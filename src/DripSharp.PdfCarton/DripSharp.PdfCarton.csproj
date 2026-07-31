@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AssemblyName>DripSharp.PdfCarton</AssemblyName>
+    <RootNamespace>DripSharp.PdfCarton</RootNamespace>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <PackageId>DripSharp.PdfCarton</PackageId>
+    <Version>3.0.8-dripsharp.0</Version>
+    <Title>PdfCarton</Title>
+    <Description>Apache PDFBox document, parsing, rendering, and manipulation APIs for .NET, mechanically translated by DripSharp. This package is an independent translation and is not affiliated with, endorsed by, or sponsored by the Apache Software Foundation.</Description>
+    <Authors>Vibeformer</Authors>
+    <Copyright>Portions Copyright The Apache Software Foundation and other upstream contributors; see NOTICE.txt.</Copyright>
+    <PackageTags>pdf pdfbox documents rendering parsing dotnet pdfcarton</PackageTags>
+    <PackageProjectUrl>https://pdfbox.apache.org/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/apache/pdfbox.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryCommit>9286e47d89d6877005c9d2d0f2fd38793a62519a</RepositoryCommit>
+    <DefineConstants>$(DefineConstants);DRIPSHARP_PDFBOX_CRYPTO</DefineConstants>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <DebugType>portable</DebugType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="src/**/*.cs" />
+    <ProjectReference Include="../DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj" />
+    <ProjectReference Include="../DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj" />
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>DripSharp.PdfCarton.Preflight</_Parameter1>
+    </AssemblyAttribute>
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Courier-Bold.afm" LogicalName="org.apache.pdfbox.resources.afm.Courier-Bold.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Courier-BoldOblique.afm" LogicalName="org.apache.pdfbox.resources.afm.Courier-BoldOblique.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Courier-Oblique.afm" LogicalName="org.apache.pdfbox.resources.afm.Courier-Oblique.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Courier.afm" LogicalName="org.apache.pdfbox.resources.afm.Courier.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Helvetica-Bold.afm" LogicalName="org.apache.pdfbox.resources.afm.Helvetica-Bold.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Helvetica-BoldOblique.afm" LogicalName="org.apache.pdfbox.resources.afm.Helvetica-BoldOblique.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Helvetica-Oblique.afm" LogicalName="org.apache.pdfbox.resources.afm.Helvetica-Oblique.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Helvetica.afm" LogicalName="org.apache.pdfbox.resources.afm.Helvetica.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/MustRead.html" LogicalName="org.apache.pdfbox.resources.afm.MustRead.html" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Symbol.afm" LogicalName="org.apache.pdfbox.resources.afm.Symbol.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Times-Bold.afm" LogicalName="org.apache.pdfbox.resources.afm.Times-Bold.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Times-BoldItalic.afm" LogicalName="org.apache.pdfbox.resources.afm.Times-BoldItalic.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Times-Italic.afm" LogicalName="org.apache.pdfbox.resources.afm.Times-Italic.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/Times-Roman.afm" LogicalName="org.apache.pdfbox.resources.afm.Times-Roman.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/afm/ZapfDingbats.afm" LogicalName="org.apache.pdfbox.resources.afm.ZapfDingbats.afm" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/glyphlist/additional.txt" LogicalName="org.apache.pdfbox.resources.glyphlist.additional.txt" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/glyphlist/glyphlist.txt" LogicalName="org.apache.pdfbox.resources.glyphlist.glyphlist.txt" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/glyphlist/zapfdingbats.txt" LogicalName="org.apache.pdfbox.resources.glyphlist.zapfdingbats.txt" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/icc/CGATS001Compat-v2-micro.icc" LogicalName="org.apache.pdfbox.resources.icc.CGATS001Compat-v2-micro.icc" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/text/BidiMirroring.txt" LogicalName="org.apache.pdfbox.resources.text.BidiMirroring.txt" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/ttf/LiberationSans-Regular.ttf" LogicalName="org.apache.pdfbox.resources.ttf.LiberationSans-Regular.ttf" />
+    <EmbeddedResource Include="resources/org/apache/pdfbox/resources/version.properties" LogicalName="org.apache.pdfbox.resources.version.properties" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+    <PackageReference Include="SkiaSharp" Version="4.150.1" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.0" />
+    <None Include="src/Legal/LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    <None Include="src/Legal/NOTICE.txt" Pack="true" PackagePath="NOTICE.txt" />
+    <None Include="src/Legal/COPYRIGHT-JJ2000-5.1.txt" Pack="true" PackagePath="THIRD-PARTY/COPYRIGHT-JJ2000-5.1.txt" />
+    <None Include="src/Legal/THIRD-PARTY-COREJ2K-LICENSE.txt" Pack="true" PackagePath="THIRD-PARTY/COREJ2K-LICENSE.txt" />
+    <None Include="src/Legal/THIRD-PARTY-JBIG2-LICENSE.txt" Pack="true" PackagePath="THIRD-PARTY/JBIG2-LICENSE.txt" />
+  </ItemGroup>
+</Project>

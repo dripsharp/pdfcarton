@@ -1,0 +1,132 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AssemblyName>DripSharp.PdfCarton.Fonts</AssemblyName>
+    <RootNamespace>DripSharp.PdfCarton.Fonts</RootNamespace>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <PackageId>DripSharp.PdfCarton.Fonts</PackageId>
+    <Version>3.0.8-dripsharp.0</Version>
+    <Title>PdfCarton Fonts</Title>
+    <Description>Apache FontBox font parsing and subsetting for .NET, mechanically translated by DripSharp. This package is an independent translation and is not affiliated with, endorsed by, or sponsored by the Apache Software Foundation.</Description>
+    <Authors>Vibeformer</Authors>
+    <Copyright>Portions Copyright The Apache Software Foundation and other upstream contributors; see NOTICE.txt.</Copyright>
+    <PackageTags>pdf pdfbox fonts opentype truetype dotnet pdfcarton</PackageTags>
+    <PackageProjectUrl>https://pdfbox.apache.org/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/apache/pdfbox.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryCommit>9286e47d89d6877005c9d2d0f2fd38793a62519a</RepositoryCommit>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <DebugType>portable</DebugType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="src/**/*.cs" />
+    <ProjectReference Include="../DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/83pv-RKSJ-H" LogicalName="org.apache.fontbox.cmap.83pv-RKSJ-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/90ms-RKSJ-H" LogicalName="org.apache.fontbox.cmap.90ms-RKSJ-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/90ms-RKSJ-V" LogicalName="org.apache.fontbox.cmap.90ms-RKSJ-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/90msp-RKSJ-H" LogicalName="org.apache.fontbox.cmap.90msp-RKSJ-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/90msp-RKSJ-V" LogicalName="org.apache.fontbox.cmap.90msp-RKSJ-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/90pv-RKSJ-H" LogicalName="org.apache.fontbox.cmap.90pv-RKSJ-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/90pv-RKSJ-V" LogicalName="org.apache.fontbox.cmap.90pv-RKSJ-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Add-RKSJ-H" LogicalName="org.apache.fontbox.cmap.Add-RKSJ-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Add-RKSJ-V" LogicalName="org.apache.fontbox.cmap.Add-RKSJ-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-CNS1-0" LogicalName="org.apache.fontbox.cmap.Adobe-CNS1-0" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-CNS1-1" LogicalName="org.apache.fontbox.cmap.Adobe-CNS1-1" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-CNS1-2" LogicalName="org.apache.fontbox.cmap.Adobe-CNS1-2" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-CNS1-3" LogicalName="org.apache.fontbox.cmap.Adobe-CNS1-3" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-CNS1-4" LogicalName="org.apache.fontbox.cmap.Adobe-CNS1-4" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-CNS1-5" LogicalName="org.apache.fontbox.cmap.Adobe-CNS1-5" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-CNS1-6" LogicalName="org.apache.fontbox.cmap.Adobe-CNS1-6" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-CNS1-UCS2" LogicalName="org.apache.fontbox.cmap.Adobe-CNS1-UCS2" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-GB1-0" LogicalName="org.apache.fontbox.cmap.Adobe-GB1-0" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-GB1-1" LogicalName="org.apache.fontbox.cmap.Adobe-GB1-1" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-GB1-2" LogicalName="org.apache.fontbox.cmap.Adobe-GB1-2" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-GB1-3" LogicalName="org.apache.fontbox.cmap.Adobe-GB1-3" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-GB1-4" LogicalName="org.apache.fontbox.cmap.Adobe-GB1-4" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-GB1-5" LogicalName="org.apache.fontbox.cmap.Adobe-GB1-5" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-GB1-UCS2" LogicalName="org.apache.fontbox.cmap.Adobe-GB1-UCS2" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Japan1-0" LogicalName="org.apache.fontbox.cmap.Adobe-Japan1-0" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Japan1-1" LogicalName="org.apache.fontbox.cmap.Adobe-Japan1-1" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Japan1-2" LogicalName="org.apache.fontbox.cmap.Adobe-Japan1-2" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Japan1-3" LogicalName="org.apache.fontbox.cmap.Adobe-Japan1-3" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Japan1-4" LogicalName="org.apache.fontbox.cmap.Adobe-Japan1-4" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Japan1-5" LogicalName="org.apache.fontbox.cmap.Adobe-Japan1-5" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Japan1-6" LogicalName="org.apache.fontbox.cmap.Adobe-Japan1-6" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Japan1-7" LogicalName="org.apache.fontbox.cmap.Adobe-Japan1-7" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Japan1-UCS2" LogicalName="org.apache.fontbox.cmap.Adobe-Japan1-UCS2" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Japan2-0" LogicalName="org.apache.fontbox.cmap.Adobe-Japan2-0" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Korea1-0" LogicalName="org.apache.fontbox.cmap.Adobe-Korea1-0" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Korea1-1" LogicalName="org.apache.fontbox.cmap.Adobe-Korea1-1" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Korea1-2" LogicalName="org.apache.fontbox.cmap.Adobe-Korea1-2" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Adobe-Korea1-UCS2" LogicalName="org.apache.fontbox.cmap.Adobe-Korea1-UCS2" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/B5pc-H" LogicalName="org.apache.fontbox.cmap.B5pc-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/B5pc-V" LogicalName="org.apache.fontbox.cmap.B5pc-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/CNS-EUC-H" LogicalName="org.apache.fontbox.cmap.CNS-EUC-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/CNS-EUC-V" LogicalName="org.apache.fontbox.cmap.CNS-EUC-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/ETen-B5-H" LogicalName="org.apache.fontbox.cmap.ETen-B5-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/ETen-B5-V" LogicalName="org.apache.fontbox.cmap.ETen-B5-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/ETenms-B5-H" LogicalName="org.apache.fontbox.cmap.ETenms-B5-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/ETenms-B5-V" LogicalName="org.apache.fontbox.cmap.ETenms-B5-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/EUC-H" LogicalName="org.apache.fontbox.cmap.EUC-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/EUC-V" LogicalName="org.apache.fontbox.cmap.EUC-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Ext-RKSJ-H" LogicalName="org.apache.fontbox.cmap.Ext-RKSJ-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Ext-RKSJ-V" LogicalName="org.apache.fontbox.cmap.Ext-RKSJ-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/GB-EUC-H" LogicalName="org.apache.fontbox.cmap.GB-EUC-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/GB-EUC-V" LogicalName="org.apache.fontbox.cmap.GB-EUC-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/GBK-EUC-H" LogicalName="org.apache.fontbox.cmap.GBK-EUC-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/GBK-EUC-V" LogicalName="org.apache.fontbox.cmap.GBK-EUC-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/GBK2K-H" LogicalName="org.apache.fontbox.cmap.GBK2K-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/GBK2K-V" LogicalName="org.apache.fontbox.cmap.GBK2K-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/GBKp-EUC-H" LogicalName="org.apache.fontbox.cmap.GBKp-EUC-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/GBKp-EUC-V" LogicalName="org.apache.fontbox.cmap.GBKp-EUC-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/GBpc-EUC-H" LogicalName="org.apache.fontbox.cmap.GBpc-EUC-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/GBpc-EUC-V" LogicalName="org.apache.fontbox.cmap.GBpc-EUC-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/H" LogicalName="org.apache.fontbox.cmap.H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/HKscs-B5-H" LogicalName="org.apache.fontbox.cmap.HKscs-B5-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/HKscs-B5-V" LogicalName="org.apache.fontbox.cmap.HKscs-B5-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Identity-H" LogicalName="org.apache.fontbox.cmap.Identity-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/Identity-V" LogicalName="org.apache.fontbox.cmap.Identity-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/KSC-EUC-H" LogicalName="org.apache.fontbox.cmap.KSC-EUC-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/KSC-EUC-V" LogicalName="org.apache.fontbox.cmap.KSC-EUC-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/KSCms-UHC-H" LogicalName="org.apache.fontbox.cmap.KSCms-UHC-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/KSCms-UHC-HW-H" LogicalName="org.apache.fontbox.cmap.KSCms-UHC-HW-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/KSCms-UHC-HW-V" LogicalName="org.apache.fontbox.cmap.KSCms-UHC-HW-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/KSCms-UHC-V" LogicalName="org.apache.fontbox.cmap.KSCms-UHC-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/KSCpc-EUC-H" LogicalName="org.apache.fontbox.cmap.KSCpc-EUC-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/KSCpc-EUC-V" LogicalName="org.apache.fontbox.cmap.KSCpc-EUC-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniCNS-UCS2-H" LogicalName="org.apache.fontbox.cmap.UniCNS-UCS2-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniCNS-UCS2-V" LogicalName="org.apache.fontbox.cmap.UniCNS-UCS2-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniCNS-UTF16-H" LogicalName="org.apache.fontbox.cmap.UniCNS-UTF16-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniCNS-UTF16-V" LogicalName="org.apache.fontbox.cmap.UniCNS-UTF16-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniGB-UCS2-H" LogicalName="org.apache.fontbox.cmap.UniGB-UCS2-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniGB-UCS2-V" LogicalName="org.apache.fontbox.cmap.UniGB-UCS2-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniGB-UTF16-H" LogicalName="org.apache.fontbox.cmap.UniGB-UTF16-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniGB-UTF16-V" LogicalName="org.apache.fontbox.cmap.UniGB-UTF16-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniJIS-UCS2-H" LogicalName="org.apache.fontbox.cmap.UniJIS-UCS2-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniJIS-UCS2-HW-H" LogicalName="org.apache.fontbox.cmap.UniJIS-UCS2-HW-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniJIS-UCS2-HW-V" LogicalName="org.apache.fontbox.cmap.UniJIS-UCS2-HW-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniJIS-UCS2-V" LogicalName="org.apache.fontbox.cmap.UniJIS-UCS2-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniJIS-UTF16-H" LogicalName="org.apache.fontbox.cmap.UniJIS-UTF16-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniJIS-UTF16-V" LogicalName="org.apache.fontbox.cmap.UniJIS-UTF16-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniKS-UCS2-H" LogicalName="org.apache.fontbox.cmap.UniKS-UCS2-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniKS-UCS2-V" LogicalName="org.apache.fontbox.cmap.UniKS-UCS2-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniKS-UTF16-H" LogicalName="org.apache.fontbox.cmap.UniKS-UTF16-H" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/UniKS-UTF16-V" LogicalName="org.apache.fontbox.cmap.UniKS-UTF16-V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/cmap/V" LogicalName="org.apache.fontbox.cmap.V" />
+    <EmbeddedResource Include="resources/org/apache/fontbox/unicode/Scripts.txt" LogicalName="org.apache.fontbox.unicode.Scripts.txt" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+    <PackageReference Include="SkiaSharp" Version="4.150.1" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="4.150.1" />
+    <None Include="src/Legal/LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    <None Include="src/Legal/NOTICE.txt" Pack="true" PackagePath="NOTICE.txt" />
+  </ItemGroup>
+</Project>

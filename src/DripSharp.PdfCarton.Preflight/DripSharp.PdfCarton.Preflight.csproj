@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AssemblyName>DripSharp.PdfCarton.Preflight</AssemblyName>
+    <RootNamespace>DripSharp.PdfCarton.Preflight</RootNamespace>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <PackageId>DripSharp.PdfCarton.Preflight</PackageId>
+    <Version>3.0.8-dripsharp.0</Version>
+    <Title>PdfCarton Preflight</Title>
+    <Description>Apache Preflight PDF/A validation APIs for .NET, mechanically translated by DripSharp. This package is an independent translation and is not affiliated with, endorsed by, or sponsored by the Apache Software Foundation.</Description>
+    <Authors>Vibeformer</Authors>
+    <Copyright>Portions Copyright The Apache Software Foundation and other upstream contributors; see NOTICE.txt.</Copyright>
+    <PackageTags>pdf pdfbox pdfa validation preflight dotnet pdfcarton</PackageTags>
+    <PackageProjectUrl>https://pdfbox.apache.org/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/apache/pdfbox.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryCommit>9286e47d89d6877005c9d2d0f2fd38793a62519a</RepositoryCommit>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <DebugType>portable</DebugType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="src/**/*.cs" />
+    <ProjectReference Include="../DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj" />
+    <ProjectReference Include="../DripSharp.PdfCarton/DripSharp.PdfCarton.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+    <PackageReference Include="SkiaSharp" Version="4.150.1" />
+    <None Include="src/Legal/LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    <None Include="src/Legal/NOTICE.txt" Pack="true" PackagePath="NOTICE.txt" />
+  </ItemGroup>
+</Project>
