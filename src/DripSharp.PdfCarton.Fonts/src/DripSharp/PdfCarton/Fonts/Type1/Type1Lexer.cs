@@ -38,7 +38,7 @@ return ((this.aheadToken != default!) && (this.aheadToken.GetKind() == kind));
 
 private char getChar() {
 try {
-return unchecked((char)((char)(this.buffer.get())));
+return unchecked((char)(unchecked((char)(this.buffer.get()))));
 } catch (global::System.IO.EndOfStreamException) {
 throw new global::System.IO.IOException("Premature end of buffer reached");
 }
@@ -298,7 +298,7 @@ if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c1)) {
 string num = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(new char[] { c1, this.getChar(), this.getChar() });
 try {
 int code = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(num, 8);
-sb.Append(unchecked((char)((char)(code))));
+sb.Append(unchecked((char)(unchecked((char)(code)))));
 } catch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaNumberFormatException ex) {
 throw new global::System.IO.IOException(null, ex);
 }

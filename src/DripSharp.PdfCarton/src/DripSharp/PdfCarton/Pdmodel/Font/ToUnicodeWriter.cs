@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Font;
 internal sealed class ToUnicodeWriter {
 private readonly global::System.Collections.Generic.IDictionary<int, string> cidToUnicode = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int, string>();
 
-private int wMode;
+private int wMode = default;
 
 internal const int MAX_ENTRIES_PER_OPERATOR = 100;
 

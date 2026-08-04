@@ -9,13 +9,13 @@
 namespace DripSharp.PdfCarton.Fonts.Util;
 
 public class BoundingBox {
-private float lowerLeftX;
+private float lowerLeftX = default;
 
-private float lowerLeftY;
+private float lowerLeftY = default;
 
-private float upperRightX;
+private float upperRightX = default;
 
-private float upperRightY;
+private float upperRightY = default;
 
 public BoundingBox() {}
 

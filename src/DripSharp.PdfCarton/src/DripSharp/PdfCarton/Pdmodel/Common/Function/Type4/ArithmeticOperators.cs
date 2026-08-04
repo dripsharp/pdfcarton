@@ -15,7 +15,7 @@ internal class Abs : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.O
 public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
 global::System.IConvertible num = context.PopNumber();
 if ((num is int)) {
-context.GetStack().Push(global::System.Math.Abs(global::System.Convert.ToInt32(num, global::System.Globalization.CultureInfo.InvariantCulture)));
+context.GetStack().Push(global::System.Math.Abs(global::DripSharp.Runtime.JavaCompat.NumberIntValue(num)));
 } else {
 context.GetStack().Push(global::System.Math.Abs(global::System.Convert.ToSingle(num, global::System.Globalization.CultureInfo.InvariantCulture)));
 }
@@ -75,7 +75,7 @@ context.GetStack().Push(cos);
 internal class Cvi : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
 public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
 global::System.IConvertible num = context.PopNumber();
-context.GetStack().Push(global::System.Convert.ToInt32(num, global::System.Globalization.CultureInfo.InvariantCulture));
+context.GetStack().Push(global::DripSharp.Runtime.JavaCompat.NumberIntValue(num));
 }
 }
 
@@ -166,11 +166,11 @@ internal class Neg : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.O
 public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
 global::System.IConvertible num = context.PopNumber();
 if ((num is int)) {
-int v = global::System.Convert.ToInt32(num, global::System.Globalization.CultureInfo.InvariantCulture);
+int v = global::DripSharp.Runtime.JavaCompat.NumberIntValue(num);
 if ((v == int.MinValue)) {
 context.GetStack().Push(-(global::System.Convert.ToSingle(num, global::System.Globalization.CultureInfo.InvariantCulture)));
 } else {
-context.GetStack().Push(-(global::System.Convert.ToInt32(num, global::System.Globalization.CultureInfo.InvariantCulture)));
+context.GetStack().Push(-(global::DripSharp.Runtime.JavaCompat.NumberIntValue(num)));
 }
 } else {
 context.GetStack().Push(-(global::System.Convert.ToSingle(num, global::System.Globalization.CultureInfo.InvariantCulture)));
@@ -182,7 +182,7 @@ internal class Round : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4
 public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
 global::System.IConvertible num = context.PopNumber();
 if ((num is int)) {
-context.GetStack().Push(global::System.Convert.ToInt32(num, global::System.Globalization.CultureInfo.InvariantCulture));
+context.GetStack().Push(global::DripSharp.Runtime.JavaCompat.NumberIntValue(num));
 } else {
 context.GetStack().Push((float)(global::DripSharp.Runtime.JavaCompat.MathRound(global::System.Convert.ToDouble(num, global::System.Globalization.CultureInfo.InvariantCulture))));
 }
@@ -230,9 +230,9 @@ internal class Truncate : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Ty
 public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
 global::System.IConvertible num = context.PopNumber();
 if ((num is int)) {
-context.GetStack().Push(global::System.Convert.ToInt32(num, global::System.Globalization.CultureInfo.InvariantCulture));
+context.GetStack().Push(global::DripSharp.Runtime.JavaCompat.NumberIntValue(num));
 } else {
-context.GetStack().Push((int)((float)(global::System.Convert.ToSingle(num, global::System.Globalization.CultureInfo.InvariantCulture))));
+context.GetStack().Push((float)((int)(global::System.Convert.ToSingle(num, global::System.Globalization.CultureInfo.InvariantCulture))));
 }
 }
 }

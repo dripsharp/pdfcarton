@@ -48,11 +48,11 @@ public virtual void SetSoftwareAgent(string value) {
 this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.SoftwareAgent, value);
 }
 
-public virtual global::System.DateTimeOffset GetWhen() {
+public virtual global::System.DateTimeOffset? GetWhen() {
 return this.GetDatePropertyAsCalendar(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.When);
 }
 
-public virtual void SetWhen(global::System.DateTimeOffset value) {
+public virtual void SetWhen(global::System.DateTimeOffset? value) {
 this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.When, value);
 }
 

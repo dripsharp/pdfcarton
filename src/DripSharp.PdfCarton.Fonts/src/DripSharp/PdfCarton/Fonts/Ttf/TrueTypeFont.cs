@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.Fonts.Ttf;
 public class TrueTypeFont : global::System.IDisposable, global::DripSharp.PdfCarton.Fonts.FontBoxFont {
 private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private float version;
+private float version = default;
 
 private int numberOfGlyphs = -1;
 
@@ -343,7 +343,7 @@ try {
 for (int chPos = 3; ((chPos + 4) <= nameLength); chPos += 4) {
 int codePoint = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(name, chPos, (chPos + 4)), 16);
 if (((codePoint <= 55295) || (codePoint >= 57344))) {
-uniStr.Append(unchecked((char)((char)(codePoint))));
+uniStr.Append(unchecked((char)(unchecked((char)(codePoint)))));
 }
 }
 string unicode = uniStr.ToString();

@@ -26,15 +26,15 @@ internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat format = n
 
 internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.CIDSystemInfo cidSystemInfo = null!;
 
-internal readonly int usWeightClass;
+internal readonly int usWeightClass = default;
 
-internal readonly int sFamilyClass;
+internal readonly int sFamilyClass = default;
 
-internal readonly int ulCodePageRange1;
+internal readonly int ulCodePageRange1 = default;
 
-internal readonly int ulCodePageRange2;
+internal readonly int ulCodePageRange2 = default;
 
-internal readonly int macStyle;
+internal readonly int macStyle = default;
 
 internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDPanoseClassification panose = null!;
 
@@ -44,7 +44,7 @@ internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvide
 
 internal readonly string hash = null!;
 
-internal readonly long lastModified;
+internal readonly long lastModified = default;
 
 internal FSFontInfo(global::System.IO.FileInfo file, global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat format, string postScriptName, global::DripSharp.PdfCarton.Pdmodel.Font.CIDSystemInfo cidSystemInfo, int usWeightClass, int sFamilyClass, int ulCodePageRange1, int ulCodePageRange2, int macStyle, sbyte[] panose, global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider parent, string hash, long lastModified) {
 this.file = file;
@@ -149,7 +149,8 @@ try {
 ttf = ttc.GetFontByName(postScriptName);
 } catch (global::System.IO.IOException ex) {
 ttc.Dispose();
-throw ex;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
+throw new global::System.InvalidOperationException("unreachable");
 }
 if ((ttf == default!)) {
 ttc.Dispose();
@@ -404,7 +405,7 @@ panose = new sbyte[10];
 for (int i = 0; (i < 10); i++) {
 string str = global::DripSharp.Runtime.JavaCompat.StringSubstring(parts[8], (i * 2), ((i * 2) + 2));
 int b = global::DripSharp.Runtime.JavaCompat.ParseInt(str, 16);
-panose![i] = unchecked((sbyte)((sbyte)((b & 255))));
+panose![i] = unchecked((sbyte)(unchecked((sbyte)((b & 255)))));
 }
 }
 fontFile = new global::System.IO.FileInfo(parts[9]);

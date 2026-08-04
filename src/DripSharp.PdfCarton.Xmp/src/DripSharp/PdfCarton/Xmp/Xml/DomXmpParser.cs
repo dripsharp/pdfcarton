@@ -129,7 +129,7 @@ private void parseSchemaExtensions(global::DripSharp.PdfCarton.Xmp.XMPMetadata x
 global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
 this.nsFinder.Push(description);
 try {
-global::System.Collections.Generic.IList<global::System.Xml.XmlElement> schemaExtensions = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ToListValues(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StreamFilter(global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(description), this.isSchemaExtensionProperty));
+global::System.Collections.Generic.IList<global::System.Xml.XmlElement> schemaExtensions = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ToListValues(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StreamFilter(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Stream(global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(description)), this.isSchemaExtensionProperty));
 if (!(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ListIsEmpty(schemaExtensions))) {
 global::DripSharp.PdfCarton.Xmp.Xml.PdfaExtensionHelper.ValidateNaming(xmp, description);
 }
@@ -350,7 +350,7 @@ return;
 }
 string whatFound = "nothing";
 if ((firstChild != default!)) {
-whatFound = ((firstChild is global::System.Xml.XmlText) ? "Text" : (((object)(firstChild)).GetType().FullName ?? ((object)(firstChild)).GetType().Name));
+whatFound = ((firstChild is global::System.Xml.XmlText) ? "Text" : global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassName(((object)(firstChild)).GetType(), "DripSharp.PdfCarton.Xmp", "org.apache.xmpbox"));
 }
 throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Invalid array definition, expecting ", type.Card()), " and found "), whatFound), " [prefix="), prefix), "; name="), name), "]"));
 }
@@ -753,7 +753,7 @@ return this.stack.Pop();
 }
 
 protected internal virtual bool ContainsNamespace(string @namespace) {
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Any(this.stack, (map) => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapContainsValue(map, @namespace));
+return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Any(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Stream(this.stack), (map) => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapContainsValue(map, @namespace));
 }
 
 protected internal NamespaceFinder() {}

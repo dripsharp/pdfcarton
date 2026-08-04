@@ -299,8 +299,10 @@ internal
 #else
 public
 #endif
-class JavaByteArrayOutputStream : MemoryStream
+class JavaByteArrayOutputStream : MemoryStream, IDisposable
 {
+    private bool disposeDispatching;
+
     public JavaByteArrayOutputStream()
     {
     }
@@ -310,10 +312,31 @@ class JavaByteArrayOutputStream : MemoryStream
     {
     }
 
+    public new virtual void Dispose()
+    {
+        // java.io.ByteArrayOutputStream.close() has no effect. Keep the
+        // public virtual surface so translated close() overrides dispatch.
+    }
+
+    void IDisposable.Dispose() => Dispose();
+
     protected override void Dispose(bool disposing)
     {
-        // java.io.ByteArrayOutputStream.close() has no effect. Its content,
-        // size, reset, and write operations remain available after close.
+        if (disposing && !disposeDispatching)
+        {
+            disposeDispatching = true;
+            try
+            {
+                Dispose();
+            }
+            finally
+            {
+                disposeDispatching = false;
+            }
+        }
+
+        // Its content, size, reset, and write operations remain available
+        // after close, so intentionally do not call MemoryStream.Dispose.
     }
 }
 
@@ -673,8 +696,8 @@ internal static partial class JavaCompat
         StreamMarks = new();
     internal static int ReaderRead(TextReader reader, char[] buffer, int index, int count)
     {
-        var read = reader.Read(buffer, index, count);
-        return read == 0 && count != 0 ? -1 : read;
+        try { var read = reader.Read(buffer, index, count); return read == 0 && count != 0 ? -1 : read; }
+        catch (ObjectDisposedException error) { throw new IOException(error.Message, error); }
     }
     internal static bool ReaderReady(TextReader reader)
     {
@@ -711,6 +734,19 @@ internal static partial class JavaCompat
     {
         ArgumentNullException.ThrowIfNull(file);
         return new StreamReader(file.FullName);
+    }
+
+    internal static StreamReader NewInputStreamReader(Stream stream)
+    {
+        ArgumentNullException.ThrowIfNull(stream);
+        return new StreamReader(stream);
+    }
+
+    internal static StreamReader NewInputStreamReader(Stream stream, string charsetName)
+    {
+        ArgumentNullException.ThrowIfNull(stream);
+        ArgumentNullException.ThrowIfNull(charsetName);
+        return new StreamReader(stream, CharsetForName(charsetName));
     }
 
     internal static Stream OpenFileOutput(FileInfo file)

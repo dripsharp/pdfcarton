@@ -83,7 +83,7 @@ return ((this.GetKey() != default!) ? this.GetKey().GetGeneration() : 0);
 }
 
 public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
-((global::DripSharp.PdfCarton.Cos.ICOSVisitor)visitor).VisitFromObject(this);
+((global::DripSharp.PdfCarton.Cos.ICOSVisitor)(visitor)).VisitFromObject(this);
 }
 
 public virtual bool IsDereferenced() {

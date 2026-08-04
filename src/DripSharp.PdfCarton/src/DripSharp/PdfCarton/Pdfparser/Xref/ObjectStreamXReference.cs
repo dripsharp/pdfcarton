@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Pdfparser.Xref;
 
 public class ObjectStreamXReference : global::DripSharp.PdfCarton.Pdfparser.Xref.AbstractXReference {
-private readonly int objectStreamIndex;
+private readonly int objectStreamIndex = default;
 
 private readonly global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
 

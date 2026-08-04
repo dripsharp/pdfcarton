@@ -27,7 +27,7 @@ private const int ASSEMBLE_DOCUMENT_BIT = 11;
 
 private const int FAITHFUL_PRINT_BIT = 12;
 
-private int bytes;
+private int bytes = default;
 
 private bool readOnly = false;
 

@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class FeatureListTable {
-private readonly int featureCount;
+private readonly int featureCount = default;
 
 private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureRecord[] featureRecords = null!;
 

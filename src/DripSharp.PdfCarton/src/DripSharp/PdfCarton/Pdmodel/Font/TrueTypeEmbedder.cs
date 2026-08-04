@@ -27,7 +27,7 @@ protected internal readonly global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup Cma
 
 private readonly global::System.Collections.Generic.ISet<int> subsetCodePoints = new global::System.Collections.Generic.HashSet<int>();
 
-private readonly bool embedSubset;
+private readonly bool embedSubset = default;
 
 private readonly global::System.Collections.Generic.ISet<int> allGlyphIds = new global::System.Collections.Generic.HashSet<int>();
 

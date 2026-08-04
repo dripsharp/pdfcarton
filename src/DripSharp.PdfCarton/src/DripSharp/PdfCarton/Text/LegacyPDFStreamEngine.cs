@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.Text;
 public class LegacyPDFStreamEngine : global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine {
 private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private int pageRotation;
+private int pageRotation = default;
 
 private global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle pageSize = null!;
 
@@ -128,7 +128,7 @@ float spaceWidthDisplay = (spaceWidthText * textRenderingMatrix.GetScalingFactor
 string unicode = font.ToUnicode(code, global::DripSharp.PdfCarton.Text.LegacyPDFStreamEngine.GLYPHLIST);
 if ((unicode == default!)) {
 if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont)) {
-char c = unchecked((char)((char)(code)));
+char c = unchecked((char)(unchecked((char)(code))));
 unicode = new string(new char[] { c });
 } else {
 return;

@@ -161,7 +161,7 @@ public static readonly global::DripSharp.PdfCarton.Xmp.Type.Types Flash = new gl
 [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(37)]
 public static readonly global::DripSharp.PdfCarton.Xmp.Type.Types Dimensions = new global::DripSharp.PdfCarton.Xmp.Type.Types(false, global::DripSharp.PdfCarton.Xmp.Type.Types.Structured, typeof(global::DripSharp.PdfCarton.Xmp.Type.DimensionsType));
 
-private readonly bool simple;
+private readonly bool simple = default;
 
 private readonly global::DripSharp.PdfCarton.Xmp.Type.Types basic = null!;
 

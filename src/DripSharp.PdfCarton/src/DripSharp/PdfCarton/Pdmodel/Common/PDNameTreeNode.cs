@@ -64,7 +64,7 @@ return retval!;
 public virtual void SetKids(global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<T>> kids) {
 if (((kids != default!) && !(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(kids)))) {
 global::DripSharp.Runtime.JavaCompat.ForEach(kids, (kidsNode) => kidsNode.SetParent(this));
-this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids, new global::DripSharp.PdfCarton.Cos.COSArray(kids));
+this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids, new global::DripSharp.PdfCarton.Cos.COSArray(global::DripSharp.Runtime.JavaCompat.ToListValues<global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<T>>(kids)));
 if (this.IsRootNode()) {
 this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Names, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
 }
@@ -146,7 +146,7 @@ global::DripSharp.PdfCarton.Cos.COSString key = (global::DripSharp.PdfCarton.Cos
 global::DripSharp.PdfCarton.Cos.COSBase cosValue = namesArray.GetObject((i + 1));
 global::DripSharp.Runtime.JavaCompat.MapPut(names, key.GetString(), this.ConvertCOSToPD(cosValue));
 }
-return global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(names);
+return global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(global::DripSharp.Runtime.JavaCompat.CastDictionary<string, T>(names));
 } else {
 return default!;
 }

@@ -19,7 +19,7 @@ private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dict = null!;
 
 private readonly global::DripSharp.PdfCarton.Cos.COSDictionary cidFont = null!;
 
-private readonly bool vertical;
+private readonly bool vertical = default;
 
 internal PDCIDFontType2Embedder(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, global::DripSharp.PdfCarton.Cos.COSDictionary dict, global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, bool embedSubset, global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font parent, bool vertical) : base(document, dict, ttf, embedSubset) {
 this.document = document;
@@ -76,7 +76,7 @@ cid = gid;
 global::System.Collections.Generic.IList<int> codes = base.CmapLookup.GetCharCodes(cid);
 int? inputCodePoint = global::DripSharp.Runtime.JavaCompat.MapGetNullable(inputCodePointByGID, cid);
 if (((inputCodePoint != default!) || (codes != default!))) {
-int codePoint__177_21 = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(((inputCodePoint != default!) ? inputCodePoint : global::DripSharp.Runtime.JavaCompat.ListGet(codes, 0)));
+int codePoint__177_21 = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(((inputCodePoint != default!) ? (int?)(inputCodePoint) : (int?)(global::DripSharp.Runtime.JavaCompat.ListGet(codes, 0))));
 if ((codePoint__177_21 > 65535)) {
 hasSurrogates = true;
 }
@@ -161,8 +161,8 @@ int bi = 0;
 for (int i = 0; (i <= cidMax); i++) {
 int? gid = global::DripSharp.Runtime.JavaCompat.MapGetNullable(cidToGid, i);
 if ((gid != default!)) {
-buffer[bi] = unchecked((sbyte)((sbyte)(((global::DripSharp.Runtime.JavaCompat.Unbox(gid) >> unchecked((int)(8))) & 255))));
-buffer[(bi + 1)] = unchecked((sbyte)((sbyte)((global::DripSharp.Runtime.JavaCompat.Unbox(gid) & 255))));
+buffer[bi] = unchecked((sbyte)(unchecked((sbyte)(((global::DripSharp.Runtime.JavaCompat.Unbox(gid) >> unchecked((int)(8))) & 255)))));
+buffer[(bi + 1)] = unchecked((sbyte)(unchecked((sbyte)((global::DripSharp.Runtime.JavaCompat.Unbox(gid) & 255)))));
 }
 bi += 2;
 }

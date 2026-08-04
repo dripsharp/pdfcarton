@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.State;
 
 public class PDGraphicsState : global::DripSharp.Runtime.JavaCloneable {
-private bool isClippingPathDirty;
+private bool isClippingPathDirty = default;
 
 private global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> clippingPaths = new global::System.Collections.Generic.List<global::SkiaSharp.SKPath>(1);
 

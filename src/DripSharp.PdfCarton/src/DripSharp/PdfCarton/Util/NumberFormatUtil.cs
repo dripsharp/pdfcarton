@@ -61,14 +61,14 @@ long remaining = number;
 while ((remaining > int.MaxValue)) {
 long digit__137_18 = (remaining / global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp]);
 remaining -= (digit__137_18 * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp]);
-asciiBuffer[offset++] = unchecked((sbyte)((sbyte)(('0' + digit__137_18))));
+asciiBuffer[offset++] = unchecked((sbyte)(unchecked((sbyte)(('0' + digit__137_18)))));
 exp--;
 }
 int remainingInt = (int)(remaining);
 while (((exp >= 0) && (!omitTrailingZeros || (remainingInt > 0)))) {
 int digit__148_17 = (remainingInt / global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp]);
 remainingInt -= (digit__148_17 * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp]);
-asciiBuffer[offset++] = unchecked((sbyte)((sbyte)(('0' + digit__148_17))));
+asciiBuffer[offset++] = unchecked((sbyte)(unchecked((sbyte)(('0' + digit__148_17)))));
 exp--;
 }
 return offset;

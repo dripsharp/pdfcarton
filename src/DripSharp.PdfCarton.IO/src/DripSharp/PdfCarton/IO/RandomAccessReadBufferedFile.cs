@@ -33,11 +33,11 @@ private readonly global::DripSharp.Runtime.JavaFileChannel fileChannel = null!;
 
 private readonly global::DripSharp.Runtime.JavaPath path = null!;
 
-private readonly long fileLength;
+private readonly long fileLength = default;
 
 private long fileOffset = 0;
 
-private bool __field_isClosed;
+private bool __field_isClosed = default;
 
 public RandomAccessReadBufferedFile(string filename) : this(new global::System.IO.FileInfo(filename)) {
 
@@ -151,12 +151,12 @@ return this.__field_isClosed;
 
 private void checkClosed() {
 if (this.__field_isClosed) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat((((object)(this)).GetType().FullName ?? ((object)(this)).GetType().Name), " already closed"));
+throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"), " already closed"));
 }
 }
 
 public virtual bool IsEOF() {
-return (((global::DripSharp.PdfCarton.IO.RandomAccessRead)this).Peek() == -1);
+return (((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Peek() == -1);
 }
 
 public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition, long streamLength) {

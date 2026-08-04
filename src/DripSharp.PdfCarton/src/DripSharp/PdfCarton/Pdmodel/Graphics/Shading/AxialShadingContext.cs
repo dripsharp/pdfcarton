@@ -19,15 +19,15 @@ private readonly float[] domain = null!;
 
 private readonly bool[] extend = null!;
 
-private readonly double x1x0;
+private readonly double x1x0 = default;
 
-private readonly double y1y0;
+private readonly double y1y0 = default;
 
-private readonly float d1d0;
+private readonly float d1d0 = default;
 
-private readonly double denom;
+private readonly double denom = default;
 
-private readonly int factor;
+private readonly int factor = default;
 
 private readonly int[] colorTable = null!;
 

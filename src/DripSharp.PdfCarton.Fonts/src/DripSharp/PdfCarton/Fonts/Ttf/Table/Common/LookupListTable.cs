@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class LookupListTable {
-private readonly int lookupCount;
+private readonly int lookupCount = default;
 
 private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupTable[] lookups = null!;
 

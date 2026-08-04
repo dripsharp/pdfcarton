@@ -78,9 +78,9 @@ this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)defaul
 public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
 if ((this.customAppearanceHandler == default!)) {
 global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDPolygonAppearanceHandler appearanceHandler = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDPolygonAppearanceHandler(this, document);
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)appearanceHandler).GenerateAppearanceStreams();
+((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
 } else {
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)this.customAppearanceHandler).GenerateAppearanceStreams();
+((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
 }
 }
 }

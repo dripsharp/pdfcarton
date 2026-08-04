@@ -9,17 +9,17 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class GlyphData {
-private short xMin;
+private short xMin = default;
 
-private short yMin;
+private short yMin = default;
 
-private short xMax;
+private short xMax = default;
 
-private short yMax;
+private short yMax = default;
 
 private global::DripSharp.PdfCarton.Fonts.Util.BoundingBox boundingBox = default!;
 
-private short numberOfContours;
+private short numberOfContours = default;
 
 private global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript glyphDescription = default!;
 
@@ -31,7 +31,7 @@ this.xMax = data.ReadSignedShort();
 this.yMax = data.ReadSignedShort();
 this.boundingBox = new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox((float)(this.xMin), (float)(this.yMin), (float)(this.xMax), (float)(this.yMax));
 if (((int)(this.numberOfContours) >= 0)) {
-short x0 = (short)((leftSideBearing - this.xMin));
+short x0 = unchecked((short)(unchecked((short)((leftSideBearing - this.xMin)))));
 this.glyphDescription = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyfSimpleDescript(this.numberOfContours, data, x0);
 } else {
 this.glyphDescription = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript(data, glyphTable, (level + 1));

@@ -14,7 +14,7 @@ private StackOperators() {}
 internal class Copy : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
 public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
 global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-int n = global::System.Convert.ToInt32(((global::System.IConvertible)(stack.Pop()!)), global::System.Globalization.CultureInfo.InvariantCulture);
+int n = global::DripSharp.Runtime.JavaCompat.NumberIntValue(((global::System.IConvertible)(stack.Pop()!)));
 if ((n > 0)) {
 int size = stack.Count;
 global::System.Collections.Generic.IList<object> copy = new global::System.Collections.Generic.List<object>(stack.SubList((size - n), size));
@@ -43,7 +43,7 @@ stack.Push(any1);
 internal class Index : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
 public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
 global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-int n = global::System.Convert.ToInt32(((global::System.IConvertible)(stack.Pop()!)), global::System.Globalization.CultureInfo.InvariantCulture);
+int n = global::DripSharp.Runtime.JavaCompat.NumberIntValue(((global::System.IConvertible)(stack.Pop()!)));
 if ((n < 0)) {
 throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("rangecheck: ", n));
 }
@@ -62,8 +62,8 @@ stack.Pop();
 internal class Roll : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
 public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
 global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-int j = global::System.Convert.ToInt32(((global::System.IConvertible)(stack.Pop()!)), global::System.Globalization.CultureInfo.InvariantCulture);
-int n = global::System.Convert.ToInt32(((global::System.IConvertible)(stack.Pop()!)), global::System.Globalization.CultureInfo.InvariantCulture);
+int j = global::DripSharp.Runtime.JavaCompat.NumberIntValue(((global::System.IConvertible)(stack.Pop()!)));
+int n = global::DripSharp.Runtime.JavaCompat.NumberIntValue(((global::System.IConvertible)(stack.Pop()!)));
 if ((j == 0)) {
 return;
 }

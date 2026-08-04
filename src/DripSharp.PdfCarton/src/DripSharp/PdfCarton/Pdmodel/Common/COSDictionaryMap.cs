@@ -116,7 +116,7 @@ if ((cosObj is global::DripSharp.PdfCarton.Cos.COSFloat)) {
 actualObject = ((global::DripSharp.PdfCarton.Cos.COSFloat)(cosObj!)).FloatValue();
 } else {
 if ((cosObj is global::DripSharp.PdfCarton.Cos.COSBoolean)) {
-actualObject = (((global::DripSharp.PdfCarton.Cos.COSBoolean)(cosObj!)).GetValue() ? true : false);
+actualObject = (((global::DripSharp.PdfCarton.Cos.COSBoolean)(cosObj!)).GetValue() ? (bool?)(true) : (bool?)(false));
 } else {
 throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error:unknown type of object to convert:", cosObj));
 }

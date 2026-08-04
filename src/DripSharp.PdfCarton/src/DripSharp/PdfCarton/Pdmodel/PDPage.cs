@@ -58,7 +58,7 @@ global::DripSharp.Runtime.JavaCompat.ForEach(this.getIndirectResourceObjects(res
 global::DripSharp.Runtime.JavaCompat.ForEach(this.getIndirectResourceObjects(resources, global::DripSharp.PdfCarton.Cos.COSName.Shading), (value0) => { this.resourceCache.RemoveShading(value0); });
 global::DripSharp.Runtime.JavaCompat.ForEach(this.getIndirectResourceObjects(resources, global::DripSharp.PdfCarton.Cos.COSName.Font), (value0) => { this.resourceCache.RemoveFont(value0); });
 foreach (global::DripSharp.PdfCarton.Cos.COSObject cosObject in this.getIndirectResourceObjects(resources, global::DripSharp.PdfCarton.Cos.COSName.Xobject)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject removedXObject = ((global::DripSharp.PdfCarton.Pdmodel.ResourceCache)this.resourceCache).RemoveXObject(cosObject);
+global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject removedXObject = ((global::DripSharp.PdfCarton.Pdmodel.ResourceCache)(this.resourceCache)).RemoveXObject(cosObject);
 if ((removedXObject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)) {
 global::DripSharp.PdfCarton.Cos.COSStream cosStream = removedXObject.GetCOSObject();
 this.removeResources(cosStream.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Resources));
@@ -71,7 +71,7 @@ global::DripSharp.PdfCarton.Cos.COSDictionary resourcesDictionary = pageResource
 if ((resourcesDictionary == default!)) {
 return global::System.Array.Empty<global::DripSharp.PdfCarton.Cos.COSObject>();
 }
-return global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamFilter(resourcesDictionary.GetValues(), (value0) => typeof(global::DripSharp.PdfCarton.Cos.COSObject).IsInstanceOfType(value0)), (value0) => global::DripSharp.Runtime.JavaCompat.ClassCast<global::DripSharp.PdfCarton.Cos.COSObject>(typeof(global::DripSharp.PdfCarton.Cos.COSObject), value0)), (value0) => value0.IsDereferenced()));
+return global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(resourcesDictionary.GetValues()), (value0) => typeof(global::DripSharp.PdfCarton.Cos.COSObject).IsInstanceOfType(value0)), (value0) => global::DripSharp.Runtime.JavaCompat.ClassCast<global::DripSharp.PdfCarton.Cos.COSObject>(typeof(global::DripSharp.PdfCarton.Cos.COSObject), value0)), (value0) => value0.IsDereferenced()));
 }
 
 public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
@@ -130,7 +130,7 @@ return new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSha
 }
 global::DripSharp.PdfCarton.Cos.COSArray array = this.page.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Contents);
 if ((array != default!)) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSStream> streams = global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Map(array.ToList(), (o) => ((o is global::DripSharp.PdfCarton.Cos.COSObject) ? (global::DripSharp.Runtime.JavaCompat.CastReference<global::DripSharp.PdfCarton.Cos.COSObject>(o)).GetObject() : (global::DripSharp.PdfCarton.Cos.COSBase)(o))), (value0) => typeof(global::DripSharp.PdfCarton.Cos.COSStream).IsInstanceOfType(value0)), (b) => (global::DripSharp.PdfCarton.Cos.COSStream)(b!)));
+global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSStream> streams = global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.Stream(array.ToList()), (o) => ((o is global::DripSharp.PdfCarton.Cos.COSObject) ? (global::DripSharp.Runtime.JavaCompat.CastReference<global::DripSharp.PdfCarton.Cos.COSObject>(o)).GetObject() : (global::DripSharp.PdfCarton.Cos.COSBase)(o))), (value0) => typeof(global::DripSharp.PdfCarton.Cos.COSStream).IsInstanceOfType(value0)), (b) => (global::DripSharp.PdfCarton.Cos.COSStream)(b!)));
 global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.IO.RandomAccessRead> inputStreams = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.IO.RandomAccessRead>((global::DripSharp.Runtime.JavaCompat.CollectionCount(streams) * 2));
 global::DripSharp.Runtime.JavaCompat.ForEach(streams, (stream) => {
 try {

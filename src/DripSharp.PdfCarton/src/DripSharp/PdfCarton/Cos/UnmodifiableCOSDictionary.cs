@@ -8,9 +8,9 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Cos;
 
-internal sealed class UnmodifiableCOSDictionary : global::DripSharp.PdfCarton.Cos.COSDictionary {
+internal sealed class UnmodifiableCOSDictionary : global::DripSharp.PdfCarton.Cos.COSDictionary, global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
 internal UnmodifiableCOSDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dict) : base() {
-base.Items = global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(dict.Items);
+base.Items = global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(global::DripSharp.Runtime.JavaCompat.CastDictionary<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Cos.COSBase>(dict.Items));
 }
 
 public void SetNeedToBeUpdated(bool flag) {

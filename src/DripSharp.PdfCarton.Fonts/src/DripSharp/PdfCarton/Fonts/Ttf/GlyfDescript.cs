@@ -23,7 +23,7 @@ public const sbyte YDual = unchecked((sbyte)(32));
 
 private int[] instructions = null!;
 
-private readonly int contourCount;
+private readonly int contourCount = default;
 
 internal GlyfDescript(short numberOfContours) {
 this.contourCount = numberOfContours;

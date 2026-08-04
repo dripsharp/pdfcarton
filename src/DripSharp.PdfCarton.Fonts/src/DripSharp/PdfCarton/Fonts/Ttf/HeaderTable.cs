@@ -15,39 +15,39 @@ public const int MacStyleBold = 1;
 
 public const int MacStyleItalic = 2;
 
-private float version;
+private float version = default;
 
-private float fontRevision;
+private float fontRevision = default;
 
-private long checkSumAdjustment;
+private long checkSumAdjustment = default;
 
-private long magicNumber;
+private long magicNumber = default;
 
-private int flags;
+private int flags = default;
 
-private int unitsPerEm;
+private int unitsPerEm = default;
 
-private global::System.DateTimeOffset created = default;
+private global::System.DateTimeOffset? created = default;
 
-private global::System.DateTimeOffset modified = default;
+private global::System.DateTimeOffset? modified = default;
 
-private short xMin;
+private short xMin = default;
 
-private short yMin;
+private short yMin = default;
 
-private short xMax;
+private short xMax = default;
 
-private short yMax;
+private short yMax = default;
 
-private int macStyle;
+private int macStyle = default;
 
-private int lowestRecPPEM;
+private int lowestRecPPEM = default;
 
-private short fontDirectionHint;
+private short fontDirectionHint = default;
 
-private short indexToLocFormat;
+private short indexToLocFormat = default;
 
-private short glyphDataFormat;
+private short glyphDataFormat = default;
 
 internal HeaderTable() : base() {
 
@@ -88,11 +88,11 @@ public virtual void SetCheckSumAdjustment(long checkSumAdjustmentValue) {
 this.checkSumAdjustment = checkSumAdjustmentValue;
 }
 
-public virtual global::System.DateTimeOffset GetCreated() {
+public virtual global::System.DateTimeOffset? GetCreated() {
 return this.created;
 }
 
-public virtual void SetCreated(global::System.DateTimeOffset createdValue) {
+public virtual void SetCreated(global::System.DateTimeOffset? createdValue) {
 this.created = createdValue;
 }
 
@@ -160,11 +160,11 @@ public virtual void SetMagicNumber(long magicNumberValue) {
 this.magicNumber = magicNumberValue;
 }
 
-public virtual global::System.DateTimeOffset GetModified() {
+public virtual global::System.DateTimeOffset? GetModified() {
 return this.modified;
 }
 
-public virtual void SetModified(global::System.DateTimeOffset modifiedValue) {
+public virtual void SetModified(global::System.DateTimeOffset? modifiedValue) {
 this.modified = modifiedValue;
 }
 

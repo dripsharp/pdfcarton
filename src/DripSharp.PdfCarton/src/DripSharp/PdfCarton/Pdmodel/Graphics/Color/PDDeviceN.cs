@@ -25,7 +25,7 @@ private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceNAttributes a
 
 private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor initialColor = null!;
 
-private int numColorants;
+private int numColorants = default;
 
 private int[] colorantToComponent = null!;
 

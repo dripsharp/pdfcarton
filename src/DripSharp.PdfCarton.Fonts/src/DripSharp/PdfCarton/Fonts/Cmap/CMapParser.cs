@@ -157,7 +157,7 @@ throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Font
 }
 
 private void parseBegincodespacerange(global::System.IConvertible cosCount, global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, global::DripSharp.PdfCarton.Fonts.Cmap.CMap result) {
-for (int j = 0; (j < global::System.Convert.ToInt32(cosCount, global::System.Globalization.CultureInfo.InvariantCulture)); j++) {
+for (int j = 0; (j < global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(cosCount)); j++) {
 object nextToken = this.parseNextToken(randomAccessRead);
 if ((nextToken is global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.Operator)) {
 this.checkExpectedOperator((global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.Operator)(nextToken!), "endcodespacerange", "codespacerange");
@@ -177,7 +177,7 @@ throw new global::System.IO.IOException(null, ex);
 }
 
 private void parseBeginbfchar(global::System.IConvertible cosCount, global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, global::DripSharp.PdfCarton.Fonts.Cmap.CMap result) {
-for (int j = 0; (j < global::System.Convert.ToInt32(cosCount, global::System.Globalization.CultureInfo.InvariantCulture)); j++) {
+for (int j = 0; (j < global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(cosCount)); j++) {
 object nextToken = this.parseNextToken(randomAccessRead);
 if ((nextToken is global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.Operator)) {
 this.checkExpectedOperator((global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.Operator)(nextToken!), "endbfchar", "bfchar");
@@ -228,7 +228,7 @@ throw new global::System.IO.IOException("Error : ~cidrange values must not have 
 }
 
 private void parseBegincidchar(global::System.IConvertible cosCount, global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, global::DripSharp.PdfCarton.Fonts.Cmap.CMap result) {
-for (int j = 0; (j < global::System.Convert.ToInt32(cosCount, global::System.Globalization.CultureInfo.InvariantCulture)); j++) {
+for (int j = 0; (j < global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(cosCount)); j++) {
 object nextToken = this.parseNextToken(randomAccessRead);
 if ((nextToken is global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.Operator)) {
 this.checkExpectedOperator((global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.Operator)(nextToken!), "endcidchar", "cidchar");
@@ -244,7 +244,7 @@ result.addCIDMapping(inputCode, mappedCID);
 }
 
 private void parseBeginbfrange(global::System.IConvertible cosCount, global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, global::DripSharp.PdfCarton.Fonts.Cmap.CMap result) {
-for (int j = 0; (j < global::System.Convert.ToInt32(cosCount, global::System.Globalization.CultureInfo.InvariantCulture)); j++) {
+for (int j = 0; (j < global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(cosCount)); j++) {
 object nextToken = this.parseNextToken(randomAccessRead);
 if ((nextToken is global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.Operator)) {
 this.checkExpectedOperator((global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.Operator)(nextToken!), "endbfrange", "bfrange");
@@ -280,9 +280,9 @@ sbyte[] tokenBytes = (sbyte[])(nextToken!);
 if ((tokenBytes.Length > 0)) {
 if ((((((tokenBytes.Length == 2) && (start == 0)) && (end == 65535)) && ((int)(tokenBytes[0]) == 0)) && ((int)(tokenBytes[1]) == 0))) {
 for (int i = 0; (i < 256); i++) {
-startCode[0] = unchecked((sbyte)((sbyte)(i)));
+startCode[0] = unchecked((sbyte)(unchecked((sbyte)(i))));
 startCode[1] = unchecked((sbyte)(0));
-tokenBytes[0] = unchecked((sbyte)((sbyte)(i)));
+tokenBytes[0] = unchecked((sbyte)(unchecked((sbyte)(i))));
 tokenBytes[1] = unchecked((sbyte)(0));
 this.addMappingFrombfrange(result, startCode, 256, tokenBytes);
 }
@@ -403,7 +403,7 @@ private string readString(global::DripSharp.PdfCarton.IO.RandomAccessRead random
 global::System.Text.StringBuilder buffer = new global::System.Text.StringBuilder();
 int stringByte = randomAccessRead.Read();
 while (((stringByte != -1) && (stringByte != (int)(')')))) {
-buffer.Append(unchecked((char)((char)(stringByte))));
+buffer.Append(unchecked((char)(unchecked((char)(stringByte)))));
 stringByte = randomAccessRead.Read();
 }
 return buffer.ToString();
@@ -412,7 +412,7 @@ return buffer.ToString();
 private string readLine(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, int firstByte) {
 int nextByte = firstByte;
 global::System.Text.StringBuilder buffer = new global::System.Text.StringBuilder();
-buffer.Append(unchecked((char)((char)(nextByte))));
+buffer.Append(unchecked((char)(unchecked((char)(nextByte)))));
 this.readUntilEndOfLine(randomAccessRead, buffer);
 return buffer.ToString();
 }
@@ -421,7 +421,7 @@ private global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.LiteralName readLitera
 global::System.Text.StringBuilder buffer = new global::System.Text.StringBuilder();
 int stringByte = randomAccessRead.Read();
 while ((!(global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.isWhitespaceOrEOF(stringByte)) && !(global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.isDelimiter(stringByte)))) {
-buffer.Append(unchecked((char)((char)(stringByte))));
+buffer.Append(unchecked((char)(unchecked((char)(stringByte)))));
 stringByte = randomAccessRead.Read();
 }
 if (global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.isDelimiter(stringByte)) {
@@ -433,10 +433,10 @@ return new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.LiteralName(buffer.
 private global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.Operator readOperator(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, int firstByte) {
 int nextByte = firstByte;
 global::System.Text.StringBuilder buffer = new global::System.Text.StringBuilder();
-buffer.Append(unchecked((char)((char)(nextByte))));
+buffer.Append(unchecked((char)(unchecked((char)(nextByte)))));
 nextByte = randomAccessRead.Read();
 while (((!(global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.isWhitespaceOrEOF(nextByte)) && !(global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.isDelimiter(nextByte))) && !(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(nextByte)))) {
-buffer.Append(unchecked((char)((char)(nextByte))));
+buffer.Append(unchecked((char)(unchecked((char)(nextByte)))));
 nextByte = randomAccessRead.Read();
 }
 if ((global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.isDelimiter(nextByte) || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(nextByte))) {
@@ -448,10 +448,10 @@ return new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.Operator(buffer.ToS
 private global::System.IConvertible readNumber(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, int firstByte) {
 int nextByte = firstByte;
 global::System.Text.StringBuilder buffer = new global::System.Text.StringBuilder();
-buffer.Append(unchecked((char)((char)(nextByte))));
+buffer.Append(unchecked((char)(unchecked((char)(nextByte)))));
 nextByte = randomAccessRead.Read();
-while ((!(global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.isWhitespaceOrEOF(nextByte)) && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(unchecked((char)((char)(nextByte)))) || (nextByte == (int)('.'))))) {
-buffer.Append(unchecked((char)((char)(nextByte))));
+while ((!(global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.isWhitespaceOrEOF(nextByte)) && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(unchecked((char)(unchecked((char)(nextByte))))) || (nextByte == (int)('.'))))) {
+buffer.Append(unchecked((char)(unchecked((char)(nextByte)))));
 nextByte = randomAccessRead.Read();
 }
 if ((nextByte != -1)) {
@@ -498,7 +498,7 @@ intValue = ((10 + theNextByte) - 'A');
 if (((theNextByte >= (int)('a')) && (theNextByte <= (int)('f')))) {
 intValue = ((10 + theNextByte) - 'a');
 } else {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Error: expected hex character and not ", (char)(theNextByte)), ":"), theNextByte));
+throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Error: expected hex character and not ", unchecked((char)(theNextByte))), ":"), theNextByte));
 }
 }
 }
@@ -525,7 +525,7 @@ return finalResult;
 private void readUntilEndOfLine(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, global::System.Text.StringBuilder buf) {
 int nextByte = randomAccessRead.Read();
 while ((((nextByte != -1) && (nextByte != 13)) && (nextByte != 10))) {
-buf.Append(unchecked((char)((char)(nextByte))));
+buf.Append(unchecked((char)(unchecked((char)(nextByte)))));
 nextByte = randomAccessRead.Read();
 }
 }
@@ -571,7 +571,7 @@ return false;
 data[position] = unchecked((sbyte)(0));
 global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.increment(data, (position - 1), useStrictMode);
 } else {
-data[position] = unchecked((sbyte)((sbyte)((data[position] + 1))));
+data[position] = unchecked((sbyte)(unchecked((sbyte)((data[position] + 1)))));
 }
 return true;
 }

@@ -27,7 +27,8 @@ try {
 return this.parse(dataStream);
 } catch (global::System.IO.IOException ex) {
 dataStream.Dispose();
-throw ex;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
+throw new global::System.InvalidOperationException("unreachable");
 } finally {
 randomAccessRead.Dispose();
 }
@@ -40,7 +41,8 @@ try {
 return this.parse(dataStream);
 } catch (global::System.IO.IOException ex) {
 dataStream.Dispose();
-throw ex;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
+throw new global::System.InvalidOperationException("unreachable");
 } finally {
 inputStream.Dispose();
 }

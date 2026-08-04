@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class RealType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty {
-private float realValue;
+private float realValue = default;
 
 public RealType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix, propertyName, value) {
 

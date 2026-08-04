@@ -19,7 +19,8 @@ try {
 this.initParserValues(stream);
 } catch (global::System.IO.IOException exception) {
 this.Dispose();
-throw exception;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(exception);
+throw new global::System.InvalidOperationException("unreachable");
 }
 }
 

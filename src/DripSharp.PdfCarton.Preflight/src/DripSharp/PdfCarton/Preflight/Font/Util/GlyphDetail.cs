@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Preflight.Font.Util;
 
 public class GlyphDetail {
-private readonly int code;
+private readonly int code = default;
 
 private readonly global::DripSharp.PdfCarton.Preflight.Font.Util.GlyphException exception = null!;
 

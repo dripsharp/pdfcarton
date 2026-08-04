@@ -125,15 +125,15 @@ global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.
 foreach (global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.BeforeAndAfterSpanComponent beforeAndAfterSpanComponent in global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.BEFORE_AND_AFTER_SPAN_CHARS) {
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(result, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(this.getGlyphId(beforeAndAfterSpanComponent.originalCharacter)), beforeAndAfterSpanComponent);
 }
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(result);
+return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<int, global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.BeforeAndAfterSpanComponent>(result));
 }
 
 internal class BeforeAndAfterSpanComponent {
-internal readonly char originalCharacter;
+internal readonly char originalCharacter = default;
 
-internal readonly char beforeComponentCharacter;
+internal readonly char beforeComponentCharacter = default;
 
-internal readonly char afterComponentCharacter;
+internal readonly char afterComponentCharacter = default;
 
 internal BeforeAndAfterSpanComponent(char originalCharacter, char beforeComponentCharacter, char afterComponentCharacter) {
 this.originalCharacter = originalCharacter;

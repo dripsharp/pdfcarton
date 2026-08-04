@@ -154,15 +154,15 @@ global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("Cre
 }
 
 protected internal virtual void AnalyzeCreationDateProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico, global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema xmp, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
-global::System.DateTimeOffset creationDate = dico.GetCreationDate();
+global::System.DateTimeOffset? creationDate = dico.GetCreationDate();
 global::DripSharp.PdfCarton.Cos.COSBase item = dico.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.CreationDate);
 if (((creationDate != default!) && this.isValidPDFDateFormat(item))) {
 if ((xmp != default!)) {
-global::System.DateTimeOffset xmpCreationDate = xmp.GetCreateDate();
+global::System.DateTimeOffset? xmpCreationDate = xmp.GetCreateDate();
 if ((xmpCreationDate == default!)) {
 global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("CreationDate", "Property is not defined"));
 } else {
-if ((xmpCreationDate.CompareTo(creationDate) != 0)) {
+if ((global::DripSharp.Runtime.JavaCompat.CalendarCompareTo(xmpCreationDate, creationDate) != 0)) {
 global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("CreationDate"));
 } else {
 if ((this.hasTimeZone(xmp.GetCreateDateProperty().GetRawValue()) != this.hasTimeZone(dico.GetPropertyStringValue("CreationDate")))) {
@@ -177,15 +177,15 @@ global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("Cre
 }
 
 protected internal virtual void AnalyzeModifyDateProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico, global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema xmp, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
-global::System.DateTimeOffset modifyDate = dico.GetModificationDate();
+global::System.DateTimeOffset? modifyDate = dico.GetModificationDate();
 global::DripSharp.PdfCarton.Cos.COSBase item = dico.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.ModDate);
 if (((modifyDate != default!) && this.isValidPDFDateFormat(item))) {
 if ((xmp != default!)) {
-global::System.DateTimeOffset xmpModifyDate = xmp.GetModifyDate();
+global::System.DateTimeOffset? xmpModifyDate = xmp.GetModifyDate();
 if ((xmpModifyDate == default!)) {
 global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("ModifyDate", "Property is not defined"));
 } else {
-if ((xmpModifyDate.CompareTo(modifyDate) != 0)) {
+if ((global::DripSharp.Runtime.JavaCompat.CalendarCompareTo(xmpModifyDate, modifyDate) != 0)) {
 global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("ModificationDate"));
 } else {
 if ((this.hasTimeZone(xmp.GetModifyDateProperty().GetRawValue()) != this.hasTimeZone(dico.GetPropertyStringValue("ModDate")))) {
@@ -268,7 +268,7 @@ return global::DripSharp.Runtime.JavaCompat.StringSubstring(@string, 0, length);
 
 private bool hasTimeZone(object date) {
 string datePattern = "^D:.*[Z]$|^D:.*[+-].*|^\\d{4}.*T.*Z(\\d{2}:\\d{2}){0,1}$|^\\d{4}.*T.*[+-]\\d{2}.*$";
-if ((date is global::System.DateTimeOffset)) {
+if ((date is global::System.DateTimeOffset?)) {
 return true;
 } else {
 if ((date is string)) {

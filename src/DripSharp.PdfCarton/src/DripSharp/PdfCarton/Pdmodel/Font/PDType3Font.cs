@@ -149,7 +149,7 @@ return this.fontMatrix;
 }
 
 private bool checkFontMatrixValues(global::DripSharp.PdfCarton.Cos.COSArray matrix) {
-return (((matrix != default!) && (matrix.Size() == 6)) && global::DripSharp.Runtime.JavaCompat.AllValues(matrix.ToCOSNumberFloatList(), (value0) => value0 is not null));
+return (((matrix != default!) && (matrix.Size() == 6)) && global::DripSharp.Runtime.JavaCompat.AllValues(global::DripSharp.Runtime.JavaCompat.Stream(matrix.ToCOSNumberFloatList()), (value0) => value0 is not null));
 }
 
 public override bool IsDamaged() {

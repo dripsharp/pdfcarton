@@ -55,17 +55,17 @@ public const int NamePostscriptName = 6;
 
 public const int NameTrademark = 7;
 
-private int platformId;
+private int platformId = default;
 
-private int platformEncodingId;
+private int platformEncodingId = default;
 
-private int languageId;
+private int languageId = default;
 
-private int nameId;
+private int nameId = default;
 
-private int stringLength;
+private int stringLength = default;
 
-private int stringOffset;
+private int stringOffset = default;
 
 private string @string = null!;
 

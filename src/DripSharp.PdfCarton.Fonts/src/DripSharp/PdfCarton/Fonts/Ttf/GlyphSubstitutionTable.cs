@@ -66,7 +66,7 @@ scriptTags[i__140_18] = data.ReadString(4);
 scriptOffsets[i__140_18] = data.ReadUnsignedShort();
 if ((scriptOffsets[i__140_18] < (data.GetCurrentPosition() - offset))) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("scriptOffsets[", i__140_18), "]: "), scriptOffsets[i__140_18]), " implausible: data.getCurrentPosition() - offset = "), (data.GetCurrentPosition() - offset))));
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(resultScriptList);
+return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<string, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable>(resultScriptList));
 }
 }
 for (int i__153_18 = 0; (i__153_18 < scriptCount); i__153_18++) {
@@ -76,7 +76,7 @@ continue;
 global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable scriptTable = this.readScriptTable(data, (offset + scriptOffsets[i__153_18]));
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(resultScriptList, scriptTags[i__153_18], scriptTable);
 }
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(resultScriptList);
+return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<string, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable>(resultScriptList));
 }
 
 private global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable readScriptTable(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, long offset) {
@@ -106,7 +106,7 @@ for (int i__202_18 = 0; (i__202_18 < langSysCount); i__202_18++) {
 global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable langSysTable = this.readLangSysTable(data, (offset + langSysOffsets[i__202_18]));
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(langSysTables, langSysTags[i__202_18], langSysTable);
 }
-return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable(defaultLangSysTable!, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(langSysTables));
+return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable(defaultLangSysTable!, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<string, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable>(langSysTables)));
 }
 
 private global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable readLangSysTable(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, long offset) {
@@ -482,7 +482,7 @@ return result;
 }
 
 private bool containsFeature(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureRecord> featureRecords, string featureTag) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Any(featureRecords, (featureRecord) => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(featureRecord.GetFeatureTag(), featureTag));
+return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Any(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Stream(featureRecords), (featureRecord) => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(featureRecord.GetFeatureTag(), featureTag));
 }
 
 private void removeFeature(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureRecord> featureRecords, string featureTag) {

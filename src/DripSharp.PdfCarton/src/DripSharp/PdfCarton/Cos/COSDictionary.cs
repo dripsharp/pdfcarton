@@ -127,15 +127,15 @@ name = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(value);
 this.SetItem(key, name!);
 }
 
-public virtual void SetDate(string key, global::System.DateTimeOffset date) {
+public virtual void SetDate(string key, global::System.DateTimeOffset? date) {
 this.SetDate(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(key), date);
 }
 
-public virtual void SetDate(global::DripSharp.PdfCarton.Cos.COSName key, global::System.DateTimeOffset date) {
+public virtual void SetDate(global::DripSharp.PdfCarton.Cos.COSName key, global::System.DateTimeOffset? date) {
 this.SetString(key, global::DripSharp.PdfCarton.Util.DateConverter.ToString(date));
 }
 
-public virtual void SetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName embedded, global::DripSharp.PdfCarton.Cos.COSName key, global::System.DateTimeOffset date) {
+public virtual void SetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName embedded, global::DripSharp.PdfCarton.Cos.COSName key, global::System.DateTimeOffset? date) {
 global::DripSharp.PdfCarton.Cos.COSDictionary dic = this.GetCOSDictionary(embedded);
 if (((dic == default!) && (date != default!))) {
 dic = new global::DripSharp.PdfCarton.Cos.COSDictionary();
@@ -333,11 +333,11 @@ global::DripSharp.PdfCarton.Cos.COSDictionary eDic = this.GetCOSDictionary(embed
 return ((eDic != default!) ? eDic.GetString(key, defaultValue) : defaultValue);
 }
 
-public virtual global::System.DateTimeOffset GetDate(string key) {
+public virtual global::System.DateTimeOffset? GetDate(string key) {
 return this.GetDate(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(key));
 }
 
-public virtual global::System.DateTimeOffset GetDate(global::DripSharp.PdfCarton.Cos.COSName key) {
+public virtual global::System.DateTimeOffset? GetDate(global::DripSharp.PdfCarton.Cos.COSName key) {
 global::DripSharp.PdfCarton.Cos.COSBase @base = this.GetDictionaryObject(key);
 if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
 return global::DripSharp.PdfCarton.Util.DateConverter.ToCalendar((global::DripSharp.PdfCarton.Cos.COSString)(@base!));
@@ -345,23 +345,23 @@ return global::DripSharp.PdfCarton.Util.DateConverter.ToCalendar((global::DripSh
 return default!;
 }
 
-public virtual global::System.DateTimeOffset GetDate(string key, global::System.DateTimeOffset defaultValue) {
+public virtual global::System.DateTimeOffset? GetDate(string key, global::System.DateTimeOffset? defaultValue) {
 return this.GetDate(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(key), defaultValue);
 }
 
-public virtual global::System.DateTimeOffset GetDate(global::DripSharp.PdfCarton.Cos.COSName key, global::System.DateTimeOffset defaultValue) {
-global::System.DateTimeOffset retval = this.GetDate(key);
+public virtual global::System.DateTimeOffset? GetDate(global::DripSharp.PdfCarton.Cos.COSName key, global::System.DateTimeOffset? defaultValue) {
+global::System.DateTimeOffset? retval = this.GetDate(key);
 if ((retval == default!)) {
 retval = defaultValue;
 }
 return retval;
 }
 
-public virtual global::System.DateTimeOffset GetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName embedded, global::DripSharp.PdfCarton.Cos.COSName key) {
-return this.GetEmbeddedDate(embedded, key, (global::System.DateTimeOffset)default!);
+public virtual global::System.DateTimeOffset? GetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName embedded, global::DripSharp.PdfCarton.Cos.COSName key) {
+return this.GetEmbeddedDate(embedded, key, (global::System.DateTimeOffset?)default!);
 }
 
-public virtual global::System.DateTimeOffset GetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName embedded, global::DripSharp.PdfCarton.Cos.COSName key, global::System.DateTimeOffset defaultValue) {
+public virtual global::System.DateTimeOffset? GetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName embedded, global::DripSharp.PdfCarton.Cos.COSName key, global::System.DateTimeOffset? defaultValue) {
 global::DripSharp.PdfCarton.Cos.COSDictionary eDic = this.GetCOSDictionary(embedded);
 return ((eDic != default!) ? eDic.GetDate(key, defaultValue) : defaultValue);
 }
@@ -510,7 +510,7 @@ visitor.VisitFromDictionary(this);
 }
 
 public virtual void AddAll(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
-global::DripSharp.Runtime.JavaCompat.MapPutAll(this.Items, dict.Items);
+global::DripSharp.Runtime.JavaCompat.MapPutAll(this.Items, global::DripSharp.Runtime.JavaCompat.CastDictionary<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Cos.COSBase>(dict.Items));
 }
 
 public virtual bool ContainsKey(global::DripSharp.PdfCarton.Cos.COSName name) {

@@ -31,6 +31,9 @@
     <Compile Include="src/**/*.cs" />
     <ProjectReference Include="../DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj" />
     <ProjectReference Include="../DripSharp.PdfCarton/DripSharp.PdfCarton.csproj" />
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>DripSharp.PdfCarton.Tests</_Parameter1>
+    </AssemblyAttribute>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
     <PackageReference Include="SkiaSharp" Version="4.150.1" />
     <None Include="src/Legal/LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />

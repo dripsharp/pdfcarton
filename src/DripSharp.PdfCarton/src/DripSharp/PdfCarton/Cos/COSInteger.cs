@@ -42,9 +42,9 @@ private static global::DripSharp.PdfCarton.Cos.COSInteger getInvalid(bool maxVal
 return (maxValue ? new global::DripSharp.PdfCarton.Cos.COSInteger(long.MaxValue, false) : new global::DripSharp.PdfCarton.Cos.COSInteger(long.MinValue, false));
 }
 
-private readonly long value;
+private readonly long value = default;
 
-private readonly bool __field_isValid;
+private readonly bool __field_isValid = default;
 
 private COSInteger(long val, bool valid) {
 this.value = val;

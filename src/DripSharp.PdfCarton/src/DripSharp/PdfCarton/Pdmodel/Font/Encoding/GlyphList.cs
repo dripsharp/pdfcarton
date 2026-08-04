@@ -50,8 +50,8 @@ this.loadList(input);
 }
 
 public GlyphList(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList glyphList, global::System.IO.Stream input) {
-this.nameToUnicode = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, string>(glyphList.nameToUnicode);
-this.unicodeToName = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, string>(glyphList.unicodeToName);
+this.nameToUnicode = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, string>(global::DripSharp.Runtime.JavaCompat.CastDictionary<string, string>(glyphList.nameToUnicode));
+this.unicodeToName = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, string>(global::DripSharp.Runtime.JavaCompat.CastDictionary<string, string>(glyphList.unicodeToName));
 this.loadList(input);
 }
 
@@ -123,7 +123,7 @@ int codePoint = global::DripSharp.Runtime.JavaCompat.ParseInt(name.Substring(sta
 if (((codePoint > 55295) && (codePoint < 57344))) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Unicode character name with disallowed code area: ", name)));
 } else {
-unicode = global::DripSharp.Runtime.JavaCompat.StringValueOf(unchecked((char)((char)(codePoint))));
+unicode = global::DripSharp.Runtime.JavaCompat.StringValueOf(unchecked((char)(unchecked((char)(codePoint)))));
 }
 } catch (global::DripSharp.Runtime.JavaNumberFormatException) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Not a number in Unicode character name: ", name)));

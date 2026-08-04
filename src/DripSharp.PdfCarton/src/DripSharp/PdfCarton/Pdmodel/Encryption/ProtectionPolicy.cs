@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 public abstract class ProtectionPolicy {
-private const short DEFAULT_KEY_LENGTH = 40;
+private const short DEFAULT_KEY_LENGTH = unchecked((short)(40));
 
 private short encryptionKeyLength = global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy.DEFAULT_KEY_LENGTH;
 
@@ -19,7 +19,7 @@ public virtual void SetEncryptionKeyLength(int l) {
 if ((((l != 40) && (l != 128)) && (l != 256))) {
 throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid key length '", l), "' value must be 40, 128 or 256!"));
 }
-this.encryptionKeyLength = (short)(l);
+this.encryptionKeyLength = unchecked((short)(unchecked((short)(l))));
 }
 
 public virtual int GetEncryptionKeyLength() {

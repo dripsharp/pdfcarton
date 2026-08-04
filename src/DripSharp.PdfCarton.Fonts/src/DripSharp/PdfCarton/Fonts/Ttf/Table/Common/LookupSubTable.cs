@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public abstract class LookupSubTable {
-private readonly int substFormat;
+private readonly int substFormat = default;
 
 private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable = null!;
 

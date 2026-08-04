@@ -783,7 +783,7 @@ public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.K
 [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(58)]
 public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hvcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(31);
 
-internal readonly int hashValue;
+internal readonly int hashValue = default;
 
 internal Key(int b0) {
 this.hashValue = b0;

@@ -9,9 +9,9 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class IndexToLocationTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-private const short SHORT_OFFSETS = 0;
+private const short SHORT_OFFSETS = unchecked((short)(0));
 
-private const short LONG_OFFSETS = 1;
+private const short LONG_OFFSETS = unchecked((short)(1));
 
 public const string Tag = "loca";
 

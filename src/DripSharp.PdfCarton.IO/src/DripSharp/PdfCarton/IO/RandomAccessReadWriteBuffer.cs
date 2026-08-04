@@ -27,7 +27,7 @@ this.CheckClosed();
 if (((base.ChunkSize - base.CurrentBufferPointer) <= 0)) {
 this.ExpandBuffer();
 }
-base.CurrentBuffer.put(unchecked((sbyte)((sbyte)(b))));
+base.CurrentBuffer.put(unchecked((sbyte)(unchecked((sbyte)(b)))));
 base.CurrentBufferPointer++;
 base.Pointer++;
 if ((base.Pointer > base.Size)) {

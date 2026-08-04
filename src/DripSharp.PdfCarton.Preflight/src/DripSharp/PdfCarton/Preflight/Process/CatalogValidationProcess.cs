@@ -16,7 +16,7 @@ private global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = null!;
 public CatalogValidationProcess() {}
 
 private bool isStandardICCCharacterization(string name) {
-return global::DripSharp.Runtime.JavaCompat.Any(global::DripSharp.PdfCarton.Preflight.Process.CatalogValidationProcess.listICC, (i) => global::DripSharp.Runtime.JavaCompat.StringContains(i, name));
+return global::DripSharp.Runtime.JavaCompat.Any(global::DripSharp.Runtime.JavaCompat.Stream(global::DripSharp.PdfCarton.Preflight.Process.CatalogValidationProcess.listICC), (i) => global::DripSharp.Runtime.JavaCompat.StringContains(i, name));
 }
 
 public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {

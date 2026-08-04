@@ -15,7 +15,7 @@ private global::DripSharp.PdfCarton.IO.RandomAccessStreamCache streamCache = nul
 
 private bool closeStreamCache = false;
 
-private bool isWriting;
+private bool isWriting = default;
 
 private global::DripSharp.PdfCarton.IO.RandomAccessReadView randomAccessReadView = null!;
 
@@ -174,7 +174,7 @@ filterList = new global::System.Collections.Generic.List<global::DripSharp.PdfCa
 for (int i = 0; (i < filterArray.Size()); i++) {
 global::DripSharp.PdfCarton.Cos.COSBase @base = filterArray.Get(i);
 if (!((@base is global::DripSharp.PdfCarton.Cos.COSName))) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Forbidden type in filter array: ", ((@base == default!) ? "null" : (((object)(@base)).GetType().FullName ?? ((object)(@base)).GetType().Name))));
+throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Forbidden type in filter array: ", ((@base == default!) ? "null" : global::DripSharp.Runtime.JavaCompat.ClassName(((object)(@base)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox"))));
 }
 global::DripSharp.Runtime.JavaCompat.Add(filterList, global::DripSharp.PdfCarton.Filter.FilterFactory.Instance.GetFilter((global::DripSharp.PdfCarton.Cos.COSName)(@base!)));
 }

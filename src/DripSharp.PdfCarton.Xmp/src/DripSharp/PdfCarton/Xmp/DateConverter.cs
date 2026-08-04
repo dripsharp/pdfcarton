@@ -13,8 +13,8 @@ public static readonly global::DripSharp.PdfCarton.Runtime.Xmp.JavaDateTimeForma
 
 private DateConverter() {}
 
-public static global::System.DateTimeOffset ToCalendar(string date) {
-global::System.DateTimeOffset retval = default!;
+public static global::System.DateTimeOffset? ToCalendar(string date) {
+global::System.DateTimeOffset? retval = default!;
 if (((date != default!) && (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringTrim(date).Length > 0))) {
 date = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringTrim(date);
 int month = 1;
@@ -125,11 +125,11 @@ global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.TimeZoneSetId(tz, "unknown");
 }
 }
 
-public static string ToISO8601(global::System.DateTimeOffset cal) {
+public static string ToISO8601(global::System.DateTimeOffset? cal) {
 return global::DripSharp.PdfCarton.Xmp.DateConverter.ToISO8601(cal, false);
 }
 
-public static string ToISO8601(global::System.DateTimeOffset cal, bool printMillis) {
+public static string ToISO8601(global::System.DateTimeOffset? cal, bool printMillis) {
 global::System.Text.StringBuilder retval = new global::System.Text.StringBuilder();
 retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), "%04d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 1)));
 retval.Append('-');
@@ -167,7 +167,7 @@ retval.Append(minutes);
 return retval.ToString();
 }
 
-private static global::System.DateTimeOffset fromISO8601(string dateString) {
+private static global::System.DateTimeOffset? fromISO8601(string dateString) {
 try {
 global::System.DateTimeOffset zonedDateTime = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseZonedDateTime(dateString, global::DripSharp.PdfCarton.Xmp.DateConverter.DateTimeFormatter);
 return zonedDateTime;

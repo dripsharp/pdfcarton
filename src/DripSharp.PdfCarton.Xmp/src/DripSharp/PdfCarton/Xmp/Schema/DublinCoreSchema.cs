@@ -87,11 +87,11 @@ public virtual void RemoveCreator(string name) {
 this.RemoveUnqualifiedSequenceValue(global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema.Creator, name);
 }
 
-public virtual void AddDate(global::System.DateTimeOffset date) {
+public virtual void AddDate(global::System.DateTimeOffset? date) {
 this.AddUnqualifiedSequenceDateValue(global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema.Date, date);
 }
 
-public virtual void RemoveDate(global::System.DateTimeOffset date) {
+public virtual void RemoveDate(global::System.DateTimeOffset? date) {
 this.RemoveUnqualifiedSequenceDateValue(global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema.Date, date);
 }
 
@@ -208,7 +208,7 @@ public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetDatesProper
 return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty>(global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema.Date, typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty));
 }
 
-public virtual global::System.Collections.Generic.IList<global::System.DateTimeOffset> GetDates() {
+public virtual global::System.Collections.Generic.IList<global::System.DateTimeOffset?> GetDates() {
 return this.GetUnqualifiedSequenceDateValueList(global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema.Date);
 }
 

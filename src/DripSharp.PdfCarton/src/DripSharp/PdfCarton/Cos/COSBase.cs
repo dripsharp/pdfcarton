@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public abstract class COSBase : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private bool direct;
+private bool direct = default;
 
 private global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
 

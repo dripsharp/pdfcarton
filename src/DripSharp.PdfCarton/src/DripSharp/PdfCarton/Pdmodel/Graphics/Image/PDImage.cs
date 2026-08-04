@@ -58,4 +58,6 @@ public void SetInterpolate(bool value);
 public string GetSuffix();
 
 public new global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject();
+
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (this.GetCOSObject());
 }

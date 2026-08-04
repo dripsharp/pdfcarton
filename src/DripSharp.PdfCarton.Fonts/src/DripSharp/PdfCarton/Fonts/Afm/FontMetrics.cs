@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Afm;
 
 public class FontMetrics {
-private float afmVersion;
+private float afmVersion = default;
 
 private int metricSets = 0;
 
@@ -43,29 +43,29 @@ private float[] vVector = null!;
 
 private bool? isFixedV = default!;
 
-private float capHeight;
+private float capHeight = default;
 
-private float xHeight;
+private float xHeight = default;
 
-private float ascender;
+private float ascender = default;
 
-private float descender;
+private float descender = default;
 
 private readonly global::System.Collections.Generic.IList<string> comments = new global::System.Collections.Generic.List<string>();
 
-private float underlinePosition;
+private float underlinePosition = default;
 
-private float underlineThickness;
+private float underlineThickness = default;
 
-private float italicAngle;
+private float italicAngle = default;
 
 private float[] charWidth = null!;
 
-private bool isFixedPitch;
+private bool isFixedPitch = default;
 
-private float standardHorizontalWidth;
+private float standardHorizontalWidth = default;
 
-private float standardVerticalWidth;
+private float standardVerticalWidth = default;
 
 private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Afm.CharMetric> charMetrics = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Afm.CharMetric>();
 

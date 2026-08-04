@@ -151,14 +151,14 @@ break;
 case 15:
 if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) >= 3)) {
 this.leftSideBearing = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaPoint2D(global::System.Convert.ToSingle(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 0), global::System.Globalization.CultureInfo.InvariantCulture), global::System.Convert.ToSingle(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 1), global::System.Globalization.CultureInfo.InvariantCulture));
-this.width = global::System.Convert.ToInt32(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 2), global::System.Globalization.CultureInfo.InvariantCulture);
+this.width = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 2));
 this.current.SetLocation(this.leftSideBearing);
 }
 break;
 case 20:
 if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) >= 2)) {
 this.leftSideBearing = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaPoint2D(global::System.Convert.ToSingle(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 0), global::System.Globalization.CultureInfo.InvariantCulture), (float)(0));
-this.width = global::System.Convert.ToInt32(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 1), global::System.Globalization.CultureInfo.InvariantCulture);
+this.width = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 1));
 this.current.SetLocation(this.leftSideBearing);
 }
 break;
@@ -184,7 +184,7 @@ this.setCurrentPoint(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGe
 break;
 case 17:
 if (!(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListIsEmpty(numbers))) {
-this.callOtherSubr(global::System.Convert.ToInt32(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 0), global::System.Globalization.CultureInfo.InvariantCulture));
+this.callOtherSubr(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 0)));
 }
 break;
 case 16:
@@ -295,14 +295,14 @@ global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontCompat.MoveTo(this.path, 
 }
 
 private void seac(global::System.IConvertible asb, global::System.IConvertible adx, global::System.IConvertible ady, global::System.IConvertible bchar, global::System.IConvertible achar) {
-string baseName = global::DripSharp.PdfCarton.Fonts.Encoding.StandardEncoding.Instance.GetName(global::System.Convert.ToInt32(bchar, global::System.Globalization.CultureInfo.InvariantCulture));
+string baseName = global::DripSharp.PdfCarton.Fonts.Encoding.StandardEncoding.Instance.GetName(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(bchar));
 try {
 global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString @base = this.font.GetType1CharString(baseName);
 global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontCompat.AppendPath(this.path, global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontCompat.PathIterator(@base.GetPath(), (global::SkiaSharp.SKMatrix)default!), false);
 } catch (global::System.IO.IOException e) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString.LOG, (global::System.Exception)e, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("invalid seac character in glyph ", this.glyphName), " of font "), this.fontName)));
 }
-string accentName = global::DripSharp.PdfCarton.Fonts.Encoding.StandardEncoding.Instance.GetName(global::System.Convert.ToInt32(achar, global::System.Globalization.CultureInfo.InvariantCulture));
+string accentName = global::DripSharp.PdfCarton.Fonts.Encoding.StandardEncoding.Instance.GetName(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(achar));
 try {
 global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString accent = this.font.GetType1CharString(accentName);
 global::SkiaSharp.SKPath accentPath = accent.GetPath();

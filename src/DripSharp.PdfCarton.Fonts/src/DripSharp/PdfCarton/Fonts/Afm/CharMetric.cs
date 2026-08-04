@@ -9,19 +9,19 @@
 namespace DripSharp.PdfCarton.Fonts.Afm;
 
 public class CharMetric {
-private int characterCode;
+private int characterCode = default;
 
-private float wx;
+private float wx = default;
 
-private float w0x;
+private float w0x = default;
 
-private float w1x;
+private float w1x = default;
 
-private float wy;
+private float wy = default;
 
-private float w0y;
+private float w0y = default;
 
-private float w1y;
+private float w1y = default;
 
 private float[] w = null!;
 

@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
 public class LigatureSetTable {
-private readonly int ligatureCount;
+private readonly int ligatureCount = default;
 
 private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureTable[] ligatureTables = null!;
 

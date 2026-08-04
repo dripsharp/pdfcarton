@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public class DefaultResourceCacheCreateImpl : global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction {
-private readonly bool stableCacheEnabled;
+private readonly bool stableCacheEnabled = default;
 
 public DefaultResourceCacheCreateImpl() : this(true) {
 

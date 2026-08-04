@@ -15,7 +15,7 @@ private readonly global::DripSharp.Runtime.JavaPaint paint = null!;
 
 private readonly global::DripSharp.PdfCarton.Util.Matrix patternMatrix = null!;
 
-private static readonly int MAXEDGE;
+private static readonly int MAXEDGE = default;
 
 private const string DEFAULTMAXEDGE = "3000";
 
@@ -84,9 +84,9 @@ return image;
 }
 
 private static int ceiling(double num) {
-decimal @decimal = global::DripSharp.Runtime.JavaCompat.BigDecimalValueOf(num);
-@decimal = global::DripSharp.Runtime.JavaCompat.BigDecimalSetScale(@decimal, 5, global::DripSharp.Runtime.JavaRoundingMode.Ceiling);
-return global::DripSharp.Runtime.JavaCompat.BigDecimalIntValue(@decimal);
+global::DripSharp.Runtime.JavaCompat.JavaBigDecimal @decimal = global::DripSharp.Runtime.JavaCompat.JavaBigDecimalValueOf(num);
+@decimal = global::DripSharp.Runtime.JavaCompat.JavaBigDecimalSetScale(@decimal, 5, global::DripSharp.Runtime.JavaRoundingMode.Ceiling);
+return global::DripSharp.Runtime.JavaCompat.JavaBigDecimalIntValue(@decimal);
 }
 
 public virtual int GetTransparency() {

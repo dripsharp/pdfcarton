@@ -89,9 +89,9 @@ alphaImageData = new sbyte[0];
 }
 for (int y = 0; (y < height); ++y) {
 foreach (int pixel in global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(image, 0, y, width, 1, rgbLineBuffer, 0, width)) {
-imageData[byteIdx++] = unchecked((sbyte)((sbyte)(((pixel >> unchecked((int)(16))) & 255))));
-imageData[byteIdx++] = unchecked((sbyte)((sbyte)(((pixel >> unchecked((int)(8))) & 255))));
-imageData[byteIdx++] = unchecked((sbyte)((sbyte)((pixel & 255))));
+imageData[byteIdx++] = unchecked((sbyte)(unchecked((sbyte)(((pixel >> unchecked((int)(16))) & 255)))));
+imageData[byteIdx++] = unchecked((sbyte)(unchecked((sbyte)(((pixel >> unchecked((int)(8))) & 255)))));
+imageData[byteIdx++] = unchecked((sbyte)(unchecked((sbyte)((pixel & 255)))));
 if ((transparency == global::DripSharp.Runtime.PdfCartonTransparency.BITMASK)) {
 global::DripSharp.Runtime.JavaCompat.OrAssign(ref alphaImageData[alphaByteIdx], (((pixel >> unchecked((int)(24))) & 1) << unchecked((int)(alphaBitPos))));
 if ((--alphaBitPos < 0)) {
@@ -100,7 +100,7 @@ alphaBitPos = 7;
 }
 } else {
 if ((transparency != global::DripSharp.Runtime.PdfCartonTransparency.OPAQUE)) {
-alphaImageData[alphaByteIdx++] = unchecked((sbyte)((sbyte)(((pixel >> unchecked((int)(24))) & 255))));
+alphaImageData[alphaByteIdx++] = unchecked((sbyte)(unchecked((sbyte)(((pixel >> unchecked((int)(24))) & 255)))));
 }
 }
 }
@@ -130,17 +130,17 @@ internal readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument document = null
 
 internal readonly global::SkiaSharp.SKBitmap image = null!;
 
-internal readonly int componentsPerPixel;
+internal readonly int componentsPerPixel = default;
 
-internal readonly int transferType;
+internal readonly int transferType = default;
 
-internal readonly int bytesPerComponent;
+internal readonly int bytesPerComponent = default;
 
-internal readonly int bytesPerPixel;
+internal readonly int bytesPerPixel = default;
 
-internal readonly int height;
+internal readonly int height = default;
 
-internal readonly int width;
+internal readonly int width = default;
 
 internal readonly sbyte[] dataRawRowNone = null!;
 
@@ -152,9 +152,9 @@ internal readonly sbyte[] dataRawRowAverage = null!;
 
 internal readonly sbyte[] dataRawRowPaeth = null!;
 
-internal readonly int imageType;
+internal readonly int imageType = default;
 
-internal readonly bool hasAlpha;
+internal readonly bool hasAlpha = default;
 
 internal readonly sbyte[] alphaImageData = null!;
 
@@ -289,11 +289,11 @@ int x = (this.xValues[bytePtr] & 255);
 int a = (this.aValues[bytePtr] & 255);
 int b = (this.bValues[bytePtr] & 255);
 int c = (this.cValues[bytePtr] & 255);
-this.dataRawRowNone[writerPtr] = unchecked((sbyte)((sbyte)(x)));
-this.dataRawRowSub[writerPtr] = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.PredictorEncoder.pngFilterSub(x, a);
-this.dataRawRowUp[writerPtr] = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.PredictorEncoder.pngFilterUp(x, b);
-this.dataRawRowAverage[writerPtr] = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.PredictorEncoder.pngFilterAverage(x, a, b);
-this.dataRawRowPaeth[writerPtr] = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.PredictorEncoder.pngFilterPaeth(x, a, b, c);
+this.dataRawRowNone[writerPtr] = unchecked((sbyte)(unchecked((sbyte)(x))));
+this.dataRawRowSub[writerPtr] = unchecked((sbyte)(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.PredictorEncoder.pngFilterSub(x, a)));
+this.dataRawRowUp[writerPtr] = unchecked((sbyte)(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.PredictorEncoder.pngFilterUp(x, b)));
+this.dataRawRowAverage[writerPtr] = unchecked((sbyte)(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.PredictorEncoder.pngFilterAverage(x, a, b)));
+this.dataRawRowPaeth[writerPtr] = unchecked((sbyte)(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.PredictorEncoder.pngFilterPaeth(x, a, b, c)));
 writerPtr++;
 }
 global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.xValues, 0, this.aValues, 0, this.bytesPerPixel);
@@ -312,28 +312,28 @@ return this.preparePredictorPDImage(stream, (this.bytesPerComponent * 8));
 
 internal void copyIntToBytes(int[] transferRow, int indexInTranferRow, sbyte[] targetValues, sbyte[] alphaImageData, int alphaPtr) {
 int val = transferRow[indexInTranferRow];
-sbyte b0 = unchecked((sbyte)((sbyte)((val & 255))));
-sbyte b1 = unchecked((sbyte)((sbyte)(((val >> unchecked((int)(8))) & 255))));
-sbyte b2 = unchecked((sbyte)((sbyte)(((val >> unchecked((int)(16))) & 255))));
+sbyte b0 = unchecked((sbyte)(unchecked((sbyte)((val & 255)))));
+sbyte b1 = unchecked((sbyte)(unchecked((sbyte)(((val >> unchecked((int)(8))) & 255)))));
+sbyte b2 = unchecked((sbyte)(unchecked((sbyte)(((val >> unchecked((int)(16))) & 255)))));
 switch (this.imageType) {
 case var __case_512_22_0 when __case_512_22_0 == global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_BGR:
-targetValues[0] = b0;
-targetValues[1] = b1;
-targetValues[2] = b2;
+targetValues[0] = unchecked((sbyte)(b0));
+targetValues[1] = unchecked((sbyte)(b1));
+targetValues[2] = unchecked((sbyte)(b2));
 break;
 case var __case_518_22_0 when __case_518_22_0 == global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB:
-targetValues[0] = b2;
-targetValues[1] = b1;
-targetValues[2] = b0;
+targetValues[0] = unchecked((sbyte)(b2));
+targetValues[1] = unchecked((sbyte)(b1));
+targetValues[2] = unchecked((sbyte)(b0));
 if ((alphaImageData != default!)) {
-sbyte b3 = unchecked((sbyte)((sbyte)(((val >> unchecked((int)(24))) & 255))));
-alphaImageData[alphaPtr] = b3;
+sbyte b3 = unchecked((sbyte)(unchecked((sbyte)(((val >> unchecked((int)(24))) & 255)))));
+alphaImageData[alphaPtr] = unchecked((sbyte)(b3));
 }
 break;
 case var __case_528_22_0 when __case_528_22_0 == global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB:
-targetValues[0] = b2;
-targetValues[1] = b1;
-targetValues[2] = b0;
+targetValues[0] = unchecked((sbyte)(b2));
+targetValues[1] = unchecked((sbyte)(b1));
+targetValues[2] = unchecked((sbyte)(b0));
 break;
 default:
 break;
@@ -343,7 +343,7 @@ break;
 internal void copyImageBytes(sbyte[] transferRow, int indexInTranferRow, sbyte[] targetValues, sbyte[] alphaImageData, int alphaPtr) {
 global::DripSharp.Runtime.JavaCompat.ArrayCopy(transferRow, indexInTranferRow, targetValues, 0, targetValues.Length);
 if ((alphaImageData != default!)) {
-alphaImageData[alphaPtr] = transferRow[(indexInTranferRow + targetValues.Length)];
+alphaImageData[alphaPtr] = unchecked((sbyte)(transferRow[(indexInTranferRow + targetValues.Length)]));
 }
 }
 
@@ -351,13 +351,13 @@ internal static void copyShortsToBytes(short[] transferRow, int indexInTranferRo
 int itr = indexInTranferRow;
 for (int i = 0; (i < (targetValues.Length - 1)); i += 2) {
 short val = transferRow[itr++];
-targetValues[i] = unchecked((sbyte)((sbyte)(((val >> unchecked((int)(8))) & 255))));
-targetValues[(i + 1)] = unchecked((sbyte)((sbyte)((val & 255))));
+targetValues[i] = unchecked((sbyte)(unchecked((sbyte)(((val >> unchecked((int)(8))) & 255)))));
+targetValues[(i + 1)] = unchecked((sbyte)(unchecked((sbyte)((val & 255)))));
 }
 if ((alphaImageData != default!)) {
 short alpha = transferRow[itr];
-alphaImageData[alphaPtr] = unchecked((sbyte)((sbyte)(((alpha >> unchecked((int)(8))) & 255))));
-alphaImageData[(alphaPtr + 1)] = unchecked((sbyte)((sbyte)((alpha & 255))));
+alphaImageData[alphaPtr] = unchecked((sbyte)(unchecked((sbyte)(((alpha >> unchecked((int)(8))) & 255)))));
+alphaImageData[(alphaPtr + 1)] = unchecked((sbyte)(unchecked((sbyte)((alpha & 255)))));
 }
 }
 
@@ -419,7 +419,7 @@ return rowToWrite;
 }
 
 internal static sbyte pngFilterSub(int x, int a) {
-return unchecked((sbyte)((sbyte)(((x & 255) - (a & 255)))));
+return unchecked((sbyte)(unchecked((sbyte)(((x & 255) - (a & 255))))));
 }
 
 internal static sbyte pngFilterUp(int x, int b) {
@@ -427,7 +427,7 @@ return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.Predic
 }
 
 internal static sbyte pngFilterAverage(int x, int a, int b) {
-return unchecked((sbyte)((sbyte)((x - ((b + a) / 2)))));
+return unchecked((sbyte)(unchecked((sbyte)((x - ((b + a) / 2))))));
 }
 
 internal static sbyte pngFilterPaeth(int x, int a, int b, int c) {
@@ -446,7 +446,7 @@ pr = c;
 }
 }
 int r = (x - pr);
-return unchecked((sbyte)((sbyte)(r)));
+return unchecked((sbyte)(unchecked((sbyte)(r))));
 }
 
 internal static long estCompressSum(sbyte[] dataRawRowSub) {

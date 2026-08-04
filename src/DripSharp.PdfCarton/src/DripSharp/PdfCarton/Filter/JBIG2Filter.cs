@@ -23,7 +23,7 @@ global::DripSharp.PdfCarton.Filter.JBIG2Filter.levigoLogged = true;
 
 public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded, global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters, int index, global::DripSharp.PdfCarton.Filter.DecodeOptions options) {
 global::DripSharp.Runtime.JavaImageReader reader = global::DripSharp.PdfCarton.Filter.Filter.FindImageReader("JBIG2", "jbig2-imageio is not installed");
-if (global::DripSharp.Runtime.JavaCompat.StringContains((((object)(reader)).GetType().FullName ?? ((object)(reader)).GetType().Name), "levigo")) {
+if (global::DripSharp.Runtime.JavaCompat.StringContains(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(reader)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox"), "levigo")) {
 global::DripSharp.PdfCarton.Filter.JBIG2Filter.logLevigoDonated();
 }
 int bits = parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent, 1);

@@ -17,7 +17,7 @@ private short[] leftSideBearing = null!;
 
 private short[] nonHorizontalLeftSideBearing = null!;
 
-private int numHMetrics;
+private int numHMetrics = default;
 
 internal HorizontalMetricsTable() : base() {
 

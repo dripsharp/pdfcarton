@@ -9,31 +9,31 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class CCITTFaxDecoderStream : global::DripSharp.Runtime.JavaFilterInputStream {
-private readonly int columns;
+private readonly int columns = default;
 
 private readonly sbyte[] decodedRow = null!;
 
-private readonly bool optionG32D;
+private readonly bool optionG32D = default;
 
-private readonly bool optionG3Fill;
+private readonly bool optionG3Fill = default;
 
-private readonly bool optionUncompressed;
+private readonly bool optionUncompressed = default;
 
-private readonly bool optionByteAligned;
+private readonly bool optionByteAligned = default;
 
-private readonly int type;
+private readonly int type = default;
 
-private int decodedLength;
+private int decodedLength = default;
 
-private int decodedPos;
+private int decodedPos = default;
 
 private int[] changesReferenceRow = null!;
 
 private int[] changesCurrentRow = null!;
 
-private int changesReferenceRowCount;
+private int changesReferenceRowCount = default;
 
-private int changesCurrentRowCount;
+private int changesCurrentRowCount = default;
 
 private int lastChangingElement = 0;
 
@@ -76,7 +76,8 @@ this.decodeRow();
 throw new global::System.IO.IOException("Malformed CCITT stream", e);
 } catch (global::System.IO.EndOfStreamException e) {
 if ((this.decodedLength != 0)) {
-throw e;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(e);
+throw new global::System.InvalidOperationException("unreachable");
 }
 this.decodedLength = -1;
 }
@@ -243,9 +244,9 @@ index++;
 }
 if (((index % 8) == 0)) {
 byteIndex = (index / 8);
-sbyte value = unchecked((sbyte)((sbyte)((white ? 0 : 255))));
+sbyte value = unchecked((sbyte)(unchecked((sbyte)((white ? 0 : 255)))));
 while (((nextChange - index) > 7)) {
-this.decodedRow[byteIndex] = value;
+this.decodedRow[byteIndex] = unchecked((sbyte)(value));
 index += 8;
 ++byteIndex;
 }
@@ -370,7 +371,7 @@ internal global::DripSharp.PdfCarton.Filter.CCITTFaxDecoderStream.Node left = nu
 
 internal global::DripSharp.PdfCarton.Filter.CCITTFaxDecoderStream.Node right = null!;
 
-internal int value;
+internal int value = default;
 
 internal bool canBeFill = false;
 

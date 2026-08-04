@@ -14,7 +14,7 @@ private object[] mapArr = null!;
 public SmallMap() {}
 
 public SmallMap(global::System.Collections.Generic.IDictionary<K, V> initMap) {
-this.PutAll(initMap);
+this.PutAll(global::DripSharp.Runtime.JavaCompat.CastDictionary<K, V>(initMap));
 }
 
 private int FindKey(object key) {
@@ -59,7 +59,7 @@ return (this.FindValue(value) >= 0);
 
 public virtual V Get(object key) {
 int kIdx = this.FindKey(key);
-return ((kIdx < 0) ? (V)(default!) : (V)((V)(this.mapArr[(kIdx + 1)]!)));
+return ((kIdx < 0) ? (V)(default!) : (V)(global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[(kIdx + 1)])));
 }
 
 public virtual V Put(K key, V value) {
@@ -80,7 +80,7 @@ newMapArr[(oldLen + 1)] = value;
 this.mapArr = newMapArr;
 return default!;
 } else {
-V oldValue = (V)(this.mapArr[(kIdx + 1)]!);
+V oldValue = global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[(kIdx + 1)]);
 this.mapArr[(kIdx + 1)] = value;
 return oldValue;
 }
@@ -92,7 +92,7 @@ int kIdx = this.FindKey(key);
 if ((kIdx < 0)) {
 return default!;
 }
-V oldValue = (V)(this.mapArr[(kIdx + 1)]!);
+V oldValue = global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[(kIdx + 1)]);
 int oldLen = this.mapArr.Length;
 if ((oldLen == 2)) {
 this.mapArr = default!;
@@ -152,7 +152,7 @@ return global::DripSharp.Runtime.JavaCompat.EmptySet<K>();
 }
 global::System.Collections.Generic.ISet<K> keys = new global::System.Collections.Generic.HashSet<K>((this.mapArr.Length >> unchecked((int)(1))));
 for (int kIdx = 0; (kIdx < this.mapArr.Length); kIdx += 2) {
-keys.Add((K)(this.mapArr[kIdx]!));
+keys.Add(global::DripSharp.Runtime.JavaCompat.CastReference<K>(this.mapArr[kIdx]));
 }
 return global::DripSharp.Runtime.JavaCompat.UnmodifiableSet(keys);
 }
@@ -163,13 +163,13 @@ return global::DripSharp.Runtime.JavaCompat.EmptySet<V>();
 }
 global::System.Collections.Generic.IList<V> values = new global::System.Collections.Generic.List<V>((this.mapArr.Length >> unchecked((int)(1))));
 for (int vIdx = 1; (vIdx < this.mapArr.Length); vIdx += 2) {
-global::DripSharp.Runtime.JavaCompat.Add(values, (V)(this.mapArr[vIdx]!));
+global::DripSharp.Runtime.JavaCompat.Add(values, global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[vIdx]));
 }
 return global::DripSharp.Runtime.JavaCompat.UnmodifiableList(values);
 }
 
 internal class SmallMapEntry : global::DripSharp.Runtime.JavaMapEntry<K, V> {
-internal readonly int keyIdx;
+internal readonly int keyIdx = default;
 
 internal SmallMapEntry(int keyInMapIdx, global::DripSharp.PdfCarton.Util.SmallMap<K, V> __outer) {
 this.__outer = __outer;
@@ -178,11 +178,11 @@ this.keyIdx = keyInMapIdx;
 }
 
 public virtual K GetKey() {
-return (K)(this.__outer.mapArr[this.keyIdx]!);
+return global::DripSharp.Runtime.JavaCompat.CastReference<K>(this.__outer.mapArr[this.keyIdx]);
 }
 
 public virtual V GetValue() {
-return (V)(this.__outer.mapArr[(this.keyIdx + 1)]!);
+return global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.__outer.mapArr[(this.keyIdx + 1)]);
 }
 
 public override V SetValue(V value) {

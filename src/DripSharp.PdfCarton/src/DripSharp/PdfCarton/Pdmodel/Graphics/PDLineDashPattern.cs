@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics;
 
 public sealed class PDLineDashPattern : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly int phase;
+private readonly int phase = default;
 
 private readonly float[] array = null!;
 

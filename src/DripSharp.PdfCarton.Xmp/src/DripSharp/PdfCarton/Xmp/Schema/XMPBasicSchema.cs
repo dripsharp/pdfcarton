@@ -86,7 +86,7 @@ public virtual void SetBaseURLProperty(global::DripSharp.PdfCarton.Xmp.Type.URLT
 this.AddProperty(url);
 }
 
-public virtual void SetCreateDate(global::System.DateTimeOffset date) {
+public virtual void SetCreateDate(global::System.DateTimeOffset? date) {
 global::DripSharp.PdfCarton.Xmp.Type.DateType tt = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(this.InstanciateSimple(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema.Createdate, date)!);
 this.SetCreateDateProperty(tt);
 }
@@ -121,7 +121,7 @@ public virtual void SetLabelProperty(global::DripSharp.PdfCarton.Xmp.Type.TextTy
 this.AddProperty(text);
 }
 
-public virtual void SetMetadataDate(global::System.DateTimeOffset date) {
+public virtual void SetMetadataDate(global::System.DateTimeOffset? date) {
 global::DripSharp.PdfCarton.Xmp.Type.DateType tt = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(this.InstanciateSimple(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema.Metadatadate, date)!);
 this.SetMetadataDateProperty(tt);
 }
@@ -130,12 +130,12 @@ public virtual void SetMetadataDateProperty(global::DripSharp.PdfCarton.Xmp.Type
 this.AddProperty(date);
 }
 
-public virtual void SetModifyDate(global::System.DateTimeOffset date) {
+public virtual void SetModifyDate(global::System.DateTimeOffset? date) {
 global::DripSharp.PdfCarton.Xmp.Type.DateType tt = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(this.InstanciateSimple(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema.Modifydate, date)!);
 this.SetModifyDateProperty(tt);
 }
 
-public virtual void SetModifierDate(global::System.DateTimeOffset date) {
+public virtual void SetModifierDate(global::System.DateTimeOffset? date) {
 global::DripSharp.PdfCarton.Xmp.Type.DateType tt = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(this.InstanciateSimple(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema.ModifierDate, date)!);
 this.SetModifierDateProperty(tt);
 }
@@ -187,10 +187,10 @@ public virtual global::DripSharp.PdfCarton.Xmp.Type.DateType GetCreateDateProper
 return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.DateType>(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema.Createdate, typeof(global::DripSharp.PdfCarton.Xmp.Type.DateType));
 }
 
-public virtual global::System.DateTimeOffset GetCreateDate() {
+public virtual global::System.DateTimeOffset? GetCreateDate() {
 global::DripSharp.PdfCarton.Xmp.Type.DateType createDate = this.GetCreateDateProperty();
 if ((createDate != default!)) {
-return (global::System.DateTimeOffset)(createDate.GetValue());
+return (global::System.DateTimeOffset?)(createDate.GetValue());
 }
 return default!;
 }
@@ -225,9 +225,9 @@ public virtual global::DripSharp.PdfCarton.Xmp.Type.DateType GetMetadataDateProp
 return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.DateType>(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema.Metadatadate, typeof(global::DripSharp.PdfCarton.Xmp.Type.DateType));
 }
 
-public virtual global::System.DateTimeOffset GetMetadataDate() {
+public virtual global::System.DateTimeOffset? GetMetadataDate() {
 global::DripSharp.PdfCarton.Xmp.Type.DateType dt = this.GetMetadataDateProperty();
-return ((dt == default!) ? (global::System.DateTimeOffset)(default!) : (global::System.DateTimeOffset)(dt.GetValue()));
+return ((dt == default!) ? (global::System.DateTimeOffset?)(default!) : (global::System.DateTimeOffset?)(dt.GetValue()));
 }
 
 public virtual global::DripSharp.PdfCarton.Xmp.Type.DateType GetModifyDateProperty() {
@@ -238,18 +238,18 @@ public virtual global::DripSharp.PdfCarton.Xmp.Type.DateType GetModifierDateProp
 return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.DateType>(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema.ModifierDate, typeof(global::DripSharp.PdfCarton.Xmp.Type.DateType));
 }
 
-public virtual global::System.DateTimeOffset GetModifyDate() {
+public virtual global::System.DateTimeOffset? GetModifyDate() {
 global::DripSharp.PdfCarton.Xmp.Type.DateType modifyDate = this.GetModifyDateProperty();
 if ((modifyDate != default!)) {
-return (global::System.DateTimeOffset)(modifyDate.GetValue());
+return (global::System.DateTimeOffset?)(modifyDate.GetValue());
 }
 return default!;
 }
 
-public virtual global::System.DateTimeOffset GetModifierDate() {
+public virtual global::System.DateTimeOffset? GetModifierDate() {
 global::DripSharp.PdfCarton.Xmp.Type.DateType modifierDate = this.GetModifierDateProperty();
 if ((modifierDate != default!)) {
-return (global::System.DateTimeOffset)(modifierDate.GetValue());
+return (global::System.DateTimeOffset?)(modifierDate.GetValue());
 }
 return default!;
 }
@@ -269,7 +269,7 @@ return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.IntegerType>(glob
 
 public virtual int? GetRating() {
 global::DripSharp.PdfCarton.Xmp.Type.IntegerType it = this.GetRatingProperty();
-return ((it == default!) ? (int)(default!) : (int)(it.GetValue()));
+return ((it == default!) ? (int?)(default!) : (int?)((int)(it.GetValue())));
 }
 
 public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType> GetThumbnailsProperty() {
@@ -280,7 +280,7 @@ foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractField in tmp
 if ((abstractField is global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType)) {
 global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(thumbs, (global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType)(abstractField!));
 } else {
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Thumbnail expected and ", (((object)(abstractField)).GetType().FullName ?? ((object)(abstractField)).GetType().Name)), " found."));
+throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Thumbnail expected and ", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassName(((object)(abstractField)).GetType(), "DripSharp.PdfCarton.Xmp", "org.apache.xmpbox")), " found."));
 }
 }
 return thumbs;

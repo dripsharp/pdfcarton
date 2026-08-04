@@ -100,16 +100,16 @@ public virtual void SetInstanceID(string value) {
 this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.InstanceId, value);
 }
 
-public virtual global::System.DateTimeOffset GetLastModifyDate() {
+public virtual global::System.DateTimeOffset? GetLastModifyDate() {
 global::DripSharp.PdfCarton.Xmp.Type.DateType absProp = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.LastModifyDate, typeof(global::DripSharp.PdfCarton.Xmp.Type.DateType))!);
 if ((absProp != default!)) {
-return (global::System.DateTimeOffset)(absProp.GetValue());
+return (global::System.DateTimeOffset?)(absProp.GetValue());
 } else {
 return default!;
 }
 }
 
-public virtual void SetLastModifyDate(global::System.DateTimeOffset value) {
+public virtual void SetLastModifyDate(global::System.DateTimeOffset? value) {
 this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.LastModifyDate, value);
 }
 

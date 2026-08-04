@@ -49,7 +49,7 @@ protected internal static readonly char[] EofMarker = new char[] { '%', '%', 'E'
 
 protected internal static readonly char[] ObjMarker = new char[] { 'o', 'b', 'j' };
 
-protected internal long FileLen;
+protected internal long FileLen = default;
 
 private bool __field_isLenient = true;
 
@@ -119,7 +119,8 @@ rebuildTrailer = this.IsLenient();
 if (this.IsLenient()) {
 rebuildTrailer = true;
 } else {
-throw exception;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(exception);
+throw new global::System.InvalidOperationException("unreachable");
 }
 }
 if (((trailer! != default!) && (trailer!.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Root) == default!))) {
@@ -189,7 +190,8 @@ base.Document.SetHasHybridXRef();
 if (this.__field_isLenient) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdfparser.COSParser.LOG, (global::System.Exception)ex, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Failed to parse /XRefStm at offset ", streamOffset)));
 } else {
-throw ex;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
+throw new global::System.InvalidOperationException("unreachable");
 }
 }
 } else {
@@ -224,7 +226,7 @@ if (this.__field_isLenient) {
 this.checkXrefOffsets();
 }
 base.Document.AddXRefTable(this.XrefTrailerResolver.GetXrefTable());
-global::DripSharp.Runtime.JavaOptional<long> maxValue = global::DripSharp.Runtime.JavaCompat.ReduceOptional(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.MapKeySet(base.Document.GetXrefTable()), (value0) => value0.GetNumber()), global::System.Math.Max);
+global::DripSharp.Runtime.JavaOptional<long> maxValue = global::DripSharp.Runtime.JavaCompat.ReduceOptional(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.Stream(global::DripSharp.Runtime.JavaCompat.MapKeySet(base.Document.GetXrefTable())), (value0) => value0.GetNumber()), global::System.Math.Max);
 base.Document.SetHighestXRefObjectNumber((maxValue.IsPresent() ? maxValue.Get() : 0));
 return trailer!;
 }
@@ -434,7 +436,8 @@ global::DripSharp.Runtime.JavaCompat.ForEach(allStreamObjects, (value0, value1) 
 if (this.__field_isLenient) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdfparser.COSParser.LOG, (global::System.Exception)ex, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("object stream ", objstmObjNr), " could not be parsed due to an exception")));
 } else {
-throw ex;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
+throw new global::System.InvalidOperationException("unreachable");
 }
 }
 }
@@ -670,7 +673,7 @@ global::DripSharp.Runtime.JavaCompat.MapPut(correctedPointers, correctedKeyEntry
 }
 }
 global::DripSharp.Runtime.JavaCompat.ForEach(correctedKeys, (key, value) => global::DripSharp.Runtime.JavaCompat.MapRemove(xrefOffset, key));
-global::DripSharp.Runtime.JavaCompat.MapPutAll(xrefOffset, correctedPointers);
+global::DripSharp.Runtime.JavaCompat.MapPutAll(xrefOffset, global::DripSharp.Runtime.JavaCompat.CastDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, long>(correctedPointers));
 return true;
 }
 
@@ -681,7 +684,7 @@ global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.C
 if (!(global::DripSharp.Runtime.JavaCompat.MapIsEmpty(bfCOSObjectKeyOffsets))) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdfparser.COSParser.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("Replaced read xref table with the results of a brute force search"));
 xrefOffset.Clear();
-global::DripSharp.Runtime.JavaCompat.MapPutAll(xrefOffset, bfCOSObjectKeyOffsets);
+global::DripSharp.Runtime.JavaCompat.MapPutAll(xrefOffset, global::DripSharp.Runtime.JavaCompat.CastDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, long>(bfCOSObjectKeyOffsets));
 }
 }
 }
@@ -1034,7 +1037,8 @@ this.SecurityHandler = this.encryption.GetSecurityHandler();
 this.SecurityHandler.PrepareForDecryption(this.encryption, base.Document.GetDocumentID(), decryptionMaterial);
 this.accessPermission = this.SecurityHandler.GetCurrentAccessPermission();
 } catch (global::System.IO.IOException e) {
-throw e;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(e);
+throw new global::System.InvalidOperationException("unreachable");
 } catch (global::System.Security.Cryptography.CryptographicException e) {
 throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error (", ((object)(e)).GetType().Name), ") while creating security handler for decryption"), e);
 } finally {

@@ -108,7 +108,8 @@ global::DripSharp.Runtime.JavaCompat.SetAccessible(f, true);
 object theUnsafe = f.GetValue((object)default!);
 return global::DripSharp.PdfCarton.IO.IOUtils.newBufferCleaner(typeof(global::DripSharp.Runtime.JavaByteBuffer), unmapper__264_36.bindTo(theUnsafe));
 } catch (global::System.Security.SecurityException se) {
-throw se;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(se);
+throw new global::System.InvalidOperationException("unreachable");
 } catch (global::System.Exception e) when (e is global::System.Reflection.TargetException or global::System.Exception) {
 global::System.Type directBufferClass = global::DripSharp.Runtime.JavaCompat.ClassForName("java.nio.DirectByteBuffer");
 global::System.Reflection.MethodInfo m = global::DripSharp.Runtime.JavaCompat.GetMethod(directBufferClass, "cleaner");
@@ -136,7 +137,7 @@ if (!(buffer.isDirect())) {
 throw new global::System.ArgumentException("unmapping only works with direct buffers");
 }
 if (!(unmappableBufferClass.IsInstanceOfType(buffer))) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("buffer is not an instance of ", (unmappableBufferClass.FullName ?? unmappableBufferClass.Name)));
+throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("buffer is not an instance of ", global::DripSharp.Runtime.JavaCompat.ClassName(unmappableBufferClass, "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io")));
 }
 global::System.Exception e = global::DripSharp.Runtime.JavaCompat.doPrivileged(() => {
 try {

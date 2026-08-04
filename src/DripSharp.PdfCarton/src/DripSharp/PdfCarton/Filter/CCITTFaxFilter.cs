@@ -59,9 +59,9 @@ pushbackInputStream.Unread(streamData, 0, bytesRead);
 encoded = pushbackInputStream;
 if ((((int)(streamData[0]) != 0) || (((streamData[1] >> unchecked((int)(4))) != 1) && ((int)(streamData[1]) != 1)))) {
 type = global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittModifiedHuffmanRle;
-short b = (short)((((streamData[0] << unchecked((int)(8))) + (streamData[1] & 255)) >> unchecked((int)(4))));
+short b = unchecked((short)(unchecked((short)((((streamData[0] << unchecked((int)(8))) + (streamData[1] & 255)) >> unchecked((int)(4)))))));
 for (int i = 12; (i < (bytesRead * 8)); i++) {
-b = (short)(((b << unchecked((int)(1))) + ((streamData[(i / 8)] >> unchecked((int)((7 - (i % 8))))) & 1)));
+b = unchecked((short)(unchecked((short)(((b << unchecked((int)(1))) + ((streamData[(i / 8)] >> unchecked((int)((7 - (i % 8))))) & 1))))));
 if (((b & 4095) == 1)) {
 type = global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittT4;
 break;
@@ -100,7 +100,7 @@ break;
 
 private void invertBitmap(sbyte[] bufferData) {
 for (int i = 0, c = bufferData.Length; (i < c); i++) {
-bufferData[i] = unchecked((sbyte)((sbyte)((~(bufferData[i]) & 255))));
+bufferData[i] = unchecked((sbyte)(unchecked((sbyte)((~(bufferData[i]) & 255)))));
 }
 }
 

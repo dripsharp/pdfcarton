@@ -9,35 +9,35 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class GlyfCompositeComp {
-protected internal const short Arg1And2AreWords = 1;
+protected internal const short Arg1And2AreWords = unchecked((short)(1));
 
-protected internal const short ArgsAreXyValues = 2;
+protected internal const short ArgsAreXyValues = unchecked((short)(2));
 
-protected internal const short RoundXyToGrid = 4;
+protected internal const short RoundXyToGrid = unchecked((short)(4));
 
-protected internal const short WeHaveAScale = 8;
+protected internal const short WeHaveAScale = unchecked((short)(8));
 
-protected internal const short MoreComponents = 32;
+protected internal const short MoreComponents = unchecked((short)(32));
 
-protected internal const short WeHaveAnXAndYScale = 64;
+protected internal const short WeHaveAnXAndYScale = unchecked((short)(64));
 
-protected internal const short WeHaveATwoByTwo = 128;
+protected internal const short WeHaveATwoByTwo = unchecked((short)(128));
 
-protected internal const short WeHaveInstructions = 256;
+protected internal const short WeHaveInstructions = unchecked((short)(256));
 
-protected internal const short UseMyMetrics = 512;
+protected internal const short UseMyMetrics = unchecked((short)(512));
 
-private int firstIndex;
+private int firstIndex = default;
 
-private int firstContour;
+private int firstContour = default;
 
-private readonly short argument1;
+private readonly short argument1 = default;
 
-private readonly short argument2;
+private readonly short argument2 = default;
 
-private readonly short flags;
+private readonly short flags = default;
 
-private readonly int glyphIndex;
+private readonly int glyphIndex = default;
 
 private double xscale = 1.0D;
 
@@ -62,8 +62,8 @@ if (((this.flags & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.Arg1A
 this.argument1 = bais.ReadSignedShort();
 this.argument2 = bais.ReadSignedShort();
 } else {
-this.argument1 = (short)(bais.ReadSignedByte());
-this.argument2 = (short)(bais.ReadSignedByte());
+this.argument1 = unchecked((short)(unchecked((short)(bais.ReadSignedByte()))));
+this.argument2 = unchecked((short)(unchecked((short)(bais.ReadSignedByte()))));
 }
 if (((this.flags & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.ArgsAreXyValues) != 0)) {
 this.xtranslate = this.argument1;

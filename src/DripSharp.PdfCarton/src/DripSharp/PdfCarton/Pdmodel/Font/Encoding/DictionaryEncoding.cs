@@ -30,8 +30,8 @@ this.baseEncoding = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.G
 if ((this.baseEncoding == default!)) {
 throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid encoding: ", baseEncoding));
 }
-global::DripSharp.Runtime.JavaCompat.MapPutAll(base.CodeToName, this.baseEncoding.CodeToName);
-global::DripSharp.Runtime.JavaCompat.MapPutAll(base.Inverted, this.baseEncoding.Inverted);
+global::DripSharp.Runtime.JavaCompat.MapPutAll(base.CodeToName, global::DripSharp.Runtime.JavaCompat.CastDictionary<int, string>(this.baseEncoding.CodeToName));
+global::DripSharp.Runtime.JavaCompat.MapPutAll(base.Inverted, global::DripSharp.Runtime.JavaCompat.CastDictionary<string, int>(this.baseEncoding.Inverted));
 this.applyDifferences();
 }
 
@@ -42,8 +42,8 @@ if ((name != default!)) {
 this.baseEncoding = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.GetInstance(name);
 if ((this.baseEncoding != default!)) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("/BaseEncoding in type 3 font"));
-global::DripSharp.Runtime.JavaCompat.MapPutAll(base.CodeToName, this.baseEncoding.CodeToName);
-global::DripSharp.Runtime.JavaCompat.MapPutAll(base.Inverted, this.baseEncoding.Inverted);
+global::DripSharp.Runtime.JavaCompat.MapPutAll(base.CodeToName, global::DripSharp.Runtime.JavaCompat.CastDictionary<int, string>(this.baseEncoding.CodeToName));
+global::DripSharp.Runtime.JavaCompat.MapPutAll(base.Inverted, global::DripSharp.Runtime.JavaCompat.CastDictionary<string, int>(this.baseEncoding.Inverted));
 }
 } else {
 this.baseEncoding = default!;
@@ -71,8 +71,8 @@ throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.
 }
 }
 this.baseEncoding = @base!;
-global::DripSharp.Runtime.JavaCompat.MapPutAll(base.CodeToName, this.baseEncoding.CodeToName);
-global::DripSharp.Runtime.JavaCompat.MapPutAll(base.Inverted, this.baseEncoding.Inverted);
+global::DripSharp.Runtime.JavaCompat.MapPutAll(base.CodeToName, global::DripSharp.Runtime.JavaCompat.CastDictionary<int, string>(this.baseEncoding.CodeToName));
+global::DripSharp.Runtime.JavaCompat.MapPutAll(base.Inverted, global::DripSharp.Runtime.JavaCompat.CastDictionary<string, int>(this.baseEncoding.Inverted));
 this.applyDifferences();
 }
 

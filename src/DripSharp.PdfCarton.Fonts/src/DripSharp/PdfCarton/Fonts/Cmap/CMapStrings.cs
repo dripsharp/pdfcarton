@@ -30,14 +30,14 @@ private CMapStrings() {}
 private static void fillMappings() {
 for (int i__49_18 = 0; (i__49_18 < 256); i__49_18++) {
 for (int j = 0; (j < 256); j++) {
-sbyte[] bytes__53_24 = new sbyte[] { unchecked((sbyte)((sbyte)(i__49_18))), unchecked((sbyte)((sbyte)(j))) };
+sbyte[] bytes__53_24 = new sbyte[] { unchecked((sbyte)(unchecked((sbyte)(i__49_18)))), unchecked((sbyte)(unchecked((sbyte)(j)))) };
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(global::DripSharp.PdfCarton.Fonts.Cmap.CMapStrings.twoByteMappings, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(bytes__53_24, global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.UTF16BE));
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(global::DripSharp.PdfCarton.Fonts.Cmap.CMapStrings.twoByteValues, bytes__53_24);
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(global::DripSharp.PdfCarton.Fonts.Cmap.CMapStrings.indexValues, ((i__49_18 * 256) + j));
 }
 }
 for (int i__59_18 = 0; (i__59_18 < 256); i__59_18++) {
-sbyte[] bytes__61_20 = new sbyte[] { unchecked((sbyte)((sbyte)(i__59_18))) };
+sbyte[] bytes__61_20 = new sbyte[] { unchecked((sbyte)(unchecked((sbyte)(i__59_18)))) };
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(global::DripSharp.PdfCarton.Fonts.Cmap.CMapStrings.oneByteMappings, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(bytes__61_20, global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.ISO88591));
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(global::DripSharp.PdfCarton.Fonts.Cmap.CMapStrings.oneByteValues, bytes__61_20);
 }

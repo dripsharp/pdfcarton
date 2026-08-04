@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class IntegerType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty {
-private int integerValue;
+private int integerValue = default;
 
 public IntegerType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix, propertyName, value) {
 

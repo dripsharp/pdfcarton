@@ -353,7 +353,7 @@ string hexString = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSu
 sbyte[] data = new sbyte[(hexString.Length / 2)];
 for (int i = 0; (i < hexString.Length); i += 2) {
 string hex = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CodePointToString(hexString[i]), hexString[(i + 1)]);
-data[(i / 2)] = unchecked((sbyte)((sbyte)(this.parseInt(hex, global::DripSharp.PdfCarton.Fonts.Afm.AFMParser.BITS_IN_HEX))));
+data[(i / 2)] = unchecked((sbyte)(unchecked((sbyte)(this.parseInt(hex, global::DripSharp.PdfCarton.Fonts.Afm.AFMParser.BITS_IN_HEX)))));
 }
 return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(data, global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.ISO88591);
 }
@@ -541,10 +541,10 @@ int nextByte = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamR
 while (global::DripSharp.PdfCarton.Fonts.Afm.AFMParser.isWhitespace(nextByte)) {
 nextByte = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(this.input);
 }
-buf.Append(unchecked((char)((char)(nextByte))));
+buf.Append(unchecked((char)(unchecked((char)(nextByte)))));
 nextByte = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(this.input);
 while (((nextByte != -1) && !(global::DripSharp.PdfCarton.Fonts.Afm.AFMParser.isEOL(nextByte)))) {
-buf.Append(unchecked((char)((char)(nextByte))));
+buf.Append(unchecked((char)(unchecked((char)(nextByte)))));
 nextByte = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(this.input);
 }
 return buf.ToString();
@@ -556,10 +556,10 @@ int nextByte = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamR
 while (global::DripSharp.PdfCarton.Fonts.Afm.AFMParser.isWhitespace(nextByte)) {
 nextByte = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(this.input);
 }
-buf.Append(unchecked((char)((char)(nextByte))));
+buf.Append(unchecked((char)(unchecked((char)(nextByte)))));
 nextByte = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(this.input);
 while (((nextByte != -1) && !(global::DripSharp.PdfCarton.Fonts.Afm.AFMParser.isWhitespace(nextByte)))) {
-buf.Append(unchecked((char)((char)(nextByte))));
+buf.Append(unchecked((char)(unchecked((char)(nextByte)))));
 nextByte = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(this.input);
 }
 return buf.ToString();

@@ -13,17 +13,17 @@ protected internal readonly global::DripSharp.Runtime.JavaPoint2D[] Corner = nul
 
 protected internal readonly float[][] Color = null!;
 
-private readonly double area;
+private readonly double area = default;
 
-private readonly int degree;
+private readonly int degree = default;
 
 private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Line line = null!;
 
-private readonly double v0;
+private readonly double v0 = default;
 
-private readonly double v1;
+private readonly double v1 = default;
 
-private readonly double v2;
+private readonly double v2 = default;
 
 internal ShadedTriangle(global::DripSharp.Runtime.JavaPoint2D[] p, float[][] c) {
 this.Corner = global::DripSharp.Runtime.JavaCompat.Clone(p);

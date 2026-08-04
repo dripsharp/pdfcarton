@@ -30,17 +30,17 @@ internal string fontName = "";
 
 internal global::DripSharp.PdfCarton.Fonts.Encoding.Encoding encoding = default!;
 
-internal int paintType;
+internal int paintType = default;
 
-internal int fontType;
+internal int fontType = default;
 
 internal global::System.Collections.Generic.IList<global::System.IConvertible> fontMatrix = global::System.Array.Empty<global::System.IConvertible>();
 
 internal global::System.Collections.Generic.IList<global::System.IConvertible> fontBBox = global::System.Array.Empty<global::System.IConvertible>();
 
-internal int uniqueID;
+internal int uniqueID = default;
 
-internal float strokeWidth;
+internal float strokeWidth = default;
 
 internal string fontID = "";
 
@@ -54,13 +54,13 @@ internal string familyName = "";
 
 internal string weight = "";
 
-internal float italicAngle;
+internal float italicAngle = default;
 
-internal bool __field_isFixedPitch;
+internal bool __field_isFixedPitch = default;
 
-internal float underlinePosition;
+internal float underlinePosition = default;
 
-internal float underlineThickness;
+internal float underlineThickness = default;
 
 internal global::System.Collections.Generic.IList<global::System.IConvertible> blueValues = global::System.Array.Empty<global::System.IConvertible>();
 
@@ -70,11 +70,11 @@ internal global::System.Collections.Generic.IList<global::System.IConvertible> f
 
 internal global::System.Collections.Generic.IList<global::System.IConvertible> familyOtherBlues = global::System.Array.Empty<global::System.IConvertible>();
 
-internal float blueScale;
+internal float blueScale = default;
 
-internal int blueShift;
+internal int blueShift = default;
 
-internal int blueFuzz;
+internal int blueFuzz = default;
 
 internal global::System.Collections.Generic.IList<global::System.IConvertible> stdHW = global::System.Array.Empty<global::System.IConvertible>();
 
@@ -84,9 +84,9 @@ internal global::System.Collections.Generic.IList<global::System.IConvertible> s
 
 internal global::System.Collections.Generic.IList<global::System.IConvertible> stemSnapV = global::System.Array.Empty<global::System.IConvertible>();
 
-internal bool forceBold;
+internal bool forceBold = default;
 
-internal int languageGroup;
+internal int languageGroup = default;
 
 internal readonly global::System.Collections.Generic.IList<sbyte[]> subrs = new global::System.Collections.Generic.List<sbyte[]>();
 
@@ -110,7 +110,7 @@ return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(thi
 }
 
 public global::System.Collections.Generic.IDictionary<string, sbyte[]> GetCharStringsDict() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(this.charstrings);
+return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<string, sbyte[]>(this.charstrings));
 }
 
 public string GetName() {
@@ -289,6 +289,6 @@ return this.segment2;
 }
 
 public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat((((object)(this)).GetType().FullName ?? ((object)(this)).GetType().Name), "[fontName="), this.fontName), ", fullName="), this.fullName), ", encoding="), this.encoding), ", charStringsDict="), this.charstrings), "]");
+return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[fontName="), this.fontName), ", fullName="), this.fullName), ", encoding="), this.encoding), ", charStringsDict="), this.charstrings), "]");
 }
 }

@@ -42,7 +42,7 @@ global::DripSharp.Runtime.JavaPoint2D[] implicitEdge = new global::DripSharp.Run
 float[][] implicitCornerColor = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<float>(2, colRange.Length);
 sbyte flag = unchecked((sbyte)(0));
 try {
-flag = unchecked((sbyte)((sbyte)((mciis.ReadBits(bitsPerFlag) & 3))));
+flag = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
 } catch (global::System.IO.EndOfStreamException ex) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDMeshBasedShadingType.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(ex));
 return list;
@@ -56,7 +56,7 @@ if ((current == default!)) {
 break;
 }
 global::DripSharp.Runtime.JavaCompat.Add(list, current);
-flag = unchecked((sbyte)((sbyte)((mciis.ReadBits(bitsPerFlag) & 3))));
+flag = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
 switch (flag) {
 case var __case_128_30_0 when __case_128_30_0 == unchecked((sbyte)(0)):
 break;

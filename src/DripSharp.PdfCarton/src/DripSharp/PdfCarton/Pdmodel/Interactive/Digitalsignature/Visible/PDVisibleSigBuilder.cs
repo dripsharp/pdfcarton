@@ -243,7 +243,7 @@ global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::Dri
 
 public virtual void CreateWidgetDictionary(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDSignatureField signatureField, global::DripSharp.PdfCarton.Pdmodel.PDResources holderFormResources) {
 global::DripSharp.PdfCarton.Cos.COSDictionary widgetDict = global::DripSharp.Runtime.JavaCompat.ListGet(signatureField.GetWidgets(), 0).GetCOSObject();
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)widgetDict).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(widgetDict)).SetNeedToBeUpdated(true);
 widgetDict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Dr, holderFormResources.GetCOSObject());
 this.pdfStructure.SetWidgetDictionary(widgetDict);
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigBuilder.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("WidgetDictionary has been created"));

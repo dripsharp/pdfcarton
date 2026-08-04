@@ -17,7 +17,7 @@ private short[] topSideBearing = null!;
 
 private short[] additionalTopSideBearing = null!;
 
-private int numVMetrics;
+private int numVMetrics = default;
 
 internal VerticalMetricsTable() : base() {
 

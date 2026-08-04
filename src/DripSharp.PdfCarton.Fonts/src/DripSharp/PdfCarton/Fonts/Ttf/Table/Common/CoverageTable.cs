@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public abstract class CoverageTable {
-private readonly int coverageFormat;
+private readonly int coverageFormat = default;
 
 public CoverageTable(int coverageFormat) {
 this.coverageFormat = coverageFormat;

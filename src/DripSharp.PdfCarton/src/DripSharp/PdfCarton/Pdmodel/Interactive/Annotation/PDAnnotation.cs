@@ -292,7 +292,7 @@ public virtual void SetModifiedDate(string m) {
 this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.M, m);
 }
 
-public virtual void SetModifiedDate(global::System.DateTimeOffset c) {
+public virtual void SetModifiedDate(global::System.DateTimeOffset? c) {
 this.GetCOSObject().SetDate(global::DripSharp.PdfCarton.Cos.COSName.M, c);
 }
 

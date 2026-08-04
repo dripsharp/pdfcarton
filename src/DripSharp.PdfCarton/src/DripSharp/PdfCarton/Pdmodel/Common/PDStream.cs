@@ -139,7 +139,7 @@ return default!;
 }
 
 public virtual void SetDecodeParms(global::System.Collections.Generic.IEnumerable<object> decodeParams) {
-this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.DecodeParms, global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<object>.ConverterToCOSArray(decodeParams));
+this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.DecodeParms, global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<object>.ConverterToCOSArray(global::DripSharp.Runtime.JavaCompat.CastObjects(decodeParams)));
 }
 
 public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification GetFile() {
@@ -170,7 +170,7 @@ this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FFilter, obj);
 }
 
 public virtual void SetFileDecodeParams(global::System.Collections.Generic.IEnumerable<object> decodeParams) {
-this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FDecodeParms, global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<object>.ConverterToCOSArray(decodeParams));
+this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FDecodeParms, global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<object>.ConverterToCOSArray(global::DripSharp.Runtime.JavaCompat.CastObjects(decodeParams)));
 }
 
 public virtual sbyte[] ToByteArray() {

@@ -172,7 +172,7 @@ int bitPadding = (neededBits % 8);
 for (int i = 0; (i < bytes.Length); i++) {
 int idx = (int)(iis.ReadBits(bitsPerComponent));
 if ((idx < transparencyTable.Length)) {
-bytes[i] = transparencyTable[idx];
+bytes[i] = unchecked((sbyte)(transparencyTable[idx]));
 } else {
 bytes[i] = unchecked((sbyte)(255));
 }
@@ -307,7 +307,7 @@ return inputStream;
 internal class MultipleInputStream : global::DripSharp.Runtime.JavaInputStream {
 internal readonly global::System.Collections.Generic.IList<global::System.IO.Stream> inputStreams = new global::System.Collections.Generic.List<global::System.IO.Stream>();
 
-internal int currentStreamIdx;
+internal int currentStreamIdx = default;
 
 internal global::System.IO.Stream currentStream = null!;
 
@@ -441,13 +441,13 @@ return true;
 internal sealed class Chunk {
 internal sbyte[] bytes = null!;
 
-internal int chunkType;
+internal int chunkType = default;
 
-internal int crc;
+internal int crc = default;
 
-internal int start;
+internal int start = default;
 
-internal int length;
+internal int length = default;
 
 internal sbyte[] getData() {
 return global::DripSharp.Runtime.JavaCompat.CopyOfRange<sbyte>(this.bytes, this.start, (this.start + this.length));
@@ -471,11 +471,11 @@ internal global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.Chunk g
 
 internal global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.Chunk cHRM = null!;
 
-internal int width;
+internal int width = default;
 
-internal int height;
+internal int height = default;
 
-internal int bitsPerComponent;
+internal int bitsPerComponent = default;
 }
 
 private static int readInt(sbyte[] data, int offset) {

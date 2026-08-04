@@ -61,11 +61,11 @@ public virtual void SetRichContents(string rc) {
 this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Rc, new global::DripSharp.PdfCarton.Cos.COSString(rc));
 }
 
-public virtual global::System.DateTimeOffset GetCreationDate() {
+public virtual global::System.DateTimeOffset? GetCreationDate() {
 return this.GetCOSObject().GetDate(global::DripSharp.PdfCarton.Cos.COSName.CreationDate);
 }
 
-public virtual void SetCreationDate(global::System.DateTimeOffset creationDate) {
+public virtual void SetCreationDate(global::System.DateTimeOffset? creationDate) {
 this.GetCOSObject().SetDate(global::DripSharp.PdfCarton.Cos.COSName.CreationDate, creationDate);
 }
 

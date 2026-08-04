@@ -239,7 +239,7 @@ if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MemberIsAnnotationPresent
 try {
 propName = (string)(field.GetValue(propName!)!);
 } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
-throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("couldn't read one type declaration, please check accessibility and declaration of fields annotated in ", (classSchem.FullName ?? classSchem.Name)), e);
+throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("couldn't read one type declaration, please check accessibility and declaration of fields annotated in ", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassName(classSchem, "DripSharp.PdfCarton.Xmp", "org.apache.xmpbox")), e);
 }
 global::DripSharp.PdfCarton.Xmp.Type.PropertyType propType = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.FieldGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.PropertyType>(field, typeof(global::DripSharp.PdfCarton.Xmp.Type.PropertyType))!;
 propMap.AddNewProperty(propName!, propType);
@@ -252,7 +252,7 @@ public global::DripSharp.PdfCarton.Xmp.Type.BooleanType CreateBoolean(string nam
 return new global::DripSharp.PdfCarton.Xmp.Type.BooleanType(this.metadata, namespaceURI, prefix, propertyName, value);
 }
 
-public global::DripSharp.PdfCarton.Xmp.Type.DateType CreateDate(string namespaceURI, string prefix, string propertyName, global::System.DateTimeOffset value) {
+public global::DripSharp.PdfCarton.Xmp.Type.DateType CreateDate(string namespaceURI, string prefix, string propertyName, global::System.DateTimeOffset? value) {
 return new global::DripSharp.PdfCarton.Xmp.Type.DateType(this.metadata, namespaceURI, prefix, propertyName, value);
 }
 

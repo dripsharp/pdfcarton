@@ -50,7 +50,7 @@ global::DripSharp.PdfCarton.Cos.COSArray contentsArray = (global::DripSharp.PdfC
 contentsArray.Add(0, saveGraphicsStateStream);
 contentsArray.Add(restoreGraphicsStateStream);
 } else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Contents are unknown type: ", (((object)(contents)).GetType().FullName ?? ((object)(contents)).GetType().Name)));
+throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Contents are unknown type: ", global::DripSharp.Runtime.JavaCompat.ClassName(((object)(contents)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox")));
 }
 }
 }

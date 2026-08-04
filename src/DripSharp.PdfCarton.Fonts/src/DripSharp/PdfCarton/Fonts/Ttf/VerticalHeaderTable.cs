@@ -11,39 +11,39 @@ namespace DripSharp.PdfCarton.Fonts.Ttf;
 public class VerticalHeaderTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
 public const string Tag = "vhea";
 
-private float version;
+private float version = default;
 
-private short ascender;
+private short ascender = default;
 
-private short descender;
+private short descender = default;
 
-private short lineGap;
+private short lineGap = default;
 
-private int advanceHeightMax;
+private int advanceHeightMax = default;
 
-private short minTopSideBearing;
+private short minTopSideBearing = default;
 
-private short minBottomSideBearing;
+private short minBottomSideBearing = default;
 
-private short yMaxExtent;
+private short yMaxExtent = default;
 
-private short caretSlopeRise;
+private short caretSlopeRise = default;
 
-private short caretSlopeRun;
+private short caretSlopeRun = default;
 
-private short caretOffset;
+private short caretOffset = default;
 
-private short reserved1;
+private short reserved1 = default;
 
-private short reserved2;
+private short reserved2 = default;
 
-private short reserved3;
+private short reserved3 = default;
 
-private short reserved4;
+private short reserved4 = default;
 
-private short metricDataFormat;
+private short metricDataFormat = default;
 
-private int numberOfVMetrics;
+private int numberOfVMetrics = default;
 
 internal VerticalHeaderTable() : base() {
 

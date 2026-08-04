@@ -23,9 +23,9 @@ private global::DripSharp.PdfCarton.Fonts.Cmap.CMap cMap = null!;
 
 private global::DripSharp.PdfCarton.Fonts.Cmap.CMap cMapUCS2 = null!;
 
-private bool isCMapPredefined;
+private bool isCMapPredefined = default;
 
-private bool isDescendantCJK;
+private bool isDescendantCJK = default;
 
 private global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder embedder = null!;
 
@@ -268,7 +268,7 @@ if ((unicode != default!)) {
 return unicode;
 }
 if (((this.GetToUnicodeCMap() != default!) && !(this.isCMapPredefined))) {
-return global::DripSharp.Runtime.JavaCompat.CodePointToString(unchecked((char)((char)(code))));
+return global::DripSharp.Runtime.JavaCompat.CodePointToString(unchecked((char)(unchecked((char)(code)))));
 }
 if (((this.isCMapPredefined || this.isDescendantCJK) && (this.cMapUCS2 != default!))) {
 int cid__566_17 = this.CodeToCID(code);
@@ -288,7 +288,7 @@ gid = this.descendantFont.CodeToCID(code);
 }
 global::System.Collections.Generic.IList<int> codes = cmap.GetCharCodes(gid);
 if (((codes != default!) && !(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(codes)))) {
-return global::DripSharp.Runtime.JavaCompat.CodePointToString(unchecked((char)((int)((char)(global::DripSharp.Runtime.JavaCompat.ListGet(codes, 0))))));
+return global::DripSharp.Runtime.JavaCompat.CodePointToString(unchecked((char)(unchecked((char)((int)(global::DripSharp.Runtime.JavaCompat.ListGet(codes, 0)))))));
 }
 }
 } catch (global::System.IO.IOException e) {

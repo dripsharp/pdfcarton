@@ -51,11 +51,11 @@ return pdImage;
 }
 
 internal class Dimensions {
-internal int width;
+internal int width = default;
 
-internal int height;
+internal int height = default;
 
-internal int numComponents;
+internal int numComponents = default;
 }
 
 private static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.Dimensions retrieveDimensions(global::System.IO.MemoryStream stream) {

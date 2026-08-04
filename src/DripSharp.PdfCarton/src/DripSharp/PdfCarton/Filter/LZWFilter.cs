@@ -42,13 +42,13 @@ curr = global::DripSharp.Runtime.JavaCompat.ListGet(codeTable, (int)((int)(nextC
 global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, curr);
 if ((prev! != default!)) {
 sbyte[] entry = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(prev!, (prev!.Length + 1));
-entry[prev!.Length] = curr[0];
+entry[prev!.Length] = unchecked((sbyte)(curr[0]));
 global::DripSharp.Runtime.JavaCompat.Add(codeTable, entry);
 }
 } else {
 if (((nextCommand == global::DripSharp.Runtime.JavaCompat.CollectionCount(codeTable)) && (prev! != default!))) {
 curr = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(prev!, (prev!.Length + 1));
-curr[prev!.Length] = prev![0];
+curr[prev!.Length] = unchecked((sbyte)(prev![0]));
 global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, curr);
 global::DripSharp.Runtime.JavaCompat.Add(codeTable, curr);
 } else {
@@ -73,13 +73,13 @@ using (global::DripSharp.Runtime.JavaImageOutputStream @out = new global::DripSh
 int foundCode = -1;
 int r;
 while (((r = global::DripSharp.Runtime.JavaCompat.InputStreamRead(rawData)) != -1)) {
-sbyte by = unchecked((sbyte)((sbyte)(r)));
+sbyte by = unchecked((sbyte)(unchecked((sbyte)(r))));
 if ((inputPattern! == default!)) {
 inputPattern = new sbyte[] { by };
 foundCode = (by & 255);
 } else {
 inputPattern = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(inputPattern!, (inputPattern!.Length + 1));
-inputPattern![(inputPattern!.Length - 1)] = by;
+inputPattern![(inputPattern!.Length - 1)] = unchecked((sbyte)(by));
 int newFoundCode = global::DripSharp.PdfCarton.Filter.LZWFilter.findPatternCode(codeTable, inputPattern!);
 if ((newFoundCode == -1)) {
 chunk = global::DripSharp.PdfCarton.Filter.LZWFilter.calculateChunk((global::DripSharp.Runtime.JavaCompat.CollectionCount(codeTable) - 1), true);
@@ -130,7 +130,7 @@ private static readonly global::System.Collections.Generic.IList<sbyte[]> INITIA
 private static global::System.Collections.Generic.IList<sbyte[]> createInitialCodeTable() {
 global::System.Collections.Generic.IList<sbyte[]> codeTable = new global::System.Collections.Generic.List<sbyte[]>(258);
 for (int i = 0; (i < 256); ++i) {
-global::DripSharp.Runtime.JavaCompat.Add(codeTable, new sbyte[] { unchecked((sbyte)((sbyte)((i & 255)))) });
+global::DripSharp.Runtime.JavaCompat.Add(codeTable, new sbyte[] { unchecked((sbyte)(unchecked((sbyte)((i & 255))))) });
 }
 global::DripSharp.Runtime.JavaCompat.Add(codeTable, default!);
 global::DripSharp.Runtime.JavaCompat.Add(codeTable, default!);

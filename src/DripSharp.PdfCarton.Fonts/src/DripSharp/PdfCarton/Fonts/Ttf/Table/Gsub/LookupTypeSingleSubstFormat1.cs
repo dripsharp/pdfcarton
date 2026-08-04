@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
 public class LookupTypeSingleSubstFormat1 : global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable {
-private readonly short deltaGlyphID;
+private readonly short deltaGlyphID = default;
 
 public LookupTypeSingleSubstFormat1(int substFormat, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable, short deltaGlyphID) : base(substFormat, coverageTable) {
 this.deltaGlyphID = deltaGlyphID;

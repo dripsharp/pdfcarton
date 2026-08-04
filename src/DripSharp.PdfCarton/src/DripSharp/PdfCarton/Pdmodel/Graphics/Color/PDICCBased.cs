@@ -147,10 +147,10 @@ return profile;
 }
 
 private static void intToBigEndian(int value, sbyte[] array, int index) {
-array[index] = unchecked((sbyte)((sbyte)((value >> unchecked((int)(24))))));
-array[(index + 1)] = unchecked((sbyte)((sbyte)((value >> unchecked((int)(16))))));
-array[(index + 2)] = unchecked((sbyte)((sbyte)((value >> unchecked((int)(8))))));
-array[(index + 3)] = unchecked((sbyte)((sbyte)(value)));
+array[index] = unchecked((sbyte)(unchecked((sbyte)((value >> unchecked((int)(24)))))));
+array[(index + 1)] = unchecked((sbyte)(unchecked((sbyte)((value >> unchecked((int)(16)))))));
+array[(index + 2)] = unchecked((sbyte)(unchecked((sbyte)((value >> unchecked((int)(8)))))));
+array[(index + 3)] = unchecked((sbyte)(unchecked((sbyte)(value))));
 }
 
 public override float[] ToRGB(float[] value) {
@@ -250,7 +250,7 @@ if ((alternate is global::DripSharp.PdfCarton.Cos.COSName)) {
 alternateArray = new global::DripSharp.PdfCarton.Cos.COSArray();
 alternateArray.Add(alternate);
 } else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error: expected COSArray or COSName and not ", (((object)(alternate)).GetType().FullName ?? ((object)(alternate)).GetType().Name)));
+throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error: expected COSArray or COSName and not ", global::DripSharp.Runtime.JavaCompat.ClassName(((object)(alternate)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox")));
 }
 }
 }

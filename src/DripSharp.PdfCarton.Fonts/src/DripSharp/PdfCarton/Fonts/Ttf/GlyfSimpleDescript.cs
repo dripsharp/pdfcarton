@@ -19,9 +19,9 @@ private short[] xCoordinates = null!;
 
 private short[] yCoordinates = null!;
 
-private readonly int pointCount;
+private readonly int pointCount = default;
 
-internal GlyfSimpleDescript() : base((short)(0)) {
+internal GlyfSimpleDescript() : base(unchecked((short)(0))) {
 this.pointCount = 0;
 }
 
@@ -72,15 +72,15 @@ return this.pointCount;
 
 private void readCoords(int count, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais, short x0) {
 short x = x0;
-short y = 0;
+short y = unchecked((short)(0));
 for (int i__157_18 = 0; (i__157_18 < count); i__157_18++) {
 if (((this.flags[i__157_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.XDual) != 0)) {
 if (((this.flags[i__157_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.XShortVector) != 0)) {
-x += (short)(bais.ReadUnsignedByte());
+x += unchecked((short)(bais.ReadUnsignedByte()));
 }
 } else {
 if (((this.flags[i__157_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.XShortVector) != 0)) {
-x -= (short)(bais.ReadUnsignedByte());
+x -= unchecked((short)(bais.ReadUnsignedByte()));
 } else {
 x += bais.ReadSignedShort();
 }
@@ -90,11 +90,11 @@ this.xCoordinates[i__157_18] = x;
 for (int i__180_18 = 0; (i__180_18 < count); i__180_18++) {
 if (((this.flags[i__180_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.YDual) != 0)) {
 if (((this.flags[i__180_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.YShortVector) != 0)) {
-y += (short)(bais.ReadUnsignedByte());
+y += unchecked((short)(bais.ReadUnsignedByte()));
 }
 } else {
 if (((this.flags[i__180_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.YShortVector) != 0)) {
-y -= (short)(bais.ReadUnsignedByte());
+y -= unchecked((short)(bais.ReadUnsignedByte()));
 } else {
 y += bais.ReadSignedShort();
 }
@@ -105,14 +105,14 @@ this.yCoordinates[i__180_18] = y;
 
 private void readFlags(int flagCount, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais) {
 for (int index = 0; (index < flagCount); index++) {
-this.flags[index] = unchecked((sbyte)((sbyte)(bais.ReadUnsignedByte())));
+this.flags[index] = unchecked((sbyte)(unchecked((sbyte)(bais.ReadUnsignedByte()))));
 if (((this.flags[index] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.Repeat) != 0)) {
 int repeats = bais.ReadUnsignedByte();
 for (int i = 1; (i <= repeats); i++) {
 if (((index + i) >= this.flags.Length)) {
 throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("repeat count (", repeats), ") higher than remaining space"));
 }
-this.flags[(index + i)] = this.flags[index];
+this.flags[(index + i)] = unchecked((sbyte)(this.flags[index]));
 }
 index += repeats;
 }

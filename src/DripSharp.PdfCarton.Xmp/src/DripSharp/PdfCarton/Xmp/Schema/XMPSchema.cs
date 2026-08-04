@@ -139,15 +139,15 @@ throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property 
 return default!;
 }
 
-public virtual global::System.DateTimeOffset GetDatePropertyValueAsSimple(string simpleName) {
+public virtual global::System.DateTimeOffset? GetDatePropertyValueAsSimple(string simpleName) {
 return this.GetDatePropertyValue(simpleName);
 }
 
-public virtual global::System.DateTimeOffset GetDatePropertyValue(string qualifiedName) {
+public virtual global::System.DateTimeOffset? GetDatePropertyValue(string qualifiedName) {
 global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetAbstractProperty(qualifiedName);
 if ((prop != default!)) {
 if ((prop is global::DripSharp.PdfCarton.Xmp.Type.DateType)) {
-return (global::System.DateTimeOffset)(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(prop!)).GetValue());
+return (global::System.DateTimeOffset?)(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(prop!)).GetValue());
 }
 throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Date Property");
 }
@@ -158,11 +158,11 @@ public virtual void SetDateProperty(global::DripSharp.PdfCarton.Xmp.Type.DateTyp
 this.setSpecifiedSimpleTypeProperty(date);
 }
 
-public virtual void SetDatePropertyValueAsSimple(string simpleName, global::System.DateTimeOffset date) {
+public virtual void SetDatePropertyValueAsSimple(string simpleName, global::System.DateTimeOffset? date) {
 this.SetDatePropertyValue(simpleName, date);
 }
 
-public virtual void SetDatePropertyValue(string qualifiedName, global::System.DateTimeOffset date) {
+public virtual void SetDatePropertyValue(string qualifiedName, global::System.DateTimeOffset? date) {
 this.setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.Types.Date, qualifiedName, date);
 }
 
@@ -358,7 +358,7 @@ return ((global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!))
 return default!;
 }
 
-public virtual void RemoveUnqualifiedSequenceDateValue(string seqName, global::System.DateTimeOffset date) {
+public virtual void RemoveUnqualifiedSequenceDateValue(string seqName, global::System.DateTimeOffset? date) {
 global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty = this.GetAbstractProperty(seqName);
 if (!((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))) {
 return;
@@ -366,31 +366,31 @@ return;
 global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!);
 global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> toDelete = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>();
 foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp in seq.GetContainer().GetAllProperties()) {
-if (((tmp is global::DripSharp.PdfCarton.Xmp.Type.DateType) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals((global::System.DateTimeOffset)(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(tmp!)).GetValue()), date))) {
+if (((tmp is global::DripSharp.PdfCarton.Xmp.Type.DateType) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals((global::System.DateTimeOffset?)(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(tmp!)).GetValue()), date))) {
 global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(toDelete, tmp);
 }
 }
 global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(toDelete, seq.GetContainer().RemoveProperty);
 }
 
-public virtual void AddSequenceDateValueAsSimple(string simpleName, global::System.DateTimeOffset date) {
+public virtual void AddSequenceDateValueAsSimple(string simpleName, global::System.DateTimeOffset? date) {
 this.AddUnqualifiedSequenceDateValue(simpleName, date);
 }
 
-public virtual void AddUnqualifiedSequenceDateValue(string seqName, global::System.DateTimeOffset date) {
+public virtual void AddUnqualifiedSequenceDateValue(string seqName, global::System.DateTimeOffset? date) {
 this.AddUnqualifiedSequenceValue(seqName, this.GetMetadata().GetTypeMapping().CreateDate((string)default!, global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfLocalName, global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, date));
 }
 
-public virtual global::System.Collections.Generic.IList<global::System.DateTimeOffset> GetUnqualifiedSequenceDateValueList(string seqName) {
+public virtual global::System.Collections.Generic.IList<global::System.DateTimeOffset?> GetUnqualifiedSequenceDateValueList(string seqName) {
 global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty = this.GetAbstractProperty(seqName);
 if (!((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))) {
 return default!;
 }
 global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!);
-global::System.Collections.Generic.IList<global::System.DateTimeOffset> retval = new global::System.Collections.Generic.List<global::System.DateTimeOffset>();
+global::System.Collections.Generic.IList<global::System.DateTimeOffset?> retval = new global::System.Collections.Generic.List<global::System.DateTimeOffset?>();
 foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in seq.GetContainer().GetAllProperties()) {
 if ((child is global::DripSharp.PdfCarton.Xmp.Type.DateType)) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(retval, (global::System.DateTimeOffset)(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(child!)).GetValue()));
+global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(retval, (global::System.DateTimeOffset?)(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(child!)).GetValue()));
 }
 }
 return retval;

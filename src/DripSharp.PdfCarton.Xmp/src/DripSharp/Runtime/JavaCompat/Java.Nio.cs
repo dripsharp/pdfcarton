@@ -646,6 +646,22 @@ internal static partial class JavaCompat
         ArgumentNullException.ThrowIfNull(encoding);
         return encoding.WebName;
     }
+    internal static bool CharsetCanEncode(Encoding encoding, string value)
+    {
+        ArgumentNullException.ThrowIfNull(encoding);
+        ArgumentNullException.ThrowIfNull(value);
+        var strict = (Encoding)encoding.Clone();
+        strict.EncoderFallback = EncoderFallback.ExceptionFallback;
+        try
+        {
+            _ = strict.GetByteCount(value);
+            return true;
+        }
+        catch (EncoderFallbackException)
+        {
+            return false;
+        }
+    }
     internal static string CharBufferWrap(char[] value, int start, int length) =>
         new(value, start, length);
 
@@ -664,6 +680,23 @@ internal static partial class JavaCompat
             return false;
         }
         catch (IOException)
+        {
+            return false;
+        }
+    }
+    internal static bool FileCreateNewFile(FileInfo file)
+    {
+        ArgumentNullException.ThrowIfNull(file);
+        try
+        {
+            using var stream = new FileStream(
+                file.FullName,
+                FileMode.CreateNew,
+                FileAccess.Write,
+                FileShare.None);
+            return true;
+        }
+        catch (IOException) when (File.Exists(file.FullName))
         {
             return false;
         }
@@ -716,6 +749,11 @@ internal static partial class JavaCompat
         uri.IsFile ? Uri.UnescapeDataString(uri.AbsolutePath) : uri.OriginalString;
     internal static bool PathIsAbsolute(string path) => Path.IsPathRooted(path);
     internal static string? PathRoot(string path) => Path.GetPathRoot(path);
+    internal static JavaPath? PathParent(string path)
+    {
+        var parent = Path.GetDirectoryName(path);
+        return parent is null ? null : new JavaPath(parent);
+    }
     internal static string PathRelativize(string basis, string path) => Path.GetRelativePath(basis, path);
     internal static string PathResolve(string basis, string value) => Path.Combine(basis, value);
     internal static string PathResolveSibling(string basis, string value) =>
@@ -825,8 +863,13 @@ internal static partial class JavaCompat
         }
         return bytes.Take(offset).Select(value => unchecked((sbyte)value)).ToArray();
     }
-    internal static MemoryStream NewMemoryStream(sbyte[] bytes) =>
-        new(bytes.Select(value => unchecked((byte)value)).ToArray());
+    internal static MemoryStream NewMemoryStream(sbyte[] bytes)
+    {
+        var stream = new MemoryStream(
+            bytes.Select(value => unchecked((byte)value)).ToArray());
+        InputStreamMark(stream, int.MaxValue);
+        return stream;
+    }
     internal static StringBuilder StringBuilderAppendInvariant(
         StringBuilder builder,
         object value)
@@ -839,14 +882,21 @@ internal static partial class JavaCompat
         ArgumentNullException.ThrowIfNull(bytes);
         if (offset < 0 || length < 0 || offset > bytes.Length - length)
             throw new IndexOutOfRangeException();
-        return new MemoryStream(
+        var stream = new MemoryStream(
             bytes.Skip(offset).Take(length).Select(value => unchecked((byte)value)).ToArray());
+        InputStreamMark(stream, int.MaxValue);
+        return stream;
     }
     internal static sbyte[] ToSignedBytes(MemoryStream stream) =>
         stream.ToArray().Select(value => unchecked((sbyte)value)).ToArray();
     internal static string WriteString(string path, object value, params object?[] _)
     {
         File.WriteAllText(path, StringValueOf(value));
+        return path;
+    }
+    internal static string WriteAllBytes(string path, sbyte[] bytes, params object?[] _)
+    {
+        File.WriteAllBytes(path, bytes.Select(value => unchecked((byte)value)).ToArray());
         return path;
     }
     internal static string Move(string source, string destination, params object?[] _)
@@ -873,6 +923,7 @@ internal static partial class JavaCompat
     }
     internal static FileStream NewOutputStream(string path, params object?[] _) => File.Create(path);
     internal static StreamWriter NewFileWriter(string path, Encoding encoding) => new(path, false, encoding);
+    internal static StreamWriter NewFileWriter(FileInfo file) => new(file.FullName, false);
     internal static StreamWriter NewFileWriter(FileInfo file, Encoding encoding) =>
         NewFileWriter(file.FullName, encoding);
     internal static JavaStream<string> Walk(string path, params object?[] _) =>

@@ -17,7 +17,7 @@ public static readonly global::DripSharp.PdfCarton.Cos.COSBoolean True = new glo
 
 public static readonly global::DripSharp.PdfCarton.Cos.COSBoolean False = new global::DripSharp.PdfCarton.Cos.COSBoolean(false);
 
-private readonly bool value;
+private readonly bool value = default;
 
 private COSBoolean(bool aValue) {
 this.value = aValue;
@@ -28,7 +28,7 @@ return this.value;
 }
 
 public bool? GetValueAsObject() {
-return (this.value ? true : false);
+return (this.value ? (bool?)(true) : (bool?)(false));
 }
 
 public static global::DripSharp.PdfCarton.Cos.COSBoolean GetBoolean(bool value) {

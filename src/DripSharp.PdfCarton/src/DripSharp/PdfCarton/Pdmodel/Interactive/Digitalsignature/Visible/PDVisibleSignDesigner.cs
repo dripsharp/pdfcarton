@@ -13,13 +13,13 @@ private float? imageWidth = default;
 
 private float? imageHeight = default;
 
-private float __field_xAxis;
+private float __field_xAxis = default;
 
-private float __field_yAxis;
+private float __field_yAxis = default;
 
-private float __field_pageHeight;
+private float __field_pageHeight = default;
 
-private float __field_pageWidth;
+private float __field_pageWidth = default;
 
 private global::SkiaSharp.SKBitmap image = null!;
 
@@ -29,7 +29,7 @@ private int[] __field_formatterRectangleParameters = new int[] { 0, 0, 100, 50 }
 
 private global::SkiaSharp.SKMatrix affineTransform = global::DripSharp.Runtime.PdfCartonFontCompat.Identity();
 
-private float __field_imageSizeInPercents;
+private float __field_imageSizeInPercents = default;
 
 private int rotation = 0;
 

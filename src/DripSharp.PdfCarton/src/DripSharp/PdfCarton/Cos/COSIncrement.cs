@@ -55,7 +55,7 @@ continue;
 global::DripSharp.PdfCarton.Cos.COSUpdateInfo updatableEntry = (global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(entry!);
 global::DripSharp.PdfCarton.Cos.COSUpdateState entryUpdateState = updatableEntry.GetUpdateState();
 this.UpdateDifferentOrigin(entryUpdateState);
-if ((((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)updatableEntry).IsNeedToBeUpdated() && ((!((entry is global::DripSharp.PdfCarton.Cos.COSObject)) && entry.IsDirect()) || (entry is global::DripSharp.PdfCarton.Cos.COSArray)))) {
+if ((((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(updatableEntry)).IsNeedToBeUpdated() && ((!((entry is global::DripSharp.PdfCarton.Cos.COSObject)) && entry.IsDirect()) || (entry is global::DripSharp.PdfCarton.Cos.COSArray)))) {
 this.Exclude(entry);
 childDemandsParentUpdate = true;
 }

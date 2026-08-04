@@ -71,7 +71,7 @@ this.extractData(glyphSubstitutionMap, lookups[lookupIndex]);
 if (global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphSubstitutionDataExtractor.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphSubstitutionDataExtractor.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("*********** extracting GSUB data for the feature: ", featureRecord.GetFeatureTag()), ", glyphSubstitutionMap: "), glyphSubstitutionMap)));
 }
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(gsubData, featureRecord.GetFeatureTag(), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(glyphSubstitutionMap));
+global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(gsubData, featureRecord.GetFeatureTag(), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<global::System.Collections.Generic.IList<int>, int>(glyphSubstitutionMap)));
 }
 
 private void extractData(global::System.Collections.Generic.IDictionary<global::System.Collections.Generic.IList<int>, int> glyphSubstitutionMap, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupTable lookupTable) {

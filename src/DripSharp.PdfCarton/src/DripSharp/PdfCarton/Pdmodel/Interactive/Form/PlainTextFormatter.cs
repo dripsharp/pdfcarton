@@ -26,7 +26,7 @@ public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.Plai
 [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
 public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainTextFormatter.TextAlign Justify = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainTextFormatter.TextAlign(4);
 
-internal readonly int alignment;
+internal readonly int alignment = default;
 
 internal TextAlign(int alignment) {
 this.alignment = alignment;
@@ -55,9 +55,9 @@ private const int FONTSCALE = 1000;
 
 private readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceStyle appearanceStyle = null!;
 
-private readonly bool wrapLines;
+private readonly bool wrapLines = default;
 
-private readonly float width;
+private readonly float width = default;
 
 private readonly global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contents = null!;
 
@@ -65,9 +65,9 @@ private readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainText 
 
 private readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainTextFormatter.TextAlign textAlignment = null!;
 
-private float horizontalOffset;
+private float horizontalOffset = default;
 
-private float verticalOffset;
+private float verticalOffset = default;
 
 internal class Builder {
 internal readonly global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contents = null!;

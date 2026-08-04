@@ -13,7 +13,7 @@ private readonly string registry = null!;
 
 private readonly string ordering = null!;
 
-private readonly int supplement;
+private readonly int supplement = default;
 
 public CIDSystemInfo(string registry, string ordering, int supplement) {
 this.registry = registry;

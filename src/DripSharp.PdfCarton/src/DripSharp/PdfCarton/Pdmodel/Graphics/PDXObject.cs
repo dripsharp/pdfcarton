@@ -16,7 +16,7 @@ if ((@base == default!)) {
 return default!;
 }
 if (!((@base is global::DripSharp.PdfCarton.Cos.COSStream))) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected object type: ", (((object)(@base)).GetType().FullName ?? ((object)(@base)).GetType().Name)));
+throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected object type: ", global::DripSharp.Runtime.JavaCompat.ClassName(((object)(@base)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox")));
 }
 global::DripSharp.PdfCarton.Cos.COSStream stream = (global::DripSharp.PdfCarton.Cos.COSStream)(@base!);
 string subtype = stream.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype);

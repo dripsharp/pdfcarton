@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
 public class AlternateSetTable {
-private readonly int glyphCount;
+private readonly int glyphCount = default;
 
 private readonly int[] alternateGlyphIDs = null!;
 

@@ -15,9 +15,9 @@ protected internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font
 
 private readonly global::System.Collections.Generic.IDictionary<int, float> widths = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, float>();
 
-private float defaultWidth;
+private float defaultWidth = default;
 
-private float averageWidth;
+private float averageWidth = default;
 
 private readonly global::System.Collections.Generic.IDictionary<int, float> verticalDisplacementY = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, float>();
 
@@ -183,7 +183,7 @@ public virtual global::DripSharp.PdfCarton.Util.Vector GetPositionVector(int cod
 int cid = this.CodeToCID(code);
 global::DripSharp.PdfCarton.Util.Vector v = global::DripSharp.Runtime.JavaCompat.MapGet(this.positionVectors, cid);
 if ((v == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange vdRange = global::DripSharp.Runtime.JavaCompat.FindFirstOptional(global::DripSharp.Runtime.JavaCompat.StreamFilter(this.displacementRanges, (vdr) => vdr.RangeMatches(cid))).OrElse(default!);
+global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange vdRange = global::DripSharp.Runtime.JavaCompat.FindFirstOptional(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(this.displacementRanges), (vdr) => vdr.RangeMatches(cid))).OrElse(default!);
 if ((vdRange != default!)) {
 v = vdRange.GetPositionVector();
 } else {
@@ -197,7 +197,7 @@ public virtual float GetVerticalDisplacementVectorY(int code) {
 int cid = this.CodeToCID(code);
 float? w1y = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.verticalDisplacementY, cid);
 if ((w1y == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange vdRange = global::DripSharp.Runtime.JavaCompat.FindFirstOptional(global::DripSharp.Runtime.JavaCompat.StreamFilter(this.displacementRanges, (vdr) => vdr.RangeMatches(cid))).OrElse(default!);
+global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange vdRange = global::DripSharp.Runtime.JavaCompat.FindFirstOptional(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(this.displacementRanges), (vdr) => vdr.RangeMatches(cid))).OrElse(default!);
 if ((vdRange != default!)) {
 w1y = vdRange.GetVerticalDisplacement();
 } else {
@@ -267,13 +267,13 @@ return cid2gid!;
 }
 
 internal class VerticalDisplacementRange {
-internal readonly int rangeStart;
+internal readonly int rangeStart = default;
 
-internal readonly int rangeEnd;
+internal readonly int rangeEnd = default;
 
 internal readonly global::DripSharp.PdfCarton.Util.Vector positionVector = null!;
 
-internal readonly float verticalDisplacment;
+internal readonly float verticalDisplacment = default;
 
 public VerticalDisplacementRange(int start, int end, global::DripSharp.PdfCarton.Util.Vector vector, float displacement) {
 this.rangeStart = start;

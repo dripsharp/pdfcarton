@@ -11,35 +11,35 @@ namespace DripSharp.PdfCarton.Fonts.Ttf;
 public class MaximumProfileTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
 public const string Tag = "maxp";
 
-private float version;
+private float version = default;
 
-private int numGlyphs;
+private int numGlyphs = default;
 
-private int maxPoints;
+private int maxPoints = default;
 
-private int maxContours;
+private int maxContours = default;
 
-private int maxCompositePoints;
+private int maxCompositePoints = default;
 
-private int maxCompositeContours;
+private int maxCompositeContours = default;
 
-private int maxZones;
+private int maxZones = default;
 
-private int maxTwilightPoints;
+private int maxTwilightPoints = default;
 
-private int maxStorage;
+private int maxStorage = default;
 
-private int maxFunctionDefs;
+private int maxFunctionDefs = default;
 
-private int maxInstructionDefs;
+private int maxInstructionDefs = default;
 
-private int maxStackElements;
+private int maxStackElements = default;
 
-private int maxSizeOfInstructions;
+private int maxSizeOfInstructions = default;
 
-private int maxComponentElements;
+private int maxComponentElements = default;
 
-private int maxComponentDepth;
+private int maxComponentDepth = default;
 
 internal MaximumProfileTable() {}
 

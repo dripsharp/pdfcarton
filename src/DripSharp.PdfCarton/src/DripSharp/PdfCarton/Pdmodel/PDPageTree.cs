@@ -246,7 +246,7 @@ internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary searched = null!
 
 internal int index = -1;
 
-internal bool found;
+internal bool found = default;
 
 internal SearchContext(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
 this.searched = page.GetCOSObject();

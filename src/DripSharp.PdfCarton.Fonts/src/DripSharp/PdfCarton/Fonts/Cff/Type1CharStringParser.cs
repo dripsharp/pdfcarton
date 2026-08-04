@@ -150,7 +150,7 @@ int b1__240_17 = input.ReadUnsignedByte();
 return (((-((b0 - 251)) * 256) - b1__240_17) - 108);
 } else {
 if ((b0 == 255)) {
-return ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)input).ReadInt();
+return ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadInt();
 } else {
 throw new global::System.ArgumentException();
 }

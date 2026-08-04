@@ -13,13 +13,13 @@ private readonly global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer = nu
 
 private readonly global::DripSharp.PdfCarton.Pdmodel.PDPage page = null!;
 
-private readonly bool subsamplingAllowed;
+private readonly bool subsamplingAllowed = default;
 
 private readonly global::DripSharp.PdfCarton.Rendering.RenderDestination destination = null!;
 
 private readonly global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints = null!;
 
-private readonly float imageDownscalingOptimizationThreshold;
+private readonly float imageDownscalingOptimizationThreshold = default;
 
 internal PageDrawerParameters(global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer, global::DripSharp.PdfCarton.Pdmodel.PDPage page, bool subsamplingAllowed, global::DripSharp.PdfCarton.Rendering.RenderDestination destination, global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints, float imageDownscalingOptimizationThreshold) {
 this.renderer = renderer;

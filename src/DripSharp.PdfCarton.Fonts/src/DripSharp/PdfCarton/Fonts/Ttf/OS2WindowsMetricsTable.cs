@@ -69,89 +69,89 @@ public const int FamilyClassScripts = 10;
 
 public const int FamilyClassSymbolic = 12;
 
-public const short FstypeRestricted = 2;
+public const short FstypeRestricted = unchecked((short)(2));
 
-public const short FstypePreviewAndPrint = 4;
+public const short FstypePreviewAndPrint = unchecked((short)(4));
 
-public const short FstypeEditible = 8;
+public const short FstypeEditible = unchecked((short)(8));
 
-public const short FstypeNoSubsetting = 256;
+public const short FstypeNoSubsetting = unchecked((short)(256));
 
-public const short FstypeBitmapOnly = 512;
+public const short FstypeBitmapOnly = unchecked((short)(512));
 
-private int version;
+private int version = default;
 
-private short averageCharWidth;
+private short averageCharWidth = default;
 
-private int weightClass;
+private int weightClass = default;
 
-private int widthClass;
+private int widthClass = default;
 
-private short fsType;
+private short fsType = default;
 
-private short subscriptXSize;
+private short subscriptXSize = default;
 
-private short subscriptYSize;
+private short subscriptYSize = default;
 
-private short subscriptXOffset;
+private short subscriptXOffset = default;
 
-private short subscriptYOffset;
+private short subscriptYOffset = default;
 
-private short superscriptXSize;
+private short superscriptXSize = default;
 
-private short superscriptYSize;
+private short superscriptYSize = default;
 
-private short superscriptXOffset;
+private short superscriptXOffset = default;
 
-private short superscriptYOffset;
+private short superscriptYOffset = default;
 
-private short strikeoutSize;
+private short strikeoutSize = default;
 
-private short strikeoutPosition;
+private short strikeoutPosition = default;
 
-private int familyClass;
+private int familyClass = default;
 
 private sbyte[] panose = new sbyte[10];
 
-private long unicodeRange1;
+private long unicodeRange1 = default;
 
-private long unicodeRange2;
+private long unicodeRange2 = default;
 
-private long unicodeRange3;
+private long unicodeRange3 = default;
 
-private long unicodeRange4;
+private long unicodeRange4 = default;
 
 private string achVendId = "XXXX";
 
-private int fsSelection;
+private int fsSelection = default;
 
-private int firstCharIndex;
+private int firstCharIndex = default;
 
-private int lastCharIndex;
+private int lastCharIndex = default;
 
-private int typoAscender;
+private int typoAscender = default;
 
-private int typoDescender;
+private int typoDescender = default;
 
-private int typoLineGap;
+private int typoLineGap = default;
 
-private int winAscent;
+private int winAscent = default;
 
-private int winDescent;
+private int winDescent = default;
 
 private long codePageRange1 = 0;
 
 private long codePageRange2 = 0;
 
-private int sxHeight;
+private int sxHeight = default;
 
-private int sCapHeight;
+private int sCapHeight = default;
 
-private int usDefaultChar;
+private int usDefaultChar = default;
 
-private int usBreakChar;
+private int usBreakChar = default;
 
-private int usMaxContext;
+private int usMaxContext = default;
 
 internal OS2WindowsMetricsTable() : base() {
 

@@ -13,7 +13,7 @@ public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference
 
 private readonly global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
 
-private readonly long nextFreeObject;
+private readonly long nextFreeObject = default;
 
 public FreeXReference(global::DripSharp.PdfCarton.Cos.COSObjectKey key, long nextFreeObject) : base(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType.Free) {
 this.key = key;

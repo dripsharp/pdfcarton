@@ -27,7 +27,7 @@ private int supplement = 0;
 
 private int minCodeLength = 4;
 
-private int maxCodeLength;
+private int maxCodeLength = default;
 
 private int minCidLength = 4;
 
@@ -95,11 +95,11 @@ global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(@in, bytes,
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamMark(@in, this.maxCodeLength);
 for (int i__177_18 = (this.minCodeLength - 1); (i__177_18 < this.maxCodeLength); i__177_18++) {
 int byteCount = (i__177_18 + 1);
-if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Any(this.codespaceRanges, (r) => r.IsFullMatch(bytes, byteCount))) {
+if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Any(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Stream(this.codespaceRanges), (r) => r.IsFullMatch(bytes, byteCount))) {
 return global::DripSharp.PdfCarton.Fonts.Cmap.CMap.toInt(bytes, byteCount);
 }
 if ((byteCount < this.maxCodeLength)) {
-bytes[byteCount] = unchecked((sbyte)((sbyte)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(@in))));
+bytes[byteCount] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(@in)))));
 }
 }
 if (global::DripSharp.PdfCarton.Fonts.Cmap.CMap.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Warning)) {
@@ -249,24 +249,24 @@ this.minCodeLength = global::System.Math.Min(this.minCodeLength, range.GetCodeLe
 
 internal virtual void useCmap(global::DripSharp.PdfCarton.Fonts.Cmap.CMap cmap) {
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(cmap.codespaceRanges, this.addCodespaceRange);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPutAll(this.charToUnicodeOneByte, cmap.charToUnicodeOneByte);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPutAll(this.charToUnicodeTwoBytes, cmap.charToUnicodeTwoBytes);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPutAll(this.charToUnicodeMoreBytes, cmap.charToUnicodeMoreBytes);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(cmap.charToUnicodeOneByte, (k, v) => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.unicodeToByteCodes, v, new sbyte[] { unchecked((sbyte)((sbyte)((k % 255)))) }));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(cmap.charToUnicodeTwoBytes, (k, v) => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.unicodeToByteCodes, v, new sbyte[] { unchecked((sbyte)((sbyte)(((k >>> unchecked((int)(8))) & 255)))), unchecked((sbyte)((sbyte)((k & 255)))) }));
+global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPutAll(this.charToUnicodeOneByte, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<int, string>(cmap.charToUnicodeOneByte));
+global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPutAll(this.charToUnicodeTwoBytes, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<int, string>(cmap.charToUnicodeTwoBytes));
+global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPutAll(this.charToUnicodeMoreBytes, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<int, string>(cmap.charToUnicodeMoreBytes));
+global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(cmap.charToUnicodeOneByte, (k, v) => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.unicodeToByteCodes, v, new sbyte[] { unchecked((sbyte)(unchecked((sbyte)((k % 255))))) }));
+global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(cmap.charToUnicodeTwoBytes, (k, v) => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.unicodeToByteCodes, v, new sbyte[] { unchecked((sbyte)(unchecked((sbyte)(((k >>> unchecked((int)(8))) & 255))))), unchecked((sbyte)(unchecked((sbyte)((k & 255))))) }));
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(cmap.charToUnicodeMoreBytes, (k, v) => {
 sbyte[] bar;
 if ((k <= 16777215)) {
-bar = new sbyte[] { unchecked((sbyte)((sbyte)(((k >>> unchecked((int)(16))) & 255)))), unchecked((sbyte)((sbyte)(((k >>> unchecked((int)(8))) & 255)))), unchecked((sbyte)((sbyte)((k & 255)))) };
+bar = new sbyte[] { unchecked((sbyte)(unchecked((sbyte)(((k >>> unchecked((int)(16))) & 255))))), unchecked((sbyte)(unchecked((sbyte)(((k >>> unchecked((int)(8))) & 255))))), unchecked((sbyte)(unchecked((sbyte)((k & 255))))) };
 } else {
-bar = new sbyte[] { unchecked((sbyte)((sbyte)(((k >>> unchecked((int)(24))) & 255)))), unchecked((sbyte)((sbyte)(((k >>> unchecked((int)(16))) & 255)))), unchecked((sbyte)((sbyte)(((k >>> unchecked((int)(8))) & 255)))), unchecked((sbyte)((sbyte)((k & 255)))) };
+bar = new sbyte[] { unchecked((sbyte)(unchecked((sbyte)(((k >>> unchecked((int)(24))) & 255))))), unchecked((sbyte)(unchecked((sbyte)(((k >>> unchecked((int)(16))) & 255))))), unchecked((sbyte)(unchecked((sbyte)(((k >>> unchecked((int)(8))) & 255))))), unchecked((sbyte)(unchecked((sbyte)((k & 255))))) };
 }
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.unicodeToByteCodes, v, bar);
 });
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(cmap.codeToCid, (key, value) => {
 global::System.Collections.Generic.IDictionary<int, int> existingMapping = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPutIfAbsent(this.codeToCid, key, value);
 if ((existingMapping != default!)) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPutAll(existingMapping, value);
+global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPutAll(existingMapping, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<int, int>(value));
 }
 });
 global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AddAll(this.codeToCidRanges, cmap.codeToCidRanges);

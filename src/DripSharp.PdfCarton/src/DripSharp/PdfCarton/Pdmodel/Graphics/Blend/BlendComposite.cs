@@ -33,7 +33,7 @@ return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendComposite(ble
 
 private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode blendMode = null!;
 
-private readonly float constantAlpha;
+private readonly float constantAlpha = default;
 
 private BlendComposite(global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode blendMode, float constantAlpha) {
 this.blendMode = blendMode;

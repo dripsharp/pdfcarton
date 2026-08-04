@@ -29,7 +29,7 @@ private static readonly string[] ALPHA_START_FORMATS = new string[] { "EEEE, dd 
 
 private static readonly string[] DIGIT_START_FORMATS = new string[] { "dd MMM yy HH:mm:ss", "dd MMM yy HH:mm", "yyyy MMM d", "yyyymmddhh:mm:ss", "H:m M/d/yy", "M/d/yy HH:mm:ss", "M/d/yy HH:mm", "M/d/yy" };
 
-public static string ToString(global::System.DateTimeOffset cal) {
+public static string ToString(global::System.DateTimeOffset? cal) {
 if ((cal == default!)) {
 return default!;
 }
@@ -37,7 +37,7 @@ string offset = global::DripSharp.PdfCarton.Util.DateConverter.formatTZoffset((l
 return global::DripSharp.Runtime.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("D:", "%1$4tY%1$2tm%1$2td"), "%1$2tH%1$2tM%1$2tS"), "%2$s"), "'"), cal, offset);
 }
 
-public static string ToISO8601(global::System.DateTimeOffset cal) {
+public static string ToISO8601(global::System.DateTimeOffset? cal) {
 string offset = global::DripSharp.PdfCarton.Util.DateConverter.formatTZoffset((long)((global::DripSharp.Runtime.JavaCompat.CalendarGet(cal, 15) + global::DripSharp.Runtime.JavaCompat.CalendarGet(cal, 16))), ":");
 return global::DripSharp.Runtime.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("%1$4tY", "-%1$2tm"), "-%1$2td"), "T"), "%1$2tH:%1$2tM:%1$2tS"), "%2$s"), cal, offset);
 }
@@ -100,21 +100,21 @@ return true;
 return false;
 }
 
-internal static global::System.DateTimeOffset newGreg() {
-global::System.DateTimeOffset retCal = global::DripSharp.Runtime.JavaCompat.CalendarInstance(global::DripSharp.Runtime.JavaCompat.NewSimpleTimeZone(0, "UTC"));
+internal static global::System.DateTimeOffset? newGreg() {
+global::System.DateTimeOffset? retCal = global::DripSharp.Runtime.JavaCompat.CalendarInstance(global::DripSharp.Runtime.JavaCompat.NewSimpleTimeZone(0, "UTC"));
 global::DripSharp.Runtime.JavaCompat.CalendarSetLenient(retCal, false);
 retCal = global::DripSharp.Runtime.JavaCompat.CalendarSet(retCal, 14, 0);
 return retCal;
 }
 
-private static global::System.DateTimeOffset adjustTimeZoneNicely(global::System.DateTimeOffset cal, global::System.TimeZoneInfo tz) {
+private static global::System.DateTimeOffset? adjustTimeZoneNicely(global::System.DateTimeOffset? cal, global::System.TimeZoneInfo tz) {
 cal = global::DripSharp.Runtime.JavaCompat.CalendarSetTimeZone(cal, tz);
 int offset = ((global::DripSharp.Runtime.JavaCompat.CalendarGet(cal, 15) + global::DripSharp.Runtime.JavaCompat.CalendarGet(cal, 16)) / global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_MINUTE);
 cal = global::DripSharp.Runtime.JavaCompat.CalendarAdd(cal, 12, -offset);
 return cal;
 }
 
-internal static bool parseTZoffset(string text, ref global::System.DateTimeOffset cal, global::DripSharp.Runtime.JavaParsePosition initialWhere) {
+internal static bool parseTZoffset(string text, ref global::System.DateTimeOffset? cal, global::DripSharp.Runtime.JavaParsePosition initialWhere) {
 global::DripSharp.Runtime.JavaParsePosition where = new global::DripSharp.Runtime.JavaParsePosition(initialWhere.GetIndex());
 global::System.TimeZoneInfo tz = global::DripSharp.Runtime.JavaCompat.NewSimpleTimeZone(0, "GMT");
 int tzHours;
@@ -170,7 +170,7 @@ global::DripSharp.Runtime.JavaCompat.TimeZoneSetId(tz, "unknown");
 }
 }
 
-private static global::System.DateTimeOffset parseBigEndianDate(string text, global::DripSharp.Runtime.JavaParsePosition initialWhere) {
+private static global::System.DateTimeOffset? parseBigEndianDate(string text, global::DripSharp.Runtime.JavaParsePosition initialWhere) {
 global::DripSharp.Runtime.JavaParsePosition where = new global::DripSharp.Runtime.JavaParsePosition(initialWhere.GetIndex());
 int year = global::DripSharp.PdfCarton.Util.DateConverter.parseTimeField(text, where, 4, 0);
 if ((where.GetIndex() != (4 + initialWhere.GetIndex()))) {
@@ -190,10 +190,10 @@ char nextC = global::DripSharp.PdfCarton.Util.DateConverter.skipOptionals(text, 
 if (((int)(nextC) == (int)('.'))) {
 global::DripSharp.PdfCarton.Util.DateConverter.parseTimeField(text, where, 19, 0);
 }
-global::System.DateTimeOffset dest = global::DripSharp.PdfCarton.Util.DateConverter.newGreg();
+global::System.DateTimeOffset? dest = global::DripSharp.PdfCarton.Util.DateConverter.newGreg();
 try {
 dest = global::DripSharp.Runtime.JavaCompat.CalendarSet(dest, year, month, day, hour, minute, second);
-dest.ToUnixTimeMilliseconds();
+global::DripSharp.Runtime.JavaCompat.CalendarGetTimeInMillis(dest);
 } catch (global::System.ArgumentException ill) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Util.DateConverter.LOG, (global::System.Exception)ill, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Couldn't parse arguments text:", text), " initialWhere:"), initialWhere)));
 return default!;
@@ -203,32 +203,33 @@ global::DripSharp.PdfCarton.Util.DateConverter.skipOptionals(text, initialWhere,
 return dest;
 }
 
-private static global::System.DateTimeOffset parseSimpleDate(string text, string[] fmts, global::DripSharp.Runtime.JavaParsePosition initialWhere) {
+private static global::System.DateTimeOffset? parseSimpleDate(string text, string[] fmts, global::DripSharp.Runtime.JavaParsePosition initialWhere) {
 foreach (string fmt in fmts) {
 global::DripSharp.Runtime.JavaParsePosition where = new global::DripSharp.Runtime.JavaParsePosition(initialWhere.GetIndex());
 global::DripSharp.Runtime.JavaSimpleDateFormat sdf = new global::DripSharp.Runtime.JavaSimpleDateFormat(fmt, global::System.Globalization.CultureInfo.GetCultureInfo("en"));
-global::System.DateTimeOffset retCal = global::DripSharp.PdfCarton.Util.DateConverter.newGreg();
+global::System.DateTimeOffset? retCal = global::DripSharp.PdfCarton.Util.DateConverter.newGreg();
 sdf.SetCalendar(retCal);
-if ((sdf.Parse(text, where) != default!)) {
+global::System.DateTimeOffset? parsedDate = sdf.Parse(text, where);
+if ((parsedDate != default!)) {
 initialWhere.SetIndex(where.GetIndex());
-global::DripSharp.PdfCarton.Util.DateConverter.skipOptionals(text, initialWhere, " ");
-return retCal;
+global::DripSharp.PdfCarton.Util.DateConverter.skipOptionals(text, initialWhere, " " );
+return parsedDate;
 }
 }
 return default!;
 }
 
-private static global::System.DateTimeOffset parseDate(string text, global::DripSharp.Runtime.JavaParsePosition initialWhere) {
+private static global::System.DateTimeOffset? parseDate(string text, global::DripSharp.Runtime.JavaParsePosition initialWhere) {
 if ((((text == default!) || (text.Length == 0)) || global::DripSharp.Runtime.JavaCompat.Equals("D:", global::DripSharp.Runtime.JavaCompat.StringTrim(text)))) {
 return default!;
 }
 int longestLen = -999999;
-global::System.DateTimeOffset longestDate = default!;
+global::System.DateTimeOffset? longestDate = default!;
 int whereLen;
 global::DripSharp.Runtime.JavaParsePosition where = new global::DripSharp.Runtime.JavaParsePosition(initialWhere.GetIndex());
 global::DripSharp.PdfCarton.Util.DateConverter.skipOptionals(text, where, " ");
 int startPosition = where.GetIndex();
-global::System.DateTimeOffset retCal = global::DripSharp.PdfCarton.Util.DateConverter.parseBigEndianDate(text, where);
+global::System.DateTimeOffset? retCal = global::DripSharp.PdfCarton.Util.DateConverter.parseBigEndianDate(text, where);
 if (((retCal != default!) && ((where.GetIndex() == text.Length) || global::DripSharp.PdfCarton.Util.DateConverter.parseTZoffset(text, ref retCal, where)))) {
 whereLen = where.GetIndex();
 if ((whereLen == text.Length)) {
@@ -259,21 +260,21 @@ return longestDate!;
 return retCal;
 }
 
-public static global::System.DateTimeOffset ToCalendar(global::DripSharp.PdfCarton.Cos.COSString text) {
+public static global::System.DateTimeOffset? ToCalendar(global::DripSharp.PdfCarton.Cos.COSString text) {
 if ((text == default!)) {
 return default!;
 }
 return global::DripSharp.PdfCarton.Util.DateConverter.ToCalendar(text.GetString());
 }
 
-public static global::System.DateTimeOffset ToCalendar(string text) {
+public static global::System.DateTimeOffset? ToCalendar(string text) {
 if (((text == default!) || (global::DripSharp.Runtime.JavaCompat.StringTrim(text).Length == 0))) {
 return default!;
 }
 global::DripSharp.Runtime.JavaParsePosition where = new global::DripSharp.Runtime.JavaParsePosition(0);
 global::DripSharp.PdfCarton.Util.DateConverter.skipOptionals(text, where, " ");
 global::DripSharp.PdfCarton.Util.DateConverter.skipString(text, "D:", where);
-global::System.DateTimeOffset calendar = global::DripSharp.PdfCarton.Util.DateConverter.parseDate(text, where);
+global::System.DateTimeOffset? calendar = global::DripSharp.PdfCarton.Util.DateConverter.parseDate(text, where);
 if (((calendar == default!) || (where.GetIndex() != text.Length))) {
 return default!;
 }

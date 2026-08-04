@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.Fonts.Ttf;
 internal class RandomAccessReadDataStream : global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream {
 private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly long length;
+private readonly long length = default;
 
 private readonly sbyte[] data = null!;
 

@@ -19,15 +19,15 @@ private static readonly bool IS_LINUX = global::DripSharp.Runtime.JavaCompat.Str
 
 private readonly global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer = null!;
 
-private readonly bool subsamplingAllowed;
+private readonly bool subsamplingAllowed = default;
 
 private global::DripSharp.Runtime.PdfCartonGraphics2D graphics = null!;
 
 private global::SkiaSharp.SKMatrix xform = default;
 
-private float xformScalingFactorX;
+private float xformScalingFactorX = default;
 
-private float xformScalingFactorY;
+private float xformScalingFactorY = default;
 
 private global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle pageSize = null!;
 
@@ -49,13 +49,13 @@ private readonly global::DripSharp.PdfCarton.Rendering.TilingPaintFactory tiling
 
 private readonly global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup> transparencyGroupStack;
 
-private int nestedHiddenOCGCount;
+private int nestedHiddenOCGCount = default;
 
 private readonly global::DripSharp.PdfCarton.Rendering.RenderDestination destination = null!;
 
 private readonly global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints = null!;
 
-private readonly float imageDownscalingOptimizationThreshold;
+private readonly float imageDownscalingOptimizationThreshold = default;
 
 private global::DripSharp.Runtime.JavaLookupTable invTable;
 
@@ -1017,17 +1017,17 @@ internal readonly global::SkiaSharp.SKBitmap image = null!;
 
 internal readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox = null!;
 
-internal readonly int minX;
+internal readonly int minX = default;
 
-internal readonly int minY;
+internal readonly int minY = default;
 
-internal readonly int maxX;
+internal readonly int maxX = default;
 
-internal readonly int maxY;
+internal readonly int maxY = default;
 
-internal readonly int width;
+internal readonly int width = default;
 
-internal readonly int height;
+internal readonly int height = default;
 
 internal TransparencyGroup(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup form, bool isSoftMask, global::DripSharp.PdfCarton.Util.Matrix ctm, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor backdropColor, global::DripSharp.PdfCarton.Rendering.PageDrawer __outer) {
 this.__outer = __outer;
@@ -1287,15 +1287,15 @@ global::System.Collections.Generic.IList<bool> visibles = new global::System.Col
 global::DripSharp.Runtime.JavaCompat.ForEach(oCGs, (prop) => global::DripSharp.Runtime.JavaCompat.Add(visibles, !(this.isHiddenOCG(prop))));
 global::DripSharp.PdfCarton.Cos.COSName visibilityPolicy = ocmd.GetVisibilityPolicy();
 if (global::DripSharp.PdfCarton.Cos.COSName.AnyOff.Equals(visibilityPolicy)) {
-return global::DripSharp.Runtime.JavaCompat.AllValues(visibles, (v) => v);
+return global::DripSharp.Runtime.JavaCompat.AllValues(global::DripSharp.Runtime.JavaCompat.Stream(visibles), (v) => v);
 }
 if (global::DripSharp.PdfCarton.Cos.COSName.AllOn.Equals(visibilityPolicy)) {
-return global::DripSharp.Runtime.JavaCompat.Any(visibles, (v) => !v);
+return global::DripSharp.Runtime.JavaCompat.Any(global::DripSharp.Runtime.JavaCompat.Stream(visibles), (v) => !v);
 }
 if (global::DripSharp.PdfCarton.Cos.COSName.AllOff.Equals(visibilityPolicy)) {
-return global::DripSharp.Runtime.JavaCompat.Any(visibles, (v) => v);
+return global::DripSharp.Runtime.JavaCompat.Any(global::DripSharp.Runtime.JavaCompat.Stream(visibles), (v) => v);
 }
-return global::DripSharp.Runtime.JavaCompat.NoValues(visibles, (v) => v);
+return global::DripSharp.Runtime.JavaCompat.NoValues(global::DripSharp.Runtime.JavaCompat.Stream(visibles), (v) => v);
 }
 
 private bool isHiddenVisibilityExpression(global::DripSharp.PdfCarton.Cos.COSArray veArray) {
@@ -1380,7 +1380,7 @@ private global::DripSharp.Runtime.JavaLookupTable getInvLookupTable() {
 if ((this.invTable == default!)) {
 sbyte[] inv = new sbyte[256];
 for (int i = 0; (i < inv.Length); i++) {
-inv[i] = unchecked((sbyte)((sbyte)((255 - i))));
+inv[i] = unchecked((sbyte)(unchecked((sbyte)((255 - i)))));
 }
 this.invTable = new global::DripSharp.Runtime.JavaLookupTable(0, inv);
 }

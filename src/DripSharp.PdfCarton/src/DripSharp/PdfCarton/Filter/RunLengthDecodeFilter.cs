@@ -66,8 +66,8 @@ if ((count == 1)) {
 if ((byt == lastVal)) {
 equality = true;
 } else {
-buf[0] = unchecked((sbyte)((sbyte)(lastVal)));
-buf[1] = unchecked((sbyte)((sbyte)(byt)));
+buf[0] = unchecked((sbyte)(unchecked((sbyte)(lastVal))));
+buf[1] = unchecked((sbyte)(unchecked((sbyte)(byt))));
 lastVal = byt;
 }
 count = 2;
@@ -88,7 +88,7 @@ global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, lastVal);
 equality = false;
 count = 1;
 } else {
-buf[count] = unchecked((sbyte)((sbyte)(byt)));
+buf[count] = unchecked((sbyte)(unchecked((sbyte)(byt))));
 ++count;
 }
 lastVal = byt;

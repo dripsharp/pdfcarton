@@ -31,7 +31,7 @@ return default!;
 }
 global::DripSharp.PdfCarton.Cos.COSBase retval = global::DripSharp.Runtime.JavaCompat.MapGet(this.clonedVersion, @base);
 if ((retval != default!)) {
-return (TCOSBASE)(retval!);
+return global::DripSharp.Runtime.JavaCompat.CastReference<TCOSBASE>(retval);
 }
 if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.clonedValues, @base)) {
 return @base;
@@ -39,7 +39,7 @@ return @base;
 retval = this.cloneCOSBaseForNewDocument(@base);
 global::DripSharp.Runtime.JavaCompat.MapPut(this.clonedVersion, @base, retval);
 this.clonedValues.Add(retval);
-return (TCOSBASE)(retval!);
+return global::DripSharp.Runtime.JavaCompat.CastReference<TCOSBASE>(retval);
 }
 
 private global::DripSharp.PdfCarton.Cos.COSBase cloneCOSBaseForNewDocument(global::DripSharp.PdfCarton.Cos.COSBase @base) {

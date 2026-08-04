@@ -39,7 +39,7 @@ private global::System.Collections.Generic.ISet<string> idSet = null!;
 
 private global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSName> roleSet = null!;
 
-private int currentPageNumber;
+private int currentPageNumber = default;
 
 private global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction;
 
@@ -124,7 +124,7 @@ this.processResources(normalAppearanceStream.GetResources(), srcNumberTreeAsMap,
 this.processResources(page.GetResources(), srcNumberTreeAsMap, dstNumberTreeAsMap, new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSDictionary>());
 }
 global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode dstNumberTreeNode = new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDParentTreeValue));
-dstNumberTreeNode.SetNumbers(dstNumberTreeAsMap);
+dstNumberTreeNode.SetNumbers(global::DripSharp.Runtime.JavaCompat.CastDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(dstNumberTreeAsMap));
 dstStructureTreeRoot.SetParentTree(dstNumberTreeNode);
 int? upperLimit = dstNumberTreeNode.GetUpperLimit();
 if ((upperLimit != default!)) {
@@ -513,7 +513,7 @@ srcDestination = this.sourceDocument.GetDocumentCatalog().FindNamedDestinationPa
 if ((srcDestination! is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)) {
 global::DripSharp.PdfCarton.Pdmodel.PDPage destinationPage = ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(srcDestination!)).GetPage();
 if ((destinationPage != default!)) {
-global::DripSharp.PdfCarton.Cos.COSArray clonedDestinationArray = new global::DripSharp.PdfCarton.Cos.COSArray(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(srcDestination!)).GetCOSObject().ToList());
+global::DripSharp.PdfCarton.Cos.COSArray clonedDestinationArray = new global::DripSharp.PdfCarton.Cos.COSArray(global::DripSharp.Runtime.JavaCompat.ToListValues<global::DripSharp.PdfCarton.Cos.COSBase>(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(srcDestination!)).GetCOSObject().ToList()));
 global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination dstDestination = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination.Create(clonedDestinationArray)!);
 global::DripSharp.Runtime.JavaCompat.MapPut(this.destToFixMap, dstDestination, imported);
 if ((action! != default!)) {

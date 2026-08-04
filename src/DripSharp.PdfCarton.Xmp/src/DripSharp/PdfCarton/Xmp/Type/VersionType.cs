@@ -45,11 +45,11 @@ public virtual void SetEvent(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventT
 this.AddProperty(value);
 }
 
-public virtual global::System.DateTimeOffset GetModifyDate() {
+public virtual global::System.DateTimeOffset? GetModifyDate() {
 return this.GetDatePropertyAsCalendar(global::DripSharp.PdfCarton.Xmp.Type.VersionType.ModifyDate);
 }
 
-public virtual void SetModifyDate(global::System.DateTimeOffset value) {
+public virtual void SetModifyDate(global::System.DateTimeOffset? value) {
 this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.VersionType.ModifyDate, value);
 }
 

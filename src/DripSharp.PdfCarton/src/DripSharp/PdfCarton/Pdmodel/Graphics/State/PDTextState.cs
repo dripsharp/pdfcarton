@@ -19,7 +19,7 @@ private float leading = 0;
 
 private global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = null!;
 
-private float fontSize;
+private float fontSize = default;
 
 private global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode = global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Fill;
 

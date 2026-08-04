@@ -9,13 +9,13 @@
 namespace DripSharp.PdfCarton.IO;
 
 public sealed class MemoryUsageSetting {
-private readonly bool __field_useMainMemory;
+private readonly bool __field_useMainMemory = default;
 
-private readonly bool __field_useTempFile;
+private readonly bool __field_useTempFile = default;
 
-private readonly long maxMainMemoryBytes;
+private readonly long maxMainMemoryBytes = default;
 
-private readonly long maxStorageBytes;
+private readonly long maxStorageBytes = default;
 
 private global::System.IO.FileInfo tempDir = null!;
 

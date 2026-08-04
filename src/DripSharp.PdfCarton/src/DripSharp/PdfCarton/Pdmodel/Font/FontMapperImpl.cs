@@ -61,7 +61,7 @@ internal static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider I
 }
 
 public void SetProvider(global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider fontProvider) {
-this.fontInfoByName = this.createFontInfoByName(fontProvider.GetFontInfo());
+this.fontInfoByName = this.createFontInfoByName(global::DripSharp.Runtime.JavaCompat.ToListValues<global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo>(fontProvider.GetFontInfo()));
 this.fontProvider = fontProvider;
 }
 
@@ -393,7 +393,7 @@ return (global::DripSharp.Runtime.JavaCompat.Equals(ordering, "Korea1") && (((co
 }
 
 internal class FontMatch : global::System.IComparable<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch> {
-internal double score;
+internal double score = default;
 
 internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info = null!;
 

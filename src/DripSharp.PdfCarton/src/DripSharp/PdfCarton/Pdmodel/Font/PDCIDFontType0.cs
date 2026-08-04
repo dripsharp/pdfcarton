@@ -17,9 +17,9 @@ private readonly global::DripSharp.PdfCarton.Fonts.FontBoxFont t1Font = null!;
 
 private readonly global::System.Collections.Generic.IDictionary<int, float> glyphHeights = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, float>();
 
-private readonly bool __field_isEmbedded;
+private readonly bool __field_isEmbedded = default;
 
-private readonly bool __field_isDamaged;
+private readonly bool __field_isDamaged = default;
 
 private readonly global::SkiaSharp.SKMatrix fontMatrixTransform = default;
 

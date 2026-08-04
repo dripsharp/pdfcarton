@@ -84,8 +84,8 @@ return pdImage;
 private static void extractFromTiff(global::DripSharp.PdfCarton.IO.RandomAccessRead reader, global::System.IO.Stream os, global::DripSharp.PdfCarton.Cos.COSDictionary @params, int number) {
 try {
 reader.Seek((long)(0));
-char endianess = unchecked((char)((char)(reader.Read())));
-if (((char)(reader.Read()) != (int)(endianess))) {
+char endianess = unchecked((char)(unchecked((char)(reader.Read()))));
+if ((unchecked((char)(reader.Read())) != (int)(endianess))) {
 throw new global::System.IO.IOException("Not a valid tiff file");
 }
 if ((((int)(endianess) != (int)('M')) && ((int)(endianess) != (int)('I')))) {
@@ -241,7 +241,7 @@ while (((amountRead = reader.Read(buf, 0, global::System.Math.Min(8192, dataleng
 datalength -= amountRead;
 if ((fillorder == 2)) {
 for (int x = 0; (x < amountRead); x++) {
-buf[x] = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.fliptable[(buf[x] & 255)];
+buf[x] = unchecked((sbyte)(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.fliptable[(buf[x] & 255)]));
 }
 }
 global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os, buf, 0, amountRead);

@@ -9,11 +9,11 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class LookupTable {
-private readonly int lookupType;
+private readonly int lookupType = default;
 
-private readonly int lookupFlag;
+private readonly int lookupFlag = default;
 
-private readonly int markFilteringSet;
+private readonly int markFilteringSet = default;
 
 private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable[] subTables = null!;
 

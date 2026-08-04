@@ -154,7 +154,7 @@ array!.Add(@object.GetCOSObject());
 if ((next == default!)) {
 array!.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
 } else {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error: Don't know how to convert type to COSBase '", (((object)(next)).GetType().FullName ?? ((object)(next)).GetType().Name)), "'"));
+throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error: Don't know how to convert type to COSBase '", global::DripSharp.Runtime.JavaCompat.ClassName(((object)(next)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox")), "'"));
 }
 }
 }

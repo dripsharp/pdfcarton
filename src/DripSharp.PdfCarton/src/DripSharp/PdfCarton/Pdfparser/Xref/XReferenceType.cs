@@ -21,7 +21,7 @@ public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType
 [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
 public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType ObjectStreamEntry = new global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType(2);
 
-private readonly int numericValue;
+private readonly int numericValue = default;
 
 private XReferenceType(int numericValue) {
 this.numericValue = numericValue;

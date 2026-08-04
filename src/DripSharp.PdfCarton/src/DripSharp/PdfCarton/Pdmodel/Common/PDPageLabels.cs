@@ -138,9 +138,9 @@ pageIndex++;
 internal class LabelGenerator : global::DripSharp.Runtime.JavaIterator<string> {
 internal readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange labelInfo = null!;
 
-internal readonly int numPages;
+internal readonly int numPages = default;
 
-internal int currentPage;
+internal int currentPage = default;
 
 internal LabelGenerator(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange label, int pages) {
 this.labelInfo = label;

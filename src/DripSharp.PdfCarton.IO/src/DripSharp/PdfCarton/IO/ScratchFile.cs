@@ -31,13 +31,13 @@ private readonly global::DripSharp.Runtime.JavaBitSet freePages = new global::Dr
 
 private volatile sbyte[][] inMemoryPages = null!;
 
-private readonly int inMemoryMaxPageCount;
+private readonly int inMemoryMaxPageCount = default;
 
-private readonly int maxPageCount;
+private readonly int maxPageCount = default;
 
-private readonly bool useScratchFile;
+private readonly bool useScratchFile = default;
 
-private readonly bool maxMainMemoryIsRestricted;
+private readonly bool maxMainMemoryIsRestricted = default;
 
 private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.IO.ScratchFileBuffer> buffers = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.IO.ScratchFileBuffer>();
 
@@ -121,7 +121,8 @@ this.raf = new global::DripSharp.Runtime.JavaRandomAccessFile(this.file, "rw");
 if (!(global::DripSharp.Runtime.JavaCompat.FileDelete(this.file))) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.IO.ScratchFile.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Error deleting scratch file: ", this.file.FullName)));
 }
-throw e;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(e);
+throw new global::System.InvalidOperationException("unreachable");
 }
 }
 long fileLen = this.raf.length();

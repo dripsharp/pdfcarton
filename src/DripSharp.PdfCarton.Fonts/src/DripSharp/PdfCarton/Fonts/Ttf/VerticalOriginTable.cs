@@ -11,9 +11,9 @@ namespace DripSharp.PdfCarton.Fonts.Ttf;
 public class VerticalOriginTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
 public const string Tag = "VORG";
 
-private float version;
+private float version = default;
 
-private int defaultVertOriginY;
+private int defaultVertOriginY = default;
 
 private global::System.Collections.Generic.IDictionary<int, int> origins = null!;
 

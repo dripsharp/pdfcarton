@@ -29,7 +29,7 @@ throw new global::System.ArgumentException();
 }
 sbyte[] bytes = new sbyte[(@string.Length / 2)];
 for (int i = 0; (i < @string.Length); i += 2) {
-bytes[(i / 2)] = unchecked((sbyte)((sbyte)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(@string, i, (i + 2)), 16))));
+bytes[(i / 2)] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(@string, i, (i + 2)), 16)))));
 }
 return bytes;
 }
@@ -51,7 +51,7 @@ sbyte[] ciphertextBytes = new sbyte[buffer.Length];
 for (int i = 0; (i < buffer.Length); i++) {
 int plain = (buffer[i] & 255);
 int cipher = (plain ^ (r >> unchecked((int)(8))));
-ciphertextBytes[i] = unchecked((sbyte)((sbyte)(cipher)));
+ciphertextBytes[i] = unchecked((sbyte)(unchecked((sbyte)(cipher))));
 r = ((((cipher + r) * c1) + c2) & 65535);
 }
 return ciphertextBytes;
@@ -72,7 +72,7 @@ int c2 = 22719;
 for (int i = 0; (i < ciphertextBytes.Length); i++) {
 int cipher = (ciphertextBytes[i] & 255);
 int plain = (cipher ^ (r >> unchecked((int)(8))));
-buffer[i] = unchecked((sbyte)((sbyte)(plain)));
+buffer[i] = unchecked((sbyte)(unchecked((sbyte)(plain))));
 r = ((((cipher + r) * c1) + c2) & 65535);
 }
 sbyte[] plaintextBytes = new sbyte[(ciphertextBytes.Length - n)];

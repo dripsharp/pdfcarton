@@ -15,7 +15,7 @@ private readonly long[] startPositions = null!;
 
 private readonly long[] endPositions = null!;
 
-private readonly int numberOfReader;
+private readonly int numberOfReader = default;
 
 private int currentIndex = 0;
 
@@ -34,7 +34,7 @@ throw new global::System.ArgumentException("Missing input parameter");
 if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(randomAccessReadList)) {
 throw new global::System.ArgumentException("Empty list");
 }
-this.readerList = global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.StreamFilter(randomAccessReadList, (r) => {
+this.readerList = global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(randomAccessReadList), (r) => {
 try {
 return (r.Length() > 0);
 } catch (global::System.IO.IOException e) {
@@ -89,7 +89,7 @@ this.checkClosed();
 if ((length == 0)) {
 return 0;
 }
-int maxAvailBytes = global::System.Math.Min(((global::DripSharp.PdfCarton.IO.RandomAccessRead)this).Available(), length);
+int maxAvailBytes = global::System.Math.Min(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Available(), length);
 if ((maxAvailBytes == 0)) {
 return -1;
 }
@@ -151,6 +151,6 @@ return (this.currentPosition >= this.totalLength);
 }
 
 public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition, long streamLength) {
-throw new global::System.NotSupportedException(global::DripSharp.Runtime.JavaCompat.Concat((((object)(this)).GetType().FullName ?? ((object)(this)).GetType().Name), ".createView isn't supported."));
+throw new global::System.NotSupportedException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"), ".createView isn't supported."));
 }
 }

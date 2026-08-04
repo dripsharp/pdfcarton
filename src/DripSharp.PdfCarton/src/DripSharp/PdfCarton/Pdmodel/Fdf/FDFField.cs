@@ -341,7 +341,7 @@ return default!;
 }
 
 public virtual void SetOptions(global::System.Collections.Generic.IList<object> options) {
-global::DripSharp.PdfCarton.Cos.COSArray value = global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<object>.ConverterToCOSArray(options);
+global::DripSharp.PdfCarton.Cos.COSArray value = global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<object>.ConverterToCOSArray(global::DripSharp.Runtime.JavaCompat.CastObjects(options));
 this.field.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Opt, value);
 }
 

@@ -17,7 +17,7 @@ private global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data = null!;
 
 private global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable loca = null!;
 
-private int numGlyphs;
+private int numGlyphs = default;
 
 private int cached = 0;
 

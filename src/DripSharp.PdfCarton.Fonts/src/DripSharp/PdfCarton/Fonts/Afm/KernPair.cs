@@ -13,9 +13,9 @@ private readonly string firstKernCharacter = null!;
 
 private readonly string secondKernCharacter = null!;
 
-private readonly float x;
+private readonly float x = default;
 
-private readonly float y;
+private readonly float y = default;
 
 public KernPair(string firstKernCharacter, string secondKernCharacter, float x, float y) {
 this.firstKernCharacter = firstKernCharacter;

@@ -15,11 +15,11 @@ private string __field_signerLocation = null!;
 
 private string __field_signatureReason = null!;
 
-private bool __field_visualSignEnabled;
+private bool __field_visualSignEnabled = default;
 
-private int __field_page;
+private int __field_page = default;
 
-private int __field_preferredSize;
+private int __field_preferredSize = default;
 
 private global::System.IO.Stream visibleSignature = null!;
 

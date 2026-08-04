@@ -11,9 +11,9 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 public class SignatureOptions : global::System.IDisposable {
 private global::DripSharp.PdfCarton.Cos.COSDocument visualSignature = null!;
 
-private int preferredSignatureSize;
+private int preferredSignatureSize = default;
 
-private int pageNo;
+private int pageNo = default;
 
 private global::DripSharp.PdfCarton.IO.RandomAccessRead pdfSource = default!;
 

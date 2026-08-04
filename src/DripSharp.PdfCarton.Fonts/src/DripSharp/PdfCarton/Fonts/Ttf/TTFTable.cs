@@ -11,13 +11,13 @@ namespace DripSharp.PdfCarton.Fonts.Ttf;
 public class TTFTable {
 private string tag = null!;
 
-private long checkSum;
+private long checkSum = default;
 
-private long offset;
+private long offset = default;
 
-private long length;
+private long length = default;
 
-protected internal bool Initialized;
+protected internal bool Initialized = default;
 
 internal TTFTable() {}
 

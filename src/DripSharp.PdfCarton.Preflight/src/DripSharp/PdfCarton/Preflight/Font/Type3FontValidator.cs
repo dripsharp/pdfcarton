@@ -204,7 +204,7 @@ foreach (global::DripSharp.PdfCarton.Cos.COSName key in keyList) {
 global::DripSharp.PdfCarton.Cos.COSDictionary xObjFont = dicFonts.GetCOSDictionary(key);
 try {
 global::DripSharp.PdfCarton.Pdmodel.Font.PDFont aFont = global::DripSharp.PdfCarton.Pdmodel.Font.PDFontFactory.CreateFont(xObjFont);
-global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer aContainer = this.Context.GetFontContainer(aFont.GetCOSObject());
+var aContainer = this.Context.GetFontContainer(aFont.GetCOSObject());
 if (!(aContainer.IsValid())) {
 this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsType3Damaged, global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(), ": The Resources dictionary of type 3 font contains invalid font")));
 }

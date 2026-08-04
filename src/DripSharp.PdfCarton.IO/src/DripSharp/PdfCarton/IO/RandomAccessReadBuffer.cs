@@ -140,13 +140,13 @@ public virtual int Read(sbyte[] b, int offset, int length) {
 this.CheckClosed();
 int bytesRead = this.readRemainingBytes(b, offset, length);
 if ((bytesRead == -1)) {
-if ((((global::DripSharp.PdfCarton.IO.RandomAccessRead)this).Available() > 0)) {
+if ((((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Available() > 0)) {
 bytesRead = 0;
 } else {
 return -1;
 }
 }
-while (((bytesRead < length) && (((global::DripSharp.PdfCarton.IO.RandomAccessRead)this).Available() > 0))) {
+while (((bytesRead < length) && (((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Available() > 0))) {
 if ((this.CurrentBufferPointer == this.ChunkSize)) {
 this.nextBuffer();
 }

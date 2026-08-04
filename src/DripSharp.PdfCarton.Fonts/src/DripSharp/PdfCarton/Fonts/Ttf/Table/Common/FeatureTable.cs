@@ -9,9 +9,9 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class FeatureTable {
-private readonly int featureParams;
+private readonly int featureParams = default;
 
-private readonly int lookupIndexCount;
+private readonly int lookupIndexCount = default;
 
 private readonly int[] lookupListIndices = null!;
 

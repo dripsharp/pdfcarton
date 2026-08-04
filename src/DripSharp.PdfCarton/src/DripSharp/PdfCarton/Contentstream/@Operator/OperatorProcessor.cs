@@ -24,6 +24,6 @@ public abstract void Process(global::DripSharp.PdfCarton.Contentstream.@Operator
 public abstract string GetName();
 
 public virtual bool CheckArrayTypesClass(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands, global::System.Type clazz) {
-return global::DripSharp.Runtime.JavaCompat.AllValues(operands, (value0) => clazz.IsInstanceOfType(value0));
+return global::DripSharp.Runtime.JavaCompat.AllValues(global::DripSharp.Runtime.JavaCompat.Stream(operands), (value0) => clazz.IsInstanceOfType(value0));
 }
 }

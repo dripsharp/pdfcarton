@@ -20,7 +20,7 @@ global::DripSharp.PdfCarton.Util.IterativeMergeSort.iterativeMergeSort<object>(a
 global::DripSharp.Runtime.JavaListIterator<T> i = global::DripSharp.Runtime.JavaCompat.ListIterator(list);
 foreach (object e in arr) {
 i.Next();
-i.Set((T)(e!));
+i.Set(global::DripSharp.Runtime.JavaCompat.CastReference<T>(e));
 }
 }
 

@@ -11,13 +11,13 @@ namespace DripSharp.PdfCarton.Printing;
 public sealed class PDFPageable : global::DripSharp.Runtime.JavaBook {
 private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument document = null!;
 
-private readonly int numberOfPages;
+private readonly int numberOfPages = default;
 
-private readonly bool showPageBorder;
+private readonly bool showPageBorder = default;
 
-private readonly float dpi;
+private readonly float dpi = default;
 
-private readonly bool center;
+private readonly bool center = default;
 
 private readonly global::DripSharp.PdfCarton.Printing.Orientation orientation = null!;
 

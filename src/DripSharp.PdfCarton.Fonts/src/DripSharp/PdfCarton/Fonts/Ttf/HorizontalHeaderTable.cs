@@ -11,39 +11,39 @@ namespace DripSharp.PdfCarton.Fonts.Ttf;
 public class HorizontalHeaderTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
 public const string Tag = "hhea";
 
-private float version;
+private float version = default;
 
-private short ascender;
+private short ascender = default;
 
-private short descender;
+private short descender = default;
 
-private short lineGap;
+private short lineGap = default;
 
-private int advanceWidthMax;
+private int advanceWidthMax = default;
 
-private short minLeftSideBearing;
+private short minLeftSideBearing = default;
 
-private short minRightSideBearing;
+private short minRightSideBearing = default;
 
-private short xMaxExtent;
+private short xMaxExtent = default;
 
-private short caretSlopeRise;
+private short caretSlopeRise = default;
 
-private short caretSlopeRun;
+private short caretSlopeRun = default;
 
-private short reserved1;
+private short reserved1 = default;
 
-private short reserved2;
+private short reserved2 = default;
 
-private short reserved3;
+private short reserved3 = default;
 
-private short reserved4;
+private short reserved4 = default;
 
-private short reserved5;
+private short reserved5 = default;
 
-private short metricDataFormat;
+private short metricDataFormat = default;
 
-private int numberOfHMetrics;
+private int numberOfHMetrics = default;
 
 internal HorizontalHeaderTable() : base() {
 

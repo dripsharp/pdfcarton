@@ -45,7 +45,7 @@ return (global::DripSharp.PdfCarton.Cos.COSDictionary)(objAtIndex!);
 }
 } else {
 if (((obj != default!) && !(((filter is global::DripSharp.PdfCarton.Cos.COSArray) || (obj is global::DripSharp.PdfCarton.Cos.COSArray))))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Filter.Filter.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Expected DecodeParams to be an Array or Dictionary but found ", (((object)(obj)).GetType().FullName ?? ((object)(obj)).GetType().Name))));
+global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Filter.Filter.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Expected DecodeParams to be an Array or Dictionary but found ", global::DripSharp.Runtime.JavaCompat.ClassName(((object)(obj)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox"))));
 }
 }
 }

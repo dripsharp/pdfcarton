@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 public class COSFilterInputStream : global::DripSharp.Runtime.JavaFilterInputStream {
 private int[][] ranges = null!;
 
-private int range;
+private int range = default;
 
 private long position = 0;
 

@@ -439,7 +439,7 @@ global::DripSharp.Runtime.JavaCompat.MapPut(destNumberTreeAsMap!, (destParentTre
 }
 destParentTreeNextKey += (maxSrcKey + 1);
 global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode newParentTreeNode = new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDParentTreeValue));
-newParentTreeNode.SetNumbers(destNumberTreeAsMap!);
+newParentTreeNode.SetNumbers(global::DripSharp.Runtime.JavaCompat.CastDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(destNumberTreeAsMap!));
 destStructTree.SetParentTree(newParentTreeNode);
 destStructTree.SetParentTreeNextKey(destParentTreeNextKey);
 this.mergeKEntries(cloner, srcStructTree, destStructTree);
@@ -657,12 +657,12 @@ global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCart
 if ((names == default!)) {
 names = new global::DripSharp.Runtime.JavaLinkedHashMap<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>();
 } else {
-names = new global::DripSharp.Runtime.JavaLinkedHashMap<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>(names);
+names = new global::DripSharp.Runtime.JavaLinkedHashMap<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>(global::DripSharp.Runtime.JavaCompat.CastDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>(names));
 }
 global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>> kids = idTree.GetKids();
 if ((kids != default!)) {
 foreach (global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> kid in kids) {
-global::DripSharp.Runtime.JavaCompat.MapPutAll(names, global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getIDTreeAsMap(kid));
+global::DripSharp.Runtime.JavaCompat.MapPutAll(names, global::DripSharp.Runtime.JavaCompat.CastDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getIDTreeAsMap(kid)));
 }
 }
 return names;
@@ -676,12 +676,12 @@ global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.
 if ((numbers == default!)) {
 numbers = new global::DripSharp.Runtime.JavaLinkedHashMap<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>();
 } else {
-numbers = new global::DripSharp.Runtime.JavaLinkedHashMap<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(numbers);
+numbers = new global::DripSharp.Runtime.JavaLinkedHashMap<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(global::DripSharp.Runtime.JavaCompat.CastDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(numbers));
 }
 global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> kids = tree.GetKids();
 if ((kids != default!)) {
 foreach (global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode kid in kids) {
-global::DripSharp.Runtime.JavaCompat.MapPutAll(numbers, global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(kid));
+global::DripSharp.Runtime.JavaCompat.MapPutAll(numbers, global::DripSharp.Runtime.JavaCompat.CastDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(kid)));
 }
 }
 return numbers;

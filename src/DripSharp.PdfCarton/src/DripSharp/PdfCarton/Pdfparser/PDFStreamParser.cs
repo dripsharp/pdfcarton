@@ -21,7 +21,7 @@ private int inlineImageDepth = 0;
 
 private long inlineOffset = 0;
 
-public PDFStreamParser(global::DripSharp.PdfCarton.Contentstream.PDContentStream pdContentstream) : base(((global::DripSharp.PdfCarton.Contentstream.PDContentStream)pdContentstream).GetContentsForStreamParsing()) {
+public PDFStreamParser(global::DripSharp.PdfCarton.Contentstream.PDContentStream pdContentstream) : base(((global::DripSharp.PdfCarton.Contentstream.PDContentStream)(pdContentstream)).GetContentsForStreamParsing()) {
 
 }
 
@@ -47,11 +47,11 @@ if (base.Source.IsEOF()) {
 this.Dispose();
 return default!;
 }
-char c = unchecked((char)((char)(base.Source.Peek())));
+char c = unchecked((char)(unchecked((char)(base.Source.Peek()))));
 switch (c) {
 case var __case_118_18_0 when __case_118_18_0 == '<':
 base.Source.Read();
-c = unchecked((char)((char)(base.Source.Peek())));
+c = unchecked((char)(unchecked((char)(base.Source.Peek()))));
 base.Source.Rewind(1);
 if (((int)(c) == (int)('<'))) {
 try {
@@ -115,7 +115,7 @@ if ((((int)(c) == (int)('-')) && (base.Source.Peek() == (int)(c)))) {
 base.Source.Read();
 }
 bool dotNotRead = ((int)(c) != (int)('.'));
-while (((global::DripSharp.Runtime.JavaCompat.IsDigit((c = unchecked((char)((char)(base.Source.Peek()))))) || (dotNotRead && ((int)(c) == (int)('.')))) || ((int)(c) == (int)('-')))) {
+while (((global::DripSharp.Runtime.JavaCompat.IsDigit((c = unchecked((char)(unchecked((char)(base.Source.Peek())))))) || (dotNotRead && ((int)(c) == (int)('.')))) || ((int)(c) == (int)('-')))) {
 if (((int)(c) != (int)('-'))) {
 buf.Append(c);
 }
@@ -164,7 +164,7 @@ global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSha
 }
 return beginImageOP;
 case var __case_290_18_0 when __case_290_18_0 == 'I':
-string id = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.CodePointToString(unchecked((char)((char)(base.Source.Read())))), (char)(base.Source.Read()));
+string id = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.CodePointToString(unchecked((char)(unchecked((char)(base.Source.Read()))))), unchecked((char)(base.Source.Read())));
 if (!(global::DripSharp.Runtime.JavaCompat.Equals(id, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImageData))) {
 long currentPosition = base.Source.GetPosition();
 this.Dispose();
@@ -246,11 +246,11 @@ this.SkipSpaces();
 global::System.Text.StringBuilder buffer = new global::System.Text.StringBuilder(4);
 int nextChar = base.Source.Peek();
 while (((((((((nextChar != -1) && !(global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsWhitespace(nextChar))) && (nextChar != (int)('['))) && (nextChar != (int)('<'))) && (nextChar != (int)('('))) && (nextChar != (int)('/'))) && (nextChar != (int)('%'))) && ((nextChar < (int)('0')) || (nextChar > (int)('9'))))) {
-char currentChar = unchecked((char)((char)(base.Source.Read())));
+char currentChar = unchecked((char)(unchecked((char)(base.Source.Read()))));
 nextChar = base.Source.Peek();
 buffer.Append(currentChar);
 if ((((int)(currentChar) == (int)('d')) && ((nextChar == (int)('0')) || (nextChar == (int)('1'))))) {
-buffer.Append(unchecked((char)((char)(base.Source.Read()))));
+buffer.Append(unchecked((char)(unchecked((char)(base.Source.Read())))));
 nextChar = base.Source.Peek();
 }
 }

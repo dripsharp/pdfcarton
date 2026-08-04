@@ -29,9 +29,9 @@ private readonly global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = null!;
 
 private readonly global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf = null!;
 
-private readonly bool __field_isEmbedded;
+private readonly bool __field_isEmbedded = default;
 
-private readonly bool __field_isDamaged;
+private readonly bool __field_isDamaged = default;
 
 private global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmapWinUnicode = default!;
 
@@ -209,7 +209,7 @@ throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.
 }
 }
 int code__420_17 = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(global::DripSharp.Runtime.JavaCompat.MapGetNullable(inverted, name__406_20));
-return new sbyte[] { unchecked((sbyte)((sbyte)(code__420_17))) };
+return new sbyte[] { unchecked((sbyte)(unchecked((sbyte)(code__420_17)))) };
 } else {
 string name__426_20 = this.GetGlyphList().CodePointToName(unicode);
 if (!(this.ttf.HasGlyph(name__426_20))) {
@@ -220,7 +220,7 @@ int? code__435_21 = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.Get
 if ((code__435_21 == default!)) {
 throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.JavaStringFormat("U+%04X is not available in font %s encoding", unicode, this.GetName()));
 }
-return new sbyte[] { unchecked((sbyte)((int)((sbyte)(code__435_21)))) };
+return new sbyte[] { unchecked((sbyte)(unchecked((sbyte)((int)(code__435_21))))) };
 }
 }
 

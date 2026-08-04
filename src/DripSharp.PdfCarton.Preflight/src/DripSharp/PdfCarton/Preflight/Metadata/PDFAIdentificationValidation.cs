@@ -20,7 +20,7 @@ global::DripSharp.PdfCarton.Xmp.Type.StructuredType stBasic = global::DripSharp.
 global::DripSharp.PdfCarton.Xmp.Type.StructuredType stPdfaIdent = global::DripSharp.Runtime.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema), typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!;
 if (!(global::DripSharp.Runtime.JavaCompat.Equals(id.GetPrefix(), stPdfaIdent.PreferedPrefix()))) {
 if ((metadata.GetSchema(stPdfaIdent.PreferedPrefix(), stBasic.@Namespace()) == default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnexpectedPrefixFoundError(id.GetPrefix(), stPdfaIdent.PreferedPrefix(), (typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema).FullName ?? typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema).Name)));
+global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnexpectedPrefixFoundError(id.GetPrefix(), stPdfaIdent.PreferedPrefix(), global::DripSharp.Runtime.JavaCompat.ClassName(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema), "DripSharp.PdfCarton.Preflight", "org.apache.pdfbox.preflight")));
 } else {
 id = (global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema)(metadata.GetSchema(stPdfaIdent.PreferedPrefix(), stPdfaIdent.@Namespace())!);
 }

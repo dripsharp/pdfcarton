@@ -22,7 +22,7 @@ public int ReadUnsignedByte();
 public int PeekUnsignedByte(int offset);
 
 public short ReadShort() {
-return (short)(((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)this).ReadUnsignedShort());
+return unchecked((short)(unchecked((short)(this.ReadUnsignedShort()))));
 }
 
 public int ReadUnsignedShort() {

@@ -118,7 +118,7 @@ return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(b0);
 
 private global::System.IConvertible readNumber(int b0, global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
 if ((b0 == 28)) {
-return (int)(((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)input).ReadShort());
+return (int)(((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort());
 }
 if (((b0 >= 32) && (b0 <= 246))) {
 return (b0 - 139);
@@ -132,8 +132,8 @@ int b1__203_17 = input.ReadUnsignedByte();
 return (((-((b0 - 251)) * 256) - b1__203_17) - 108);
 }
 if ((b0 == 255)) {
-short value = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)input).ReadShort();
-double fraction = (((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)input).ReadUnsignedShort() / (double)(65535.0D));
+short value = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort();
+double fraction = (((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadUnsignedShort() / (double)(65535.0D));
 return (value + fraction);
 }
 throw new global::System.ArgumentException();

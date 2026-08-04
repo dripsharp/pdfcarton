@@ -168,7 +168,7 @@ global::DripSharp.PdfCarton.Cos.COSDictionary obj = new global::DripSharp.PdfCar
 obj.SetDirect(isDirect);
 while (true) {
 this.SkipSpaces();
-char c = unchecked((char)((char)(this.Source.Peek())));
+char c = unchecked((char)(unchecked((char)(this.Source.Peek()))));
 if (((int)(c) == (int)('>'))) {
 break;
 } else {
@@ -294,7 +294,7 @@ return bracesParameter;
 }
 
 protected internal virtual global::DripSharp.PdfCarton.Cos.COSString ParseCOSString() {
-char nextChar = unchecked((char)((char)(this.Source.Read())));
+char nextChar = unchecked((char)(unchecked((char)(this.Source.Read()))));
 if (((int)(nextChar) == (int)('<'))) {
 return this.parseCOSHexString();
 } else {
@@ -306,7 +306,7 @@ global::DripSharp.Runtime.JavaByteArrayOutputStream @out = new global::DripSharp
 int braces = 1;
 int c = this.Source.Read();
 while (((braces > 0) && (c != -1))) {
-char ch = unchecked((char)((char)(c)));
+char ch = unchecked((char)(unchecked((char)(c))));
 int nextc = -2;
 if (((int)(ch) == (int)(')'))) {
 braces--;
@@ -320,7 +320,7 @@ braces++;
 global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)(ch));
 } else {
 if (((int)(ch) == (int)('\\'))) {
-char next = unchecked((char)((char)(this.Source.Read())));
+char next = unchecked((char)(unchecked((char)(this.Source.Read()))));
 switch (next) {
 case var __case_581_26_0 when __case_581_26_0 == 'n':
 global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)('\n'));
@@ -368,11 +368,11 @@ case var __case_629_26_0 when __case_629_26_0 == '7':
 global::System.Text.StringBuilder octal = new global::System.Text.StringBuilder();
 octal.Append(next);
 c = this.Source.Read();
-char digit = unchecked((char)((char)(c)));
+char digit = unchecked((char)(unchecked((char)(c))));
 if ((((int)(digit) >= (int)('0')) && ((int)(digit) <= (int)('7')))) {
 octal.Append(digit);
 c = this.Source.Read();
-digit = unchecked((char)((char)(c)));
+digit = unchecked((char)(unchecked((char)(c))));
 if ((((int)(digit) >= (int)('0')) && ((int)(digit) <= (int)('7')))) {
 octal.Append(digit);
 } else {
@@ -414,8 +414,8 @@ private global::DripSharp.PdfCarton.Cos.COSString parseCOSHexString() {
 global::System.Text.StringBuilder sBuf = new global::System.Text.StringBuilder();
 while (true) {
 int c = this.Source.Read();
-if (global::DripSharp.PdfCarton.Pdfparser.BaseParser.isHexDigit(unchecked((char)((char)(c))))) {
-sBuf.Append(unchecked((char)((char)(c))));
+if (global::DripSharp.PdfCarton.Pdfparser.BaseParser.isHexDigit(unchecked((char)(unchecked((char)(c)))))) {
+sBuf.Append(unchecked((char)(unchecked((char)(c)))));
 } else {
 if ((c == (int)('>'))) {
 break;
@@ -456,7 +456,7 @@ global::DripSharp.PdfCarton.Cos.COSArray po = new global::DripSharp.PdfCarton.Co
 global::DripSharp.PdfCarton.Cos.COSBase pbo;
 this.SkipSpaces();
 int i;
-while ((((i = this.Source.Peek()) > 0) && ((char)(i) != (int)(']')))) {
+while ((((i = this.Source.Peek()) > 0) && (unchecked((char)(i)) != (int)(']')))) {
 pbo = this.ParseDirObject();
 if ((pbo is global::DripSharp.PdfCarton.Cos.COSObject)) {
 pbo = default!;
@@ -528,8 +528,8 @@ int ch = c;
 if ((ch == (int)('#'))) {
 int ch1 = this.Source.Read();
 int ch2 = this.Source.Read();
-if ((global::DripSharp.PdfCarton.Pdfparser.BaseParser.isHexDigit(unchecked((char)((char)(ch1)))) && global::DripSharp.PdfCarton.Pdfparser.BaseParser.isHexDigit(unchecked((char)((char)(ch2)))))) {
-string hex = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.CodePointToString(unchecked((char)((char)(ch1)))), (char)(ch2));
+if ((global::DripSharp.PdfCarton.Pdfparser.BaseParser.isHexDigit(unchecked((char)(unchecked((char)(ch1))))) && global::DripSharp.PdfCarton.Pdfparser.BaseParser.isHexDigit(unchecked((char)(unchecked((char)(ch2))))))) {
+string hex = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.CodePointToString(unchecked((char)(unchecked((char)(ch1))))), unchecked((char)(ch2)));
 try {
 global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(buffer, global::DripSharp.Runtime.JavaCompat.ParseInt(hex, 16));
 } catch (global::DripSharp.Runtime.JavaNumberFormatException e) {
@@ -573,11 +573,11 @@ if ((this.recursionDepth > global::DripSharp.PdfCarton.Pdfparser.BaseParser.MAX_
 throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Pdfparser.BaseParser.MAX_RECUSRION_MSG);
 }
 this.SkipSpaces();
-char c = unchecked((char)((char)(this.Source.Peek())));
+char c = unchecked((char)(unchecked((char)(this.Source.Peek()))));
 switch (c) {
 case var __case_982_15_0 when __case_982_15_0 == '<':
 this.Source.Read();
-c = unchecked((char)((char)(this.Source.Peek())));
+c = unchecked((char)(unchecked((char)(this.Source.Peek()))));
 this.Source.Rewind(1);
 return (((int)(c) == (int)('<')) ? (global::DripSharp.PdfCarton.Cos.COSBase)(this.ParseCOSDictionary(true)) : (global::DripSharp.PdfCarton.Cos.COSBase)(this.ParseCOSString()));
 case var __case_989_15_0 when __case_989_15_0 == '[':
@@ -608,7 +608,7 @@ long startOffset = this.Source.GetPosition();
 string badString = this.ReadString();
 if ((badString.Length == 0)) {
 int peek = this.Source.Peek();
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unknown dir object c='", c), "' cInt="), (int)(c)), " peek='"), (char)(peek)), "' peekInt="), peek), " at offset "), this.Source.GetPosition()), " (start offset: "), startOffset), ")"));
+throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unknown dir object c='", c), "' cInt="), (int)(c)), " peek='"), unchecked((char)(peek))), "' peekInt="), peek), " at offset "), this.Source.GetPosition()), " (start offset: "), startOffset), ")"));
 }
 if ((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdfparser.BaseParser.EndobjString, badString) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdfparser.BaseParser.EndstreamString, badString))) {
 this.Source.Rewind(global::DripSharp.Runtime.JavaCompat.StringGetBytes(badString, global::DripSharp.Runtime.JavaStandardCharsets.ISO88591).Length);
@@ -627,11 +627,11 @@ this.recursionDepth--;
 private global::DripSharp.PdfCarton.Cos.COSNumber parseCOSNumber() {
 global::System.Text.StringBuilder buf = new global::System.Text.StringBuilder();
 int ic = this.Source.Read();
-char c = unchecked((char)((char)(ic)));
+char c = unchecked((char)(unchecked((char)(ic))));
 while ((((((global::DripSharp.Runtime.JavaCompat.IsDigit(c) || ((int)(c) == (int)('-'))) || ((int)(c) == (int)('+'))) || ((int)(c) == (int)('.'))) || ((int)(c) == (int)('E'))) || ((int)(c) == (int)('e')))) {
 buf.Append(c);
 ic = this.Source.Read();
-c = unchecked((char)((char)(ic)));
+c = unchecked((char)(unchecked((char)(ic))));
 }
 if ((ic != -1)) {
 this.Source.Rewind(1);
@@ -649,7 +649,7 @@ this.SkipSpaces();
 global::System.Text.StringBuilder buffer = new global::System.Text.StringBuilder();
 int c = this.Source.Read();
 while (!(this.IsEndOfName(c))) {
-buffer.Append(unchecked((char)((char)(c))));
+buffer.Append(unchecked((char)(unchecked((char)(c)))));
 c = this.Source.Read();
 }
 if ((c != -1)) {
@@ -669,7 +669,7 @@ this.SkipSpaces();
 }
 
 protected internal virtual void ReadExpectedChar(char ec) {
-char c = unchecked((char)((char)(this.Source.Read())));
+char c = unchecked((char)(unchecked((char)(this.Source.Read()))));
 if (((int)(c) != (int)(ec))) {
 throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("expected='", ec), "' actual='"), c), "' at offset "), this.Source.GetPosition()));
 }
@@ -680,7 +680,7 @@ this.SkipSpaces();
 int c = this.Source.Read();
 global::System.Text.StringBuilder buffer = new global::System.Text.StringBuilder(length);
 while (((((((!(global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsWhitespace(c)) && (c != -1)) && (buffer.Length < length)) && (c != (int)('['))) && (c != (int)('<'))) && (c != (int)('('))) && (c != (int)('/')))) {
-buffer.Append(unchecked((char)((char)(c))));
+buffer.Append(unchecked((char)(unchecked((char)(c)))));
 c = this.Source.Read();
 }
 if ((c != -1)) {
@@ -707,7 +707,7 @@ while (((c = this.Source.Read()) != -1)) {
 if (this.IsEOL(c)) {
 break;
 }
-buffer.Append(unchecked((char)((char)(c))));
+buffer.Append(unchecked((char)(unchecked((char)(c)))));
 }
 if ((this.isCR(c) && this.isLF(this.Source.Peek()))) {
 this.Source.Read();
@@ -832,7 +832,7 @@ protected internal global::System.Text.StringBuilder ReadStringNumber() {
 int lastByte;
 global::System.Text.StringBuilder buffer = new global::System.Text.StringBuilder();
 while ((((lastByte = this.Source.Read()) >= (int)('0')) && (lastByte <= (int)('9')))) {
-buffer.Append(unchecked((char)((char)(lastByte))));
+buffer.Append(unchecked((char)(unchecked((char)(lastByte)))));
 if ((buffer.Length > global::DripSharp.PdfCarton.Pdfparser.BaseParser.MAX_LENGTH_LONG)) {
 throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Number '", buffer), "' is getting too long, stop reading at offset "), this.Source.GetPosition()));
 }

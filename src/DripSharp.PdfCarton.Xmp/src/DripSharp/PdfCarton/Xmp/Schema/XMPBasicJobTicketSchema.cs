@@ -68,7 +68,7 @@ foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractField in tmp
 if ((abstractField is global::DripSharp.PdfCarton.Xmp.Type.JobType)) {
 global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(layers, (global::DripSharp.PdfCarton.Xmp.Type.JobType)(abstractField!));
 } else {
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Job expected and ", (((object)(abstractField)).GetType().FullName ?? ((object)(abstractField)).GetType().Name)), " found."));
+throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Job expected and ", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassName(((object)(abstractField)).GetType(), "DripSharp.PdfCarton.Xmp", "org.apache.xmpbox")), " found."));
 }
 }
 return layers;

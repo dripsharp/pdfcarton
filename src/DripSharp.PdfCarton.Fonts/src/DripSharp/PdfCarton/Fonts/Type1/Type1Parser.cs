@@ -612,7 +612,7 @@ for (int i = 0; (i < cipherBytes.Length); i++) {
 int cipher = (cipherBytes[i] & 255);
 int plain = (cipher ^ (r >> unchecked((int)(8))));
 if ((i >= n)) {
-plainBytes[(i - n)] = unchecked((sbyte)((sbyte)(plain)));
+plainBytes[(i - n)] = unchecked((sbyte)(unchecked((sbyte)(plain))));
 }
 r = ((((cipher + r) * c1) + c2) & 65535);
 }
@@ -625,7 +625,7 @@ return true;
 }
 for (int i = 0; (i < 4); ++i) {
 sbyte by = bytes[i];
-if (((((((int)(by) != 10) && ((int)(by) != 13)) && ((int)(by) != 32)) && ((int)(by) != (int)('\t'))) && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CharacterDigit(unchecked((char)((char)(by))), 16) == -1))) {
+if (((((((int)(by) != 10) && ((int)(by) != 13)) && ((int)(by) != 32)) && ((int)(by) != (int)('\t'))) && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CharacterDigit(unchecked((char)(unchecked((char)(by)))), 16) == -1))) {
 return true;
 }
 }
@@ -635,7 +635,7 @@ return false;
 private sbyte[] hexToBinary(sbyte[] bytes) {
 int len = 0;
 foreach (sbyte by__982_19 in bytes) {
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CharacterDigit(unchecked((char)((char)(by__982_19))), 16) != -1)) {
+if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CharacterDigit(unchecked((char)(unchecked((char)(by__982_19)))), 16) != -1)) {
 ++len;
 }
 }
@@ -643,12 +643,12 @@ sbyte[] res = new sbyte[(len / 2)];
 int r = 0;
 int prev = -1;
 foreach (sbyte by__992_19 in bytes) {
-int digit = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CharacterDigit(unchecked((char)((char)(by__992_19))), 16);
+int digit = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CharacterDigit(unchecked((char)(unchecked((char)(by__992_19)))), 16);
 if ((digit != -1)) {
 if ((prev == -1)) {
 prev = digit;
 } else {
-res[r++] = unchecked((sbyte)((sbyte)(((prev * 16) + digit))));
+res[r++] = unchecked((sbyte)(unchecked((sbyte)(((prev * 16) + digit)))));
 prev = -1;
 }
 }

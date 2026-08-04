@@ -124,7 +124,7 @@ return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.privateD
 private int getDefaultWidthX() {
 if ((this.defaultWidthX == int.MinValue)) {
 global::System.IConvertible num = (global::System.IConvertible)(this.getProperty("defaultWidthX")!);
-this.defaultWidthX = ((num != default!) ? global::System.Convert.ToInt32(num, global::System.Globalization.CultureInfo.InvariantCulture) : 1000);
+this.defaultWidthX = ((num != default!) ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(num) : 1000);
 }
 return this.defaultWidthX;
 }
@@ -132,7 +132,7 @@ return this.defaultWidthX;
 private int getNominalWidthX() {
 if ((this.nominalWidthX == int.MinValue)) {
 global::System.IConvertible num = (global::System.IConvertible)(this.getProperty("nominalWidthX")!);
-this.nominalWidthX = ((num != default!) ? global::System.Convert.ToInt32(num, global::System.Globalization.CultureInfo.InvariantCulture) : 0);
+this.nominalWidthX = ((num != default!) ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(num) : 0);
 }
 return this.nominalWidthX;
 }

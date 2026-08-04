@@ -23,17 +23,17 @@ private global::DripSharp.PdfCarton.Cos.COSDictionary trailer = null!;
 
 private bool __field_isDecrypted = false;
 
-private long startXref;
+private long startXref = default;
 
 private bool closed = false;
 
-private bool __field_isXRefStream;
+private bool __field_isXRefStream = default;
 
 private bool __field_hasHybridXRef = false;
 
 private readonly global::DripSharp.PdfCarton.IO.RandomAccessStreamCache streamCache = null!;
 
-private long highestXRefObjectNumber;
+private long highestXRefObjectNumber = default;
 
 private readonly global::DripSharp.PdfCarton.Cos.ICOSParser parser = null!;
 
@@ -87,7 +87,7 @@ return stream;
 }
 
 public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetLinearizedDictionary() {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSObjectKey> objectKeys = global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamSorted(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.MapEntrySet(this.xrefTable), (e) => (e.Value > 0L)), global::System.Collections.Generic.Comparer<global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSObjectKey, long>>.Create((value0, value1) => global::DripSharp.Runtime.JavaCompat.CompareNatural(value0.Value, value1.Value))), (value0) => value0.Key));
+global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSObjectKey> objectKeys = global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamSorted(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(global::DripSharp.Runtime.JavaCompat.MapEntrySet(this.xrefTable)), (e) => (e.Value > 0L)), global::System.Collections.Generic.Comparer<global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSObjectKey, long>>.Create((value0, value1) => global::DripSharp.Runtime.JavaCompat.CompareNatural(value0.Value, value1.Value))), (value0) => value0.Key));
 foreach (global::DripSharp.PdfCarton.Cos.COSObjectKey objectKey in objectKeys) {
 global::DripSharp.PdfCarton.Cos.COSObject objectFromPool = this.GetObjectFromPool(objectKey);
 if ((objectFromPool != default!)) {
@@ -230,7 +230,7 @@ return obj!;
 }
 
 public virtual void AddXRefTable(global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, long> xrefTableValues) {
-global::DripSharp.Runtime.JavaCompat.MapPutAll(this.xrefTable, xrefTableValues);
+global::DripSharp.Runtime.JavaCompat.MapPutAll(this.xrefTable, global::DripSharp.Runtime.JavaCompat.CastDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, long>(xrefTableValues));
 }
 
 public virtual global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, long> GetXrefTable() {

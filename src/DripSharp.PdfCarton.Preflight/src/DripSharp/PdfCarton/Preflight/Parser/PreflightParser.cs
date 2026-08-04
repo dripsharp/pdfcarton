@@ -140,7 +140,7 @@ count = this.ReadInt();
 }
 this.SkipSpaces();
 for (int i = 0; (i < count); i++) {
-if ((base.Source.IsEOF() || this.IsEndOfName((char)(base.Source.Peek())))) {
+if ((base.Source.IsEOF() || this.IsEndOfName(unchecked((char)(base.Source.Peek()))))) {
 break;
 }
 if ((base.Source.Peek() == (int)('t'))) {
@@ -269,11 +269,11 @@ return result;
 
 protected internal override global::DripSharp.PdfCarton.Cos.COSString ParseCOSString() {
 long offset = base.Source.GetPosition();
-char nextChar = unchecked((char)((char)(base.Source.Read())));
+char nextChar = unchecked((char)(unchecked((char)(base.Source.Read()))));
 int count = 0;
 if (((int)(nextChar) == (int)('<'))) {
 do {
-nextChar = unchecked((char)((char)(base.Source.Read())));
+nextChar = unchecked((char)(unchecked((char)(base.Source.Read()))));
 if ((!(global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsWhitespace((int)(nextChar))) && ((int)(nextChar) != (int)('>')))) {
 if ((global::DripSharp.Runtime.JavaCompat.CharacterDigit(nextChar, 16) >= 0)) {
 count++;

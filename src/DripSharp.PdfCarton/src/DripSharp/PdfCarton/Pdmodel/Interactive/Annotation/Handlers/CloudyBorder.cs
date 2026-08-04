@@ -23,21 +23,21 @@ private readonly global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream o
 
 private readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle annotRect = null!;
 
-private readonly double intensity;
+private readonly double intensity = default;
 
-private readonly double lineWidth;
+private readonly double lineWidth = default;
 
 private global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rectWithDiff = null!;
 
 private bool outputStarted = false;
 
-private double bboxMinX;
+private double bboxMinX = default;
 
-private double bboxMinY;
+private double bboxMinY = default;
 
-private double bboxMaxX;
+private double bboxMaxX = default;
 
-private double bboxMaxY;
+private double bboxMaxY = default;
 
 internal CloudyBorder(global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream stream, double intensity, double lineWidth, global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect) {
 this.output = stream;

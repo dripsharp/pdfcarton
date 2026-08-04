@@ -9,9 +9,9 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
 public class LigatureTable {
-private readonly int ligatureGlyph;
+private readonly int ligatureGlyph = default;
 
-private readonly int componentCount;
+private readonly int componentCount = default;
 
 private readonly int[] componentGlyphIDs = null!;
 

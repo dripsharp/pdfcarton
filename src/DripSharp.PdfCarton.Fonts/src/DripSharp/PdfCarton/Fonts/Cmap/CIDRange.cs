@@ -9,13 +9,13 @@
 namespace DripSharp.PdfCarton.Fonts.Cmap;
 
 internal class CIDRange {
-private readonly int from;
+private readonly int from = default;
 
-private int to;
+private int to = default;
 
-private readonly int unicode;
+private readonly int unicode = default;
 
-private readonly int codeLength;
+private readonly int codeLength = default;
 
 internal CIDRange(int from, int to, int unicode, int codeLength) {
 this.from = from;

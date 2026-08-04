@@ -164,7 +164,7 @@ private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.Bl
 
 private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction blend = null!;
 
-private readonly bool isSeparable;
+private readonly bool isSeparable = default;
 
 private BlendMode(global::DripSharp.PdfCarton.Cos.COSName name, global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction blendChannel, global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction blend) {
 this.name = name;

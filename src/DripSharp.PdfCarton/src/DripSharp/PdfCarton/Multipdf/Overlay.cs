@@ -197,7 +197,7 @@ internal readonly global::DripSharp.PdfCarton.Cos.COSStream overlayCOSStream = n
 
 internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary overlayResources = null!;
 
-internal int overlayRotation;
+internal int overlayRotation = default;
 
 internal LayoutPage(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle mediaBox, global::DripSharp.PdfCarton.Cos.COSStream contentStream, global::DripSharp.PdfCarton.Cos.COSDictionary resources, int rotation) {
 this.overlayMediaBox = mediaBox;
@@ -261,7 +261,7 @@ global::DripSharp.Runtime.JavaCompat.AddAll(contentStreams, this.createContentSt
 if ((contents is global::DripSharp.PdfCarton.Cos.COSObject)) {
 global::DripSharp.Runtime.JavaCompat.AddAll(contentStreams, this.createContentStreamList(((global::DripSharp.PdfCarton.Cos.COSObject)(contents!)).GetObject()));
 } else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unknown content type: ", (((object)(contents)).GetType().FullName ?? ((object)(contents)).GetType().Name)));
+throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unknown content type: ", global::DripSharp.Runtime.JavaCompat.ClassName(((object)(contents)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox")));
 }
 }
 return contentStreams;
@@ -309,7 +309,7 @@ contentArray.Add(contents);
 if ((contents is global::DripSharp.PdfCarton.Cos.COSArray)) {
 contentArray.AddAll((global::DripSharp.PdfCarton.Cos.COSArray)(contents!));
 } else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unknown content type: ", (((object)(contents)).GetType().FullName ?? ((object)(contents)).GetType().Name)));
+throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unknown content type: ", global::DripSharp.Runtime.JavaCompat.ClassName(((object)(contents)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox")));
 }
 }
 }
@@ -439,8 +439,8 @@ return at;
 }
 
 private string float2String(float floatValue) {
-decimal value = global::DripSharp.Runtime.JavaCompat.BigDecimalParse(global::DripSharp.Runtime.JavaCompat.StringValueOf(floatValue));
-string stringValue = global::DripSharp.Runtime.JavaCompat.BigDecimalToPlainString(value);
+global::DripSharp.Runtime.JavaCompat.JavaBigDecimal value = global::DripSharp.Runtime.JavaCompat.JavaBigDecimalParse(global::DripSharp.Runtime.JavaCompat.StringValueOf(floatValue));
+string stringValue = global::DripSharp.Runtime.JavaCompat.JavaBigDecimalToPlainString(value);
 if (((global::DripSharp.Runtime.JavaCompat.StringIndexOf(stringValue, (int)('.')) > -1) && !(global::DripSharp.Runtime.JavaCompat.StringEndsWith(stringValue, ".0")))) {
 while ((global::DripSharp.Runtime.JavaCompat.StringEndsWith(stringValue, "0") && !(global::DripSharp.Runtime.JavaCompat.StringEndsWith(stringValue, ".0")))) {
 stringValue = global::DripSharp.Runtime.JavaCompat.StringSubstring(stringValue, 0, (stringValue.Length - 1));

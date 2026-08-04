@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.Fonts.Ttf;
 public class TrueTypeCollection : global::System.IDisposable {
 private readonly global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream = null!;
 
-private readonly int numFonts;
+private readonly int numFonts = default;
 
 private readonly long[] fontOffsets = null!;
 

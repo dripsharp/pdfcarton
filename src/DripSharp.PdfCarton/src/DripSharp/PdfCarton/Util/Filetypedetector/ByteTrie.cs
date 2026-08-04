@@ -28,7 +28,7 @@ return this.value;
 
 private readonly global::DripSharp.PdfCarton.Util.Filetypedetector.ByteTrie<object>.ByteTrieNode<T> root = new global::DripSharp.PdfCarton.Util.Filetypedetector.ByteTrie<object>.ByteTrieNode<T>();
 
-private int maxDepth;
+private int maxDepth = default;
 
 public virtual T Find(sbyte[] bytes) {
 global::DripSharp.PdfCarton.Util.Filetypedetector.ByteTrie<object>.ByteTrieNode<T> node = this.root;

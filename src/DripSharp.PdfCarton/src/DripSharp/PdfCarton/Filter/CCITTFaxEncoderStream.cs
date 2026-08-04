@@ -13,11 +13,11 @@ private int currentBufferLength = 0;
 
 private sbyte[] inputBuffer = null!;
 
-private readonly int inputBufferLength;
+private readonly int inputBufferLength = default;
 
-private readonly int columns;
+private readonly int columns = default;
 
-private readonly int rows;
+private readonly int rows = default;
 
 private int[] changesCurrentRow = null!;
 
@@ -33,7 +33,7 @@ private sbyte outputBuffer = unchecked((sbyte)(0));
 
 private sbyte outputBufferBitLength = unchecked((sbyte)(0));
 
-private readonly int fillOrder;
+private readonly int fillOrder = default;
 
 private readonly global::System.IO.Stream stream = null!;
 
@@ -49,7 +49,7 @@ this.inputBuffer = new sbyte[this.inputBufferLength];
 }
 
 public override void Write(int b) {
-this.inputBuffer[this.currentBufferLength] = unchecked((sbyte)((sbyte)(b)));
+this.inputBuffer[this.currentBufferLength] = unchecked((sbyte)(unchecked((sbyte)(b))));
 this.currentBufferLength++;
 if ((this.currentBufferLength == this.inputBufferLength)) {
 this.encodeRow();
@@ -230,9 +230,9 @@ this.code = code;
 this.length = length;
 }
 
-internal readonly int code;
+internal readonly int code = default;
 
-internal readonly int length;
+internal readonly int length = default;
 }
 
 private static readonly global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.Code[] WHITE_TERMINATING_CODES = null!;

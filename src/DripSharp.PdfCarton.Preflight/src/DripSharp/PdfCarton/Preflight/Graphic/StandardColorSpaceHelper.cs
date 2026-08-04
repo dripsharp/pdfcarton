@@ -153,7 +153,7 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceNAttributes attr = de
 if ((attr != default!)) {
 global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation> colorants = attr.GetColorants((global::DripSharp.PdfCarton.Pdmodel.PDResources)default!);
 numberOfColorants = global::DripSharp.Runtime.JavaCompat.MapCount(colorants);
-global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.StreamFilter(colorants.Values, (value0) => value0 is not null), this.ProcessAllColorSpace);
+global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(colorants.Values), (value0) => value0 is not null), this.ProcessAllColorSpace);
 global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceNProcess process = attr.GetProcess();
 if ((process != default!)) {
 this.ProcessAllColorSpace(process.GetColorSpace());

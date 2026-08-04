@@ -17,7 +17,7 @@ public PDDefaultAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary di
 
 public virtual global::System.Collections.Generic.IList<string> GetAttributeNames() {
 global::System.Collections.Generic.IList<string> attrNames = new global::System.Collections.Generic.List<string>();
-global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamFilter(this.GetCOSObject().KeySet(), (key) => !(global::DripSharp.PdfCarton.Cos.COSName.O.Equals(key))), (value0) => value0.GetName()), (value0) => { attrNames.Add(value0); });
+global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(this.GetCOSObject().KeySet()), (key) => !(global::DripSharp.PdfCarton.Cos.COSName.O.Equals(key))), (value0) => value0.GetName()), (value0) => { attrNames.Add(value0); });
 return attrNames;
 }
 

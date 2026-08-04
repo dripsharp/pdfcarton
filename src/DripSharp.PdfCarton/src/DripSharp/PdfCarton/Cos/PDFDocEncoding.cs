@@ -29,7 +29,7 @@ continue;
 if ((i == 173)) {
 continue;
 }
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(i, unchecked((char)((char)(i))));
+global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(i, unchecked((char)(unchecked((char)(i)))));
 }
 global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(24, '\u02D8');
 global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(25, '\u02C7');
@@ -89,7 +89,7 @@ foreach (sbyte b in bytes) {
 if (((b & 255) >= global::DripSharp.PdfCarton.Cos.PDFDocEncoding.CODE_TO_UNI.Length)) {
 sb.Append('?');
 } else {
-sb.Append(unchecked((char)((char)(global::DripSharp.PdfCarton.Cos.PDFDocEncoding.CODE_TO_UNI[(b & 255)]))));
+sb.Append(unchecked((char)(unchecked((char)(global::DripSharp.PdfCarton.Cos.PDFDocEncoding.CODE_TO_UNI[(b & 255)])))));
 }
 }
 return sb.ToString();

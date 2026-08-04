@@ -25,7 +25,7 @@ if (((firstByte == -1) || global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.isEO
 break;
 }
 if ((global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[firstByte] == -1)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex, int: ", firstByte), " char: "), (char)(firstByte))));
+global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex, int: ", firstByte), " char: "), unchecked((char)(firstByte)))));
 }
 value = (global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[firstByte] * 16);
 secondByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded);
@@ -34,7 +34,7 @@ global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, value);
 break;
 }
 if ((global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[secondByte] == -1)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex, int: ", secondByte), " char: "), (char)(secondByte))));
+global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex, int: ", secondByte), " char: "), unchecked((char)(secondByte)))));
 }
 value += global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[secondByte];
 global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, value);
@@ -64,7 +64,7 @@ return (c == (int)('>'));
 public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
 int byteRead;
 while (((byteRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(input)) != -1)) {
-global::DripSharp.PdfCarton.Util.Hex.WriteHexByte(unchecked((sbyte)((sbyte)(byteRead))), encoded);
+global::DripSharp.PdfCarton.Util.Hex.WriteHexByte(unchecked((sbyte)(unchecked((sbyte)(byteRead)))), encoded);
 }
 encoded.Flush();
 }

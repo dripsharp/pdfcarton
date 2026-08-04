@@ -13,7 +13,7 @@ private readonly global::DripSharp.PdfCarton.Cos.COSArray c0 = null!;
 
 private readonly global::DripSharp.PdfCarton.Cos.COSArray c1 = null!;
 
-private readonly float exponent;
+private readonly float exponent = default;
 
 public PDFunctionType2(global::DripSharp.PdfCarton.Cos.COSBase function) : base(function) {
 global::DripSharp.PdfCarton.Cos.COSDictionary cosObject = this.GetCOSObject();

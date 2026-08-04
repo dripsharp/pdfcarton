@@ -71,7 +71,7 @@ global::DripSharp.PdfCarton.Cos.COSBase obj = global::DripSharp.Runtime.JavaComp
 if ((obj is global::DripSharp.PdfCarton.Cos.COSNumber)) {
 this.width = ((global::DripSharp.PdfCarton.Cos.COSNumber)(obj!)).FloatValue();
 } else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected argument type. Expected : COSInteger or Number / Received : ", (((object)(obj)).GetType().FullName ?? ((object)(obj)).GetType().Name)));
+throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected argument type. Expected : COSInteger or Number / Received : ", global::DripSharp.Runtime.JavaCompat.ClassName(((object)(obj)).GetType(), "DripSharp.PdfCarton.Preflight", "org.apache.pdfbox.preflight")));
 }
 }
 

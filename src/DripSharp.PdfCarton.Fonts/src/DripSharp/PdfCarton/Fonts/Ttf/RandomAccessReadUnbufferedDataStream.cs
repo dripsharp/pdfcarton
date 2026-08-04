@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 internal class RandomAccessReadUnbufferedDataStream : global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream {
-private readonly long length;
+private readonly long length = default;
 
 private readonly global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead = null!;
 

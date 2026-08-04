@@ -15,31 +15,31 @@ private static readonly global::System.Collections.Generic.IDictionary<int, stri
 
 private readonly global::DripSharp.PdfCarton.Util.Matrix textMatrix = null!;
 
-private readonly float endX;
+private readonly float endX = default;
 
-private readonly float endY;
+private readonly float endY = default;
 
-private readonly float maxHeight;
+private readonly float maxHeight = default;
 
-private readonly int rotation;
+private readonly int rotation = default;
 
-private readonly float x;
+private readonly float x = default;
 
-private readonly float y;
+private readonly float y = default;
 
-private readonly float pageHeight;
+private readonly float pageHeight = default;
 
-private readonly float pageWidth;
+private readonly float pageWidth = default;
 
-private readonly float widthOfSpace;
+private readonly float widthOfSpace = default;
 
 private readonly int[] charCodes = null!;
 
 private readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = null!;
 
-private readonly float fontSize;
+private readonly float fontSize = default;
 
-private readonly int fontSizePt;
+private readonly int fontSizePt = default;
 
 private float[] widths = null!;
 

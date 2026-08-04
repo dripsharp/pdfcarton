@@ -81,15 +81,15 @@ return array;
 }
 
 public virtual short ReadSignedShort() {
-return (short)(this.ReadUnsignedShort());
+return unchecked((short)(unchecked((short)(this.ReadUnsignedShort()))));
 }
 
-public virtual global::System.DateTimeOffset ReadInternationalDate() {
+public virtual global::System.DateTimeOffset? ReadInternationalDate() {
 long secondsSince1904 = this.ReadLong();
-global::System.DateTimeOffset cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarInstance((global::System.TimeZoneInfo)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Clone(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream.TIMEZONE_UTC)!));
+global::System.DateTimeOffset? cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarInstance((global::System.TimeZoneInfo)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Clone(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream.TIMEZONE_UTC)!));
 cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarSet(cal, 1904, 0, 1, 0, 0, 0);
 cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarSet(cal, 14, 0);
-long millisFor1904 = cal.ToUnixTimeMilliseconds();
+long millisFor1904 = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarGetTimeInMillis(cal);
 millisFor1904 += (secondsSince1904 * 1000);
 cal = global::System.DateTimeOffset.FromUnixTimeMilliseconds(millisFor1904);
 return cal;

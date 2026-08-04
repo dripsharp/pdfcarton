@@ -27,11 +27,11 @@ private const int COVERAGE_CROSS_STREAM_SHIFT = 2;
 
 private const int COVERAGE_FORMAT_SHIFT = 8;
 
-private bool horizontal;
+private bool horizontal = default;
 
-private bool minimums;
+private bool minimums = default;
 
-private bool crossStream;
+private bool crossStream = default;
 
 private global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.PairData pairs = null!;
 

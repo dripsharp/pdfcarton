@@ -13,7 +13,7 @@ private string registry = null!;
 
 private string ordering = null!;
 
-private int supplement;
+private int supplement = default;
 
 private global::System.Collections.Generic.IList<global::System.Collections.Generic.IDictionary<string, object>> fontDictionaries;
 
@@ -81,7 +81,7 @@ if (((fdArrayIndex == -1) || (fdArrayIndex >= global::DripSharp.PdfCarton.Runtim
 return 1000;
 }
 object privDictValue = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.privateDictionaries, fdArrayIndex), "defaultWidthX");
-return ((privDictValue is global::System.IConvertible) ? global::System.Convert.ToInt32(((global::System.IConvertible)(privDictValue!)), global::System.Globalization.CultureInfo.InvariantCulture) : 1000);
+return ((privDictValue is global::System.IConvertible) ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(((global::System.IConvertible)(privDictValue!))) : 1000);
 }
 
 private int getNominalWidthX(int gid) {
@@ -90,7 +90,7 @@ if (((fdArrayIndex == -1) || (fdArrayIndex >= global::DripSharp.PdfCarton.Runtim
 return 0;
 }
 object privDictValue = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.privateDictionaries, fdArrayIndex), "nominalWidthX");
-return ((privDictValue is global::System.IConvertible) ? global::System.Convert.ToInt32(((global::System.IConvertible)(privDictValue!)), global::System.Globalization.CultureInfo.InvariantCulture) : 0);
+return ((privDictValue is global::System.IConvertible) ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(((global::System.IConvertible)(privDictValue!))) : 0);
 }
 
 private sbyte[][] getLocalSubrIndex(int gid) {

@@ -11,11 +11,11 @@ namespace DripSharp.PdfCarton.IO;
 public class RandomAccessReadView : global::DripSharp.PdfCarton.IO.RandomAccessRead {
 private global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead = null!;
 
-private readonly long startPosition;
+private readonly long startPosition = default;
 
-private readonly long streamLength;
+private readonly long streamLength = default;
 
-private readonly bool closeInput;
+private readonly bool closeInput = default;
 
 private long currentPosition = 0;
 
@@ -61,7 +61,7 @@ if (this.IsEOF()) {
 return -1;
 }
 this.restorePosition();
-int readBytes = this.randomAccessRead.Read(b, off, global::System.Math.Min(len, ((global::DripSharp.PdfCarton.IO.RandomAccessRead)this).Available()));
+int readBytes = this.randomAccessRead.Read(b, off, global::System.Math.Min(len, ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Available()));
 this.currentPosition += readBytes;
 return readBytes;
 }
@@ -85,7 +85,7 @@ return ((this.randomAccessRead == default!) || this.randomAccessRead.IsClosed())
 public virtual void Rewind(int bytes) {
 this.checkClosed();
 this.restorePosition();
-((global::DripSharp.PdfCarton.IO.RandomAccessRead)this.randomAccessRead).Rewind(bytes);
+((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.randomAccessRead)).Rewind(bytes);
 this.currentPosition -= bytes;
 }
 
@@ -105,6 +105,6 @@ throw new global::System.IO.IOException("RandomAccessReadView already closed");
 }
 
 public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition, long streamLength) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat((((object)(this)).GetType().FullName ?? ((object)(this)).GetType().Name), ".createView isn't supported."));
+throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"), ".createView isn't supported."));
 }
 }

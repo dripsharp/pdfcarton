@@ -15,7 +15,7 @@ private float nominalWidthX = 0;
 
 private int pathCount = 0;
 
-private readonly int gid;
+private readonly int gid = default;
 
 public Type2CharString(global::DripSharp.PdfCarton.Fonts.Type1.Type1CharStringReader font, string fontName, string glyphName, int gid, global::System.Collections.Generic.IList<object> sequence, int defaultWidthX, int nomWidthX) : base(font, fontName, glyphName) {
 this.gid = gid;
@@ -136,8 +136,8 @@ case 33:
 int dx = 0;
 int dy = 0;
 for (int i = 0; (i < 5); i++) {
-dx += global::System.Convert.ToInt32(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, (i * 2)), global::System.Globalization.CultureInfo.InvariantCulture);
-dy += global::System.Convert.ToInt32(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, ((i * 2) + 1)), global::System.Globalization.CultureInfo.InvariantCulture);
+dx += global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, (i * 2)));
+dy += global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, ((i * 2) + 1)));
 }
 global::System.Collections.Generic.IList<global::System.IConvertible> first__222_26 = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.SubList(numbers, 0, 6);
 bool dxIsBigger = (global::System.Math.Abs(dx) > global::System.Math.Abs(dy));

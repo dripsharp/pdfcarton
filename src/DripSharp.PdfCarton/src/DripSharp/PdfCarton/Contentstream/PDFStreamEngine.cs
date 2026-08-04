@@ -19,7 +19,7 @@ private global::DripSharp.PdfCarton.Pdmodel.PDResources resources = null!;
 
 private global::DripSharp.PdfCarton.Pdmodel.PDPage currentPage = null!;
 
-private bool isProcessingPage;
+private bool isProcessingPage = default;
 
 private global::DripSharp.PdfCarton.Util.Matrix initialMatrix = null!;
 
@@ -27,7 +27,7 @@ private int level = 0;
 
 private global::DripSharp.PdfCarton.Pdmodel.Font.PDFont defaultFont = null!;
 
-private bool shouldProcessColorOperators;
+private bool shouldProcessColorOperators = default;
 
 protected internal PDFStreamEngine() {}
 
@@ -149,6 +149,11 @@ global::DripSharp.PdfCarton.Util.Matrix a = global::DripSharp.PdfCarton.Util.Mat
 a.Scale((float)((float)(((float)(rect.GetWidth()) / (double)(transformedBox.Width)))), (float)((float)(((float)(rect.GetHeight()) / (double)(transformedBox.Height)))));
 a.Translate((float)((float)(-(transformedBox.Left))), (float)((float)(-(transformedBox.Top))));
 global::DripSharp.PdfCarton.Util.Matrix aa = global::DripSharp.PdfCarton.Util.Matrix.Concatenate(a, matrix);
+for (int row = 0; row < 3; row++) {
+for (int column = 0; column < 2; column++) {
+aa.SetValue(row, column, (float)global::System.Math.Round(aa.GetValue(row, column), 5, global::System.MidpointRounding.AwayFromZero));
+}
+}
 global::DripSharp.PdfCarton.Pdmodel.PDResources parent = this.pushResources(appearance);
 global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState> savedStack = this.SaveGraphicsStack();
 this.GetGraphicsState().SetCurrentTransformationMatrix(aa);

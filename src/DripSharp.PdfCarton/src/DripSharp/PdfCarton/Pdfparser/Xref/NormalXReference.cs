@@ -9,13 +9,13 @@
 namespace DripSharp.PdfCarton.Pdfparser.Xref;
 
 public class NormalXReference : global::DripSharp.PdfCarton.Pdfparser.Xref.AbstractXReference {
-private readonly long byteOffset;
+private readonly long byteOffset = default;
 
 private readonly global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
 
 private readonly global::DripSharp.PdfCarton.Cos.COSBase @object = null!;
 
-private readonly bool objectStream;
+private readonly bool objectStream = default;
 
 public NormalXReference(long byteOffset, global::DripSharp.PdfCarton.Cos.COSObjectKey key, global::DripSharp.PdfCarton.Cos.COSBase @object) : base(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType.Normal) {
 this.byteOffset = byteOffset;

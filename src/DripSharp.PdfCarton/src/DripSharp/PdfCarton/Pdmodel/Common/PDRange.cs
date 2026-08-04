@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Common;
 public class PDRange : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
 private readonly global::DripSharp.PdfCarton.Cos.COSArray rangeArray = null!;
 
-private int startingIndex;
+private int startingIndex = default;
 
 public PDRange() {
 this.rangeArray = new global::DripSharp.PdfCarton.Cos.COSArray();

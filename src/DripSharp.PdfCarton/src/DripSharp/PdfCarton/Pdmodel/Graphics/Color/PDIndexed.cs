@@ -17,7 +17,7 @@ private sbyte[] lookupData = null!;
 
 private float[][] colorTable = null!;
 
-private int actualMaxIndex;
+private int actualMaxIndex = default;
 
 private int[][] rgbColorTable = null!;
 
@@ -143,9 +143,9 @@ sbyte[] r = new sbyte[this.colorTable.Length];
 sbyte[] g = new sbyte[this.colorTable.Length];
 sbyte[] b = new sbyte[this.colorTable.Length];
 for (int i = 0; (i < this.colorTable.Length); i++) {
-r[i] = unchecked((sbyte)((sbyte)(((int)((this.colorTable[i][0] * 255)) & 255))));
-g[i] = unchecked((sbyte)((sbyte)(((int)((this.colorTable[i][1] * 255)) & 255))));
-b[i] = unchecked((sbyte)((sbyte)(((int)((this.colorTable[i][2] * 255)) & 255))));
+r[i] = unchecked((sbyte)(unchecked((sbyte)(((int)((this.colorTable[i][0] * 255)) & 255)))));
+g[i] = unchecked((sbyte)(unchecked((sbyte)(((int)((this.colorTable[i][1] * 255)) & 255)))));
+b[i] = unchecked((sbyte)(unchecked((sbyte)(((int)((this.colorTable[i][2] * 255)) & 255)))));
 }
 global::DripSharp.Runtime.JavaColorModel colorModel = global::DripSharp.Runtime.PdfCartonFontCompat.IndexColorModel(8, this.colorTable.Length, r, g, b);
 return global::DripSharp.Runtime.PdfCartonFontCompat.CreateImage(colorModel, raster, false, (global::DripSharp.Runtime.JavaHashtable<object, object>)default!);

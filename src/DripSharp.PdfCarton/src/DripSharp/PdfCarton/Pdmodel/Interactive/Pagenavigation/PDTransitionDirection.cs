@@ -33,7 +33,7 @@ public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavig
 [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
 public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection None = new Anonymous_50_9(0);
 
-private readonly int degrees;
+private readonly int degrees = default;
 
 private PDTransitionDirection(int degrees) {
 this.degrees = degrees;

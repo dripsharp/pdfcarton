@@ -176,7 +176,7 @@ return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.IntegerType>(glob
 
 public virtual int? GetColorMode() {
 global::DripSharp.PdfCarton.Xmp.Type.IntegerType tt = this.GetColorModeProperty();
-return ((tt == default!) ? (int)(default!) : (int)(tt.GetValue()));
+return ((tt == default!) ? (int?)(default!) : (int?)((int)(tt.GetValue())));
 }
 
 public virtual void SetColorMode(string text) {
@@ -399,7 +399,7 @@ foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractField in tmp
 if ((abstractField is global::DripSharp.PdfCarton.Xmp.Type.LayerType)) {
 global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(layers, (global::DripSharp.PdfCarton.Xmp.Type.LayerType)(abstractField!));
 } else {
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Layer expected and ", (((object)(abstractField)).GetType().FullName ?? ((object)(abstractField)).GetType().Name)), " found."));
+throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Layer expected and ", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassName(((object)(abstractField)).GetType(), "DripSharp.PdfCarton.Xmp", "org.apache.xmpbox")), " found."));
 }
 }
 return layers;
@@ -431,7 +431,7 @@ return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.IntegerType>(glob
 
 public virtual int? GetUrgency() {
 global::DripSharp.PdfCarton.Xmp.Type.IntegerType tt = this.GetUrgencyProperty();
-return ((tt == default!) ? (int)(default!) : (int)(tt.GetValue()));
+return ((tt == default!) ? (int?)(default!) : (int?)((int)(tt.GetValue())));
 }
 
 public virtual void SetUrgency(string s) {

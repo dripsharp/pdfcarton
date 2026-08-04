@@ -59,7 +59,7 @@ return kidObjects;
 }
 
 public virtual void SetKids(global::System.Collections.Generic.IList<object> kids) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.K, global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<object>.ConverterToCOSArray(kids));
+this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.K, global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<object>.ConverterToCOSArray(global::DripSharp.Runtime.JavaCompat.CastObjects(kids)));
 }
 
 public virtual void AppendKid(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement structureElement) {

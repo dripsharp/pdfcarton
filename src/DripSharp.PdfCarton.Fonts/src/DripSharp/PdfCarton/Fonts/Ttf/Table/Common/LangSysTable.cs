@@ -9,11 +9,11 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class LangSysTable {
-private readonly int lookupOrder;
+private readonly int lookupOrder = default;
 
-private readonly int requiredFeatureIndex;
+private readonly int requiredFeatureIndex = default;
 
-private readonly int featureIndexCount;
+private readonly int featureIndexCount = default;
 
 private readonly int[] featureIndices = null!;
 

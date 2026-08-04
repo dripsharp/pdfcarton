@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
 public class SequenceTable {
-private readonly int glyphCount;
+private readonly int glyphCount = default;
 
 private readonly int[] substituteGlyphIDs = null!;
 

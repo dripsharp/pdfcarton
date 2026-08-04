@@ -13,7 +13,7 @@ private readonly int[] start = null!;
 
 private readonly int[] end = null!;
 
-private readonly int codeLength;
+private readonly int codeLength = default;
 
 public CodespaceRange(sbyte[] startBytes, sbyte[] endBytes) {
 sbyte[] correctedStartBytes = startBytes;

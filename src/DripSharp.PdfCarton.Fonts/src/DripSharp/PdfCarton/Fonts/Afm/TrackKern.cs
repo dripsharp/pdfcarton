@@ -9,15 +9,15 @@
 namespace DripSharp.PdfCarton.Fonts.Afm;
 
 public class TrackKern {
-private readonly int degree;
+private readonly int degree = default;
 
-private readonly float minPointSize;
+private readonly float minPointSize = default;
 
-private readonly float minKern;
+private readonly float minKern = default;
 
-private readonly float maxPointSize;
+private readonly float maxPointSize = default;
 
-private readonly float maxKern;
+private readonly float maxKern = default;
 
 public TrackKern(int degree, float minPointSize, float minKern, float maxPointSize, float maxKern) {
 this.degree = degree;

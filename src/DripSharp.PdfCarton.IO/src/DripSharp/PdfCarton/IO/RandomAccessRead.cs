@@ -28,7 +28,7 @@ public bool IsClosed();
 public int Peek() {
 int result = this.Read();
 if ((result != -1)) {
-((global::DripSharp.PdfCarton.IO.RandomAccessRead)this).Rewind(1);
+this.Rewind(1);
 }
 return result;
 }
@@ -50,7 +50,7 @@ this.Seek((this.GetPosition() + length));
 public global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition, long streamLength);
 
 public void ReadFully(sbyte[] b) {
-((global::DripSharp.PdfCarton.IO.RandomAccessRead)this).ReadFully(b, 0, b.Length);
+this.ReadFully(b, 0, b.Length);
 }
 
 public void ReadFully(sbyte[] b, int offset, int length) {

@@ -31,7 +31,7 @@ return ".notdef";
 }
 
 public virtual global::System.Collections.Generic.IDictionary<int, string> GetCodeToNameMap() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(this.codeToName);
+return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<int, string>(this.codeToName));
 }
 
 public Encoding() {}

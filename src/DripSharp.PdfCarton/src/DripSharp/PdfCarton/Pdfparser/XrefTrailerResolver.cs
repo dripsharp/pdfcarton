@@ -143,7 +143,7 @@ curObj = global::DripSharp.Runtime.JavaCompat.MapGet(this.bytePosToXrefMap, bPos
 if ((curObj.Trailer != default!)) {
 this.resolvedXrefTrailer.Trailer.AddAll(curObj.Trailer);
 }
-global::DripSharp.Runtime.JavaCompat.MapPutAll(this.resolvedXrefTrailer.xrefTable, curObj.xrefTable);
+global::DripSharp.Runtime.JavaCompat.MapPutAll(this.resolvedXrefTrailer.xrefTable, global::DripSharp.Runtime.JavaCompat.CastDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, long>(curObj.xrefTable));
 }
 }
 

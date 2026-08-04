@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 public abstract class SecurityHandler<TPOLICY> : global::DripSharp.Runtime.PdfBoxSecurityHandler where TPOLICY : global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy {
 private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private const short DEFAULT_KEY_LENGTH = 40;
+private const short DEFAULT_KEY_LENGTH = unchecked((short)(40));
 
 private static readonly sbyte[] AES_SALT = new sbyte[] { unchecked((sbyte)(115)), unchecked((sbyte)(65)), unchecked((sbyte)(108)), unchecked((sbyte)(84)) };
 
@@ -21,13 +21,13 @@ private sbyte[] encryptionKey = null!;
 
 private readonly global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher rc4 = new global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher();
 
-private bool decryptMetadata;
+private bool decryptMetadata = default;
 
 private global::DripSharp.Runtime.JavaRandom customSecureRandom = null!;
 
 private readonly global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSBase> objects = global::DripSharp.Runtime.JavaCompat.NewSetFromMap(new global::DripSharp.Runtime.JavaIdentityHashMap<global::DripSharp.PdfCarton.Cos.COSBase, bool>());
 
-private bool useAES;
+private bool useAES = default;
 
 private TPOLICY protectionPolicy = default!;
 
@@ -41,7 +41,7 @@ protected internal SecurityHandler() {}
 
 protected internal SecurityHandler(TPOLICY protectionPolicy) {
 this.protectionPolicy = protectionPolicy;
-this.keyLength = (short)(protectionPolicy.GetEncryptionKeyLength());
+this.keyLength = unchecked((short)(unchecked((short)(protectionPolicy.GetEncryptionKeyLength()))));
 }
 
 protected internal virtual void SetDecryptMetadata(bool decryptMetadata) {
@@ -85,11 +85,11 @@ output.Flush();
 private sbyte[] calcFinalKey(long objectNumber, long genNumber) {
 sbyte[] newKey = new sbyte[(this.encryptionKey.Length + 5)];
 global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.encryptionKey, 0, newKey, 0, this.encryptionKey.Length);
-newKey[(newKey.Length - 5)] = unchecked((sbyte)((sbyte)((objectNumber & 255))));
-newKey[(newKey.Length - 4)] = unchecked((sbyte)((sbyte)(((objectNumber >> unchecked((int)(8))) & 255))));
-newKey[(newKey.Length - 3)] = unchecked((sbyte)((sbyte)(((objectNumber >> unchecked((int)(16))) & 255))));
-newKey[(newKey.Length - 2)] = unchecked((sbyte)((sbyte)((genNumber & 255))));
-newKey[(newKey.Length - 1)] = unchecked((sbyte)((sbyte)(((genNumber >> unchecked((int)(8))) & 255))));
+newKey[(newKey.Length - 5)] = unchecked((sbyte)(unchecked((sbyte)((objectNumber & 255)))));
+newKey[(newKey.Length - 4)] = unchecked((sbyte)(unchecked((sbyte)(((objectNumber >> unchecked((int)(8))) & 255)))));
+newKey[(newKey.Length - 3)] = unchecked((sbyte)(unchecked((sbyte)(((objectNumber >> unchecked((int)(16))) & 255)))));
+newKey[(newKey.Length - 2)] = unchecked((sbyte)(unchecked((sbyte)((genNumber & 255)))));
+newKey[(newKey.Length - 1)] = unchecked((sbyte)(unchecked((sbyte)(((genNumber >> unchecked((int)(8))) & 255)))));
 global::DripSharp.Runtime.JavaMessageDigest md = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getMD5();
 md.Update(newKey);
 if (this.useAES) {
@@ -150,7 +150,8 @@ global::DripSharp.PdfCarton.IO.IOUtils.Copy(cis, output);
 }
 } catch (global::System.IO.IOException exception) {
 if (!((global::DripSharp.Runtime.JavaCompat.GetCause(exception)! is global::System.Security.Cryptography.CryptographicException))) {
-throw exception;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(exception);
+throw new global::System.InvalidOperationException("unreachable");
 }
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandler<global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy>.LOG, (global::System.Exception)exception, global::DripSharp.Runtime.JavaCompat.StringValueOf("A GeneralSecurityException occurred when decrypting some stream data"));
 }
@@ -257,7 +258,8 @@ this.encryptData(objNum, genNum, encryptedStream, output, true);
 }
 } catch (global::System.IO.IOException ex) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandler<global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy>.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(((object)(ex)).GetType().Name, " thrown when decrypting object "), objNum), " "), genNum), " obj")));
-throw ex;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
+throw new global::System.InvalidOperationException("unreachable");
 }
 }
 
@@ -340,7 +342,7 @@ return this.keyLength;
 }
 
 public virtual void SetKeyLength(int keyLen) {
-this.keyLength = (short)(keyLen);
+this.keyLength = unchecked((short)(unchecked((short)(keyLen))));
 }
 
 public virtual void SetCurrentAccessPermission(global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission currentAccessPermission) {

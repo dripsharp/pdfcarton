@@ -296,11 +296,11 @@ return new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.C
 }
 
 public virtual global::System.Collections.Generic.IList<string> ToCOSNameStringList() {
-return global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(this.objects, (o) => ((global::DripSharp.PdfCarton.Cos.COSName)(o!)).GetName()));
+return global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.Stream(this.objects), (o) => ((global::DripSharp.PdfCarton.Cos.COSName)(o!)).GetName()));
 }
 
 public virtual global::System.Collections.Generic.IList<string> ToCOSStringStringList() {
-return global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(this.objects, (o) => ((global::DripSharp.PdfCarton.Cos.COSString)(o!)).GetString()));
+return global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.Stream(this.objects), (o) => ((global::DripSharp.PdfCarton.Cos.COSString)(o!)).GetString()));
 }
 
 public virtual global::System.Collections.Generic.IList<float?> ToCOSNumberFloatList() {

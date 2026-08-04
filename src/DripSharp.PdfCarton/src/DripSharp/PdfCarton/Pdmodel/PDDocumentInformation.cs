@@ -75,19 +75,19 @@ public virtual void SetProducer(string producer) {
 this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Producer, producer);
 }
 
-public virtual global::System.DateTimeOffset GetCreationDate() {
+public virtual global::System.DateTimeOffset? GetCreationDate() {
 return this.info.GetDate(global::DripSharp.PdfCarton.Cos.COSName.CreationDate);
 }
 
-public virtual void SetCreationDate(global::System.DateTimeOffset date) {
+public virtual void SetCreationDate(global::System.DateTimeOffset? date) {
 this.info.SetDate(global::DripSharp.PdfCarton.Cos.COSName.CreationDate, date);
 }
 
-public virtual global::System.DateTimeOffset GetModificationDate() {
+public virtual global::System.DateTimeOffset? GetModificationDate() {
 return this.info.GetDate(global::DripSharp.PdfCarton.Cos.COSName.ModDate);
 }
 
-public virtual void SetModificationDate(global::System.DateTimeOffset date) {
+public virtual void SetModificationDate(global::System.DateTimeOffset? date) {
 this.info.SetDate(global::DripSharp.PdfCarton.Cos.COSName.ModDate, date);
 }
 

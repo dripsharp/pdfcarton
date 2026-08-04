@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public class CIDKeyedType2CharString : global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString {
-private readonly int cid;
+private readonly int cid = default;
 
 public CIDKeyedType2CharString(global::DripSharp.PdfCarton.Fonts.Type1.Type1CharStringReader font, string fontName, int cid, int gid, global::System.Collections.Generic.IList<object> sequence, int defaultWidthX, int nomWidthX) : base(font, fontName, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), "%04x", cid), gid, sequence, defaultWidthX, nomWidthX) {
 this.cid = cid;

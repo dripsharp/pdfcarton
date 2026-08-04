@@ -29,7 +29,7 @@ private readonly global::System.Collections.Generic.ISet<int> invisibleGlyphIds 
 
 private string prefix = null!;
 
-private bool hasAddedCompoundReferences;
+private bool hasAddedCompoundReferences = default;
 
 public TTFSubsetter(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf) : this(ttf, (global::System.Collections.Generic.IList<string>)default!) {
 
@@ -133,7 +133,7 @@ this.writeSInt16(@out, h.GetYMax());
 this.writeUint16(@out, h.GetMacStyle());
 this.writeUint16(@out, h.GetLowestRecPPEM());
 this.writeSInt16(@out, h.GetFontDirectionHint());
-this.writeSInt16(@out, (short)(1));
+this.writeSInt16(@out, unchecked((short)(1)));
 this.writeSInt16(@out, h.GetGlyphDataFormat());
 @out.flush();
 return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ToSignedBytes(bos);
@@ -180,7 +180,7 @@ if (((name == default!) || ((this.keepTables != default!) && !global::DripSharp.
 return default!;
 }
 global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Ttf.NameRecord> nameRecords = name.GetNameRecords();
-int numRecords = (int)(global::System.Linq.Enumerable.LongCount(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StreamFilter(nameRecords, this.shouldCopyNameRecord)));
+int numRecords = (int)(global::System.Linq.Enumerable.LongCount(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StreamFilter(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Stream(nameRecords), this.shouldCopyNameRecord)));
 this.writeUint16(@out, 0);
 this.writeUint16(@out, numRecords);
 this.writeUint16(@out, ((2 * 3) + ((2 * 6) * numRecords)));
@@ -283,7 +283,7 @@ this.writeSInt16(@out, os2.GetSuperscriptXOffset());
 this.writeSInt16(@out, os2.GetSuperscriptYOffset());
 this.writeSInt16(@out, os2.GetStrikeoutSize());
 this.writeSInt16(@out, os2.GetStrikeoutPosition());
-this.writeSInt16(@out, (short)((short)(os2.GetFamilyClass())));
+this.writeSInt16(@out, unchecked((short)(unchecked((short)(os2.GetFamilyClass())))));
 @out.Write(os2.GetPanose());
 this.writeUint32(@out, (long)(0));
 this.writeUint32(@out, (long)(0));
@@ -422,8 +422,8 @@ if (!(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(th
 throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Internal error: componentGid ", componentGid), " not in glyphIds set"));
 }
 int newComponentGid = this.getNewGlyphId(componentGid);
-buf[off] = unchecked((sbyte)((sbyte)((newComponentGid >>> unchecked((int)(8))))));
-buf[(off + 1)] = unchecked((sbyte)((sbyte)(newComponentGid)));
+buf[off] = unchecked((sbyte)(unchecked((sbyte)((newComponentGid >>> unchecked((int)(8)))))));
+buf[(off + 1)] = unchecked((sbyte)(unchecked((sbyte)(newComponentGid))));
 off += 2;
 if (((flags & (1 << unchecked((int)(0)))) != 0)) {
 off += (2 * 2);
@@ -685,10 +685,10 @@ checksum += this.writeTableHeader(@out, entry__1079_44.Key, offset, entry__1079_
 offset += (((entry__1079_44.Value.Length + 3L) / 4) * 4);
 }
 checksum = (2981146554L - (checksum & 4294967295L));
-head[8] = unchecked((sbyte)((sbyte)((checksum >>> unchecked((int)(24))))));
-head[9] = unchecked((sbyte)((sbyte)((checksum >>> unchecked((int)(16))))));
-head[10] = unchecked((sbyte)((sbyte)((checksum >>> unchecked((int)(8))))));
-head[11] = unchecked((sbyte)((sbyte)(checksum)));
+head[8] = unchecked((sbyte)(unchecked((sbyte)((checksum >>> unchecked((int)(24)))))));
+head[9] = unchecked((sbyte)(unchecked((sbyte)((checksum >>> unchecked((int)(16)))))));
+head[10] = unchecked((sbyte)(unchecked((sbyte)((checksum >>> unchecked((int)(8)))))));
+head[11] = unchecked((sbyte)(unchecked((sbyte)(checksum))));
 foreach (sbyte[] bytes in tables.Values) {
 this.writeTableBody(@out, bytes);
 }
@@ -718,12 +718,12 @@ private void writeUint8(global::DripSharp.PdfCarton.Runtime.Fonts.JavaDataOutput
 @out.writeByte(i);
 }
 
-private void writeLongDateTime(global::DripSharp.PdfCarton.Runtime.Fonts.JavaDataOutputStream @out, global::System.DateTimeOffset calendar) {
-global::System.DateTimeOffset cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarInstance((global::System.TimeZoneInfo)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Clone(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.TIMEZONE_UTC)!));
+private void writeLongDateTime(global::DripSharp.PdfCarton.Runtime.Fonts.JavaDataOutputStream @out, global::System.DateTimeOffset? calendar) {
+global::System.DateTimeOffset? cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarInstance((global::System.TimeZoneInfo)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Clone(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.TIMEZONE_UTC)!));
 cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarSet(cal, 1904, 0, 1, 0, 0, 0);
 cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarSet(cal, 14, 0);
-long millisFor1904 = cal.ToUnixTimeMilliseconds();
-long secondsSince1904 = ((calendar.ToUnixTimeMilliseconds() - millisFor1904) / 1000L);
+long millisFor1904 = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarGetTimeInMillis(cal);
+long secondsSince1904 = ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarGetTimeInMillis(calendar) - millisFor1904) / 1000L);
 @out.writeLong(secondsSince1904);
 }
 

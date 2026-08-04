@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.Pdmodel;
 public class DefaultResourceCache : global::DripSharp.PdfCarton.Pdmodel.ResourceCache {
 private const int maxRemovals = 3;
 
-private readonly bool stableCacheEnabled;
+private readonly bool stableCacheEnabled = default;
 
 private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObject, global::DripSharp.Runtime.JavaSoftReference<global::DripSharp.PdfCarton.Pdmodel.Font.PDFont>> fonts = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObject, global::DripSharp.Runtime.JavaSoftReference<global::DripSharp.PdfCarton.Pdmodel.Font.PDFont>>();
 
@@ -76,16 +76,16 @@ global::DripSharp.Runtime.JavaCompat.MapPut(this.fonts, indirect, new global::Dr
 }
 
 public virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDFont RemoveFont(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-long objectKey = global::DripSharp.Runtime.JavaCompat.Unbox(((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long)(indirect.GetKey().GetInternalHash()) : (long)(default!)));
+long? objectKey = ((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long?)(indirect.GetKey().GetInternalHash()) : (long?)(default!));
 if ((objectKey != default!)) {
 if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.stableFonts, objectKey)) {
 return default!;
 }
-int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedFonts, objectKey, (v) => 1);
+int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedFonts, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), (v) => 1);
 if ((counter < global::DripSharp.PdfCarton.Pdmodel.DefaultResourceCache.maxRemovals)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.removedFonts, objectKey, ++counter);
+global::DripSharp.Runtime.JavaCompat.MapPut(this.removedFonts, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), ++counter);
 } else {
-this.stableFonts.Add(objectKey);
+this.stableFonts.Add(global::DripSharp.Runtime.JavaCompat.Unbox(objectKey));
 global::DripSharp.Runtime.JavaCompat.MapRemove(this.removedFonts, objectKey);
 return default!;
 }
@@ -107,16 +107,16 @@ global::DripSharp.Runtime.JavaCompat.MapPut(this.colorSpaces, indirect, new glob
 }
 
 public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace RemoveColorSpace(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-long objectKey = global::DripSharp.Runtime.JavaCompat.Unbox(((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long)(indirect.GetKey().GetInternalHash()) : (long)(default!)));
+long? objectKey = ((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long?)(indirect.GetKey().GetInternalHash()) : (long?)(default!));
 if ((objectKey != default!)) {
 if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.stableColorSpaces, objectKey)) {
 return default!;
 }
-int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedColorSpaces, objectKey, (v) => 1);
+int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedColorSpaces, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), (v) => 1);
 if ((counter < global::DripSharp.PdfCarton.Pdmodel.DefaultResourceCache.maxRemovals)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.removedColorSpaces, objectKey, ++counter);
+global::DripSharp.Runtime.JavaCompat.MapPut(this.removedColorSpaces, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), ++counter);
 } else {
-this.stableColorSpaces.Add(objectKey);
+this.stableColorSpaces.Add(global::DripSharp.Runtime.JavaCompat.Unbox(objectKey));
 global::DripSharp.Runtime.JavaCompat.MapRemove(this.removedColorSpaces, objectKey);
 return default!;
 }
@@ -138,16 +138,16 @@ global::DripSharp.Runtime.JavaCompat.MapPut(this.extGStates, indirect, new globa
 }
 
 public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState RemoveExtState(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-long objectKey = global::DripSharp.Runtime.JavaCompat.Unbox(((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long)(indirect.GetKey().GetInternalHash()) : (long)(default!)));
+long? objectKey = ((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long?)(indirect.GetKey().GetInternalHash()) : (long?)(default!));
 if ((objectKey != default!)) {
 if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.stableExtGStates, objectKey)) {
 return default!;
 }
-int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedExtGStates, objectKey, (v) => 1);
+int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedExtGStates, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), (v) => 1);
 if ((counter < global::DripSharp.PdfCarton.Pdmodel.DefaultResourceCache.maxRemovals)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.removedExtGStates, objectKey, ++counter);
+global::DripSharp.Runtime.JavaCompat.MapPut(this.removedExtGStates, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), ++counter);
 } else {
-this.stableExtGStates.Add(objectKey);
+this.stableExtGStates.Add(global::DripSharp.Runtime.JavaCompat.Unbox(objectKey));
 global::DripSharp.Runtime.JavaCompat.MapRemove(this.removedExtGStates, objectKey);
 return default!;
 }
@@ -169,16 +169,16 @@ global::DripSharp.Runtime.JavaCompat.MapPut(this.shadings, indirect, new global:
 }
 
 public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading RemoveShading(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-long objectKey = global::DripSharp.Runtime.JavaCompat.Unbox(((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long)(indirect.GetKey().GetInternalHash()) : (long)(default!)));
+long? objectKey = ((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long?)(indirect.GetKey().GetInternalHash()) : (long?)(default!));
 if ((objectKey != default!)) {
 if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.stableShadings, objectKey)) {
 return default!;
 }
-int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedShadings, objectKey, (v) => 1);
+int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedShadings, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), (v) => 1);
 if ((counter < global::DripSharp.PdfCarton.Pdmodel.DefaultResourceCache.maxRemovals)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.removedShadings, objectKey, ++counter);
+global::DripSharp.Runtime.JavaCompat.MapPut(this.removedShadings, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), ++counter);
 } else {
-this.stableShadings.Add(objectKey);
+this.stableShadings.Add(global::DripSharp.Runtime.JavaCompat.Unbox(objectKey));
 global::DripSharp.Runtime.JavaCompat.MapRemove(this.removedShadings, objectKey);
 return default!;
 }
@@ -200,16 +200,16 @@ global::DripSharp.Runtime.JavaCompat.MapPut(this.patterns, indirect, new global:
 }
 
 public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern RemovePattern(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-long objectKey = global::DripSharp.Runtime.JavaCompat.Unbox(((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long)(indirect.GetKey().GetInternalHash()) : (long)(default!)));
+long? objectKey = ((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long?)(indirect.GetKey().GetInternalHash()) : (long?)(default!));
 if ((objectKey != default!)) {
 if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.stablePatterns, objectKey)) {
 return default!;
 }
-int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedPatterns, objectKey, (v) => 1);
+int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedPatterns, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), (v) => 1);
 if ((counter < global::DripSharp.PdfCarton.Pdmodel.DefaultResourceCache.maxRemovals)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.removedPatterns, objectKey, ++counter);
+global::DripSharp.Runtime.JavaCompat.MapPut(this.removedPatterns, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), ++counter);
 } else {
-this.stablePatterns.Add(objectKey);
+this.stablePatterns.Add(global::DripSharp.Runtime.JavaCompat.Unbox(objectKey));
 global::DripSharp.Runtime.JavaCompat.MapRemove(this.removedPatterns, objectKey);
 return default!;
 }
@@ -231,16 +231,16 @@ global::DripSharp.Runtime.JavaCompat.MapPut(this.properties, indirect, new globa
 }
 
 public virtual global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList RemoveProperties(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-long objectKey = global::DripSharp.Runtime.JavaCompat.Unbox(((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long)(indirect.GetKey().GetInternalHash()) : (long)(default!)));
+long? objectKey = ((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long?)(indirect.GetKey().GetInternalHash()) : (long?)(default!));
 if ((objectKey != default!)) {
 if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.stableProperties, objectKey)) {
 return default!;
 }
-int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedProperties, objectKey, (v) => 1);
+int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedProperties, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), (v) => 1);
 if ((counter < global::DripSharp.PdfCarton.Pdmodel.DefaultResourceCache.maxRemovals)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.removedProperties, objectKey, ++counter);
+global::DripSharp.Runtime.JavaCompat.MapPut(this.removedProperties, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), ++counter);
 } else {
-this.stableProperties.Add(objectKey);
+this.stableProperties.Add(global::DripSharp.Runtime.JavaCompat.Unbox(objectKey));
 global::DripSharp.Runtime.JavaCompat.MapRemove(this.removedProperties, objectKey);
 return default!;
 }
@@ -262,16 +262,16 @@ global::DripSharp.Runtime.JavaCompat.MapPut(this.xobjects, indirect, new global:
 }
 
 public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject RemoveXObject(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-long objectKey = global::DripSharp.Runtime.JavaCompat.Unbox(((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long)(indirect.GetKey().GetInternalHash()) : (long)(default!)));
+long? objectKey = ((this.stableCacheEnabled && (indirect.GetKey() != default!)) ? (long?)(indirect.GetKey().GetInternalHash()) : (long?)(default!));
 if ((objectKey != default!)) {
 if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.stableXObject, objectKey)) {
 return default!;
 }
-int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedXObjects, objectKey, (v) => 1);
+int counter = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.removedXObjects, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), (v) => 1);
 if ((counter < global::DripSharp.PdfCarton.Pdmodel.DefaultResourceCache.maxRemovals)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.removedXObjects, objectKey, ++counter);
+global::DripSharp.Runtime.JavaCompat.MapPut(this.removedXObjects, global::DripSharp.Runtime.JavaCompat.Unbox(objectKey), ++counter);
 } else {
-this.stableXObject.Add(objectKey);
+this.stableXObject.Add(global::DripSharp.Runtime.JavaCompat.Unbox(objectKey));
 global::DripSharp.Runtime.JavaCompat.MapRemove(this.removedXObjects, objectKey);
 return default!;
 }

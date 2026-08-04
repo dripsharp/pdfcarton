@@ -7,21 +7,23 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RollForward>Major</RollForward>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" PrivateAssets="all" />
-    <PackageReference Include="xunit" Version="2.9.3" PrivateAssets="all" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" PrivateAssets="all" />
+    <PackageReference Include="xunit.v3" Version="3.2.2" PrivateAssets="all" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" PrivateAssets="all" />
+    <PackageReference Include="Castle.Core" Version="5.1.1" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../../src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj" />
     <ProjectReference Include="../../src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj" />
+    <ProjectReference Include="../../src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj" />
+    <ProjectReference Include="../../src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj" />
     <ProjectReference Include="../../src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj" />
     <ProjectReference Include="../../src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj" />
-    <ProjectReference Include="../../src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Fixtures/metadata.xmp" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures/metadata.xmp" TargetPath="Fixtures/metadata.xmp" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

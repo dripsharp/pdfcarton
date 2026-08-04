@@ -11,23 +11,23 @@ namespace DripSharp.PdfCarton.Fonts.Ttf;
 public class PostScriptTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
 private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private float formatType;
+private float formatType = default;
 
-private float italicAngle;
+private float italicAngle = default;
 
-private short underlinePosition;
+private short underlinePosition = default;
 
-private short underlineThickness;
+private short underlineThickness = default;
 
-private long isFixedPitch;
+private long isFixedPitch = default;
 
-private long minMemType42;
+private long minMemType42 = default;
 
-private long maxMemType42;
+private long maxMemType42 = default;
 
-private long mimMemType1;
+private long mimMemType1 = default;
 
-private long maxMemType1;
+private long maxMemType1 = default;
 
 private string[] glyphNames = default!;
 

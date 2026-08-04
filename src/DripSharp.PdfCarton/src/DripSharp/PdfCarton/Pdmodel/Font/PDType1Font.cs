@@ -33,9 +33,9 @@ private readonly global::DripSharp.PdfCarton.Fonts.Type1.Type1Font type1font = n
 
 private readonly global::DripSharp.PdfCarton.Fonts.FontBoxFont genericFont = null!;
 
-private readonly bool __field_isEmbedded;
+private readonly bool __field_isEmbedded = default;
 
-private readonly bool __field_isDamaged;
+private readonly bool __field_isDamaged = default;
 
 private readonly global::SkiaSharp.SKMatrix fontMatrixTransform = default;
 
@@ -234,7 +234,7 @@ int code = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(global::DripSha
 if ((code < 0)) {
 throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.JavaStringFormat("U+%04X ('%s') is not available in the font %s (generic: %s), encoding: %s", unicode, name, this.GetName(), this.genericFont.GetName(), base.Encoding.GetEncodingName()));
 }
-bytes = new sbyte[] { unchecked((sbyte)((sbyte)(code))) };
+bytes = new sbyte[] { unchecked((sbyte)(unchecked((sbyte)(code)))) };
 global::DripSharp.Runtime.JavaCompat.MapPut(this.codeToBytesMap, unicode, bytes);
 return bytes;
 }

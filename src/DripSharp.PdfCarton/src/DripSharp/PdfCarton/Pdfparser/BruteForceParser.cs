@@ -165,8 +165,8 @@ long originOffset = base.Source.GetPosition();
 global::System.Collections.Generic.IDictionary<long, global::DripSharp.PdfCarton.Cos.COSObjectKey> bfSearchForObjStreamOffsets = this.bfSearchForObjStreamOffsets();
 global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, long> bfCOSObjectOffsets = this.GetBFCOSObjectOffsets();
 global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaMapEntry<long, global::DripSharp.PdfCarton.Cos.COSObjectKey>> entries = global::DripSharp.Runtime.JavaCompat.MapEntrySet(bfSearchForObjStreamOffsets);
-global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.StreamFilter(entries, (o) => (global::DripSharp.Runtime.JavaCompat.MapGetNullable(bfCOSObjectOffsets, o.Value) == default!)), (o) => global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Skipped incomplete object stream:", o.Value), " at "), o.Key))));
-global::System.Collections.Generic.IList<long> objStreamOffsets = global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.StreamFilter(entries, (o) => (global::DripSharp.Runtime.JavaCompat.MapGetNullable(bfCOSObjectOffsets, o.Value) != default!)), (o) => global::DripSharp.Runtime.JavaCompat.Equals(o.Key, global::DripSharp.Runtime.JavaCompat.MapGetNullable(bfCOSObjectOffsets, o.Value))), (value0) => value0.Key));
+global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(entries), (o) => (global::DripSharp.Runtime.JavaCompat.MapGetNullable(bfCOSObjectOffsets, o.Value) == default!)), (o) => global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Skipped incomplete object stream:", o.Value), " at "), o.Key))));
+global::System.Collections.Generic.IList<long> objStreamOffsets = global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(entries), (o) => (global::DripSharp.Runtime.JavaCompat.MapGetNullable(bfCOSObjectOffsets, o.Value) != default!)), (o) => global::DripSharp.Runtime.JavaCompat.Equals(o.Key, global::DripSharp.Runtime.JavaCompat.MapGetNullable(bfCOSObjectOffsets, o.Value))), (value0) => value0.Key));
 foreach (long offset in objStreamOffsets) {
 base.Source.Seek((long)(offset));
 long stmObjNumber = this.ReadObjectNumber();
@@ -318,7 +318,7 @@ return lastEOFMarker;
 }
 
 private global::System.Collections.Generic.IDictionary<long, global::DripSharp.PdfCarton.Cos.COSObjectKey> bfSearchForObjStreamOffsets() {
-global::System.Collections.Generic.Dictionary<long, global::DripSharp.PdfCarton.Cos.COSObjectKey> bfSearchObjStreamsOffsets = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<long, global::DripSharp.PdfCarton.Cos.COSObjectKey>();
+global::DripSharp.Runtime.JavaLinkedHashMap<long, global::DripSharp.PdfCarton.Cos.COSObjectKey> bfSearchObjStreamsOffsets = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<long, global::DripSharp.PdfCarton.Cos.COSObjectKey>();
 base.Source.Seek(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.MINIMUM_SEARCH_OFFSET);
 char[] @string = " obj".ToCharArray();
 long positionObjStream = this.findString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.OBJ_STREAM);
@@ -483,7 +483,7 @@ global::DripSharp.Runtime.JavaCompat.ForEach(this.GetBFCOSObjectOffsets(), trail
 trailerResolver.SetStartxref((long)(0));
 base.Document.GetXrefTable().Clear();
 base.Document.AddXRefTable(trailerResolver.GetXrefTable());
-long maxValue = global::DripSharp.Runtime.JavaCompat.ReduceOptional(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.MapKeySet(base.Document.GetXrefTable()), (value0) => value0.GetNumber()), global::System.Math.Max).OrElse(0L);
+long maxValue = global::DripSharp.Runtime.JavaCompat.ReduceOptional(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.Stream(global::DripSharp.Runtime.JavaCompat.MapKeySet(base.Document.GetXrefTable())), (value0) => value0.GetNumber()), global::System.Math.Max).OrElse(0L);
 base.Document.SetHighestXRefObjectNumber((long)(maxValue));
 global::DripSharp.PdfCarton.Cos.COSDictionary trailer = trailerResolver.GetTrailer();
 base.Document.SetTrailer(trailer);

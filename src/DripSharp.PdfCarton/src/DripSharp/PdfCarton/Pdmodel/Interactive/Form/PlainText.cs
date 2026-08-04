@@ -149,7 +149,7 @@ return lo;
 internal class Line {
 internal readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainText.Word> words = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainText.Word>();
 
-internal float lineWidth;
+internal float lineWidth = default;
 
 internal virtual float getWidth() {
 return this.lineWidth;

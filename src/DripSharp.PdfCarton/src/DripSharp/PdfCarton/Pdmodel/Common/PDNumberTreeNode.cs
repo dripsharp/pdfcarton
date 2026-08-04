@@ -58,7 +58,7 @@ int? lowerLimit = firstKid.GetLowerLimit();
 this.setLowerLimit(lowerLimit);
 int? upperLimit = lastKid.GetUpperLimit();
 this.setUpperLimit(upperLimit);
-this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids, new global::DripSharp.PdfCarton.Cos.COSArray(kids));
+this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids, new global::DripSharp.PdfCarton.Cos.COSArray(global::DripSharp.Runtime.JavaCompat.ToListValues<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode>(kids)));
 } else {
 if ((this.node.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Nums) == default!)) {
 this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Limits, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
@@ -106,7 +106,7 @@ global::DripSharp.PdfCarton.Cos.COSInteger key = (global::DripSharp.PdfCarton.Co
 global::DripSharp.PdfCarton.Cos.COSBase cosValue = numbersArray.GetObject((i + 1));
 global::DripSharp.Runtime.JavaCompat.MapPut(indices!, key.IntValue(), ((cosValue == default!) ? (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)(default!) : this.ConvertCOSToPD(cosValue)));
 }
-indices = global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(indices!);
+indices = global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(global::DripSharp.Runtime.JavaCompat.CastDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(indices!));
 }
 return indices!;
 }

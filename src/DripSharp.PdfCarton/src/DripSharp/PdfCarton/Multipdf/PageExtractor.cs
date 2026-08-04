@@ -13,7 +13,7 @@ private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDocument =
 
 private int startPage = 1;
 
-private int endPage;
+private int endPage = default;
 
 public PageExtractor(global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDocument) {
 this.sourceDocument = sourceDocument;

@@ -25,7 +25,7 @@ private int pointCount = -1;
 
 private int contourCount = -1;
 
-internal GlyfCompositeDescript(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais, global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable glyphTable, int level) : base((short)((short)(-1))) {
+internal GlyfCompositeDescript(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais, global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable glyphTable, int level) : base(unchecked((short)(unchecked((short)(-1))))) {
 this.glyphTable = glyphTable;
 global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp comp;
 do {
@@ -88,9 +88,9 @@ global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd = global::DripSharp.Pd
 int n = (i - c.GetFirstIndex());
 int x = gd.GetXCoordinate(n);
 int y = gd.GetYCoordinate(n);
-return (short)((c.ScaleX(x, y) + c.GetXTranslate()));
+return unchecked((short)(unchecked((short)((c.ScaleX(x, y) + c.GetXTranslate())))));
 }
-return 0;
+return unchecked((short)(0));
 }
 
 public override short GetYCoordinate(int i) {
@@ -100,9 +100,9 @@ global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd = global::DripSharp.Pd
 int n = (i - c.GetFirstIndex());
 int x = gd.GetXCoordinate(n);
 int y = gd.GetYCoordinate(n);
-return (short)((c.ScaleY(x, y) + c.GetYTranslate()));
+return unchecked((short)(unchecked((short)((c.ScaleY(x, y) + c.GetYTranslate())))));
 }
-return 0;
+return unchecked((short)(0));
 }
 
 public override bool IsComposite() {

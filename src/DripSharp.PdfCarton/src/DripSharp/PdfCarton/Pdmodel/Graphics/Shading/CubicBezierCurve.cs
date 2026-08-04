@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 internal class CubicBezierCurve {
 private readonly global::DripSharp.Runtime.JavaPoint2D[] controlPoints = null!;
 
-private readonly int level;
+private readonly int level = default;
 
 private readonly global::DripSharp.Runtime.JavaPoint2D[] curve = null!;
 

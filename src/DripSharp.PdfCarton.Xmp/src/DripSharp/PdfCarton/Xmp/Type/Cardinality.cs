@@ -25,7 +25,7 @@ public static readonly global::DripSharp.PdfCarton.Xmp.Type.Cardinality Seq = ne
 [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(3)]
 public static readonly global::DripSharp.PdfCarton.Xmp.Type.Cardinality Alt = new global::DripSharp.PdfCarton.Xmp.Type.Cardinality(true);
 
-private readonly bool array;
+private readonly bool array = default;
 
 private Cardinality(bool a) {
 this.array = a;

@@ -37,7 +37,7 @@ return this.properties;
 }
 
 public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> GetPropertiesByLocalName(string localName) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> list = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ToListValues(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StreamFilter(this.GetAllProperties(), (abstractField) => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(abstractField.GetPropertyName(), localName)));
+global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> list = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ToListValues(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StreamFilter(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Stream(this.GetAllProperties()), (abstractField) => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(abstractField.GetPropertyName(), localName)));
 if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ListIsEmpty(list)) {
 return default!;
 } else {

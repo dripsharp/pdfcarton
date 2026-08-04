@@ -11,9 +11,9 @@ namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 internal class RC4Cipher {
 private readonly int[] salt = null!;
 
-private int b;
+private int b = default;
 
-private int c;
+private int c = default;
 
 internal RC4Cipher() {
 this.salt = new int[256];
@@ -52,7 +52,7 @@ this.b = ((this.b + 1) % 256);
 this.c = ((this.salt[this.b] + this.c) % 256);
 global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher.swap(this.salt, this.b, this.c);
 int saltIndex = ((this.salt[this.b] + this.salt[this.c]) % 256);
-return (aByte ^ (sbyte)(this.salt[saltIndex]));
+return (aByte ^ unchecked((sbyte)(this.salt[saltIndex])));
 }
 
 public virtual void Write(sbyte aByte, global::System.IO.Stream output) {
@@ -77,7 +77,7 @@ this.write(data, offset, len, output, new sbyte[len]);
 
 private void write(sbyte[] data, int offset, int len, global::System.IO.Stream output, sbyte[] buffer) {
 for (int i = 0, j = offset; (i < len); ++i, ++j) {
-buffer[i] = unchecked((sbyte)((sbyte)(this.encrypt(data[j]))));
+buffer[i] = unchecked((sbyte)(unchecked((sbyte)(this.encrypt(data[j])))));
 }
 global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, buffer, 0, len);
 }

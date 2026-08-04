@@ -29,7 +29,7 @@ private readonly global::System.Collections.Generic.ISet<global::DripSharp.PdfCa
 
 private int? currentPageNumber = default!;
 
-private long fileLen;
+private long fileLen = default;
 
 public PreflightContext() {
 this.config = default!;

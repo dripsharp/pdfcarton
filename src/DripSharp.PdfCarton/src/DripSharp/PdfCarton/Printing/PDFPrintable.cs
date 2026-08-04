@@ -19,13 +19,13 @@ private readonly global::DripSharp.PdfCarton.Pdmodel.PDPageTree pageTree = null!
 
 private readonly global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer = null!;
 
-private readonly bool showPageBorder;
+private readonly bool showPageBorder = default;
 
 private readonly global::DripSharp.PdfCarton.Printing.Scaling scaling = null!;
 
-private readonly float dpi;
+private readonly float dpi = default;
 
-private readonly bool center;
+private readonly bool center = default;
 
 private bool subsamplingAllowed = false;
 

@@ -37,8 +37,8 @@ return new sbyte[] { global::DripSharp.PdfCarton.Util.Hex.HEX_BYTES[global::Drip
 public static sbyte[] GetBytes(sbyte[] bytes) {
 sbyte[] asciiBytes = new sbyte[(bytes.Length * 2)];
 for (int i = 0; (i < bytes.Length); i++) {
-asciiBytes[(i * 2)] = global::DripSharp.PdfCarton.Util.Hex.HEX_BYTES[global::DripSharp.PdfCarton.Util.Hex.getHighNibble(bytes[i])];
-asciiBytes[((i * 2) + 1)] = global::DripSharp.PdfCarton.Util.Hex.HEX_BYTES[global::DripSharp.PdfCarton.Util.Hex.getLowNibble(bytes[i])];
+asciiBytes[(i * 2)] = unchecked((sbyte)(global::DripSharp.PdfCarton.Util.Hex.HEX_BYTES[global::DripSharp.PdfCarton.Util.Hex.getHighNibble(bytes[i])]));
+asciiBytes[((i * 2) + 1)] = unchecked((sbyte)(global::DripSharp.PdfCarton.Util.Hex.HEX_BYTES[global::DripSharp.PdfCarton.Util.Hex.getLowNibble(bytes[i])]));
 }
 return asciiBytes;
 }

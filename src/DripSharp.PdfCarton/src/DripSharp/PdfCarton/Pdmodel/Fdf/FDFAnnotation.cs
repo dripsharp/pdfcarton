@@ -453,11 +453,11 @@ public virtual string GetTitle() {
 return this.Annot.GetString(global::DripSharp.PdfCarton.Cos.COSName.T);
 }
 
-public virtual global::System.DateTimeOffset GetCreationDate() {
+public virtual global::System.DateTimeOffset? GetCreationDate() {
 return this.Annot.GetDate(global::DripSharp.PdfCarton.Cos.COSName.CreationDate);
 }
 
-public void SetCreationDate(global::System.DateTimeOffset date) {
+public void SetCreationDate(global::System.DateTimeOffset? date) {
 this.Annot.SetDate(global::DripSharp.PdfCarton.Cos.COSName.CreationDate, date);
 }
 

@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.IO;
 public class RandomAccessReadMemoryMappedFile : global::DripSharp.PdfCarton.IO.RandomAccessRead {
 private global::DripSharp.Runtime.JavaByteBuffer mappedByteBuffer = null!;
 
-private readonly long size;
+private readonly long size = default;
 
 private readonly global::DripSharp.Runtime.JavaFileChannel fileChannel = null!;
 
@@ -29,7 +29,7 @@ public RandomAccessReadMemoryMappedFile(global::DripSharp.Runtime.JavaPath path)
 this.fileChannel = global::DripSharp.Runtime.JavaFileChannel.open(path, global::DripSharp.Runtime.JavaCompat.EnumSetOf<global::DripSharp.Runtime.JavaStandardOpenOption>(global::DripSharp.Runtime.JavaStandardOpenOption.READ));
 this.size = this.fileChannel.size();
 if ((this.size > int.MaxValue)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat((((object)(this)).GetType().FullName ?? ((object)(this)).GetType().Name), " doesn't yet support files bigger than "), int.MaxValue));
+throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"), " doesn't yet support files bigger than "), int.MaxValue));
 }
 this.mappedByteBuffer = this.fileChannel.map(global::DripSharp.Runtime.JavaFileChannelMapMode.READ_ONLY, (long)(0), this.size);
 this.unmapper = global::DripSharp.PdfCarton.IO.IOUtils.Unmap;

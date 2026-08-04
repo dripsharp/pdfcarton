@@ -27,7 +27,7 @@ public virtual T GetPathElement<T>(int position, global::System.Type expectedTyp
 if (((position < 0) || (position >= this.objectPath.Count))) {
 return default!;
 }
-return (T)(this.objectPath.Get(position)!);
+return global::DripSharp.Runtime.JavaCompat.CastReference<T>(this.objectPath.Get(position));
 }
 
 public virtual int GetClosestTypePosition(global::System.Type type) {

@@ -15,11 +15,11 @@ private const long LEAD_OFFSET = (55296L - (65536 >> unchecked((int)(10))));
 
 private const long SURROGATE_OFFSET = ((65536L - (55296 << unchecked((int)(10)))) - 56320);
 
-private int platformId;
+private int platformId = default;
 
-private int platformEncodingId;
+private int platformEncodingId = default;
 
-private long subTableOffset;
+private long subTableOffset = default;
 
 private int[] glyphIdToCharacterCode = null!;
 
@@ -418,13 +418,13 @@ return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripS
 }
 
 internal class SubHeader {
-internal readonly int firstCode;
+internal readonly int firstCode = default;
 
-internal readonly int entryCount;
+internal readonly int entryCount = default;
 
-internal readonly short idDelta;
+internal readonly short idDelta = default;
 
-internal readonly int idRangeOffset;
+internal readonly int idRangeOffset = default;
 
 internal SubHeader(int firstCodeValue, int entryCountValue, short idDeltaValue, int idRangeOffsetValue) {
 this.firstCode = firstCodeValue;

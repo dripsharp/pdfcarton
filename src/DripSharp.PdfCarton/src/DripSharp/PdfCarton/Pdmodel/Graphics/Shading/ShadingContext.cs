@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 public abstract class ShadingContext : global::DripSharp.Runtime.JavaPaintContext {
 private float[] background = null!;
 
-private int rgbBackground;
+private int rgbBackground = default;
 
 private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading = null!;
 

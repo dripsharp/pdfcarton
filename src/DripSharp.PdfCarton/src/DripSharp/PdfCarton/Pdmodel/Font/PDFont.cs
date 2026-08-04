@@ -23,7 +23,7 @@ private global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor
 
 private global::System.Collections.Generic.IList<float?> widths = null!;
 
-private float avgFontWidth;
+private float avgFontWidth = default;
 
 private float fontWidthOfSpace = -1.0F;
 
@@ -239,7 +239,7 @@ return this.ToUnicode(code);
 public virtual string ToUnicode(int code) {
 if ((this.toUnicodeCMap != default!)) {
 if ((((this.toUnicodeCMap.GetName() != default!) && global::DripSharp.Runtime.JavaCompat.StringStartsWith(this.toUnicodeCMap.GetName(), "Identity-")) && ((this.Dict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.ToUnicode) != default!) || !(this.toUnicodeCMap.HasUnicodeMappings())))) {
-return new string(new char[] { unchecked((char)((char)(code))) });
+return new string(new char[] { unchecked((char)(unchecked((char)(code)))) });
 } else {
 if (((code < 256) && !((this is global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font)))) {
 global::DripSharp.PdfCarton.Cos.COSName encoding = this.Dict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Encoding);

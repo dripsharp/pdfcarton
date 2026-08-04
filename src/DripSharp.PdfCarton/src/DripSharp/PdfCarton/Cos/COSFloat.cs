@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public class COSFloat : global::DripSharp.PdfCarton.Cos.COSNumber {
-private readonly float value;
+private readonly float value = default;
 
 private string valueAsString = null!;
 
@@ -98,7 +98,7 @@ private string formatString() {
 if ((this.valueAsString == default!)) {
 string s = global::DripSharp.Runtime.JavaCompat.StringValueOf(this.value);
 bool simpleFormat = (global::DripSharp.Runtime.JavaCompat.StringIndexOf(s, (int)('E')) < 0);
-this.valueAsString = (simpleFormat ? s : global::DripSharp.Runtime.JavaCompat.BigDecimalToPlainString(global::DripSharp.Runtime.JavaCompat.BigDecimalStripTrailingZeros(global::DripSharp.Runtime.JavaCompat.BigDecimalParse(s))));
+this.valueAsString = (simpleFormat ? s : global::DripSharp.Runtime.JavaCompat.JavaBigDecimalToPlainString(global::DripSharp.Runtime.JavaCompat.JavaBigDecimalStripTrailingZeros(global::DripSharp.Runtime.JavaCompat.JavaBigDecimalParse(s))));
 }
 return this.valueAsString;
 }

@@ -29,7 +29,7 @@ private static void analyzePropertyUniqueness(global::DripSharp.PdfCarton.Xmp.Sc
 if ((schema == default!)) {
 return;
 }
-if ((global::System.Linq.Enumerable.LongCount(global::DripSharp.Runtime.JavaCompat.StreamFilter(schema.GetAllProperties(), (field) => global::DripSharp.Runtime.JavaCompat.Equals(propertyName, field.GetPropertyName()))) > 1)) {
+if ((global::System.Linq.Enumerable.LongCount(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(schema.GetAllProperties()), (field) => global::DripSharp.Runtime.JavaCompat.Equals(propertyName, field.GetPropertyName()))) > 1)) {
 global::DripSharp.Runtime.JavaCompat.Add(ve, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPropertyFormat, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("property '", schema.GetPrefix()), ":"), propertyName), "' occurs multiple times")));
 }
 }

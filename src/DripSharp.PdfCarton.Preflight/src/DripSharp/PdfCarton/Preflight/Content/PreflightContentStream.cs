@@ -55,7 +55,7 @@ if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Cont
 this.ValidateInlineImageFilter(@operator);
 this.ValidateInlineImageColorSpace(@operator);
 }
-this.CheckShowTextOperators(@operator, operands);
+this.CheckShowTextOperators(@operator, global::DripSharp.Runtime.JavaCompat.CastObjects(operands));
 this.CheckColorOperators(@operator.GetName());
 this.ValidateRenderingIntent(@operator, operands);
 this.CheckSetColorSpaceOperators(@operator, operands);
@@ -70,10 +70,10 @@ this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp
 protected internal virtual void CheckShowTextOperators(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IEnumerable<object> arguments) {
 string op = @operator.GetName();
 if (((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowText, op) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace, op))) {
-this.validateStringDefinition(@operator, arguments);
+this.validateStringDefinition(@operator, global::DripSharp.Runtime.JavaCompat.CastObjects(arguments));
 }
 if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted, op)) {
-this.validateStringArray(@operator, arguments);
+this.validateStringArray(@operator, global::DripSharp.Runtime.JavaCompat.CastObjects(arguments));
 }
 }
 
@@ -110,7 +110,7 @@ this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat("Invalid argument
 private void validateStringArray(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IEnumerable<object> arguments) {
 foreach (object @object in arguments) {
 if ((@object is global::DripSharp.PdfCarton.Cos.COSArray)) {
-this.validateStringArray(@operator, ((global::DripSharp.PdfCarton.Cos.COSArray)(@object!)).ToList());
+this.validateStringArray(@operator, global::DripSharp.Runtime.JavaCompat.CastObjects(((global::DripSharp.PdfCarton.Cos.COSArray)(@object!)).ToList()));
 } else {
 if ((@object is global::DripSharp.PdfCarton.Cos.COSString)) {
 this.ValidateText(((global::DripSharp.PdfCarton.Cos.COSString)(@object!)).GetBytes());
@@ -132,7 +132,7 @@ if ((font == default!)) {
 this.RegisterError("Text operator can't be processed without a Font", global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontRef);
 return;
 }
-global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer fontContainer = base.Context.GetFontContainer(font.GetCOSObject());
+var fontContainer = base.Context.GetFontContainer(font.GetCOSObject());
 if (((renderingMode == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Neither) && ((fontContainer == default!) || !(fontContainer.IsEmbeddedFont())))) {
 return;
 } else {

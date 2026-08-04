@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class OpenTypeFont : global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont {
-private bool hasPostScriptTag;
+private bool hasPostScriptTag = default;
 
 internal OpenTypeFont(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream fontData) : base(fontData) {
 

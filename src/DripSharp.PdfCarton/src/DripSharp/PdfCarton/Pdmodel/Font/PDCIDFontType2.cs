@@ -17,9 +17,9 @@ private readonly global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf = null!;
 
 private readonly int[] cid2gid = null!;
 
-private readonly bool __field_isEmbedded;
+private readonly bool __field_isEmbedded = default;
 
-private readonly bool __field_isDamaged;
+private readonly bool __field_isDamaged = default;
 
 private readonly global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmap = null!;
 
@@ -205,7 +205,7 @@ cid = base.Parent.GetCMapUCS2().ToCID(unicode);
 if ((cid == -1)) {
 global::DripSharp.PdfCarton.Fonts.Cmap.CMap toUnicodeCMap = base.Parent.GetToUnicodeCMap();
 if ((toUnicodeCMap != default!)) {
-sbyte[] codes = toUnicodeCMap.GetCodesFromUnicode(global::DripSharp.Runtime.JavaCompat.CodePointToString(unchecked((char)((char)(unicode)))));
+sbyte[] codes = toUnicodeCMap.GetCodesFromUnicode(global::DripSharp.Runtime.JavaCompat.CodePointToString(unchecked((char)(unchecked((char)(unicode))))));
 if ((codes != default!)) {
 return codes;
 }
@@ -216,13 +216,13 @@ cid = 0;
 cid = this.cmap.GetGlyphId(unicode);
 }
 if ((cid == 0)) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.JavaStringFormat("No glyph for U+%04X (%c) in font %s", unicode, (char)(unicode), this.GetName()));
+throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.JavaStringFormat("No glyph for U+%04X (%c) in font %s", unicode, unchecked((char)(unicode)), this.GetName()));
 }
 return this.EncodeGlyphId(cid);
 }
 
 public override sbyte[] EncodeGlyphId(int glyphId) {
-return new sbyte[] { unchecked((sbyte)((sbyte)(((glyphId >> unchecked((int)(8))) & 255)))), unchecked((sbyte)((sbyte)((glyphId & 255)))) };
+return new sbyte[] { unchecked((sbyte)(unchecked((sbyte)(((glyphId >> unchecked((int)(8))) & 255))))), unchecked((sbyte)(unchecked((sbyte)((glyphId & 255))))) };
 }
 
 public override bool IsEmbedded() {

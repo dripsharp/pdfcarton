@@ -251,10 +251,10 @@ encryptionDictionary.SetOwnerKey(o);
 encryptionDictionary.SetOwnerEncryptionKey(oe);
 this.prepareEncryptionDictAES(encryptionDictionary, global::DripSharp.PdfCarton.Cos.COSName.Aesv3);
 sbyte[] perms = new sbyte[16];
-perms[0] = unchecked((sbyte)((sbyte)(permissionInt)));
-perms[1] = unchecked((sbyte)((sbyte)((permissionInt >>> unchecked((int)(8))))));
-perms[2] = unchecked((sbyte)((sbyte)((permissionInt >>> unchecked((int)(16))))));
-perms[3] = unchecked((sbyte)((sbyte)((permissionInt >>> unchecked((int)(24))))));
+perms[0] = unchecked((sbyte)(unchecked((sbyte)(permissionInt))));
+perms[1] = unchecked((sbyte)(unchecked((sbyte)((permissionInt >>> unchecked((int)(8)))))));
+perms[2] = unchecked((sbyte)(unchecked((sbyte)((permissionInt >>> unchecked((int)(16)))))));
+perms[3] = unchecked((sbyte)(unchecked((sbyte)((permissionInt >>> unchecked((int)(24)))))));
 perms[4] = unchecked((sbyte)(255));
 perms[5] = unchecked((sbyte)(255));
 perms[6] = unchecked((sbyte)(255));
@@ -264,7 +264,7 @@ perms[9] = unchecked((sbyte)('a'));
 perms[10] = unchecked((sbyte)('d'));
 perms[11] = unchecked((sbyte)('b'));
 for (int i = 12; (i <= 15); i++) {
-perms[i] = unchecked((sbyte)((sbyte)(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextInt())));
+perms[i] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextInt()))));
 }
 cipher.Init(global::DripSharp.Runtime.JavaCipher.ENCRYPT_MODE, new global::DripSharp.Runtime.JavaSecretKeySpec(this.GetEncryptionKey(), "AES"), new global::DripSharp.Runtime.JavaIvParameterSpec(new sbyte[16]));
 sbyte[] permsEnc = cipher.DoFinal(perms);
@@ -371,7 +371,7 @@ global::DripSharp.Runtime.JavaCompat.ArrayCopy(owner, 0, otemp, 0, owner.Length)
 for (int i = 19; (i >= 0); i--) {
 global::DripSharp.Runtime.JavaCompat.ArrayCopy(rc4Key, 0, iterationKey, 0, rc4Key.Length);
 for (int j = 0; (j < iterationKey.Length); j++) {
-iterationKey[j] = unchecked((sbyte)((sbyte)((iterationKey[j] ^ (sbyte)(i)))));
+iterationKey[j] = unchecked((sbyte)(unchecked((sbyte)((iterationKey[j] ^ unchecked((sbyte)(i)))))));
 }
 global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(result);
 this.EncryptDataRC4(iterationKey, otemp, result);
@@ -395,10 +395,10 @@ sbyte[] padded = this.truncateOrPad(password);
 global::DripSharp.Runtime.JavaMessageDigest md = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getMD5();
 md.Update(padded);
 md.Update(o);
-md.Update(unchecked((sbyte)((sbyte)(permissions))));
-md.Update(unchecked((sbyte)((sbyte)((permissions >>> unchecked((int)(8)))))));
-md.Update(unchecked((sbyte)((sbyte)((permissions >>> unchecked((int)(16)))))));
-md.Update(unchecked((sbyte)((sbyte)((permissions >>> unchecked((int)(24)))))));
+md.Update(unchecked((sbyte)(unchecked((sbyte)(permissions)))));
+md.Update(unchecked((sbyte)(unchecked((sbyte)((permissions >>> unchecked((int)(8))))))));
+md.Update(unchecked((sbyte)(unchecked((sbyte)((permissions >>> unchecked((int)(16))))))));
+md.Update(unchecked((sbyte)(unchecked((sbyte)((permissions >>> unchecked((int)(24))))))));
 md.Update(id);
 if (((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4) && !encryptMetadata)) {
 md.Update(new sbyte[] { unchecked((sbyte)(255)), unchecked((sbyte)(255)), unchecked((sbyte)(255)), unchecked((sbyte)(255)) });
@@ -471,7 +471,7 @@ sbyte[] iterationKey = new sbyte[encKey.Length];
 for (int i = 0; (i < 20); i++) {
 global::DripSharp.Runtime.JavaCompat.ArrayCopy(encKey, 0, iterationKey, 0, iterationKey.Length);
 for (int j = 0; (j < iterationKey.Length); j++) {
-iterationKey[j] = unchecked((sbyte)((sbyte)((iterationKey[j] ^ i))));
+iterationKey[j] = unchecked((sbyte)(unchecked((sbyte)((iterationKey[j] ^ i)))));
 }
 global::System.IO.MemoryStream input = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(result));
 global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(result);
@@ -500,7 +500,7 @@ sbyte[] iterationKey = new sbyte[rc4Key.Length];
 for (int i = 1; (i < 20); i++) {
 global::DripSharp.Runtime.JavaCompat.ArrayCopy(rc4Key, 0, iterationKey, 0, rc4Key.Length);
 for (int j = 0; (j < iterationKey.Length); j++) {
-iterationKey[j] = unchecked((sbyte)((sbyte)((iterationKey[j] ^ (sbyte)(i)))));
+iterationKey[j] = unchecked((sbyte)(unchecked((sbyte)((iterationKey[j] ^ unchecked((sbyte)(i)))))));
 }
 global::System.IO.MemoryStream input = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(encrypted));
 global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(encrypted);

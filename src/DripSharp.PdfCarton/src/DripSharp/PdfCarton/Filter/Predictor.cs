@@ -24,7 +24,7 @@ if ((bitsPerComponent == 8)) {
 for (int p__66_30 = bytesPerPixel; (p__66_30 < rowlength); p__66_30++) {
 int sub__68_29 = (actline[p__66_30] & 255);
 int left__69_29 = (actline[(p__66_30 - bytesPerPixel)] & 255);
-actline[p__66_30] = unchecked((sbyte)((sbyte)((sub__68_29 + left__69_29))));
+actline[p__66_30] = unchecked((sbyte)(unchecked((sbyte)((sub__68_29 + left__69_29)))));
 }
 break;
 }
@@ -32,8 +32,8 @@ if ((bitsPerComponent == 16)) {
 for (int p__76_30 = bytesPerPixel; (p__76_30 < (rowlength - 1)); p__76_30 += 2) {
 int sub__78_29 = (((actline[p__76_30] & 255) << unchecked((int)(8))) + (actline[(p__76_30 + 1)] & 255));
 int left__79_29 = (((actline[(p__76_30 - bytesPerPixel)] & 255) << unchecked((int)(8))) + (actline[((p__76_30 - bytesPerPixel) + 1)] & 255));
-actline[p__76_30] = unchecked((sbyte)((sbyte)((((sub__78_29 + left__79_29) >> unchecked((int)(8))) & 255))));
-actline[(p__76_30 + 1)] = unchecked((sbyte)((sbyte)(((sub__78_29 + left__79_29) & 255))));
+actline[p__76_30] = unchecked((sbyte)(unchecked((sbyte)((((sub__78_29 + left__79_29) >> unchecked((int)(8))) & 255)))));
+actline[(p__76_30 + 1)] = unchecked((sbyte)(unchecked((sbyte)(((sub__78_29 + left__79_29) & 255)))));
 }
 break;
 }
@@ -67,7 +67,7 @@ int bytePosLeft = (((p__128_26 - colors) * bitsPerComponent) / 8);
 int bitPosLeft = ((8 - (((p__128_26 - colors) * bitsPerComponent) % 8)) - bitsPerComponent);
 int sub__135_25 = global::DripSharp.PdfCarton.Filter.Predictor.getBitSeq((int)(actline[bytePosSub]), bitPosSub, bitsPerComponent);
 int left__136_25 = global::DripSharp.PdfCarton.Filter.Predictor.getBitSeq((int)(actline[bytePosLeft]), bitPosLeft, bitsPerComponent);
-actline[bytePosSub] = unchecked((sbyte)((sbyte)(global::DripSharp.PdfCarton.Filter.Predictor.calcSetBitSeq((int)(actline[bytePosSub]), bitPosSub, bitsPerComponent, (sub__135_25 + left__136_25)))));
+actline[bytePosSub] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Filter.Predictor.calcSetBitSeq((int)(actline[bytePosSub]), bitPosSub, bitsPerComponent, (sub__135_25 + left__136_25))))));
 }
 break;
 case var __case_140_18_0 when __case_140_18_0 == 10:
@@ -76,14 +76,14 @@ case var __case_144_18_0 when __case_144_18_0 == 11:
 for (int p__146_26 = bytesPerPixel; (p__146_26 < rowlength); p__146_26++) {
 int sub__148_25 = actline[p__146_26];
 int left__149_25 = actline[(p__146_26 - bytesPerPixel)];
-actline[p__146_26] = unchecked((sbyte)((sbyte)((sub__148_25 + left__149_25))));
+actline[p__146_26] = unchecked((sbyte)(unchecked((sbyte)((sub__148_25 + left__149_25)))));
 }
 break;
 case var __case_153_18_0 when __case_153_18_0 == 12:
 for (int p__155_26 = 0; (p__155_26 < rowlength); p__155_26++) {
 int up__157_25 = (actline[p__155_26] & 255);
 int prior = (lastline[p__155_26] & 255);
-actline[p__155_26] = unchecked((sbyte)((sbyte)(((up__157_25 + prior) & 255))));
+actline[p__155_26] = unchecked((sbyte)(unchecked((sbyte)(((up__157_25 + prior) & 255)))));
 }
 break;
 case var __case_162_18_0 when __case_162_18_0 == 13:
@@ -91,7 +91,7 @@ for (int p__164_26 = 0; (p__164_26 < rowlength); p__164_26++) {
 int avg = (actline[p__164_26] & 255);
 int left__167_25 = (((p__164_26 - bytesPerPixel) >= 0) ? (actline[(p__164_26 - bytesPerPixel)] & 255) : 0);
 int up__168_25 = (lastline[p__164_26] & 255);
-actline[p__164_26] = unchecked((sbyte)((sbyte)(((avg + ((left__167_25 + up__168_25) / 2)) & 255))));
+actline[p__164_26] = unchecked((sbyte)(unchecked((sbyte)(((avg + ((left__167_25 + up__168_25) / 2)) & 255)))));
 }
 break;
 case var __case_172_18_0 when __case_172_18_0 == 14:
@@ -105,12 +105,12 @@ int absa = global::System.Math.Abs((value - a));
 int absb = global::System.Math.Abs((value - b));
 int absc = global::System.Math.Abs((value - c));
 if (((absa <= absb) && (absa <= absc))) {
-actline[p__174_26] = unchecked((sbyte)((sbyte)(((paeth + a) & 255))));
+actline[p__174_26] = unchecked((sbyte)(unchecked((sbyte)(((paeth + a) & 255)))));
 } else {
 if ((absb <= absc)) {
-actline[p__174_26] = unchecked((sbyte)((sbyte)(((paeth + b) & 255))));
+actline[p__174_26] = unchecked((sbyte)(unchecked((sbyte)(((paeth + b) & 255)))));
 } else {
-actline[p__174_26] = unchecked((sbyte)((sbyte)(((paeth + c) & 255))));
+actline[p__174_26] = unchecked((sbyte)(unchecked((sbyte)(((paeth + c) & 255)))));
 }
 }
 }
@@ -150,17 +150,17 @@ return @out;
 }
 
 internal sealed class PredictorOutputStream : global::DripSharp.Runtime.JavaFilterOutputStream {
-internal int predictor;
+internal int predictor = default;
 
-internal readonly int colors;
+internal readonly int colors = default;
 
-internal readonly int bitsPerComponent;
+internal readonly int bitsPerComponent = default;
 
-internal readonly int columns;
+internal readonly int columns = default;
 
-internal readonly int rowLength;
+internal readonly int rowLength = default;
 
-internal readonly bool predictorPerRow;
+internal readonly bool predictorPerRow = default;
 
 internal sbyte[] currentRow = null!;
 

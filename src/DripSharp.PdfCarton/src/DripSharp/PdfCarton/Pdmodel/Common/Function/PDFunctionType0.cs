@@ -110,7 +110,7 @@ internal readonly int[] inPrev = null!;
 
 internal readonly int[] inNext = null!;
 
-internal readonly int numberOfInputValues;
+internal readonly int numberOfInputValues = default;
 
 internal readonly int numberOfOutputValues;
 

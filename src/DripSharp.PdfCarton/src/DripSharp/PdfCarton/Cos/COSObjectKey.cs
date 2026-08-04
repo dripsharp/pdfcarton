@@ -13,9 +13,9 @@ private static readonly int NUMBER_OFFSET = 16;
 
 private static readonly long GENERATION_MASK = ((long)(global::System.Math.Pow((double)(2), (double)(global::DripSharp.PdfCarton.Cos.COSObjectKey.NUMBER_OFFSET))) - 1);
 
-private readonly long numberAndGeneration;
+private readonly long numberAndGeneration = default;
 
-private readonly int streamIndex;
+private readonly int streamIndex = default;
 
 public COSObjectKey(long num, int gen) : this(num, gen, -1) {
 

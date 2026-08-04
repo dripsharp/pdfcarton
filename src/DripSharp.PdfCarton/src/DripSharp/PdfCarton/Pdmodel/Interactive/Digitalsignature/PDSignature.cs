@@ -68,7 +68,7 @@ public virtual void SetContactInfo(string contactInfo) {
 this.dictionary.SetString(global::DripSharp.PdfCarton.Cos.COSName.ContactInfo, contactInfo);
 }
 
-public virtual void SetSignDate(global::System.DateTimeOffset cal) {
+public virtual void SetSignDate(global::System.DateTimeOffset? cal) {
 this.dictionary.SetDate(global::DripSharp.PdfCarton.Cos.COSName.M, cal);
 }
 
@@ -96,7 +96,7 @@ public virtual string GetContactInfo() {
 return this.dictionary.GetString(global::DripSharp.PdfCarton.Cos.COSName.ContactInfo);
 }
 
-public virtual global::System.DateTimeOffset GetSignDate() {
+public virtual global::System.DateTimeOffset? GetSignDate() {
 return this.dictionary.GetDate(global::DripSharp.PdfCarton.Cos.COSName.M);
 }
 

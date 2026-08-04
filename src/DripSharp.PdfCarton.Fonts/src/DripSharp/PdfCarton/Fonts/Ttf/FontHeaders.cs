@@ -25,13 +25,13 @@ private string fontSubFamily = null!;
 
 private sbyte[] nonOtfGcid142 = null!;
 
-private bool isOTFAndPostScript;
+private bool isOTFAndPostScript = default;
 
 private string otfRegistry = null!;
 
 private string otfOrdering = null!;
 
-private int otfSupplement;
+private int otfSupplement = default;
 
 public string GetError() {
 return this.error;

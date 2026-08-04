@@ -35,6 +35,9 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>DripSharp.PdfCarton.Preflight</_Parameter1>
     </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>DripSharp.PdfCarton.Tests</_Parameter1>
+    </AssemblyAttribute>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
     <None Include="src/Legal/LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
     <None Include="src/Legal/NOTICE.txt" Pack="true" PackagePath="NOTICE.txt" />

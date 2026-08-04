@@ -161,14 +161,14 @@ float dMin = decode[(c * 2)];
 float dMax = decode[((c * 2) + 1)];
 float output = (dMin + (value * ((float)((dMax - dMin)) / (float)(sampleMax))));
 if (isIndexed) {
-srcColorValuesBytes[c] = unchecked((sbyte)((sbyte)(global::DripSharp.Runtime.JavaCompat.MathRoundFloat(output))));
+srcColorValuesBytes[c] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.MathRoundFloat(output)))));
 } else {
 if (isShort) {
 int outputShort = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((((float)((output - global::System.Math.Min(dMin, dMax))) / (float)(global::System.Math.Abs((dMax - dMin)))) * 65535.0F));
-srcColorValuesShort[c] = (short)(outputShort);
+srcColorValuesShort[c] = unchecked((short)(unchecked((short)(outputShort))));
 } else {
 int outputByte = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((((float)((output - global::System.Math.Min(dMin, dMax))) / (float)(global::System.Math.Abs((dMax - dMin)))) * 255.0F));
-srcColorValuesBytes[c] = unchecked((sbyte)((sbyte)(outputByte)));
+srcColorValuesBytes[c] = unchecked((sbyte)(unchecked((sbyte)(outputByte))));
 }
 }
 }
@@ -248,6 +248,7 @@ break;
 }
 }
 if ((bim! != default!)) {
+global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(bim!, raster);
 return bim!;
 }
 return colorSpace.ToRGBImage(raster);
@@ -302,7 +303,7 @@ global::DripSharp.Runtime.JavaCompat.ArrayCopy(tempBytes, (startx * numComponent
 } else {
 for (int x = startx; (x < (startx + scanWidth)); x += currentSubsampling) {
 for (int c = 0; (c < numComponents); c++) {
-bank[i] = tempBytes[((x * numComponents) + c)];
+bank[i] = unchecked((sbyte)(tempBytes[((x * numComponents) + c)]));
 ++i;
 }
 }
@@ -373,16 +374,16 @@ float dMin = decode[(c * 2)];
 float dMax = decode[((c * 2) + 1)];
 float output = (dMin + (value * ((float)((dMax - dMin)) / (float)(sampleMax))));
 if (isIndexed) {
-srcColorValues[c] = unchecked((sbyte)((sbyte)(global::DripSharp.Runtime.JavaCompat.MathRoundFloat(output))));
+srcColorValues[c] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.MathRoundFloat(output)))));
 } else {
 int outputByte = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((((float)((output - global::System.Math.Min(dMin, dMax))) / (float)(global::System.Math.Abs((dMax - dMin)))) * 255.0F));
-srcColorValues[c] = unchecked((sbyte)((sbyte)(outputByte)));
+srcColorValues[c] = unchecked((sbyte)(unchecked((sbyte)(outputByte))));
 }
 }
 if (((((x >= startx) && (y >= starty)) && ((x % currentSubsampling) == 0)) && ((y % currentSubsampling) == 0))) {
 raster.SetDataElements(((x - startx) / currentSubsampling), ((y - starty) / currentSubsampling), srcColorValues);
 if ((colorKeyMask! != default!)) {
-alpha[0] = unchecked((sbyte)((sbyte)((isMasked ? 255 : 0))));
+alpha[0] = unchecked((sbyte)(unchecked((sbyte)((isMasked ? 255 : 0)))));
 global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(colorKeyMask!).SetDataElements(((x - startx) / currentSubsampling), ((y - starty) / currentSubsampling), alpha);
 }
 }

@@ -13,7 +13,7 @@ private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = globa
 
 private sbyte[] bytes = null!;
 
-private bool forceHexForm;
+private bool forceHexForm = default;
 
 public static readonly bool ForceParsing = global::DripSharp.Runtime.JavaCompat.GetBoolean("org.apache.pdfbox.forceParsing");
 

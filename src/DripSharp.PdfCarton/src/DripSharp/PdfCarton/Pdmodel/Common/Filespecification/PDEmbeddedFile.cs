@@ -41,19 +41,19 @@ public virtual void SetSize(int size) {
 this.GetCOSObject().SetEmbeddedInt(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.Size, size);
 }
 
-public virtual global::System.DateTimeOffset GetCreationDate() {
+public virtual global::System.DateTimeOffset? GetCreationDate() {
 return this.GetCOSObject().GetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.CreationDate);
 }
 
-public virtual void SetCreationDate(global::System.DateTimeOffset creation) {
+public virtual void SetCreationDate(global::System.DateTimeOffset? creation) {
 this.GetCOSObject().SetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.CreationDate, creation);
 }
 
-public virtual global::System.DateTimeOffset GetModDate() {
+public virtual global::System.DateTimeOffset? GetModDate() {
 return this.GetCOSObject().GetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.ModDate);
 }
 
-public virtual void SetModDate(global::System.DateTimeOffset mod) {
+public virtual void SetModDate(global::System.DateTimeOffset? mod) {
 this.GetCOSObject().SetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.ModDate, mod);
 }
 

@@ -9,13 +9,13 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class DateType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty {
-private global::System.DateTimeOffset dateValue = default;
+private global::System.DateTimeOffset? dateValue = default;
 
 public DateType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix, propertyName, value) {
 
 }
 
-private void setValueFromCalendar(global::System.DateTimeOffset value) {
+private void setValueFromCalendar(global::System.DateTimeOffset? value) {
 this.dateValue = value;
 }
 
@@ -24,7 +24,7 @@ return this.dateValue;
 }
 
 private bool isGoodType(object value) {
-if ((value is global::System.DateTimeOffset)) {
+if ((value is global::System.DateTimeOffset?)) {
 return true;
 } else {
 if ((value is string)) {
@@ -49,7 +49,7 @@ throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.X
 if ((value is string)) {
 this.setValueFromString((string)(value!));
 } else {
-this.setValueFromCalendar((global::System.DateTimeOffset)(value!));
+this.setValueFromCalendar((global::System.DateTimeOffset?)(value!));
 }
 }
 }

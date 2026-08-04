@@ -229,17 +229,17 @@ global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter writer = new global::D
 global::System.Collections.Generic.IList<object> tokens = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(appearanceStream).Parse();
 int bmcIndex = global::DripSharp.Runtime.JavaCompat.ListIndexOf(tokens, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.BMC);
 if ((bmcIndex == -1)) {
-writer.WriteTokens(tokens);
+writer.WriteTokens(global::DripSharp.Runtime.JavaCompat.CastObjects(tokens));
 writer.WriteTokens(global::DripSharp.PdfCarton.Cos.COSName.Tx, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.BMC);
 } else {
-writer.WriteTokens(global::DripSharp.Runtime.JavaCompat.SubList(tokens, 0, (bmcIndex + 1)));
+writer.WriteTokens(global::DripSharp.Runtime.JavaCompat.CastObjects(global::DripSharp.Runtime.JavaCompat.SubList(tokens, 0, (bmcIndex + 1))));
 }
 this.insertGeneratedAppearance(widget, appearanceStream, output);
 int emcIndex = global::DripSharp.Runtime.JavaCompat.ListIndexOf(tokens, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.EMC);
 if ((emcIndex == -1)) {
 writer.WriteTokens(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.EMC);
 } else {
-writer.WriteTokens(global::DripSharp.Runtime.JavaCompat.SubList(tokens, emcIndex, global::DripSharp.Runtime.JavaCompat.CollectionCount(tokens)));
+writer.WriteTokens(global::DripSharp.Runtime.JavaCompat.CastObjects(global::DripSharp.Runtime.JavaCompat.SubList(tokens, emcIndex, global::DripSharp.Runtime.JavaCompat.CollectionCount(tokens))));
 }
 this.writeToStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(output), appearanceStream);
 }

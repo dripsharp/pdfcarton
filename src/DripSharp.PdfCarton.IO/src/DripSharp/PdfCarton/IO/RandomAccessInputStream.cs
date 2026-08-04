@@ -13,7 +13,7 @@ private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = globa
 
 private readonly global::DripSharp.PdfCarton.IO.RandomAccessRead input = null!;
 
-private long position;
+private long position = default;
 
 public RandomAccessInputStream(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
 this.input = randomAccessRead;

@@ -17,7 +17,7 @@ public const string DefaultXpacketId = "W5M0MpCehiHzreSzNTczkc9d";
 
 public const string DefaultXpacketEncoding = "UTF-8";
 
-public const string DefaultXpacketBytes = default!;
+public const string DefaultXpacketBytes = "";
 
 public const string DefaultXpacketEnd = "w";
 

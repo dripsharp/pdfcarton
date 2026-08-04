@@ -9,9 +9,9 @@
 namespace DripSharp.PdfCarton.Pdfparser;
 
 public class PDFObjectStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser {
-private readonly int numberOfObjects;
+private readonly int numberOfObjects = default;
 
-private readonly int firstObject;
+private readonly int firstObject = default;
 
 public PDFObjectStreamParser(global::DripSharp.PdfCarton.Cos.COSStream stream, global::DripSharp.PdfCarton.Cos.COSDocument document) : base(stream.CreateView()) {
 this.Document = document;
@@ -57,7 +57,7 @@ public virtual global::System.Collections.Generic.IDictionary<global::DripSharp.
 global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, global::DripSharp.PdfCarton.Cos.COSBase> allObjects = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, global::DripSharp.PdfCarton.Cos.COSBase>();
 try {
 global::System.Collections.Generic.IDictionary<int, long> objectNumbers = this.privateReadObjectOffsets();
-long numberOfObjNumbers = global::System.Linq.Enumerable.LongCount(global::System.Linq.Enumerable.Distinct(objectNumbers.Values));
+long numberOfObjNumbers = global::System.Linq.Enumerable.LongCount(global::System.Linq.Enumerable.Distinct(global::DripSharp.Runtime.JavaCompat.Stream(objectNumbers.Values)));
 bool indexNeeded = (global::DripSharp.Runtime.JavaCompat.MapCount(objectNumbers) > numberOfObjNumbers);
 long currentPosition = base.Source.GetPosition();
 if (((this.firstObject > 0) && (currentPosition < this.firstObject))) {

@@ -18,9 +18,9 @@ if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDFon
 context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsInvalidData, "Font validation process needs at least one PDFont object"));
 } else {
 global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = (global::DripSharp.PdfCarton.Pdmodel.Font.PDFont)(vPath.Peek()!);
-global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer fontContainer = context.GetFontContainer(font.GetCOSObject());
+var fontContainer = context.GetFontContainer(font.GetCOSObject());
 if ((fontContainer == default!)) {
-global::DripSharp.PdfCarton.Preflight.Font.IFontValidator validator = this.GetFontValidator(context, font);
+var validator = this.GetFontValidator(context, font);
 if ((validator != default!)) {
 validator.Validate();
 }

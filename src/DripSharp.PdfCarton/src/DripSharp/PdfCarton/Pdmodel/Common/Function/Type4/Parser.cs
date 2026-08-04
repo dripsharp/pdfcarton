@@ -81,7 +81,7 @@ internal const char SPACE = ' ';
 
 internal readonly string input = null!;
 
-internal int index;
+internal int index = default;
 
 internal readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Parser.SyntaxHandler handler = null!;
 

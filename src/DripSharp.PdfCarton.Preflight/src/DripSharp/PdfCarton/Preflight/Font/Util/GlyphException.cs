@@ -11,7 +11,7 @@ namespace DripSharp.PdfCarton.Preflight.Font.Util;
 public class GlyphException : global::System.Exception {
 private readonly string errorCode = null!;
 
-private readonly int invalidCid;
+private readonly int invalidCid = default;
 
 public GlyphException(string errorCode, int cid) : base() {
 this.errorCode = errorCode;

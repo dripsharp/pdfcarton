@@ -15,7 +15,7 @@ public static readonly global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressPa
 
 public const int DefaultObjectStreamSize = 200;
 
-private readonly int objectStreamSize;
+private readonly int objectStreamSize = default;
 
 public CompressParameters() : this(global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.DefaultObjectStreamSize) {
 

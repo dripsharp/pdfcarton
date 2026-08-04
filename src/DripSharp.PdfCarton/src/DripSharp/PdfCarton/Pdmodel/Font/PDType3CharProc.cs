@@ -104,7 +104,7 @@ global::DripSharp.PdfCarton.Cos.COSBase obj = global::DripSharp.Runtime.JavaComp
 if ((obj is global::DripSharp.PdfCarton.Cos.COSNumber)) {
 return ((global::DripSharp.PdfCarton.Cos.COSNumber)(obj!)).FloatValue();
 }
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected argument type: ", (((object)(obj)).GetType().FullName ?? ((object)(obj)).GetType().Name)));
+throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected argument type: ", global::DripSharp.Runtime.JavaCompat.ClassName(((object)(obj)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox")));
 } else {
 throw new global::System.IO.IOException("First operator must be d0 or d1");
 }

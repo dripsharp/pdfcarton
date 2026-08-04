@@ -9,11 +9,11 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class RangeRecord {
-private readonly int startGlyphID;
+private readonly int startGlyphID = default;
 
-private readonly int endGlyphID;
+private readonly int endGlyphID = default;
 
-private readonly int startCoverageIndex;
+private readonly int startCoverageIndex = default;
 
 public RangeRecord(int startGlyphID, int endGlyphID, int startCoverageIndex) {
 this.startGlyphID = startGlyphID;

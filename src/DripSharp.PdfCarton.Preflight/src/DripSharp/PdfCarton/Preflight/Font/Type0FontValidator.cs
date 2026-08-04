@@ -46,7 +46,7 @@ if ((cidFont == default!)) {
 this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedInvalid, global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(), ": The DescendantFonts array should have one element with is a dictionary.")));
 return;
 }
-global::DripSharp.PdfCarton.Preflight.Font.IFontValidator cidFontValidator = this.CreateDescendantValidator(cidFont);
+var cidFontValidator = this.CreateDescendantValidator(cidFont);
 if ((cidFontValidator != default!)) {
 this.FontContainer.SetDelegateFontContainer(cidFontValidator.GetFontContainer());
 cidFontValidator.Validate();

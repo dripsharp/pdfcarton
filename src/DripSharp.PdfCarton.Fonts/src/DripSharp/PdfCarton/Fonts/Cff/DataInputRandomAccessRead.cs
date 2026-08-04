@@ -37,7 +37,7 @@ public virtual sbyte ReadByte() {
 if (!(this.HasRemaining())) {
 throw new global::System.IO.IOException("End of buffer reached!");
 }
-return unchecked((sbyte)((sbyte)(this.randomAccessRead.Read())));
+return unchecked((sbyte)(unchecked((sbyte)(this.randomAccessRead.Read()))));
 }
 
 public virtual int ReadUnsignedByte() {

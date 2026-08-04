@@ -56,7 +56,7 @@ using (global::System.IO.Stream imageStream = ((global::DripSharp.PdfCarton.Cos.
 using (global::DripSharp.Runtime.JavaImageInputStream mciis = new global::DripSharp.Runtime.JavaImageInputStream(imageStream)) {
 sbyte flag = unchecked((sbyte)(0));
 try {
-flag = unchecked((sbyte)((sbyte)((mciis.ReadBits(bitsPerFlag) & 3))));
+flag = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
 } catch (global::System.IO.EndOfStreamException ex) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(ex));
 }
@@ -72,7 +72,7 @@ try {
 switch (flag) {
 case var __case_150_30_0 when __case_150_30_0 == unchecked((sbyte)(0)):
 p0 = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY, colRange, matrix, xform);
-flag = unchecked((sbyte)((sbyte)((mciis.ReadBits(bitsPerFlag) & 3))));
+flag = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
 if (((int)(flag) != 0)) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("bad triangle: ", flag)));
 }
@@ -85,7 +85,7 @@ p2 = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY, colRange, 
 ps = new global::DripSharp.Runtime.JavaPoint2D[] { p0.point, p1.point, p2.point };
 cs = new float[][] { p0.color, p1.color, p2.color };
 global::DripSharp.Runtime.JavaCompat.Add(list, new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle(ps, cs));
-flag = unchecked((sbyte)((sbyte)((mciis.ReadBits(bitsPerFlag) & 3))));
+flag = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
 break;
 case var __case_172_30_0 when __case_172_30_0 == unchecked((sbyte)(1)):
 case var __case_173_30_0 when __case_173_30_0 == unchecked((sbyte)(2)):
@@ -99,7 +99,7 @@ p2 = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY, colRange, 
 ps = new global::DripSharp.Runtime.JavaPoint2D[] { (((int)(flag) == 1) ? preTri.Corner[1] : preTri.Corner[0]), preTri.Corner[2], p2.point };
 cs = new float[][] { (((int)(flag) == 1) ? preTri.Color[1] : preTri.Color[0]), preTri.Color[2], p2.color };
 global::DripSharp.Runtime.JavaCompat.Add(list, new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle(ps, cs));
-flag = unchecked((sbyte)((sbyte)((mciis.ReadBits(bitsPerFlag) & 3))));
+flag = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
 }
 break;
 default:

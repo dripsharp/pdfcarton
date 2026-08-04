@@ -9,19 +9,19 @@
 namespace DripSharp.PdfCarton.IO;
 
 internal class ScratchFileBuffer : global::DripSharp.PdfCarton.IO.RandomAccess {
-private readonly int pageSize;
+private readonly int pageSize = default;
 
 private global::DripSharp.PdfCarton.IO.ScratchFile pageHandler = null!;
 
 private long size = 0;
 
-private int currentPagePositionInPageIndexes;
+private int currentPagePositionInPageIndexes = default;
 
-private long currentPageOffset;
+private long currentPageOffset = default;
 
 private sbyte[] currentPage = null!;
 
-private int positionInPage;
+private int positionInPage = default;
 
 private bool currentPageContentChanged = false;
 
@@ -93,7 +93,7 @@ return true;
 public virtual void Write(int b) {
 this.checkClosed();
 this.ensureAvailableBytesInPage(true);
-this.currentPage[this.positionInPage++] = unchecked((sbyte)((sbyte)(b)));
+this.currentPage[this.positionInPage++] = unchecked((sbyte)(unchecked((sbyte)(b))));
 this.currentPageContentChanged = true;
 if (((this.currentPageOffset + this.positionInPage) > this.size)) {
 this.size = (this.currentPageOffset + this.positionInPage);
@@ -230,6 +230,6 @@ this.size = 0;
 }
 
 public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition, long streamLength) {
-throw new global::System.NotSupportedException(global::DripSharp.Runtime.JavaCompat.Concat((((object)(this)).GetType().FullName ?? ((object)(this)).GetType().Name), ".createView isn't supported."));
+throw new global::System.NotSupportedException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"), ".createView isn't supported."));
 }
 }

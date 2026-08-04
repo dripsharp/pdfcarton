@@ -124,7 +124,7 @@ return linkedList;
 private void writeNumber(global::System.IO.Stream os, long number, int bytes) {
 sbyte[] buffer = new sbyte[bytes];
 for (int i__224_19 = 0; (i__224_19 < bytes); i__224_19++) {
-buffer[i__224_19] = unchecked((sbyte)((sbyte)((number & 255))));
+buffer[i__224_19] = unchecked((sbyte)(unchecked((sbyte)((number & 255)))));
 number >>= 8;
 }
 for (int i__230_19 = 0; (i__230_19 < bytes); i__230_19++) {

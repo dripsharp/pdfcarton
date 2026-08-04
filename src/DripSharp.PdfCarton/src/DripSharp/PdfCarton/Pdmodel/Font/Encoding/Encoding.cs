@@ -38,11 +38,11 @@ protected internal readonly global::System.Collections.Generic.IDictionary<int, 
 protected internal readonly global::System.Collections.Generic.IDictionary<string, int> Inverted = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, int>(250);
 
 public virtual global::System.Collections.Generic.IDictionary<int, string> GetCodeToNameMap() {
-return global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(this.CodeToName);
+return global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(global::DripSharp.Runtime.JavaCompat.CastDictionary<int, string>(this.CodeToName));
 }
 
 public virtual global::System.Collections.Generic.IDictionary<string, int> GetNameToCodeMap() {
-return global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(this.Inverted);
+return global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(global::DripSharp.Runtime.JavaCompat.CastDictionary<string, int>(this.Inverted));
 }
 
 protected internal virtual void Add(int code, string name) {

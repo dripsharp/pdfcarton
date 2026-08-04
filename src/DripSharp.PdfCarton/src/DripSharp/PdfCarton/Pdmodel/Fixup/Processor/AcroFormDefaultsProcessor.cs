@@ -24,13 +24,13 @@ private void verifyOrCreateDefaults(global::DripSharp.PdfCarton.Pdmodel.Interact
 string adobeDefaultAppearanceString = "/Helv 0 Tf 0 g ";
 if ((acroForm.GetDefaultAppearance().Length == 0)) {
 acroForm.SetDefaultAppearance(adobeDefaultAppearanceString);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)acroForm.GetCOSObject()).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(acroForm.GetCOSObject())).SetNeedToBeUpdated(true);
 }
 global::DripSharp.PdfCarton.Pdmodel.PDResources defaultResources = acroForm.GetDefaultResources();
 if ((defaultResources == default!)) {
 defaultResources = new global::DripSharp.PdfCarton.Pdmodel.PDResources();
 acroForm.SetDefaultResources(defaultResources);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)acroForm.GetCOSObject()).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(acroForm.GetCOSObject())).SetNeedToBeUpdated(true);
 }
 global::DripSharp.PdfCarton.Cos.COSDictionary fontDict = defaultResources.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Font);
 if ((fontDict == default!)) {
@@ -39,13 +39,13 @@ defaultResources.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.
 }
 if (!(fontDict.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Helv))) {
 defaultResources.Put(global::DripSharp.PdfCarton.Cos.COSName.Helv, new global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.Helvetica));
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)defaultResources.GetCOSObject()).SetNeedToBeUpdated(true);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)fontDict).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(defaultResources.GetCOSObject())).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(fontDict)).SetNeedToBeUpdated(true);
 }
 if (!(fontDict.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.ZaDb))) {
 defaultResources.Put(global::DripSharp.PdfCarton.Cos.COSName.ZaDb, new global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.ZapfDingbats));
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)defaultResources.GetCOSObject()).SetNeedToBeUpdated(true);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)fontDict).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(defaultResources.GetCOSObject())).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(fontDict)).SetNeedToBeUpdated(true);
 }
 }
 }

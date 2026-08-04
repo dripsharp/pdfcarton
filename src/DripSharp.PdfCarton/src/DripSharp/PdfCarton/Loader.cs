@@ -23,7 +23,8 @@ global::DripSharp.PdfCarton.Pdfparser.FDFParser parser = new global::DripSharp.P
 return parser.Parse();
 } catch (global::System.IO.IOException ioe) {
 global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(raFile!);
-throw ioe;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ioe);
+throw new global::System.InvalidOperationException("unreachable");
 }
 }
 
@@ -68,7 +69,8 @@ global::DripSharp.PdfCarton.Pdfparser.PDFParser parser = new global::DripSharp.P
 return parser.Parse();
 } catch (global::System.IO.IOException ioe) {
 global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(source!);
-throw ioe;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ioe);
+throw new global::System.InvalidOperationException("unreachable");
 }
 }
 
@@ -99,7 +101,8 @@ raFile = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file);
 return global::DripSharp.PdfCarton.Loader.LoadPDF(raFile!, password, keyStore, alias, streamCacheCreateFunction);
 } catch (global::System.IO.IOException ioe) {
 global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(raFile!);
-throw ioe;
+global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ioe);
+throw new global::System.InvalidOperationException("unreachable");
 }
 }
 

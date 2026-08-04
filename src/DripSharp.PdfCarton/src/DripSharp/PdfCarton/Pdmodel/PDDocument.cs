@@ -34,7 +34,7 @@ private global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog documentCatalog = 
 
 private global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryption = null!;
 
-private bool allSecurityToBeRemoved;
+private bool allSecurityToBeRemoved = default;
 
 private long? documentId = default;
 
@@ -127,17 +127,17 @@ throw new global::System.InvalidOperationException("Cannot sign an empty documen
 }
 global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = this.GetDocumentCatalog();
 global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm = catalog.GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)catalog.GetCOSObject()).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(catalog.GetCOSObject())).SetNeedToBeUpdated(true);
 if ((acroForm == default!)) {
 acroForm = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm(this);
 catalog.SetAcroForm(acroForm);
 } else {
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)acroForm.GetCOSObject()).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(acroForm.GetCOSObject())).SetNeedToBeUpdated(true);
 }
 global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDSignatureField signatureField = default!;
 global::DripSharp.PdfCarton.Cos.COSArray fieldArray = acroForm.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Fields);
 if ((fieldArray != default!)) {
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)fieldArray).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(fieldArray)).SetNeedToBeUpdated(true);
 signatureField = this.findSignatureField(acroForm.GetFieldIterator(), sigObject);
 } else {
 acroForm.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fields, new global::DripSharp.PdfCarton.Cos.COSArray());
@@ -153,7 +153,7 @@ page = pageTree.Get(startIndex);
 firstWidget.SetPage(page);
 } else {
 firstWidget = global::DripSharp.Runtime.JavaCompat.ListGet(signatureField!.GetWidgets(), 0);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)sigObject.GetCOSObject()).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(sigObject.GetCOSObject())).SetNeedToBeUpdated(true);
 page = default!;
 }
 firstWidget.SetPrinted(true);
@@ -163,7 +163,7 @@ acroForm.SetSignaturesExist(true);
 acroForm.SetAppendOnly(true);
 bool checkFields = this.checkSignatureField(acroForm.GetFieldIterator(), signatureField!);
 if (checkFields) {
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)signatureField!.GetCOSObject()).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(signatureField!.GetCOSObject())).SetNeedToBeUpdated(true);
 } else {
 global::DripSharp.Runtime.JavaCompat.Add(acroFormFields, signatureField!);
 }
@@ -177,13 +177,13 @@ if ((page != default!)) {
 global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations = page.GetAnnotations();
 if (!((((checkFields && (annotations is global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation>)) && (acroFormFields is global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField>)) && global::DripSharp.Runtime.JavaCompat.Equals(((global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<object>)(annotations!)).ToList(), ((global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<object>)(acroFormFields!)).ToList())))) {
 if (this.checkSignatureAnnotation(annotations, firstWidget)) {
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)firstWidget.GetCOSObject()).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(firstWidget.GetCOSObject())).SetNeedToBeUpdated(true);
 } else {
 global::DripSharp.Runtime.JavaCompat.Add(annotations, firstWidget);
 }
 }
 page.SetAnnotations(annotations);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)page.GetCOSObject()).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(page.GetCOSObject())).SetNeedToBeUpdated(true);
 }
 }
 
@@ -233,7 +233,7 @@ firstWidget.SetAppearance(appearanceDictionary);
 private void prepareVisibleSignature(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget firstWidget, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm, global::DripSharp.PdfCarton.Cos.COSDocument visualSignature) {
 bool annotFound = false;
 bool sigFieldFound = false;
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSObject> cosObjects = global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.MapKeySet(visualSignature.GetXrefTable()), visualSignature.GetObjectFromPool));
+global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSObject> cosObjects = global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.Stream(global::DripSharp.Runtime.JavaCompat.MapKeySet(visualSignature.GetXrefTable())), visualSignature.GetObjectFromPool));
 foreach (global::DripSharp.PdfCarton.Cos.COSObject cosObject in cosObjects) {
 global::DripSharp.PdfCarton.Cos.COSBase @base = cosObject.GetObject();
 if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
@@ -280,14 +280,14 @@ global::DripSharp.PdfCarton.Pdmodel.PDResources defaultResources = acroForm.GetD
 if ((defaultResources == default!)) {
 acroForm.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Dr, newDR);
 newDR.SetDirect(true);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)newDR).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(newDR)).SetNeedToBeUpdated(true);
 } else {
 global::DripSharp.PdfCarton.Cos.COSDictionary oldDR = defaultResources.GetCOSObject();
 global::DripSharp.PdfCarton.Cos.COSDictionary newXObject = newDR.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Xobject);
 global::DripSharp.PdfCarton.Cos.COSDictionary oldXObject = oldDR.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Xobject);
 if (((newXObject != default!) && (oldXObject != default!))) {
 oldXObject.AddAll(newXObject);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)oldDR).SetNeedToBeUpdated(true);
+((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(oldDR)).SetNeedToBeUpdated(true);
 }
 }
 }
@@ -477,7 +477,7 @@ throw new global::System.InvalidOperationException("document was not loaded from
 global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature foundSignature = default!;
 foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature sig in this.GetSignatureDictionaries()) {
 foundSignature = sig;
-if (((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)sig.GetCOSObject()).IsNeedToBeUpdated()) {
+if (((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(sig.GetCOSObject())).IsNeedToBeUpdated()) {
 break;
 }
 }

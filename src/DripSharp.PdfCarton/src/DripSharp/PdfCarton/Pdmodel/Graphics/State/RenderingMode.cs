@@ -47,7 +47,7 @@ public static global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode F
 return global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.VALUES[value];
 }
 
-private readonly int value;
+private readonly int value = default;
 
 private RenderingMode(int value) {
 this.value = value;

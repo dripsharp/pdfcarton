@@ -9,9 +9,9 @@
 namespace DripSharp.PdfCarton.Util;
 
 public sealed class Vector {
-private readonly float x;
+private readonly float x = default;
 
-private readonly float y;
+private readonly float y = default;
 
 public Vector(float x, float y) {
 this.x = x;

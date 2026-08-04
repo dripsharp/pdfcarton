@@ -106,9 +106,9 @@ context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationR
 private void checkUpperCA(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
 global::DripSharp.PdfCarton.Cos.COSBase uCA = egs.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ca);
 if ((uCA != default!)) {
-float fca = global::DripSharp.Runtime.JavaCompat.Unbox(((uCA is global::DripSharp.PdfCarton.Cos.COSFloat) ? (float)(((global::DripSharp.PdfCarton.Cos.COSFloat)(uCA!)).FloatValue()) : (float)(default!)));
-int ica = global::DripSharp.Runtime.JavaCompat.Unbox(((uCA is global::DripSharp.PdfCarton.Cos.COSInteger) ? (int)(((global::DripSharp.PdfCarton.Cos.COSInteger)(uCA!)).IntValue()) : (int)(default!)));
-if ((!(((fca != default!) && (global::DripSharp.Runtime.JavaCompat.CompareFloat((float)(fca), 1.0F) == 0))) && !(((ica != default!) && (ica == 1))))) {
+float? fca = ((uCA is global::DripSharp.PdfCarton.Cos.COSFloat) ? (float?)(((global::DripSharp.PdfCarton.Cos.COSFloat)(uCA!)).FloatValue()) : (float?)(default!));
+int? ica = ((uCA is global::DripSharp.PdfCarton.Cos.COSInteger) ? (int?)(((global::DripSharp.PdfCarton.Cos.COSInteger)(uCA!)).IntValue()) : (int?)(default!));
+if ((!(((fca != default!) && (global::DripSharp.Runtime.JavaCompat.CompareFloat((float)(global::DripSharp.Runtime.JavaCompat.Unbox(fca)), 1.0F) == 0))) && !(((ica != default!) && (global::DripSharp.Runtime.JavaCompat.Unbox(ica) == 1))))) {
 context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorTransparencyExtGsCa, "CA entry in a ExtGState is invalid"));
 }
 }
@@ -117,9 +117,9 @@ context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationR
 private void checkLowerCA(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
 global::DripSharp.PdfCarton.Cos.COSBase lCA = egs.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.CaNs);
 if ((lCA != default!)) {
-float fca = global::DripSharp.Runtime.JavaCompat.Unbox(((lCA is global::DripSharp.PdfCarton.Cos.COSFloat) ? (float)(((global::DripSharp.PdfCarton.Cos.COSFloat)(lCA!)).FloatValue()) : (float)(default!)));
-int ica = global::DripSharp.Runtime.JavaCompat.Unbox(((lCA is global::DripSharp.PdfCarton.Cos.COSInteger) ? (int)(((global::DripSharp.PdfCarton.Cos.COSInteger)(lCA!)).IntValue()) : (int)(default!)));
-if ((!(((fca != default!) && (global::DripSharp.Runtime.JavaCompat.CompareFloat((float)(fca), 1.0F) == 0))) && !(((ica != default!) && (ica == 1))))) {
+float? fca = ((lCA is global::DripSharp.PdfCarton.Cos.COSFloat) ? (float?)(((global::DripSharp.PdfCarton.Cos.COSFloat)(lCA!)).FloatValue()) : (float?)(default!));
+int? ica = ((lCA is global::DripSharp.PdfCarton.Cos.COSInteger) ? (int?)(((global::DripSharp.PdfCarton.Cos.COSInteger)(lCA!)).IntValue()) : (int?)(default!));
+if ((!(((fca != default!) && (global::DripSharp.Runtime.JavaCompat.CompareFloat((float)(global::DripSharp.Runtime.JavaCompat.Unbox(fca)), 1.0F) == 0))) && !(((ica != default!) && (global::DripSharp.Runtime.JavaCompat.Unbox(ica) == 1))))) {
 context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorTransparencyExtGsCa, "ca entry in a ExtGState is invalid"));
 }
 }

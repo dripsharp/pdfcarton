@@ -117,7 +117,7 @@ protected internal global::DripSharp.PdfCarton.Pdmodel.PDDocument Document = nul
 
 protected internal global::System.IO.TextWriter Output = null!;
 
-private bool inParagraph;
+private bool inParagraph = default;
 
 public PDFTextStripper() {
 this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent.BeginMarkedContentSequenceWithProperties(this));
@@ -941,7 +941,7 @@ int runCount = bidi.GetRunCount();
 sbyte[] levels = new sbyte[runCount];
 int[] runs = new int[runCount];
 for (int i__1921_18 = 0; (i__1921_18 < runCount); i__1921_18++) {
-levels[i__1921_18] = unchecked((sbyte)((sbyte)(bidi.GetRunLevel(i__1921_18))));
+levels[i__1921_18] = unchecked((sbyte)(unchecked((sbyte)(bidi.GetRunLevel(i__1921_18)))));
 runs[i__1921_18] = i__1921_18;
 }
 global::DripSharp.Runtime.JavaBidi.ReorderVisually(levels, 0, runs, 0, runCount);
@@ -993,7 +993,7 @@ global::DripSharp.Runtime.JavaStringTokenizer st = new global::DripSharp.Runtime
 int nFields = st.countTokens();
 char[] fields = new char[nFields];
 for (int i = 0; (i < nFields); i++) {
-fields[i] = (char)(global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.Runtime.JavaCompat.StringTrim(st.nextToken()), 16));
+fields[i] = unchecked((char)(global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.Runtime.JavaCompat.StringTrim(st.nextToken()), 16)));
 }
 if ((fields.Length == 2)) {
 global::DripSharp.Runtime.JavaCompat.MapPut(global::DripSharp.PdfCarton.Text.PDFTextStripper.MIRRORING_CHAR_MAP, fields[0], fields[1]);
@@ -1006,35 +1006,7 @@ return new global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPosition
 }
 
 private string normalizeWord(string word) {
-global::System.Text.StringBuilder builder = default!;
-int p = 0;
-int q = 0;
-int strLength = word.Length;
-for (; (q < strLength); q++) {
-char c = word[q];
-if ((((64256 <= (int)(c)) && ((int)(c) <= 65023)) || ((65136 <= (int)(c)) && ((int)(c) <= 65279)))) {
-if ((builder! == default!)) {
-builder = new global::System.Text.StringBuilder((strLength * 2));
-}
-builder!.Append(word, p, (q - p));
-if (((((int)(c) == 65010) && (q > 0)) && (((int)(word[(q - 1)]) == 1575) || ((int)(word[(q - 1)]) == 65165)))) {
-builder!.Append("\u0644\u0644\u0647");
-} else {
-string normalized = global::DripSharp.Runtime.JavaCompat.StringTrim(global::DripSharp.Runtime.JavaCompat.Normalize(global::DripSharp.Runtime.JavaCompat.StringSubstring(word, q, (q + 1)), global::System.Text.NormalizationForm.FormKC));
-if (((64285 <= (int)(c)) && (normalized.Length > 1))) {
-normalized = global::DripSharp.Runtime.JavaCompat.Reverse(new global::System.Text.StringBuilder(normalized)).ToString();
-}
-builder!.Append(normalized);
-}
-p = (q + 1);
-}
-}
-if ((builder! == default!)) {
-return this.handleDirection(word);
-} else {
-builder!.Append(word, p, (q - p));
-return this.handleDirection(builder!.ToString());
-}
+return this.handleDirection(global::DripSharp.Runtime.PdfBoxTextCompatibility.NormalizeVisualWord(word, this.sortByPosition));
 }
 
 private global::System.Text.StringBuilder normalizeAdd(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions> normalized, global::System.Text.StringBuilder lineBuilder, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> wordPositions, global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem item) {

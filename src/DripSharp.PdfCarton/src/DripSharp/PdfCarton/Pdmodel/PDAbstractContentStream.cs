@@ -802,7 +802,7 @@ int glyphId__1736_17 = cmapLookup.GetGlyphId(codePoint);
 if ((glyphId__1736_17 <= 0)) {
 string source;
 if (global::DripSharp.Runtime.JavaCompat.IsBmpCodePoint(codePoint)) {
-source = global::DripSharp.Runtime.JavaCompat.StringValueOf(unchecked((char)((char)(codePoint))));
+source = global::DripSharp.Runtime.JavaCompat.StringValueOf(unchecked((char)(unchecked((char)(codePoint)))));
 } else {
 if (global::DripSharp.Runtime.JavaCompat.IsValidCodePoint(codePoint)) {
 source = global::DripSharp.Runtime.JavaCompat.NewString(new int[] { codePoint }, 0, 1);

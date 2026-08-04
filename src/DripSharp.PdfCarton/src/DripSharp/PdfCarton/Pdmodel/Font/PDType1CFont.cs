@@ -19,9 +19,9 @@ private readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font cffFont = nu
 
 private readonly global::DripSharp.PdfCarton.Fonts.FontBoxFont genericFont = null!;
 
-private readonly bool __field_isEmbedded;
+private readonly bool __field_isEmbedded = default;
 
-private readonly bool __field_isDamaged;
+private readonly bool __field_isDamaged = default;
 
 private float? avgWidth = default!;
 
@@ -254,7 +254,7 @@ if ((global::DripSharp.Runtime.JavaCompat.Equals(nameInFont, ".notdef") || !(thi
 throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.JavaStringFormat("No glyph for U+%04X in font %s", unicode, this.GetName()));
 }
 int code = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(global::DripSharp.Runtime.JavaCompat.MapGetNullable(inverted, name));
-return new sbyte[] { unchecked((sbyte)((sbyte)(code))) };
+return new sbyte[] { unchecked((sbyte)(unchecked((sbyte)(code)))) };
 }
 
 public override float GetStringWidth(string @string) {
