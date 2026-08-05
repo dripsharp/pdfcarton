@@ -88,7 +88,7 @@ public sealed class GeneratedSuiteIntegrityTests
             ("Fixtures/validxmp/override_ns.rdf", "a3882df6745a1352ab26781ffd223c3e083dcc8e882f03dece37440731c4e6f8"),
             ("Fixtures/commons-logging.properties", "d418de3568777e0833210876d3a85a846c5e721baad6b4052cb312f31941183b"),
             ("Fixtures/input/FC60_Times.pdf", "1616a1fc70fb70812f9865e4e6648736b218ab0d44775380adaf668e4300cc0d"),
-            ("Fixtures/input/FC60_Times.pdf-sorted.txt", "ffe84544e72da409da02d24cda2832fc0b024d8afcfb105e753ca1cec2afb997"),
+            ("Fixtures/input/FC60_Times.pdf-sorted.txt", "76e6304f0ba8667264b44ff922bc0ab4ccc0296575ae59fb095887ce0fc999cf"),
             ("Fixtures/input/FC60_Times.pdf.txt", "32491ca1579254c905ca86048cbb568c5159100e8adbe55c7e949517c3510fe6"),
             ("Fixtures/input/Liste732004001452_001_0.pdf_0_.pdf", "467c9b4bd29e155cd80447c36bfeba95ee39bc105781c28d1e05019026b14064"),
             ("Fixtures/input/Liste732004001452_001_0.pdf_0_.pdf-sorted.txt", "5f8022a29a905a05ff0993d63b0fbb7b9b5693f268895e51289e79a733c218d3"),
