@@ -9,27 +9,32 @@
     <RootNamespace>DripSharp.PdfCarton</RootNamespace>
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-    <PackageId>DripSharp.PdfCarton</PackageId>
-    <Version>3.0.8-dripsharp.0</Version>
-    <Title>PdfCarton</Title>
-    <Description>Apache PDFBox document, parsing, rendering, and manipulation APIs for .NET, mechanically translated by DripSharp. This package is an independent translation and is not affiliated with, endorsed by, or sponsored by the Apache Software Foundation.</Description>
-    <Authors>Vibeformer</Authors>
-    <Copyright>Portions Copyright The Apache Software Foundation and other upstream contributors; see NOTICE.txt.</Copyright>
-    <PackageTags>pdf pdfbox documents rendering parsing dotnet pdfcarton</PackageTags>
-    <PackageProjectUrl>https://pdfbox.apache.org/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/apache/pdfbox.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryCommit>9286e47d89d6877005c9d2d0f2fd38793a62519a</RepositoryCommit>
-    <DefineConstants>$(DefineConstants);DRIPSHARP_PDFBOX_CRYPTO</DefineConstants>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <PackageId>DripSharp.PdfCarton</PackageId>
+    <Version>3.0.8-alpha.1</Version>
+    <Title>PdfCarton</Title>
+    <Description>Apache PDFBox document, parsing, rendering, and manipulation APIs for .NET, mechanically translated by DripSharp. This package is an independent translation and is not affiliated with, endorsed by, or sponsored by the Apache Software Foundation.</Description>
+    <Authors>Isak Sky</Authors>
+    <Copyright>Portions Copyright The Apache Software Foundation and other upstream contributors; see NOTICE.txt.</Copyright>
+    <PackageTags>pdf pdfbox documents rendering parsing dotnet pdfcarton</PackageTags>
+    <PackageProjectUrl>https://github.com/dripsharp/pdfcarton</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dripsharp/pdfcarton.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <DefineConstants>$(DefineConstants);DRIPSHARP_PDFBOX_CRYPTO</DefineConstants>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src/**/*.cs" />
+    <SourceRoot Include="$(MSBuildProjectDirectory)/" RepositoryUrl="https://github.com/dripsharp/pdfcarton.git" SourceControl="git" RevisionId="$(RepositoryCommit)" SourceLinkUrl="https://raw.githubusercontent.com/dripsharp/pdfcarton/$(RepositoryCommit)/src/DripSharp.PdfCarton/*" />
     <ProjectReference Include="../DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj" />
     <ProjectReference Include="../DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj" />
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
@@ -60,6 +65,7 @@
     <EmbeddedResource Include="resources/org/apache/pdfbox/resources/text/BidiMirroring.txt" LogicalName="org.apache.pdfbox.resources.text.BidiMirroring.txt" />
     <EmbeddedResource Include="resources/org/apache/pdfbox/resources/ttf/LiberationSans-Regular.ttf" LogicalName="org.apache.pdfbox.resources.ttf.LiberationSans-Regular.ttf" />
     <EmbeddedResource Include="resources/org/apache/pdfbox/resources/version.properties" LogicalName="org.apache.pdfbox.resources.version.properties" />
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
     <PackageReference Include="SkiaSharp" Version="4.150.1" />
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.0" />

@@ -6,11 +6,36 @@ This is a generated publication repository. Durable source, translation, runtime
 
 ## Projects
 
-- [`DripSharp.PdfCarton`](src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj) — PdfCarton (`net10.0`)
-- [`DripSharp.PdfCarton.Fonts`](src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj) — PdfCarton Fonts (`net10.0`)
-- [`DripSharp.PdfCarton.IO`](src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj) — PdfCarton I/O (`net10.0`)
-- [`DripSharp.PdfCarton.Preflight`](src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj) — PdfCarton Preflight (`net10.0`)
-- [`DripSharp.PdfCarton.Xmp`](src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj) — PdfCarton XMP (`net10.0`)
+- [`DripSharp.PdfCarton`](src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj) — PdfCarton (`net10.0`, version `3.0.8-alpha.1`)
+- [`DripSharp.PdfCarton.Fonts`](src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj) — PdfCarton Fonts (`net10.0`, version `3.0.8-alpha.1`)
+- [`DripSharp.PdfCarton.IO`](src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj) — PdfCarton I/O (`net10.0`, version `3.0.8-alpha.1`)
+- [`DripSharp.PdfCarton.Preflight`](src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj) — PdfCarton Preflight (`net10.0`, version `3.0.8-alpha.1`)
+- [`DripSharp.PdfCarton.Xmp`](src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj) — PdfCarton XMP (`net10.0`, version `3.0.8-alpha.1`)
+
+## Install
+
+The first public packages are prereleases. Install the package you need from nuget.org:
+
+```sh
+dotnet add package DripSharp.PdfCarton --version 3.0.8-alpha.1
+```
+
+```sh
+dotnet add package DripSharp.PdfCarton.Fonts --version 3.0.8-alpha.1
+```
+
+```sh
+dotnet add package DripSharp.PdfCarton.IO --version 3.0.8-alpha.1
+```
+
+```sh
+dotnet add package DripSharp.PdfCarton.Preflight --version 3.0.8-alpha.1
+```
+
+```sh
+dotnet add package DripSharp.PdfCarton.Xmp --version 3.0.8-alpha.1
+```
+
 
 ## Build and test
 

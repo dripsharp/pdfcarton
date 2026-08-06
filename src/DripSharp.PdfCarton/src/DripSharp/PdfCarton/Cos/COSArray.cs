@@ -310,7 +310,7 @@ global::DripSharp.PdfCarton.Cos.COSBase num = this.GetObject(i);
 if ((num is global::DripSharp.PdfCarton.Cos.COSNumber)) {
 global::DripSharp.Runtime.JavaCompat.Add(numbers, ((global::DripSharp.PdfCarton.Cos.COSNumber)(num!)).FloatValue());
 } else {
-global::DripSharp.Runtime.JavaCompat.Add(numbers, default!);
+global::DripSharp.Runtime.JavaCompat.Add(numbers, (object)default!);
 }
 }
 return global::DripSharp.Runtime.JavaCompat.CastList<float?>(numbers);
@@ -323,7 +323,7 @@ global::DripSharp.PdfCarton.Cos.COSBase num = this.GetObject(i);
 if ((num is global::DripSharp.PdfCarton.Cos.COSNumber)) {
 global::DripSharp.Runtime.JavaCompat.Add(numbers, ((global::DripSharp.PdfCarton.Cos.COSNumber)(num!)).IntValue());
 } else {
-global::DripSharp.Runtime.JavaCompat.Add(numbers, default!);
+global::DripSharp.Runtime.JavaCompat.Add(numbers, (object)default!);
 }
 }
 return global::DripSharp.Runtime.JavaCompat.CastList<int?>(numbers);
