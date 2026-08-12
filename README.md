@@ -14,28 +14,11 @@ This is a generated publication repository. Durable source, translation, runtime
 
 ## Install
 
-The first public packages are prereleases. Install the package you need from nuget.org:
+The first public release is a prerelease. Install from nuget.org:
 
 ```sh
 dotnet add package DripSharp.PdfCarton --version 3.0.8-alpha.1
 ```
-
-```sh
-dotnet add package DripSharp.PdfCarton.Fonts --version 3.0.8-alpha.1
-```
-
-```sh
-dotnet add package DripSharp.PdfCarton.IO --version 3.0.8-alpha.1
-```
-
-```sh
-dotnet add package DripSharp.PdfCarton.Preflight --version 3.0.8-alpha.1
-```
-
-```sh
-dotnet add package DripSharp.PdfCarton.Xmp --version 3.0.8-alpha.1
-```
-
 
 ## Build and test
 
