@@ -326,11 +326,11 @@ return 0;
 
 public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData GetGsubData() {
 if (!(this.enableGsub)) {
-return global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData.NoDataFound;
+return global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubDataStatics.NoDataFound;
 }
 global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable table = this.GetGsub();
 if ((table == default!)) {
-return global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData.NoDataFound;
+return global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubDataStatics.NoDataFound;
 }
 return table.GetGsubData();
 }

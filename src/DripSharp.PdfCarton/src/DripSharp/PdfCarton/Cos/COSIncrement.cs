@@ -158,4 +158,8 @@ return this.objects;
 public virtual global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Cos.COSBase> Iterator() {
 return global::DripSharp.Runtime.JavaCompat.Iterator(this.GetObjects());
 }
+
+global::System.Collections.Generic.IEnumerator<global::DripSharp.PdfCarton.Cos.COSBase> global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Cos.COSBase>.GetEnumerator() {return global::DripSharp.Runtime.JavaCompat.AsEnumerator(this.Iterator());}
+
+global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() {return ((global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Cos.COSBase>)this).GetEnumerator();}
 }

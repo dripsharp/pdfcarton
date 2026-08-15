@@ -343,9 +343,9 @@ protected internal virtual global::DripSharp.PdfCarton.Fonts.Cmap.CMap GetToUnic
 return this.toUnicodeCMap;
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
-
 public abstract global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetBoundingBox();
+
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 
 public abstract float GetHeight(int code);
 

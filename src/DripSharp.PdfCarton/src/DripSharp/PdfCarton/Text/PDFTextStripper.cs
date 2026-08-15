@@ -191,7 +191,7 @@ this.fillBeadRectangles(page);
 numberOfArticleSections += (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.beadRectangles) * 2);
 }
 int originalSize = global::DripSharp.Runtime.JavaCompat.CollectionCount(this.CharactersByArticle);
-this.CharactersByArticle.EnsureCapacity(numberOfArticleSections);
+global::DripSharp.Runtime.JavaCompat.EnsureCapacity(this.CharactersByArticle, numberOfArticleSections);
 int lastIndex = global::System.Math.Max(numberOfArticleSections, originalSize);
 for (int i = 0; (i < lastIndex); i++) {
 if ((i < originalSize)) {
@@ -465,7 +465,7 @@ global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedCo
 global::DripSharp.Runtime.JavaCompat.DequePush(this.currentMarkedContents, markedContent);
 this.actualText = markedContent.GetActualText();
 if ((this.actualText != default!)) {
-this.actualText = this.actualText.Replace("\u00AD", "", global::System.StringComparison.Ordinal);
+this.actualText = global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(this.actualText, "\u00AD", "");
 this.firstActualTextPosition = true;
 }
 base.BeginMarkedContentSequence(tag, properties);

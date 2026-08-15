@@ -526,7 +526,7 @@ string[] path = global::DripSharp.Runtime.JavaCompat.StringSplit(objPath, global
 global::DripSharp.PdfCarton.Cos.COSBase retval = this;
 foreach (string pathString in path) {
 if ((retval is global::DripSharp.PdfCarton.Cos.COSArray)) {
-int idx = global::DripSharp.Runtime.JavaCompat.ParseInt(pathString.Replace("\\[", "", global::System.StringComparison.Ordinal).Replace("\\]", "", global::System.StringComparison.Ordinal), 10);
+int idx = global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(pathString, "\\[", ""), "\\]", ""), 10);
 retval = ((global::DripSharp.PdfCarton.Cos.COSArray)(retval!)).GetObject(idx);
 } else {
 if ((retval is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
@@ -680,5 +680,17 @@ global::DripSharp.Runtime.JavaCompat.Add(indirectObjects, indirectObjectKey);
 }
 }
 return indirectObjects;
+}
+
+public virtual bool IsNeedToBeUpdated() {
+return this.GetUpdateState().IsUpdated();
+}
+
+public virtual void SetNeedToBeUpdated(bool flag) {
+this.GetUpdateState().update(flag);
+}
+
+public virtual global::DripSharp.PdfCarton.Cos.COSIncrement ToIncrement() {
+return this.GetUpdateState().toIncrement();
 }
 }

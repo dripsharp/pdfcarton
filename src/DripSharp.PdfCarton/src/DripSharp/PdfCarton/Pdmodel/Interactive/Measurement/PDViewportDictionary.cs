@@ -55,5 +55,5 @@ public virtual void SetMeasure(global::DripSharp.PdfCarton.Pdmodel.Interactive.M
 this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Measure, measure);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

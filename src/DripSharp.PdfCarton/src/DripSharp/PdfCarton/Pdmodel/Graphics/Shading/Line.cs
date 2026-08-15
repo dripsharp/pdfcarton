@@ -28,7 +28,7 @@ this.LinePoints = this.calcLine(this.point0.IntX, this.point0.IntY, this.point1.
 }
 
 private global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaPoint> calcLine(int x0, int y0, int x1, int y1) {
-global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaPoint> points = new global::System.Collections.Generic.HashSet<global::DripSharp.Runtime.JavaPoint>(3);
+global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaPoint> points = new global::System.Collections.Generic.HashSet<global::DripSharp.Runtime.JavaPoint>();
 int dx = global::System.Math.Abs((x1 - x0));
 int dy = global::System.Math.Abs((y1 - y0));
 int sx = ((x0 < x1) ? 1 : -1);

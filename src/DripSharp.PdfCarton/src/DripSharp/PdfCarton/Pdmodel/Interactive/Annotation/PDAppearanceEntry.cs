@@ -51,5 +51,5 @@ global::DripSharp.Runtime.JavaCompat.MapPut(map, name, new global::DripSharp.Pdf
 return new global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream>(map, dict);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

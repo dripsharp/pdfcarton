@@ -213,5 +213,5 @@ this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Limits, arr);
 arr.SetString(0, lower);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

@@ -26,7 +26,7 @@ return global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destin
 public virtual void SetDestination(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination d) {
 if ((d is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)) {
 global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pageDest = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(d!);
-global::DripSharp.PdfCarton.Cos.COSArray destArray = pageDest.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSArray destArray = ((global::DripSharp.PdfCarton.Cos.COSArray)(pageDest.GetCOSObject()));
 if ((destArray.Size() >= 1)) {
 global::DripSharp.PdfCarton.Cos.COSBase page = destArray.GetObject(0);
 if (!((page is global::DripSharp.PdfCarton.Cos.COSDictionary))) {

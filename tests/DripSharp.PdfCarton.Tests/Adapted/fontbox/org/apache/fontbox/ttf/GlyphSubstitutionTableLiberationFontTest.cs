@@ -11,7 +11,7 @@ internal virtual void setUp() {
 global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser otfParser = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser();
 string fontPath = "src/test/resources/ttf/LiberationSans-Regular.ttf";
 using (global::DripSharp.PdfCarton.IO.RandomAccessRead fontFile = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", fontPath))) {
-this.font = otfParser.Parse(fontFile);
+this.font = ((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(otfParser.Parse(fontFile)))));
 }
 }
 
@@ -51,7 +51,7 @@ internal virtual void checkGsubDataLoadingForAllSupportedScripts(string scriptTa
 global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable gsub = this.font.GetGsub();
 global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData = gsub.GetGsubData(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", scriptTag));
 global::DripSharp.Testing.JavaAssertions.NotNull(gsubData, null);
-global::DripSharp.Testing.JavaAssertions.NotSame(global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData.NoDataFound, gsubData, null);
+global::DripSharp.Testing.JavaAssertions.NotSame(global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubDataStatics.NoDataFound, gsubData, null);
 global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language.Unspecified, gsubData.GetLanguage(), null);
 global::DripSharp.Testing.JavaAssertions.Equal(scriptTag, gsubData.GetActiveScriptName(), null);
 }

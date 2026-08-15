@@ -11,9 +11,7 @@ namespace DripSharp.PdfCarton.IO;
 public interface RandomAccessRead : global::System.IDisposable {
 public int Read();
 
-public int Read(sbyte[] b) {
-return this.Read(b, 0, b.Length);
-}
+public int Read(sbyte[] b);
 
 public int Read(sbyte[] b, int offset, int length);
 
@@ -25,45 +23,19 @@ public long Length();
 
 public bool IsClosed();
 
-public int Peek() {
-int result = this.Read();
-if ((result != -1)) {
-this.Rewind(1);
-}
-return result;
-}
+public int Peek();
 
-public void Rewind(int bytes) {
-this.Seek((this.GetPosition() - bytes));
-}
+public void Rewind(int bytes);
 
 public bool IsEOF();
 
-public int Available() {
-return (int)(global::System.Math.Min((this.Length() - this.GetPosition()), (long)(int.MaxValue)));
-}
+public int Available();
 
-public void Skip(int length) {
-this.Seek((this.GetPosition() + length));
-}
+public void Skip(int length);
 
 public global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition, long streamLength);
 
-public void ReadFully(sbyte[] b) {
-this.ReadFully(b, 0, b.Length);
-}
+public void ReadFully(sbyte[] b);
 
-public void ReadFully(sbyte[] b, int offset, int length) {
-if (((this.Length() - this.GetPosition()) < length)) {
-throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
-}
-int bytesReadTotal = 0;
-while ((bytesReadTotal < length)) {
-int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
-if ((bytesReadNow <= 0)) {
-throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
-}
-bytesReadTotal += bytesReadNow;
-}
-}
+public void ReadFully(sbyte[] b, int offset, int length);
 }

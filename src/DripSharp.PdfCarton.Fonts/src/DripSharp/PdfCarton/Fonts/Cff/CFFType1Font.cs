@@ -137,7 +137,7 @@ this.nominalWidthX = ((num != default!) ? global::DripSharp.PdfCarton.Runtime.Fo
 return this.nominalWidthX;
 }
 
-global::DripSharp.PdfCarton.Fonts.Encoding.Encoding global::DripSharp.PdfCarton.Fonts.EncodedFont.GetEncoding() => this.GetEncoding();
+global::DripSharp.PdfCarton.Fonts.Encoding.Encoding global::DripSharp.PdfCarton.Fonts.EncodedFont.GetEncoding() => (global::DripSharp.PdfCarton.Fonts.Encoding.Encoding)(this.GetEncoding());
 
 public CFFType1Font() {
 this.privateDict = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<string, object>();

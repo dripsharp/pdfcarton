@@ -66,5 +66,5 @@ public global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetStream() {
 return this.stream;
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

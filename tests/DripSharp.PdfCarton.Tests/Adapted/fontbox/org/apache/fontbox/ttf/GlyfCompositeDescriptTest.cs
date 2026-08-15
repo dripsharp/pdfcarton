@@ -10,7 +10,7 @@ global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser otfParser = new global::DripShar
 string fontPath = "src/test/resources/ttf/LiberationSans-Regular.ttf";
 global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont font;
 using (global::DripSharp.PdfCarton.IO.RandomAccessRead fontFile = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", fontPath))) {
-font = otfParser.Parse(fontFile);
+font = ((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(otfParser.Parse(fontFile)))));
 }
 global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable glyphTable = font.GetGlyph();
 global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData aacuteGlyph = glyphTable.GetGlyph(131);

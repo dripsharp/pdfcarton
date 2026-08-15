@@ -110,4 +110,8 @@ this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
 this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox, bbox.GetCOSArray());
 }
 }
+
+public virtual global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForStreamParsing() {
+return this.GetContentsForRandomAccess();
+}
 }

@@ -25,10 +25,9 @@ public virtual global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont Parse(global::
 global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadDataStream dataStream = new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadDataStream(randomAccessRead);
 try {
 return this.parse(dataStream);
-} catch (global::System.IO.IOException ex) {
+} catch (global::System.IO.IOException) {
 dataStream.Dispose();
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 } finally {
 randomAccessRead.Dispose();
 }
@@ -39,10 +38,9 @@ this.isEmbedded = true;
 global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadDataStream dataStream = new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadDataStream(inputStream);
 try {
 return this.parse(dataStream);
-} catch (global::System.IO.IOException ex) {
+} catch (global::System.IO.IOException) {
 dataStream.Dispose();
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 } finally {
 inputStream.Dispose();
 }

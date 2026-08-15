@@ -46,9 +46,9 @@ long tiffOptions = 0;
 if ((k == 0)) {
 if (decodeParms.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.EndOfLine)) {
 bool hasEndOfLine = decodeParms.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.EndOfLine, false);
-type = (hasEndOfLine ? global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittT4 : global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittModifiedHuffmanRle);
+type = (hasEndOfLine ? global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittT4 : global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittModifiedHuffmanRle);
 } else {
-type = global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittT4;
+type = global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittT4;
 sbyte[] streamData = new sbyte[20];
 int bytesRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded, streamData);
 if ((bytesRead == -1)) {
@@ -58,12 +58,12 @@ global::DripSharp.Runtime.JavaPushbackInputStream pushbackInputStream = new glob
 pushbackInputStream.Unread(streamData, 0, bytesRead);
 encoded = pushbackInputStream;
 if ((((int)(streamData[0]) != 0) || (((streamData[1] >> unchecked((int)(4))) != 1) && ((int)(streamData[1]) != 1)))) {
-type = global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittModifiedHuffmanRle;
+type = global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittModifiedHuffmanRle;
 short b = unchecked((short)(unchecked((short)((((streamData[0] << unchecked((int)(8))) + (streamData[1] & 255)) >> unchecked((int)(4)))))));
 for (int i = 12; (i < (bytesRead * 8)); i++) {
 b = unchecked((short)(unchecked((short)(((b << unchecked((int)(1))) + ((streamData[(i / 8)] >> unchecked((int)((7 - (i % 8))))) & 1))))));
 if (((b & 4095) == 1)) {
-type = global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittT4;
+type = global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittT4;
 break;
 }
 }
@@ -71,10 +71,10 @@ break;
 }
 } else {
 if ((k > 0)) {
-type = global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittT4;
-tiffOptions = global::DripSharp.PdfCarton.Filter.TIFFExtension.Group3opt2dencoding;
+type = global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittT4;
+tiffOptions = global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.Group3opt2dencoding;
 } else {
-type = global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittT6;
+type = global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittT6;
 }
 }
 s = new global::DripSharp.PdfCarton.Filter.CCITTFaxDecoderStream(encoded, cols, type, tiffOptions, encodedByteAlign);
@@ -107,7 +107,7 @@ bufferData[i] = unchecked((sbyte)(unchecked((sbyte)((~(bufferData[i]) & 255)))))
 public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
 int cols = parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Columns);
 int rows = parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Rows);
-global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream ccittFaxEncoderStream = new global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream(encoded, cols, rows, global::DripSharp.PdfCarton.Filter.TIFFExtension.FillLeftToRight);
+global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream ccittFaxEncoderStream = new global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream(encoded, cols, rows, global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.FillLeftToRight);
 global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, ccittFaxEncoderStream);
 }
 }

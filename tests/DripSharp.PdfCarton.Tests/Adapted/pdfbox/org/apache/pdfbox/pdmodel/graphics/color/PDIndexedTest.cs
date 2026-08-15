@@ -8,7 +8,7 @@ public class PDIndexedTest {
 internal virtual void testFactory() {
 global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace baseColorspace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance;
 int hival = 5;
-string stringLookupData = "AA1166 112233 000000 FEDC01 4561FE DC34DA".Replace(" ", "", global::System.StringComparison.Ordinal);
+string stringLookupData = global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal("AA1166 112233 000000 FEDC01 4561FE DC34DA", " ", "");
 string outputString = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("/Indexed /DeviceRGB 5 <", stringLookupData), ">");
 sbyte[] lookupData = global::DripSharp.PdfCarton.Cos.COSString.ParseHex(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", stringLookupData)).GetBytes();
 global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed pdIndexed = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed.Create(baseColorspace, hival, lookupData);
@@ -35,7 +35,7 @@ internal virtual void testFactoryParameterChecks() {
 global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace baseColorspace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance;
 sbyte[] lookupDataEmpty = new sbyte[5];
 int hival = 5;
-string stringLookupData = "AA1166 112233 000000 FEDC01 4561FE DC34DA".Replace(" ", "", global::System.StringComparison.Ordinal);
+string stringLookupData = global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal("AA1166 112233 000000 FEDC01 4561FE DC34DA", " ", "");
 sbyte[] lookupData = global::DripSharp.PdfCarton.Cos.COSString.ParseHex(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", stringLookupData)).GetBytes();
 global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(() => global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed.Create(baseColorspace, 0, (sbyte[])default!), null);
 global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(() => global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed.Create((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace)default!, 0, lookupDataEmpty), null);

@@ -75,4 +75,30 @@ return bytes;
 public virtual int Length() {
 return this.inputBuffer.Length;
 }
+
+public virtual int ReadInt() {
+int b1 = this.ReadUnsignedByte();
+int b2 = this.ReadUnsignedByte();
+int b3 = this.ReadUnsignedByte();
+int b4 = this.ReadUnsignedByte();
+return ((((b1 << unchecked((int)(24))) | (b2 << unchecked((int)(16)))) | (b3 << unchecked((int)(8)))) | b4);
+}
+
+public virtual int ReadOffset(int offSize) {
+int value = 0;
+for (int i = 0; (i < offSize); i++) {
+value = ((value << unchecked((int)(8))) | this.ReadUnsignedByte());
+}
+return value;
+}
+
+public virtual short ReadShort() {
+return unchecked((short)(unchecked((short)(((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(this)).ReadUnsignedShort()))));
+}
+
+public virtual int ReadUnsignedShort() {
+int b1 = this.ReadUnsignedByte();
+int b2 = this.ReadUnsignedByte();
+return ((b1 << unchecked((int)(8))) | b2);
+}
 }

@@ -13,9 +13,7 @@ public global::System.IO.Stream GetContents();
 
 public global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForRandomAccess();
 
-public global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForStreamParsing() {
-return this.GetContentsForRandomAccess();
-}
+public global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForStreamParsing();
 
 public global::DripSharp.PdfCarton.Pdmodel.PDResources GetResources();
 

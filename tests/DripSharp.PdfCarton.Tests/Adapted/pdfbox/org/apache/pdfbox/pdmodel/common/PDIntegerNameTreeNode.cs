@@ -18,7 +18,7 @@ throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Tests.Suppor
 return (global::DripSharp.PdfCarton.Cos.COSInteger)(@base!);
 }
 
-protected internal override global::DripSharp.PdfCarton.Pdmodel.Common.PDIntegerNameTreeNode CreateChildNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
+protected internal override global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Cos.COSInteger> CreateChildNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
 return new global::DripSharp.PdfCarton.Pdmodel.Common.PDIntegerNameTreeNode(dic);
 }
 }

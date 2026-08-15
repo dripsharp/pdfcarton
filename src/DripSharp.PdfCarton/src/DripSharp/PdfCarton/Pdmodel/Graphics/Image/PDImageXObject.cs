@@ -546,7 +546,7 @@ public void SetOptionalContent(global::DripSharp.PdfCarton.Pdmodel.Documentinter
 this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Oc, oc);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 
-global::DripSharp.PdfCarton.Cos.COSDictionary global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSDictionary global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSDictionary)(this.GetCOSObject());
 }

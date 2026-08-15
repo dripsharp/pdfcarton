@@ -186,5 +186,5 @@ public virtual void SetLegalAttestation(global::System.Collections.Generic.IList
 this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.LegalAttestation, global::DripSharp.PdfCarton.Cos.COSArray.OfCOSStrings(legalAttestation));
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

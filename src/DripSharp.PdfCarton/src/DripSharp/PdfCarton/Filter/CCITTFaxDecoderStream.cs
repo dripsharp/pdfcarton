@@ -44,23 +44,23 @@ this.decodedRow = new sbyte[((columns + 7) / 8)];
 this.changesReferenceRow = new int[(columns + 2)];
 this.changesCurrentRow = new int[(columns + 2)];
 switch (type) {
-case var __case_102_18_0 when __case_102_18_0 == global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittModifiedHuffmanRle:
+case var __case_102_18_0 when __case_102_18_0 == global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittModifiedHuffmanRle:
 this.optionByteAligned = byteAligned;
 this.optionG32D = false;
 this.optionG3Fill = false;
 this.optionUncompressed = false;
 break;
-case var __case_108_18_0 when __case_108_18_0 == global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittT4:
+case var __case_108_18_0 when __case_108_18_0 == global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittT4:
 this.optionByteAligned = byteAligned;
-this.optionG32D = ((options & global::DripSharp.PdfCarton.Filter.TIFFExtension.Group3opt2dencoding) != 0);
-this.optionG3Fill = ((options & global::DripSharp.PdfCarton.Filter.TIFFExtension.Group3optFillbits) != 0);
-this.optionUncompressed = ((options & global::DripSharp.PdfCarton.Filter.TIFFExtension.Group3optUncompressed) != 0);
+this.optionG32D = ((options & global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.Group3opt2dencoding) != 0);
+this.optionG3Fill = ((options & global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.Group3optFillbits) != 0);
+this.optionUncompressed = ((options & global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.Group3optUncompressed) != 0);
 break;
-case var __case_114_18_0 when __case_114_18_0 == global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittT6:
+case var __case_114_18_0 when __case_114_18_0 == global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittT6:
 this.optionByteAligned = byteAligned;
 this.optionG32D = false;
 this.optionG3Fill = false;
-this.optionUncompressed = ((options & global::DripSharp.PdfCarton.Filter.TIFFExtension.Group4optUncompressed) != 0);
+this.optionUncompressed = ((options & global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.Group4optUncompressed) != 0);
 break;
 default:
 throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("Illegal parameter: ", type));
@@ -74,10 +74,9 @@ try {
 this.decodeRow();
 } catch (global::System.IndexOutOfRangeException e) {
 throw new global::System.IO.IOException("Malformed CCITT stream", e);
-} catch (global::System.IO.EndOfStreamException e) {
+} catch (global::System.IO.EndOfStreamException) {
 if ((this.decodedLength != 0)) {
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(e);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 }
 this.decodedLength = -1;
 }
@@ -214,13 +213,13 @@ this.decode2D();
 
 private void decodeRow() {
 switch (this.type) {
-case var __case_309_18_0 when __case_309_18_0 == global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittModifiedHuffmanRle:
+case var __case_309_18_0 when __case_309_18_0 == global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittModifiedHuffmanRle:
 this.decodeRowType2();
 break;
-case var __case_312_18_0 when __case_312_18_0 == global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittT4:
+case var __case_312_18_0 when __case_312_18_0 == global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittT4:
 this.decodeRowType4();
 break;
-case var __case_315_18_0 when __case_315_18_0 == global::DripSharp.PdfCarton.Filter.TIFFExtension.CompressionCcittT6:
+case var __case_315_18_0 when __case_315_18_0 == global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittT6:
 this.decodeRowType6();
 break;
 default:

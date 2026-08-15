@@ -122,4 +122,8 @@ return ((optionalContent != default!) ? global::DripSharp.PdfCarton.Pdmodel.Docu
 public virtual void SetOptionalContent(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList oc) {
 this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Oc, oc);
 }
+
+public virtual global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForStreamParsing() {
+return this.GetContentsForRandomAccess();
+}
 }

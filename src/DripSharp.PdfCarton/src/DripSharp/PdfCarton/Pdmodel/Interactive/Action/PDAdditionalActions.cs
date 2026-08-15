@@ -31,5 +31,5 @@ public virtual void SetF(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.
 this.actions.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, action);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

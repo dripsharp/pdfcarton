@@ -170,6 +170,48 @@ global::DripSharp.Runtime.JavaCompat.MapPut(this.rafCopies, currentThreadID, ran
 return new global::DripSharp.PdfCarton.IO.RandomAccessReadView(randomAccessReadBufferedFile, startPosition, streamLength);
 }
 
+public virtual int Available() {
+return (int)(global::System.Math.Min((this.Length() - this.GetPosition()), (long)(int.MaxValue)));
+}
+
+public virtual int Peek() {
+int result = this.Read();
+if ((result != -1)) {
+((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
+}
+return result;
+}
+
+public virtual int Read(sbyte[] b) {
+return this.Read(b, 0, b.Length);
+}
+
+public virtual void ReadFully(sbyte[] b) {
+((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).ReadFully(b, 0, b.Length);
+}
+
+public virtual void ReadFully(sbyte[] b, int offset, int length) {
+if (((this.Length() - this.GetPosition()) < length)) {
+throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
+}
+int bytesReadTotal = 0;
+while ((bytesReadTotal < length)) {
+int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
+if ((bytesReadNow <= 0)) {
+throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
+}
+bytesReadTotal += bytesReadNow;
+}
+}
+
+public virtual void Rewind(int bytes) {
+this.Seek((this.GetPosition() - bytes));
+}
+
+public virtual void Skip(int length) {
+this.Seek((this.GetPosition() + length));
+}
+
 private sealed class Anonymous_51_53 : global::DripSharp.Runtime.JavaLinkedHashMap<long, global::DripSharp.Runtime.JavaByteBuffer> {
 private readonly global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile __outer;
 

@@ -65,5 +65,5 @@ public virtual void SetNext(global::System.Collections.Generic.IList<global::Dri
 this.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Next, new global::DripSharp.PdfCarton.Cos.COSArray(next));
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

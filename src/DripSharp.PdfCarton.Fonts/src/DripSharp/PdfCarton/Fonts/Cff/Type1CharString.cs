@@ -334,6 +334,6 @@ return default!;
 }
 
 public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(this.type1Sequence).Replace("|", "\n", global::System.StringComparison.Ordinal).Replace(",", " ", global::System.StringComparison.Ordinal);
+return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ReplaceOrdinal(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ReplaceOrdinal(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(this.type1Sequence), "|", "\n"), ",", " ");
 }
 }

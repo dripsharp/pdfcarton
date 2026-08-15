@@ -52,7 +52,7 @@ this.v2 = this.edgeEquationValue(p[2], p[0], p[1]);
 }
 
 private int calcDeg(global::DripSharp.Runtime.JavaPoint2D[] p) {
-global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaPoint> set = new global::System.Collections.Generic.HashSet<global::DripSharp.Runtime.JavaPoint>(3);
+global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaPoint> set = new global::System.Collections.Generic.HashSet<global::DripSharp.Runtime.JavaPoint>();
 foreach (global::DripSharp.Runtime.JavaPoint2D itp in p) {
 global::DripSharp.Runtime.JavaPoint np = new global::DripSharp.Runtime.JavaPoint((int)((int)(global::DripSharp.Runtime.JavaCompat.MathRound((itp.X * 1000)))), (int)((int)(global::DripSharp.Runtime.JavaCompat.MathRound((itp.Y * 1000)))));
 set.Add(np);

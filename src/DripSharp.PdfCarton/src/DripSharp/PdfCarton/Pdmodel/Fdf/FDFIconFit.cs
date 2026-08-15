@@ -85,5 +85,5 @@ public virtual void SetScaleToFitAnnotation(bool value) {
 this.fit.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Fb, value);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

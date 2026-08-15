@@ -13,7 +13,7 @@ internal UnmodifiableCOSDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary
 base.Items = global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(global::DripSharp.Runtime.JavaCompat.CastDictionary<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Cos.COSBase>(dict.Items));
 }
 
-public void SetNeedToBeUpdated(bool flag) {
+public override void SetNeedToBeUpdated(bool flag) {
 throw new global::System.NotSupportedException();
 }
 }

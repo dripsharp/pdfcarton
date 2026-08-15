@@ -77,5 +77,5 @@ public virtual void SetRectangle(global::DripSharp.PdfCarton.Pdmodel.Common.PDRe
 this.bead.SetItem(global::DripSharp.PdfCarton.Cos.COSName.R, rect);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

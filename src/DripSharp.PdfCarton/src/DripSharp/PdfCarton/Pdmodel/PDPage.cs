@@ -446,5 +446,5 @@ throw new global::System.ArgumentException("User unit must be positive");
 this.page.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.UserUnit, userUnit);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

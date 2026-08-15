@@ -294,4 +294,17 @@ return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.Jav
 public virtual global::DripSharp.PdfCarton.Cos.COSArray ToList() {
 return this.array;
 }
+
+int global::System.Collections.Generic.ICollection<E>.Count => this.Size();
+bool global::System.Collections.Generic.ICollection<E>.IsReadOnly => false;
+E global::System.Collections.Generic.IList<E>.this[int index] { get => this.Get(index); set => this.Set(index, value); }
+void global::System.Collections.Generic.ICollection<E>.Add(E item) => this.Add(item);
+bool global::System.Collections.Generic.ICollection<E>.Contains(E item) => this.Contains(item);
+void global::System.Collections.Generic.ICollection<E>.CopyTo(E[] array, int arrayIndex) { global::DripSharp.Runtime.JavaCompat.ThrowIfNull(array, nameof(array)); foreach (var item in (global::System.Collections.Generic.IEnumerable<E>)this) array[arrayIndex++] = item; }
+bool global::System.Collections.Generic.ICollection<E>.Remove(E item) => this.Remove(item);
+int global::System.Collections.Generic.IList<E>.IndexOf(E item) => this.IndexOf(item);
+void global::System.Collections.Generic.IList<E>.Insert(int index, E item) => this.Add(index, item);
+void global::System.Collections.Generic.IList<E>.RemoveAt(int index) => this.Remove(index);
+global::System.Collections.Generic.IEnumerator<E> global::System.Collections.Generic.IEnumerable<E>.GetEnumerator() { return global::DripSharp.Runtime.JavaCompat.AsEnumerator(this.Iterator()); }
+global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => ((global::System.Collections.Generic.IEnumerable<E>)this).GetEnumerator();
 }

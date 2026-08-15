@@ -130,7 +130,7 @@ return new global::DripSharp.PdfCarton.Util.Matrix(this.checkFloatValues(this.mu
 }
 
 private float[] checkFloatValues(float[] values) {
-if (((((((((!(float.IsFinite(values[0])) || !(float.IsFinite(values[1]))) || !(float.IsFinite(values[2]))) || !(float.IsFinite(values[3]))) || !(float.IsFinite(values[4]))) || !(float.IsFinite(values[5]))) || !(float.IsFinite(values[6]))) || !(float.IsFinite(values[7]))) || !(float.IsFinite(values[8])))) {
+if (((((((((!(global::DripSharp.Runtime.JavaCompat.IsFinite(values[0])) || !(global::DripSharp.Runtime.JavaCompat.IsFinite(values[1]))) || !(global::DripSharp.Runtime.JavaCompat.IsFinite(values[2]))) || !(global::DripSharp.Runtime.JavaCompat.IsFinite(values[3]))) || !(global::DripSharp.Runtime.JavaCompat.IsFinite(values[4]))) || !(global::DripSharp.Runtime.JavaCompat.IsFinite(values[5]))) || !(global::DripSharp.Runtime.JavaCompat.IsFinite(values[6]))) || !(global::DripSharp.Runtime.JavaCompat.IsFinite(values[7]))) || !(global::DripSharp.Runtime.JavaCompat.IsFinite(values[8])))) {
 throw new global::System.ArgumentException("Multiplying two matrices produces illegal values");
 }
 return values;

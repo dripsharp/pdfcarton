@@ -93,4 +93,16 @@ return this.__field_isDereferenced;
 public virtual global::DripSharp.PdfCarton.Cos.COSUpdateState GetUpdateState() {
 return this.updateState;
 }
+
+public virtual bool IsNeedToBeUpdated() {
+return this.GetUpdateState().IsUpdated();
+}
+
+public virtual void SetNeedToBeUpdated(bool flag) {
+this.GetUpdateState().update(flag);
+}
+
+public virtual global::DripSharp.PdfCarton.Cos.COSIncrement ToIncrement() {
+return this.GetUpdateState().toIncrement();
+}
 }

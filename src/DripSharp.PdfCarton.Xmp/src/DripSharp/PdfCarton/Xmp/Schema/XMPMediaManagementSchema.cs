@@ -96,7 +96,7 @@ return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.IntegerType>(glob
 
 public virtual int? GetSaveID() {
 global::DripSharp.PdfCarton.Xmp.Type.IntegerType tt = this.GetSaveIDProperty();
-return ((tt != default!) ? (int?)((int)(tt.GetValue())) : (int?)(default!));
+return ((tt != default!) ? (int?)(((int)(tt.GetValue()))) : (int?)(default!));
 }
 
 [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("AgentName", "Simple")]

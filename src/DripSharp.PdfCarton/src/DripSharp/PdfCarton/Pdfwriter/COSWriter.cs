@@ -928,4 +928,13 @@ global::DripSharp.PdfCarton.Util.Hex.WriteHexBytes(bytes, output);
 global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, (int)('>'));
 }
 }
+
+public virtual void VisitFromObject(global::DripSharp.PdfCarton.Cos.COSObject obj) {
+global::DripSharp.PdfCarton.Cos.COSBase @base = obj.GetObject();
+if ((@base == default!)) {
+this.VisitFromNull(global::DripSharp.PdfCarton.Cos.COSNull.Null);
+} else {
+@base.Accept(this);
+}
+}
 }

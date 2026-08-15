@@ -37,31 +37,17 @@ public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect, global::Drip
 
 public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect, global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject xobject);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace RemoveColorSpace(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-return default!;
-}
+public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace RemoveColorSpace(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState RemoveExtState(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-return default!;
-}
+public global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState RemoveExtState(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Font.PDFont RemoveFont(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-return default!;
-}
+public global::DripSharp.PdfCarton.Pdmodel.Font.PDFont RemoveFont(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading RemoveShading(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-return default!;
-}
+public global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading RemoveShading(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern RemovePattern(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-return default!;
-}
+public global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern RemovePattern(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList RemoveProperties(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-return default!;
-}
+public global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList RemoveProperties(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject RemoveXObject(global::DripSharp.PdfCarton.Cos.COSObject indirect) {
-return default!;
-}
+public global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject RemoveXObject(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 }

@@ -66,5 +66,5 @@ public virtual void SetSignature(global::DripSharp.PdfCarton.Pdmodel.Interactive
 this.catalog.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Sig, sig);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

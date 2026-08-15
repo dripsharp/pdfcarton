@@ -298,5 +298,5 @@ public virtual void SetJavaScript(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFJav
 this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.JavaScript, js);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

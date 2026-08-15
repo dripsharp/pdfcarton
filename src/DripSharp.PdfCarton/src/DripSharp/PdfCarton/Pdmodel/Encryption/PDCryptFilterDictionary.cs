@@ -51,5 +51,5 @@ public virtual void SetEncryptMetaData(bool encryptMetaData) {
 this.GetCOSObject().SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.EncryptMetaData, encryptMetaData);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

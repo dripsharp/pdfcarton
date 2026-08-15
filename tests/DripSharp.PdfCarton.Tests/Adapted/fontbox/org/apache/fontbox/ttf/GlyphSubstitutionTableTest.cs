@@ -16,7 +16,7 @@ global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable testClass = new glo
 testClass.read((global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont)default!, rarbds);
 global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData = testClass.GetGsubData();
 global::DripSharp.Testing.JavaAssertions.NotNull(gsubData, null);
-global::DripSharp.Testing.JavaAssertions.NotEqual(global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData.NoDataFound, gsubData, null);
+global::DripSharp.Testing.JavaAssertions.NotEqual(global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubDataStatics.NoDataFound, gsubData, null);
 global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language.Bengali, gsubData.GetLanguage(), null);
 global::DripSharp.Testing.JavaAssertions.Equal("bng2", gsubData.GetActiveScriptName(), null);
 global::DripSharp.Testing.JavaAssertions.Equal(new global::System.Collections.Generic.HashSet<string>(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTableTest.EXPECTED_FEATURE_NAMES), gsubData.GetSupportedFeatures(), null);

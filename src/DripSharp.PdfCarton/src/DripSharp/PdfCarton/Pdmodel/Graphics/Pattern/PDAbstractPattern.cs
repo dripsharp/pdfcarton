@@ -72,5 +72,5 @@ matrix.Add(new global::DripSharp.PdfCarton.Cos.COSFloat((float)((float)(v))));
 this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Matrix, matrix);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

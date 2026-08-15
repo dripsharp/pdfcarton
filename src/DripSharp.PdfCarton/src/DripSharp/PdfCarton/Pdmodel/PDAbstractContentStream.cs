@@ -82,7 +82,7 @@ global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSha
 if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font)) {
 global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font type0Font = (global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font)(font!);
 global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData = type0Font.GetGsubData();
-if ((gsubData != global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData.NoDataFound)) {
+if ((gsubData != global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubDataStatics.NoDataFound)) {
 global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker gsubWorker = this.gsubWorkerFactory.GetGsubWorker(type0Font.GetCmapLookup(), gsubData);
 global::DripSharp.Runtime.JavaCompat.MapPut(this.gsubWorkers, (global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font)(font!), gsubWorker);
 } else {
@@ -672,7 +672,7 @@ global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.OutputStream, (int)(
 }
 
 protected internal virtual void WriteOperand(float real) {
-if (!(float.IsFinite(real))) {
+if (!(global::DripSharp.Runtime.JavaCompat.IsFinite(real))) {
 throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(real, " is not a finite number"));
 }
 int byteCount = global::DripSharp.PdfCarton.Util.NumberFormatUtil.FormatFloatFast(real, this.formatDecimal.GetMaximumFractionDigits(), this.formatBuffer);

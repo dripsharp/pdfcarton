@@ -295,23 +295,23 @@ return this.verticalDisplacment;
 }
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
-
 public abstract global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetBoundingBox();
+
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 
 public abstract global::DripSharp.PdfCarton.Util.Matrix GetFontMatrix();
 
 public abstract float GetHeight(int code);
 
-public abstract float GetWidthFromFont(int code);
-
-public abstract bool IsDamaged();
-
-public abstract bool IsEmbedded();
-
 public abstract global::SkiaSharp.SKPath GetNormalizedPath(int code);
 
 public abstract global::SkiaSharp.SKPath GetPath(int code);
 
+public abstract float GetWidthFromFont(int code);
+
 public abstract bool HasGlyph(int code);
+
+public abstract bool IsDamaged();
+
+public abstract bool IsEmbedded();
 }

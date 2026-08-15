@@ -27,7 +27,7 @@ this.fs = dict;
 }
 }
 
-public override global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
 return this.fs;
 }
 

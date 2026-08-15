@@ -444,4 +444,20 @@ objectToAdd = new global::DripSharp.PdfCarton.Cos.COSObject(@object, @object.Get
 }
 return objectToAdd;
 }
+
+public virtual bool IsNeedToBeUpdated() {
+return this.GetUpdateState().IsUpdated();
+}
+
+public virtual void SetNeedToBeUpdated(bool flag) {
+this.GetUpdateState().update(flag);
+}
+
+public virtual global::DripSharp.PdfCarton.Cos.COSIncrement ToIncrement() {
+return this.GetUpdateState().toIncrement();
+}
+
+global::System.Collections.Generic.IEnumerator<global::DripSharp.PdfCarton.Cos.COSBase> global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Cos.COSBase>.GetEnumerator() {return global::DripSharp.Runtime.JavaCompat.AsEnumerator(this.Iterator());}
+
+global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() {return ((global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Cos.COSBase>)this).GetEnumerator();}
 }

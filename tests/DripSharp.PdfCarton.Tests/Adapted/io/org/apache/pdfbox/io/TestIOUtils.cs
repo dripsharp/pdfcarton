@@ -161,16 +161,16 @@ internal virtual void testCreateProtectedTempDirPermissions() {
 global::DripSharp.Runtime.JavaPath tempDir = global::DripSharp.PdfCarton.IO.IOUtils.CreateProtectedTempDir();
 try {
 if (global::DripSharp.PdfCarton.Tests.Support.SupportsFileAttributeView(global::DripSharp.PdfCarton.Tests.Support.FileStore(tempDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "posix"))) {
-global::System.Collections.Generic.ISet<global::System.IO.UnixFileMode> perms = global::DripSharp.PdfCarton.Tests.Support.GetPosixFilePermissions(tempDir);
-global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.UserRead), null);
-global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.UserWrite), null);
-global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.UserExecute), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.GroupRead), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.GroupWrite), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.GroupExecute), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.OtherRead), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.OtherWrite), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.OtherExecute), null);
+global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode> perms = global::DripSharp.PdfCarton.Tests.Support.GetPosixFilePermissions(tempDir);
+global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.UserRead), null);
+global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.UserWrite), null);
+global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.UserExecute), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.GroupRead), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.GroupWrite), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.GroupExecute), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.OtherRead), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.OtherWrite), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.OtherExecute), null);
 }
 } finally {
 if (global::DripSharp.Runtime.JavaCompat.Exists(tempDir)) {
@@ -236,16 +236,16 @@ internal virtual void testCreateProtectedTempFilePermissions() {
 global::DripSharp.Runtime.JavaPath tempFile = global::DripSharp.PdfCarton.IO.IOUtils.CreateProtectedTempFile((global::DripSharp.Runtime.JavaPath)default!, global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "perm"), global::DripSharp.PdfCarton.Tests.Support.TestPath("io", ".test"));
 try {
 if (global::DripSharp.PdfCarton.Tests.Support.SupportsFileAttributeView(global::DripSharp.PdfCarton.Tests.Support.FileStore(tempFile), global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "posix"))) {
-global::System.Collections.Generic.ISet<global::System.IO.UnixFileMode> perms = global::DripSharp.PdfCarton.Tests.Support.GetPosixFilePermissions(tempFile);
-global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.UserRead), null);
-global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.UserWrite), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.UserExecute), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.GroupRead), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.GroupWrite), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.GroupExecute), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.OtherRead), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.OtherWrite), null);
-global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::System.IO.UnixFileMode.OtherExecute), null);
+global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode> perms = global::DripSharp.PdfCarton.Tests.Support.GetPosixFilePermissions(tempFile);
+global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.UserRead), null);
+global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.UserWrite), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.UserExecute), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.GroupRead), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.GroupWrite), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.GroupExecute), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.OtherRead), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.OtherWrite), null);
+global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.CollectionContains(perms, global::DripSharp.Runtime.JavaUnixFileMode.OtherExecute), null);
 }
 } finally {
 if (global::DripSharp.Runtime.JavaCompat.Exists(tempFile)) {

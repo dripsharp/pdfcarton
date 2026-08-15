@@ -117,12 +117,11 @@ this.file = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.IO.IOUtil
 }
 try {
 this.raf = new global::DripSharp.Runtime.JavaRandomAccessFile(this.file, "rw");
-} catch (global::System.IO.FileNotFoundException e) {
+} catch (global::System.IO.FileNotFoundException) {
 if (!(global::DripSharp.Runtime.JavaCompat.FileDelete(this.file))) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.IO.ScratchFile.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Error deleting scratch file: ", this.file.FullName)));
 }
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(e);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 }
 }
 long fileLen = this.raf.length();

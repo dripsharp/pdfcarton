@@ -29,12 +29,5 @@ public void VisitFromStream(global::DripSharp.PdfCarton.Cos.COSStream obj);
 
 public void VisitFromString(global::DripSharp.PdfCarton.Cos.COSString obj);
 
-public void VisitFromObject(global::DripSharp.PdfCarton.Cos.COSObject obj) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = obj.GetObject();
-if ((@base == default!)) {
-this.VisitFromNull(global::DripSharp.PdfCarton.Cos.COSNull.Null);
-} else {
-@base.Accept(this);
-}
-}
+public void VisitFromObject(global::DripSharp.PdfCarton.Cos.COSObject obj);
 }

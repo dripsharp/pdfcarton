@@ -43,7 +43,7 @@ global::SkiaSharp.SKMatrix originalTransform = g2d.GetTransform();
 global::SkiaSharp.SKRect originalClipDeviceBounds = global::DripSharp.PdfCarton.Printing.TestPDFPrintable.deviceClipBounds(g2d);
 global::DripSharp.Runtime.JavaPageFormat pf = global::DripSharp.PdfCarton.Printing.TestPDFPrintable.createPageFormat((double)(global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_WIDTH), (double)(global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_HEIGHT));
 int result = printable.Print(g2d, pf, 0);
-global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaPrintable.PAGE_EXISTS, result, null);
+global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaPrintConstants.PAGE_EXISTS, result, null);
 global::DripSharp.Testing.JavaAssertions.Equal(originalColor, g2d.GetColor(), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "color should be unchanged after print()"));
 global::DripSharp.Testing.JavaAssertions.Equal(originalBackground, g2d.GetBackground(), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "background should be unchanged after print()"));
 global::DripSharp.Testing.JavaAssertions.Equal(originalStroke, g2d.GetStroke(), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "stroke should be unchanged after print()"));
@@ -68,9 +68,9 @@ global::DripSharp.PdfCarton.Printing.PDFPrintable printable = new global::DripSh
 global::SkiaSharp.SKBitmap output = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_WIDTH, global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_HEIGHT, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
 global::DripSharp.Runtime.PdfCartonGraphics2D g2d = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(output);
 global::DripSharp.Runtime.JavaPageFormat pf = global::DripSharp.PdfCarton.Printing.TestPDFPrintable.createPageFormat((double)(global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_WIDTH), (double)(global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_HEIGHT));
-global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaPrintable.NO_SUCH_PAGE, printable.Print(g2d, pf, -1), null);
-global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaPrintable.NO_SUCH_PAGE, printable.Print(g2d, pf, 1), null);
-global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaPrintable.PAGE_EXISTS, printable.Print(g2d, pf, 0), null);
+global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaPrintConstants.NO_SUCH_PAGE, printable.Print(g2d, pf, -1), null);
+global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaPrintConstants.NO_SUCH_PAGE, printable.Print(g2d, pf, 1), null);
+global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaPrintConstants.PAGE_EXISTS, printable.Print(g2d, pf, 0), null);
 g2d.Dispose();
 }
 }
@@ -87,7 +87,7 @@ g2d.FillRect(0, 0, global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_W
 global::DripSharp.Runtime.JavaPageFormat pf = global::DripSharp.PdfCarton.Printing.TestPDFPrintable.createPageFormat((double)(global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_WIDTH), (double)(global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_HEIGHT));
 int result = printable.Print(g2d, pf, 0);
 g2d.Dispose();
-global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaPrintable.PAGE_EXISTS, result, null);
+global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaPrintConstants.PAGE_EXISTS, result, null);
 global::DripSharp.PdfCarton.Printing.TestPDFPrintable.assertBorderPixelIsGray(output);
 }
 }

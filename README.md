@@ -6,11 +6,18 @@ This is a generated publication repository. Durable source, translation, runtime
 
 ## Projects
 
-- [`DripSharp.PdfCarton`](src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj) — PdfCarton (`net10.0`, version `3.0.8-alpha.1`)
-- [`DripSharp.PdfCarton.Fonts`](src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj) — PdfCarton Fonts (`net10.0`, version `3.0.8-alpha.1`)
-- [`DripSharp.PdfCarton.IO`](src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj) — PdfCarton I/O (`net10.0`, version `3.0.8-alpha.1`)
-- [`DripSharp.PdfCarton.Preflight`](src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj) — PdfCarton Preflight (`net10.0`, version `3.0.8-alpha.1`)
-- [`DripSharp.PdfCarton.Xmp`](src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj) — PdfCarton XMP (`net10.0`, version `3.0.8-alpha.1`)
+- [`DripSharp.PdfCarton`](src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj) — PdfCarton (`netstandard2.0`, version `3.0.8-alpha.1`)
+- [`DripSharp.PdfCarton.Fonts`](src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj) — PdfCarton Fonts (`netstandard2.0`, version `3.0.8-alpha.1`)
+- [`DripSharp.PdfCarton.IO`](src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj) — PdfCarton I/O (`netstandard2.0`, version `3.0.8-alpha.1`)
+- [`DripSharp.PdfCarton.Preflight`](src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj) — PdfCarton Preflight (`netstandard2.0`, version `3.0.8-alpha.1`)
+- [`DripSharp.PdfCarton.Xmp`](src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj) — PdfCarton XMP (`netstandard2.0`, version `3.0.8-alpha.1`)
+
+## Framework compatibility
+
+Every production library has one target framework: `netstandard2.0`. Repository test projects, runners, probes, differential hosts, and package consumers execute on `net10.0` while referencing or consuming those production assemblies.
+
+.NET Framework 4.8 compatibility is inferred from the `netstandard2.0` contract and compatible dependency assets. This repository does not build or run a .NET Framework 4.8 host and does not empirically certify net48 runtime behavior.
+
 
 ## Install
 

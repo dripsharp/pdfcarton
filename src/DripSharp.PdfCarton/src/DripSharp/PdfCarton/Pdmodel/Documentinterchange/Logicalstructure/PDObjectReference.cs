@@ -70,5 +70,5 @@ public virtual void SetPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
 this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Pg, page);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

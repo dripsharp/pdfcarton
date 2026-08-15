@@ -8,7 +8,9 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Filter;
 
-internal interface TIFFExtension {
+internal interface TIFFExtension {}
+
+internal static class TIFFExtensionStatics {
 public const int CompressionCcittT4 = 3;
 
 public const int CompressionCcittT6 = 4;

@@ -176,7 +176,7 @@ return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.IntegerType>(glob
 
 public virtual int? GetColorMode() {
 global::DripSharp.PdfCarton.Xmp.Type.IntegerType tt = this.GetColorModeProperty();
-return ((tt == default!) ? (int?)(default!) : (int?)((int)(tt.GetValue())));
+return ((tt == default!) ? (int?)(default!) : (int?)(((int)(tt.GetValue()))));
 }
 
 public virtual void SetColorMode(string text) {
@@ -431,7 +431,7 @@ return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.IntegerType>(glob
 
 public virtual int? GetUrgency() {
 global::DripSharp.PdfCarton.Xmp.Type.IntegerType tt = this.GetUrgencyProperty();
-return ((tt == default!) ? (int?)(default!) : (int?)((int)(tt.GetValue())));
+return ((tt == default!) ? (int?)(default!) : (int?)(((int)(tt.GetValue()))));
 }
 
 public virtual void SetUrgency(string s) {

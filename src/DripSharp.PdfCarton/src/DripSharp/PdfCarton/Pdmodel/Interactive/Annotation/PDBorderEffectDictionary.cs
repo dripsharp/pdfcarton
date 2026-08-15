@@ -43,5 +43,5 @@ public virtual string GetStyle() {
 return this.GetCOSObject().GetNameAsString("S", global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary.StyleSolid);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

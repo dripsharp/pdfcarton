@@ -49,9 +49,9 @@ private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.Blend
 
 private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fOverlay = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src, dest) => ((dest <= 0.5D) ? ((2 * dest) * src) : ((2 * ((src + dest) - (src * dest))) - 1)));
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fDarken = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter(global::System.MathF.Min);
+private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fDarken = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter(global::System.Math.Min);
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fLighten = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter(global::System.MathF.Max);
+private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fLighten = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter(global::System.Math.Max);
 
 private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fColorDodge = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src, dest) => {
 if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(dest, (float)(0)) == 0)) {

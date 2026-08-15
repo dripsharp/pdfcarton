@@ -17,10 +17,9 @@ public PDFXrefStreamParser(global::DripSharp.PdfCarton.Cos.COSStream stream, glo
 this.Document = document;
 try {
 this.initParserValues(stream);
-} catch (global::System.IO.IOException exception) {
+} catch (global::System.IO.IOException) {
 this.Dispose();
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(exception);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 }
 }
 
@@ -153,5 +152,7 @@ this.currentNumber = this.start[++(this.currentRange)];
 this.currentEnd = this.end[this.currentRange];
 return this.currentNumber++;
 }
+
+public void Remove() {throw new global::System.NotSupportedException("Iterator removal is not supported.");}
 }
 }

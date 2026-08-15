@@ -150,8 +150,7 @@ global::DripSharp.PdfCarton.IO.IOUtils.Copy(cis, output);
 }
 } catch (global::System.IO.IOException exception) {
 if (!((global::DripSharp.Runtime.JavaCompat.GetCause(exception)! is global::System.Security.Cryptography.CryptographicException))) {
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(exception);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 }
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandler<global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy>.LOG, (global::System.Exception)exception, global::DripSharp.Runtime.JavaCompat.StringValueOf("A GeneralSecurityException occurred when decrypting some stream data"));
 }
@@ -258,8 +257,7 @@ this.encryptData(objNum, genNum, encryptedStream, output, true);
 }
 } catch (global::System.IO.IOException ex) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandler<global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy>.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(((object)(ex)).GetType().Name, " thrown when decrypting object "), objNum), " "), genNum), " obj")));
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 }
 }
 

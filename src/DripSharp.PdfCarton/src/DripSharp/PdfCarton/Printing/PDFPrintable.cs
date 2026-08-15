@@ -78,7 +78,7 @@ this.renderingHints = renderingHints;
 
 public int Print(global::DripSharp.Runtime.PdfCartonGraphics2D graphics, global::DripSharp.Runtime.JavaPageFormat pageFormat, int pageIndex) {
 if (((pageIndex < 0) || (pageIndex >= this.pageTree.GetCount()))) {
-return global::DripSharp.Runtime.JavaPrintable.NO_SUCH_PAGE;
+return global::DripSharp.Runtime.JavaPrintConstants.NO_SUCH_PAGE;
 }
 global::DripSharp.Runtime.PdfCartonGraphics2D printerGraphics = (global::DripSharp.Runtime.PdfCartonGraphics2D)(graphics.Create()!);
 global::DripSharp.Runtime.PdfCartonGraphics2D graphics2D = printerGraphics;
@@ -147,7 +147,7 @@ printerGraphics.SetColor(global::DripSharp.Runtime.JavaColor.Gray);
 printerGraphics.SetStroke(new global::DripSharp.Runtime.JavaBasicStroke(0.5F));
 printerGraphics.DrawRect(0, 0, (int)((int)(cropBox.GetWidth())), (int)((int)(cropBox.GetHeight())));
 }
-return global::DripSharp.Runtime.JavaPrintable.PAGE_EXISTS;
+return global::DripSharp.Runtime.JavaPrintConstants.PAGE_EXISTS;
 } catch (global::System.IO.IOException e) {
 throw new global::System.IO.IOException(null, e);
 } finally {

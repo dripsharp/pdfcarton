@@ -80,7 +80,7 @@ public virtual void SetPageNumber(int pageNumber) {
 this.Array.Set(0, pageNumber);
 }
 
-public override global::DripSharp.PdfCarton.Cos.COSArray GetCOSObject() {
+public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
 return this.Array;
 }
 }

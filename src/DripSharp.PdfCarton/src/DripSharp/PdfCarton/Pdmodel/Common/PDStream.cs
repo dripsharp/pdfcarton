@@ -206,5 +206,5 @@ public virtual void SetDecodedStreamLength(int decodedStreamLength) {
 this.stream.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Dl, decodedStreamLength);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

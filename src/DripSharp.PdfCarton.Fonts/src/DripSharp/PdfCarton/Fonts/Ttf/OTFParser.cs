@@ -17,15 +17,15 @@ public OTFParser(bool isEmbedded) : base(isEmbedded) {
 
 }
 
-public override global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont Parse(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
+public override global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont Parse(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
 return (global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(base.Parse(randomAccessRead)!);
 }
 
-internal override global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont parse(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream raf) {
+internal override global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont parse(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream raf) {
 return (global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(base.parse(raf)!);
 }
 
-internal override global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont newFont(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream raf) {
+internal override global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont newFont(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream raf) {
 return new global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont(raf);
 }
 

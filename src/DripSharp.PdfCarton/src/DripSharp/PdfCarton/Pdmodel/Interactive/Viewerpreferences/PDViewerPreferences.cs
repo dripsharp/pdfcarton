@@ -249,5 +249,5 @@ public virtual void SetPrintScaling(global::DripSharp.PdfCarton.Pdmodel.Interact
 this.prefs.SetName(global::DripSharp.PdfCarton.Cos.COSName.PrintScaling, value.ToString());
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

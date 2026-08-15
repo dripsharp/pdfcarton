@@ -110,5 +110,9 @@ throw new global::System.IO.IOException("First operator must be d0 or d1");
 }
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+
+public global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForStreamParsing() {
+return this.GetContentsForRandomAccess();
+}
 }

@@ -79,8 +79,7 @@ renderer.RenderImage(i);
 if (((i == 3) && global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex), "Missing descendant font array"))) {
 continue;
 }
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 }
 }
 }

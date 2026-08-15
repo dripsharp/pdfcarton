@@ -41,7 +41,7 @@ if (global::DripSharp.Runtime.JavaCompat.StringMatches(aFloat, "^0\\.0*-\\d+")) 
 aFloat = global::DripSharp.Runtime.JavaCompat.Concat("-", global::DripSharp.Runtime.JavaCompat.StringReplaceFirst(aFloat, "-", ""));
 } else {
 if (global::DripSharp.Runtime.JavaCompat.StringMatches(aFloat, "^-\\d+\\.-\\d+")) {
-aFloat = global::DripSharp.Runtime.JavaCompat.Concat("-", aFloat.Replace("-", "", global::System.StringComparison.Ordinal));
+aFloat = global::DripSharp.Runtime.JavaCompat.Concat("-", global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(aFloat, "-", ""));
 } else {
 throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error expected floating point number actual='", aFloat), "'"), e);
 }

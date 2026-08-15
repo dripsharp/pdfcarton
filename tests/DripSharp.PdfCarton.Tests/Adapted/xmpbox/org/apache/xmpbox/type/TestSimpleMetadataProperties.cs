@@ -52,10 +52,10 @@ global::DripSharp.PdfCarton.Xmp.Type.DateType date = this.parent.GetTypeMapping(
 global::DripSharp.PdfCarton.Xmp.Type.IntegerType integer = this.parent.GetTypeMapping().CreateInteger((string)default!, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "test"), global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "integer"), integerv);
 global::DripSharp.PdfCarton.Xmp.Type.RealType real = this.parent.GetTypeMapping().CreateReal((string)default!, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "test"), global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "real"), realv);
 global::DripSharp.PdfCarton.Xmp.Type.TextType text = this.parent.GetTypeMapping().CreateText((string)default!, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "test"), global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "text"), global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", textv));
-global::DripSharp.Testing.JavaAssertions.Equal(boolv, (bool)(@bool.GetValue()), null);
-global::DripSharp.Testing.JavaAssertions.Equal(datev, (global::System.DateTimeOffset?)(date.GetValue()), null);
-global::DripSharp.Testing.JavaAssertions.Equal(integerv, (int)(integer.GetValue()), null);
-global::DripSharp.Testing.JavaAssertions.Equal(realv, (float)((float)((float)(real.GetValue()))), null, (float)(0));
+global::DripSharp.Testing.JavaAssertions.Equal(boolv, ((bool)(@bool.GetValue())), null);
+global::DripSharp.Testing.JavaAssertions.Equal(datev, ((global::System.DateTimeOffset?)(date.GetValue())), null);
+global::DripSharp.Testing.JavaAssertions.Equal(integerv, ((int)(integer.GetValue())), null);
+global::DripSharp.Testing.JavaAssertions.Equal(realv, (float)((float)(((float)(real.GetValue())))), null, (float)(0));
 global::DripSharp.Testing.JavaAssertions.Equal(textv, text.GetStringValue(), null);
 }
 

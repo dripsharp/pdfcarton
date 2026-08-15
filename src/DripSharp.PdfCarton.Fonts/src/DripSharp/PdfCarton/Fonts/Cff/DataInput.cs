@@ -21,33 +21,15 @@ public int ReadUnsignedByte();
 
 public int PeekUnsignedByte(int offset);
 
-public short ReadShort() {
-return unchecked((short)(unchecked((short)(this.ReadUnsignedShort()))));
-}
+public short ReadShort();
 
-public int ReadUnsignedShort() {
-int b1 = this.ReadUnsignedByte();
-int b2 = this.ReadUnsignedByte();
-return ((b1 << unchecked((int)(8))) | b2);
-}
+public int ReadUnsignedShort();
 
-public int ReadInt() {
-int b1 = this.ReadUnsignedByte();
-int b2 = this.ReadUnsignedByte();
-int b3 = this.ReadUnsignedByte();
-int b4 = this.ReadUnsignedByte();
-return ((((b1 << unchecked((int)(24))) | (b2 << unchecked((int)(16)))) | (b3 << unchecked((int)(8)))) | b4);
-}
+public int ReadInt();
 
 public sbyte[] ReadBytes(int length);
 
 public int Length();
 
-public int ReadOffset(int offSize) {
-int value = 0;
-for (int i = 0; (i < offSize); i++) {
-value = ((value << unchecked((int)(8))) | this.ReadUnsignedByte());
-}
-return value;
-}
+public int ReadOffset(int offSize);
 }

@@ -33,7 +33,7 @@ break;
 }
 }
 if ((this.OutputResult != default!)) {
-string log = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(path.Name.Replace(".pdf", "", global::System.StringComparison.Ordinal), "#"), error__81_34.GetErrorCode()), "#"), error__81_34.GetDetails()), "\n");
+string log = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(path.Name, ".pdf", ""), "#"), error__81_34.GetErrorCode()), "#"), error__81_34.GetDetails()), "\n");
 global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.OutputResult, global::DripSharp.Runtime.JavaCompat.StringGetBytes(log, global::System.Text.Encoding.UTF8));
 }
 }

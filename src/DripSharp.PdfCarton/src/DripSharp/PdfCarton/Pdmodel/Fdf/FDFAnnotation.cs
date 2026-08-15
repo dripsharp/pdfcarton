@@ -541,7 +541,7 @@ sb.Append("<![CDATA[").Append(((global::System.Xml.XmlCDataSection)(child!)).Dat
 if ((child is global::System.Xml.XmlText)) {
 string cdata = ((global::System.Xml.XmlText)(child!)).Data;
 if ((cdata != default!)) {
-cdata = cdata.Replace("&", "&amp;", global::System.StringComparison.Ordinal).Replace("<", "&lt;", global::System.StringComparison.Ordinal);
+cdata = global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(cdata, "&", "&amp;"), "<", "&lt;");
 }
 sb.Append(cdata);
 }
@@ -557,12 +557,12 @@ for (int i__1031_18 = 0; (i__1031_18 < attributes.Count); i__1031_18++) {
 global::System.Xml.XmlNode attribute = global::DripSharp.Runtime.JavaCompat.XmlAttributeItem(attributes, i__1031_18);
 string attributeNodeValue = attribute.Value;
 if ((attributeNodeValue != default!)) {
-attributeNodeValue = attributeNodeValue.Replace("\"", "&quot;", global::System.StringComparison.Ordinal);
+attributeNodeValue = global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(attributeNodeValue, "\"", "&quot;");
 }
 builder.Append(global::DripSharp.Runtime.JavaCompat.JavaStringFormat(" %s=\"%s\"", attribute.Name, attributeNodeValue));
 }
 return global::DripSharp.Runtime.JavaCompat.JavaStringFormat("<%s%s>%s</%s>", node.Name, builder, sb, node.Name);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

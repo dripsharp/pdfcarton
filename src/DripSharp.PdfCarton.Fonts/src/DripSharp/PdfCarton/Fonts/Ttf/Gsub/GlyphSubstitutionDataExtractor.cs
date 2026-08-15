@@ -14,7 +14,7 @@ private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = globa
 public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData GetGsubData(global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable> scriptList, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureListTable featureListTable, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupListTable lookupListTable) {
 global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphSubstitutionDataExtractor.ScriptTableDetails scriptTableDetails = this.getSupportedLanguage(scriptList);
 if ((scriptTableDetails == default!)) {
-return global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData.NoDataFound;
+return global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubDataStatics.NoDataFound;
 }
 return this.buildMapBackedGsubData(featureListTable, lookupListTable, scriptTableDetails);
 }

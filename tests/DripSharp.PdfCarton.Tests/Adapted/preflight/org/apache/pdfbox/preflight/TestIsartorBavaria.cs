@@ -118,7 +118,7 @@ if (global::DripSharp.Runtime.JavaCompat.Equals(error__203_42.GetErrorCode(), ex
 oneFound = true;
 }
 if (((global::DripSharp.PdfCarton.Preflight.TestIsartorBavaria.isartorResultFile != default!) && !logged)) {
-string log = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(file.Name.Replace(".pdf", "", global::System.StringComparison.Ordinal), "#"), error__203_42.GetErrorCode()), "#"), error__203_42.GetDetails()), "\n");
+string log = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(file.Name, ".pdf", ""), "#"), error__203_42.GetErrorCode()), "#"), error__203_42.GetDetails()), "\n");
 global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(global::DripSharp.PdfCarton.Preflight.TestIsartorBavaria.isartorResultFile, global::DripSharp.Runtime.JavaCompat.StringGetBytes(log, global::System.Text.Encoding.UTF8));
 }
 }

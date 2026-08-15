@@ -15,13 +15,13 @@ private static readonly global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.S
 
 private static readonly global::DripSharp.Runtime.JavaOptional<global::System.Action<global::DripSharp.Runtime.JavaByteBuffer>> UNMAPPER = null!;
 
-private static readonly global::System.Collections.Generic.ISet<global::System.IO.UnixFileMode> POSIX_DIR_PERMS = global::DripSharp.Runtime.JavaCompat.fromString("rwx------");
+private static readonly global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode> POSIX_DIR_PERMS = global::DripSharp.Runtime.JavaCompat.fromString("rwx------");
 
-private static readonly global::System.Collections.Generic.ISet<global::System.IO.UnixFileMode> POSIX_FILE_PERMS = global::DripSharp.Runtime.JavaCompat.fromString("rw-------");
+private static readonly global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode> POSIX_FILE_PERMS = global::DripSharp.Runtime.JavaCompat.fromString("rw-------");
 
-private static readonly global::DripSharp.Runtime.JavaFileAttribute<global::System.Collections.Generic.ISet<global::System.IO.UnixFileMode>> POSIX_DIR_PERMISSIONS = global::DripSharp.Runtime.JavaCompat.asFileAttribute(global::DripSharp.PdfCarton.IO.IOUtils.POSIX_DIR_PERMS);
+private static readonly global::DripSharp.Runtime.JavaFileAttribute<global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode>> POSIX_DIR_PERMISSIONS = global::DripSharp.Runtime.JavaCompat.asFileAttribute(global::DripSharp.PdfCarton.IO.IOUtils.POSIX_DIR_PERMS);
 
-private static readonly global::DripSharp.Runtime.JavaFileAttribute<global::System.Collections.Generic.ISet<global::System.IO.UnixFileMode>> POSIX_FILE_PERMISSIONS = global::DripSharp.Runtime.JavaCompat.asFileAttribute(global::DripSharp.PdfCarton.IO.IOUtils.POSIX_FILE_PERMS);
+private static readonly global::DripSharp.Runtime.JavaFileAttribute<global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode>> POSIX_FILE_PERMISSIONS = global::DripSharp.Runtime.JavaCompat.asFileAttribute(global::DripSharp.PdfCarton.IO.IOUtils.POSIX_FILE_PERMS);
 
 private static readonly global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaPath> TEMP_DIRS_TO_DELETE = global::DripSharp.Runtime.JavaCompat.SynchronizedList(new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaPath>());
 
@@ -107,9 +107,8 @@ global::System.Reflection.FieldInfo f = global::DripSharp.Runtime.JavaCompat.Get
 global::DripSharp.Runtime.JavaCompat.SetAccessible(f, true);
 object theUnsafe = f.GetValue((object)default!);
 return global::DripSharp.PdfCarton.IO.IOUtils.newBufferCleaner(typeof(global::DripSharp.Runtime.JavaByteBuffer), unmapper__264_36.bindTo(theUnsafe));
-} catch (global::System.Security.SecurityException se) {
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(se);
-throw new global::System.InvalidOperationException("unreachable");
+} catch (global::System.Security.SecurityException) {
+throw;
 } catch (global::System.Exception e) when (e is global::System.Reflection.TargetException or global::System.Exception) {
 global::System.Type directBufferClass = global::DripSharp.Runtime.JavaCompat.ClassForName("java.nio.DirectByteBuffer");
 global::System.Reflection.MethodInfo m = global::DripSharp.Runtime.JavaCompat.GetMethod(directBufferClass, "cleaner");
@@ -200,7 +199,7 @@ return tempFile;
 
 private static void applyOwnerOnlyPermissions(global::DripSharp.Runtime.JavaPath path, bool isDirectory) {
 if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.Runtime.JavaFileSystems.GetDefault().SupportedFileAttributeViews(), "posix")) {
-global::System.Collections.Generic.ISet<global::System.IO.UnixFileMode> permissions = (isDirectory ? global::DripSharp.PdfCarton.IO.IOUtils.POSIX_DIR_PERMS : global::DripSharp.PdfCarton.IO.IOUtils.POSIX_FILE_PERMS);
+global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode> permissions = (isDirectory ? global::DripSharp.PdfCarton.IO.IOUtils.POSIX_DIR_PERMS : global::DripSharp.PdfCarton.IO.IOUtils.POSIX_FILE_PERMS);
 global::DripSharp.Runtime.JavaCompat.setPosixFilePermissions(path, permissions);
 } else {
 global::DripSharp.Runtime.JavaAclFileAttributeView aclView = global::DripSharp.Runtime.JavaCompat.getFileAttributeView(path, typeof(global::DripSharp.Runtime.JavaAclFileAttributeView));

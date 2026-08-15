@@ -195,7 +195,7 @@ return result;
 private void write(int code, int codeLength) {
 for (int i = 0; (i < codeLength); i++) {
 bool codeBit = (((code >> unchecked((int)(((codeLength - i) - 1)))) & 1) == 1);
-if ((this.fillOrder == global::DripSharp.PdfCarton.Filter.TIFFExtension.FillLeftToRight)) {
+if ((this.fillOrder == global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.FillLeftToRight)) {
 global::DripSharp.Runtime.JavaCompat.OrAssign(ref this.outputBuffer, (codeBit ? (1 << unchecked((int)((7 - (this.outputBufferBitLength % 8))))) : 0));
 } else {
 global::DripSharp.Runtime.JavaCompat.OrAssign(ref this.outputBuffer, (codeBit ? (1 << unchecked((int)((this.outputBufferBitLength % 8)))) : 0));

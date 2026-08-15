@@ -272,6 +272,12 @@ borderBox = this.getPaddedRectangle(borderBox, ((float)(lineWidth) / 2));
 return borderBox;
 }
 
+public virtual void GenerateAppearanceStreams() {
+this.GenerateNormalAppearance();
+this.GenerateRolloverAppearance();
+this.GenerateDownAppearance();
+}
+
 public abstract void GenerateDownAppearance();
 
 public abstract void GenerateNormalAppearance();

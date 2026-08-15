@@ -32,7 +32,7 @@ private global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder embedder
 private global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = null!;
 
 public PDType0Font(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary) : base(fontDictionary) {
-this.gsubData = global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData.NoDataFound;
+this.gsubData = global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubDataStatics.NoDataFound;
 this.cmapLookup = default!;
 global::DripSharp.PdfCarton.Cos.COSArray descendantFonts = base.Dict.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.DescendantFonts);
 if ((descendantFonts == default!)) {

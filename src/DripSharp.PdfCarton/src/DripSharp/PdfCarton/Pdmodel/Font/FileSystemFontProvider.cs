@@ -147,10 +147,9 @@ global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection ttc = new global::DripS
 global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf;
 try {
 ttf = ttc.GetFontByName(postScriptName);
-} catch (global::System.IO.IOException ex) {
+} catch (global::System.IO.IOException) {
 ttc.Dispose();
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 }
 if ((ttf == default!)) {
 ttc.Dispose();
@@ -182,7 +181,7 @@ throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Con
 return (global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(ttf!);
 }
 global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser parser = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser(false);
-global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf = parser.Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file));
+global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf = ((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(parser.Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file))));
 if (global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Loaded ", postScriptName), " from "), file)));
 }
@@ -346,7 +345,7 @@ writer.WriteLine();
 }
 
 private global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.FSFontInfo> loadDiskCache(global::System.Collections.Generic.IList<global::System.IO.FileInfo> files) {
-global::System.Collections.Generic.ISet<string> pending = new global::System.Collections.Generic.HashSet<string>(global::DripSharp.Runtime.JavaCompat.CollectionCount(files));
+global::System.Collections.Generic.ISet<string> pending = new global::System.Collections.Generic.HashSet<string>();
 foreach (global::System.IO.FileInfo file in files) {
 pending.Add(file.FullName);
 }

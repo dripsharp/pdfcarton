@@ -164,8 +164,7 @@ this.Size += this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAc
 } catch (global::System.IO.IOException exception) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.LOG, (global::System.Exception)exception, global::DripSharp.Runtime.JavaCompat.StringValueOf("premature end of stream, some data could be read "));
 this.__field_isEOF = true;
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(exception);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 }
 return true;
 }
@@ -212,5 +211,21 @@ return this.__field_isEOF;
 
 public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition, long streamLength) {
 throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"), ".createView isn't supported."));
+}
+
+public virtual int Peek() {
+int result = this.Read();
+if ((result != -1)) {
+((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
+}
+return result;
+}
+
+public virtual int Read(sbyte[] b) {
+return this.Read(b, 0, b.Length);
+}
+
+public virtual void ReadFully(sbyte[] b) {
+((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).ReadFully(b, 0, b.Length);
 }
 }

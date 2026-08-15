@@ -51,7 +51,7 @@ global::DripSharp.PdfCarton.Pdmodel.Common.TestPDNumberTreeNode.PDTest other = (
 return (this.value == other.value);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }
 
 internal virtual void setUp() {

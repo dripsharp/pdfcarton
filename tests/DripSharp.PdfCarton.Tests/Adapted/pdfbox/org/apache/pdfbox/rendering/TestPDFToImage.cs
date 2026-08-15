@@ -96,11 +96,10 @@ global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(global::DripSharp.Runtime
 global::DripSharp.Runtime.JavaCompat.FileDelete(tmpFile);
 global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(tmpFile);
 }
-} catch (global::System.IO.IOException e) {
+} catch (global::System.IO.IOException) {
 failed = true;
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Error converting file ", file.Name)));
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(e);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 }
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Comparing: ", file.Name)));
 try {

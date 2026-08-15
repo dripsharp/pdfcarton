@@ -87,9 +87,9 @@ return map;
 }
 
 private global::System.Collections.Generic.ISet<string> getPostScriptNames(string postScriptName) {
-global::System.Collections.Generic.ISet<string> names = new global::System.Collections.Generic.HashSet<string>(2);
+global::System.Collections.Generic.ISet<string> names = new global::System.Collections.Generic.HashSet<string>();
 names.Add(postScriptName);
-names.Add(postScriptName.Replace("-", "", global::System.StringComparison.Ordinal));
+names.Add(global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(postScriptName, "-", ""));
 return names;
 }
 
@@ -103,7 +103,7 @@ global::DripSharp.Runtime.JavaCompat.MapPut(this.substitutes, match.ToLowerInvar
 }
 
 private global::System.Collections.Generic.IList<string> getSubstitutes(string postScriptName) {
-return global::DripSharp.Runtime.JavaCompat.MapGetOrDefault(this.substitutes, postScriptName.Replace(" ", "", global::System.StringComparison.Ordinal).ToLowerInvariant(), global::System.Array.Empty<string>());
+return global::DripSharp.Runtime.JavaCompat.MapGetOrDefault(this.substitutes, global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(postScriptName, " ", "").ToLowerInvariant(), global::System.Array.Empty<string>());
 }
 
 private string getFallbackFontName(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
@@ -218,7 +218,7 @@ global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info = this.getFont(format, po
 if ((info != default!)) {
 return info.GetFont();
 }
-info = this.getFont(format, postScriptName.Replace("-", "", global::System.StringComparison.Ordinal));
+info = this.getFont(format, global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(postScriptName, "-", ""));
 if ((info != default!)) {
 return info.GetFont();
 }
@@ -228,7 +228,7 @@ if ((info != default!)) {
 return info.GetFont();
 }
 }
-info = this.getFont(format, postScriptName.Replace(",", "-", global::System.StringComparison.Ordinal));
+info = this.getFont(format, global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(postScriptName, ",", "-"));
 if ((info != default!)) {
 return info.GetFont();
 }

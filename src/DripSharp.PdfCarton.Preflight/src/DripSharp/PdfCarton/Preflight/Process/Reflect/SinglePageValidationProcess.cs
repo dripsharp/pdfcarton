@@ -94,9 +94,8 @@ global::DripSharp.PdfCarton.Cos.COSDictionary cosAnnot = ((global::DripSharp.Pdf
 global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(context, cosAnnot, global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.AnnotationsProcess);
 }
 }
-} catch (global::DripSharp.PdfCarton.Preflight.Exception.ValidationException e) {
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(e);
-throw new global::System.InvalidOperationException("unreachable");
+} catch (global::DripSharp.PdfCarton.Preflight.Exception.ValidationException) {
+throw;
 } catch (global::System.IO.IOException e) {
 throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("Unable to access Annotation", e);
 }

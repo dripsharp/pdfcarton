@@ -449,7 +449,7 @@ string s = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime
 global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser xmpParser1 = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
 global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(() => xmpParser1.Parse(global::DripSharp.Runtime.JavaCompat.StringGetBytes(s, global::DripSharp.Runtime.JavaStandardCharsets.UTF8)), null);
 global::DripSharp.Testing.JavaAssertions.Equal("inner element should contain child elements : [stRef:instanceID: null]", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex), null);
-string s2 = s.Replace("xmpMM:parseType", "rdf:parseType", global::System.StringComparison.Ordinal);
+string s2 = global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(s, "xmpMM:parseType", "rdf:parseType");
 global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser xmpParser2 = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
 global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp2 = xmpParser2.Parse(global::DripSharp.Runtime.JavaCompat.StringGetBytes(s2, global::DripSharp.Runtime.JavaStandardCharsets.UTF8));
 global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema xmpMediaManagementSchema = xmp2.GetXMPMediaManagementSchema();

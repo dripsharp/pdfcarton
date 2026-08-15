@@ -118,5 +118,5 @@ throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.
 this.info.SetName(global::DripSharp.PdfCarton.Cos.COSName.Trapped, value);
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

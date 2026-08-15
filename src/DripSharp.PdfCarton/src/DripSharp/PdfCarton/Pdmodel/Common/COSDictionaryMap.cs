@@ -130,4 +130,20 @@ retval = new global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<string,
 }
 return retval!;
 }
+
+V global::System.Collections.Generic.IDictionary<K, V>.this[K key] { get => this.Get(key); set => this.Put(key, value); }
+global::System.Collections.Generic.ICollection<K> global::System.Collections.Generic.IDictionary<K, V>.Keys => this.KeySet();
+global::System.Collections.Generic.ICollection<V> global::System.Collections.Generic.IDictionary<K, V>.Values => this.Values();
+int global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.Count => this.Size();
+bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.IsReadOnly => false;
+void global::System.Collections.Generic.IDictionary<K, V>.Add(K key, V value) => this.Put(key, value);
+bool global::System.Collections.Generic.IDictionary<K, V>.ContainsKey(K key) => this.ContainsKey(key);
+bool global::System.Collections.Generic.IDictionary<K, V>.Remove(K key) { if (!this.ContainsKey(key)) return false; this.Remove(key); return true; }
+bool global::System.Collections.Generic.IDictionary<K, V>.TryGetValue(K key, out V value) { if (this.ContainsKey(key)) { value = this.Get(key); return true; } value = default!; return false; }
+void global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.Add(global::System.Collections.Generic.KeyValuePair<K, V> item) => this.Put(item.Key, item.Value);
+bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.Contains(global::System.Collections.Generic.KeyValuePair<K, V> item) => this.ContainsKey(item.Key) && global::DripSharp.Runtime.JavaCompat.Equals(this.Get(item.Key), item.Value);
+void global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.CopyTo(global::System.Collections.Generic.KeyValuePair<K, V>[] array, int arrayIndex) { global::DripSharp.Runtime.JavaCompat.ThrowIfNull(array, nameof(array)); foreach (var item in (global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K, V>>)this) array[arrayIndex++] = item; }
+bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.Remove(global::System.Collections.Generic.KeyValuePair<K, V> item) { if (!((global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>)this).Contains(item)) return false; this.Remove(item.Key); return true; }
+global::System.Collections.Generic.IEnumerator<global::System.Collections.Generic.KeyValuePair<K, V>> global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K, V>>.GetEnumerator() { foreach (var entry in this.EntrySet()) yield return new global::System.Collections.Generic.KeyValuePair<K, V>(entry.Key, entry.Value); }
+global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => ((global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K, V>>)this).GetEnumerator();
 }

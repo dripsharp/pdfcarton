@@ -9,8 +9,6 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Model;
 
 public interface GsubData {
-public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData NoDataFound = new Anonymous_33_30();
-
 public global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language GetLanguage();
 
 public string GetActiveScriptName();
@@ -20,6 +18,10 @@ public bool IsFeatureSupported(string featureName);
 public global::DripSharp.PdfCarton.Fonts.Ttf.Model.ScriptFeature GetFeature(string featureName);
 
 public global::System.Collections.Generic.ISet<string> GetSupportedFeatures();
+}
+
+public static class GsubDataStatics {
+public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData NoDataFound = new Anonymous_33_30();
 
 private sealed class Anonymous_33_30 : global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData {
 public Anonymous_33_30() {}

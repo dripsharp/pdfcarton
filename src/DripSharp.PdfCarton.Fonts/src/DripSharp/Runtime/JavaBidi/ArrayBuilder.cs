@@ -140,14 +140,7 @@ namespace DripSharp.PdfCarton.Runtime.Fonts
         /// </summary>
         public void Clear()
         {
-            if (RuntimeHelpers.IsReferenceOrContainsReferences<T>())
-            {
-                ClearArray();
-            }
-            else
-            {
-                _size = 0;
-            }
+            ClearArray();
         }
 
         private void ClearArray()

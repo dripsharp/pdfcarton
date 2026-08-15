@@ -115,12 +115,11 @@ trailer = this.parseXref(startXRefOffset);
 } else {
 rebuildTrailer = this.IsLenient();
 }
-} catch (global::System.IO.IOException exception) {
+} catch (global::System.IO.IOException) {
 if (this.IsLenient()) {
 rebuildTrailer = true;
 } else {
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(exception);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 }
 }
 if (((trailer! != default!) && (trailer!.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Root) == default!))) {
@@ -190,8 +189,7 @@ base.Document.SetHasHybridXRef();
 if (this.__field_isLenient) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdfparser.COSParser.LOG, (global::System.Exception)ex, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Failed to parse /XRefStm at offset ", streamOffset)));
 } else {
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 }
 }
 } else {
@@ -436,8 +434,7 @@ global::DripSharp.Runtime.JavaCompat.ForEach(allStreamObjects, (value0, value1) 
 if (this.__field_isLenient) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdfparser.COSParser.LOG, (global::System.Exception)ex, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("object stream ", objstmObjNr), " could not be parsed due to an exception")));
 } else {
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(ex);
-throw new global::System.InvalidOperationException("unreachable");
+throw;
 }
 }
 }
@@ -1036,9 +1033,8 @@ decryptionMaterial = new global::DripSharp.PdfCarton.Pdmodel.Encryption.Standard
 this.SecurityHandler = this.encryption.GetSecurityHandler();
 this.SecurityHandler.PrepareForDecryption(this.encryption, base.Document.GetDocumentID(), decryptionMaterial);
 this.accessPermission = this.SecurityHandler.GetCurrentAccessPermission();
-} catch (global::System.IO.IOException e) {
-global::System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(e);
-throw new global::System.InvalidOperationException("unreachable");
+} catch (global::System.IO.IOException) {
+throw;
 } catch (global::System.Security.Cryptography.CryptographicException e) {
 throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error (", ((object)(e)).GetType().Name), ") while creating security handler for decryption"), e);
 } finally {

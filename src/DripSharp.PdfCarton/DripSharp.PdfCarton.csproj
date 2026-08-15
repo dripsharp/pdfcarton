@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -34,6 +35,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src/**/*.cs" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+    <PackageReference Include="SkiaSharp" Version="4.150.1" />
+    <PackageReference Include="System.Memory" Version="4.6.3" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.0" />
     <SourceRoot Include="$(MSBuildProjectDirectory)/" RepositoryUrl="https://github.com/dripsharp/pdfcarton.git" SourceControl="git" RevisionId="$(RepositoryCommit)" SourceLinkUrl="https://raw.githubusercontent.com/dripsharp/pdfcarton/$(RepositoryCommit)/src/DripSharp.PdfCarton/*" />
     <ProjectReference Include="../DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj" />
     <ProjectReference Include="../DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj" />
@@ -66,9 +73,6 @@
     <EmbeddedResource Include="resources/org/apache/pdfbox/resources/ttf/LiberationSans-Regular.ttf" LogicalName="org.apache.pdfbox.resources.ttf.LiberationSans-Regular.ttf" />
     <EmbeddedResource Include="resources/org/apache/pdfbox/resources/version.properties" LogicalName="org.apache.pdfbox.resources.version.properties" />
     <None Include="../../README.md" Pack="true" PackagePath="/" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
-    <PackageReference Include="SkiaSharp" Version="4.150.1" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.0" />
     <None Include="src/Legal/LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
     <None Include="src/Legal/NOTICE.txt" Pack="true" PackagePath="NOTICE.txt" />
     <None Include="src/Legal/COPYRIGHT-JJ2000-5.1.txt" Pack="true" PackagePath="THIRD-PARTY/COPYRIGHT-JJ2000-5.1.txt" />

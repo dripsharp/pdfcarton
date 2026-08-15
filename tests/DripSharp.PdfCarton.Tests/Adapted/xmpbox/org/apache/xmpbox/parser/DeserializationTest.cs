@@ -218,7 +218,7 @@ this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath
 
 private void checkTransform(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string expected, int expectedSchemaCount) {
 this.serializer.Serialize(metadata, this.baos, true);
-string replaced = global::DripSharp.Runtime.JavaCompat.MemoryStreamToString(this.baos, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", (global::DripSharp.Runtime.JavaStandardCharsets.UTF8).WebName)).Replace("\r\n", "\n", global::System.StringComparison.Ordinal);
+string replaced = global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(global::DripSharp.Runtime.JavaCompat.MemoryStreamToString(this.baos, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", (global::DripSharp.Runtime.JavaStandardCharsets.UTF8).WebName)), "\r\n", "\n");
 sbyte[] ba = global::DripSharp.Runtime.JavaCompat.StringGetBytes(replaced, global::DripSharp.Runtime.JavaStandardCharsets.UTF8);
 sbyte[] digest = global::DripSharp.Runtime.JavaMessageDigest.GetInstance(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "SHA-256")).Digest(ba);
 string result = (global::DripSharp.Runtime.JavaCompat.NewBigInteger(1, digest)).ToString();

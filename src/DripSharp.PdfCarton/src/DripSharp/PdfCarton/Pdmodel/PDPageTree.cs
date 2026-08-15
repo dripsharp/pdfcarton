@@ -349,5 +349,9 @@ parentDict = parentDict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName
 } while ((parentDict != default!));
 }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => this.GetCOSObject();
+global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+
+global::System.Collections.Generic.IEnumerator<global::DripSharp.PdfCarton.Pdmodel.PDPage> global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.PDPage>.GetEnumerator() {return global::DripSharp.Runtime.JavaCompat.AsEnumerator(this.Iterator());}
+
+global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() {return ((global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.PDPage>)this).GetEnumerator();}
 }
