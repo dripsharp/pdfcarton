@@ -292,7 +292,7 @@ global::DripSharp.Testing.JavaAssertions.Equal("\u0391 \u2126", global::DripShar
 internal virtual void testPDFBox6172() {
 using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
 global::System.IO.Stream @is = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "target/fonts/NotoSansSC-Regular.otf"));
-global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf = ((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(@is))));
+global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(@is));
 global::System.Exception t = global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(() => global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font.Load(document, otf, false), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "should have thrown IllegalStateException"));
 global::DripSharp.Testing.JavaAssertions.Equal("CID and GID not identical: CID 628 != GID 372, use a ttf font instead", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(t), null);
 }

@@ -10,7 +10,7 @@ global::System.Collections.Generic.IList<int> expectedCharCodes = global::DripSh
 int gid = 8712;
 global::System.IO.FileInfo fontFile = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "target/fonts"), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "NotoSansSC-Regular.otf"));
 global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser otfParser = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser(false);
-global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf = ((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(otfParser.Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(fontFile))))));
+global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf = otfParser.Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(fontFile));
 global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup unicodeCmapLookup = otf.GetUnicodeCmapLookup();
 global::System.Collections.Generic.IList<int> charCodes = unicodeCmapLookup.GetCharCodes(gid);
 global::DripSharp.Testing.JavaAssertions.Equal(expectedCharCodes, charCodes, null);

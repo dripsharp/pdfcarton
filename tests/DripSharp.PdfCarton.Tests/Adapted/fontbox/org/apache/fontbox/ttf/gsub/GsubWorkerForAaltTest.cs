@@ -8,7 +8,7 @@ public class GsubWorkerForAaltTest {
 internal virtual void testFoglihtenNo07() {
 global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmapLookup;
 global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker gsubWorkerForAlt;
-using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = ((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "src/test/resources/otf/FoglihtenNo07.otf")))))))) {
+using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "src/test/resources/otf/FoglihtenNo07.otf")))) {
 cmapLookup = ttf.GetUnicodeCmapLookup();
 gsubWorkerForAlt = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForAalt(ttf.GetGsubData());
 }

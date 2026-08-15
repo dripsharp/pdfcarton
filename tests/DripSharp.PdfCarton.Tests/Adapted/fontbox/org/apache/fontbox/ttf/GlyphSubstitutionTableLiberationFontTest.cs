@@ -11,7 +11,7 @@ internal virtual void setUp() {
 global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser otfParser = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser();
 string fontPath = "src/test/resources/ttf/LiberationSans-Regular.ttf";
 using (global::DripSharp.PdfCarton.IO.RandomAccessRead fontFile = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", fontPath))) {
-this.font = ((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(otfParser.Parse(fontFile)))));
+this.font = otfParser.Parse(fontFile);
 }
 }
 

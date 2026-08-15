@@ -181,7 +181,7 @@ throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Con
 return (global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(ttf!);
 }
 global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser parser = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser(false);
-global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf = ((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(parser.Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file))));
+global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf = parser.Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file));
 if (global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)) {
 global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Loaded ", postScriptName), " from "), file)));
 }
