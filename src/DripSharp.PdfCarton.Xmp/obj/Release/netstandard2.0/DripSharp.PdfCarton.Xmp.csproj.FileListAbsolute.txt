@@ -1,0 +1,11 @@
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/bin/Release/netstandard2.0/DripSharp.PdfCarton.Xmp.deps.json
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/bin/Release/netstandard2.0/DripSharp.PdfCarton.Xmp.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/bin/Release/netstandard2.0/DripSharp.PdfCarton.Xmp.pdb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/obj/Release/netstandard2.0/DripSharp.PdfCarton.Xmp.csproj.AssemblyReference.cache
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/obj/Release/netstandard2.0/DripSharp.PdfCarton.Xmp.GeneratedMSBuildEditorConfig.editorconfig
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/obj/Release/netstandard2.0/DripSharp.PdfCarton.Xmp.AssemblyInfoInputs.cache
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/obj/Release/netstandard2.0/DripSharp.PdfCarton.Xmp.AssemblyInfo.cs
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/obj/Release/netstandard2.0/DripSharp.PdfCarton.Xmp.csproj.CoreCompileInputs.cache
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/obj/Release/netstandard2.0/DripSharp.PdfCarton.Xmp.sourcelink.json
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/obj/Release/netstandard2.0/DripSharp.PdfCarton.Xmp.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/obj/Release/netstandard2.0/DripSharp.PdfCarton.Xmp.pdb

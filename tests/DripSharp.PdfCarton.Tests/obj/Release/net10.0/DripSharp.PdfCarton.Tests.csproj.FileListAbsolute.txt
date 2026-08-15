@@ -1,0 +1,872 @@
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/.msCoverageSourceRootsMapping_DripSharp.PdfCarton.Tests
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/xunit.abstractions.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/xunit.runner.visualstudio.testadapter.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/afm/Helvetica.afm
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/afm/MalformedFloat.afm
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/afm/MalformedInteger.afm
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/afm/NoEndFontMetrics.afm
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/cmap/CMapMalformedbfrange1
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/cmap/CMapMalformedbfrange2
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/cmap/CMapNoWhitespace
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/cmap/CMapTest
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/cmap/Identitybfrange
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/commons-logging.properties
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/expected_errors.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/gsub/lohit_bengali/bng2/abvs.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/gsub/lohit_bengali/bng2/akhn.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/gsub/lohit_bengali/bng2/blwf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/gsub/lohit_bengali/bng2/blws.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/gsub/lohit_bengali/bng2/half.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/gsub/lohit_bengali/bng2/haln.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/gsub/lohit_bengali/bng2/init.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/gsub/lohit_bengali/bng2/nukt.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/gsub/lohit_bengali/bng2/pres.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/gsub/lohit_bengali/bng2/pstf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/gsub/lohit_bengali/bng2/rphf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/gsub/lohit_bengali/bng2/vatu.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/compression/acroform.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/compression/attachment.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/compression/unencrypted.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/cweb.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/cweb.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/cweb.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/data-000001.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/data-000001.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/data-000001.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/eu-001.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/eu-001.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/eu-001.pdf-tabula.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/eu-001.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/FC60_Times.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/FC60_Times.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/FC60_Times.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/hello3.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/hello3.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/hello3.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/Liste732004001452_001_0.pdf_0_.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/Liste732004001452_001_0.pdf_0_.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/Liste732004001452_001_0.pdf_0_.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/jpegrgb.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/multitiff.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFA3A.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFBOX-4417-001031.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFBOX-4417-054080.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFBOX-5762-722238.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFBOX-5792-240045.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFBOX-5809-509329.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFBOX-5811-362972.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFBOX-5840-410609.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFBOX-6018-099267-p9-OrphanPopups.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFBox.GlobalResourceMergeTest.Doc01.decoded.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFBox.GlobalResourceMergeTest.Doc01.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFBox.GlobalResourceMergeTest.Doc02.decoded.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/merge/PDFBox.GlobalResourceMergeTest.Doc02.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/openoffice-test-document.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/openoffice-test-document.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/openoffice-test-document.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-2984-rotations.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-2984-rotations.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-2984-rotations.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3025.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3025.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3025.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3038-001033-p2.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3038-001033-p2.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3038-001033-p2.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3042-003177-p2.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3042-003177-p2.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3042-003177-p2.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3044-010197-p5-ligatures.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3044-010197-p5-ligatures.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3044-010197-p5-ligatures.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3053-reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3053-reduced.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3053-reduced.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3061-092465-reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3061-092465-reduced.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3061-092465-reduced.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3062-002207-p1.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3062-002207-p1.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3062-002207-p1.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3062-005717-p1.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3062-005717-p1.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3062-005717-p1.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3062-N2MOQ7YZICIYGTPLQJAWJ4HLN6CCEMHZ-reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3062-N2MOQ7YZICIYGTPLQJAWJ4HLN6CCEMHZ-reduced.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3062-N2MOQ7YZICIYGTPLQJAWJ4HLN6CCEMHZ-reduced.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3067-negativeTf.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3067-negativeTf.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3067-negativeTf.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3110-poems-beads-cropbox.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3110-poems-beads-cropbox.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3110-poems-beads-cropbox.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3110-poems-beads.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3110-poems-beads.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3110-poems-beads.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3123-ADSFWTRB3HBZBZKEVESVTBRZC2MNKZF5_reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3123-ADSFWTRB3HBZBZKEVESVTBRZC2MNKZF5_reduced.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3123-ADSFWTRB3HBZBZKEVESVTBRZC2MNKZF5_reduced.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3127-RAU4G6QMOVRYBISJU7R6MOVZCRFUO7P4-VFont.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3127-RAU4G6QMOVRYBISJU7R6MOVZCRFUO7P4-VFont.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3127-RAU4G6QMOVRYBISJU7R6MOVZCRFUO7P4-VFont.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3195.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3195.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3195.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3498-Y5TLCWTIAE3FYDVJTV2TXRZGXLEDUNSW.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3498-Y5TLCWTIAE3FYDVJTV2TXRZGXLEDUNSW.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3498-Y5TLCWTIAE3FYDVJTV2TXRZGXLEDUNSW.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3833-reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3833-reduced.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-3833-reduced.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-4322-Empty-ToUnicode-reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-4322-Empty-ToUnicode-reduced.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-4322-Empty-ToUnicode-reduced.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-4531-bidi-ligature-1.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-4531-bidi-ligature-1.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-4531-bidi-ligature-1.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-4531-bidi-ligature-2.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-4531-bidi-ligature-2.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-4531-bidi-ligature-2.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-4532-reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-4532-reduced.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-4532-reduced.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5002.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5002.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5002.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5350-JX57O5E5YG6XM4FZABPULQGTW4OXPCWA-p1-reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5350-JX57O5E5YG6XM4FZABPULQGTW4OXPCWA-p1-reduced.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5350-JX57O5E5YG6XM4FZABPULQGTW4OXPCWA-p1-reduced.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5747-unicode-surrogate-with-diacritic-reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5747-unicode-surrogate-with-diacritic-reduced.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5747-unicode-surrogate-with-diacritic-reduced.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5838-0024320-reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5838-0024320-reduced.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5838-0024320-reduced.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5920-4MQTG6ZXOYSMTQ444KGQOVC6ZFQHWFNY-spaces-reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5920-4MQTG6ZXOYSMTQ444KGQOVC6ZFQHWFNY-spaces-reduced.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5920-4MQTG6ZXOYSMTQ444KGQOVC6ZFQHWFNY-spaces-reduced.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5920-Y5U2XZCKG2U6TO3FC36NCGOZECHQA2PY-p39-reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5920-Y5U2XZCKG2U6TO3FC36NCGOZECHQA2PY-p39-reduced.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/PDFBOX-5920-Y5U2XZCKG2U6TO3FC36NCGOZECHQA2PY-p39-reduced.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/26101_Colors.ai
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/26101_Colors.ai-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/4PP-Highlighting.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/4PP-Highlighting.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/ARCHIVERGB.ai
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/ARCHIVERGB.ai-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/FANTASTICCMYK.ai
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/FANTASTICCMYK.ai-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/HOTRODCMYK.ai
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/HOTRODCMYK.ai-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/PDFBOX-4372-2DAYCLVOFG3FTVO4RMAJJL3VTPNYDFRO-p4_reduced.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/PDFBOX-4372-2DAYCLVOFG3FTVO4RMAJJL3VTPNYDFRO-p4_reduced.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/source.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/source.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/survey.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/survey.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/survey.pdf-2.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/survey.pdf-3.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/survey.pdf-4.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/survey.pdf-5.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/survey.pdf-6.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/survey.pdf-7.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/survey.pdf-8.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/survey.pdf-9.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/test-landscape2.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/test-landscape2.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/tiger-as-form-xobject.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rendering/tiger-as-form-xobject.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rotation.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rotation.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/rotation.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/sampleForSpec.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/sampleForSpec.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/sampleForSpec.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/sample_fonts_solidconvertor.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/sample_fonts_solidconvertor.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/sample_fonts_solidconvertor.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/simple-openoffice.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/simple-openoffice.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/simple-openoffice.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/yaddatest.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/yaddatest.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/input/yaddatest.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/invalidxmp/invalidroot.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/invalidxmp/invalidroot2.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/invalidxmp/noroot.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/invalidxmp/noxpacket.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/invalidxmp/noxpacketend.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/invalidxmp/tworoot.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/invalidxmp/undefinedpropertyindefinedschema.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/invalidxmp/undefinedschema.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/invalidxmp/undefinedstructuredindefinedschema.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/junit-platform.properties
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/log4j2.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/metadata.xmp
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/fontbox/target/fonts/DejaVuSansMono.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/fontbox/target/fonts/DejaVuSerifCondensed.pfb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/fontbox/target/fonts/ipag00303/ipag.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/fontbox/target/fonts/ipag00303/IPA_Font_License_Agreement_v1.0.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/fontbox/target/fonts/ipag00303/Readme_ipag00303.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/fontbox/target/fonts/NotoEmoji-Regular.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/fontbox/target/fonts/NotoMono-Regular.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/fontbox/target/fonts/NotoSansSC-Regular.otf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/fontbox/target/fonts/OpenSans-Regular.pfb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/fontbox/target/fonts/PdfCartonCmap01.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/fontbox/target/fonts/SourceSansProBold.otf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/io/src/test/java/org/apache/pdfbox/io/NonSeekableRandomAccessReadInputStreamTest.java
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/fonts/ipag00303/ipag.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/fonts/ipag00303/IPA_Font_License_Agreement_v1.0.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/fonts/ipag00303/Readme_ipag00303.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/fonts/ipagp00303/ipagp.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/fonts/ipagp00303/IPA_Font_License_Agreement_v1.0.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/fonts/ipagp00303/Readme_ipagp00303.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/fonts/n019003l.pfb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/fonts/NotoSansCJKkr-VF.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/fonts/NotoSansSC-Regular.otf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/fonts/PDFBOX-5484.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/imgs/PDFBOX-4184-032163.jpg
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/imgs/PDFBOX-4184-16bit.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/imgs/PDFBOX-5196-lotus.jpg
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/ComSquare1.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/ComSquare2.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/genko_oc_shiryo1.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/Ghostscript1.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/Ghostscript2.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-1031-1.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-1031-2.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-1065-1.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-1065-2.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-1100-1.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-1100-2.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3208-L33MUTT2SVCWGCS6UIYL5TH3PNPXHIS6.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3656.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3682.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3783-72GLBIGUC6LB46ELZFBARRJTLN4RBSQM.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3785-202097.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3940-079977.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3947-670064.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3948-EUWO6SQS5TM4VGOMRD3FLXZHU35V2CP2.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3949-MKFYUGZWS3OPXLLVU2Z4LWCTVA5WNOGF.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3950-23EGDHXSBBYQLKYOKGZUOVYVNE675PRD.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3951-FIHUZWDDL2VGPOE34N6YHWSIGSH5LVGZ.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3964-c687766d68ac766be3f02aaec5e0d713_2.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3977-63NGFQRI44HQNPIPEJH5W2TBM6DJZWMI.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-3999-GeneralForbearance.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4153-WXMDXCYRWFDCMOSFQJ5OAJIAFXYRZ5OA.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4197.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4308.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4338.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4339.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4408.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4418-000314.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4418-000671.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4423-000746.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4490.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4517-cryptfilter.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4750.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-4831.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-5025.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-5639.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-5742.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-5894.fdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-5927.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-5939-google-docs-1.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-5955-40bit.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-5955-48bit.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-6009.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-6150.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-6178-1.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-6178.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/pdfbox/target/pdfs/PDFBOX-6207.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/doc/Isartor test suite manual.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.10 Filters/isartor-6-1-10-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.10 Filters/isartor-6-1-10-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.10 Filters/isartor-6-1-10-t01-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.11 Embedded Files/isartor-6-1-11-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.11 Embedded Files/isartor-6-1-11-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.12 Implementation Limits/isartor-6-1-12-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.12 Implementation Limits/isartor-6-1-12-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.12 Implementation Limits/isartor-6-1-12-t01-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.12 Implementation Limits/isartor-6-1-12-t01-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.13 Optional content/isartor-6-1-13-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.2 File header/isartor-6-1-2-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.2 File header/isartor-6-1-2-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.3 File trailer/isartor-6-1-3-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.3 File trailer/isartor-6-1-3-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.3 File trailer/isartor-6-1-3-t03-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.3 File trailer/isartor-6-1-3-t04-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.4 Cross reference trailer/isartor-6-1-4-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.4 Cross reference trailer/isartor-6-1-4-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.6 String objects/isartor-6-1-6-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.7 Stream objects/isartor-6-1-7-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.7 Stream objects/isartor-6-1-7-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.7 Stream objects/isartor-6-1-7-t03-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.7 Stream objects/isartor-6-1-7-t04-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.7 Stream objects/isartor-6-1-7-t04-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.7 Stream objects/isartor-6-1-7-t04-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.8 Indirect objects/isartor-6-1-8-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.8 Indirect objects/isartor-6-1-8-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.8 Indirect objects/isartor-6-1-8-t03-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.8 Indirect objects/isartor-6-1-8-t04-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.8 Indirect objects/isartor-6-1-8-t05-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.1 File structure/6.1.8 Indirect objects/isartor-6-1-8-t06-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.10 Content Streams/isartor-6-2-10-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.10 Content Streams/isartor-6-2-10-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.10 Content Streams/isartor-6-2-10-t01-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.2 Output intent/isartor-6-2-2-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.2 Output intent/isartor-6-2-2-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.2 Output intent/isartor-6-2-2-t02-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.2 Output intent/isartor-6-2-2-t03-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t02-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t02-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t02-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t02-fail-e.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t02-fail-f.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t02-fail-g.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t02-fail-h.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t02-fail-i.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t02-fail-j.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t03-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t03-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t03-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t03-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t03-fail-e.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t04-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t04-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t04-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t04-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t05-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.3 Uncalibrated colour spaces/isartor-6-2-3-3-t05-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.4 Separation and DeviceN colour spaces/isartor-6-2-3-4-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.3 Colour spaces/6.2.3.4 Separation and DeviceN colour spaces/isartor-6-2-3-4-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.4 Images/isartor-6-2-4-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.4 Images/isartor-6-2-4-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.4 Images/isartor-6-2-4-t03-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.4 Images/isartor-6-2-4-t04-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.5 Form Xobjects/isartor-6-2-5-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.6 Reference XObjects/isartor-6-2-6-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.7 PostScript XObjects/isartor-6-2-7-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.7 PostScript XObjects/isartor-6-2-7-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.8 Extended graphics state/isartor-6-2-8-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.8 Extended graphics state/isartor-6-2-8-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.8 Extended graphics state/isartor-6-2-8-t01-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.8 Extended graphics state/isartor-6-2-8-t01-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.8 Extended graphics state/isartor-6-2-8-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.8 Extended graphics state/isartor-6-2-8-t02-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.8 Extended graphics state/isartor-6-2-8-t02-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.2 Graphics/6.2.9 Rendering intents/isartor-6-2-9-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.2 Font types/isartor-6-3-2-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.2 Font types/isartor-6-3-2-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.2 Font types/isartor-6-3-2-t01-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.3 Composite fonts/6.3.3.1 General/isartor-6-3-3-1-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.3 Composite fonts/6.3.3.1 General/isartor-6-3-3-1-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.3 Composite fonts/6.3.3.2 CIDFonts/isartor-6-3-3-2-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.3 Composite fonts/6.3.3.3 CMaps/isartor-6-3-3-3-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.3 Composite fonts/6.3.3.3 CMaps/isartor-6-3-3-3-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.4 Embedded font programs/isartor-6-3-4-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.4 Embedded font programs/isartor-6-3-4-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.4 Embedded font programs/isartor-6-3-4-t01-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.4 Embedded font programs/isartor-6-3-4-t01-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.4 Embedded font programs/isartor-6-3-4-t01-fail-e.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.4 Embedded font programs/isartor-6-3-4-t01-fail-f.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.4 Embedded font programs/isartor-6-3-4-t01-fail-g.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.4 Embedded font programs/isartor-6-3-4-t01-fail-h.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.5 Font subsets/isartor-6-3-5-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.5 Font subsets/isartor-6-3-5-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.5 Font subsets/isartor-6-3-5-t01-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.5 Font subsets/isartor-6-3-5-t01-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.5 Font subsets/isartor-6-3-5-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.5 Font subsets/isartor-6-3-5-t03-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.6 Font metrics/isartor-6-3-6-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.6 Font metrics/isartor-6-3-6-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.6 Font metrics/isartor-6-3-6-t01-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.7 Character encodings/isartor-6-3-7-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.7 Character encodings/isartor-6-3-7-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.3 Fonts/6.3.7 Character encodings/isartor-6-3-7-t03-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.4 Transparency/isartor-6-4-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.4 Transparency/isartor-6-4-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.4 Transparency/isartor-6-4-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.4 Transparency/isartor-6-4-t03-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.4 Transparency/isartor-6-4-t04-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.4 Transparency/isartor-6-4-t05-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.2 Annotation types/isartor-6-5-2-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.2 Annotation types/isartor-6-5-2-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.2 Annotation types/isartor-6-5-2-t01-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.2 Annotation types/isartor-6-5-2-t01-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.2 Annotation types/isartor-6-5-2-t01-fail-e.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.2 Annotation types/isartor-6-5-2-t01-fail-f.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.2 Annotation types/isartor-6-5-2-t01-fail-g.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.2 Annotation types/isartor-6-5-2-t01-fail-h.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.2 Annotation types/isartor-6-5-2-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.2 Annotation types/isartor-6-5-2-t02-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.2 Annotation types/isartor-6-5-2-t02-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t02-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t02-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t02-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t02-fail-e.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t03-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t03-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t03-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t03-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t04-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t04-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t04-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.5 Annotations/6.5.3 Annotation dictionaries/isartor-6-5-3-t04-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t01-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t01-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t01-fail-e.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t01-fail-f.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t01-fail-g.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t01-fail-h.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t01-fail-i.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t02-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t02-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t02-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t02-fail-e.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t02-fail-f.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t02-fail-g.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t02-fail-h.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t02-fail-i.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t03-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t03-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t03-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t03-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t03-fail-e.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t03-fail-f.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t03-fail-g.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t03-fail-h.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t03-fail-i.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t04-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t04-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t04-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t04-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t04-fail-e.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t04-fail-f.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t04-fail-g.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t04-fail-h.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.1 General/isartor-6-6-1-t04-fail-i.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.6 Actions/6.6.2 Trigger events/isartor-6-6-2-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.11 Version and conformance level identification/isartor-6-7-11-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.11 Version and conformance level identification/isartor-6-7-11-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.11 Version and conformance level identification/isartor-6-7-11-t01-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.11 Version and conformance level identification/isartor-6-7-11-t01-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.2 Properties/isartor-6-7-2-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.2 Properties/isartor-6-7-2-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.2 Properties/isartor-6-7-2-t02-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.2 Properties/isartor-6-7-2-t02-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.2 Properties/isartor-6-7-2-t03-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.3 Document information dictionary/isartor-6-7-3-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.3 Document information dictionary/isartor-6-7-3-t01-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.3 Document information dictionary/isartor-6-7-3-t01-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.5 XMP header/isartor-6-7-5-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.5 XMP header/isartor-6-7-5-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.8 Extension schemas/isartor-6-7-8-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.8 Extension schemas/isartor-6-7-8-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.8 Extension schemas/isartor-6-7-8-t02-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.8 Extension schemas/isartor-6-7-8-t02-fail-c.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.8 Extension schemas/isartor-6-7-8-t02-fail-d.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.8 Extension schemas/isartor-6-7-8-t02-fail-e.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.8 Extension schemas/isartor-6-7-8-t02-fail-f.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.8 Extension schemas/isartor-6-7-8-t02-fail-g.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.8 Extension schemas/isartor-6-7-8-t02-fail-h.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.8 Extension schemas/isartor-6-7-8-t02-fail-i.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.8 Extension schemas/isartor-6-7-8-t02-fail-j.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.8 Extension schemas/isartor-6-7-8-t02-fail-k.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.7 Metadata/6.7.9 Validation/isartor-6-7-9-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.9 Interactive Forms/isartor-6-9-t01-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.9 Interactive Forms/isartor-6-9-t02-fail-a.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/modules/preflight/target/pdfs/Isartor testsuite/PDFA-1b/6.9 Interactive Forms/isartor-6-9-t02-fail-b.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/cos/simple.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/Acroform-PDFBOX-2333.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/AES128ExposedMeta.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/AES256ExposedMeta.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/AESkeylength128.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/AESkeylength256.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/PasswordSample-128bit.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/PasswordSample-256bit.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/PasswordSample-40bit.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/PDFBOX-4421-keystore.pfx
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/PDFBOX-5249.p12
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/preEnc_20141025_105451.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/test.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/test1.der
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/test1.pfx
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/test2.der
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/encryption/test2.pfx
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/filter/PDFBOX-1977.bin
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/io/RandomAccessReadEmptyFile.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/io/RandomAccessReadFile1.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcrobatMerge-DifferentExportValues-WasMaster.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcrobatMerge-DifferentExportValues.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcrobatMerge-DifferentFieldType-WasMaster.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcrobatMerge-DifferentFieldType.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcrobatMerge-DifferentOptions-WasMaster.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcrobatMerge-DifferentOptions.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcrobatMerge-SameMerged.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcrobatMerge-SameNameNode.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcrobatMerge-TextFieldsOnly-SameMerged.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcroFormForMerge-DifferentExportValues.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcroFormForMerge-DifferentFieldType.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcroFormForMerge-DifferentOptions.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcroFormForMerge-SameNameNode.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcroFormForMerge-TextFieldsOnly.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/AcroFormForMerge.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/Overlayed-with-rot0.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/Overlayed-with-rot180.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/Overlayed-with-rot270.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/Overlayed-with-rot90.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/OverlayTestBaseRot0.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/PDFBOX-6049-ExpectedResult.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/PDFBOX-6049-Overlay.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/PDFBOX-6049-Source.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/PDFBoxLegacyMerge-SameMerged.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/rot0.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/rot180.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/rot270.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/multipdf/rot90.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdfparser/embedded_zip.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdfparser/MissingCatalog.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdfparser/nocatalog.fdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdfparser/PDFBOX-6041-example.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdfparser/SimpleForm2Fields.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdfparser/withcatalog.fdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/badpagelabels.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/common/null_PDComplexFileSpecification.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/common/testPDF_multiFormatEmbFiles.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/documentinterchange/logicalstructure/PDFBOX-2725-878725.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/fdf/xfdf-test-document-annotations.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/font/F001u_3_7j.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/929316.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/ccittg3-garbage-padded-fields-bigendian.tif
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/ccittg3-garbage-padded-fields.tif
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/ccittg3.tif
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/ccittg4.tif
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/ccittg4multi.tif
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/gif-1bit-transparent.gif
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/gif.gif
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/jpeg.jpg
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/jpeg256.jpg
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/jpegcmyk.jpg
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/lzw.tif
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/png.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/png_alpha_gray.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/png_alpha_rgb.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/png_gray.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/png_gray_with_gama.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/png_indexed.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/png_indexed_1bit_alpha.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/png_indexed_2bit_alpha.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/png_indexed_4bit_alpha.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/png_indexed_8bit_alpha.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/png_rgb_gamma.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/graphics/image/png_rgb_romm_16bit.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/annotation/AnnotationTypes.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/annotation/AnnotationTypes.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/annotation/PDFBOX-5797-SO79271803.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/annotation/PDSquareAnnotationTest.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/AcroFormsBasicFields.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/AcroFormsRotation.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/AcroFormsRotation.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/AcroFormsRotation.pdf-2.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/AlignmentTests-flattened-noRef.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/AlignmentTests-flattened.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/AlignmentTests.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/AlignmentTests.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/CombTest.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/CombTest.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/ControlCharacters.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/DifferentDALevels.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/MultilineFields.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/MultilineFields.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/PDFBOX-3656-SF1199AEG (Complete).pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/PDFBOX-3835-input-acrobat-wrap.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/PDFBOX-4958.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/PDFBOX-5784.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/PDFBOX-5784.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/form/PDFBOX3812-acrobat-multiline-auto.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/interactive/pagenavigation/transitions_test.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/page_tree_multiple_levels.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/PDFBOX-3068.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/PDFBOX-6040-nodeloop.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/sRGB.icc
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/sRGB.icc.COPYING
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/sRGB.icc.LICENSE-ZLIB
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/sRGB.icc.README
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/test.unc.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/test_pagelabels.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/pdmodel/with_outline.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/preflight/metadata/PDFAMetaDataValidationTestMiddleControlChar.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/preflight/metadata/PDFAMetaDataValidationTestMiddleNul.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/preflight/metadata/PDFAMetaDataValidationTestTrailingControlChar.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/preflight/metadata/PDFAMetaDataValidationTestTrailingNul.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/preflight/metadata/PDFAMetaDataValidationTestTrailingSpaces.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/resources/icc/ISOcoated_v2_300_bas.icc
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/text/BidiSample.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/text/BidiSample.pdf-sorted.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/text/BidiSample.pdf.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/ttf/Bengali.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/ttf/Devanagari.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/ttf/Devanagari2.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/ttf/Gujarati.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/ttf/Lohit-Bengali.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/ttf/Lohit-Devanagari.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/ttf/Lohit-Gujarati.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/ttf/NotoSansDevanagari-Regular.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/pdfbox/ttf/PDFBOX-5812.pdf-1.png
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/parser/AltBagSeqTest.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/parser/empty_list.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/parser/isartorStyleXMPOK.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/parser/structured_recursive.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/parser/ThumbisartorStyle.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/propertiesDescription.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/valueTypeDescription.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/xml/PDFBOX-3882-dematbox.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/xml/PDFBOX-5649.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/xml/PDFBOX-5835.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/xml/PDFBOX-6131-0015675.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/xml/PDFBOX-6131-RMR6DEEUWZO6IM3A7WKRPX33SZMBTTQZ.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/org/apache/xmpbox/xml/PDFBOX-6133-0064638.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/otf/FoglihtenNo07.otf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/pdfa-with-annotations-square.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/PDFBOX-3741.pdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/permited_metadata.txt
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12558110
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12682897
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12689788
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12792007
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12816014
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12816016
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12821307
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12821308
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12866226
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12881055
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12891316
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12908175
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12968302
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12986337
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/12994791
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13005793
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13011410
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13013354
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13013384
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13014447
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13016941
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13016992
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13016993
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13016994
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13017227
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13027311
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13066015
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13066016
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/remote/13069137
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/ttf/JosefinSans-Italic.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/ttf/LiberationSans-Regular.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/ttf/Lohit-Bengali.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/ttf/Lohit-Devanagari.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/ttf/Lohit-Gujarati.ttf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/undefinedxmp/prism.xmp
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/validxmp/attr_as_props.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/validxmp/emptyli.xml
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/validxmp/exif.xmp
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/validxmp/ghost2.xmp
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/validxmp/history2.rdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/validxmp/metadata.rdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/validxmp/Notepad++_A1b.xmp
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/validxmp/only_space_fields.xmp
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/validxmp/override_ns.rdf
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Fixtures/validxmp/PDFBOX-6099.xmp
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.Tests
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.Tests.deps.json
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.Tests.runtimeconfig.json
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.Tests.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.Tests.pdb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Castle.Core.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.ApplicationInsights.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.Extensions.Logging.Abstractions.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.Testing.Extensions.Telemetry.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.Testing.Extensions.TrxReport.Abstractions.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.Testing.Platform.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.Testing.Extensions.MSBuild.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.TestPlatform.CoreUtilities.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.TestPlatform.PlatformAbstractions.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.VisualStudio.TestPlatform.ObjectModel.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.TestPlatform.CommunicationUtilities.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.TestPlatform.CrossPlatEngine.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.TestPlatform.Utilities.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Microsoft.VisualStudio.TestPlatform.Common.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/testhost.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/Newtonsoft.Json.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/SkiaSharp.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/System.Diagnostics.EventLog.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/System.Security.Cryptography.Pkcs.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/xunit.v3.assert.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/xunit.v3.common.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/xunit.v3.mtp-v1.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/xunit.v3.core.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/xunit.v3.runner.common.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/xunit.v3.runner.inproc.console.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/cs/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/de/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/es/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/fr/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/it/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ja/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ko/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pl/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pt-BR/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ru/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/tr/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hans/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hant/Microsoft.Testing.Extensions.Telemetry.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/cs/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/de/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/es/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/fr/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/it/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ja/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ko/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pl/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pt-BR/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ru/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/tr/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hans/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hant/Microsoft.Testing.Platform.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/cs/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/de/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/es/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/fr/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/it/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ja/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ko/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pl/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pt-BR/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ru/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/tr/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hans/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hant/Microsoft.Testing.Extensions.MSBuild.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/cs/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/cs/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/de/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/de/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/es/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/es/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/fr/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/fr/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/it/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/it/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ja/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ja/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ko/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ko/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pl/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pl/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pt-BR/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pt-BR/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ru/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ru/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/tr/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/tr/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hans/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hans/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hant/Microsoft.TestPlatform.CoreUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hant/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/cs/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/cs/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/cs/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/de/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/de/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/de/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/es/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/es/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/es/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/fr/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/fr/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/fr/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/it/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/it/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/it/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ja/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ja/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ja/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ko/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ko/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ko/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pl/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pl/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pl/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pt-BR/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pt-BR/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/pt-BR/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ru/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ru/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/ru/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/tr/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/tr/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/tr/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hans/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hans/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hans/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hant/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hant/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/zh-Hant/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-arm/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-arm64/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-bionic-arm64/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-bionic-x64/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-loongarch64/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-musl-arm/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-musl-arm64/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-musl-loongarch64/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-musl-riscv64/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-musl-x64/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-riscv64/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-x64/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/linux-x86/native/libSkiaSharp.so
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/osx/native/libSkiaSharp.dylib
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/win-arm64/native/libSkiaSharp.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/win-arm64/native/libSkiaSharp.pdb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/win-x64/native/libSkiaSharp.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/win-x64/native/libSkiaSharp.pdb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/win-x86/native/libSkiaSharp.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/win-x86/native/libSkiaSharp.pdb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/win/lib/net6.0/System.Diagnostics.EventLog.Messages.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/win/lib/net6.0/System.Diagnostics.EventLog.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/runtimes/win/lib/net10.0/System.Security.Cryptography.Pkcs.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.Fonts.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.IO.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.Preflight.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.Xmp.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.IO.pdb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.Fonts.pdb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.Xmp.pdb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.pdb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/bin/Release/net10.0/DripSharp.PdfCarton.Preflight.pdb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripSharp.PdfCarton.Tests.csproj.AssemblyReference.cache
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripSharp.PdfCarton.Tests.GeneratedMSBuildEditorConfig.editorconfig
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripSharp.PdfCarton.Tests.gentestingplatformentrypointinputcache.cache
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripSharp.PdfCarton.Tests.genautoregisteredextensionsinputcache.cache
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/SelfRegisteredExtensions.cs
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripSharp.PdfCarton.Tests.xUnit.v3.EntryPoint.cache
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/XunitAutoGeneratedEntryPoint.cs
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripSharp.PdfCarton.Tests.AssemblyInfoInputs.cache
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripSharp.PdfCarton.Tests.AssemblyInfo.cs
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripSharp.PdfCarton.Tests.csproj.CoreCompileInputs.cache
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripSharp.PdfCarton.Tests.sourcelink.json
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripShar.02653AA7.Up2Date
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripSharp.PdfCarton.Tests.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/refint/DripSharp.PdfCarton.Tests.dll
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripSharp.PdfCarton.Tests.pdb
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/DripSharp.PdfCarton.Tests.genruntimeconfig.cache
+/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/tests/DripSharp.PdfCarton.Tests/obj/Release/net10.0/ref/DripSharp.PdfCarton.Tests.dll

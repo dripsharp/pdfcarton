@@ -1,0 +1,450 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj": {}
+  },
+  "projects": {
+    "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj": {
+      "version": "3.0.8-alpha.1",
+      "restore": {
+        "projectUniqueName": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj",
+        "projectName": "DripSharp.PdfCarton.Fonts",
+        "projectPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj",
+        "packagesPath": "/Users/admin/.nuget/packages/",
+        "outputPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Fonts/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/admin/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/10.0.107/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {
+              "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj": {
+                "projectPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "Microsoft.CSharp": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[4.150.1, )"
+            },
+            "SkiaSharp.NativeAssets.Linux": {
+              "target": "Package",
+              "version": "[4.150.1, )"
+            },
+            "System.Formats.Asn1": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "System.Memory": {
+              "target": "Package",
+              "version": "[4.6.3, )"
+            },
+            "System.Text.Encoding.CodePages": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/10.0.107/libexec/sdk/10.0.107/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj": {
+      "version": "3.0.8-alpha.1",
+      "restore": {
+        "projectUniqueName": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj",
+        "projectName": "DripSharp.PdfCarton.IO",
+        "projectPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj",
+        "packagesPath": "/Users/admin/.nuget/packages/",
+        "outputPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.IO/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/admin/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/10.0.107/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "Microsoft.CSharp": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "System.Memory": {
+              "target": "Package",
+              "version": "[4.6.3, )"
+            },
+            "System.Text.Encoding.CodePages": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/10.0.107/libexec/sdk/10.0.107/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj": {
+      "version": "3.0.8-alpha.1",
+      "restore": {
+        "projectUniqueName": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj",
+        "projectName": "DripSharp.PdfCarton.Preflight",
+        "projectPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj",
+        "packagesPath": "/Users/admin/.nuget/packages/",
+        "outputPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Preflight/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/admin/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/10.0.107/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {
+              "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj": {
+                "projectPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj"
+              },
+              "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj": {
+                "projectPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "Microsoft.CSharp": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[4.150.1, )"
+            },
+            "System.Memory": {
+              "target": "Package",
+              "version": "[4.6.3, )"
+            },
+            "System.Text.Encoding.CodePages": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/10.0.107/libexec/sdk/10.0.107/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj": {
+      "version": "3.0.8-alpha.1",
+      "restore": {
+        "projectUniqueName": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj",
+        "projectName": "DripSharp.PdfCarton.Xmp",
+        "projectPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj",
+        "packagesPath": "/Users/admin/.nuget/packages/",
+        "outputPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Xmp/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/admin/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/10.0.107/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "Microsoft.CSharp": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "System.Memory": {
+              "target": "Package",
+              "version": "[4.6.3, )"
+            },
+            "System.Text.Encoding.CodePages": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/10.0.107/libexec/sdk/10.0.107/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj": {
+      "version": "3.0.8-alpha.1",
+      "restore": {
+        "projectUniqueName": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj",
+        "projectName": "DripSharp.PdfCarton",
+        "projectPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj",
+        "packagesPath": "/Users/admin/.nuget/packages/",
+        "outputPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/admin/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/10.0.107/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {
+              "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj": {
+                "projectPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj"
+              },
+              "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj": {
+                "projectPath": "/Users/admin/src/dripsharp/dripsharp/products/pdfcarton/src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "Microsoft.CSharp": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[4.150.1, )"
+            },
+            "System.Memory": {
+              "target": "Package",
+              "version": "[4.6.3, )"
+            },
+            "System.Security.Cryptography.Pkcs": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "System.Text.Encoding.CodePages": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/10.0.107/libexec/sdk/10.0.107/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
