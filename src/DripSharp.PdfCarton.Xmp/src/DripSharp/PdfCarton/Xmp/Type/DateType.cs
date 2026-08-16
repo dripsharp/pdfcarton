@@ -19,7 +19,7 @@ private void setValueFromCalendar(global::System.DateTimeOffset? value) {
 this.dateValue = value;
 }
 
-public override object GetValue() {
+public new virtual global::System.DateTimeOffset? GetValue() {
 return this.dateValue;
 }
 
@@ -67,5 +67,9 @@ this.setValueFromCalendar(global::DripSharp.PdfCarton.Xmp.DateConverter.ToCalend
 } catch (global::System.IO.IOException e) {
 throw new global::System.ArgumentException(null, e);
 }
+}
+
+protected override object __DripSharpCovariantBridgeGetValue() {
+return this.GetValue();
 }
 }

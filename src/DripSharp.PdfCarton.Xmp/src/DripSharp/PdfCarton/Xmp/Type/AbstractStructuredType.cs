@@ -84,7 +84,7 @@ return default!;
 protected internal virtual global::System.DateTimeOffset? GetDatePropertyAsCalendar(string fieldName) {
 global::DripSharp.PdfCarton.Xmp.Type.DateType absProp = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(this.GetFirstEquivalentProperty(fieldName, typeof(global::DripSharp.PdfCarton.Xmp.Type.DateType))!);
 if ((absProp != default!)) {
-return ((global::System.DateTimeOffset?)(absProp.GetValue()));
+return absProp.GetValue();
 } else {
 return default!;
 }

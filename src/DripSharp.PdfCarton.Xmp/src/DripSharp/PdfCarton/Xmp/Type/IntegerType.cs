@@ -15,7 +15,7 @@ public IntegerType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string 
 
 }
 
-public override object GetValue() {
+public new virtual int? GetValue() {
 return this.integerValue;
 }
 
@@ -33,5 +33,9 @@ throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.X
 
 public override string GetStringValue() {
 return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringValueOf(this.integerValue);
+}
+
+protected override object __DripSharpCovariantBridgeGetValue() {
+return this.GetValue();
 }
 }

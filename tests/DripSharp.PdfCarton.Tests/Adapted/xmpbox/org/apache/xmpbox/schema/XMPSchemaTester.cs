@@ -239,7 +239,7 @@ global::DripSharp.PdfCarton.Xmp.Type.BooleanType bt = new global::DripSharp.PdfC
 global::System.Reflection.MethodInfo setMethod = global::DripSharp.Runtime.JavaCompat.GetMethod(this.schemaClass, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", setName), typeof(global::DripSharp.PdfCarton.Xmp.Type.BooleanType));
 global::System.Reflection.MethodInfo getMethod = global::DripSharp.Runtime.JavaCompat.GetMethod(this.schemaClass, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", getName));
 setMethod.Invoke(this.schema, new object?[] { bt });
-bool? found = ((bool)(((global::DripSharp.PdfCarton.Xmp.Type.BooleanType)(getMethod.Invoke(this.schema, new object?[] {  })!)).GetValue()));
+bool? found = ((global::DripSharp.PdfCarton.Xmp.Type.BooleanType)(getMethod.Invoke(this.schema, new object?[] {  })!)).GetValue();
 global::DripSharp.Testing.JavaAssertions.Equal(this.value, found, null);
 }
 
@@ -250,7 +250,7 @@ global::DripSharp.PdfCarton.Xmp.Type.DateType dt = new global::DripSharp.PdfCart
 global::System.Reflection.MethodInfo setMethod = global::DripSharp.Runtime.JavaCompat.GetMethod(this.schemaClass, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", setName), typeof(global::DripSharp.PdfCarton.Xmp.Type.DateType));
 global::System.Reflection.MethodInfo getMethod = global::DripSharp.Runtime.JavaCompat.GetMethod(this.schemaClass, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", getName));
 setMethod.Invoke(this.schema, new object?[] { dt });
-global::System.DateTimeOffset? found = ((global::System.DateTimeOffset?)(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(getMethod.Invoke(this.schema, new object?[] {  })!)).GetValue()));
+global::System.DateTimeOffset? found = ((global::DripSharp.PdfCarton.Xmp.Type.DateType)(getMethod.Invoke(this.schema, new object?[] {  })!)).GetValue();
 global::DripSharp.Testing.JavaAssertions.Equal(this.value, found, null);
 }
 
@@ -261,7 +261,7 @@ global::DripSharp.PdfCarton.Xmp.Type.IntegerType it = new global::DripSharp.PdfC
 global::System.Reflection.MethodInfo setMethod = global::DripSharp.Runtime.JavaCompat.GetMethod(this.schemaClass, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", setName), typeof(global::DripSharp.PdfCarton.Xmp.Type.IntegerType));
 global::System.Reflection.MethodInfo getMethod = global::DripSharp.Runtime.JavaCompat.GetMethod(this.schemaClass, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", getName));
 setMethod.Invoke(this.schema, new object?[] { it });
-int? found = ((int)(((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(getMethod.Invoke(this.schema, new object?[] {  })!)).GetValue()));
+int? found = ((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(getMethod.Invoke(this.schema, new object?[] {  })!)).GetValue();
 global::DripSharp.Testing.JavaAssertions.Equal(this.value, found, null);
 }
 

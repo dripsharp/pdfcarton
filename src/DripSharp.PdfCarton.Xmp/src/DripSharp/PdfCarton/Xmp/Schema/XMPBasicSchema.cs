@@ -190,7 +190,7 @@ return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.DateType>(global:
 public virtual global::System.DateTimeOffset? GetCreateDate() {
 global::DripSharp.PdfCarton.Xmp.Type.DateType createDate = this.GetCreateDateProperty();
 if ((createDate != default!)) {
-return ((global::System.DateTimeOffset?)(createDate.GetValue()));
+return createDate.GetValue();
 }
 return default!;
 }
@@ -227,7 +227,7 @@ return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.DateType>(global:
 
 public virtual global::System.DateTimeOffset? GetMetadataDate() {
 global::DripSharp.PdfCarton.Xmp.Type.DateType dt = this.GetMetadataDateProperty();
-return ((dt == default!) ? (global::System.DateTimeOffset?)(default!) : ((global::System.DateTimeOffset?)(dt.GetValue())));
+return ((dt == default!) ? (global::System.DateTimeOffset?)(default!) : dt.GetValue());
 }
 
 public virtual global::DripSharp.PdfCarton.Xmp.Type.DateType GetModifyDateProperty() {
@@ -241,7 +241,7 @@ return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.DateType>(global:
 public virtual global::System.DateTimeOffset? GetModifyDate() {
 global::DripSharp.PdfCarton.Xmp.Type.DateType modifyDate = this.GetModifyDateProperty();
 if ((modifyDate != default!)) {
-return ((global::System.DateTimeOffset?)(modifyDate.GetValue()));
+return modifyDate.GetValue();
 }
 return default!;
 }
@@ -249,7 +249,7 @@ return default!;
 public virtual global::System.DateTimeOffset? GetModifierDate() {
 global::DripSharp.PdfCarton.Xmp.Type.DateType modifierDate = this.GetModifierDateProperty();
 if ((modifierDate != default!)) {
-return ((global::System.DateTimeOffset?)(modifierDate.GetValue()));
+return modifierDate.GetValue();
 }
 return default!;
 }
@@ -269,7 +269,7 @@ return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.IntegerType>(glob
 
 public virtual int? GetRating() {
 global::DripSharp.PdfCarton.Xmp.Type.IntegerType it = this.GetRatingProperty();
-return ((it == default!) ? (int?)(default!) : (int?)(((int)(it.GetValue()))));
+return ((it == default!) ? (int?)(default!) : (int?)(it.GetValue()));
 }
 
 public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType> GetThumbnailsProperty() {

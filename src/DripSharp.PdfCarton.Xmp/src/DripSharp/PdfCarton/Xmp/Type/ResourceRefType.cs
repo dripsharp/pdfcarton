@@ -103,7 +103,7 @@ this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.Inst
 public virtual global::System.DateTimeOffset? GetLastModifyDate() {
 global::DripSharp.PdfCarton.Xmp.Type.DateType absProp = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.LastModifyDate, typeof(global::DripSharp.PdfCarton.Xmp.Type.DateType))!);
 if ((absProp != default!)) {
-return ((global::System.DateTimeOffset?)(absProp.GetValue()));
+return absProp.GetValue();
 } else {
 return default!;
 }

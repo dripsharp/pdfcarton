@@ -26,7 +26,9 @@ public abstract void SetValue(object value);
 
 public abstract string GetStringValue();
 
-public abstract object GetValue();
+public virtual object GetValue() {
+return ((object)(this.__DripSharpCovariantBridgeGetValue()));
+}
 
 public virtual object GetRawValue() {
 return this.rawValue;
@@ -43,4 +45,6 @@ return this.@namespace;
 public override string GetPrefix() {
 return this.prefix;
 }
+
+protected abstract object __DripSharpCovariantBridgeGetValue();
 }

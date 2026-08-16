@@ -102,7 +102,7 @@ global::System.Collections.Generic.IDictionary<string, object> privDict = global
 return (sbyte[][])(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(privDict, "Subrs")!);
 }
 
-public override global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString GetType2CharString(int cid) {
+public new virtual global::DripSharp.PdfCarton.Fonts.Cff.CIDKeyedType2CharString GetType2CharString(int cid) {
 global::DripSharp.PdfCarton.Fonts.Cff.CIDKeyedType2CharString type2 = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.charStringCache, cid);
 if ((type2 == default!)) {
 int gid = this.GetCharset().GetGIDForCID(cid);
@@ -126,12 +126,12 @@ return this.charStringParser;
 
 public override global::SkiaSharp.SKPath GetPath(string selector) {
 int cid = this.selectorToCID(selector);
-return ((global::DripSharp.PdfCarton.Fonts.Cff.CIDKeyedType2CharString)(this.GetType2CharString(cid))).GetPath();
+return this.GetType2CharString(cid).GetPath();
 }
 
 public override float GetWidth(string selector) {
 int cid = this.selectorToCID(selector);
-return ((global::DripSharp.PdfCarton.Fonts.Cff.CIDKeyedType2CharString)(this.GetType2CharString(cid))).GetWidth();
+return this.GetType2CharString(cid).GetWidth();
 }
 
 public override bool HasGlyph(string selector) {
@@ -148,7 +148,7 @@ return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(selector.Su
 
 internal class PrivateType1CharStringReader : global::DripSharp.PdfCarton.Fonts.Type1.Type1CharStringReader {
 public virtual global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString GetType1CharString(string name) {
-return ((global::DripSharp.PdfCarton.Fonts.Cff.CIDKeyedType2CharString)(this.__outer.GetType2CharString(0)));
+return this.__outer.GetType2CharString(0);
 }
 
 private readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont __outer;
@@ -156,6 +156,10 @@ private readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont __outer;
 internal PrivateType1CharStringReader(global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont __outer) {
 this.__outer = __outer;
 }
+}
+
+protected override global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString __DripSharpCovariantBridgeGetType2CharString(int cid) {
+return this.GetType2CharString(cid);
 }
 
 public CFFCIDFont() {

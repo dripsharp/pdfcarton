@@ -26,7 +26,7 @@ public DimensionsType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : ba
 public virtual float? GetH() {
 global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.DimensionsType.H);
 if ((prop is global::DripSharp.PdfCarton.Xmp.Type.RealType)) {
-return ((float)(((global::DripSharp.PdfCarton.Xmp.Type.RealType)(prop!)).GetValue()));
+return ((global::DripSharp.PdfCarton.Xmp.Type.RealType)(prop!)).GetValue();
 }
 return default!;
 }
@@ -34,7 +34,7 @@ return default!;
 public virtual float? GetW() {
 global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.DimensionsType.W);
 if ((prop is global::DripSharp.PdfCarton.Xmp.Type.RealType)) {
-return ((float)(((global::DripSharp.PdfCarton.Xmp.Type.RealType)(prop!)).GetValue()));
+return ((global::DripSharp.PdfCarton.Xmp.Type.RealType)(prop!)).GetValue();
 }
 return default!;
 }

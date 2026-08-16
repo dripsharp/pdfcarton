@@ -78,7 +78,7 @@ global::DripSharp.PdfCarton.Xmp.Type.IntegerType tmp = this.GetPartProperty();
 if ((tmp == default!)) {
 return default!;
 }
-return ((int)(tmp.GetValue()));
+return tmp.GetValue();
 }
 
 public virtual global::DripSharp.PdfCarton.Xmp.Type.IntegerType GetPartProperty() {
@@ -172,6 +172,6 @@ global::DripSharp.PdfCarton.Xmp.Type.IntegerType tmp = this.GetRevProperty();
 if ((tmp == default!)) {
 return default!;
 }
-return ((int)(tmp.GetValue()));
+return tmp.GetValue();
 }
 }

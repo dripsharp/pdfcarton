@@ -15,7 +15,7 @@ public RealType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string nam
 
 }
 
-public override object GetValue() {
+public new virtual float? GetValue() {
 return this.realValue;
 }
 
@@ -33,5 +33,9 @@ throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.X
 
 public override string GetStringValue() {
 return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringValueOf(this.realValue);
+}
+
+protected override object __DripSharpCovariantBridgeGetValue() {
+return this.GetValue();
 }
 }

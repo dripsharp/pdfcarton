@@ -83,11 +83,15 @@ public virtual global::System.Collections.Generic.IList<sbyte[]> GetGlobalSubrIn
 return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<sbyte[]>(this.GlobalSubrIndex);
 }
 
-public abstract global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString GetType2CharString(int cidOrGid);
+public virtual global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString GetType2CharString(int cidOrGid) {
+return ((global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString)(this.__DripSharpCovariantBridgeGetType2CharString(cidOrGid)));
+}
 
 public override string ToString() {
 return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(((object)(this)).GetType().Name, "[name="), this.fontName), ", topDict="), this.TopDict), ", charset="), this.charset), ", charStrings="), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.DeepArrayString(this.CharStrings)), "]");
 }
+
+protected abstract global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString __DripSharpCovariantBridgeGetType2CharString(int cidOrGid);
 
 public abstract global::SkiaSharp.SKPath GetPath(string name);
 

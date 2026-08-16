@@ -19,7 +19,7 @@ public BooleanType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string 
 
 }
 
-public override object GetValue() {
+public new virtual bool? GetValue() {
 return this.booleanValue;
 }
 
@@ -46,5 +46,9 @@ throw new global::System.ArgumentException("Value given is not allowed for the B
 
 public override string GetStringValue() {
 return (this.booleanValue ? global::DripSharp.PdfCarton.Xmp.Type.BooleanType.True : global::DripSharp.PdfCarton.Xmp.Type.BooleanType.False);
+}
+
+protected override object __DripSharpCovariantBridgeGetValue() {
+return this.GetValue();
 }
 }

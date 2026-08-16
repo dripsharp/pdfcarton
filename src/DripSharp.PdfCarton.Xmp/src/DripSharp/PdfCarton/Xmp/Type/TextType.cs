@@ -30,4 +30,8 @@ return this.textValue;
 public override object GetValue() {
 return this.textValue;
 }
+
+protected override object __DripSharpCovariantBridgeGetValue() {
+return this.GetValue();
+}
 }

@@ -64,7 +64,7 @@ return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.BooleanType>(glob
 
 public virtual bool? GetMarked() {
 global::DripSharp.PdfCarton.Xmp.Type.BooleanType bt = this.GetMarkedProperty();
-return ((bt == default!) ? (bool?)(default!) : (bool?)(((bool)(bt.GetValue()))));
+return ((bt == default!) ? (bool?)(default!) : (bool?)(bt.GetValue()));
 }
 
 public virtual void AddUsageTerms(string lang, string value) {

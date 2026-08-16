@@ -137,6 +137,10 @@ this.nominalWidthX = ((num != default!) ? global::DripSharp.PdfCarton.Runtime.Fo
 return this.nominalWidthX;
 }
 
+protected override global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString __DripSharpCovariantBridgeGetType2CharString(int gid) {
+return this.GetType2CharString(gid);
+}
+
 global::DripSharp.PdfCarton.Fonts.Encoding.Encoding global::DripSharp.PdfCarton.Fonts.EncodedFont.GetEncoding() => (global::DripSharp.PdfCarton.Fonts.Encoding.Encoding)(this.GetEncoding());
 
 public CFFType1Font() {

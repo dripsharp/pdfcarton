@@ -147,7 +147,7 @@ public virtual global::System.DateTimeOffset? GetDatePropertyValue(string qualif
 global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetAbstractProperty(qualifiedName);
 if ((prop != default!)) {
 if ((prop is global::DripSharp.PdfCarton.Xmp.Type.DateType)) {
-return ((global::System.DateTimeOffset?)(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(prop!)).GetValue()));
+return ((global::DripSharp.PdfCarton.Xmp.Type.DateType)(prop!)).GetValue();
 }
 throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Date Property");
 }
@@ -186,7 +186,7 @@ public virtual bool? GetBooleanPropertyValue(string qualifiedName) {
 global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetAbstractProperty(qualifiedName);
 if ((prop != default!)) {
 if ((prop is global::DripSharp.PdfCarton.Xmp.Type.BooleanType)) {
-return ((bool)(((global::DripSharp.PdfCarton.Xmp.Type.BooleanType)(prop!)).GetValue()));
+return ((global::DripSharp.PdfCarton.Xmp.Type.BooleanType)(prop!)).GetValue();
 } else {
 throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Boolean Property");
 }
@@ -225,7 +225,7 @@ public virtual int? GetIntegerPropertyValue(string qualifiedName) {
 global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetAbstractProperty(qualifiedName);
 if ((prop != default!)) {
 if ((prop is global::DripSharp.PdfCarton.Xmp.Type.IntegerType)) {
-return ((int)(((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(prop!)).GetValue()));
+return ((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(prop!)).GetValue();
 }
 throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not an Integer Property");
 }
@@ -366,7 +366,7 @@ return;
 global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!);
 global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> toDelete = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>();
 foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp in seq.GetContainer().GetAllProperties()) {
-if (((tmp is global::DripSharp.PdfCarton.Xmp.Type.DateType) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(((global::System.DateTimeOffset?)(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(tmp!)).GetValue())), date))) {
+if (((tmp is global::DripSharp.PdfCarton.Xmp.Type.DateType) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(tmp!)).GetValue(), date))) {
 global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(toDelete, tmp);
 }
 }
@@ -390,7 +390,7 @@ global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq = (global::DripSharp.PdfC
 global::System.Collections.Generic.IList<global::System.DateTimeOffset?> retval = new global::System.Collections.Generic.List<global::System.DateTimeOffset?>();
 foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in seq.GetContainer().GetAllProperties()) {
 if ((child is global::DripSharp.PdfCarton.Xmp.Type.DateType)) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(retval, ((global::System.DateTimeOffset?)(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(child!)).GetValue())));
+global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(retval, ((global::DripSharp.PdfCarton.Xmp.Type.DateType)(child!)).GetValue());
 }
 }
 return retval;

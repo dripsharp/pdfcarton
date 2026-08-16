@@ -29,7 +29,7 @@ this.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute(global::Dri
 public virtual int? GetHeight() {
 global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Height, typeof(global::DripSharp.PdfCarton.Xmp.Type.IntegerType));
 if ((absProp != default!)) {
-return ((int)(((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(absProp!)).GetValue()));
+return ((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(absProp!)).GetValue();
 }
 return default!;
 }
@@ -41,7 +41,7 @@ this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Height
 public virtual int? GetWidth() {
 global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Width, typeof(global::DripSharp.PdfCarton.Xmp.Type.IntegerType));
 if ((absProp != default!)) {
-return ((int)(((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(absProp!)).GetValue()));
+return ((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(absProp!)).GetValue();
 }
 return default!;
 }
