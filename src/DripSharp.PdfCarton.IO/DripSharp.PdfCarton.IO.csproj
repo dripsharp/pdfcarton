@@ -18,7 +18,7 @@
     <EmbedUntrackedSources>false</EmbedUntrackedSources>
     <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
     <PackageId>DripSharp.PdfCarton.IO</PackageId>
-    <Version>3.0.8-alpha.1</Version>
+    <Version>3.0.8-alpha.2</Version>
     <Title>PdfCarton I/O</Title>
     <Description>Apache PDFBox random-access and stream I/O for .NET, mechanically translated by DripSharp. This package is an independent translation and is not affiliated with, endorsed by, or sponsored by the Apache Software Foundation.</Description>
     <Authors>Isak Sky</Authors>
