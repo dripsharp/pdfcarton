@@ -15,148 +15,74 @@ jobs:
     name: Build and prepare PdfCarton
     runs-on: ubuntu-latest
     timeout-minutes: 240
-    outputs:
-      dripsharp_commit: ${{ steps.dripsharp-source.outputs.commit }}
     env:
-      DRIPSHARP_WORKERS: 4
       PDFCARTON_RELEASE_REDUCED_TESTS: "1"
-      JAVA_TOOL_OPTIONS: -Xmx10g
     steps:
-      - name: Check out the authoritative DripSharp source
-        uses: actions/checkout@v4
-        with:
-          repository: dripsharp/dripsharp
-          path: dripsharp
-          persist-credentials: false
-
-      - name: Record the authoritative source commit
-        id: dripsharp-source
-        shell: bash
-        run: echo "commit=$(git -C dripsharp rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-
-      - name: Check out the exact PdfCarton and PDFBox sources
-        run: >-
-          git -C dripsharp submodule update --init --depth 1
-          research/pdfbox
-          products/pdfcarton
-
-      - name: Require the published PdfCarton master commit
+      - name: Require the PdfCarton master branch
         shell: bash
         run: |
           if [[ "$GITHUB_REF" != "refs/heads/master" ]]; then
             echo "NuGet releases must run from master, not $GITHUB_REF."
             exit 1
           fi
-          expected=$(git -C dripsharp/products/pdfcarton rev-parse HEAD)
-          if [[ "$GITHUB_SHA" != "$expected" ]]; then
-            echo "dripsharp/dripsharp references PdfCarton $expected, not workflow commit $GITHUB_SHA."
-            exit 1
-          fi
 
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "25"
-
-      - uses: DeLaGuardo/setup-clojure@13.4
-        with:
-          cli: latest
+      - name: Check out the triggering PdfCarton commit
+        uses: actions/checkout@v4
 
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
 
-      - name: Require the release-runner resources
+      - name: Run reduced PdfCarton release verification
         shell: bash
+        run: eng/verify-release.sh
+
+      - name: Pack and validate PdfCarton release packages
+        shell: bash
+        run: eng/pack-release.sh release-artifacts
+
+      - name: Create the package checksum list
+        shell: bash
+        working-directory: release-artifacts
         run: |
-          available_kib=$(awk '/MemAvailable/ { print $2 }' /proc/meminfo)
-          available_cpu=$(getconf _NPROCESSORS_ONLN)
-          if (( available_kib < 10485760 || available_cpu < 4 )); then
-            echo "The reduced PdfCarton NuGet release requires at least 10 GiB available RAM and 4 CPUs."
+          shopt -s nullglob
+          io_packages=(DripSharp.PdfCarton.IO.*.nupkg DripSharp.PdfCarton.IO.*.snupkg)
+          fonts_packages=(DripSharp.PdfCarton.Fonts.*.nupkg DripSharp.PdfCarton.Fonts.*.snupkg)
+          xmp_packages=(DripSharp.PdfCarton.Xmp.*.nupkg DripSharp.PdfCarton.Xmp.*.snupkg)
+          pdfcarton_packages=(DripSharp.PdfCarton.[0-9]*.nupkg DripSharp.PdfCarton.[0-9]*.snupkg)
+          preflight_packages=(DripSharp.PdfCarton.Preflight.*.nupkg DripSharp.PdfCarton.Preflight.*.snupkg)
+          packages=(
+            "${io_packages[@]}"
+            "${fonts_packages[@]}"
+            "${xmp_packages[@]}"
+            "${pdfcarton_packages[@]}"
+            "${preflight_packages[@]}"
+          )
+
+          if (( ${#io_packages[@]} != 2 ||
+                ${#fonts_packages[@]} != 2 ||
+                ${#xmp_packages[@]} != 2 ||
+                ${#pdfcarton_packages[@]} != 2 ||
+                ${#preflight_packages[@]} != 2 )); then
+            echo "Expected one package and one symbol package for each PdfCarton project."
+            exit 1
+          fi
+          if (( $(find . -mindepth 1 -maxdepth 1 -type f | wc -l) != 10 )); then
+            echo "The release artifact directory contains unexpected files."
             exit 1
           fi
 
-      - name: Build and pack PdfCarton with reduced CI verification
-        working-directory: dripsharp
-        run: clojure -J-Xmx10g -M:run nuget-release-prepare pdfcube
+          printf '%s\0' "${packages[@]}" \
+            | sort -z \
+            | xargs -0 sha256sum > SHA256SUMS
 
-      - name: Validate the exact release artifact offline
-        working-directory: dripsharp
-        run: >-
-          clojure -M:run nuget-release-preflight
-          target/nuget-release/pdfcube/release-manifest.edn
-
-      - name: Require the PdfCarton version to be available
-        working-directory: dripsharp
-        run: >-
-          clojure -M:run nuget-release-preflight
-          target/nuget-release/pdfcube/release-manifest.edn
-          --check-nuget-org
-
-      - name: Validate the publication plan
-        working-directory: dripsharp
-        run: >-
-          clojure -M:run nuget-release-publish
-          target/nuget-release/pdfcube/release-manifest.edn
-
-      - name: Retain the hash-bound PdfCarton release artifact
+      - name: Retain the tested PdfCarton release packages
         uses: actions/upload-artifact@v4
         with:
           name: pdfcarton-nuget-release
-          path: dripsharp/target/nuget-release/pdfcube
+          path: |
+            release-artifacts/*.nupkg
+            release-artifacts/*.snupkg
+            release-artifacts/SHA256SUMS
           if-no-files-found: error
           retention-days: 14
-
-  publish:
-    name: Publish PdfCarton to nuget.org
-    needs: prepare
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    environment: release
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - name: Check out the proved DripSharp source
-        uses: actions/checkout@v4
-        with:
-          repository: dripsharp/dripsharp
-          ref: ${{ needs.prepare.outputs.dripsharp_commit }}
-          path: dripsharp
-          persist-credentials: false
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "25"
-
-      - uses: DeLaGuardo/setup-clojure@13.4
-        with:
-          cli: latest
-
-      - uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 10.0.x
-
-      - name: Download the proved PdfCarton release artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: pdfcarton-nuget-release
-          path: dripsharp/target/nuget-release/pdfcube
-
-      - name: Obtain a short-lived NuGet API key
-        id: nuget-login
-        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
-        with:
-          user: isaksky
-
-      - name: Publish the exact proved PdfCarton release
-        working-directory: dripsharp
-        env:
-          NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
-        run: >-
-          clojure -M:run nuget-release-publish
-          target/nuget-release/pdfcube/release-manifest.edn
-          --live
-          --authorize-publish
-          --source https://api.nuget.org/v3/index.json
