@@ -86,3 +86,85 @@ jobs:
             release-artifacts/SHA256SUMS
           if-no-files-found: error
           retention-days: 14
+
+  publish:
+    name: Publish PdfCarton to nuget.org
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: release
+    permissions:
+      id-token: write
+    steps:
+      - name: Download the tested PdfCarton release packages
+        uses: actions/download-artifact@v4
+        with:
+          name: pdfcarton-nuget-release
+          path: release-artifacts
+
+      - name: Verify the tested PdfCarton release packages
+        id: packages
+        shell: bash
+        working-directory: release-artifacts
+        run: |
+          sha256sum --check --strict SHA256SUMS
+
+          shopt -s nullglob
+          io_packages=(DripSharp.PdfCarton.IO.*.nupkg)
+          fonts_packages=(DripSharp.PdfCarton.Fonts.*.nupkg)
+          xmp_packages=(DripSharp.PdfCarton.Xmp.*.nupkg)
+          pdfcarton_packages=(DripSharp.PdfCarton.[0-9]*.nupkg)
+          preflight_packages=(DripSharp.PdfCarton.Preflight.*.nupkg)
+          symbol_packages=(*.snupkg)
+
+          if (( ${#io_packages[@]} != 1 ||
+                ${#fonts_packages[@]} != 1 ||
+                ${#xmp_packages[@]} != 1 ||
+                ${#pdfcarton_packages[@]} != 1 ||
+                ${#preflight_packages[@]} != 1 ||
+                ${#symbol_packages[@]} != 5 )); then
+            echo "Expected one package and one symbol package for each PdfCarton project."
+            exit 1
+          fi
+          if (( $(find . -mindepth 1 -maxdepth 1 -type f | wc -l) != 11 )); then
+            echo "The downloaded release artifact contains unexpected files."
+            exit 1
+          fi
+
+          printf 'io=%s\n' "${io_packages[0]}" >> "$GITHUB_OUTPUT"
+          printf 'fonts=%s\n' "${fonts_packages[0]}" >> "$GITHUB_OUTPUT"
+          printf 'xmp=%s\n' "${xmp_packages[0]}" >> "$GITHUB_OUTPUT"
+          printf 'pdfcarton=%s\n' "${pdfcarton_packages[0]}" >> "$GITHUB_OUTPUT"
+          printf 'preflight=%s\n' "${preflight_packages[0]}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Obtain a short-lived NuGet API key
+        id: nuget-login
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
+        with:
+          user: isaksky
+
+      - name: Publish IO, Fonts, Xmp, PdfCarton, then Preflight
+        shell: bash
+        working-directory: release-artifacts
+        env:
+          NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
+        run: |
+          dotnet nuget push "${{ steps.packages.outputs.io }}" \
+            --api-key "$NUGET_API_KEY" \
+            --source https://api.nuget.org/v3/index.json
+          dotnet nuget push "${{ steps.packages.outputs.fonts }}" \
+            --api-key "$NUGET_API_KEY" \
+            --source https://api.nuget.org/v3/index.json
+          dotnet nuget push "${{ steps.packages.outputs.xmp }}" \
+            --api-key "$NUGET_API_KEY" \
+            --source https://api.nuget.org/v3/index.json
+          dotnet nuget push "${{ steps.packages.outputs.pdfcarton }}" \
+            --api-key "$NUGET_API_KEY" \
+            --source https://api.nuget.org/v3/index.json
+          dotnet nuget push "${{ steps.packages.outputs.preflight }}" \
+            --api-key "$NUGET_API_KEY" \
+            --source https://api.nuget.org/v3/index.json
