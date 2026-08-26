@@ -19,7 +19,7 @@ jobs:
       dripsharp_commit: ${{ steps.dripsharp-source.outputs.commit }}
     env:
       DRIPSHARP_WORKERS: 4
-      DRIPSHARP_NUGET_RELEASE_SKIP_TESTS: "1"
+      PDFCARTON_RELEASE_REDUCED_TESTS: "1"
       JAVA_TOOL_OPTIONS: -Xmx10g
     steps:
       - name: Check out the authoritative DripSharp source
