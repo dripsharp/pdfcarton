@@ -32,6 +32,14 @@ dotnet add package DripSharp.PdfCarton --version 3.0.8-alpha.2
 
 From a clean checkout:
 
+### `DripSharp.PdfCarton.ReleaseSmoke`
+
+```sh
+dotnet restore tests/DripSharp.PdfCarton.ReleaseSmoke/DripSharp.PdfCarton.ReleaseSmoke.csproj
+dotnet build tests/DripSharp.PdfCarton.ReleaseSmoke/DripSharp.PdfCarton.ReleaseSmoke.csproj --configuration Release --no-restore --no-incremental -warnaserror
+dotnet test tests/DripSharp.PdfCarton.ReleaseSmoke/DripSharp.PdfCarton.ReleaseSmoke.csproj --configuration Release --no-restore --no-build
+```
+
 ### `DripSharp.PdfCarton.Tests`
 
 ```sh

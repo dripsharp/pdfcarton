@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>DripSharp.PdfCarton.ReleaseSmoke</AssemblyName>
+    <RootNamespace>DripSharp.PdfCarton.ReleaseSmoke</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RollForward>Major</RollForward>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" PrivateAssets="all" />
+    <PackageReference Include="xunit.v3" Version="3.2.2" PrivateAssets="all" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj" />
+    <ProjectReference Include="../../src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj" />
+    <ProjectReference Include="../../src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj" />
+    <ProjectReference Include="../../src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj" />
+    <ProjectReference Include="../../src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Fixtures/metadata.xmp" TargetPath="Fixtures/metadata.xmp" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

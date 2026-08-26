@@ -4,6 +4,14 @@ These test suites are generated from the authoritative `dripsharp/dripsharp` tar
 
 From a clean pdfcarton product-repository checkout:
 
+### `DripSharp.PdfCarton.ReleaseSmoke`
+
+```sh
+dotnet restore tests/DripSharp.PdfCarton.ReleaseSmoke/DripSharp.PdfCarton.ReleaseSmoke.csproj
+dotnet build tests/DripSharp.PdfCarton.ReleaseSmoke/DripSharp.PdfCarton.ReleaseSmoke.csproj --configuration Release --no-restore --no-incremental -warnaserror
+dotnet test tests/DripSharp.PdfCarton.ReleaseSmoke/DripSharp.PdfCarton.ReleaseSmoke.csproj --configuration Release --no-restore --no-build
+```
+
 ### `DripSharp.PdfCarton.Tests`
 
 ```sh
