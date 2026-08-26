@@ -22,3 +22,26 @@ Run `eng/test-verify-release.sh` for the fast command-contract regression. It
 uses a fake `dotnet` executable to prove the exact reduced boundary, all five
 published-project builds, the mandatory smoke invocation, rejection of invalid
 mode values, and that a release-smoke failure remains fatal in reduced mode.
+
+After release verification has restored and built the production projects in
+Release, run `eng/pack-release.sh <empty-artifact-directory>`. It invokes
+`dotnet pack` exactly once for each of IO, Fonts, Xmp, PdfCarton, and Preflight,
+then runs the bounded package validator. The validator checks only package ID,
+version, `netstandard2.0` dependency metadata, and the expected production DLL.
+It does not inspect public surface, PDBs, symbol packages, SourceLink, or byte
+reproducibility.
+
+The validator stages the five newly packed nupkgs and their already-restored
+NuGet dependencies in a temporary local feed. It creates a `net10.0` console
+consumer outside the checkout with package references to all five PdfCarton
+packages, restores into an empty package cache using only that feed, builds,
+and runs representative IO, Fonts, Xmp, PdfCarton, and Preflight behavior.
+Restore, compilation, assembly load, and behavior failures are fatal.
+`eng/validate-release-packages.sh` may also be run directly against an existing
+five-package artifact directory.
+
+Run `eng/test-release-packages.sh <validated-artifact-directory>` for the fast
+command-boundary regression. It proves the one-pack command count, the
+package-reference-only consumer and isolated source configuration, deliberate
+non-inspection of symbol packages, fatal restore/build/run failures, and fatal
+essential-metadata failures.
