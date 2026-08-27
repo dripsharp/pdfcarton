@@ -6,70 +6,32 @@ import shutil
 import sys
 import xml.etree.ElementTree as ET
 import zipfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 
 class ValidationError(RuntimeError):
     pass
 
 
-PACKAGE_CONTRACTS = {
-    "DripSharp.PdfCarton.IO": {
-        "assembly": "DripSharp.PdfCarton.IO.dll",
-        "dependencies": {
-            "Microsoft.CSharp": "4.7.0",
-            "Microsoft.Extensions.Logging.Abstractions": "10.0.0",
-            "System.Memory": "4.6.3",
-            "System.Text.Encoding.CodePages": "10.0.0",
-        },
-    },
-    "DripSharp.PdfCarton.Fonts": {
-        "assembly": "DripSharp.PdfCarton.Fonts.dll",
-        "dependencies": {
-            "DripSharp.PdfCarton.IO": None,
-            "Microsoft.CSharp": "4.7.0",
-            "Microsoft.Extensions.Logging.Abstractions": "10.0.0",
-            "SkiaSharp": "4.150.1",
-            "SkiaSharp.NativeAssets.Linux": "4.150.1",
-            "System.Formats.Asn1": "10.0.0",
-            "System.Memory": "4.6.3",
-            "System.Text.Encoding.CodePages": "10.0.0",
-        },
-    },
-    "DripSharp.PdfCarton.Xmp": {
-        "assembly": "DripSharp.PdfCarton.Xmp.dll",
-        "dependencies": {
-            "Microsoft.CSharp": "4.7.0",
-            "Microsoft.Extensions.Logging.Abstractions": "10.0.0",
-            "System.Memory": "4.6.3",
-            "System.Text.Encoding.CodePages": "10.0.0",
-        },
-    },
-    "DripSharp.PdfCarton": {
-        "assembly": "DripSharp.PdfCarton.dll",
-        "dependencies": {
-            "DripSharp.PdfCarton.Fonts": None,
-            "DripSharp.PdfCarton.IO": None,
-            "Microsoft.CSharp": "4.7.0",
-            "Microsoft.Extensions.Logging.Abstractions": "10.0.0",
-            "SkiaSharp": "4.150.1",
-            "System.Memory": "4.6.3",
-            "System.Security.Cryptography.Pkcs": "10.0.0",
-            "System.Text.Encoding.CodePages": "10.0.0",
-        },
-    },
-    "DripSharp.PdfCarton.Preflight": {
-        "assembly": "DripSharp.PdfCarton.Preflight.dll",
-        "dependencies": {
-            "DripSharp.PdfCarton.Xmp": None,
-            "DripSharp.PdfCarton": None,
-            "Microsoft.CSharp": "4.7.0",
-            "Microsoft.Extensions.Logging.Abstractions": "10.0.0",
-            "SkiaSharp": "4.150.1",
-            "System.Memory": "4.6.3",
-            "System.Text.Encoding.CodePages": "10.0.0",
-        },
-    },
+PUBLIC_PACKAGE_ID = "DripSharp.PdfCarton"
+TARGET_FRAMEWORK = "netstandard2.0"
+DEPENDENCY_FRAMEWORK = ".NETStandard2.0"
+COMPONENT_PACKAGE_IDS = (
+    "DripSharp.PdfCarton.IO",
+    "DripSharp.PdfCarton.Fonts",
+    "DripSharp.PdfCarton.Xmp",
+    "DripSharp.PdfCarton",
+    "DripSharp.PdfCarton.Preflight",
+)
+PUBLIC_DEPENDENCIES = {
+    "Microsoft.CSharp": "4.7.0",
+    "Microsoft.Extensions.Logging.Abstractions": "10.0.0",
+    "SkiaSharp": "4.150.1",
+    "SkiaSharp.NativeAssets.Linux": "4.150.1",
+    "System.Formats.Asn1": "10.0.0",
+    "System.Memory": "4.6.3",
+    "System.Security.Cryptography.Pkcs": "10.0.0",
+    "System.Text.Encoding.CodePages": "10.0.0",
 }
 
 
@@ -94,33 +56,47 @@ def element_text(parent, name):
     return element.text.strip()
 
 
-def inspect_package(artifacts, package_id, version, contract):
-    archive_path = artifacts / f"{package_id}.{version}.nupkg"
-    require(archive_path.is_file(), f"Missing release package: {archive_path.name}")
-
-    with zipfile.ZipFile(archive_path) as archive:
-        names = archive.namelist()
-        nuspecs = [name for name in names if name.lower().endswith(".nuspec")]
-        require(len(nuspecs) == 1, f"{package_id} must contain one nuspec")
-        metadata = ET.fromstring(archive.read(nuspecs[0])).find("{*}metadata")
-        require(metadata is not None, f"{package_id} nuspec has no metadata")
-
-        actual_id = element_text(metadata, "id")
-        actual_version = element_text(metadata, "version")
-        require(actual_id == package_id, f"Expected package ID {package_id}, found {actual_id}")
+def safe_archive_names(names, archive):
+    lowered = set()
+    for name in names:
+        path = PurePosixPath(name)
+        require(name and "\\" not in name, f"Unsafe archive path in {archive}: {name!r}")
         require(
-            actual_version == version,
-            f"Expected {package_id} version {version}, found {actual_version}",
+            not path.is_absolute() and all(part not in ("", ".", "..") for part in path.parts),
+            f"Unsafe archive path in {archive}: {name!r}",
+        )
+        folded = name.casefold()
+        require(folded not in lowered, f"Repeated or case-colliding path in {archive}: {name}")
+        lowered.add(folded)
+
+
+def inspect_archive(path, version, expected_payloads, payload_suffix, archive_kind):
+    require(path.is_file(), f"Missing {archive_kind}: {path.name}")
+    with zipfile.ZipFile(path) as archive:
+        entries = [entry for entry in archive.infolist() if not entry.is_dir()]
+        names = [entry.filename for entry in entries]
+        safe_archive_names(names, path)
+        nuspecs = [name for name in names if name.casefold().endswith(".nuspec")]
+        require(len(nuspecs) == 1, f"{archive_kind} must contain one nuspec")
+        metadata = ET.fromstring(archive.read(nuspecs[0])).find("{*}metadata")
+        require(metadata is not None, f"{archive_kind} nuspec has no metadata")
+        require(
+            element_text(metadata, "id") == PUBLIC_PACKAGE_ID,
+            f"Expected package ID {PUBLIC_PACKAGE_ID}",
+        )
+        require(
+            element_text(metadata, "version") == version,
+            f"Expected {PUBLIC_PACKAGE_ID} version {version}",
         )
 
         dependencies = metadata.find("{*}dependencies")
-        require(dependencies is not None, f"{package_id} has no dependency metadata")
+        require(dependencies is not None, f"{archive_kind} has no dependency metadata")
         groups = dependencies.findall("{*}group")
-        require(len(groups) == 1, f"{package_id} must have one dependency group")
+        require(len(groups) == 1, f"{archive_kind} must have one dependency group")
         group = groups[0]
         require(
-            group.get("targetFramework") == ".NETStandard2.0",
-            f"{package_id} must target .NETStandard2.0 in its nuspec",
+            group.get("targetFramework") == DEPENDENCY_FRAMEWORK,
+            f"{archive_kind} must target {DEPENDENCY_FRAMEWORK} in its nuspec",
         )
         actual_dependencies = {}
         for dependency in group.findall("{*}dependency"):
@@ -128,37 +104,30 @@ def inspect_package(artifacts, package_id, version, contract):
             dependency_version = dependency.get("version")
             require(
                 dependency_id and dependency_version,
-                f"{package_id} has incomplete dependency metadata",
+                f"{archive_kind} has incomplete dependency metadata",
             )
             require(
                 dependency_id not in actual_dependencies,
-                f"{package_id} repeats dependency {dependency_id}",
+                f"{archive_kind} repeats dependency {dependency_id}",
             )
             actual_dependencies[dependency_id] = dependency_version
-
-        expected_dependencies = {
-            dependency_id: version if dependency_version is None else dependency_version
-            for dependency_id, dependency_version in contract["dependencies"].items()
-        }
         require(
-            actual_dependencies == expected_dependencies,
-            f"{package_id} dependencies differ: expected {expected_dependencies}, "
+            actual_dependencies == PUBLIC_DEPENDENCIES,
+            f"{archive_kind} dependencies differ: expected {PUBLIC_DEPENDENCIES}, "
             f"found {actual_dependencies}",
         )
 
-        production_assemblies = {
+        actual_payloads = {
             name
             for name in names
-            if name.startswith("lib/netstandard2.0/") and name.lower().endswith(".dll")
+            if name.startswith(f"lib/{TARGET_FRAMEWORK}/")
+            and name.casefold().endswith(payload_suffix)
         }
-        expected_assemblies = {f"lib/netstandard2.0/{contract['assembly']}"}
         require(
-            production_assemblies == expected_assemblies,
-            f"{package_id} production assemblies differ: expected "
-            f"{sorted(expected_assemblies)}, found {sorted(production_assemblies)}",
+            actual_payloads == expected_payloads,
+            f"{archive_kind} production payload differs: expected "
+            f"{sorted(expected_payloads)}, found {sorted(actual_payloads)}",
         )
-
-    return archive_path
 
 
 def stage_dependency_packages(project, feed, release_ids):
@@ -189,8 +158,8 @@ def stage_dependency_packages(project, feed, release_ids):
                     path
                     for path in directory.iterdir()
                     if path.is_file()
-                    and path.name.lower().endswith(".nupkg")
-                    and not path.name.lower().endswith(".symbols.nupkg")
+                    and path.name.casefold().endswith(".nupkg")
+                    and not path.name.casefold().endswith(".symbols.nupkg")
                 )
         require(
             len(candidates) == 1,
@@ -204,7 +173,7 @@ def stage_dependency_packages(project, feed, release_ids):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Inspect bounded PdfCarton release package facts and stage a local feed."
+        description="Inspect the single public PdfCarton bundle and stage a local feed."
     )
     parser.add_argument("--artifacts", required=True, type=Path)
     parser.add_argument("--feed", required=True, type=Path)
@@ -215,8 +184,8 @@ def main():
     require(args.artifacts.is_dir(), f"Artifact directory does not exist: {args.artifacts}")
     require(args.feed.is_dir(), f"Local feed does not exist: {args.feed}")
     require(
-        len(args.project) == len(PACKAGE_CONTRACTS),
-        f"Expected {len(PACKAGE_CONTRACTS)} PdfCarton projects, found {len(args.project)}",
+        len(args.project) == len(COMPONENT_PACKAGE_IDS),
+        f"Expected {len(COMPONENT_PACKAGE_IDS)} PdfCarton projects, found {len(args.project)}",
     )
 
     projects = {}
@@ -224,14 +193,11 @@ def main():
     for project in args.project:
         properties = project_properties(project)
         package_id = properties.get("PackageId")
-        require(package_id in PACKAGE_CONTRACTS, f"Unexpected PackageId in {project}")
+        require(package_id in COMPONENT_PACKAGE_IDS, f"Unexpected PackageId in {project}")
         require(package_id not in projects, f"Repeated PdfCarton project: {package_id}")
+        require(properties.get("AssemblyName") == package_id, f"Unexpected AssemblyName in {project}")
         require(
-            properties.get("AssemblyName") == package_id,
-            f"Unexpected AssemblyName in {project}",
-        )
-        require(
-            properties.get("TargetFramework") == "netstandard2.0",
+            properties.get("TargetFramework") == TARGET_FRAMEWORK,
             f"Unexpected TargetFramework in {project}",
         )
         version = properties.get("Version")
@@ -240,28 +206,40 @@ def main():
         projects[package_id] = project
 
     require(
-        set(projects) == set(PACKAGE_CONTRACTS),
-        f"PdfCarton projects differ: expected {sorted(PACKAGE_CONTRACTS)}, "
+        set(projects) == set(COMPONENT_PACKAGE_IDS),
+        f"PdfCarton projects differ: expected {sorted(COMPONENT_PACKAGE_IDS)}, "
         f"found {sorted(projects)}",
     )
-    require(len(versions) == 1, f"PdfCarton package versions differ: {sorted(versions)}")
+    require(len(versions) == 1, f"PdfCarton project versions differ: {sorted(versions)}")
     version = versions.pop()
-    release_archives = []
-    for package_id, contract in PACKAGE_CONTRACTS.items():
-        release_archives.append(
-            inspect_package(args.artifacts, package_id, version, contract)
-        )
+    package_path = args.artifacts / f"{PUBLIC_PACKAGE_ID}.{version}.nupkg"
+    symbol_path = args.artifacts / f"{PUBLIC_PACKAGE_ID}.{version}.snupkg"
+    expected_inventory = {package_path.name, symbol_path.name}
+    actual_inventory = {path.name for path in args.artifacts.iterdir()}
+    require(
+        actual_inventory == expected_inventory,
+        f"Public PdfCarton artifact inventory differs: expected {sorted(expected_inventory)}, "
+        f"found {sorted(actual_inventory)}",
+    )
 
-    for archive in release_archives:
-        shutil.copy2(archive, args.feed / archive.name)
-    release_ids = set(PACKAGE_CONTRACTS)
+    expected_assemblies = {
+        f"lib/{TARGET_FRAMEWORK}/{package_id}.dll" for package_id in COMPONENT_PACKAGE_IDS
+    }
+    expected_pdbs = {
+        f"lib/{TARGET_FRAMEWORK}/{package_id}.pdb" for package_id in COMPONENT_PACKAGE_IDS
+    }
+    inspect_archive(package_path, version, expected_assemblies, ".dll", "package")
+    inspect_archive(symbol_path, version, expected_pdbs, ".pdb", "symbol package")
+
+    shutil.copy2(package_path, args.feed / package_path.name)
+    release_ids = set(COMPONENT_PACKAGE_IDS)
     for project in projects.values():
         stage_dependency_packages(project, args.feed, release_ids)
 
     args.version_file.write_text(version + "\n", encoding="utf-8")
     print(
-        "Essential PdfCarton package metadata and production assemblies passed: "
-        f"{', '.join(PACKAGE_CONTRACTS)} {version}"
+        f"Public PdfCarton bundle passed: {PUBLIC_PACKAGE_ID} {version}; "
+        f"assemblies {', '.join(COMPONENT_PACKAGE_IDS)}"
     )
 
 

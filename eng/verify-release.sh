@@ -19,7 +19,7 @@ case "${PDFCARTON_RELEASE_REDUCED_TESTS:-0}" in
     ;;
 esac
 
-published_projects=(
+production_projects=(
   "src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj"
   "src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj"
   "src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj"
@@ -30,7 +30,7 @@ release_smoke_project="tests/DripSharp.PdfCarton.ReleaseSmoke/DripSharp.PdfCarto
 complete_test_project="tests/DripSharp.PdfCarton.Tests/DripSharp.PdfCarton.Tests.csproj"
 focused_consumer_filter="FullyQualifiedName~DripSharp.PdfCarton.Tests.IoConsumerTests|FullyQualifiedName~DripSharp.PdfCarton.Tests.FontsConsumerTests|FullyQualifiedName~DripSharp.PdfCarton.Tests.XmpConsumerTests|FullyQualifiedName~DripSharp.PdfCarton.Tests.PdfConsumerTests|FullyQualifiedName~DripSharp.PdfCarton.Tests.PreflightConsumerTests"
 
-for project in "${published_projects[@]}"; do
+for project in "${production_projects[@]}"; do
   dotnet restore "$project" --no-dependencies
   dotnet build "$project" \
     --configuration Release \

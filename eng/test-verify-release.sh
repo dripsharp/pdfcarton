@@ -47,7 +47,7 @@ reject_command_fragment() {
   fi
 }
 
-published_projects=(
+production_projects=(
   "src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj"
   "src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj"
   "src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj"
@@ -67,7 +67,7 @@ env \
   PDFCARTON_RELEASE_REDUCED_TESTS=1 \
   "$script_directory/verify-release.sh" >/dev/null
 
-for project in "${published_projects[@]}"; do
+for project in "${production_projects[@]}"; do
   require_command "restore $project --no-dependencies"
   require_command "build $project $common_build_arguments"
 done

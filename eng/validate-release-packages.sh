@@ -33,7 +33,7 @@ packages="$temporary_directory/packages"
 dotnet_home="$temporary_directory/dotnet-home"
 mkdir -p "$feed" "$consumer" "$packages" "$dotnet_home"
 
-published_projects=(
+component_projects=(
   "$repository_root/src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj"
   "$repository_root/src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj"
   "$repository_root/src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj"
@@ -42,7 +42,7 @@ published_projects=(
 )
 version_file="$temporary_directory/version.txt"
 project_arguments=()
-for project in "${published_projects[@]}"; do
+for project in "${component_projects[@]}"; do
   project_arguments+=(--project "$project")
 done
 
@@ -64,11 +64,7 @@ cat > "$consumer/PdfCarton.ReleaseConsumer.csproj" <<EOF
     <RollForward>Major</RollForward>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DripSharp.PdfCarton.IO" Version="$version" />
-    <PackageReference Include="DripSharp.PdfCarton.Fonts" Version="$version" />
-    <PackageReference Include="DripSharp.PdfCarton.Xmp" Version="$version" />
     <PackageReference Include="DripSharp.PdfCarton" Version="$version" />
-    <PackageReference Include="DripSharp.PdfCarton.Preflight" Version="$version" />
   </ItemGroup>
 </Project>
 EOF
@@ -94,19 +90,19 @@ static void Require(bool condition, string message)
 
 Require(
     typeof(RandomAccessReadBuffer).Assembly.GetName().Name == "DripSharp.PdfCarton.IO",
-    "IO package assembly did not load.");
+    "Bundled IO assembly did not load.");
 Require(
     typeof(BoundingBox).Assembly.GetName().Name == "DripSharp.PdfCarton.Fonts",
-    "Fonts package assembly did not load.");
+    "Bundled Fonts assembly did not load.");
 Require(
     typeof(DomXmpParser).Assembly.GetName().Name == "DripSharp.PdfCarton.Xmp",
-    "Xmp package assembly did not load.");
+    "Bundled Xmp assembly did not load.");
 Require(
     typeof(PDDocument).Assembly.GetName().Name == "DripSharp.PdfCarton",
-    "PdfCarton package assembly did not load.");
+    "Bundled PdfCarton assembly did not load.");
 Require(
     typeof(PreflightParser).Assembly.GetName().Name == "DripSharp.PdfCarton.Preflight",
-    "Preflight package assembly did not load.");
+    "Bundled Preflight assembly did not load.");
 
 using (var input = new RandomAccessReadBuffer(new sbyte[] { 1, -2, 3, 4 }))
 {
@@ -171,7 +167,7 @@ finally
     File.Delete(file);
 }
 
-Console.WriteLine("External PdfCarton release package consumer passed.");
+Console.WriteLine("External single-package PdfCarton release consumer passed.");
 EOF
 
 cat > "$consumer/NuGet.Config" <<EOF

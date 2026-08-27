@@ -46,28 +46,13 @@ jobs:
         working-directory: release-artifacts
         run: |
           shopt -s nullglob
-          io_packages=(DripSharp.PdfCarton.IO.*.nupkg DripSharp.PdfCarton.IO.*.snupkg)
-          fonts_packages=(DripSharp.PdfCarton.Fonts.*.nupkg DripSharp.PdfCarton.Fonts.*.snupkg)
-          xmp_packages=(DripSharp.PdfCarton.Xmp.*.nupkg DripSharp.PdfCarton.Xmp.*.snupkg)
-          pdfcarton_packages=(DripSharp.PdfCarton.[0-9]*.nupkg DripSharp.PdfCarton.[0-9]*.snupkg)
-          preflight_packages=(DripSharp.PdfCarton.Preflight.*.nupkg DripSharp.PdfCarton.Preflight.*.snupkg)
-          packages=(
-            "${io_packages[@]}"
-            "${fonts_packages[@]}"
-            "${xmp_packages[@]}"
-            "${pdfcarton_packages[@]}"
-            "${preflight_packages[@]}"
-          )
+          packages=(DripSharp.PdfCarton.[0-9]*.nupkg DripSharp.PdfCarton.[0-9]*.snupkg)
 
-          if (( ${#io_packages[@]} != 2 ||
-                ${#fonts_packages[@]} != 2 ||
-                ${#xmp_packages[@]} != 2 ||
-                ${#pdfcarton_packages[@]} != 2 ||
-                ${#preflight_packages[@]} != 2 )); then
-            echo "Expected one package and one symbol package for each PdfCarton project."
+          if (( ${#packages[@]} != 2 )); then
+            echo "Expected the one public PdfCarton package and its symbol package."
             exit 1
           fi
-          if (( $(find . -mindepth 1 -maxdepth 1 -type f | wc -l) != 10 )); then
+          if (( $(find . -mindepth 1 -maxdepth 1 -type f | wc -l) != 2 )); then
             echo "The release artifact directory contains unexpected files."
             exit 1
           fi
@@ -110,32 +95,20 @@ jobs:
           sha256sum --check --strict SHA256SUMS
 
           shopt -s nullglob
-          io_packages=(DripSharp.PdfCarton.IO.*.nupkg)
-          fonts_packages=(DripSharp.PdfCarton.Fonts.*.nupkg)
-          xmp_packages=(DripSharp.PdfCarton.Xmp.*.nupkg)
           pdfcarton_packages=(DripSharp.PdfCarton.[0-9]*.nupkg)
-          preflight_packages=(DripSharp.PdfCarton.Preflight.*.nupkg)
-          symbol_packages=(*.snupkg)
+          symbol_packages=(DripSharp.PdfCarton.[0-9]*.snupkg)
 
-          if (( ${#io_packages[@]} != 1 ||
-                ${#fonts_packages[@]} != 1 ||
-                ${#xmp_packages[@]} != 1 ||
-                ${#pdfcarton_packages[@]} != 1 ||
-                ${#preflight_packages[@]} != 1 ||
-                ${#symbol_packages[@]} != 5 )); then
-            echo "Expected one package and one symbol package for each PdfCarton project."
+          if (( ${#pdfcarton_packages[@]} != 1 ||
+                ${#symbol_packages[@]} != 1 )); then
+            echo "Expected the one public PdfCarton package and its symbol package."
             exit 1
           fi
-          if (( $(find . -mindepth 1 -maxdepth 1 -type f | wc -l) != 11 )); then
+          if (( $(find . -mindepth 1 -maxdepth 1 -type f | wc -l) != 3 )); then
             echo "The downloaded release artifact contains unexpected files."
             exit 1
           fi
 
-          printf 'io=%s\n' "${io_packages[0]}" >> "$GITHUB_OUTPUT"
-          printf 'fonts=%s\n' "${fonts_packages[0]}" >> "$GITHUB_OUTPUT"
-          printf 'xmp=%s\n' "${xmp_packages[0]}" >> "$GITHUB_OUTPUT"
           printf 'pdfcarton=%s\n' "${pdfcarton_packages[0]}" >> "$GITHUB_OUTPUT"
-          printf 'preflight=%s\n' "${preflight_packages[0]}" >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-dotnet@v5
         with:
@@ -147,24 +120,12 @@ jobs:
         with:
           user: isaksky
 
-      - name: Publish IO, Fonts, Xmp, PdfCarton, then Preflight
+      - name: Publish the PdfCarton bundle
         shell: bash
         working-directory: release-artifacts
         env:
           NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
         run: |
-          dotnet nuget push "${{ steps.packages.outputs.io }}" \
-            --api-key "$NUGET_API_KEY" \
-            --source https://api.nuget.org/v3/index.json
-          dotnet nuget push "${{ steps.packages.outputs.fonts }}" \
-            --api-key "$NUGET_API_KEY" \
-            --source https://api.nuget.org/v3/index.json
-          dotnet nuget push "${{ steps.packages.outputs.xmp }}" \
-            --api-key "$NUGET_API_KEY" \
-            --source https://api.nuget.org/v3/index.json
           dotnet nuget push "${{ steps.packages.outputs.pdfcarton }}" \
-            --api-key "$NUGET_API_KEY" \
-            --source https://api.nuget.org/v3/index.json
-          dotnet nuget push "${{ steps.packages.outputs.preflight }}" \
             --api-key "$NUGET_API_KEY" \
             --source https://api.nuget.org/v3/index.json

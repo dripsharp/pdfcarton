@@ -23,19 +23,29 @@ fi
 artifact_directory="$(cd -- "$artifact_directory" && pwd)"
 
 cd "$repository_root"
-published_projects=(
+component_directory="$(mktemp -d "${TMPDIR:-/tmp}/pdfcarton-release-components.XXXXXX")"
+trap 'rm -rf "$component_directory"' EXIT
+
+component_projects=(
   "src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj"
   "src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj"
   "src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj"
   "src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj"
   "src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj"
 )
-for project in "${published_projects[@]}"; do
+project_arguments=()
+for project in "${component_projects[@]}"; do
   dotnet pack "$project" \
     --configuration Release \
     --no-build \
     --no-restore \
-    --output "$artifact_directory"
+    --output "$component_directory"
+  project_arguments+=(--project "$project")
 done
+
+python3 "$script_directory/bundle-release-packages.py" \
+  --components "$component_directory" \
+  --artifacts "$artifact_directory" \
+  "${project_arguments[@]}"
 
 "$script_directory/validate-release-packages.sh" "$artifact_directory"
