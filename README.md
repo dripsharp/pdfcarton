@@ -1,5 +1,7 @@
 # PdfCarton
 
+[![DripSharp.PdfCarton on NuGet](https://img.shields.io/nuget/vpre/DripSharp.PdfCarton?logo=nuget&label=DripSharp.PdfCarton)](https://www.nuget.org/packages/DripSharp.PdfCarton)
+
 Apache PDFBox document, parsing, rendering, and manipulation APIs for .NET, mechanically translated by DripSharp. This package is an independent translation and is not affiliated with, endorsed by, or sponsored by the Apache Software Foundation.
 
 This is a generated publication repository. Durable source, translation, runtime, and test changes belong in [`dripsharp/dripsharp`](https://github.com/dripsharp/dripsharp) and must be regenerated; do not apply durable manual fixes to generated C# or generated tests here.
