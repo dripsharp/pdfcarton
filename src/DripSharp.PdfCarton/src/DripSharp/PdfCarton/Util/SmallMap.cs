@@ -9,234 +9,278 @@
 namespace DripSharp.PdfCarton.Util;
 
 public class SmallMap<K, V> : global::DripSharp.Runtime.JavaMapContract<K, V> {
-private object[] mapArr = null!;
+  private object[] mapArr = null!;
 
-public SmallMap() {}
+  public SmallMap() {}
 
-public SmallMap(global::System.Collections.Generic.IDictionary<K, V> initMap) {
-this.PutAll(global::DripSharp.Runtime.JavaCompat.CastDictionary<K, V>(initMap));
-}
+  public SmallMap(global::System.Collections.Generic.IDictionary<K, V> initMap) {
+    this.PutAll(global::DripSharp.Runtime.JavaCompat.CastDictionary<K, V>(initMap));
+  }
 
-private int FindKey(object key) {
-if ((this.IsEmpty() || (key == default!))) {
-return -1;
-}
-for (int aIdx = 0; (aIdx < this.mapArr.Length); aIdx += 2) {
-if (global::DripSharp.Runtime.JavaCompat.Equals(key, this.mapArr[aIdx])) {
-return aIdx;
-}
-}
-return -1;
-}
+  private int FindKey(object key) {
+    if ((this.IsEmpty() || (key == default!))) {
+      return -1;
+    }
+    for (int aIdx = 0; (aIdx < this.mapArr.Length); aIdx += 2) {
+      if (global::DripSharp.Runtime.JavaCompat.Equals(key, this.mapArr[aIdx])) {
+        return aIdx;
+      }
+    }
+    return -1;
+  }
 
-private int FindValue(object value) {
-if ((this.IsEmpty() || (value == default!))) {
-return -1;
-}
-for (int aIdx = 1; (aIdx < this.mapArr.Length); aIdx += 2) {
-if (global::DripSharp.Runtime.JavaCompat.Equals(value, this.mapArr[aIdx])) {
-return aIdx;
-}
-}
-return -1;
-}
+  private int FindValue(object value) {
+    if ((this.IsEmpty() || (value == default!))) {
+      return -1;
+    }
+    for (int aIdx = 1; (aIdx < this.mapArr.Length); aIdx += 2) {
+      if (global::DripSharp.Runtime.JavaCompat.Equals(value, this.mapArr[aIdx])) {
+        return aIdx;
+      }
+    }
+    return -1;
+  }
 
-public virtual int Size() {
-return ((this.mapArr == default!) ? 0 : (this.mapArr.Length >> unchecked((int)(1))));
-}
+  public virtual int Size() {
+    return ((this.mapArr == default!) ? 0 : (this.mapArr.Length >> unchecked((int)(1))));
+  }
 
-public virtual bool IsEmpty() {
-return ((this.mapArr == default!) || (this.mapArr.Length == 0));
-}
+  public virtual bool IsEmpty() {
+    return ((this.mapArr == default!) || (this.mapArr.Length == 0));
+  }
 
-public virtual bool ContainsKey(object key) {
-return (this.FindKey(key) >= 0);
-}
+  public virtual bool ContainsKey(object key) {
+    return (this.FindKey(key) >= 0);
+  }
 
-public virtual bool ContainsValue(object value) {
-return (this.FindValue(value) >= 0);
-}
+  public virtual bool ContainsValue(object value) {
+    return (this.FindValue(value) >= 0);
+  }
 
-public virtual V Get(object key) {
-int kIdx = this.FindKey(key);
-return ((kIdx < 0) ? (V)(default!) : (V)(global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[(kIdx + 1)])));
-}
+  public virtual V Get(object key) {
+    int kIdx = this.FindKey(key);
+    return ((kIdx < 0) ? (V)(default!)
+      : (V)(global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[(kIdx + 1)])));
+  }
 
-public virtual V Put(K key, V value) {
-if (((key is null) || (value is null))) {
-throw new global::System.NullReferenceException("Key or value must not be null.");
-}
-if ((this.mapArr == default!)) {
-this.mapArr = new object[] { key, value };
-return default!;
-} else {
-int kIdx = this.FindKey(key);
-if ((kIdx < 0)) {
-int oldLen = this.mapArr.Length;
-object[] newMapArr = new object[(oldLen + 2)];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, 0, newMapArr, 0, oldLen);
-newMapArr[oldLen] = key;
-newMapArr[(oldLen + 1)] = value;
-this.mapArr = newMapArr;
-return default!;
-} else {
-V oldValue = global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[(kIdx + 1)]);
-this.mapArr[(kIdx + 1)] = value;
-return oldValue;
-}
-}
-}
+  public virtual V Put(K key, V value) {
+    if (((key is null) || (value is null))) {
+      throw new global::System.NullReferenceException("Key or value must not be null.");
+    }
+    if ((this.mapArr == default!)) {
+      this.mapArr = new object[] { key, value };
+      return default!;
+    } else {
+      int kIdx = this.FindKey(key);
+      if ((kIdx < 0)) {
+        int oldLen = this.mapArr.Length;
+        object[] newMapArr = new object[(oldLen + 2)];
+        global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, 0, newMapArr, 0, oldLen);
+        newMapArr[oldLen] = key;
+        newMapArr[(oldLen + 1)] = value;
+        this.mapArr = newMapArr;
+        return default!;
+      } else {
+        V oldValue = global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[(kIdx + 1)]);
+        this.mapArr[(kIdx + 1)] = value;
+        return oldValue;
+      }
+    }
+  }
 
-public virtual V Remove(object key) {
-int kIdx = this.FindKey(key);
-if ((kIdx < 0)) {
-return default!;
-}
-V oldValue = global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[(kIdx + 1)]);
-int oldLen = this.mapArr.Length;
-if ((oldLen == 2)) {
-this.mapArr = default!;
-} else {
-object[] newMapArr = new object[(oldLen - 2)];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, 0, newMapArr, 0, kIdx);
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, (kIdx + 2), newMapArr, kIdx, ((oldLen - kIdx) - 2));
-this.mapArr = newMapArr;
-}
-return oldValue;
-}
+  public virtual V Remove(object key) {
+    int kIdx = this.FindKey(key);
+    if ((kIdx < 0)) {
+      return default!;
+    }
+    V oldValue = global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[(kIdx + 1)]);
+    int oldLen = this.mapArr.Length;
+    if ((oldLen == 2)) {
+      this.mapArr = default!;
+    } else {
+      object[] newMapArr = new object[(oldLen - 2)];
+      global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, 0, newMapArr, 0, kIdx);
+      global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, (kIdx + 2), newMapArr, kIdx,
+        ((oldLen - kIdx) - 2));
+      this.mapArr = newMapArr;
+    }
+    return oldValue;
+  }
 
-public void PutAll(global::System.Collections.Generic.IDictionary<K, V> otherMap) {
-if (((this.mapArr == default!) || (this.mapArr.Length == 0))) {
-this.mapArr = new object[(global::DripSharp.Runtime.JavaCompat.MapCount(otherMap) << unchecked((int)(1)))];
-int aIdx = 0;
-foreach (global::DripSharp.Runtime.JavaMapEntry<K, V> entry__216_50 in global::DripSharp.Runtime.JavaCompat.MapEntrySet(otherMap)) {
-if (((entry__216_50.Key is null) || (entry__216_50.Value is null))) {
-throw new global::System.NullReferenceException("Key or value must not be null.");
-}
-this.mapArr[aIdx++] = entry__216_50.Key;
-this.mapArr[aIdx++] = entry__216_50.Value;
-}
-} else {
-int oldLen = this.mapArr.Length;
-object[] newMapArr = new object[(oldLen + (global::DripSharp.Runtime.JavaCompat.MapCount(otherMap) << unchecked((int)(1))))];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, 0, newMapArr, 0, oldLen);
-int newIdx = oldLen;
-foreach (global::DripSharp.Runtime.JavaMapEntry<K, V> entry__236_50 in global::DripSharp.Runtime.JavaCompat.MapEntrySet(otherMap)) {
-if (((entry__236_50.Key is null) || (entry__236_50.Value is null))) {
-throw new global::System.NullReferenceException("Key or value must not be null.");
-}
-int existKeyIdx = this.FindKey(entry__236_50.Key);
-if ((existKeyIdx >= 0)) {
-newMapArr[(existKeyIdx + 1)] = entry__236_50.Value;
-} else {
-newMapArr[newIdx++] = entry__236_50.Key;
-newMapArr[newIdx++] = entry__236_50.Value;
-}
-}
-if ((newIdx < newMapArr.Length)) {
-object[] reducedMapArr = new object[newIdx];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(newMapArr, 0, reducedMapArr, 0, newIdx);
-newMapArr = reducedMapArr;
-}
-this.mapArr = newMapArr;
-}
-}
+  public void PutAll(global::System.Collections.Generic.IDictionary<K, V> otherMap) {
+    if (((this.mapArr == default!) || (this.mapArr.Length == 0))) {
+      this.mapArr
+        = new object[(global::DripSharp.Runtime.JavaCompat.MapCount(otherMap) << unchecked((int)(1)))];
+      int aIdx = 0;
+      foreach (global::DripSharp.Runtime.JavaMapEntry<K,
+        V> entry__216_50 in global::DripSharp.Runtime.JavaCompat.MapEntrySet(otherMap)) {
+        if (((entry__216_50.Key is null) || (entry__216_50.Value is null))) {
+          throw new global::System.NullReferenceException("Key or value must not be null.");
+        }
+        this.mapArr[aIdx++] = entry__216_50.Key;
+        this.mapArr[aIdx++] = entry__216_50.Value;
+      }
+    } else {
+      int oldLen = this.mapArr.Length;
+      object[] newMapArr = new object[(oldLen
+        + (global::DripSharp.Runtime.JavaCompat.MapCount(otherMap) << unchecked((int)(1))))];
+      global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, 0, newMapArr, 0, oldLen);
+      int newIdx = oldLen;
+      foreach (global::DripSharp.Runtime.JavaMapEntry<K,
+        V> entry__236_50 in global::DripSharp.Runtime.JavaCompat.MapEntrySet(otherMap)) {
+        if (((entry__236_50.Key is null) || (entry__236_50.Value is null))) {
+          throw new global::System.NullReferenceException("Key or value must not be null.");
+        }
+        int existKeyIdx = this.FindKey(entry__236_50.Key);
+        if ((existKeyIdx >= 0)) {
+          newMapArr[(existKeyIdx + 1)] = entry__236_50.Value;
+        } else {
+          newMapArr[newIdx++] = entry__236_50.Key;
+          newMapArr[newIdx++] = entry__236_50.Value;
+        }
+      }
+      if ((newIdx < newMapArr.Length)) {
+        object[] reducedMapArr = new object[newIdx];
+        global::DripSharp.Runtime.JavaCompat.ArrayCopy(newMapArr, 0, reducedMapArr, 0, newIdx);
+        newMapArr = reducedMapArr;
+      }
+      this.mapArr = newMapArr;
+    }
+  }
 
-public virtual void Clear() {
-this.mapArr = default!;
-}
+  public virtual void Clear() {
+    this.mapArr = default!;
+  }
 
-public virtual global::System.Collections.Generic.ISet<K> KeySet() {
-if (this.IsEmpty()) {
-return global::DripSharp.Runtime.JavaCompat.EmptySet<K>();
-}
-global::System.Collections.Generic.ISet<K> keys = new global::System.Collections.Generic.HashSet<K>();
-for (int kIdx = 0; (kIdx < this.mapArr.Length); kIdx += 2) {
-keys.Add(global::DripSharp.Runtime.JavaCompat.CastReference<K>(this.mapArr[kIdx]));
-}
-return global::DripSharp.Runtime.JavaCompat.UnmodifiableSet(keys);
-}
+  public virtual global::System.Collections.Generic.ISet<K> KeySet() {
+    if (this.IsEmpty()) {
+      return global::DripSharp.Runtime.JavaCompat.EmptySet<K>();
+    }
+    global::System.Collections.Generic.ISet<K> keys
+      = new global::System.Collections.Generic.HashSet<K>();
+    for (int kIdx = 0; (kIdx < this.mapArr.Length); kIdx += 2) {
+      keys.Add(global::DripSharp.Runtime.JavaCompat.CastReference<K>(this.mapArr[kIdx]));
+    }
+    return global::DripSharp.Runtime.JavaCompat.UnmodifiableSet(keys);
+  }
 
-public virtual global::System.Collections.Generic.ICollection<V> Values() {
-if (this.IsEmpty()) {
-return global::DripSharp.Runtime.JavaCompat.EmptySet<V>();
-}
-global::System.Collections.Generic.IList<V> values = new global::System.Collections.Generic.List<V>((this.mapArr.Length >> unchecked((int)(1))));
-for (int vIdx = 1; (vIdx < this.mapArr.Length); vIdx += 2) {
-global::DripSharp.Runtime.JavaCompat.Add(values, global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[vIdx]));
-}
-return global::DripSharp.Runtime.JavaCompat.UnmodifiableList(values);
-}
+  public virtual global::System.Collections.Generic.ICollection<V> Values() {
+    if (this.IsEmpty()) {
+      return global::DripSharp.Runtime.JavaCompat.EmptySet<V>();
+    }
+    global::System.Collections.Generic.IList<V> values
+      = new global::System.Collections.Generic.List<V>((this.mapArr.Length >> unchecked((int)(1))));
+    for (int vIdx = 1; (vIdx < this.mapArr.Length); vIdx += 2) {
+      global::DripSharp.Runtime.JavaCompat.Add(values,
+        global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[vIdx]));
+    }
+    return global::DripSharp.Runtime.JavaCompat.UnmodifiableList(values);
+  }
 
-internal class SmallMapEntry : global::DripSharp.Runtime.JavaMapEntry<K, V> {
-internal readonly int keyIdx = default;
+  internal class SmallMapEntry : global::DripSharp.Runtime.JavaMapEntry<K, V> {
+    internal readonly int keyIdx = default;
 
-internal SmallMapEntry(int keyInMapIdx, global::DripSharp.PdfCarton.Util.SmallMap<K, V> __outer) {
-this.__outer = __outer;
+    internal SmallMapEntry(int keyInMapIdx, global::DripSharp.PdfCarton.Util.SmallMap<K,
+      V> __outer) {
+      this.__outer = __outer;
 
-this.keyIdx = keyInMapIdx;
-}
+      this.keyIdx = keyInMapIdx;
+    }
 
-public virtual K GetKey() {
-return global::DripSharp.Runtime.JavaCompat.CastReference<K>(this.__outer.mapArr[this.keyIdx]);
-}
+    public virtual K GetKey() {
+      return global::DripSharp.Runtime.JavaCompat.CastReference<K>(this.__outer.mapArr[this.keyIdx]);
+    }
 
-public virtual V GetValue() {
-return global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.__outer.mapArr[(this.keyIdx + 1)]);
-}
+    public virtual V GetValue() {
+      return global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.__outer.mapArr[(this.keyIdx
+        + 1)]);
+    }
 
-public override V SetValue(V value) {
-if ((value is null)) {
-throw new global::System.NullReferenceException("Key or value must not be null.");
-}
-V oldValue = this.GetValue();
-this.__outer.mapArr[(this.keyIdx + 1)] = value;
-return oldValue;
-}
+    public override V SetValue(V value) {
+      if ((value is null)) {
+        throw new global::System.NullReferenceException("Key or value must not be null.");
+      }
+      V oldValue = this.GetValue();
+      this.__outer.mapArr[(this.keyIdx + 1)] = value;
+      return oldValue;
+    }
 
-public override int GetHashCode() {
-return this.GetKey().GetHashCode();
-}
+    public override int GetHashCode() {
+      return this.GetKey().GetHashCode();
+    }
 
-public override bool Equals(object obj) {
-if (!((obj is global::DripSharp.PdfCarton.Util.SmallMap<object, object>.SmallMapEntry))) {
-return false;
-}
-global::DripSharp.PdfCarton.Util.SmallMap<K, V>.SmallMapEntry other = (global::DripSharp.PdfCarton.Util.SmallMap<K, V>.SmallMapEntry)(obj!);
-return (global::DripSharp.Runtime.JavaCompat.Equals(this.GetKey(), other.GetKey()) && global::DripSharp.Runtime.JavaCompat.Equals(this.GetValue(), other.GetValue()));
-}
+    public override bool Equals(object obj) {
+      if (!((obj is global::DripSharp.PdfCarton.Util.SmallMap<object, object>.SmallMapEntry))) {
+        return false;
+      }
+      global::DripSharp.PdfCarton.Util.SmallMap<K, V>.SmallMapEntry other
+        = (global::DripSharp.PdfCarton.Util.SmallMap<K, V>.SmallMapEntry)(obj!);
+      return (global::DripSharp.Runtime.JavaCompat.Equals(this.GetKey(), other.GetKey())
+        && global::DripSharp.Runtime.JavaCompat.Equals(this.GetValue(), other.GetValue()));
+    }
 
-public override K Key => this.GetKey();
+    public override K Key => this.GetKey();
 
-public override V Value => this.GetValue();
+    public override V Value => this.GetValue();
 
-private readonly global::DripSharp.PdfCarton.Util.SmallMap<K, V> __outer;
-}
+    private readonly global::DripSharp.PdfCarton.Util.SmallMap<K, V> __outer;
+  }
 
-public virtual global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaMapEntry<K, V>> EntrySet() {
-if (this.IsEmpty()) {
-return global::DripSharp.Runtime.JavaCompat.EmptySet<global::DripSharp.Runtime.JavaMapEntry<K, V>>();
-}
-global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaMapEntry<K, V>> entries = new global::System.Collections.Generic.HashSet<global::DripSharp.Runtime.JavaMapEntry<K, V>>();
-for (int kIdx = 0; (kIdx < this.mapArr.Length); kIdx += 2) {
-entries.Add(new global::DripSharp.PdfCarton.Util.SmallMap<K, V>.SmallMapEntry(kIdx, this));
-}
-return global::DripSharp.Runtime.JavaCompat.UnmodifiableSet(entries);
-}
+  public virtual global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaMapEntry<K,
+    V>> EntrySet() {
+    if (this.IsEmpty()) {
+      return global::DripSharp.Runtime.JavaCompat.EmptySet<global::DripSharp.Runtime.JavaMapEntry<K,
+        V>>();
+    }
+    global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaMapEntry<K, V>> entries
+      = new global::System.Collections.Generic.HashSet<global::DripSharp.Runtime.JavaMapEntry<K,
+      V>>();
+    for (int kIdx = 0; (kIdx < this.mapArr.Length); kIdx += 2) {
+      entries.Add(new global::DripSharp.PdfCarton.Util.SmallMap<K, V>.SmallMapEntry(kIdx, this));
+    }
+    return global::DripSharp.Runtime.JavaCompat.UnmodifiableSet(entries);
+  }
 
-V global::System.Collections.Generic.IDictionary<K, V>.this[K key] { get => this.Get(key); set => this.Put(key, value); }
-global::System.Collections.Generic.ICollection<K> global::System.Collections.Generic.IDictionary<K, V>.Keys => this.KeySet();
-global::System.Collections.Generic.ICollection<V> global::System.Collections.Generic.IDictionary<K, V>.Values => this.Values();
-int global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.Count => this.Size();
-bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.IsReadOnly => false;
-void global::System.Collections.Generic.IDictionary<K, V>.Add(K key, V value) => this.Put(key, value);
-bool global::System.Collections.Generic.IDictionary<K, V>.ContainsKey(K key) => this.ContainsKey(key);
-bool global::System.Collections.Generic.IDictionary<K, V>.Remove(K key) { if (!this.ContainsKey(key)) return false; this.Remove(key); return true; }
-bool global::System.Collections.Generic.IDictionary<K, V>.TryGetValue(K key, out V value) { if (this.ContainsKey(key)) { value = this.Get(key); return true; } value = default!; return false; }
-void global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.Add(global::System.Collections.Generic.KeyValuePair<K, V> item) => this.Put(item.Key, item.Value);
-bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.Contains(global::System.Collections.Generic.KeyValuePair<K, V> item) => this.ContainsKey(item.Key) && global::DripSharp.Runtime.JavaCompat.Equals(this.Get(item.Key), item.Value);
-void global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.CopyTo(global::System.Collections.Generic.KeyValuePair<K, V>[] array, int arrayIndex) { global::DripSharp.Runtime.JavaCompat.ThrowIfNull(array, nameof(array)); foreach (var item in (global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K, V>>)this) array[arrayIndex++] = item; }
-bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.Remove(global::System.Collections.Generic.KeyValuePair<K, V> item) { if (!((global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>)this).Contains(item)) return false; this.Remove(item.Key); return true; }
-global::System.Collections.Generic.IEnumerator<global::System.Collections.Generic.KeyValuePair<K, V>> global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K, V>>.GetEnumerator() { foreach (var entry in this.EntrySet()) yield return new global::System.Collections.Generic.KeyValuePair<K, V>(entry.Key, entry.Value); }
-global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => ((global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K, V>>)this).GetEnumerator();
+  V global::System.Collections.Generic.IDictionary<K, V>.this[K key] { get => this.Get(key); set
+      => this.Put(key, value); }
+  global::System.Collections.Generic.ICollection<K> global::System.Collections.Generic.IDictionary<K,
+    V>.Keys => this.KeySet();
+  global::System.Collections.Generic.ICollection<V> global::System.Collections.Generic.IDictionary<K,
+    V>.Values => this.Values();
+  int global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.Count => this.Size();
+  bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.IsReadOnly => false;
+  void global::System.Collections.Generic.IDictionary<K, V>.Add(K key, V value) => this.Put(key,
+    value);
+  bool global::System.Collections.Generic.IDictionary<K, V>.ContainsKey(K key)
+    => this.ContainsKey(key);
+  bool global::System.Collections.Generic.IDictionary<K,
+    V>.Remove(K key) { if (!this.ContainsKey(key)) return false; this.Remove(key); return true; }
+  bool global::System.Collections.Generic.IDictionary<K, V>.TryGetValue(K key,
+    out V value) { if (this.ContainsKey(key)) { value = this.Get(key); return true; } value
+      = default!; return false; }
+  void global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.Add(global::System.Collections.Generic.KeyValuePair<K, V> item) => this.Put(item.Key,
+    item.Value);
+  bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.Contains(global::System.Collections.Generic.KeyValuePair<K, V> item)
+    => this.ContainsKey(item.Key) && global::DripSharp.Runtime.JavaCompat.Equals(this.Get(item.Key),
+    item.Value);
+  void global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.CopyTo(global::System.Collections.Generic.KeyValuePair<K, V>[] array,
+    int arrayIndex) { global::DripSharp.Runtime.JavaCompat.ThrowIfNull(array, nameof(array));
+    foreach (var item in (global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K,
+      V>>)this) array[arrayIndex++] = item; }
+  bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.Remove(global::System.Collections.Generic.KeyValuePair<K,
+    V> item) { if (!((global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+      V>>)this).Contains(item)) return false; this.Remove(item.Key); return true; }
+  global::System.Collections.Generic.IEnumerator<global::System.Collections.Generic.KeyValuePair<K,
+    V>> global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.GetEnumerator() { foreach (var entry in this.EntrySet()) yield return new global::System.Collections.Generic.KeyValuePair<K,
+      V>(entry.Key, entry.Value); }
+  global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()
+    => ((global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K,
+    V>>)this).GetEnumerator();
 }

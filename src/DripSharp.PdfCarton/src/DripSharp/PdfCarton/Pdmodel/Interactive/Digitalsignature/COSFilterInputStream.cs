@@ -9,71 +9,75 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 
 public class COSFilterInputStream : global::DripSharp.Runtime.JavaFilterInputStream {
-private int[][] ranges = null!;
+  private int[][] ranges = null!;
 
-private int range = default;
+  private int range = default;
 
-private long position = 0;
+  private long position = 0;
 
-public COSFilterInputStream(global::System.IO.Stream @in, int[] byteRange) : base(@in) {
-this.calculateRanges(byteRange);
-}
+  public COSFilterInputStream(global::System.IO.Stream @in, int[] byteRange) : base(@in) {
+    this.calculateRanges(byteRange);
+  }
 
-public COSFilterInputStream(sbyte[] @in, int[] byteRange) : this(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(@in), byteRange) {
+  public COSFilterInputStream(sbyte[] @in, int[] byteRange)
+  : this(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(@in), byteRange) {
 
-}
+  }
 
-public override int Read() {
-if ((((this.range == -1) || (this.getRemaining() <= 0)) && !(this.nextRange()))) {
-return -1;
-}
-int result = base.Read();
-this.position++;
-return result;
-}
+  public override int Read() {
+    if ((((this.range == -1) || (this.getRemaining() <= 0)) && !(this.nextRange()))) {
+      return -1;
+    }
+    int result = base.Read();
+    this.position++;
+    return result;
+  }
 
-public override int Read(sbyte[] b) {
-return this.Read(b, 0, b.Length);
-}
+  public override int Read(sbyte[] b) {
+    return this.Read(b, 0, b.Length);
+  }
 
-public override int Read(sbyte[] b, int off, int len) {
-if ((((this.range == -1) || (this.getRemaining() <= 0)) && !(this.nextRange()))) {
-return -1;
-}
-int bytesRead = base.Read(b, off, (int)((int)(global::System.Math.Min((long)(len), this.getRemaining()))));
-this.position += bytesRead;
-return bytesRead;
-}
+  public override int Read(sbyte[] b, int off, int len) {
+    if ((((this.range == -1) || (this.getRemaining() <= 0)) && !(this.nextRange()))) {
+      return -1;
+    }
+    int bytesRead = base.Read(b, off, (int)((int)(global::System.Math.Min((long)(len),
+      this.getRemaining()))));
+    this.position += bytesRead;
+    return bytesRead;
+  }
 
-public virtual sbyte[] ToByteArray() {
-return global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(this);
-}
+  public virtual sbyte[] ToByteArray() {
+    return global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(this);
+  }
 
-private void calculateRanges(int[] byteRange) {
-this.ranges = new int[(byteRange.Length / 2)][];
-for (int i = 0; (i < (byteRange.Length / 2)); i++) {
-this.ranges[i] = new int[] { byteRange[(i * 2)], (byteRange[(i * 2)] + byteRange[((i * 2) + 1)]) };
-}
-this.range = -1;
-}
+  private void calculateRanges(int[] byteRange) {
+    this.ranges = new int[(byteRange.Length / 2)][];
+    for (int i = 0; (i < (byteRange.Length / 2)); i++) {
+      this.ranges[i] = new int[] { byteRange[(i * 2)], (byteRange[(i * 2)] + byteRange[((i * 2)
+          + 1)]) };
+    }
+    this.range = -1;
+  }
 
-private long getRemaining() {
-return (this.ranges[this.range][1] - this.position);
-}
+  private long getRemaining() {
+    return (this.ranges[this.range][1] - this.position);
+  }
 
-private bool nextRange() {
-if (((this.range + 1) < this.ranges.Length)) {
-this.range++;
-while ((this.position < this.ranges[this.range][0])) {
-long skipped = base.Skip((this.ranges[this.range][0] - this.position));
-if ((skipped == 0)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("FilterInputStream.skip() returns 0, range: ", global::DripSharp.Runtime.JavaCompat.ArrayToString(this.ranges[this.range])));
-}
-this.position += skipped;
-}
-return true;
-} else {
-return false;
-}
-}
+  private bool nextRange() {
+    if (((this.range + 1) < this.ranges.Length)) {
+      this.range++;
+      while ((this.position < this.ranges[this.range][0])) {
+        long skipped = base.Skip((this.ranges[this.range][0] - this.position));
+        if ((skipped == 0)) {
+          throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("FilterInputStream.skip() returns 0, range: ",
+            global::DripSharp.Runtime.JavaCompat.ArrayToString(this.ranges[this.range])));
+        }
+        this.position += skipped;
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

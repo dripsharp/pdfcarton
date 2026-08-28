@@ -8,101 +8,112 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
-public class PDAppearanceCharacteristicsDictionary : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+public class PDAppearanceCharacteristicsDictionary
+: global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public PDAppearanceCharacteristicsDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
-this.dictionary = dict;
-}
+  public PDAppearanceCharacteristicsDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
+    this.dictionary = dict;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public virtual int GetRotation() {
-return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.R, 0);
-}
+  public virtual int GetRotation() {
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.R, 0);
+  }
 
-public virtual void SetRotation(int rotation) {
-this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.R, rotation);
-}
+  public virtual void SetRotation(int rotation) {
+    this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.R, rotation);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetBorderColour() {
-return this.getColor(global::DripSharp.PdfCarton.Cos.COSName.Bc);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetBorderColour() {
+    return this.getColor(global::DripSharp.PdfCarton.Cos.COSName.Bc);
+  }
 
-public virtual void SetBorderColour(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor c) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Bc, c.ToCOSArray());
-}
+  public virtual void SetBorderColour(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor c) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Bc, c.ToCOSArray());
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetBackground() {
-return this.getColor(global::DripSharp.PdfCarton.Cos.COSName.Bg);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetBackground() {
+    return this.getColor(global::DripSharp.PdfCarton.Cos.COSName.Bg);
+  }
 
-public virtual void SetBackground(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor c) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Bg, c.ToCOSArray());
-}
+  public virtual void SetBackground(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor c) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Bg, c.ToCOSArray());
+  }
 
-public virtual string GetNormalCaption() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Ca);
-}
+  public virtual string GetNormalCaption() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Ca);
+  }
 
-public virtual void SetNormalCaption(string caption) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Ca, caption);
-}
+  public virtual void SetNormalCaption(string caption) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Ca, caption);
+  }
 
-public virtual string GetRolloverCaption() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Rc);
-}
+  public virtual string GetRolloverCaption() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Rc);
+  }
 
-public virtual void SetRolloverCaption(string caption) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Rc, caption);
-}
+  public virtual void SetRolloverCaption(string caption) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Rc, caption);
+  }
 
-public virtual string GetAlternateCaption() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Ac);
-}
+  public virtual string GetAlternateCaption() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Ac);
+  }
 
-public virtual void SetAlternateCaption(string caption) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Ac, caption);
-}
+  public virtual void SetAlternateCaption(string caption) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Ac, caption);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject GetNormalIcon() {
-global::DripSharp.PdfCarton.Cos.COSStream stream = this.GetCOSObject().GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.I);
-return ((stream != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(stream) : (global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject GetNormalIcon() {
+    global::DripSharp.PdfCarton.Cos.COSStream stream
+      = this.GetCOSObject().GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.I);
+    return ((stream != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(stream)
+      : (global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(default!));
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject GetRolloverIcon() {
-global::DripSharp.PdfCarton.Cos.COSStream stream = this.GetCOSObject().GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Ri);
-return ((stream != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(stream) : (global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject GetRolloverIcon() {
+    global::DripSharp.PdfCarton.Cos.COSStream stream
+      = this.GetCOSObject().GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Ri);
+    return ((stream != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(stream)
+      : (global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(default!));
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject GetAlternateIcon() {
-global::DripSharp.PdfCarton.Cos.COSStream stream = this.GetCOSObject().GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Ix);
-return ((stream != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(stream) : (global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject GetAlternateIcon() {
+    global::DripSharp.PdfCarton.Cos.COSStream stream
+      = this.GetCOSObject().GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Ix);
+    return ((stream != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(stream)
+      : (global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(default!));
+  }
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor getColor(global::DripSharp.PdfCarton.Cos.COSName itemName) {
-global::DripSharp.PdfCarton.Cos.COSArray cs = this.GetCOSObject().GetCOSArray(itemName);
-if ((cs != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace;
-switch (cs.Size()) {
-case var __case_222_18_0 when __case_222_18_0 == 1:
-colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance;
-break;
-case var __case_225_18_0 when __case_225_18_0 == 3:
-colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance;
-break;
-case var __case_228_18_0 when __case_228_18_0 == 4:
-colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceCMYK.Instance;
-break;
-default:
-return default!;
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(cs, colorSpace);
-}
-return default!;
-}
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor getColor(global::DripSharp.PdfCarton.Cos.COSName itemName) {
+    global::DripSharp.PdfCarton.Cos.COSArray cs = this.GetCOSObject().GetCOSArray(itemName);
+    if ((cs != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace;
+      switch (cs.Size()) {
+        case var __case_222_18_0 when __case_222_18_0 == 1:
+          colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance;
+          break;
+        case var __case_225_18_0 when __case_225_18_0 == 3:
+          colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance;
+          break;
+        case var __case_228_18_0 when __case_228_18_0 == 4:
+          colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceCMYK.Instance;
+          break;
+        default:
+          return default!;
+      }
+      return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(cs, colorSpace);
+    }
+    return default!;
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

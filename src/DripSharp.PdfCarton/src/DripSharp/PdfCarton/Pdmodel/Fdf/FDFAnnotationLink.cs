@@ -9,33 +9,42 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFAnnotationLink : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public const string Subtype = "Link";
+  public const string Subtype = "Link";
 
-public FDFAnnotationLink() {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationLink.Subtype);
-}
+  public FDFAnnotationLink() {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationLink.Subtype);
+  }
 
-public FDFAnnotationLink(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public FDFAnnotationLink(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public FDFAnnotationLink(global::System.Xml.XmlElement element) : base(element) {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationLink.Subtype);
-global::DripSharp.Runtime.JavaXPath xpath = global::DripSharp.Runtime.JavaXPathFactory.Instance.NewXPath();
-try {
-global::System.Xml.XmlNodeList uri = (global::System.Xml.XmlNodeList)(xpath.Evaluate("OnActivation/Action/URI", element, global::DripSharp.Runtime.JavaXPathConstants.NODESET)!);
-if ((uri.Count > 0)) {
-global::System.Xml.XmlNode namedItem = uri.Item(0).Attributes!.GetNamedItem("Name");
-if (((namedItem != default!) && (namedItem.Value != default!))) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionURI actionURI = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionURI();
-actionURI.SetURI(namedItem.Value);
-base.Annot.SetItem(global::DripSharp.PdfCarton.Cos.COSName.A, actionURI);
-}
-}
-} catch (global::System.Xml.XPath.XPathException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationLink.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf("Error while evaluating XPath expression"));
-}
-}
+  public FDFAnnotationLink(global::System.Xml.XmlElement element) : base(element) {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationLink.Subtype);
+    global::DripSharp.Runtime.JavaXPath xpath
+      = global::DripSharp.Runtime.JavaXPathFactory.Instance.NewXPath();
+    try {
+      global::System.Xml.XmlNodeList uri
+        = (global::System.Xml.XmlNodeList)(xpath.Evaluate("OnActivation/Action/URI", element,
+        global::DripSharp.Runtime.JavaXPathConstants.NODESET)!);
+      if ((uri.Count > 0)) {
+        global::System.Xml.XmlNode namedItem = uri.Item(0).Attributes!.GetNamedItem("Name");
+        if (((namedItem != default!) && (namedItem.Value != default!))) {
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionURI actionURI
+            = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionURI();
+          actionURI.SetURI(namedItem.Value);
+          base.Annot.SetItem(global::DripSharp.PdfCarton.Cos.COSName.A, actionURI);
+        }
+      }
+    } catch (global::System.Xml.XPath.XPathException e) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationLink.LOG,
+        (global::System.Exception)e,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("Error while evaluating XPath expression"));
+    }
+  }
 }

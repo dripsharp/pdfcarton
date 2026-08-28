@@ -9,29 +9,35 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public sealed class PDListBox : global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDChoice {
-public PDListBox(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) : base(acroForm) {
+  public PDListBox(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm)
+  : base(acroForm) {
 
-}
+  }
 
-internal PDListBox(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm, global::DripSharp.PdfCarton.Cos.COSDictionary field, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm, field, parent) {
+  internal PDListBox(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm,
+    global::DripSharp.PdfCarton.Cos.COSDictionary field,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm,
+    field, parent) {
 
-}
+  }
 
-public int GetTopIndex() {
-return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.Ti, 0);
-}
+  public int GetTopIndex() {
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.Ti, 0);
+  }
 
-public void SetTopIndex(int? topIndex) {
-if ((topIndex != default!)) {
-this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.Ti, (int)(global::DripSharp.Runtime.JavaCompat.Unbox(topIndex)));
-} else {
-this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Ti);
-}
-}
+  public void SetTopIndex(int? topIndex) {
+    if ((topIndex != default!)) {
+      this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.Ti,
+        (int)(global::DripSharp.Runtime.JavaCompat.Unbox(topIndex)));
+    } else {
+      this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Ti);
+    }
+  }
 
-internal override void constructAppearances() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper apHelper;
-apHelper = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper(this);
-apHelper.SetAppearanceValue("");
-}
+  internal override void constructAppearances() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper apHelper;
+    apHelper
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper(this);
+    apHelper.SetAppearanceValue("");
+  }
 }

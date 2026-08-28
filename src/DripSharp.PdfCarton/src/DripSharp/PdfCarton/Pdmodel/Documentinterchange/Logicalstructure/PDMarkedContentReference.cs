@@ -9,46 +9,50 @@
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
 public class PDMarkedContentReference : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-public const string Type = "MCR";
+  public const string Type = "MCR";
 
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public PDMarkedContentReference() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.dictionary.SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkedContentReference.Type);
-}
+  public PDMarkedContentReference() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.dictionary.SetName(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkedContentReference.Type);
+  }
 
-public PDMarkedContentReference(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-this.dictionary = dictionary;
-}
+  public PDMarkedContentReference(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    this.dictionary = dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.PDPage GetPage() {
-global::DripSharp.PdfCarton.Cos.COSDictionary pg = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Pg);
-return ((pg != default!) ? new global::DripSharp.PdfCarton.Pdmodel.PDPage(pg) : (global::DripSharp.PdfCarton.Pdmodel.PDPage)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.PDPage GetPage() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary pg
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Pg);
+    return ((pg != default!) ? new global::DripSharp.PdfCarton.Pdmodel.PDPage(pg)
+      : (global::DripSharp.PdfCarton.Pdmodel.PDPage)(default!));
+  }
 
-public virtual void SetPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Pg, page);
-}
+  public virtual void SetPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Pg, page);
+  }
 
-public virtual int GetMCID() {
-return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.Mcid);
-}
+  public virtual int GetMCID() {
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.Mcid);
+  }
 
-public virtual void SetMCID(int mcid) {
-if ((mcid < 0)) {
-throw new global::System.ArgumentException("MCID is negative");
-}
-this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.Mcid, mcid);
-}
+  public virtual void SetMCID(int mcid) {
+    if ((mcid < 0)) {
+      throw new global::System.ArgumentException("MCID is negative");
+    }
+    this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.Mcid, mcid);
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat("mcid=", this.GetMCID());
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat("mcid=", this.GetMCID());
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

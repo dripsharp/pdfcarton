@@ -8,30 +8,33 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
-public class CoverageTableFormat1 : global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable {
-private readonly int[] glyphArray = null!;
+public class CoverageTableFormat1
+: global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable {
+  private readonly int[] glyphArray = null!;
 
-public CoverageTableFormat1(int coverageFormat, int[] glyphArray) : base(coverageFormat) {
-this.glyphArray = glyphArray;
-}
+  public CoverageTableFormat1(int coverageFormat, int[] glyphArray) : base(coverageFormat) {
+    this.glyphArray = glyphArray;
+  }
 
-public override int GetCoverageIndex(int gid) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.BinarySearch(this.glyphArray, gid);
-}
+  public override int GetCoverageIndex(int gid) {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.BinarySearch(this.glyphArray, gid);
+  }
 
-public override int GetGlyphId(int index) {
-return this.glyphArray[index];
-}
+  public override int GetGlyphId(int index) {
+    return this.glyphArray[index];
+  }
 
-public override int GetSize() {
-return this.glyphArray.Length;
-}
+  public override int GetSize() {
+    return this.glyphArray.Length;
+  }
 
-public virtual int[] GetGlyphArray() {
-return this.glyphArray;
-}
+  public virtual int[] GetGlyphArray() {
+    return this.glyphArray;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("CoverageTableFormat1[coverageFormat=%d,glyphArray=%s]", this.GetCoverageFormat(), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(this.glyphArray));
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("CoverageTableFormat1[coverageFormat=%d,glyphArray=%s]",
+      this.GetCoverageFormat(),
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(this.glyphArray));
+  }
 }

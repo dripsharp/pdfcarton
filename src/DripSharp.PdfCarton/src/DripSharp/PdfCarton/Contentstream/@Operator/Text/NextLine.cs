@@ -9,19 +9,24 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Text;
 
 public class NextLine : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public NextLine(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+  public NextLine(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> args = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>(2);
-global::DripSharp.Runtime.JavaCompat.Add(args, global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-global::DripSharp.Runtime.JavaCompat.Add(args, new global::DripSharp.PdfCarton.Cos.COSFloat(-(context.GetGraphicsState().GetTextState().GetLeading())));
-context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveText, args);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> args
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>(2);
+    global::DripSharp.Runtime.JavaCompat.Add(args, global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    global::DripSharp.Runtime.JavaCompat.Add(args,
+      new global::DripSharp.PdfCarton.Cos.COSFloat(-(context.GetGraphicsState().GetTextState().GetLeading())));
+    context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveText,
+      args);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NextLine;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NextLine;
+  }
 }

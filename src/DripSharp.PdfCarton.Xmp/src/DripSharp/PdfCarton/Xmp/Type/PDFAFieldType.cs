@@ -8,33 +8,37 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://www.aiim.org/pdfa/ns/field#", "pdfaField")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://www.aiim.org/pdfa/ns/field#",
+  "pdfaField")]
 public class PDFAFieldType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string Name = "name";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string Name = "name";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
-public const string Valuetype = "valueType";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
+  public const string Valuetype = "valueType";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string Description = "description";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string Description = "description";
 
-public PDFAFieldType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+  public PDFAFieldType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
-}
+  }
 
-public virtual string GetName() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType tt = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.PDFAFieldType.Name)!);
-return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
-}
+  public virtual string GetName() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType tt
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.PDFAFieldType.Name)!);
+    return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
+  }
 
-public virtual string GetValueType() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType tt = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.PDFAFieldType.Valuetype)!);
-return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
-}
+  public virtual string GetValueType() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType tt
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.PDFAFieldType.Valuetype)!);
+    return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
+  }
 
-public virtual string GetDescription() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType tt = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.PDFAFieldType.Description)!);
-return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
-}
+  public virtual string GetDescription() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType tt
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.PDFAFieldType.Description)!);
+    return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
+  }
 }

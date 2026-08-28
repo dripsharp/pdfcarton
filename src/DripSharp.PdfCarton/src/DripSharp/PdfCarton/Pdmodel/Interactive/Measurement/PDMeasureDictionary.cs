@@ -9,34 +9,37 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Measurement;
 
 public class PDMeasureDictionary : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-public const string Type = "Measure";
+  public const string Type = "Measure";
 
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary measureDictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary measureDictionary = null!;
 
-protected internal PDMeasureDictionary() {
-this.measureDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary.Type);
-}
+  protected internal PDMeasureDictionary() {
+    this.measureDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary.Type);
+  }
 
-public PDMeasureDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-this.measureDictionary = dictionary;
-}
+  public PDMeasureDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    this.measureDictionary = dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.measureDictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.measureDictionary;
+  }
 
-public new virtual string GetType() {
-return global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary.Type;
-}
+  public new virtual string GetType() {
+    return global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary.Type;
+  }
 
-public virtual string GetSubtype() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDRectlinearMeasureDictionary.Subtype);
-}
+  public virtual string GetSubtype() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDRectlinearMeasureDictionary.Subtype);
+  }
 
-protected internal virtual void SetSubtype(string subtype) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, subtype);
-}
+  protected internal virtual void SetSubtype(string subtype) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, subtype);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

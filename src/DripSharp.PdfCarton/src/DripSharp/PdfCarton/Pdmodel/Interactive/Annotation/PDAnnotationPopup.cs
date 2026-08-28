@@ -8,42 +8,52 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
-public class PDAnnotationPopup : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class PDAnnotationPopup
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public const string SubType = "Popup";
+  public const string SubType = "Popup";
 
-public PDAnnotationPopup() {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup.SubType);
-}
+  public PDAnnotationPopup() {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup.SubType);
+  }
 
-public PDAnnotationPopup(global::DripSharp.PdfCarton.Cos.COSDictionary field) : base(field) {
+  public PDAnnotationPopup(global::DripSharp.PdfCarton.Cos.COSDictionary field) : base(field) {
 
-}
+  }
 
-public virtual void SetOpen(bool open) {
-this.GetCOSObject().SetBoolean("Open", open);
-}
+  public virtual void SetOpen(bool open) {
+    this.GetCOSObject().SetBoolean("Open", open);
+  }
 
-public virtual bool GetOpen() {
-return this.GetCOSObject().GetBoolean("Open", false);
-}
+  public virtual bool GetOpen() {
+    return this.GetCOSObject().GetBoolean("Open", false);
+  }
 
-public virtual void SetParent(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup annot) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Parent, annot.GetCOSObject());
-}
+  public virtual void SetParent(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup annot) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Parent,
+      annot.GetCOSObject());
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup GetParent() {
-try {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation ann = global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation.CreateAnnotation(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Parent, global::DripSharp.PdfCarton.Cos.COSName.P));
-if (!((ann is global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("parent annotation is of type ", ((object)(ann)).GetType().Name), " but should be of type PDAnnotationMarkup")));
-return default!;
-}
-return (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup)(ann!);
-} catch (global::System.IO.IOException ioe) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup.LOG, (global::System.Exception)ioe, global::DripSharp.Runtime.JavaCompat.StringValueOf("An exception while trying to get the parent markup - ignoring"));
-return default!;
-}
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup GetParent() {
+    try {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation ann
+        = global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation.CreateAnnotation(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Parent,
+        global::DripSharp.PdfCarton.Cos.COSName.P));
+      if (!((ann is global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup))) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("parent annotation is of type ",
+          ((object)(ann)).GetType().Name), " but should be of type PDAnnotationMarkup")));
+        return default!;
+      }
+      return (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup)(ann!);
+    } catch (global::System.IO.IOException ioe) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup.LOG,
+        (global::System.Exception)ioe,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("An exception while trying to get the parent markup - ignoring"));
+      return default!;
+    }
+  }
 }

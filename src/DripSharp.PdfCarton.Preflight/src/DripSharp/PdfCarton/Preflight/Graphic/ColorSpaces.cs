@@ -9,78 +9,95 @@
 namespace DripSharp.PdfCarton.Preflight.Graphic;
 
 public sealed class ColorSpaces {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Lab")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces Lab = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("Lab");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Lab")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces Lab
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("Lab");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("CalRGB")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces CalRGB = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("CalRGB");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("CalRGB")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces CalRGB
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("CalRGB");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("CalGray")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces CalGray = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("CalGray");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("CalGray")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces CalGray
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("CalGray");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("DeviceN")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces DeviceN = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("DeviceN");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("DeviceN")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces DeviceN
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("DeviceN");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Indexed")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces Indexed = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("Indexed");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Indexed")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces Indexed
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("Indexed");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("I")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces I = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("I");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("I")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces I
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("I");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Pattern")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(6)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces Pattern = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("Pattern");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Pattern")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(6)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces Pattern
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("Pattern");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("ICCBased")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(7)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces ICCBased = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("ICCBased");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("ICCBased")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(7)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces ICCBased
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("ICCBased");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("DeviceRGB")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(8)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces DeviceRGB = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("DeviceRGB");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("DeviceRGB")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(8)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces DeviceRGB
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("DeviceRGB");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("RGB")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(9)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces Rgb = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("RGB");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("RGB")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(9)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces Rgb
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("RGB");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("DeviceGray")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(10)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces DeviceGray = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("DeviceGray");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("DeviceGray")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(10)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces DeviceGray
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("DeviceGray");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("G")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(11)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces G = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("G");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("G")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(11)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces G
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("G");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("DeviceCMYK")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(12)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces DeviceCMYK = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("DeviceCMYK");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("DeviceCMYK")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(12)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces DeviceCMYK
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("DeviceCMYK");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("CMYK")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(13)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces Cmyk = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("CMYK");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("CMYK")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(13)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces Cmyk
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("CMYK");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Separation")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(14)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces Separation = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("Separation");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Separation")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(14)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces Separation
+    = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces("Separation");
 
-private readonly string label = null!;
+  private readonly string label = null!;
 
-private ColorSpaces(string _label) {
-this.label = _label;
-}
+  private ColorSpaces(string _label) {
+    this.label = _label;
+  }
 
-public string GetLabel() {
-return this.label;
-}
+  public string GetLabel() {
+    return this.label;
+  }
 
-public static ColorSpaces[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<ColorSpaces>();
-public static ColorSpaces valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<ColorSpaces>(name);
+  public static ColorSpaces[] values()
+    => global::DripSharp.Runtime.JavaCompat.EnumValues<ColorSpaces>();
+  public static ColorSpaces valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<ColorSpaces>(name);
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

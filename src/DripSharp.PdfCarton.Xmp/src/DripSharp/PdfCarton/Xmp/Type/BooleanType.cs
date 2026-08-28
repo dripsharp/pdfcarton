@@ -9,46 +9,51 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class BooleanType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty {
-public const string True = "True";
+  public const string True = "True";
 
-public const string False = "False";
+  public const string False = "False";
 
-private bool booleanValue = default;
+  private bool booleanValue = default;
 
-public BooleanType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix, propertyName, value) {
+  public BooleanType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI,
+    string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix,
+    propertyName, value) {
 
-}
+  }
 
-public new virtual bool? GetValue() {
-return this.booleanValue;
-}
+  public new virtual bool? GetValue() {
+    return this.booleanValue;
+  }
 
-public override void SetValue(object value) {
-if ((value is bool)) {
-this.booleanValue = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Unbox((bool?)(value));
-} else {
-if ((value is string)) {
-string s = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringTrim(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringValueOf(value)).ToUpper();
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("TRUE", s)) {
-this.booleanValue = true;
-} else {
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("FALSE", s)) {
-this.booleanValue = false;
-} else {
-throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Not a valid boolean value : '", value), "'"));
-}
-}
-} else {
-throw new global::System.ArgumentException("Value given is not allowed for the Boolean type.");
-}
-}
-}
+  public override void SetValue(object value) {
+    if ((value is bool)) {
+      this.booleanValue = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Unbox((bool?)value);
+    } else {
+      if ((value is string)) {
+        string s
+          = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringTrim(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringValueOf(value)).ToUpper();
+        if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("TRUE", s)) {
+          this.booleanValue = true;
+        } else {
+          if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("FALSE", s)) {
+            this.booleanValue = false;
+          } else {
+            throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Not a valid boolean value : '",
+              value), "'"));
+          }
+        }
+      } else {
+        throw new global::System.ArgumentException("Value given is not allowed for the Boolean type.");
+      }
+    }
+  }
 
-public override string GetStringValue() {
-return (this.booleanValue ? global::DripSharp.PdfCarton.Xmp.Type.BooleanType.True : global::DripSharp.PdfCarton.Xmp.Type.BooleanType.False);
-}
+  public override string GetStringValue() {
+    return (this.booleanValue ? global::DripSharp.PdfCarton.Xmp.Type.BooleanType.True
+      : global::DripSharp.PdfCarton.Xmp.Type.BooleanType.False);
+  }
 
-protected override object __DripSharpCovariantBridgeGetValue() {
-return this.GetValue();
-}
+  protected override object __DripSharpCovariantBridgeGetValue() {
+    return this.GetValue();
+  }
 }

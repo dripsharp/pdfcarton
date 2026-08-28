@@ -9,77 +9,91 @@
 namespace DripSharp.PdfCarton.Pdfparser;
 
 public class PDFParser : global::DripSharp.PdfCarton.Pdfparser.COSParser {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public PDFParser(global::DripSharp.PdfCarton.IO.RandomAccessRead source) : this(source, "") {
+  public PDFParser(global::DripSharp.PdfCarton.IO.RandomAccessRead source) : this(source, "") {
 
-}
+  }
 
-public PDFParser(global::DripSharp.PdfCarton.IO.RandomAccessRead source, string decryptionPassword) : this(source, decryptionPassword, (global::System.IO.Stream)default!, (string)default!) {
+  public PDFParser(global::DripSharp.PdfCarton.IO.RandomAccessRead source,
+    string decryptionPassword) : this(source, decryptionPassword,
+    (global::System.IO.Stream)default!, (string)default!) {
 
-}
+  }
 
-public PDFParser(global::DripSharp.PdfCarton.IO.RandomAccessRead source, string decryptionPassword, global::System.IO.Stream keyStore, string alias) : this(source, decryptionPassword, keyStore, alias, (global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)default!) {
+  public PDFParser(global::DripSharp.PdfCarton.IO.RandomAccessRead source,
+    string decryptionPassword, global::System.IO.Stream keyStore, string alias) : this(source,
+    decryptionPassword, keyStore, alias,
+    (global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)default!) {
 
-}
+  }
 
-public PDFParser(global::DripSharp.PdfCarton.IO.RandomAccessRead source, string decryptionPassword, global::System.IO.Stream keyStore, string alias, global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) : base(source, decryptionPassword, keyStore, alias, streamCacheCreateFunction) {
+  public PDFParser(global::DripSharp.PdfCarton.IO.RandomAccessRead source,
+    string decryptionPassword, global::System.IO.Stream keyStore, string alias,
+    global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction)
+  : base(source, decryptionPassword, keyStore, alias, streamCacheCreateFunction) {
 
-}
+  }
 
-protected internal virtual void InitialParse() {
-global::DripSharp.PdfCarton.Cos.COSDictionary trailer = this.RetrieveTrailer();
-global::DripSharp.PdfCarton.Cos.COSDictionary root = trailer.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Root);
-if ((root == default!)) {
-throw new global::System.IO.IOException("Missing root object specification in trailer.");
-}
-if ((this.IsLenient() && !(root.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Type)))) {
-root.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Catalog);
-}
-this.CheckPages(root);
-base.Document.SetDecrypted();
-base.InitialParseDone = true;
-}
+  protected internal virtual void InitialParse() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary trailer = this.RetrieveTrailer();
+    global::DripSharp.PdfCarton.Cos.COSDictionary root
+      = trailer.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Root);
+    if ((root == default!)) {
+      throw new global::System.IO.IOException("Missing root object specification in trailer.");
+    }
+    if ((this.IsLenient() && !(root.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Type)))) {
+      root.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+        global::DripSharp.PdfCarton.Cos.COSName.Catalog);
+    }
+    this.CheckPages(root);
+    base.Document.SetDecrypted();
+    base.InitialParseDone = true;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.PDDocument Parse() {
-return this.Parse(true);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.PDDocument Parse() {
+    return this.Parse(true);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.PDDocument Parse(bool lenient) {
-this.SetLenient(lenient);
-bool exceptionOccurred = true;
-try {
-if ((!(this.ParsePDFHeader()) && !(this.ParseFDFHeader()))) {
-if (lenient) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdfparser.PDFParser.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("Error: Header doesn't contain versioninfo"));
-} else {
-throw new global::System.IO.IOException("Error: Header doesn't contain versioninfo");
-}
-}
-if (!(base.InitialParseDone)) {
-this.InitialParse();
-}
-exceptionOccurred = false;
-global::DripSharp.PdfCarton.Pdmodel.PDDocument pdDocument = this.CreateDocument();
-pdDocument.SetEncryptionDictionary(this.GetEncryption());
-return pdDocument;
-} finally {
-if ((exceptionOccurred && (base.Document != default!))) {
-global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(base.Document);
-base.Document = default!;
-}
-}
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.PDDocument Parse(bool lenient) {
+    this.SetLenient(lenient);
+    bool exceptionOccurred = true;
+    try {
+      if ((!(this.ParsePDFHeader()) && !(this.ParseFDFHeader()))) {
+        if (lenient) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdfparser.PDFParser.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf("Error: Header doesn't contain versioninfo"));
+        } else {
+          throw new global::System.IO.IOException("Error: Header doesn't contain versioninfo");
+        }
+      }
+      if (!(base.InitialParseDone)) {
+        this.InitialParse();
+      }
+      exceptionOccurred = false;
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument pdDocument = this.CreateDocument();
+      pdDocument.SetEncryptionDictionary(this.GetEncryption());
+      return pdDocument;
+    } finally {
+      if ((exceptionOccurred && (base.Document != default!))) {
+        global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(base.Document);
+        base.Document = default!;
+      }
+    }
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Pdmodel.PDDocument CreateDocument() {
-return new global::DripSharp.PdfCarton.Pdmodel.PDDocument(base.Document, base.Source, this.GetAccessPermission());
-}
+  protected internal virtual global::DripSharp.PdfCarton.Pdmodel.PDDocument CreateDocument() {
+    return new global::DripSharp.PdfCarton.Pdmodel.PDDocument(base.Document, base.Source,
+      this.GetAccessPermission());
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument Load(global::System.IO.FileInfo file) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(file);
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument Load(global::System.IO.FileInfo file) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(file);
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument Load(global::System.IO.FileInfo file, string password) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(file, password);
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument Load(global::System.IO.FileInfo file,
+    string password) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(file, password);
+  }
 }

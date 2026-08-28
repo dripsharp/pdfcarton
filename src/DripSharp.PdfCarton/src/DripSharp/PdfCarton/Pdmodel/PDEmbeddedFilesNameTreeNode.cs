@@ -8,21 +8,24 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel;
 
-public class PDEmbeddedFilesNameTreeNode : global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification> {
-public PDEmbeddedFilesNameTreeNode() {}
+public class PDEmbeddedFilesNameTreeNode
+: global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification> {
+  public PDEmbeddedFilesNameTreeNode() {}
 
-public PDEmbeddedFilesNameTreeNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
+  public PDEmbeddedFilesNameTreeNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic)
+  : base(dic) {
 
-}
+  }
 
-protected internal override global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification ConvertCOSToPD(global::DripSharp.PdfCarton.Cos.COSBase @base) {
-if (((@base != default!) && !((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)))) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("dictionary expected here, but got ", @base));
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
-}
+  protected internal override global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification ConvertCOSToPD(global::DripSharp.PdfCarton.Cos.COSBase @base) {
+    if (((@base != default!) && !((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)))) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("dictionary expected here, but got ",
+        @base));
+    }
+    return new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
+  }
 
-protected internal override global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification> CreateChildNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
-return new global::DripSharp.PdfCarton.Pdmodel.PDEmbeddedFilesNameTreeNode(dic);
-}
+  protected internal override global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification> CreateChildNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
+    return new global::DripSharp.PdfCarton.Pdmodel.PDEmbeddedFilesNameTreeNode(dic);
+  }
 }

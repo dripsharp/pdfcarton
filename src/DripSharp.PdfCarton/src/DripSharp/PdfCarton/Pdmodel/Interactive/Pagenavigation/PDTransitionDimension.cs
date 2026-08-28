@@ -9,19 +9,22 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation;
 
 public sealed class PDTransitionDimension {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("H")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDimension H = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDimension();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("H")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDimension H
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDimension();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("V")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDimension V = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDimension();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("V")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDimension V
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDimension();
 
-private PDTransitionDimension() {}
+  private PDTransitionDimension() {}
 
+  public static PDTransitionDimension[] values()
+    => global::DripSharp.Runtime.JavaCompat.EnumValues<PDTransitionDimension>();
+  public static PDTransitionDimension valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<PDTransitionDimension>(name);
 
-public static PDTransitionDimension[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<PDTransitionDimension>();
-public static PDTransitionDimension valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<PDTransitionDimension>(name);
-
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

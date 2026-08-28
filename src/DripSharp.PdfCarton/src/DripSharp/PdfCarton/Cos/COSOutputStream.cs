@@ -9,75 +9,85 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public sealed class COSOutputStream : global::DripSharp.Runtime.JavaFilterOutputStream {
-private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Filter.Filter> filters = null!;
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Filter.Filter> filters
+    = null!;
 
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary parameters = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary parameters = null!;
 
-private readonly global::DripSharp.PdfCarton.IO.RandomAccessStreamCache streamCache = null!;
+  private readonly global::DripSharp.PdfCarton.IO.RandomAccessStreamCache streamCache = null!;
 
-private global::DripSharp.PdfCarton.IO.RandomAccess buffer = null!;
+  private global::DripSharp.PdfCarton.IO.RandomAccess buffer = null!;
 
-internal COSOutputStream(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Filter.Filter> filters, global::DripSharp.PdfCarton.Cos.COSDictionary parameters, global::System.IO.Stream output, global::DripSharp.PdfCarton.IO.RandomAccessStreamCache streamCache) : base(output) {
-this.filters = filters;
-this.parameters = parameters;
-this.streamCache = streamCache;
-this.buffer = (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(filters) ? (global::DripSharp.PdfCarton.IO.RandomAccess)(default!) : streamCache.CreateBuffer());
-}
+  internal COSOutputStream(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Filter.Filter> filters,
+    global::DripSharp.PdfCarton.Cos.COSDictionary parameters, global::System.IO.Stream output,
+    global::DripSharp.PdfCarton.IO.RandomAccessStreamCache streamCache) : base(output) {
+    this.filters = filters;
+    this.parameters = parameters;
+    this.streamCache = streamCache;
+    this.buffer = (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(filters)
+      ? (global::DripSharp.PdfCarton.IO.RandomAccess)(default!) : streamCache.CreateBuffer());
+  }
 
-public override void Write(sbyte[] b) {
-this.Write(b, 0, b.Length);
-}
+  public override void Write(sbyte[] b) {
+    this.Write(b, 0, b.Length);
+  }
 
-public override void Write(sbyte[] b, int off, int len) {
-if ((this.buffer != default!)) {
-this.buffer.Write(b, off, len);
-} else {
-base.Write(b, off, len);
-}
-}
+  public override void Write(sbyte[] b, int off, int len) {
+    if ((this.buffer != default!)) {
+      this.buffer.Write(b, off, len);
+    } else {
+      base.Write(b, off, len);
+    }
+  }
 
-public override void Write(int b) {
-if ((this.buffer != default!)) {
-this.buffer.Write(b);
-} else {
-base.Write(b);
-}
-}
+  public override void Write(int b) {
+    if ((this.buffer != default!)) {
+      this.buffer.Write(b);
+    } else {
+      base.Write(b);
+    }
+  }
 
-public override void Flush() {
-if ((this.buffer == default!)) {
-base.Flush();
-}
-}
+  public override void Flush() {
+    if ((this.buffer == default!)) {
+      base.Flush();
+    }
+  }
 
-public override void Dispose() {
-try {
-if ((this.buffer != default!)) {
-try {
-for (int i = (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.filters) - 1); (i >= 0); i--) {
-using (global::System.IO.Stream unfilteredIn = new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(this.buffer)) {
-if ((i == 0)) {
-global::DripSharp.Runtime.JavaCompat.ListGet(this.filters, i).Encode(unfilteredIn, @out, this.parameters, i);
-} else {
-global::DripSharp.PdfCarton.IO.RandomAccess filteredBuffer = this.streamCache.CreateBuffer();
-try {
-using (global::System.IO.Stream filteredOut = new global::DripSharp.PdfCarton.IO.RandomAccessOutputStream(filteredBuffer)) {
-global::DripSharp.Runtime.JavaCompat.ListGet(this.filters, i).Encode(unfilteredIn, filteredOut, this.parameters, i);
-}
-} finally {
-this.buffer.Dispose();
-this.buffer = filteredBuffer;
-}
-}
-}
-}
-} finally {
-this.buffer.Dispose();
-this.buffer = default!;
-}
-}
-} finally {
-base.Dispose();
-}
-}
+  public override void Dispose() {
+    try {
+      if ((this.buffer != default!)) {
+        try {
+          for (int i = (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.filters) - 1); (i
+            >= 0); i--) {
+            using (global::System.IO.Stream unfilteredIn
+              = new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(this.buffer)) {
+              if ((i == 0)) {
+                global::DripSharp.Runtime.JavaCompat.ListGet(this.filters, i).Encode(unfilteredIn,
+                  @out, this.parameters, i);
+              } else {
+                global::DripSharp.PdfCarton.IO.RandomAccess filteredBuffer
+                  = this.streamCache.CreateBuffer();
+                try {
+                  using (global::System.IO.Stream filteredOut
+                    = new global::DripSharp.PdfCarton.IO.RandomAccessOutputStream(filteredBuffer)) {
+                    global::DripSharp.Runtime.JavaCompat.ListGet(this.filters,
+                      i).Encode(unfilteredIn, filteredOut, this.parameters, i);
+                  }
+                } finally {
+                  this.buffer.Dispose();
+                  this.buffer = filteredBuffer;
+                }
+              }
+            }
+          }
+        } finally {
+          this.buffer.Dispose();
+          this.buffer = default!;
+        }
+      }
+    } finally {
+      base.Dispose();
+    }
+  }
 }

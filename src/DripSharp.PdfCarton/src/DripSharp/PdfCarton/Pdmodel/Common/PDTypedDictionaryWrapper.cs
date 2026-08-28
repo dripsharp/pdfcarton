@@ -8,16 +8,18 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Common;
 
-public class PDTypedDictionaryWrapper : global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper {
-public PDTypedDictionaryWrapper(string type) : base() {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, type);
-}
+public class PDTypedDictionaryWrapper
+: global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper {
+  public PDTypedDictionaryWrapper(string type) : base() {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, type);
+  }
 
-public PDTypedDictionaryWrapper(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : base(dictionary) {
+  public PDTypedDictionaryWrapper(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary)
+  : base(dictionary) {
 
-}
+  }
 
-public new virtual string GetType() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type);
-}
+  public new virtual string GetType() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type);
+  }
 }

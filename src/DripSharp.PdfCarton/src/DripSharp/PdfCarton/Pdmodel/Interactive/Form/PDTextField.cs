@@ -8,117 +8,141 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
-public sealed class PDTextField : global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDVariableText {
-private const int FLAG_MULTILINE = (1 << unchecked((int)(12)));
+public sealed class PDTextField
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDVariableText {
+  private const int FLAG_MULTILINE = (1 << unchecked((int)(12)));
 
-private const int FLAG_PASSWORD = (1 << unchecked((int)(13)));
+  private const int FLAG_PASSWORD = (1 << unchecked((int)(13)));
 
-private const int FLAG_FILE_SELECT = (1 << unchecked((int)(20)));
+  private const int FLAG_FILE_SELECT = (1 << unchecked((int)(20)));
 
-private const int FLAG_DO_NOT_SPELL_CHECK = (1 << unchecked((int)(22)));
+  private const int FLAG_DO_NOT_SPELL_CHECK = (1 << unchecked((int)(22)));
 
-private const int FLAG_DO_NOT_SCROLL = (1 << unchecked((int)(23)));
+  private const int FLAG_DO_NOT_SCROLL = (1 << unchecked((int)(23)));
 
-private const int FLAG_COMB = (1 << unchecked((int)(24)));
+  private const int FLAG_COMB = (1 << unchecked((int)(24)));
 
-private const int FLAG_RICH_TEXT = (1 << unchecked((int)(25)));
+  private const int FLAG_RICH_TEXT = (1 << unchecked((int)(25)));
 
-public PDTextField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) : base(acroForm) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ft, global::DripSharp.PdfCarton.Cos.COSName.Tx);
-}
+  public PDTextField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm)
+  : base(acroForm) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ft,
+      global::DripSharp.PdfCarton.Cos.COSName.Tx);
+  }
 
-internal PDTextField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm, global::DripSharp.PdfCarton.Cos.COSDictionary field, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm, field, parent) {
+  internal PDTextField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm,
+    global::DripSharp.PdfCarton.Cos.COSDictionary field,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm,
+    field, parent) {
 
-}
+  }
 
-public bool IsMultiline() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_MULTILINE);
-}
+  public bool IsMultiline() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_MULTILINE);
+  }
 
-public void SetMultiline(bool multiline) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_MULTILINE, multiline);
-}
+  public void SetMultiline(bool multiline) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_MULTILINE, multiline);
+  }
 
-public bool IsPassword() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_PASSWORD);
-}
+  public bool IsPassword() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_PASSWORD);
+  }
 
-public void SetPassword(bool password) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_PASSWORD, password);
-}
+  public void SetPassword(bool password) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_PASSWORD, password);
+  }
 
-public bool IsFileSelect() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_FILE_SELECT);
-}
+  public bool IsFileSelect() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_FILE_SELECT);
+  }
 
-public void SetFileSelect(bool fileSelect) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_FILE_SELECT, fileSelect);
-}
+  public void SetFileSelect(bool fileSelect) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_FILE_SELECT,
+      fileSelect);
+  }
 
-public bool DoNotSpellCheck() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_DO_NOT_SPELL_CHECK);
-}
+  public bool DoNotSpellCheck() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_DO_NOT_SPELL_CHECK);
+  }
 
-public void SetDoNotSpellCheck(bool doNotSpellCheck) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_DO_NOT_SPELL_CHECK, doNotSpellCheck);
-}
+  public void SetDoNotSpellCheck(bool doNotSpellCheck) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_DO_NOT_SPELL_CHECK,
+      doNotSpellCheck);
+  }
 
-public bool DoNotScroll() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_DO_NOT_SCROLL);
-}
+  public bool DoNotScroll() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_DO_NOT_SCROLL);
+  }
 
-public void SetDoNotScroll(bool doNotScroll) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_DO_NOT_SCROLL, doNotScroll);
-}
+  public void SetDoNotScroll(bool doNotScroll) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_DO_NOT_SCROLL,
+      doNotScroll);
+  }
 
-public bool IsComb() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_COMB);
-}
+  public bool IsComb() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_COMB);
+  }
 
-public void SetComb(bool comb) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_COMB, comb);
-}
+  public void SetComb(bool comb) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_COMB, comb);
+  }
 
-public bool IsRichText() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_RICH_TEXT);
-}
+  public bool IsRichText() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_RICH_TEXT);
+  }
 
-public void SetRichText(bool richText) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_RICH_TEXT, richText);
-}
+  public void SetRichText(bool richText) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField.FLAG_RICH_TEXT, richText);
+  }
 
-public int GetMaxLen() {
-return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.MaxLen);
-}
+  public int GetMaxLen() {
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.MaxLen);
+  }
 
-public void SetMaxLen(int maxLen) {
-this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.MaxLen, maxLen);
-}
+  public void SetMaxLen(int maxLen) {
+    this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.MaxLen, maxLen);
+  }
 
-public override void SetValue(string value) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.V, value);
-this.ApplyChange();
-}
+  public override void SetValue(string value) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.V, value);
+    this.ApplyChange();
+  }
 
-public void SetDefaultValue(string value) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Dv, value);
-}
+  public void SetDefaultValue(string value) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Dv, value);
+  }
 
-public string GetValue() {
-return this.GetStringOrStream(this.GetInheritableAttribute(global::DripSharp.PdfCarton.Cos.COSName.V));
-}
+  public string GetValue() {
+    return this.GetStringOrStream(this.GetInheritableAttribute(global::DripSharp.PdfCarton.Cos.COSName.V));
+  }
 
-public string GetDefaultValue() {
-return this.GetStringOrStream(this.GetInheritableAttribute(global::DripSharp.PdfCarton.Cos.COSName.Dv));
-}
+  public string GetDefaultValue() {
+    return this.GetStringOrStream(this.GetInheritableAttribute(global::DripSharp.PdfCarton.Cos.COSName.Dv));
+  }
 
-public override string GetValueAsString() {
-return this.GetValue();
-}
+  public override string GetValueAsString() {
+    return this.GetValue();
+  }
 
-internal override void constructAppearances() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper apHelper;
-apHelper = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper(this);
-apHelper.SetAppearanceValue(this.GetValue());
-}
+  internal override void constructAppearances() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper apHelper;
+    apHelper
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper(this);
+    apHelper.SetAppearanceValue(this.GetValue());
+  }
 }

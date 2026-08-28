@@ -8,139 +8,202 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process;
 
-public class CatalogValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-private static readonly global::System.Collections.Generic.IList<string> listICC = global::DripSharp.Runtime.JavaCompat.AsList<string>("FOGRA43", "CGATS TR 006", "CGATS TR006", "FOGRA39", "JC200103", "FOGRA27", "EUROSB104", "FOGRA45", "FOGRA46", "FOGRA41", "CGATS TR 001", "CGATS TR001", "CGATS TR 003", "CGATS TR003", "CGATS TR 005", "CGATS TR005", "FOGRA28", "JCW2003", "EUROSB204", "FOGRA47", "FOGRA44", "FOGRA29", "JC200104", "FOGRA40", "FOGRA30", "FOGRA42", "IFRA26", "JCN2002", "CGATS TR 002", "CGATS TR002", "FOGRA33", "FOGRA37", "FOGRA31", "FOGRA35", "FOGRA32", "FOGRA34", "FOGRA36", "FOGRA38", "sRGB", "sRGB IEC61966-2.1", "Adobe RGB (1998)", "bg-sRGB", "sYCC", "scRGB", "scRGB-nl", "scYCC-nl", "ROMM RGB", "RIMM RGB", "ERIMM RGB", "eciRGB", "opRGB");
+public class CatalogValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
+  private static readonly global::System.Collections.Generic.IList<string> listICC
+    = global::DripSharp.Runtime.JavaCompat.AsList<string>("FOGRA43", "CGATS TR 006", "CGATS TR006",
+    "FOGRA39", "JC200103", "FOGRA27", "EUROSB104", "FOGRA45", "FOGRA46", "FOGRA41", "CGATS TR 001",
+    "CGATS TR001", "CGATS TR 003", "CGATS TR003", "CGATS TR 005", "CGATS TR005", "FOGRA28",
+    "JCW2003", "EUROSB204", "FOGRA47", "FOGRA44", "FOGRA29", "JC200104", "FOGRA40", "FOGRA30",
+    "FOGRA42", "IFRA26", "JCN2002", "CGATS TR 002", "CGATS TR002", "FOGRA33", "FOGRA37", "FOGRA31",
+    "FOGRA35", "FOGRA32", "FOGRA34", "FOGRA36", "FOGRA38", "sRGB", "sRGB IEC61966-2.1",
+    "Adobe RGB (1998)", "bg-sRGB", "sYCC", "scRGB", "scRGB-nl", "scYCC-nl", "ROMM RGB", "RIMM RGB",
+    "ERIMM RGB", "eciRGB", "opRGB");
 
-private global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = null!;
 
-public CatalogValidationProcess() {}
+  public CatalogValidationProcess() {}
 
-private bool isStandardICCCharacterization(string name) {
-return global::DripSharp.Runtime.JavaCompat.Any(global::DripSharp.Runtime.JavaCompat.Stream(global::DripSharp.PdfCarton.Preflight.Process.CatalogValidationProcess.listICC), (i) => global::DripSharp.Runtime.JavaCompat.StringContains(i, name));
-}
+  private bool isStandardICCCharacterization(string name) {
+    return global::DripSharp.Runtime.JavaCompat.Any(global::DripSharp.Runtime.JavaCompat.Stream(global::DripSharp.PdfCarton.Preflight.Process.CatalogValidationProcess.listICC),
+      (i) => global::DripSharp.Runtime.JavaCompat.StringContains(i, name));
+  }
 
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-global::DripSharp.PdfCarton.Pdmodel.PDDocument pdfbox = ctx.GetDocument();
-this.catalog = pdfbox.GetDocumentCatalog();
-if ((this.catalog == default!)) {
-ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNocatalog, "There are no Catalog entry in the Document"));
-} else {
-this.validateActions(ctx);
-this.validateLang(ctx);
-this.validateNames(ctx);
-this.validateOCProperties(ctx);
-this.validateOutputIntent(ctx);
-}
-}
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    global::DripSharp.PdfCarton.Pdmodel.PDDocument pdfbox = ctx.GetDocument();
+    this.catalog = pdfbox.GetDocumentCatalog();
+    if ((this.catalog == default!)) {
+      ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNocatalog,
+        "There are no Catalog entry in the Document"));
+    } else {
+      this.validateActions(ctx);
+      this.validateLang(ctx);
+      this.validateNames(ctx);
+      this.validateOCProperties(ctx);
+      this.validateOutputIntent(ctx);
+    }
+  }
 
-private void validateActions(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(ctx, this.catalog.GetCOSObject(), global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ActionsProcess);
-if (this.catalog.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Aa)) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenAdditionalAction, "The AA field is forbidden for the Catalog  when the PDF is a PDF/A"));
-}
-}
+  private void validateActions(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(ctx,
+      this.catalog.GetCOSObject(),
+      global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ActionsProcess);
+    if (this.catalog.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Aa)) {
+      this.AddValidationError(ctx,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenAdditionalAction,
+        "The AA field is forbidden for the Catalog  when the PDF is a PDF/A"));
+    }
+  }
 
-private void validateLang(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-string lang = this.catalog.GetLanguage();
-if ((((lang != default!) && !((lang.Length == 0))) && !(global::DripSharp.Runtime.JavaCompat.StringMatches(lang, "[A-Za-z]{1,8}(-[A-Za-z]{1,8})*")))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxLangNotRfc1766));
-}
-}
+  private void validateLang(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    string lang = this.catalog.GetLanguage();
+    if ((((lang != default!) && !((lang.Length == 0)))
+      && !global::DripSharp.Runtime.JavaCompat.StringMatches(lang,
+      "[A-Za-z]{1,8}(-[A-Za-z]{1,8})*"))) {
+      this.AddValidationError(ctx,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxLangNotRfc1766));
+    }
+  }
 
-private void validateNames(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDictionary names = this.catalog.GetNames();
-if ((names != default!)) {
-if ((names.GetEmbeddedFiles() != default!)) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerCatalogEmbeddedfiles, "EmbeddedFile entry is present in the Names dictionary"));
-}
-if ((names.GetJavaScript() != default!)) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenActionsNamed, "Javascript entry is present in the Names dictionary"));
-}
-}
-}
+  private void validateNames(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDictionary names = this.catalog.GetNames();
+    if ((names != default!)) {
+      if ((names.GetEmbeddedFiles() != default!)) {
+        this.AddValidationError(ctx,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerCatalogEmbeddedfiles,
+          "EmbeddedFile entry is present in the Names dictionary"));
+      }
+      if ((names.GetJavaScript() != default!)) {
+        this.AddValidationError(ctx,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenActionsNamed,
+          "Javascript entry is present in the Names dictionary"));
+      }
+    }
+  }
 
-private void validateOCProperties(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-if ((this.catalog.GetOCProperties() != default!)) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerCatalogOcproperties, "A Catalog shall not contain the OCPProperties entry"));
-}
-}
+  private void validateOCProperties(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    if ((this.catalog.GetOCProperties() != default!)) {
+      this.AddValidationError(ctx,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerCatalogOcproperties,
+        "A Catalog shall not contain the OCPProperties entry"));
+    }
+  }
 
-private void validateOutputIntent(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-global::DripSharp.PdfCarton.Cos.COSArray outputIntents = this.catalog.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.OutputIntents);
-global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, bool> tmpDestOutputProfile = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, bool>();
-if ((outputIntents == default!)) {
-return;
-}
-for (int i = 0; (i < outputIntents.Size()); ++i) {
-global::DripSharp.PdfCarton.Cos.COSDictionary outputIntentDict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(outputIntents.GetObject(i)!);
-if ((outputIntentDict == default!)) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry, "OutputIntent object is null or isn't a dictionary"));
-} else {
-global::DripSharp.PdfCarton.Cos.COSName sValue = outputIntentDict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.S);
-if (!(global::DripSharp.PdfCarton.Cos.COSName.GtsPdfa1.Equals(sValue))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentSValueInvalid, "The S entry of the OutputIntent isn't GTS_PDFA1"));
-continue;
-}
-string outputConditionIdentifier = outputIntentDict.GetString(global::DripSharp.PdfCarton.Cos.COSName.OutputConditionIdentifier);
-if ((outputConditionIdentifier == default!)) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry, "The OutputIntentCondition is missing"));
-continue;
-}
-global::DripSharp.PdfCarton.Cos.COSBase destOutputProfile = outputIntentDict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.DestOutputProfile);
-this.validateICCProfile(destOutputProfile, tmpDestOutputProfile, ctx);
-global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = ctx.GetConfig();
-if ((config.IsLazyValidation() && !(this.isStandardICCCharacterization(outputConditionIdentifier)))) {
-string info = outputIntentDict.GetString(global::DripSharp.PdfCarton.Cos.COSName.Info);
-if (((info == default!) || (info.Length == 0))) {
-global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error = new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry, "The Info entry of a OutputIntent dictionary is missing");
-error.SetWarning(true);
-this.AddValidationError(ctx, error);
-}
-}
-}
-}
-}
+  private void validateOutputIntent(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    global::DripSharp.PdfCarton.Cos.COSArray outputIntents
+      = this.catalog.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.OutputIntents);
+    global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+      bool> tmpDestOutputProfile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+      bool>();
+    if ((outputIntents == default!)) {
+      return;
+    }
+    for (int i = 0; (i < outputIntents.Size()); ++i) {
+      global::DripSharp.PdfCarton.Cos.COSDictionary outputIntentDict
+        = (global::DripSharp.PdfCarton.Cos.COSDictionary)(outputIntents.GetObject(i)!);
+      if ((outputIntentDict == default!)) {
+        this.AddValidationError(ctx,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry,
+          "OutputIntent object is null or isn't a dictionary"));
+      } else {
+        global::DripSharp.PdfCarton.Cos.COSName sValue
+          = outputIntentDict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.S);
+        if (!(global::DripSharp.PdfCarton.Cos.COSName.GtsPdfa1.Equals(sValue))) {
+          this.AddValidationError(ctx,
+            new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentSValueInvalid,
+            "The S entry of the OutputIntent isn't GTS_PDFA1"));
+          continue;
+        }
+        string outputConditionIdentifier
+          = outputIntentDict.GetString(global::DripSharp.PdfCarton.Cos.COSName.OutputConditionIdentifier);
+        if ((outputConditionIdentifier == default!)) {
+          this.AddValidationError(ctx,
+            new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry,
+            "The OutputIntentCondition is missing"));
+          continue;
+        }
+        global::DripSharp.PdfCarton.Cos.COSBase destOutputProfile
+          = outputIntentDict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.DestOutputProfile);
+        this.validateICCProfile(destOutputProfile, tmpDestOutputProfile, ctx);
+        global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = ctx.GetConfig();
+        if ((config.IsLazyValidation()
+          && !(this.isStandardICCCharacterization(outputConditionIdentifier)))) {
+          string info = outputIntentDict.GetString(global::DripSharp.PdfCarton.Cos.COSName.Info);
+          if (((info == default!) || (info.Length == 0))) {
+            global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error
+              = new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry,
+              "The Info entry of a OutputIntent dictionary is missing");
+            error.SetWarning(true);
+            this.AddValidationError(ctx, error);
+          }
+        }
+      }
+    }
+  }
 
-private void validateICCProfile(global::DripSharp.PdfCarton.Cos.COSBase destOutputProfile, global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, bool> mapDestOutputProfile, global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-try {
-if (!((destOutputProfile is global::DripSharp.PdfCarton.Cos.COSObject))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry, global::DripSharp.Runtime.JavaCompat.Concat("OutputIntent object should be a reference: ", destOutputProfile)));
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSObject cosObj = (global::DripSharp.PdfCarton.Cos.COSObject)(destOutputProfile!);
-global::DripSharp.PdfCarton.Cos.COSObjectKey key = cosObj.GetKey();
-if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(mapDestOutputProfile, key)) {
-return;
-} else {
-if (!(global::DripSharp.Runtime.JavaCompat.MapIsEmpty(mapDestOutputProfile))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileMultiple, global::DripSharp.Runtime.JavaCompat.Concat("More than one ICCProfile is defined: ", destOutputProfile)));
-return;
-}
-}
-global::DripSharp.Runtime.JavaCompat.MapPut(mapDestOutputProfile, key, true);
-global::DripSharp.PdfCarton.Cos.COSBase localDestOutputProfile = cosObj.GetObject();
-if (!((localDestOutputProfile is global::DripSharp.PdfCarton.Cos.COSStream))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry, "OutputIntent object must be a stream"));
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSStream stream = (global::DripSharp.PdfCarton.Cos.COSStream)(localDestOutputProfile!);
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-array.Add(global::DripSharp.PdfCarton.Cos.COSName.Iccbased);
-array.Add(stream);
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased iccBased = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased.Create(array, (global::DripSharp.PdfCarton.Pdmodel.PDResources)default!);
-global::DripSharp.PdfCarton.Preflight.PreflightConfiguration cfg = ctx.GetConfig();
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory csFact = cfg.GetColorSpaceHelperFact();
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper csHelper = csFact.GetColorSpaceHelper(ctx, iccBased, global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.NoRestriction);
-csHelper.Validate();
-if ((ctx.GetIccProfileWrapper() == default!)) {
-using (global::System.IO.Stream @is = stream.CreateInputStream()) {
-ctx.SetIccProfileWrapper(new global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper(global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is)));
-}
-}
-} catch (global::System.Exception e) when (e is global::System.ArgumentException or global::System.IndexOutOfRangeException) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileInvalid, global::DripSharp.Runtime.JavaCompat.Concat("DestOutputProfile isn't a valid ICCProfile: ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
-} catch (global::System.IO.IOException e) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("Unable to parse the ICC Profile.", e);
-}
-}
+  private void validateICCProfile(global::DripSharp.PdfCarton.Cos.COSBase destOutputProfile,
+    global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+    bool> mapDestOutputProfile, global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    try {
+      if (!((destOutputProfile is global::DripSharp.PdfCarton.Cos.COSObject))) {
+        this.AddValidationError(ctx,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry,
+          global::DripSharp.Runtime.JavaCompat.Concat("OutputIntent object should be a reference: ",
+          destOutputProfile)));
+        return;
+      }
+      global::DripSharp.PdfCarton.Cos.COSObject cosObj
+        = (global::DripSharp.PdfCarton.Cos.COSObject)(destOutputProfile!);
+      global::DripSharp.PdfCarton.Cos.COSObjectKey key = cosObj.GetKey();
+      if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(mapDestOutputProfile, key)) {
+        return;
+      } else {
+        if (!global::DripSharp.Runtime.JavaCompat.MapIsEmpty(mapDestOutputProfile)) {
+          this.AddValidationError(ctx,
+            new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileMultiple,
+            global::DripSharp.Runtime.JavaCompat.Concat("More than one ICCProfile is defined: ",
+            destOutputProfile)));
+          return;
+        }
+      }
+      global::DripSharp.Runtime.JavaCompat.MapPut(mapDestOutputProfile, key, true);
+      global::DripSharp.PdfCarton.Cos.COSBase localDestOutputProfile = cosObj.GetObject();
+      if (!((localDestOutputProfile is global::DripSharp.PdfCarton.Cos.COSStream))) {
+        this.AddValidationError(ctx,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry,
+          "OutputIntent object must be a stream"));
+        return;
+      }
+      global::DripSharp.PdfCarton.Cos.COSStream stream
+        = (global::DripSharp.PdfCarton.Cos.COSStream)(localDestOutputProfile!);
+      global::DripSharp.PdfCarton.Cos.COSArray array
+        = new global::DripSharp.PdfCarton.Cos.COSArray();
+      array.Add(global::DripSharp.PdfCarton.Cos.COSName.Iccbased);
+      array.Add(stream);
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased iccBased
+        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased.Create(array,
+        (global::DripSharp.PdfCarton.Pdmodel.PDResources)default!);
+      global::DripSharp.PdfCarton.Preflight.PreflightConfiguration cfg = ctx.GetConfig();
+      global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory csFact
+        = cfg.GetColorSpaceHelperFact();
+      global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper csHelper
+        = csFact.GetColorSpaceHelper(ctx, iccBased,
+        global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.NoRestriction);
+      csHelper.Validate();
+      if ((ctx.GetIccProfileWrapper() == default!)) {
+        using (global::System.IO.Stream @is = stream.CreateInputStream()) {
+          ctx.SetIccProfileWrapper(new global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper(global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is)));
+        }
+      }
+    } catch (global::System.Exception e) when (e is global::System.ArgumentException or global::System.IndexOutOfRangeException) {
+      this.AddValidationError(ctx,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileInvalid,
+        global::DripSharp.Runtime.JavaCompat.Concat("DestOutputProfile isn't a valid ICCProfile: ",
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
+    } catch (global::System.IO.IOException e) {
+      throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("Unable to parse the ICC Profile.",
+        e);
+    }
+  }
 }

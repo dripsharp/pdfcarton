@@ -9,31 +9,32 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class RangeRecord {
-private readonly int startGlyphID = default;
+  private readonly int startGlyphID = default;
 
-private readonly int endGlyphID = default;
+  private readonly int endGlyphID = default;
 
-private readonly int startCoverageIndex = default;
+  private readonly int startCoverageIndex = default;
 
-public RangeRecord(int startGlyphID, int endGlyphID, int startCoverageIndex) {
-this.startGlyphID = startGlyphID;
-this.endGlyphID = endGlyphID;
-this.startCoverageIndex = startCoverageIndex;
-}
+  public RangeRecord(int startGlyphID, int endGlyphID, int startCoverageIndex) {
+    this.startGlyphID = startGlyphID;
+    this.endGlyphID = endGlyphID;
+    this.startCoverageIndex = startCoverageIndex;
+  }
 
-public virtual int GetStartGlyphID() {
-return this.startGlyphID;
-}
+  public virtual int GetStartGlyphID() {
+    return this.startGlyphID;
+  }
 
-public virtual int GetEndGlyphID() {
-return this.endGlyphID;
-}
+  public virtual int GetEndGlyphID() {
+    return this.endGlyphID;
+  }
 
-public virtual int GetStartCoverageIndex() {
-return this.startCoverageIndex;
-}
+  public virtual int GetStartCoverageIndex() {
+    return this.startCoverageIndex;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("RangeRecord[startGlyphID=%d,endGlyphID=%d,startCoverageIndex=%d]", this.startGlyphID, this.endGlyphID, this.startCoverageIndex);
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("RangeRecord[startGlyphID=%d,endGlyphID=%d,startCoverageIndex=%d]",
+      this.startGlyphID, this.endGlyphID, this.startCoverageIndex);
+  }
 }

@@ -9,17 +9,18 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common;
 
 public interface COSObjectable {
-public global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject();
+  public global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject();
 }
 
-public sealed class __COSObjectableFunctionalAdapter : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::System.Func<global::DripSharp.PdfCarton.Cos.COSBase> implementation;
+public sealed class __COSObjectableFunctionalAdapter
+: global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
+  private readonly global::System.Func<global::DripSharp.PdfCarton.Cos.COSBase> implementation;
 
-public __COSObjectableFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.Cos.COSBase> implementation) {
-this.implementation = implementation;
-}
+  public __COSObjectableFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.Cos.COSBase> implementation) {
+    this.implementation = implementation;
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.implementation();
-}
+  public global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.implementation();
+  }
 }

@@ -8,31 +8,41 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Graphics;
 
-public sealed class MoveTo : global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
-public MoveTo(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context) : base(context) {
+public sealed class MoveTo
+: global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
+  public MoveTo(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(operands) < 2)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, operands);
-}
-global::DripSharp.PdfCarton.Cos.COSBase base0 = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0);
-if (!((base0 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSBase base1 = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 1);
-if (!((base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber x = (global::DripSharp.PdfCarton.Cos.COSNumber)(base0!);
-global::DripSharp.PdfCarton.Cos.COSNumber y = (global::DripSharp.PdfCarton.Cos.COSNumber)(base1!);
-global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context = this.GetGraphicsContext();
-global::DripSharp.Runtime.JavaPoint2D pos = context.TransformedPoint(x.FloatValue(), y.FloatValue());
-context.MoveTo((float)(pos.X), (float)(pos.Y));
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(operands) < 2)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        operands);
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base0
+      = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0);
+    if (!((base0 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base1
+      = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 1);
+    if (!((base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSNumber x
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(base0!);
+    global::DripSharp.PdfCarton.Cos.COSNumber y
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(base1!);
+    global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context
+      = this.GetGraphicsContext();
+    global::DripSharp.Runtime.JavaPoint2D pos = context.TransformedPoint(x.FloatValue(),
+      y.FloatValue());
+    context.MoveTo((float)(pos.X), (float)(pos.Y));
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveTo;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveTo;
+  }
 }

@@ -9,68 +9,88 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.State;
 
 public sealed class RenderingMode {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("FILL")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode Fill = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(0);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("FILL")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode Fill
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(0);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("STROKE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode Stroke = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(1);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("STROKE")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode Stroke
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(1);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("FILL_STROKE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode FillStroke = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(2);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("FILL_STROKE")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode FillStroke
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(2);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("NEITHER")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode Neither = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(3);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("NEITHER")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode Neither
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(3);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("FILL_CLIP")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode FillClip = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(4);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("FILL_CLIP")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode FillClip
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(4);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("STROKE_CLIP")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode StrokeClip = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(5);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("STROKE_CLIP")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode StrokeClip
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(5);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("FILL_STROKE_CLIP")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(6)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode FillStrokeClip = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(6);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("FILL_STROKE_CLIP")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(6)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode FillStrokeClip
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(6);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("NEITHER_CLIP")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(7)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode NeitherClip = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(7);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("NEITHER_CLIP")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(7)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode NeitherClip
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode(7);
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode[] VALUES = global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.values();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode[] VALUES
+    = global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.values();
 
-public static global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode FromInt(int value) {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.VALUES[value];
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode FromInt(int value) {
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.VALUES[value];
+  }
 
-private readonly int value = default;
+  private readonly int value = default;
 
-private RenderingMode(int value) {
-this.value = value;
-}
+  private RenderingMode(int value) {
+    this.value = value;
+  }
 
-public int IntValue() {
-return this.value;
-}
+  public int IntValue() {
+    return this.value;
+  }
 
-public bool IsFill() {
-return ((((this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Fill) || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillStroke)) || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillClip)) || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillStrokeClip));
-}
+  public bool IsFill() {
+    return ((((this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Fill)
+      || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillStroke))
+      || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillClip))
+      || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillStrokeClip));
+  }
 
-public bool IsStroke() {
-return ((((this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Stroke) || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillStroke)) || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.StrokeClip)) || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillStrokeClip));
-}
+  public bool IsStroke() {
+    return ((((this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Stroke)
+      || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillStroke))
+      || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.StrokeClip))
+      || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillStrokeClip));
+  }
 
-public bool IsClip() {
-return ((((this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillClip) || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.StrokeClip)) || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillStrokeClip)) || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.NeitherClip));
-}
+  public bool IsClip() {
+    return ((((this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillClip)
+      || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.StrokeClip))
+      || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FillStrokeClip))
+      || (this == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.NeitherClip));
+  }
 
-public static RenderingMode[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<RenderingMode>();
-public static RenderingMode valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<RenderingMode>(name);
+  public static RenderingMode[] values()
+    => global::DripSharp.Runtime.JavaCompat.EnumValues<RenderingMode>();
+  public static RenderingMode valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<RenderingMode>(name);
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

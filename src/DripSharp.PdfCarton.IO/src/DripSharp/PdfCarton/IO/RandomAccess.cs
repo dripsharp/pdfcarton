@@ -8,4 +8,5 @@
 #nullable disable
 namespace DripSharp.PdfCarton.IO;
 
-public interface RandomAccess : global::DripSharp.PdfCarton.IO.RandomAccessRead, global::DripSharp.PdfCarton.IO.RandomAccessWrite {}
+public interface RandomAccess : global::DripSharp.PdfCarton.IO.RandomAccessRead,
+global::DripSharp.PdfCarton.IO.RandomAccessWrite {}

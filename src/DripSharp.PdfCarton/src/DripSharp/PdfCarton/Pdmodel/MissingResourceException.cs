@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public sealed class MissingResourceException : global::System.IO.IOException {
-public MissingResourceException(string message) : base(message) {
+  public MissingResourceException(string message) : base(message) {
 
-}
+  }
 }

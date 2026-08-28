@@ -9,49 +9,66 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 internal sealed class GlyphCache {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont font = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont font = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<int, global::SkiaSharp.SKPath> cache = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, global::SkiaSharp.SKPath>();
+  private readonly global::System.Collections.Generic.IDictionary<int,
+    global::SkiaSharp.SKPath> cache = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int,
+    global::SkiaSharp.SKPath>();
 
-internal GlyphCache(global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont font) {
-this.font = font;
-}
+  internal GlyphCache(global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont font) {
+    this.font = font;
+  }
 
-public global::SkiaSharp.SKPath GetPathForCharacterCode(int code) {
-global::SkiaSharp.SKPath path = global::DripSharp.Runtime.JavaCompat.MapGet(this.cache, code);
-if ((path != default!)) {
-return path;
-}
-try {
-if (!(this.font.HasGlyph(code))) {
-string fontName__59_24 = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike)(this.font!)).GetName();
-if ((this.font is global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font)) {
-int cid = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font)(this.font!)).CodeToCID(code);
-string cidHex = global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%04x", cid);
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.GlyphCache.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("No glyph for code ", code), " (CID "), cidHex), ") in font "), fontName__59_24)));
-} else {
-if ((this.font is global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont)) {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont simpleFont = (global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont)(this.font!);
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.GlyphCache.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("No glyph for code ", code), " in "), ((object)(this.font)).GetType().Name), " "), fontName__59_24), " (embedded or system font used: "), simpleFont.GetFontBoxFont().GetName()), ")")));
-if (((code == 10) && simpleFont.IsStandard14())) {
-path = new global::SkiaSharp.SKPath();
-global::DripSharp.Runtime.JavaCompat.MapPut(this.cache, code, path);
-return path;
-}
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.GlyphCache.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("No glyph for code ", code), " in font "), fontName__59_24)));
-}
-}
-}
-path = this.font.GetNormalizedPath(code);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.cache, code, path);
-return path;
-} catch (global::System.IO.IOException e) {
-string fontName__93_20 = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike)(this.font!)).GetName();
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.GlyphCache.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Glyph rendering failed for code ", code), " in font "), fontName__93_20)));
-return new global::SkiaSharp.SKPath();
-}
-}
+  public global::SkiaSharp.SKPath GetPathForCharacterCode(int code) {
+    global::SkiaSharp.SKPath path = global::DripSharp.Runtime.JavaCompat.MapGet(this.cache, code);
+    if ((path != default!)) {
+      return path;
+    }
+    try {
+      if (!(this.font.HasGlyph(code))) {
+        string fontName__59_24
+          = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike)(this.font!)).GetName();
+        if ((this.font is global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font)) {
+          int cid
+            = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font)(this.font!)).CodeToCID(code);
+          string cidHex = global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%04x", cid);
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.GlyphCache.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("No glyph for code ",
+            code), " (CID "), cidHex), ") in font "), fontName__59_24)));
+        } else {
+          if ((this.font is global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont)) {
+            global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont simpleFont
+              = (global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont)(this.font!);
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.GlyphCache.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("No glyph for code ",
+              code), " in "), ((object)(this.font)).GetType().Name), " "), fontName__59_24),
+              " (embedded or system font used: "), simpleFont.GetFontBoxFont().GetName()), ")")));
+            if (((code == 10) && simpleFont.IsStandard14())) {
+              path = new global::SkiaSharp.SKPath();
+              global::DripSharp.Runtime.JavaCompat.MapPut(this.cache, code, path);
+              return path;
+            }
+          } else {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.GlyphCache.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("No glyph for code ",
+              code), " in font "), fontName__59_24)));
+          }
+        }
+      }
+      path = this.font.GetNormalizedPath(code);
+      global::DripSharp.Runtime.JavaCompat.MapPut(this.cache, code, path);
+      return path;
+    } catch (global::System.IO.IOException e) {
+      string fontName__93_20
+        = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike)(this.font!)).GetName();
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.GlyphCache.LOG,
+        (global::System.Exception)e,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Glyph rendering failed for code ",
+        code), " in font "), fontName__93_20)));
+      return new global::SkiaSharp.SKPath();
+    }
+  }
 }

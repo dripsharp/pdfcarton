@@ -9,105 +9,117 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public class COSFloat : global::DripSharp.PdfCarton.Cos.COSNumber {
-private readonly float value = default;
+  private readonly float value = default;
 
-private string valueAsString = null!;
+  private string valueAsString = null!;
 
-public static readonly global::DripSharp.PdfCarton.Cos.COSFloat Zero = new global::DripSharp.PdfCarton.Cos.COSFloat(0.0F, "0.0");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSFloat Zero
+    = new global::DripSharp.PdfCarton.Cos.COSFloat(0.0F, "0.0");
 
-public static readonly global::DripSharp.PdfCarton.Cos.COSFloat One = new global::DripSharp.PdfCarton.Cos.COSFloat(1.0F, "1.0");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSFloat One
+    = new global::DripSharp.PdfCarton.Cos.COSFloat(1.0F, "1.0");
 
-public COSFloat(float aFloat) {
-this.value = aFloat;
-}
+  public COSFloat(float aFloat) {
+    this.value = aFloat;
+  }
 
-private COSFloat(float aFloat, string valueString) {
-this.value = aFloat;
-this.valueAsString = valueString;
-}
+  private COSFloat(float aFloat, string valueString) {
+    this.value = aFloat;
+    this.valueAsString = valueString;
+  }
 
-public COSFloat(string aFloat) {
-float parsedValue;
-string stringValue = default!;
-try {
-float f = global::DripSharp.Runtime.JavaCompat.ParseFloat(aFloat);
-parsedValue = this.coerce(f);
-stringValue = ((f == parsedValue) ? aFloat : (string)(default!));
-} catch (global::DripSharp.Runtime.JavaNumberFormatException e) {
-if (global::DripSharp.Runtime.JavaCompat.StringStartsWith(aFloat, "--")) {
-aFloat = aFloat.Substring(1);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.StringMatches(aFloat, "^0\\.0*-\\d+")) {
-aFloat = global::DripSharp.Runtime.JavaCompat.Concat("-", global::DripSharp.Runtime.JavaCompat.StringReplaceFirst(aFloat, "-", ""));
-} else {
-if (global::DripSharp.Runtime.JavaCompat.StringMatches(aFloat, "^-\\d+\\.-\\d+")) {
-aFloat = global::DripSharp.Runtime.JavaCompat.Concat("-", global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(aFloat, "-", ""));
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error expected floating point number actual='", aFloat), "'"), e);
-}
-}
-}
-try {
-parsedValue = this.coerce(global::DripSharp.Runtime.JavaCompat.ParseFloat(aFloat));
-} catch (global::DripSharp.Runtime.JavaNumberFormatException e2) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error expected floating point number actual='", aFloat), "'"), e2);
-}
-}
-this.value = parsedValue;
-this.valueAsString = stringValue!;
-}
+  public COSFloat(string aFloat) {
+    float parsedValue;
+    string stringValue = default!;
+    try {
+      float f = global::DripSharp.Runtime.JavaCompat.ParseFloat(aFloat);
+      parsedValue = this.coerce(f);
+      stringValue = ((f == parsedValue) ? aFloat : (string)(default!));
+    } catch (global::DripSharp.Runtime.JavaNumberFormatException e) {
+      if (global::DripSharp.Runtime.JavaCompat.StringStartsWith(aFloat, "--")) {
+        aFloat = aFloat.Substring(1);
+      } else {
+        if (global::DripSharp.Runtime.JavaCompat.StringMatches(aFloat, "^0\\.0*-\\d+")) {
+          aFloat = global::DripSharp.Runtime.JavaCompat.Concat("-",
+            global::DripSharp.Runtime.JavaCompat.StringReplaceFirst(aFloat, "-", ""));
+        } else {
+          if (global::DripSharp.Runtime.JavaCompat.StringMatches(aFloat, "^-\\d+\\.-\\d+")) {
+            aFloat = global::DripSharp.Runtime.JavaCompat.Concat("-",
+              global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(aFloat, "-", ""));
+          } else {
+            throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error expected floating point number actual='",
+              aFloat), "'"), e);
+          }
+        }
+      }
+      try {
+        parsedValue = this.coerce(global::DripSharp.Runtime.JavaCompat.ParseFloat(aFloat));
+      } catch (global::DripSharp.Runtime.JavaNumberFormatException e2) {
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error expected floating point number actual='",
+          aFloat), "'"), e2);
+      }
+    }
+    this.value = parsedValue;
+    this.valueAsString = stringValue!;
+  }
 
-private float coerce(float floatValue) {
-if ((floatValue == float.PositiveInfinity)) {
-return float.MaxValue;
-}
-if ((floatValue == float.NegativeInfinity)) {
-return -(float.MaxValue);
-}
-if ((global::System.Math.Abs(floatValue) < 1.17549435E-38f)) {
-return 0.0F;
-}
-return floatValue;
-}
+  private float coerce(float floatValue) {
+    if ((floatValue == float.PositiveInfinity)) {
+      return float.MaxValue;
+    }
+    if ((floatValue == float.NegativeInfinity)) {
+      return -(float.MaxValue);
+    }
+    if ((global::System.Math.Abs(floatValue) < 1.17549435E-38f)) {
+      return 0.0F;
+    }
+    return floatValue;
+  }
 
-public override float FloatValue() {
-return this.value;
-}
+  public override float FloatValue() {
+    return this.value;
+  }
 
-public override long LongValue() {
-return (long)(this.value);
-}
+  public override long LongValue() {
+    return (long)(this.value);
+  }
 
-public override int IntValue() {
-return (int)(this.value);
-}
+  public override int IntValue() {
+    return (int)(this.value);
+  }
 
-public override bool Equals(object o) {
-return ((o is global::DripSharp.PdfCarton.Cos.COSFloat) && (global::DripSharp.Runtime.JavaCompat.FloatToIntBits(((global::DripSharp.PdfCarton.Cos.COSFloat)(o!)).value) == global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.value)));
-}
+  public override bool Equals(object o) {
+    return ((o is global::DripSharp.PdfCarton.Cos.COSFloat)
+      && (global::DripSharp.Runtime.JavaCompat.FloatToIntBits(((global::DripSharp.PdfCarton.Cos.COSFloat)(o!)).value)
+      == global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.value)));
+  }
 
-public override int GetHashCode() {
-return global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.value);
-}
+  public override int GetHashCode() {
+    return global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.value);
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("COSFloat{", this.formatString()), "}");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("COSFloat{",
+      this.formatString()), "}");
+  }
 
-private string formatString() {
-if ((this.valueAsString == default!)) {
-string s = global::DripSharp.Runtime.JavaCompat.StringValueOf(this.value);
-bool simpleFormat = (global::DripSharp.Runtime.JavaCompat.StringIndexOf(s, (int)('E')) < 0);
-this.valueAsString = (simpleFormat ? s : global::DripSharp.Runtime.JavaCompat.JavaBigDecimalToPlainString(global::DripSharp.Runtime.JavaCompat.JavaBigDecimalStripTrailingZeros(global::DripSharp.Runtime.JavaCompat.JavaBigDecimalParse(s))));
-}
-return this.valueAsString;
-}
+  private string formatString() {
+    if ((this.valueAsString == default!)) {
+      string s = global::DripSharp.Runtime.JavaCompat.StringValueOf(this.value);
+      bool simpleFormat = (global::DripSharp.Runtime.JavaCompat.StringIndexOf(s, (int)('E')) < 0);
+      this.valueAsString = (simpleFormat ? s
+        : global::DripSharp.Runtime.JavaCompat.JavaBigDecimalToPlainString(global::DripSharp.Runtime.JavaCompat.JavaBigDecimalStripTrailingZeros(global::DripSharp.Runtime.JavaCompat.JavaBigDecimalParse(s))));
+    }
+    return this.valueAsString;
+  }
 
-public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
-visitor.VisitFromFloat(this);
-}
+  public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
+    visitor.VisitFromFloat(this);
+  }
 
-public virtual void WritePDF(global::System.IO.Stream output) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, global::DripSharp.Runtime.JavaCompat.StringGetBytes(this.formatString(), global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
-}
+  public virtual void WritePDF(global::System.IO.Stream output) {
+    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output,
+      global::DripSharp.Runtime.JavaCompat.StringGetBytes(this.formatString(),
+      global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+  }
 }

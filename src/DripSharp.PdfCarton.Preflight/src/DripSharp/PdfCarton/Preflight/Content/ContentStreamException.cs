@@ -8,26 +8,28 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Content;
 
-public class ContentStreamException : global::DripSharp.PdfCarton.Preflight.Exception.ValidationException {
-private string errorCode = "";
+public class ContentStreamException
+: global::DripSharp.PdfCarton.Preflight.Exception.ValidationException {
+  private string errorCode = "";
 
-public ContentStreamException(string arg0, global::System.Exception arg1) : base(arg0) {
+  public ContentStreamException(string arg0, global::System.Exception arg1) : base(arg0) {
 
-}
+  }
 
-public ContentStreamException(string arg0) : base(arg0) {
+  public ContentStreamException(string arg0) : base(arg0) {
 
-}
+  }
 
-public ContentStreamException(global::System.Exception arg0) : base(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(arg0)) {
+  public ContentStreamException(global::System.Exception arg0)
+  : base(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(arg0)) {
 
-}
+  }
 
-public virtual string GetErrorCode() {
-return this.errorCode;
-}
+  public virtual string GetErrorCode() {
+    return this.errorCode;
+  }
 
-public virtual void SetErrorCode(string errorCode) {
-this.errorCode = errorCode;
-}
+  public virtual void SetErrorCode(string errorCode) {
+    this.errorCode = errorCode;
+  }
 }

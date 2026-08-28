@@ -9,26 +9,27 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public interface StructuredType {
-public string @Namespace();
+  public string @Namespace();
 
-public string PreferedPrefix();
+  public string PreferedPrefix();
 }
 
-[global::System.AttributeUsage(global::System.AttributeTargets.Class | global::System.AttributeTargets.Interface | global::System.AttributeTargets.Struct | global::System.AttributeTargets.Enum | global::System.AttributeTargets.Delegate, AllowMultiple = false, Inherited = false)]
+[global::System.AttributeUsage(global::System.AttributeTargets.Class | global::System.AttributeTargets.Interface | global::System.AttributeTargets.Struct | global::System.AttributeTargets.Enum | global::System.AttributeTargets.Delegate,
+  AllowMultiple = false, Inherited = false)]
 internal sealed class StructuredTypeAttribute : global::System.Attribute, StructuredType {
-private readonly string __namespace;
-private readonly string __preferedPrefix;
+  private readonly string __namespace;
+  private readonly string __preferedPrefix;
 
-public StructuredTypeAttribute(string @namespace, string preferedPrefix) {
-this.__namespace = @namespace;
-this.__preferedPrefix = preferedPrefix;
-}
+  public StructuredTypeAttribute(string @namespace, string preferedPrefix) {
+    this.__namespace = @namespace;
+    this.__preferedPrefix = preferedPrefix;
+  }
 
-public string @Namespace() {
-return this.__namespace;
-}
+  public string @Namespace() {
+    return this.__namespace;
+  }
 
-public string PreferedPrefix() {
-return this.__preferedPrefix;
-}
+  public string PreferedPrefix() {
+    return this.__preferedPrefix;
+  }
 }

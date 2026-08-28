@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 public class InvalidPasswordException : global::System.IO.IOException {
-internal InvalidPasswordException(string message) : base(message) {
+  internal InvalidPasswordException(string message) : base(message) {
 
-}
+  }
 }

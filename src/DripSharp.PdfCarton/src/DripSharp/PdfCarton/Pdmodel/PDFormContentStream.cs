@@ -8,8 +8,11 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel;
 
-public sealed class PDFormContentStream : global::DripSharp.PdfCarton.Pdmodel.PDAbstractContentStream {
-public PDFormContentStream(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject form) : base((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!, form.GetContentStream().CreateOutputStream(), form.GetResources()) {
+public sealed class PDFormContentStream
+: global::DripSharp.PdfCarton.Pdmodel.PDAbstractContentStream {
+  public PDFormContentStream(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject form)
+  : base((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!,
+    form.GetContentStream().CreateOutputStream(), form.GetResources()) {
 
-}
+  }
 }

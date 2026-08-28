@@ -8,43 +8,55 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.State;
 
-public class SetLineDashPattern : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class SetLineDashPattern
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public SetLineDashPattern(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+  public SetLineDashPattern(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) < 2)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-global::DripSharp.PdfCarton.Cos.COSBase base0 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-if (!((base0 is global::DripSharp.PdfCarton.Cos.COSArray))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSBase base1 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 1);
-if (!((base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSArray dashArray = (global::DripSharp.PdfCarton.Cos.COSArray)(base0!);
-int dashPhase = ((global::DripSharp.PdfCarton.Cos.COSNumber)(base1!)).IntValue();
-foreach (global::DripSharp.PdfCarton.Cos.COSBase @base in dashArray) {
-if ((@base is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-global::DripSharp.PdfCarton.Cos.COSNumber num = (global::DripSharp.PdfCarton.Cos.COSNumber)(@base!);
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(num.FloatValue(), (float)(0)) != 0)) {
-break;
-}
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetLineDashPattern.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("dash array has non number element ", @base), ", ignored")));
-dashArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-break;
-}
-}
-this.GetContext().SetLineDashPattern(dashArray, dashPhase);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) < 2)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        arguments);
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base0
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+    if (!((base0 is global::DripSharp.PdfCarton.Cos.COSArray))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base1
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 1);
+    if (!((base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray dashArray
+      = (global::DripSharp.PdfCarton.Cos.COSArray)(base0!);
+    int dashPhase = ((global::DripSharp.PdfCarton.Cos.COSNumber)(base1!)).IntValue();
+    foreach (global::DripSharp.PdfCarton.Cos.COSBase @base in dashArray) {
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+        global::DripSharp.PdfCarton.Cos.COSNumber num
+          = (global::DripSharp.PdfCarton.Cos.COSNumber)(@base!);
+        if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(num.FloatValue(), (float)(0))
+          != 0)) {
+          break;
+        }
+      } else {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetLineDashPattern.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("dash array has non number element ",
+          @base), ", ignored")));
+        dashArray = new global::DripSharp.PdfCarton.Cos.COSArray();
+        break;
+      }
+    }
+    this.GetContext().SetLineDashPattern(dashArray, dashPhase);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineDashpattern;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineDashpattern;
+  }
 }

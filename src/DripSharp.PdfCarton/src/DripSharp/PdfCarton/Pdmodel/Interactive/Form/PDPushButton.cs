@@ -9,39 +9,44 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class PDPushButton : global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton {
-public PDPushButton(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) : base(acroForm) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton.FLAG_PUSHBUTTON, true);
-}
+  public PDPushButton(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm)
+  : base(acroForm) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton.FLAG_PUSHBUTTON, true);
+  }
 
-internal PDPushButton(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm, global::DripSharp.PdfCarton.Cos.COSDictionary field, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm, field, parent) {
+  internal PDPushButton(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm,
+    global::DripSharp.PdfCarton.Cos.COSDictionary field,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm,
+    field, parent) {
 
-}
+  }
 
-public override global::System.Collections.Generic.IList<string> GetExportValues() {
-return global::System.Array.Empty<string>();
-}
+  public override global::System.Collections.Generic.IList<string> GetExportValues() {
+    return global::System.Array.Empty<string>();
+  }
 
-public override void SetExportValues(global::System.Collections.Generic.IList<string> values) {
-if (((values != default!) && !(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(values)))) {
-throw new global::System.ArgumentException("A PDPushButton shall not use the Opt entry in the field dictionary");
-}
-}
+  public override void SetExportValues(global::System.Collections.Generic.IList<string> values) {
+    if (((values != default!) && !global::DripSharp.Runtime.JavaCompat.ListIsEmpty(values))) {
+      throw new global::System.ArgumentException("A PDPushButton shall not use the Opt entry in the field dictionary");
+    }
+  }
 
-public override string GetValue() {
-return "";
-}
+  public override string GetValue() {
+    return "";
+  }
 
-public override string GetDefaultValue() {
-return "";
-}
+  public override string GetDefaultValue() {
+    return "";
+  }
 
-public override string GetValueAsString() {
-return this.GetValue();
-}
+  public override string GetValueAsString() {
+    return this.GetValue();
+  }
 
-public override global::System.Collections.Generic.ISet<string> GetOnValues() {
-return global::DripSharp.Runtime.JavaCompat.EmptySet<string>();
-}
+  public override global::System.Collections.Generic.ISet<string> GetOnValues() {
+    return global::DripSharp.Runtime.JavaCompat.EmptySet<string>();
+  }
 
-internal override void constructAppearances() {}
+  internal override void constructAppearances() {}
 }

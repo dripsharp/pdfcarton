@@ -9,150 +9,167 @@
 namespace DripSharp.PdfCarton.Pdfparser;
 
 public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser {
-private readonly int[] w = new int[3];
+  private readonly int[] w = new int[3];
 
-private global::DripSharp.PdfCarton.Pdfparser.PDFXrefStreamParser.ObjectNumbers objectNumbers = default!;
+  private global::DripSharp.PdfCarton.Pdfparser.PDFXrefStreamParser.ObjectNumbers objectNumbers
+    = default!;
 
-public PDFXrefStreamParser(global::DripSharp.PdfCarton.Cos.COSStream stream, global::DripSharp.PdfCarton.Cos.COSDocument document) : base(stream.CreateView()) {
-this.Document = document;
-try {
-this.initParserValues(stream);
-} catch (global::System.IO.IOException) {
-this.Dispose();
-throw;
-}
-}
+  public PDFXrefStreamParser(global::DripSharp.PdfCarton.Cos.COSStream stream,
+    global::DripSharp.PdfCarton.Cos.COSDocument document) : base(stream.CreateView()) {
+    this.Document = document;
+    try {
+      this.initParserValues(stream);
+    } catch (global::System.IO.IOException) {
+      this.Dispose();
+      throw;
+    }
+  }
 
-private void initParserValues(global::DripSharp.PdfCarton.Cos.COSStream stream) {
-global::DripSharp.PdfCarton.Cos.COSArray wArray = stream.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.W);
-if ((wArray == default!)) {
-throw new global::System.IO.IOException("/W array is missing in Xref stream");
-}
-if ((wArray.Size() != 3)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Wrong number of values for /W array in XRef: ", global::DripSharp.Runtime.JavaCompat.ArrayToString(this.w)));
-}
-for (int i = 0; (i < 3); i++) {
-this.w[i] = wArray.GetInt(i, 0);
-}
-if ((((this.w[0] < 0) || (this.w[1] < 0)) || (this.w[2] < 0))) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Incorrect /W array in XRef: ", global::DripSharp.Runtime.JavaCompat.ArrayToString(this.w)));
-}
-if ((((this.w[0] + this.w[1]) + this.w[2]) > 20)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Incorrect /W array in XRef: ", global::DripSharp.Runtime.JavaCompat.ArrayToString(this.w)));
-}
-global::DripSharp.PdfCarton.Cos.COSArray indexArray = stream.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Index);
-if ((indexArray == default!)) {
-indexArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-indexArray.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Zero);
-indexArray.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(stream.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Size, 0))));
-}
-if (((indexArray.Size() == 0) || ((indexArray.Size() % 2) == 1))) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Wrong number of values for /Index array in XRef: ", global::DripSharp.Runtime.JavaCompat.ArrayToString(this.w)));
-}
-this.objectNumbers = new global::DripSharp.PdfCarton.Pdfparser.PDFXrefStreamParser.ObjectNumbers(indexArray);
-}
+  private void initParserValues(global::DripSharp.PdfCarton.Cos.COSStream stream) {
+    global::DripSharp.PdfCarton.Cos.COSArray wArray
+      = stream.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.W);
+    if ((wArray == default!)) {
+      throw new global::System.IO.IOException("/W array is missing in Xref stream");
+    }
+    if ((wArray.Size() != 3)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Wrong number of values for /W array in XRef: ",
+        global::DripSharp.Runtime.JavaCompat.ArrayToString(this.w)));
+    }
+    for (int i = 0; (i < 3); i++) {
+      this.w[i] = wArray.GetInt(i, 0);
+    }
+    if ((((this.w[0] < 0) || (this.w[1] < 0)) || (this.w[2] < 0))) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Incorrect /W array in XRef: ",
+        global::DripSharp.Runtime.JavaCompat.ArrayToString(this.w)));
+    }
+    if ((((this.w[0] + this.w[1]) + this.w[2]) > 20)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Incorrect /W array in XRef: ",
+        global::DripSharp.Runtime.JavaCompat.ArrayToString(this.w)));
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray indexArray
+      = stream.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Index);
+    if ((indexArray == default!)) {
+      indexArray = new global::DripSharp.PdfCarton.Cos.COSArray();
+      indexArray.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Zero);
+      indexArray.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(stream.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Size,
+        0))));
+    }
+    if (((indexArray.Size() == 0) || ((indexArray.Size() % 2) == 1))) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Wrong number of values for /Index array in XRef: ",
+        global::DripSharp.Runtime.JavaCompat.ArrayToString(this.w)));
+    }
+    this.objectNumbers
+      = new global::DripSharp.PdfCarton.Pdfparser.PDFXrefStreamParser.ObjectNumbers(indexArray);
+  }
 
-private void Dispose() {
-if ((base.Source != default!)) {
-base.Source.Dispose();
-}
-base.Document = default!;
-this.objectNumbers = default!;
-}
+  private void Dispose() {
+    if ((base.Source != default!)) {
+      base.Source.Dispose();
+    }
+    base.Document = default!;
+    this.objectNumbers = default!;
+  }
 
-public virtual void Parse(global::DripSharp.PdfCarton.Pdfparser.XrefTrailerResolver resolver) {
-sbyte[] currLine = new sbyte[((this.w[0] + this.w[1]) + this.w[2])];
-while ((!(this.IsEOF()) && this.objectNumbers.HasNext())) {
-this.readNextValue(currLine);
-long objID = global::DripSharp.Runtime.JavaCompat.UnboxObject<long>(this.objectNumbers.Next());
-int type = ((this.w[0] == 0) ? 1 : (int)(this.parseValue(currLine, 0, this.w[0])));
-if ((type == 0)) {
-continue;
-}
-long offset = this.parseValue(currLine, this.w[0], this.w[1]);
-int thirdValue = (int)(this.parseValue(currLine, (this.w[0] + this.w[1]), this.w[2]));
-if ((type == 1)) {
-resolver.SetXRef(new global::DripSharp.PdfCarton.Cos.COSObjectKey(objID, thirdValue), offset);
-} else {
-resolver.SetXRef(new global::DripSharp.PdfCarton.Cos.COSObjectKey(objID, 0, thirdValue), -offset);
-}
-}
-this.Dispose();
-}
+  public virtual void Parse(global::DripSharp.PdfCarton.Pdfparser.XrefTrailerResolver resolver) {
+    sbyte[] currLine = new sbyte[((this.w[0] + this.w[1]) + this.w[2])];
+    while ((!(this.IsEOF()) && this.objectNumbers.HasNext())) {
+      this.readNextValue(currLine);
+      long objID
+        = global::DripSharp.Runtime.JavaCompat.UnboxObject<long>(this.objectNumbers.Next());
+      int type = ((this.w[0] == 0) ? 1 : (int)(this.parseValue(currLine, 0, this.w[0])));
+      if ((type == 0)) {
+        continue;
+      }
+      long offset = this.parseValue(currLine, this.w[0], this.w[1]);
+      int thirdValue = (int)(this.parseValue(currLine, (this.w[0] + this.w[1]), this.w[2]));
+      if ((type == 1)) {
+        resolver.SetXRef(new global::DripSharp.PdfCarton.Cos.COSObjectKey(objID, thirdValue),
+          offset);
+      } else {
+        resolver.SetXRef(new global::DripSharp.PdfCarton.Cos.COSObjectKey(objID, 0, thirdValue),
+          -offset);
+      }
+    }
+    this.Dispose();
+  }
 
-private void readNextValue(sbyte[] value) {
-int remainingBytes = value.Length;
-int amountRead;
-while (((amountRead = base.Source.Read(value, (value.Length - remainingBytes), remainingBytes)) > 0)) {
-remainingBytes -= amountRead;
-}
-}
+  private void readNextValue(sbyte[] value) {
+    int remainingBytes = value.Length;
+    int amountRead;
+    while (((amountRead = base.Source.Read(value, (value.Length - remainingBytes),
+      remainingBytes)) > 0)) {
+      remainingBytes -= amountRead;
+    }
+  }
 
-private long parseValue(sbyte[] data, int start, int length) {
-long value = 0;
-for (int i = 0; (i < length); i++) {
-value += (((long)(data[(i + start)]) & 255) << unchecked((int)((((length - i) - 1) * 8))));
-}
-return value;
-}
+  private long parseValue(sbyte[] data, int start, int length) {
+    long value = 0;
+    for (int i = 0; (i < length); i++) {
+      value += (((long)(data[(i + start)]) & 255) << unchecked((int)((((length - i) - 1) * 8))));
+    }
+    return value;
+  }
 
-internal class ObjectNumbers : global::DripSharp.Runtime.JavaIterator<long> {
-internal readonly long[] start = null!;
+  internal class ObjectNumbers : global::DripSharp.Runtime.JavaIterator<long> {
+    internal readonly long[] start = null!;
 
-internal readonly long[] end = null!;
+    internal readonly long[] end = null!;
 
-internal int currentRange = 0;
+    internal int currentRange = 0;
 
-internal long currentEnd = 0;
+    internal long currentEnd = 0;
 
-internal long currentNumber = 0;
+    internal long currentNumber = 0;
 
-internal ObjectNumbers(global::DripSharp.PdfCarton.Cos.COSArray indexArray) {
-this.start = new long[(indexArray.Size() / 2)];
-this.end = new long[this.start.Length];
-int counter = 0;
-global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Cos.COSBase> indexIter = indexArray.Iterator();
-while (indexIter.HasNext()) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = indexIter.Next()!;
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSInteger))) {
-throw new global::System.IO.IOException("Xref stream must have integer in /Index array");
-}
-long startValue = ((global::DripSharp.PdfCarton.Cos.COSInteger)(@base!)).LongValue();
-if (!indexIter.HasNext()) {
-break;
-}
-@base = indexIter.Next()!;
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSInteger))) {
-throw new global::System.IO.IOException("Xref stream must have integer in /Index array");
-}
-long sizeValue = ((global::DripSharp.PdfCarton.Cos.COSInteger)(@base!)).LongValue();
-this.start[counter] = startValue;
-this.end[counter] = (startValue + sizeValue);
-counter++;
-}
-this.currentNumber = this.start[0];
-this.currentEnd = this.end[0];
-}
+    internal ObjectNumbers(global::DripSharp.PdfCarton.Cos.COSArray indexArray) {
+      this.start = new long[(indexArray.Size() / 2)];
+      this.end = new long[this.start.Length];
+      int counter = 0;
+      global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Cos.COSBase> indexIter
+        = indexArray.Iterator();
+      while (indexIter.HasNext()) {
+        global::DripSharp.PdfCarton.Cos.COSBase @base = indexIter.Next()!;
+        if (!((@base is global::DripSharp.PdfCarton.Cos.COSInteger))) {
+          throw new global::System.IO.IOException("Xref stream must have integer in /Index array");
+        }
+        long startValue = ((global::DripSharp.PdfCarton.Cos.COSInteger)(@base!)).LongValue();
+        if (!indexIter.HasNext()) {
+          break;
+        }
+        @base = indexIter.Next()!;
+        if (!((@base is global::DripSharp.PdfCarton.Cos.COSInteger))) {
+          throw new global::System.IO.IOException("Xref stream must have integer in /Index array");
+        }
+        long sizeValue = ((global::DripSharp.PdfCarton.Cos.COSInteger)(@base!)).LongValue();
+        this.start[counter] = startValue;
+        this.end[counter] = (startValue + sizeValue);
+        counter++;
+      }
+      this.currentNumber = this.start[0];
+      this.currentEnd = this.end[0];
+    }
 
-public virtual bool HasNext() {
-if ((this.start.Length == 1)) {
-return (this.currentNumber < this.currentEnd);
-}
-return ((this.currentRange < (this.start.Length - 1)) || (this.currentNumber < this.currentEnd));
-}
+    public virtual bool HasNext() {
+      if ((this.start.Length == 1)) {
+        return (this.currentNumber < this.currentEnd);
+      }
+      return ((this.currentRange < (this.start.Length - 1))
+        || (this.currentNumber < this.currentEnd));
+    }
 
-public virtual long Next() {
-if ((this.currentNumber < this.currentEnd)) {
-return this.currentNumber++;
-}
-if ((this.currentRange >= (this.start.Length - 1))) {
-throw new global::System.InvalidOperationException();
-}
-this.currentNumber = this.start[++(this.currentRange)];
-this.currentEnd = this.end[this.currentRange];
-return this.currentNumber++;
-}
+    public virtual long Next() {
+      if ((this.currentNumber < this.currentEnd)) {
+        return this.currentNumber++;
+      }
+      if ((this.currentRange >= (this.start.Length - 1))) {
+        throw new global::System.InvalidOperationException();
+      }
+      this.currentNumber = this.start[++(this.currentRange)];
+      this.currentEnd = this.end[this.currentRange];
+      return this.currentNumber++;
+    }
 
-public void Remove() {throw new global::System.NotSupportedException("Iterator removal is not supported.");}
-}
+    public void Remove() {throw new global::System.NotSupportedException("Iterator removal is not supported.");
+    }
+  }
 }

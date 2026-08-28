@@ -9,151 +9,151 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator;
 
 public sealed class OperatorName {
-public const string NonStrokingColor = "sc";
+  public const string NonStrokingColor = "sc";
 
-public const string NonStrokingColorN = "scn";
+  public const string NonStrokingColorN = "scn";
 
-public const string NonStrokingRgb = "rg";
+  public const string NonStrokingRgb = "rg";
 
-public const string NonStrokingGray = "g";
+  public const string NonStrokingGray = "g";
 
-public const string NonStrokingCmyk = "k";
+  public const string NonStrokingCmyk = "k";
 
-public const string NonStrokingColorspace = "cs";
+  public const string NonStrokingColorspace = "cs";
 
-public const string StrokingColor = "SC";
+  public const string StrokingColor = "SC";
 
-public const string StrokingColorN = "SCN";
+  public const string StrokingColorN = "SCN";
 
-public const string StrokingColorRgb = "RG";
+  public const string StrokingColorRgb = "RG";
 
-public const string StrokingColorGray = "G";
+  public const string StrokingColorGray = "G";
 
-public const string StrokingColorCmyk = "K";
+  public const string StrokingColorCmyk = "K";
 
-public const string StrokingColorspace = "CS";
+  public const string StrokingColorspace = "CS";
 
-public const string BeginMarkedContentSeq = "BDC";
+  public const string BeginMarkedContentSeq = "BDC";
 
-public const string BeginMarkedContent = "BMC";
+  public const string BeginMarkedContent = "BMC";
 
-public const string EndMarkedContent = "EMC";
+  public const string EndMarkedContent = "EMC";
 
-public const string MarkedContentPointWithProps = "DP";
+  public const string MarkedContentPointWithProps = "DP";
 
-public const string MarkedContentPoint = "MP";
+  public const string MarkedContentPoint = "MP";
 
-public const string DrawObject = "Do";
+  public const string DrawObject = "Do";
 
-public const string Concat = "cm";
+  public const string Concat = "cm";
 
-public const string Restore = "Q";
+  public const string Restore = "Q";
 
-public const string Save = "q";
+  public const string Save = "q";
 
-public const string SetFlatness = "i";
+  public const string SetFlatness = "i";
 
-public const string SetGraphicsStateParams = "gs";
+  public const string SetGraphicsStateParams = "gs";
 
-public const string SetLineCapstyle = "J";
+  public const string SetLineCapstyle = "J";
 
-public const string SetLineDashpattern = "d";
+  public const string SetLineDashpattern = "d";
 
-public const string SetLineJoinstyle = "j";
+  public const string SetLineJoinstyle = "j";
 
-public const string SetLineMiterlimit = "M";
+  public const string SetLineMiterlimit = "M";
 
-public const string SetLineWidth = "w";
+  public const string SetLineWidth = "w";
 
-public const string SetMatrix = "Tm";
+  public const string SetMatrix = "Tm";
 
-public const string SetRenderingintent = "ri";
+  public const string SetRenderingintent = "ri";
 
-public const string AppendRect = "re";
+  public const string AppendRect = "re";
 
-public const string BeginInlineImage = "BI";
+  public const string BeginInlineImage = "BI";
 
-public const string BeginInlineImageData = "ID";
+  public const string BeginInlineImageData = "ID";
 
-public const string EndInlineImage = "EI";
+  public const string EndInlineImage = "EI";
 
-public const string ClipEvenOdd = "W*";
+  public const string ClipEvenOdd = "W*";
 
-public const string ClipNonZero = "W";
+  public const string ClipNonZero = "W";
 
-public const string CloseAndStroke = "s";
+  public const string CloseAndStroke = "s";
 
-public const string CloseFillEvenOddAndStroke = "b*";
+  public const string CloseFillEvenOddAndStroke = "b*";
 
-public const string CloseFillNonZeroAndStroke = "b";
+  public const string CloseFillNonZeroAndStroke = "b";
 
-public const string ClosePath = "h";
+  public const string ClosePath = "h";
 
-public const string CurveTo = "c";
+  public const string CurveTo = "c";
 
-public const string CurveToReplicateFinalPoint = "y";
+  public const string CurveToReplicateFinalPoint = "y";
 
-public const string CurveToReplicateInitialPoint = "v";
+  public const string CurveToReplicateInitialPoint = "v";
 
-public const string Endpath = "n";
+  public const string Endpath = "n";
 
-public const string FillEvenOddAndStroke = "B*";
+  public const string FillEvenOddAndStroke = "B*";
 
-public const string FillEvenOdd = "f*";
+  public const string FillEvenOdd = "f*";
 
-public const string FillNonZeroAndStroke = "B";
+  public const string FillNonZeroAndStroke = "B";
 
-public const string FillNonZero = "f";
+  public const string FillNonZero = "f";
 
-public const string LegacyFillNonZero = "F";
+  public const string LegacyFillNonZero = "F";
 
-public const string LineTo = "l";
+  public const string LineTo = "l";
 
-public const string MoveTo = "m";
+  public const string MoveTo = "m";
 
-public const string ShadingFill = "sh";
+  public const string ShadingFill = "sh";
 
-public const string StrokePath = "S";
+  public const string StrokePath = "S";
 
-public const string BeginText = "BT";
+  public const string BeginText = "BT";
 
-public const string EndText = "ET";
+  public const string EndText = "ET";
 
-public const string MoveText = "Td";
+  public const string MoveText = "Td";
 
-public const string MoveTextSetLeading = "TD";
+  public const string MoveTextSetLeading = "TD";
 
-public const string NextLine = "T*";
+  public const string NextLine = "T*";
 
-public const string SetCharSpacing = "Tc";
+  public const string SetCharSpacing = "Tc";
 
-public const string SetFontAndSize = "Tf";
+  public const string SetFontAndSize = "Tf";
 
-public const string SetTextHorizontalScaling = "Tz";
+  public const string SetTextHorizontalScaling = "Tz";
 
-public const string SetTextLeading = "TL";
+  public const string SetTextLeading = "TL";
 
-public const string SetTextRenderingmode = "Tr";
+  public const string SetTextRenderingmode = "Tr";
 
-public const string SetTextRise = "Ts";
+  public const string SetTextRise = "Ts";
 
-public const string SetWordSpacing = "Tw";
+  public const string SetWordSpacing = "Tw";
 
-public const string ShowText = "Tj";
+  public const string ShowText = "Tj";
 
-public const string ShowTextAdjusted = "TJ";
+  public const string ShowTextAdjusted = "TJ";
 
-public const string ShowTextLine = "'";
+  public const string ShowTextLine = "'";
 
-public const string ShowTextLineAndSpace = "\"";
+  public const string ShowTextLineAndSpace = "\"";
 
-public const string Type3D0 = "d0";
+  public const string Type3D0 = "d0";
 
-public const string Type3D1 = "d1";
+  public const string Type3D1 = "d1";
 
-public const string BeginCompatibilitySection = "BX";
+  public const string BeginCompatibilitySection = "BX";
 
-public const string EndCompatibilitySection = "EX";
+  public const string EndCompatibilitySection = "EX";
 
-private OperatorName() {}
+  private OperatorName() {}
 }

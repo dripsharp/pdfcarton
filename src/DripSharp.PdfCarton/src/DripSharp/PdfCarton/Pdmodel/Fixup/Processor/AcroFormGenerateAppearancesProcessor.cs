@@ -8,24 +8,31 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Fixup.Processor;
 
-public class AcroFormGenerateAppearancesProcessor : global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AbstractProcessor {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class AcroFormGenerateAppearancesProcessor
+: global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AbstractProcessor {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public AcroFormGenerateAppearancesProcessor(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(document) {
+  public AcroFormGenerateAppearancesProcessor(global::DripSharp.PdfCarton.Pdmodel.PDDocument document)
+  : base(document) {
 
-}
+  }
 
-public override void Process() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm = base.Document.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!);
-if ((acroForm != default!)) {
-try {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormGenerateAppearancesProcessor.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("trying to generate appearance streams for fields as NeedAppearances is true()"));
-acroForm.RefreshAppearances();
-acroForm.SetNeedAppearances(false);
-} catch (global::System.Exception ex) when (ex is global::System.IO.IOException or global::System.ArgumentException) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormGenerateAppearancesProcessor.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("couldn't generate appearance stream for some fields - check output"));
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormGenerateAppearancesProcessor.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex)));
-}
-}
-}
+  public override void Process() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
+      = base.Document.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!);
+    if ((acroForm != default!)) {
+      try {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormGenerateAppearancesProcessor.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf("trying to generate appearance streams for fields as NeedAppearances is true()"));
+        acroForm.RefreshAppearances();
+        acroForm.SetNeedAppearances(false);
+      } catch (global::System.Exception ex) when (ex is global::System.IO.IOException or global::System.ArgumentException) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormGenerateAppearancesProcessor.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf("couldn't generate appearance stream for some fields - check output"));
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormGenerateAppearancesProcessor.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex)));
+      }
+    }
+  }
 }

@@ -9,11 +9,11 @@
 namespace DripSharp.PdfCarton.IO;
 
 public interface RandomAccessWrite : global::System.IDisposable {
-public void Write(int b);
+  public void Write(int b);
 
-public void Write(sbyte[] b);
+  public void Write(sbyte[] b);
 
-public void Write(sbyte[] b, int offset, int length);
+  public void Write(sbyte[] b, int offset, int length);
 
-public void Clear();
+  public void Clear();
 }

@@ -9,21 +9,21 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public interface CFFCharset {
-public bool IsCIDFont();
+  public bool IsCIDFont();
 
-public void AddSID(int gid, int sid, string name);
+  public void AddSID(int gid, int sid, string name);
 
-public void AddCID(int gid, int cid);
+  public void AddCID(int gid, int cid);
 
-public int GetSIDForGID(int gid);
+  public int GetSIDForGID(int gid);
 
-public int GetGIDForSID(int sid);
+  public int GetGIDForSID(int sid);
 
-public int GetGIDForCID(int cid);
+  public int GetGIDForCID(int cid);
 
-public int GetSID(string name);
+  public int GetSID(string name);
 
-public string GetNameForGID(int gid);
+  public string GetNameForGID(int gid);
 
-public int GetCIDForGID(int gid);
+  public int GetCIDForGID(int gid);
 }

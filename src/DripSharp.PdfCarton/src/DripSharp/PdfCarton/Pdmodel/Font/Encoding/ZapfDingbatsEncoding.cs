@@ -9,21 +9,86 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font.Encoding;
 
 public class ZapfDingbatsEncoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding {
-private static readonly object[][] ZAPFDINGBATS_ENCODING_TABLE = new object[][] { new object[] { 32, "space" }, new object[] { 33, "a1" }, new object[] { 34, "a2" }, new object[] { 35, "a202" }, new object[] { 36, "a3" }, new object[] { 37, "a4" }, new object[] { 38, "a5" }, new object[] { 39, "a119" }, new object[] { 40, "a118" }, new object[] { 41, "a117" }, new object[] { 42, "a11" }, new object[] { 43, "a12" }, new object[] { 44, "a13" }, new object[] { 45, "a14" }, new object[] { 46, "a15" }, new object[] { 47, "a16" }, new object[] { 48, "a105" }, new object[] { 49, "a17" }, new object[] { 50, "a18" }, new object[] { 51, "a19" }, new object[] { 52, "a20" }, new object[] { 53, "a21" }, new object[] { 54, "a22" }, new object[] { 55, "a23" }, new object[] { 56, "a24" }, new object[] { 57, "a25" }, new object[] { 58, "a26" }, new object[] { 59, "a27" }, new object[] { 60, "a28" }, new object[] { 61, "a6" }, new object[] { 62, "a7" }, new object[] { 63, "a8" }, new object[] { 64, "a9" }, new object[] { 65, "a10" }, new object[] { 66, "a29" }, new object[] { 67, "a30" }, new object[] { 68, "a31" }, new object[] { 69, "a32" }, new object[] { 70, "a33" }, new object[] { 71, "a34" }, new object[] { 72, "a35" }, new object[] { 73, "a36" }, new object[] { 74, "a37" }, new object[] { 75, "a38" }, new object[] { 76, "a39" }, new object[] { 77, "a40" }, new object[] { 78, "a41" }, new object[] { 79, "a42" }, new object[] { 80, "a43" }, new object[] { 81, "a44" }, new object[] { 82, "a45" }, new object[] { 83, "a46" }, new object[] { 84, "a47" }, new object[] { 85, "a48" }, new object[] { 86, "a49" }, new object[] { 87, "a50" }, new object[] { 88, "a51" }, new object[] { 89, "a52" }, new object[] { 90, "a53" }, new object[] { 91, "a54" }, new object[] { 92, "a55" }, new object[] { 93, "a56" }, new object[] { 94, "a57" }, new object[] { 95, "a58" }, new object[] { 96, "a59" }, new object[] { 97, "a60" }, new object[] { 98, "a61" }, new object[] { 99, "a62" }, new object[] { 100, "a63" }, new object[] { 101, "a64" }, new object[] { 102, "a65" }, new object[] { 103, "a66" }, new object[] { 104, "a67" }, new object[] { 105, "a68" }, new object[] { 106, "a69" }, new object[] { 107, "a70" }, new object[] { 108, "a71" }, new object[] { 109, "a72" }, new object[] { 110, "a73" }, new object[] { 111, "a74" }, new object[] { 112, "a203" }, new object[] { 113, "a75" }, new object[] { 114, "a204" }, new object[] { 115, "a76" }, new object[] { 116, "a77" }, new object[] { 117, "a78" }, new object[] { 118, "a79" }, new object[] { 119, "a81" }, new object[] { 120, "a82" }, new object[] { 121, "a83" }, new object[] { 122, "a84" }, new object[] { 123, "a97" }, new object[] { 124, "a98" }, new object[] { 125, "a99" }, new object[] { 126, "a100" }, new object[] { 161, "a101" }, new object[] { 162, "a102" }, new object[] { 163, "a103" }, new object[] { 164, "a104" }, new object[] { 165, "a106" }, new object[] { 166, "a107" }, new object[] { 167, "a108" }, new object[] { 168, "a112" }, new object[] { 169, "a111" }, new object[] { 170, "a110" }, new object[] { 171, "a109" }, new object[] { 172, "a120" }, new object[] { 173, "a121" }, new object[] { 174, "a122" }, new object[] { 175, "a123" }, new object[] { 176, "a124" }, new object[] { 177, "a125" }, new object[] { 178, "a126" }, new object[] { 179, "a127" }, new object[] { 180, "a128" }, new object[] { 181, "a129" }, new object[] { 182, "a130" }, new object[] { 183, "a131" }, new object[] { 184, "a132" }, new object[] { 185, "a133" }, new object[] { 186, "a134" }, new object[] { 187, "a135" }, new object[] { 188, "a136" }, new object[] { 189, "a137" }, new object[] { 190, "a138" }, new object[] { 191, "a139" }, new object[] { 192, "a140" }, new object[] { 193, "a141" }, new object[] { 194, "a142" }, new object[] { 195, "a143" }, new object[] { 196, "a144" }, new object[] { 197, "a145" }, new object[] { 198, "a146" }, new object[] { 199, "a147" }, new object[] { 200, "a148" }, new object[] { 201, "a149" }, new object[] { 202, "a150" }, new object[] { 203, "a151" }, new object[] { 204, "a152" }, new object[] { 205, "a153" }, new object[] { 206, "a154" }, new object[] { 207, "a155" }, new object[] { 208, "a156" }, new object[] { 209, "a157" }, new object[] { 210, "a158" }, new object[] { 211, "a159" }, new object[] { 212, "a160" }, new object[] { 213, "a161" }, new object[] { 214, "a163" }, new object[] { 215, "a164" }, new object[] { 216, "a196" }, new object[] { 217, "a165" }, new object[] { 218, "a192" }, new object[] { 219, "a166" }, new object[] { 220, "a167" }, new object[] { 221, "a168" }, new object[] { 222, "a169" }, new object[] { 223, "a170" }, new object[] { 224, "a171" }, new object[] { 225, "a172" }, new object[] { 226, "a173" }, new object[] { 227, "a162" }, new object[] { 228, "a174" }, new object[] { 229, "a175" }, new object[] { 230, "a176" }, new object[] { 231, "a177" }, new object[] { 232, "a178" }, new object[] { 233, "a179" }, new object[] { 234, "a193" }, new object[] { 235, "a180" }, new object[] { 236, "a199" }, new object[] { 237, "a181" }, new object[] { 238, "a200" }, new object[] { 239, "a182" }, new object[] { 241, "a201" }, new object[] { 242, "a183" }, new object[] { 243, "a184" }, new object[] { 244, "a197" }, new object[] { 245, "a185" }, new object[] { 246, "a194" }, new object[] { 247, "a198" }, new object[] { 248, "a186" }, new object[] { 249, "a195" }, new object[] { 250, "a187" }, new object[] { 251, "a188" }, new object[] { 252, "a189" }, new object[] { 253, "a190" }, new object[] { 254, "a191" } };
+  private static readonly object[][] ZAPFDINGBATS_ENCODING_TABLE
+    = new object[][] { new object[] { 32, "space" }, new object[] { 33, "a1" }, new object[] { 34,
+    "a2" }, new object[] { 35, "a202" }, new object[] { 36, "a3" }, new object[] { 37, "a4" },
+    new object[] { 38, "a5" }, new object[] { 39, "a119" }, new object[] { 40, "a118" },
+    new object[] { 41, "a117" }, new object[] { 42, "a11" }, new object[] { 43, "a12" },
+    new object[] { 44, "a13" }, new object[] { 45, "a14" }, new object[] { 46, "a15" },
+    new object[] { 47, "a16" }, new object[] { 48, "a105" }, new object[] { 49, "a17" },
+    new object[] { 50, "a18" }, new object[] { 51, "a19" }, new object[] { 52, "a20" },
+    new object[] { 53, "a21" }, new object[] { 54, "a22" }, new object[] { 55, "a23" },
+    new object[] { 56, "a24" }, new object[] { 57, "a25" }, new object[] { 58, "a26" },
+    new object[] { 59, "a27" }, new object[] { 60, "a28" }, new object[] { 61, "a6" },
+    new object[] { 62, "a7" }, new object[] { 63, "a8" }, new object[] { 64, "a9" },
+    new object[] { 65, "a10" }, new object[] { 66, "a29" }, new object[] { 67, "a30" },
+    new object[] { 68, "a31" }, new object[] { 69, "a32" }, new object[] { 70, "a33" },
+    new object[] { 71, "a34" }, new object[] { 72, "a35" }, new object[] { 73, "a36" },
+    new object[] { 74, "a37" }, new object[] { 75, "a38" }, new object[] { 76, "a39" },
+    new object[] { 77, "a40" }, new object[] { 78, "a41" }, new object[] { 79, "a42" },
+    new object[] { 80, "a43" }, new object[] { 81, "a44" }, new object[] { 82, "a45" },
+    new object[] { 83, "a46" }, new object[] { 84, "a47" }, new object[] { 85, "a48" },
+    new object[] { 86, "a49" }, new object[] { 87, "a50" }, new object[] { 88, "a51" },
+    new object[] { 89, "a52" }, new object[] { 90, "a53" }, new object[] { 91, "a54" },
+    new object[] { 92, "a55" }, new object[] { 93, "a56" }, new object[] { 94, "a57" },
+    new object[] { 95, "a58" }, new object[] { 96, "a59" }, new object[] { 97, "a60" },
+    new object[] { 98, "a61" }, new object[] { 99, "a62" }, new object[] { 100, "a63" },
+    new object[] { 101, "a64" }, new object[] { 102, "a65" }, new object[] { 103, "a66" },
+    new object[] { 104, "a67" }, new object[] { 105, "a68" }, new object[] { 106, "a69" },
+    new object[] { 107, "a70" }, new object[] { 108, "a71" }, new object[] { 109, "a72" },
+    new object[] { 110, "a73" }, new object[] { 111, "a74" }, new object[] { 112, "a203" },
+    new object[] { 113, "a75" }, new object[] { 114, "a204" }, new object[] { 115, "a76" },
+    new object[] { 116, "a77" }, new object[] { 117, "a78" }, new object[] { 118, "a79" },
+    new object[] { 119, "a81" }, new object[] { 120, "a82" }, new object[] { 121, "a83" },
+    new object[] { 122, "a84" }, new object[] { 123, "a97" }, new object[] { 124, "a98" },
+    new object[] { 125, "a99" }, new object[] { 126, "a100" }, new object[] { 161, "a101" },
+    new object[] { 162, "a102" }, new object[] { 163, "a103" }, new object[] { 164, "a104" },
+    new object[] { 165, "a106" }, new object[] { 166, "a107" }, new object[] { 167, "a108" },
+    new object[] { 168, "a112" }, new object[] { 169, "a111" }, new object[] { 170, "a110" },
+    new object[] { 171, "a109" }, new object[] { 172, "a120" }, new object[] { 173, "a121" },
+    new object[] { 174, "a122" }, new object[] { 175, "a123" }, new object[] { 176, "a124" },
+    new object[] { 177, "a125" }, new object[] { 178, "a126" }, new object[] { 179, "a127" },
+    new object[] { 180, "a128" }, new object[] { 181, "a129" }, new object[] { 182, "a130" },
+    new object[] { 183, "a131" }, new object[] { 184, "a132" }, new object[] { 185, "a133" },
+    new object[] { 186, "a134" }, new object[] { 187, "a135" }, new object[] { 188, "a136" },
+    new object[] { 189, "a137" }, new object[] { 190, "a138" }, new object[] { 191, "a139" },
+    new object[] { 192, "a140" }, new object[] { 193, "a141" }, new object[] { 194, "a142" },
+    new object[] { 195, "a143" }, new object[] { 196, "a144" }, new object[] { 197, "a145" },
+    new object[] { 198, "a146" }, new object[] { 199, "a147" }, new object[] { 200, "a148" },
+    new object[] { 201, "a149" }, new object[] { 202, "a150" }, new object[] { 203, "a151" },
+    new object[] { 204, "a152" }, new object[] { 205, "a153" }, new object[] { 206, "a154" },
+    new object[] { 207, "a155" }, new object[] { 208, "a156" }, new object[] { 209, "a157" },
+    new object[] { 210, "a158" }, new object[] { 211, "a159" }, new object[] { 212, "a160" },
+    new object[] { 213, "a161" }, new object[] { 214, "a163" }, new object[] { 215, "a164" },
+    new object[] { 216, "a196" }, new object[] { 217, "a165" }, new object[] { 218, "a192" },
+    new object[] { 219, "a166" }, new object[] { 220, "a167" }, new object[] { 221, "a168" },
+    new object[] { 222, "a169" }, new object[] { 223, "a170" }, new object[] { 224, "a171" },
+    new object[] { 225, "a172" }, new object[] { 226, "a173" }, new object[] { 227, "a162" },
+    new object[] { 228, "a174" }, new object[] { 229, "a175" }, new object[] { 230, "a176" },
+    new object[] { 231, "a177" }, new object[] { 232, "a178" }, new object[] { 233, "a179" },
+    new object[] { 234, "a193" }, new object[] { 235, "a180" }, new object[] { 236, "a199" },
+    new object[] { 237, "a181" }, new object[] { 238, "a200" }, new object[] { 239, "a182" },
+    new object[] { 241, "a201" }, new object[] { 242, "a183" }, new object[] { 243, "a184" },
+    new object[] { 244, "a197" }, new object[] { 245, "a185" }, new object[] { 246, "a194" },
+    new object[] { 247, "a198" }, new object[] { 248, "a186" }, new object[] { 249, "a195" },
+    new object[] { 250, "a187" }, new object[] { 251, "a188" }, new object[] { 252, "a189" },
+    new object[] { 253, "a190" }, new object[] { 254, "a191" } };
 
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.ZapfDingbatsEncoding Instance = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.ZapfDingbatsEncoding();
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.ZapfDingbatsEncoding Instance
+    = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.ZapfDingbatsEncoding();
 
-private ZapfDingbatsEncoding() {
-foreach (object[] encodingEntry in global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.ZapfDingbatsEncoding.ZAPFDINGBATS_ENCODING_TABLE) {
-this.Add((int)(global::DripSharp.Runtime.JavaCompat.Unbox((int?)(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharCode]))), global::DripSharp.Runtime.JavaCompat.StringValueOf(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharName]));
-}
-}
+  private ZapfDingbatsEncoding() {
+    foreach (object[] encodingEntry in global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.ZapfDingbatsEncoding.ZAPFDINGBATS_ENCODING_TABLE) {
+      this.Add((int)(global::DripSharp.Runtime.JavaCompat.Unbox((int?)(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharCode]))),
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharName]));
+    }
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("ZapfDingbatsEncoding");
-}
+  public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("ZapfDingbatsEncoding");
+  }
 
-public override string GetEncodingName() {
-return "ZapfDingbatsEncoding";
-}
+  public override string GetEncodingName() {
+    return "ZapfDingbatsEncoding";
+  }
 }

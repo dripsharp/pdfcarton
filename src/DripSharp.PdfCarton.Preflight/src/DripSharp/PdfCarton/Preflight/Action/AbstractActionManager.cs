@@ -9,57 +9,61 @@
 namespace DripSharp.PdfCarton.Preflight.Action;
 
 public abstract class AbstractActionManager {
-private global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory actionFact = default!;
+  private global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory actionFact = default!;
 
-private string aaKey = default!;
+  private string aaKey = default!;
 
-protected internal global::DripSharp.PdfCarton.Cos.COSDictionary ActionDictionary = default!;
+  protected internal global::DripSharp.PdfCarton.Cos.COSDictionary ActionDictionary = default!;
 
-protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Context = default!;
+  protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Context = default!;
 
-internal AbstractActionManager(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact, global::DripSharp.PdfCarton.Cos.COSDictionary adict, global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) {
-this.actionFact = amFact;
-this.ActionDictionary = adict;
-this.aaKey = aaKey;
-this.Context = ctx;
-}
+  internal AbstractActionManager(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact,
+    global::DripSharp.PdfCarton.Cos.COSDictionary adict,
+    global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) {
+    this.actionFact = amFact;
+    this.ActionDictionary = adict;
+    this.aaKey = aaKey;
+    this.Context = ctx;
+  }
 
-public virtual bool IsAdditionalAction() {
-return (this.aaKey != default!);
-}
+  public virtual bool IsAdditionalAction() {
+    return (this.aaKey != default!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetActionDictionary() {
-return this.ActionDictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetActionDictionary() {
+    return this.ActionDictionary;
+  }
 
-public virtual string GetAdditionalActionKey() {
-return this.aaKey;
-}
+  public virtual string GetAdditionalActionKey() {
+    return this.aaKey;
+  }
 
-protected internal virtual bool ValidNextActions() {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager> lActions = this.actionFact.GetNextActions(this.Context, this.ActionDictionary);
-foreach (global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager nAction in lActions) {
-if (!(nAction.InnerValid())) {
-return false;
-}
-}
-return true;
-}
+  protected internal virtual bool ValidNextActions() {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager> lActions
+      = this.actionFact.GetNextActions(this.Context, this.ActionDictionary);
+    foreach (global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager nAction in lActions) {
+      if (!(nAction.InnerValid())) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-public virtual bool Valid() {
-return this.Valid(false);
-}
+  public virtual bool Valid() {
+    return this.Valid(false);
+  }
 
-public virtual bool Valid(bool additionalActionAuth) {
-if ((this.IsAdditionalAction() && !additionalActionAuth)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenAdditionalAction, "Additional Action are forbidden"));
-return false;
-}
-if (this.InnerValid()) {
-return this.ValidNextActions();
-}
-return true;
-}
+  public virtual bool Valid(bool additionalActionAuth) {
+    if ((this.IsAdditionalAction() && !additionalActionAuth)) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenAdditionalAction,
+        "Additional Action are forbidden"));
+      return false;
+    }
+    if (this.InnerValid()) {
+      return this.ValidNextActions();
+    }
+    return true;
+  }
 
-protected internal abstract bool InnerValid();
+  protected internal abstract bool InnerValid();
 }

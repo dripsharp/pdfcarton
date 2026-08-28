@@ -8,701 +8,799 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf;
 
-public class PDLayoutAttributeObject : global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject {
-public const string OwnerLayout = "Layout";
+public class PDLayoutAttributeObject
+: global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject {
+  public const string OwnerLayout = "Layout";
 
-private const string PLACEMENT = "Placement";
+  private const string PLACEMENT = "Placement";
 
-private const string WRITING_MODE = "WritingMode";
+  private const string WRITING_MODE = "WritingMode";
 
-private const string BACKGROUND_COLOR = "BackgroundColor";
+  private const string BACKGROUND_COLOR = "BackgroundColor";
 
-private const string BORDER_COLOR = "BorderColor";
+  private const string BORDER_COLOR = "BorderColor";
 
-private const string BORDER_STYLE = "BorderStyle";
+  private const string BORDER_STYLE = "BorderStyle";
 
-private const string BORDER_THICKNESS = "BorderThickness";
+  private const string BORDER_THICKNESS = "BorderThickness";
 
-private const string PADDING = "Padding";
+  private const string PADDING = "Padding";
 
-private const string COLOR = "Color";
+  private const string COLOR = "Color";
 
-private const string SPACE_BEFORE = "SpaceBefore";
+  private const string SPACE_BEFORE = "SpaceBefore";
 
-private const string SPACE_AFTER = "SpaceAfter";
+  private const string SPACE_AFTER = "SpaceAfter";
 
-private const string START_INDENT = "StartIndent";
+  private const string START_INDENT = "StartIndent";
 
-private const string END_INDENT = "EndIndent";
+  private const string END_INDENT = "EndIndent";
 
-private const string TEXT_INDENT = "TextIndent";
+  private const string TEXT_INDENT = "TextIndent";
 
-private const string TEXT_ALIGN = "TextAlign";
+  private const string TEXT_ALIGN = "TextAlign";
 
-private const string BBOX = "BBox";
+  private const string BBOX = "BBox";
 
-private const string WIDTH = "Width";
+  private const string WIDTH = "Width";
 
-private const string HEIGHT = "Height";
+  private const string HEIGHT = "Height";
 
-private const string BLOCK_ALIGN = "BlockAlign";
+  private const string BLOCK_ALIGN = "BlockAlign";
 
-private const string INLINE_ALIGN = "InlineAlign";
+  private const string INLINE_ALIGN = "InlineAlign";
 
-private const string T_BORDER_STYLE = "TBorderStyle";
+  private const string T_BORDER_STYLE = "TBorderStyle";
 
-private const string T_PADDING = "TPadding";
+  private const string T_PADDING = "TPadding";
 
-private const string BASELINE_SHIFT = "BaselineShift";
+  private const string BASELINE_SHIFT = "BaselineShift";
 
-private const string LINE_HEIGHT = "LineHeight";
+  private const string LINE_HEIGHT = "LineHeight";
 
-private const string TEXT_DECORATION_COLOR = "TextDecorationColor";
+  private const string TEXT_DECORATION_COLOR = "TextDecorationColor";
 
-private const string TEXT_DECORATION_THICKNESS = "TextDecorationThickness";
+  private const string TEXT_DECORATION_THICKNESS = "TextDecorationThickness";
 
-private const string TEXT_DECORATION_TYPE = "TextDecorationType";
+  private const string TEXT_DECORATION_TYPE = "TextDecorationType";
 
-private const string RUBY_ALIGN = "RubyAlign";
+  private const string RUBY_ALIGN = "RubyAlign";
 
-private const string RUBY_POSITION = "RubyPosition";
+  private const string RUBY_POSITION = "RubyPosition";
 
-private const string GLYPH_ORIENTATION_VERTICAL = "GlyphOrientationVertical";
+  private const string GLYPH_ORIENTATION_VERTICAL = "GlyphOrientationVertical";
 
-private const string COLUMN_COUNT = "ColumnCount";
+  private const string COLUMN_COUNT = "ColumnCount";
 
-private const string COLUMN_GAP = "ColumnGap";
+  private const string COLUMN_GAP = "ColumnGap";
 
-private const string COLUMN_WIDTHS = "ColumnWidths";
+  private const string COLUMN_WIDTHS = "ColumnWidths";
 
-public const string PlacementBlock = "Block";
+  public const string PlacementBlock = "Block";
 
-public const string PlacementInline = "Inline";
+  public const string PlacementInline = "Inline";
 
-public const string PlacementBefore = "Before";
+  public const string PlacementBefore = "Before";
 
-public const string PlacementStart = "Start";
+  public const string PlacementStart = "Start";
 
-public const string PlacementEnd = "End";
+  public const string PlacementEnd = "End";
 
-public const string WritingModeLrtb = "LrTb";
+  public const string WritingModeLrtb = "LrTb";
 
-public const string WritingModeRltb = "RlTb";
+  public const string WritingModeRltb = "RlTb";
 
-public const string WritingModeTbrl = "TbRl";
+  public const string WritingModeTbrl = "TbRl";
 
-public const string BorderStyleNone = "None";
+  public const string BorderStyleNone = "None";
 
-public const string BorderStyleHidden = "Hidden";
+  public const string BorderStyleHidden = "Hidden";
 
-public const string BorderStyleDotted = "Dotted";
+  public const string BorderStyleDotted = "Dotted";
 
-public const string BorderStyleDashed = "Dashed";
+  public const string BorderStyleDashed = "Dashed";
 
-public const string BorderStyleSolid = "Solid";
+  public const string BorderStyleSolid = "Solid";
 
-public const string BorderStyleDouble = "Double";
+  public const string BorderStyleDouble = "Double";
 
-public const string BorderStyleGroove = "Groove";
+  public const string BorderStyleGroove = "Groove";
 
-public const string BorderStyleRidge = "Ridge";
+  public const string BorderStyleRidge = "Ridge";
 
-public const string BorderStyleInset = "Inset";
+  public const string BorderStyleInset = "Inset";
 
-public const string BorderStyleOutset = "Outset";
+  public const string BorderStyleOutset = "Outset";
 
-public const string TextAlignStart = "Start";
+  public const string TextAlignStart = "Start";
 
-public const string TextAlignCenter = "Center";
+  public const string TextAlignCenter = "Center";
 
-public const string TextAlignEnd = "End";
+  public const string TextAlignEnd = "End";
 
-public const string TextAlignJustify = "Justify";
+  public const string TextAlignJustify = "Justify";
 
-public const string WidthAuto = "Auto";
+  public const string WidthAuto = "Auto";
 
-public const string HeightAuto = "Auto";
+  public const string HeightAuto = "Auto";
 
-public const string BlockAlignBefore = "Before";
+  public const string BlockAlignBefore = "Before";
 
-public const string BlockAlignMiddle = "Middle";
+  public const string BlockAlignMiddle = "Middle";
 
-public const string BlockAlignAfter = "After";
+  public const string BlockAlignAfter = "After";
 
-public const string BlockAlignJustify = "Justify";
+  public const string BlockAlignJustify = "Justify";
 
-public const string InlineAlignStart = "Start";
+  public const string InlineAlignStart = "Start";
 
-public const string InlineAlignCenter = "Center";
+  public const string InlineAlignCenter = "Center";
 
-public const string InlineAlignEnd = "End";
+  public const string InlineAlignEnd = "End";
 
-public const string LineHeightNormal = "Normal";
+  public const string LineHeightNormal = "Normal";
 
-public const string LineHeightAuto = "Auto";
+  public const string LineHeightAuto = "Auto";
 
-public const string TextDecorationTypeNone = "None";
+  public const string TextDecorationTypeNone = "None";
 
-public const string TextDecorationTypeUnderline = "Underline";
+  public const string TextDecorationTypeUnderline = "Underline";
 
-public const string TextDecorationTypeOverline = "Overline";
+  public const string TextDecorationTypeOverline = "Overline";
 
-public const string TextDecorationTypeLineThrough = "LineThrough";
+  public const string TextDecorationTypeLineThrough = "LineThrough";
 
-public const string RubyAlignStart = "Start";
+  public const string RubyAlignStart = "Start";
 
-public const string RubyAlignCenter = "Center";
+  public const string RubyAlignCenter = "Center";
 
-public const string RubyAlignEnd = "End";
+  public const string RubyAlignEnd = "End";
 
-public const string RubyAlignJustify = "Justify";
+  public const string RubyAlignJustify = "Justify";
 
-public const string RubyAlignDistribute = "Distribute";
+  public const string RubyAlignDistribute = "Distribute";
 
-public const string RubyPositionBefore = "Before";
+  public const string RubyPositionBefore = "Before";
 
-public const string RubyPositionAfter = "After";
+  public const string RubyPositionAfter = "After";
 
-public const string RubyPositionWarichu = "Warichu";
+  public const string RubyPositionWarichu = "Warichu";
 
-public const string RubyPositionInline = "Inline";
+  public const string RubyPositionInline = "Inline";
 
-public const string GlyphOrientationVerticalAuto = "Auto";
+  public const string GlyphOrientationVerticalAuto = "Auto";
 
-public const string GlyphOrientationVerticalMinus180Degrees = "-180";
+  public const string GlyphOrientationVerticalMinus180Degrees = "-180";
 
-public const string GlyphOrientationVerticalMinus90Degrees = "-90";
+  public const string GlyphOrientationVerticalMinus90Degrees = "-90";
 
-public const string GlyphOrientationVerticalZeroDegrees = "0";
+  public const string GlyphOrientationVerticalZeroDegrees = "0";
 
-public const string GlyphOrientationVertical90Degrees = "90";
+  public const string GlyphOrientationVertical90Degrees = "90";
 
-public const string GlyphOrientationVertical180Degrees = "180";
+  public const string GlyphOrientationVertical180Degrees = "180";
 
-public const string GlyphOrientationVertical270Degrees = "270";
+  public const string GlyphOrientationVertical270Degrees = "270";
 
-public const string GlyphOrientationVertical360Degrees = "360";
+  public const string GlyphOrientationVertical360Degrees = "360";
 
-public PDLayoutAttributeObject() {
-this.SetOwner(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.OwnerLayout);
-}
+  public PDLayoutAttributeObject() {
+    this.SetOwner(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.OwnerLayout);
+  }
 
-public PDLayoutAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : base(dictionary) {
+  public PDLayoutAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary)
+  : base(dictionary) {
 
-}
+  }
 
-public virtual string GetPlacement() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PLACEMENT, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PlacementInline);
-}
+  public virtual string GetPlacement() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PLACEMENT,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PlacementInline);
+  }
 
-public virtual void SetPlacement(string placement) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PLACEMENT, placement);
-}
+  public virtual void SetPlacement(string placement) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PLACEMENT,
+      placement);
+  }
 
-public virtual string GetWritingMode() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WRITING_MODE, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WritingModeLrtb);
-}
+  public virtual string GetWritingMode() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WRITING_MODE,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WritingModeLrtb);
+  }
 
-public virtual void SetWritingMode(string writingMode) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WRITING_MODE, writingMode);
-}
+  public virtual void SetWritingMode(string writingMode) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WRITING_MODE,
+      writingMode);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetBackgroundColor() {
-return this.GetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BACKGROUND_COLOR);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetBackgroundColor() {
+    return this.GetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BACKGROUND_COLOR);
+  }
 
-public virtual void SetBackgroundColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma backgroundColor) {
-this.SetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BACKGROUND_COLOR, backgroundColor);
-}
+  public virtual void SetBackgroundColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma backgroundColor) {
+    this.SetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BACKGROUND_COLOR,
+      backgroundColor);
+  }
 
-public virtual object GetBorderColors() {
-return this.GetColorOrFourColors(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_COLOR);
-}
+  public virtual object GetBorderColors() {
+    return this.GetColorOrFourColors(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_COLOR);
+  }
 
-public virtual void SetAllBorderColors(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma borderColor) {
-this.SetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_COLOR, borderColor);
-}
+  public virtual void SetAllBorderColors(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma borderColor) {
+    this.SetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_COLOR,
+      borderColor);
+  }
 
-public virtual void SetBorderColors(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDFourColours borderColors) {
-this.SetFourColors(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_COLOR, borderColors);
-}
+  public virtual void SetBorderColors(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDFourColours borderColors) {
+    this.SetFourColors(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_COLOR,
+      borderColors);
+  }
 
-public virtual object GetBorderStyle() {
-return this.GetNameOrArrayOfName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_STYLE, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BorderStyleNone);
-}
+  public virtual object GetBorderStyle() {
+    return this.GetNameOrArrayOfName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_STYLE,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BorderStyleNone);
+  }
 
-public virtual void SetAllBorderStyles(string borderStyle) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_STYLE, borderStyle);
-}
+  public virtual void SetAllBorderStyles(string borderStyle) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_STYLE,
+      borderStyle);
+  }
 
-public virtual void SetBorderStyles(string[] borderStyles) {
-this.SetArrayOfName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_STYLE, borderStyles);
-}
+  public virtual void SetBorderStyles(string[] borderStyles) {
+    this.SetArrayOfName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_STYLE,
+      borderStyles);
+  }
 
-public virtual object GetBorderThickness() {
-return this.GetNumberOrArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_THICKNESS, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject.Unspecified);
-}
+  public virtual object GetBorderThickness() {
+    return this.GetNumberOrArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_THICKNESS,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject.Unspecified);
+  }
 
-public virtual void SetAllBorderThicknesses(float borderThickness) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_THICKNESS, borderThickness);
-}
+  public virtual void SetAllBorderThicknesses(float borderThickness) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_THICKNESS,
+      borderThickness);
+  }
 
-public virtual void SetAllBorderThicknesses(int borderThickness) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_THICKNESS, borderThickness);
-}
+  public virtual void SetAllBorderThicknesses(int borderThickness) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_THICKNESS,
+      borderThickness);
+  }
 
-public virtual void SetBorderThicknesses(float[] borderThicknesses) {
-this.SetArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_THICKNESS, borderThicknesses);
-}
+  public virtual void SetBorderThicknesses(float[] borderThicknesses) {
+    this.SetArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_THICKNESS,
+      borderThicknesses);
+  }
 
-public virtual object GetPadding() {
-return this.GetNumberOrArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PADDING, 0.0F);
-}
+  public virtual object GetPadding() {
+    return this.GetNumberOrArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PADDING,
+      0.0F);
+  }
 
-public virtual void SetAllPaddings(float padding) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PADDING, padding);
-}
+  public virtual void SetAllPaddings(float padding) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PADDING,
+      padding);
+  }
 
-public virtual void SetAllPaddings(int padding) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PADDING, padding);
-}
+  public virtual void SetAllPaddings(int padding) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PADDING,
+      padding);
+  }
 
-public virtual void SetPaddings(float[] paddings) {
-this.SetArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PADDING, paddings);
-}
+  public virtual void SetPaddings(float[] paddings) {
+    this.SetArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PADDING,
+      paddings);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetColor() {
-return this.GetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLOR);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetColor() {
+    return this.GetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLOR);
+  }
 
-public virtual void SetColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma color) {
-this.SetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLOR, color);
-}
+  public virtual void SetColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma color) {
+    this.SetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLOR,
+      color);
+  }
 
-public virtual float GetSpaceBefore() {
-return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_BEFORE, 0.0F);
-}
+  public virtual float GetSpaceBefore() {
+    return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_BEFORE,
+      0.0F);
+  }
 
-public virtual void SetSpaceBefore(float spaceBefore) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_BEFORE, spaceBefore);
-}
+  public virtual void SetSpaceBefore(float spaceBefore) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_BEFORE,
+      spaceBefore);
+  }
 
-public virtual void SetSpaceBefore(int spaceBefore) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_BEFORE, spaceBefore);
-}
+  public virtual void SetSpaceBefore(int spaceBefore) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_BEFORE,
+      spaceBefore);
+  }
 
-public virtual float GetSpaceAfter() {
-return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_AFTER, 0.0F);
-}
+  public virtual float GetSpaceAfter() {
+    return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_AFTER,
+      0.0F);
+  }
 
-public virtual void SetSpaceAfter(float spaceAfter) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_AFTER, spaceAfter);
-}
+  public virtual void SetSpaceAfter(float spaceAfter) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_AFTER,
+      spaceAfter);
+  }
 
-public virtual void SetSpaceAfter(int spaceAfter) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_AFTER, spaceAfter);
-}
+  public virtual void SetSpaceAfter(int spaceAfter) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_AFTER,
+      spaceAfter);
+  }
 
-public virtual float GetStartIndent() {
-return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.START_INDENT, 0.0F);
-}
+  public virtual float GetStartIndent() {
+    return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.START_INDENT,
+      0.0F);
+  }
 
-public virtual void SetStartIndent(float startIndent) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.START_INDENT, startIndent);
-}
+  public virtual void SetStartIndent(float startIndent) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.START_INDENT,
+      startIndent);
+  }
 
-public virtual void SetStartIndent(int startIndent) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.START_INDENT, startIndent);
-}
+  public virtual void SetStartIndent(int startIndent) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.START_INDENT,
+      startIndent);
+  }
 
-public virtual float GetEndIndent() {
-return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.END_INDENT, 0.0F);
-}
+  public virtual float GetEndIndent() {
+    return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.END_INDENT,
+      0.0F);
+  }
 
-public virtual void SetEndIndent(float endIndent) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.END_INDENT, endIndent);
-}
+  public virtual void SetEndIndent(float endIndent) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.END_INDENT,
+      endIndent);
+  }
 
-public virtual void SetEndIndent(int endIndent) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.END_INDENT, endIndent);
-}
+  public virtual void SetEndIndent(int endIndent) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.END_INDENT,
+      endIndent);
+  }
 
-public virtual float GetTextIndent() {
-return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_INDENT, 0.0F);
-}
+  public virtual float GetTextIndent() {
+    return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_INDENT,
+      0.0F);
+  }
 
-public virtual void SetTextIndent(float textIndent) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_INDENT, textIndent);
-}
+  public virtual void SetTextIndent(float textIndent) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_INDENT,
+      textIndent);
+  }
 
-public virtual void SetTextIndent(int textIndent) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_INDENT, textIndent);
-}
+  public virtual void SetTextIndent(int textIndent) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_INDENT,
+      textIndent);
+  }
 
-public virtual string GetTextAlign() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_ALIGN, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TextAlignStart);
-}
+  public virtual string GetTextAlign() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_ALIGN,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TextAlignStart);
+  }
 
-public virtual void SetTextAlign(string textIndent) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_ALIGN, textIndent);
-}
+  public virtual void SetTextAlign(string textIndent) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_ALIGN,
+      textIndent);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetBBox() {
-global::DripSharp.PdfCarton.Cos.COSArray array = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
-if ((array != default!)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(array);
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetBBox() {
+    global::DripSharp.PdfCarton.Cos.COSArray array
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
+    if ((array != default!)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(array);
+    }
+    return default!;
+  }
 
-public virtual void SetBBox(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox) {
-string name = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BBOX;
-global::DripSharp.PdfCarton.Cos.COSBase oldValue = this.GetCOSObject().GetDictionaryObject(name);
-this.GetCOSObject().SetItem(name, bbox);
-global::DripSharp.PdfCarton.Cos.COSBase newValue = ((bbox == default!) ? (global::DripSharp.PdfCarton.Cos.COSBase)(default!) : bbox.GetCOSObject());
-this.PotentiallyNotifyChanged(oldValue, newValue);
-}
+  public virtual void SetBBox(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox) {
+    string name
+      = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BBOX;
+    global::DripSharp.PdfCarton.Cos.COSBase oldValue
+      = this.GetCOSObject().GetDictionaryObject(name);
+    this.GetCOSObject().SetItem(name, bbox);
+    global::DripSharp.PdfCarton.Cos.COSBase newValue = ((bbox == default!)
+      ? (global::DripSharp.PdfCarton.Cos.COSBase)(default!) : bbox.GetCOSObject());
+    this.PotentiallyNotifyChanged(oldValue, newValue);
+  }
 
-public virtual object GetWidth() {
-return this.GetNumberOrName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WIDTH, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WidthAuto);
-}
+  public virtual object GetWidth() {
+    return this.GetNumberOrName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WIDTH,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WidthAuto);
+  }
 
-public virtual void SetWidthAuto() {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WIDTH, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WidthAuto);
-}
+  public virtual void SetWidthAuto() {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WIDTH,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WidthAuto);
+  }
 
-public virtual void SetWidth(float width) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WIDTH, width);
-}
+  public virtual void SetWidth(float width) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WIDTH,
+      width);
+  }
 
-public virtual void SetWidth(int width) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WIDTH, width);
-}
+  public virtual void SetWidth(int width) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WIDTH,
+      width);
+  }
 
-public virtual object GetHeight() {
-return this.GetNumberOrName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HEIGHT, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HeightAuto);
-}
+  public virtual object GetHeight() {
+    return this.GetNumberOrName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HEIGHT,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HeightAuto);
+  }
 
-public virtual void SetHeightAuto() {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HEIGHT, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HeightAuto);
-}
+  public virtual void SetHeightAuto() {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HEIGHT,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HeightAuto);
+  }
 
-public virtual void SetHeight(float height) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HEIGHT, height);
-}
+  public virtual void SetHeight(float height) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HEIGHT,
+      height);
+  }
 
-public virtual void SetHeight(int height) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HEIGHT, height);
-}
+  public virtual void SetHeight(int height) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HEIGHT,
+      height);
+  }
 
-public virtual string GetBlockAlign() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BLOCK_ALIGN, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BlockAlignBefore);
-}
+  public virtual string GetBlockAlign() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BLOCK_ALIGN,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BlockAlignBefore);
+  }
 
-public virtual void SetBlockAlign(string blockAlign) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BLOCK_ALIGN, blockAlign);
-}
+  public virtual void SetBlockAlign(string blockAlign) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BLOCK_ALIGN,
+      blockAlign);
+  }
 
-public virtual string GetInlineAlign() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.INLINE_ALIGN, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.InlineAlignStart);
-}
+  public virtual string GetInlineAlign() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.INLINE_ALIGN,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.InlineAlignStart);
+  }
 
-public virtual void SetInlineAlign(string inlineAlign) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.INLINE_ALIGN, inlineAlign);
-}
+  public virtual void SetInlineAlign(string inlineAlign) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.INLINE_ALIGN,
+      inlineAlign);
+  }
 
-public virtual object GetTBorderStyle() {
-return this.GetNameOrArrayOfName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_BORDER_STYLE, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BorderStyleNone);
-}
-
-public virtual void SetAllTBorderStyles(string tBorderStyle) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_BORDER_STYLE, tBorderStyle);
-}
-
-public virtual void SetTBorderStyles(string[] tBorderStyles) {
-this.SetArrayOfName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_BORDER_STYLE, tBorderStyles);
-}
-
-public virtual object GetTPadding() {
-return this.GetNumberOrArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_PADDING, 0.0F);
-}
-
-public virtual void SetAllTPaddings(float tPadding) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_PADDING, tPadding);
-}
-
-public virtual void SetAllTPaddings(int tPadding) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_PADDING, tPadding);
-}
-
-public virtual void SetTPaddings(float[] tPaddings) {
-this.SetArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_PADDING, tPaddings);
-}
-
-public virtual float GetBaselineShift() {
-return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BASELINE_SHIFT, 0.0F);
-}
-
-public virtual void SetBaselineShift(float baselineShift) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BASELINE_SHIFT, baselineShift);
-}
-
-public virtual void SetBaselineShift(int baselineShift) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BASELINE_SHIFT, baselineShift);
-}
-
-public virtual object GetLineHeight() {
-return this.GetNumberOrName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LINE_HEIGHT, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LineHeightNormal);
-}
-
-public virtual void SetLineHeightNormal() {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LINE_HEIGHT, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LineHeightNormal);
-}
-
-public virtual void SetLineHeightAuto() {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LINE_HEIGHT, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LineHeightAuto);
-}
-
-public virtual void SetLineHeight(float lineHeight) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LINE_HEIGHT, lineHeight);
-}
-
-public virtual void SetLineHeight(int lineHeight) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LINE_HEIGHT, lineHeight);
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetTextDecorationColor() {
-return this.GetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_COLOR);
-}
-
-public virtual void SetTextDecorationColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma textDecorationColor) {
-this.SetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_COLOR, textDecorationColor);
-}
-
-public virtual float GetTextDecorationThickness() {
-return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_THICKNESS);
-}
-
-public virtual void SetTextDecorationThickness(float textDecorationThickness) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_THICKNESS, textDecorationThickness);
-}
-
-public virtual void SetTextDecorationThickness(int textDecorationThickness) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_THICKNESS, textDecorationThickness);
-}
-
-public virtual string GetTextDecorationType() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_TYPE, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TextDecorationTypeNone);
-}
-
-public virtual void SetTextDecorationType(string textDecorationType) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_TYPE, textDecorationType);
-}
-
-public virtual string GetRubyAlign() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RUBY_ALIGN, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RubyAlignDistribute);
-}
-
-public virtual void SetRubyAlign(string rubyAlign) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RUBY_ALIGN, rubyAlign);
-}
-
-public virtual string GetRubyPosition() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RUBY_POSITION, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RubyPositionBefore);
-}
-
-public virtual void SetRubyPosition(string rubyPosition) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RUBY_POSITION, rubyPosition);
-}
-
-public virtual string GetGlyphOrientationVertical() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.GLYPH_ORIENTATION_VERTICAL, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.GlyphOrientationVerticalAuto);
-}
-
-public virtual void SetGlyphOrientationVertical(string glyphOrientationVertical) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.GLYPH_ORIENTATION_VERTICAL, glyphOrientationVertical);
-}
-
-public virtual int GetColumnCount() {
-return this.GetInteger(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_COUNT, 1);
-}
-
-public virtual void SetColumnCount(int columnCount) {
-this.SetInteger(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_COUNT, columnCount);
-}
-
-public virtual object GetColumnGap() {
-return this.GetNumberOrArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_GAP, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject.Unspecified);
-}
-
-public virtual void SetColumnGap(float columnGap) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_GAP, columnGap);
-}
-
-public virtual void SetColumnGap(int columnGap) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_GAP, columnGap);
-}
-
-public virtual void SetColumnGaps(float[] columnGaps) {
-this.SetArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_GAP, columnGaps);
-}
-
-public virtual object GetColumnWidths() {
-return this.GetNumberOrArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_WIDTHS, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject.Unspecified);
-}
-
-public virtual void SetAllColumnWidths(float columnWidth) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_WIDTHS, columnWidth);
-}
-
-public virtual void SetAllColumnWidths(int columnWidth) {
-this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_WIDTHS, columnWidth);
-}
-
-public virtual void SetColumnWidths(float[] columnWidths) {
-this.SetArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_WIDTHS, columnWidths);
-}
-
-public override string ToString() {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder().Append(base.ToString());
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PLACEMENT)) {
-sb.Append(", Placement=").Append(this.GetPlacement());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WRITING_MODE)) {
-sb.Append(", WritingMode=").Append(this.GetWritingMode());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BACKGROUND_COLOR)) {
-sb.Append(", BackgroundColor=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetBackgroundColor()));
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_COLOR)) {
-sb.Append(", BorderColor=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetBorderColors()));
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_STYLE)) {
-object borderStyle = this.GetBorderStyle();
-sb.Append(", BorderStyle=");
-if ((borderStyle is string[])) {
-sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((string[])(borderStyle!)));
-} else {
-sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(borderStyle));
-}
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_THICKNESS)) {
-object borderThickness = this.GetBorderThickness();
-sb.Append(", BorderThickness=");
-if ((borderThickness is float[])) {
-sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((float[])(borderThickness!)));
-} else {
-sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(borderThickness));
-}
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PADDING)) {
-object padding = this.GetPadding();
-sb.Append(", Padding=");
-if ((padding is float[])) {
-sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((float[])(padding!)));
-} else {
-sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(padding));
-}
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLOR)) {
-sb.Append(", Color=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetColor()));
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_BEFORE)) {
-global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", SpaceBefore="), this.GetSpaceBefore());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_AFTER)) {
-global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", SpaceAfter="), this.GetSpaceAfter());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.START_INDENT)) {
-global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", StartIndent="), this.GetStartIndent());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.END_INDENT)) {
-global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", EndIndent="), this.GetEndIndent());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_INDENT)) {
-global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", TextIndent="), this.GetTextIndent());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_ALIGN)) {
-sb.Append(", TextAlign=").Append(this.GetTextAlign());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BBOX)) {
-sb.Append(", BBox=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetBBox()));
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WIDTH)) {
-sb.Append(", Width=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetWidth()));
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HEIGHT)) {
-sb.Append(", Height=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetHeight()));
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BLOCK_ALIGN)) {
-sb.Append(", BlockAlign=").Append(this.GetBlockAlign());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.INLINE_ALIGN)) {
-sb.Append(", InlineAlign=").Append(this.GetInlineAlign());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_BORDER_STYLE)) {
-object tBorderStyle = this.GetTBorderStyle();
-sb.Append(", TBorderStyle=");
-if ((tBorderStyle is string[])) {
-sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((string[])(tBorderStyle!)));
-} else {
-sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(tBorderStyle));
-}
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_PADDING)) {
-object tPadding = this.GetTPadding();
-sb.Append(", TPadding=");
-if ((tPadding is float[])) {
-sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((float[])(tPadding!)));
-} else {
-sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(tPadding));
-}
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BASELINE_SHIFT)) {
-global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", BaselineShift="), this.GetBaselineShift());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LINE_HEIGHT)) {
-sb.Append(", LineHeight=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetLineHeight()));
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_COLOR)) {
-sb.Append(", TextDecorationColor=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetTextDecorationColor()));
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_THICKNESS)) {
-global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", TextDecorationThickness="), this.GetTextDecorationThickness());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_TYPE)) {
-sb.Append(", TextDecorationType=").Append(this.GetTextDecorationType());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RUBY_ALIGN)) {
-sb.Append(", RubyAlign=").Append(this.GetRubyAlign());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RUBY_POSITION)) {
-sb.Append(", RubyPosition=").Append(this.GetRubyPosition());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.GLYPH_ORIENTATION_VERTICAL)) {
-sb.Append(", GlyphOrientationVertical=").Append(this.GetGlyphOrientationVertical());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_COUNT)) {
-sb.Append(", ColumnCount=").Append(this.GetColumnCount());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_GAP)) {
-object columnGap = this.GetColumnGap();
-sb.Append(", ColumnGap=");
-if ((columnGap is float[])) {
-sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((float[])(columnGap!)));
-} else {
-sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(columnGap));
-}
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_WIDTHS)) {
-object columnWidth = this.GetColumnWidths();
-sb.Append(", ColumnWidths=");
-if ((columnWidth is float[])) {
-sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((float[])(columnWidth!)));
-} else {
-sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(columnWidth));
-}
-}
-return sb.ToString();
-}
+  public virtual object GetTBorderStyle() {
+    return this.GetNameOrArrayOfName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_BORDER_STYLE,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BorderStyleNone);
+  }
+
+  public virtual void SetAllTBorderStyles(string tBorderStyle) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_BORDER_STYLE,
+      tBorderStyle);
+  }
+
+  public virtual void SetTBorderStyles(string[] tBorderStyles) {
+    this.SetArrayOfName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_BORDER_STYLE,
+      tBorderStyles);
+  }
+
+  public virtual object GetTPadding() {
+    return this.GetNumberOrArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_PADDING,
+      0.0F);
+  }
+
+  public virtual void SetAllTPaddings(float tPadding) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_PADDING,
+      tPadding);
+  }
+
+  public virtual void SetAllTPaddings(int tPadding) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_PADDING,
+      tPadding);
+  }
+
+  public virtual void SetTPaddings(float[] tPaddings) {
+    this.SetArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_PADDING,
+      tPaddings);
+  }
+
+  public virtual float GetBaselineShift() {
+    return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BASELINE_SHIFT,
+      0.0F);
+  }
+
+  public virtual void SetBaselineShift(float baselineShift) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BASELINE_SHIFT,
+      baselineShift);
+  }
+
+  public virtual void SetBaselineShift(int baselineShift) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BASELINE_SHIFT,
+      baselineShift);
+  }
+
+  public virtual object GetLineHeight() {
+    return this.GetNumberOrName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LINE_HEIGHT,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LineHeightNormal);
+  }
+
+  public virtual void SetLineHeightNormal() {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LINE_HEIGHT,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LineHeightNormal);
+  }
+
+  public virtual void SetLineHeightAuto() {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LINE_HEIGHT,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LineHeightAuto);
+  }
+
+  public virtual void SetLineHeight(float lineHeight) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LINE_HEIGHT,
+      lineHeight);
+  }
+
+  public virtual void SetLineHeight(int lineHeight) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LINE_HEIGHT,
+      lineHeight);
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetTextDecorationColor() {
+    return this.GetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_COLOR);
+  }
+
+  public virtual void SetTextDecorationColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma textDecorationColor) {
+    this.SetColor(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_COLOR,
+      textDecorationColor);
+  }
+
+  public virtual float GetTextDecorationThickness() {
+    return this.GetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_THICKNESS);
+  }
+
+  public virtual void SetTextDecorationThickness(float textDecorationThickness) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_THICKNESS,
+      textDecorationThickness);
+  }
+
+  public virtual void SetTextDecorationThickness(int textDecorationThickness) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_THICKNESS,
+      textDecorationThickness);
+  }
+
+  public virtual string GetTextDecorationType() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_TYPE,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TextDecorationTypeNone);
+  }
+
+  public virtual void SetTextDecorationType(string textDecorationType) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_TYPE,
+      textDecorationType);
+  }
+
+  public virtual string GetRubyAlign() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RUBY_ALIGN,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RubyAlignDistribute);
+  }
+
+  public virtual void SetRubyAlign(string rubyAlign) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RUBY_ALIGN,
+      rubyAlign);
+  }
+
+  public virtual string GetRubyPosition() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RUBY_POSITION,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RubyPositionBefore);
+  }
+
+  public virtual void SetRubyPosition(string rubyPosition) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RUBY_POSITION,
+      rubyPosition);
+  }
+
+  public virtual string GetGlyphOrientationVertical() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.GLYPH_ORIENTATION_VERTICAL,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.GlyphOrientationVerticalAuto);
+  }
+
+  public virtual void SetGlyphOrientationVertical(string glyphOrientationVertical) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.GLYPH_ORIENTATION_VERTICAL,
+      glyphOrientationVertical);
+  }
+
+  public virtual int GetColumnCount() {
+    return this.GetInteger(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_COUNT,
+      1);
+  }
+
+  public virtual void SetColumnCount(int columnCount) {
+    this.SetInteger(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_COUNT,
+      columnCount);
+  }
+
+  public virtual object GetColumnGap() {
+    return this.GetNumberOrArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_GAP,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject.Unspecified);
+  }
+
+  public virtual void SetColumnGap(float columnGap) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_GAP,
+      columnGap);
+  }
+
+  public virtual void SetColumnGap(int columnGap) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_GAP,
+      columnGap);
+  }
+
+  public virtual void SetColumnGaps(float[] columnGaps) {
+    this.SetArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_GAP,
+      columnGaps);
+  }
+
+  public virtual object GetColumnWidths() {
+    return this.GetNumberOrArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_WIDTHS,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject.Unspecified);
+  }
+
+  public virtual void SetAllColumnWidths(float columnWidth) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_WIDTHS,
+      columnWidth);
+  }
+
+  public virtual void SetAllColumnWidths(int columnWidth) {
+    this.SetNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_WIDTHS,
+      columnWidth);
+  }
+
+  public virtual void SetColumnWidths(float[] columnWidths) {
+    this.SetArrayOfNumber(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_WIDTHS,
+      columnWidths);
+  }
+
+  public override string ToString() {
+    global::System.Text.StringBuilder sb
+      = new global::System.Text.StringBuilder().Append(base.ToString());
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PLACEMENT)) {
+      sb.Append(", Placement=").Append(this.GetPlacement());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WRITING_MODE)) {
+      sb.Append(", WritingMode=").Append(this.GetWritingMode());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BACKGROUND_COLOR)) {
+      sb.Append(", BackgroundColor=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetBackgroundColor()));
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_COLOR)) {
+      sb.Append(", BorderColor=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetBorderColors()));
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_STYLE)) {
+      object borderStyle = this.GetBorderStyle();
+      sb.Append(", BorderStyle=");
+      if ((borderStyle is string[])) {
+        sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((string[])(borderStyle!)));
+      } else {
+        sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(borderStyle));
+      }
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BORDER_THICKNESS)) {
+      object borderThickness = this.GetBorderThickness();
+      sb.Append(", BorderThickness=");
+      if ((borderThickness is float[])) {
+        sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((float[])(borderThickness!)));
+      } else {
+        sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(borderThickness));
+      }
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.PADDING)) {
+      object padding = this.GetPadding();
+      sb.Append(", Padding=");
+      if ((padding is float[])) {
+        sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((float[])(padding!)));
+      } else {
+        sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(padding));
+      }
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLOR)) {
+      sb.Append(", Color=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetColor()));
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_BEFORE)) {
+      global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", SpaceBefore="),
+        this.GetSpaceBefore());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.SPACE_AFTER)) {
+      global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", SpaceAfter="),
+        this.GetSpaceAfter());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.START_INDENT)) {
+      global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", StartIndent="),
+        this.GetStartIndent());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.END_INDENT)) {
+      global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", EndIndent="),
+        this.GetEndIndent());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_INDENT)) {
+      global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", TextIndent="),
+        this.GetTextIndent());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_ALIGN)) {
+      sb.Append(", TextAlign=").Append(this.GetTextAlign());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BBOX)) {
+      sb.Append(", BBox=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetBBox()));
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.WIDTH)) {
+      sb.Append(", Width=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetWidth()));
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.HEIGHT)) {
+      sb.Append(", Height=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetHeight()));
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BLOCK_ALIGN)) {
+      sb.Append(", BlockAlign=").Append(this.GetBlockAlign());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.INLINE_ALIGN)) {
+      sb.Append(", InlineAlign=").Append(this.GetInlineAlign());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_BORDER_STYLE)) {
+      object tBorderStyle = this.GetTBorderStyle();
+      sb.Append(", TBorderStyle=");
+      if ((tBorderStyle is string[])) {
+        sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((string[])(tBorderStyle!)));
+      } else {
+        sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(tBorderStyle));
+      }
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.T_PADDING)) {
+      object tPadding = this.GetTPadding();
+      sb.Append(", TPadding=");
+      if ((tPadding is float[])) {
+        sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((float[])(tPadding!)));
+      } else {
+        sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(tPadding));
+      }
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.BASELINE_SHIFT)) {
+      global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", BaselineShift="),
+        this.GetBaselineShift());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.LINE_HEIGHT)) {
+      sb.Append(", LineHeight=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetLineHeight()));
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_COLOR)) {
+      sb.Append(", TextDecorationColor=").Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetTextDecorationColor()));
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_THICKNESS)) {
+      global::DripSharp.Runtime.JavaCompat.StringBuilderAppendInvariant(sb.Append(", TextDecorationThickness="),
+        this.GetTextDecorationThickness());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.TEXT_DECORATION_TYPE)) {
+      sb.Append(", TextDecorationType=").Append(this.GetTextDecorationType());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RUBY_ALIGN)) {
+      sb.Append(", RubyAlign=").Append(this.GetRubyAlign());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.RUBY_POSITION)) {
+      sb.Append(", RubyPosition=").Append(this.GetRubyPosition());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.GLYPH_ORIENTATION_VERTICAL)) {
+      sb.Append(", GlyphOrientationVertical=").Append(this.GetGlyphOrientationVertical());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_COUNT)) {
+      sb.Append(", ColumnCount=").Append(this.GetColumnCount());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_GAP)) {
+      object columnGap = this.GetColumnGap();
+      sb.Append(", ColumnGap=");
+      if ((columnGap is float[])) {
+        sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((float[])(columnGap!)));
+      } else {
+        sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(columnGap));
+      }
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.COLUMN_WIDTHS)) {
+      object columnWidth = this.GetColumnWidths();
+      sb.Append(", ColumnWidths=");
+      if ((columnWidth is float[])) {
+        sb.Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString((float[])(columnWidth!)));
+      } else {
+        sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(columnWidth));
+      }
+    }
+    return sb.ToString();
+  }
 }

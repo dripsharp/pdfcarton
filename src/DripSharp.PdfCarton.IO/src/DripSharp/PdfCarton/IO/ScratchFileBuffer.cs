@@ -9,269 +9,281 @@
 namespace DripSharp.PdfCarton.IO;
 
 internal class ScratchFileBuffer : global::DripSharp.PdfCarton.IO.RandomAccess {
-private readonly int pageSize = default;
+  private readonly int pageSize = default;
 
-private global::DripSharp.PdfCarton.IO.ScratchFile pageHandler = null!;
+  private global::DripSharp.PdfCarton.IO.ScratchFile pageHandler = null!;
 
-private long size = 0;
+  private long size = 0;
 
-private int currentPagePositionInPageIndexes = default;
+  private int currentPagePositionInPageIndexes = default;
 
-private long currentPageOffset = default;
+  private long currentPageOffset = default;
 
-private sbyte[] currentPage = null!;
+  private sbyte[] currentPage = null!;
 
-private int positionInPage = default;
+  private int positionInPage = default;
 
-private bool currentPageContentChanged = false;
+  private bool currentPageContentChanged = false;
 
-private int[] pageIndexes = new int[16];
+  private int[] pageIndexes = new int[16];
 
-private int pageCount = 0;
+  private int pageCount = 0;
 
-internal ScratchFileBuffer(global::DripSharp.PdfCarton.IO.ScratchFile pageHandler) {
-pageHandler.checkClosed();
-this.pageHandler = pageHandler;
-this.pageSize = this.pageHandler.getPageSize();
-this.addPage();
-}
+  internal ScratchFileBuffer(global::DripSharp.PdfCarton.IO.ScratchFile pageHandler) {
+    pageHandler.checkClosed();
+    this.pageHandler = pageHandler;
+    this.pageSize = this.pageHandler.getPageSize();
+    this.addPage();
+  }
 
-private void checkClosed() {
-if ((this.pageHandler == default!)) {
-throw new global::System.IO.IOException("Buffer already closed");
-}
-this.pageHandler.checkClosed();
-}
+  private void checkClosed() {
+    if ((this.pageHandler == default!)) {
+      throw new global::System.IO.IOException("Buffer already closed");
+    }
+    this.pageHandler.checkClosed();
+  }
 
-private void addPage() {
-if (((this.pageCount + 1) >= this.pageIndexes.Length)) {
-int newSize = (this.pageIndexes.Length * 2);
-if ((newSize < this.pageIndexes.Length)) {
-if ((this.pageIndexes.Length == int.MaxValue)) {
-throw new global::System.IO.IOException("Maximum buffer size reached.");
-}
-newSize = int.MaxValue;
-}
-int[] newPageIndexes = new int[newSize];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.pageIndexes, 0, newPageIndexes, 0, this.pageCount);
-this.pageIndexes = newPageIndexes;
-}
-int newPageIdx = this.pageHandler.getNewPage();
-this.pageIndexes[this.pageCount] = newPageIdx;
-this.currentPagePositionInPageIndexes = this.pageCount;
-this.currentPageOffset = ((long)(this.pageCount) * this.pageSize);
-this.pageCount++;
-this.currentPage = new sbyte[this.pageSize];
-this.positionInPage = 0;
-}
+  private void addPage() {
+    if (((this.pageCount + 1) >= this.pageIndexes.Length)) {
+      int newSize = (this.pageIndexes.Length * 2);
+      if ((newSize < this.pageIndexes.Length)) {
+        if ((this.pageIndexes.Length == int.MaxValue)) {
+          throw new global::System.IO.IOException("Maximum buffer size reached.");
+        }
+        newSize = int.MaxValue;
+      }
+      int[] newPageIndexes = new int[newSize];
+      global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.pageIndexes, 0, newPageIndexes, 0,
+        this.pageCount);
+      this.pageIndexes = newPageIndexes;
+    }
+    int newPageIdx = this.pageHandler.getNewPage();
+    this.pageIndexes[this.pageCount] = newPageIdx;
+    this.currentPagePositionInPageIndexes = this.pageCount;
+    this.currentPageOffset = ((long)(this.pageCount) * this.pageSize);
+    this.pageCount++;
+    this.currentPage = new sbyte[this.pageSize];
+    this.positionInPage = 0;
+  }
 
-public virtual long Length() {
-return this.size;
-}
+  public virtual long Length() {
+    return this.size;
+  }
 
-private bool ensureAvailableBytesInPage(bool addNewPageIfNeeded) {
-if ((this.positionInPage >= this.pageSize)) {
-if (this.currentPageContentChanged) {
-this.pageHandler.writePage(this.pageIndexes[this.currentPagePositionInPageIndexes], this.currentPage);
-this.currentPageContentChanged = false;
-}
-if (((this.currentPagePositionInPageIndexes + 1) < this.pageCount)) {
-this.currentPage = this.pageHandler.readPage(this.pageIndexes[++(this.currentPagePositionInPageIndexes)]);
-this.currentPageOffset = ((long)(this.currentPagePositionInPageIndexes) * this.pageSize);
-this.positionInPage = 0;
-} else {
-if (addNewPageIfNeeded) {
-this.addPage();
-} else {
-return false;
-}
-}
-}
-return true;
-}
+  private bool ensureAvailableBytesInPage(bool addNewPageIfNeeded) {
+    if ((this.positionInPage >= this.pageSize)) {
+      if (this.currentPageContentChanged) {
+        this.pageHandler.writePage(this.pageIndexes[this.currentPagePositionInPageIndexes],
+          this.currentPage);
+        this.currentPageContentChanged = false;
+      }
+      if (((this.currentPagePositionInPageIndexes + 1) < this.pageCount)) {
+        this.currentPage
+          = this.pageHandler.readPage(this.pageIndexes[++(this.currentPagePositionInPageIndexes)]);
+        this.currentPageOffset = ((long)(this.currentPagePositionInPageIndexes) * this.pageSize);
+        this.positionInPage = 0;
+      } else {
+        if (addNewPageIfNeeded) {
+          this.addPage();
+        } else {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
-public virtual void Write(int b) {
-this.checkClosed();
-this.ensureAvailableBytesInPage(true);
-this.currentPage[this.positionInPage++] = unchecked((sbyte)(unchecked((sbyte)(b))));
-this.currentPageContentChanged = true;
-if (((this.currentPageOffset + this.positionInPage) > this.size)) {
-this.size = (this.currentPageOffset + this.positionInPage);
-}
-}
+  public virtual void Write(int b) {
+    this.checkClosed();
+    this.ensureAvailableBytesInPage(true);
+    this.currentPage[this.positionInPage++] = unchecked((sbyte)(unchecked((sbyte)(b))));
+    this.currentPageContentChanged = true;
+    if (((this.currentPageOffset + this.positionInPage) > this.size)) {
+      this.size = (this.currentPageOffset + this.positionInPage);
+    }
+  }
 
-public virtual void Write(sbyte[] b) {
-this.Write(b, 0, b.Length);
-}
+  public virtual void Write(sbyte[] b) {
+    this.Write(b, 0, b.Length);
+  }
 
-public virtual void Write(sbyte[] b, int off, int len) {
-this.checkClosed();
-int remain = len;
-int bOff = off;
-while ((remain > 0)) {
-this.ensureAvailableBytesInPage(true);
-int bytesToWrite = global::System.Math.Min(remain, (this.pageSize - this.positionInPage));
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(b, bOff, this.currentPage, this.positionInPage, bytesToWrite);
-this.positionInPage += bytesToWrite;
-this.currentPageContentChanged = true;
-bOff += bytesToWrite;
-remain -= bytesToWrite;
-}
-if (((this.currentPageOffset + this.positionInPage) > this.size)) {
-this.size = (this.currentPageOffset + this.positionInPage);
-}
-}
+  public virtual void Write(sbyte[] b, int off, int len) {
+    this.checkClosed();
+    int remain = len;
+    int bOff = off;
+    while ((remain > 0)) {
+      this.ensureAvailableBytesInPage(true);
+      int bytesToWrite = global::System.Math.Min(remain, (this.pageSize - this.positionInPage));
+      global::DripSharp.Runtime.JavaCompat.ArrayCopy(b, bOff, this.currentPage, this.positionInPage,
+        bytesToWrite);
+      this.positionInPage += bytesToWrite;
+      this.currentPageContentChanged = true;
+      bOff += bytesToWrite;
+      remain -= bytesToWrite;
+    }
+    if (((this.currentPageOffset + this.positionInPage) > this.size)) {
+      this.size = (this.currentPageOffset + this.positionInPage);
+    }
+  }
 
-public void Clear() {
-this.checkClosed();
-this.pageHandler.markPagesAsFree(this.pageIndexes, 1, (this.pageCount - 1));
-this.pageCount = 1;
-if ((this.currentPagePositionInPageIndexes > 0)) {
-this.currentPage = this.pageHandler.readPage(this.pageIndexes[0]);
-this.currentPagePositionInPageIndexes = 0;
-this.currentPageOffset = 0;
-}
-this.positionInPage = 0;
-this.size = 0;
-this.currentPageContentChanged = false;
-}
+  public void Clear() {
+    this.checkClosed();
+    this.pageHandler.markPagesAsFree(this.pageIndexes, 1, (this.pageCount - 1));
+    this.pageCount = 1;
+    if ((this.currentPagePositionInPageIndexes > 0)) {
+      this.currentPage = this.pageHandler.readPage(this.pageIndexes[0]);
+      this.currentPagePositionInPageIndexes = 0;
+      this.currentPageOffset = 0;
+    }
+    this.positionInPage = 0;
+    this.size = 0;
+    this.currentPageContentChanged = false;
+  }
 
-public virtual long GetPosition() {
-this.checkClosed();
-return (this.currentPageOffset + this.positionInPage);
-}
+  public virtual long GetPosition() {
+    this.checkClosed();
+    return (this.currentPageOffset + this.positionInPage);
+  }
 
-public virtual void Seek(long seekToPosition) {
-this.checkClosed();
-if ((seekToPosition > this.size)) {
-throw new global::System.IO.EndOfStreamException();
-}
-if ((seekToPosition < 0)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Negative seek offset: ", seekToPosition));
-}
-if (((seekToPosition >= this.currentPageOffset) && (seekToPosition <= (this.currentPageOffset + this.pageSize)))) {
-this.positionInPage = (int)((seekToPosition - this.currentPageOffset));
-} else {
-if (this.currentPageContentChanged) {
-this.pageHandler.writePage(this.pageIndexes[this.currentPagePositionInPageIndexes], this.currentPage);
-this.currentPageContentChanged = false;
-}
-int newPagePosition = (int)((seekToPosition / this.pageSize));
-if ((((seekToPosition % this.pageSize) == 0) && (seekToPosition == this.size))) {
-newPagePosition--;
-}
-this.currentPage = this.pageHandler.readPage(this.pageIndexes[newPagePosition]);
-this.currentPagePositionInPageIndexes = newPagePosition;
-this.currentPageOffset = ((long)(this.currentPagePositionInPageIndexes) * this.pageSize);
-this.positionInPage = (int)((seekToPosition - this.currentPageOffset));
-}
-}
+  public virtual void Seek(long seekToPosition) {
+    this.checkClosed();
+    if ((seekToPosition > this.size)) {
+      throw new global::System.IO.EndOfStreamException();
+    }
+    if ((seekToPosition < 0)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Negative seek offset: ",
+        seekToPosition));
+    }
+    if (((seekToPosition >= this.currentPageOffset) && (seekToPosition <= (this.currentPageOffset
+      + this.pageSize)))) {
+      this.positionInPage = (int)((seekToPosition - this.currentPageOffset));
+    } else {
+      if (this.currentPageContentChanged) {
+        this.pageHandler.writePage(this.pageIndexes[this.currentPagePositionInPageIndexes],
+          this.currentPage);
+        this.currentPageContentChanged = false;
+      }
+      int newPagePosition = (int)((seekToPosition / this.pageSize));
+      if ((((seekToPosition % this.pageSize) == 0) && (seekToPosition == this.size))) {
+        newPagePosition--;
+      }
+      this.currentPage = this.pageHandler.readPage(this.pageIndexes[newPagePosition]);
+      this.currentPagePositionInPageIndexes = newPagePosition;
+      this.currentPageOffset = ((long)(this.currentPagePositionInPageIndexes) * this.pageSize);
+      this.positionInPage = (int)((seekToPosition - this.currentPageOffset));
+    }
+  }
 
-public virtual bool IsClosed() {
-return (this.pageHandler == default!);
-}
+  public virtual bool IsClosed() {
+    return (this.pageHandler == default!);
+  }
 
-public virtual bool IsEOF() {
-this.checkClosed();
-return ((this.currentPageOffset + this.positionInPage) >= this.size);
-}
+  public virtual bool IsEOF() {
+    this.checkClosed();
+    return ((this.currentPageOffset + this.positionInPage) >= this.size);
+  }
 
-public virtual int Read() {
-this.checkClosed();
-if (((this.currentPageOffset + this.positionInPage) >= this.size)) {
-return -1;
-}
-if (!(this.ensureAvailableBytesInPage(false))) {
-throw new global::System.IO.IOException("Unexpectedly no bytes available for read in buffer.");
-}
-return (this.currentPage[this.positionInPage++] & 255);
-}
+  public virtual int Read() {
+    this.checkClosed();
+    if (((this.currentPageOffset + this.positionInPage) >= this.size)) {
+      return -1;
+    }
+    if (!(this.ensureAvailableBytesInPage(false))) {
+      throw new global::System.IO.IOException("Unexpectedly no bytes available for read in buffer.");
+    }
+    return (this.currentPage[this.positionInPage++] & 255);
+  }
 
-public virtual int Read(sbyte[] b, int off, int len) {
-this.checkClosed();
-if (((this.currentPageOffset + this.positionInPage) >= this.size)) {
-return -1;
-}
-int remain = (int)(global::System.Math.Min((long)(len), (this.size - (this.currentPageOffset + this.positionInPage))));
-int totalBytesRead = 0;
-int bOff = off;
-while ((remain > 0)) {
-if (!(this.ensureAvailableBytesInPage(false))) {
-throw new global::System.IO.IOException("Unexpectedly no bytes available for read in buffer.");
-}
-int readBytes = global::System.Math.Min(remain, (this.pageSize - this.positionInPage));
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.currentPage, this.positionInPage, b, bOff, readBytes);
-this.positionInPage += readBytes;
-totalBytesRead += readBytes;
-bOff += readBytes;
-remain -= readBytes;
-}
-return totalBytesRead;
-}
+  public virtual int Read(sbyte[] b, int off, int len) {
+    this.checkClosed();
+    if (((this.currentPageOffset + this.positionInPage) >= this.size)) {
+      return -1;
+    }
+    int remain = (int)(global::System.Math.Min((long)(len), (this.size - (this.currentPageOffset
+      + this.positionInPage))));
+    int totalBytesRead = 0;
+    int bOff = off;
+    while ((remain > 0)) {
+      if (!(this.ensureAvailableBytesInPage(false))) {
+        throw new global::System.IO.IOException("Unexpectedly no bytes available for read in buffer.");
+      }
+      int readBytes = global::System.Math.Min(remain, (this.pageSize - this.positionInPage));
+      global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.currentPage, this.positionInPage, b, bOff,
+        readBytes);
+      this.positionInPage += readBytes;
+      totalBytesRead += readBytes;
+      bOff += readBytes;
+      remain -= readBytes;
+    }
+    return totalBytesRead;
+  }
 
-public virtual void Dispose() {
-this.close(true);
-}
+  public virtual void Dispose() {
+    this.close(true);
+  }
 
-internal virtual void close(bool removeBuffer) {
-if ((this.pageHandler != default!)) {
-this.pageHandler.markPagesAsFree(this.pageIndexes, 0, this.pageCount);
-if (removeBuffer) {
-this.pageHandler.removeBuffer(this);
-}
-this.pageHandler = default!;
-this.pageIndexes = default!;
-this.currentPage = default!;
-this.currentPageOffset = 0;
-this.currentPagePositionInPageIndexes = -1;
-this.positionInPage = 0;
-this.size = 0;
-}
-}
+  internal virtual void close(bool removeBuffer) {
+    if ((this.pageHandler != default!)) {
+      this.pageHandler.markPagesAsFree(this.pageIndexes, 0, this.pageCount);
+      if (removeBuffer) {
+        this.pageHandler.removeBuffer(this);
+      }
+      this.pageHandler = default!;
+      this.pageIndexes = default!;
+      this.currentPage = default!;
+      this.currentPageOffset = 0;
+      this.currentPagePositionInPageIndexes = -1;
+      this.positionInPage = 0;
+      this.size = 0;
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition, long streamLength) {
-throw new global::System.NotSupportedException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"), ".createView isn't supported."));
-}
+  public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition,
+    long streamLength) {
+    throw new global::System.NotSupportedException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(this)).GetType(),
+      "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"), ".createView isn't supported."));
+  }
 
-public virtual int Available() {
-return (int)(global::System.Math.Min((this.Length() - this.GetPosition()), (long)(int.MaxValue)));
-}
+  public virtual int Available() {
+    return (int)(global::System.Math.Min((this.Length() - this.GetPosition()),
+      (long)(int.MaxValue)));
+  }
 
-public virtual int Peek() {
-int result = this.Read();
-if ((result != -1)) {
-((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
-}
-return result;
-}
+  public virtual int Peek() {
+    int result = this.Read();
+    if ((result != -1)) {
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
+    }
+    return result;
+  }
 
-public virtual int Read(sbyte[] b) {
-return this.Read(b, 0, b.Length);
-}
+  public virtual int Read(sbyte[] b) {
+    return this.Read(b, 0, b.Length);
+  }
 
-public virtual void ReadFully(sbyte[] b) {
-((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).ReadFully(b, 0, b.Length);
-}
+  public virtual void ReadFully(sbyte[] b) {
+    ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).ReadFully(b, 0, b.Length);
+  }
 
-public virtual void ReadFully(sbyte[] b, int offset, int length) {
-if (((this.Length() - this.GetPosition()) < length)) {
-throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
-}
-int bytesReadTotal = 0;
-while ((bytesReadTotal < length)) {
-int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
-if ((bytesReadNow <= 0)) {
-throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
-}
-bytesReadTotal += bytesReadNow;
-}
-}
+  public virtual void ReadFully(sbyte[] b, int offset, int length) {
+    if (((this.Length() - this.GetPosition()) < length)) {
+      throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
+    }
+    int bytesReadTotal = 0;
+    while ((bytesReadTotal < length)) {
+      int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
+      if ((bytesReadNow <= 0)) {
+        throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
+      }
+      bytesReadTotal += bytesReadNow;
+    }
+  }
 
-public virtual void Rewind(int bytes) {
-this.Seek((this.GetPosition() - bytes));
-}
+  public virtual void Rewind(int bytes) {
+    this.Seek((this.GetPosition() - bytes));
+  }
 
-public virtual void Skip(int length) {
-this.Seek((this.GetPosition() + length));
-}
+  public virtual void Skip(int length) {
+    this.Seek((this.GetPosition() + length));
+  }
 }

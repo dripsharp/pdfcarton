@@ -9,20 +9,20 @@
 namespace DripSharp.PdfCarton.Fonts.Afm;
 
 public class Ligature {
-private readonly string successor = null!;
+  private readonly string successor = null!;
 
-private readonly string liga = null!;
+  private readonly string liga = null!;
 
-public Ligature(string successor, string ligature) {
-this.successor = successor;
-this.liga = ligature;
-}
+  public Ligature(string successor, string ligature) {
+    this.successor = successor;
+    this.liga = ligature;
+  }
 
-public virtual string GetLigature() {
-return this.liga;
-}
+  public virtual string GetLigature() {
+    return this.liga;
+  }
 
-public virtual string GetSuccessor() {
-return this.successor;
-}
+  public virtual string GetSuccessor() {
+    return this.successor;
+  }
 }

@@ -8,64 +8,71 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
-public class PDAnnotationInk : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
-public const string SubType = "Ink";
+public class PDAnnotationInk
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
+  public const string SubType = "Ink";
 
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler
+    = null!;
 
-public PDAnnotationInk() {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationInk.SubType);
-}
+  public PDAnnotationInk() {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationInk.SubType);
+  }
 
-public PDAnnotationInk(global::DripSharp.PdfCarton.Cos.COSDictionary dict) : base(dict) {
+  public PDAnnotationInk(global::DripSharp.PdfCarton.Cos.COSDictionary dict) : base(dict) {
 
-}
+  }
 
-public virtual void SetInkList(float[][] inkList) {
-if ((inkList == default!)) {
-this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Inklist);
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (float[] path in inkList) {
-global::DripSharp.PdfCarton.Cos.COSArray innerArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-innerArray.SetFloatArray(path);
-array.Add(innerArray);
-}
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Inklist, array);
-}
+  public virtual void SetInkList(float[][] inkList) {
+    if ((inkList == default!)) {
+      this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Inklist);
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (float[] path in inkList) {
+      global::DripSharp.PdfCarton.Cos.COSArray innerArray
+        = new global::DripSharp.PdfCarton.Cos.COSArray();
+      innerArray.SetFloatArray(path);
+      array.Add(innerArray);
+    }
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Inklist, array);
+  }
 
-public virtual float[][] GetInkList() {
-global::DripSharp.PdfCarton.Cos.COSArray array = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Inklist);
-if ((array != default!)) {
-float[][] inkList = new float[array.Size()][];
-for (int i = 0; (i < array.Size()); ++i) {
-global::DripSharp.PdfCarton.Cos.COSBase base2 = array.GetObject(i);
-if ((base2 is global::DripSharp.PdfCarton.Cos.COSArray)) {
-inkList[i] = ((global::DripSharp.PdfCarton.Cos.COSArray)(base2!)).ToFloatArray();
-} else {
-inkList[i] = new float[0];
-}
-}
-return inkList;
-}
-return global::DripSharp.Runtime.JavaCompat.NewJaggedArray<float>(0, 0);
-}
+  public virtual float[][] GetInkList() {
+    global::DripSharp.PdfCarton.Cos.COSArray array
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Inklist);
+    if ((array != default!)) {
+      float[][] inkList = new float[array.Size()][];
+      for (int i = 0; (i < array.Size()); ++i) {
+        global::DripSharp.PdfCarton.Cos.COSBase base2 = array.GetObject(i);
+        if ((base2 is global::DripSharp.PdfCarton.Cos.COSArray)) {
+          inkList[i] = ((global::DripSharp.PdfCarton.Cos.COSArray)(base2!)).ToFloatArray();
+        } else {
+          inkList[i] = new float[0];
+        }
+      }
+      return inkList;
+    }
+    return global::DripSharp.Runtime.JavaCompat.NewJaggedArray<float>(0, 0);
+  }
 
-public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
-this.customAppearanceHandler = appearanceHandler;
-}
+  public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
+    this.customAppearanceHandler = appearanceHandler;
+  }
 
-public override void ConstructAppearances() {
-this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
-}
+  public override void ConstructAppearances() {
+    this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
+  }
 
-public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-if ((this.customAppearanceHandler == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDInkAppearanceHandler appearanceHandler = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDInkAppearanceHandler(this, document);
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
-} else {
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
-}
-}
+  public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    if ((this.customAppearanceHandler == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDInkAppearanceHandler appearanceHandler
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDInkAppearanceHandler(this,
+        document);
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
+    } else {
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
+    }
+  }
 }

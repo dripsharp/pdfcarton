@@ -8,22 +8,29 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Text;
 
-public class ShowTextLineAndSpace : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public ShowTextLineAndSpace(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class ShowTextLineAndSpace
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public ShowTextLineAndSpace(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) < 3)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetWordSpacing, global::DripSharp.Runtime.JavaCompat.SubList(arguments, 0, 1));
-context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetCharSpacing, global::DripSharp.Runtime.JavaCompat.SubList(arguments, 1, 2));
-context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine, global::DripSharp.Runtime.JavaCompat.SubList(arguments, 2, 3));
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) < 3)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        arguments);
+    }
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetWordSpacing,
+      global::DripSharp.Runtime.JavaCompat.SubList(arguments, 0, 1));
+    context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetCharSpacing,
+      global::DripSharp.Runtime.JavaCompat.SubList(arguments, 1, 2));
+    context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine,
+      global::DripSharp.Runtime.JavaCompat.SubList(arguments, 2, 3));
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace;
+  }
 }

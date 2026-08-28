@@ -9,18 +9,20 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Text;
 
 public class EndText : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public EndText(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+  public EndText(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-context.SetTextMatrix((global::DripSharp.PdfCarton.Util.Matrix)default!);
-context.SetTextLineMatrix((global::DripSharp.PdfCarton.Util.Matrix)default!);
-context.EndText();
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    context.SetTextMatrix((global::DripSharp.PdfCarton.Util.Matrix)default!);
+    context.SetTextLineMatrix((global::DripSharp.PdfCarton.Util.Matrix)default!);
+    context.EndText();
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndText;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndText;
+  }
 }

@@ -8,22 +8,26 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent;
 
-public class BeginMarkedContentSequence : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public BeginMarkedContentSequence(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class BeginMarkedContentSequence
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public BeginMarkedContentSequence(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-global::DripSharp.PdfCarton.Cos.COSName tag = default!;
-foreach (global::DripSharp.PdfCarton.Cos.COSBase argument in arguments) {
-if ((argument is global::DripSharp.PdfCarton.Cos.COSName)) {
-tag = (global::DripSharp.PdfCarton.Cos.COSName)(argument!);
-}
-}
-this.GetContext().BeginMarkedContentSequence(tag!, (global::DripSharp.PdfCarton.Cos.COSDictionary)default!);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    global::DripSharp.PdfCarton.Cos.COSName tag = default!;
+    foreach (global::DripSharp.PdfCarton.Cos.COSBase argument in arguments) {
+      if ((argument is global::DripSharp.PdfCarton.Cos.COSName)) {
+        tag = (global::DripSharp.PdfCarton.Cos.COSName)(argument!);
+      }
+    }
+    this.GetContext().BeginMarkedContentSequence(tag!,
+      (global::DripSharp.PdfCarton.Cos.COSDictionary)default!);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContent;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContent;
+  }
 }

@@ -8,42 +8,48 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Form;
 
-public sealed class PDTransparencyGroupAttributes : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+public sealed class PDTransparencyGroupAttributes
+: global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace = null!;
 
-public PDTransparencyGroupAttributes() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.S, global::DripSharp.PdfCarton.Cos.COSName.Transparency);
-}
+  public PDTransparencyGroupAttributes() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.S,
+      global::DripSharp.PdfCarton.Cos.COSName.Transparency);
+  }
 
-public PDTransparencyGroupAttributes(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
-this.dictionary = dic;
-}
+  public PDTransparencyGroupAttributes(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
+    this.dictionary = dic;
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace() {
-return this.GetColorSpace((global::DripSharp.PdfCarton.Pdmodel.PDResources)default!);
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace() {
+    return this.GetColorSpace((global::DripSharp.PdfCarton.Pdmodel.PDResources)default!);
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace(global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
-if (((this.colorSpace == default!) && this.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Cs))) {
-this.colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Cs), resources);
-}
-return this.colorSpace;
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace(global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
+    if (((this.colorSpace == default!)
+      && this.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Cs))) {
+      this.colorSpace
+        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Cs),
+        resources);
+    }
+    return this.colorSpace;
+  }
 
-public bool IsIsolated() {
-return this.GetCOSObject().GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.I, false);
-}
+  public bool IsIsolated() {
+    return this.GetCOSObject().GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.I, false);
+  }
 
-public bool IsKnockout() {
-return this.GetCOSObject().GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.K, false);
-}
+  public bool IsKnockout() {
+    return this.GetCOSObject().GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.K, false);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

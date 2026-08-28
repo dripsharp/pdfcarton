@@ -9,43 +9,43 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 internal class TTCDataStream : global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream {
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream = null!;
 
-internal TTCDataStream(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream) {
-this.stream = stream;
-}
+  internal TTCDataStream(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream) {
+    this.stream = stream;
+  }
 
-public override int Read() {
-return this.stream.Read();
-}
+  public override int Read() {
+    return this.stream.Read();
+  }
 
-public override long ReadLong() {
-return this.stream.ReadLong();
-}
+  public override long ReadLong() {
+    return this.stream.ReadLong();
+  }
 
-public override void Dispose() {}
+  public override void Dispose() {}
 
-public override void Seek(long pos) {
-this.stream.Seek(pos);
-}
+  public override void Seek(long pos) {
+    this.stream.Seek(pos);
+  }
 
-public override int Read(sbyte[] b, int off, int len) {
-return this.stream.Read(b, off, len);
-}
+  public override int Read(sbyte[] b, int off, int len) {
+    return this.stream.Read(b, off, len);
+  }
 
-public override long GetCurrentPosition() {
-return this.stream.GetCurrentPosition();
-}
+  public override long GetCurrentPosition() {
+    return this.stream.GetCurrentPosition();
+  }
 
-public override global::System.IO.Stream GetOriginalData() {
-return this.stream.GetOriginalData();
-}
+  public override global::System.IO.Stream GetOriginalData() {
+    return this.stream.GetOriginalData();
+  }
 
-public override long GetOriginalDataSize() {
-return this.stream.GetOriginalDataSize();
-}
+  public override long GetOriginalDataSize() {
+    return this.stream.GetOriginalDataSize();
+  }
 
-public override global::DripSharp.PdfCarton.IO.RandomAccessRead CreateSubView(long length) {
-return this.stream.CreateSubView(length);
-}
+  public override global::DripSharp.PdfCarton.IO.RandomAccessRead CreateSubView(long length) {
+    return this.stream.CreateSubView(length);
+  }
 }

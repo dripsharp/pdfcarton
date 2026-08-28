@@ -8,119 +8,136 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
-public class PDPolygonAppearanceHandler : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class PDPolygonAppearanceHandler
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public PDPolygonAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation) : base(annotation) {
+  public PDPolygonAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
+  : base(annotation) {
 
-}
+  }
 
-public PDPolygonAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation, global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(annotation, document) {
+  public PDPolygonAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(annotation, document) {
 
-}
+  }
 
-public override void GenerateNormalAppearance() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPolygon annotation = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPolygon)(this.getAnnotation()!);
-float lineWidth = this.getLineWidth();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = annotation.GetRectangle();
-if ((rect == default!)) {
-return;
-}
-float minX = float.MaxValue;
-float minY = float.MaxValue;
-float maxX = float.Epsilon;
-float maxY = float.Epsilon;
-float[][] pathArray = this.getPathArray(annotation);
-if ((pathArray == default!)) {
-return;
-}
-for (int i__78_18 = 0; (i__78_18 < pathArray.Length); ++i__78_18) {
-for (int j = 0; (j < (pathArray[i__78_18].Length / 2)); ++j) {
-float x = pathArray[i__78_18][(j * 2)];
-float y = pathArray[i__78_18][((j * 2) + 1)];
-minX = global::System.Math.Min(minX, x);
-minY = global::System.Math.Min(minY, y);
-maxX = global::System.Math.Max(maxX, x);
-maxY = global::System.Math.Max(maxY, y);
-}
-}
-rect.SetLowerLeftX(global::System.Math.Min((minX - lineWidth), rect.GetLowerLeftX()));
-rect.SetLowerLeftY(global::System.Math.Min((minY - lineWidth), rect.GetLowerLeftY()));
-rect.SetUpperRightX(global::System.Math.Max((maxX + lineWidth), rect.GetUpperRightX()));
-rect.SetUpperRightY(global::System.Math.Max((maxY + lineWidth), rect.GetUpperRightY()));
-annotation.SetRectangle(rect);
-try {
-using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream = this.getNormalAppearanceAsContentStream()) {
-bool hasStroke = contentStream.SetStrokingColorOnDemand(this.getColor());
-bool hasBackground = contentStream.SetNonStrokingColorOnDemand(annotation.GetInteriorColor());
-this.setOpacity(contentStream, annotation.GetConstantOpacity());
-contentStream.SetBorderLine(lineWidth, annotation.GetBorderStyle(), annotation.GetBorder());
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary borderEffect = annotation.GetBorderEffect();
-if (((borderEffect != default!) && global::DripSharp.Runtime.JavaCompat.Equals(borderEffect.GetStyle(), global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary.StyleCloudy))) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder cloudyBorder = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder(contentStream, (double)(borderEffect.GetIntensity()), (double)(lineWidth), this.getRectangle());
-cloudyBorder.createCloudyPolygon(pathArray);
-annotation.SetRectangle(cloudyBorder.getRectangle());
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream = annotation.GetNormalAppearanceStream();
-appearanceStream.SetBBox(cloudyBorder.getBBox());
-appearanceStream.SetMatrix(cloudyBorder.getMatrix());
-} else {
-for (int i__124_26 = 0; (i__124_26 < pathArray.Length); i__124_26++) {
-float[] pointsArray = pathArray[i__124_26];
-if (((i__124_26 == 0) && (pointsArray.Length == 2))) {
-contentStream.MoveTo(pointsArray[0], pointsArray[1]);
-} else {
-if ((pointsArray.Length == 2)) {
-contentStream.LineTo(pointsArray[0], pointsArray[1]);
-} else {
-if ((pointsArray.Length == 6)) {
-contentStream.CurveTo(pointsArray[0], pointsArray[1], pointsArray[2], pointsArray[3], pointsArray[4], pointsArray[5]);
-}
-}
-}
-}
-contentStream.ClosePath();
-}
-contentStream.DrawShape(lineWidth, hasStroke, hasBackground);
-}
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDPolygonAppearanceHandler.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(e));
-}
-}
+  public override void GenerateNormalAppearance() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPolygon annotation
+      = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPolygon)(this.getAnnotation()!);
+    float lineWidth = this.getLineWidth();
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = annotation.GetRectangle();
+    if ((rect == default!)) {
+      return;
+    }
+    float minX = float.MaxValue;
+    float minY = float.MaxValue;
+    float maxX = float.Epsilon;
+    float maxY = float.Epsilon;
+    float[][] pathArray = this.getPathArray(annotation);
+    if ((pathArray == default!)) {
+      return;
+    }
+    for (int i__78_18 = 0; (i__78_18 < pathArray.Length); ++i__78_18) {
+      for (int j = 0; (j < (pathArray[i__78_18].Length / 2)); ++j) {
+        float x = pathArray[i__78_18][(j * 2)];
+        float y = pathArray[i__78_18][((j * 2) + 1)];
+        minX = global::System.Math.Min(minX, x);
+        minY = global::System.Math.Min(minY, y);
+        maxX = global::System.Math.Max(maxX, x);
+        maxY = global::System.Math.Max(maxY, y);
+      }
+    }
+    rect.SetLowerLeftX(global::System.Math.Min((minX - lineWidth), rect.GetLowerLeftX()));
+    rect.SetLowerLeftY(global::System.Math.Min((minY - lineWidth), rect.GetLowerLeftY()));
+    rect.SetUpperRightX(global::System.Math.Max((maxX + lineWidth), rect.GetUpperRightX()));
+    rect.SetUpperRightY(global::System.Math.Max((maxY + lineWidth), rect.GetUpperRightY()));
+    annotation.SetRectangle(rect);
+    try {
+      using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
+        = this.getNormalAppearanceAsContentStream()) {
+        bool hasStroke = contentStream.SetStrokingColorOnDemand(this.getColor());
+        bool hasBackground
+          = contentStream.SetNonStrokingColorOnDemand(annotation.GetInteriorColor());
+        this.setOpacity(contentStream, annotation.GetConstantOpacity());
+        contentStream.SetBorderLine(lineWidth, annotation.GetBorderStyle(), annotation.GetBorder());
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary borderEffect
+          = annotation.GetBorderEffect();
+        if (((borderEffect != default!)
+          && global::DripSharp.Runtime.JavaCompat.Equals(borderEffect.GetStyle(),
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary.StyleCloudy))) {
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder cloudyBorder
+            = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder(contentStream,
+            (double)(borderEffect.GetIntensity()), (double)(lineWidth), this.getRectangle());
+          cloudyBorder.createCloudyPolygon(pathArray);
+          annotation.SetRectangle(cloudyBorder.getRectangle());
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream
+            = annotation.GetNormalAppearanceStream();
+          appearanceStream.SetBBox(cloudyBorder.getBBox());
+          appearanceStream.SetMatrix(cloudyBorder.getMatrix());
+        } else {
+          for (int i__124_26 = 0; (i__124_26 < pathArray.Length); i__124_26++) {
+            float[] pointsArray = pathArray[i__124_26];
+            if (((i__124_26 == 0) && (pointsArray.Length == 2))) {
+              contentStream.MoveTo(pointsArray[0], pointsArray[1]);
+            } else {
+              if ((pointsArray.Length == 2)) {
+                contentStream.LineTo(pointsArray[0], pointsArray[1]);
+              } else {
+                if ((pointsArray.Length == 6)) {
+                  contentStream.CurveTo(pointsArray[0], pointsArray[1], pointsArray[2],
+                    pointsArray[3], pointsArray[4], pointsArray[5]);
+                }
+              }
+            }
+          }
+          contentStream.ClosePath();
+        }
+        contentStream.DrawShape(lineWidth, hasStroke, hasBackground);
+      }
+    } catch (global::System.IO.IOException e) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDPolygonAppearanceHandler.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(e));
+    }
+  }
 
-private float[][] getPathArray(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPolygon annotation) {
-float[][] pathArray = annotation.GetPath();
-if ((pathArray == default!)) {
-float[] verticesArray = annotation.GetVertices();
-if ((verticesArray == default!)) {
-return default!;
-}
-int points = (verticesArray.Length / 2);
-pathArray = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<float>(points, 2);
-for (int i = 0; (i < points); ++i) {
-pathArray[i][0] = verticesArray[(i * 2)];
-pathArray[i][1] = verticesArray[((i * 2) + 1)];
-}
-}
-return pathArray;
-}
+  private float[][] getPathArray(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPolygon annotation) {
+    float[][] pathArray = annotation.GetPath();
+    if ((pathArray == default!)) {
+      float[] verticesArray = annotation.GetVertices();
+      if ((verticesArray == default!)) {
+        return default!;
+      }
+      int points = (verticesArray.Length / 2);
+      pathArray = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<float>(points, 2);
+      for (int i = 0; (i < points); ++i) {
+        pathArray[i][0] = verticesArray[(i * 2)];
+        pathArray[i][1] = verticesArray[((i * 2) + 1)];
+      }
+    }
+    return pathArray;
+  }
 
-public override void GenerateRolloverAppearance() {}
+  public override void GenerateRolloverAppearance() {}
 
-public override void GenerateDownAppearance() {}
+  public override void GenerateDownAppearance() {}
 
-internal virtual float getLineWidth() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup annotation = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup)(this.getAnnotation()!);
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary bs = annotation.GetBorderStyle();
-if ((bs != default!)) {
-return bs.GetWidth();
-}
-global::DripSharp.PdfCarton.Cos.COSArray borderCharacteristics = annotation.GetBorder();
-if ((borderCharacteristics.Size() >= 3)) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = borderCharacteristics.GetObject(2);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-return ((global::DripSharp.PdfCarton.Cos.COSNumber)(@base!)).FloatValue();
-}
-}
-return 1;
-}
+  internal virtual float getLineWidth() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup annotation
+      = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup)(this.getAnnotation()!);
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary bs
+      = annotation.GetBorderStyle();
+    if ((bs != default!)) {
+      return bs.GetWidth();
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray borderCharacteristics = annotation.GetBorder();
+    if ((borderCharacteristics.Size() >= 3)) {
+      global::DripSharp.PdfCarton.Cos.COSBase @base = borderCharacteristics.GetObject(2);
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+        return ((global::DripSharp.PdfCarton.Cos.COSNumber)(@base!)).FloatValue();
+      }
+    }
+    return 1;
+  }
 }

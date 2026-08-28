@@ -9,64 +9,65 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class VerticalMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-public const string Tag = "vmtx";
+  public const string Tag = "vmtx";
 
-private int[] advanceHeight = null!;
+  private int[] advanceHeight = null!;
 
-private short[] topSideBearing = null!;
+  private short[] topSideBearing = null!;
 
-private short[] additionalTopSideBearing = null!;
+  private short[] additionalTopSideBearing = null!;
 
-private int numVMetrics = default;
+  private int numVMetrics = default;
 
-internal VerticalMetricsTable() : base() {
+  internal VerticalMetricsTable() : base() {
 
-}
+  }
 
-internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-global::DripSharp.PdfCarton.Fonts.Ttf.VerticalHeaderTable vHeader = ttf.GetVerticalHeader();
-if ((vHeader == default!)) {
-throw new global::System.IO.IOException("Could not get vhea table");
-}
-this.numVMetrics = vHeader.GetNumberOfVMetrics();
-int numGlyphs = ttf.GetNumberOfGlyphs();
-int bytesRead = 0;
-this.advanceHeight = new int[this.numVMetrics];
-this.topSideBearing = new short[this.numVMetrics];
-for (int i__70_18 = 0; (i__70_18 < this.numVMetrics); i__70_18++) {
-this.advanceHeight[i__70_18] = data.ReadUnsignedShort();
-this.topSideBearing[i__70_18] = data.ReadSignedShort();
-bytesRead += 4;
-}
-if ((bytesRead < this.GetLength())) {
-int numberNonVertical = (numGlyphs - this.numVMetrics);
-if ((numberNonVertical < 0)) {
-numberNonVertical = numGlyphs;
-}
-this.additionalTopSideBearing = new short[numberNonVertical];
-for (int i__88_22 = 0; (i__88_22 < numberNonVertical); i__88_22++) {
-if ((bytesRead < this.GetLength())) {
-this.additionalTopSideBearing[i__88_22] = data.ReadSignedShort();
-bytesRead += 2;
-}
-}
-}
-base.Initialized = true;
-}
+  internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.VerticalHeaderTable vHeader = ttf.GetVerticalHeader();
+    if ((vHeader == default!)) {
+      throw new global::System.IO.IOException("Could not get vhea table");
+    }
+    this.numVMetrics = vHeader.GetNumberOfVMetrics();
+    int numGlyphs = ttf.GetNumberOfGlyphs();
+    int bytesRead = 0;
+    this.advanceHeight = new int[this.numVMetrics];
+    this.topSideBearing = new short[this.numVMetrics];
+    for (int i__70_18 = 0; (i__70_18 < this.numVMetrics); i__70_18++) {
+      this.advanceHeight[i__70_18] = data.ReadUnsignedShort();
+      this.topSideBearing[i__70_18] = data.ReadSignedShort();
+      bytesRead += 4;
+    }
+    if ((bytesRead < this.GetLength())) {
+      int numberNonVertical = (numGlyphs - this.numVMetrics);
+      if ((numberNonVertical < 0)) {
+        numberNonVertical = numGlyphs;
+      }
+      this.additionalTopSideBearing = new short[numberNonVertical];
+      for (int i__88_22 = 0; (i__88_22 < numberNonVertical); i__88_22++) {
+        if ((bytesRead < this.GetLength())) {
+          this.additionalTopSideBearing[i__88_22] = data.ReadSignedShort();
+          bytesRead += 2;
+        }
+      }
+    }
+    base.Initialized = true;
+  }
 
-public virtual int GetTopSideBearing(int gid) {
-if ((gid < this.numVMetrics)) {
-return this.topSideBearing[gid];
-} else {
-return this.additionalTopSideBearing[(gid - this.numVMetrics)];
-}
-}
+  public virtual int GetTopSideBearing(int gid) {
+    if ((gid < this.numVMetrics)) {
+      return this.topSideBearing[gid];
+    } else {
+      return this.additionalTopSideBearing[(gid - this.numVMetrics)];
+    }
+  }
 
-public virtual int GetAdvanceHeight(int gid) {
-if ((gid < this.numVMetrics)) {
-return this.advanceHeight[gid];
-} else {
-return this.advanceHeight[(this.advanceHeight.Length - 1)];
-}
-}
+  public virtual int GetAdvanceHeight(int gid) {
+    if ((gid < this.numVMetrics)) {
+      return this.advanceHeight[gid];
+    } else {
+      return this.advanceHeight[(this.advanceHeight.Length - 1)];
+    }
+  }
 }

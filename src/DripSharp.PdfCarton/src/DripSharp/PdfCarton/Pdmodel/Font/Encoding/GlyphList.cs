@@ -9,131 +9,175 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font.Encoding;
 
 public sealed class GlyphList {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList DEFAULT = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.load("glyphlist.txt", 4281);
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList DEFAULT
+    = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.load("glyphlist.txt", 4281);
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList ZAPF_DINGBATS = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.load("zapfdingbats.txt", 201);
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList ZAPF_DINGBATS
+    = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.load("zapfdingbats.txt", 201);
 
-private static global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList load(string filename, int numberOfEntries) {
-string path = global::DripSharp.Runtime.JavaCompat.Concat("/org/apache/pdfbox/resources/glyphlist/", filename);
-try {
-using (global::System.IO.Stream resourceAsStream = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList), path)) {
-if ((resourceAsStream == default!)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("GlyphList '", path), "' not found"));
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList(resourceAsStream, numberOfEntries);
-}
-} catch (global::System.IO.IOException e) {
-throw new global::System.Exception(null, e);
-}
-}
+  private static global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList load(string filename,
+    int numberOfEntries) {
+    string path
+      = global::DripSharp.Runtime.JavaCompat.Concat("/org/apache/pdfbox/resources/glyphlist/",
+      filename);
+    try {
+      using (global::System.IO.Stream resourceAsStream
+        = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList),
+        path)) {
+        if ((resourceAsStream == default!)) {
+          throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("GlyphList '",
+            path), "' not found"));
+        }
+        return new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList(resourceAsStream,
+          numberOfEntries);
+      }
+    } catch (global::System.IO.IOException e) {
+      throw new global::System.Exception(null, e);
+    }
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList GetAdobeGlyphList() {
-return global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.DEFAULT;
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList GetAdobeGlyphList() {
+    return global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.DEFAULT;
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList GetZapfDingbats() {
-return global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.ZAPF_DINGBATS;
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList GetZapfDingbats() {
+    return global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.ZAPF_DINGBATS;
+  }
 
-private readonly global::System.Collections.Generic.IDictionary<string, string> nameToUnicode = null!;
+  private readonly global::System.Collections.Generic.IDictionary<string, string> nameToUnicode
+    = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<string, string> unicodeToName = null!;
+  private readonly global::System.Collections.Generic.IDictionary<string, string> unicodeToName
+    = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<string, string> uniNameToUnicodeCache = new global::System.Collections.Concurrent.ConcurrentDictionary<string, string>();
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    string> uniNameToUnicodeCache
+    = new global::System.Collections.Concurrent.ConcurrentDictionary<string, string>();
 
-public GlyphList(global::System.IO.Stream input, int numberOfEntries) {
-this.nameToUnicode = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, string>(numberOfEntries);
-this.unicodeToName = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, string>(numberOfEntries);
-this.loadList(input);
-}
+  public GlyphList(global::System.IO.Stream input, int numberOfEntries) {
+    this.nameToUnicode = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+      string>(numberOfEntries);
+    this.unicodeToName = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+      string>(numberOfEntries);
+    this.loadList(input);
+  }
 
-public GlyphList(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList glyphList, global::System.IO.Stream input) {
-this.nameToUnicode = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, string>(global::DripSharp.Runtime.JavaCompat.CastDictionary<string, string>(glyphList.nameToUnicode));
-this.unicodeToName = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, string>(global::DripSharp.Runtime.JavaCompat.CastDictionary<string, string>(glyphList.unicodeToName));
-this.loadList(input);
-}
+  public GlyphList(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList glyphList,
+    global::System.IO.Stream input) {
+    this.nameToUnicode = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+      string>(global::DripSharp.Runtime.JavaCompat.CastDictionary<string,
+      string>(glyphList.nameToUnicode));
+    this.unicodeToName = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+      string>(global::DripSharp.Runtime.JavaCompat.CastDictionary<string,
+      string>(glyphList.unicodeToName));
+    this.loadList(input);
+  }
 
-private void loadList(global::System.IO.Stream input) {
-using (global::System.IO.TextReader @in = new global::System.IO.StreamReader(input, global::DripSharp.Runtime.JavaStandardCharsets.ISO88591)) {
-while (global::DripSharp.Runtime.JavaCompat.ReaderReady(@in)) {
-string line = @in.ReadLine();
-if (((line != default!) && !(global::DripSharp.Runtime.JavaCompat.StringStartsWith(line, "#")))) {
-string[] parts = global::DripSharp.Runtime.JavaCompat.StringSplit(line, ";", 0);
-if ((parts.Length < 2)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid glyph list entry: ", line));
-}
-string name = parts[0];
-string[] unicodeList = global::DripSharp.Runtime.JavaCompat.StringSplit(parts[1], " ", 0);
-int[] codePoints = new int[unicodeList.Length];
-int index = 0;
-foreach (string hex in unicodeList) {
-codePoints[index++] = global::DripSharp.Runtime.JavaCompat.ParseInt(hex, 16);
-}
-string @string = global::DripSharp.Runtime.JavaCompat.NewString(codePoints, 0, codePoints.Length);
-string oldMapping = global::DripSharp.Runtime.JavaCompat.MapPut(this.nameToUnicode, name, @string);
-if ((oldMapping != default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("duplicate value for ", name), " -> "), parts[1]), " "), global::DripSharp.Runtime.JavaCompat.MapGet(this.nameToUnicode, name))));
-}
-bool forceOverride = ((((global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.WinAnsiEncoding.Instance.Contains(name) || global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacRomanEncoding.Instance.Contains(name)) || global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacExpertEncoding.Instance.Contains(name)) || global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.SymbolEncoding.Instance.Contains(name)) || global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.ZapfDingbatsEncoding.Instance.Contains(name));
-if (forceOverride) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.unicodeToName, @string, name);
-} else {
-global::DripSharp.Runtime.JavaCompat.MapPutIfAbsent(this.unicodeToName, @string, name);
-}
-}
-}
-}
-}
+  private void loadList(global::System.IO.Stream input) {
+    using (global::System.IO.TextReader @in = new global::System.IO.StreamReader(input,
+      global::DripSharp.Runtime.JavaStandardCharsets.ISO88591)) {
+      while (global::DripSharp.Runtime.JavaCompat.ReaderReady(@in)) {
+        string line = @in.ReadLine();
+        if (((line != default!) && !global::DripSharp.Runtime.JavaCompat.StringStartsWith(line,
+          "#"))) {
+          string[] parts = global::DripSharp.Runtime.JavaCompat.StringSplit(line, ";", 0);
+          if ((parts.Length < 2)) {
+            throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid glyph list entry: ",
+              line));
+          }
+          string name = parts[0];
+          string[] unicodeList = global::DripSharp.Runtime.JavaCompat.StringSplit(parts[1], " ", 0);
+          int[] codePoints = new int[unicodeList.Length];
+          int index = 0;
+          foreach (string hex in unicodeList) {
+            codePoints[index++] = global::DripSharp.Runtime.JavaCompat.ParseInt(hex, 16);
+          }
+          string @string = global::DripSharp.Runtime.JavaCompat.NewString(codePoints, 0,
+            codePoints.Length);
+          string oldMapping = global::DripSharp.Runtime.JavaCompat.MapPut(this.nameToUnicode, name,
+            @string);
+          if ((oldMapping != default!)) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("duplicate value for ",
+              name), " -> "), parts[1]), " "),
+              global::DripSharp.Runtime.JavaCompat.MapGet(this.nameToUnicode, name))));
+          }
+          bool forceOverride
+            = ((((global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.WinAnsiEncoding.Instance.Contains(name)
+            || global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacRomanEncoding.Instance.Contains(name))
+            || global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacExpertEncoding.Instance.Contains(name))
+            || global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.SymbolEncoding.Instance.Contains(name))
+            || global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.ZapfDingbatsEncoding.Instance.Contains(name));
+          if (forceOverride) {
+            global::DripSharp.Runtime.JavaCompat.MapPut(this.unicodeToName, @string, name);
+          } else {
+            global::DripSharp.Runtime.JavaCompat.MapPutIfAbsent(this.unicodeToName, @string, name);
+          }
+        }
+      }
+    }
+  }
 
-public string CodePointToName(int codePoint) {
-string name = global::DripSharp.Runtime.JavaCompat.MapGet(this.unicodeToName, global::DripSharp.Runtime.JavaCompat.NewString(new int[] { codePoint }, 0, 1));
-if ((name == default!)) {
-return ".notdef";
-}
-return name;
-}
+  public string CodePointToName(int codePoint) {
+    string name = global::DripSharp.Runtime.JavaCompat.MapGet(this.unicodeToName,
+      global::DripSharp.Runtime.JavaCompat.NewString(new int[] { codePoint }, 0, 1));
+    if ((name == default!)) {
+      return ".notdef";
+    }
+    return name;
+  }
 
-public string SequenceToName(string unicodeSequence) {
-string name = global::DripSharp.Runtime.JavaCompat.MapGet(this.unicodeToName, unicodeSequence);
-if ((name == default!)) {
-return ".notdef";
-}
-return name;
-}
+  public string SequenceToName(string unicodeSequence) {
+    string name = global::DripSharp.Runtime.JavaCompat.MapGet(this.unicodeToName, unicodeSequence);
+    if ((name == default!)) {
+      return ".notdef";
+    }
+    return name;
+  }
 
-public string ToUnicode(string name) {
-if ((name == default!)) {
-return default!;
-}
-string unicode = global::DripSharp.Runtime.JavaCompat.MapGet(this.nameToUnicode, name);
-if ((unicode != default!)) {
-return unicode;
-}
-unicode = global::DripSharp.Runtime.JavaCompat.MapGet(this.uniNameToUnicodeCache, name);
-if ((unicode == default!)) {
-if ((global::DripSharp.Runtime.JavaCompat.StringIndexOf(name, (int)('.')) > 0)) {
-unicode = this.ToUnicode(global::DripSharp.Runtime.JavaCompat.StringSubstring(name, 0, global::DripSharp.Runtime.JavaCompat.StringIndexOf(name, (int)('.'))));
-} else {
-if ((((name.Length == 7) && global::DripSharp.Runtime.JavaCompat.StringStartsWith(name, "uni")) || ((name.Length == 5) && global::DripSharp.Runtime.JavaCompat.StringStartsWith(name, "u")))) {
-int start = ((name.Length == 7) ? 3 : 1);
-try {
-int codePoint = global::DripSharp.Runtime.JavaCompat.ParseInt(name.Substring(start), 16);
-if (((codePoint > 55295) && (codePoint < 57344))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Unicode character name with disallowed code area: ", name)));
-} else {
-unicode = global::DripSharp.Runtime.JavaCompat.StringValueOf(unchecked((char)(unchecked((char)(codePoint)))));
-}
-} catch (global::DripSharp.Runtime.JavaNumberFormatException) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Not a number in Unicode character name: ", name)));
-}
-}
-}
-if ((unicode != default!)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.uniNameToUnicodeCache, name, unicode);
-}
-}
-return unicode;
-}
+  public string ToUnicode(string name) {
+    if ((name == default!)) {
+      return default!;
+    }
+    string unicode = global::DripSharp.Runtime.JavaCompat.MapGet(this.nameToUnicode, name);
+    if ((unicode != default!)) {
+      return unicode;
+    }
+    unicode = global::DripSharp.Runtime.JavaCompat.MapGet(this.uniNameToUnicodeCache, name);
+    if ((unicode == default!)) {
+      if ((global::DripSharp.Runtime.JavaCompat.StringIndexOf(name, (int)('.')) > 0)) {
+        unicode = this.ToUnicode(global::DripSharp.Runtime.JavaCompat.StringSubstring(name, 0,
+          global::DripSharp.Runtime.JavaCompat.StringIndexOf(name, (int)('.'))));
+      } else {
+        if ((((name.Length == 7) && global::DripSharp.Runtime.JavaCompat.StringStartsWith(name,
+          "uni")) || ((name.Length == 5)
+          && global::DripSharp.Runtime.JavaCompat.StringStartsWith(name, "u")))) {
+          int start = ((name.Length == 7) ? 3 : 1);
+          try {
+            int codePoint = global::DripSharp.Runtime.JavaCompat.ParseInt(name.Substring(start),
+              16);
+            if (((codePoint > 55295) && (codePoint < 57344))) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.LOG,
+                global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Unicode character name with disallowed code area: ",
+                name)));
+            } else {
+              unicode
+                = global::DripSharp.Runtime.JavaCompat.StringValueOf(unchecked((char)(unchecked((char)(codePoint)))));
+            }
+          } catch (global::DripSharp.Runtime.JavaNumberFormatException) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Not a number in Unicode character name: ",
+              name)));
+          }
+        }
+      }
+      if ((unicode != default!)) {
+        global::DripSharp.Runtime.JavaCompat.MapPut(this.uniNameToUnicodeCache, name, unicode);
+      }
+    }
+    return unicode;
+  }
 }

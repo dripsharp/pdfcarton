@@ -9,20 +9,22 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator.State;
 
 public class Restore : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public Restore(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+  public Restore(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-if ((context.GetGraphicsStackSize() > 1)) {
-context.RestoreGraphicsState();
-} else {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.State.EmptyGraphicsStackException();
-}
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    if ((context.GetGraphicsStackSize() > 1)) {
+      context.RestoreGraphicsState();
+    } else {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.State.EmptyGraphicsStackException();
+    }
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Restore;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Restore;
+  }
 }

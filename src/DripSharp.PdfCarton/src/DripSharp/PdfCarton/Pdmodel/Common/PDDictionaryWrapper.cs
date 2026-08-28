@@ -9,33 +9,35 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common;
 
 public class PDDictionaryWrapper : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public PDDictionaryWrapper() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDDictionaryWrapper() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDDictionaryWrapper(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-this.dictionary = dictionary;
-}
+  public PDDictionaryWrapper(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    this.dictionary = dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public override bool Equals(object obj) {
-if ((this == obj)) {
-return true;
-}
-if ((obj is global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper)) {
-return global::DripSharp.Runtime.JavaCompat.Equals(this.dictionary, ((global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper)(obj!)).dictionary);
-}
-return false;
-}
+  public override bool Equals(object obj) {
+    if ((this == obj)) {
+      return true;
+    }
+    if ((obj is global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper)) {
+      return global::DripSharp.Runtime.JavaCompat.Equals(this.dictionary,
+        ((global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper)(obj!)).dictionary);
+    }
+    return false;
+  }
 
-public override int GetHashCode() {
-return this.dictionary.GetHashCode();
-}
+  public override int GetHashCode() {
+    return this.dictionary.GetHashCode();
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

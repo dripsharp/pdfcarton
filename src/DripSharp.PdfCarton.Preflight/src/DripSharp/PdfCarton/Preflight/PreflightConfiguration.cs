@@ -9,186 +9,216 @@
 namespace DripSharp.PdfCarton.Preflight;
 
 public class PreflightConfiguration {
-public const string CatalogProcess = "catalog-process";
+  public const string CatalogProcess = "catalog-process";
 
-public const string StreamProcess = "stream-process";
+  public const string StreamProcess = "stream-process";
 
-public const string TrailerProcess = "trailer-process";
+  public const string TrailerProcess = "trailer-process";
 
-public const string XrefProcess = "xref-process";
+  public const string XrefProcess = "xref-process";
 
-public const string BookmarkProcess = "bookmark-process";
+  public const string BookmarkProcess = "bookmark-process";
 
-public const string AcroFormProcess = "acro-form-process";
+  public const string AcroFormProcess = "acro-form-process";
 
-public const string FileSpecifProcess = "file-specification-process";
+  public const string FileSpecifProcess = "file-specification-process";
 
-public const string PagesTreeProcess = "pages-tree-process";
+  public const string PagesTreeProcess = "pages-tree-process";
 
-public const string MetaDataProcess = "metadata-process";
+  public const string MetaDataProcess = "metadata-process";
 
-public const string PageProcess = "page-process";
+  public const string PageProcess = "page-process";
 
-public const string ResourcesProcess = "resources-process";
+  public const string ResourcesProcess = "resources-process";
 
-public const string ActionsProcess = "actions-process";
+  public const string ActionsProcess = "actions-process";
 
-public const string AnnotationsProcess = "annotations-process";
+  public const string AnnotationsProcess = "annotations-process";
 
-public const string GraphicProcess = "graphic-process";
+  public const string GraphicProcess = "graphic-process";
 
-public const string FontProcess = "font-process";
+  public const string FontProcess = "font-process";
 
-public const string ExtgstateProcess = "extgstate-process";
+  public const string ExtgstateProcess = "extgstate-process";
 
-public const string ShadingPatternProcess = "shading-pattern-process";
+  public const string ShadingPatternProcess = "shading-pattern-process";
 
-public const string TilingPatternProcess = "tiling-pattern-process";
+  public const string TilingPatternProcess = "tiling-pattern-process";
 
-public const string DestinationProcess = "destination-process";
+  public const string DestinationProcess = "destination-process";
 
-private bool errorOnMissingProcess = true;
+  private bool errorOnMissingProcess = true;
 
-private bool lazyValidation = false;
+  private bool lazyValidation = false;
 
-private readonly global::System.Collections.Generic.IDictionary<string, global::System.Type> processes = new global::DripSharp.Runtime.JavaLinkedHashMap<string, global::System.Type>();
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::System.Type> processes = new global::DripSharp.Runtime.JavaLinkedHashMap<string,
+    global::System.Type>();
 
-private readonly global::System.Collections.Generic.IDictionary<string, global::System.Type> innerProcesses = new global::DripSharp.Runtime.JavaLinkedHashMap<string, global::System.Type>();
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::System.Type> innerProcesses = new global::DripSharp.Runtime.JavaLinkedHashMap<string,
+    global::System.Type>();
 
-private global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory annotFact = null!;
+  private global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory annotFact
+    = null!;
 
-private global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory actionFact = null!;
+  private global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory actionFact = null!;
 
-private global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory colorSpaceHelperFact = null!;
+  private global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory colorSpaceHelperFact
+    = null!;
 
-private int maxErrors = 10000;
+  private int maxErrors = 10000;
 
-public static global::DripSharp.PdfCarton.Preflight.PreflightConfiguration CreatePdfA1BConfiguration() {
-global::DripSharp.PdfCarton.Preflight.PreflightConfiguration configuration = new global::DripSharp.PdfCarton.Preflight.PreflightConfiguration();
-configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.CatalogProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.CatalogValidationProcess));
-configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.FileSpecifProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.FileSpecificationValidationProcess));
-configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.TrailerProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.TrailerValidationProcess));
-configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.XrefProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.XRefValidationProcess));
-configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.AcroFormProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.AcroFormValidationProcess));
-configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.BookmarkProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.BookmarkValidationProcess));
-configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.PagesTreeProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.PageTreeValidationProcess));
-configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.MetaDataProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.MetadataValidationProcess));
-configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.StreamProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.StreamValidationProcess));
-configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.PageProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.SinglePageValidationProcess));
-configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ExtgstateProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.ExtGStateValidationProcess));
-configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ShadingPatternProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.ShadingPatternValidationProcess));
-configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.GraphicProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.GraphicObjectPageValidationProcess));
-configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.TilingPatternProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.TilingPatternValidationProcess));
-configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ResourcesProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.ResourcesValidationProcess));
-configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.FontProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.FontValidationProcess));
-configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ActionsProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.ActionsValidationProcess));
-configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.AnnotationsProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.AnnotationValidationProcess));
-configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.DestinationProcess, typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.DestinationValidationProcess));
-configuration.actionFact = new global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory();
-configuration.annotFact = new global::DripSharp.PdfCarton.Preflight.Annotation.Pdfa.PDFAbAnnotationFactory();
-configuration.colorSpaceHelperFact = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory();
-return configuration;
-}
+  public static global::DripSharp.PdfCarton.Preflight.PreflightConfiguration CreatePdfA1BConfiguration() {
+    global::DripSharp.PdfCarton.Preflight.PreflightConfiguration configuration
+      = new global::DripSharp.PdfCarton.Preflight.PreflightConfiguration();
+    configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.CatalogProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.CatalogValidationProcess));
+    configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.FileSpecifProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.FileSpecificationValidationProcess));
+    configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.TrailerProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.TrailerValidationProcess));
+    configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.XrefProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.XRefValidationProcess));
+    configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.AcroFormProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.AcroFormValidationProcess));
+    configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.BookmarkProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.BookmarkValidationProcess));
+    configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.PagesTreeProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.PageTreeValidationProcess));
+    configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.MetaDataProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.MetadataValidationProcess));
+    configuration.ReplaceProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.StreamProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.StreamValidationProcess));
+    configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.PageProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.SinglePageValidationProcess));
+    configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ExtgstateProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.ExtGStateValidationProcess));
+    configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ShadingPatternProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.ShadingPatternValidationProcess));
+    configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.GraphicProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.GraphicObjectPageValidationProcess));
+    configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.TilingPatternProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.TilingPatternValidationProcess));
+    configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ResourcesProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.ResourcesValidationProcess));
+    configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.FontProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.FontValidationProcess));
+    configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ActionsProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.ActionsValidationProcess));
+    configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.AnnotationsProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.AnnotationValidationProcess));
+    configuration.ReplacePageProcess(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.DestinationProcess,
+      typeof(global::DripSharp.PdfCarton.Preflight.Process.Reflect.DestinationValidationProcess));
+    configuration.actionFact
+      = new global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory();
+    configuration.annotFact
+      = new global::DripSharp.PdfCarton.Preflight.Annotation.Pdfa.PDFAbAnnotationFactory();
+    configuration.colorSpaceHelperFact
+      = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory();
+    return configuration;
+  }
 
-public virtual global::System.Collections.Generic.ICollection<string> GetProcessNames() {
-return global::DripSharp.Runtime.JavaCompat.MapKeySet(this.processes);
-}
+  public virtual global::System.Collections.Generic.ICollection<string> GetProcessNames() {
+    return global::DripSharp.Runtime.JavaCompat.MapKeySet(this.processes);
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.Process.ValidationProcess GetInstanceOfProcess(string processName) {
-global::System.Type clazz = default!;
-if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.processes, processName)) {
-clazz = global::DripSharp.Runtime.JavaCompat.MapGet(this.processes, processName);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.innerProcesses, processName)) {
-clazz = global::DripSharp.Runtime.JavaCompat.MapGet(this.innerProcesses, processName);
-} else {
-if (this.errorOnMissingProcess) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.MissingValidationProcessException(processName);
-} else {
-return new global::DripSharp.PdfCarton.Preflight.Process.EmptyValidationProcess();
-}
-}
-}
-try {
-return global::DripSharp.Runtime.JavaCompat.ConstructorInvoke<global::DripSharp.PdfCarton.Preflight.Process.ValidationProcess>(global::DripSharp.Runtime.JavaCompat.ClassGetDeclaredConstructor(clazz!));
-} catch (global::System.Exception e) when (e is global::System.MemberAccessException or global::System.MissingMethodException or global::System.Security.SecurityException or global::System.ArgumentException or global::System.Reflection.TargetInvocationException) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(global::DripSharp.Runtime.JavaCompat.Concat(processName, " can't be created"), e);
-}
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.Process.ValidationProcess GetInstanceOfProcess(string processName) {
+    global::System.Type clazz = default!;
+    if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.processes, processName)) {
+      clazz = global::DripSharp.Runtime.JavaCompat.MapGet(this.processes, processName);
+    } else {
+      if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.innerProcesses, processName)) {
+        clazz = global::DripSharp.Runtime.JavaCompat.MapGet(this.innerProcesses, processName);
+      } else {
+        if (this.errorOnMissingProcess) {
+          throw new global::DripSharp.PdfCarton.Preflight.Exception.MissingValidationProcessException(processName);
+        } else {
+          return new global::DripSharp.PdfCarton.Preflight.Process.EmptyValidationProcess();
+        }
+      }
+    }
+    try {
+      return global::DripSharp.Runtime.JavaCompat.ConstructorInvoke<global::DripSharp.PdfCarton.Preflight.Process.ValidationProcess>(global::DripSharp.Runtime.JavaCompat.ClassGetDeclaredConstructor(clazz!));
+    } catch (global::System.Exception e) when (e is global::System.MemberAccessException or global::System.MissingMethodException or global::System.Security.SecurityException or global::System.ArgumentException or global::System.Reflection.TargetInvocationException) {
+      throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(global::DripSharp.Runtime.JavaCompat.Concat(processName,
+        " can't be created"), e);
+    }
+  }
 
-public virtual void ReplaceProcess(string processName, global::System.Type process) {
-if ((process == default!)) {
-this.RemoveProcess(processName);
-} else {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.processes, processName, process);
-}
-}
+  public virtual void ReplaceProcess(string processName, global::System.Type process) {
+    if ((process == default!)) {
+      this.RemoveProcess(processName);
+    } else {
+      global::DripSharp.Runtime.JavaCompat.MapPut(this.processes, processName, process);
+    }
+  }
 
-public virtual void RemoveProcess(string processName) {
-global::DripSharp.Runtime.JavaCompat.MapRemove(this.processes, processName);
-}
+  public virtual void RemoveProcess(string processName) {
+    global::DripSharp.Runtime.JavaCompat.MapRemove(this.processes, processName);
+  }
 
-public virtual global::System.Collections.Generic.ICollection<string> GetPageValidationProcessNames() {
-return global::DripSharp.Runtime.JavaCompat.MapKeySet(this.innerProcesses);
-}
+  public virtual global::System.Collections.Generic.ICollection<string> GetPageValidationProcessNames() {
+    return global::DripSharp.Runtime.JavaCompat.MapKeySet(this.innerProcesses);
+  }
 
-public virtual void ReplacePageProcess(string processName, global::System.Type process) {
-if ((process == default!)) {
-this.RemovePageProcess(processName);
-} else {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.innerProcesses, processName, process);
-}
-}
+  public virtual void ReplacePageProcess(string processName, global::System.Type process) {
+    if ((process == default!)) {
+      this.RemovePageProcess(processName);
+    } else {
+      global::DripSharp.Runtime.JavaCompat.MapPut(this.innerProcesses, processName, process);
+    }
+  }
 
-public virtual void RemovePageProcess(string processName) {
-global::DripSharp.Runtime.JavaCompat.MapRemove(this.innerProcesses, processName);
-}
+  public virtual void RemovePageProcess(string processName) {
+    global::DripSharp.Runtime.JavaCompat.MapRemove(this.innerProcesses, processName);
+  }
 
-public virtual bool IsErrorOnMissingProcess() {
-return this.errorOnMissingProcess;
-}
+  public virtual bool IsErrorOnMissingProcess() {
+    return this.errorOnMissingProcess;
+  }
 
-public virtual void SetErrorOnMissingProcess(bool errorOnMissingProcess) {
-this.errorOnMissingProcess = errorOnMissingProcess;
-}
+  public virtual void SetErrorOnMissingProcess(bool errorOnMissingProcess) {
+    this.errorOnMissingProcess = errorOnMissingProcess;
+  }
 
-public virtual bool IsLazyValidation() {
-return this.lazyValidation;
-}
+  public virtual bool IsLazyValidation() {
+    return this.lazyValidation;
+  }
 
-public virtual void SetLazyValidation(bool lazyValidation) {
-this.lazyValidation = lazyValidation;
-}
+  public virtual void SetLazyValidation(bool lazyValidation) {
+    this.lazyValidation = lazyValidation;
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory GetAnnotFact() {
-return this.annotFact;
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory GetAnnotFact() {
+    return this.annotFact;
+  }
 
-public virtual void SetAnnotFact(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory annotFact) {
-this.annotFact = annotFact;
-}
+  public virtual void SetAnnotFact(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory annotFact) {
+    this.annotFact = annotFact;
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory GetActionFact() {
-return this.actionFact;
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory GetActionFact() {
+    return this.actionFact;
+  }
 
-public virtual void SetActionFact(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory actionFact) {
-this.actionFact = actionFact;
-}
+  public virtual void SetActionFact(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory actionFact) {
+    this.actionFact = actionFact;
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory GetColorSpaceHelperFact() {
-return this.colorSpaceHelperFact;
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory GetColorSpaceHelperFact() {
+    return this.colorSpaceHelperFact;
+  }
 
-public virtual void SetColorSpaceHelperFact(global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory colorSpaceHelperFact) {
-this.colorSpaceHelperFact = colorSpaceHelperFact;
-}
+  public virtual void SetColorSpaceHelperFact(global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory colorSpaceHelperFact) {
+    this.colorSpaceHelperFact = colorSpaceHelperFact;
+  }
 
-public virtual int GetMaxErrors() {
-return this.maxErrors;
-}
+  public virtual int GetMaxErrors() {
+    return this.maxErrors;
+  }
 
-public virtual void SetMaxErrors(int maxErrors) {
-this.maxErrors = maxErrors;
-}
+  public virtual void SetMaxErrors(int maxErrors) {
+    this.maxErrors = maxErrors;
+  }
 }

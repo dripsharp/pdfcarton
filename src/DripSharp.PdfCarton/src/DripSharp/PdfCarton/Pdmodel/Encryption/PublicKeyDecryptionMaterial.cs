@@ -8,52 +8,65 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
-public class PublicKeyDecryptionMaterial : global::DripSharp.PdfCarton.Pdmodel.Encryption.DecryptionMaterial {
-private readonly string password = null!;
+public class PublicKeyDecryptionMaterial
+: global::DripSharp.PdfCarton.Pdmodel.Encryption.DecryptionMaterial {
+  private readonly string password = null!;
 
-private readonly global::System.Security.Cryptography.X509Certificates.X509Certificate2Collection keyStore = null!;
+  private readonly global::System.Security.Cryptography.X509Certificates.X509Certificate2Collection keyStore
+    = null!;
 
-private readonly string alias = null!;
+  private readonly string alias = null!;
 
-public PublicKeyDecryptionMaterial(global::System.Security.Cryptography.X509Certificates.X509Certificate2Collection keystore, string a, string pwd) {
-this.keyStore = keystore;
-this.alias = a;
-this.password = pwd;
-}
+  public PublicKeyDecryptionMaterial(global::System.Security.Cryptography.X509Certificates.X509Certificate2Collection keystore,
+    string a, string pwd) {
+    this.keyStore = keystore;
+    this.alias = a;
+    this.password = pwd;
+  }
 
-public virtual global::System.Security.Cryptography.X509Certificates.X509Certificate2 GetCertificate() {
-if ((global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreSize(this.keyStore) == 1)) {
-global::DripSharp.Runtime.JavaIterator<string> aliases = global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreAliases(this.keyStore);
-string keyStoreAlias = aliases.Next();
-return (global::System.Security.Cryptography.X509Certificates.X509Certificate2)(global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreGetCertificate(this.keyStore, keyStoreAlias)!);
-} else {
-if (global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreContainsAlias(this.keyStore, this.alias)) {
-return (global::System.Security.Cryptography.X509Certificates.X509Certificate2)(global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreGetCertificate(this.keyStore, this.alias)!);
-}
-throw new global::System.Security.Cryptography.CryptographicException("the keystore does not contain the given alias");
-}
-}
+  public virtual global::System.Security.Cryptography.X509Certificates.X509Certificate2 GetCertificate() {
+    if ((global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreSize(this.keyStore) == 1)) {
+      global::DripSharp.Runtime.JavaIterator<string> aliases
+        = global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreAliases(this.keyStore);
+      string keyStoreAlias = aliases.Next();
+      return (global::System.Security.Cryptography.X509Certificates.X509Certificate2)(global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreGetCertificate(this.keyStore,
+        keyStoreAlias)!);
+    } else {
+      if (global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreContainsAlias(this.keyStore,
+        this.alias)) {
+        return (global::System.Security.Cryptography.X509Certificates.X509Certificate2)(global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreGetCertificate(this.keyStore,
+          this.alias)!);
+      }
+      throw new global::System.Security.Cryptography.CryptographicException("the keystore does not contain the given alias");
+    }
+  }
 
-public virtual string GetPassword() {
-return this.password;
-}
+  public virtual string GetPassword() {
+    return this.password;
+  }
 
-public virtual object GetPrivateKey() {
-try {
-if ((global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreSize(this.keyStore) == 1)) {
-global::DripSharp.Runtime.JavaIterator<string> aliases = global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreAliases(this.keyStore);
-string keyStoreAlias = aliases.Next();
-return global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreGetKey(this.keyStore, keyStoreAlias, this.password.ToCharArray());
-} else {
-if (global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreContainsAlias(this.keyStore, this.alias)) {
-return global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreGetKey(this.keyStore, this.alias, this.password.ToCharArray());
-}
-throw new global::System.Security.Cryptography.CryptographicException("the keystore does not contain the given alias");
-}
-} catch (global::DripSharp.Runtime.JavaUnrecoverableKeyException ex) {
-throw new global::System.Security.Cryptography.CryptographicException("the private key is not recoverable", ex);
-} catch (global::DripSharp.Runtime.JavaNoSuchAlgorithmException ex) {
-throw new global::System.Security.Cryptography.CryptographicException("the algorithm necessary to recover the key is not available", ex);
-}
-}
+  public virtual object GetPrivateKey() {
+    try {
+      if ((global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreSize(this.keyStore) == 1)) {
+        global::DripSharp.Runtime.JavaIterator<string> aliases
+          = global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreAliases(this.keyStore);
+        string keyStoreAlias = aliases.Next();
+        return global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreGetKey(this.keyStore,
+          keyStoreAlias, this.password.ToCharArray());
+      } else {
+        if (global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreContainsAlias(this.keyStore,
+          this.alias)) {
+          return global::DripSharp.Runtime.PdfCartonCrypto.KeyStoreGetKey(this.keyStore, this.alias,
+            this.password.ToCharArray());
+        }
+        throw new global::System.Security.Cryptography.CryptographicException("the keystore does not contain the given alias");
+      }
+    } catch (global::DripSharp.Runtime.JavaUnrecoverableKeyException ex) {
+      throw new global::System.Security.Cryptography.CryptographicException("the private key is not recoverable",
+        ex);
+    } catch (global::DripSharp.Runtime.JavaNoSuchAlgorithmException ex) {
+      throw new global::System.Security.Cryptography.CryptographicException("the algorithm necessary to recover the key is not available",
+        ex);
+    }
+  }
 }

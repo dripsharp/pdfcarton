@@ -8,8 +8,12 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
-internal class Type6ShadingContext : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PatchMeshesShadingContext {
-internal Type6ShadingContext(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType6 shading, global::DripSharp.Runtime.JavaColorModel colorModel, global::SkiaSharp.SKMatrix xform, global::DripSharp.PdfCarton.Util.Matrix matrix, global::SkiaSharp.SKRectI deviceBounds) : base(shading, colorModel, xform, matrix, deviceBounds, 12) {
+internal class Type6ShadingContext
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PatchMeshesShadingContext {
+  internal Type6ShadingContext(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType6 shading,
+    global::DripSharp.Runtime.JavaColorModel colorModel, global::SkiaSharp.SKMatrix xform,
+    global::DripSharp.PdfCarton.Util.Matrix matrix, global::SkiaSharp.SKRectI deviceBounds)
+  : base(shading, colorModel, xform, matrix, deviceBounds, 12) {
 
-}
+  }
 }

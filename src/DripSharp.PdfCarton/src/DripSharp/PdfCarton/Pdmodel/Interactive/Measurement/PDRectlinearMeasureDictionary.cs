@@ -8,167 +8,194 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Measurement;
 
-public class PDRectlinearMeasureDictionary : global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary {
-public const string Subtype = "RL";
+public class PDRectlinearMeasureDictionary
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary {
+  public const string Subtype = "RL";
 
-public PDRectlinearMeasureDictionary() {
-this.SetSubtype(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDRectlinearMeasureDictionary.Subtype);
-}
+  public PDRectlinearMeasureDictionary() {
+    this.SetSubtype(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDRectlinearMeasureDictionary.Subtype);
+  }
 
-public PDRectlinearMeasureDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : base(dictionary) {
+  public PDRectlinearMeasureDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary)
+  : base(dictionary) {
 
-}
+  }
 
-public virtual string GetScaleRatio() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.R);
-}
+  public virtual string GetScaleRatio() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.R);
+  }
 
-public virtual void SetScaleRatio(string scaleRatio) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.R, scaleRatio);
-}
+  public virtual void SetScaleRatio(string scaleRatio) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.R, scaleRatio);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] GetChangeXs() {
-global::DripSharp.PdfCarton.Cos.COSArray x = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.X);
-if ((x != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[x.Size()];
-for (int i = 0; (i < x.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dic = (global::DripSharp.PdfCarton.Cos.COSDictionary)(x.Get(i)!);
-retval[i] = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary(dic);
-}
-return retval;
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] GetChangeXs() {
+    global::DripSharp.PdfCarton.Cos.COSArray x
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.X);
+    if ((x != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] retval
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[x.Size()];
+      for (int i = 0; (i < x.Size()); i++) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary dic
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(x.Get(i)!);
+        retval[i]
+          = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary(dic);
+      }
+      return retval;
+    }
+    return default!;
+  }
 
-public virtual void SetChangeXs(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] changeXs) {
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary changeX in changeXs) {
-array.Add(changeX);
-}
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.X, array);
-}
+  public virtual void SetChangeXs(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] changeXs) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary changeX in changeXs) {
+      array.Add(changeX);
+    }
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.X, array);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] GetChangeYs() {
-global::DripSharp.PdfCarton.Cos.COSArray y = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Y);
-if ((y != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[y.Size()];
-for (int i = 0; (i < y.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dic = (global::DripSharp.PdfCarton.Cos.COSDictionary)(y.Get(i)!);
-retval[i] = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary(dic);
-}
-return retval;
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] GetChangeYs() {
+    global::DripSharp.PdfCarton.Cos.COSArray y
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Y);
+    if ((y != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] retval
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[y.Size()];
+      for (int i = 0; (i < y.Size()); i++) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary dic
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(y.Get(i)!);
+        retval[i]
+          = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary(dic);
+      }
+      return retval;
+    }
+    return default!;
+  }
 
-public virtual void SetChangeYs(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] changeYs) {
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary changeY in changeYs) {
-array.Add(changeY);
-}
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Y, array);
-}
+  public virtual void SetChangeYs(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] changeYs) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary changeY in changeYs) {
+      array.Add(changeY);
+    }
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Y, array);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] GetDistances() {
-global::DripSharp.PdfCarton.Cos.COSArray d = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.D);
-if ((d != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[d.Size()];
-for (int i = 0; (i < d.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dic = (global::DripSharp.PdfCarton.Cos.COSDictionary)(d.Get(i)!);
-retval[i] = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary(dic);
-}
-return retval;
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] GetDistances() {
+    global::DripSharp.PdfCarton.Cos.COSArray d
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.D);
+    if ((d != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] retval
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[d.Size()];
+      for (int i = 0; (i < d.Size()); i++) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary dic
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(d.Get(i)!);
+        retval[i]
+          = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary(dic);
+      }
+      return retval;
+    }
+    return default!;
+  }
 
-public virtual void SetDistances(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] distances) {
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary distance in distances) {
-array.Add(distance);
-}
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, array);
-}
+  public virtual void SetDistances(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] distances) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary distance in distances) {
+      array.Add(distance);
+    }
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, array);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] GetAreas() {
-global::DripSharp.PdfCarton.Cos.COSArray a = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.A);
-if ((a != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[a.Size()];
-for (int i = 0; (i < a.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dic = (global::DripSharp.PdfCarton.Cos.COSDictionary)(a.Get(i)!);
-retval[i] = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary(dic);
-}
-return retval;
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] GetAreas() {
+    global::DripSharp.PdfCarton.Cos.COSArray a
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.A);
+    if ((a != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] retval
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[a.Size()];
+      for (int i = 0; (i < a.Size()); i++) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary dic
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(a.Get(i)!);
+        retval[i]
+          = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary(dic);
+      }
+      return retval;
+    }
+    return default!;
+  }
 
-public virtual void SetAreas(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] areas) {
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary area in areas) {
-array.Add(area);
-}
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.A, array);
-}
+  public virtual void SetAreas(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] areas) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary area in areas) {
+      array.Add(area);
+    }
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.A, array);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] GetAngles() {
-global::DripSharp.PdfCarton.Cos.COSArray t = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.T);
-if ((t != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[t.Size()];
-for (int i = 0; (i < t.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dic = (global::DripSharp.PdfCarton.Cos.COSDictionary)(t.Get(i)!);
-retval[i] = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary(dic);
-}
-return retval;
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] GetAngles() {
+    global::DripSharp.PdfCarton.Cos.COSArray t
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.T);
+    if ((t != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] retval
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[t.Size()];
+      for (int i = 0; (i < t.Size()); i++) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary dic
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(t.Get(i)!);
+        retval[i]
+          = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary(dic);
+      }
+      return retval;
+    }
+    return default!;
+  }
 
-public virtual void SetAngles(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] angles) {
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary angle in angles) {
-array.Add(angle);
-}
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.T, array);
-}
+  public virtual void SetAngles(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] angles) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary angle in angles) {
+      array.Add(angle);
+    }
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.T, array);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] GetLineSloaps() {
-global::DripSharp.PdfCarton.Cos.COSArray s = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.S);
-if ((s != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[s.Size()];
-for (int i = 0; (i < s.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dic = (global::DripSharp.PdfCarton.Cos.COSDictionary)(s.Get(i)!);
-retval[i] = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary(dic);
-}
-return retval;
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] GetLineSloaps() {
+    global::DripSharp.PdfCarton.Cos.COSArray s
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.S);
+    if ((s != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] retval
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[s.Size()];
+      for (int i = 0; (i < s.Size()); i++) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary dic
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(s.Get(i)!);
+        retval[i]
+          = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary(dic);
+      }
+      return retval;
+    }
+    return default!;
+  }
 
-public virtual void SetLineSloaps(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] lineSloaps) {
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary lineSloap in lineSloaps) {
-array.Add(lineSloap);
-}
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.S, array);
-}
+  public virtual void SetLineSloaps(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary[] lineSloaps) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary lineSloap in lineSloaps) {
+      array.Add(lineSloap);
+    }
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.S, array);
+  }
 
-public virtual float[] GetCoordSystemOrigin() {
-global::DripSharp.PdfCarton.Cos.COSArray o = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.O);
-return ((o != default!) ? o.ToFloatArray() : (float[])(default!));
-}
+  public virtual float[] GetCoordSystemOrigin() {
+    global::DripSharp.PdfCarton.Cos.COSArray o
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.O);
+    return ((o != default!) ? o.ToFloatArray() : (float[])(default!));
+  }
 
-public virtual void SetCoordSystemOrigin(float[] coordSystemOrigin) {
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-array.SetFloatArray(coordSystemOrigin);
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.O, array);
-}
+  public virtual void SetCoordSystemOrigin(float[] coordSystemOrigin) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    array.SetFloatArray(coordSystemOrigin);
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.O, array);
+  }
 
-public virtual float GetCYX() {
-return this.GetCOSObject().GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Cyx);
-}
+  public virtual float GetCYX() {
+    return this.GetCOSObject().GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Cyx);
+  }
 
-public virtual void SetCYX(float cyx) {
-this.GetCOSObject().SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Cyx, cyx);
-}
+  public virtual void SetCYX(float cyx) {
+    this.GetCOSObject().SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Cyx, cyx);
+  }
 }

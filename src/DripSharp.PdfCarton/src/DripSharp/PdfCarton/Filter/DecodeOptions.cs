@@ -9,108 +9,110 @@
 namespace DripSharp.PdfCarton.Filter;
 
 public class DecodeOptions {
-public static readonly global::DripSharp.PdfCarton.Filter.DecodeOptions Default = new global::DripSharp.PdfCarton.Filter.DecodeOptions.FinalDecodeOptions(true);
+  public static readonly global::DripSharp.PdfCarton.Filter.DecodeOptions Default
+    = new global::DripSharp.PdfCarton.Filter.DecodeOptions.FinalDecodeOptions(true);
 
-private global::SkiaSharp.SKRectI sourceRegion = default!;
+  private global::SkiaSharp.SKRectI sourceRegion = default!;
 
-private int subsamplingX = 1;
+  private int subsamplingX = 1;
 
-private int subsamplingY = 1;
+  private int subsamplingY = 1;
 
-private int subsamplingOffsetX = 0;
+  private int subsamplingOffsetX = 0;
 
-private int subsamplingOffsetY = 0;
+  private int subsamplingOffsetY = 0;
 
-private bool filterSubsampled = false;
+  private bool filterSubsampled = false;
 
-public DecodeOptions() {}
+  public DecodeOptions() {}
 
-public DecodeOptions(global::SkiaSharp.SKRectI sourceRegion) {
-this.sourceRegion = sourceRegion;
-}
+  public DecodeOptions(global::SkiaSharp.SKRectI sourceRegion) {
+    this.sourceRegion = sourceRegion;
+  }
 
-public DecodeOptions(int x, int y, int width, int height) : this(global::DripSharp.Runtime.PdfCartonFontCompat.RectangleI(x, y, width, height)) {
+  public DecodeOptions(int x, int y, int width, int height)
+  : this(global::DripSharp.Runtime.PdfCartonFontCompat.RectangleI(x, y, width, height)) {
 
-}
+  }
 
-public DecodeOptions(int subsampling) {
-this.subsamplingX = subsampling;
-this.subsamplingY = subsampling;
-}
+  public DecodeOptions(int subsampling) {
+    this.subsamplingX = subsampling;
+    this.subsamplingY = subsampling;
+  }
 
-public virtual global::SkiaSharp.SKRectI GetSourceRegion() {
-return this.sourceRegion;
-}
+  public virtual global::SkiaSharp.SKRectI GetSourceRegion() {
+    return this.sourceRegion;
+  }
 
-public virtual void SetSourceRegion(global::SkiaSharp.SKRectI sourceRegion) {
-this.sourceRegion = sourceRegion;
-}
+  public virtual void SetSourceRegion(global::SkiaSharp.SKRectI sourceRegion) {
+    this.sourceRegion = sourceRegion;
+  }
 
-public virtual int GetSubsamplingX() {
-return this.subsamplingX;
-}
+  public virtual int GetSubsamplingX() {
+    return this.subsamplingX;
+  }
 
-public virtual void SetSubsamplingX(int ssX) {
-this.subsamplingX = ssX;
-}
+  public virtual void SetSubsamplingX(int ssX) {
+    this.subsamplingX = ssX;
+  }
 
-public virtual int GetSubsamplingY() {
-return this.subsamplingY;
-}
+  public virtual int GetSubsamplingY() {
+    return this.subsamplingY;
+  }
 
-public virtual void SetSubsamplingY(int ssY) {
-this.subsamplingY = ssY;
-}
+  public virtual void SetSubsamplingY(int ssY) {
+    this.subsamplingY = ssY;
+  }
 
-public virtual int GetSubsamplingOffsetX() {
-return this.subsamplingOffsetX;
-}
+  public virtual int GetSubsamplingOffsetX() {
+    return this.subsamplingOffsetX;
+  }
 
-public virtual void SetSubsamplingOffsetX(int ssOffsetX) {
-this.subsamplingOffsetX = ssOffsetX;
-}
+  public virtual void SetSubsamplingOffsetX(int ssOffsetX) {
+    this.subsamplingOffsetX = ssOffsetX;
+  }
 
-public virtual int GetSubsamplingOffsetY() {
-return this.subsamplingOffsetY;
-}
+  public virtual int GetSubsamplingOffsetY() {
+    return this.subsamplingOffsetY;
+  }
 
-public virtual void SetSubsamplingOffsetY(int ssOffsetY) {
-this.subsamplingOffsetY = ssOffsetY;
-}
+  public virtual void SetSubsamplingOffsetY(int ssOffsetY) {
+    this.subsamplingOffsetY = ssOffsetY;
+  }
 
-public virtual bool IsFilterSubsampled() {
-return this.filterSubsampled;
-}
+  public virtual bool IsFilterSubsampled() {
+    return this.filterSubsampled;
+  }
 
-internal virtual void setFilterSubsampled(bool filterSubsampled) {
-this.filterSubsampled = filterSubsampled;
-}
+  internal virtual void setFilterSubsampled(bool filterSubsampled) {
+    this.filterSubsampled = filterSubsampled;
+  }
 
-internal class FinalDecodeOptions : global::DripSharp.PdfCarton.Filter.DecodeOptions {
-internal FinalDecodeOptions(bool filterSubsampled) {
-base.setFilterSubsampled(filterSubsampled);
-}
+  internal class FinalDecodeOptions : global::DripSharp.PdfCarton.Filter.DecodeOptions {
+    internal FinalDecodeOptions(bool filterSubsampled) {
+      base.setFilterSubsampled(filterSubsampled);
+    }
 
-public override void SetSourceRegion(global::SkiaSharp.SKRectI sourceRegion) {
-throw new global::System.NotSupportedException("This instance may not be modified.");
-}
+    public override void SetSourceRegion(global::SkiaSharp.SKRectI sourceRegion) {
+      throw new global::System.NotSupportedException("This instance may not be modified.");
+    }
 
-public override void SetSubsamplingX(int ssX) {
-throw new global::System.NotSupportedException("This instance may not be modified.");
-}
+    public override void SetSubsamplingX(int ssX) {
+      throw new global::System.NotSupportedException("This instance may not be modified.");
+    }
 
-public override void SetSubsamplingY(int ssY) {
-throw new global::System.NotSupportedException("This instance may not be modified.");
-}
+    public override void SetSubsamplingY(int ssY) {
+      throw new global::System.NotSupportedException("This instance may not be modified.");
+    }
 
-public override void SetSubsamplingOffsetX(int ssOffsetX) {
-throw new global::System.NotSupportedException("This instance may not be modified.");
-}
+    public override void SetSubsamplingOffsetX(int ssOffsetX) {
+      throw new global::System.NotSupportedException("This instance may not be modified.");
+    }
 
-public override void SetSubsamplingOffsetY(int ssOffsetY) {
-throw new global::System.NotSupportedException("This instance may not be modified.");
-}
+    public override void SetSubsamplingOffsetY(int ssOffsetY) {
+      throw new global::System.NotSupportedException("This instance may not be modified.");
+    }
 
-internal override void setFilterSubsampled(bool filterSubsampled) {}
-}
+    internal override void setFilterSubsampled(bool filterSubsampled) {}
+  }
 }

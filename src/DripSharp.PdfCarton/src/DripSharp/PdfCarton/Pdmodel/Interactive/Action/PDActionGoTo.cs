@@ -9,31 +9,33 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDActionGoTo : global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction {
-public const string SubType = "GoTo";
+  public const string SubType = "GoTo";
 
-public PDActionGoTo() {
-this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo.SubType);
-}
+  public PDActionGoTo() {
+    this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo.SubType);
+  }
 
-public PDActionGoTo(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public PDActionGoTo(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination GetDestination() {
-return global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination.Create(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.D));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination GetDestination() {
+    return global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination.Create(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.D));
+  }
 
-public virtual void SetDestination(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination d) {
-if ((d is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pageDest = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(d!);
-global::DripSharp.PdfCarton.Cos.COSArray destArray = ((global::DripSharp.PdfCarton.Cos.COSArray)(pageDest.GetCOSObject()));
-if ((destArray.Size() >= 1)) {
-global::DripSharp.PdfCarton.Cos.COSBase page = destArray.GetObject(0);
-if (!((page is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
-throw new global::System.ArgumentException("Destination of a GoTo action must be a page dictionary object");
-}
-}
-}
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, d);
-}
+  public virtual void SetDestination(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination d) {
+    if ((d is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pageDest
+        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(d!);
+      global::DripSharp.PdfCarton.Cos.COSArray destArray
+        = ((global::DripSharp.PdfCarton.Cos.COSArray)(pageDest.GetCOSObject()));
+      if ((destArray.Size() >= 1)) {
+        global::DripSharp.PdfCarton.Cos.COSBase page = destArray.GetObject(0);
+        if (!((page is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
+          throw new global::System.ArgumentException("Destination of a GoTo action must be a page dictionary object");
+        }
+      }
+    }
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, d);
+  }
 }

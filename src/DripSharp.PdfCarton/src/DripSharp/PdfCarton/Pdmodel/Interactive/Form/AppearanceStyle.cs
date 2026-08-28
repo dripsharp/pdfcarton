@@ -9,34 +9,34 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 internal class AppearanceStyle {
-private global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = null!;
 
-private float fontSize = 12.0F;
+  private float fontSize = 12.0F;
 
-private float leading = 14.4F;
+  private float leading = 14.4F;
 
-internal virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDFont getFont() {
-return this.font;
-}
+  internal virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDFont getFont() {
+    return this.font;
+  }
 
-internal virtual void setFont(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) {
-this.font = font;
-}
+  internal virtual void setFont(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) {
+    this.font = font;
+  }
 
-internal virtual float getFontSize() {
-return this.fontSize;
-}
+  internal virtual float getFontSize() {
+    return this.fontSize;
+  }
 
-internal virtual void setFontSize(float fontSize) {
-this.fontSize = fontSize;
-this.leading = (fontSize * 1.2F);
-}
+  internal virtual void setFontSize(float fontSize) {
+    this.fontSize = fontSize;
+    this.leading = (fontSize * 1.2F);
+  }
 
-internal virtual float getLeading() {
-return this.leading;
-}
+  internal virtual float getLeading() {
+    return this.leading;
+  }
 
-internal virtual void setLeading(float leading) {
-this.leading = leading;
-}
+  internal virtual void setLeading(float leading) {
+    this.leading = leading;
+  }
 }

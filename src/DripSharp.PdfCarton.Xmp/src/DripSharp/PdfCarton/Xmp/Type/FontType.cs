@@ -8,33 +8,34 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/sType/Font#", "stFnt")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/sType/Font#",
+  "stFnt")]
 public class FontType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Seq")]
-public const string ChildFontFiles = "childFontFiles";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Seq")]
+  public const string ChildFontFiles = "childFontFiles";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Boolean", "Simple")]
-public const string Composite = "composite";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Boolean", "Simple")]
+  public const string Composite = "composite";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string FontFace = "fontFace";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string FontFace = "fontFace";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string FontFamily = "fontFamily";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string FontFamily = "fontFamily";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string FontFileName = "fontFileName";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string FontFileName = "fontFileName";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string FontName = "fontName";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string FontName = "fontName";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
-public const string __field_FontType = "fontType";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
+  public const string __field_FontType = "fontType";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string VersionString = "versionString";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string VersionString = "versionString";
 
-public FontType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+  public FontType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
-}
+  }
 }

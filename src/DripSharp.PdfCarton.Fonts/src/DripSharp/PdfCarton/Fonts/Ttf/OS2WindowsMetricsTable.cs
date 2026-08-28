@@ -9,494 +9,501 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class OS2WindowsMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public const int WeightClassThin = 100;
+  public const int WeightClassThin = 100;
 
-public const int WeightClassUltraLight = 200;
+  public const int WeightClassUltraLight = 200;
 
-public const int WeightClassLight = 300;
+  public const int WeightClassLight = 300;
 
-public const int WeightClassNormal = 400;
+  public const int WeightClassNormal = 400;
 
-public const int WeightClassMedium = 500;
+  public const int WeightClassMedium = 500;
 
-public const int WeightClassSemiBold = 600;
+  public const int WeightClassSemiBold = 600;
 
-public const int WeightClassBold = 700;
+  public const int WeightClassBold = 700;
 
-public const int WeightClassExtraBold = 800;
+  public const int WeightClassExtraBold = 800;
 
-public const int WeightClassBlack = 900;
+  public const int WeightClassBlack = 900;
 
-public const int WidthClassUltraCondensed = 1;
+  public const int WidthClassUltraCondensed = 1;
 
-public const int WidthClassExtraCondensed = 2;
+  public const int WidthClassExtraCondensed = 2;
 
-public const int WidthClassCondensed = 3;
+  public const int WidthClassCondensed = 3;
 
-public const int WidthClassSemiCondensed = 4;
+  public const int WidthClassSemiCondensed = 4;
 
-public const int WidthClassMedium = 5;
+  public const int WidthClassMedium = 5;
 
-public const int WidthClassSemiExpanded = 6;
+  public const int WidthClassSemiExpanded = 6;
 
-public const int WidthClassExpanded = 7;
+  public const int WidthClassExpanded = 7;
 
-public const int WidthClassExtraExpanded = 8;
+  public const int WidthClassExtraExpanded = 8;
 
-public const int WidthClassUltraExpanded = 9;
+  public const int WidthClassUltraExpanded = 9;
 
-public const int FamilyClassNoClassification = 0;
+  public const int FamilyClassNoClassification = 0;
 
-public const int FamilyClassOldstyleSerifs = 1;
+  public const int FamilyClassOldstyleSerifs = 1;
 
-public const int FamilyClassTransitionalSerifs = 2;
+  public const int FamilyClassTransitionalSerifs = 2;
 
-public const int FamilyClassModernSerifs = 3;
+  public const int FamilyClassModernSerifs = 3;
 
-public const int FamilyClassClaredonSerifs = 4;
+  public const int FamilyClassClaredonSerifs = 4;
 
-public const int FamilyClassSlabSerifs = 5;
+  public const int FamilyClassSlabSerifs = 5;
 
-public const int FamilyClassFreeformSerifs = 7;
+  public const int FamilyClassFreeformSerifs = 7;
 
-public const int FamilyClassSansSerif = 8;
+  public const int FamilyClassSansSerif = 8;
 
-public const int FamilyClassOrnamentals = 9;
+  public const int FamilyClassOrnamentals = 9;
 
-public const int FamilyClassScripts = 10;
+  public const int FamilyClassScripts = 10;
 
-public const int FamilyClassSymbolic = 12;
+  public const int FamilyClassSymbolic = 12;
 
-public const short FstypeRestricted = unchecked((short)(2));
+  public const short FstypeRestricted = unchecked((short)(2));
 
-public const short FstypePreviewAndPrint = unchecked((short)(4));
+  public const short FstypePreviewAndPrint = unchecked((short)(4));
 
-public const short FstypeEditible = unchecked((short)(8));
+  public const short FstypeEditible = unchecked((short)(8));
 
-public const short FstypeNoSubsetting = unchecked((short)(256));
+  public const short FstypeNoSubsetting = unchecked((short)(256));
 
-public const short FstypeBitmapOnly = unchecked((short)(512));
+  public const short FstypeBitmapOnly = unchecked((short)(512));
 
-private int version = default;
+  private int version = default;
 
-private short averageCharWidth = default;
+  private short averageCharWidth = default;
 
-private int weightClass = default;
+  private int weightClass = default;
 
-private int widthClass = default;
+  private int widthClass = default;
 
-private short fsType = default;
+  private short fsType = default;
 
-private short subscriptXSize = default;
+  private short subscriptXSize = default;
 
-private short subscriptYSize = default;
+  private short subscriptYSize = default;
 
-private short subscriptXOffset = default;
+  private short subscriptXOffset = default;
 
-private short subscriptYOffset = default;
+  private short subscriptYOffset = default;
 
-private short superscriptXSize = default;
+  private short superscriptXSize = default;
 
-private short superscriptYSize = default;
+  private short superscriptYSize = default;
 
-private short superscriptXOffset = default;
+  private short superscriptXOffset = default;
 
-private short superscriptYOffset = default;
+  private short superscriptYOffset = default;
 
-private short strikeoutSize = default;
+  private short strikeoutSize = default;
 
-private short strikeoutPosition = default;
+  private short strikeoutPosition = default;
 
-private int familyClass = default;
+  private int familyClass = default;
 
-private sbyte[] panose = new sbyte[10];
+  private sbyte[] panose = new sbyte[10];
 
-private long unicodeRange1 = default;
+  private long unicodeRange1 = default;
 
-private long unicodeRange2 = default;
+  private long unicodeRange2 = default;
 
-private long unicodeRange3 = default;
+  private long unicodeRange3 = default;
 
-private long unicodeRange4 = default;
+  private long unicodeRange4 = default;
 
-private string achVendId = "XXXX";
+  private string achVendId = "XXXX";
 
-private int fsSelection = default;
+  private int fsSelection = default;
 
-private int firstCharIndex = default;
+  private int firstCharIndex = default;
 
-private int lastCharIndex = default;
+  private int lastCharIndex = default;
 
-private int typoAscender = default;
+  private int typoAscender = default;
 
-private int typoDescender = default;
+  private int typoDescender = default;
 
-private int typoLineGap = default;
+  private int typoLineGap = default;
 
-private int winAscent = default;
+  private int winAscent = default;
 
-private int winDescent = default;
+  private int winDescent = default;
 
-private long codePageRange1 = 0;
+  private long codePageRange1 = 0;
 
-private long codePageRange2 = 0;
+  private long codePageRange2 = 0;
 
-private int sxHeight = default;
+  private int sxHeight = default;
 
-private int sCapHeight = default;
+  private int sCapHeight = default;
 
-private int usDefaultChar = default;
+  private int usDefaultChar = default;
 
-private int usBreakChar = default;
+  private int usBreakChar = default;
 
-private int usMaxContext = default;
+  private int usMaxContext = default;
 
-internal OS2WindowsMetricsTable() : base() {
+  internal OS2WindowsMetricsTable() : base() {
 
-}
+  }
 
-public virtual string GetAchVendId() {
-return this.achVendId;
-}
+  public virtual string GetAchVendId() {
+    return this.achVendId;
+  }
 
-public virtual void SetAchVendId(string achVendIdValue) {
-this.achVendId = achVendIdValue;
-}
+  public virtual void SetAchVendId(string achVendIdValue) {
+    this.achVendId = achVendIdValue;
+  }
 
-public virtual short GetAverageCharWidth() {
-return this.averageCharWidth;
-}
+  public virtual short GetAverageCharWidth() {
+    return this.averageCharWidth;
+  }
 
-public virtual void SetAverageCharWidth(short averageCharWidthValue) {
-this.averageCharWidth = averageCharWidthValue;
-}
+  public virtual void SetAverageCharWidth(short averageCharWidthValue) {
+    this.averageCharWidth = averageCharWidthValue;
+  }
 
-public virtual long GetCodePageRange1() {
-return this.codePageRange1;
-}
+  public virtual long GetCodePageRange1() {
+    return this.codePageRange1;
+  }
 
-public virtual void SetCodePageRange1(long codePageRange1Value) {
-this.codePageRange1 = codePageRange1Value;
-}
+  public virtual void SetCodePageRange1(long codePageRange1Value) {
+    this.codePageRange1 = codePageRange1Value;
+  }
 
-public virtual long GetCodePageRange2() {
-return this.codePageRange2;
-}
+  public virtual long GetCodePageRange2() {
+    return this.codePageRange2;
+  }
 
-public virtual void SetCodePageRange2(long codePageRange2Value) {
-this.codePageRange2 = codePageRange2Value;
-}
+  public virtual void SetCodePageRange2(long codePageRange2Value) {
+    this.codePageRange2 = codePageRange2Value;
+  }
 
-public virtual int GetFamilyClass() {
-return this.familyClass;
-}
+  public virtual int GetFamilyClass() {
+    return this.familyClass;
+  }
 
-public virtual void SetFamilyClass(int familyClassValue) {
-this.familyClass = familyClassValue;
-}
+  public virtual void SetFamilyClass(int familyClassValue) {
+    this.familyClass = familyClassValue;
+  }
 
-public virtual int GetFirstCharIndex() {
-return this.firstCharIndex;
-}
+  public virtual int GetFirstCharIndex() {
+    return this.firstCharIndex;
+  }
 
-public virtual void SetFirstCharIndex(int firstCharIndexValue) {
-this.firstCharIndex = firstCharIndexValue;
-}
+  public virtual void SetFirstCharIndex(int firstCharIndexValue) {
+    this.firstCharIndex = firstCharIndexValue;
+  }
 
-public virtual int GetFsSelection() {
-return this.fsSelection;
-}
+  public virtual int GetFsSelection() {
+    return this.fsSelection;
+  }
 
-public virtual void SetFsSelection(int fsSelectionValue) {
-this.fsSelection = fsSelectionValue;
-}
+  public virtual void SetFsSelection(int fsSelectionValue) {
+    this.fsSelection = fsSelectionValue;
+  }
 
-public virtual short GetFsType() {
-return this.fsType;
-}
+  public virtual short GetFsType() {
+    return this.fsType;
+  }
 
-public virtual void SetFsType(short fsTypeValue) {
-this.fsType = fsTypeValue;
-}
+  public virtual void SetFsType(short fsTypeValue) {
+    this.fsType = fsTypeValue;
+  }
 
-public virtual int GetLastCharIndex() {
-return this.lastCharIndex;
-}
+  public virtual int GetLastCharIndex() {
+    return this.lastCharIndex;
+  }
 
-public virtual void SetLastCharIndex(int lastCharIndexValue) {
-this.lastCharIndex = lastCharIndexValue;
-}
+  public virtual void SetLastCharIndex(int lastCharIndexValue) {
+    this.lastCharIndex = lastCharIndexValue;
+  }
 
-public virtual sbyte[] GetPanose() {
-return this.panose;
-}
+  public virtual sbyte[] GetPanose() {
+    return this.panose;
+  }
 
-public virtual void SetPanose(sbyte[] panoseValue) {
-this.panose = panoseValue;
-}
+  public virtual void SetPanose(sbyte[] panoseValue) {
+    this.panose = panoseValue;
+  }
 
-public virtual short GetStrikeoutPosition() {
-return this.strikeoutPosition;
-}
+  public virtual short GetStrikeoutPosition() {
+    return this.strikeoutPosition;
+  }
 
-public virtual void SetStrikeoutPosition(short strikeoutPositionValue) {
-this.strikeoutPosition = strikeoutPositionValue;
-}
+  public virtual void SetStrikeoutPosition(short strikeoutPositionValue) {
+    this.strikeoutPosition = strikeoutPositionValue;
+  }
 
-public virtual short GetStrikeoutSize() {
-return this.strikeoutSize;
-}
+  public virtual short GetStrikeoutSize() {
+    return this.strikeoutSize;
+  }
 
-public virtual void SetStrikeoutSize(short strikeoutSizeValue) {
-this.strikeoutSize = strikeoutSizeValue;
-}
+  public virtual void SetStrikeoutSize(short strikeoutSizeValue) {
+    this.strikeoutSize = strikeoutSizeValue;
+  }
 
-public virtual short GetSubscriptXOffset() {
-return this.subscriptXOffset;
-}
+  public virtual short GetSubscriptXOffset() {
+    return this.subscriptXOffset;
+  }
 
-public virtual void SetSubscriptXOffset(short subscriptXOffsetValue) {
-this.subscriptXOffset = subscriptXOffsetValue;
-}
+  public virtual void SetSubscriptXOffset(short subscriptXOffsetValue) {
+    this.subscriptXOffset = subscriptXOffsetValue;
+  }
 
-public virtual short GetSubscriptXSize() {
-return this.subscriptXSize;
-}
+  public virtual short GetSubscriptXSize() {
+    return this.subscriptXSize;
+  }
 
-public virtual void SetSubscriptXSize(short subscriptXSizeValue) {
-this.subscriptXSize = subscriptXSizeValue;
-}
+  public virtual void SetSubscriptXSize(short subscriptXSizeValue) {
+    this.subscriptXSize = subscriptXSizeValue;
+  }
 
-public virtual short GetSubscriptYOffset() {
-return this.subscriptYOffset;
-}
+  public virtual short GetSubscriptYOffset() {
+    return this.subscriptYOffset;
+  }
 
-public virtual void SetSubscriptYOffset(short subscriptYOffsetValue) {
-this.subscriptYOffset = subscriptYOffsetValue;
-}
+  public virtual void SetSubscriptYOffset(short subscriptYOffsetValue) {
+    this.subscriptYOffset = subscriptYOffsetValue;
+  }
 
-public virtual short GetSubscriptYSize() {
-return this.subscriptYSize;
-}
+  public virtual short GetSubscriptYSize() {
+    return this.subscriptYSize;
+  }
 
-public virtual void SetSubscriptYSize(short subscriptYSizeValue) {
-this.subscriptYSize = subscriptYSizeValue;
-}
+  public virtual void SetSubscriptYSize(short subscriptYSizeValue) {
+    this.subscriptYSize = subscriptYSizeValue;
+  }
 
-public virtual short GetSuperscriptXOffset() {
-return this.superscriptXOffset;
-}
+  public virtual short GetSuperscriptXOffset() {
+    return this.superscriptXOffset;
+  }
 
-public virtual void SetSuperscriptXOffset(short superscriptXOffsetValue) {
-this.superscriptXOffset = superscriptXOffsetValue;
-}
+  public virtual void SetSuperscriptXOffset(short superscriptXOffsetValue) {
+    this.superscriptXOffset = superscriptXOffsetValue;
+  }
 
-public virtual short GetSuperscriptXSize() {
-return this.superscriptXSize;
-}
+  public virtual short GetSuperscriptXSize() {
+    return this.superscriptXSize;
+  }
 
-public virtual void SetSuperscriptXSize(short superscriptXSizeValue) {
-this.superscriptXSize = superscriptXSizeValue;
-}
+  public virtual void SetSuperscriptXSize(short superscriptXSizeValue) {
+    this.superscriptXSize = superscriptXSizeValue;
+  }
 
-public virtual short GetSuperscriptYOffset() {
-return this.superscriptYOffset;
-}
+  public virtual short GetSuperscriptYOffset() {
+    return this.superscriptYOffset;
+  }
 
-public virtual void SetSuperscriptYOffset(short superscriptYOffsetValue) {
-this.superscriptYOffset = superscriptYOffsetValue;
-}
+  public virtual void SetSuperscriptYOffset(short superscriptYOffsetValue) {
+    this.superscriptYOffset = superscriptYOffsetValue;
+  }
 
-public virtual short GetSuperscriptYSize() {
-return this.superscriptYSize;
-}
+  public virtual short GetSuperscriptYSize() {
+    return this.superscriptYSize;
+  }
 
-public virtual void SetSuperscriptYSize(short superscriptYSizeValue) {
-this.superscriptYSize = superscriptYSizeValue;
-}
+  public virtual void SetSuperscriptYSize(short superscriptYSizeValue) {
+    this.superscriptYSize = superscriptYSizeValue;
+  }
 
-public virtual int GetTypoLineGap() {
-return this.typoLineGap;
-}
+  public virtual int GetTypoLineGap() {
+    return this.typoLineGap;
+  }
 
-public virtual void SetTypoLineGap(int typeLineGapValue) {
-this.typoLineGap = typeLineGapValue;
-}
+  public virtual void SetTypoLineGap(int typeLineGapValue) {
+    this.typoLineGap = typeLineGapValue;
+  }
 
-public virtual int GetTypoAscender() {
-return this.typoAscender;
-}
+  public virtual int GetTypoAscender() {
+    return this.typoAscender;
+  }
 
-public virtual void SetTypoAscender(int typoAscenderValue) {
-this.typoAscender = typoAscenderValue;
-}
+  public virtual void SetTypoAscender(int typoAscenderValue) {
+    this.typoAscender = typoAscenderValue;
+  }
 
-public virtual int GetTypoDescender() {
-return this.typoDescender;
-}
+  public virtual int GetTypoDescender() {
+    return this.typoDescender;
+  }
 
-public virtual void SetTypoDescender(int typoDescenderValue) {
-this.typoDescender = typoDescenderValue;
-}
+  public virtual void SetTypoDescender(int typoDescenderValue) {
+    this.typoDescender = typoDescenderValue;
+  }
 
-public virtual long GetUnicodeRange1() {
-return this.unicodeRange1;
-}
+  public virtual long GetUnicodeRange1() {
+    return this.unicodeRange1;
+  }
 
-public virtual void SetUnicodeRange1(long unicodeRange1Value) {
-this.unicodeRange1 = unicodeRange1Value;
-}
+  public virtual void SetUnicodeRange1(long unicodeRange1Value) {
+    this.unicodeRange1 = unicodeRange1Value;
+  }
 
-public virtual long GetUnicodeRange2() {
-return this.unicodeRange2;
-}
+  public virtual long GetUnicodeRange2() {
+    return this.unicodeRange2;
+  }
 
-public virtual void SetUnicodeRange2(long unicodeRange2Value) {
-this.unicodeRange2 = unicodeRange2Value;
-}
+  public virtual void SetUnicodeRange2(long unicodeRange2Value) {
+    this.unicodeRange2 = unicodeRange2Value;
+  }
 
-public virtual long GetUnicodeRange3() {
-return this.unicodeRange3;
-}
+  public virtual long GetUnicodeRange3() {
+    return this.unicodeRange3;
+  }
 
-public virtual void SetUnicodeRange3(long unicodeRange3Value) {
-this.unicodeRange3 = unicodeRange3Value;
-}
+  public virtual void SetUnicodeRange3(long unicodeRange3Value) {
+    this.unicodeRange3 = unicodeRange3Value;
+  }
 
-public virtual long GetUnicodeRange4() {
-return this.unicodeRange4;
-}
+  public virtual long GetUnicodeRange4() {
+    return this.unicodeRange4;
+  }
 
-public virtual void SetUnicodeRange4(long unicodeRange4Value) {
-this.unicodeRange4 = unicodeRange4Value;
-}
+  public virtual void SetUnicodeRange4(long unicodeRange4Value) {
+    this.unicodeRange4 = unicodeRange4Value;
+  }
 
-public virtual int GetVersion() {
-return this.version;
-}
+  public virtual int GetVersion() {
+    return this.version;
+  }
 
-public virtual void SetVersion(int versionValue) {
-this.version = versionValue;
-}
+  public virtual void SetVersion(int versionValue) {
+    this.version = versionValue;
+  }
 
-public virtual int GetWeightClass() {
-return this.weightClass;
-}
+  public virtual int GetWeightClass() {
+    return this.weightClass;
+  }
 
-public virtual void SetWeightClass(int weightClassValue) {
-this.weightClass = weightClassValue;
-}
-
-public virtual int GetWidthClass() {
-return this.widthClass;
-}
-
-public virtual void SetWidthClass(int widthClassValue) {
-this.widthClass = widthClassValue;
-}
-
-public virtual int GetWinAscent() {
-return this.winAscent;
-}
-
-public virtual void SetWinAscent(int winAscentValue) {
-this.winAscent = winAscentValue;
-}
-
-public virtual int GetWinDescent() {
-return this.winDescent;
-}
-
-public virtual void SetWinDescent(int winDescentValue) {
-this.winDescent = winDescentValue;
-}
-
-public virtual int GetHeight() {
-return this.sxHeight;
-}
-
-public virtual int GetCapHeight() {
-return this.sCapHeight;
-}
-
-public virtual int GetDefaultChar() {
-return this.usDefaultChar;
-}
-
-public virtual int GetBreakChar() {
-return this.usBreakChar;
-}
-
-public virtual int GetMaxContext() {
-return this.usMaxContext;
-}
-
-public const string Tag = "OS/2";
-
-internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-this.version = data.ReadUnsignedShort();
-this.averageCharWidth = data.ReadSignedShort();
-this.weightClass = data.ReadUnsignedShort();
-this.widthClass = data.ReadUnsignedShort();
-this.fsType = data.ReadSignedShort();
-this.subscriptXSize = data.ReadSignedShort();
-this.subscriptYSize = data.ReadSignedShort();
-this.subscriptXOffset = data.ReadSignedShort();
-this.subscriptYOffset = data.ReadSignedShort();
-this.superscriptXSize = data.ReadSignedShort();
-this.superscriptYSize = data.ReadSignedShort();
-this.superscriptXOffset = data.ReadSignedShort();
-this.superscriptYOffset = data.ReadSignedShort();
-this.strikeoutSize = data.ReadSignedShort();
-this.strikeoutPosition = data.ReadSignedShort();
-this.familyClass = data.ReadSignedShort();
-this.panose = data.Read(10);
-this.unicodeRange1 = data.ReadUnsignedInt();
-this.unicodeRange2 = data.ReadUnsignedInt();
-this.unicodeRange3 = data.ReadUnsignedInt();
-this.unicodeRange4 = data.ReadUnsignedInt();
-this.achVendId = data.ReadString(4);
-this.fsSelection = data.ReadUnsignedShort();
-this.firstCharIndex = data.ReadUnsignedShort();
-this.lastCharIndex = data.ReadUnsignedShort();
-try {
-this.typoAscender = data.ReadSignedShort();
-this.typoDescender = data.ReadSignedShort();
-this.typoLineGap = data.ReadSignedShort();
-this.winAscent = data.ReadUnsignedShort();
-this.winDescent = data.ReadUnsignedShort();
-} catch (global::System.IO.EndOfStreamException) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("EOF, probably some legacy TrueType font"));
-base.Initialized = true;
-return;
-}
-if ((this.version >= 1)) {
-try {
-this.codePageRange1 = data.ReadUnsignedInt();
-this.codePageRange2 = data.ReadUnsignedInt();
-} catch (global::System.IO.EndOfStreamException ex) {
-this.version = 0;
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable.LOG, (global::System.Exception)ex, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Could not read all expected parts of version >= 1, setting version to 0"));
-base.Initialized = true;
-return;
-}
-}
-if ((this.version >= 2)) {
-try {
-this.sxHeight = data.ReadSignedShort();
-this.sCapHeight = data.ReadSignedShort();
-this.usDefaultChar = data.ReadUnsignedShort();
-this.usBreakChar = data.ReadUnsignedShort();
-this.usMaxContext = data.ReadUnsignedShort();
-} catch (global::System.IO.EndOfStreamException ex) {
-this.version = 1;
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable.LOG, (global::System.Exception)ex, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Could not read all expected parts of version >= 2, setting version to 1"));
-base.Initialized = true;
-return;
-}
-}
-base.Initialized = true;
-}
+  public virtual void SetWeightClass(int weightClassValue) {
+    this.weightClass = weightClassValue;
+  }
+
+  public virtual int GetWidthClass() {
+    return this.widthClass;
+  }
+
+  public virtual void SetWidthClass(int widthClassValue) {
+    this.widthClass = widthClassValue;
+  }
+
+  public virtual int GetWinAscent() {
+    return this.winAscent;
+  }
+
+  public virtual void SetWinAscent(int winAscentValue) {
+    this.winAscent = winAscentValue;
+  }
+
+  public virtual int GetWinDescent() {
+    return this.winDescent;
+  }
+
+  public virtual void SetWinDescent(int winDescentValue) {
+    this.winDescent = winDescentValue;
+  }
+
+  public virtual int GetHeight() {
+    return this.sxHeight;
+  }
+
+  public virtual int GetCapHeight() {
+    return this.sCapHeight;
+  }
+
+  public virtual int GetDefaultChar() {
+    return this.usDefaultChar;
+  }
+
+  public virtual int GetBreakChar() {
+    return this.usBreakChar;
+  }
+
+  public virtual int GetMaxContext() {
+    return this.usMaxContext;
+  }
+
+  public const string Tag = "OS/2";
+
+  internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    this.version = data.ReadUnsignedShort();
+    this.averageCharWidth = data.ReadSignedShort();
+    this.weightClass = data.ReadUnsignedShort();
+    this.widthClass = data.ReadUnsignedShort();
+    this.fsType = data.ReadSignedShort();
+    this.subscriptXSize = data.ReadSignedShort();
+    this.subscriptYSize = data.ReadSignedShort();
+    this.subscriptXOffset = data.ReadSignedShort();
+    this.subscriptYOffset = data.ReadSignedShort();
+    this.superscriptXSize = data.ReadSignedShort();
+    this.superscriptYSize = data.ReadSignedShort();
+    this.superscriptXOffset = data.ReadSignedShort();
+    this.superscriptYOffset = data.ReadSignedShort();
+    this.strikeoutSize = data.ReadSignedShort();
+    this.strikeoutPosition = data.ReadSignedShort();
+    this.familyClass = data.ReadSignedShort();
+    this.panose = data.Read(10);
+    this.unicodeRange1 = data.ReadUnsignedInt();
+    this.unicodeRange2 = data.ReadUnsignedInt();
+    this.unicodeRange3 = data.ReadUnsignedInt();
+    this.unicodeRange4 = data.ReadUnsignedInt();
+    this.achVendId = data.ReadString(4);
+    this.fsSelection = data.ReadUnsignedShort();
+    this.firstCharIndex = data.ReadUnsignedShort();
+    this.lastCharIndex = data.ReadUnsignedShort();
+    try {
+      this.typoAscender = data.ReadSignedShort();
+      this.typoDescender = data.ReadSignedShort();
+      this.typoLineGap = data.ReadSignedShort();
+      this.winAscent = data.ReadUnsignedShort();
+      this.winDescent = data.ReadUnsignedShort();
+    } catch (global::System.IO.EndOfStreamException) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("EOF, probably some legacy TrueType font"));
+      base.Initialized = true;
+      return;
+    }
+    if ((this.version >= 1)) {
+      try {
+        this.codePageRange1 = data.ReadUnsignedInt();
+        this.codePageRange2 = data.ReadUnsignedInt();
+      } catch (global::System.IO.EndOfStreamException ex) {
+        this.version = 0;
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable.LOG,
+          (global::System.Exception)ex,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Could not read all expected parts of version >= 1, setting version to 0"));
+        base.Initialized = true;
+        return;
+      }
+    }
+    if ((this.version >= 2)) {
+      try {
+        this.sxHeight = data.ReadSignedShort();
+        this.sCapHeight = data.ReadSignedShort();
+        this.usDefaultChar = data.ReadUnsignedShort();
+        this.usBreakChar = data.ReadUnsignedShort();
+        this.usMaxContext = data.ReadUnsignedShort();
+      } catch (global::System.IO.EndOfStreamException ex) {
+        this.version = 1;
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable.LOG,
+          (global::System.Exception)ex,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Could not read all expected parts of version >= 2, setting version to 1"));
+        base.Initialized = true;
+        return;
+      }
+    }
+    base.Initialized = true;
+  }
 }

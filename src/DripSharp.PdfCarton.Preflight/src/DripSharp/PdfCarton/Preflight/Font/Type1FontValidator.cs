@@ -8,28 +8,40 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font;
 
-public class Type1FontValidator : global::DripSharp.PdfCarton.Preflight.Font.SimpleFontValidator<global::DripSharp.PdfCarton.Preflight.Font.Container.Type1Container> {
-public Type1FontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont font) : base(context, font, font.GetCOSObject(), new global::DripSharp.PdfCarton.Preflight.Font.Container.Type1Container(font)) {
+public class Type1FontValidator
+: global::DripSharp.PdfCarton.Preflight.Font.SimpleFontValidator<global::DripSharp.PdfCarton.Preflight.Font.Container.Type1Container> {
+  public Type1FontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont font) : base(context, font,
+    font.GetCOSObject(),
+    new global::DripSharp.PdfCarton.Preflight.Font.Container.Type1Container(font)) {
 
-}
+  }
 
-protected internal override void CreateFontDescriptorHelper() {
-base.DescriptorHelper = new global::DripSharp.PdfCarton.Preflight.Font.Descriptor.Type1DescriptorHelper(base.Context, (global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont)(base.Font!), base.FontContainer);
-}
+  protected internal override void CreateFontDescriptorHelper() {
+    base.DescriptorHelper
+      = new global::DripSharp.PdfCarton.Preflight.Font.Descriptor.Type1DescriptorHelper(base.Context,
+      (global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont)(base.Font!), base.FontContainer);
+  }
 
-protected internal override void CheckEncoding() {
-global::DripSharp.PdfCarton.Cos.COSBase encoding = base.FontDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Encoding);
-if ((encoding != default!)) {
-if ((encoding is global::DripSharp.PdfCarton.Cos.COSName)) {
-global::DripSharp.PdfCarton.Cos.COSName encodingName = (global::DripSharp.PdfCarton.Cos.COSName)(encoding!);
-if (!(((((encodingName.Equals(global::DripSharp.PdfCarton.Cos.COSName.MacRomanEncoding) || encodingName.Equals(global::DripSharp.PdfCarton.Cos.COSName.MacExpertEncoding)) || encodingName.Equals(global::DripSharp.PdfCarton.Cos.COSName.WinAnsiEncoding)) || encodingName.Equals(global::DripSharp.PdfCarton.Cos.COSName.PdfDocEncoding)) || encodingName.Equals(global::DripSharp.PdfCarton.Cos.COSName.StandardEncoding)))) {
-base.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsEncoding));
-}
-} else {
-if (!((encoding is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
-base.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsEncoding));
-}
-}
-}
-}
+  protected internal override void CheckEncoding() {
+    global::DripSharp.PdfCarton.Cos.COSBase encoding
+      = base.FontDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Encoding);
+    if ((encoding != default!)) {
+      if ((encoding is global::DripSharp.PdfCarton.Cos.COSName)) {
+        global::DripSharp.PdfCarton.Cos.COSName encodingName
+          = (global::DripSharp.PdfCarton.Cos.COSName)(encoding!);
+        if (!(((((encodingName.Equals(global::DripSharp.PdfCarton.Cos.COSName.MacRomanEncoding)
+          || encodingName.Equals(global::DripSharp.PdfCarton.Cos.COSName.MacExpertEncoding))
+          || encodingName.Equals(global::DripSharp.PdfCarton.Cos.COSName.WinAnsiEncoding))
+          || encodingName.Equals(global::DripSharp.PdfCarton.Cos.COSName.PdfDocEncoding))
+          || encodingName.Equals(global::DripSharp.PdfCarton.Cos.COSName.StandardEncoding)))) {
+          base.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsEncoding));
+        }
+      } else {
+        if (!((encoding is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
+          base.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsEncoding));
+        }
+      }
+    }
+  }
 }

@@ -9,21 +9,91 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font.Encoding;
 
 public class MacExpertEncoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding {
-private static readonly object[][] MAC_EXPERT_ENCODING_TABLE = new object[][] { new object[] { 190, "AEsmall" }, new object[] { 135, "Aacutesmall" }, new object[] { 137, "Acircumflexsmall" }, new object[] { 39, "Acutesmall" }, new object[] { 138, "Adieresissmall" }, new object[] { 136, "Agravesmall" }, new object[] { 140, "Aringsmall" }, new object[] { 97, "Asmall" }, new object[] { 139, "Atildesmall" }, new object[] { 243, "Brevesmall" }, new object[] { 98, "Bsmall" }, new object[] { 174, "Caronsmall" }, new object[] { 141, "Ccedillasmall" }, new object[] { 201, "Cedillasmall" }, new object[] { 94, "Circumflexsmall" }, new object[] { 99, "Csmall" }, new object[] { 172, "Dieresissmall" }, new object[] { 250, "Dotaccentsmall" }, new object[] { 100, "Dsmall" }, new object[] { 142, "Eacutesmall" }, new object[] { 144, "Ecircumflexsmall" }, new object[] { 145, "Edieresissmall" }, new object[] { 143, "Egravesmall" }, new object[] { 101, "Esmall" }, new object[] { 68, "Ethsmall" }, new object[] { 102, "Fsmall" }, new object[] { 96, "Gravesmall" }, new object[] { 103, "Gsmall" }, new object[] { 104, "Hsmall" }, new object[] { 34, "Hungarumlautsmall" }, new object[] { 146, "Iacutesmall" }, new object[] { 148, "Icircumflexsmall" }, new object[] { 149, "Idieresissmall" }, new object[] { 147, "Igravesmall" }, new object[] { 105, "Ismall" }, new object[] { 106, "Jsmall" }, new object[] { 107, "Ksmall" }, new object[] { 194, "Lslashsmall" }, new object[] { 108, "Lsmall" }, new object[] { 244, "Macronsmall" }, new object[] { 109, "Msmall" }, new object[] { 110, "Nsmall" }, new object[] { 150, "Ntildesmall" }, new object[] { 207, "OEsmall" }, new object[] { 151, "Oacutesmall" }, new object[] { 153, "Ocircumflexsmall" }, new object[] { 154, "Odieresissmall" }, new object[] { 242, "Ogoneksmall" }, new object[] { 152, "Ogravesmall" }, new object[] { 191, "Oslashsmall" }, new object[] { 111, "Osmall" }, new object[] { 155, "Otildesmall" }, new object[] { 112, "Psmall" }, new object[] { 113, "Qsmall" }, new object[] { 251, "Ringsmall" }, new object[] { 114, "Rsmall" }, new object[] { 167, "Scaronsmall" }, new object[] { 115, "Ssmall" }, new object[] { 185, "Thornsmall" }, new object[] { 126, "Tildesmall" }, new object[] { 116, "Tsmall" }, new object[] { 156, "Uacutesmall" }, new object[] { 158, "Ucircumflexsmall" }, new object[] { 159, "Udieresissmall" }, new object[] { 157, "Ugravesmall" }, new object[] { 117, "Usmall" }, new object[] { 118, "Vsmall" }, new object[] { 119, "Wsmall" }, new object[] { 120, "Xsmall" }, new object[] { 180, "Yacutesmall" }, new object[] { 216, "Ydieresissmall" }, new object[] { 121, "Ysmall" }, new object[] { 189, "Zcaronsmall" }, new object[] { 122, "Zsmall" }, new object[] { 38, "ampersandsmall" }, new object[] { 129, "asuperior" }, new object[] { 245, "bsuperior" }, new object[] { 169, "centinferior" }, new object[] { 35, "centoldstyle" }, new object[] { 130, "centsuperior" }, new object[] { 58, "colon" }, new object[] { 123, "colonmonetary" }, new object[] { 44, "comma" }, new object[] { 178, "commainferior" }, new object[] { 248, "commasuperior" }, new object[] { 182, "dollarinferior" }, new object[] { 36, "dollaroldstyle" }, new object[] { 37, "dollarsuperior" }, new object[] { 235, "dsuperior" }, new object[] { 165, "eightinferior" }, new object[] { 56, "eightoldstyle" }, new object[] { 161, "eightsuperior" }, new object[] { 228, "esuperior" }, new object[] { 214, "exclamdownsmall" }, new object[] { 33, "exclamsmall" }, new object[] { 86, "ff" }, new object[] { 89, "ffi" }, new object[] { 90, "ffl" }, new object[] { 87, "fi" }, new object[] { 208, "figuredash" }, new object[] { 76, "fiveeighths" }, new object[] { 176, "fiveinferior" }, new object[] { 53, "fiveoldstyle" }, new object[] { 222, "fivesuperior" }, new object[] { 88, "fl" }, new object[] { 162, "fourinferior" }, new object[] { 52, "fouroldstyle" }, new object[] { 221, "foursuperior" }, new object[] { 47, "fraction" }, new object[] { 45, "hyphen" }, new object[] { 95, "hypheninferior" }, new object[] { 209, "hyphensuperior" }, new object[] { 233, "isuperior" }, new object[] { 241, "lsuperior" }, new object[] { 247, "msuperior" }, new object[] { 187, "nineinferior" }, new object[] { 57, "nineoldstyle" }, new object[] { 225, "ninesuperior" }, new object[] { 246, "nsuperior" }, new object[] { 43, "onedotenleader" }, new object[] { 74, "oneeighth" }, new object[] { 124, "onefitted" }, new object[] { 72, "onehalf" }, new object[] { 193, "oneinferior" }, new object[] { 49, "oneoldstyle" }, new object[] { 71, "onequarter" }, new object[] { 218, "onesuperior" }, new object[] { 78, "onethird" }, new object[] { 175, "osuperior" }, new object[] { 91, "parenleftinferior" }, new object[] { 40, "parenleftsuperior" }, new object[] { 93, "parenrightinferior" }, new object[] { 41, "parenrightsuperior" }, new object[] { 46, "period" }, new object[] { 179, "periodinferior" }, new object[] { 249, "periodsuperior" }, new object[] { 192, "questiondownsmall" }, new object[] { 63, "questionsmall" }, new object[] { 229, "rsuperior" }, new object[] { 125, "rupiah" }, new object[] { 59, "semicolon" }, new object[] { 77, "seveneighths" }, new object[] { 166, "seveninferior" }, new object[] { 55, "sevenoldstyle" }, new object[] { 224, "sevensuperior" }, new object[] { 164, "sixinferior" }, new object[] { 54, "sixoldstyle" }, new object[] { 223, "sixsuperior" }, new object[] { 32, "space" }, new object[] { 234, "ssuperior" }, new object[] { 75, "threeeighths" }, new object[] { 163, "threeinferior" }, new object[] { 51, "threeoldstyle" }, new object[] { 73, "threequarters" }, new object[] { 61, "threequartersemdash" }, new object[] { 220, "threesuperior" }, new object[] { 230, "tsuperior" }, new object[] { 42, "twodotenleader" }, new object[] { 170, "twoinferior" }, new object[] { 50, "twooldstyle" }, new object[] { 219, "twosuperior" }, new object[] { 79, "twothirds" }, new object[] { 188, "zeroinferior" }, new object[] { 48, "zerooldstyle" }, new object[] { 226, "zerosuperior" } };
+  private static readonly object[][] MAC_EXPERT_ENCODING_TABLE
+    = new object[][] { new object[] { 190, "AEsmall" }, new object[] { 135, "Aacutesmall" },
+    new object[] { 137, "Acircumflexsmall" }, new object[] { 39, "Acutesmall" }, new object[] { 138,
+    "Adieresissmall" }, new object[] { 136, "Agravesmall" }, new object[] { 140, "Aringsmall" },
+    new object[] { 97, "Asmall" }, new object[] { 139, "Atildesmall" }, new object[] { 243,
+    "Brevesmall" }, new object[] { 98, "Bsmall" }, new object[] { 174, "Caronsmall" },
+    new object[] { 141, "Ccedillasmall" }, new object[] { 201, "Cedillasmall" }, new object[] { 94,
+    "Circumflexsmall" }, new object[] { 99, "Csmall" }, new object[] { 172, "Dieresissmall" },
+    new object[] { 250, "Dotaccentsmall" }, new object[] { 100, "Dsmall" }, new object[] { 142,
+    "Eacutesmall" }, new object[] { 144, "Ecircumflexsmall" }, new object[] { 145,
+    "Edieresissmall" }, new object[] { 143, "Egravesmall" }, new object[] { 101, "Esmall" },
+    new object[] { 68, "Ethsmall" }, new object[] { 102, "Fsmall" }, new object[] { 96,
+    "Gravesmall" }, new object[] { 103, "Gsmall" }, new object[] { 104, "Hsmall" },
+    new object[] { 34, "Hungarumlautsmall" }, new object[] { 146, "Iacutesmall" },
+    new object[] { 148, "Icircumflexsmall" }, new object[] { 149, "Idieresissmall" },
+    new object[] { 147, "Igravesmall" }, new object[] { 105, "Ismall" }, new object[] { 106,
+    "Jsmall" }, new object[] { 107, "Ksmall" }, new object[] { 194, "Lslashsmall" },
+    new object[] { 108, "Lsmall" }, new object[] { 244, "Macronsmall" }, new object[] { 109,
+    "Msmall" }, new object[] { 110, "Nsmall" }, new object[] { 150, "Ntildesmall" },
+    new object[] { 207, "OEsmall" }, new object[] { 151, "Oacutesmall" }, new object[] { 153,
+    "Ocircumflexsmall" }, new object[] { 154, "Odieresissmall" }, new object[] { 242,
+    "Ogoneksmall" }, new object[] { 152, "Ogravesmall" }, new object[] { 191, "Oslashsmall" },
+    new object[] { 111, "Osmall" }, new object[] { 155, "Otildesmall" }, new object[] { 112,
+    "Psmall" }, new object[] { 113, "Qsmall" }, new object[] { 251, "Ringsmall" },
+    new object[] { 114, "Rsmall" }, new object[] { 167, "Scaronsmall" }, new object[] { 115,
+    "Ssmall" }, new object[] { 185, "Thornsmall" }, new object[] { 126, "Tildesmall" },
+    new object[] { 116, "Tsmall" }, new object[] { 156, "Uacutesmall" }, new object[] { 158,
+    "Ucircumflexsmall" }, new object[] { 159, "Udieresissmall" }, new object[] { 157,
+    "Ugravesmall" }, new object[] { 117, "Usmall" }, new object[] { 118, "Vsmall" },
+    new object[] { 119, "Wsmall" }, new object[] { 120, "Xsmall" }, new object[] { 180,
+    "Yacutesmall" }, new object[] { 216, "Ydieresissmall" }, new object[] { 121, "Ysmall" },
+    new object[] { 189, "Zcaronsmall" }, new object[] { 122, "Zsmall" }, new object[] { 38,
+    "ampersandsmall" }, new object[] { 129, "asuperior" }, new object[] { 245, "bsuperior" },
+    new object[] { 169, "centinferior" }, new object[] { 35, "centoldstyle" }, new object[] { 130,
+    "centsuperior" }, new object[] { 58, "colon" }, new object[] { 123, "colonmonetary" },
+    new object[] { 44, "comma" }, new object[] { 178, "commainferior" }, new object[] { 248,
+    "commasuperior" }, new object[] { 182, "dollarinferior" }, new object[] { 36,
+    "dollaroldstyle" }, new object[] { 37, "dollarsuperior" }, new object[] { 235, "dsuperior" },
+    new object[] { 165, "eightinferior" }, new object[] { 56, "eightoldstyle" }, new object[] { 161,
+    "eightsuperior" }, new object[] { 228, "esuperior" }, new object[] { 214, "exclamdownsmall" },
+    new object[] { 33, "exclamsmall" }, new object[] { 86, "ff" }, new object[] { 89, "ffi" },
+    new object[] { 90, "ffl" }, new object[] { 87, "fi" }, new object[] { 208, "figuredash" },
+    new object[] { 76, "fiveeighths" }, new object[] { 176, "fiveinferior" }, new object[] { 53,
+    "fiveoldstyle" }, new object[] { 222, "fivesuperior" }, new object[] { 88, "fl" },
+    new object[] { 162, "fourinferior" }, new object[] { 52, "fouroldstyle" }, new object[] { 221,
+    "foursuperior" }, new object[] { 47, "fraction" }, new object[] { 45, "hyphen" },
+    new object[] { 95, "hypheninferior" }, new object[] { 209, "hyphensuperior" },
+    new object[] { 233, "isuperior" }, new object[] { 241, "lsuperior" }, new object[] { 247,
+    "msuperior" }, new object[] { 187, "nineinferior" }, new object[] { 57, "nineoldstyle" },
+    new object[] { 225, "ninesuperior" }, new object[] { 246, "nsuperior" }, new object[] { 43,
+    "onedotenleader" }, new object[] { 74, "oneeighth" }, new object[] { 124, "onefitted" },
+    new object[] { 72, "onehalf" }, new object[] { 193, "oneinferior" }, new object[] { 49,
+    "oneoldstyle" }, new object[] { 71, "onequarter" }, new object[] { 218, "onesuperior" },
+    new object[] { 78, "onethird" }, new object[] { 175, "osuperior" }, new object[] { 91,
+    "parenleftinferior" }, new object[] { 40, "parenleftsuperior" }, new object[] { 93,
+    "parenrightinferior" }, new object[] { 41, "parenrightsuperior" }, new object[] { 46,
+    "period" }, new object[] { 179, "periodinferior" }, new object[] { 249, "periodsuperior" },
+    new object[] { 192, "questiondownsmall" }, new object[] { 63, "questionsmall" },
+    new object[] { 229, "rsuperior" }, new object[] { 125, "rupiah" }, new object[] { 59,
+    "semicolon" }, new object[] { 77, "seveneighths" }, new object[] { 166, "seveninferior" },
+    new object[] { 55, "sevenoldstyle" }, new object[] { 224, "sevensuperior" }, new object[] { 164,
+    "sixinferior" }, new object[] { 54, "sixoldstyle" }, new object[] { 223, "sixsuperior" },
+    new object[] { 32, "space" }, new object[] { 234, "ssuperior" }, new object[] { 75,
+    "threeeighths" }, new object[] { 163, "threeinferior" }, new object[] { 51, "threeoldstyle" },
+    new object[] { 73, "threequarters" }, new object[] { 61, "threequartersemdash" },
+    new object[] { 220, "threesuperior" }, new object[] { 230, "tsuperior" }, new object[] { 42,
+    "twodotenleader" }, new object[] { 170, "twoinferior" }, new object[] { 50, "twooldstyle" },
+    new object[] { 219, "twosuperior" }, new object[] { 79, "twothirds" }, new object[] { 188,
+    "zeroinferior" }, new object[] { 48, "zerooldstyle" }, new object[] { 226, "zerosuperior" } };
 
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacExpertEncoding Instance = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacExpertEncoding();
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacExpertEncoding Instance
+    = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacExpertEncoding();
 
-public MacExpertEncoding() {
-foreach (object[] encodingEntry in global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacExpertEncoding.MAC_EXPERT_ENCODING_TABLE) {
-this.Add((int)(global::DripSharp.Runtime.JavaCompat.Unbox((int?)(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharCode]))), global::DripSharp.Runtime.JavaCompat.StringValueOf(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharName]));
-}
-}
+  public MacExpertEncoding() {
+    foreach (object[] encodingEntry in global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacExpertEncoding.MAC_EXPERT_ENCODING_TABLE) {
+      this.Add((int)(global::DripSharp.Runtime.JavaCompat.Unbox((int?)(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharCode]))),
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharName]));
+    }
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return global::DripSharp.PdfCarton.Cos.COSName.MacExpertEncoding;
-}
+  public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return global::DripSharp.PdfCarton.Cos.COSName.MacExpertEncoding;
+  }
 
-public override string GetEncodingName() {
-return "MacExpertEncoding";
-}
+  public override string GetEncodingName() {
+    return "MacExpertEncoding";
+  }
 }

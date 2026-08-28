@@ -9,15 +9,18 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Form;
 
 public class PDTransparencyGroup : global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject {
-public PDTransparencyGroup(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream) : base(stream) {
+  public PDTransparencyGroup(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream)
+  : base(stream) {
 
-}
+  }
 
-public PDTransparencyGroup(global::DripSharp.PdfCarton.Cos.COSStream stream, global::DripSharp.PdfCarton.Pdmodel.ResourceCache cache) : base(stream, cache) {
+  public PDTransparencyGroup(global::DripSharp.PdfCarton.Cos.COSStream stream,
+    global::DripSharp.PdfCarton.Pdmodel.ResourceCache cache) : base(stream, cache) {
 
-}
+  }
 
-public PDTransparencyGroup(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(document) {
+  public PDTransparencyGroup(global::DripSharp.PdfCarton.Pdmodel.PDDocument document)
+  : base(document) {
 
-}
+  }
 }

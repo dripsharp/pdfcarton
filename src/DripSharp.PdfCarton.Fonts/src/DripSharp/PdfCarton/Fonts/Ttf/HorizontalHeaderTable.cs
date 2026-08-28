@@ -9,200 +9,201 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class HorizontalHeaderTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-public const string Tag = "hhea";
+  public const string Tag = "hhea";
 
-private float version = default;
+  private float version = default;
 
-private short ascender = default;
+  private short ascender = default;
 
-private short descender = default;
+  private short descender = default;
 
-private short lineGap = default;
+  private short lineGap = default;
 
-private int advanceWidthMax = default;
+  private int advanceWidthMax = default;
 
-private short minLeftSideBearing = default;
+  private short minLeftSideBearing = default;
 
-private short minRightSideBearing = default;
+  private short minRightSideBearing = default;
 
-private short xMaxExtent = default;
+  private short xMaxExtent = default;
 
-private short caretSlopeRise = default;
+  private short caretSlopeRise = default;
 
-private short caretSlopeRun = default;
+  private short caretSlopeRun = default;
 
-private short reserved1 = default;
+  private short reserved1 = default;
 
-private short reserved2 = default;
+  private short reserved2 = default;
 
-private short reserved3 = default;
+  private short reserved3 = default;
 
-private short reserved4 = default;
+  private short reserved4 = default;
 
-private short reserved5 = default;
+  private short reserved5 = default;
 
-private short metricDataFormat = default;
+  private short metricDataFormat = default;
 
-private int numberOfHMetrics = default;
+  private int numberOfHMetrics = default;
 
-internal HorizontalHeaderTable() : base() {
+  internal HorizontalHeaderTable() : base() {
 
-}
+  }
 
-internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-this.version = data.Read32Fixed();
-this.ascender = data.ReadSignedShort();
-this.descender = data.ReadSignedShort();
-this.lineGap = data.ReadSignedShort();
-this.advanceWidthMax = data.ReadUnsignedShort();
-this.minLeftSideBearing = data.ReadSignedShort();
-this.minRightSideBearing = data.ReadSignedShort();
-this.xMaxExtent = data.ReadSignedShort();
-this.caretSlopeRise = data.ReadSignedShort();
-this.caretSlopeRun = data.ReadSignedShort();
-this.reserved1 = data.ReadSignedShort();
-this.reserved2 = data.ReadSignedShort();
-this.reserved3 = data.ReadSignedShort();
-this.reserved4 = data.ReadSignedShort();
-this.reserved5 = data.ReadSignedShort();
-this.metricDataFormat = data.ReadSignedShort();
-this.numberOfHMetrics = data.ReadUnsignedShort();
-base.Initialized = true;
-}
+  internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    this.version = data.Read32Fixed();
+    this.ascender = data.ReadSignedShort();
+    this.descender = data.ReadSignedShort();
+    this.lineGap = data.ReadSignedShort();
+    this.advanceWidthMax = data.ReadUnsignedShort();
+    this.minLeftSideBearing = data.ReadSignedShort();
+    this.minRightSideBearing = data.ReadSignedShort();
+    this.xMaxExtent = data.ReadSignedShort();
+    this.caretSlopeRise = data.ReadSignedShort();
+    this.caretSlopeRun = data.ReadSignedShort();
+    this.reserved1 = data.ReadSignedShort();
+    this.reserved2 = data.ReadSignedShort();
+    this.reserved3 = data.ReadSignedShort();
+    this.reserved4 = data.ReadSignedShort();
+    this.reserved5 = data.ReadSignedShort();
+    this.metricDataFormat = data.ReadSignedShort();
+    this.numberOfHMetrics = data.ReadUnsignedShort();
+    base.Initialized = true;
+  }
 
-public virtual int GetAdvanceWidthMax() {
-return this.advanceWidthMax;
-}
+  public virtual int GetAdvanceWidthMax() {
+    return this.advanceWidthMax;
+  }
 
-public virtual void SetAdvanceWidthMax(int advanceWidthMaxValue) {
-this.advanceWidthMax = advanceWidthMaxValue;
-}
+  public virtual void SetAdvanceWidthMax(int advanceWidthMaxValue) {
+    this.advanceWidthMax = advanceWidthMaxValue;
+  }
 
-public virtual short GetAscender() {
-return this.ascender;
-}
+  public virtual short GetAscender() {
+    return this.ascender;
+  }
 
-public virtual void SetAscender(short ascenderValue) {
-this.ascender = ascenderValue;
-}
+  public virtual void SetAscender(short ascenderValue) {
+    this.ascender = ascenderValue;
+  }
 
-public virtual short GetCaretSlopeRise() {
-return this.caretSlopeRise;
-}
+  public virtual short GetCaretSlopeRise() {
+    return this.caretSlopeRise;
+  }
 
-public virtual void SetCaretSlopeRise(short caretSlopeRiseValue) {
-this.caretSlopeRise = caretSlopeRiseValue;
-}
+  public virtual void SetCaretSlopeRise(short caretSlopeRiseValue) {
+    this.caretSlopeRise = caretSlopeRiseValue;
+  }
 
-public virtual short GetCaretSlopeRun() {
-return this.caretSlopeRun;
-}
+  public virtual short GetCaretSlopeRun() {
+    return this.caretSlopeRun;
+  }
 
-public virtual void SetCaretSlopeRun(short caretSlopeRunValue) {
-this.caretSlopeRun = caretSlopeRunValue;
-}
+  public virtual void SetCaretSlopeRun(short caretSlopeRunValue) {
+    this.caretSlopeRun = caretSlopeRunValue;
+  }
 
-public virtual short GetDescender() {
-return this.descender;
-}
+  public virtual short GetDescender() {
+    return this.descender;
+  }
 
-public virtual void SetDescender(short descenderValue) {
-this.descender = descenderValue;
-}
+  public virtual void SetDescender(short descenderValue) {
+    this.descender = descenderValue;
+  }
 
-public virtual short GetLineGap() {
-return this.lineGap;
-}
+  public virtual short GetLineGap() {
+    return this.lineGap;
+  }
 
-public virtual void SetLineGap(short lineGapValue) {
-this.lineGap = lineGapValue;
-}
+  public virtual void SetLineGap(short lineGapValue) {
+    this.lineGap = lineGapValue;
+  }
 
-public virtual short GetMetricDataFormat() {
-return this.metricDataFormat;
-}
+  public virtual short GetMetricDataFormat() {
+    return this.metricDataFormat;
+  }
 
-public virtual void SetMetricDataFormat(short metricDataFormatValue) {
-this.metricDataFormat = metricDataFormatValue;
-}
+  public virtual void SetMetricDataFormat(short metricDataFormatValue) {
+    this.metricDataFormat = metricDataFormatValue;
+  }
 
-public virtual short GetMinLeftSideBearing() {
-return this.minLeftSideBearing;
-}
+  public virtual short GetMinLeftSideBearing() {
+    return this.minLeftSideBearing;
+  }
 
-public virtual void SetMinLeftSideBearing(short minLeftSideBearingValue) {
-this.minLeftSideBearing = minLeftSideBearingValue;
-}
+  public virtual void SetMinLeftSideBearing(short minLeftSideBearingValue) {
+    this.minLeftSideBearing = minLeftSideBearingValue;
+  }
 
-public virtual short GetMinRightSideBearing() {
-return this.minRightSideBearing;
-}
+  public virtual short GetMinRightSideBearing() {
+    return this.minRightSideBearing;
+  }
 
-public virtual void SetMinRightSideBearing(short minRightSideBearingValue) {
-this.minRightSideBearing = minRightSideBearingValue;
-}
+  public virtual void SetMinRightSideBearing(short minRightSideBearingValue) {
+    this.minRightSideBearing = minRightSideBearingValue;
+  }
 
-public virtual int GetNumberOfHMetrics() {
-return this.numberOfHMetrics;
-}
+  public virtual int GetNumberOfHMetrics() {
+    return this.numberOfHMetrics;
+  }
 
-public virtual void SetNumberOfHMetrics(int numberOfHMetricsValue) {
-this.numberOfHMetrics = numberOfHMetricsValue;
-}
+  public virtual void SetNumberOfHMetrics(int numberOfHMetricsValue) {
+    this.numberOfHMetrics = numberOfHMetricsValue;
+  }
 
-public virtual short GetReserved1() {
-return this.reserved1;
-}
+  public virtual short GetReserved1() {
+    return this.reserved1;
+  }
 
-public virtual void SetReserved1(short reserved1Value) {
-this.reserved1 = reserved1Value;
-}
+  public virtual void SetReserved1(short reserved1Value) {
+    this.reserved1 = reserved1Value;
+  }
 
-public virtual short GetReserved2() {
-return this.reserved2;
-}
+  public virtual short GetReserved2() {
+    return this.reserved2;
+  }
 
-public virtual void SetReserved2(short reserved2Value) {
-this.reserved2 = reserved2Value;
-}
+  public virtual void SetReserved2(short reserved2Value) {
+    this.reserved2 = reserved2Value;
+  }
 
-public virtual short GetReserved3() {
-return this.reserved3;
-}
+  public virtual short GetReserved3() {
+    return this.reserved3;
+  }
 
-public virtual void SetReserved3(short reserved3Value) {
-this.reserved3 = reserved3Value;
-}
+  public virtual void SetReserved3(short reserved3Value) {
+    this.reserved3 = reserved3Value;
+  }
 
-public virtual short GetReserved4() {
-return this.reserved4;
-}
+  public virtual short GetReserved4() {
+    return this.reserved4;
+  }
 
-public virtual void SetReserved4(short reserved4Value) {
-this.reserved4 = reserved4Value;
-}
+  public virtual void SetReserved4(short reserved4Value) {
+    this.reserved4 = reserved4Value;
+  }
 
-public virtual short GetReserved5() {
-return this.reserved5;
-}
+  public virtual short GetReserved5() {
+    return this.reserved5;
+  }
 
-public virtual void SetReserved5(short reserved5Value) {
-this.reserved5 = reserved5Value;
-}
+  public virtual void SetReserved5(short reserved5Value) {
+    this.reserved5 = reserved5Value;
+  }
 
-public virtual float GetVersion() {
-return this.version;
-}
+  public virtual float GetVersion() {
+    return this.version;
+  }
 
-public virtual void SetVersion(float versionValue) {
-this.version = versionValue;
-}
+  public virtual void SetVersion(float versionValue) {
+    this.version = versionValue;
+  }
 
-public virtual short GetXMaxExtent() {
-return this.xMaxExtent;
-}
+  public virtual short GetXMaxExtent() {
+    return this.xMaxExtent;
+  }
 
-public virtual void SetXMaxExtent(short maxExtentValue) {
-this.xMaxExtent = maxExtentValue;
-}
+  public virtual void SetXMaxExtent(short maxExtentValue) {
+    this.xMaxExtent = maxExtentValue;
+  }
 }

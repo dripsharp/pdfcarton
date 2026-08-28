@@ -8,16 +8,24 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
-internal class Type4ShadingContext : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.GouraudShadingContext {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+internal class Type4ShadingContext
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.GouraudShadingContext {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly int bitsPerFlag = default;
+  private readonly int bitsPerFlag = default;
 
-internal Type4ShadingContext(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4 shading, global::DripSharp.Runtime.JavaColorModel cm, global::SkiaSharp.SKMatrix xform, global::DripSharp.PdfCarton.Util.Matrix matrix, global::SkiaSharp.SKRectI deviceBounds) : base(shading, cm, xform, matrix) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type4ShadingContext.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("Type4ShadingContext"));
-this.bitsPerFlag = shading.GetBitsPerFlag();
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type4ShadingContext.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("bitsPerFlag: ", this.bitsPerFlag)));
-this.setTriangleList(shading.collectTriangles(xform, matrix));
-this.CreatePixelTable(deviceBounds);
-}
+  internal Type4ShadingContext(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4 shading,
+    global::DripSharp.Runtime.JavaColorModel cm, global::SkiaSharp.SKMatrix xform,
+    global::DripSharp.PdfCarton.Util.Matrix matrix, global::SkiaSharp.SKRectI deviceBounds)
+  : base(shading, cm, xform, matrix) {
+    global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type4ShadingContext.LOG,
+      global::DripSharp.Runtime.JavaCompat.StringValueOf("Type4ShadingContext"));
+    this.bitsPerFlag = shading.GetBitsPerFlag();
+    global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type4ShadingContext.LOG,
+      global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("bitsPerFlag: ",
+      this.bitsPerFlag)));
+    this.setTriangleList(shading.collectTriangles(xform, matrix));
+    this.CreatePixelTable(deviceBounds);
+  }
 }

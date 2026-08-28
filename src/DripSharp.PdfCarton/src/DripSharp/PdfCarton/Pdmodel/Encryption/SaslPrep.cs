@@ -9,105 +9,149 @@
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 internal class SaslPrep {
-private SaslPrep() {}
+  private SaslPrep() {}
 
-internal static string saslPrepQuery(string str) {
-return global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.saslPrep(str, true);
-}
+  internal static string saslPrepQuery(string str) {
+    return global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.saslPrep(str, true);
+  }
 
-internal static string saslPrepStored(string str) {
-return global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.saslPrep(str, false);
-}
+  internal static string saslPrepStored(string str) {
+    return global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.saslPrep(str, false);
+  }
 
-private static string saslPrep(string str, bool allowUnassigned) {
-char[] chars = str.ToCharArray();
-for (int i__77_18 = 0; (i__77_18 < str.Length); i__77_18++) {
-char ch__79_18 = str[i__77_18];
-if (global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.nonAsciiSpace(ch__79_18)) {
-chars[i__77_18] = ' ';
-}
-}
-int length = 0;
-for (int i__87_18 = 0; (i__87_18 < str.Length); i__87_18++) {
-char ch__89_18 = chars[i__87_18];
-if (!(global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.mappedToNothing(ch__89_18))) {
-chars[length++] = ch__89_18;
-}
-}
-string normalized = global::DripSharp.Runtime.JavaCompat.Normalize(global::DripSharp.Runtime.JavaCompat.CharBufferWrap(chars, 0, length), global::System.Text.NormalizationForm.FormKC);
-bool containsRandALCat = false;
-bool containsLCat = false;
-bool initialRandALCat = false;
-int i__102_13 = 0;
-while ((i__102_13 < normalized.Length)) {
-int codepoint = global::DripSharp.Runtime.JavaCompat.CodePointAt(normalized, i__102_13);
-if (global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.prohibited(codepoint)) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Prohibited character '", global::DripSharp.Runtime.JavaCompat.CharacterName(codepoint)), "' at position "), i__102_13));
-}
-sbyte directionality = global::DripSharp.Runtime.PdfCartonFontCompat.CharacterDirectionality(codepoint);
-bool isRandALcat = (((int)(directionality) == (int)(1)) || ((int)(directionality) == (int)(2)));
-containsRandALCat |= isRandALcat;
-containsLCat |= ((int)(directionality) == (int)(0));
-initialRandALCat |= ((i__102_13 == 0) && isRandALcat);
-if ((!allowUnassigned && !(global::DripSharp.Runtime.JavaCompat.CharacterIsDefined(codepoint)))) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Character at position ", i__102_13), " is unassigned"));
-}
-i__102_13 += global::DripSharp.Runtime.JavaCompat.CharacterCharCount(codepoint);
-if (((initialRandALCat && (i__102_13 >= normalized.Length)) && !isRandALcat)) {
-throw new global::System.ArgumentException("First character is RandALCat, but last character is not");
-}
-}
-if ((containsRandALCat && containsLCat)) {
-throw new global::System.ArgumentException("Contains both RandALCat characters and LCat characters");
-}
-return normalized;
-}
+  private static string saslPrep(string str, bool allowUnassigned) {
+    char[] chars = str.ToCharArray();
+    for (int i__77_18 = 0; (i__77_18 < str.Length); i__77_18++) {
+      char ch__79_18 = str[i__77_18];
+      if (global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.nonAsciiSpace(ch__79_18)) {
+        chars[i__77_18] = ' ';
+      }
+    }
+    int length = 0;
+    for (int i__87_18 = 0; (i__87_18 < str.Length); i__87_18++) {
+      char ch__89_18 = chars[i__87_18];
+      if (!(global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.mappedToNothing(ch__89_18))) {
+        chars[length++] = ch__89_18;
+      }
+    }
+    string normalized
+      = global::DripSharp.Runtime.JavaCompat.Normalize(global::DripSharp.Runtime.JavaCompat.CharBufferWrap(chars,
+      0, length), global::System.Text.NormalizationForm.FormKC);
+    bool containsRandALCat = false;
+    bool containsLCat = false;
+    bool initialRandALCat = false;
+    int i__102_13 = 0;
+    while ((i__102_13 < normalized.Length)) {
+      int codepoint = global::DripSharp.Runtime.JavaCompat.CodePointAt(normalized, i__102_13);
+      if (global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.prohibited(codepoint)) {
+        throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Prohibited character '",
+          global::DripSharp.Runtime.JavaCompat.CharacterName(codepoint)), "' at position "),
+          i__102_13));
+      }
+      sbyte directionality
+        = global::DripSharp.Runtime.PdfCartonFontCompat.CharacterDirectionality(codepoint);
+      bool isRandALcat = (((int)directionality == (int)1) || ((int)directionality == (int)2));
+      containsRandALCat |= isRandALcat;
+      containsLCat |= ((int)directionality == (int)0);
+      initialRandALCat |= ((i__102_13 == 0) && isRandALcat);
+      if ((!allowUnassigned
+        && !global::DripSharp.Runtime.JavaCompat.CharacterIsDefined(codepoint))) {
+        throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Character at position ",
+          i__102_13), " is unassigned"));
+      }
+      i__102_13 += global::DripSharp.Runtime.JavaCompat.CharacterCharCount(codepoint);
+      if (((initialRandALCat && (i__102_13 >= normalized.Length)) && !isRandALcat)) {
+        throw new global::System.ArgumentException("First character is RandALCat, but last character is not");
+      }
+    }
+    if ((containsRandALCat && containsLCat)) {
+      throw new global::System.ArgumentException("Contains both RandALCat characters and LCat characters");
+    }
+    return normalized;
+  }
 
-internal static bool prohibited(int codepoint) {
-return (((((((((global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.nonAsciiSpace(unchecked((char)(unchecked((char)(codepoint))))) || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.asciiControl(unchecked((char)(unchecked((char)(codepoint)))))) || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.nonAsciiControl(codepoint)) || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.privateUse(codepoint)) || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.nonCharacterCodePoint(codepoint)) || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.surrogateCodePoint(codepoint)) || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.inappropriateForPlainText(codepoint)) || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.inappropriateForCanonical(codepoint)) || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.changeDisplayProperties(codepoint)) || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.tagging(codepoint));
-}
+  internal static bool prohibited(int codepoint) {
+    return (((((((((global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.nonAsciiSpace(unchecked((char)(unchecked((char)(codepoint)))))
+      || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.asciiControl(unchecked((char)(unchecked((char)(codepoint))))))
+      || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.nonAsciiControl(codepoint))
+      || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.privateUse(codepoint))
+      || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.nonCharacterCodePoint(codepoint))
+      || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.surrogateCodePoint(codepoint))
+      || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.inappropriateForPlainText(codepoint))
+      || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.inappropriateForCanonical(codepoint))
+      || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.changeDisplayProperties(codepoint))
+      || global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.tagging(codepoint));
+  }
 
-private static bool tagging(int codepoint) {
-return ((codepoint == 917505) || ((917536 <= codepoint) && (codepoint <= 917631)));
-}
+  private static bool tagging(int codepoint) {
+    return ((codepoint == 917505) || ((917536 <= codepoint) && (codepoint <= 917631)));
+  }
 
-private static bool changeDisplayProperties(int codepoint) {
-return (((((((((((((((codepoint == 832) || (codepoint == 833)) || (codepoint == 8206)) || (codepoint == 8207)) || (codepoint == 8234)) || (codepoint == 8235)) || (codepoint == 8236)) || (codepoint == 8237)) || (codepoint == 8238)) || (codepoint == 8298)) || (codepoint == 8299)) || (codepoint == 8300)) || (codepoint == 8301)) || (codepoint == 8302)) || (codepoint == 8303));
-}
+  private static bool changeDisplayProperties(int codepoint) {
+    return (((((((((((((((codepoint == 832) || (codepoint == 833)) || (codepoint == 8206))
+      || (codepoint == 8207)) || (codepoint == 8234)) || (codepoint == 8235)) || (codepoint
+      == 8236)) || (codepoint == 8237)) || (codepoint == 8238)) || (codepoint == 8298))
+      || (codepoint == 8299)) || (codepoint == 8300)) || (codepoint == 8301)) || (codepoint
+      == 8302)) || (codepoint == 8303));
+  }
 
-private static bool inappropriateForCanonical(int codepoint) {
-return ((12272 <= codepoint) && (codepoint <= 12283));
-}
+  private static bool inappropriateForCanonical(int codepoint) {
+    return ((12272 <= codepoint) && (codepoint <= 12283));
+  }
 
-private static bool inappropriateForPlainText(int codepoint) {
-return (((((codepoint == 65529) || (codepoint == 65530)) || (codepoint == 65531)) || (codepoint == 65532)) || (codepoint == 65533));
-}
+  private static bool inappropriateForPlainText(int codepoint) {
+    return (((((codepoint == 65529) || (codepoint == 65530)) || (codepoint == 65531)) || (codepoint
+      == 65532)) || (codepoint == 65533));
+  }
 
-private static bool surrogateCodePoint(int codepoint) {
-return ((55296 <= codepoint) && (codepoint <= 57343));
-}
+  private static bool surrogateCodePoint(int codepoint) {
+    return ((55296 <= codepoint) && (codepoint <= 57343));
+  }
 
-private static bool nonCharacterCodePoint(int codepoint) {
-return (((((((((((((((((((64976 <= codepoint) && (codepoint <= 65007)) || ((65534 <= codepoint) && (codepoint <= 65535))) || ((131070 <= codepoint) && (codepoint <= 131071))) || ((196606 <= codepoint) && (codepoint <= 196607))) || ((262142 <= codepoint) && (codepoint <= 262143))) || ((327678 <= codepoint) && (codepoint <= 327679))) || ((393214 <= codepoint) && (codepoint <= 393215))) || ((458750 <= codepoint) && (codepoint <= 458751))) || ((524286 <= codepoint) && (codepoint <= 524287))) || ((589822 <= codepoint) && (codepoint <= 589823))) || ((655358 <= codepoint) && (codepoint <= 655359))) || ((720894 <= codepoint) && (codepoint <= 720895))) || ((786430 <= codepoint) && (codepoint <= 786431))) || ((851966 <= codepoint) && (codepoint <= 851967))) || ((917502 <= codepoint) && (codepoint <= 917503))) || ((983038 <= codepoint) && (codepoint <= 983039))) || ((1048574 <= codepoint) && (codepoint <= 1048575))) || ((1114110 <= codepoint) && (codepoint <= 1114111)));
-}
+  private static bool nonCharacterCodePoint(int codepoint) {
+    return (((((((((((((((((((64976 <= codepoint) && (codepoint <= 65007)) || ((65534 <= codepoint)
+      && (codepoint <= 65535))) || ((131070 <= codepoint) && (codepoint <= 131071))) || ((196606
+      <= codepoint) && (codepoint <= 196607))) || ((262142 <= codepoint) && (codepoint <= 262143)))
+      || ((327678 <= codepoint) && (codepoint <= 327679))) || ((393214 <= codepoint) && (codepoint
+      <= 393215))) || ((458750 <= codepoint) && (codepoint <= 458751))) || ((524286 <= codepoint)
+      && (codepoint <= 524287))) || ((589822 <= codepoint) && (codepoint <= 589823))) || ((655358
+      <= codepoint) && (codepoint <= 655359))) || ((720894 <= codepoint) && (codepoint <= 720895)))
+      || ((786430 <= codepoint) && (codepoint <= 786431))) || ((851966 <= codepoint) && (codepoint
+      <= 851967))) || ((917502 <= codepoint) && (codepoint <= 917503))) || ((983038 <= codepoint)
+      && (codepoint <= 983039))) || ((1048574 <= codepoint) && (codepoint <= 1048575))) || ((1114110
+      <= codepoint) && (codepoint <= 1114111)));
+  }
 
-private static bool privateUse(int codepoint) {
-return ((((57344 <= codepoint) && (codepoint <= 63743)) || ((983040 <= codepoint) && (codepoint <= 1048573))) || ((1048576 <= codepoint) && (codepoint <= 1114109)));
-}
+  private static bool privateUse(int codepoint) {
+    return ((((57344 <= codepoint) && (codepoint <= 63743)) || ((983040 <= codepoint) && (codepoint
+      <= 1048573))) || ((1048576 <= codepoint) && (codepoint <= 1114109)));
+  }
 
-private static bool nonAsciiControl(int codepoint) {
-return (((((((((((((((((128 <= codepoint) && (codepoint <= 159)) || (codepoint == 1757)) || (codepoint == 1807)) || (codepoint == 6158)) || (codepoint == 8204)) || (codepoint == 8205)) || (codepoint == 8232)) || (codepoint == 8233)) || (codepoint == 8288)) || (codepoint == 8289)) || (codepoint == 8290)) || (codepoint == 8291)) || ((8298 <= codepoint) && (codepoint <= 8303))) || (codepoint == 65279)) || ((65529 <= codepoint) && (codepoint <= 65532))) || ((119155 <= codepoint) && (codepoint <= 119162)));
-}
+  private static bool nonAsciiControl(int codepoint) {
+    return (((((((((((((((((128 <= codepoint) && (codepoint <= 159)) || (codepoint == 1757))
+      || (codepoint == 1807)) || (codepoint == 6158)) || (codepoint == 8204)) || (codepoint
+      == 8205)) || (codepoint == 8232)) || (codepoint == 8233)) || (codepoint == 8288))
+      || (codepoint == 8289)) || (codepoint == 8290)) || (codepoint == 8291)) || ((8298
+      <= codepoint) && (codepoint <= 8303))) || (codepoint == 65279)) || ((65529 <= codepoint)
+      && (codepoint <= 65532))) || ((119155 <= codepoint) && (codepoint <= 119162)));
+  }
 
-private static bool asciiControl(char ch) {
-return ((((int)('\u0000') <= (int)(ch)) && ((int)(ch) <= (int)('\u001F'))) || ((int)(ch) == (int)('\u007F')));
-}
+  private static bool asciiControl(char ch) {
+    return ((((int)'\u0000' <= (int)ch) && ((int)ch <= (int)'\u001F')) || ((int)ch
+      == (int)'\u007F'));
+  }
 
-private static bool nonAsciiSpace(char ch) {
-return (((((((int)(ch) == (int)('\u00A0')) || ((int)(ch) == (int)('\u1680'))) || (((int)('\u2000') <= (int)(ch)) && ((int)(ch) <= (int)('\u200B')))) || ((int)(ch) == (int)('\u202F'))) || ((int)(ch) == (int)('\u205F'))) || ((int)(ch) == (int)('\u3000')));
-}
+  private static bool nonAsciiSpace(char ch) {
+    return (((((((int)ch == (int)'\u00A0') || ((int)ch == (int)'\u1680'))
+      || (((int)'\u2000' <= (int)ch) && ((int)ch <= (int)'\u200B'))) || ((int)ch == (int)'\u202F'))
+      || ((int)ch == (int)'\u205F')) || ((int)ch == (int)'\u3000'));
+  }
 
-private static bool mappedToNothing(char ch) {
-return (((((((((((((int)(ch) == (int)('\u00AD')) || ((int)(ch) == (int)('\u034F'))) || ((int)(ch) == (int)('\u1806'))) || ((int)(ch) == (int)('\u180B'))) || ((int)(ch) == (int)('\u180C'))) || ((int)(ch) == (int)('\u180D'))) || ((int)(ch) == (int)('\u200B'))) || ((int)(ch) == (int)('\u200C'))) || ((int)(ch) == (int)('\u200D'))) || ((int)(ch) == (int)('\u2060'))) || (((int)('\uFE00') <= (int)(ch)) && ((int)(ch) <= (int)('\uFE0F')))) || ((int)(ch) == (int)('\uFEFF')));
-}
+  private static bool mappedToNothing(char ch) {
+    return (((((((((((((int)ch == (int)'\u00AD') || ((int)ch == (int)'\u034F')) || ((int)ch
+      == (int)'\u1806')) || ((int)ch == (int)'\u180B')) || ((int)ch == (int)'\u180C')) || ((int)ch
+      == (int)'\u180D')) || ((int)ch == (int)'\u200B')) || ((int)ch == (int)'\u200C')) || ((int)ch
+      == (int)'\u200D')) || ((int)ch == (int)'\u2060')) || (((int)'\uFE00' <= (int)ch) && ((int)ch
+      <= (int)'\uFE0F'))) || ((int)ch == (int)'\uFEFF'));
+  }
 }

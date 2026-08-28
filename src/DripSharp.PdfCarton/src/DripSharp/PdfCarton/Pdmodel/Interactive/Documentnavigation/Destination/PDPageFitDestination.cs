@@ -8,30 +8,35 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination;
 
-public class PDPageFitDestination : global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination {
-protected internal const string Type = "Fit";
+public class PDPageFitDestination
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination {
+  protected internal const string Type = "Fit";
 
-protected internal const string TypeBounded = "FitB";
+  protected internal const string TypeBounded = "FitB";
 
-public PDPageFitDestination() {
-base.Array.GrowToSize(2);
-base.Array.SetName(1, global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitDestination.Type);
-}
+  public PDPageFitDestination() {
+    base.Array.GrowToSize(2);
+    base.Array.SetName(1,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitDestination.Type);
+  }
 
-public PDPageFitDestination(global::DripSharp.PdfCarton.Cos.COSArray arr) : base(arr) {
+  public PDPageFitDestination(global::DripSharp.PdfCarton.Cos.COSArray arr) : base(arr) {
 
-}
+  }
 
-public virtual bool FitBoundingBox() {
-return global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitDestination.TypeBounded, base.Array.GetName(1));
-}
+  public virtual bool FitBoundingBox() {
+    return global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitDestination.TypeBounded,
+      base.Array.GetName(1));
+  }
 
-public virtual void SetFitBoundingBox(bool fitBoundingBox) {
-base.Array.GrowToSize(2);
-if (fitBoundingBox) {
-base.Array.SetName(1, global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitDestination.TypeBounded);
-} else {
-base.Array.SetName(1, global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitDestination.Type);
-}
-}
+  public virtual void SetFitBoundingBox(bool fitBoundingBox) {
+    base.Array.GrowToSize(2);
+    if (fitBoundingBox) {
+      base.Array.SetName(1,
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitDestination.TypeBounded);
+    } else {
+      base.Array.SetName(1,
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitDestination.Type);
+    }
+  }
 }

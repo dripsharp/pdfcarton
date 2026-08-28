@@ -9,7 +9,8 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public class PDMMType1Font : global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font {
-public PDMMType1Font(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary) : base(fontDictionary) {
+  public PDMMType1Font(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary)
+  : base(fontDictionary) {
 
-}
+  }
 }

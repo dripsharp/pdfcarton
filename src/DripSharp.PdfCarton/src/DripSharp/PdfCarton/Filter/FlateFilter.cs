@@ -9,23 +9,31 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class FlateFilter : global::DripSharp.PdfCarton.Filter.Filter {
-public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded, global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters, int index) {
-global::DripSharp.PdfCarton.Cos.COSDictionary decodeParams = this.GetDecodeParams(parameters, index);
-using (global::DripSharp.PdfCarton.Filter.FlateFilterDecoderStream decoderStream = new global::DripSharp.PdfCarton.Filter.FlateFilterDecoderStream(encoded)) {
-global::System.IO.Stream wrapPredictor = global::DripSharp.PdfCarton.Filter.Predictor.wrapPredictor(decoded, decodeParams);
-global::DripSharp.PdfCarton.IO.IOUtils.Copy(decoderStream, wrapPredictor);
-wrapPredictor.Flush();
-}
-return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
-}
+  public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded,
+    global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters,
+    int index) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary decodeParams = this.GetDecodeParams(parameters,
+      index);
+    using (global::DripSharp.PdfCarton.Filter.FlateFilterDecoderStream decoderStream
+      = new global::DripSharp.PdfCarton.Filter.FlateFilterDecoderStream(encoded)) {
+      global::System.IO.Stream wrapPredictor
+        = global::DripSharp.PdfCarton.Filter.Predictor.wrapPredictor(decoded, decodeParams);
+      global::DripSharp.PdfCarton.IO.IOUtils.Copy(decoderStream, wrapPredictor);
+      wrapPredictor.Flush();
+    }
+    return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
+  }
 
-public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
-int compressionLevel = global::DripSharp.PdfCarton.Filter.Filter.GetCompressionLevel();
-global::DripSharp.Runtime.JavaDeflater deflater = new global::DripSharp.Runtime.JavaDeflater(compressionLevel);
-using (global::DripSharp.Runtime.JavaDeflaterOutputStream @out = new global::DripSharp.Runtime.JavaDeflaterOutputStream(encoded, deflater)) {
-global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, @out);
-}
-encoded.Flush();
-deflater.End();
-}
+  public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded,
+    global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
+    int compressionLevel = global::DripSharp.PdfCarton.Filter.Filter.GetCompressionLevel();
+    global::DripSharp.Runtime.JavaDeflater deflater
+      = new global::DripSharp.Runtime.JavaDeflater(compressionLevel);
+    using (global::DripSharp.Runtime.JavaDeflaterOutputStream @out
+      = new global::DripSharp.Runtime.JavaDeflaterOutputStream(encoded, deflater)) {
+      global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, @out);
+    }
+    encoded.Flush();
+    deflater.End();
+  }
 }

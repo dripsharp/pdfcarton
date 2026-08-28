@@ -9,30 +9,48 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator.State;
 
 public class SetMatrix : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public SetMatrix(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+  public SetMatrix(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) < 6)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-if (!(this.CheckArrayTypesClass(arguments, typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber a = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0)!);
-global::DripSharp.PdfCarton.Cos.COSNumber b = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 1)!);
-global::DripSharp.PdfCarton.Cos.COSNumber c = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 2)!);
-global::DripSharp.PdfCarton.Cos.COSNumber d = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 3)!);
-global::DripSharp.PdfCarton.Cos.COSNumber e = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 4)!);
-global::DripSharp.PdfCarton.Cos.COSNumber f = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 5)!);
-global::DripSharp.PdfCarton.Util.Matrix matrix = new global::DripSharp.PdfCarton.Util.Matrix(a.FloatValue(), b.FloatValue(), c.FloatValue(), d.FloatValue(), e.FloatValue(), f.FloatValue());
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-context.SetTextMatrix(matrix);
-context.SetTextLineMatrix(matrix.Clone());
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) < 6)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        arguments);
+    }
+    if (!(this.CheckArrayTypesClass(arguments,
+      typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSNumber a
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+      0)!);
+    global::DripSharp.PdfCarton.Cos.COSNumber b
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+      1)!);
+    global::DripSharp.PdfCarton.Cos.COSNumber c
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+      2)!);
+    global::DripSharp.PdfCarton.Cos.COSNumber d
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+      3)!);
+    global::DripSharp.PdfCarton.Cos.COSNumber e
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+      4)!);
+    global::DripSharp.PdfCarton.Cos.COSNumber f
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+      5)!);
+    global::DripSharp.PdfCarton.Util.Matrix matrix
+      = new global::DripSharp.PdfCarton.Util.Matrix(a.FloatValue(), b.FloatValue(), c.FloatValue(),
+      d.FloatValue(), e.FloatValue(), f.FloatValue());
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    context.SetTextMatrix(matrix);
+    context.SetTextLineMatrix(matrix.Clone());
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetMatrix;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetMatrix;
+  }
 }

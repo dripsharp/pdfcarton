@@ -8,64 +8,73 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Cos;
 
-public sealed class COSObjectKey : global::System.IComparable<global::DripSharp.PdfCarton.Cos.COSObjectKey> {
-private static readonly int NUMBER_OFFSET = 16;
+public sealed class COSObjectKey
+: global::System.IComparable<global::DripSharp.PdfCarton.Cos.COSObjectKey> {
+  private static readonly int NUMBER_OFFSET = 16;
 
-private static readonly long GENERATION_MASK = ((long)(global::System.Math.Pow((double)(2), (double)(global::DripSharp.PdfCarton.Cos.COSObjectKey.NUMBER_OFFSET))) - 1);
+  private static readonly long GENERATION_MASK = ((long)(global::System.Math.Pow((double)(2),
+    (double)(global::DripSharp.PdfCarton.Cos.COSObjectKey.NUMBER_OFFSET))) - 1);
 
-private readonly long numberAndGeneration = default;
+  private readonly long numberAndGeneration = default;
 
-private readonly int streamIndex = default;
+  private readonly int streamIndex = default;
 
-public COSObjectKey(long num, int gen) : this(num, gen, -1) {
+  public COSObjectKey(long num, int gen) : this(num, gen, -1) {
 
-}
+  }
 
-public COSObjectKey(long num, int gen, int index) {
-if ((num < 0)) {
-throw new global::System.ArgumentException("Object number must not be a negative value");
-}
-if ((gen < 0)) {
-throw new global::System.ArgumentException("Generation number must not be a negative value");
-}
-this.numberAndGeneration = global::DripSharp.PdfCarton.Cos.COSObjectKey.ComputeInternalHash(num, gen);
-this.streamIndex = index;
-}
+  public COSObjectKey(long num, int gen, int index) {
+    if ((num < 0)) {
+      throw new global::System.ArgumentException("Object number must not be a negative value");
+    }
+    if ((gen < 0)) {
+      throw new global::System.ArgumentException("Generation number must not be a negative value");
+    }
+    this.numberAndGeneration = global::DripSharp.PdfCarton.Cos.COSObjectKey.ComputeInternalHash(num,
+      gen);
+    this.streamIndex = index;
+  }
 
-public static long ComputeInternalHash(long num, int gen) {
-return ((num << unchecked((int)(global::DripSharp.PdfCarton.Cos.COSObjectKey.NUMBER_OFFSET))) | (gen & global::DripSharp.PdfCarton.Cos.COSObjectKey.GENERATION_MASK));
-}
+  public static long ComputeInternalHash(long num, int gen) {
+    return ((num << unchecked((int)(global::DripSharp.PdfCarton.Cos.COSObjectKey.NUMBER_OFFSET))) | (gen & global::DripSharp.PdfCarton.Cos.COSObjectKey.GENERATION_MASK));
+  }
 
-public long GetInternalHash() {
-return this.numberAndGeneration;
-}
+  public long GetInternalHash() {
+    return this.numberAndGeneration;
+  }
 
-public override bool Equals(object obj) {
-global::DripSharp.PdfCarton.Cos.COSObjectKey objToBeCompared = ((obj is global::DripSharp.PdfCarton.Cos.COSObjectKey) ? (global::DripSharp.PdfCarton.Cos.COSObjectKey)((global::DripSharp.PdfCarton.Cos.COSObjectKey)(obj!)) : (global::DripSharp.PdfCarton.Cos.COSObjectKey)(default!));
-return ((objToBeCompared != default!) && (objToBeCompared.numberAndGeneration == this.numberAndGeneration));
-}
+  public override bool Equals(object obj) {
+    global::DripSharp.PdfCarton.Cos.COSObjectKey objToBeCompared
+      = ((obj is global::DripSharp.PdfCarton.Cos.COSObjectKey)
+      ? (global::DripSharp.PdfCarton.Cos.COSObjectKey)((global::DripSharp.PdfCarton.Cos.COSObjectKey)(obj!))
+      : (global::DripSharp.PdfCarton.Cos.COSObjectKey)(default!));
+    return ((objToBeCompared != default!) && (objToBeCompared.numberAndGeneration
+      == this.numberAndGeneration));
+  }
 
-public int GetGeneration() {
-return (int)((this.numberAndGeneration & global::DripSharp.PdfCarton.Cos.COSObjectKey.GENERATION_MASK));
-}
+  public int GetGeneration() {
+    return (int)((this.numberAndGeneration & global::DripSharp.PdfCarton.Cos.COSObjectKey.GENERATION_MASK));
+  }
 
-public long GetNumber() {
-return (this.numberAndGeneration >>> unchecked((int)(global::DripSharp.PdfCarton.Cos.COSObjectKey.NUMBER_OFFSET)));
-}
+  public long GetNumber() {
+    return (this.numberAndGeneration >>> unchecked((int)(global::DripSharp.PdfCarton.Cos.COSObjectKey.NUMBER_OFFSET)));
+  }
 
-public int GetStreamIndex() {
-return this.streamIndex;
-}
+  public int GetStreamIndex() {
+    return this.streamIndex;
+  }
 
-public override int GetHashCode() {
-return global::DripSharp.Runtime.JavaCompat.LongHashCode(this.numberAndGeneration);
-}
+  public override int GetHashCode() {
+    return global::DripSharp.Runtime.JavaCompat.LongHashCode(this.numberAndGeneration);
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.GetNumber(), " "), this.GetGeneration()), " R");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.GetNumber(),
+      " "), this.GetGeneration()), " R");
+  }
 
-public int CompareTo(global::DripSharp.PdfCarton.Cos.COSObjectKey other) {
-return global::DripSharp.Runtime.JavaCompat.CompareLong(this.numberAndGeneration, other.numberAndGeneration);
-}
+  public int CompareTo(global::DripSharp.PdfCarton.Cos.COSObjectKey other) {
+    return global::DripSharp.Runtime.JavaCompat.CompareLong(this.numberAndGeneration,
+      other.numberAndGeneration);
+  }
 }

@@ -9,117 +9,142 @@
 namespace DripSharp.PdfCarton.Preflight;
 
 public class Validator_A1b {
-public static void Main(string[] args) {
-if ((args.Length == 0)) {
-global::DripSharp.PdfCarton.Preflight.Validator_A1b.usage();
-global::System.Environment.Exit(1);
-}
-int posFile = 0;
-bool outputXml = global::DripSharp.Runtime.JavaCompat.Equals("xml", args[posFile]);
-posFile += (outputXml ? 1 : 0);
-bool isGroup = global::DripSharp.Runtime.JavaCompat.Equals("group", args[posFile]);
-posFile += (isGroup ? 1 : 0);
-bool isBatch = global::DripSharp.Runtime.JavaCompat.Equals("batch", args[posFile]);
-posFile += (isBatch ? 1 : 0);
-if ((isGroup || isBatch)) {
-global::System.Collections.Generic.IList<global::System.IO.FileInfo> ftp = global::DripSharp.PdfCarton.Preflight.Validator_A1b.listFiles(args[posFile]);
-int status = 0;
-if (!outputXml) {
-foreach (global::System.IO.FileInfo file2 in ftp) {
-status |= global::DripSharp.PdfCarton.Preflight.Validator_A1b.runSimple(file2);
-}
-global::System.Environment.Exit(status);
-} else {
-global::System.Xml.XmlWriterSettings transformer__96_29 = global::DripSharp.Runtime.JavaCompat.XmlWriterSettingsClone(new global::System.Xml.XmlWriterSettings());
-global::DripSharp.Runtime.JavaCompat.XmlSetOutputProperty(transformer__96_29, "indent", "yes");
-global::DripSharp.Runtime.JavaCompat.XmlSetOutputProperty(transformer__96_29, "{http://xml.apache.org/xslt}indent-amount", "2");
-global::DripSharp.PdfCarton.Preflight.Parser.XmlResultParser xrp__99_33 = new global::DripSharp.PdfCarton.Preflight.Parser.XmlResultParser();
-if (isGroup) {
-global::System.Xml.XmlDocument document__103_30 = new global::System.Xml.XmlDocument();
-global::System.Xml.XmlElement root = document__103_30.CreateElement("preflights");
-document__103_30.AppendChild(root);
-root.SetAttribute("count", global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%d", global::DripSharp.Runtime.JavaCompat.CollectionCount(ftp)));
-foreach (global::System.IO.FileInfo file__107_31 in ftp) {
-global::System.Xml.XmlElement result__109_33 = xrp__99_33.Validate(document__103_30, file__107_31);
-root.AppendChild(result__109_33);
-}
-global::DripSharp.Runtime.JavaCompat.XmlTransform(transformer__96_29, document__103_30, global::DripSharp.Runtime.JavaCompat.OpenFileOutput(new global::System.IO.FileInfo(global::DripSharp.Runtime.JavaCompat.Concat(args[posFile], ".preflight.xml"))));
-} else {
-foreach (global::System.IO.FileInfo file__118_31 in ftp) {
-global::System.Xml.XmlElement result__120_33 = xrp__99_33.Validate(file__118_31);
-global::System.Xml.XmlDocument document__121_34 = result__120_33.OwnerDocument!;
-document__121_34.AppendChild(result__120_33);
-global::DripSharp.Runtime.JavaCompat.XmlTransform(transformer__96_29, document__121_34, global::DripSharp.Runtime.JavaCompat.OpenFileOutput(new global::System.IO.FileInfo(global::DripSharp.Runtime.JavaCompat.Concat(file__118_31.FullName, ".preflight.xml"))));
-}
-}
-}
-} else {
-if (!outputXml) {
-global::System.Environment.Exit(global::DripSharp.PdfCarton.Preflight.Validator_A1b.runSimple(new global::System.IO.FileInfo(args[posFile])));
-} else {
-global::DripSharp.PdfCarton.Preflight.Parser.XmlResultParser xrp__139_33 = new global::DripSharp.PdfCarton.Preflight.Parser.XmlResultParser();
-global::System.Xml.XmlElement result__140_25 = xrp__139_33.Validate(new global::System.IO.FileInfo(args[posFile]));
-global::System.Xml.XmlDocument document__141_26 = result__140_25.OwnerDocument!;
-document__141_26.AppendChild(result__140_25);
-global::System.Xml.XmlWriterSettings transformer__144_29 = global::DripSharp.Runtime.JavaCompat.XmlWriterSettingsClone(new global::System.Xml.XmlWriterSettings());
-global::DripSharp.Runtime.JavaCompat.XmlSetOutputProperty(transformer__144_29, "indent", "yes");
-global::DripSharp.Runtime.JavaCompat.XmlSetOutputProperty(transformer__144_29, "{http://xml.apache.org/xslt}indent-amount", "2");
-global::DripSharp.Runtime.JavaCompat.XmlTransform(transformer__144_29, document__141_26, global::DripSharp.Runtime.JavaCompat.@out);
-}
-}
-}
+  public static void Main(string[] args) {
+    if ((args.Length == 0)) {
+      global::DripSharp.PdfCarton.Preflight.Validator_A1b.usage();
+      global::System.Environment.Exit(1);
+    }
+    int posFile = 0;
+    bool outputXml = global::DripSharp.Runtime.JavaCompat.Equals("xml", args[posFile]);
+    posFile += (outputXml ? 1 : 0);
+    bool isGroup = global::DripSharp.Runtime.JavaCompat.Equals("group", args[posFile]);
+    posFile += (isGroup ? 1 : 0);
+    bool isBatch = global::DripSharp.Runtime.JavaCompat.Equals("batch", args[posFile]);
+    posFile += (isBatch ? 1 : 0);
+    if ((isGroup || isBatch)) {
+      global::System.Collections.Generic.IList<global::System.IO.FileInfo> ftp
+        = global::DripSharp.PdfCarton.Preflight.Validator_A1b.listFiles(args[posFile]);
+      int status = 0;
+      if (!outputXml) {
+        foreach (global::System.IO.FileInfo file2 in ftp) {
+          status |= global::DripSharp.PdfCarton.Preflight.Validator_A1b.runSimple(file2);
+        }
+        global::System.Environment.Exit(status);
+      } else {
+        global::System.Xml.XmlWriterSettings transformer__96_29
+          = global::DripSharp.Runtime.JavaCompat.XmlWriterSettingsClone(new global::System.Xml.XmlWriterSettings());
+        global::DripSharp.Runtime.JavaCompat.XmlSetOutputProperty(transformer__96_29, "indent",
+          "yes");
+        global::DripSharp.Runtime.JavaCompat.XmlSetOutputProperty(transformer__96_29,
+          "{http://xml.apache.org/xslt}indent-amount", "2");
+        global::DripSharp.PdfCarton.Preflight.Parser.XmlResultParser xrp__99_33
+          = new global::DripSharp.PdfCarton.Preflight.Parser.XmlResultParser();
+        if (isGroup) {
+          global::System.Xml.XmlDocument document__103_30 = new global::System.Xml.XmlDocument();
+          global::System.Xml.XmlElement root = document__103_30.CreateElement("preflights");
+          document__103_30.AppendChild(root);
+          root.SetAttribute("count", global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%d",
+            global::DripSharp.Runtime.JavaCompat.CollectionCount(ftp)));
+          foreach (global::System.IO.FileInfo file__107_31 in ftp) {
+            global::System.Xml.XmlElement result__109_33 = xrp__99_33.Validate(document__103_30,
+              file__107_31);
+            root.AppendChild(result__109_33);
+          }
+          global::DripSharp.Runtime.JavaCompat.XmlTransform(transformer__96_29, document__103_30,
+            global::DripSharp.Runtime.JavaCompat.OpenFileOutput(new global::System.IO.FileInfo(global::DripSharp.Runtime.JavaCompat.Concat(args[posFile],
+            ".preflight.xml"))));
+        } else {
+          foreach (global::System.IO.FileInfo file__118_31 in ftp) {
+            global::System.Xml.XmlElement result__120_33 = xrp__99_33.Validate(file__118_31);
+            global::System.Xml.XmlDocument document__121_34 = result__120_33.OwnerDocument!;
+            document__121_34.AppendChild(result__120_33);
+            global::DripSharp.Runtime.JavaCompat.XmlTransform(transformer__96_29, document__121_34,
+              global::DripSharp.Runtime.JavaCompat.OpenFileOutput(new global::System.IO.FileInfo(global::DripSharp.Runtime.JavaCompat.Concat(file__118_31.FullName,
+              ".preflight.xml"))));
+          }
+        }
+      }
+    } else {
+      if (!outputXml) {
+        global::System.Environment.Exit(global::DripSharp.PdfCarton.Preflight.Validator_A1b.runSimple(new global::System.IO.FileInfo(args[posFile])));
+      } else {
+        global::DripSharp.PdfCarton.Preflight.Parser.XmlResultParser xrp__139_33
+          = new global::DripSharp.PdfCarton.Preflight.Parser.XmlResultParser();
+        global::System.Xml.XmlElement result__140_25
+          = xrp__139_33.Validate(new global::System.IO.FileInfo(args[posFile]));
+        global::System.Xml.XmlDocument document__141_26 = result__140_25.OwnerDocument!;
+        document__141_26.AppendChild(result__140_25);
+        global::System.Xml.XmlWriterSettings transformer__144_29
+          = global::DripSharp.Runtime.JavaCompat.XmlWriterSettingsClone(new global::System.Xml.XmlWriterSettings());
+        global::DripSharp.Runtime.JavaCompat.XmlSetOutputProperty(transformer__144_29, "indent",
+          "yes");
+        global::DripSharp.Runtime.JavaCompat.XmlSetOutputProperty(transformer__144_29,
+          "{http://xml.apache.org/xslt}indent-amount", "2");
+        global::DripSharp.Runtime.JavaCompat.XmlTransform(transformer__144_29, document__141_26,
+          global::DripSharp.Runtime.JavaCompat.@out);
+      }
+    }
+  }
 
-private static void usage() {
-string version = global::DripSharp.PdfCarton.Util.Version.GetVersion();
-global::DripSharp.Runtime.JavaCompat.@out.WriteLine("Usage : java org.apache.pdfbox.preflight.Validator_A1b [xml] [<mode>] <file path>");
-(global::DripSharp.Runtime.JavaCompat.@out).WriteLine();
-global::DripSharp.Runtime.JavaCompat.@out.WriteLine(" * xml : if set, generate xml output instead of text");
-global::DripSharp.Runtime.JavaCompat.@out.WriteLine(" * <mode> : if set, <file path> must be a file containing the PDF files to parse. <mode> can have 2 values:");
-global::DripSharp.Runtime.JavaCompat.@out.WriteLine("       batch : generate xml result files for each PDF file in the list");
-global::DripSharp.Runtime.JavaCompat.@out.WriteLine("       group : generate one xml result file for all the PDF files in the list.");
-global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.Runtime.JavaCompat.Concat("Version : ", version));
-}
+  private static void usage() {
+    string version = global::DripSharp.PdfCarton.Util.Version.GetVersion();
+    global::DripSharp.Runtime.JavaCompat.@out.WriteLine("Usage : java org.apache.pdfbox.preflight.Validator_A1b [xml] [<mode>] <file path>");
+    (global::DripSharp.Runtime.JavaCompat.@out).WriteLine();
+    global::DripSharp.Runtime.JavaCompat.@out.WriteLine(" * xml : if set, generate xml output instead of text");
+    global::DripSharp.Runtime.JavaCompat.@out.WriteLine(" * <mode> : if set, <file path> must be a file containing the PDF files to parse. <mode> can have 2 values:");
+    global::DripSharp.Runtime.JavaCompat.@out.WriteLine("       batch : generate xml result files for each PDF file in the list");
+    global::DripSharp.Runtime.JavaCompat.@out.WriteLine("       group : generate one xml result file for all the PDF files in the list.");
+    global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.Runtime.JavaCompat.Concat("Version : ",
+      version));
+  }
 
-private static int runSimple(global::System.IO.FileInfo file) {
-global::DripSharp.PdfCarton.Preflight.ValidationResult result = global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser.Validate(file);
-if (result.IsValid()) {
-global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The file ", file.Name), " is a valid PDF/A-1b file"));
-(global::DripSharp.Runtime.JavaCompat.@out).WriteLine();
-return 0;
-} else {
-global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The file ", file.Name), " is not a valid PDF/A-1b file, error(s) :"));
-foreach (global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error in result.GetErrorsList()) {
-(global::DripSharp.Runtime.JavaCompat.@out).Write(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(error.GetErrorCode(), " : "), error.GetDetails()));
-if ((error.GetPageNumber() != default!)) {
-global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.Runtime.JavaCompat.Concat(" on page ", (global::DripSharp.Runtime.JavaCompat.Unbox(error.GetPageNumber()) + 1)));
-} else {
-(global::DripSharp.Runtime.JavaCompat.@out).WriteLine();
-}
-}
-(global::DripSharp.Runtime.JavaCompat.@out).WriteLine();
-return -1;
-}
-}
+  private static int runSimple(global::System.IO.FileInfo file) {
+    global::DripSharp.PdfCarton.Preflight.ValidationResult result
+      = global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser.Validate(file);
+    if (result.IsValid()) {
+      global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The file ",
+        file.Name), " is a valid PDF/A-1b file"));
+      (global::DripSharp.Runtime.JavaCompat.@out).WriteLine();
+      return 0;
+    } else {
+      global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The file ",
+        file.Name), " is not a valid PDF/A-1b file, error(s) :"));
+      foreach (global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error in result.GetErrorsList()) {
+        (global::DripSharp.Runtime.JavaCompat.@out).Write(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(error.GetErrorCode(),
+          " : "), error.GetDetails()));
+        if ((error.GetPageNumber() != default!)) {
+          global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.Runtime.JavaCompat.Concat(" on page ",
+            (global::DripSharp.Runtime.JavaCompat.Unbox(error.GetPageNumber()) + 1)));
+        } else {
+          (global::DripSharp.Runtime.JavaCompat.@out).WriteLine();
+        }
+      }
+      (global::DripSharp.Runtime.JavaCompat.@out).WriteLine();
+      return -1;
+    }
+  }
 
-private static global::System.Collections.Generic.IList<global::System.IO.FileInfo> listFiles(string path) {
-global::System.Collections.Generic.IList<global::System.IO.FileInfo> files = new global::System.Collections.Generic.List<global::System.IO.FileInfo>();
-global::System.IO.FileInfo f = new global::System.IO.FileInfo(path);
-if (global::DripSharp.Runtime.JavaCompat.FileIsFile(f)) {
-global::System.IO.TextReader fr = global::DripSharp.Runtime.JavaCompat.OpenFileReader(f);
-using (global::System.IO.TextReader bufferedReader = fr) {
-while (global::DripSharp.Runtime.JavaCompat.ReaderReady(bufferedReader)) {
-global::System.IO.FileInfo fn = new global::System.IO.FileInfo(bufferedReader.ReadLine());
-if (global::DripSharp.Runtime.JavaCompat.FileExists(fn)) {
-global::DripSharp.Runtime.JavaCompat.Add(files, fn);
-}
-}
-}
-} else {
-global::System.IO.FileInfo[] fileList = global::DripSharp.Runtime.JavaCompat.FileListFiles(f);
-if ((fileList != default!)) {
-global::DripSharp.Runtime.JavaCompat.AddAll(files, global::DripSharp.Runtime.JavaCompat.AsList<global::System.IO.FileInfo>(fileList));
-}
-}
-return files;
-}
+  private static global::System.Collections.Generic.IList<global::System.IO.FileInfo> listFiles(string path) {
+    global::System.Collections.Generic.IList<global::System.IO.FileInfo> files
+      = new global::System.Collections.Generic.List<global::System.IO.FileInfo>();
+    global::System.IO.FileInfo f = new global::System.IO.FileInfo(path);
+    if (global::DripSharp.Runtime.JavaCompat.FileIsFile(f)) {
+      global::System.IO.TextReader fr = global::DripSharp.Runtime.JavaCompat.OpenFileReader(f);
+      using (global::System.IO.TextReader bufferedReader = fr) {
+        while (global::DripSharp.Runtime.JavaCompat.ReaderReady(bufferedReader)) {
+          global::System.IO.FileInfo fn = new global::System.IO.FileInfo(bufferedReader.ReadLine());
+          if (global::DripSharp.Runtime.JavaCompat.FileExists(fn)) {
+            global::DripSharp.Runtime.JavaCompat.Add(files, fn);
+          }
+        }
+      }
+    } else {
+      global::System.IO.FileInfo[] fileList = global::DripSharp.Runtime.JavaCompat.FileListFiles(f);
+      if ((fileList != default!)) {
+        global::DripSharp.Runtime.JavaCompat.AddAll(files,
+          global::DripSharp.Runtime.JavaCompat.AsList<global::System.IO.FileInfo>(fileList));
+      }
+    }
+    return files;
+  }
 }

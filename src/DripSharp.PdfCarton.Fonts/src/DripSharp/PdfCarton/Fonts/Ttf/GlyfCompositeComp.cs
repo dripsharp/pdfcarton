@@ -9,154 +9,161 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class GlyfCompositeComp {
-protected internal const short Arg1And2AreWords = unchecked((short)(1));
+  protected internal const short Arg1And2AreWords = unchecked((short)(1));
 
-protected internal const short ArgsAreXyValues = unchecked((short)(2));
+  protected internal const short ArgsAreXyValues = unchecked((short)(2));
 
-protected internal const short RoundXyToGrid = unchecked((short)(4));
+  protected internal const short RoundXyToGrid = unchecked((short)(4));
 
-protected internal const short WeHaveAScale = unchecked((short)(8));
+  protected internal const short WeHaveAScale = unchecked((short)(8));
 
-protected internal const short MoreComponents = unchecked((short)(32));
+  protected internal const short MoreComponents = unchecked((short)(32));
 
-protected internal const short WeHaveAnXAndYScale = unchecked((short)(64));
+  protected internal const short WeHaveAnXAndYScale = unchecked((short)(64));
 
-protected internal const short WeHaveATwoByTwo = unchecked((short)(128));
+  protected internal const short WeHaveATwoByTwo = unchecked((short)(128));
 
-protected internal const short WeHaveInstructions = unchecked((short)(256));
+  protected internal const short WeHaveInstructions = unchecked((short)(256));
 
-protected internal const short UseMyMetrics = unchecked((short)(512));
+  protected internal const short UseMyMetrics = unchecked((short)(512));
 
-private int firstIndex = default;
+  private int firstIndex = default;
 
-private int firstContour = default;
+  private int firstContour = default;
 
-private readonly short argument1 = default;
+  private readonly short argument1 = default;
 
-private readonly short argument2 = default;
+  private readonly short argument2 = default;
 
-private readonly short flags = default;
+  private readonly short flags = default;
 
-private readonly int glyphIndex = default;
+  private readonly int glyphIndex = default;
 
-private double xscale = 1.0D;
+  private double xscale = 1.0D;
 
-private double yscale = 1.0D;
+  private double yscale = 1.0D;
 
-private double scale01 = 0.0D;
+  private double scale01 = 0.0D;
 
-private double scale10 = 0.0D;
+  private double scale10 = 0.0D;
 
-private int xtranslate = 0;
+  private int xtranslate = 0;
 
-private int ytranslate = 0;
+  private int ytranslate = 0;
 
-private int point1 = 0;
+  private int point1 = 0;
 
-private int point2 = 0;
+  private int point2 = 0;
 
-internal GlyfCompositeComp(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais) {
-this.flags = bais.ReadSignedShort();
-this.glyphIndex = bais.ReadUnsignedShort();
-if (((this.flags & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.Arg1And2AreWords) != 0)) {
-this.argument1 = bais.ReadSignedShort();
-this.argument2 = bais.ReadSignedShort();
-} else {
-this.argument1 = unchecked((short)(unchecked((short)(bais.ReadSignedByte()))));
-this.argument2 = unchecked((short)(unchecked((short)(bais.ReadSignedByte()))));
-}
-if (((this.flags & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.ArgsAreXyValues) != 0)) {
-this.xtranslate = this.argument1;
-this.ytranslate = this.argument2;
-} else {
-this.point1 = this.argument1;
-this.point2 = this.argument2;
-}
-if (((this.flags & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.WeHaveAScale) != 0)) {
-int i__130_17 = bais.ReadSignedShort();
-this.xscale = (this.yscale = (i__130_17 / (double)(16384)));
-} else {
-if (((this.flags & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.WeHaveAnXAndYScale) != 0)) {
-short i__135_19 = bais.ReadSignedShort();
-this.xscale = (i__135_19 / (double)(16384));
-i__135_19 = bais.ReadSignedShort();
-this.yscale = (i__135_19 / (double)(16384));
-} else {
-if (((this.flags & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.WeHaveATwoByTwo) != 0)) {
-int i__142_17 = bais.ReadSignedShort();
-this.xscale = (i__142_17 / (double)(16384));
-i__142_17 = bais.ReadSignedShort();
-this.scale01 = (i__142_17 / (double)(16384));
-i__142_17 = bais.ReadSignedShort();
-this.scale10 = (i__142_17 / (double)(16384));
-i__142_17 = bais.ReadSignedShort();
-this.yscale = (i__142_17 / (double)(16384));
-}
-}
-}
-}
+  internal GlyfCompositeComp(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais) {
+    this.flags = bais.ReadSignedShort();
+    this.glyphIndex = bais.ReadUnsignedShort();
+    if (((this.flags & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.Arg1And2AreWords)
+      != 0)) {
+      this.argument1 = bais.ReadSignedShort();
+      this.argument2 = bais.ReadSignedShort();
+    } else {
+      this.argument1 = unchecked((short)(unchecked((short)(bais.ReadSignedByte()))));
+      this.argument2 = unchecked((short)(unchecked((short)(bais.ReadSignedByte()))));
+    }
+    if (((this.flags & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.ArgsAreXyValues)
+      != 0)) {
+      this.xtranslate = this.argument1;
+      this.ytranslate = this.argument2;
+    } else {
+      this.point1 = this.argument1;
+      this.point2 = this.argument2;
+    }
+    if (((this.flags & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.WeHaveAScale)
+      != 0)) {
+      int i__130_17 = bais.ReadSignedShort();
+      this.xscale = (this.yscale = (i__130_17 / (double)16384));
+    } else {
+      if (((this.flags & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.WeHaveAnXAndYScale)
+        != 0)) {
+        short i__135_19 = bais.ReadSignedShort();
+        this.xscale = (i__135_19 / (double)16384);
+        i__135_19 = bais.ReadSignedShort();
+        this.yscale = (i__135_19 / (double)16384);
+      } else {
+        if (((this.flags & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.WeHaveATwoByTwo)
+          != 0)) {
+          int i__142_17 = bais.ReadSignedShort();
+          this.xscale = (i__142_17 / (double)16384);
+          i__142_17 = bais.ReadSignedShort();
+          this.scale01 = (i__142_17 / (double)16384);
+          i__142_17 = bais.ReadSignedShort();
+          this.scale10 = (i__142_17 / (double)16384);
+          i__142_17 = bais.ReadSignedShort();
+          this.yscale = (i__142_17 / (double)16384);
+        }
+      }
+    }
+  }
 
-protected internal virtual void SetFirstIndex(int idx) {
-this.firstIndex = idx;
-}
+  protected internal virtual void SetFirstIndex(int idx) {
+    this.firstIndex = idx;
+  }
 
-public virtual int GetFirstIndex() {
-return this.firstIndex;
-}
+  public virtual int GetFirstIndex() {
+    return this.firstIndex;
+  }
 
-protected internal virtual void SetFirstContour(int idx) {
-this.firstContour = idx;
-}
+  protected internal virtual void SetFirstContour(int idx) {
+    this.firstContour = idx;
+  }
 
-public virtual int GetFirstContour() {
-return this.firstContour;
-}
+  public virtual int GetFirstContour() {
+    return this.firstContour;
+  }
 
-public virtual short GetArgument1() {
-return this.argument1;
-}
+  public virtual short GetArgument1() {
+    return this.argument1;
+  }
 
-public virtual short GetArgument2() {
-return this.argument2;
-}
+  public virtual short GetArgument2() {
+    return this.argument2;
+  }
 
-public virtual short GetFlags() {
-return this.flags;
-}
+  public virtual short GetFlags() {
+    return this.flags;
+  }
 
-public virtual int GetGlyphIndex() {
-return this.glyphIndex;
-}
+  public virtual int GetGlyphIndex() {
+    return this.glyphIndex;
+  }
 
-public virtual double GetScale01() {
-return this.scale01;
-}
+  public virtual double GetScale01() {
+    return this.scale01;
+  }
 
-public virtual double GetScale10() {
-return this.scale10;
-}
+  public virtual double GetScale10() {
+    return this.scale10;
+  }
 
-public virtual double GetXScale() {
-return this.xscale;
-}
+  public virtual double GetXScale() {
+    return this.xscale;
+  }
 
-public virtual double GetYScale() {
-return this.yscale;
-}
+  public virtual double GetYScale() {
+    return this.yscale;
+  }
 
-public virtual int GetXTranslate() {
-return this.xtranslate;
-}
+  public virtual int GetXTranslate() {
+    return this.xtranslate;
+  }
 
-public virtual int GetYTranslate() {
-return this.ytranslate;
-}
+  public virtual int GetYTranslate() {
+    return this.ytranslate;
+  }
 
-public virtual int ScaleX(int x, int y) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MathRoundFloat((float)((float)(((x * this.xscale) + (y * this.scale10)))));
-}
+  public virtual int ScaleX(int x, int y) {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MathRoundFloat((float)((float)(((x
+      * this.xscale) + (y * this.scale10)))));
+  }
 
-public virtual int ScaleY(int x, int y) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MathRoundFloat((float)((float)(((x * this.scale01) + (y * this.yscale)))));
-}
+  public virtual int ScaleY(int x, int y) {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MathRoundFloat((float)((float)(((x
+      * this.scale01) + (y * this.yscale)))));
+  }
 }

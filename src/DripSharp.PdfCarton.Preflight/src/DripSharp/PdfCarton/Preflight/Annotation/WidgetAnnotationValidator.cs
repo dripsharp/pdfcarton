@@ -8,24 +8,28 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public class WidgetAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget PdWidget = default!;
+public class WidgetAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget PdWidget
+    = default!;
 
-public WidgetAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
-this.PdWidget = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget(annotDictionary);
-this.PdAnnot = this.PdWidget;
-}
+  public WidgetAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdWidget
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget(annotDictionary);
+    this.PdAnnot = this.PdWidget;
+  }
 
-public override bool Validate() {
-bool isValid = base.Validate();
-return (this.CheckAAField() && isValid);
-}
+  public override bool Validate() {
+    bool isValid = base.Validate();
+    return (this.CheckAAField() && isValid);
+  }
 
-protected internal virtual bool CheckAAField() {
-if ((this.PdWidget.GetActions() != default!)) {
-base.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotForbiddenAa));
-return false;
-}
-return true;
-}
+  protected internal virtual bool CheckAAField() {
+    if ((this.PdWidget.GetActions() != default!)) {
+      base.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotForbiddenAa));
+      return false;
+    }
+    return true;
+  }
 }

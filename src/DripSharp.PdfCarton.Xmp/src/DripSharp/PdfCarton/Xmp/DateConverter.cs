@@ -9,171 +9,221 @@
 namespace DripSharp.PdfCarton.Xmp;
 
 public sealed class DateConverter {
-public static readonly global::DripSharp.PdfCarton.Runtime.Xmp.JavaDateTimeFormatter DateTimeFormatter = new global::DripSharp.PdfCarton.Runtime.Xmp.JavaDateTimeFormatterBuilder().ParseCaseInsensitive().Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaDateTimeFormatter.IsoLocalDateTime).ParseLenient().AppendOffset("+HH:MM", "Z").ParseStrict().ToFormatter();
+  public static readonly global::DripSharp.PdfCarton.Runtime.Xmp.JavaDateTimeFormatter DateTimeFormatter
+    = new global::DripSharp.PdfCarton.Runtime.Xmp.JavaDateTimeFormatterBuilder().ParseCaseInsensitive().Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaDateTimeFormatter.IsoLocalDateTime).ParseLenient().AppendOffset("+HH:MM",
+    "Z").ParseStrict().ToFormatter();
 
-private DateConverter() {}
+  private DateConverter() {}
 
-public static global::System.DateTimeOffset? ToCalendar(string date) {
-global::System.DateTimeOffset? retval = default!;
-if (((date != default!) && (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringTrim(date).Length > 0))) {
-date = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringTrim(date);
-int month = 1;
-int day = 1;
-int hour = 0;
-int minute = 0;
-int second = 0;
-try {
-global::System.TimeZoneInfo zone = default!;
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringMatches(date, "^\\d{4}-\\d{2}-\\d{2}T.*")) {
-try {
-return global::DripSharp.PdfCarton.Xmp.DateConverter.fromISO8601(date);
-} catch (global::System.FormatException ex) {
-throw new global::System.IO.IOException(null, ex);
-}
-}
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringStartsWith(date, "D:")) {
-date = date.Substring(2);
-}
-int posOfT = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringIndexOf(date, (int)('T'));
-if (((posOfT != 10) && (posOfT != -1))) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Error converting date:", date));
-}
-date = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringReplaceAll(date, "[-:T]", "");
-if ((date.Length < 4)) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Error: Invalid date format '", date), "'"));
-}
-int year = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date, 0, 4), 10);
-if ((date.Length >= 6)) {
-month = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date, 4, 6), 10);
-}
-if ((date.Length >= 8)) {
-day = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date, 6, 8), 10);
-}
-if ((date.Length >= 10)) {
-hour = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date, 8, 10), 10);
-}
-if ((date.Length >= 12)) {
-minute = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date, 10, 12), 10);
-}
-int timeZonePos = 12;
-if ((((date.Length == 14) || ((date.Length - 12) > 5)) || (((date.Length - 12) == 3) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringEndsWith(date, "Z")))) {
-second = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date, 12, 14), 10);
-timeZonePos = 14;
-}
-if ((date.Length >= (timeZonePos + 1))) {
-char sign = date[timeZonePos];
-if (((int)(sign) == (int)('Z'))) {
-zone = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewSimpleTimeZone(0, "Unknown");
-} else {
-int hours = 0;
-int minutes = 0;
-if ((date.Length >= (timeZonePos + 3))) {
-if (((int)(sign) == (int)('+'))) {
-hours = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date, (timeZonePos + 1), (timeZonePos + 3)), 10);
-} else {
-hours = -(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date, timeZonePos, (timeZonePos + 2)), 10));
-}
-}
-if (((int)(sign) == (int)('+'))) {
-if ((date.Length >= (timeZonePos + 5))) {
-minutes = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date, (timeZonePos + 3), (timeZonePos + 5)), 10);
-}
-} else {
-if ((date.Length >= (timeZonePos + 4))) {
-minutes = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date, (timeZonePos + 2), (timeZonePos + 4)), 10);
-}
-}
-zone = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewSimpleTimeZone(((((hours * 60) * 60) * 1000) + ((minutes * 60) * 1000)), "Unknown");
-}
-}
-if ((zone! == default!)) {
-retval = global::System.DateTimeOffset.Now;
-} else {
-global::DripSharp.PdfCarton.Xmp.DateConverter.updateZoneId(zone!);
-retval = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarInstance(zone!);
-}
-retval = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarClear(retval!);
-retval = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarSet(retval!, year, (month - 1), day, hour, minute, second);
-} catch (global::DripSharp.PdfCarton.Runtime.Xmp.JavaNumberFormatException e) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Error converting date:", date), e);
-}
-}
-return retval!;
-}
+  public static global::System.DateTimeOffset? ToCalendar(string date) {
+    global::System.DateTimeOffset? retval = default!;
+    if (((date != default!)
+      && (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringTrim(date).Length > 0))) {
+      date = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringTrim(date);
+      int month = 1;
+      int day = 1;
+      int hour = 0;
+      int minute = 0;
+      int second = 0;
+      try {
+        global::System.TimeZoneInfo zone = default!;
+        if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringMatches(date,
+          "^\\d{4}-\\d{2}-\\d{2}T.*")) {
+          try {
+            return global::DripSharp.PdfCarton.Xmp.DateConverter.fromISO8601(date);
+          } catch (global::System.FormatException ex) {
+            throw new global::System.IO.IOException(null, ex);
+          }
+        }
+        if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringStartsWith(date, "D:")) {
+          date = date.Substring(2);
+        }
+        int posOfT = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringIndexOf(date,
+          (int)('T'));
+        if (((posOfT != 10) && (posOfT != -1))) {
+          throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Error converting date:",
+            date));
+        }
+        date = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringReplaceAll(date, "[-:T]",
+          "");
+        if ((date.Length < 4)) {
+          throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Error: Invalid date format '",
+            date), "'"));
+        }
+        int year
+          = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date,
+          0, 4), 10);
+        if ((date.Length >= 6)) {
+          month
+            = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date,
+            4, 6), 10);
+        }
+        if ((date.Length >= 8)) {
+          day
+            = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date,
+            6, 8), 10);
+        }
+        if ((date.Length >= 10)) {
+          hour
+            = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date,
+            8, 10), 10);
+        }
+        if ((date.Length >= 12)) {
+          minute
+            = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date,
+            10, 12), 10);
+        }
+        int timeZonePos = 12;
+        if ((((date.Length == 14) || ((date.Length - 12) > 5)) || (((date.Length - 12) == 3)
+          && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringEndsWith(date, "Z")))) {
+          second
+            = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date,
+            12, 14), 10);
+          timeZonePos = 14;
+        }
+        if ((date.Length >= (timeZonePos + 1))) {
+          char sign = date[timeZonePos];
+          if (((int)sign == (int)'Z')) {
+            zone = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewSimpleTimeZone(0,
+              "Unknown");
+          } else {
+            int hours = 0;
+            int minutes = 0;
+            if ((date.Length >= (timeZonePos + 3))) {
+              if (((int)sign == (int)'+')) {
+                hours
+                  = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date,
+                  (timeZonePos + 1), (timeZonePos + 3)), 10);
+              } else {
+                hours =
+                  -global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date,
+                  timeZonePos, (timeZonePos + 2)), 10);
+              }
+            }
+            if (((int)sign == (int)'+')) {
+              if ((date.Length >= (timeZonePos + 5))) {
+                minutes
+                  = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date,
+                  (timeZonePos + 3), (timeZonePos + 5)), 10);
+              }
+            } else {
+              if ((date.Length >= (timeZonePos + 4))) {
+                minutes
+                  = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(date,
+                  (timeZonePos + 2), (timeZonePos + 4)), 10);
+              }
+            }
+            zone = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewSimpleTimeZone(((((hours
+              * 60) * 60) * 1000) + ((minutes * 60) * 1000)), "Unknown");
+          }
+        }
+        if ((zone! == default!)) {
+          retval = global::System.DateTimeOffset.Now;
+        } else {
+          global::DripSharp.PdfCarton.Xmp.DateConverter.updateZoneId(zone!);
+          retval = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarInstance(zone!);
+        }
+        retval = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarClear(retval!);
+        retval = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarSet(retval!, year,
+          (month - 1), day, hour, minute, second);
+      } catch (global::DripSharp.PdfCarton.Runtime.Xmp.JavaNumberFormatException e) {
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Error converting date:",
+          date), e);
+      }
+    }
+    return retval!;
+  }
 
-private static void updateZoneId(global::System.TimeZoneInfo tz) {
-int offset = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.TimeZoneRawOffset(tz);
-char pm = '+';
-if ((offset < 0)) {
-pm = '-';
-offset = -offset;
-}
-int hh = (offset / 3600000);
-int mm = ((offset % 3600000) / 60000);
-if ((offset == 0)) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.TimeZoneSetId(tz, "GMT");
-} else {
-if ((((int)(pm) == (int)('+')) && (hh <= 12))) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.TimeZoneSetId(tz, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), "GMT+%02d:%02d", hh, mm));
-} else {
-if ((((int)(pm) == (int)('-')) && (hh <= 14))) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.TimeZoneSetId(tz, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), "GMT-%02d:%02d", hh, mm));
-} else {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.TimeZoneSetId(tz, "unknown");
-}
-}
-}
-}
+  private static void updateZoneId(global::System.TimeZoneInfo tz) {
+    int offset = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.TimeZoneRawOffset(tz);
+    char pm = '+';
+    if ((offset < 0)) {
+      pm = '-';
+      offset = -offset;
+    }
+    int hh = (offset / 3600000);
+    int mm = ((offset % 3600000) / 60000);
+    if ((offset == 0)) {
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.TimeZoneSetId(tz, "GMT");
+    } else {
+      if ((((int)pm == (int)'+') && (hh <= 12))) {
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.TimeZoneSetId(tz,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"),
+          "GMT+%02d:%02d", hh, mm));
+      } else {
+        if ((((int)pm == (int)'-') && (hh <= 14))) {
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.TimeZoneSetId(tz,
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"),
+            "GMT-%02d:%02d", hh, mm));
+        } else {
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.TimeZoneSetId(tz, "unknown");
+        }
+      }
+    }
+  }
 
-public static string ToISO8601(global::System.DateTimeOffset? cal) {
-return global::DripSharp.PdfCarton.Xmp.DateConverter.ToISO8601(cal, false);
-}
+  public static string ToISO8601(global::System.DateTimeOffset? cal) {
+    return global::DripSharp.PdfCarton.Xmp.DateConverter.ToISO8601(cal, false);
+  }
 
-public static string ToISO8601(global::System.DateTimeOffset? cal, bool printMillis) {
-global::System.Text.StringBuilder retval = new global::System.Text.StringBuilder();
-retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), "%04d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 1)));
-retval.Append('-');
-retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), "%02d", (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 2) + 1)));
-retval.Append('-');
-retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), "%02d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 5)));
-retval.Append('T');
-retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), "%02d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 11)));
-retval.Append(':');
-retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), "%02d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 12)));
-retval.Append(':');
-retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), "%02d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 13)));
-if (printMillis) {
-retval.Append('.');
-retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"), "%03d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 14)));
-}
-int timeZone = (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 15) + global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 16));
-if ((timeZone < 0)) {
-retval.Append('-');
-} else {
-retval.Append('+');
-}
-timeZone = global::System.Math.Abs(timeZone);
-int hours = (((timeZone / 1000) / 60) / 60);
-int minutes = (((timeZone - (((hours * 1000) * 60) * 60)) / 1000) / 60);
-if ((hours < 10)) {
-retval.Append('0');
-}
-retval.Append(hours);
-retval.Append(':');
-if ((minutes < 10)) {
-retval.Append('0');
-}
-retval.Append(minutes);
-return retval.ToString();
-}
+  public static string ToISO8601(global::System.DateTimeOffset? cal, bool printMillis) {
+    global::System.Text.StringBuilder retval = new global::System.Text.StringBuilder();
+    retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"),
+      "%04d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 1)));
+    retval.Append('-');
+    retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"),
+      "%02d", (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 2) + 1)));
+    retval.Append('-');
+    retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"),
+      "%02d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 5)));
+    retval.Append('T');
+    retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"),
+      "%02d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 11)));
+    retval.Append(':');
+    retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"),
+      "%02d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 12)));
+    retval.Append(':');
+    retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"),
+      "%02d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 13)));
+    if (printMillis) {
+      retval.Append('.');
+      retval.Append(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"),
+        "%03d", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 14)));
+    }
+    int timeZone = (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 15)
+      + global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CalendarGet(cal, 16));
+    if ((timeZone < 0)) {
+      retval.Append('-');
+    } else {
+      retval.Append('+');
+    }
+    timeZone = global::System.Math.Abs(timeZone);
+    int hours = (((timeZone / 1000) / 60) / 60);
+    int minutes = (((timeZone - (((hours * 1000) * 60) * 60)) / 1000) / 60);
+    if ((hours < 10)) {
+      retval.Append('0');
+    }
+    retval.Append(hours);
+    retval.Append(':');
+    if ((minutes < 10)) {
+      retval.Append('0');
+    }
+    retval.Append(minutes);
+    return retval.ToString();
+  }
 
-private static global::System.DateTimeOffset? fromISO8601(string dateString) {
-try {
-global::System.DateTimeOffset zonedDateTime = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseZonedDateTime(dateString, global::DripSharp.PdfCarton.Xmp.DateConverter.DateTimeFormatter);
-return zonedDateTime;
-} catch (global::System.FormatException) {
-global::System.DateTime localDateTime = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseLocalDateTime(dateString, global::DripSharp.PdfCarton.Runtime.Xmp.JavaDateTimeFormatter.IsoLocalDateTime);
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.LocalDateTimeAtZone(localDateTime, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ZoneIdOf("UTC"));
-}
-}
+  private static global::System.DateTimeOffset? fromISO8601(string dateString) {
+    try {
+      global::System.DateTimeOffset zonedDateTime
+        = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseZonedDateTime(dateString,
+        global::DripSharp.PdfCarton.Xmp.DateConverter.DateTimeFormatter);
+      return zonedDateTime;
+    } catch (global::System.FormatException) {
+      global::System.DateTime localDateTime
+        = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseLocalDateTime(dateString,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaDateTimeFormatter.IsoLocalDateTime);
+      return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.LocalDateTimeAtZone(localDateTime,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ZoneIdOf("UTC"));
+    }
+  }
 }

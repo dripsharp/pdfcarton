@@ -8,18 +8,19 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel;
 
-public class DefaultResourceCacheCreateImpl : global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction {
-private readonly bool stableCacheEnabled = default;
+public class DefaultResourceCacheCreateImpl
+: global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction {
+  private readonly bool stableCacheEnabled = default;
 
-public DefaultResourceCacheCreateImpl() : this(true) {
+  public DefaultResourceCacheCreateImpl() : this(true) {
 
-}
+  }
 
-public DefaultResourceCacheCreateImpl(bool enableStableCache) {
-this.stableCacheEnabled = enableStableCache;
-}
+  public DefaultResourceCacheCreateImpl(bool enableStableCache) {
+    this.stableCacheEnabled = enableStableCache;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.ResourceCache Create() {
-return new global::DripSharp.PdfCarton.Pdmodel.DefaultResourceCache(this.stableCacheEnabled);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.ResourceCache Create() {
+    return new global::DripSharp.PdfCarton.Pdmodel.DefaultResourceCache(this.stableCacheEnabled);
+  }
 }

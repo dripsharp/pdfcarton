@@ -9,42 +9,45 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public sealed class OTFParser : global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser {
-public OTFParser() : base() {
+  public OTFParser() : base() {
 
-}
+  }
 
-public OTFParser(bool isEmbedded) : base(isEmbedded) {
+  public OTFParser(bool isEmbedded) : base(isEmbedded) {
 
-}
+  }
 
-public new global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont Parse(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(base.Parse(randomAccessRead)!);
-}
+  public new global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont Parse(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(base.Parse(randomAccessRead)!);
+  }
 
-internal override global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont parse(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream raf) {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(base.parse(raf)!);
-}
+  internal override global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont parse(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream raf) {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(base.parse(raf)!);
+  }
 
-internal override global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont newFont(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream raf) {
-return new global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont(raf);
-}
+  internal override global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont newFont(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream raf) {
+    return new global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont(raf);
+  }
 
-protected internal override global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable ReadTable(string tag) {
-switch (tag) {
-case var __case_71_18_0 when global::System.Object.Equals(__case_71_18_0, "BASE"):
-case var __case_72_18_0 when global::System.Object.Equals(__case_72_18_0, "GDEF"):
-case var __case_73_18_0 when global::System.Object.Equals(__case_73_18_0, "GPOS"):
-case var __case_74_18_0 when global::System.Object.Equals(__case_74_18_0, global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.Tag):
-case var __case_75_18_0 when global::System.Object.Equals(__case_75_18_0, global::DripSharp.PdfCarton.Fonts.Ttf.OTLTable.Tag):
-return new global::DripSharp.PdfCarton.Fonts.Ttf.OTLTable();
-case var __case_77_18_0 when global::System.Object.Equals(__case_77_18_0, global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag):
-return new global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable();
-default:
-return base.ReadTable(tag);
-}
-}
+  protected internal override global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable ReadTable(string tag) {
+    switch (tag) {
+      case var __case_71_18_0 when global::System.Object.Equals(__case_71_18_0, "BASE"):
+      case var __case_72_18_0 when global::System.Object.Equals(__case_72_18_0, "GDEF"):
+      case var __case_73_18_0 when global::System.Object.Equals(__case_73_18_0, "GPOS"):
+      case var __case_74_18_0 when global::System.Object.Equals(__case_74_18_0,
+          global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.Tag):
+      case var __case_75_18_0 when global::System.Object.Equals(__case_75_18_0,
+          global::DripSharp.PdfCarton.Fonts.Ttf.OTLTable.Tag):
+        return new global::DripSharp.PdfCarton.Fonts.Ttf.OTLTable();
+      case var __case_77_18_0 when global::System.Object.Equals(__case_77_18_0,
+          global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag):
+        return new global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable();
+      default:
+        return base.ReadTable(tag);
+    }
+  }
 
-protected internal override bool AllowCFF() {
-return true;
-}
+  protected internal override bool AllowCFF() {
+    return true;
+  }
 }

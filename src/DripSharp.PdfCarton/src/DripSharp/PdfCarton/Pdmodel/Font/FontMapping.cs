@@ -9,20 +9,20 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public class FontMapping<T> where T : global::DripSharp.PdfCarton.Fonts.FontBoxFont {
-private readonly T font = default!;
+  private readonly T font = default!;
 
-private readonly bool __field_isFallback = default;
+  private readonly bool __field_isFallback = default;
 
-public FontMapping(T font, bool isFallback) {
-this.font = font;
-this.__field_isFallback = isFallback;
-}
+  public FontMapping(T font, bool isFallback) {
+    this.font = font;
+    this.__field_isFallback = isFallback;
+  }
 
-public virtual T GetFont() {
-return this.font;
-}
+  public virtual T GetFont() {
+    return this.font;
+  }
 
-public virtual bool IsFallback() {
-return this.__field_isFallback;
-}
+  public virtual bool IsFallback() {
+    return this.__field_isFallback;
+  }
 }

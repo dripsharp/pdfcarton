@@ -8,18 +8,21 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
-public class PDSoundAppearanceHandler : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
-public PDSoundAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation) : base(annotation) {
+public class PDSoundAppearanceHandler
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
+  public PDSoundAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
+  : base(annotation) {
 
-}
+  }
 
-public PDSoundAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation, global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(annotation, document) {
+  public PDSoundAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(annotation, document) {
 
-}
+  }
 
-public override void GenerateNormalAppearance() {}
+  public override void GenerateNormalAppearance() {}
 
-public override void GenerateRolloverAppearance() {}
+  public override void GenerateRolloverAppearance() {}
 
-public override void GenerateDownAppearance() {}
+  public override void GenerateDownAppearance() {}
 }

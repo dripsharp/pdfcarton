@@ -8,14 +8,15 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
-public abstract class PDDeviceColorSpace : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace {
-public override string ToString() {
-return this.GetName();
-}
+public abstract class PDDeviceColorSpace
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace {
+  public override string ToString() {
+    return this.GetName();
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(this.GetName());
-}
+  public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(this.GetName());
+  }
 
-public PDDeviceColorSpace() {}
+  public PDDeviceColorSpace() {}
 }

@@ -8,22 +8,27 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
-public class LookupTypeSingleSubstFormat2 : global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable {
-private readonly int[] substituteGlyphIDs = null!;
+public class LookupTypeSingleSubstFormat2
+: global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable {
+  private readonly int[] substituteGlyphIDs = null!;
 
-public LookupTypeSingleSubstFormat2(int substFormat, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable, int[] substituteGlyphIDs) : base(substFormat, coverageTable) {
-this.substituteGlyphIDs = substituteGlyphIDs;
-}
+  public LookupTypeSingleSubstFormat2(int substFormat,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable,
+    int[] substituteGlyphIDs) : base(substFormat, coverageTable) {
+    this.substituteGlyphIDs = substituteGlyphIDs;
+  }
 
-public override int DoSubstitution(int gid, int coverageIndex) {
-return ((coverageIndex < 0) ? gid : this.substituteGlyphIDs[coverageIndex]);
-}
+  public override int DoSubstitution(int gid, int coverageIndex) {
+    return ((coverageIndex < 0) ? gid : this.substituteGlyphIDs[coverageIndex]);
+  }
 
-public virtual int[] GetSubstituteGlyphIDs() {
-return this.substituteGlyphIDs;
-}
+  public virtual int[] GetSubstituteGlyphIDs() {
+    return this.substituteGlyphIDs;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("LookupTypeSingleSubstFormat2[substFormat=%d,substituteGlyphIDs=%s]", this.GetSubstFormat(), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(this.substituteGlyphIDs));
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("LookupTypeSingleSubstFormat2[substFormat=%d,substituteGlyphIDs=%s]",
+      this.GetSubstFormat(),
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(this.substituteGlyphIDs));
+  }
 }

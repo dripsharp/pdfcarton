@@ -8,42 +8,49 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline;
 
-internal class PDOutlineItemIterator : global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem> {
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem currentItem = null!;
+internal class PDOutlineItemIterator
+: global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem> {
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem currentItem
+    = null!;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem startingItem = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem startingItem
+    = null!;
 
-private readonly global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSDictionary> visited = new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSDictionary>();
+  private readonly global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSDictionary> visited
+    = new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSDictionary>();
 
-internal PDOutlineItemIterator(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem startingItem) {
-this.startingItem = startingItem;
-}
+  internal PDOutlineItemIterator(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem startingItem) {
+    this.startingItem = startingItem;
+  }
 
-public virtual bool HasNext() {
-if ((this.startingItem == default!)) {
-return false;
-}
-if ((this.currentItem == default!)) {
-return true;
-}
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem sibling = this.currentItem.GetNextSibling();
-return ((sibling != default!) && !(global::DripSharp.Runtime.JavaCompat.CollectionContains(this.visited, sibling.GetCOSObject())));
-}
+  public virtual bool HasNext() {
+    if ((this.startingItem == default!)) {
+      return false;
+    }
+    if ((this.currentItem == default!)) {
+      return true;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem sibling
+      = this.currentItem.GetNextSibling();
+    return ((sibling != default!)
+      && !global::DripSharp.Runtime.JavaCompat.CollectionContains(this.visited,
+      sibling.GetCOSObject()));
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem Next() {
-if (!(this.HasNext())) {
-throw new global::System.InvalidOperationException();
-}
-if ((this.currentItem == default!)) {
-this.currentItem = this.startingItem;
-} else {
-this.currentItem = this.currentItem.GetNextSibling();
-}
-this.visited.Add(this.currentItem.GetCOSObject());
-return this.currentItem;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem Next() {
+    if (!(this.HasNext())) {
+      throw new global::System.InvalidOperationException();
+    }
+    if ((this.currentItem == default!)) {
+      this.currentItem = this.startingItem;
+    } else {
+      this.currentItem = this.currentItem.GetNextSibling();
+    }
+    this.visited.Add(this.currentItem.GetCOSObject());
+    return this.currentItem;
+  }
 
-public virtual void Remove() {
-throw new global::System.NotSupportedException();
-}
+  public virtual void Remove() {
+    throw new global::System.NotSupportedException();
+  }
 }

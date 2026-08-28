@@ -9,7 +9,9 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class RationalType : global::DripSharp.PdfCarton.Xmp.Type.TextType {
-public RationalType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix, propertyName, value) {
+  public RationalType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI,
+    string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix,
+    propertyName, value) {
 
-}
+  }
 }

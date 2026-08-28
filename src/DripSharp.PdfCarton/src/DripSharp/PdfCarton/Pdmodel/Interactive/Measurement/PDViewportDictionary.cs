@@ -9,51 +9,57 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Measurement;
 
 public class PDViewportDictionary : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-public const string Type = "Viewport";
+  public const string Type = "Viewport";
 
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary viewportDictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary viewportDictionary = null!;
 
-public PDViewportDictionary() {
-this.viewportDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDViewportDictionary() {
+    this.viewportDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDViewportDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-this.viewportDictionary = dictionary;
-}
+  public PDViewportDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    this.viewportDictionary = dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.viewportDictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.viewportDictionary;
+  }
 
-public new virtual string GetType() {
-return global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDViewportDictionary.Type;
-}
+  public new virtual string GetType() {
+    return global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDViewportDictionary.Type;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetBBox() {
-global::DripSharp.PdfCarton.Cos.COSArray bbox = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
-return ((bbox != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(bbox) : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetBBox() {
+    global::DripSharp.PdfCarton.Cos.COSArray bbox
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
+    return ((bbox != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(bbox)
+      : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
+  }
 
-public virtual void SetBBox(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rectangle) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox, rectangle);
-}
+  public virtual void SetBBox(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rectangle) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox, rectangle);
+  }
 
-public virtual string GetName() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Name);
-}
+  public virtual string GetName() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Name);
+  }
 
-public virtual void SetName(string name) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Name, name);
-}
+  public virtual void SetName(string name) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Name, name);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary GetMeasure() {
-global::DripSharp.PdfCarton.Cos.COSDictionary @base = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Measure);
-return ((@base != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary(@base) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary GetMeasure() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary @base
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Measure);
+    return ((@base != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary(@base)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary)(default!));
+  }
 
-public virtual void SetMeasure(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary measure) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Measure, measure);
-}
+  public virtual void SetMeasure(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary measure) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Measure, measure);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

@@ -9,141 +9,182 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common;
 
 public class COSDictionaryMap<K, V> : global::DripSharp.Runtime.JavaMapContract<K, V> {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary map = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary map = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<K, V> actuals = null!;
+  private readonly global::System.Collections.Generic.IDictionary<K, V> actuals = null!;
 
-public COSDictionaryMap(global::System.Collections.Generic.IDictionary<K, V> actualsMap, global::DripSharp.PdfCarton.Cos.COSDictionary dicMap) {
-this.actuals = actualsMap;
-this.map = dicMap;
-}
+  public COSDictionaryMap(global::System.Collections.Generic.IDictionary<K, V> actualsMap,
+    global::DripSharp.PdfCarton.Cos.COSDictionary dicMap) {
+    this.actuals = actualsMap;
+    this.map = dicMap;
+  }
 
-public virtual int Size() {
-return this.map.Size();
-}
+  public virtual int Size() {
+    return this.map.Size();
+  }
 
-public virtual bool IsEmpty() {
-return (this.Size() == 0);
-}
+  public virtual bool IsEmpty() {
+    return (this.Size() == 0);
+  }
 
-public virtual bool ContainsKey(object key) {
-return global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.actuals, key);
-}
+  public virtual bool ContainsKey(object key) {
+    return global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.actuals, key);
+  }
 
-public virtual bool ContainsValue(object value) {
-return global::DripSharp.Runtime.JavaCompat.MapContainsValue(this.actuals, value);
-}
+  public virtual bool ContainsValue(object value) {
+    return global::DripSharp.Runtime.JavaCompat.MapContainsValue(this.actuals, value);
+  }
 
-public virtual V Get(object key) {
-return global::DripSharp.Runtime.JavaCompat.MapGet(this.actuals, key);
-}
+  public virtual V Get(object key) {
+    return global::DripSharp.Runtime.JavaCompat.MapGet(this.actuals, key);
+  }
 
-public virtual V Put(K key, V value) {
-global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable @object = global::DripSharp.Runtime.JavaCompat.CastReference<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(value);
-this.map.SetItem(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.Runtime.JavaCompat.CastReference<string>(key)), @object.GetCOSObject());
-return global::DripSharp.Runtime.JavaCompat.MapPut(this.actuals, key, value);
-}
+  public virtual V Put(K key, V value) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable @object
+      = global::DripSharp.Runtime.JavaCompat.CastReference<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(value);
+    this.map.SetItem(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.Runtime.JavaCompat.CastReference<string>(key)),
+      @object.GetCOSObject());
+    return global::DripSharp.Runtime.JavaCompat.MapPut(this.actuals, key, value);
+  }
 
-public virtual V Remove(object key) {
-this.map.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName((string)(key!)));
-return global::DripSharp.Runtime.JavaCompat.MapRemove(this.actuals, key);
-}
+  public virtual V Remove(object key) {
+    this.map.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName((string)(key!)));
+    return global::DripSharp.Runtime.JavaCompat.MapRemove(this.actuals, key);
+  }
 
-public virtual void PutAll(global::System.Collections.Generic.IDictionary<K, V> t) {
-throw new global::System.NotSupportedException("Not yet implemented");
-}
+  public virtual void PutAll(global::System.Collections.Generic.IDictionary<K, V> t) {
+    throw new global::System.NotSupportedException("Not yet implemented");
+  }
 
-public virtual void Clear() {
-this.map.Clear();
-this.actuals.Clear();
-}
+  public virtual void Clear() {
+    this.map.Clear();
+    this.actuals.Clear();
+  }
 
-public virtual global::System.Collections.Generic.ISet<K> KeySet() {
-return global::DripSharp.Runtime.JavaCompat.MapKeySet(this.actuals);
-}
+  public virtual global::System.Collections.Generic.ISet<K> KeySet() {
+    return global::DripSharp.Runtime.JavaCompat.MapKeySet(this.actuals);
+  }
 
-public virtual global::System.Collections.Generic.ICollection<V> Values() {
-return this.actuals.Values;
-}
+  public virtual global::System.Collections.Generic.ICollection<V> Values() {
+    return this.actuals.Values;
+  }
 
-public virtual global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaMapEntry<K, V>> EntrySet() {
-return global::DripSharp.Runtime.JavaCompat.UnmodifiableSet(global::DripSharp.Runtime.JavaCompat.MapEntrySet(this.actuals));
-}
+  public virtual global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaMapEntry<K,
+    V>> EntrySet() {
+    return global::DripSharp.Runtime.JavaCompat.UnmodifiableSet(global::DripSharp.Runtime.JavaCompat.MapEntrySet(this.actuals));
+  }
 
-public override bool Equals(object o) {
-bool retval = false;
-if ((o is global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<object, object>)) {
-global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<K, V> other = (global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<K, V>)(o!);
-retval = global::DripSharp.Runtime.JavaCompat.Equals(other.map, this.map);
-}
-return retval;
-}
+  public override bool Equals(object o) {
+    bool retval = false;
+    if ((o is global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<object, object>)) {
+      global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<K, V> other
+        = (global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<K, V>)(o!);
+      retval = global::DripSharp.Runtime.JavaCompat.Equals(other.map, this.map);
+    }
+    return retval;
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.StringValueOf(this.actuals);
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.StringValueOf(this.actuals);
+  }
 
-public override int GetHashCode() {
-return this.map.GetHashCode();
-}
+  public override int GetHashCode() {
+    return this.map.GetHashCode();
+  }
 
-public static global::DripSharp.PdfCarton.Cos.COSDictionary Convert(global::System.Collections.Generic.IDictionary<string, object> someMap) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dic = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-global::DripSharp.Runtime.JavaCompat.ForEach(someMap, (name, objectable) => {
-global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable @object = global::DripSharp.Runtime.JavaCompat.CastReference<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(objectable);
-dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(name), @object.GetCOSObject());
-});
-return dic;
-}
+  public static global::DripSharp.PdfCarton.Cos.COSDictionary Convert(global::System.Collections.Generic.IDictionary<string,
+    object> someMap) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary dic
+      = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    global::DripSharp.Runtime.JavaCompat.ForEach(someMap, (name, objectable) => {
+        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable @object
+        = global::DripSharp.Runtime.JavaCompat.CastReference<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(objectable);
+        dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(name),
+        @object.GetCOSObject());
+      });
+    return dic;
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<string, object> ConvertBasicTypesToMap(global::DripSharp.PdfCarton.Cos.COSDictionary map) {
-global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<string, object> retval = default!;
-if ((map != default!)) {
-global::System.Collections.Generic.IDictionary<string, object> actualMap = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, object>();
-foreach (global::DripSharp.PdfCarton.Cos.COSName key in map.KeySet()) {
-global::DripSharp.PdfCarton.Cos.COSBase cosObj = map.GetDictionaryObject(key);
-object actualObject = default!;
-if ((cosObj is global::DripSharp.PdfCarton.Cos.COSString)) {
-actualObject = ((global::DripSharp.PdfCarton.Cos.COSString)(cosObj!)).GetString();
-} else {
-if ((cosObj is global::DripSharp.PdfCarton.Cos.COSInteger)) {
-actualObject = ((global::DripSharp.PdfCarton.Cos.COSInteger)(cosObj!)).IntValue();
-} else {
-if ((cosObj is global::DripSharp.PdfCarton.Cos.COSName)) {
-actualObject = ((global::DripSharp.PdfCarton.Cos.COSName)(cosObj!)).GetName();
-} else {
-if ((cosObj is global::DripSharp.PdfCarton.Cos.COSFloat)) {
-actualObject = ((global::DripSharp.PdfCarton.Cos.COSFloat)(cosObj!)).FloatValue();
-} else {
-if ((cosObj is global::DripSharp.PdfCarton.Cos.COSBoolean)) {
-actualObject = (((global::DripSharp.PdfCarton.Cos.COSBoolean)(cosObj!)).GetValue() ? (bool?)(true) : (bool?)(false));
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error:unknown type of object to convert:", cosObj));
-}
-}
-}
-}
-}
-global::DripSharp.Runtime.JavaCompat.MapPut(actualMap, key.GetName(), actualObject!);
-}
-retval = new global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<string, object>(actualMap, map);
-}
-return retval!;
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<string,
+    object> ConvertBasicTypesToMap(global::DripSharp.PdfCarton.Cos.COSDictionary map) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<string, object> retval = default!;
+    if ((map != default!)) {
+      global::System.Collections.Generic.IDictionary<string, object> actualMap
+        = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, object>();
+      foreach (global::DripSharp.PdfCarton.Cos.COSName key in map.KeySet()) {
+        global::DripSharp.PdfCarton.Cos.COSBase cosObj = map.GetDictionaryObject(key);
+        object actualObject = default!;
+        if ((cosObj is global::DripSharp.PdfCarton.Cos.COSString)) {
+          actualObject = ((global::DripSharp.PdfCarton.Cos.COSString)(cosObj!)).GetString();
+        } else {
+          if ((cosObj is global::DripSharp.PdfCarton.Cos.COSInteger)) {
+            actualObject = ((global::DripSharp.PdfCarton.Cos.COSInteger)(cosObj!)).IntValue();
+          } else {
+            if ((cosObj is global::DripSharp.PdfCarton.Cos.COSName)) {
+              actualObject = ((global::DripSharp.PdfCarton.Cos.COSName)(cosObj!)).GetName();
+            } else {
+              if ((cosObj is global::DripSharp.PdfCarton.Cos.COSFloat)) {
+                actualObject = ((global::DripSharp.PdfCarton.Cos.COSFloat)(cosObj!)).FloatValue();
+              } else {
+                if ((cosObj is global::DripSharp.PdfCarton.Cos.COSBoolean)) {
+                  actualObject = (((global::DripSharp.PdfCarton.Cos.COSBoolean)(cosObj!)).GetValue()
+                    ? (bool?)(true) : (bool?)(false));
+                } else {
+                  throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error:unknown type of object to convert:",
+                    cosObj));
+                }
+              }
+            }
+          }
+        }
+        global::DripSharp.Runtime.JavaCompat.MapPut(actualMap, key.GetName(), actualObject!);
+      }
+      retval = new global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<string,
+        object>(actualMap, map);
+    }
+    return retval!;
+  }
 
-V global::System.Collections.Generic.IDictionary<K, V>.this[K key] { get => this.Get(key); set => this.Put(key, value); }
-global::System.Collections.Generic.ICollection<K> global::System.Collections.Generic.IDictionary<K, V>.Keys => this.KeySet();
-global::System.Collections.Generic.ICollection<V> global::System.Collections.Generic.IDictionary<K, V>.Values => this.Values();
-int global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.Count => this.Size();
-bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.IsReadOnly => false;
-void global::System.Collections.Generic.IDictionary<K, V>.Add(K key, V value) => this.Put(key, value);
-bool global::System.Collections.Generic.IDictionary<K, V>.ContainsKey(K key) => this.ContainsKey(key);
-bool global::System.Collections.Generic.IDictionary<K, V>.Remove(K key) { if (!this.ContainsKey(key)) return false; this.Remove(key); return true; }
-bool global::System.Collections.Generic.IDictionary<K, V>.TryGetValue(K key, out V value) { if (this.ContainsKey(key)) { value = this.Get(key); return true; } value = default!; return false; }
-void global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.Add(global::System.Collections.Generic.KeyValuePair<K, V> item) => this.Put(item.Key, item.Value);
-bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.Contains(global::System.Collections.Generic.KeyValuePair<K, V> item) => this.ContainsKey(item.Key) && global::DripSharp.Runtime.JavaCompat.Equals(this.Get(item.Key), item.Value);
-void global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.CopyTo(global::System.Collections.Generic.KeyValuePair<K, V>[] array, int arrayIndex) { global::DripSharp.Runtime.JavaCompat.ThrowIfNull(array, nameof(array)); foreach (var item in (global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K, V>>)this) array[arrayIndex++] = item; }
-bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>.Remove(global::System.Collections.Generic.KeyValuePair<K, V> item) { if (!((global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K, V>>)this).Contains(item)) return false; this.Remove(item.Key); return true; }
-global::System.Collections.Generic.IEnumerator<global::System.Collections.Generic.KeyValuePair<K, V>> global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K, V>>.GetEnumerator() { foreach (var entry in this.EntrySet()) yield return new global::System.Collections.Generic.KeyValuePair<K, V>(entry.Key, entry.Value); }
-global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => ((global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K, V>>)this).GetEnumerator();
+  V global::System.Collections.Generic.IDictionary<K, V>.this[K key] { get => this.Get(key); set
+      => this.Put(key, value); }
+  global::System.Collections.Generic.ICollection<K> global::System.Collections.Generic.IDictionary<K,
+    V>.Keys => this.KeySet();
+  global::System.Collections.Generic.ICollection<V> global::System.Collections.Generic.IDictionary<K,
+    V>.Values => this.Values();
+  int global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.Count => this.Size();
+  bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.IsReadOnly => false;
+  void global::System.Collections.Generic.IDictionary<K, V>.Add(K key, V value) => this.Put(key,
+    value);
+  bool global::System.Collections.Generic.IDictionary<K, V>.ContainsKey(K key)
+    => this.ContainsKey(key);
+  bool global::System.Collections.Generic.IDictionary<K,
+    V>.Remove(K key) { if (!this.ContainsKey(key)) return false; this.Remove(key); return true; }
+  bool global::System.Collections.Generic.IDictionary<K, V>.TryGetValue(K key,
+    out V value) { if (this.ContainsKey(key)) { value = this.Get(key); return true; } value
+      = default!; return false; }
+  void global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.Add(global::System.Collections.Generic.KeyValuePair<K, V> item) => this.Put(item.Key,
+    item.Value);
+  bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.Contains(global::System.Collections.Generic.KeyValuePair<K, V> item)
+    => this.ContainsKey(item.Key) && global::DripSharp.Runtime.JavaCompat.Equals(this.Get(item.Key),
+    item.Value);
+  void global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.CopyTo(global::System.Collections.Generic.KeyValuePair<K, V>[] array,
+    int arrayIndex) { global::DripSharp.Runtime.JavaCompat.ThrowIfNull(array, nameof(array));
+    foreach (var item in (global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K,
+      V>>)this) array[arrayIndex++] = item; }
+  bool global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.Remove(global::System.Collections.Generic.KeyValuePair<K,
+    V> item) { if (!((global::System.Collections.Generic.ICollection<global::System.Collections.Generic.KeyValuePair<K,
+      V>>)this).Contains(item)) return false; this.Remove(item.Key); return true; }
+  global::System.Collections.Generic.IEnumerator<global::System.Collections.Generic.KeyValuePair<K,
+    V>> global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K,
+    V>>.GetEnumerator() { foreach (var entry in this.EntrySet()) yield return new global::System.Collections.Generic.KeyValuePair<K,
+      V>(entry.Key, entry.Value); }
+  global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()
+    => ((global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<K,
+    V>>)this).GetEnumerator();
 }

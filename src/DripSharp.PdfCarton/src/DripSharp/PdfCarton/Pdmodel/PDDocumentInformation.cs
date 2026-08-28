@@ -9,114 +9,119 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public class PDDocumentInformation : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary info = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary info = null!;
 
-public PDDocumentInformation() {
-this.info = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDDocumentInformation() {
+    this.info = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDDocumentInformation(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
-this.info = dic;
-}
+  public PDDocumentInformation(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
+    this.info = dic;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.info;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.info;
+  }
 
-public virtual object GetPropertyStringValue(string propertyKey) {
-return this.info.GetString(propertyKey);
-}
+  public virtual object GetPropertyStringValue(string propertyKey) {
+    return this.info.GetString(propertyKey);
+  }
 
-public virtual string GetTitle() {
-return this.info.GetString(global::DripSharp.PdfCarton.Cos.COSName.Title);
-}
+  public virtual string GetTitle() {
+    return this.info.GetString(global::DripSharp.PdfCarton.Cos.COSName.Title);
+  }
 
-public virtual void SetTitle(string title) {
-this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Title, title);
-}
+  public virtual void SetTitle(string title) {
+    this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Title, title);
+  }
 
-public virtual string GetAuthor() {
-return this.info.GetString(global::DripSharp.PdfCarton.Cos.COSName.Author);
-}
+  public virtual string GetAuthor() {
+    return this.info.GetString(global::DripSharp.PdfCarton.Cos.COSName.Author);
+  }
 
-public virtual void SetAuthor(string author) {
-this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Author, author);
-}
+  public virtual void SetAuthor(string author) {
+    this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Author, author);
+  }
 
-public virtual string GetSubject() {
-return this.info.GetString(global::DripSharp.PdfCarton.Cos.COSName.Subject);
-}
+  public virtual string GetSubject() {
+    return this.info.GetString(global::DripSharp.PdfCarton.Cos.COSName.Subject);
+  }
 
-public virtual void SetSubject(string subject) {
-this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Subject, subject);
-}
+  public virtual void SetSubject(string subject) {
+    this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Subject, subject);
+  }
 
-public virtual string GetKeywords() {
-return this.info.GetString(global::DripSharp.PdfCarton.Cos.COSName.Keywords);
-}
+  public virtual string GetKeywords() {
+    return this.info.GetString(global::DripSharp.PdfCarton.Cos.COSName.Keywords);
+  }
 
-public virtual void SetKeywords(string keywords) {
-this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Keywords, keywords);
-}
+  public virtual void SetKeywords(string keywords) {
+    this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Keywords, keywords);
+  }
 
-public virtual string GetCreator() {
-return this.info.GetString(global::DripSharp.PdfCarton.Cos.COSName.Creator);
-}
+  public virtual string GetCreator() {
+    return this.info.GetString(global::DripSharp.PdfCarton.Cos.COSName.Creator);
+  }
 
-public virtual void SetCreator(string creator) {
-this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Creator, creator);
-}
+  public virtual void SetCreator(string creator) {
+    this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Creator, creator);
+  }
 
-public virtual string GetProducer() {
-return this.info.GetString(global::DripSharp.PdfCarton.Cos.COSName.Producer);
-}
+  public virtual string GetProducer() {
+    return this.info.GetString(global::DripSharp.PdfCarton.Cos.COSName.Producer);
+  }
 
-public virtual void SetProducer(string producer) {
-this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Producer, producer);
-}
+  public virtual void SetProducer(string producer) {
+    this.info.SetString(global::DripSharp.PdfCarton.Cos.COSName.Producer, producer);
+  }
 
-public virtual global::System.DateTimeOffset? GetCreationDate() {
-return this.info.GetDate(global::DripSharp.PdfCarton.Cos.COSName.CreationDate);
-}
+  public virtual global::System.DateTimeOffset? GetCreationDate() {
+    return this.info.GetDate(global::DripSharp.PdfCarton.Cos.COSName.CreationDate);
+  }
 
-public virtual void SetCreationDate(global::System.DateTimeOffset? date) {
-this.info.SetDate(global::DripSharp.PdfCarton.Cos.COSName.CreationDate, date);
-}
+  public virtual void SetCreationDate(global::System.DateTimeOffset? date) {
+    this.info.SetDate(global::DripSharp.PdfCarton.Cos.COSName.CreationDate, date);
+  }
 
-public virtual global::System.DateTimeOffset? GetModificationDate() {
-return this.info.GetDate(global::DripSharp.PdfCarton.Cos.COSName.ModDate);
-}
+  public virtual global::System.DateTimeOffset? GetModificationDate() {
+    return this.info.GetDate(global::DripSharp.PdfCarton.Cos.COSName.ModDate);
+  }
 
-public virtual void SetModificationDate(global::System.DateTimeOffset? date) {
-this.info.SetDate(global::DripSharp.PdfCarton.Cos.COSName.ModDate, date);
-}
+  public virtual void SetModificationDate(global::System.DateTimeOffset? date) {
+    this.info.SetDate(global::DripSharp.PdfCarton.Cos.COSName.ModDate, date);
+  }
 
-public virtual string GetTrapped() {
-return this.info.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Trapped);
-}
+  public virtual string GetTrapped() {
+    return this.info.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Trapped);
+  }
 
-public virtual global::System.Collections.Generic.ISet<string> GetMetadataKeys() {
-global::System.Collections.Generic.ISet<string> keys = global::DripSharp.Runtime.JavaCompat.NewSortedSet<string>();
-foreach (global::DripSharp.PdfCarton.Cos.COSName key in this.info.KeySet()) {
-keys.Add(key.GetName());
-}
-return keys;
-}
+  public virtual global::System.Collections.Generic.ISet<string> GetMetadataKeys() {
+    global::System.Collections.Generic.ISet<string> keys
+      = global::DripSharp.Runtime.JavaCompat.NewSortedSet<string>();
+    foreach (global::DripSharp.PdfCarton.Cos.COSName key in this.info.KeySet()) {
+      keys.Add(key.GetName());
+    }
+    return keys;
+  }
 
-public virtual string GetCustomMetadataValue(string fieldName) {
-return this.info.GetString(fieldName);
-}
+  public virtual string GetCustomMetadataValue(string fieldName) {
+    return this.info.GetString(fieldName);
+  }
 
-public virtual void SetCustomMetadataValue(string fieldName, string fieldValue) {
-this.info.SetString(fieldName, fieldValue);
-}
+  public virtual void SetCustomMetadataValue(string fieldName, string fieldValue) {
+    this.info.SetString(fieldName, fieldValue);
+  }
 
-public virtual void SetTrapped(string value) {
-if (((((value != default!) && !(global::DripSharp.Runtime.JavaCompat.Equals(value, "True"))) && !(global::DripSharp.Runtime.JavaCompat.Equals(value, "False"))) && !(global::DripSharp.Runtime.JavaCompat.Equals(value, "Unknown")))) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("Valid values for trapped are ", "'True', 'False', or 'Unknown'"));
-}
-this.info.SetName(global::DripSharp.PdfCarton.Cos.COSName.Trapped, value);
-}
+  public virtual void SetTrapped(string value) {
+    if (((((value != default!) && !global::DripSharp.Runtime.JavaCompat.Equals(value, "True"))
+      && !global::DripSharp.Runtime.JavaCompat.Equals(value, "False"))
+      && !global::DripSharp.Runtime.JavaCompat.Equals(value, "Unknown"))) {
+      throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("Valid values for trapped are ",
+        "'True', 'False', or 'Unknown'"));
+    }
+    this.info.SetName(global::DripSharp.PdfCarton.Cos.COSName.Trapped, value);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

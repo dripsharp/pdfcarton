@@ -9,35 +9,35 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 
 public class PDSeedValueTimeStamp {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public PDSeedValueTimeStamp() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.dictionary.SetDirect(true);
-}
+  public PDSeedValueTimeStamp() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.dictionary.SetDirect(true);
+  }
 
-public PDSeedValueTimeStamp(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
-this.dictionary = dict;
-this.dictionary.SetDirect(true);
-}
+  public PDSeedValueTimeStamp(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
+    this.dictionary = dict;
+    this.dictionary.SetDirect(true);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public virtual string GetURL() {
-return this.dictionary.GetString(global::DripSharp.PdfCarton.Cos.COSName.Url);
-}
+  public virtual string GetURL() {
+    return this.dictionary.GetString(global::DripSharp.PdfCarton.Cos.COSName.Url);
+  }
 
-public virtual void SetURL(string url) {
-this.dictionary.SetString(global::DripSharp.PdfCarton.Cos.COSName.Url, url);
-}
+  public virtual void SetURL(string url) {
+    this.dictionary.SetString(global::DripSharp.PdfCarton.Cos.COSName.Url, url);
+  }
 
-public virtual bool IsTimestampRequired() {
-return (this.dictionary.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Ff, 0) != 0);
-}
+  public virtual bool IsTimestampRequired() {
+    return (this.dictionary.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Ff, 0) != 0);
+  }
 
-public virtual void SetTimestampRequired(bool flag) {
-this.dictionary.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Ff, (flag ? 1 : 0));
-}
+  public virtual void SetTimestampRequired(bool flag) {
+    this.dictionary.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Ff, (flag ? 1 : 0));
+  }
 }

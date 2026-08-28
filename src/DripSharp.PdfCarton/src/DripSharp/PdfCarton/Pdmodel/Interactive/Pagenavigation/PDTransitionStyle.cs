@@ -9,59 +9,72 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation;
 
 public sealed class PDTransitionStyle {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Split")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Split = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Split")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Split
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Blinds")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Blinds = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Blinds")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Blinds
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Box")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Box = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Box")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Box
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Wipe")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Wipe = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Wipe")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Wipe
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Dissolve")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Dissolve = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Dissolve")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Dissolve
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Glitter")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Glitter = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Glitter")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Glitter
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("R")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(6)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle R = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("R")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(6)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle R
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Fly")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(7)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Fly = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Fly")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(7)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Fly
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Push")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(8)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Push = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Push")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(8)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Push
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Cover")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(9)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Cover = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Cover")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(9)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Cover
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Uncover")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(10)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Uncover = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Uncover")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(10)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Uncover
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("Fade")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(11)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Fade = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("Fade")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(11)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle Fade
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle();
 
-private PDTransitionStyle() {}
+  private PDTransitionStyle() {}
 
+  public static PDTransitionStyle[] values()
+    => global::DripSharp.Runtime.JavaCompat.EnumValues<PDTransitionStyle>();
+  public static PDTransitionStyle valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<PDTransitionStyle>(name);
 
-public static PDTransitionStyle[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<PDTransitionStyle>();
-public static PDTransitionStyle valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<PDTransitionStyle>(name);
-
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

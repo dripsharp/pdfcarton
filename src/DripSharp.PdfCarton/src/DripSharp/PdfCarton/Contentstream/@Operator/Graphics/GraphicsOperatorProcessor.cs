@@ -8,12 +8,14 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Graphics;
 
-public abstract class GraphicsOperatorProcessor : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-protected internal GraphicsOperatorProcessor(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context) : base(context) {
+public abstract class GraphicsOperatorProcessor
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  protected internal GraphicsOperatorProcessor(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine GetGraphicsContext() {
-return (global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine)(this.GetContext()!);
-}
+  protected internal virtual global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine GetGraphicsContext() {
+    return (global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine)(this.GetContext()!);
+  }
 }

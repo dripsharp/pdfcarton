@@ -9,17 +9,20 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Gsub;
 
 public interface GsubWorker {
-public global::System.Collections.Generic.IList<int> ApplyTransforms(global::System.Collections.Generic.IList<int> originalGlyphIds);
+  public global::System.Collections.Generic.IList<int> ApplyTransforms(global::System.Collections.Generic.IList<int> originalGlyphIds);
 }
 
-public sealed class __GsubWorkerFunctionalAdapter : global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker {
-private readonly global::System.Func<global::System.Collections.Generic.IList<int>, global::System.Collections.Generic.IList<int>> implementation;
+public sealed class __GsubWorkerFunctionalAdapter
+: global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker {
+  private readonly global::System.Func<global::System.Collections.Generic.IList<int>,
+    global::System.Collections.Generic.IList<int>> implementation;
 
-public __GsubWorkerFunctionalAdapter(global::System.Func<global::System.Collections.Generic.IList<int>, global::System.Collections.Generic.IList<int>> implementation) {
-this.implementation = implementation;
-}
+  public __GsubWorkerFunctionalAdapter(global::System.Func<global::System.Collections.Generic.IList<int>,
+    global::System.Collections.Generic.IList<int>> implementation) {
+    this.implementation = implementation;
+  }
 
-public global::System.Collections.Generic.IList<int> ApplyTransforms(global::System.Collections.Generic.IList<int> originalGlyphIds) {
-return this.implementation(originalGlyphIds);
-}
+  public global::System.Collections.Generic.IList<int> ApplyTransforms(global::System.Collections.Generic.IList<int> originalGlyphIds) {
+    return this.implementation(originalGlyphIds);
+  }
 }

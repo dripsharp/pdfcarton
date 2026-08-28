@@ -9,235 +9,264 @@
 namespace DripSharp.PdfCarton.Xmp;
 
 public class XMPMetadata {
-private string xpacketId = default!;
+  private string xpacketId = default!;
 
-private string xpacketBegin = default!;
+  private string xpacketBegin = default!;
 
-private string xpacketBytes = default!;
+  private string xpacketBytes = default!;
 
-private string xpacketEncoding = default!;
+  private string xpacketEncoding = default!;
 
-private string xpacketEndData = global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketEnd;
+  private string xpacketEndData = global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketEnd;
 
-private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema> schemas = null!;
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema> schemas
+    = null!;
 
-private readonly global::DripSharp.PdfCarton.Xmp.Type.TypeMapping typeMapping = null!;
+  private readonly global::DripSharp.PdfCarton.Xmp.Type.TypeMapping typeMapping = null!;
 
-protected internal XMPMetadata() : this(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketBegin, global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketId, global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketBytes, global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketEncoding) {
+  protected internal XMPMetadata()
+  : this(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketBegin,
+    global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketId,
+    global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketBytes,
+    global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketEncoding) {
 
-}
+  }
 
-protected internal XMPMetadata(string xpacketBegin, string xpacketId, string xpacketBytes, string xpacketEncoding) {
-this.schemas = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema>();
-this.typeMapping = new global::DripSharp.PdfCarton.Xmp.Type.TypeMapping(this);
-this.xpacketBegin = xpacketBegin;
-this.xpacketId = xpacketId;
-this.xpacketBytes = xpacketBytes;
-this.xpacketEncoding = xpacketEncoding;
-}
+  protected internal XMPMetadata(string xpacketBegin, string xpacketId, string xpacketBytes,
+    string xpacketEncoding) {
+    this.schemas
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema>();
+    this.typeMapping = new global::DripSharp.PdfCarton.Xmp.Type.TypeMapping(this);
+    this.xpacketBegin = xpacketBegin;
+    this.xpacketId = xpacketId;
+    this.xpacketBytes = xpacketBytes;
+    this.xpacketEncoding = xpacketEncoding;
+  }
 
-public static global::DripSharp.PdfCarton.Xmp.XMPMetadata CreateXMPMetadata() {
-return new global::DripSharp.PdfCarton.Xmp.XMPMetadata();
-}
+  public static global::DripSharp.PdfCarton.Xmp.XMPMetadata CreateXMPMetadata() {
+    return new global::DripSharp.PdfCarton.Xmp.XMPMetadata();
+  }
 
-public static global::DripSharp.PdfCarton.Xmp.XMPMetadata CreateXMPMetadata(string xpacketBegin, string xpacketId, string xpacketBytes, string xpacketEncoding) {
-return new global::DripSharp.PdfCarton.Xmp.XMPMetadata(xpacketBegin, xpacketId, xpacketBytes, xpacketEncoding);
-}
+  public static global::DripSharp.PdfCarton.Xmp.XMPMetadata CreateXMPMetadata(string xpacketBegin,
+    string xpacketId, string xpacketBytes, string xpacketEncoding) {
+    return new global::DripSharp.PdfCarton.Xmp.XMPMetadata(xpacketBegin, xpacketId, xpacketBytes,
+      xpacketEncoding);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.TypeMapping GetTypeMapping() {
-return this.typeMapping;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.TypeMapping GetTypeMapping() {
+    return this.typeMapping;
+  }
 
-public virtual string GetXpacketBytes() {
-return this.xpacketBytes;
-}
+  public virtual string GetXpacketBytes() {
+    return this.xpacketBytes;
+  }
 
-public virtual string GetXpacketEncoding() {
-return this.xpacketEncoding;
-}
+  public virtual string GetXpacketEncoding() {
+    return this.xpacketEncoding;
+  }
 
-public virtual string GetXpacketBegin() {
-return this.xpacketBegin;
-}
+  public virtual string GetXpacketBegin() {
+    return this.xpacketBegin;
+  }
 
-public virtual string GetXpacketId() {
-return this.xpacketId;
-}
+  public virtual string GetXpacketId() {
+    return this.xpacketId;
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema> GetAllSchemas() {
-return new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema>(this.schemas);
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema> GetAllSchemas() {
+    return new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema>(this.schemas);
+  }
 
-public virtual void SetEndXPacket(string data) {
-this.xpacketEndData = data;
-}
+  public virtual void SetEndXPacket(string data) {
+    this.xpacketEndData = data;
+  }
 
-public virtual string GetEndXPacket() {
-return this.xpacketEndData;
-}
+  public virtual string GetEndXPacket() {
+    return this.xpacketEndData;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema GetSchema(string nsURI) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaIterator<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema> it = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Iterator(this.schemas);
-global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema tmp;
-while (it.HasNext()) {
-tmp = it.Next()!;
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmp.GetNamespace(), nsURI)) {
-return tmp;
-}
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema GetSchema(string nsURI) {
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaIterator<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema> it
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Iterator(this.schemas);
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema tmp;
+    while (it.HasNext()) {
+      tmp = it.Next()!;
+      if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmp.GetNamespace(), nsURI)) {
+        return tmp;
+      }
+    }
+    return default!;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema GetSchema(global::System.Type clz) {
-global::DripSharp.PdfCarton.Xmp.Type.StructuredType st = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(clz, typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!;
-return this.GetSchema(st.@Namespace());
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema GetSchema(global::System.Type clz) {
+    global::DripSharp.PdfCarton.Xmp.Type.StructuredType st
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(clz,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!;
+    return this.GetSchema(st.@Namespace());
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema GetSchema(string prefix, string nsURI) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaIterator<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema> it = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Iterator(this.GetAllSchemas());
-global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema tmp;
-while (it.HasNext()) {
-tmp = it.Next()!;
-if ((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmp.GetNamespace(), nsURI) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmp.GetPrefix(), prefix))) {
-return tmp;
-}
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema GetSchema(string prefix,
+    string nsURI) {
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaIterator<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema> it
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Iterator(this.GetAllSchemas());
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema tmp;
+    while (it.HasNext()) {
+      tmp = it.Next()!;
+      if ((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmp.GetNamespace(), nsURI)
+        && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmp.GetPrefix(), prefix))) {
+        return tmp;
+      }
+    }
+    return default!;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema CreateAndAddDefaultSchema(string nsPrefix, string nsURI) {
-global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema schem = new global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema(this, nsURI, nsPrefix);
-schem.SetAboutAsSimple("");
-this.AddSchema(schem);
-return schem;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema CreateAndAddDefaultSchema(string nsPrefix,
+    string nsURI) {
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema schem
+      = new global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema(this, nsURI, nsPrefix);
+    schem.SetAboutAsSimple("");
+    this.AddSchema(schem);
+    return schem;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema CreateAndAddPDFAExtensionSchemaWithDefaultNS() {
-global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema pdfAExt = new global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema(this);
-pdfAExt.SetAboutAsSimple("");
-this.AddSchema(pdfAExt);
-return pdfAExt;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema CreateAndAddPDFAExtensionSchemaWithDefaultNS() {
+    global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema pdfAExt
+      = new global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema(this);
+    pdfAExt.SetAboutAsSimple("");
+    this.AddSchema(pdfAExt);
+    return pdfAExt;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema CreateAndAddPDFAExtensionSchemaWithNS(global::System.Collections.Generic.IDictionary<string, string> namespaces) {
-global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema pdfAExt = new global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema(this);
-pdfAExt.SetAboutAsSimple("");
-this.AddSchema(pdfAExt);
-return pdfAExt;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema CreateAndAddPDFAExtensionSchemaWithNS(global::System.Collections.Generic.IDictionary<string,
+    string> namespaces) {
+    global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema pdfAExt
+      = new global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema(this);
+    pdfAExt.SetAboutAsSimple("");
+    this.AddSchema(pdfAExt);
+    return pdfAExt;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema GetPDFExtensionSchema() {
-return (global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema))!);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema GetPDFExtensionSchema() {
+    return (global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema))!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema CreateAndAddPDFAIdentificationSchema() {
-global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema pdfAId = new global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema(this);
-pdfAId.SetAboutAsSimple("");
-this.AddSchema(pdfAId);
-return pdfAId;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema CreateAndAddPDFAIdentificationSchema() {
+    global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema pdfAId
+      = new global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema(this);
+    pdfAId.SetAboutAsSimple("");
+    this.AddSchema(pdfAId);
+    return pdfAId;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema GetPDFAIdentificationSchema() {
-return (global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema))!);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema GetPDFAIdentificationSchema() {
+    return (global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema))!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema CreateAndAddDublinCoreSchema() {
-global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = new global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema(this);
-dc.SetAboutAsSimple("");
-this.AddSchema(dc);
-return dc;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema CreateAndAddDublinCoreSchema() {
+    global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc
+      = new global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema(this);
+    dc.SetAboutAsSimple("");
+    this.AddSchema(dc);
+    return dc;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema GetDublinCoreSchema() {
-return (global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema))!);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema GetDublinCoreSchema() {
+    return (global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema))!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema CreateAndAddBasicJobTicketSchema() {
-global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema sc = new global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema(this);
-sc.SetAboutAsSimple("");
-this.AddSchema(sc);
-return sc;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema CreateAndAddBasicJobTicketSchema() {
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema sc
+      = new global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema(this);
+    sc.SetAboutAsSimple("");
+    this.AddSchema(sc);
+    return sc;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema GetBasicJobTicketSchema() {
-return (global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema))!);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema GetBasicJobTicketSchema() {
+    return (global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema))!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema CreateAndAddXMPRightsManagementSchema() {
-global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema rights = new global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema(this);
-rights.SetAboutAsSimple("");
-this.AddSchema(rights);
-return rights;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema CreateAndAddXMPRightsManagementSchema() {
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema rights
+      = new global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema(this);
+    rights.SetAboutAsSimple("");
+    this.AddSchema(rights);
+    return rights;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema GetXMPRightsManagementSchema() {
-return (global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema))!);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema GetXMPRightsManagementSchema() {
+    return (global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema))!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema CreateAndAddXMPBasicSchema() {
-global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema xmpB = new global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema(this);
-xmpB.SetAboutAsSimple("");
-this.AddSchema(xmpB);
-return xmpB;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema CreateAndAddXMPBasicSchema() {
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema xmpB
+      = new global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema(this);
+    xmpB.SetAboutAsSimple("");
+    this.AddSchema(xmpB);
+    return xmpB;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema GetXMPBasicSchema() {
-return (global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema))!);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema GetXMPBasicSchema() {
+    return (global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema))!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema CreateAndAddXMPMediaManagementSchema() {
-global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema xmpMM = new global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema(this);
-xmpMM.SetAboutAsSimple("");
-this.AddSchema(xmpMM);
-return xmpMM;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema CreateAndAddXMPMediaManagementSchema() {
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema xmpMM
+      = new global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema(this);
+    xmpMM.SetAboutAsSimple("");
+    this.AddSchema(xmpMM);
+    return xmpMM;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.PhotoshopSchema CreateAndAddPhotoshopSchema() {
-global::DripSharp.PdfCarton.Xmp.Schema.PhotoshopSchema photoshop = new global::DripSharp.PdfCarton.Xmp.Schema.PhotoshopSchema(this);
-photoshop.SetAboutAsSimple("");
-this.AddSchema(photoshop);
-return photoshop;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.PhotoshopSchema CreateAndAddPhotoshopSchema() {
+    global::DripSharp.PdfCarton.Xmp.Schema.PhotoshopSchema photoshop
+      = new global::DripSharp.PdfCarton.Xmp.Schema.PhotoshopSchema(this);
+    photoshop.SetAboutAsSimple("");
+    this.AddSchema(photoshop);
+    return photoshop;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.PhotoshopSchema GetPhotoshopSchema() {
-return (global::DripSharp.PdfCarton.Xmp.Schema.PhotoshopSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PhotoshopSchema))!);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.PhotoshopSchema GetPhotoshopSchema() {
+    return (global::DripSharp.PdfCarton.Xmp.Schema.PhotoshopSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PhotoshopSchema))!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema GetXMPMediaManagementSchema() {
-return (global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema))!);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema GetXMPMediaManagementSchema() {
+    return (global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema))!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema CreateAndAddAdobePDFSchema() {
-global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema pdf = new global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema(this);
-pdf.SetAboutAsSimple("");
-this.AddSchema(pdf);
-return pdf;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema CreateAndAddAdobePDFSchema() {
+    global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema pdf
+      = new global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema(this);
+    pdf.SetAboutAsSimple("");
+    this.AddSchema(pdf);
+    return pdf;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema GetAdobePDFSchema() {
-return (global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema))!);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema GetAdobePDFSchema() {
+    return (global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema))!);
+  }
 
-public virtual void AddSchema(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema obj) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(this.schemas, obj);
-}
+  public virtual void AddSchema(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema obj) {
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(this.schemas, obj);
+  }
 
-public virtual void RemoveSchema(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema schema) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CollectionRemove(this.schemas, schema);
-}
+  public virtual void RemoveSchema(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema schema) {
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CollectionRemove(this.schemas, schema);
+  }
 
-public virtual void ClearSchemas() {
-(this.schemas).Clear();
-}
+  public virtual void ClearSchemas() {
+    (this.schemas).Clear();
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema CreateAndAddPageTextSchema() {
-global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema pageText = new global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema(this);
-pageText.SetAboutAsSimple("");
-this.AddSchema(pageText);
-return pageText;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema CreateAndAddPageTextSchema() {
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema pageText
+      = new global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema(this);
+    pageText.SetAboutAsSimple("");
+    this.AddSchema(pageText);
+    return pageText;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema GetPageTextSchema() {
-return (global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema))!);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema GetPageTextSchema() {
+    return (global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema)(this.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema))!);
+  }
 }

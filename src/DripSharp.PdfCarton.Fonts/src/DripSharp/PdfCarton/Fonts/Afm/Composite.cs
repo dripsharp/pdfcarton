@@ -9,23 +9,24 @@
 namespace DripSharp.PdfCarton.Fonts.Afm;
 
 public class Composite {
-private readonly string name = null!;
+  private readonly string name = null!;
 
-private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Afm.CompositePart> parts = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Afm.CompositePart>();
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Afm.CompositePart> parts
+    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Afm.CompositePart>();
 
-public Composite(string name) {
-this.name = name;
-}
+  public Composite(string name) {
+    this.name = name;
+  }
 
-public virtual string GetName() {
-return this.name;
-}
+  public virtual string GetName() {
+    return this.name;
+  }
 
-public virtual void AddPart(global::DripSharp.PdfCarton.Fonts.Afm.CompositePart part) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.parts, part);
-}
+  public virtual void AddPart(global::DripSharp.PdfCarton.Fonts.Afm.CompositePart part) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.parts, part);
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Afm.CompositePart> GetParts() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(this.parts);
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Afm.CompositePart> GetParts() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(this.parts);
+  }
 }

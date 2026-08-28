@@ -8,28 +8,38 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Text;
 
-public class MoveTextSetLeading : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public MoveTextSetLeading(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class MoveTextSetLeading
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public MoveTextSetLeading(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) < 2)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-global::DripSharp.PdfCarton.Cos.COSBase base1 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 1);
-if (!((base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber y = (global::DripSharp.PdfCarton.Cos.COSNumber)(base1!);
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> args = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>();
-global::DripSharp.Runtime.JavaCompat.Add(args, new global::DripSharp.PdfCarton.Cos.COSFloat(-(y.FloatValue())));
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetTextLeading, args);
-context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveText, arguments);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) < 2)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        arguments);
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base1
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 1);
+    if (!((base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSNumber y
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(base1!);
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> args
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>();
+    global::DripSharp.Runtime.JavaCompat.Add(args,
+      new global::DripSharp.PdfCarton.Cos.COSFloat(-(y.FloatValue())));
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetTextLeading,
+      args);
+    context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveText,
+      arguments);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveTextSetLeading;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveTextSetLeading;
+  }
 }

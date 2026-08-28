@@ -9,72 +9,85 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation;
 
 public sealed class PDTransition : global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper {
-public PDTransition() : this(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle.R) {
+  public PDTransition()
+  : this(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle.R) {
 
-}
+  }
 
-public PDTransition(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle style) : base() {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Trans.GetName());
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.S, global::DripSharp.Runtime.JavaCompat.EnumName(style));
-}
+  public PDTransition(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle style)
+  : base() {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Trans.GetName());
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.S,
+      global::DripSharp.Runtime.JavaCompat.EnumName(style));
+  }
 
-public PDTransition(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : base(dictionary) {
+  public PDTransition(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : base(dictionary) {
 
-}
+  }
 
-public string GetStyle() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.S, global::DripSharp.Runtime.JavaCompat.EnumName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle.R));
-}
+  public string GetStyle() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.S,
+      global::DripSharp.Runtime.JavaCompat.EnumName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle.R));
+  }
 
-public string GetDimension() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Dm, global::DripSharp.Runtime.JavaCompat.EnumName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDimension.H));
-}
+  public string GetDimension() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Dm,
+      global::DripSharp.Runtime.JavaCompat.EnumName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDimension.H));
+  }
 
-public void SetDimension(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDimension dimension) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Dm, global::DripSharp.Runtime.JavaCompat.EnumName(dimension));
-}
+  public void SetDimension(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDimension dimension) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Dm,
+      global::DripSharp.Runtime.JavaCompat.EnumName(dimension));
+  }
 
-public string GetMotion() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.M, global::DripSharp.Runtime.JavaCompat.EnumName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionMotion.I));
-}
+  public string GetMotion() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.M,
+      global::DripSharp.Runtime.JavaCompat.EnumName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionMotion.I));
+  }
 
-public void SetMotion(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionMotion motion) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.M, global::DripSharp.Runtime.JavaCompat.EnumName(motion));
-}
+  public void SetMotion(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionMotion motion) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.M,
+      global::DripSharp.Runtime.JavaCompat.EnumName(motion));
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSBase GetDirection() {
-global::DripSharp.PdfCarton.Cos.COSBase item = this.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.Di);
-if ((item == default!)) {
-return global::DripSharp.PdfCarton.Cos.COSInteger.Zero;
-}
-return item;
-}
+  public global::DripSharp.PdfCarton.Cos.COSBase GetDirection() {
+    global::DripSharp.PdfCarton.Cos.COSBase item
+      = this.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.Di);
+    if ((item == default!)) {
+      return global::DripSharp.PdfCarton.Cos.COSInteger.Zero;
+    }
+    return item;
+  }
 
-public void SetDirection(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection direction) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Di, direction.GetCOSBase());
-}
+  public void SetDirection(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection direction) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Di, direction.GetCOSBase());
+  }
 
-public float GetDuration() {
-return this.GetCOSObject().GetFloat(global::DripSharp.PdfCarton.Cos.COSName.D, (float)(1));
-}
+  public float GetDuration() {
+    return this.GetCOSObject().GetFloat(global::DripSharp.PdfCarton.Cos.COSName.D, (float)(1));
+  }
 
-public void SetDuration(float duration) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, new global::DripSharp.PdfCarton.Cos.COSFloat(duration));
-}
+  public void SetDuration(float duration) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.D,
+      new global::DripSharp.PdfCarton.Cos.COSFloat(duration));
+  }
 
-public float GetFlyScale() {
-return this.GetCOSObject().GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Ss, (float)(1));
-}
+  public float GetFlyScale() {
+    return this.GetCOSObject().GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Ss, (float)(1));
+  }
 
-public void SetFlyScale(float scale) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ss, new global::DripSharp.PdfCarton.Cos.COSFloat(scale));
-}
+  public void SetFlyScale(float scale) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ss,
+      new global::DripSharp.PdfCarton.Cos.COSFloat(scale));
+  }
 
-public bool IsFlyAreaOpaque() {
-return this.GetCOSObject().GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.B, false);
-}
+  public bool IsFlyAreaOpaque() {
+    return this.GetCOSObject().GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.B, false);
+  }
 
-public void SetFlyAreaOpaque(bool opaque) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.B, global::DripSharp.PdfCarton.Cos.COSBoolean.GetBoolean(opaque));
-}
+  public void SetFlyAreaOpaque(bool opaque) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.B,
+      global::DripSharp.PdfCarton.Cos.COSBoolean.GetBoolean(opaque));
+  }
 }

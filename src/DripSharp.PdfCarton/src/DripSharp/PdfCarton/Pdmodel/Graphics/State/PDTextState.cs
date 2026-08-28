@@ -9,101 +9,102 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.State;
 
 public class PDTextState : global::DripSharp.Runtime.JavaCloneable {
-private float characterSpacing = 0;
+  private float characterSpacing = 0;
 
-private float wordSpacing = 0;
+  private float wordSpacing = 0;
 
-private float horizontalScaling = 100;
+  private float horizontalScaling = 100;
 
-private float leading = 0;
+  private float leading = 0;
 
-private global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = null!;
 
-private float fontSize = default;
+  private float fontSize = default;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode = global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Fill;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode
+    = global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Fill;
 
-private float rise = 0;
+  private float rise = 0;
 
-private bool knockout = true;
+  private bool knockout = true;
 
-public virtual float GetCharacterSpacing() {
-return this.characterSpacing;
-}
+  public virtual float GetCharacterSpacing() {
+    return this.characterSpacing;
+  }
 
-public virtual void SetCharacterSpacing(float value) {
-this.characterSpacing = value;
-}
+  public virtual void SetCharacterSpacing(float value) {
+    this.characterSpacing = value;
+  }
 
-public virtual float GetWordSpacing() {
-return this.wordSpacing;
-}
+  public virtual float GetWordSpacing() {
+    return this.wordSpacing;
+  }
 
-public virtual void SetWordSpacing(float value) {
-this.wordSpacing = value;
-}
+  public virtual void SetWordSpacing(float value) {
+    this.wordSpacing = value;
+  }
 
-public virtual float GetHorizontalScaling() {
-return this.horizontalScaling;
-}
+  public virtual float GetHorizontalScaling() {
+    return this.horizontalScaling;
+  }
 
-public virtual void SetHorizontalScaling(float value) {
-this.horizontalScaling = value;
-}
+  public virtual void SetHorizontalScaling(float value) {
+    this.horizontalScaling = value;
+  }
 
-public virtual float GetLeading() {
-return this.leading;
-}
+  public virtual float GetLeading() {
+    return this.leading;
+  }
 
-public virtual void SetLeading(float value) {
-this.leading = value;
-}
+  public virtual void SetLeading(float value) {
+    this.leading = value;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDFont GetFont() {
-return this.font;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDFont GetFont() {
+    return this.font;
+  }
 
-public virtual void SetFont(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont value) {
-this.font = value;
-}
+  public virtual void SetFont(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont value) {
+    this.font = value;
+  }
 
-public virtual float GetFontSize() {
-return this.fontSize;
-}
+  public virtual float GetFontSize() {
+    return this.fontSize;
+  }
 
-public virtual void SetFontSize(float value) {
-this.fontSize = value;
-}
+  public virtual void SetFontSize(float value) {
+    this.fontSize = value;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode GetRenderingMode() {
-return this.renderingMode;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode GetRenderingMode() {
+    return this.renderingMode;
+  }
 
-public virtual void SetRenderingMode(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode) {
-this.renderingMode = renderingMode;
-}
+  public virtual void SetRenderingMode(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode) {
+    this.renderingMode = renderingMode;
+  }
 
-public virtual float GetRise() {
-return this.rise;
-}
+  public virtual float GetRise() {
+    return this.rise;
+  }
 
-public virtual void SetRise(float value) {
-this.rise = value;
-}
+  public virtual void SetRise(float value) {
+    this.rise = value;
+  }
 
-public virtual bool GetKnockoutFlag() {
-return this.knockout;
-}
+  public virtual bool GetKnockoutFlag() {
+    return this.knockout;
+  }
 
-public virtual void SetKnockoutFlag(bool value) {
-this.knockout = value;
-}
+  public virtual void SetKnockoutFlag(bool value) {
+    this.knockout = value;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState Clone() {
-try {
-return (global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState)(this.MemberwiseClone()!);
-} catch (global::System.NotSupportedException e) {
-throw new global::System.Exception(null, e);
-}
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState Clone() {
+    try {
+      return (global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState)(this.MemberwiseClone()!);
+    } catch (global::System.NotSupportedException e) {
+      throw new global::System.Exception(null, e);
+    }
+  }
 }

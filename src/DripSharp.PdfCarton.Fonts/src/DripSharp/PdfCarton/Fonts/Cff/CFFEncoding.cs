@@ -9,13 +9,14 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public abstract class CFFEncoding : global::DripSharp.PdfCarton.Fonts.Encoding.Encoding {
-internal CFFEncoding() {}
+  internal CFFEncoding() {}
 
-public virtual void Add(int code, int sid, string name) {
-this.AddCharacterEncoding(code, name);
-}
+  public virtual void Add(int code, int sid, string name) {
+    this.AddCharacterEncoding(code, name);
+  }
 
-protected internal virtual void Add(int code, int sid) {
-this.AddCharacterEncoding(code, global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardString.GetName(sid));
-}
+  protected internal virtual void Add(int code, int sid) {
+    this.AddCharacterEncoding(code,
+      global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardString.GetName(sid));
+  }
 }

@@ -8,83 +8,114 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
-public class PDSignatureField : global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTerminalField {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class PDSignatureField
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTerminalField {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public PDSignatureField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) : base(acroForm) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ft, global::DripSharp.PdfCarton.Cos.COSName.Sig);
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget firstWidget = global::DripSharp.Runtime.JavaCompat.ListGet(this.GetWidgets(), 0);
-firstWidget.SetLocked(true);
-firstWidget.SetPrinted(true);
-this.SetPartialName(this.generatePartialName());
-}
+  public PDSignatureField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm)
+  : base(acroForm) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ft,
+      global::DripSharp.PdfCarton.Cos.COSName.Sig);
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget firstWidget
+      = global::DripSharp.Runtime.JavaCompat.ListGet(this.GetWidgets(), 0);
+    firstWidget.SetLocked(true);
+    firstWidget.SetPrinted(true);
+    this.SetPartialName(this.generatePartialName());
+  }
 
-internal PDSignatureField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm, global::DripSharp.PdfCarton.Cos.COSDictionary field, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm, field, parent) {
+  internal PDSignatureField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm,
+    global::DripSharp.PdfCarton.Cos.COSDictionary field,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm,
+    field, parent) {
 
-}
+  }
 
-private string generatePartialName() {
-string fieldName = "Signature";
-global::System.Collections.Generic.ISet<string> nameSet = new global::System.Collections.Generic.HashSet<string>();
-global::DripSharp.Runtime.JavaCompat.ForEach(this.GetAcroForm().GetFieldTree(), (field) => nameSet.Add(field.GetPartialName()));
-int i = 1;
-while (global::DripSharp.Runtime.JavaCompat.CollectionContains(nameSet, global::DripSharp.Runtime.JavaCompat.Concat(fieldName, i))) {
-++i;
-}
-return global::DripSharp.Runtime.JavaCompat.Concat(fieldName, i);
-}
+  private string generatePartialName() {
+    string fieldName = "Signature";
+    global::System.Collections.Generic.ISet<string> nameSet
+      = new global::System.Collections.Generic.HashSet<string>();
+    global::DripSharp.Runtime.JavaCompat.ForEach(this.GetAcroForm().GetFieldTree(), (field)
+      => nameSet.Add(field.GetPartialName()));
+    int i = 1;
+    while (global::DripSharp.Runtime.JavaCompat.CollectionContains(nameSet,
+      global::DripSharp.Runtime.JavaCompat.Concat(fieldName, i))) {
+      ++i;
+    }
+    return global::DripSharp.Runtime.JavaCompat.Concat(fieldName, i);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature GetSignature() {
-return this.GetValue();
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature GetSignature() {
+    return this.GetValue();
+  }
 
-public virtual void SetValue(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature value) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.V, value);
-this.ApplyChange();
-}
+  public virtual void SetValue(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature value) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.V, value);
+    this.ApplyChange();
+  }
 
-public override void SetValue(string value) {
-throw new global::System.NotSupportedException(global::DripSharp.Runtime.JavaCompat.Concat("Signature fields don't support setting the value as String ", "- use setValue(PDSignature value) instead"));
-}
+  public override void SetValue(string value) {
+    throw new global::System.NotSupportedException(global::DripSharp.Runtime.JavaCompat.Concat("Signature fields don't support setting the value as String ",
+      "- use setValue(PDSignature value) instead"));
+  }
 
-public virtual void SetDefaultValue(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature value) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Dv, value);
-}
+  public virtual void SetDefaultValue(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature value) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Dv, value);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature GetValue() {
-global::DripSharp.PdfCarton.Cos.COSDictionary value = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.V);
-return ((value != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature(value) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature GetValue() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary value
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.V);
+    return ((value != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature(value)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature)(default!));
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature GetDefaultValue() {
-global::DripSharp.PdfCarton.Cos.COSDictionary value = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Dv);
-return ((value != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature(value) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature GetDefaultValue() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary value
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Dv);
+    return ((value != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature(value)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature)(default!));
+  }
 
-public override string GetValueAsString() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature signature = this.GetValue();
-return ((signature != default!) ? global::DripSharp.Runtime.JavaCompat.StringValueOf(signature) : "");
-}
+  public override string GetValueAsString() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature signature
+      = this.GetValue();
+    return ((signature != default!) ? global::DripSharp.Runtime.JavaCompat.StringValueOf(signature)
+      : "");
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue GetSeedValue() {
-global::DripSharp.PdfCarton.Cos.COSDictionary dict = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Sv);
-return ((dict != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue(dict) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue GetSeedValue() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary dict
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Sv);
+    return ((dict != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue(dict)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue)(default!));
+  }
 
-public virtual void SetSeedValue(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue sv) {
-if ((sv != default!)) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Sv, sv);
-}
-}
+  public virtual void SetSeedValue(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue sv) {
+    if ((sv != default!)) {
+      this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Sv, sv);
+    }
+  }
 
-internal override void constructAppearances() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget = global::DripSharp.Runtime.JavaCompat.ListGet(this.GetWidgets(), 0);
-if ((widget != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rectangle = widget.GetRectangle();
-if (((((rectangle == default!) || ((global::DripSharp.Runtime.JavaCompat.CompareFloat(rectangle.GetHeight(), (float)(0)) == 0) && (global::DripSharp.Runtime.JavaCompat.CompareFloat(rectangle.GetWidth(), (float)(0)) == 0))) || widget.IsNoView()) || widget.IsHidden())) {
-return;
-}
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDSignatureField.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Appearance generation for signature fields not implemented here. ", "You need to generate/update that manually, see the "), "CreateVisibleSignature*.java files in the examples subproject "), "of the source code download")));
-}
-}
+  internal override void constructAppearances() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget
+      = global::DripSharp.Runtime.JavaCompat.ListGet(this.GetWidgets(), 0);
+    if ((widget != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rectangle = widget.GetRectangle();
+      if (((((rectangle == default!)
+        || ((global::DripSharp.Runtime.JavaCompat.CompareFloat(rectangle.GetHeight(), (float)(0))
+        == 0) && (global::DripSharp.Runtime.JavaCompat.CompareFloat(rectangle.GetWidth(),
+        (float)(0)) == 0))) || widget.IsNoView()) || widget.IsHidden())) {
+        return;
+      }
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDSignatureField.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Appearance generation for signature fields not implemented here. ",
+        "You need to generate/update that manually, see the "),
+        "CreateVisibleSignature*.java files in the examples subproject "),
+        "of the source code download")));
+    }
+  }
 }

@@ -8,100 +8,119 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
-public abstract class PDAttributeObject : global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper {
-public PDAttributeObject() {}
+public abstract class PDAttributeObject
+: global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper {
+  public PDAttributeObject() {}
 
-public PDAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : base(dictionary) {
+  public PDAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary)
+  : base(dictionary) {
 
-}
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject Create(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-string owner = dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.O);
-if ((owner != default!)) {
-switch (owner) {
-case var __case_70_22_0 when global::System.Object.Equals(__case_70_22_0, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserAttributeObject.OwnerUserProperties):
-return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserAttributeObject(dictionary);
-case var __case_72_22_0 when global::System.Object.Equals(__case_72_22_0, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.OwnerList):
-return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject(dictionary);
-case var __case_74_22_0 when global::System.Object.Equals(__case_74_22_0, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.OwnerPrintField):
-return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject(dictionary);
-case var __case_76_22_0 when global::System.Object.Equals(__case_76_22_0, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.OwnerTable):
-return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject(dictionary);
-case var __case_78_22_0 when global::System.Object.Equals(__case_78_22_0, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.OwnerLayout):
-return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject(dictionary);
-case var __case_80_22_0 when global::System.Object.Equals(__case_80_22_0, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerXml100):
-case var __case_81_22_0 when global::System.Object.Equals(__case_81_22_0, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerHtml320):
-case var __case_82_22_0 when global::System.Object.Equals(__case_82_22_0, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerHtml401):
-case var __case_83_22_0 when global::System.Object.Equals(__case_83_22_0, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerOeb100):
-case var __case_84_22_0 when global::System.Object.Equals(__case_84_22_0, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerRtf105):
-case var __case_85_22_0 when global::System.Object.Equals(__case_85_22_0, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerCss100):
-case var __case_86_22_0 when global::System.Object.Equals(__case_86_22_0, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerCss200):
-return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject(dictionary);
-default:
-break;
-}
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDDefaultAttributeObject(dictionary);
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject Create(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    string owner = dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.O);
+    if ((owner != default!)) {
+      switch (owner) {
+        case var __case_70_22_0 when global::System.Object.Equals(__case_70_22_0,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserAttributeObject.OwnerUserProperties):
+          return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserAttributeObject(dictionary);
+        case var __case_72_22_0 when global::System.Object.Equals(__case_72_22_0,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.OwnerList):
+          return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject(dictionary);
+        case var __case_74_22_0 when global::System.Object.Equals(__case_74_22_0,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.OwnerPrintField):
+          return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject(dictionary);
+        case var __case_76_22_0 when global::System.Object.Equals(__case_76_22_0,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.OwnerTable):
+          return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject(dictionary);
+        case var __case_78_22_0 when global::System.Object.Equals(__case_78_22_0,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject.OwnerLayout):
+          return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject(dictionary);
+        case var __case_80_22_0 when global::System.Object.Equals(__case_80_22_0,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerXml100):
+        case var __case_81_22_0 when global::System.Object.Equals(__case_81_22_0,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerHtml320):
+        case var __case_82_22_0 when global::System.Object.Equals(__case_82_22_0,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerHtml401):
+        case var __case_83_22_0 when global::System.Object.Equals(__case_83_22_0,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerOeb100):
+        case var __case_84_22_0 when global::System.Object.Equals(__case_84_22_0,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerRtf105):
+        case var __case_85_22_0 when global::System.Object.Equals(__case_85_22_0,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerCss100):
+        case var __case_86_22_0 when global::System.Object.Equals(__case_86_22_0,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject.OwnerCss200):
+          return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDExportFormatAttributeObject(dictionary);
+        default:
+          break;
+      }
+    }
+    return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDDefaultAttributeObject(dictionary);
+  }
 
-private global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement structureElement = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement structureElement
+    = null!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement getStructureElement() {
-return this.structureElement;
-}
+  private global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement getStructureElement() {
+    return this.structureElement;
+  }
 
-protected internal virtual void SetStructureElement(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement structureElement) {
-this.structureElement = structureElement;
-}
+  protected internal virtual void SetStructureElement(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement structureElement) {
+    this.structureElement = structureElement;
+  }
 
-public virtual string GetOwner() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.O);
-}
+  public virtual string GetOwner() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.O);
+  }
 
-protected internal virtual void SetOwner(string owner) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.O, owner);
-}
+  protected internal virtual void SetOwner(string owner) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.O, owner);
+  }
 
-public virtual bool IsEmpty() {
-return ((this.GetCOSObject().Size() == 1) && (this.GetOwner() != default!));
-}
+  public virtual bool IsEmpty() {
+    return ((this.GetCOSObject().Size() == 1) && (this.GetOwner() != default!));
+  }
 
-protected internal virtual void PotentiallyNotifyChanged(global::DripSharp.PdfCarton.Cos.COSBase oldBase, global::DripSharp.PdfCarton.Cos.COSBase newBase) {
-if (this.isValueChanged(oldBase, newBase)) {
-this.NotifyChanged();
-}
-}
+  protected internal virtual void PotentiallyNotifyChanged(global::DripSharp.PdfCarton.Cos.COSBase oldBase,
+    global::DripSharp.PdfCarton.Cos.COSBase newBase) {
+    if (this.isValueChanged(oldBase, newBase)) {
+      this.NotifyChanged();
+    }
+  }
 
-private bool isValueChanged(global::DripSharp.PdfCarton.Cos.COSBase oldValue, global::DripSharp.PdfCarton.Cos.COSBase newValue) {
-if ((oldValue == default!)) {
-return (newValue != default!);
-}
-return !(global::DripSharp.Runtime.JavaCompat.Equals(oldValue, newValue));
-}
+  private bool isValueChanged(global::DripSharp.PdfCarton.Cos.COSBase oldValue,
+    global::DripSharp.PdfCarton.Cos.COSBase newValue) {
+    if ((oldValue == default!)) {
+      return (newValue != default!);
+    }
+    return !global::DripSharp.Runtime.JavaCompat.Equals(oldValue, newValue);
+  }
 
-protected internal virtual void NotifyChanged() {
-if ((this.getStructureElement() != default!)) {
-this.getStructureElement().AttributeChanged(this);
-}
-}
+  protected internal virtual void NotifyChanged() {
+    if ((this.getStructureElement() != default!)) {
+      this.getStructureElement().AttributeChanged(this);
+    }
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat("O=", this.GetOwner());
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat("O=", this.GetOwner());
+  }
 
-protected internal static string ArrayToString(object[] array) {
-global::DripSharp.Runtime.JavaStringJoiner sj = new global::DripSharp.Runtime.JavaStringJoiner(", ", "[", "]");
-foreach (object o in array) {
-sj.add(global::DripSharp.Runtime.JavaCompat.StringValueOf(o));
-}
-return sj.toString();
-}
+  protected internal static string ArrayToString(object[] array) {
+    global::DripSharp.Runtime.JavaStringJoiner sj
+      = new global::DripSharp.Runtime.JavaStringJoiner(", ", "[", "]");
+    foreach (object o in array) {
+      sj.add(global::DripSharp.Runtime.JavaCompat.StringValueOf(o));
+    }
+    return sj.toString();
+  }
 
-protected internal static string ArrayToString(float[] array) {
-global::DripSharp.Runtime.JavaStringJoiner sj = new global::DripSharp.Runtime.JavaStringJoiner(", ", "[", "]");
-foreach (float f in array) {
-sj.add(global::DripSharp.Runtime.JavaCompat.StringValueOf(f));
-}
-return sj.toString();
-}
+  protected internal static string ArrayToString(float[] array) {
+    global::DripSharp.Runtime.JavaStringJoiner sj
+      = new global::DripSharp.Runtime.JavaStringJoiner(", ", "[", "]");
+    foreach (float f in array) {
+      sj.add(global::DripSharp.Runtime.JavaCompat.StringValueOf(f));
+    }
+    return sj.toString();
+  }
 }

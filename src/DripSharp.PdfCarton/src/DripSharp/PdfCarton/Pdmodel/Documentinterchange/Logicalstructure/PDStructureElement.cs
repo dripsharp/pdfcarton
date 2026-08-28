@@ -8,386 +8,419 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
-public class PDStructureElement : global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode {
-public const string Type = "StructElem";
+public class PDStructureElement
+: global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode {
+  public const string Type = "StructElem";
 
-public PDStructureElement(string structureType, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode parent) : base(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement.Type) {
-this.SetStructureType(structureType);
-this.SetParent(parent);
-}
+  public PDStructureElement(string structureType,
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode parent)
+  : base(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement.Type) {
+    this.SetStructureType(structureType);
+    this.SetParent(parent);
+  }
 
-public PDStructureElement(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
+  public PDStructureElement(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
 
-}
+  }
 
-public virtual string GetStructureType() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.S);
-}
+  public virtual string GetStructureType() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.S);
+  }
 
-public void SetStructureType(string structureType) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.S, structureType);
-}
+  public void SetStructureType(string structureType) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.S, structureType);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode GetParent() {
-global::DripSharp.PdfCarton.Cos.COSDictionary parent = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.P);
-return ((parent != default!) ? global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode.Create(parent) : (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode GetParent() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary parent
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.P);
+    return ((parent != default!)
+      ? global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode.Create(parent)
+      : (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode)(default!));
+  }
 
-public void SetParent(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode structureNode) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, structureNode);
-}
+  public void SetParent(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode structureNode) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, structureNode);
+  }
 
-public virtual string GetElementIdentifier() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Id);
-}
+  public virtual string GetElementIdentifier() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Id);
+  }
 
-public virtual void SetElementIdentifier(string id) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Id, id);
-}
+  public virtual void SetElementIdentifier(string id) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Id, id);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.PDPage GetPage() {
-global::DripSharp.PdfCarton.Cos.COSDictionary page = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Pg);
-return ((page != default!) ? new global::DripSharp.PdfCarton.Pdmodel.PDPage(page) : (global::DripSharp.PdfCarton.Pdmodel.PDPage)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.PDPage GetPage() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary page
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Pg);
+    return ((page != default!) ? new global::DripSharp.PdfCarton.Pdmodel.PDPage(page)
+      : (global::DripSharp.PdfCarton.Pdmodel.PDPage)(default!));
+  }
 
-public virtual void SetPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Pg, page);
-}
+  public virtual void SetPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Pg, page);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject> GetAttributes() {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject> attributes = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject>();
-global::DripSharp.PdfCarton.Cos.COSBase a = this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.A);
-if ((a is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(a!);
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject ao__166_31 = default!;
-for (int i = 0; (i < array.Size()); ++i) {
-global::DripSharp.PdfCarton.Cos.COSBase item = array.GetObject(i);
-if ((item is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-ao__166_31 = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(item!));
-ao__166_31!.SetStructureElement(this);
-attributes.AddObject(ao__166_31!, 0);
-} else {
-if ((item is global::DripSharp.PdfCarton.Cos.COSInteger)) {
-attributes.SetRevisionNumber(ao__166_31!, ((global::DripSharp.PdfCarton.Cos.COSNumber)(item!)).IntValue());
-}
-}
-}
-}
-if ((a is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject ao__186_31 = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(a!));
-ao__186_31.SetStructureElement(this);
-attributes.AddObject(ao__186_31, 0);
-}
-return attributes;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject> GetAttributes() {
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject> attributes
+      = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject>();
+    global::DripSharp.PdfCarton.Cos.COSBase a
+      = this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.A);
+    if ((a is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      global::DripSharp.PdfCarton.Cos.COSArray array
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(a!);
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject ao__166_31
+        = default!;
+      for (int i = 0; (i < array.Size()); ++i) {
+        global::DripSharp.PdfCarton.Cos.COSBase item = array.GetObject(i);
+        if ((item is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+          ao__166_31
+            = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(item!));
+          ao__166_31!.SetStructureElement(this);
+          attributes.AddObject(ao__166_31!, 0);
+        } else {
+          if ((item is global::DripSharp.PdfCarton.Cos.COSInteger)) {
+            attributes.SetRevisionNumber(ao__166_31!,
+              ((global::DripSharp.PdfCarton.Cos.COSNumber)(item!)).IntValue());
+          }
+        }
+      }
+    }
+    if ((a is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject ao__186_31
+        = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(a!));
+      ao__186_31.SetStructureElement(this);
+      attributes.AddObject(ao__186_31, 0);
+    }
+    return attributes;
+  }
 
-public virtual void SetAttributes(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject> attributes) {
-global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.A;
-if (((attributes.Size() == 1) && (attributes.GetRevisionNumber(0) == 0))) {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject attributeObject__203_31 = attributes.GetObject(0);
-attributeObject__203_31.SetStructureElement(this);
-this.GetCOSObject().SetItem(key, attributeObject__203_31);
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-for (int i = 0; (i < attributes.Size()); i++) {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject attributeObject__211_31 = attributes.GetObject(i);
-attributeObject__211_31.SetStructureElement(this);
-int revisionNumber = attributes.GetRevisionNumber(i);
-if ((revisionNumber < 0)) {
-throw new global::System.ArgumentException("The revision number shall be > -1");
-}
-array.Add(attributeObject__211_31);
-array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(revisionNumber)));
-}
-this.GetCOSObject().SetItem(key, array);
-}
+  public virtual void SetAttributes(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject> attributes) {
+    global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.A;
+    if (((attributes.Size() == 1) && (attributes.GetRevisionNumber(0) == 0))) {
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject attributeObject__203_31
+        = attributes.GetObject(0);
+      attributeObject__203_31.SetStructureElement(this);
+      this.GetCOSObject().SetItem(key, attributeObject__203_31);
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    for (int i = 0; (i < attributes.Size()); i++) {
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject attributeObject__211_31
+        = attributes.GetObject(i);
+      attributeObject__211_31.SetStructureElement(this);
+      int revisionNumber = attributes.GetRevisionNumber(i);
+      if ((revisionNumber < 0)) {
+        throw new global::System.ArgumentException("The revision number shall be > -1");
+      }
+      array.Add(attributeObject__211_31);
+      array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(revisionNumber)));
+    }
+    this.GetCOSObject().SetItem(key, array);
+  }
 
-public virtual void AddAttribute(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject attributeObject) {
-global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.A;
-attributeObject.SetStructureElement(this);
-global::DripSharp.PdfCarton.Cos.COSBase a = this.GetCOSObject().GetDictionaryObject(key);
-global::DripSharp.PdfCarton.Cos.COSArray array;
-if ((a is global::DripSharp.PdfCarton.Cos.COSArray)) {
-array = (global::DripSharp.PdfCarton.Cos.COSArray)(a!);
-} else {
-array = new global::DripSharp.PdfCarton.Cos.COSArray();
-if ((a != default!)) {
-array.Add(a);
-array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(0)));
-}
-}
-this.GetCOSObject().SetItem(key, array);
-array.Add(attributeObject);
-array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.GetRevisionNumber())));
-}
+  public virtual void AddAttribute(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject attributeObject) {
+    global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.A;
+    attributeObject.SetStructureElement(this);
+    global::DripSharp.PdfCarton.Cos.COSBase a = this.GetCOSObject().GetDictionaryObject(key);
+    global::DripSharp.PdfCarton.Cos.COSArray array;
+    if ((a is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      array = (global::DripSharp.PdfCarton.Cos.COSArray)(a!);
+    } else {
+      array = new global::DripSharp.PdfCarton.Cos.COSArray();
+      if ((a != default!)) {
+        array.Add(a);
+        array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(0)));
+      }
+    }
+    this.GetCOSObject().SetItem(key, array);
+    array.Add(attributeObject);
+    array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.GetRevisionNumber())));
+  }
 
-public virtual void RemoveAttribute(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject attributeObject) {
-global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.A;
-global::DripSharp.PdfCarton.Cos.COSBase a = this.GetCOSObject().GetDictionaryObject(key);
-if ((a is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(a!);
-array.Remove(attributeObject.GetCOSObject());
-if (((array.Size() == 2) && (array.GetInt(1) == 0))) {
-this.GetCOSObject().SetItem(key, array.GetObject(0));
-}
-} else {
-global::DripSharp.PdfCarton.Cos.COSBase directA = a;
-if ((a is global::DripSharp.PdfCarton.Cos.COSObject)) {
-directA = ((global::DripSharp.PdfCarton.Cos.COSObject)(a!)).GetObject();
-}
-if (global::DripSharp.Runtime.JavaCompat.Equals(attributeObject.GetCOSObject(), directA)) {
-this.GetCOSObject().SetItem(key, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
-}
-}
-attributeObject.SetStructureElement((global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement)default!);
-}
+  public virtual void RemoveAttribute(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject attributeObject) {
+    global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.A;
+    global::DripSharp.PdfCarton.Cos.COSBase a = this.GetCOSObject().GetDictionaryObject(key);
+    if ((a is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      global::DripSharp.PdfCarton.Cos.COSArray array
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(a!);
+      array.Remove(attributeObject.GetCOSObject());
+      if (((array.Size() == 2) && (array.GetInt(1) == 0))) {
+        this.GetCOSObject().SetItem(key, array.GetObject(0));
+      }
+    } else {
+      global::DripSharp.PdfCarton.Cos.COSBase directA = a;
+      if ((a is global::DripSharp.PdfCarton.Cos.COSObject)) {
+        directA = ((global::DripSharp.PdfCarton.Cos.COSObject)(a!)).GetObject();
+      }
+      if (global::DripSharp.Runtime.JavaCompat.Equals(attributeObject.GetCOSObject(), directA)) {
+        this.GetCOSObject().SetItem(key, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+      }
+    }
+    attributeObject.SetStructureElement((global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement)default!);
+  }
 
-public virtual void AttributeChanged(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject attributeObject) {
-global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.A;
-global::DripSharp.PdfCarton.Cos.COSBase a = this.GetCOSObject().GetDictionaryObject(key);
-if ((a is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray array__297_22 = (global::DripSharp.PdfCarton.Cos.COSArray)(a!);
-for (int i = 0; (i < array__297_22.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase entry = array__297_22.GetObject(i);
-if (global::DripSharp.Runtime.JavaCompat.Equals(entry, attributeObject.GetCOSObject())) {
-global::DripSharp.PdfCarton.Cos.COSBase next = array__297_22.Get((i + 1));
-if ((next is global::DripSharp.PdfCarton.Cos.COSInteger)) {
-array__297_22.Set((i + 1), global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.GetRevisionNumber())));
-}
-}
-}
-} else {
-global::DripSharp.PdfCarton.Cos.COSArray array__313_22 = new global::DripSharp.PdfCarton.Cos.COSArray();
-array__313_22.Add(a);
-array__313_22.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.GetRevisionNumber())));
-this.GetCOSObject().SetItem(key, array__313_22);
-}
-}
+  public virtual void AttributeChanged(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject attributeObject) {
+    global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.A;
+    global::DripSharp.PdfCarton.Cos.COSBase a = this.GetCOSObject().GetDictionaryObject(key);
+    if ((a is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      global::DripSharp.PdfCarton.Cos.COSArray array__297_22
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(a!);
+      for (int i = 0; (i < array__297_22.Size()); i++) {
+        global::DripSharp.PdfCarton.Cos.COSBase entry = array__297_22.GetObject(i);
+        if (global::DripSharp.Runtime.JavaCompat.Equals(entry, attributeObject.GetCOSObject())) {
+          global::DripSharp.PdfCarton.Cos.COSBase next = array__297_22.Get((i + 1));
+          if ((next is global::DripSharp.PdfCarton.Cos.COSInteger)) {
+            array__297_22.Set((i + 1),
+              global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.GetRevisionNumber())));
+          }
+        }
+      }
+    } else {
+      global::DripSharp.PdfCarton.Cos.COSArray array__313_22
+        = new global::DripSharp.PdfCarton.Cos.COSArray();
+      array__313_22.Add(a);
+      array__313_22.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.GetRevisionNumber())));
+      this.GetCOSObject().SetItem(key, array__313_22);
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<string> GetClassNames() {
-global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.C;
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<string> classNames = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<string>();
-global::DripSharp.PdfCarton.Cos.COSBase c = this.GetCOSObject().GetDictionaryObject(key);
-if ((c is global::DripSharp.PdfCarton.Cos.COSName)) {
-classNames.AddObject(((global::DripSharp.PdfCarton.Cos.COSName)(c!)).GetName(), 0);
-}
-if ((c is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(c!);
-string className = default!;
-for (int i = 0; (i < array.Size()); ++i) {
-global::DripSharp.PdfCarton.Cos.COSBase item = array.GetObject(i);
-if ((item is global::DripSharp.PdfCarton.Cos.COSName)) {
-className = ((global::DripSharp.PdfCarton.Cos.COSName)(item!)).GetName();
-classNames.AddObject(className!, 0);
-} else {
-if ((item is global::DripSharp.PdfCarton.Cos.COSInteger)) {
-classNames.SetRevisionNumber(className!, ((global::DripSharp.PdfCarton.Cos.COSNumber)(item!)).IntValue());
-}
-}
-}
-}
-return classNames;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<string> GetClassNames() {
+    global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.C;
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<string> classNames
+      = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<string>();
+    global::DripSharp.PdfCarton.Cos.COSBase c = this.GetCOSObject().GetDictionaryObject(key);
+    if ((c is global::DripSharp.PdfCarton.Cos.COSName)) {
+      classNames.AddObject(((global::DripSharp.PdfCarton.Cos.COSName)(c!)).GetName(), 0);
+    }
+    if ((c is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      global::DripSharp.PdfCarton.Cos.COSArray array
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(c!);
+      string className = default!;
+      for (int i = 0; (i < array.Size()); ++i) {
+        global::DripSharp.PdfCarton.Cos.COSBase item = array.GetObject(i);
+        if ((item is global::DripSharp.PdfCarton.Cos.COSName)) {
+          className = ((global::DripSharp.PdfCarton.Cos.COSName)(item!)).GetName();
+          classNames.AddObject(className!, 0);
+        } else {
+          if ((item is global::DripSharp.PdfCarton.Cos.COSInteger)) {
+            classNames.SetRevisionNumber(className!,
+              ((global::DripSharp.PdfCarton.Cos.COSNumber)(item!)).IntValue());
+          }
+        }
+      }
+    }
+    return classNames;
+  }
 
-public virtual void SetClassNames(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<string> classNames) {
-if ((classNames == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.C;
-if (((classNames.Size() == 1) && (classNames.GetRevisionNumber(0) == 0))) {
-string className__371_20 = classNames.GetObject(0);
-this.GetCOSObject().SetName(key, className__371_20);
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-for (int i = 0; (i < classNames.Size()); i++) {
-string className__378_20 = classNames.GetObject(i);
-int revisionNumber = classNames.GetRevisionNumber(i);
-if ((revisionNumber < 0)) {
-throw new global::System.ArgumentException("The revision number shall be > -1");
-}
-array.Add(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(className__378_20));
-array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(revisionNumber)));
-}
-this.GetCOSObject().SetItem(key, array);
-}
+  public virtual void SetClassNames(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<string> classNames) {
+    if ((classNames == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.C;
+    if (((classNames.Size() == 1) && (classNames.GetRevisionNumber(0) == 0))) {
+      string className__371_20 = classNames.GetObject(0);
+      this.GetCOSObject().SetName(key, className__371_20);
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    for (int i = 0; (i < classNames.Size()); i++) {
+      string className__378_20 = classNames.GetObject(i);
+      int revisionNumber = classNames.GetRevisionNumber(i);
+      if ((revisionNumber < 0)) {
+        throw new global::System.ArgumentException("The revision number shall be > -1");
+      }
+      array.Add(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(className__378_20));
+      array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(revisionNumber)));
+    }
+    this.GetCOSObject().SetItem(key, array);
+  }
 
-public virtual void AddClassName(string className) {
-if ((className == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.C;
-global::DripSharp.PdfCarton.Cos.COSBase c = this.GetCOSObject().GetDictionaryObject(key);
-global::DripSharp.PdfCarton.Cos.COSArray array;
-if ((c is global::DripSharp.PdfCarton.Cos.COSArray)) {
-array = (global::DripSharp.PdfCarton.Cos.COSArray)(c!);
-} else {
-array = new global::DripSharp.PdfCarton.Cos.COSArray();
-if ((c != default!)) {
-array.Add(c);
-array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(0)));
-}
-}
-this.GetCOSObject().SetItem(key, array);
-array.Add(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(className));
-array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.GetRevisionNumber())));
-}
+  public virtual void AddClassName(string className) {
+    if ((className == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.C;
+    global::DripSharp.PdfCarton.Cos.COSBase c = this.GetCOSObject().GetDictionaryObject(key);
+    global::DripSharp.PdfCarton.Cos.COSArray array;
+    if ((c is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      array = (global::DripSharp.PdfCarton.Cos.COSArray)(c!);
+    } else {
+      array = new global::DripSharp.PdfCarton.Cos.COSArray();
+      if ((c != default!)) {
+        array.Add(c);
+        array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(0)));
+      }
+    }
+    this.GetCOSObject().SetItem(key, array);
+    array.Add(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(className));
+    array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.GetRevisionNumber())));
+  }
 
-public virtual void RemoveClassName(string className) {
-if ((className == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.C;
-global::DripSharp.PdfCarton.Cos.COSBase c = this.GetCOSObject().GetDictionaryObject(key);
-global::DripSharp.PdfCarton.Cos.COSName name = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(className);
-if ((c is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(c!);
-array.Remove(name);
-if (((array.Size() == 2) && (array.GetInt(1) == 0))) {
-this.GetCOSObject().SetItem(key, array.GetObject(0));
-}
-} else {
-global::DripSharp.PdfCarton.Cos.COSBase directC = c;
-if ((c is global::DripSharp.PdfCarton.Cos.COSObject)) {
-directC = ((global::DripSharp.PdfCarton.Cos.COSObject)(c!)).GetObject();
-}
-if (name.Equals(directC)) {
-this.GetCOSObject().SetItem(key, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
-}
-}
-}
+  public virtual void RemoveClassName(string className) {
+    if ((className == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSName key = global::DripSharp.PdfCarton.Cos.COSName.C;
+    global::DripSharp.PdfCarton.Cos.COSBase c = this.GetCOSObject().GetDictionaryObject(key);
+    global::DripSharp.PdfCarton.Cos.COSName name
+      = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(className);
+    if ((c is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      global::DripSharp.PdfCarton.Cos.COSArray array
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(c!);
+      array.Remove(name);
+      if (((array.Size() == 2) && (array.GetInt(1) == 0))) {
+        this.GetCOSObject().SetItem(key, array.GetObject(0));
+      }
+    } else {
+      global::DripSharp.PdfCarton.Cos.COSBase directC = c;
+      if ((c is global::DripSharp.PdfCarton.Cos.COSObject)) {
+        directC = ((global::DripSharp.PdfCarton.Cos.COSObject)(c!)).GetObject();
+      }
+      if (name.Equals(directC)) {
+        this.GetCOSObject().SetItem(key, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+      }
+    }
+  }
 
-public virtual int GetRevisionNumber() {
-return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.R, 0);
-}
+  public virtual int GetRevisionNumber() {
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.R, 0);
+  }
 
-public virtual void SetRevisionNumber(int revisionNumber) {
-if ((revisionNumber < 0)) {
-throw new global::System.ArgumentException("The revision number shall be > -1");
-}
-this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.R, revisionNumber);
-}
+  public virtual void SetRevisionNumber(int revisionNumber) {
+    if ((revisionNumber < 0)) {
+      throw new global::System.ArgumentException("The revision number shall be > -1");
+    }
+    this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.R, revisionNumber);
+  }
 
-public virtual void IncrementRevisionNumber() {
-this.SetRevisionNumber((this.GetRevisionNumber() + 1));
-}
+  public virtual void IncrementRevisionNumber() {
+    this.SetRevisionNumber((this.GetRevisionNumber() + 1));
+  }
 
-public virtual string GetTitle() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.T);
-}
+  public virtual string GetTitle() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.T);
+  }
 
-public virtual void SetTitle(string title) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.T, title);
-}
+  public virtual void SetTitle(string title) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.T, title);
+  }
 
-public virtual string GetLanguage() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Lang);
-}
+  public virtual string GetLanguage() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Lang);
+  }
 
-public virtual void SetLanguage(string language) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Lang, language);
-}
+  public virtual void SetLanguage(string language) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Lang, language);
+  }
 
-public virtual string GetAlternateDescription() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Alt);
-}
+  public virtual string GetAlternateDescription() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Alt);
+  }
 
-public virtual void SetAlternateDescription(string alternateDescription) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Alt, alternateDescription);
-}
+  public virtual void SetAlternateDescription(string alternateDescription) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Alt,
+      alternateDescription);
+  }
 
-public virtual string GetExpandedForm() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.E);
-}
+  public virtual string GetExpandedForm() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.E);
+  }
 
-public virtual void SetExpandedForm(string expandedForm) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.E, expandedForm);
-}
+  public virtual void SetExpandedForm(string expandedForm) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.E, expandedForm);
+  }
 
-public virtual string GetActualText() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.ActualText);
-}
+  public virtual string GetActualText() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.ActualText);
+  }
 
-public virtual void SetActualText(string actualText) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.ActualText, actualText);
-}
+  public virtual void SetActualText(string actualText) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.ActualText, actualText);
+  }
 
-public virtual string GetStandardStructureType() {
-string type = this.GetStructureType();
-object mappedValue = global::DripSharp.Runtime.JavaCompat.MapGet(this.getRoleMap(), type);
-if ((mappedValue is string)) {
-type = (string)(mappedValue!);
-}
-return type;
-}
+  public virtual string GetStandardStructureType() {
+    string type = this.GetStructureType();
+    object mappedValue = global::DripSharp.Runtime.JavaCompat.MapGet(this.getRoleMap(), type);
+    if ((mappedValue is string)) {
+      type = (string)(mappedValue!);
+    }
+    return type;
+  }
 
-public virtual void AppendKid(int mcid) {
-if ((mcid < 0)) {
-throw new global::System.ArgumentException("MCID should not be negative");
-}
-this.AppendKid(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(mcid)));
-}
+  public virtual void AppendKid(int mcid) {
+    if ((mcid < 0)) {
+      throw new global::System.ArgumentException("MCID should not be negative");
+    }
+    this.AppendKid(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(mcid)));
+  }
 
-public virtual void AppendKid(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent markedContent) {
-if ((markedContent == default!)) {
-return;
-}
-int mcid = markedContent.GetMCID();
-if ((mcid < 0)) {
-throw new global::System.ArgumentException("MCID is negative or doesn't exist");
-}
-this.AppendKid(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(mcid)));
-}
+  public virtual void AppendKid(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent markedContent) {
+    if ((markedContent == default!)) {
+      return;
+    }
+    int mcid = markedContent.GetMCID();
+    if ((mcid < 0)) {
+      throw new global::System.ArgumentException("MCID is negative or doesn't exist");
+    }
+    this.AppendKid(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(mcid)));
+  }
 
-public virtual void AppendKid(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkedContentReference markedContentReference) {
-this.AppendObjectableKid(markedContentReference);
-}
+  public virtual void AppendKid(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkedContentReference markedContentReference) {
+    this.AppendObjectableKid(markedContentReference);
+  }
 
-public virtual void AppendKid(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDObjectReference objectReference) {
-this.AppendObjectableKid(objectReference);
-}
+  public virtual void AppendKid(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDObjectReference objectReference) {
+    this.AppendObjectableKid(objectReference);
+  }
 
-public virtual void InsertBefore(global::DripSharp.PdfCarton.Cos.COSInteger markedContentIdentifier, object refKid) {
-this.InsertBefore((global::DripSharp.PdfCarton.Cos.COSBase)(markedContentIdentifier!), refKid);
-}
+  public virtual void InsertBefore(global::DripSharp.PdfCarton.Cos.COSInteger markedContentIdentifier,
+    object refKid) {
+    this.InsertBefore((global::DripSharp.PdfCarton.Cos.COSBase)(markedContentIdentifier!), refKid);
+  }
 
-public virtual void InsertBefore(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkedContentReference markedContentReference, object refKid) {
-this.InsertObjectableBefore(markedContentReference, refKid);
-}
+  public virtual void InsertBefore(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkedContentReference markedContentReference,
+    object refKid) {
+    this.InsertObjectableBefore(markedContentReference, refKid);
+  }
 
-public virtual void InsertBefore(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDObjectReference objectReference, object refKid) {
-this.InsertObjectableBefore(objectReference, refKid);
-}
+  public virtual void InsertBefore(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDObjectReference objectReference,
+    object refKid) {
+    this.InsertObjectableBefore(objectReference, refKid);
+  }
 
-public virtual void RemoveKid(global::DripSharp.PdfCarton.Cos.COSInteger markedContentIdentifier) {
-this.RemoveKid((global::DripSharp.PdfCarton.Cos.COSBase)(markedContentIdentifier!));
-}
+  public virtual void RemoveKid(global::DripSharp.PdfCarton.Cos.COSInteger markedContentIdentifier) {
+    this.RemoveKid((global::DripSharp.PdfCarton.Cos.COSBase)(markedContentIdentifier!));
+  }
 
-public virtual void RemoveKid(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkedContentReference markedContentReference) {
-this.RemoveObjectableKid(markedContentReference);
-}
+  public virtual void RemoveKid(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkedContentReference markedContentReference) {
+    this.RemoveObjectableKid(markedContentReference);
+  }
 
-public virtual void RemoveKid(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDObjectReference objectReference) {
-this.RemoveObjectableKid(objectReference);
-}
+  public virtual void RemoveKid(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDObjectReference objectReference) {
+    this.RemoveObjectableKid(objectReference);
+  }
 
-private global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot getStructureTreeRoot() {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode parent = this.GetParent();
-while ((parent is global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement)) {
-parent = ((global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement)(parent!)).GetParent();
-}
-if ((parent is global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot)) {
-return (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot)(parent!);
-}
-return default!;
-}
+  private global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot getStructureTreeRoot() {
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode parent
+      = this.GetParent();
+    while ((parent is global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement)) {
+      parent
+        = ((global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement)(parent!)).GetParent();
+    }
+    if ((parent is global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot)) {
+      return (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot)(parent!);
+    }
+    return default!;
+  }
 
-private global::System.Collections.Generic.IDictionary<string, object> getRoleMap() {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot root = this.getStructureTreeRoot();
-if ((root != default!)) {
-return root.GetRoleMap();
-}
-return global::DripSharp.Runtime.JavaCompat.EmptyMap<string, object>();
-}
+  private global::System.Collections.Generic.IDictionary<string, object> getRoleMap() {
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot root
+      = this.getStructureTreeRoot();
+    if ((root != default!)) {
+      return root.GetRoleMap();
+    }
+    return global::DripSharp.Runtime.JavaCompat.EmptyMap<string, object>();
+  }
 }

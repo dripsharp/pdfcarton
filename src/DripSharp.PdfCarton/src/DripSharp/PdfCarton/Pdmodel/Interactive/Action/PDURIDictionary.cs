@@ -9,27 +9,28 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDURIDictionary : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary uriDictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary uriDictionary = null!;
 
-public PDURIDictionary() {
-this.uriDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDURIDictionary() {
+    this.uriDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDURIDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-this.uriDictionary = dictionary;
-}
+  public PDURIDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    this.uriDictionary = dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.uriDictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.uriDictionary;
+  }
 
-public virtual string GetBase() {
-return this.GetCOSObject().GetString("Base");
-}
+  public virtual string GetBase() {
+    return this.GetCOSObject().GetString("Base");
+  }
 
-public virtual void SetBase(string @base) {
-this.GetCOSObject().SetString("Base", @base);
-}
+  public virtual void SetBase(string @base) {
+    this.GetCOSObject().SetString("Base", @base);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

@@ -8,24 +8,26 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Color;
 
-public class SetNonStrokingColor : global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetColor {
-public SetNonStrokingColor(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class SetNonStrokingColor
+: global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetColor {
+  public SetNonStrokingColor(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-protected internal override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetColor() {
-return this.GetContext().GetGraphicsState().GetNonStrokingColor();
-}
+  protected internal override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetColor() {
+    return this.GetContext().GetGraphicsState().GetNonStrokingColor();
+  }
 
-protected internal override void setColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
-this.GetContext().GetGraphicsState().SetNonStrokingColor(color);
-}
+  protected internal override void setColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
+    this.GetContext().GetGraphicsState().SetNonStrokingColor(color);
+  }
 
-protected internal override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace() {
-return this.GetContext().GetGraphicsState().GetNonStrokingColorSpace();
-}
+  protected internal override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace() {
+    return this.GetContext().GetGraphicsState().GetNonStrokingColorSpace();
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingColor;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingColor;
+  }
 }

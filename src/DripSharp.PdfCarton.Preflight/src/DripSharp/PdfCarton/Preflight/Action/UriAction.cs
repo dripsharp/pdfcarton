@@ -9,20 +9,26 @@
 namespace DripSharp.PdfCarton.Preflight.Action;
 
 public class UriAction : global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager {
-public UriAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact, global::DripSharp.PdfCarton.Cos.COSDictionary adict, global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) : base(amFact, adict, ctx, aaKey) {
+  public UriAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact,
+    global::DripSharp.PdfCarton.Cos.COSDictionary adict,
+    global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) : base(amFact, adict,
+    ctx, aaKey) {
 
-}
+  }
 
-protected internal override bool InnerValid() {
-global::DripSharp.PdfCarton.Cos.COSBase uri = this.ActionDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Uri);
-if ((uri == default!)) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionMisingKey, "URI entry is mandatory for the UriAction"));
-return false;
-}
-if (!((uri is global::DripSharp.PdfCarton.Cos.COSString))) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionInvalidType, "URI entry should be a string"));
-return false;
-}
-return true;
-}
+  protected internal override bool InnerValid() {
+    global::DripSharp.PdfCarton.Cos.COSBase uri
+      = this.ActionDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Uri);
+    if ((uri == default!)) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionMisingKey,
+        "URI entry is mandatory for the UriAction"));
+      return false;
+    }
+    if (!((uri is global::DripSharp.PdfCarton.Cos.COSString))) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionInvalidType,
+        "URI entry should be a string"));
+      return false;
+    }
+    return true;
+  }
 }

@@ -9,27 +9,28 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common;
 
 public class PDMetadata : global::DripSharp.PdfCarton.Pdmodel.Common.PDStream {
-public PDMetadata(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(document) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, "Metadata");
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, "XML");
-}
+  public PDMetadata(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(document) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, "Metadata");
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, "XML");
+  }
 
-public PDMetadata(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc, global::System.IO.Stream str) : base(doc, str) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, "Metadata");
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, "XML");
-}
+  public PDMetadata(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
+    global::System.IO.Stream str) : base(doc, str) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, "Metadata");
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, "XML");
+  }
 
-public PDMetadata(global::DripSharp.PdfCarton.Cos.COSStream str) : base(str) {
+  public PDMetadata(global::DripSharp.PdfCarton.Cos.COSStream str) : base(str) {
 
-}
+  }
 
-public virtual global::System.IO.Stream ExportXMPMetadata() {
-return this.CreateInputStream();
-}
+  public virtual global::System.IO.Stream ExportXMPMetadata() {
+    return this.CreateInputStream();
+  }
 
-public virtual void ImportXMPMetadata(sbyte[] xmp) {
-using (global::System.IO.Stream os = this.CreateOutputStream()) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os, xmp);
-}
-}
+  public virtual void ImportXMPMetadata(sbyte[] xmp) {
+    using (global::System.IO.Stream os = this.CreateOutputStream()) {
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os, xmp);
+    }
+  }
 }

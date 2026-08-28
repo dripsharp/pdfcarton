@@ -8,80 +8,98 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent;
 
-public class PDOptionalContentGroup : global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList {
-public PDOptionalContentGroup(string name) {
-this.Dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Ocg);
-this.SetName(name);
-}
+public class PDOptionalContentGroup
+: global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList {
+  public PDOptionalContentGroup(string name) {
+    this.Dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Ocg);
+    this.SetName(name);
+  }
 
-public PDOptionalContentGroup(global::DripSharp.PdfCarton.Cos.COSDictionary dict) : base(dict) {
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Type), global::DripSharp.PdfCarton.Cos.COSName.Ocg))) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Provided dictionary is not of type '", global::DripSharp.PdfCarton.Cos.COSName.Ocg), "'"));
-}
-}
+  public PDOptionalContentGroup(global::DripSharp.PdfCarton.Cos.COSDictionary dict) : base(dict) {
+    if (!global::DripSharp.Runtime.JavaCompat.Equals(dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Type),
+      global::DripSharp.PdfCarton.Cos.COSName.Ocg)) {
+      throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Provided dictionary is not of type '",
+        global::DripSharp.PdfCarton.Cos.COSName.Ocg), "'"));
+    }
+  }
 
-public sealed class RenderState {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("ON")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState On = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState(global::DripSharp.PdfCarton.Cos.COSName.On);
+  public sealed class RenderState {
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("ON")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+    public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState On
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState(global::DripSharp.PdfCarton.Cos.COSName.On);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("OFF")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState Off = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState(global::DripSharp.PdfCarton.Cos.COSName.OFF);
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("OFF")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+    public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState Off
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState(global::DripSharp.PdfCarton.Cos.COSName.OFF);
 
-internal readonly global::DripSharp.PdfCarton.Cos.COSName name = null!;
+    internal readonly global::DripSharp.PdfCarton.Cos.COSName name = null!;
 
-internal RenderState(global::DripSharp.PdfCarton.Cos.COSName value) {
-this.name = value;
-}
+    internal RenderState(global::DripSharp.PdfCarton.Cos.COSName value) {
+      this.name = value;
+    }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState ValueOf(global::DripSharp.PdfCarton.Cos.COSName state) {
-if ((state == default!)) {
-return default!;
-}
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState.valueOf(state.GetName().ToUpper());
-}
+    public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState ValueOf(global::DripSharp.PdfCarton.Cos.COSName state) {
+      if ((state == default!)) {
+        return default!;
+      }
+      return global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState.valueOf(state.GetName().ToUpper());
+    }
 
-public global::DripSharp.PdfCarton.Cos.COSName GetName() {
-return this.name;
-}
+    public global::DripSharp.PdfCarton.Cos.COSName GetName() {
+      return this.name;
+    }
 
-public static RenderState[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<RenderState>();
-public static RenderState valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<RenderState>(name);
+    public static RenderState[] values()
+      => global::DripSharp.Runtime.JavaCompat.EnumValues<RenderState>();
+    public static RenderState valueOf(string name)
+      => global::DripSharp.Runtime.JavaCompat.EnumValueOf<RenderState>(name);
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
-}
+    public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  }
 
-public virtual string GetName() {
-return base.Dict.GetString(global::DripSharp.PdfCarton.Cos.COSName.Name);
-}
+  public virtual string GetName() {
+    return base.Dict.GetString(global::DripSharp.PdfCarton.Cos.COSName.Name);
+  }
 
-public void SetName(string name) {
-base.Dict.SetString(global::DripSharp.PdfCarton.Cos.COSName.Name, name);
-}
+  public void SetName(string name) {
+    base.Dict.SetString(global::DripSharp.PdfCarton.Cos.COSName.Name, name);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState GetRenderState(global::DripSharp.PdfCarton.Rendering.RenderDestination destination) {
-global::DripSharp.PdfCarton.Cos.COSName state = default!;
-global::DripSharp.PdfCarton.Cos.COSDictionary usage = base.Dict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Usage);
-if ((usage != default!)) {
-if ((global::DripSharp.PdfCarton.Rendering.RenderDestination.Print == destination)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary print = usage.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Print);
-state = ((print == default!) ? (global::DripSharp.PdfCarton.Cos.COSName)(default!) : print.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.PrintState));
-} else {
-if ((global::DripSharp.PdfCarton.Rendering.RenderDestination.View == destination)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary view = usage.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.View);
-state = ((view == default!) ? (global::DripSharp.PdfCarton.Cos.COSName)(default!) : view.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.ViewState));
-}
-}
-if ((state! == default!)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary export = usage.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Export);
-state = ((export == default!) ? (global::DripSharp.PdfCarton.Cos.COSName)(default!) : export.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.ExportState));
-}
-}
-return ((state! == default!) ? (global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState)(default!) : global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState.ValueOf(state!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState GetRenderState(global::DripSharp.PdfCarton.Rendering.RenderDestination destination) {
+    global::DripSharp.PdfCarton.Cos.COSName state = default!;
+    global::DripSharp.PdfCarton.Cos.COSDictionary usage
+      = base.Dict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Usage);
+    if ((usage != default!)) {
+      if ((global::DripSharp.PdfCarton.Rendering.RenderDestination.Print == destination)) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary print
+          = usage.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Print);
+        state = ((print == default!) ? (global::DripSharp.PdfCarton.Cos.COSName)(default!)
+          : print.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.PrintState));
+      } else {
+        if ((global::DripSharp.PdfCarton.Rendering.RenderDestination.View == destination)) {
+          global::DripSharp.PdfCarton.Cos.COSDictionary view
+            = usage.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.View);
+          state = ((view == default!) ? (global::DripSharp.PdfCarton.Cos.COSName)(default!)
+            : view.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.ViewState));
+        }
+      }
+      if ((state! == default!)) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary export
+          = usage.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Export);
+        state = ((export == default!) ? (global::DripSharp.PdfCarton.Cos.COSName)(default!)
+          : export.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.ExportState));
+      }
+    }
+    return ((state! == default!)
+      ? (global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState)(default!)
+      : global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState.ValueOf(state!));
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(base.ToString()!, " ("), this.GetName()), ")");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(base.ToString()!,
+      " ("), this.GetName()), ")");
+  }
 }

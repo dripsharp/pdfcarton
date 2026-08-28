@@ -9,127 +9,165 @@
 namespace DripSharp.PdfCarton.Pdfwriter;
 
 public class ContentStreamWriter {
-private readonly global::System.IO.Stream output = null!;
+  private readonly global::System.IO.Stream output = null!;
 
-public static readonly sbyte[] Space = new sbyte[] { unchecked((sbyte)(32)) };
+  public static readonly sbyte[] Space = new sbyte[] { unchecked((sbyte)(32)) };
 
-public static readonly sbyte[] Eol = new sbyte[] { unchecked((sbyte)(10)) };
+  public static readonly sbyte[] Eol = new sbyte[] { unchecked((sbyte)(10)) };
 
-public ContentStreamWriter(global::System.IO.Stream @out) {
-this.output = @out;
-}
+  public ContentStreamWriter(global::System.IO.Stream @out) {
+    this.output = @out;
+  }
 
-public virtual void WriteToken(global::DripSharp.PdfCarton.Cos.COSBase @base) {
-this.writeObject(@base);
-}
+  public virtual void WriteToken(global::DripSharp.PdfCarton.Cos.COSBase @base) {
+    this.writeObject(@base);
+  }
 
-public virtual void WriteToken(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator op) {
-this.writeObject(op);
-}
+  public virtual void WriteToken(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator op) {
+    this.writeObject(op);
+  }
 
-public virtual void WriteTokens(params object[] tokens) {
-foreach (object token in tokens) {
-this.writeObject(token);
-}
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.Runtime.JavaCompat.StringGetBytes("\n", global::DripSharp.Runtime.JavaStandardCharsets.USASCII));
-}
+  public virtual void WriteTokens(params object[] tokens) {
+    foreach (object token in tokens) {
+      this.writeObject(token);
+    }
+    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+      global::DripSharp.Runtime.JavaCompat.StringGetBytes("\n",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII));
+  }
 
-public virtual void WriteTokens(global::System.Collections.Generic.IEnumerable<object> tokens) {
-foreach (object token in tokens) {
-this.writeObject(token);
-}
-}
+  public virtual void WriteTokens(global::System.Collections.Generic.IEnumerable<object> tokens) {
+    foreach (object token in tokens) {
+      this.writeObject(token);
+    }
+  }
 
-private void writeObject(object o) {
-if ((o is global::DripSharp.PdfCarton.Cos.COSBase)) {
-this.writeObject((global::DripSharp.PdfCarton.Cos.COSBase)(o!));
-} else {
-if ((o is global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)) {
-this.writeObject((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(o!));
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error:Unknown type in content stream:", o));
-}
-}
-}
+  private void writeObject(object o) {
+    if ((o is global::DripSharp.PdfCarton.Cos.COSBase)) {
+      this.writeObject((global::DripSharp.PdfCarton.Cos.COSBase)(o!));
+    } else {
+      if ((o is global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)) {
+        this.writeObject((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(o!));
+      } else {
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error:Unknown type in content stream:",
+          o));
+      }
+    }
+  }
 
-private void writeObject(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator op) {
-if (global::DripSharp.Runtime.JavaCompat.Equals(op.GetName(), global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage)) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.Runtime.JavaCompat.StringGetBytes(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage, global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Eol);
-global::DripSharp.PdfCarton.Cos.COSDictionary dic = op.GetImageParameters();
-foreach (global::DripSharp.PdfCarton.Cos.COSName key in dic.KeySet()) {
-global::DripSharp.PdfCarton.Cos.COSBase value = dic.GetDictionaryObject(key);
-key.WritePDF(this.output);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
-this.writeObject(value);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Eol);
-}
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.Runtime.JavaCompat.StringGetBytes(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImageData, global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Eol);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, op.GetImageData());
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Eol);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.Runtime.JavaCompat.StringGetBytes(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndInlineImage, global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Eol);
-} else {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.Runtime.JavaCompat.StringGetBytes(op.GetName(), global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Eol);
-}
-}
+  private void writeObject(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator op) {
+    if (global::DripSharp.Runtime.JavaCompat.Equals(op.GetName(),
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage)) {
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+        global::DripSharp.Runtime.JavaCompat.StringGetBytes(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage,
+        global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+        global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Eol);
+      global::DripSharp.PdfCarton.Cos.COSDictionary dic = op.GetImageParameters();
+      foreach (global::DripSharp.PdfCarton.Cos.COSName key in dic.KeySet()) {
+        global::DripSharp.PdfCarton.Cos.COSBase value = dic.GetDictionaryObject(key);
+        key.WritePDF(this.output);
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+          global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
+        this.writeObject(value);
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+          global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Eol);
+      }
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+        global::DripSharp.Runtime.JavaCompat.StringGetBytes(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImageData,
+        global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+        global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Eol);
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, op.GetImageData());
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+        global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Eol);
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+        global::DripSharp.Runtime.JavaCompat.StringGetBytes(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndInlineImage,
+        global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+        global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Eol);
+    } else {
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+        global::DripSharp.Runtime.JavaCompat.StringGetBytes(op.GetName(),
+        global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+        global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Eol);
+    }
+  }
 
-private void writeObject(global::DripSharp.PdfCarton.Cos.COSBase o) {
-if ((o is global::DripSharp.PdfCarton.Cos.COSString)) {
-global::DripSharp.PdfCarton.Pdfwriter.COSWriter.WriteString((global::DripSharp.PdfCarton.Cos.COSString)(o!), this.output);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
-} else {
-if ((o is global::DripSharp.PdfCarton.Cos.COSFloat)) {
-((global::DripSharp.PdfCarton.Cos.COSFloat)(o!)).WritePDF(this.output);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
-} else {
-if ((o is global::DripSharp.PdfCarton.Cos.COSInteger)) {
-((global::DripSharp.PdfCarton.Cos.COSInteger)(o!)).WritePDF(this.output);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
-} else {
-if ((o is global::DripSharp.PdfCarton.Cos.COSBoolean)) {
-((global::DripSharp.PdfCarton.Cos.COSBoolean)(o!)).WritePDF(this.output);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
-} else {
-if ((o is global::DripSharp.PdfCarton.Cos.COSName)) {
-((global::DripSharp.PdfCarton.Cos.COSName)(o!)).WritePDF(this.output);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
-} else {
-if ((o is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(o!);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.COSWriter.ArrayOpen);
-for (int i = 0; (i < array.Size()); i++) {
-this.writeObject(array.Get(i));
-}
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.COSWriter.ArrayClose);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
-} else {
-if ((o is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary obj = (global::DripSharp.PdfCarton.Cos.COSDictionary)(o!);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.COSWriter.DictOpen);
-foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Cos.COSBase> entry in obj.EntrySet()) {
-if ((entry.Value != default!)) {
-this.writeObject(entry.Key);
-this.writeObject(entry.Value);
-}
-}
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.COSWriter.DictClose);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
-} else {
-if ((o is global::DripSharp.PdfCarton.Cos.COSNull)) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.Runtime.JavaCompat.StringGetBytes("null", global::DripSharp.Runtime.JavaStandardCharsets.USASCII));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output, global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error:Unknown type in content stream:", o));
-}
-}
-}
-}
-}
-}
-}
-}
-}
+  private void writeObject(global::DripSharp.PdfCarton.Cos.COSBase o) {
+    if ((o is global::DripSharp.PdfCarton.Cos.COSString)) {
+      global::DripSharp.PdfCarton.Pdfwriter.COSWriter.WriteString((global::DripSharp.PdfCarton.Cos.COSString)(o!),
+        this.output);
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+        global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
+    } else {
+      if ((o is global::DripSharp.PdfCarton.Cos.COSFloat)) {
+        ((global::DripSharp.PdfCarton.Cos.COSFloat)(o!)).WritePDF(this.output);
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+          global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
+      } else {
+        if ((o is global::DripSharp.PdfCarton.Cos.COSInteger)) {
+          ((global::DripSharp.PdfCarton.Cos.COSInteger)(o!)).WritePDF(this.output);
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+            global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
+        } else {
+          if ((o is global::DripSharp.PdfCarton.Cos.COSBoolean)) {
+            ((global::DripSharp.PdfCarton.Cos.COSBoolean)(o!)).WritePDF(this.output);
+            global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+              global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
+          } else {
+            if ((o is global::DripSharp.PdfCarton.Cos.COSName)) {
+              ((global::DripSharp.PdfCarton.Cos.COSName)(o!)).WritePDF(this.output);
+              global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+                global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
+            } else {
+              if ((o is global::DripSharp.PdfCarton.Cos.COSArray)) {
+                global::DripSharp.PdfCarton.Cos.COSArray array
+                  = (global::DripSharp.PdfCarton.Cos.COSArray)(o!);
+                global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+                  global::DripSharp.PdfCarton.Pdfwriter.COSWriter.ArrayOpen);
+                for (int i = 0; (i < array.Size()); i++) {
+                  this.writeObject(array.Get(i));
+                }
+                global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+                  global::DripSharp.PdfCarton.Pdfwriter.COSWriter.ArrayClose);
+                global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+                  global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
+              } else {
+                if ((o is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+                  global::DripSharp.PdfCarton.Cos.COSDictionary obj
+                    = (global::DripSharp.PdfCarton.Cos.COSDictionary)(o!);
+                  global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+                    global::DripSharp.PdfCarton.Pdfwriter.COSWriter.DictOpen);
+                  foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName,
+                    global::DripSharp.PdfCarton.Cos.COSBase> entry in obj.EntrySet()) {
+                    if ((entry.Value != default!)) {
+                      this.writeObject(entry.Key);
+                      this.writeObject(entry.Value);
+                    }
+                  }
+                  global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+                    global::DripSharp.PdfCarton.Pdfwriter.COSWriter.DictClose);
+                  global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+                    global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
+                } else {
+                  if ((o is global::DripSharp.PdfCarton.Cos.COSNull)) {
+                    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+                      global::DripSharp.Runtime.JavaCompat.StringGetBytes("null",
+                      global::DripSharp.Runtime.JavaStandardCharsets.USASCII));
+                    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.output,
+                      global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter.Space);
+                  } else {
+                    throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error:Unknown type in content stream:",
+                      o));
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

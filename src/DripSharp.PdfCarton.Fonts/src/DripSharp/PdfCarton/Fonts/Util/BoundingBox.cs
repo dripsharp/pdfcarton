@@ -9,75 +9,86 @@
 namespace DripSharp.PdfCarton.Fonts.Util;
 
 public class BoundingBox {
-private float lowerLeftX = default;
+  private float lowerLeftX = default;
 
-private float lowerLeftY = default;
+  private float lowerLeftY = default;
 
-private float upperRightX = default;
+  private float upperRightX = default;
 
-private float upperRightY = default;
+  private float upperRightY = default;
 
-public BoundingBox() {}
+  public BoundingBox() {}
 
-public BoundingBox(float minX, float minY, float maxX, float maxY) {
-this.lowerLeftX = minX;
-this.lowerLeftY = minY;
-this.upperRightX = maxX;
-this.upperRightY = maxY;
-}
+  public BoundingBox(float minX, float minY, float maxX, float maxY) {
+    this.lowerLeftX = minX;
+    this.lowerLeftY = minY;
+    this.upperRightX = maxX;
+    this.upperRightY = maxY;
+  }
 
-public BoundingBox(global::System.Collections.Generic.IList<global::System.IConvertible> numbers) {
-this.lowerLeftX = global::System.Convert.ToSingle(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 0), global::System.Globalization.CultureInfo.InvariantCulture);
-this.lowerLeftY = global::System.Convert.ToSingle(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 1), global::System.Globalization.CultureInfo.InvariantCulture);
-this.upperRightX = global::System.Convert.ToSingle(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 2), global::System.Globalization.CultureInfo.InvariantCulture);
-this.upperRightY = global::System.Convert.ToSingle(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 3), global::System.Globalization.CultureInfo.InvariantCulture);
-}
+  public BoundingBox(global::System.Collections.Generic.IList<global::System.IConvertible> numbers) {
+    this.lowerLeftX
+      = global::System.Convert.ToSingle(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers,
+      0), global::System.Globalization.CultureInfo.InvariantCulture);
+    this.lowerLeftY
+      = global::System.Convert.ToSingle(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers,
+      1), global::System.Globalization.CultureInfo.InvariantCulture);
+    this.upperRightX
+      = global::System.Convert.ToSingle(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers,
+      2), global::System.Globalization.CultureInfo.InvariantCulture);
+    this.upperRightY
+      = global::System.Convert.ToSingle(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers,
+      3), global::System.Globalization.CultureInfo.InvariantCulture);
+  }
 
-public virtual float GetLowerLeftX() {
-return this.lowerLeftX;
-}
+  public virtual float GetLowerLeftX() {
+    return this.lowerLeftX;
+  }
 
-public virtual void SetLowerLeftX(float lowerLeftXValue) {
-this.lowerLeftX = lowerLeftXValue;
-}
+  public virtual void SetLowerLeftX(float lowerLeftXValue) {
+    this.lowerLeftX = lowerLeftXValue;
+  }
 
-public virtual float GetLowerLeftY() {
-return this.lowerLeftY;
-}
+  public virtual float GetLowerLeftY() {
+    return this.lowerLeftY;
+  }
 
-public virtual void SetLowerLeftY(float lowerLeftYValue) {
-this.lowerLeftY = lowerLeftYValue;
-}
+  public virtual void SetLowerLeftY(float lowerLeftYValue) {
+    this.lowerLeftY = lowerLeftYValue;
+  }
 
-public virtual float GetUpperRightX() {
-return this.upperRightX;
-}
+  public virtual float GetUpperRightX() {
+    return this.upperRightX;
+  }
 
-public virtual void SetUpperRightX(float upperRightXValue) {
-this.upperRightX = upperRightXValue;
-}
+  public virtual void SetUpperRightX(float upperRightXValue) {
+    this.upperRightX = upperRightXValue;
+  }
 
-public virtual float GetUpperRightY() {
-return this.upperRightY;
-}
+  public virtual float GetUpperRightY() {
+    return this.upperRightY;
+  }
 
-public virtual void SetUpperRightY(float upperRightYValue) {
-this.upperRightY = upperRightYValue;
-}
+  public virtual void SetUpperRightY(float upperRightYValue) {
+    this.upperRightY = upperRightYValue;
+  }
 
-public virtual float GetWidth() {
-return (this.GetUpperRightX() - this.GetLowerLeftX());
-}
+  public virtual float GetWidth() {
+    return (this.GetUpperRightX() - this.GetLowerLeftX());
+  }
 
-public virtual float GetHeight() {
-return (this.GetUpperRightY() - this.GetLowerLeftY());
-}
+  public virtual float GetHeight() {
+    return (this.GetUpperRightY() - this.GetLowerLeftY());
+  }
 
-public virtual bool Contains(float x, float y) {
-return ((((x >= this.lowerLeftX) && (x <= this.upperRightX)) && (y >= this.lowerLeftY)) && (y <= this.upperRightY));
-}
+  public virtual bool Contains(float x, float y) {
+    return ((((x >= this.lowerLeftX) && (x <= this.upperRightX)) && (y >= this.lowerLeftY)) && (y
+      <= this.upperRightY));
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("[", this.GetLowerLeftX()), ","), this.GetLowerLeftY()), ","), this.GetUpperRightX()), ","), this.GetUpperRightY()), "]");
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("[",
+      this.GetLowerLeftX()), ","), this.GetLowerLeftY()), ","), this.GetUpperRightX()), ","),
+      this.GetUpperRightY()), "]");
+  }
 }

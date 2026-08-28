@@ -8,32 +8,43 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
-public class CoverageTableFormat2 : global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTableFormat1 {
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.RangeRecord[] rangeRecords = null!;
+public class CoverageTableFormat2
+: global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTableFormat1 {
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.RangeRecord[] rangeRecords
+    = null!;
 
-public CoverageTableFormat2(int coverageFormat, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.RangeRecord[] rangeRecords) : base(coverageFormat, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTableFormat2.getRangeRecordsAsArray(rangeRecords)) {
-this.rangeRecords = rangeRecords;
-}
+  public CoverageTableFormat2(int coverageFormat,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.RangeRecord[] rangeRecords)
+  : base(coverageFormat,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTableFormat2.getRangeRecordsAsArray(rangeRecords)) {
+    this.rangeRecords = rangeRecords;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.RangeRecord[] GetRangeRecords() {
-return this.rangeRecords;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.RangeRecord[] GetRangeRecords() {
+    return this.rangeRecords;
+  }
 
-private static int[] getRangeRecordsAsArray(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.RangeRecord[] rangeRecords) {
-global::System.Collections.Generic.IList<int> glyphIds = new global::System.Collections.Generic.List<int>();
-foreach (global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.RangeRecord rangeRecord in rangeRecords) {
-for (int glyphId = rangeRecord.GetStartGlyphID(); (glyphId <= rangeRecord.GetEndGlyphID()); glyphId++) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(glyphIds, glyphId);
-}
-}
-int[] glyphArray = new int[global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(glyphIds)];
-for (int i = 0; (i < glyphArray.Length); i++) {
-glyphArray[i] = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(glyphIds, i));
-}
-return glyphArray;
-}
+  private static int[] getRangeRecordsAsArray(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.RangeRecord[] rangeRecords) {
+    global::System.Collections.Generic.IList<int> glyphIds
+      = new global::System.Collections.Generic.List<int>();
+    foreach (global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.RangeRecord rangeRecord in rangeRecords) {
+      for (int glyphId = rangeRecord.GetStartGlyphID(); (glyphId <= rangeRecord.GetEndGlyphID());
+        glyphId++) {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(glyphIds, glyphId);
+      }
+    }
+    int[] glyphArray
+      = new int[global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(glyphIds)];
+    for (int i = 0; (i < glyphArray.Length); i++) {
+      glyphArray[i]
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(glyphIds,
+        i));
+    }
+    return glyphArray;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("CoverageTableFormat2[coverageFormat=%d]", this.GetCoverageFormat());
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("CoverageTableFormat2[coverageFormat=%d]",
+      this.GetCoverageFormat());
+  }
 }

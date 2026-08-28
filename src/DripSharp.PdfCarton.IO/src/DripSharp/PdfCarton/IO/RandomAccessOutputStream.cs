@@ -9,21 +9,21 @@
 namespace DripSharp.PdfCarton.IO;
 
 public class RandomAccessOutputStream : global::DripSharp.Runtime.JavaOutputStream {
-private readonly global::DripSharp.PdfCarton.IO.RandomAccessWrite writer = null!;
+  private readonly global::DripSharp.PdfCarton.IO.RandomAccessWrite writer = null!;
 
-public RandomAccessOutputStream(global::DripSharp.PdfCarton.IO.RandomAccessWrite writer) {
-this.writer = writer;
-}
+  public RandomAccessOutputStream(global::DripSharp.PdfCarton.IO.RandomAccessWrite writer) {
+    this.writer = writer;
+  }
 
-public override void Write(sbyte[] b, int offset, int length) {
-this.writer.Write(b, offset, length);
-}
+  public override void Write(sbyte[] b, int offset, int length) {
+    this.writer.Write(b, offset, length);
+  }
 
-public override void Write(sbyte[] b) {
-this.writer.Write(b);
-}
+  public override void Write(sbyte[] b) {
+    this.writer.Write(b);
+  }
 
-public override void Write(int b) {
-this.writer.Write(b);
-}
+  public override void Write(int b) {
+    this.writer.Write(b);
+  }
 }

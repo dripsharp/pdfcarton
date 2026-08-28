@@ -9,51 +9,59 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public sealed class PageLayout {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("SINGLE_PAGE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PageLayout SinglePage = new global::DripSharp.PdfCarton.Pdmodel.PageLayout("SinglePage");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("SINGLE_PAGE")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.PageLayout SinglePage
+    = new global::DripSharp.PdfCarton.Pdmodel.PageLayout("SinglePage");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("ONE_COLUMN")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PageLayout OneColumn = new global::DripSharp.PdfCarton.Pdmodel.PageLayout("OneColumn");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("ONE_COLUMN")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.PageLayout OneColumn
+    = new global::DripSharp.PdfCarton.Pdmodel.PageLayout("OneColumn");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("TWO_COLUMN_LEFT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PageLayout TwoColumnLeft = new global::DripSharp.PdfCarton.Pdmodel.PageLayout("TwoColumnLeft");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("TWO_COLUMN_LEFT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.PageLayout TwoColumnLeft
+    = new global::DripSharp.PdfCarton.Pdmodel.PageLayout("TwoColumnLeft");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("TWO_COLUMN_RIGHT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PageLayout TwoColumnRight = new global::DripSharp.PdfCarton.Pdmodel.PageLayout("TwoColumnRight");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("TWO_COLUMN_RIGHT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.PageLayout TwoColumnRight
+    = new global::DripSharp.PdfCarton.Pdmodel.PageLayout("TwoColumnRight");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("TWO_PAGE_LEFT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PageLayout TwoPageLeft = new global::DripSharp.PdfCarton.Pdmodel.PageLayout("TwoPageLeft");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("TWO_PAGE_LEFT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.PageLayout TwoPageLeft
+    = new global::DripSharp.PdfCarton.Pdmodel.PageLayout("TwoPageLeft");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("TWO_PAGE_RIGHT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PageLayout TwoPageRight = new global::DripSharp.PdfCarton.Pdmodel.PageLayout("TwoPageRight");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("TWO_PAGE_RIGHT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.PageLayout TwoPageRight
+    = new global::DripSharp.PdfCarton.Pdmodel.PageLayout("TwoPageRight");
 
-public static global::DripSharp.PdfCarton.Pdmodel.PageLayout FromString(string value) {
-foreach (global::DripSharp.PdfCarton.Pdmodel.PageLayout instance in global::DripSharp.PdfCarton.Pdmodel.PageLayout.values()) {
-if (global::DripSharp.Runtime.JavaCompat.Equals(instance.value, value)) {
-return instance;
-}
-}
-throw new global::System.ArgumentException(value);
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PageLayout FromString(string value) {
+    foreach (global::DripSharp.PdfCarton.Pdmodel.PageLayout instance in global::DripSharp.PdfCarton.Pdmodel.PageLayout.values()) {
+      if (global::DripSharp.Runtime.JavaCompat.Equals(instance.value, value)) {
+        return instance;
+      }
+    }
+    throw new global::System.ArgumentException(value);
+  }
 
-private readonly string value = null!;
+  private readonly string value = null!;
 
-private PageLayout(string value) {
-this.value = value;
-}
+  private PageLayout(string value) {
+    this.value = value;
+  }
 
-public string StringValue() {
-return this.value;
-}
+  public string StringValue() {
+    return this.value;
+  }
 
-public static PageLayout[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<PageLayout>();
-public static PageLayout valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<PageLayout>(name);
+  public static PageLayout[] values()
+    => global::DripSharp.Runtime.JavaCompat.EnumValues<PageLayout>();
+  public static PageLayout valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<PageLayout>(name);
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

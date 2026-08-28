@@ -9,28 +9,29 @@
 namespace DripSharp.PdfCarton.Preflight.Exception;
 
 public class ValidationException : global::System.IO.IOException {
-internal const long serialVersionUID = -1616141241190424669L;
+  internal const long serialVersionUID = -1616141241190424669L;
 
-protected internal int? PageNumber = default!;
+  protected internal int? PageNumber = default!;
 
-public ValidationException(string message, global::System.Exception cause, int? pageNumber) : base(message) {
-global::DripSharp.Runtime.JavaCompat.InitCause(this, cause);
-this.PageNumber = pageNumber;
-}
+  public ValidationException(string message, global::System.Exception cause, int? pageNumber)
+  : base(message) {
+    global::DripSharp.Runtime.JavaCompat.InitCause(this, cause);
+    this.PageNumber = pageNumber;
+  }
 
-public ValidationException(string message, global::System.Exception cause) : base(message) {
-global::DripSharp.Runtime.JavaCompat.InitCause(this, cause);
-}
+  public ValidationException(string message, global::System.Exception cause) : base(message) {
+    global::DripSharp.Runtime.JavaCompat.InitCause(this, cause);
+  }
 
-public ValidationException(string message) : base(message) {
+  public ValidationException(string message) : base(message) {
 
-}
+  }
 
-public ValidationException(global::System.Exception cause) : base() {
-global::DripSharp.Runtime.JavaCompat.InitCause(this, cause);
-}
+  public ValidationException(global::System.Exception cause) : base() {
+    global::DripSharp.Runtime.JavaCompat.InitCause(this, cause);
+  }
 
-public virtual int? GetPageNumber() {
-return this.PageNumber;
-}
+  public virtual int? GetPageNumber() {
+    return this.PageNumber;
+  }
 }

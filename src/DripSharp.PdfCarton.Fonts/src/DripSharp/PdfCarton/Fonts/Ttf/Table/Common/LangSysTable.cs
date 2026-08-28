@@ -9,38 +9,40 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class LangSysTable {
-private readonly int lookupOrder = default;
+  private readonly int lookupOrder = default;
 
-private readonly int requiredFeatureIndex = default;
+  private readonly int requiredFeatureIndex = default;
 
-private readonly int featureIndexCount = default;
+  private readonly int featureIndexCount = default;
 
-private readonly int[] featureIndices = null!;
+  private readonly int[] featureIndices = null!;
 
-public LangSysTable(int lookupOrder, int requiredFeatureIndex, int featureIndexCount, int[] featureIndices) {
-this.lookupOrder = lookupOrder;
-this.requiredFeatureIndex = requiredFeatureIndex;
-this.featureIndexCount = featureIndexCount;
-this.featureIndices = featureIndices;
-}
+  public LangSysTable(int lookupOrder, int requiredFeatureIndex, int featureIndexCount,
+    int[] featureIndices) {
+    this.lookupOrder = lookupOrder;
+    this.requiredFeatureIndex = requiredFeatureIndex;
+    this.featureIndexCount = featureIndexCount;
+    this.featureIndices = featureIndices;
+  }
 
-public virtual int GetLookupOrder() {
-return this.lookupOrder;
-}
+  public virtual int GetLookupOrder() {
+    return this.lookupOrder;
+  }
 
-public virtual int GetRequiredFeatureIndex() {
-return this.requiredFeatureIndex;
-}
+  public virtual int GetRequiredFeatureIndex() {
+    return this.requiredFeatureIndex;
+  }
 
-public virtual int GetFeatureIndexCount() {
-return this.featureIndexCount;
-}
+  public virtual int GetFeatureIndexCount() {
+    return this.featureIndexCount;
+  }
 
-public virtual int[] GetFeatureIndices() {
-return this.featureIndices;
-}
+  public virtual int[] GetFeatureIndices() {
+    return this.featureIndices;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("LangSysTable[requiredFeatureIndex=%d]", this.requiredFeatureIndex);
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("LangSysTable[requiredFeatureIndex=%d]",
+      this.requiredFeatureIndex);
+  }
 }

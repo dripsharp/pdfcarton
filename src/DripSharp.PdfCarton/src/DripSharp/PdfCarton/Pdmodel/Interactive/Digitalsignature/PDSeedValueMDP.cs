@@ -9,30 +9,30 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 
 public class PDSeedValueMDP {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public PDSeedValueMDP() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.dictionary.SetDirect(true);
-}
+  public PDSeedValueMDP() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.dictionary.SetDirect(true);
+  }
 
-public PDSeedValueMDP(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
-this.dictionary = dict;
-this.dictionary.SetDirect(true);
-}
+  public PDSeedValueMDP(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
+    this.dictionary = dict;
+    this.dictionary.SetDirect(true);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public virtual int GetP() {
-return this.dictionary.GetInt(global::DripSharp.PdfCarton.Cos.COSName.P);
-}
+  public virtual int GetP() {
+    return this.dictionary.GetInt(global::DripSharp.PdfCarton.Cos.COSName.P);
+  }
 
-public virtual void SetP(int p) {
-if (((p < 0) || (p > 3))) {
-throw new global::System.ArgumentException("Only values between 0 and 3 nare allowed.");
-}
-this.dictionary.SetInt(global::DripSharp.PdfCarton.Cos.COSName.P, p);
-}
+  public virtual void SetP(int p) {
+    if (((p < 0) || (p > 3))) {
+      throw new global::System.ArgumentException("Only values between 0 and 3 nare allowed.");
+    }
+    this.dictionary.SetInt(global::DripSharp.PdfCarton.Cos.COSName.P, p);
+  }
 }

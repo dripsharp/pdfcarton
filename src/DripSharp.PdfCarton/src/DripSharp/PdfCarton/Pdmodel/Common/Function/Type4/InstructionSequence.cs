@@ -9,46 +9,51 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function.Type4;
 
 public class InstructionSequence {
-private readonly global::System.Collections.Generic.IList<object> instructions = new global::System.Collections.Generic.List<object>();
+  private readonly global::System.Collections.Generic.IList<object> instructions
+    = new global::System.Collections.Generic.List<object>();
 
-public virtual void AddName(string name) {
-global::DripSharp.Runtime.JavaCompat.Add(this.instructions, name);
-}
+  public virtual void AddName(string name) {
+    global::DripSharp.Runtime.JavaCompat.Add(this.instructions, name);
+  }
 
-public virtual void AddInteger(int value) {
-global::DripSharp.Runtime.JavaCompat.Add(this.instructions, value);
-}
+  public virtual void AddInteger(int value) {
+    global::DripSharp.Runtime.JavaCompat.Add(this.instructions, value);
+  }
 
-public virtual void AddReal(float value) {
-global::DripSharp.Runtime.JavaCompat.Add(this.instructions, value);
-}
+  public virtual void AddReal(float value) {
+    global::DripSharp.Runtime.JavaCompat.Add(this.instructions, value);
+  }
 
-public virtual void AddBoolean(bool value) {
-global::DripSharp.Runtime.JavaCompat.Add(this.instructions, value);
-}
+  public virtual void AddBoolean(bool value) {
+    global::DripSharp.Runtime.JavaCompat.Add(this.instructions, value);
+  }
 
-public virtual void AddProc(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence child) {
-global::DripSharp.Runtime.JavaCompat.Add(this.instructions, child);
-}
+  public virtual void AddProc(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence child) {
+    global::DripSharp.Runtime.JavaCompat.Add(this.instructions, child);
+  }
 
-public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
-global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-foreach (object o in this.instructions) {
-if ((o is string)) {
-string name = (string)(o!);
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator cmd = context.GetOperators().GetOperator(name);
-if ((cmd != default!)) {
-cmd.Execute(context);
-} else {
-throw new global::System.NotSupportedException(global::DripSharp.Runtime.JavaCompat.Concat("Unknown operator or name: ", name));
-}
-} else {
-stack.Push(o);
-}
-}
-while ((!(stack.IsEmpty) && (stack.Peek() is global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence))) {
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence nested = (global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence)(stack.Pop()!);
-nested.Execute(context);
-}
-}
+  public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
+    global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
+    foreach (object o in this.instructions) {
+      if ((o is string)) {
+        string name = (string)(o!);
+        global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator cmd
+          = context.GetOperators().GetOperator(name);
+        if ((cmd != default!)) {
+          cmd.Execute(context);
+        } else {
+          throw new global::System.NotSupportedException(global::DripSharp.Runtime.JavaCompat.Concat("Unknown operator or name: ",
+            name));
+        }
+      } else {
+        stack.Push(o);
+      }
+    }
+    while ((!(stack.IsEmpty)
+      && (stack.Peek() is global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence))) {
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence nested
+        = (global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence)(stack.Pop()!);
+      nested.Execute(context);
+    }
+  }
 }

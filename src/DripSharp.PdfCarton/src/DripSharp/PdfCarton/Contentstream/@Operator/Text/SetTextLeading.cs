@@ -8,24 +8,30 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Text;
 
-public class SetTextLeading : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public SetTextLeading(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class SetTextLeading
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public SetTextLeading(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-global::DripSharp.PdfCarton.Cos.COSBase @base = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber leading = (global::DripSharp.PdfCarton.Cos.COSNumber)(@base!);
-this.GetContext().GetGraphicsState().GetTextState().SetLeading(leading.FloatValue());
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        arguments);
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+    if (!((@base is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSNumber leading
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(@base!);
+    this.GetContext().GetGraphicsState().GetTextState().SetLeading(leading.FloatValue());
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetTextLeading;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetTextLeading;
+  }
 }

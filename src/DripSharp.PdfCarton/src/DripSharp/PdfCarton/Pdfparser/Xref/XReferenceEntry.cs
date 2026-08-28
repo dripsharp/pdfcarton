@@ -8,14 +8,15 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdfparser.Xref;
 
-public interface XReferenceEntry : global::System.IComparable<global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry> {
-public global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType GetType();
+public interface XReferenceEntry
+: global::System.IComparable<global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry> {
+  public global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType GetType();
 
-public global::DripSharp.PdfCarton.Cos.COSObjectKey GetReferencedKey();
+  public global::DripSharp.PdfCarton.Cos.COSObjectKey GetReferencedKey();
 
-public long GetFirstColumnValue();
+  public long GetFirstColumnValue();
 
-public long GetSecondColumnValue();
+  public long GetSecondColumnValue();
 
-public long GetThirdColumnValue();
+  public long GetThirdColumnValue();
 }

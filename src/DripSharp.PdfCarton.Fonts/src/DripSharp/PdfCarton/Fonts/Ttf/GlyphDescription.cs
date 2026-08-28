@@ -9,19 +9,19 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public interface GlyphDescription {
-public int GetEndPtOfContours(int i);
+  public int GetEndPtOfContours(int i);
 
-public sbyte GetFlags(int i);
+  public sbyte GetFlags(int i);
 
-public short GetXCoordinate(int i);
+  public short GetXCoordinate(int i);
 
-public short GetYCoordinate(int i);
+  public short GetYCoordinate(int i);
 
-public bool IsComposite();
+  public bool IsComposite();
 
-public int GetPointCount();
+  public int GetPointCount();
 
-public int GetContourCount();
+  public int GetContourCount();
 
-public void Resolve();
+  public void Resolve();
 }

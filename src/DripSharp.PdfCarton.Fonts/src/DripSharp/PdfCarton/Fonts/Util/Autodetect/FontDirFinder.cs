@@ -9,17 +9,18 @@
 namespace DripSharp.PdfCarton.Fonts.Util.Autodetect;
 
 public interface FontDirFinder {
-public global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find();
+  public global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find();
 }
 
-public sealed class __FontDirFinderFunctionalAdapter : global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontDirFinder {
-private readonly global::System.Func<global::System.Collections.Generic.IList<global::System.IO.FileInfo>> implementation;
+public sealed class __FontDirFinderFunctionalAdapter
+: global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontDirFinder {
+  private readonly global::System.Func<global::System.Collections.Generic.IList<global::System.IO.FileInfo>> implementation;
 
-public __FontDirFinderFunctionalAdapter(global::System.Func<global::System.Collections.Generic.IList<global::System.IO.FileInfo>> implementation) {
-this.implementation = implementation;
-}
+  public __FontDirFinderFunctionalAdapter(global::System.Func<global::System.Collections.Generic.IList<global::System.IO.FileInfo>> implementation) {
+    this.implementation = implementation;
+  }
 
-public global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find() {
-return this.implementation();
-}
+  public global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find() {
+    return this.implementation();
+  }
 }

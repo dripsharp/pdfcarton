@@ -8,85 +8,92 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
-public abstract class PDCIEDictionaryBasedColorSpace : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEBasedColorSpace {
-protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary Dictionary = null!;
+public abstract class PDCIEDictionaryBasedColorSpace
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEBasedColorSpace {
+  protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary Dictionary = null!;
 
-private static readonly global::DripSharp.Runtime.JavaColorSpace CIEXYZ = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_CIEXYZ);
+  private static readonly global::DripSharp.Runtime.JavaColorSpace CIEXYZ
+    = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_CIEXYZ);
 
-protected internal float WpX = 1;
+  protected internal float WpX = 1;
 
-protected internal float WpY = 1;
+  protected internal float WpY = 1;
 
-protected internal float WpZ = 1;
+  protected internal float WpZ = 1;
 
-protected internal PDCIEDictionaryBasedColorSpace(global::DripSharp.PdfCarton.Cos.COSName cosName) {
-base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
-this.Dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-base.Array.Add(cosName);
-base.Array.Add(this.Dictionary);
-this.fillWhitepointCache(this.GetWhitepoint());
-}
+  protected internal PDCIEDictionaryBasedColorSpace(global::DripSharp.PdfCarton.Cos.COSName cosName) {
+    base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    this.Dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    base.Array.Add(cosName);
+    base.Array.Add(this.Dictionary);
+    this.fillWhitepointCache(this.GetWhitepoint());
+  }
 
-protected internal PDCIEDictionaryBasedColorSpace(global::DripSharp.PdfCarton.Cos.COSArray rgb) {
-base.Array = rgb;
-this.Dictionary = (global::DripSharp.PdfCarton.Cos.COSDictionary)(base.Array.GetObject(1)!);
-this.fillWhitepointCache(this.GetWhitepoint());
-}
+  protected internal PDCIEDictionaryBasedColorSpace(global::DripSharp.PdfCarton.Cos.COSArray rgb) {
+    base.Array = rgb;
+    this.Dictionary = (global::DripSharp.PdfCarton.Cos.COSDictionary)(base.Array.GetObject(1)!);
+    this.fillWhitepointCache(this.GetWhitepoint());
+  }
 
-protected internal virtual bool IsWhitePoint() {
-return (((global::DripSharp.Runtime.JavaCompat.CompareFloat(this.WpX, (float)(1)) == 0) && (global::DripSharp.Runtime.JavaCompat.CompareFloat(this.WpY, (float)(1)) == 0)) && (global::DripSharp.Runtime.JavaCompat.CompareFloat(this.WpZ, (float)(1)) == 0));
-}
+  protected internal virtual bool IsWhitePoint() {
+    return (((global::DripSharp.Runtime.JavaCompat.CompareFloat(this.WpX, (float)(1)) == 0)
+      && (global::DripSharp.Runtime.JavaCompat.CompareFloat(this.WpY, (float)(1)) == 0))
+      && (global::DripSharp.Runtime.JavaCompat.CompareFloat(this.WpZ, (float)(1)) == 0));
+  }
 
-private void fillWhitepointCache(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus whitepoint) {
-this.WpX = whitepoint.GetX();
-this.WpY = whitepoint.GetY();
-this.WpZ = whitepoint.GetZ();
-}
+  private void fillWhitepointCache(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus whitepoint) {
+    this.WpX = whitepoint.GetX();
+    this.WpY = whitepoint.GetY();
+    this.WpZ = whitepoint.GetZ();
+  }
 
-protected internal virtual float[] ConvXYZtoRGB(float x, float y, float z) {
-if ((x < 0)) {
-x = 0;
-}
-if ((y < 0)) {
-y = 0;
-}
-if ((z < 0)) {
-z = 0;
-}
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEDictionaryBasedColorSpace.CIEXYZ.ToRgb(new float[] { x, y, z });
-}
+  protected internal virtual float[] ConvXYZtoRGB(float x, float y, float z) {
+    if ((x < 0)) {
+      x = 0;
+    }
+    if ((y < 0)) {
+      y = 0;
+    }
+    if ((z < 0)) {
+      z = 0;
+    }
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEDictionaryBasedColorSpace.CIEXYZ.ToRgb(new float[] { x,
+        y, z });
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus GetWhitepoint() {
-global::DripSharp.PdfCarton.Cos.COSArray wp = this.Dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.WhitePoint);
-if ((wp == default!)) {
-wp = new global::DripSharp.PdfCarton.Cos.COSArray();
-wp.Add(global::DripSharp.PdfCarton.Cos.COSFloat.One);
-wp.Add(global::DripSharp.PdfCarton.Cos.COSFloat.One);
-wp.Add(global::DripSharp.PdfCarton.Cos.COSFloat.One);
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus(wp);
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus GetWhitepoint() {
+    global::DripSharp.PdfCarton.Cos.COSArray wp
+      = this.Dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.WhitePoint);
+    if ((wp == default!)) {
+      wp = new global::DripSharp.PdfCarton.Cos.COSArray();
+      wp.Add(global::DripSharp.PdfCarton.Cos.COSFloat.One);
+      wp.Add(global::DripSharp.PdfCarton.Cos.COSFloat.One);
+      wp.Add(global::DripSharp.PdfCarton.Cos.COSFloat.One);
+    }
+    return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus(wp);
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus GetBlackPoint() {
-global::DripSharp.PdfCarton.Cos.COSArray bp = this.Dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.BlackPoint);
-if ((bp == default!)) {
-bp = new global::DripSharp.PdfCarton.Cos.COSArray();
-bp.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
-bp.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
-bp.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus(bp);
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus GetBlackPoint() {
+    global::DripSharp.PdfCarton.Cos.COSArray bp
+      = this.Dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.BlackPoint);
+    if ((bp == default!)) {
+      bp = new global::DripSharp.PdfCarton.Cos.COSArray();
+      bp.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
+      bp.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
+      bp.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
+    }
+    return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus(bp);
+  }
 
-public virtual void SetWhitePoint(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus whitepoint) {
-if ((whitepoint == default!)) {
-throw new global::System.ArgumentException("Whitepoint may not be null");
-}
-this.Dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.WhitePoint, whitepoint);
-this.fillWhitepointCache(whitepoint);
-}
+  public virtual void SetWhitePoint(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus whitepoint) {
+    if ((whitepoint == default!)) {
+      throw new global::System.ArgumentException("Whitepoint may not be null");
+    }
+    this.Dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.WhitePoint, whitepoint);
+    this.fillWhitepointCache(whitepoint);
+  }
 
-public virtual void SetBlackPoint(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus blackpoint) {
-this.Dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.BlackPoint, blackpoint);
-}
+  public virtual void SetBlackPoint(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus blackpoint) {
+    this.Dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.BlackPoint, blackpoint);
+  }
 }

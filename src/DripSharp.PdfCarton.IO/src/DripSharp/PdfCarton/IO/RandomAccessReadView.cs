@@ -9,140 +9,149 @@
 namespace DripSharp.PdfCarton.IO;
 
 public class RandomAccessReadView : global::DripSharp.PdfCarton.IO.RandomAccessRead {
-private global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead = null!;
+  private global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead = null!;
 
-private readonly long startPosition = default;
+  private readonly long startPosition = default;
 
-private readonly long streamLength = default;
+  private readonly long streamLength = default;
 
-private readonly bool closeInput = default;
+  private readonly bool closeInput = default;
 
-private long currentPosition = 0;
+  private long currentPosition = 0;
 
-public RandomAccessReadView(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, long startPosition, long streamLength) : this(randomAccessRead, startPosition, streamLength, false) {
+  public RandomAccessReadView(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead,
+    long startPosition, long streamLength) : this(randomAccessRead, startPosition, streamLength,
+    false) {
 
-}
+  }
 
-public RandomAccessReadView(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, long startPosition, long streamLength, bool closeInput) {
-this.randomAccessRead = randomAccessRead;
-this.startPosition = startPosition;
-this.streamLength = streamLength;
-this.closeInput = closeInput;
-}
+  public RandomAccessReadView(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead,
+    long startPosition, long streamLength, bool closeInput) {
+    this.randomAccessRead = randomAccessRead;
+    this.startPosition = startPosition;
+    this.streamLength = streamLength;
+    this.closeInput = closeInput;
+  }
 
-public virtual long GetPosition() {
-this.checkClosed();
-return this.currentPosition;
-}
+  public virtual long GetPosition() {
+    this.checkClosed();
+    return this.currentPosition;
+  }
 
-public virtual void Seek(long newOffset) {
-this.checkClosed();
-if ((newOffset < 0)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid position ", newOffset));
-}
-this.randomAccessRead.Seek((this.startPosition + global::System.Math.Min(newOffset, this.streamLength)));
-this.currentPosition = newOffset;
-}
+  public virtual void Seek(long newOffset) {
+    this.checkClosed();
+    if ((newOffset < 0)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid position ",
+        newOffset));
+    }
+    this.randomAccessRead.Seek((this.startPosition + global::System.Math.Min(newOffset,
+      this.streamLength)));
+    this.currentPosition = newOffset;
+  }
 
-public virtual int Read() {
-if (this.IsEOF()) {
-return -1;
-}
-this.restorePosition();
-int readValue = this.randomAccessRead.Read();
-if ((readValue > -1)) {
-this.currentPosition++;
-}
-return readValue;
-}
+  public virtual int Read() {
+    if (this.IsEOF()) {
+      return -1;
+    }
+    this.restorePosition();
+    int readValue = this.randomAccessRead.Read();
+    if ((readValue > -1)) {
+      this.currentPosition++;
+    }
+    return readValue;
+  }
 
-public virtual int Read(sbyte[] b, int off, int len) {
-if (this.IsEOF()) {
-return -1;
-}
-this.restorePosition();
-int readBytes = this.randomAccessRead.Read(b, off, global::System.Math.Min(len, ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Available()));
-this.currentPosition += readBytes;
-return readBytes;
-}
+  public virtual int Read(sbyte[] b, int off, int len) {
+    if (this.IsEOF()) {
+      return -1;
+    }
+    this.restorePosition();
+    int readBytes = this.randomAccessRead.Read(b, off, global::System.Math.Min(len,
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Available()));
+    this.currentPosition += readBytes;
+    return readBytes;
+  }
 
-public virtual long Length() {
-this.checkClosed();
-return this.streamLength;
-}
+  public virtual long Length() {
+    this.checkClosed();
+    return this.streamLength;
+  }
 
-public virtual void Dispose() {
-if ((this.closeInput && (this.randomAccessRead != default!))) {
-this.randomAccessRead.Dispose();
-}
-this.randomAccessRead = default!;
-}
+  public virtual void Dispose() {
+    if ((this.closeInput && (this.randomAccessRead != default!))) {
+      this.randomAccessRead.Dispose();
+    }
+    this.randomAccessRead = default!;
+  }
 
-public virtual bool IsClosed() {
-return ((this.randomAccessRead == default!) || this.randomAccessRead.IsClosed());
-}
+  public virtual bool IsClosed() {
+    return ((this.randomAccessRead == default!) || this.randomAccessRead.IsClosed());
+  }
 
-public virtual void Rewind(int bytes) {
-this.checkClosed();
-this.restorePosition();
-((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.randomAccessRead)).Rewind(bytes);
-this.currentPosition -= bytes;
-}
+  public virtual void Rewind(int bytes) {
+    this.checkClosed();
+    this.restorePosition();
+    ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.randomAccessRead)).Rewind(bytes);
+    this.currentPosition -= bytes;
+  }
 
-public virtual bool IsEOF() {
-this.checkClosed();
-return (this.currentPosition >= this.streamLength);
-}
+  public virtual bool IsEOF() {
+    this.checkClosed();
+    return (this.currentPosition >= this.streamLength);
+  }
 
-private void restorePosition() {
-this.randomAccessRead.Seek((this.startPosition + this.currentPosition));
-}
+  private void restorePosition() {
+    this.randomAccessRead.Seek((this.startPosition + this.currentPosition));
+  }
 
-private void checkClosed() {
-if (this.IsClosed()) {
-throw new global::System.IO.IOException("RandomAccessReadView already closed");
-}
-}
+  private void checkClosed() {
+    if (this.IsClosed()) {
+      throw new global::System.IO.IOException("RandomAccessReadView already closed");
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition, long streamLength) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"), ".createView isn't supported."));
-}
+  public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition,
+    long streamLength) {
+    throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(this)).GetType(),
+      "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"), ".createView isn't supported."));
+  }
 
-public virtual int Available() {
-return (int)(global::System.Math.Min((this.Length() - this.GetPosition()), (long)(int.MaxValue)));
-}
+  public virtual int Available() {
+    return (int)(global::System.Math.Min((this.Length() - this.GetPosition()),
+      (long)(int.MaxValue)));
+  }
 
-public virtual int Peek() {
-int result = this.Read();
-if ((result != -1)) {
-((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
-}
-return result;
-}
+  public virtual int Peek() {
+    int result = this.Read();
+    if ((result != -1)) {
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
+    }
+    return result;
+  }
 
-public virtual int Read(sbyte[] b) {
-return this.Read(b, 0, b.Length);
-}
+  public virtual int Read(sbyte[] b) {
+    return this.Read(b, 0, b.Length);
+  }
 
-public virtual void ReadFully(sbyte[] b) {
-((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).ReadFully(b, 0, b.Length);
-}
+  public virtual void ReadFully(sbyte[] b) {
+    ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).ReadFully(b, 0, b.Length);
+  }
 
-public virtual void ReadFully(sbyte[] b, int offset, int length) {
-if (((this.Length() - this.GetPosition()) < length)) {
-throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
-}
-int bytesReadTotal = 0;
-while ((bytesReadTotal < length)) {
-int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
-if ((bytesReadNow <= 0)) {
-throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
-}
-bytesReadTotal += bytesReadNow;
-}
-}
+  public virtual void ReadFully(sbyte[] b, int offset, int length) {
+    if (((this.Length() - this.GetPosition()) < length)) {
+      throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
+    }
+    int bytesReadTotal = 0;
+    while ((bytesReadTotal < length)) {
+      int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
+      if ((bytesReadNow <= 0)) {
+        throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
+      }
+      bytesReadTotal += bytesReadNow;
+    }
+  }
 
-public virtual void Skip(int length) {
-this.Seek((this.GetPosition() + length));
-}
+  public virtual void Skip(int length) {
+    this.Seek((this.GetPosition() + length));
+  }
 }

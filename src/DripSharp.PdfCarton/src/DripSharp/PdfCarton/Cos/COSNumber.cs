@@ -9,47 +9,53 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public abstract class COSNumber : global::DripSharp.PdfCarton.Cos.COSBase {
-public abstract float FloatValue();
+  public abstract float FloatValue();
 
-public abstract int IntValue();
+  public abstract int IntValue();
 
-public abstract long LongValue();
+  public abstract long LongValue();
 
-public static global::DripSharp.PdfCarton.Cos.COSNumber Get(string number) {
-if ((number.Length == 1)) {
-char digit = number[0];
-if ((((int)('0') <= (int)(digit)) && ((int)(digit) <= (int)('9')))) {
-return global::DripSharp.PdfCarton.Cos.COSInteger.Get(((long)(digit) - '0'));
-}
-if ((((int)(digit) == (int)('-')) || ((int)(digit) == (int)('.')))) {
-return global::DripSharp.PdfCarton.Cos.COSInteger.Zero;
-}
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Not a number: ", number));
-}
-if (global::DripSharp.PdfCarton.Cos.COSNumber.isFloat(number)) {
-return new global::DripSharp.PdfCarton.Cos.COSFloat(number);
-}
-try {
-return global::DripSharp.PdfCarton.Cos.COSInteger.Get(global::DripSharp.Runtime.JavaCompat.ParseLong(number));
-} catch (global::DripSharp.Runtime.JavaNumberFormatException) {
-string numberString = ((global::DripSharp.Runtime.JavaCompat.StringStartsWith(number, "+") || global::DripSharp.Runtime.JavaCompat.StringStartsWith(number, "-")) ? number.Substring(1) : number);
-if (!(global::DripSharp.Runtime.JavaCompat.StringMatches(numberString, "\\d*"))) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Not a number: ", number));
-}
-return (global::DripSharp.Runtime.JavaCompat.StringStartsWith(number, "-") ? (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.PdfCarton.Cos.COSInteger.OUT_OF_RANGE_MIN) : (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.PdfCarton.Cos.COSInteger.OUT_OF_RANGE_MAX));
-}
-}
+  public static global::DripSharp.PdfCarton.Cos.COSNumber Get(string number) {
+    if ((number.Length == 1)) {
+      char digit = number[0];
+      if ((((int)'0' <= (int)digit) && ((int)digit <= (int)'9'))) {
+        return global::DripSharp.PdfCarton.Cos.COSInteger.Get(((long)digit - '0'));
+      }
+      if ((((int)digit == (int)'-') || ((int)digit == (int)'.'))) {
+        return global::DripSharp.PdfCarton.Cos.COSInteger.Zero;
+      }
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Not a number: ",
+        number));
+    }
+    if (global::DripSharp.PdfCarton.Cos.COSNumber.isFloat(number)) {
+      return new global::DripSharp.PdfCarton.Cos.COSFloat(number);
+    }
+    try {
+      return global::DripSharp.PdfCarton.Cos.COSInteger.Get(global::DripSharp.Runtime.JavaCompat.ParseLong(number));
+    } catch (global::DripSharp.Runtime.JavaNumberFormatException) {
+      string numberString = ((global::DripSharp.Runtime.JavaCompat.StringStartsWith(number, "+")
+        || global::DripSharp.Runtime.JavaCompat.StringStartsWith(number, "-")) ? number.Substring(1)
+        : number);
+      if (!global::DripSharp.Runtime.JavaCompat.StringMatches(numberString, "\\d*")) {
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Not a number: ",
+          number));
+      }
+      return (global::DripSharp.Runtime.JavaCompat.StringStartsWith(number, "-")
+        ? (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.PdfCarton.Cos.COSInteger.OUT_OF_RANGE_MIN)
+        : (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.PdfCarton.Cos.COSInteger.OUT_OF_RANGE_MAX));
+    }
+  }
 
-private static bool isFloat(string number) {
-int length = number.Length;
-for (int i = 0; (i < length); i++) {
-char digit = number[i];
-if ((((int)(digit) == (int)('.')) || ((int)(digit) == (int)('e')))) {
-return true;
-}
-}
-return false;
-}
+  private static bool isFloat(string number) {
+    int length = number.Length;
+    for (int i = 0; (i < length); i++) {
+      char digit = number[i];
+      if ((((int)digit == (int)'.') || ((int)digit == (int)'e'))) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-public COSNumber() {}
+  public COSNumber() {}
 }

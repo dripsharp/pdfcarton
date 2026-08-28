@@ -9,11 +9,11 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public interface COSUpdateInfo : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-public bool IsNeedToBeUpdated();
+  public bool IsNeedToBeUpdated();
 
-public void SetNeedToBeUpdated(bool flag);
+  public void SetNeedToBeUpdated(bool flag);
 
-public global::DripSharp.PdfCarton.Cos.COSIncrement ToIncrement();
+  public global::DripSharp.PdfCarton.Cos.COSIncrement ToIncrement();
 
-public global::DripSharp.PdfCarton.Cos.COSUpdateState GetUpdateState();
+  public global::DripSharp.PdfCarton.Cos.COSUpdateState GetUpdateState();
 }

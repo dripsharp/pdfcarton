@@ -9,42 +9,51 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Model;
 
 public sealed class Language {
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("BENGALI")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language Bengali = new global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language(new string[] { "bng2", "beng" });
+  [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("BENGALI")]
+  [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language Bengali
+    = new global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language(new string[] { "bng2", "beng" });
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DEVANAGARI")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language Devanagari = new global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language(new string[] { "dev2", "deva" });
+  [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DEVANAGARI")]
+  [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language Devanagari
+    = new global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language(new string[] { "dev2", "deva" });
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("GUJARATI")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language Gujarati = new global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language(new string[] { "gjr2", "gujr" });
+  [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("GUJARATI")]
+  [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language Gujarati
+    = new global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language(new string[] { "gjr2", "gujr" });
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("LATIN")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language Latin = new global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language(new string[] { "latn" });
+  [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("LATIN")]
+  [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language Latin
+    = new global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language(new string[] { "latn" });
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DFLT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language Dflt = new global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language(new string[] { "DFLT" });
+  [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DFLT")]
+  [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(4)]
+  public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language Dflt
+    = new global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language(new string[] { "DFLT" });
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("UNSPECIFIED")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language Unspecified = new global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language(new string[0]);
+  [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("UNSPECIFIED")]
+  [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(5)]
+  public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language Unspecified
+    = new global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language(new string[0]);
 
-private readonly string[] scriptNames = null!;
+  private readonly string[] scriptNames = null!;
 
-private Language(string[] scriptNames) {
-this.scriptNames = scriptNames;
-}
+  private Language(string[] scriptNames) {
+    this.scriptNames = scriptNames;
+  }
 
-public string[] GetScriptNames() {
-return this.scriptNames;
-}
+  public string[] GetScriptNames() {
+    return this.scriptNames;
+  }
 
-public static Language[] values() => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValues<Language>();
-public static Language valueOf(string name) => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValueOf<Language>(name);
+  public static Language[] values()
+    => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValues<Language>();
+  public static Language valueOf(string name)
+    => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValueOf<Language>(name);
 
-public override string ToString() => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumName(this);
+  public override string ToString()
+    => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumName(this);
 }

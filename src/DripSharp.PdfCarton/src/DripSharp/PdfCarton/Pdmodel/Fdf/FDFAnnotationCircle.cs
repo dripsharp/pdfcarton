@@ -9,54 +9,63 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFAnnotationCircle : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation {
-public const string Subtype = "Circle";
+  public const string Subtype = "Circle";
 
-public FDFAnnotationCircle() : base() {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationCircle.Subtype);
-}
+  public FDFAnnotationCircle() : base() {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationCircle.Subtype);
+  }
 
-public FDFAnnotationCircle(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public FDFAnnotationCircle(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public FDFAnnotationCircle(global::System.Xml.XmlElement element) : base(element) {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationCircle.Subtype);
-string color = element.GetAttribute("interior-color");
-if ((((color != default!) && (color.Length == 7)) && ((int)(color[0]) == (int)('#')))) {
-int colorValue = global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.Runtime.JavaCompat.StringSubstring(color, 1, 7), 16);
-this.SetInteriorColor(global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromRgb(colorValue));
-}
-this.initFringe(element);
-}
+  public FDFAnnotationCircle(global::System.Xml.XmlElement element) : base(element) {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationCircle.Subtype);
+    string color = element.GetAttribute("interior-color");
+    if ((((color != default!) && (color.Length == 7)) && ((int)(color[0]) == (int)'#'))) {
+      int colorValue
+        = global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.Runtime.JavaCompat.StringSubstring(color,
+        1, 7), 16);
+      this.SetInteriorColor(global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromRgb(colorValue));
+    }
+    this.initFringe(element);
+  }
 
-private void initFringe(global::System.Xml.XmlElement element) {
-string fringe = element.GetAttribute("fringe");
-if (((fringe != default!) && !((fringe.Length == 0)))) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = this.createRectangleFromAttributes(fringe, "Error: wrong amount of numbers in attribute 'fringe'");
-this.SetFringe(rect);
-}
-}
+  private void initFringe(global::System.Xml.XmlElement element) {
+    string fringe = element.GetAttribute("fringe");
+    if (((fringe != default!) && !((fringe.Length == 0)))) {
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect
+        = this.createRectangleFromAttributes(fringe,
+        "Error: wrong amount of numbers in attribute 'fringe'");
+      this.SetFringe(rect);
+    }
+  }
 
-public void SetInteriorColor(global::DripSharp.Runtime.JavaColor color) {
-global::DripSharp.PdfCarton.Cos.COSArray array = default!;
-if ((color != default!)) {
-float[] colors = global::DripSharp.Runtime.PdfCartonFontCompat.GetRgbColorComponents(color, (float[])default!);
-array = new global::DripSharp.PdfCarton.Cos.COSArray();
-array!.SetFloatArray(colors);
-}
-base.Annot.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ic, array!);
-}
+  public void SetInteriorColor(global::DripSharp.Runtime.JavaColor color) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = default!;
+    if ((color != default!)) {
+      float[] colors = global::DripSharp.Runtime.PdfCartonFontCompat.GetRgbColorComponents(color,
+        (float[])default!);
+      array = new global::DripSharp.PdfCarton.Cos.COSArray();
+      array!.SetFloatArray(colors);
+    }
+    base.Annot.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ic, array!);
+  }
 
-public virtual global::DripSharp.Runtime.JavaColor GetInteriorColor() {
-return this.getColor(global::DripSharp.PdfCarton.Cos.COSName.Ic);
-}
+  public virtual global::DripSharp.Runtime.JavaColor GetInteriorColor() {
+    return this.getColor(global::DripSharp.PdfCarton.Cos.COSName.Ic);
+  }
 
-public void SetFringe(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle fringe) {
-base.Annot.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Rd, fringe);
-}
+  public void SetFringe(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle fringe) {
+    base.Annot.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Rd, fringe);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetFringe() {
-global::DripSharp.PdfCarton.Cos.COSArray rd = base.Annot.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Rd);
-return ((rd != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(rd) : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetFringe() {
+    global::DripSharp.PdfCarton.Cos.COSArray rd
+      = base.Annot.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Rd);
+    return ((rd != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(rd)
+      : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
+  }
 }

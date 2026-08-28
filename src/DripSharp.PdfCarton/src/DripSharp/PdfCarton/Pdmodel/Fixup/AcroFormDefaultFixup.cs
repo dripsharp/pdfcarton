@@ -9,18 +9,20 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fixup;
 
 public class AcroFormDefaultFixup : global::DripSharp.PdfCarton.Pdmodel.Fixup.AbstractFixup {
-public AcroFormDefaultFixup(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(document) {
+  public AcroFormDefaultFixup(global::DripSharp.PdfCarton.Pdmodel.PDDocument document)
+  : base(document) {
 
-}
+  }
 
-public override void Apply() {
-new global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormDefaultsProcessor(base.Document).Process();
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm = base.Document.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!);
-if (((acroForm != default!) && acroForm.GetNeedAppearances())) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(acroForm.GetFields())) {
-new global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormOrphanWidgetsProcessor(base.Document).Process();
-}
-new global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormGenerateAppearancesProcessor(base.Document).Process();
-}
-}
+  public override void Apply() {
+    new global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormDefaultsProcessor(base.Document).Process();
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
+      = base.Document.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!);
+    if (((acroForm != default!) && acroForm.GetNeedAppearances())) {
+      if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(acroForm.GetFields())) {
+        new global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormOrphanWidgetsProcessor(base.Document).Process();
+      }
+      new global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormGenerateAppearancesProcessor(base.Document).Process();
+    }
+  }
 }

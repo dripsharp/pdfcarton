@@ -8,71 +8,84 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Schema;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/bj/", "xmpBJ")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/bj/",
+  "xmpBJ")]
 public class XMPBasicJobTicketSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Job", "Bag")]
-public const string JobRef = "JobRef";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Job", "Bag")]
+  public const string JobRef = "JobRef";
 
-private global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty bagJobs = null!;
+  private global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty bagJobs = null!;
 
-public XMPBasicJobTicketSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : this(metadata, (string)default!) {
+  public XMPBasicJobTicketSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata)
+  : this(metadata, (string)default!) {
 
-}
+  }
 
-public XMPBasicJobTicketSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string ownPrefix) : base(metadata, ownPrefix) {
+  public XMPBasicJobTicketSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata,
+    string ownPrefix) : base(metadata, ownPrefix) {
 
-}
+  }
 
-public virtual void AddJob(string id, string name, string url) {
-this.AddJob(id, name, url, (string)default!);
-}
+  public virtual void AddJob(string id, string name, string url) {
+    this.AddJob(id, name, url, (string)default!);
+  }
 
-public virtual void AddJob(string id, string name, string url, string fieldPrefix) {
-if (((this.bagJobs != default!) && (fieldPrefix == default!))) {
-global::DripSharp.PdfCarton.Xmp.Type.JobType first = (global::DripSharp.PdfCarton.Xmp.Type.JobType)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ListGet(this.bagJobs.GetAllProperties(), 0)!);
-if ((first.GetPrefix() != default!)) {
-fieldPrefix = first.GetPrefix();
-}
-}
-global::DripSharp.PdfCarton.Xmp.Type.JobType job = new global::DripSharp.PdfCarton.Xmp.Type.JobType(this.GetMetadata(), fieldPrefix);
-job.SetId(id);
-job.SetName(name);
-job.SetUrl(url);
-this.AddJob(job);
-}
+  public virtual void AddJob(string id, string name, string url, string fieldPrefix) {
+    if (((this.bagJobs != default!) && (fieldPrefix == default!))) {
+      global::DripSharp.PdfCarton.Xmp.Type.JobType first
+        = (global::DripSharp.PdfCarton.Xmp.Type.JobType)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ListGet(this.bagJobs.GetAllProperties(),
+        0)!);
+      if ((first.GetPrefix() != default!)) {
+        fieldPrefix = first.GetPrefix();
+      }
+    }
+    global::DripSharp.PdfCarton.Xmp.Type.JobType job
+      = new global::DripSharp.PdfCarton.Xmp.Type.JobType(this.GetMetadata(), fieldPrefix);
+    job.SetId(id);
+    job.SetName(name);
+    job.SetUrl(url);
+    this.AddJob(job);
+  }
 
-public virtual void AddJob(global::DripSharp.PdfCarton.Xmp.Type.JobType job) {
-string prefix = this.GetNamespacePrefix(job.GetNamespace());
-if ((prefix != default!)) {
-job.SetPrefix(prefix);
-if ((this.bagJobs != default!)) {
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField field in this.bagJobs.GetAllProperties()) {
-((global::DripSharp.PdfCarton.Xmp.Type.JobType)(field!)).SetPrefix(prefix);
-}
-}
-} else {
-this.AddNamespace(job.GetNamespace(), job.GetPrefix());
-}
-if ((this.bagJobs == default!)) {
-this.bagJobs = this.CreateArrayProperty(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema.JobRef, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Bag);
-this.AddProperty(this.bagJobs);
-}
-this.bagJobs.GetContainer().AddProperty(job);
-}
+  public virtual void AddJob(global::DripSharp.PdfCarton.Xmp.Type.JobType job) {
+    string prefix = this.GetNamespacePrefix(job.GetNamespace());
+    if ((prefix != default!)) {
+      job.SetPrefix(prefix);
+      if ((this.bagJobs != default!)) {
+        foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField field in this.bagJobs.GetAllProperties()) {
+          ((global::DripSharp.PdfCarton.Xmp.Type.JobType)(field!)).SetPrefix(prefix);
+        }
+      }
+    } else {
+      this.AddNamespace(job.GetNamespace(), job.GetPrefix());
+    }
+    if ((this.bagJobs == default!)) {
+      this.bagJobs
+        = this.CreateArrayProperty(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema.JobRef,
+        global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Bag);
+      this.AddProperty(this.bagJobs);
+    }
+    this.bagJobs.GetContainer().AddProperty(job);
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.JobType> GetJobs() {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> tmp = this.GetUnqualifiedArrayList(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema.JobRef);
-if ((tmp != default!)) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.JobType> layers = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.JobType>();
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractField in tmp) {
-if ((abstractField is global::DripSharp.PdfCarton.Xmp.Type.JobType)) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(layers, (global::DripSharp.PdfCarton.Xmp.Type.JobType)(abstractField!));
-} else {
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Job expected and ", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassName(((object)(abstractField)).GetType(), "DripSharp.PdfCarton.Xmp", "org.apache.xmpbox")), " found."));
-}
-}
-return layers;
-}
-return default!;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.JobType> GetJobs() {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> tmp
+      = this.GetUnqualifiedArrayList(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicJobTicketSchema.JobRef);
+    if ((tmp != default!)) {
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.JobType> layers
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.JobType>();
+      foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractField in tmp) {
+        if ((abstractField is global::DripSharp.PdfCarton.Xmp.Type.JobType)) {
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(layers,
+            (global::DripSharp.PdfCarton.Xmp.Type.JobType)(abstractField!));
+        } else {
+          throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Job expected and ",
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassName(((object)(abstractField)).GetType(),
+            "DripSharp.PdfCarton.Xmp", "org.apache.xmpbox")), " found."));
+        }
+      }
+      return layers;
+    }
+    return default!;
+  }
 }

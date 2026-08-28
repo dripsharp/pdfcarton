@@ -9,54 +9,59 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 internal class CFFCharsetCID : global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset {
-private const string EXCEPTION_MESSAGE = "Not a Type 1-equivalent font";
+  private const string EXCEPTION_MESSAGE = "Not a Type 1-equivalent font";
 
-private readonly global::System.Collections.Generic.IDictionary<int, int> sidOrCidToGid = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(250);
+  private readonly global::System.Collections.Generic.IDictionary<int, int> sidOrCidToGid
+    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(250);
 
-private readonly global::System.Collections.Generic.IDictionary<int, int> gidToCid = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>();
+  private readonly global::System.Collections.Generic.IDictionary<int, int> gidToCid
+    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>();
 
-public virtual bool IsCIDFont() {
-return true;
-}
+  public virtual bool IsCIDFont() {
+    return true;
+  }
 
-public virtual void AddSID(int gid, int sid, string name) {
-throw new global::System.InvalidOperationException(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID.EXCEPTION_MESSAGE);
-}
+  public virtual void AddSID(int gid, int sid, string name) {
+    throw new global::System.InvalidOperationException(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID.EXCEPTION_MESSAGE);
+  }
 
-public virtual void AddCID(int gid, int cid) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.sidOrCidToGid, cid, gid);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.gidToCid, gid, cid);
-}
+  public virtual void AddCID(int gid, int cid) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.sidOrCidToGid, cid, gid);
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.gidToCid, gid, cid);
+  }
 
-public virtual int GetSIDForGID(int sid) {
-throw new global::System.InvalidOperationException(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID.EXCEPTION_MESSAGE);
-}
+  public virtual int GetSIDForGID(int sid) {
+    throw new global::System.InvalidOperationException(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID.EXCEPTION_MESSAGE);
+  }
 
-public virtual int GetGIDForSID(int sid) {
-throw new global::System.InvalidOperationException(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID.EXCEPTION_MESSAGE);
-}
+  public virtual int GetGIDForSID(int sid) {
+    throw new global::System.InvalidOperationException(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID.EXCEPTION_MESSAGE);
+  }
 
-public virtual int GetGIDForCID(int cid) {
-int? gid = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.sidOrCidToGid, cid);
-if ((gid == default!)) {
-return 0;
-}
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(gid);
-}
+  public virtual int GetGIDForCID(int cid) {
+    int? gid
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.sidOrCidToGid,
+      cid);
+    if ((gid == default!)) {
+      return 0;
+    }
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(gid);
+  }
 
-public virtual int GetSID(string name) {
-throw new global::System.InvalidOperationException(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID.EXCEPTION_MESSAGE);
-}
+  public virtual int GetSID(string name) {
+    throw new global::System.InvalidOperationException(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID.EXCEPTION_MESSAGE);
+  }
 
-public virtual string GetNameForGID(int gid) {
-throw new global::System.InvalidOperationException(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID.EXCEPTION_MESSAGE);
-}
+  public virtual string GetNameForGID(int gid) {
+    throw new global::System.InvalidOperationException(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID.EXCEPTION_MESSAGE);
+  }
 
-public virtual int GetCIDForGID(int gid) {
-int? cid = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.gidToCid, gid);
-if ((cid != default!)) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(cid);
-}
-return 0;
-}
+  public virtual int GetCIDForGID(int gid) {
+    int? cid = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.gidToCid,
+      gid);
+    if ((cid != default!)) {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(cid);
+    }
+    return 0;
+  }
 }

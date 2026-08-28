@@ -9,17 +9,19 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 
 public interface SignatureInterface {
-public sbyte[] Sign(global::System.IO.Stream content);
+  public sbyte[] Sign(global::System.IO.Stream content);
 }
 
-public sealed class __SignatureInterfaceFunctionalAdapter : global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.SignatureInterface {
-private readonly global::System.Func<global::System.IO.Stream, sbyte[]> implementation;
+public sealed class __SignatureInterfaceFunctionalAdapter
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.SignatureInterface {
+  private readonly global::System.Func<global::System.IO.Stream, sbyte[]> implementation;
 
-public __SignatureInterfaceFunctionalAdapter(global::System.Func<global::System.IO.Stream, sbyte[]> implementation) {
-this.implementation = implementation;
-}
+  public __SignatureInterfaceFunctionalAdapter(global::System.Func<global::System.IO.Stream,
+    sbyte[]> implementation) {
+    this.implementation = implementation;
+  }
 
-public sbyte[] Sign(global::System.IO.Stream content) {
-return this.implementation(content);
-}
+  public sbyte[] Sign(global::System.IO.Stream content) {
+    return this.implementation(content);
+  }
 }

@@ -9,17 +9,18 @@
 namespace DripSharp.PdfCarton.Preflight.Graphic;
 
 public interface ColorSpaceHelper {
-public void Validate();
+  public void Validate();
 }
 
-public sealed class __ColorSpaceHelperFunctionalAdapter : global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper {
-private readonly global::System.Action implementation;
+public sealed class __ColorSpaceHelperFunctionalAdapter
+: global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper {
+  private readonly global::System.Action implementation;
 
-public __ColorSpaceHelperFunctionalAdapter(global::System.Action implementation) {
-this.implementation = implementation;
-}
+  public __ColorSpaceHelperFunctionalAdapter(global::System.Action implementation) {
+    this.implementation = implementation;
+  }
 
-public void Validate() {
-this.implementation();
-}
+  public void Validate() {
+    this.implementation();
+  }
 }

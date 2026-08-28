@@ -9,79 +9,96 @@
 namespace DripSharp.PdfCarton.Util.Filetypedetector;
 
 public sealed class FileType {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("UNKNOWN")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Unknown = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("UNKNOWN")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Unknown
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("JPEG")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Jpeg = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("JPEG")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Jpeg
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("TIFF")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Tiff = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("TIFF")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Tiff
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("PSD")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Psd = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("PSD")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Psd
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("PNG")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Png = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("PNG")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Png
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("BMP")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Bmp = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("BMP")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Bmp
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("GIF")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(6)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Gif = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("GIF")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(6)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Gif
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("ICO")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(7)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Ico = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("ICO")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(7)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Ico
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("PCX")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(8)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Pcx = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("PCX")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(8)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Pcx
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("RIFF")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(9)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Riff = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("RIFF")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(9)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Riff
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("ARW")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(10)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Arw = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("ARW")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(10)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Arw
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("CRW")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(11)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Crw = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("CRW")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(11)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Crw
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("CR2")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(12)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Cr2 = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("CR2")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(12)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Cr2
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("NEF")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(13)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Nef = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("NEF")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(13)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Nef
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("ORF")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(14)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Orf = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("ORF")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(14)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Orf
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("RAF")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(15)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Raf = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("RAF")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(15)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Raf
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("RW2")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(16)]
-public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Rw2 = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("RW2")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(16)]
+  public static readonly global::DripSharp.PdfCarton.Util.Filetypedetector.FileType Rw2
+    = new global::DripSharp.PdfCarton.Util.Filetypedetector.FileType();
 
-private FileType() {}
+  private FileType() {}
 
+  public static FileType[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<FileType>();
+  public static FileType valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<FileType>(name);
 
-public static FileType[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<FileType>();
-public static FileType valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<FileType>(name);
-
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

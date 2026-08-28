@@ -9,48 +9,52 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 public sealed class PageDrawerParameters {
-private readonly global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer = null!;
+  private readonly global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer = null!;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.PDPage page = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.PDPage page = null!;
 
-private readonly bool subsamplingAllowed = default;
+  private readonly bool subsamplingAllowed = default;
 
-private readonly global::DripSharp.PdfCarton.Rendering.RenderDestination destination = null!;
+  private readonly global::DripSharp.PdfCarton.Rendering.RenderDestination destination = null!;
 
-private readonly global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints = null!;
+  private readonly global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints = null!;
 
-private readonly float imageDownscalingOptimizationThreshold = default;
+  private readonly float imageDownscalingOptimizationThreshold = default;
 
-internal PageDrawerParameters(global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer, global::DripSharp.PdfCarton.Pdmodel.PDPage page, bool subsamplingAllowed, global::DripSharp.PdfCarton.Rendering.RenderDestination destination, global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints, float imageDownscalingOptimizationThreshold) {
-this.renderer = renderer;
-this.page = page;
-this.subsamplingAllowed = subsamplingAllowed;
-this.destination = destination;
-this.renderingHints = renderingHints;
-this.imageDownscalingOptimizationThreshold = imageDownscalingOptimizationThreshold;
-}
+  internal PageDrawerParameters(global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page, bool subsamplingAllowed,
+    global::DripSharp.PdfCarton.Rendering.RenderDestination destination,
+    global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints,
+    float imageDownscalingOptimizationThreshold) {
+    this.renderer = renderer;
+    this.page = page;
+    this.subsamplingAllowed = subsamplingAllowed;
+    this.destination = destination;
+    this.renderingHints = renderingHints;
+    this.imageDownscalingOptimizationThreshold = imageDownscalingOptimizationThreshold;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.PDPage GetPage() {
-return this.page;
-}
+  public global::DripSharp.PdfCarton.Pdmodel.PDPage GetPage() {
+    return this.page;
+  }
 
-internal global::DripSharp.PdfCarton.Rendering.PDFRenderer getRenderer() {
-return this.renderer;
-}
+  internal global::DripSharp.PdfCarton.Rendering.PDFRenderer getRenderer() {
+    return this.renderer;
+  }
 
-public bool IsSubsamplingAllowed() {
-return this.subsamplingAllowed;
-}
+  public bool IsSubsamplingAllowed() {
+    return this.subsamplingAllowed;
+  }
 
-public global::DripSharp.PdfCarton.Rendering.RenderDestination GetDestination() {
-return this.destination;
-}
+  public global::DripSharp.PdfCarton.Rendering.RenderDestination GetDestination() {
+    return this.destination;
+  }
 
-public global::DripSharp.Runtime.PdfCartonRenderingHints GetRenderingHints() {
-return this.renderingHints;
-}
+  public global::DripSharp.Runtime.PdfCartonRenderingHints GetRenderingHints() {
+    return this.renderingHints;
+  }
 
-public float GetImageDownscalingOptimizationThreshold() {
-return this.imageDownscalingOptimizationThreshold;
-}
+  public float GetImageDownscalingOptimizationThreshold() {
+    return this.imageDownscalingOptimizationThreshold;
+  }
 }

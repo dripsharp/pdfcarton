@@ -8,12 +8,14 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Graphics;
 
-public sealed class LegacyFillNonZeroRule : global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.FillNonZeroRule {
-public LegacyFillNonZeroRule(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context) : base(context) {
+public sealed class LegacyFillNonZeroRule
+: global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.FillNonZeroRule {
+  public LegacyFillNonZeroRule(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero;
+  }
 }

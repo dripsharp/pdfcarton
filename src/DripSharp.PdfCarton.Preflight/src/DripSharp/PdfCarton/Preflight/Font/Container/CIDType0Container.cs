@@ -8,12 +8,14 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font.Container;
 
-public class CIDType0Container : global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType0> {
-public CIDType0Container(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType0 font) : base(font) {
+public class CIDType0Container
+: global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType0> {
+  public CIDType0Container(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType0 font)
+  : base(font) {
 
-}
+  }
 
-public override bool HasGlyph(int code) {
-return (base.Font.CodeToGID(code) != 0);
-}
+  public override bool HasGlyph(int code) {
+    return (base.Font.CodeToGID(code) != 0);
+  }
 }

@@ -9,61 +9,88 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public sealed class PDActionFactory {
-private PDActionFactory() {}
+  private PDActionFactory() {}
 
-public static global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction CreateAction(global::DripSharp.PdfCarton.Cos.COSDictionary action) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction retval = default!;
-if ((action != default!)) {
-string type = action.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.S);
-if ((type != default!)) {
-switch (type) {
-case var __case_56_26_0 when global::System.Object.Equals(__case_56_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript(action);
-break;
-case var __case_59_26_0 when global::System.Object.Equals(__case_59_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo(action);
-break;
-case var __case_62_26_0 when global::System.Object.Equals(__case_62_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionLaunch.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionLaunch(action);
-break;
-case var __case_65_26_0 when global::System.Object.Equals(__case_65_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionRemoteGoTo.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionRemoteGoTo(action);
-break;
-case var __case_68_26_0 when global::System.Object.Equals(__case_68_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionURI.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionURI(action);
-break;
-case var __case_71_26_0 when global::System.Object.Equals(__case_71_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionNamed.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionNamed(action);
-break;
-case var __case_74_26_0 when global::System.Object.Equals(__case_74_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionSound.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionSound(action);
-break;
-case var __case_77_26_0 when global::System.Object.Equals(__case_77_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionMovie.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionMovie(action);
-break;
-case var __case_80_26_0 when global::System.Object.Equals(__case_80_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionImportData.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionImportData(action);
-break;
-case var __case_83_26_0 when global::System.Object.Equals(__case_83_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionResetForm.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionResetForm(action);
-break;
-case var __case_86_26_0 when global::System.Object.Equals(__case_86_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionHide.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionHide(action);
-break;
-case var __case_89_26_0 when global::System.Object.Equals(__case_89_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionSubmitForm.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionSubmitForm(action);
-break;
-case var __case_92_26_0 when global::System.Object.Equals(__case_92_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionThread.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionThread(action);
-break;
-case var __case_95_26_0 when global::System.Object.Equals(__case_95_26_0, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionEmbeddedGoTo.SubType):
-retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionEmbeddedGoTo(action);
-break;
-default:
-break;
-}
-}
-}
-return retval!;
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction CreateAction(global::DripSharp.PdfCarton.Cos.COSDictionary action) {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction retval = default!;
+    if ((action != default!)) {
+      string type = action.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.S);
+      if ((type != default!)) {
+        switch (type) {
+          case var __case_56_26_0 when global::System.Object.Equals(__case_56_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript(action);
+            break;
+          case var __case_59_26_0 when global::System.Object.Equals(__case_59_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo(action);
+            break;
+          case var __case_62_26_0 when global::System.Object.Equals(__case_62_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionLaunch.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionLaunch(action);
+            break;
+          case var __case_65_26_0 when global::System.Object.Equals(__case_65_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionRemoteGoTo.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionRemoteGoTo(action);
+            break;
+          case var __case_68_26_0 when global::System.Object.Equals(__case_68_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionURI.SubType):
+            retval = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionURI(action);
+            break;
+          case var __case_71_26_0 when global::System.Object.Equals(__case_71_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionNamed.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionNamed(action);
+            break;
+          case var __case_74_26_0 when global::System.Object.Equals(__case_74_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionSound.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionSound(action);
+            break;
+          case var __case_77_26_0 when global::System.Object.Equals(__case_77_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionMovie.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionMovie(action);
+            break;
+          case var __case_80_26_0 when global::System.Object.Equals(__case_80_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionImportData.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionImportData(action);
+            break;
+          case var __case_83_26_0 when global::System.Object.Equals(__case_83_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionResetForm.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionResetForm(action);
+            break;
+          case var __case_86_26_0 when global::System.Object.Equals(__case_86_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionHide.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionHide(action);
+            break;
+          case var __case_89_26_0 when global::System.Object.Equals(__case_89_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionSubmitForm.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionSubmitForm(action);
+            break;
+          case var __case_92_26_0 when global::System.Object.Equals(__case_92_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionThread.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionThread(action);
+            break;
+          case var __case_95_26_0 when global::System.Object.Equals(__case_95_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionEmbeddedGoTo.SubType):
+            retval
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionEmbeddedGoTo(action);
+            break;
+          default:
+            break;
+        }
+      }
+    }
+    return retval!;
+  }
 }

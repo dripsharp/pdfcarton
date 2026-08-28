@@ -9,21 +9,21 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDActionNamed : global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction {
-public const string SubType = "Named";
+  public const string SubType = "Named";
 
-public PDActionNamed() {
-this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionNamed.SubType);
-}
+  public PDActionNamed() {
+    this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionNamed.SubType);
+  }
 
-public PDActionNamed(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public PDActionNamed(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public virtual string GetN() {
-return base.Action.GetNameAsString("N");
-}
+  public virtual string GetN() {
+    return base.Action.GetNameAsString("N");
+  }
 
-public virtual void SetN(string name) {
-base.Action.SetName("N", name);
-}
+  public virtual void SetN(string name) {
+    base.Action.SetName("N", name);
+  }
 }

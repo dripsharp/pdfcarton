@@ -9,210 +9,213 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class HeaderTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-public const string Tag = "head";
+  public const string Tag = "head";
 
-public const int MacStyleBold = 1;
+  public const int MacStyleBold = 1;
 
-public const int MacStyleItalic = 2;
+  public const int MacStyleItalic = 2;
 
-private float version = default;
+  private float version = default;
 
-private float fontRevision = default;
+  private float fontRevision = default;
 
-private long checkSumAdjustment = default;
+  private long checkSumAdjustment = default;
 
-private long magicNumber = default;
+  private long magicNumber = default;
 
-private int flags = default;
+  private int flags = default;
 
-private int unitsPerEm = default;
+  private int unitsPerEm = default;
 
-private global::System.DateTimeOffset? created = default;
+  private global::System.DateTimeOffset? created = default;
 
-private global::System.DateTimeOffset? modified = default;
+  private global::System.DateTimeOffset? modified = default;
 
-private short xMin = default;
+  private short xMin = default;
 
-private short yMin = default;
+  private short yMin = default;
 
-private short xMax = default;
+  private short xMax = default;
 
-private short yMax = default;
+  private short yMax = default;
 
-private int macStyle = default;
+  private int macStyle = default;
 
-private int lowestRecPPEM = default;
+  private int lowestRecPPEM = default;
 
-private short fontDirectionHint = default;
+  private short fontDirectionHint = default;
 
-private short indexToLocFormat = default;
+  private short indexToLocFormat = default;
 
-private short glyphDataFormat = default;
+  private short glyphDataFormat = default;
 
-internal HeaderTable() : base() {
+  internal HeaderTable() : base() {
 
-}
+  }
 
-internal override void readHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) {
-data.Seek((data.GetCurrentPosition() + 44));
-this.macStyle = data.ReadUnsignedShort();
-outHeaders.setHeaderMacStyle(this.macStyle);
-}
+  internal override void readHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
+    global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) {
+    data.Seek((data.GetCurrentPosition() + 44));
+    this.macStyle = data.ReadUnsignedShort();
+    outHeaders.setHeaderMacStyle(this.macStyle);
+  }
 
-internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-this.version = data.Read32Fixed();
-this.fontRevision = data.Read32Fixed();
-this.checkSumAdjustment = data.ReadUnsignedInt();
-this.magicNumber = data.ReadUnsignedInt();
-this.flags = data.ReadUnsignedShort();
-this.unitsPerEm = data.ReadUnsignedShort();
-this.created = data.ReadInternationalDate();
-this.modified = data.ReadInternationalDate();
-this.xMin = data.ReadSignedShort();
-this.yMin = data.ReadSignedShort();
-this.xMax = data.ReadSignedShort();
-this.yMax = data.ReadSignedShort();
-this.macStyle = data.ReadUnsignedShort();
-this.lowestRecPPEM = data.ReadUnsignedShort();
-this.fontDirectionHint = data.ReadSignedShort();
-this.indexToLocFormat = data.ReadSignedShort();
-this.glyphDataFormat = data.ReadSignedShort();
-base.Initialized = true;
-}
+  internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    this.version = data.Read32Fixed();
+    this.fontRevision = data.Read32Fixed();
+    this.checkSumAdjustment = data.ReadUnsignedInt();
+    this.magicNumber = data.ReadUnsignedInt();
+    this.flags = data.ReadUnsignedShort();
+    this.unitsPerEm = data.ReadUnsignedShort();
+    this.created = data.ReadInternationalDate();
+    this.modified = data.ReadInternationalDate();
+    this.xMin = data.ReadSignedShort();
+    this.yMin = data.ReadSignedShort();
+    this.xMax = data.ReadSignedShort();
+    this.yMax = data.ReadSignedShort();
+    this.macStyle = data.ReadUnsignedShort();
+    this.lowestRecPPEM = data.ReadUnsignedShort();
+    this.fontDirectionHint = data.ReadSignedShort();
+    this.indexToLocFormat = data.ReadSignedShort();
+    this.glyphDataFormat = data.ReadSignedShort();
+    base.Initialized = true;
+  }
 
-public virtual long GetCheckSumAdjustment() {
-return this.checkSumAdjustment;
-}
+  public virtual long GetCheckSumAdjustment() {
+    return this.checkSumAdjustment;
+  }
 
-public virtual void SetCheckSumAdjustment(long checkSumAdjustmentValue) {
-this.checkSumAdjustment = checkSumAdjustmentValue;
-}
+  public virtual void SetCheckSumAdjustment(long checkSumAdjustmentValue) {
+    this.checkSumAdjustment = checkSumAdjustmentValue;
+  }
 
-public virtual global::System.DateTimeOffset? GetCreated() {
-return this.created;
-}
+  public virtual global::System.DateTimeOffset? GetCreated() {
+    return this.created;
+  }
 
-public virtual void SetCreated(global::System.DateTimeOffset? createdValue) {
-this.created = createdValue;
-}
+  public virtual void SetCreated(global::System.DateTimeOffset? createdValue) {
+    this.created = createdValue;
+  }
 
-public virtual int GetFlags() {
-return this.flags;
-}
+  public virtual int GetFlags() {
+    return this.flags;
+  }
 
-public virtual void SetFlags(int flagsValue) {
-this.flags = flagsValue;
-}
+  public virtual void SetFlags(int flagsValue) {
+    this.flags = flagsValue;
+  }
 
-public virtual short GetFontDirectionHint() {
-return this.fontDirectionHint;
-}
+  public virtual short GetFontDirectionHint() {
+    return this.fontDirectionHint;
+  }
 
-public virtual void SetFontDirectionHint(short fontDirectionHintValue) {
-this.fontDirectionHint = fontDirectionHintValue;
-}
+  public virtual void SetFontDirectionHint(short fontDirectionHintValue) {
+    this.fontDirectionHint = fontDirectionHintValue;
+  }
 
-public virtual float GetFontRevision() {
-return this.fontRevision;
-}
+  public virtual float GetFontRevision() {
+    return this.fontRevision;
+  }
 
-public virtual void SetFontRevision(float fontRevisionValue) {
-this.fontRevision = fontRevisionValue;
-}
+  public virtual void SetFontRevision(float fontRevisionValue) {
+    this.fontRevision = fontRevisionValue;
+  }
 
-public virtual short GetGlyphDataFormat() {
-return this.glyphDataFormat;
-}
+  public virtual short GetGlyphDataFormat() {
+    return this.glyphDataFormat;
+  }
 
-public virtual void SetGlyphDataFormat(short glyphDataFormatValue) {
-this.glyphDataFormat = glyphDataFormatValue;
-}
+  public virtual void SetGlyphDataFormat(short glyphDataFormatValue) {
+    this.glyphDataFormat = glyphDataFormatValue;
+  }
 
-public virtual short GetIndexToLocFormat() {
-return this.indexToLocFormat;
-}
+  public virtual short GetIndexToLocFormat() {
+    return this.indexToLocFormat;
+  }
 
-public virtual void SetIndexToLocFormat(short indexToLocFormatValue) {
-this.indexToLocFormat = indexToLocFormatValue;
-}
+  public virtual void SetIndexToLocFormat(short indexToLocFormatValue) {
+    this.indexToLocFormat = indexToLocFormatValue;
+  }
 
-public virtual int GetLowestRecPPEM() {
-return this.lowestRecPPEM;
-}
+  public virtual int GetLowestRecPPEM() {
+    return this.lowestRecPPEM;
+  }
 
-public virtual void SetLowestRecPPEM(int lowestRecPPEMValue) {
-this.lowestRecPPEM = lowestRecPPEMValue;
-}
+  public virtual void SetLowestRecPPEM(int lowestRecPPEMValue) {
+    this.lowestRecPPEM = lowestRecPPEMValue;
+  }
 
-public virtual int GetMacStyle() {
-return this.macStyle;
-}
+  public virtual int GetMacStyle() {
+    return this.macStyle;
+  }
 
-public virtual void SetMacStyle(int macStyleValue) {
-this.macStyle = macStyleValue;
-}
+  public virtual void SetMacStyle(int macStyleValue) {
+    this.macStyle = macStyleValue;
+  }
 
-public virtual long GetMagicNumber() {
-return this.magicNumber;
-}
+  public virtual long GetMagicNumber() {
+    return this.magicNumber;
+  }
 
-public virtual void SetMagicNumber(long magicNumberValue) {
-this.magicNumber = magicNumberValue;
-}
+  public virtual void SetMagicNumber(long magicNumberValue) {
+    this.magicNumber = magicNumberValue;
+  }
 
-public virtual global::System.DateTimeOffset? GetModified() {
-return this.modified;
-}
+  public virtual global::System.DateTimeOffset? GetModified() {
+    return this.modified;
+  }
 
-public virtual void SetModified(global::System.DateTimeOffset? modifiedValue) {
-this.modified = modifiedValue;
-}
+  public virtual void SetModified(global::System.DateTimeOffset? modifiedValue) {
+    this.modified = modifiedValue;
+  }
 
-public virtual int GetUnitsPerEm() {
-return this.unitsPerEm;
-}
+  public virtual int GetUnitsPerEm() {
+    return this.unitsPerEm;
+  }
 
-public virtual void SetUnitsPerEm(int unitsPerEmValue) {
-this.unitsPerEm = unitsPerEmValue;
-}
+  public virtual void SetUnitsPerEm(int unitsPerEmValue) {
+    this.unitsPerEm = unitsPerEmValue;
+  }
 
-public virtual float GetVersion() {
-return this.version;
-}
+  public virtual float GetVersion() {
+    return this.version;
+  }
 
-public virtual void SetVersion(float versionValue) {
-this.version = versionValue;
-}
+  public virtual void SetVersion(float versionValue) {
+    this.version = versionValue;
+  }
 
-public virtual short GetXMax() {
-return this.xMax;
-}
+  public virtual short GetXMax() {
+    return this.xMax;
+  }
 
-public virtual void SetXMax(short maxValue) {
-this.xMax = maxValue;
-}
+  public virtual void SetXMax(short maxValue) {
+    this.xMax = maxValue;
+  }
 
-public virtual short GetXMin() {
-return this.xMin;
-}
+  public virtual short GetXMin() {
+    return this.xMin;
+  }
 
-public virtual void SetXMin(short minValue) {
-this.xMin = minValue;
-}
+  public virtual void SetXMin(short minValue) {
+    this.xMin = minValue;
+  }
 
-public virtual short GetYMax() {
-return this.yMax;
-}
+  public virtual short GetYMax() {
+    return this.yMax;
+  }
 
-public virtual void SetYMax(short maxValue) {
-this.yMax = maxValue;
-}
+  public virtual void SetYMax(short maxValue) {
+    this.yMax = maxValue;
+  }
 
-public virtual short GetYMin() {
-return this.yMin;
-}
+  public virtual short GetYMin() {
+    return this.yMin;
+  }
 
-public virtual void SetYMin(short minValue) {
-this.yMin = minValue;
-}
+  public virtual void SetYMin(short minValue) {
+    this.yMin = minValue;
+  }
 }

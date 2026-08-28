@@ -9,219 +9,252 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public abstract class PDShading : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-private global::DripSharp.PdfCarton.Cos.COSArray background = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray background = default!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bBox = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bBox = default!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace = default!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction function = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction function = default!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction[] functionArray = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction[] functionArray = default!;
 
-public const int ShadingType1 = 1;
+  public const int ShadingType1 = 1;
 
-public const int ShadingType2 = 2;
+  public const int ShadingType2 = 2;
 
-public const int ShadingType3 = 3;
+  public const int ShadingType3 = 3;
 
-public const int ShadingType4 = 4;
+  public const int ShadingType4 = 4;
 
-public const int ShadingType5 = 5;
+  public const int ShadingType5 = 5;
 
-public const int ShadingType6 = 6;
+  public const int ShadingType6 = 6;
 
-public const int ShadingType7 = 7;
+  public const int ShadingType7 = 7;
 
-public PDShading() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDShading() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDShading(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary) {
-this.dictionary = shadingDictionary;
-}
+  public PDShading(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary) {
+    this.dictionary = shadingDictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public new virtual string GetType() {
-return global::DripSharp.PdfCarton.Cos.COSName.Shading.GetName();
-}
+  public new virtual string GetType() {
+    return global::DripSharp.PdfCarton.Cos.COSName.Shading.GetName();
+  }
 
-public virtual void SetShadingType(int shadingType) {
-this.dictionary.SetInt(global::DripSharp.PdfCarton.Cos.COSName.ShadingType, shadingType);
-}
+  public virtual void SetShadingType(int shadingType) {
+    this.dictionary.SetInt(global::DripSharp.PdfCarton.Cos.COSName.ShadingType, shadingType);
+  }
 
-public abstract int GetShadingType();
+  public abstract int GetShadingType();
 
-public virtual void SetBackground(global::DripSharp.PdfCarton.Cos.COSArray newBackground) {
-this.background = newBackground;
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Background, newBackground);
-}
+  public virtual void SetBackground(global::DripSharp.PdfCarton.Cos.COSArray newBackground) {
+    this.background = newBackground;
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Background, newBackground);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSArray GetBackground() {
-if ((this.background == default!)) {
-this.background = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Background);
-}
-return this.background;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSArray GetBackground() {
+    if ((this.background == default!)) {
+      this.background
+        = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Background);
+    }
+    return this.background;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetBBox() {
-if ((this.bBox == default!)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
-if ((array != default!)) {
-this.bBox = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(array);
-}
-}
-return this.bBox;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetBBox() {
+    if ((this.bBox == default!)) {
+      global::DripSharp.PdfCarton.Cos.COSArray array
+        = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
+      if ((array != default!)) {
+        this.bBox = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(array);
+      }
+    }
+    return this.bBox;
+  }
 
-public virtual void SetBBox(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle newBBox) {
-this.bBox = newBBox;
-if ((this.bBox == default!)) {
-this.dictionary.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
-} else {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox, this.bBox.GetCOSArray());
-}
-}
+  public virtual void SetBBox(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle newBBox) {
+    this.bBox = newBBox;
+    if ((this.bBox == default!)) {
+      this.dictionary.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
+    } else {
+      this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox,
+        this.bBox.GetCOSArray());
+    }
+  }
 
-public virtual global::SkiaSharp.SKRect GetBounds(global::SkiaSharp.SKMatrix xform, global::DripSharp.PdfCarton.Util.Matrix matrix) {
-return default!;
-}
+  public virtual global::SkiaSharp.SKRect GetBounds(global::SkiaSharp.SKMatrix xform,
+    global::DripSharp.PdfCarton.Util.Matrix matrix) {
+    return default!;
+  }
 
-public virtual void SetAntiAlias(bool antiAlias) {
-this.dictionary.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.AntiAlias, antiAlias);
-}
+  public virtual void SetAntiAlias(bool antiAlias) {
+    this.dictionary.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.AntiAlias, antiAlias);
+  }
 
-public virtual bool GetAntiAlias() {
-return this.dictionary.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.AntiAlias, false);
-}
+  public virtual bool GetAntiAlias() {
+    return this.dictionary.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.AntiAlias, false);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace() {
-if ((this.colorSpace == default!)) {
-global::DripSharp.PdfCarton.Cos.COSBase colorSpaceDictionary = this.dictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Cs, global::DripSharp.PdfCarton.Cos.COSName.Colorspace);
-this.colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(colorSpaceDictionary);
-}
-return this.colorSpace;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace() {
+    if ((this.colorSpace == default!)) {
+      global::DripSharp.PdfCarton.Cos.COSBase colorSpaceDictionary
+        = this.dictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Cs,
+        global::DripSharp.PdfCarton.Cos.COSName.Colorspace);
+      this.colorSpace
+        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(colorSpaceDictionary);
+    }
+    return this.colorSpace;
+  }
 
-public virtual void SetColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-this.colorSpace = colorSpace;
-if ((colorSpace != default!)) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Colorspace, colorSpace.GetCOSObject());
-} else {
-this.dictionary.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Colorspace);
-}
-}
+  public virtual void SetColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    this.colorSpace = colorSpace;
+    if ((colorSpace != default!)) {
+      this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Colorspace,
+        colorSpace.GetCOSObject());
+    } else {
+      this.dictionary.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Colorspace);
+    }
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading Create(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading = default!;
-int shadingType = shadingDictionary.GetInt(global::DripSharp.PdfCarton.Cos.COSName.ShadingType, 0);
-switch (shadingType) {
-case var __case_280_18_0 when __case_280_18_0 == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType1:
-shading = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType1(shadingDictionary);
-break;
-case var __case_283_18_0 when __case_283_18_0 == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType2:
-shading = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType2(shadingDictionary);
-break;
-case var __case_286_18_0 when __case_286_18_0 == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType3:
-shading = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType3(shadingDictionary);
-break;
-case var __case_289_18_0 when __case_289_18_0 == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType4:
-shading = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4(shadingDictionary);
-break;
-case var __case_292_18_0 when __case_292_18_0 == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType5:
-shading = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType5(shadingDictionary);
-break;
-case var __case_295_18_0 when __case_295_18_0 == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType6:
-shading = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType6(shadingDictionary);
-break;
-case var __case_298_18_0 when __case_298_18_0 == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType7:
-shading = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType7(shadingDictionary);
-break;
-default:
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error: Unknown shading type ", shadingType));
-}
-return shading!;
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading Create(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading = default!;
+    int shadingType = shadingDictionary.GetInt(global::DripSharp.PdfCarton.Cos.COSName.ShadingType,
+      0);
+    switch (shadingType) {
+      case var __case_280_18_0 when __case_280_18_0
+        == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType1:
+      shading
+        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType1(shadingDictionary);
+      break;
+      case var __case_283_18_0 when __case_283_18_0
+        == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType2:
+      shading
+        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType2(shadingDictionary);
+      break;
+      case var __case_286_18_0 when __case_286_18_0
+        == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType3:
+      shading
+        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType3(shadingDictionary);
+      break;
+      case var __case_289_18_0 when __case_289_18_0
+        == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType4:
+      shading
+        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4(shadingDictionary);
+      break;
+      case var __case_292_18_0 when __case_292_18_0
+        == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType5:
+      shading
+        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType5(shadingDictionary);
+      break;
+      case var __case_295_18_0 when __case_295_18_0
+        == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType6:
+      shading
+        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType6(shadingDictionary);
+      break;
+      case var __case_298_18_0 when __case_298_18_0
+        == global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType7:
+      shading
+        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType7(shadingDictionary);
+      break;
+      default:
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error: Unknown shading type ",
+          shadingType));
+    }
+    return shading!;
+  }
 
-public virtual void SetFunction(global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction newFunction) {
-this.functionArray = default!;
-this.function = newFunction;
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Function, newFunction);
-}
+  public virtual void SetFunction(global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction newFunction) {
+    this.functionArray = default!;
+    this.function = newFunction;
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Function, newFunction);
+  }
 
-public virtual void SetFunction(global::DripSharp.PdfCarton.Cos.COSArray newFunctions) {
-this.functionArray = default!;
-this.function = default!;
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Function, newFunctions);
-}
+  public virtual void SetFunction(global::DripSharp.PdfCarton.Cos.COSArray newFunctions) {
+    this.functionArray = default!;
+    this.function = default!;
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Function, newFunctions);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction GetFunction() {
-if ((this.function == default!)) {
-global::DripSharp.PdfCarton.Cos.COSBase dictionaryFunctionObject = this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Function);
-if ((dictionaryFunctionObject != default!)) {
-this.function = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(dictionaryFunctionObject);
-}
-}
-return this.function;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction GetFunction() {
+    if ((this.function == default!)) {
+      global::DripSharp.PdfCarton.Cos.COSBase dictionaryFunctionObject
+        = this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Function);
+      if ((dictionaryFunctionObject != default!)) {
+        this.function
+          = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(dictionaryFunctionObject);
+      }
+    }
+    return this.function;
+  }
 
-private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction[] getFunctionsArray() {
-if ((this.functionArray == default!)) {
-global::DripSharp.PdfCarton.Cos.COSBase functionObject = this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Function);
-if ((functionObject is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-this.functionArray = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction[1];
-this.functionArray[0] = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(functionObject);
-} else {
-if ((functionObject is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray functionCOSArray = (global::DripSharp.PdfCarton.Cos.COSArray)(functionObject!);
-int numberOfFunctions = functionCOSArray.Size();
-this.functionArray = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction[numberOfFunctions];
-for (int i = 0; (i < numberOfFunctions); i++) {
-this.functionArray[i] = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(functionCOSArray.Get(i));
-}
-} else {
-throw new global::System.IO.IOException("mandatory /Function element must be a dictionary or an array");
-}
-}
-}
-return this.functionArray;
-}
+  private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction[] getFunctionsArray() {
+    if ((this.functionArray == default!)) {
+      global::DripSharp.PdfCarton.Cos.COSBase functionObject
+        = this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Function);
+      if ((functionObject is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        this.functionArray = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction[1];
+        this.functionArray[0]
+          = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(functionObject);
+      } else {
+        if ((functionObject is global::DripSharp.PdfCarton.Cos.COSArray)) {
+          global::DripSharp.PdfCarton.Cos.COSArray functionCOSArray
+            = (global::DripSharp.PdfCarton.Cos.COSArray)(functionObject!);
+          int numberOfFunctions = functionCOSArray.Size();
+          this.functionArray
+            = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction[numberOfFunctions];
+          for (int i = 0; (i < numberOfFunctions); i++) {
+            this.functionArray[i]
+              = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(functionCOSArray.Get(i));
+          }
+        } else {
+          throw new global::System.IO.IOException("mandatory /Function element must be a dictionary or an array");
+        }
+      }
+    }
+    return this.functionArray;
+  }
 
-public virtual float[] EvalFunction(float inputValue) {
-return this.EvalFunction(new float[] { inputValue });
-}
+  public virtual float[] EvalFunction(float inputValue) {
+    return this.EvalFunction(new float[] { inputValue });
+  }
 
-public virtual float[] EvalFunction(float[] input) {
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction[] functions = this.getFunctionsArray();
-int numberOfFunctions = functions.Length;
-float[] returnValues;
-if ((numberOfFunctions == 1)) {
-returnValues = functions[0].Eval(input);
-} else {
-returnValues = new float[numberOfFunctions];
-for (int i__415_22 = 0; (i__415_22 < numberOfFunctions); i__415_22++) {
-float[] newValue = functions[i__415_22].Eval(input);
-returnValues[i__415_22] = newValue[0];
-}
-}
-for (int i__424_18 = 0; (i__424_18 < returnValues.Length); ++i__424_18) {
-if ((returnValues[i__424_18] < 0)) {
-returnValues[i__424_18] = 0;
-} else {
-if ((returnValues[i__424_18] > 1)) {
-returnValues[i__424_18] = 1;
-}
-}
-}
-return returnValues;
-}
+  public virtual float[] EvalFunction(float[] input) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction[] functions
+      = this.getFunctionsArray();
+    int numberOfFunctions = functions.Length;
+    float[] returnValues;
+    if ((numberOfFunctions == 1)) {
+      returnValues = functions[0].Eval(input);
+    } else {
+      returnValues = new float[numberOfFunctions];
+      for (int i__415_22 = 0; (i__415_22 < numberOfFunctions); i__415_22++) {
+        float[] newValue = functions[i__415_22].Eval(input);
+        returnValues[i__415_22] = newValue[0];
+      }
+    }
+    for (int i__424_18 = 0; (i__424_18 < returnValues.Length); ++i__424_18) {
+      if ((returnValues[i__424_18] < 0)) {
+        returnValues[i__424_18] = 0;
+      } else {
+        if ((returnValues[i__424_18] > 1)) {
+          returnValues[i__424_18] = 1;
+        }
+      }
+    }
+    return returnValues;
+  }
 
-public abstract global::DripSharp.Runtime.JavaPaint ToPaint(global::DripSharp.PdfCarton.Util.Matrix matrix);
+  public abstract global::DripSharp.Runtime.JavaPaint ToPaint(global::DripSharp.PdfCarton.Util.Matrix matrix);
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

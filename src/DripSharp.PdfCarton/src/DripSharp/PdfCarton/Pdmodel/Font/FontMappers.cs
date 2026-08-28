@@ -9,22 +9,24 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public sealed class FontMappers {
-private static global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper __field_instance = null!;
+  private static global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper __field_instance = null!;
 
-private FontMappers() {}
+  private FontMappers() {}
 
-internal class DefaultFontMapper {
-internal static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper INSTANCE = new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl();
-}
+  internal class DefaultFontMapper {
+    internal static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper INSTANCE
+      = new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl();
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper Instance() {
-if ((global::DripSharp.PdfCarton.Pdmodel.Font.FontMappers.__field_instance == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Font.FontMappers.__field_instance = global::DripSharp.PdfCarton.Pdmodel.Font.FontMappers.DefaultFontMapper.INSTANCE;
-}
-return global::DripSharp.PdfCarton.Pdmodel.Font.FontMappers.__field_instance;
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper Instance() {
+    if ((global::DripSharp.PdfCarton.Pdmodel.Font.FontMappers.__field_instance == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Font.FontMappers.__field_instance
+        = global::DripSharp.PdfCarton.Pdmodel.Font.FontMappers.DefaultFontMapper.INSTANCE;
+    }
+    return global::DripSharp.PdfCarton.Pdmodel.Font.FontMappers.__field_instance;
+  }
 
-public static void Set(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper fontMapper) {
-global::DripSharp.PdfCarton.Pdmodel.Font.FontMappers.__field_instance = fontMapper;
-}
+  public static void Set(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper fontMapper) {
+    global::DripSharp.PdfCarton.Pdmodel.Font.FontMappers.__field_instance = fontMapper;
+  }
 }

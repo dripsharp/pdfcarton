@@ -9,48 +9,55 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFPage : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary page = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary page = null!;
 
-public FDFPage() {
-this.page = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public FDFPage() {
+    this.page = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public FDFPage(global::DripSharp.PdfCarton.Cos.COSDictionary p) {
-this.page = p;
-}
+  public FDFPage(global::DripSharp.PdfCarton.Cos.COSDictionary p) {
+    this.page = p;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.page;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.page;
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFTemplate> GetTemplates() {
-global::DripSharp.PdfCarton.Cos.COSArray array = this.page.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Templates);
-if ((array != default!)) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFTemplate> objects = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFTemplate>(array.Size());
-for (int i = 0; (i < array.Size()); i++) {
-global::DripSharp.Runtime.JavaCompat.Add(objects, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFTemplate((global::DripSharp.PdfCarton.Cos.COSDictionary)(array.GetObject(i)!)));
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFTemplate>(objects, array);
-}
-return default!;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFTemplate> GetTemplates() {
+    global::DripSharp.PdfCarton.Cos.COSArray array
+      = this.page.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Templates);
+    if ((array != default!)) {
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFTemplate> objects
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFTemplate>(array.Size());
+      for (int i = 0; (i < array.Size()); i++) {
+        global::DripSharp.Runtime.JavaCompat.Add(objects,
+          new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFTemplate((global::DripSharp.PdfCarton.Cos.COSDictionary)(array.GetObject(i)!)));
+      }
+      return new global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFTemplate>(objects,
+        array);
+    }
+    return default!;
+  }
 
-public virtual void SetTemplates(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFTemplate> templates) {
-this.page.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Templates, new global::DripSharp.PdfCarton.Cos.COSArray(templates));
-}
+  public virtual void SetTemplates(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFTemplate> templates) {
+    this.page.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Templates,
+      new global::DripSharp.PdfCarton.Cos.COSArray(templates));
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPageInfo GetPageInfo() {
-global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPageInfo retval = default!;
-global::DripSharp.PdfCarton.Cos.COSDictionary dict = this.page.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Info);
-if ((dict != default!)) {
-retval = new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPageInfo(dict);
-}
-return retval!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPageInfo GetPageInfo() {
+    global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPageInfo retval = default!;
+    global::DripSharp.PdfCarton.Cos.COSDictionary dict
+      = this.page.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Info);
+    if ((dict != default!)) {
+      retval = new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPageInfo(dict);
+    }
+    return retval!;
+  }
 
-public virtual void SetPageInfo(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPageInfo info) {
-this.page.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Info, info);
-}
+  public virtual void SetPageInfo(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPageInfo info) {
+    this.page.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Info, info);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

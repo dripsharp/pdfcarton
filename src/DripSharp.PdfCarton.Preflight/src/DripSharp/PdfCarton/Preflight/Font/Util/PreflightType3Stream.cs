@@ -8,74 +8,94 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font.Util;
 
-public class PreflightType3Stream : global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine {
-private readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDType3CharProc charProc = null!;
+public class PreflightType3Stream
+: global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine {
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDType3CharProc charProc = null!;
 
-private bool firstOperator = true;
+  private bool firstOperator = true;
 
-private float width = 0;
+  private float width = 0;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImage image = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImage image = default!;
 
-private global::DripSharp.PdfCarton.Fonts.Util.BoundingBox box = default!;
+  private global::DripSharp.PdfCarton.Fonts.Util.BoundingBox box = default!;
 
-public PreflightType3Stream(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.PDPage page, global::DripSharp.PdfCarton.Pdmodel.Font.PDType3CharProc charProc) : base(context, page) {
-this.charProc = charProc;
-}
+  public PreflightType3Stream(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDType3CharProc charProc) : base(context, page) {
+    this.charProc = charProc;
+  }
 
-public virtual void ShowType3Character(global::DripSharp.PdfCarton.Pdmodel.Font.PDType3CharProc charProc) {
-this.ProcessChildStream(charProc, new global::DripSharp.PdfCarton.Pdmodel.PDPage());
-}
+  public virtual void ShowType3Character(global::DripSharp.PdfCarton.Pdmodel.Font.PDType3CharProc charProc) {
+    this.ProcessChildStream(charProc, new global::DripSharp.PdfCarton.Pdmodel.PDPage());
+  }
 
-public virtual global::SkiaSharp.SKBitmap CreateImage() {
-this.ShowType3Character(this.charProc);
-return this.image.GetImage();
-}
+  public virtual global::SkiaSharp.SKBitmap CreateImage() {
+    this.ShowType3Character(this.charProc);
+    return this.image.GetImage();
+  }
 
-protected internal override void ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-base.ProcessOperator(@operator, operands);
-string operation = @operator.GetName();
-if (global::DripSharp.Runtime.JavaCompat.Equals(operation, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage)) {
-this.image = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImage(@operator.GetImageParameters(), @operator.GetImageData(), this.GetResources());
-this.ValidateInlineImageFilter(@operator);
-this.ValidateInlineImageColorSpace(@operator);
-}
-if (global::DripSharp.Runtime.JavaCompat.Equals(operation, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D0)) {
-this.checkType3FirstOperator(operands);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.Equals(operation, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D1)) {
-global::DripSharp.PdfCarton.Cos.COSNumber llx = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 2)!);
-global::DripSharp.PdfCarton.Cos.COSNumber lly = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 3)!);
-global::DripSharp.PdfCarton.Cos.COSNumber urx = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 4)!);
-global::DripSharp.PdfCarton.Cos.COSNumber ury = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 5)!);
-this.box = new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox();
-this.box.SetLowerLeftX(llx.FloatValue());
-this.box.SetLowerLeftY(lly.FloatValue());
-this.box.SetUpperRightX(urx.FloatValue());
-this.box.SetUpperRightY(ury.FloatValue());
-this.checkType3FirstOperator(operands);
-}
-}
-this.CheckColorOperators(operation);
-this.ValidateRenderingIntent(@operator, operands);
-this.CheckSetColorSpaceOperators(@operator, operands);
-this.ValidateNumberOfGraphicStates(@operator);
-this.firstOperator = false;
-}
+  protected internal override void ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    base.ProcessOperator(@operator, operands);
+    string operation = @operator.GetName();
+    if (global::DripSharp.Runtime.JavaCompat.Equals(operation,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage)) {
+      this.image
+        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImage(@operator.GetImageParameters(),
+        @operator.GetImageData(), this.GetResources());
+      this.ValidateInlineImageFilter(@operator);
+      this.ValidateInlineImageColorSpace(@operator);
+    }
+    if (global::DripSharp.Runtime.JavaCompat.Equals(operation,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D0)) {
+      this.checkType3FirstOperator(operands);
+    } else {
+      if (global::DripSharp.Runtime.JavaCompat.Equals(operation,
+        global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D1)) {
+        global::DripSharp.PdfCarton.Cos.COSNumber llx
+          = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+          2)!);
+        global::DripSharp.PdfCarton.Cos.COSNumber lly
+          = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+          3)!);
+        global::DripSharp.PdfCarton.Cos.COSNumber urx
+          = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+          4)!);
+        global::DripSharp.PdfCarton.Cos.COSNumber ury
+          = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+          5)!);
+        this.box = new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox();
+        this.box.SetLowerLeftX(llx.FloatValue());
+        this.box.SetLowerLeftY(lly.FloatValue());
+        this.box.SetUpperRightX(urx.FloatValue());
+        this.box.SetUpperRightY(ury.FloatValue());
+        this.checkType3FirstOperator(operands);
+      }
+    }
+    this.CheckColorOperators(operation);
+    this.ValidateRenderingIntent(@operator, operands);
+    this.CheckSetColorSpaceOperators(@operator, operands);
+    this.ValidateNumberOfGraphicStates(@operator);
+    this.firstOperator = false;
+  }
 
-private void checkType3FirstOperator(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (!(this.firstOperator)) {
-throw new global::System.IO.IOException("Type3 CharProc : First operator must be d0 or d1");
-}
-global::DripSharp.PdfCarton.Cos.COSBase obj = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-if ((obj is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-this.width = ((global::DripSharp.PdfCarton.Cos.COSNumber)(obj!)).FloatValue();
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected argument type. Expected : COSInteger or Number / Received : ", global::DripSharp.Runtime.JavaCompat.ClassName(((object)(obj)).GetType(), "DripSharp.PdfCarton.Preflight", "org.apache.pdfbox.preflight")));
-}
-}
+  private void checkType3FirstOperator(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (!(this.firstOperator)) {
+      throw new global::System.IO.IOException("Type3 CharProc : First operator must be d0 or d1");
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase obj
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+    if ((obj is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+      this.width = ((global::DripSharp.PdfCarton.Cos.COSNumber)(obj!)).FloatValue();
+    } else {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected argument type. Expected : COSInteger or Number / Received : ",
+        global::DripSharp.Runtime.JavaCompat.ClassName(((object)(obj)).GetType(),
+        "DripSharp.PdfCarton.Preflight", "org.apache.pdfbox.preflight")));
+    }
+  }
 
-public virtual float GetWidth() {
-return this.width;
-}
+  public virtual float GetWidth() {
+    return this.width;
+  }
 }

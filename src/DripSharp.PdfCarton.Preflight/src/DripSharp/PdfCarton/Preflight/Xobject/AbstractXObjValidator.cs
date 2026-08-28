@@ -8,53 +8,65 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Xobject;
 
-public abstract class AbstractXObjValidator : global::DripSharp.PdfCarton.Preflight.Xobject.XObjectValidator {
-protected internal global::DripSharp.PdfCarton.Cos.COSStream Xobject = default!;
+public abstract class AbstractXObjValidator
+: global::DripSharp.PdfCarton.Preflight.Xobject.XObjectValidator {
+  protected internal global::DripSharp.PdfCarton.Cos.COSStream Xobject = default!;
 
-protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Context = default!;
+  protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Context = default!;
 
-public AbstractXObjValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSStream xobj) {
-this.Xobject = xobj;
-this.Context = context;
-}
+  public AbstractXObjValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Cos.COSStream xobj) {
+    this.Xobject = xobj;
+    this.Context = context;
+  }
 
-protected internal virtual void CheckSMask() {
-global::DripSharp.PdfCarton.Cos.COSBase smask = this.Xobject.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Smask);
-if (((smask != default!) && !(global::DripSharp.PdfCarton.Cos.COSName.None.Equals(smask)))) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicTransparencySmask, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Soft Mask must be null or None [", this.Xobject.ToString()), "]")));
-}
-}
+  protected internal virtual void CheckSMask() {
+    global::DripSharp.PdfCarton.Cos.COSBase smask
+      = this.Xobject.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Smask);
+    if (((smask != default!) && !(global::DripSharp.PdfCarton.Cos.COSName.None.Equals(smask)))) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicTransparencySmask,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Soft Mask must be null or None [",
+        this.Xobject.ToString()), "]")));
+    }
+  }
 
-protected internal virtual void CheckOPI() {
-if ((this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("OPI")) != default!)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedKey, "Unexpected 'OPI' Key"));
-}
-}
+  protected internal virtual void CheckOPI() {
+    if ((this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("OPI"))
+      != default!)) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedKey,
+        "Unexpected 'OPI' Key"));
+    }
+  }
 
-protected internal virtual void CheckReferenceXObject() {
-if ((this.Xobject.GetItem("Ref") != default!)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedKey, "No reference XObject allowed in PDF/A"));
-}
-}
+  protected internal virtual void CheckReferenceXObject() {
+    if ((this.Xobject.GetItem("Ref") != default!)) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedKey,
+        "No reference XObject allowed in PDF/A"));
+    }
+  }
 
-protected internal virtual void CheckPostscriptXObject() {
-global::DripSharp.PdfCarton.Cos.COSName subtype = this.Xobject.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
-if (global::DripSharp.PdfCarton.Cos.COSName.Ps.Equals(subtype)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey, "No Postscript XObject allowed in PDF/A"));
-} else {
-if ((this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("Subtype2")) != default!)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey, "No Postscript XObject allowed in PDF/A (Subtype2)"));
-}
-}
-}
+  protected internal virtual void CheckPostscriptXObject() {
+    global::DripSharp.PdfCarton.Cos.COSName subtype
+      = this.Xobject.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
+    if (global::DripSharp.PdfCarton.Cos.COSName.Ps.Equals(subtype)) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey,
+        "No Postscript XObject allowed in PDF/A"));
+    } else {
+      if ((this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("Subtype2"))
+        != default!)) {
+        this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey,
+          "No Postscript XObject allowed in PDF/A (Subtype2)"));
+      }
+    }
+  }
 
-protected internal abstract void CheckMandatoryFields();
+  protected internal abstract void CheckMandatoryFields();
 
-public virtual void Validate() {
-this.CheckMandatoryFields();
-this.CheckOPI();
-this.CheckSMask();
-this.CheckReferenceXObject();
-this.CheckPostscriptXObject();
-}
+  public virtual void Validate() {
+    this.CheckMandatoryFields();
+    this.CheckOPI();
+    this.CheckSMask();
+    this.CheckReferenceXObject();
+    this.CheckPostscriptXObject();
+  }
 }

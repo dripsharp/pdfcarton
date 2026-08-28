@@ -9,108 +9,116 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class RunLengthDecodeFilter : global::DripSharp.PdfCarton.Filter.Filter {
-private const int RUN_LENGTH_EOD = 128;
+  private const int RUN_LENGTH_EOD = 128;
 
-public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded, global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters, int index) {
-int dupAmount;
-sbyte[] buffer = new sbyte[128];
-while ((((dupAmount = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded)) != -1) && (dupAmount != global::DripSharp.PdfCarton.Filter.RunLengthDecodeFilter.RUN_LENGTH_EOD))) {
-if ((dupAmount <= 127)) {
-int amountToCopy = (dupAmount + 1);
-int compressedRead;
-while ((amountToCopy > 0)) {
-compressedRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded, buffer, 0, amountToCopy);
-if ((compressedRead == -1)) {
-break;
-}
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, buffer, 0, compressedRead);
-amountToCopy -= compressedRead;
-}
-} else {
-int dupByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded);
-if ((dupByte == -1)) {
-break;
-}
-for (int i = 0; (i < (257 - dupAmount)); i++) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, dupByte);
-}
-}
-}
-return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
-}
+  public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded,
+    global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters,
+    int index) {
+    int dupAmount;
+    sbyte[] buffer = new sbyte[128];
+    while ((((dupAmount = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded)) != -1)
+      && (dupAmount != global::DripSharp.PdfCarton.Filter.RunLengthDecodeFilter.RUN_LENGTH_EOD))) {
+      if ((dupAmount <= 127)) {
+        int amountToCopy = (dupAmount + 1);
+        int compressedRead;
+        while ((amountToCopy > 0)) {
+          compressedRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded, buffer, 0,
+            amountToCopy);
+          if ((compressedRead == -1)) {
+            break;
+          }
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, buffer, 0,
+            compressedRead);
+          amountToCopy -= compressedRead;
+        }
+      } else {
+        int dupByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded);
+        if ((dupByte == -1)) {
+          break;
+        }
+        for (int i = 0; (i < (257 - dupAmount)); i++) {
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, dupByte);
+        }
+      }
+    }
+    return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
+  }
 
-public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
-int lastVal = -1;
-int byt;
-int count = 0;
-bool equality = false;
-sbyte[] buf = new sbyte[128];
-while (((byt = global::DripSharp.Runtime.JavaCompat.InputStreamRead(input)) != -1)) {
-if ((lastVal == -1)) {
-lastVal = byt;
-count = 1;
-} else {
-if ((count == 128)) {
-if (equality) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, 129);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, lastVal);
-} else {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, 127);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, buf, 0, 128);
-}
-equality = false;
-lastVal = byt;
-count = 1;
-} else {
-if ((count == 1)) {
-if ((byt == lastVal)) {
-equality = true;
-} else {
-buf[0] = unchecked((sbyte)(unchecked((sbyte)(lastVal))));
-buf[1] = unchecked((sbyte)(unchecked((sbyte)(byt))));
-lastVal = byt;
-}
-count = 2;
-} else {
-if ((byt == lastVal)) {
-if (equality) {
-++count;
-} else {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, (count - 2));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, buf, 0, (count - 1));
-count = 2;
-equality = true;
-}
-} else {
-if (equality) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, (257 - count));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, lastVal);
-equality = false;
-count = 1;
-} else {
-buf[count] = unchecked((sbyte)(unchecked((sbyte)(byt))));
-++count;
-}
-lastVal = byt;
-}
-}
-}
-}
-}
-if ((count > 0)) {
-if ((count == 1)) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, 0);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, lastVal);
-} else {
-if (equality) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, (257 - count));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, lastVal);
-} else {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, (count - 1));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, buf, 0, count);
-}
-}
-}
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, global::DripSharp.PdfCarton.Filter.RunLengthDecodeFilter.RUN_LENGTH_EOD);
-}
+  public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded,
+    global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
+    int lastVal = -1;
+    int byt;
+    int count = 0;
+    bool equality = false;
+    sbyte[] buf = new sbyte[128];
+    while (((byt = global::DripSharp.Runtime.JavaCompat.InputStreamRead(input)) != -1)) {
+      if ((lastVal == -1)) {
+        lastVal = byt;
+        count = 1;
+      } else {
+        if ((count == 128)) {
+          if (equality) {
+            global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, 129);
+            global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, lastVal);
+          } else {
+            global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, 127);
+            global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, buf, 0, 128);
+          }
+          equality = false;
+          lastVal = byt;
+          count = 1;
+        } else {
+          if ((count == 1)) {
+            if ((byt == lastVal)) {
+              equality = true;
+            } else {
+              buf[0] = unchecked((sbyte)(unchecked((sbyte)(lastVal))));
+              buf[1] = unchecked((sbyte)(unchecked((sbyte)(byt))));
+              lastVal = byt;
+            }
+            count = 2;
+          } else {
+            if ((byt == lastVal)) {
+              if (equality) {
+                ++count;
+              } else {
+                global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, (count - 2));
+                global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, buf, 0, (count
+                  - 1));
+                count = 2;
+                equality = true;
+              }
+            } else {
+              if (equality) {
+                global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, (257 - count));
+                global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, lastVal);
+                equality = false;
+                count = 1;
+              } else {
+                buf[count] = unchecked((sbyte)(unchecked((sbyte)(byt))));
+                ++count;
+              }
+              lastVal = byt;
+            }
+          }
+        }
+      }
+    }
+    if ((count > 0)) {
+      if ((count == 1)) {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, 0);
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, lastVal);
+      } else {
+        if (equality) {
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, (257 - count));
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, lastVal);
+        } else {
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, (count - 1));
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded, buf, 0, count);
+        }
+      }
+    }
+    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(encoded,
+      global::DripSharp.PdfCarton.Filter.RunLengthDecodeFilter.RUN_LENGTH_EOD);
+  }
 }

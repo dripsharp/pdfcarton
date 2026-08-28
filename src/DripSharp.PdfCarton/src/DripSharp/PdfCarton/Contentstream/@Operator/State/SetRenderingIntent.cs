@@ -8,23 +8,28 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.State;
 
-public class SetRenderingIntent : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public SetRenderingIntent(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class SetRenderingIntent
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public SetRenderingIntent(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(operands)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, operands);
-}
-global::DripSharp.PdfCarton.Cos.COSBase @base = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0);
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSName))) {
-return;
-}
-this.GetContext().GetGraphicsState().SetRenderingIntent(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent.FromString(((global::DripSharp.PdfCarton.Cos.COSName)(@base!)).GetName()));
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(operands)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        operands);
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0);
+    if (!((@base is global::DripSharp.PdfCarton.Cos.COSName))) {
+      return;
+    }
+    this.GetContext().GetGraphicsState().SetRenderingIntent(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent.FromString(((global::DripSharp.PdfCarton.Cos.COSName)(@base!)).GetName()));
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetRenderingintent;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetRenderingintent;
+  }
 }

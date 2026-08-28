@@ -9,166 +9,260 @@
 namespace DripSharp.PdfCarton.Preflight.Content;
 
 public class StubOperator : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-private readonly string name = null!;
+  private readonly string name = null!;
 
-private static readonly global::System.Collections.Generic.IList<string> CHECK_NO_OPERANDS = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokePath, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZero, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOddAndStroke, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseAndStroke, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndMarkedContent, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClosePath, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipNonZero, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipEvenOdd, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Endpath);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_NO_OPERANDS
+    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokePath,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZero,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOddAndStroke,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseAndStroke,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndMarkedContent,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClosePath,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipNonZero,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipEvenOdd,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Endpath);
 
-private static readonly global::System.Collections.Generic.IList<string> CHECK_STRING_OPERANDS = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContent, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetGraphicsStateParams, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetRenderingintent, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShadingFill, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowText, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPoint);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_STRING_OPERANDS
+    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContent,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetGraphicsStateParams,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetRenderingintent,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShadingFill,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowText,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPoint);
 
-private static readonly global::System.Collections.Generic.IList<string> CHECK_TAG_AND_PROPERTY_OPERANDS = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContentSeq, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPointWithProps);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_TAG_AND_PROPERTY_OPERANDS
+    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContentSeq,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPointWithProps);
 
-private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS_6 = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveTo, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D1);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS_6
+    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveTo,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D1);
 
-private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS_4 = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateFinalPoint, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateInitialPoint, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.AppendRect);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS_4
+    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateFinalPoint,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateInitialPoint,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.AppendRect);
 
-private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS_2 = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveTo, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LineTo, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D0);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS_2
+    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveTo,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LineTo,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D0);
 
-private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorGray, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFlatness, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineMiterlimit);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS
+    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorGray,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFlatness,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineMiterlimit);
 
-private static readonly global::System.Collections.Generic.IList<string> CHECK_ARRAY_OPERANDS = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_ARRAY_OPERANDS
+    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted);
 
-public StubOperator(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context, string name) : base(context) {
-this.name = name;
-}
+  public StubOperator(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context,
+    string name) : base(context) {
+    this.name = name;
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-string opName = @operator.GetName();
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_NO_OPERANDS, opName)) {
-this.checkNoOperands(arguments);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_STRING_OPERANDS, opName)) {
-this.checkStringOperands(arguments, 1);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_TAG_AND_PROPERTY_OPERANDS, opName)) {
-this.checkTagAndPropertyOperands(arguments);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_NUMBER_OPERANDS_6, opName)) {
-this.checkNumberOperands(arguments, 6);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_NUMBER_OPERANDS_4, opName)) {
-this.checkNumberOperands(arguments, 4);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_NUMBER_OPERANDS_2, opName)) {
-this.checkNumberOperands(arguments, 2);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_NUMBER_OPERANDS, opName)) {
-this.checkNumberOperands(arguments, 1);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_ARRAY_OPERANDS, opName)) {
-this.checkArrayOperands(arguments, 1);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace, opName)) {
-this.checkNumberOperands(global::DripSharp.Runtime.JavaCompat.SubList(arguments, 0, 2), 2);
-this.checkStringOperands(global::DripSharp.Runtime.JavaCompat.SubList(arguments, 2, global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments)), 1);
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    string opName = @operator.GetName();
+    if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_NO_OPERANDS,
+      opName)) {
+      this.checkNoOperands(arguments);
+    } else {
+      if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_STRING_OPERANDS,
+        opName)) {
+        this.checkStringOperands(arguments, 1);
+      } else {
+        if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_TAG_AND_PROPERTY_OPERANDS,
+          opName)) {
+          this.checkTagAndPropertyOperands(arguments);
+        } else {
+          if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_NUMBER_OPERANDS_6,
+            opName)) {
+            this.checkNumberOperands(arguments, 6);
+          } else {
+            if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_NUMBER_OPERANDS_4,
+              opName)) {
+              this.checkNumberOperands(arguments, 4);
+            } else {
+              if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_NUMBER_OPERANDS_2,
+                opName)) {
+                this.checkNumberOperands(arguments, 2);
+              } else {
+                if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_NUMBER_OPERANDS,
+                  opName)) {
+                  this.checkNumberOperands(arguments, 1);
+                } else {
+                  if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Content.StubOperator.CHECK_ARRAY_OPERANDS,
+                    opName)) {
+                    this.checkArrayOperands(arguments, 1);
+                  } else {
+                    if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace,
+                      opName)) {
+                      this.checkNumberOperands(global::DripSharp.Runtime.JavaCompat.SubList(arguments,
+                        0, 2), 2);
+                      this.checkStringOperands(global::DripSharp.Runtime.JavaCompat.SubList(arguments,
+                        2, global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments)), 1);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
-private void checkNoOperands(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (((arguments != default!) && !(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)))) {
-throw this.createInvalidArgumentsError();
-}
-}
+  private void checkNoOperands(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (((arguments != default!) && !global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments))) {
+      throw this.createInvalidArgumentsError();
+    }
+  }
 
-private void checkStringOperands(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments, int length) {
-if ((((arguments == default!) || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) || (global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) != length))) {
-throw this.createInvalidArgumentsError();
-}
-for (int i = 0; (i < length); ++i) {
-global::DripSharp.PdfCarton.Cos.COSBase arg = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, i);
-if ((!((arg is global::DripSharp.PdfCarton.Cos.COSName)) && !((arg is global::DripSharp.PdfCarton.Cos.COSString)))) {
-throw this.createInvalidArgumentsError();
-}
-if (((arg is global::DripSharp.PdfCarton.Cos.COSName) && (((global::DripSharp.PdfCarton.Cos.COSName)(arg!)).GetName().Length > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxNameSize))) {
-throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNameTooLong, "A Name operand is too long");
-}
-if (((arg is global::DripSharp.PdfCarton.Cos.COSString) && (global::DripSharp.Runtime.JavaCompat.StringGetBytes(((global::DripSharp.PdfCarton.Cos.COSString)(arg!)).GetString(), global::System.Text.Encoding.UTF8).Length > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxStringLength))) {
-throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxLiteralTooLong, "A String operand is too long");
-}
-}
-}
+  private void checkStringOperands(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments,
+    int length) {
+    if ((((arguments == default!) || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments))
+      || (global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) != length))) {
+      throw this.createInvalidArgumentsError();
+    }
+    for (int i = 0; (i < length); ++i) {
+      global::DripSharp.PdfCarton.Cos.COSBase arg
+        = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, i);
+      if ((!((arg is global::DripSharp.PdfCarton.Cos.COSName))
+        && !((arg is global::DripSharp.PdfCarton.Cos.COSString)))) {
+        throw this.createInvalidArgumentsError();
+      }
+      if (((arg is global::DripSharp.PdfCarton.Cos.COSName)
+        && (((global::DripSharp.PdfCarton.Cos.COSName)(arg!)).GetName().Length > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxNameSize))) {
+        throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNameTooLong,
+          "A Name operand is too long");
+      }
+      if (((arg is global::DripSharp.PdfCarton.Cos.COSString)
+        && (global::DripSharp.Runtime.JavaCompat.StringGetBytes(((global::DripSharp.PdfCarton.Cos.COSString)(arg!)).GetString(),
+        global::System.Text.Encoding.UTF8).Length > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxStringLength))) {
+        throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxLiteralTooLong,
+          "A String operand is too long");
+      }
+    }
+  }
 
-private void checkArrayOperands(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments, int length) {
-if ((((arguments == default!) || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) || (global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) != length))) {
-throw this.createInvalidArgumentsError();
-}
-for (int i = 0; (i < length); ++i) {
-global::DripSharp.PdfCarton.Cos.COSBase arg = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, i);
-if (!((arg is global::DripSharp.PdfCarton.Cos.COSArray))) {
-throw this.createInvalidArgumentsError();
-}
-if ((((global::DripSharp.PdfCarton.Cos.COSArray)(arg!)).Size() > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxArrayElements)) {
-throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxArrayTooLong, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Array has ", ((global::DripSharp.PdfCarton.Cos.COSArray)(arg!)).Size()), " elements"));
-}
-}
-}
+  private void checkArrayOperands(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments,
+    int length) {
+    if ((((arguments == default!) || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments))
+      || (global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) != length))) {
+      throw this.createInvalidArgumentsError();
+    }
+    for (int i = 0; (i < length); ++i) {
+      global::DripSharp.PdfCarton.Cos.COSBase arg
+        = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, i);
+      if (!((arg is global::DripSharp.PdfCarton.Cos.COSArray))) {
+        throw this.createInvalidArgumentsError();
+      }
+      if ((((global::DripSharp.PdfCarton.Cos.COSArray)(arg!)).Size() > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxArrayElements)) {
+        throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxArrayTooLong,
+          global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Array has ",
+          ((global::DripSharp.PdfCarton.Cos.COSArray)(arg!)).Size()), " elements"));
+      }
+    }
+  }
 
-private void checkNumberOperands(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments, int length) {
-if ((((arguments == default!) || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) || (global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) != length))) {
-throw this.createInvalidArgumentsError();
-}
-foreach (global::DripSharp.PdfCarton.Cos.COSBase arg in arguments) {
-if ((!((arg is global::DripSharp.PdfCarton.Cos.COSFloat)) && !((arg is global::DripSharp.PdfCarton.Cos.COSInteger)))) {
-throw this.createInvalidArgumentsError();
-}
-if (((arg is global::DripSharp.PdfCarton.Cos.COSInteger) && ((((global::DripSharp.PdfCarton.Cos.COSInteger)(arg!)).LongValue() > int.MaxValue) || (((global::DripSharp.PdfCarton.Cos.COSInteger)(arg!)).LongValue() < int.MinValue)))) {
-throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNumericRange, "Invalid integer range in a Number operand");
-}
-if (((arg is global::DripSharp.PdfCarton.Cos.COSFloat) && ((((global::DripSharp.PdfCarton.Cos.COSFloat)(arg!)).FloatValue() > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxPositiveFloat) || (((global::DripSharp.PdfCarton.Cos.COSFloat)(arg!)).FloatValue() < global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxNegativeFloat)))) {
-throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNumericRange, "Invalid float range in a Number operand");
-}
-}
-}
+  private void checkNumberOperands(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments,
+    int length) {
+    if ((((arguments == default!) || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments))
+      || (global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) != length))) {
+      throw this.createInvalidArgumentsError();
+    }
+    foreach (global::DripSharp.PdfCarton.Cos.COSBase arg in arguments) {
+      if ((!((arg is global::DripSharp.PdfCarton.Cos.COSFloat))
+        && !((arg is global::DripSharp.PdfCarton.Cos.COSInteger)))) {
+        throw this.createInvalidArgumentsError();
+      }
+      if (((arg is global::DripSharp.PdfCarton.Cos.COSInteger)
+        && ((((global::DripSharp.PdfCarton.Cos.COSInteger)(arg!)).LongValue() > int.MaxValue)
+        || (((global::DripSharp.PdfCarton.Cos.COSInteger)(arg!)).LongValue() < int.MinValue)))) {
+        throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNumericRange,
+          "Invalid integer range in a Number operand");
+      }
+      if (((arg is global::DripSharp.PdfCarton.Cos.COSFloat)
+        && ((((global::DripSharp.PdfCarton.Cos.COSFloat)(arg!)).FloatValue() > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxPositiveFloat)
+        || (((global::DripSharp.PdfCarton.Cos.COSFloat)(arg!)).FloatValue() < global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxNegativeFloat)))) {
+        throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNumericRange,
+          "Invalid float range in a Number operand");
+      }
+    }
+  }
 
-private void checkTagAndPropertyOperands(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if ((((arguments == default!) || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) || (global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) != 2))) {
-throw this.createInvalidArgumentsError();
-}
-global::DripSharp.PdfCarton.Cos.COSBase arg = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-if ((!((arg is global::DripSharp.PdfCarton.Cos.COSName)) && !((arg is global::DripSharp.PdfCarton.Cos.COSString)))) {
-throw this.createInvalidArgumentsError();
-}
-if (((arg is global::DripSharp.PdfCarton.Cos.COSName) && (((global::DripSharp.PdfCarton.Cos.COSName)(arg!)).GetName().Length > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxNameSize))) {
-throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNameTooLong, "A Name operand is too long");
-}
-if (((arg is global::DripSharp.PdfCarton.Cos.COSString) && (global::DripSharp.Runtime.JavaCompat.StringGetBytes(((global::DripSharp.PdfCarton.Cos.COSString)(arg!)).GetString(), global::System.Text.Encoding.UTF8).Length > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxStringLength))) {
-throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxLiteralTooLong, "A String operand is too long");
-}
-global::DripSharp.PdfCarton.Cos.COSBase arg2 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 1);
-if (((!((arg2 is global::DripSharp.PdfCarton.Cos.COSName)) && !((arg2 is global::DripSharp.PdfCarton.Cos.COSString))) && !((arg2 is global::DripSharp.PdfCarton.Cos.COSDictionary)))) {
-throw this.createInvalidArgumentsError();
-}
-if (((arg2 is global::DripSharp.PdfCarton.Cos.COSName) && (((global::DripSharp.PdfCarton.Cos.COSName)(arg2!)).GetName().Length > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxNameSize))) {
-throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNameTooLong, "A Name operand is too long");
-}
-if (((arg2 is global::DripSharp.PdfCarton.Cos.COSString) && (global::DripSharp.Runtime.JavaCompat.StringGetBytes(((global::DripSharp.PdfCarton.Cos.COSString)(arg2!)).GetString(), global::System.Text.Encoding.UTF8).Length > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxStringLength))) {
-throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxLiteralTooLong, "A String operand is too long");
-}
-if (((arg2 is global::DripSharp.PdfCarton.Cos.COSDictionary) && (((global::DripSharp.PdfCarton.Cos.COSDictionary)(arg2!)).Size() > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxDictEntries))) {
-throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTooManyEntries, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Dictionary has ", ((global::DripSharp.PdfCarton.Cos.COSDictionary)(arg2!)).Size()), " entries"));
-}
-}
+  private void checkTagAndPropertyOperands(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if ((((arguments == default!) || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments))
+      || (global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) != 2))) {
+      throw this.createInvalidArgumentsError();
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase arg
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+    if ((!((arg is global::DripSharp.PdfCarton.Cos.COSName))
+      && !((arg is global::DripSharp.PdfCarton.Cos.COSString)))) {
+      throw this.createInvalidArgumentsError();
+    }
+    if (((arg is global::DripSharp.PdfCarton.Cos.COSName)
+      && (((global::DripSharp.PdfCarton.Cos.COSName)(arg!)).GetName().Length > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxNameSize))) {
+      throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNameTooLong,
+        "A Name operand is too long");
+    }
+    if (((arg is global::DripSharp.PdfCarton.Cos.COSString)
+      && (global::DripSharp.Runtime.JavaCompat.StringGetBytes(((global::DripSharp.PdfCarton.Cos.COSString)(arg!)).GetString(),
+      global::System.Text.Encoding.UTF8).Length > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxStringLength))) {
+      throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxLiteralTooLong,
+        "A String operand is too long");
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase arg2
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 1);
+    if (((!((arg2 is global::DripSharp.PdfCarton.Cos.COSName))
+      && !((arg2 is global::DripSharp.PdfCarton.Cos.COSString)))
+      && !((arg2 is global::DripSharp.PdfCarton.Cos.COSDictionary)))) {
+      throw this.createInvalidArgumentsError();
+    }
+    if (((arg2 is global::DripSharp.PdfCarton.Cos.COSName)
+      && (((global::DripSharp.PdfCarton.Cos.COSName)(arg2!)).GetName().Length > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxNameSize))) {
+      throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNameTooLong,
+        "A Name operand is too long");
+    }
+    if (((arg2 is global::DripSharp.PdfCarton.Cos.COSString)
+      && (global::DripSharp.Runtime.JavaCompat.StringGetBytes(((global::DripSharp.PdfCarton.Cos.COSString)(arg2!)).GetString(),
+      global::System.Text.Encoding.UTF8).Length > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxStringLength))) {
+      throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxLiteralTooLong,
+        "A String operand is too long");
+    }
+    if (((arg2 is global::DripSharp.PdfCarton.Cos.COSDictionary)
+      && (((global::DripSharp.PdfCarton.Cos.COSDictionary)(arg2!)).Size() > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxDictEntries))) {
+      throw this.createLimitError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTooManyEntries,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Dictionary has ",
+        ((global::DripSharp.PdfCarton.Cos.COSDictionary)(arg2!)).Size()), " entries"));
+    }
+  }
 
-private global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException createInvalidArgumentsError() {
-global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException ex = new global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException("Invalid arguments");
-ex.SetErrorCode(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamInvalidArgument);
-return ex;
-}
+  private global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException createInvalidArgumentsError() {
+    global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException ex
+      = new global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException("Invalid arguments");
+    ex.SetErrorCode(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamInvalidArgument);
+    return ex;
+  }
 
-private global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException createLimitError(string errorCode, string details) {
-global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException ex = new global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException(details);
-ex.SetErrorCode(errorCode);
-return ex;
-}
+  private global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException createLimitError(string errorCode,
+    string details) {
+    global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException ex
+      = new global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException(details);
+    ex.SetErrorCode(errorCode);
+    return ex;
+  }
 
-public override string GetName() {
-return this.name;
-}
+  public override string GetName() {
+    return this.name;
+  }
 }

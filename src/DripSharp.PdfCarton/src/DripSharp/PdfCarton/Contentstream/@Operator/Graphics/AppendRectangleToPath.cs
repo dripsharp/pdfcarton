@@ -8,35 +8,48 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Graphics;
 
-public sealed class AppendRectangleToPath : global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
-public AppendRectangleToPath(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context) : base(context) {
+public sealed class AppendRectangleToPath
+: global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
+  public AppendRectangleToPath(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(operands) < 4)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, operands);
-}
-if (!(this.CheckArrayTypesClass(operands, typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber x = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0)!);
-global::DripSharp.PdfCarton.Cos.COSNumber y = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 1)!);
-global::DripSharp.PdfCarton.Cos.COSNumber w = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 2)!);
-global::DripSharp.PdfCarton.Cos.COSNumber h = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 3)!);
-float x1 = x.FloatValue();
-float y1 = y.FloatValue();
-float x2 = (w.FloatValue() + x1);
-float y2 = (h.FloatValue() + y1);
-global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context = this.GetGraphicsContext();
-global::DripSharp.Runtime.JavaPoint2D p0 = context.TransformedPoint(x1, y1);
-global::DripSharp.Runtime.JavaPoint2D p1 = context.TransformedPoint(x2, y1);
-global::DripSharp.Runtime.JavaPoint2D p2 = context.TransformedPoint(x2, y2);
-global::DripSharp.Runtime.JavaPoint2D p3 = context.TransformedPoint(x1, y2);
-context.AppendRectangle(p0, p1, p2, p3);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(operands) < 4)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        operands);
+    }
+    if (!(this.CheckArrayTypesClass(operands, typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSNumber x
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+      0)!);
+    global::DripSharp.PdfCarton.Cos.COSNumber y
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+      1)!);
+    global::DripSharp.PdfCarton.Cos.COSNumber w
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+      2)!);
+    global::DripSharp.PdfCarton.Cos.COSNumber h
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+      3)!);
+    float x1 = x.FloatValue();
+    float y1 = y.FloatValue();
+    float x2 = (w.FloatValue() + x1);
+    float y2 = (h.FloatValue() + y1);
+    global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context
+      = this.GetGraphicsContext();
+    global::DripSharp.Runtime.JavaPoint2D p0 = context.TransformedPoint(x1, y1);
+    global::DripSharp.Runtime.JavaPoint2D p1 = context.TransformedPoint(x2, y1);
+    global::DripSharp.Runtime.JavaPoint2D p2 = context.TransformedPoint(x2, y2);
+    global::DripSharp.Runtime.JavaPoint2D p3 = context.TransformedPoint(x1, y2);
+    context.AppendRectangle(p0, p1, p2, p3);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.AppendRect;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.AppendRect;
+  }
 }

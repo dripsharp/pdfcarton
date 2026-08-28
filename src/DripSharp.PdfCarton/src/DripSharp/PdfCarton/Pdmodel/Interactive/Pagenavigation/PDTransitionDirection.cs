@@ -9,50 +9,59 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation;
 
 public class PDTransitionDirection {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("LEFT_TO_RIGHT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection LeftToRight = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection(0);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("LEFT_TO_RIGHT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection LeftToRight
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection(0);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("BOTTOM_TO_TOP")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection BottomToTop = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection(90);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("BOTTOM_TO_TOP")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection BottomToTop
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection(90);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("RIGHT_TO_LEFT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection RightToLeft = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection(180);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("RIGHT_TO_LEFT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection RightToLeft
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection(180);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("TOP_TO_BOTTOM")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection TopToBottom = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection(270);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("TOP_TO_BOTTOM")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection TopToBottom
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection(270);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("TOP_LEFT_TO_BOTTOM_RIGHT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection TopLeftToBottomRight = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection(315);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("TOP_LEFT_TO_BOTTOM_RIGHT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection TopLeftToBottomRight
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection(315);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("NONE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection None = new Anonymous_50_9(0);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("NONE")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection None
+    = new Anonymous_50_9(0);
 
-private readonly int degrees = default;
+  private readonly int degrees = default;
 
-private PDTransitionDirection(int degrees) {
-this.degrees = degrees;
-}
+  private PDTransitionDirection(int degrees) {
+    this.degrees = degrees;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSBase() {
-return global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.degrees));
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSBase() {
+    return global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.degrees));
+  }
 
-private sealed class Anonymous_50_9 : global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection {
-public Anonymous_50_9(int baseArgument0) : base(baseArgument0) {}
+  private sealed class Anonymous_50_9
+  : global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection {
+    public Anonymous_50_9(int baseArgument0) : base(baseArgument0) {}
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSBase() {
-return global::DripSharp.PdfCarton.Cos.COSName.None;
-}
-}
+    public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSBase() {
+      return global::DripSharp.PdfCarton.Cos.COSName.None;
+    }
+  }
 
-public static PDTransitionDirection[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<PDTransitionDirection>();
-public static PDTransitionDirection valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<PDTransitionDirection>(name);
+  public static PDTransitionDirection[] values()
+    => global::DripSharp.Runtime.JavaCompat.EnumValues<PDTransitionDirection>();
+  public static PDTransitionDirection valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<PDTransitionDirection>(name);
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

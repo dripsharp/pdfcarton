@@ -8,51 +8,59 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
-public class PDAnnotationCaret : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
-public const string SubType = "Caret";
+public class PDAnnotationCaret
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
+  public const string SubType = "Caret";
 
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler
+    = null!;
 
-public PDAnnotationCaret() {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationCaret.SubType);
-}
+  public PDAnnotationCaret() {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationCaret.SubType);
+  }
 
-public PDAnnotationCaret(global::DripSharp.PdfCarton.Cos.COSDictionary field) : base(field) {
+  public PDAnnotationCaret(global::DripSharp.PdfCarton.Cos.COSDictionary field) : base(field) {
 
-}
+  }
 
-public virtual void SetRectDifferences(float difference) {
-this.SetRectDifferences(difference, difference, difference, difference);
-}
+  public virtual void SetRectDifferences(float difference) {
+    this.SetRectDifferences(difference, difference, difference, difference);
+  }
 
-public virtual void SetRectDifferences(float differenceLeft, float differenceTop, float differenceRight, float differenceBottom) {
-global::DripSharp.PdfCarton.Cos.COSArray margins = new global::DripSharp.PdfCarton.Cos.COSArray();
-margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceLeft));
-margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceTop));
-margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceRight));
-margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceBottom));
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Rd, margins);
-}
+  public virtual void SetRectDifferences(float differenceLeft, float differenceTop,
+    float differenceRight, float differenceBottom) {
+    global::DripSharp.PdfCarton.Cos.COSArray margins
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceLeft));
+    margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceTop));
+    margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceRight));
+    margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceBottom));
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Rd, margins);
+  }
 
-public virtual float[] GetRectDifferences() {
-global::DripSharp.PdfCarton.Cos.COSArray margin = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Rd);
-return ((margin != default!) ? margin.ToFloatArray() : new float[] {  });
-}
+  public virtual float[] GetRectDifferences() {
+    global::DripSharp.PdfCarton.Cos.COSArray margin
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Rd);
+    return ((margin != default!) ? margin.ToFloatArray() : new float[] {  });
+  }
 
-public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
-this.customAppearanceHandler = appearanceHandler;
-}
+  public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
+    this.customAppearanceHandler = appearanceHandler;
+  }
 
-public override void ConstructAppearances() {
-this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
-}
+  public override void ConstructAppearances() {
+    this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
+  }
 
-public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-if ((this.customAppearanceHandler == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDCaretAppearanceHandler appearanceHandler = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDCaretAppearanceHandler(this, document);
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
-} else {
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
-}
-}
+  public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    if ((this.customAppearanceHandler == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDCaretAppearanceHandler appearanceHandler
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDCaretAppearanceHandler(this,
+        document);
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
+    } else {
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
+    }
+  }
 }

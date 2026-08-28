@@ -9,16 +9,21 @@
 namespace DripSharp.PdfCarton.Preflight.Action;
 
 public class SubmitAction : global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager {
-public SubmitAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact, global::DripSharp.PdfCarton.Cos.COSDictionary adict, global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) : base(amFact, adict, ctx, aaKey) {
+  public SubmitAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact,
+    global::DripSharp.PdfCarton.Cos.COSDictionary adict,
+    global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) : base(amFact, adict,
+    ctx, aaKey) {
 
-}
+  }
 
-protected internal override bool InnerValid() {
-global::DripSharp.PdfCarton.Cos.COSBase f = this.ActionDictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.F);
-if ((f == default!)) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionMisingKey, "F entry is mandatory for the SubmitActions"));
-return false;
-}
-return true;
-}
+  protected internal override bool InnerValid() {
+    global::DripSharp.PdfCarton.Cos.COSBase f
+      = this.ActionDictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.F);
+    if ((f == default!)) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionMisingKey,
+        "F entry is mandatory for the SubmitActions"));
+      return false;
+    }
+    return true;
+  }
 }

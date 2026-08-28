@@ -8,28 +8,33 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Common.Filespecification;
 
-public abstract class PDFileSpecification : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-public static global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification CreateFS(global::DripSharp.PdfCarton.Cos.COSBase @base) {
-global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification retval = default!;
-if ((@base == default!)) {} else {
-if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
-retval = new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDSimpleFileSpecification((global::DripSharp.PdfCarton.Cos.COSString)(@base!));
-} else {
-if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-retval = new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error: Unknown file specification ", @base));
-}
-}
-}
-return retval!;
-}
+public abstract class PDFileSpecification
+: global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
+  public static global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification CreateFS(global::DripSharp.PdfCarton.Cos.COSBase @base) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification retval
+      = default!;
+    if ((@base == default!)) {} else {
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
+        retval
+          = new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDSimpleFileSpecification((global::DripSharp.PdfCarton.Cos.COSString)(@base!));
+      } else {
+        if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+          retval
+            = new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
+        } else {
+          throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error: Unknown file specification ",
+            @base));
+        }
+      }
+    }
+    return retval!;
+  }
 
-public abstract string GetFile();
+  public abstract string GetFile();
 
-public abstract void SetFile(string file);
+  public abstract void SetFile(string file);
 
-public abstract global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject();
+  public abstract global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject();
 
-public PDFileSpecification() {}
+  public PDFileSpecification() {}
 }

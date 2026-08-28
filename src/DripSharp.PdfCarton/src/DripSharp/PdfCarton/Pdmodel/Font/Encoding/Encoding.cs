@@ -9,74 +9,79 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font.Encoding;
 
 public abstract class Encoding : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-protected internal const int CharCode = 0;
+  protected internal const int CharCode = 0;
 
-protected internal const int CharName = 1;
+  protected internal const int CharName = 1;
 
-public static global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding GetInstance(global::DripSharp.PdfCarton.Cos.COSName name) {
-if (global::DripSharp.PdfCarton.Cos.COSName.StandardEncoding.Equals(name)) {
-return global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.StandardEncoding.Instance;
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSName.WinAnsiEncoding.Equals(name)) {
-return global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.WinAnsiEncoding.Instance;
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSName.MacRomanEncoding.Equals(name)) {
-return global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacRomanEncoding.Instance;
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSName.MacExpertEncoding.Equals(name)) {
-return global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacExpertEncoding.Instance;
-} else {
-return default!;
-}
-}
-}
-}
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding GetInstance(global::DripSharp.PdfCarton.Cos.COSName name) {
+    if (global::DripSharp.PdfCarton.Cos.COSName.StandardEncoding.Equals(name)) {
+      return global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.StandardEncoding.Instance;
+    } else {
+      if (global::DripSharp.PdfCarton.Cos.COSName.WinAnsiEncoding.Equals(name)) {
+        return global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.WinAnsiEncoding.Instance;
+      } else {
+        if (global::DripSharp.PdfCarton.Cos.COSName.MacRomanEncoding.Equals(name)) {
+          return global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacRomanEncoding.Instance;
+        } else {
+          if (global::DripSharp.PdfCarton.Cos.COSName.MacExpertEncoding.Equals(name)) {
+            return global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacExpertEncoding.Instance;
+          } else {
+            return default!;
+          }
+        }
+      }
+    }
+  }
 
-protected internal readonly global::System.Collections.Generic.IDictionary<int, string> CodeToName = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, string>(250);
+  protected internal readonly global::System.Collections.Generic.IDictionary<int, string> CodeToName
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, string>(250);
 
-protected internal readonly global::System.Collections.Generic.IDictionary<string, int> Inverted = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, int>(250);
+  protected internal readonly global::System.Collections.Generic.IDictionary<string, int> Inverted
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, int>(250);
 
-public virtual global::System.Collections.Generic.IDictionary<int, string> GetCodeToNameMap() {
-return global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(global::DripSharp.Runtime.JavaCompat.CastDictionary<int, string>(this.CodeToName));
-}
+  public virtual global::System.Collections.Generic.IDictionary<int, string> GetCodeToNameMap() {
+    return global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(global::DripSharp.Runtime.JavaCompat.CastDictionary<int,
+      string>(this.CodeToName));
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<string, int> GetNameToCodeMap() {
-return global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(global::DripSharp.Runtime.JavaCompat.CastDictionary<string, int>(this.Inverted));
-}
+  public virtual global::System.Collections.Generic.IDictionary<string, int> GetNameToCodeMap() {
+    return global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(global::DripSharp.Runtime.JavaCompat.CastDictionary<string,
+      int>(this.Inverted));
+  }
 
-protected internal virtual void Add(int code, string name) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.CodeToName, code, name);
-global::DripSharp.Runtime.JavaCompat.MapPutIfAbsent(this.Inverted, name, code);
-}
+  protected internal virtual void Add(int code, string name) {
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.CodeToName, code, name);
+    global::DripSharp.Runtime.JavaCompat.MapPutIfAbsent(this.Inverted, name, code);
+  }
 
-protected internal virtual void Overwrite(int code, string name) {
-string oldName = global::DripSharp.Runtime.JavaCompat.MapGet(this.CodeToName, code);
-if ((oldName != default!)) {
-int? oldCode = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.Inverted, oldName);
-if (((oldCode != default!) && (global::DripSharp.Runtime.JavaCompat.Unbox(oldCode) == code))) {
-global::DripSharp.Runtime.JavaCompat.MapRemove(this.Inverted, oldName);
-}
-}
-global::DripSharp.Runtime.JavaCompat.MapPut(this.Inverted, name, code);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.CodeToName, code, name);
-}
+  protected internal virtual void Overwrite(int code, string name) {
+    string oldName = global::DripSharp.Runtime.JavaCompat.MapGet(this.CodeToName, code);
+    if ((oldName != default!)) {
+      int? oldCode = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.Inverted, oldName);
+      if (((oldCode != default!) && (global::DripSharp.Runtime.JavaCompat.Unbox(oldCode)
+        == code))) {
+        global::DripSharp.Runtime.JavaCompat.MapRemove(this.Inverted, oldName);
+      }
+    }
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.Inverted, name, code);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.CodeToName, code, name);
+  }
 
-public virtual bool Contains(string name) {
-return global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.Inverted, name);
-}
+  public virtual bool Contains(string name) {
+    return global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.Inverted, name);
+  }
 
-public virtual bool Contains(int code) {
-return global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.CodeToName, code);
-}
+  public virtual bool Contains(int code) {
+    return global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.CodeToName, code);
+  }
 
-public virtual string GetName(int code) {
-return global::DripSharp.Runtime.JavaCompat.MapGetOrDefault(this.CodeToName, code, ".notdef");
-}
+  public virtual string GetName(int code) {
+    return global::DripSharp.Runtime.JavaCompat.MapGetOrDefault(this.CodeToName, code, ".notdef");
+  }
 
-public abstract string GetEncodingName();
+  public abstract string GetEncodingName();
 
-public abstract global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject();
+  public abstract global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject();
 
-public Encoding() {}
+  public Encoding() {}
 }

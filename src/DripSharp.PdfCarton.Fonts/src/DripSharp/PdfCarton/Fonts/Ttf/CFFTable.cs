@@ -9,48 +9,57 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class CFFTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-public const string Tag = "CFF ";
+  public const string Tag = "CFF ";
 
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFFont cffFont = null!;
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFFont cffFont = null!;
 
-internal CFFTable() : base() {
+  internal CFFTable() : base() {
 
-}
+  }
 
-internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-sbyte[] bytes = data.Read((int)((int)(this.GetLength())));
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser parser = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser();
-this.cffFont = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(parser.Parse(bytes, new global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.CFFBytesource(ttf)), 0);
-base.Initialized = true;
-}
+  internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    sbyte[] bytes = data.Read((int)((int)(this.GetLength())));
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser parser
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser();
+    this.cffFont = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(parser.Parse(bytes,
+      new global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.CFFBytesource(ttf)), 0);
+    base.Initialized = true;
+  }
 
-internal override void readHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) {
-using (global::DripSharp.PdfCarton.IO.RandomAccessRead subReader = data.CreateSubView(this.GetLength())) {
-global::DripSharp.PdfCarton.IO.RandomAccessRead reader;
-if ((subReader != default!)) {
-reader = subReader;
-} else {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Assert(() => false, () => "It is inefficient to read TTFDataStream into an array");
-sbyte[] bytes = data.Read((int)((int)(this.GetLength())));
-reader = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(bytes);
-}
-new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser().ParseFirstSubFontROS(reader, outHeaders);
-}
-}
+  internal override void readHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
+    global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) {
+    using (global::DripSharp.PdfCarton.IO.RandomAccessRead subReader
+      = data.CreateSubView(this.GetLength())) {
+      global::DripSharp.PdfCarton.IO.RandomAccessRead reader;
+      if ((subReader != default!)) {
+        reader = subReader;
+      } else {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Assert(() => false, ()
+          => "It is inefficient to read TTFDataStream into an array");
+        sbyte[] bytes = data.Read((int)((int)(this.GetLength())));
+        reader = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(bytes);
+      }
+      new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser().ParseFirstSubFontROS(reader,
+        outHeaders);
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Cff.CFFFont GetFont() {
-return this.cffFont;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Cff.CFFFont GetFont() {
+    return this.cffFont;
+  }
 
-internal class CFFBytesource : global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource {
-internal readonly global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = null!;
+  internal class CFFBytesource : global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource {
+    internal readonly global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = null!;
 
-internal CFFBytesource(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf) {
-this.ttf = ttf;
-}
+    internal CFFBytesource(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf) {
+      this.ttf = ttf;
+    }
 
-public virtual sbyte[] GetBytes() {
-return this.ttf.GetTableBytes(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.ttf.GetTableMap(), global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag));
-}
-}
+    public virtual sbyte[] GetBytes() {
+      return this.ttf.GetTableBytes(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.ttf.GetTableMap(),
+        global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag));
+    }
+  }
 }

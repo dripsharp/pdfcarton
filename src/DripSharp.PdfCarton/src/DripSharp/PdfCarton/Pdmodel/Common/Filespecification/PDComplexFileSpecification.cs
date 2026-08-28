@@ -8,164 +8,172 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Common.Filespecification;
 
-public class PDComplexFileSpecification : global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary fs = null!;
+public class PDComplexFileSpecification
+: global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification {
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary fs = null!;
 
-private global::DripSharp.PdfCarton.Cos.COSDictionary efDictionary = null!;
+  private global::DripSharp.PdfCarton.Cos.COSDictionary efDictionary = null!;
 
-public PDComplexFileSpecification() {
-this.fs = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.fs.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Filespec);
-}
+  public PDComplexFileSpecification() {
+    this.fs = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.fs.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Filespec);
+  }
 
-public PDComplexFileSpecification(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
-if ((dict == default!)) {
-this.fs = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.fs.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Filespec);
-} else {
-this.fs = dict;
-}
-}
+  public PDComplexFileSpecification(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
+    if ((dict == default!)) {
+      this.fs = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+      this.fs.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+        global::DripSharp.PdfCarton.Cos.COSName.Filespec);
+    } else {
+      this.fs = dict;
+    }
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.fs;
-}
+  public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.fs;
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSDictionary getEFDictionary() {
-if (((this.efDictionary == default!) && (this.fs != default!))) {
-this.efDictionary = this.fs.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Ef);
-}
-return this.efDictionary;
-}
+  private global::DripSharp.PdfCarton.Cos.COSDictionary getEFDictionary() {
+    if (((this.efDictionary == default!) && (this.fs != default!))) {
+      this.efDictionary = this.fs.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Ef);
+    }
+    return this.efDictionary;
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSBase getObjectFromEFDictionary(global::DripSharp.PdfCarton.Cos.COSName key) {
-global::DripSharp.PdfCarton.Cos.COSDictionary ef = this.getEFDictionary();
-if ((ef != default!)) {
-return ef.GetDictionaryObject(key);
-}
-return default!;
-}
+  private global::DripSharp.PdfCarton.Cos.COSBase getObjectFromEFDictionary(global::DripSharp.PdfCarton.Cos.COSName key) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary ef = this.getEFDictionary();
+    if ((ef != default!)) {
+      return ef.GetDictionaryObject(key);
+    }
+    return default!;
+  }
 
-public virtual string GetFilename() {
-string filename = this.GetFileUnicode();
-if ((filename == default!)) {
-filename = this.GetFileDos();
-}
-if ((filename == default!)) {
-filename = this.GetFileMac();
-}
-if ((filename == default!)) {
-filename = this.GetFileUnix();
-}
-if ((filename == default!)) {
-filename = this.GetFile();
-}
-return filename;
-}
+  public virtual string GetFilename() {
+    string filename = this.GetFileUnicode();
+    if ((filename == default!)) {
+      filename = this.GetFileDos();
+    }
+    if ((filename == default!)) {
+      filename = this.GetFileMac();
+    }
+    if ((filename == default!)) {
+      filename = this.GetFileUnix();
+    }
+    if ((filename == default!)) {
+      filename = this.GetFile();
+    }
+    return filename;
+  }
 
-public virtual string GetFileUnicode() {
-return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.Uf);
-}
+  public virtual string GetFileUnicode() {
+    return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.Uf);
+  }
 
-public virtual void SetFileUnicode(string file) {
-this.fs.SetString(global::DripSharp.PdfCarton.Cos.COSName.Uf, file);
-}
+  public virtual void SetFileUnicode(string file) {
+    this.fs.SetString(global::DripSharp.PdfCarton.Cos.COSName.Uf, file);
+  }
 
-public override string GetFile() {
-return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.F);
-}
+  public override string GetFile() {
+    return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.F);
+  }
 
-public override void SetFile(string file) {
-this.fs.SetString(global::DripSharp.PdfCarton.Cos.COSName.F, file);
-}
+  public override void SetFile(string file) {
+    this.fs.SetString(global::DripSharp.PdfCarton.Cos.COSName.F, file);
+  }
 
-public virtual string GetFileDos() {
-return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.Dos);
-}
+  public virtual string GetFileDos() {
+    return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.Dos);
+  }
 
-public virtual string GetFileMac() {
-return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.Mac);
-}
+  public virtual string GetFileMac() {
+    return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.Mac);
+  }
 
-public virtual string GetFileUnix() {
-return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.Unix);
-}
+  public virtual string GetFileUnix() {
+    return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.Unix);
+  }
 
-public virtual void SetVolatile(bool fileIsVolatile) {
-this.fs.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.V, fileIsVolatile);
-}
+  public virtual void SetVolatile(bool fileIsVolatile) {
+    this.fs.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.V, fileIsVolatile);
+  }
 
-public virtual bool IsVolatile() {
-return this.fs.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.V, false);
-}
+  public virtual bool IsVolatile() {
+    return this.fs.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.V, false);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile GetEmbeddedFile() {
-global::DripSharp.PdfCarton.Cos.COSBase @base = this.getObjectFromEFDictionary(global::DripSharp.PdfCarton.Cos.COSName.F);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile((global::DripSharp.PdfCarton.Cos.COSStream)(@base!));
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile GetEmbeddedFile() {
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = this.getObjectFromEFDictionary(global::DripSharp.PdfCarton.Cos.COSName.F);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile((global::DripSharp.PdfCarton.Cos.COSStream)(@base!));
+    }
+    return default!;
+  }
 
-public virtual void SetEmbeddedFile(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile file) {
-global::DripSharp.PdfCarton.Cos.COSDictionary ef = this.getEFDictionary();
-if (((ef == default!) && (file != default!))) {
-ef = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.fs.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ef, ef);
-}
-if ((ef != default!)) {
-ef.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, file);
-}
-}
+  public virtual void SetEmbeddedFile(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile file) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary ef = this.getEFDictionary();
+    if (((ef == default!) && (file != default!))) {
+      ef = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+      this.fs.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ef, ef);
+    }
+    if ((ef != default!)) {
+      ef.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, file);
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile GetEmbeddedFileDos() {
-global::DripSharp.PdfCarton.Cos.COSBase @base = this.getObjectFromEFDictionary(global::DripSharp.PdfCarton.Cos.COSName.Dos);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile((global::DripSharp.PdfCarton.Cos.COSStream)(@base!));
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile GetEmbeddedFileDos() {
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = this.getObjectFromEFDictionary(global::DripSharp.PdfCarton.Cos.COSName.Dos);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile((global::DripSharp.PdfCarton.Cos.COSStream)(@base!));
+    }
+    return default!;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile GetEmbeddedFileMac() {
-global::DripSharp.PdfCarton.Cos.COSBase @base = this.getObjectFromEFDictionary(global::DripSharp.PdfCarton.Cos.COSName.Mac);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile((global::DripSharp.PdfCarton.Cos.COSStream)(@base!));
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile GetEmbeddedFileMac() {
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = this.getObjectFromEFDictionary(global::DripSharp.PdfCarton.Cos.COSName.Mac);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile((global::DripSharp.PdfCarton.Cos.COSStream)(@base!));
+    }
+    return default!;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile GetEmbeddedFileUnix() {
-global::DripSharp.PdfCarton.Cos.COSBase @base = this.getObjectFromEFDictionary(global::DripSharp.PdfCarton.Cos.COSName.Unix);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile((global::DripSharp.PdfCarton.Cos.COSStream)(@base!));
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile GetEmbeddedFileUnix() {
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = this.getObjectFromEFDictionary(global::DripSharp.PdfCarton.Cos.COSName.Unix);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile((global::DripSharp.PdfCarton.Cos.COSStream)(@base!));
+    }
+    return default!;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile GetEmbeddedFileUnicode() {
-global::DripSharp.PdfCarton.Cos.COSBase @base = this.getObjectFromEFDictionary(global::DripSharp.PdfCarton.Cos.COSName.Uf);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile((global::DripSharp.PdfCarton.Cos.COSStream)(@base!));
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile GetEmbeddedFileUnicode() {
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = this.getObjectFromEFDictionary(global::DripSharp.PdfCarton.Cos.COSName.Uf);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile((global::DripSharp.PdfCarton.Cos.COSStream)(@base!));
+    }
+    return default!;
+  }
 
-public virtual void SetEmbeddedFileUnicode(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile file) {
-global::DripSharp.PdfCarton.Cos.COSDictionary ef = this.getEFDictionary();
-if (((ef == default!) && (file != default!))) {
-ef = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.fs.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ef, ef);
-}
-if ((ef != default!)) {
-ef.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Uf, file);
-}
-}
+  public virtual void SetEmbeddedFileUnicode(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile file) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary ef = this.getEFDictionary();
+    if (((ef == default!) && (file != default!))) {
+      ef = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+      this.fs.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ef, ef);
+    }
+    if ((ef != default!)) {
+      ef.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Uf, file);
+    }
+  }
 
-public virtual void SetFileDescription(string description) {
-this.fs.SetString(global::DripSharp.PdfCarton.Cos.COSName.Desc, description);
-}
+  public virtual void SetFileDescription(string description) {
+    this.fs.SetString(global::DripSharp.PdfCarton.Cos.COSName.Desc, description);
+  }
 
-public virtual string GetFileDescription() {
-return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.Desc);
-}
+  public virtual string GetFileDescription() {
+    return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.Desc);
+  }
 }

@@ -9,96 +9,99 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible;
 
 public class PDVisibleSigProperties {
-private string __field_signerName = null!;
+  private string __field_signerName = null!;
 
-private string __field_signerLocation = null!;
+  private string __field_signerLocation = null!;
 
-private string __field_signatureReason = null!;
+  private string __field_signatureReason = null!;
 
-private bool __field_visualSignEnabled = default;
+  private bool __field_visualSignEnabled = default;
 
-private int __field_page = default;
+  private int __field_page = default;
 
-private int __field_preferredSize = default;
+  private int __field_preferredSize = default;
 
-private global::System.IO.Stream visibleSignature = null!;
+  private global::System.IO.Stream visibleSignature = null!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSignDesigner pdVisibleSignature = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSignDesigner pdVisibleSignature
+    = null!;
 
-public virtual void BuildSignature() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDFTemplateBuilder builder = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigBuilder();
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDFTemplateCreator creator = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDFTemplateCreator(builder);
-this.SetVisibleSignature(creator.BuildPDF(this.GetPdVisibleSignature()));
-}
+  public virtual void BuildSignature() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDFTemplateBuilder builder
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigBuilder();
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDFTemplateCreator creator
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDFTemplateCreator(builder);
+    this.SetVisibleSignature(creator.BuildPDF(this.GetPdVisibleSignature()));
+  }
 
-public virtual string GetSignerName() {
-return this.__field_signerName;
-}
+  public virtual string GetSignerName() {
+    return this.__field_signerName;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties SignerName(string signerName) {
-this.__field_signerName = signerName;
-return this;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties SignerName(string signerName) {
+    this.__field_signerName = signerName;
+    return this;
+  }
 
-public virtual string GetSignerLocation() {
-return this.__field_signerLocation;
-}
+  public virtual string GetSignerLocation() {
+    return this.__field_signerLocation;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties SignerLocation(string signerLocation) {
-this.__field_signerLocation = signerLocation;
-return this;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties SignerLocation(string signerLocation) {
+    this.__field_signerLocation = signerLocation;
+    return this;
+  }
 
-public virtual string GetSignatureReason() {
-return this.__field_signatureReason;
-}
+  public virtual string GetSignatureReason() {
+    return this.__field_signatureReason;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties SignatureReason(string signatureReason) {
-this.__field_signatureReason = signatureReason;
-return this;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties SignatureReason(string signatureReason) {
+    this.__field_signatureReason = signatureReason;
+    return this;
+  }
 
-public virtual int GetPage() {
-return this.__field_page;
-}
+  public virtual int GetPage() {
+    return this.__field_page;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties Page(int page) {
-this.__field_page = page;
-return this;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties Page(int page) {
+    this.__field_page = page;
+    return this;
+  }
 
-public virtual int GetPreferredSize() {
-return this.__field_preferredSize;
-}
+  public virtual int GetPreferredSize() {
+    return this.__field_preferredSize;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties PreferredSize(int preferredSize) {
-this.__field_preferredSize = preferredSize;
-return this;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties PreferredSize(int preferredSize) {
+    this.__field_preferredSize = preferredSize;
+    return this;
+  }
 
-public virtual bool IsVisualSignEnabled() {
-return this.__field_visualSignEnabled;
-}
+  public virtual bool IsVisualSignEnabled() {
+    return this.__field_visualSignEnabled;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties VisualSignEnabled(bool visualSignEnabled) {
-this.__field_visualSignEnabled = visualSignEnabled;
-return this;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties VisualSignEnabled(bool visualSignEnabled) {
+    this.__field_visualSignEnabled = visualSignEnabled;
+    return this;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSignDesigner GetPdVisibleSignature() {
-return this.pdVisibleSignature;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSignDesigner GetPdVisibleSignature() {
+    return this.pdVisibleSignature;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties SetPdVisibleSignature(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSignDesigner pdVisibleSignature) {
-this.pdVisibleSignature = pdVisibleSignature;
-return this;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties SetPdVisibleSignature(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSignDesigner pdVisibleSignature) {
+    this.pdVisibleSignature = pdVisibleSignature;
+    return this;
+  }
 
-public virtual global::System.IO.Stream GetVisibleSignature() {
-return this.visibleSignature;
-}
+  public virtual global::System.IO.Stream GetVisibleSignature() {
+    return this.visibleSignature;
+  }
 
-public virtual void SetVisibleSignature(global::System.IO.Stream visibleSignature) {
-this.visibleSignature = visibleSignature;
-}
+  public virtual void SetVisibleSignature(global::System.IO.Stream visibleSignature) {
+    this.visibleSignature = visibleSignature;
+  }
 }

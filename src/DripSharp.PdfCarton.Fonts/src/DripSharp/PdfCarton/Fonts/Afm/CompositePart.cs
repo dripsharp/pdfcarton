@@ -9,27 +9,27 @@
 namespace DripSharp.PdfCarton.Fonts.Afm;
 
 public class CompositePart {
-private readonly string name = null!;
+  private readonly string name = null!;
 
-private readonly int xDisplacement = default;
+  private readonly int xDisplacement = default;
 
-private readonly int yDisplacement = default;
+  private readonly int yDisplacement = default;
 
-public CompositePart(string name, int xDisplacement, int yDisplacement) {
-this.name = name;
-this.xDisplacement = xDisplacement;
-this.yDisplacement = yDisplacement;
-}
+  public CompositePart(string name, int xDisplacement, int yDisplacement) {
+    this.name = name;
+    this.xDisplacement = xDisplacement;
+    this.yDisplacement = yDisplacement;
+  }
 
-public virtual string GetName() {
-return this.name;
-}
+  public virtual string GetName() {
+    return this.name;
+  }
 
-public virtual int GetXDisplacement() {
-return this.xDisplacement;
-}
+  public virtual int GetXDisplacement() {
+    return this.xDisplacement;
+  }
 
-public virtual int GetYDisplacement() {
-return this.yDisplacement;
-}
+  public virtual int GetYDisplacement() {
+    return this.yDisplacement;
+  }
 }

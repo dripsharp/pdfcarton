@@ -9,192 +9,246 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common;
 
 public class PDNumberTreeNode : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary node = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary node = null!;
 
-private global::System.Type valueType = default!;
+  private global::System.Type valueType = default!;
 
-public PDNumberTreeNode(global::System.Type valueClass) {
-this.node = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.valueType = valueClass;
-}
+  public PDNumberTreeNode(global::System.Type valueClass) {
+    this.node = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.valueType = valueClass;
+  }
 
-public PDNumberTreeNode(global::DripSharp.PdfCarton.Cos.COSDictionary dict, global::System.Type valueClass) {
-this.node = dict;
-this.valueType = valueClass;
-}
+  public PDNumberTreeNode(global::DripSharp.PdfCarton.Cos.COSDictionary dict,
+    global::System.Type valueClass) {
+    this.node = dict;
+    this.valueType = valueClass;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.node;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.node;
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> GetKids() {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> retval = default!;
-global::DripSharp.PdfCarton.Cos.COSArray kids = this.node.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Kids);
-if ((kids != default!)) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> pdObjects = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode>(kids.Size());
-for (int i = 0; (i < kids.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = kids.GetObject(i);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode childNode;
-if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-childNode = this.CreateChildNode((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Bad child node at position ", i)));
-childNode = new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(this.valueType);
-}
-global::DripSharp.Runtime.JavaCompat.Add(pdObjects, childNode);
-}
-retval = new global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode>(pdObjects, kids);
-}
-return retval!;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> GetKids() {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> retval
+      = default!;
+    global::DripSharp.PdfCarton.Cos.COSArray kids
+      = this.node.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Kids);
+    if ((kids != default!)) {
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> pdObjects
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode>(kids.Size());
+      for (int i = 0; (i < kids.Size()); i++) {
+        global::DripSharp.PdfCarton.Cos.COSBase @base = kids.GetObject(i);
+        global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode childNode;
+        if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+          childNode = this.CreateChildNode((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
+        } else {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Bad child node at position ",
+            i)));
+          childNode
+            = new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(this.valueType);
+        }
+        global::DripSharp.Runtime.JavaCompat.Add(pdObjects, childNode);
+      }
+      retval
+        = new global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode>(pdObjects,
+        kids);
+    }
+    return retval!;
+  }
 
-public virtual void SetKids(global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> kids) {
-if (((kids != default!) && !(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(kids)))) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode firstKid = global::DripSharp.Runtime.JavaCompat.ListGet(kids, 0);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode lastKid = global::DripSharp.Runtime.JavaCompat.ListGet(kids, (global::DripSharp.Runtime.JavaCompat.CollectionCount(kids) - 1));
-int? lowerLimit = firstKid.GetLowerLimit();
-this.setLowerLimit(lowerLimit);
-int? upperLimit = lastKid.GetUpperLimit();
-this.setUpperLimit(upperLimit);
-this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids, new global::DripSharp.PdfCarton.Cos.COSArray(global::DripSharp.Runtime.JavaCompat.ToListValues<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode>(kids)));
-} else {
-if ((this.node.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Nums) == default!)) {
-this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Limits, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
-this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
-}
-}
-}
+  public virtual void SetKids(global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> kids) {
+    if (((kids != default!) && !global::DripSharp.Runtime.JavaCompat.ListIsEmpty(kids))) {
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode firstKid
+        = global::DripSharp.Runtime.JavaCompat.ListGet(kids, 0);
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode lastKid
+        = global::DripSharp.Runtime.JavaCompat.ListGet(kids,
+        (global::DripSharp.Runtime.JavaCompat.CollectionCount(kids) - 1));
+      int? lowerLimit = firstKid.GetLowerLimit();
+      this.setLowerLimit(lowerLimit);
+      int? upperLimit = lastKid.GetUpperLimit();
+      this.setUpperLimit(upperLimit);
+      this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids,
+        new global::DripSharp.PdfCarton.Cos.COSArray(global::DripSharp.Runtime.JavaCompat.ToListValues<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode>(kids)));
+    } else {
+      if ((this.node.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Nums)
+        == default!)) {
+        this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Limits,
+          (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+        this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids,
+          (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+      }
+    }
+  }
 
-public virtual object GetValue(int? index) {
-global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> numbers = this.GetNumbers();
-if ((numbers != default!)) {
-return global::DripSharp.Runtime.JavaCompat.MapGet(numbers, index);
-}
-object retval = default!;
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> kids = this.GetKids();
-if ((kids != default!)) {
-for (int i = 0; ((i < global::DripSharp.Runtime.JavaCompat.CollectionCount(kids)) && (retval! == default!)); i++) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode childNode = global::DripSharp.Runtime.JavaCompat.ListGet(kids, i);
-if (((global::DripSharp.Runtime.JavaCompat.Unbox(childNode.GetLowerLimit()).CompareTo(global::DripSharp.Runtime.JavaCompat.Unbox(index)) <= 0) && (global::DripSharp.Runtime.JavaCompat.Unbox(childNode.GetUpperLimit()).CompareTo(global::DripSharp.Runtime.JavaCompat.Unbox(index)) >= 0))) {
-retval = childNode.GetValue(index);
-}
-}
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("NumberTreeNode does not have \"nums\" nor \"kids\" objects."));
-}
-return retval!;
-}
+  public virtual object GetValue(int? index) {
+    global::System.Collections.Generic.IDictionary<int,
+      global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> numbers = this.GetNumbers();
+    if ((numbers != default!)) {
+      return global::DripSharp.Runtime.JavaCompat.MapGet(numbers, index);
+    }
+    object retval = default!;
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> kids
+      = this.GetKids();
+    if ((kids != default!)) {
+      for (int i = 0; ((i < global::DripSharp.Runtime.JavaCompat.CollectionCount(kids)) && (retval!
+        == default!)); i++) {
+        global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode childNode
+          = global::DripSharp.Runtime.JavaCompat.ListGet(kids, i);
+        if (((global::DripSharp.Runtime.JavaCompat.Unbox(childNode.GetLowerLimit()).CompareTo(global::DripSharp.Runtime.JavaCompat.Unbox(index))
+          <= 0)
+          && (global::DripSharp.Runtime.JavaCompat.Unbox(childNode.GetUpperLimit()).CompareTo(global::DripSharp.Runtime.JavaCompat.Unbox(index))
+          >= 0))) {
+          retval = childNode.GetValue(index);
+        }
+      }
+    } else {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("NumberTreeNode does not have \"nums\" nor \"kids\" objects."));
+    }
+    return retval!;
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> GetNumbers() {
-global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> indices = default!;
-global::DripSharp.PdfCarton.Cos.COSArray numbersArray = this.node.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Nums);
-if ((numbersArray != default!)) {
-int size = numbersArray.Size();
-indices = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>();
-if (((size % 2) != 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Numbers array has odd size: ", size)));
-}
-for (int i = 0; ((i + 1) < size); i += 2) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = numbersArray.GetObject(i);
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSInteger))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("page labels ignored, index ", i), " should be a number, but is "), @base)));
-return default!;
-}
-global::DripSharp.PdfCarton.Cos.COSInteger key = (global::DripSharp.PdfCarton.Cos.COSInteger)(@base!);
-global::DripSharp.PdfCarton.Cos.COSBase cosValue = numbersArray.GetObject((i + 1));
-global::DripSharp.Runtime.JavaCompat.MapPut(indices!, key.IntValue(), ((cosValue == default!) ? (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)(default!) : this.ConvertCOSToPD(cosValue)));
-}
-indices = global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(global::DripSharp.Runtime.JavaCompat.CastDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(indices!));
-}
-return indices!;
-}
+  public virtual global::System.Collections.Generic.IDictionary<int,
+    global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> GetNumbers() {
+    global::System.Collections.Generic.IDictionary<int,
+      global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> indices = default!;
+    global::DripSharp.PdfCarton.Cos.COSArray numbersArray
+      = this.node.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Nums);
+    if ((numbersArray != default!)) {
+      int size = numbersArray.Size();
+      indices = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int,
+        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>();
+      if (((size % 2) != 0)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Numbers array has odd size: ",
+          size)));
+      }
+      for (int i = 0; ((i + 1) < size); i += 2) {
+        global::DripSharp.PdfCarton.Cos.COSBase @base = numbersArray.GetObject(i);
+        if (!((@base is global::DripSharp.PdfCarton.Cos.COSInteger))) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("page labels ignored, index ",
+            i), " should be a number, but is "), @base)));
+          return default!;
+        }
+        global::DripSharp.PdfCarton.Cos.COSInteger key
+          = (global::DripSharp.PdfCarton.Cos.COSInteger)(@base!);
+        global::DripSharp.PdfCarton.Cos.COSBase cosValue = numbersArray.GetObject((i + 1));
+        global::DripSharp.Runtime.JavaCompat.MapPut(indices!, key.IntValue(), ((cosValue
+          == default!) ? (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)(default!)
+          : this.ConvertCOSToPD(cosValue)));
+      }
+      indices
+        = global::DripSharp.Runtime.JavaCompat.UnmodifiableMap(global::DripSharp.Runtime.JavaCompat.CastDictionary<int,
+        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(indices!));
+    }
+    return indices!;
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable ConvertCOSToPD(global::DripSharp.PdfCarton.Cos.COSBase @base) {
-try {
-return global::DripSharp.Runtime.JavaCompat.ConstructorInvoke<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(global::DripSharp.Runtime.JavaCompat.ClassGetDeclaredConstructor(this.valueType, ((object)(@base)).GetType()), @base);
-} catch (global::System.Exception t) when (t is not global::System.TypeInitializationException) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error while trying to create value in number tree:", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(t)), t);
-}
-}
+  protected internal virtual global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable ConvertCOSToPD(global::DripSharp.PdfCarton.Cos.COSBase @base) {
+    try {
+      return global::DripSharp.Runtime.JavaCompat.ConstructorInvoke<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(global::DripSharp.Runtime.JavaCompat.ClassGetDeclaredConstructor(this.valueType,
+        ((object)(@base)).GetType()), @base);
+    } catch (global::System.Exception t) when (t is not global::System.TypeInitializationException) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error while trying to create value in number tree:",
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(t)), t);
+    }
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode CreateChildNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
-return new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(dic, this.valueType);
-}
+  protected internal virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode CreateChildNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
+    return new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(dic, this.valueType);
+  }
 
-public virtual void SetNumbers(global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> numbers) {
-if ((numbers == default!)) {
-this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Nums, (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)default!);
-this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Limits, (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)default!);
-} else {
-global::System.Collections.Generic.IList<int> keys = new global::System.Collections.Generic.List<int>(global::DripSharp.Runtime.JavaCompat.MapKeySet(numbers));
-global::DripSharp.Runtime.JavaCompat.SortList(keys);
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (int key in keys) {
-array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(key)));
-global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable obj = global::DripSharp.Runtime.JavaCompat.MapGet(numbers, key);
-array.Add(((obj == default!) ? (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)(global::DripSharp.PdfCarton.Cos.COSNull.Null) : obj));
-}
-int? lower = default!;
-int? upper = default!;
-if (!(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(keys))) {
-lower = global::DripSharp.Runtime.JavaCompat.ListGet(keys, 0);
-upper = global::DripSharp.Runtime.JavaCompat.ListGet(keys, (global::DripSharp.Runtime.JavaCompat.CollectionCount(keys) - 1));
-}
-this.setUpperLimit(upper!);
-this.setLowerLimit(lower!);
-this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Nums, array);
-}
-}
+  public virtual void SetNumbers(global::System.Collections.Generic.IDictionary<int,
+    global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> numbers) {
+    if ((numbers == default!)) {
+      this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Nums,
+        (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)default!);
+      this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Limits,
+        (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)default!);
+    } else {
+      global::System.Collections.Generic.IList<int> keys
+        = new global::System.Collections.Generic.List<int>(global::DripSharp.Runtime.JavaCompat.MapKeySet(numbers));
+      global::DripSharp.Runtime.JavaCompat.SortList(keys);
+      global::DripSharp.PdfCarton.Cos.COSArray array
+        = new global::DripSharp.PdfCarton.Cos.COSArray();
+      foreach (int key in keys) {
+        array.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(key)));
+        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable obj
+          = global::DripSharp.Runtime.JavaCompat.MapGet(numbers, key);
+        array.Add(((obj == default!)
+          ? (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)(global::DripSharp.PdfCarton.Cos.COSNull.Null)
+          : obj));
+      }
+      int? lower = default!;
+      int? upper = default!;
+      if (!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(keys)) {
+        lower = global::DripSharp.Runtime.JavaCompat.ListGet(keys, 0);
+        upper = global::DripSharp.Runtime.JavaCompat.ListGet(keys,
+          (global::DripSharp.Runtime.JavaCompat.CollectionCount(keys) - 1));
+      }
+      this.setUpperLimit(upper!);
+      this.setLowerLimit(lower!);
+      this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Nums, array);
+    }
+  }
 
-public virtual int? GetUpperLimit() {
-int? retval = default!;
-global::DripSharp.PdfCarton.Cos.COSArray arr = this.node.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Limits);
-if (((arr != default!) && (arr.Get(1) != default!))) {
-retval = arr.GetInt(1);
-}
-return retval!;
-}
+  public virtual int? GetUpperLimit() {
+    int? retval = default!;
+    global::DripSharp.PdfCarton.Cos.COSArray arr
+      = this.node.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Limits);
+    if (((arr != default!) && (arr.Get(1) != default!))) {
+      retval = arr.GetInt(1);
+    }
+    return retval!;
+  }
 
-private void setUpperLimit(int? upper) {
-global::DripSharp.PdfCarton.Cos.COSArray arr = this.node.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Limits);
-if ((arr == default!)) {
-arr = new global::DripSharp.PdfCarton.Cos.COSArray();
-arr.Add((global::DripSharp.PdfCarton.Cos.COSBase)default!);
-arr.Add((global::DripSharp.PdfCarton.Cos.COSBase)default!);
-this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Limits, arr);
-}
-if ((upper != default!)) {
-arr.SetInt(1, (int)(global::DripSharp.Runtime.JavaCompat.Unbox(upper)));
-} else {
-arr.Set(1, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
-}
-}
+  private void setUpperLimit(int? upper) {
+    global::DripSharp.PdfCarton.Cos.COSArray arr
+      = this.node.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Limits);
+    if ((arr == default!)) {
+      arr = new global::DripSharp.PdfCarton.Cos.COSArray();
+      arr.Add((global::DripSharp.PdfCarton.Cos.COSBase)default!);
+      arr.Add((global::DripSharp.PdfCarton.Cos.COSBase)default!);
+      this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Limits, arr);
+    }
+    if ((upper != default!)) {
+      arr.SetInt(1, (int)(global::DripSharp.Runtime.JavaCompat.Unbox(upper)));
+    } else {
+      arr.Set(1, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+    }
+  }
 
-public virtual int? GetLowerLimit() {
-int? retval = default!;
-global::DripSharp.PdfCarton.Cos.COSArray arr = this.node.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Limits);
-if (((arr != default!) && (arr.Get(0) != default!))) {
-retval = arr.GetInt(0);
-}
-return retval!;
-}
+  public virtual int? GetLowerLimit() {
+    int? retval = default!;
+    global::DripSharp.PdfCarton.Cos.COSArray arr
+      = this.node.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Limits);
+    if (((arr != default!) && (arr.Get(0) != default!))) {
+      retval = arr.GetInt(0);
+    }
+    return retval!;
+  }
 
-private void setLowerLimit(int? lower) {
-global::DripSharp.PdfCarton.Cos.COSArray arr = this.node.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Limits);
-if ((arr == default!)) {
-arr = new global::DripSharp.PdfCarton.Cos.COSArray();
-arr.Add((global::DripSharp.PdfCarton.Cos.COSBase)default!);
-arr.Add((global::DripSharp.PdfCarton.Cos.COSBase)default!);
-this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Limits, arr);
-}
-if ((lower != default!)) {
-arr.SetInt(0, (int)(global::DripSharp.Runtime.JavaCompat.Unbox(lower)));
-} else {
-arr.Set(0, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
-}
-}
+  private void setLowerLimit(int? lower) {
+    global::DripSharp.PdfCarton.Cos.COSArray arr
+      = this.node.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Limits);
+    if ((arr == default!)) {
+      arr = new global::DripSharp.PdfCarton.Cos.COSArray();
+      arr.Add((global::DripSharp.PdfCarton.Cos.COSBase)default!);
+      arr.Add((global::DripSharp.PdfCarton.Cos.COSBase)default!);
+      this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Limits, arr);
+    }
+    if ((lower != default!)) {
+      arr.SetInt(0, (int)(global::DripSharp.Runtime.JavaCompat.Unbox(lower)));
+    } else {
+      arr.Set(0, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+    }
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

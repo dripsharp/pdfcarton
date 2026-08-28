@@ -9,7 +9,8 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public interface ICOSParser {
-public global::DripSharp.PdfCarton.Cos.COSBase DereferenceCOSObject(global::DripSharp.PdfCarton.Cos.COSObject obj);
+  public global::DripSharp.PdfCarton.Cos.COSBase DereferenceCOSObject(global::DripSharp.PdfCarton.Cos.COSObject obj);
 
-public global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateRandomAccessReadView(long startPosition, long streamLength);
+  public global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateRandomAccessReadView(long startPosition,
+    long streamLength);
 }

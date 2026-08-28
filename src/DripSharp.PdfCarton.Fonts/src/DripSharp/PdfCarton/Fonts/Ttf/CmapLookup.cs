@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public interface CmapLookup {
-public int GetGlyphId(int codePointAt);
+  public int GetGlyphId(int codePointAt);
 
-public global::System.Collections.Generic.IList<int> GetCharCodes(int gid);
+  public global::System.Collections.Generic.IList<int> GetCharCodes(int gid);
 }

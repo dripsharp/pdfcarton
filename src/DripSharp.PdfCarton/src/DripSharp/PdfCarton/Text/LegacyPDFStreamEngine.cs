@@ -9,168 +9,206 @@
 namespace DripSharp.PdfCarton.Text;
 
 public class LegacyPDFStreamEngine : global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private int pageRotation = default;
+  private int pageRotation = default;
 
-private global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle pageSize = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle pageSize = null!;
 
-private global::DripSharp.PdfCarton.Util.Matrix translateMatrix = null!;
+  private global::DripSharp.PdfCarton.Util.Matrix translateMatrix = null!;
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList GLYPHLIST = null!;
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList GLYPHLIST
+    = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary, float> fontHeightMap = new global::DripSharp.Runtime.JavaWeakHashMap<global::DripSharp.PdfCarton.Cos.COSDictionary, float>();
+  private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary,
+    float> fontHeightMap
+    = new global::DripSharp.Runtime.JavaWeakHashMap<global::DripSharp.PdfCarton.Cos.COSDictionary,
+    float>();
 
-static LegacyPDFStreamEngine() {
-{
-string path = "/org/apache/pdfbox/resources/glyphlist/additional.txt";
-try {
-using (global::System.IO.Stream input = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList), path)) {
-global::DripSharp.PdfCarton.Text.LegacyPDFStreamEngine.GLYPHLIST = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetAdobeGlyphList(), input);
-}
-} catch (global::System.IO.IOException ex) {
-throw new global::System.Exception(null, ex);
-}
-}
-}
+  static LegacyPDFStreamEngine() { {
+      string path = "/org/apache/pdfbox/resources/glyphlist/additional.txt";
+      try {
+        using (global::System.IO.Stream input
+          = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList),
+          path)) {
+          global::DripSharp.PdfCarton.Text.LegacyPDFStreamEngine.GLYPHLIST
+            = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetAdobeGlyphList(),
+            input);
+        }
+      } catch (global::System.IO.IOException ex) {
+        throw new global::System.Exception(null, ex);
+      }
+    }
+  }
 
-internal LegacyPDFStreamEngine() {
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.BeginText(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Concatenate(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.DrawObject(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.EndText(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetGraphicsStateParameters(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Save(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Restore(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.NextLine(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetCharSpacing(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.MoveText(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.MoveTextSetLeading(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetFontAndSize(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.ShowText(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.ShowTextAdjusted(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextLeading(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetMatrix(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextRenderingMode(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextRise(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetWordSpacing(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextHorizontalScaling(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.ShowTextLine(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.ShowTextLineAndSpace(this));
-}
+  internal LegacyPDFStreamEngine() {
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.BeginText(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Concatenate(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.DrawObject(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.EndText(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetGraphicsStateParameters(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Save(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Restore(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.NextLine(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetCharSpacing(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.MoveText(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.MoveTextSetLeading(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetFontAndSize(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.ShowText(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.ShowTextAdjusted(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextLeading(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetMatrix(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextRenderingMode(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextRise(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetWordSpacing(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextHorizontalScaling(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.ShowTextLine(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.ShowTextLineAndSpace(this));
+  }
 
-public override void ProcessPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-this.pageRotation = page.GetRotation();
-this.pageSize = page.GetCropBox();
-if (((global::DripSharp.Runtime.JavaCompat.CompareFloat(this.pageSize.GetLowerLeftX(), (float)(0)) == 0) && (global::DripSharp.Runtime.JavaCompat.CompareFloat(this.pageSize.GetLowerLeftY(), (float)(0)) == 0))) {
-this.translateMatrix = default!;
-} else {
-this.translateMatrix = global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance(-(this.pageSize.GetLowerLeftX()), -(this.pageSize.GetLowerLeftY()));
-}
-base.ProcessPage(page);
-}
+  public override void ProcessPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    this.pageRotation = page.GetRotation();
+    this.pageSize = page.GetCropBox();
+    if (((global::DripSharp.Runtime.JavaCompat.CompareFloat(this.pageSize.GetLowerLeftX(),
+      (float)(0)) == 0)
+      && (global::DripSharp.Runtime.JavaCompat.CompareFloat(this.pageSize.GetLowerLeftY(),
+      (float)(0)) == 0))) {
+      this.translateMatrix = default!;
+    } else {
+      this.translateMatrix
+        = global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance(-(this.pageSize.GetLowerLeftX()),
+        -(this.pageSize.GetLowerLeftY()));
+    }
+    base.ProcessPage(page);
+  }
 
-protected internal override void ShowGlyph(global::DripSharp.PdfCarton.Util.Matrix textRenderingMatrix, global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font, int code, global::DripSharp.PdfCarton.Util.Vector displacement) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState state = this.GetGraphicsState();
-global::DripSharp.PdfCarton.Util.Matrix ctm = state.GetCurrentTransformationMatrix();
-float fontSize = state.GetTextState().GetFontSize();
-float horizontalScaling = ((float)(state.GetTextState().GetHorizontalScaling()) / (float)(100.0F));
-global::DripSharp.PdfCarton.Util.Matrix textMatrix = this.GetTextMatrix();
-float displacementX = displacement.GetX();
-if (font.IsVertical()) {
-displacementX = ((float)(font.GetWidth(code)) / 1000);
-global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = default!;
-if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont)) {
-ttf = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont)(font!)).GetTrueTypeFont();
-} else {
-if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font)) {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont cidFont = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font)(font!)).GetDescendantFont();
-if ((cidFont is global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2)) {
-ttf = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2)(cidFont!)).GetTrueTypeFont();
-}
-}
-}
-if (((ttf! != default!) && (ttf!.GetUnitsPerEm() != 1000))) {
-displacementX *= ((float)(1000.0F) / ttf!.GetUnitsPerEm());
-}
-}
-float tx = ((displacementX * fontSize) * horizontalScaling);
-float ty = (displacement.GetY() * fontSize);
-global::DripSharp.PdfCarton.Util.Matrix td = global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance(tx, ty);
-global::DripSharp.PdfCarton.Util.Matrix nextTextRenderingMatrix = td.Multiply(textMatrix).Multiply(ctm);
-float nextX = nextTextRenderingMatrix.GetTranslateX();
-float nextY = nextTextRenderingMatrix.GetTranslateY();
-float dxDisplay = (nextX - textRenderingMatrix.GetTranslateX());
-float? fontHeight = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.fontHeightMap, font.GetCOSObject());
-if ((fontHeight == default!)) {
-fontHeight = this.ComputeFontHeight(font);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.fontHeightMap, font.GetCOSObject(), global::DripSharp.Runtime.JavaCompat.Unbox(fontHeight));
-}
-float dyDisplay = (global::DripSharp.Runtime.JavaCompat.Unbox(fontHeight) * textRenderingMatrix.GetScalingFactorY());
-float glyphSpaceToTextSpaceFactor = (1 / (float)(1000.0F));
-if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font)) {
-glyphSpaceToTextSpaceFactor = font.GetFontMatrix().GetScaleX();
-}
-float spaceWidthText = 0;
-try {
-spaceWidthText = (font.GetSpaceWidth() * glyphSpaceToTextSpaceFactor);
-} catch (global::System.Exception exception) when (exception is not global::System.TypeInitializationException) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Text.LegacyPDFStreamEngine.LOG, (global::System.Exception)exception, global::DripSharp.Runtime.JavaCompat.StringValueOf(exception));
-}
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(spaceWidthText, (float)(0)) == 0)) {
-spaceWidthText = (font.GetAverageFontWidth() * glyphSpaceToTextSpaceFactor);
-spaceWidthText *= 0.8F;
-}
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(spaceWidthText, (float)(0)) == 0)) {
-spaceWidthText = 1.0F;
-}
-float spaceWidthDisplay = (spaceWidthText * textRenderingMatrix.GetScalingFactorX());
-string unicode = font.ToUnicode(code, global::DripSharp.PdfCarton.Text.LegacyPDFStreamEngine.GLYPHLIST);
-if ((unicode == default!)) {
-if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont)) {
-char c = unchecked((char)(unchecked((char)(code))));
-unicode = new string(new char[] { c });
-} else {
-return;
-}
-}
-global::DripSharp.PdfCarton.Util.Matrix translatedTextRenderingMatrix;
-if ((this.translateMatrix == default!)) {
-translatedTextRenderingMatrix = textRenderingMatrix;
-} else {
-translatedTextRenderingMatrix = global::DripSharp.PdfCarton.Util.Matrix.Concatenate(this.translateMatrix, textRenderingMatrix);
-nextX -= this.pageSize.GetLowerLeftX();
-nextY -= this.pageSize.GetLowerLeftY();
-}
-this.ProcessTextPosition(new global::DripSharp.PdfCarton.Text.TextPosition(this.pageRotation, this.pageSize.GetWidth(), this.pageSize.GetHeight(), translatedTextRenderingMatrix, nextX, nextY, global::System.Math.Abs(dyDisplay), dxDisplay, global::System.Math.Abs(spaceWidthDisplay), unicode, new int[] { code }, font, fontSize, (int)((int)((fontSize * textMatrix.GetScalingFactorX())))));
-}
+  protected internal override void ShowGlyph(global::DripSharp.PdfCarton.Util.Matrix textRenderingMatrix,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font, int code,
+    global::DripSharp.PdfCarton.Util.Vector displacement) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState state
+      = this.GetGraphicsState();
+    global::DripSharp.PdfCarton.Util.Matrix ctm = state.GetCurrentTransformationMatrix();
+    float fontSize = state.GetTextState().GetFontSize();
+    float horizontalScaling = ((float)(state.GetTextState().GetHorizontalScaling())
+      / (float)100.0F);
+    global::DripSharp.PdfCarton.Util.Matrix textMatrix = this.GetTextMatrix();
+    float displacementX = displacement.GetX();
+    if (font.IsVertical()) {
+      displacementX = ((float)(font.GetWidth(code)) / 1000);
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = default!;
+      if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont)) {
+        ttf = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont)(font!)).GetTrueTypeFont();
+      } else {
+        if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font)) {
+          global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont cidFont
+            = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font)(font!)).GetDescendantFont();
+          if ((cidFont is global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2)) {
+            ttf
+              = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2)(cidFont!)).GetTrueTypeFont();
+          }
+        }
+      }
+      if (((ttf! != default!) && (ttf!.GetUnitsPerEm() != 1000))) {
+        displacementX *= ((float)1000.0F / ttf!.GetUnitsPerEm());
+      }
+    }
+    float tx = ((displacementX * fontSize) * horizontalScaling);
+    float ty = (displacement.GetY() * fontSize);
+    global::DripSharp.PdfCarton.Util.Matrix td
+      = global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance(tx, ty);
+    global::DripSharp.PdfCarton.Util.Matrix nextTextRenderingMatrix
+      = td.Multiply(textMatrix).Multiply(ctm);
+    float nextX = nextTextRenderingMatrix.GetTranslateX();
+    float nextY = nextTextRenderingMatrix.GetTranslateY();
+    float dxDisplay = (nextX - textRenderingMatrix.GetTranslateX());
+    float? fontHeight = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.fontHeightMap,
+      font.GetCOSObject());
+    if ((fontHeight == default!)) {
+      fontHeight = this.ComputeFontHeight(font);
+      global::DripSharp.Runtime.JavaCompat.MapPut(this.fontHeightMap, font.GetCOSObject(),
+        global::DripSharp.Runtime.JavaCompat.Unbox(fontHeight));
+    }
+    float dyDisplay = (global::DripSharp.Runtime.JavaCompat.Unbox(fontHeight)
+      * textRenderingMatrix.GetScalingFactorY());
+    float glyphSpaceToTextSpaceFactor = (1 / (float)1000.0F);
+    if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font)) {
+      glyphSpaceToTextSpaceFactor = font.GetFontMatrix().GetScaleX();
+    }
+    float spaceWidthText = 0;
+    try {
+      spaceWidthText = (font.GetSpaceWidth() * glyphSpaceToTextSpaceFactor);
+    } catch (global::System.Exception exception) when (exception is not global::System.TypeInitializationException) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Text.LegacyPDFStreamEngine.LOG,
+        (global::System.Exception)exception,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(exception));
+    }
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(spaceWidthText, (float)(0)) == 0)) {
+      spaceWidthText = (font.GetAverageFontWidth() * glyphSpaceToTextSpaceFactor);
+      spaceWidthText *= 0.8F;
+    }
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(spaceWidthText, (float)(0)) == 0)) {
+      spaceWidthText = 1.0F;
+    }
+    float spaceWidthDisplay = (spaceWidthText * textRenderingMatrix.GetScalingFactorX());
+    string unicode = font.ToUnicode(code,
+      global::DripSharp.PdfCarton.Text.LegacyPDFStreamEngine.GLYPHLIST);
+    if ((unicode == default!)) {
+      if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont)) {
+        char c = unchecked((char)(unchecked((char)(code))));
+        unicode = new string(new char[] { c });
+      } else {
+        return;
+      }
+    }
+    global::DripSharp.PdfCarton.Util.Matrix translatedTextRenderingMatrix;
+    if ((this.translateMatrix == default!)) {
+      translatedTextRenderingMatrix = textRenderingMatrix;
+    } else {
+      translatedTextRenderingMatrix
+        = global::DripSharp.PdfCarton.Util.Matrix.Concatenate(this.translateMatrix,
+        textRenderingMatrix);
+      nextX -= this.pageSize.GetLowerLeftX();
+      nextY -= this.pageSize.GetLowerLeftY();
+    }
+    this.ProcessTextPosition(new global::DripSharp.PdfCarton.Text.TextPosition(this.pageRotation,
+      this.pageSize.GetWidth(), this.pageSize.GetHeight(), translatedTextRenderingMatrix, nextX,
+      nextY, global::System.Math.Abs(dyDisplay), dxDisplay,
+      global::System.Math.Abs(spaceWidthDisplay), unicode, new int[] { code }, font, fontSize,
+      (int)((int)((fontSize * textMatrix.GetScalingFactorX())))));
+  }
 
-protected internal virtual float ComputeFontHeight(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) {
-global::DripSharp.PdfCarton.Fonts.Util.BoundingBox bbox = font.GetBoundingBox();
-if ((bbox.GetLowerLeftY() < (int)(short.MinValue))) {
-bbox.SetLowerLeftY(-((bbox.GetLowerLeftY() + 65536)));
-}
-float glyphHeight = ((float)(bbox.GetHeight()) / 2);
-global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor = font.GetFontDescriptor();
-if ((fontDescriptor != default!)) {
-float capHeight = fontDescriptor.GetCapHeight();
-if (((global::DripSharp.Runtime.JavaCompat.CompareFloat(capHeight, (float)(0)) != 0) && ((capHeight < glyphHeight) || (global::DripSharp.Runtime.JavaCompat.CompareFloat(glyphHeight, (float)(0)) == 0)))) {
-glyphHeight = capHeight;
-}
-float ascent = fontDescriptor.GetAscent();
-float descent = fontDescriptor.GetDescent();
-if (((((capHeight > ascent) && (ascent > 0)) && (descent < 0)) && ((((float)((ascent - descent)) / 2) < glyphHeight) || (global::DripSharp.Runtime.JavaCompat.CompareFloat(glyphHeight, (float)(0)) == 0)))) {
-glyphHeight = ((float)((ascent - descent)) / 2);
-}
-}
-float height;
-if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font)) {
-height = (float)(font.GetFontMatrix().TransformPoint((float)(0), glyphHeight).Y);
-} else {
-height = ((float)(glyphHeight) / 1000);
-}
-return height;
-}
+  protected internal virtual float ComputeFontHeight(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) {
+    global::DripSharp.PdfCarton.Fonts.Util.BoundingBox bbox = font.GetBoundingBox();
+    if ((bbox.GetLowerLeftY() < (int)(short.MinValue))) {
+      bbox.SetLowerLeftY(-((bbox.GetLowerLeftY() + 65536)));
+    }
+    float glyphHeight = ((float)(bbox.GetHeight()) / 2);
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor
+      = font.GetFontDescriptor();
+    if ((fontDescriptor != default!)) {
+      float capHeight = fontDescriptor.GetCapHeight();
+      if (((global::DripSharp.Runtime.JavaCompat.CompareFloat(capHeight, (float)(0)) != 0)
+        && ((capHeight < glyphHeight)
+        || (global::DripSharp.Runtime.JavaCompat.CompareFloat(glyphHeight, (float)(0)) == 0)))) {
+        glyphHeight = capHeight;
+      }
+      float ascent = fontDescriptor.GetAscent();
+      float descent = fontDescriptor.GetDescent();
+      if (((((capHeight > ascent) && (ascent > 0)) && (descent < 0)) && ((((float)((ascent
+        - descent)) / 2) < glyphHeight)
+        || (global::DripSharp.Runtime.JavaCompat.CompareFloat(glyphHeight, (float)(0)) == 0)))) {
+        glyphHeight = ((float)((ascent - descent)) / 2);
+      }
+    }
+    float height;
+    if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font)) {
+      height = (float)(font.GetFontMatrix().TransformPoint((float)(0), glyphHeight).Y);
+    } else {
+      height = ((float)glyphHeight / 1000);
+    }
+    return height;
+  }
 
-protected internal virtual void ProcessTextPosition(global::DripSharp.PdfCarton.Text.TextPosition text) {}
+  protected internal virtual void ProcessTextPosition(global::DripSharp.PdfCarton.Text.TextPosition text) {}
 }

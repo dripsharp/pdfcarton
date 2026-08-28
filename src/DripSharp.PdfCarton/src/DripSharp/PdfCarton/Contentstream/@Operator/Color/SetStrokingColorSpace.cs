@@ -8,29 +8,34 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Color;
 
-public class SetStrokingColorSpace : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public SetStrokingColorSpace(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class SetStrokingColorSpace
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public SetStrokingColorSpace(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSBase @base = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSName))) {
-return;
-}
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-if (!(context.IsShouldProcessColorOperators())) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace cs = context.GetResources().GetColorSpace((global::DripSharp.PdfCarton.Cos.COSName)(@base!));
-context.GetGraphicsState().SetStrokingColorSpace(cs);
-context.GetGraphicsState().SetStrokingColor(cs.GetInitialColor());
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+    if (!((@base is global::DripSharp.PdfCarton.Cos.COSName))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    if (!(context.IsShouldProcessColorOperators())) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace cs
+      = context.GetResources().GetColorSpace((global::DripSharp.PdfCarton.Cos.COSName)(@base!));
+    context.GetGraphicsState().SetStrokingColorSpace(cs);
+    context.GetGraphicsState().SetStrokingColor(cs.GetInitialColor());
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorspace;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorspace;
+  }
 }

@@ -8,18 +8,19 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/exif/1.0/", "exif")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/exif/1.0/",
+  "exif")]
 public class DeviceSettingsType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string Columns = "Columns";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string Columns = "Columns";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string Rows = "Rows";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string Rows = "Rows";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Seq")]
-public const string Settings = "Settings";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Seq")]
+  public const string Settings = "Settings";
 
-public DeviceSettingsType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+  public DeviceSettingsType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
-}
+  }
 }

@@ -9,21 +9,24 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator;
 
 public abstract class OperatorProcessor {
-private readonly global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = null!;
+  private readonly global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = null!;
 
-protected internal OperatorProcessor(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) {
-this.context = context;
-}
+  protected internal OperatorProcessor(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) {
+    this.context = context;
+  }
 
-protected internal global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine GetContext() {
-return this.context;
-}
+  protected internal global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine GetContext() {
+    return this.context;
+  }
 
-public abstract void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands);
+  public abstract void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands);
 
-public abstract string GetName();
+  public abstract string GetName();
 
-public virtual bool CheckArrayTypesClass(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands, global::System.Type clazz) {
-return global::DripSharp.Runtime.JavaCompat.AllValues(global::DripSharp.Runtime.JavaCompat.Stream(operands), (value0) => clazz.IsInstanceOfType(value0));
-}
+  public virtual bool CheckArrayTypesClass(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands,
+    global::System.Type clazz) {
+    return global::DripSharp.Runtime.JavaCompat.AllValues(global::DripSharp.Runtime.JavaCompat.Stream(operands),
+      (value0) => clazz.IsInstanceOfType(value0));
+  }
 }

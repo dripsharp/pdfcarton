@@ -8,15 +8,21 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process;
 
-public class FileSpecificationValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-global::DripSharp.PdfCarton.Cos.COSDocument cDoc = ctx.GetDocument().GetDocument();
-global::DripSharp.Runtime.JavaCompat.ForEach(cDoc.GetObjectsByType(global::DripSharp.PdfCarton.Cos.COSName.Filespec, global::DripSharp.PdfCarton.Cos.COSName.F), (o) => this.ValidateFileSpecification(ctx, (global::DripSharp.PdfCarton.Cos.COSDictionary)(o.GetObject()!)));
-}
+public class FileSpecificationValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    global::DripSharp.PdfCarton.Cos.COSDocument cDoc = ctx.GetDocument().GetDocument();
+    global::DripSharp.Runtime.JavaCompat.ForEach(cDoc.GetObjectsByType(global::DripSharp.PdfCarton.Cos.COSName.Filespec,
+      global::DripSharp.PdfCarton.Cos.COSName.F), (o) => this.ValidateFileSpecification(ctx,
+      (global::DripSharp.PdfCarton.Cos.COSDictionary)(o.GetObject()!)));
+  }
 
-public virtual void ValidateFileSpecification(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary fileSpec) {
-if ((fileSpec.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Ef) != default!)) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxEmbeddedFiles, "EmbeddedFile entry is present in a FileSpecification dictionary"));
-}
-}
+  public virtual void ValidateFileSpecification(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary fileSpec) {
+    if ((fileSpec.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Ef) != default!)) {
+      this.AddValidationError(ctx,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxEmbeddedFiles,
+        "EmbeddedFile entry is present in a FileSpecification dictionary"));
+    }
+  }
 }

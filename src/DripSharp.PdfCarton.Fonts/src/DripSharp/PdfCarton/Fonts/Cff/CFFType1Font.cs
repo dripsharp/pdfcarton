@@ -8,147 +8,166 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
-public class CFFType1Font : global::DripSharp.PdfCarton.Fonts.Cff.CFFFont, global::DripSharp.PdfCarton.Fonts.EncodedFont {
-private readonly global::System.Collections.Generic.IDictionary<string, object> privateDict;
+public class CFFType1Font : global::DripSharp.PdfCarton.Fonts.Cff.CFFFont,
+global::DripSharp.PdfCarton.Fonts.EncodedFont {
+  private readonly global::System.Collections.Generic.IDictionary<string, object> privateDict;
 
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding encoding = null!;
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding encoding = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString> charStringCache;
+  private readonly global::System.Collections.Generic.IDictionary<int,
+    global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString> charStringCache;
 
-private readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font.PrivateType1CharStringReader reader;
+  private readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font.PrivateType1CharStringReader reader;
 
-private global::DripSharp.PdfCarton.Fonts.Cff.Type2CharStringParser charStringParser;
+  private global::DripSharp.PdfCarton.Fonts.Cff.Type2CharStringParser charStringParser;
 
-private int defaultWidthX;
+  private int defaultWidthX;
 
-private int nominalWidthX;
+  private int nominalWidthX;
 
-private sbyte[][] localSubrIndex = null!;
+  private sbyte[][] localSubrIndex = null!;
 
-internal class PrivateType1CharStringReader : global::DripSharp.PdfCarton.Fonts.Type1.Type1CharStringReader {
-public virtual global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString GetType1CharString(string name) {
-return this.__outer.GetType1CharString(name);
-}
+  internal class PrivateType1CharStringReader
+  : global::DripSharp.PdfCarton.Fonts.Type1.Type1CharStringReader {
+    public virtual global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString GetType1CharString(string name) {
+      return this.__outer.GetType1CharString(name);
+    }
 
-private readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font __outer;
+    private readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font __outer;
 
-internal PrivateType1CharStringReader(global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font __outer) {
-this.__outer = __outer;
-}
-}
+    internal PrivateType1CharStringReader(global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font __outer) {
+      this.__outer = __outer;
+    }
+  }
 
-public override global::SkiaSharp.SKPath GetPath(string name) {
-return this.GetType1CharString(name).GetPath();
-}
+  public override global::SkiaSharp.SKPath GetPath(string name) {
+    return this.GetType1CharString(name).GetPath();
+  }
 
-public override float GetWidth(string name) {
-return this.GetType1CharString(name).GetWidth();
-}
+  public override float GetWidth(string name) {
+    return this.GetType1CharString(name).GetWidth();
+  }
 
-public override bool HasGlyph(string name) {
-return (this.NameToGID(name) != 0);
-}
+  public override bool HasGlyph(string name) {
+    return (this.NameToGID(name) != 0);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString GetType1CharString(string name) {
-int gid = this.NameToGID(name);
-return this.getType2CharString(gid, name);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString GetType1CharString(string name) {
+    int gid = this.NameToGID(name);
+    return this.getType2CharString(gid, name);
+  }
 
-public virtual int NameToGID(string name) {
-int sid = this.GetCharset().GetSID(name);
-return this.GetCharset().GetGIDForSID(sid);
-}
+  public virtual int NameToGID(string name) {
+    int sid = this.GetCharset().GetSID(name);
+    return this.GetCharset().GetGIDForSID(sid);
+  }
 
-public override global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString GetType2CharString(int gid) {
-string name = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("GID+", gid);
-return this.getType2CharString(gid, name);
-}
+  public override global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString GetType2CharString(int gid) {
+    string name = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("GID+", gid);
+    return this.getType2CharString(gid, name);
+  }
 
-private global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString getType2CharString(int gid, string name) {
-global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString type2 = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.charStringCache, gid);
-if ((type2 == default!)) {
-sbyte[] bytes = default!;
-if ((gid < this.CharStrings.Length)) {
-bytes = base.CharStrings[gid];
-}
-if ((bytes! == default!)) {
-bytes = base.CharStrings[0];
-}
-global::System.Collections.Generic.IList<object> type2seq = this.getParser().Parse(bytes!, base.GlobalSubrIndex, this.getLocalSubrIndex(), name);
-type2 = new global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString(this.reader, this.GetName(), name, gid, type2seq, this.getDefaultWidthX(), this.getNominalWidthX());
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.charStringCache, gid, type2);
-}
-return type2;
-}
+  private global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString getType2CharString(int gid,
+    string name) {
+    global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString type2
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.charStringCache, gid);
+    if ((type2 == default!)) {
+      sbyte[] bytes = default!;
+      if ((gid < this.CharStrings.Length)) {
+        bytes = base.CharStrings[gid];
+      }
+      if ((bytes! == default!)) {
+        bytes = base.CharStrings[0];
+      }
+      global::System.Collections.Generic.IList<object> type2seq = this.getParser().Parse(bytes!,
+        base.GlobalSubrIndex, this.getLocalSubrIndex(), name);
+      type2 = new global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString(this.reader, this.GetName(),
+        name, gid, type2seq, this.getDefaultWidthX(), this.getNominalWidthX());
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.charStringCache, gid, type2);
+    }
+    return type2;
+  }
 
-private global::DripSharp.PdfCarton.Fonts.Cff.Type2CharStringParser getParser() {
-if ((this.charStringParser == default!)) {
-this.charStringParser = new global::DripSharp.PdfCarton.Fonts.Cff.Type2CharStringParser(this.GetName());
-}
-return this.charStringParser;
-}
+  private global::DripSharp.PdfCarton.Fonts.Cff.Type2CharStringParser getParser() {
+    if ((this.charStringParser == default!)) {
+      this.charStringParser
+        = new global::DripSharp.PdfCarton.Fonts.Cff.Type2CharStringParser(this.GetName());
+    }
+    return this.charStringParser;
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<string, object> GetPrivateDict() {
-return this.privateDict;
-}
+  public virtual global::System.Collections.Generic.IDictionary<string, object> GetPrivateDict() {
+    return this.privateDict;
+  }
 
-internal virtual void addToPrivateDict(string name, object value) {
-if ((value != default!)) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.privateDict, name, value);
-}
-}
+  internal virtual void addToPrivateDict(string name, object value) {
+    if ((value != default!)) {
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.privateDict, name, value);
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding GetEncoding() {
-return this.encoding;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding GetEncoding() {
+    return this.encoding;
+  }
 
-internal virtual void setEncoding(global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding encoding) {
-this.encoding = encoding;
-}
+  internal virtual void setEncoding(global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding encoding) {
+    this.encoding = encoding;
+  }
 
-private sbyte[][] getLocalSubrIndex() {
-if ((this.localSubrIndex == default!)) {
-this.localSubrIndex = (sbyte[][])(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.privateDict, "Subrs")!);
-}
-return this.localSubrIndex;
-}
+  private sbyte[][] getLocalSubrIndex() {
+    if ((this.localSubrIndex == default!)) {
+      this.localSubrIndex
+        = (sbyte[][])(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.privateDict,
+        "Subrs")!);
+    }
+    return this.localSubrIndex;
+  }
 
-private object getProperty(string name) {
-object topDictValue = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(base.TopDict, name);
-if ((topDictValue != default!)) {
-return topDictValue;
-}
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.privateDict, name);
-}
+  private object getProperty(string name) {
+    object topDictValue = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(base.TopDict,
+      name);
+    if ((topDictValue != default!)) {
+      return topDictValue;
+    }
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.privateDict, name);
+  }
 
-private int getDefaultWidthX() {
-if ((this.defaultWidthX == int.MinValue)) {
-global::System.IConvertible num = (global::System.IConvertible)(this.getProperty("defaultWidthX")!);
-this.defaultWidthX = ((num != default!) ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(num) : 1000);
-}
-return this.defaultWidthX;
-}
+  private int getDefaultWidthX() {
+    if ((this.defaultWidthX == int.MinValue)) {
+      global::System.IConvertible num
+        = (global::System.IConvertible)(this.getProperty("defaultWidthX")!);
+      this.defaultWidthX = ((num != default!)
+        ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(num) : 1000);
+    }
+    return this.defaultWidthX;
+  }
 
-private int getNominalWidthX() {
-if ((this.nominalWidthX == int.MinValue)) {
-global::System.IConvertible num = (global::System.IConvertible)(this.getProperty("nominalWidthX")!);
-this.nominalWidthX = ((num != default!) ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(num) : 0);
-}
-return this.nominalWidthX;
-}
+  private int getNominalWidthX() {
+    if ((this.nominalWidthX == int.MinValue)) {
+      global::System.IConvertible num
+        = (global::System.IConvertible)(this.getProperty("nominalWidthX")!);
+      this.nominalWidthX = ((num != default!)
+        ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(num) : 0);
+    }
+    return this.nominalWidthX;
+  }
 
-protected override global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString __DripSharpCovariantBridgeGetType2CharString(int gid) {
-return this.GetType2CharString(gid);
-}
+  protected override global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString __DripSharpCovariantBridgeGetType2CharString(int gid) {
+    return this.GetType2CharString(gid);
+  }
 
-global::DripSharp.PdfCarton.Fonts.Encoding.Encoding global::DripSharp.PdfCarton.Fonts.EncodedFont.GetEncoding() => (global::DripSharp.PdfCarton.Fonts.Encoding.Encoding)(this.GetEncoding());
+  global::DripSharp.PdfCarton.Fonts.Encoding.Encoding global::DripSharp.PdfCarton.Fonts.EncodedFont.GetEncoding()
+    => (global::DripSharp.PdfCarton.Fonts.Encoding.Encoding)(this.GetEncoding());
 
-public CFFType1Font() {
-this.privateDict = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<string, object>();
-this.charStringCache = new global::System.Collections.Concurrent.ConcurrentDictionary<int, global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString>();
-this.reader = new global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font.PrivateType1CharStringReader(this);
-this.charStringParser = default!;
-this.defaultWidthX = int.MinValue;
-this.nominalWidthX = int.MinValue;
-}
+  public CFFType1Font() {
+    this.privateDict = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<string,
+      object>();
+    this.charStringCache = new global::System.Collections.Concurrent.ConcurrentDictionary<int,
+      global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString>();
+    this.reader
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font.PrivateType1CharStringReader(this);
+    this.charStringParser = default!;
+    this.defaultWidthX = int.MinValue;
+    this.nominalWidthX = int.MinValue;
+  }
 }

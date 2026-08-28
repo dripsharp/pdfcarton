@@ -9,51 +9,57 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFAnnotationCaret : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation {
-public const string Subtype = "Caret";
+  public const string Subtype = "Caret";
 
-public FDFAnnotationCaret() : base() {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationCaret.Subtype);
-}
+  public FDFAnnotationCaret() : base() {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationCaret.Subtype);
+  }
 
-public FDFAnnotationCaret(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public FDFAnnotationCaret(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public FDFAnnotationCaret(global::System.Xml.XmlElement element) : base(element) {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationCaret.Subtype);
-this.initFringe(element);
-string symbol = element.GetAttribute("symbol");
-if (((symbol != default!) && !((symbol.Length == 0)))) {
-this.SetSymbol(symbol);
-}
-}
+  public FDFAnnotationCaret(global::System.Xml.XmlElement element) : base(element) {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationCaret.Subtype);
+    this.initFringe(element);
+    string symbol = element.GetAttribute("symbol");
+    if (((symbol != default!) && !((symbol.Length == 0)))) {
+      this.SetSymbol(symbol);
+    }
+  }
 
-private void initFringe(global::System.Xml.XmlElement element) {
-string fringe = element.GetAttribute("fringe");
-if (((fringe != default!) && !((fringe.Length == 0)))) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = this.createRectangleFromAttributes(fringe, "Error: wrong amount of numbers in attribute 'fringe'");
-this.SetFringe(rect);
-}
-}
+  private void initFringe(global::System.Xml.XmlElement element) {
+    string fringe = element.GetAttribute("fringe");
+    if (((fringe != default!) && !((fringe.Length == 0)))) {
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect
+        = this.createRectangleFromAttributes(fringe,
+        "Error: wrong amount of numbers in attribute 'fringe'");
+      this.SetFringe(rect);
+    }
+  }
 
-public void SetFringe(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle fringe) {
-base.Annot.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Rd, fringe);
-}
+  public void SetFringe(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle fringe) {
+    base.Annot.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Rd, fringe);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetFringe() {
-global::DripSharp.PdfCarton.Cos.COSArray rd = base.Annot.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Rd);
-return ((rd != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(rd) : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetFringe() {
+    global::DripSharp.PdfCarton.Cos.COSArray rd
+      = base.Annot.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Rd);
+    return ((rd != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(rd)
+      : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
+  }
 
-public void SetSymbol(string symbol) {
-string newSymbol = "None";
-if (global::DripSharp.Runtime.JavaCompat.Equals("paragraph", symbol)) {
-newSymbol = "P";
-}
-base.Annot.SetString(global::DripSharp.PdfCarton.Cos.COSName.Sy, newSymbol);
-}
+  public void SetSymbol(string symbol) {
+    string newSymbol = "None";
+    if (global::DripSharp.Runtime.JavaCompat.Equals("paragraph", symbol)) {
+      newSymbol = "P";
+    }
+    base.Annot.SetString(global::DripSharp.PdfCarton.Cos.COSName.Sy, newSymbol);
+  }
 
-public virtual string GetSymbol() {
-return base.Annot.GetString(global::DripSharp.PdfCarton.Cos.COSName.Sy);
-}
+  public virtual string GetSymbol() {
+    return base.Annot.GetString(global::DripSharp.PdfCarton.Cos.COSName.Sy);
+  }
 }

@@ -9,81 +9,83 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFIconFit : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary fit = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary fit = null!;
 
-public const string ScaleOptionAlways = "A";
+  public const string ScaleOptionAlways = "A";
 
-public const string ScaleOptionOnlyWhenIconIsBigger = "B";
+  public const string ScaleOptionOnlyWhenIconIsBigger = "B";
 
-public const string ScaleOptionOnlyWhenIconIsSmaller = "S";
+  public const string ScaleOptionOnlyWhenIconIsSmaller = "S";
 
-public const string ScaleOptionNever = "N";
+  public const string ScaleOptionNever = "N";
 
-public const string ScaleTypeAnamorphic = "A";
+  public const string ScaleTypeAnamorphic = "A";
 
-public const string ScaleTypeProportional = "P";
+  public const string ScaleTypeProportional = "P";
 
-public FDFIconFit() {
-this.fit = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public FDFIconFit() {
+    this.fit = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public FDFIconFit(global::DripSharp.PdfCarton.Cos.COSDictionary f) {
-this.fit = f;
-}
+  public FDFIconFit(global::DripSharp.PdfCarton.Cos.COSDictionary f) {
+    this.fit = f;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.fit;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.fit;
+  }
 
-public virtual string GetScaleOption() {
-string retval = this.fit.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Sw);
-if ((retval == default!)) {
-retval = global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFIconFit.ScaleOptionAlways;
-}
-return retval;
-}
+  public virtual string GetScaleOption() {
+    string retval = this.fit.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Sw);
+    if ((retval == default!)) {
+      retval = global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFIconFit.ScaleOptionAlways;
+    }
+    return retval;
+  }
 
-public virtual void SetScaleOption(string option) {
-this.fit.SetName(global::DripSharp.PdfCarton.Cos.COSName.Sw, option);
-}
+  public virtual void SetScaleOption(string option) {
+    this.fit.SetName(global::DripSharp.PdfCarton.Cos.COSName.Sw, option);
+  }
 
-public virtual string GetScaleType() {
-string retval = this.fit.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.S);
-if ((retval == default!)) {
-retval = global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFIconFit.ScaleTypeProportional;
-}
-return retval;
-}
+  public virtual string GetScaleType() {
+    string retval = this.fit.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.S);
+    if ((retval == default!)) {
+      retval = global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFIconFit.ScaleTypeProportional;
+    }
+    return retval;
+  }
 
-public virtual void SetScaleType(string scale) {
-this.fit.SetName(global::DripSharp.PdfCarton.Cos.COSName.S, scale);
-}
+  public virtual void SetScaleType(string scale) {
+    this.fit.SetName(global::DripSharp.PdfCarton.Cos.COSName.S, scale);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetFractionalSpaceToAllocate() {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRange retval = default!;
-global::DripSharp.PdfCarton.Cos.COSArray array = this.fit.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.A);
-if ((array == default!)) {
-retval = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange();
-retval!.SetMin(0.5F);
-retval!.SetMax(0.5F);
-this.SetFractionalSpaceToAllocate(retval!);
-} else {
-retval = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(array);
-}
-return retval!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetFractionalSpaceToAllocate() {
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRange retval = default!;
+    global::DripSharp.PdfCarton.Cos.COSArray array
+      = this.fit.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.A);
+    if ((array == default!)) {
+      retval = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange();
+      retval!.SetMin(0.5F);
+      retval!.SetMax(0.5F);
+      this.SetFractionalSpaceToAllocate(retval!);
+    } else {
+      retval = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(array);
+    }
+    return retval!;
+  }
 
-public virtual void SetFractionalSpaceToAllocate(global::DripSharp.PdfCarton.Pdmodel.Common.PDRange space) {
-this.fit.SetItem(global::DripSharp.PdfCarton.Cos.COSName.A, space);
-}
+  public virtual void SetFractionalSpaceToAllocate(global::DripSharp.PdfCarton.Pdmodel.Common.PDRange space) {
+    this.fit.SetItem(global::DripSharp.PdfCarton.Cos.COSName.A, space);
+  }
 
-public virtual bool ShouldScaleToFitAnnotation() {
-return this.fit.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Fb, false);
-}
+  public virtual bool ShouldScaleToFitAnnotation() {
+    return this.fit.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Fb, false);
+  }
 
-public virtual void SetScaleToFitAnnotation(bool value) {
-this.fit.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Fb, value);
-}
+  public virtual void SetScaleToFitAnnotation(bool value) {
+    this.fit.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Fb, value);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

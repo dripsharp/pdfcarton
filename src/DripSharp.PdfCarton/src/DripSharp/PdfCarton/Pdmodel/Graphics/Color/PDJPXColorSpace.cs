@@ -8,48 +8,49 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
-public sealed class PDJPXColorSpace : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace {
-private readonly global::DripSharp.Runtime.JavaColorSpace awtColorSpace = null!;
+public sealed class PDJPXColorSpace
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace {
+  private readonly global::DripSharp.Runtime.JavaColorSpace awtColorSpace = null!;
 
-public PDJPXColorSpace(global::DripSharp.Runtime.JavaColorSpace colorSpace) {
-this.awtColorSpace = colorSpace;
-}
+  public PDJPXColorSpace(global::DripSharp.Runtime.JavaColorSpace colorSpace) {
+    this.awtColorSpace = colorSpace;
+  }
 
-public override string GetName() {
-return "JPX";
-}
+  public override string GetName() {
+    return "JPX";
+  }
 
-public override int GetNumberOfComponents() {
-return this.awtColorSpace.NumberOfComponents;
-}
+  public override int GetNumberOfComponents() {
+    return this.awtColorSpace.NumberOfComponents;
+  }
 
-public override float[] GetDefaultDecode(int bitsPerComponent) {
-int n = this.GetNumberOfComponents();
-float[] decode = new float[(n * 2)];
-for (int i = 0; (i < n); i++) {
-decode[(i * 2)] = this.awtColorSpace.GetMinValue(i);
-decode[((i * 2) + 1)] = this.awtColorSpace.GetMaxValue(i);
-}
-return decode;
-}
+  public override float[] GetDefaultDecode(int bitsPerComponent) {
+    int n = this.GetNumberOfComponents();
+    float[] decode = new float[(n * 2)];
+    for (int i = 0; (i < n); i++) {
+      decode[(i * 2)] = this.awtColorSpace.GetMinValue(i);
+      decode[((i * 2) + 1)] = this.awtColorSpace.GetMaxValue(i);
+    }
+    return decode;
+  }
 
-public override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetInitialColor() {
-throw new global::System.NotSupportedException("JPX color spaces don't support drawing");
-}
+  public override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetInitialColor() {
+    throw new global::System.NotSupportedException("JPX color spaces don't support drawing");
+  }
 
-public override float[] ToRGB(float[] value) {
-return this.awtColorSpace.ToRgb(value);
-}
+  public override float[] ToRGB(float[] value) {
+    return this.awtColorSpace.ToRgb(value);
+  }
 
-public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
-return this.ToRGBImageAWT(raster, this.awtColorSpace);
-}
+  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+    return this.ToRGBImageAWT(raster, this.awtColorSpace);
+  }
 
-public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
-return this.ToRawImage(raster, this.awtColorSpace);
-}
+  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+    return this.ToRawImage(raster, this.awtColorSpace);
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-throw new global::System.NotSupportedException("JPX color spaces don't have COS objects");
-}
+  public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    throw new global::System.NotSupportedException("JPX color spaces don't have COS objects");
+  }
 }

@@ -9,31 +9,32 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class FeatureTable {
-private readonly int featureParams = default;
+  private readonly int featureParams = default;
 
-private readonly int lookupIndexCount = default;
+  private readonly int lookupIndexCount = default;
 
-private readonly int[] lookupListIndices = null!;
+  private readonly int[] lookupListIndices = null!;
 
-public FeatureTable(int featureParams, int lookupIndexCount, int[] lookupListIndices) {
-this.featureParams = featureParams;
-this.lookupIndexCount = lookupIndexCount;
-this.lookupListIndices = lookupListIndices;
-}
+  public FeatureTable(int featureParams, int lookupIndexCount, int[] lookupListIndices) {
+    this.featureParams = featureParams;
+    this.lookupIndexCount = lookupIndexCount;
+    this.lookupListIndices = lookupListIndices;
+  }
 
-public virtual int GetFeatureParams() {
-return this.featureParams;
-}
+  public virtual int GetFeatureParams() {
+    return this.featureParams;
+  }
 
-public virtual int GetLookupIndexCount() {
-return this.lookupIndexCount;
-}
+  public virtual int GetLookupIndexCount() {
+    return this.lookupIndexCount;
+  }
 
-public virtual int[] GetLookupListIndices() {
-return this.lookupListIndices;
-}
+  public virtual int[] GetLookupListIndices() {
+    return this.lookupListIndices;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("FeatureTable[lookupListIndicesCount=%d]", this.lookupListIndices.Length);
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("FeatureTable[lookupListIndicesCount=%d]",
+      this.lookupListIndices.Length);
+  }
 }

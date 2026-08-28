@@ -8,110 +8,123 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Pattern;
 
-public class PDTilingPattern : global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern, global::DripSharp.PdfCarton.Contentstream.PDContentStream {
-public const int PaintColored = 1;
+public class PDTilingPattern
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern,
+global::DripSharp.PdfCarton.Contentstream.PDContentStream {
+  public const int PaintColored = 1;
 
-public const int PaintUncolored = 2;
+  public const int PaintUncolored = 2;
 
-public const int TilingConstantSpacing = 1;
+  public const int TilingConstantSpacing = 1;
 
-public const int TilingNoDistortion = 2;
+  public const int TilingNoDistortion = 2;
 
-public const int TilingConstantSpacingFasterTiling = 3;
+  public const int TilingConstantSpacingFasterTiling = 3;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.ResourceCache resourceCache = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.ResourceCache resourceCache = null!;
 
-public PDTilingPattern() : base(new global::DripSharp.PdfCarton.Cos.COSStream()) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Pattern.GetName());
-this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.PatternType, global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern.TypeTilingPattern);
-this.SetResources(new global::DripSharp.PdfCarton.Pdmodel.PDResources());
-this.resourceCache = default!;
-}
+  public PDTilingPattern() : base(new global::DripSharp.PdfCarton.Cos.COSStream()) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Pattern.GetName());
+    this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.PatternType,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern.TypeTilingPattern);
+    this.SetResources(new global::DripSharp.PdfCarton.Pdmodel.PDResources());
+    this.resourceCache = default!;
+  }
 
-public PDTilingPattern(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : this(dictionary, (global::DripSharp.PdfCarton.Pdmodel.ResourceCache)default!) {
+  public PDTilingPattern(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary)
+  : this(dictionary, (global::DripSharp.PdfCarton.Pdmodel.ResourceCache)default!) {
 
-}
+  }
 
-public PDTilingPattern(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary, global::DripSharp.PdfCarton.Pdmodel.ResourceCache resourceCache) : base(dictionary) {
-this.resourceCache = resourceCache;
-}
+  public PDTilingPattern(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary,
+    global::DripSharp.PdfCarton.Pdmodel.ResourceCache resourceCache) : base(dictionary) {
+    this.resourceCache = resourceCache;
+  }
 
-public override int GetPatternType() {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern.TypeTilingPattern;
-}
+  public override int GetPatternType() {
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern.TypeTilingPattern;
+  }
 
-public override void SetPaintType(int paintType) {
-this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.PaintType, paintType);
-}
+  public override void SetPaintType(int paintType) {
+    this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.PaintType, paintType);
+  }
 
-public virtual int GetPaintType() {
-return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.PaintType, 0);
-}
+  public virtual int GetPaintType() {
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.PaintType, 0);
+  }
 
-public virtual void SetTilingType(int tilingType) {
-this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.TilingType, tilingType);
-}
+  public virtual void SetTilingType(int tilingType) {
+    this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.TilingType, tilingType);
+  }
 
-public virtual int GetTilingType() {
-return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.TilingType, 0);
-}
+  public virtual int GetTilingType() {
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.TilingType, 0);
+  }
 
-public virtual void SetXStep(float xStep) {
-this.GetCOSObject().SetFloat(global::DripSharp.PdfCarton.Cos.COSName.XStep, xStep);
-}
+  public virtual void SetXStep(float xStep) {
+    this.GetCOSObject().SetFloat(global::DripSharp.PdfCarton.Cos.COSName.XStep, xStep);
+  }
 
-public virtual float GetXStep() {
-return this.GetCOSObject().GetFloat(global::DripSharp.PdfCarton.Cos.COSName.XStep, (float)(0));
-}
+  public virtual float GetXStep() {
+    return this.GetCOSObject().GetFloat(global::DripSharp.PdfCarton.Cos.COSName.XStep, (float)(0));
+  }
 
-public virtual void SetYStep(float yStep) {
-this.GetCOSObject().SetFloat(global::DripSharp.PdfCarton.Cos.COSName.YStep, yStep);
-}
+  public virtual void SetYStep(float yStep) {
+    this.GetCOSObject().SetFloat(global::DripSharp.PdfCarton.Cos.COSName.YStep, yStep);
+  }
 
-public virtual float GetYStep() {
-return this.GetCOSObject().GetFloat(global::DripSharp.PdfCarton.Cos.COSName.YStep, (float)(0));
-}
+  public virtual float GetYStep() {
+    return this.GetCOSObject().GetFloat(global::DripSharp.PdfCarton.Cos.COSName.YStep, (float)(0));
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetContentStream() {
-return new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream((global::DripSharp.PdfCarton.Cos.COSStream)(this.GetCOSObject()!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetContentStream() {
+    return new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream((global::DripSharp.PdfCarton.Cos.COSStream)(this.GetCOSObject()!));
+  }
 
-public virtual global::System.IO.Stream GetContents() {
-global::DripSharp.PdfCarton.IO.RandomAccessRead contentsForRandomAccess = this.GetContentsForRandomAccess();
-return ((contentsForRandomAccess != default!) ? (global::System.IO.Stream)(new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(contentsForRandomAccess)) : (global::System.IO.Stream)(default!));
-}
+  public virtual global::System.IO.Stream GetContents() {
+    global::DripSharp.PdfCarton.IO.RandomAccessRead contentsForRandomAccess
+      = this.GetContentsForRandomAccess();
+    return ((contentsForRandomAccess != default!)
+      ? (global::System.IO.Stream)(new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(contentsForRandomAccess))
+      : (global::System.IO.Stream)(default!));
+  }
 
-public virtual global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForRandomAccess() {
-global::DripSharp.PdfCarton.Cos.COSDictionary dict = this.GetCOSObject();
-if ((dict is global::DripSharp.PdfCarton.Cos.COSStream)) {
-return ((global::DripSharp.PdfCarton.Cos.COSStream)(this.GetCOSObject()!)).CreateView();
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForRandomAccess() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary dict = this.GetCOSObject();
+    if ((dict is global::DripSharp.PdfCarton.Cos.COSStream)) {
+      return ((global::DripSharp.PdfCarton.Cos.COSStream)(this.GetCOSObject()!)).CreateView();
+    }
+    return default!;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.PDResources GetResources() {
-global::DripSharp.PdfCarton.Cos.COSDictionary resources = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Resources);
-return ((resources != default!) ? new global::DripSharp.PdfCarton.Pdmodel.PDResources(resources, this.resourceCache) : (global::DripSharp.PdfCarton.Pdmodel.PDResources)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.PDResources GetResources() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary resources
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Resources);
+    return ((resources != default!) ? new global::DripSharp.PdfCarton.Pdmodel.PDResources(resources,
+      this.resourceCache) : (global::DripSharp.PdfCarton.Pdmodel.PDResources)(default!));
+  }
 
-public void SetResources(global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Resources, resources);
-}
+  public void SetResources(global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Resources, resources);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetBBox() {
-global::DripSharp.PdfCarton.Cos.COSArray bbox = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
-return ((bbox != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(bbox) : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetBBox() {
+    global::DripSharp.PdfCarton.Cos.COSArray bbox
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
+    return ((bbox != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(bbox)
+      : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
+  }
 
-public virtual void SetBBox(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox) {
-if ((bbox == default!)) {
-this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
-} else {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox, bbox.GetCOSArray());
-}
-}
+  public virtual void SetBBox(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox) {
+    if ((bbox == default!)) {
+      this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
+    } else {
+      this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox, bbox.GetCOSArray());
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForStreamParsing() {
-return this.GetContentsForRandomAccess();
-}
+  public virtual global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForStreamParsing() {
+    return this.GetContentsForRandomAccess();
+  }
 }

@@ -9,9 +9,9 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class DigitalSignatureTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-public const string Tag = "DSIG";
+  public const string Tag = "DSIG";
 
-internal DigitalSignatureTable() : base() {
+  internal DigitalSignatureTable() : base() {
 
-}
+  }
 }

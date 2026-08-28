@@ -9,47 +9,54 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
 public class PDAppearanceEntry : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private global::DripSharp.PdfCarton.Cos.COSDictionary entry = null!;
+  private global::DripSharp.PdfCarton.Cos.COSDictionary entry = null!;
 
-private PDAppearanceEntry() {}
+  private PDAppearanceEntry() {}
 
-public PDAppearanceEntry(global::DripSharp.PdfCarton.Cos.COSDictionary entry) {
-this.entry = entry;
-}
+  public PDAppearanceEntry(global::DripSharp.PdfCarton.Cos.COSDictionary entry) {
+    this.entry = entry;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.entry;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.entry;
+  }
 
-public virtual bool IsSubDictionary() {
-return !((this.entry is global::DripSharp.PdfCarton.Cos.COSStream));
-}
+  public virtual bool IsSubDictionary() {
+    return !((this.entry is global::DripSharp.PdfCarton.Cos.COSStream));
+  }
 
-public virtual bool IsStream() {
-return (this.entry is global::DripSharp.PdfCarton.Cos.COSStream);
-}
+  public virtual bool IsStream() {
+    return (this.entry is global::DripSharp.PdfCarton.Cos.COSStream);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream GetAppearanceStream() {
-if (!(this.IsStream())) {
-throw new global::System.InvalidOperationException("This entry is not an appearance stream");
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream((global::DripSharp.PdfCarton.Cos.COSStream)(this.entry!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream GetAppearanceStream() {
+    if (!(this.IsStream())) {
+      throw new global::System.InvalidOperationException("This entry is not an appearance stream");
+    }
+    return new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream((global::DripSharp.PdfCarton.Cos.COSStream)(this.entry!));
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream> GetSubDictionary() {
-if (!(this.IsSubDictionary())) {
-throw new global::System.InvalidOperationException("This entry is not an appearance subdictionary");
-}
-global::DripSharp.PdfCarton.Cos.COSDictionary dict = this.entry;
-global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream> map = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream>();
-foreach (global::DripSharp.PdfCarton.Cos.COSName name in dict.KeySet()) {
-global::DripSharp.PdfCarton.Cos.COSStream stream = dict.GetCOSStream(name);
-if ((stream != default!)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(map, name, new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream(stream));
-}
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream>(map, dict);
-}
+  public virtual global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSName,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream> GetSubDictionary() {
+    if (!(this.IsSubDictionary())) {
+      throw new global::System.InvalidOperationException("This entry is not an appearance subdictionary");
+    }
+    global::DripSharp.PdfCarton.Cos.COSDictionary dict = this.entry;
+    global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSName,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream> map
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSName,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream>();
+    foreach (global::DripSharp.PdfCarton.Cos.COSName name in dict.KeySet()) {
+      global::DripSharp.PdfCarton.Cos.COSStream stream = dict.GetCOSStream(name);
+      if ((stream != default!)) {
+        global::DripSharp.Runtime.JavaCompat.MapPut(map, name,
+          new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream(stream));
+      }
+    }
+    return new global::DripSharp.PdfCarton.Pdmodel.Common.COSDictionaryMap<global::DripSharp.PdfCarton.Cos.COSName,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream>(map, dict);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

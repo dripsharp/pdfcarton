@@ -8,41 +8,59 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process.Reflect;
 
-public class ShadingPatternValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOGGER = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class ShadingPatternValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOGGER
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
-global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
-if (vPath.IsEmpty()) {
-return;
-}
-if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading)))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicMissingObject, "ShadingPattern validation required at least a PDResources"));
-} else {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shadingResource = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading)(vPath.Peek()!);
-global::DripSharp.PdfCarton.Pdmodel.PDPage page = vPath.GetClosestPathElement<global::DripSharp.PdfCarton.Pdmodel.PDPage>(typeof(global::DripSharp.PdfCarton.Pdmodel.PDPage));
-this.CheckColorSpace(context, page, shadingResource);
-this.CheckGraphicState(context, page, shadingResource);
-}
-}
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
+    global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
+    if (vPath.IsEmpty()) {
+      return;
+    }
+    if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading)))) {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicMissingObject,
+        "ShadingPattern validation required at least a PDResources"));
+    } else {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shadingResource
+        = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading)(vPath.Peek()!);
+      global::DripSharp.PdfCarton.Pdmodel.PDPage page
+        = vPath.GetClosestPathElement<global::DripSharp.PdfCarton.Pdmodel.PDPage>(typeof(global::DripSharp.PdfCarton.Pdmodel.PDPage));
+      this.CheckColorSpace(context, page, shadingResource);
+      this.CheckGraphicState(context, page, shadingResource);
+    }
+  }
 
-protected internal virtual void CheckColorSpace(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.PDPage page, global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shadingRes) {
-try {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pColorSpace = shadingRes.GetColorSpace();
-global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = context.GetConfig();
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory csFact = config.GetColorSpaceHelperFact();
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper csh = csFact.GetColorSpaceHelper(context, pColorSpace, global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.NoPattern);
-csh.Validate();
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Preflight.Process.Reflect.ShadingPatternValidationProcess.LOGGER, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf("Unable to get the color space"));
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidUnknownColorSpace, global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)));
-}
-}
+  protected internal virtual void CheckColorSpace(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shadingRes) {
+    try {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pColorSpace
+        = shadingRes.GetColorSpace();
+      global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = context.GetConfig();
+      global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory csFact
+        = config.GetColorSpaceHelperFact();
+      global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper csh
+        = csFact.GetColorSpaceHelper(context, pColorSpace,
+        global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.NoPattern);
+      csh.Validate();
+    } catch (global::System.IO.IOException e) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Preflight.Process.Reflect.ShadingPatternValidationProcess.LOGGER,
+        (global::System.Exception)e,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("Unable to get the color space"));
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidUnknownColorSpace,
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)));
+    }
+  }
 
-protected internal virtual void CheckGraphicState(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.PDPage page, global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shadingRes) {
-global::DripSharp.PdfCarton.Cos.COSDictionary resources = (global::DripSharp.PdfCarton.Cos.COSDictionary)(shadingRes.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.ExtGState)!);
-if ((resources != default!)) {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(context, resources, global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ExtgstateProcess);
-}
-}
+  protected internal virtual void CheckGraphicState(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shadingRes) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary resources
+      = (global::DripSharp.PdfCarton.Cos.COSDictionary)(shadingRes.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.ExtGState)!);
+    if ((resources != default!)) {
+      global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(context, resources,
+        global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ExtgstateProcess);
+    }
+  }
 }

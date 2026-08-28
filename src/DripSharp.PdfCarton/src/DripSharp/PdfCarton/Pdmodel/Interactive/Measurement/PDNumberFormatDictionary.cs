@@ -9,126 +9,142 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Measurement;
 
 public class PDNumberFormatDictionary : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-public const string Type = "NumberFormat";
+  public const string Type = "NumberFormat";
 
-public const string LabelSuffixToValue = "S";
+  public const string LabelSuffixToValue = "S";
 
-public const string LabelPrefixToValue = "P";
+  public const string LabelPrefixToValue = "P";
 
-public const string FractionalDisplayDecimal = "D";
+  public const string FractionalDisplayDecimal = "D";
 
-public const string FractionalDisplayFraction = "F";
+  public const string FractionalDisplayFraction = "F";
 
-public const string FractionalDisplayRound = "R";
+  public const string FractionalDisplayRound = "R";
 
-public const string FractionalDisplayTruncate = "T";
+  public const string FractionalDisplayTruncate = "T";
 
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary numberFormatDictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary numberFormatDictionary = null!;
 
-public PDNumberFormatDictionary() {
-this.numberFormatDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.numberFormatDictionary.SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.Type);
-}
+  public PDNumberFormatDictionary() {
+    this.numberFormatDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.numberFormatDictionary.SetName(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.Type);
+  }
 
-public PDNumberFormatDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-this.numberFormatDictionary = dictionary;
-}
+  public PDNumberFormatDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    this.numberFormatDictionary = dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.numberFormatDictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.numberFormatDictionary;
+  }
 
-public new virtual string GetType() {
-return global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.Type;
-}
+  public new virtual string GetType() {
+    return global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.Type;
+  }
 
-public virtual string GetUnits() {
-return this.GetCOSObject().GetString("U");
-}
+  public virtual string GetUnits() {
+    return this.GetCOSObject().GetString("U");
+  }
 
-public virtual void SetUnits(string units) {
-this.GetCOSObject().SetString("U", units);
-}
+  public virtual void SetUnits(string units) {
+    this.GetCOSObject().SetString("U", units);
+  }
 
-public virtual float GetConversionFactor() {
-return this.GetCOSObject().GetFloat("C");
-}
+  public virtual float GetConversionFactor() {
+    return this.GetCOSObject().GetFloat("C");
+  }
 
-public virtual void SetConversionFactor(float conversionFactor) {
-this.GetCOSObject().SetFloat("C", conversionFactor);
-}
+  public virtual void SetConversionFactor(float conversionFactor) {
+    this.GetCOSObject().SetFloat("C", conversionFactor);
+  }
 
-public virtual string GetFractionalDisplay() {
-return this.GetCOSObject().GetString("F", global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.FractionalDisplayDecimal);
-}
+  public virtual string GetFractionalDisplay() {
+    return this.GetCOSObject().GetString("F",
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.FractionalDisplayDecimal);
+  }
 
-public virtual void SetFractionalDisplay(string fractionalDisplay) {
-if ((((((fractionalDisplay == default!) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.FractionalDisplayDecimal, fractionalDisplay)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.FractionalDisplayFraction, fractionalDisplay)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.FractionalDisplayRound, fractionalDisplay)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.FractionalDisplayTruncate, fractionalDisplay))) {
-this.GetCOSObject().SetString("F", fractionalDisplay);
-} else {
-throw new global::System.ArgumentException("Value must be \"D\", \"F\", \"R\", or \"T\", (or null).");
-}
-}
+  public virtual void SetFractionalDisplay(string fractionalDisplay) {
+    if ((((((fractionalDisplay == default!)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.FractionalDisplayDecimal,
+      fractionalDisplay))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.FractionalDisplayFraction,
+      fractionalDisplay))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.FractionalDisplayRound,
+      fractionalDisplay))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.FractionalDisplayTruncate,
+      fractionalDisplay))) {
+      this.GetCOSObject().SetString("F", fractionalDisplay);
+    } else {
+      throw new global::System.ArgumentException("Value must be \"D\", \"F\", \"R\", or \"T\", (or null).");
+    }
+  }
 
-public virtual int GetDenominator() {
-return this.GetCOSObject().GetInt("D");
-}
+  public virtual int GetDenominator() {
+    return this.GetCOSObject().GetInt("D");
+  }
 
-public virtual void SetDenominator(int denominator) {
-this.GetCOSObject().SetInt("D", denominator);
-}
+  public virtual void SetDenominator(int denominator) {
+    this.GetCOSObject().SetInt("D", denominator);
+  }
 
-public virtual bool IsFD() {
-return this.GetCOSObject().GetBoolean("FD", false);
-}
+  public virtual bool IsFD() {
+    return this.GetCOSObject().GetBoolean("FD", false);
+  }
 
-public virtual void SetFD(bool fd) {
-this.GetCOSObject().SetBoolean("FD", fd);
-}
+  public virtual void SetFD(bool fd) {
+    this.GetCOSObject().SetBoolean("FD", fd);
+  }
 
-public virtual string GetThousandsSeparator() {
-return this.GetCOSObject().GetString("RT", ",");
-}
+  public virtual string GetThousandsSeparator() {
+    return this.GetCOSObject().GetString("RT", ",");
+  }
 
-public virtual void SetThousandsSeparator(string thousandsSeparator) {
-this.GetCOSObject().SetString("RT", thousandsSeparator);
-}
+  public virtual void SetThousandsSeparator(string thousandsSeparator) {
+    this.GetCOSObject().SetString("RT", thousandsSeparator);
+  }
 
-public virtual string GetDecimalSeparator() {
-return this.GetCOSObject().GetString("RD", ".");
-}
+  public virtual string GetDecimalSeparator() {
+    return this.GetCOSObject().GetString("RD", ".");
+  }
 
-public virtual void SetDecimalSeparator(string decimalSeparator) {
-this.GetCOSObject().SetString("RD", decimalSeparator);
-}
+  public virtual void SetDecimalSeparator(string decimalSeparator) {
+    this.GetCOSObject().SetString("RD", decimalSeparator);
+  }
 
-public virtual string GetLabelPrefixString() {
-return this.GetCOSObject().GetString("PS", " ");
-}
+  public virtual string GetLabelPrefixString() {
+    return this.GetCOSObject().GetString("PS", " ");
+  }
 
-public virtual void SetLabelPrefixString(string labelPrefixString) {
-this.GetCOSObject().SetString("PS", labelPrefixString);
-}
+  public virtual void SetLabelPrefixString(string labelPrefixString) {
+    this.GetCOSObject().SetString("PS", labelPrefixString);
+  }
 
-public virtual string GetLabelSuffixString() {
-return this.GetCOSObject().GetString("SS", " ");
-}
+  public virtual string GetLabelSuffixString() {
+    return this.GetCOSObject().GetString("SS", " ");
+  }
 
-public virtual void SetLabelSuffixString(string labelSuffixString) {
-this.GetCOSObject().SetString("SS", labelSuffixString);
-}
+  public virtual void SetLabelSuffixString(string labelSuffixString) {
+    this.GetCOSObject().SetString("SS", labelSuffixString);
+  }
 
-public virtual string GetLabelPositionToValue() {
-return this.GetCOSObject().GetString("O", global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.LabelSuffixToValue);
-}
+  public virtual string GetLabelPositionToValue() {
+    return this.GetCOSObject().GetString("O",
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.LabelSuffixToValue);
+  }
 
-public virtual void SetLabelPositionToValue(string labelPositionToValue) {
-if ((((labelPositionToValue == default!) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.LabelPrefixToValue, labelPositionToValue)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.LabelSuffixToValue, labelPositionToValue))) {
-this.GetCOSObject().SetString("O", labelPositionToValue);
-} else {
-throw new global::System.ArgumentException("Value must be \"S\", or \"P\" (or null).");
-}
-}
+  public virtual void SetLabelPositionToValue(string labelPositionToValue) {
+    if ((((labelPositionToValue == default!)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.LabelPrefixToValue,
+      labelPositionToValue))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDNumberFormatDictionary.LabelSuffixToValue,
+      labelPositionToValue))) {
+      this.GetCOSObject().SetString("O", labelPositionToValue);
+    } else {
+      throw new global::System.ArgumentException("Value must be \"S\", or \"P\" (or null).");
+    }
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

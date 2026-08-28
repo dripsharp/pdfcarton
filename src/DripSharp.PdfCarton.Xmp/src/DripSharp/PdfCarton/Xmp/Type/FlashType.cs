@@ -8,24 +8,25 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/exif/1.0/", "exif")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/exif/1.0/",
+  "exif")]
 public class FlashType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Boolean", "Simple")]
-public const string Fired = "Fired";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Boolean", "Simple")]
+  public const string Fired = "Fired";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Boolean", "Simple")]
-public const string Function = "Function";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Boolean", "Simple")]
+  public const string Function = "Function";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Boolean", "Simple")]
-public const string RedEyeMode = "RedEyeMode";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Boolean", "Simple")]
+  public const string RedEyeMode = "RedEyeMode";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string Mode = "Mode";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string Mode = "Mode";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string Return = "Return";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string Return = "Return";
 
-public FlashType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+  public FlashType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
-}
+  }
 }

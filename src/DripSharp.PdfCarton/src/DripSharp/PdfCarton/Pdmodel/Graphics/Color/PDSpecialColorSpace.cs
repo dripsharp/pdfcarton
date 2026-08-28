@@ -8,6 +8,7 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
-public abstract class PDSpecialColorSpace : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace {
-public PDSpecialColorSpace() {}
+public abstract class PDSpecialColorSpace
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace {
+  public PDSpecialColorSpace() {}
 }

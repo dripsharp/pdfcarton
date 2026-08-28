@@ -8,24 +8,30 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process.Reflect;
 
-public class ActionsValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
-global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
-if (vPath.IsEmpty()) {
-return;
-} else {
-if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Cos.COSDictionary)))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionInvalidType, "Action validation process needs at least one COSDictionary object"));
-} else {
-global::DripSharp.PdfCarton.Cos.COSDictionary actionsDict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(vPath.Peek()!);
-bool aaEntryAuth = ((vPath.Size() - vPath.GetClosestTypePosition(typeof(global::DripSharp.PdfCarton.Pdmodel.PDPage))) == 2);
-global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = context.GetConfig();
-global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory factory = config.GetActionFact();
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager> la = factory.GetActionManagers(context, actionsDict);
-foreach (global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager aMng in la) {
-aMng.Valid(aaEntryAuth);
-}
-}
-}
-}
+public class ActionsValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
+    global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
+    if (vPath.IsEmpty()) {
+      return;
+    } else {
+      if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Cos.COSDictionary)))) {
+        context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionInvalidType,
+          "Action validation process needs at least one COSDictionary object"));
+      } else {
+        global::DripSharp.PdfCarton.Cos.COSDictionary actionsDict
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(vPath.Peek()!);
+        bool aaEntryAuth = ((vPath.Size()
+          - vPath.GetClosestTypePosition(typeof(global::DripSharp.PdfCarton.Pdmodel.PDPage))) == 2);
+        global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = context.GetConfig();
+        global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory factory
+          = config.GetActionFact();
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager> la
+          = factory.GetActionManagers(context, actionsDict);
+        foreach (global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager aMng in la) {
+          aMng.Valid(aaEntryAuth);
+        }
+      }
+    }
+  }
 }

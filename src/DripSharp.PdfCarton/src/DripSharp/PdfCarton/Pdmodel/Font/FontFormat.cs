@@ -9,23 +9,27 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public sealed class FontFormat {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("TTF")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat Ttf = new global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("TTF")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat Ttf
+    = new global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("OTF")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat Otf = new global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("OTF")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat Otf
+    = new global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("PFB")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat Pfb = new global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("PFB")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat Pfb
+    = new global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat();
 
-private FontFormat() {}
+  private FontFormat() {}
 
+  public static FontFormat[] values()
+    => global::DripSharp.Runtime.JavaCompat.EnumValues<FontFormat>();
+  public static FontFormat valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<FontFormat>(name);
 
-public static FontFormat[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<FontFormat>();
-public static FontFormat valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<FontFormat>(name);
-
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

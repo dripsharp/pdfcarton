@@ -8,33 +8,38 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
-public class PDAnnotationCircle : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquareCircle {
-public const string SubType = "Circle";
+public class PDAnnotationCircle
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquareCircle {
+  public const string SubType = "Circle";
 
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler
+    = null!;
 
-public PDAnnotationCircle() : base(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationCircle.SubType) {
+  public PDAnnotationCircle()
+  : base(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationCircle.SubType) {
 
-}
+  }
 
-public PDAnnotationCircle(global::DripSharp.PdfCarton.Cos.COSDictionary field) : base(field) {
+  public PDAnnotationCircle(global::DripSharp.PdfCarton.Cos.COSDictionary field) : base(field) {
 
-}
+  }
 
-public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
-this.customAppearanceHandler = appearanceHandler;
-}
+  public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
+    this.customAppearanceHandler = appearanceHandler;
+  }
 
-public override void ConstructAppearances() {
-this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
-}
+  public override void ConstructAppearances() {
+    this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
+  }
 
-public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-if ((this.customAppearanceHandler == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDCircleAppearanceHandler appearanceHandler = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDCircleAppearanceHandler(this, document);
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
-} else {
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
-}
-}
+  public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    if ((this.customAppearanceHandler == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDCircleAppearanceHandler appearanceHandler
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDCircleAppearanceHandler(this,
+        document);
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
+    } else {
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
+    }
+  }
 }

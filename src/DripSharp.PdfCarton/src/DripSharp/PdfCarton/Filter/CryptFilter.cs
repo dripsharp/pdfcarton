@@ -9,23 +9,34 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class CryptFilter : global::DripSharp.PdfCarton.Filter.Filter {
-public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded, global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters, int index) {
-global::DripSharp.PdfCarton.Cos.COSName encryptionName = parameters.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Name);
-if (((encryptionName == default!) || encryptionName.Equals(global::DripSharp.PdfCarton.Cos.COSName.Identity))) {
-global::DripSharp.PdfCarton.Filter.Filter identityFilter = new global::DripSharp.PdfCarton.Filter.IdentityFilter();
-identityFilter.Decode(encoded, decoded, parameters, index);
-return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
-}
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unsupported crypt filter ", encryptionName.GetName()));
-}
+  public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded,
+    global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters,
+    int index) {
+    global::DripSharp.PdfCarton.Cos.COSName encryptionName
+      = parameters.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Name);
+    if (((encryptionName == default!)
+      || encryptionName.Equals(global::DripSharp.PdfCarton.Cos.COSName.Identity))) {
+      global::DripSharp.PdfCarton.Filter.Filter identityFilter
+        = new global::DripSharp.PdfCarton.Filter.IdentityFilter();
+      identityFilter.Decode(encoded, decoded, parameters, index);
+      return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
+    }
+    throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unsupported crypt filter ",
+      encryptionName.GetName()));
+  }
 
-public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
-global::DripSharp.PdfCarton.Cos.COSName encryptionName = parameters.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Name);
-if (((encryptionName == default!) || encryptionName.Equals(global::DripSharp.PdfCarton.Cos.COSName.Identity))) {
-global::DripSharp.PdfCarton.Filter.Filter identityFilter = new global::DripSharp.PdfCarton.Filter.IdentityFilter();
-identityFilter.Encode(input, encoded, parameters);
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unsupported crypt filter ", encryptionName.GetName()));
-}
-}
+  public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded,
+    global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
+    global::DripSharp.PdfCarton.Cos.COSName encryptionName
+      = parameters.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Name);
+    if (((encryptionName == default!)
+      || encryptionName.Equals(global::DripSharp.PdfCarton.Cos.COSName.Identity))) {
+      global::DripSharp.PdfCarton.Filter.Filter identityFilter
+        = new global::DripSharp.PdfCarton.Filter.IdentityFilter();
+      identityFilter.Encode(input, encoded, parameters);
+    } else {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unsupported crypt filter ",
+        encryptionName.GetName()));
+    }
+  }
 }

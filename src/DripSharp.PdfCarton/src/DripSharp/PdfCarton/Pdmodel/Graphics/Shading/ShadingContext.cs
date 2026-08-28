@@ -9,61 +9,68 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public abstract class ShadingContext : global::DripSharp.Runtime.JavaPaintContext {
-private float[] background = null!;
+  private float[] background = null!;
 
-private int rgbBackground = default;
+  private int rgbBackground = default;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading = null!;
 
-private global::DripSharp.Runtime.JavaColorModel outputColorModel = null!;
+  private global::DripSharp.Runtime.JavaColorModel outputColorModel = null!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace shadingColorSpace = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace shadingColorSpace = null!;
 
-public ShadingContext(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading, global::DripSharp.Runtime.JavaColorModel cm, global::SkiaSharp.SKMatrix xform, global::DripSharp.PdfCarton.Util.Matrix matrix) {
-this.shading = shading;
-this.shadingColorSpace = shading.GetColorSpace();
-global::DripSharp.Runtime.JavaColorSpace outputCS = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_sRGB);
-this.outputColorModel = global::DripSharp.Runtime.PdfCartonFontCompat.ComponentColorModel(outputCS, true, false, global::DripSharp.Runtime.PdfCartonTransparency.TRANSLUCENT, global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE);
-global::DripSharp.PdfCarton.Cos.COSArray bg = shading.GetBackground();
-if ((bg != default!)) {
-this.background = bg.ToFloatArray();
-this.rgbBackground = this.convertToRGB(this.background);
-}
-}
+  public ShadingContext(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading,
+    global::DripSharp.Runtime.JavaColorModel cm, global::SkiaSharp.SKMatrix xform,
+    global::DripSharp.PdfCarton.Util.Matrix matrix) {
+    this.shading = shading;
+    this.shadingColorSpace = shading.GetColorSpace();
+    global::DripSharp.Runtime.JavaColorSpace outputCS
+      = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_sRGB);
+    this.outputColorModel
+      = global::DripSharp.Runtime.PdfCartonFontCompat.ComponentColorModel(outputCS, true, false,
+      global::DripSharp.Runtime.PdfCartonTransparency.TRANSLUCENT,
+      global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE);
+    global::DripSharp.PdfCarton.Cos.COSArray bg = shading.GetBackground();
+    if ((bg != default!)) {
+      this.background = bg.ToFloatArray();
+      this.rgbBackground = this.convertToRGB(this.background);
+    }
+  }
 
-internal virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace getShadingColorSpace() {
-return this.shadingColorSpace;
-}
+  internal virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace getShadingColorSpace() {
+    return this.shadingColorSpace;
+  }
 
-internal virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading getShading() {
-return this.shading;
-}
+  internal virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading getShading() {
+    return this.shading;
+  }
 
-internal virtual float[] getBackground() {
-return this.background;
-}
+  internal virtual float[] getBackground() {
+    return this.background;
+  }
 
-internal virtual int getRgbBackground() {
-return this.rgbBackground;
-}
+  internal virtual int getRgbBackground() {
+    return this.rgbBackground;
+  }
 
-internal int convertToRGB(float[] values) {
-int normRGBValues;
-float[] rgbValues = this.shadingColorSpace.ToRGB(values);
-normRGBValues = (int)((rgbValues[0] * 255));
-normRGBValues |= ((int)((rgbValues[1] * 255)) << unchecked((int)(8)));
-normRGBValues |= ((int)((rgbValues[2] * 255)) << unchecked((int)(16)));
-return normRGBValues;
-}
+  internal int convertToRGB(float[] values) {
+    int normRGBValues;
+    float[] rgbValues = this.shadingColorSpace.ToRGB(values);
+    normRGBValues = (int)((rgbValues[0] * 255));
+    normRGBValues |= ((int)((rgbValues[1] * 255)) << unchecked((int)(8)));
+    normRGBValues |= ((int)((rgbValues[2] * 255)) << unchecked((int)(16)));
+    return normRGBValues;
+  }
 
-public virtual global::DripSharp.Runtime.JavaColorModel GetColorModel() {
-return this.outputColorModel;
-}
+  public virtual global::DripSharp.Runtime.JavaColorModel GetColorModel() {
+    return this.outputColorModel;
+  }
 
-public virtual void Dispose() {
-this.outputColorModel = default!;
-this.shadingColorSpace = default!;
-}
+  public virtual void Dispose() {
+    this.outputColorModel = default!;
+    this.shadingColorSpace = default!;
+  }
 
-public abstract global::DripSharp.Runtime.JavaRaster GetRaster(int x, int y, int width, int height);
+  public abstract global::DripSharp.Runtime.JavaRaster GetRaster(int x, int y, int width,
+    int height);
 }

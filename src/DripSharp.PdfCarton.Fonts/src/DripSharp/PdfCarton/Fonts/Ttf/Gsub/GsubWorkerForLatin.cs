@@ -9,47 +9,63 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Gsub;
 
 public class GsubWorkerForLatin : global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private static readonly global::System.Collections.Generic.IList<string> FEATURES_IN_ORDER = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<string>("ccmp", "liga", "clig");
+  private static readonly global::System.Collections.Generic.IList<string> FEATURES_IN_ORDER
+    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<string>("ccmp", "liga", "clig");
 
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData = null!;
 
-internal GsubWorkerForLatin(global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData) {
-this.gsubData = gsubData;
-}
+  internal GsubWorkerForLatin(global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData) {
+    this.gsubData = gsubData;
+  }
 
-public virtual global::System.Collections.Generic.IList<int> ApplyTransforms(global::System.Collections.Generic.IList<int> originalGlyphIds) {
-global::System.Collections.Generic.IList<int> intermediateGlyphsFromGsub = originalGlyphIds;
-foreach (string feature in global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForLatin.FEATURES_IN_ORDER) {
-if (!(this.gsubData.IsFeatureSupported(feature))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForLatin.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("the feature ", feature), " was not found")));
-continue;
-}
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForLatin.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("applying the feature ", feature)));
-global::DripSharp.PdfCarton.Fonts.Ttf.Model.ScriptFeature scriptFeature = this.gsubData.GetFeature(feature);
-intermediateGlyphsFromGsub = this.applyGsubFeature(scriptFeature, intermediateGlyphsFromGsub);
-}
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(intermediateGlyphsFromGsub);
-}
+  public virtual global::System.Collections.Generic.IList<int> ApplyTransforms(global::System.Collections.Generic.IList<int> originalGlyphIds) {
+    global::System.Collections.Generic.IList<int> intermediateGlyphsFromGsub = originalGlyphIds;
+    foreach (string feature in global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForLatin.FEATURES_IN_ORDER) {
+      if (!(this.gsubData.IsFeatureSupported(feature))) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForLatin.LOG,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("the feature ",
+          feature), " was not found")));
+        continue;
+      }
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForLatin.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("applying the feature ",
+        feature)));
+      global::DripSharp.PdfCarton.Fonts.Ttf.Model.ScriptFeature scriptFeature
+        = this.gsubData.GetFeature(feature);
+      intermediateGlyphsFromGsub = this.applyGsubFeature(scriptFeature, intermediateGlyphsFromGsub);
+    }
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(intermediateGlyphsFromGsub);
+  }
 
-private global::System.Collections.Generic.IList<int> applyGsubFeature(global::DripSharp.PdfCarton.Fonts.Ttf.Model.ScriptFeature scriptFeature, global::System.Collections.Generic.IList<int> originalGlyphs) {
-if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionIsEmpty(scriptFeature.GetAllGlyphIdsForSubstitution())) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForLatin.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("getAllGlyphIdsForSubstitution() for ", scriptFeature.GetName()), " is empty")));
-return originalGlyphs;
-}
-global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitter glyphArraySplitter = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitterRegexImpl(scriptFeature.GetAllGlyphIdsForSubstitution());
-global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>> tokens = glyphArraySplitter.Split(originalGlyphs);
-global::System.Collections.Generic.IList<int> gsubProcessedGlyphs = new global::System.Collections.Generic.List<int>();
-foreach (global::System.Collections.Generic.IList<int> chunk in tokens) {
-if (scriptFeature.CanReplaceGlyphs(chunk)) {
-int glyphId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(scriptFeature.GetReplacementForGlyphs(chunk));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(gsubProcessedGlyphs, glyphId);
-} else {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AddAll(gsubProcessedGlyphs, chunk);
-}
-}
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForLatin.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("originalGlyphs: ", originalGlyphs), ", gsubProcessedGlyphs: "), gsubProcessedGlyphs)));
-return gsubProcessedGlyphs;
-}
+  private global::System.Collections.Generic.IList<int> applyGsubFeature(global::DripSharp.PdfCarton.Fonts.Ttf.Model.ScriptFeature scriptFeature,
+    global::System.Collections.Generic.IList<int> originalGlyphs) {
+    if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionIsEmpty(scriptFeature.GetAllGlyphIdsForSubstitution())) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForLatin.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("getAllGlyphIdsForSubstitution() for ",
+        scriptFeature.GetName()), " is empty")));
+      return originalGlyphs;
+    }
+    global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitter glyphArraySplitter
+      = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitterRegexImpl(scriptFeature.GetAllGlyphIdsForSubstitution());
+    global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>> tokens
+      = glyphArraySplitter.Split(originalGlyphs);
+    global::System.Collections.Generic.IList<int> gsubProcessedGlyphs
+      = new global::System.Collections.Generic.List<int>();
+    foreach (global::System.Collections.Generic.IList<int> chunk in tokens) {
+      if (scriptFeature.CanReplaceGlyphs(chunk)) {
+        int glyphId
+          = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(scriptFeature.GetReplacementForGlyphs(chunk));
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(gsubProcessedGlyphs, glyphId);
+      } else {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AddAll(gsubProcessedGlyphs, chunk);
+      }
+    }
+    global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForLatin.LOG,
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("originalGlyphs: ",
+      originalGlyphs), ", gsubProcessedGlyphs: "), gsubProcessedGlyphs)));
+    return gsubProcessedGlyphs;
+  }
 }

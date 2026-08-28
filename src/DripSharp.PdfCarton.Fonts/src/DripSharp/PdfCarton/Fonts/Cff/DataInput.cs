@@ -9,27 +9,27 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public interface DataInput {
-public bool HasRemaining();
+  public bool HasRemaining();
 
-public int GetPosition();
+  public int GetPosition();
 
-public void SetPosition(int position);
+  public void SetPosition(int position);
 
-public sbyte ReadByte();
+  public sbyte ReadByte();
 
-public int ReadUnsignedByte();
+  public int ReadUnsignedByte();
 
-public int PeekUnsignedByte(int offset);
+  public int PeekUnsignedByte(int offset);
 
-public short ReadShort();
+  public short ReadShort();
 
-public int ReadUnsignedShort();
+  public int ReadUnsignedShort();
 
-public int ReadInt();
+  public int ReadInt();
 
-public sbyte[] ReadBytes(int length);
+  public sbyte[] ReadBytes(int length);
 
-public int Length();
+  public int Length();
 
-public int ReadOffset(int offSize);
+  public int ReadOffset(int offSize);
 }

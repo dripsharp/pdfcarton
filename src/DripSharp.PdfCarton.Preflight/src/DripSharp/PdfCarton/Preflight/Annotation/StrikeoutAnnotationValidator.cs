@@ -8,9 +8,12 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public class StrikeoutAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.MarkupAnnotationValidator {
-protected internal StrikeoutAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
-this.PdMarkup = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationStrikeout(annotDictionary);
-this.PdAnnot = this.PdMarkup;
-}
+public class StrikeoutAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.MarkupAnnotationValidator {
+  protected internal StrikeoutAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdMarkup
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationStrikeout(annotDictionary);
+    this.PdAnnot = this.PdMarkup;
+  }
 }

@@ -9,17 +9,20 @@
 namespace DripSharp.PdfCarton.Fonts.Type1;
 
 public interface Type1CharStringReader {
-public global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString GetType1CharString(string name);
+  public global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString GetType1CharString(string name);
 }
 
-public sealed class __Type1CharStringReaderFunctionalAdapter : global::DripSharp.PdfCarton.Fonts.Type1.Type1CharStringReader {
-private readonly global::System.Func<string, global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString> implementation;
+public sealed class __Type1CharStringReaderFunctionalAdapter
+: global::DripSharp.PdfCarton.Fonts.Type1.Type1CharStringReader {
+  private readonly global::System.Func<string,
+    global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString> implementation;
 
-public __Type1CharStringReaderFunctionalAdapter(global::System.Func<string, global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString> implementation) {
-this.implementation = implementation;
-}
+  public __Type1CharStringReaderFunctionalAdapter(global::System.Func<string,
+    global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString> implementation) {
+    this.implementation = implementation;
+  }
 
-public global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString GetType1CharString(string name) {
-return this.implementation(name);
-}
+  public global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString GetType1CharString(string name) {
+    return this.implementation(name);
+  }
 }

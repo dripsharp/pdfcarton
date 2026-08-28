@@ -8,28 +8,34 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Util.Autodetect;
 
-public abstract class NativeFontDirFinder : global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontDirFinder {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public abstract class NativeFontDirFinder
+: global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontDirFinder {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public virtual global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find() {
-global::System.Collections.Generic.IList<global::System.IO.FileInfo> fontDirList = new global::System.Collections.Generic.List<global::System.IO.FileInfo>();
-string[] searchableDirectories = this.GetSearchableDirectories();
-if ((searchableDirectories != default!)) {
-foreach (string searchableDirectorie in searchableDirectories) {
-global::System.IO.FileInfo fontDir = new global::System.IO.FileInfo(searchableDirectorie);
-try {
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(fontDir) && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(fontDir))) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDirList, fontDir);
-}
-} catch (global::System.Security.SecurityException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.NativeFontDirFinder.LOG, (global::System.Exception)e, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get native font directories - ignoring"));
-}
-}
-}
-return fontDirList;
-}
+  public virtual global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find() {
+    global::System.Collections.Generic.IList<global::System.IO.FileInfo> fontDirList
+      = new global::System.Collections.Generic.List<global::System.IO.FileInfo>();
+    string[] searchableDirectories = this.GetSearchableDirectories();
+    if ((searchableDirectories != default!)) {
+      foreach (string searchableDirectorie in searchableDirectories) {
+        global::System.IO.FileInfo fontDir = new global::System.IO.FileInfo(searchableDirectorie);
+        try {
+          if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(fontDir)
+            && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(fontDir))) {
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDirList, fontDir);
+          }
+        } catch (global::System.Security.SecurityException e) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.NativeFontDirFinder.LOG,
+            (global::System.Exception)e,
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get native font directories - ignoring"));
+        }
+      }
+    }
+    return fontDirList;
+  }
 
-protected internal abstract string[] GetSearchableDirectories();
+  protected internal abstract string[] GetSearchableDirectories();
 
-public NativeFontDirFinder() {}
+  public NativeFontDirFinder() {}
 }

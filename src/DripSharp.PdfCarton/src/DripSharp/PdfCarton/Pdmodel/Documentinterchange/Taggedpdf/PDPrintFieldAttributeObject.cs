@@ -8,72 +8,79 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf;
 
-public class PDPrintFieldAttributeObject : global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject {
-public const string OwnerPrintField = "PrintField";
+public class PDPrintFieldAttributeObject
+: global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject {
+  public const string OwnerPrintField = "PrintField";
 
-private const string ROLE = "Role";
+  private const string ROLE = "Role";
 
-private const string CHECKED = "checked";
+  private const string CHECKED = "checked";
 
-private const string DESC = "Desc";
+  private const string DESC = "Desc";
 
-public const string RoleRb = "rb";
+  public const string RoleRb = "rb";
 
-public const string RoleCb = "cb";
+  public const string RoleCb = "cb";
 
-public const string RolePb = "pb";
+  public const string RolePb = "pb";
 
-public const string RoleTv = "tv";
+  public const string RoleTv = "tv";
 
-public const string CheckedStateOn = "on";
+  public const string CheckedStateOn = "on";
 
-public const string CheckedStateOff = "off";
+  public const string CheckedStateOff = "off";
 
-public const string CheckedStateNeutral = "neutral";
+  public const string CheckedStateNeutral = "neutral";
 
-public PDPrintFieldAttributeObject() {
-this.SetOwner(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.OwnerPrintField);
-}
+  public PDPrintFieldAttributeObject() {
+    this.SetOwner(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.OwnerPrintField);
+  }
 
-public PDPrintFieldAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : base(dictionary) {
+  public PDPrintFieldAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary)
+  : base(dictionary) {
 
-}
+  }
 
-public virtual string GetRole() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.ROLE);
-}
+  public virtual string GetRole() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.ROLE);
+  }
 
-public virtual void SetRole(string role) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.ROLE, role);
-}
+  public virtual void SetRole(string role) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.ROLE,
+      role);
+  }
 
-public virtual string GetCheckedState() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.CHECKED, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.CheckedStateOff);
-}
+  public virtual string GetCheckedState() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.CHECKED,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.CheckedStateOff);
+  }
 
-public virtual void SetCheckedState(string checkedState) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.CHECKED, checkedState);
-}
+  public virtual void SetCheckedState(string checkedState) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.CHECKED,
+      checkedState);
+  }
 
-public virtual string GetAlternateName() {
-return this.GetString(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.DESC);
-}
+  public virtual string GetAlternateName() {
+    return this.GetString(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.DESC);
+  }
 
-public virtual void SetAlternateName(string alternateName) {
-this.SetString(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.DESC, alternateName);
-}
+  public virtual void SetAlternateName(string alternateName) {
+    this.SetString(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.DESC,
+      alternateName);
+  }
 
-public override string ToString() {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder().Append(base.ToString());
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.ROLE)) {
-sb.Append(", Role=").Append(this.GetRole());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.CHECKED)) {
-sb.Append(", Checked=").Append(this.GetCheckedState());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.DESC)) {
-sb.Append(", Desc=").Append(this.GetAlternateName());
-}
-return sb.ToString();
-}
+  public override string ToString() {
+    global::System.Text.StringBuilder sb
+      = new global::System.Text.StringBuilder().Append(base.ToString());
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.ROLE)) {
+      sb.Append(", Role=").Append(this.GetRole());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.CHECKED)) {
+      sb.Append(", Checked=").Append(this.GetCheckedState());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDPrintFieldAttributeObject.DESC)) {
+      sb.Append(", Desc=").Append(this.GetAlternateName());
+    }
+    return sb.ToString();
+  }
 }

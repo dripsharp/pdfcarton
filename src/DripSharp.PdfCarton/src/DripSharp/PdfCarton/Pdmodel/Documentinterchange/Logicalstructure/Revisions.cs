@@ -9,44 +9,48 @@
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
 public class Revisions<T> {
-private readonly global::System.Collections.Generic.IList<T> objects = null!;
+  private readonly global::System.Collections.Generic.IList<T> objects = null!;
 
-private readonly global::System.Collections.Generic.IList<int> revisionNumbers = null!;
+  private readonly global::System.Collections.Generic.IList<int> revisionNumbers = null!;
 
-public Revisions() {
-this.objects = new global::System.Collections.Generic.List<T>();
-this.revisionNumbers = new global::System.Collections.Generic.List<int>();
-}
+  public Revisions() {
+    this.objects = new global::System.Collections.Generic.List<T>();
+    this.revisionNumbers = new global::System.Collections.Generic.List<int>();
+  }
 
-public virtual T GetObject(int index) {
-return global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, index);
-}
+  public virtual T GetObject(int index) {
+    return global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, index);
+  }
 
-public virtual int GetRevisionNumber(int index) {
-return global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(global::DripSharp.Runtime.JavaCompat.ListGet(this.revisionNumbers, index));
-}
+  public virtual int GetRevisionNumber(int index) {
+    return global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(global::DripSharp.Runtime.JavaCompat.ListGet(this.revisionNumbers,
+      index));
+  }
 
-public virtual void AddObject(T @object, int revisionNumber) {
-global::DripSharp.Runtime.JavaCompat.Add(this.objects, @object);
-global::DripSharp.Runtime.JavaCompat.Add(this.revisionNumbers, revisionNumber);
-}
+  public virtual void AddObject(T @object, int revisionNumber) {
+    global::DripSharp.Runtime.JavaCompat.Add(this.objects, @object);
+    global::DripSharp.Runtime.JavaCompat.Add(this.revisionNumbers, revisionNumber);
+  }
 
-protected internal virtual void SetRevisionNumber(T @object, int revisionNumber) {
-int index = global::DripSharp.Runtime.JavaCompat.ListIndexOf(this.objects, @object);
-if ((index > -1)) {
-global::DripSharp.Runtime.JavaCompat.ListSet(this.revisionNumbers, index, revisionNumber);
-}
-}
+  protected internal virtual void SetRevisionNumber(T @object, int revisionNumber) {
+    int index = global::DripSharp.Runtime.JavaCompat.ListIndexOf(this.objects, @object);
+    if ((index > -1)) {
+      global::DripSharp.Runtime.JavaCompat.ListSet(this.revisionNumbers, index, revisionNumber);
+    }
+  }
 
-public virtual int Size() {
-return global::DripSharp.Runtime.JavaCompat.CollectionCount(this.objects);
-}
+  public virtual int Size() {
+    return global::DripSharp.Runtime.JavaCompat.CollectionCount(this.objects);
+  }
 
-public override string ToString() {
-global::DripSharp.Runtime.JavaStringJoiner sj = new global::DripSharp.Runtime.JavaStringJoiner("; ", "{", "}");
-for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.objects)); i++) {
-sj.add(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("object=", global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, i)), ", revisionNumber="), this.GetRevisionNumber(i)));
-}
-return sj.toString();
-}
+  public override string ToString() {
+    global::DripSharp.Runtime.JavaStringJoiner sj
+      = new global::DripSharp.Runtime.JavaStringJoiner("; ", "{", "}");
+    for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.objects)); i++) {
+      sj.add(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("object=",
+        global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, i)), ", revisionNumber="),
+        this.GetRevisionNumber(i)));
+    }
+    return sj.toString();
+  }
 }

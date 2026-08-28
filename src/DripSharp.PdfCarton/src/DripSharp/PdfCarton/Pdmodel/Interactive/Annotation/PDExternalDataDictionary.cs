@@ -9,32 +9,34 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
 public class PDExternalDataDictionary : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dataDictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dataDictionary = null!;
 
-public PDExternalDataDictionary() {
-this.dataDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.dataDictionary.SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, "ExData");
-}
+  public PDExternalDataDictionary() {
+    this.dataDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.dataDictionary.SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, "ExData");
+  }
 
-public PDExternalDataDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-this.dataDictionary = dictionary;
-}
+  public PDExternalDataDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    this.dataDictionary = dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dataDictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dataDictionary;
+  }
 
-public new virtual string GetType() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type, "ExData");
-}
+  public new virtual string GetType() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      "ExData");
+  }
 
-public virtual string GetSubtype() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
-}
+  public virtual string GetSubtype() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
+  }
 
-public virtual void SetSubtype(string subtype) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, subtype);
-}
+  public virtual void SetSubtype(string subtype) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, subtype);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

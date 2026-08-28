@@ -9,51 +9,61 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public sealed class PDRadioButton : global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton {
-private const int FLAG_NO_TOGGLE_TO_OFF = (1 << unchecked((int)(14)));
+  private const int FLAG_NO_TOGGLE_TO_OFF = (1 << unchecked((int)(14)));
 
-public PDRadioButton(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) : base(acroForm) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton.FLAG_RADIO, true);
-}
+  public PDRadioButton(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm)
+  : base(acroForm) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton.FLAG_RADIO, true);
+  }
 
-internal PDRadioButton(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm, global::DripSharp.PdfCarton.Cos.COSDictionary field, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm, field, parent) {
+  internal PDRadioButton(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm,
+    global::DripSharp.PdfCarton.Cos.COSDictionary field,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm,
+    field, parent) {
 
-}
+  }
 
-public void SetRadiosInUnison(bool radiosInUnison) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton.FLAG_RADIOS_IN_UNISON, radiosInUnison);
-}
+  public void SetRadiosInUnison(bool radiosInUnison) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton.FLAG_RADIOS_IN_UNISON,
+      radiosInUnison);
+  }
 
-public bool IsRadiosInUnison() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton.FLAG_RADIOS_IN_UNISON);
-}
+  public bool IsRadiosInUnison() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton.FLAG_RADIOS_IN_UNISON);
+  }
 
-public int GetSelectedIndex() {
-int idx = 0;
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in this.GetWidgets()) {
-if (!(global::DripSharp.PdfCarton.Cos.COSName.Off.Equals(widget.GetAppearanceState()))) {
-return idx;
-}
-idx++;
-}
-return -1;
-}
+  public int GetSelectedIndex() {
+    int idx = 0;
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in this.GetWidgets()) {
+      if (!(global::DripSharp.PdfCarton.Cos.COSName.Off.Equals(widget.GetAppearanceState()))) {
+        return idx;
+      }
+      idx++;
+    }
+    return -1;
+  }
 
-public global::System.Collections.Generic.IList<string> GetSelectedExportValues() {
-global::System.Collections.Generic.IList<string> exportValues = this.GetExportValues();
-global::System.Collections.Generic.IList<string> selectedExportValues = new global::System.Collections.Generic.List<string>();
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(exportValues)) {
-global::DripSharp.Runtime.JavaCompat.Add(selectedExportValues, this.GetValue());
-return selectedExportValues;
-} else {
-string fieldValue = this.GetValue();
-int idx = 0;
-foreach (string onValue in this.GetOnValues()) {
-if ((global::DripSharp.Runtime.JavaCompat.StringCompareTo(onValue, fieldValue) == 0)) {
-global::DripSharp.Runtime.JavaCompat.Add(selectedExportValues, global::DripSharp.Runtime.JavaCompat.ListGet(exportValues, idx));
-}
-++idx;
-}
-return selectedExportValues;
-}
-}
+  public global::System.Collections.Generic.IList<string> GetSelectedExportValues() {
+    global::System.Collections.Generic.IList<string> exportValues = this.GetExportValues();
+    global::System.Collections.Generic.IList<string> selectedExportValues
+      = new global::System.Collections.Generic.List<string>();
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(exportValues)) {
+      global::DripSharp.Runtime.JavaCompat.Add(selectedExportValues, this.GetValue());
+      return selectedExportValues;
+    } else {
+      string fieldValue = this.GetValue();
+      int idx = 0;
+      foreach (string onValue in this.GetOnValues()) {
+        if ((global::DripSharp.Runtime.JavaCompat.StringCompareTo(onValue, fieldValue) == 0)) {
+          global::DripSharp.Runtime.JavaCompat.Add(selectedExportValues,
+            global::DripSharp.Runtime.JavaCompat.ListGet(exportValues, idx));
+        }
+        ++idx;
+      }
+      return selectedExportValues;
+    }
+  }
 }

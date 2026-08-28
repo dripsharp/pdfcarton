@@ -8,14 +8,17 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Exception;
 
-public class MissingValidationProcessException : global::DripSharp.PdfCarton.Preflight.Exception.ValidationException {
-private readonly string processName = null!;
+public class MissingValidationProcessException
+: global::DripSharp.PdfCarton.Preflight.Exception.ValidationException {
+  private readonly string processName = null!;
 
-public MissingValidationProcessException(string process) : base(global::DripSharp.Runtime.JavaCompat.Concat(process, " is missing, validation can't be done")) {
-this.processName = process;
-}
+  public MissingValidationProcessException(string process)
+  : base(global::DripSharp.Runtime.JavaCompat.Concat(process,
+    " is missing, validation can't be done")) {
+    this.processName = process;
+  }
 
-public virtual string GetProcessName() {
-return this.processName;
-}
+  public virtual string GetProcessName() {
+    return this.processName;
+  }
 }

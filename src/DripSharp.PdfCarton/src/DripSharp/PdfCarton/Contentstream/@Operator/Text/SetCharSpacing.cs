@@ -8,23 +8,29 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Text;
 
-public class SetCharSpacing : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public SetCharSpacing(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class SetCharSpacing
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public SetCharSpacing(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-object charSpacing = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, (global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) - 1));
-if ((charSpacing is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-global::DripSharp.PdfCarton.Cos.COSNumber characterSpacing = (global::DripSharp.PdfCarton.Cos.COSNumber)(charSpacing!);
-this.GetContext().GetGraphicsState().GetTextState().SetCharacterSpacing(characterSpacing.FloatValue());
-}
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        arguments);
+    }
+    object charSpacing = global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+      (global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) - 1));
+    if ((charSpacing is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+      global::DripSharp.PdfCarton.Cos.COSNumber characterSpacing
+        = (global::DripSharp.PdfCarton.Cos.COSNumber)(charSpacing!);
+      this.GetContext().GetGraphicsState().GetTextState().SetCharacterSpacing(characterSpacing.FloatValue());
+    }
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetCharSpacing;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetCharSpacing;
+  }
 }

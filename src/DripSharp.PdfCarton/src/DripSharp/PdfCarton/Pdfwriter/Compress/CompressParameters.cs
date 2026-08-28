@@ -9,30 +9,33 @@
 namespace DripSharp.PdfCarton.Pdfwriter.Compress;
 
 public class CompressParameters {
-public static readonly global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters DefaultCompression = new global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters();
+  public static readonly global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters DefaultCompression
+    = new global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters();
 
-public static readonly global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters NoCompression = new global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters(0);
+  public static readonly global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters NoCompression
+    = new global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters(0);
 
-public const int DefaultObjectStreamSize = 200;
+  public const int DefaultObjectStreamSize = 200;
 
-private readonly int objectStreamSize = default;
+  private readonly int objectStreamSize = default;
 
-public CompressParameters() : this(global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.DefaultObjectStreamSize) {
+  public CompressParameters()
+  : this(global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.DefaultObjectStreamSize) {
 
-}
+  }
 
-public CompressParameters(int objectStreamSize) {
-if ((objectStreamSize < 0)) {
-throw new global::System.ArgumentException("Object stream size can't be a negative value");
-}
-this.objectStreamSize = objectStreamSize;
-}
+  public CompressParameters(int objectStreamSize) {
+    if ((objectStreamSize < 0)) {
+      throw new global::System.ArgumentException("Object stream size can't be a negative value");
+    }
+    this.objectStreamSize = objectStreamSize;
+  }
 
-public virtual int GetObjectStreamSize() {
-return this.objectStreamSize;
-}
+  public virtual int GetObjectStreamSize() {
+    return this.objectStreamSize;
+  }
 
-public virtual bool IsCompress() {
-return (this.objectStreamSize > 0);
-}
+  public virtual bool IsCompress() {
+    return (this.objectStreamSize > 0);
+  }
 }

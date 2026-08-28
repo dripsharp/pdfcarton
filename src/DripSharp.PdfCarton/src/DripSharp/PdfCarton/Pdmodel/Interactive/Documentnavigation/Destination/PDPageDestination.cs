@@ -8,79 +8,85 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination;
 
-public abstract class PDPageDestination : global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination {
-protected internal readonly global::DripSharp.PdfCarton.Cos.COSArray Array = null!;
+public abstract class PDPageDestination
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination {
+  protected internal readonly global::DripSharp.PdfCarton.Cos.COSArray Array = null!;
 
-protected internal PDPageDestination() {
-this.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
-}
+  protected internal PDPageDestination() {
+    this.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
+  }
 
-protected internal PDPageDestination(global::DripSharp.PdfCarton.Cos.COSArray arr) {
-this.Array = arr;
-}
+  protected internal PDPageDestination(global::DripSharp.PdfCarton.Cos.COSArray arr) {
+    this.Array = arr;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.PDPage GetPage() {
-global::DripSharp.PdfCarton.Pdmodel.PDPage retval = default!;
-if ((this.Array.Size() > 0)) {
-global::DripSharp.PdfCarton.Cos.COSBase page = this.Array.GetObject(0);
-if ((page is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-retval = new global::DripSharp.PdfCarton.Pdmodel.PDPage((global::DripSharp.PdfCarton.Cos.COSDictionary)(page!));
-}
-}
-return retval!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.PDPage GetPage() {
+    global::DripSharp.PdfCarton.Pdmodel.PDPage retval = default!;
+    if ((this.Array.Size() > 0)) {
+      global::DripSharp.PdfCarton.Cos.COSBase page = this.Array.GetObject(0);
+      if ((page is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        retval
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage((global::DripSharp.PdfCarton.Cos.COSDictionary)(page!));
+      }
+    }
+    return retval!;
+  }
 
-public virtual void SetPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-this.Array.Set(0, page);
-}
+  public virtual void SetPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    this.Array.Set(0, page);
+  }
 
-public virtual int GetPageNumber() {
-int retval = -1;
-if ((this.Array.Size() > 0)) {
-global::DripSharp.PdfCarton.Cos.COSBase page = this.Array.GetObject(0);
-if ((page is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-retval = ((global::DripSharp.PdfCarton.Cos.COSNumber)(page!)).IntValue();
-}
-}
-return retval;
-}
+  public virtual int GetPageNumber() {
+    int retval = -1;
+    if ((this.Array.Size() > 0)) {
+      global::DripSharp.PdfCarton.Cos.COSBase page = this.Array.GetObject(0);
+      if ((page is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+        retval = ((global::DripSharp.PdfCarton.Cos.COSNumber)(page!)).IntValue();
+      }
+    }
+    return retval;
+  }
 
-public virtual int RetrievePageNumber() {
-int retval = -1;
-if ((this.Array.Size() > 0)) {
-global::DripSharp.PdfCarton.Cos.COSBase page = this.Array.GetObject(0);
-if ((page is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-retval = ((global::DripSharp.PdfCarton.Cos.COSNumber)(page!)).IntValue();
-} else {
-if ((page is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-return this.indexOfPageTree((global::DripSharp.PdfCarton.Cos.COSDictionary)(page!));
-}
-}
-}
-return retval;
-}
+  public virtual int RetrievePageNumber() {
+    int retval = -1;
+    if ((this.Array.Size() > 0)) {
+      global::DripSharp.PdfCarton.Cos.COSBase page = this.Array.GetObject(0);
+      if ((page is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+        retval = ((global::DripSharp.PdfCarton.Cos.COSNumber)(page!)).IntValue();
+      } else {
+        if ((page is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+          return this.indexOfPageTree((global::DripSharp.PdfCarton.Cos.COSDictionary)(page!));
+        }
+      }
+    }
+    return retval;
+  }
 
-private int indexOfPageTree(global::DripSharp.PdfCarton.Cos.COSDictionary pageDict) {
-global::DripSharp.PdfCarton.Cos.COSDictionary parent = pageDict;
-while (true) {
-global::DripSharp.PdfCarton.Cos.COSDictionary prevParent = parent.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Parent, global::DripSharp.PdfCarton.Cos.COSName.P);
-if ((prevParent == default!)) {
-break;
-}
-parent = prevParent;
-}
-if ((parent.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Kids) && global::DripSharp.PdfCarton.Cos.COSName.Pages.Equals(parent.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Type)))) {
-global::DripSharp.PdfCarton.Pdmodel.PDPageTree pages = new global::DripSharp.PdfCarton.Pdmodel.PDPageTree(parent);
-return pages.IndexOf(new global::DripSharp.PdfCarton.Pdmodel.PDPage(pageDict));
-}
-return -1;
-}
+  private int indexOfPageTree(global::DripSharp.PdfCarton.Cos.COSDictionary pageDict) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary parent = pageDict;
+    while (true) {
+      global::DripSharp.PdfCarton.Cos.COSDictionary prevParent
+        = parent.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Parent,
+        global::DripSharp.PdfCarton.Cos.COSName.P);
+      if ((prevParent == default!)) {
+        break;
+      }
+      parent = prevParent;
+    }
+    if ((parent.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Kids)
+      && global::DripSharp.PdfCarton.Cos.COSName.Pages.Equals(parent.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Type)))) {
+      global::DripSharp.PdfCarton.Pdmodel.PDPageTree pages
+        = new global::DripSharp.PdfCarton.Pdmodel.PDPageTree(parent);
+      return pages.IndexOf(new global::DripSharp.PdfCarton.Pdmodel.PDPage(pageDict));
+    }
+    return -1;
+  }
 
-public virtual void SetPageNumber(int pageNumber) {
-this.Array.Set(0, pageNumber);
-}
+  public virtual void SetPageNumber(int pageNumber) {
+    this.Array.Set(0, pageNumber);
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.Array;
-}
+  public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.Array;
+  }
 }

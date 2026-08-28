@@ -8,414 +8,452 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
-public class TrueTypeFont : global::System.IDisposable, global::DripSharp.PdfCarton.Fonts.FontBoxFont {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class TrueTypeFont : global::System.IDisposable,
+global::DripSharp.PdfCarton.Fonts.FontBoxFont {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private float version = default;
+  private float version = default;
 
-private int numberOfGlyphs = -1;
+  private int numberOfGlyphs = -1;
 
-private int unitsPerEm = -1;
+  private int unitsPerEm = -1;
 
-private bool enableGsub = true;
+  private bool enableGsub = true;
 
-protected internal readonly global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable> Tables = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string, global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable>();
+  protected internal readonly global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable> Tables
+    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable>();
 
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data = null!;
 
-private volatile global::System.Collections.Generic.IDictionary<string, int> postScriptNames = null!;
+  private volatile global::System.Collections.Generic.IDictionary<string, int> postScriptNames
+    = null!;
 
-private readonly object lockReadtable = new object();
+  private readonly object lockReadtable = new object();
 
-private readonly object lockPSNames = new object();
+  private readonly object lockPSNames = new object();
 
-private readonly global::System.Collections.Generic.IList<string> enabledGsubFeatures = new global::System.Collections.Generic.List<string>();
+  private readonly global::System.Collections.Generic.IList<string> enabledGsubFeatures
+    = new global::System.Collections.Generic.List<string>();
 
-internal TrueTypeFont(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream fontData) {
-this.data = fontData;
-}
+  internal TrueTypeFont(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream fontData) {
+    this.data = fontData;
+  }
 
-public virtual void Dispose() {
-this.data.Dispose();
-}
+  public virtual void Dispose() {
+    this.data.Dispose();
+  }
 
-public virtual float GetVersion() {
-return this.version;
-}
+  public virtual float GetVersion() {
+    return this.version;
+  }
 
-internal virtual void setVersion(float versionValue) {
-this.version = versionValue;
-}
+  internal virtual void setVersion(float versionValue) {
+    this.version = versionValue;
+  }
 
-public virtual bool IsEnableGsub() {
-return this.enableGsub;
-}
+  public virtual bool IsEnableGsub() {
+    return this.enableGsub;
+  }
 
-public virtual void SetEnableGsub(bool enableGsub) {
-this.enableGsub = enableGsub;
-}
+  public virtual void SetEnableGsub(bool enableGsub) {
+    this.enableGsub = enableGsub;
+  }
 
-internal virtual void addTable(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.Tables, table.GetTag(), table);
-}
+  internal virtual void addTable(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.Tables, table.GetTag(), table);
+  }
 
-public virtual global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable> GetTables() {
-return this.Tables.Values;
-}
+  public virtual global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable> GetTables() {
+    return this.Tables.Values;
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable> GetTableMap() {
-return this.Tables;
-}
+  public virtual global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable> GetTableMap() {
+    return this.Tables;
+  }
 
-public virtual sbyte[] GetTableBytes(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table) {
-lock (this.lockReadtable) {
-long currentPosition = this.data.GetCurrentPosition();
-this.data.Seek(table.GetOffset());
-sbyte[] bytes = this.data.Read((int)((int)(table.GetLength())));
-this.data.Seek(currentPosition);
-return bytes;
-}
-}
+  public virtual sbyte[] GetTableBytes(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table) {
+    lock (this.lockReadtable) {
+      long currentPosition = this.data.GetCurrentPosition();
+      this.data.Seek(table.GetOffset());
+      sbyte[] bytes = this.data.Read((int)((int)(table.GetLength())));
+      this.data.Seek(currentPosition);
+      return bytes;
+    }
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable GetTable(string tag) {
-global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.Tables, tag);
-if (((table != default!) && !(table.GetInitialized()))) {
-this.readTable(table);
-}
-return table;
-}
+  protected internal virtual global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable GetTable(string tag) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.Tables, tag);
+    if (((table != default!) && !(table.GetInitialized()))) {
+      this.readTable(table);
+    }
+    return table;
+  }
 
-public virtual sbyte[] GetTableNBytes(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table, int limit) {
-lock (this.lockReadtable) {
-long currentPosition = this.data.GetCurrentPosition();
-this.data.Seek(table.GetOffset());
-sbyte[] bytes = this.data.Read(global::System.Math.Min(limit, (int)((int)(table.GetLength()))));
-this.data.Seek(currentPosition);
-return bytes;
-}
-}
+  public virtual sbyte[] GetTableNBytes(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table,
+    int limit) {
+    lock (this.lockReadtable) {
+      long currentPosition = this.data.GetCurrentPosition();
+      this.data.Seek(table.GetOffset());
+      sbyte[] bytes = this.data.Read(global::System.Math.Min(limit,
+        (int)((int)(table.GetLength()))));
+      this.data.Seek(currentPosition);
+      return bytes;
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable GetNaming() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable GetNaming() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable GetPostScript() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable GetPostScript() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable GetOS2Windows() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable GetOS2Windows() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable GetMaximumProfile() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable GetMaximumProfile() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable GetHeader() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable GetHeader() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalHeaderTable GetHorizontalHeader() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalHeaderTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalHeaderTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalHeaderTable GetHorizontalHeader() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalHeaderTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalHeaderTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable GetHorizontalMetrics() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable GetHorizontalMetrics() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable GetIndexToLocation() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable GetIndexToLocation() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable GetGlyph() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable GetGlyph() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable GetCmap() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable GetCmap() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.VerticalHeaderTable GetVerticalHeader() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.VerticalHeaderTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.VerticalHeaderTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.VerticalHeaderTable GetVerticalHeader() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.VerticalHeaderTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.VerticalHeaderTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.VerticalMetricsTable GetVerticalMetrics() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.VerticalMetricsTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.VerticalMetricsTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.VerticalMetricsTable GetVerticalMetrics() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.VerticalMetricsTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.VerticalMetricsTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.VerticalOriginTable GetVerticalOrigin() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.VerticalOriginTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.VerticalOriginTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.VerticalOriginTable GetVerticalOrigin() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.VerticalOriginTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.VerticalOriginTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.KerningTable GetKerning() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.KerningTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.KerningTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.KerningTable GetKerning() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.KerningTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.KerningTable.Tag)!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable GetGsub() {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable GetGsub() {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.Tag)!);
+  }
 
-public virtual global::System.IO.Stream GetOriginalData() {
-return this.data.GetOriginalData();
-}
+  public virtual global::System.IO.Stream GetOriginalData() {
+    return this.data.GetOriginalData();
+  }
 
-public virtual long GetOriginalDataSize() {
-return this.data.GetOriginalDataSize();
-}
+  public virtual long GetOriginalDataSize() {
+    return this.data.GetOriginalDataSize();
+  }
 
-internal virtual void readTable(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table) {
-long currentPosition = this.data.GetCurrentPosition();
-this.data.Seek(table.GetOffset());
-table.read(this, this.data);
-this.data.Seek(currentPosition);
-}
+  internal virtual void readTable(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table) {
+    long currentPosition = this.data.GetCurrentPosition();
+    this.data.Seek(table.GetOffset());
+    table.read(this, this.data);
+    this.data.Seek(currentPosition);
+  }
 
-internal virtual void readTableHeaders(string tag, global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) {
-global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.Tables, tag);
-if ((table != default!)) {
-long currentPosition = this.data.GetCurrentPosition();
-this.data.Seek(table.GetOffset());
-table.readHeaders(this, this.data, outHeaders);
-this.data.Seek(currentPosition);
-}
-}
+  internal virtual void readTableHeaders(string tag,
+    global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.Tables, tag);
+    if ((table != default!)) {
+      long currentPosition = this.data.GetCurrentPosition();
+      this.data.Seek(table.GetOffset());
+      table.readHeaders(this, this.data, outHeaders);
+      this.data.Seek(currentPosition);
+    }
+  }
 
-public virtual int GetNumberOfGlyphs() {
-if ((this.numberOfGlyphs == -1)) {
-global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable maximumProfile = this.GetMaximumProfile();
-if ((maximumProfile != default!)) {
-this.numberOfGlyphs = maximumProfile.GetNumGlyphs();
-} else {
-this.numberOfGlyphs = 0;
-}
-}
-return this.numberOfGlyphs;
-}
+  public virtual int GetNumberOfGlyphs() {
+    if ((this.numberOfGlyphs == -1)) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable maximumProfile
+        = this.GetMaximumProfile();
+      if ((maximumProfile != default!)) {
+        this.numberOfGlyphs = maximumProfile.GetNumGlyphs();
+      } else {
+        this.numberOfGlyphs = 0;
+      }
+    }
+    return this.numberOfGlyphs;
+  }
 
-public virtual int GetUnitsPerEm() {
-if ((this.unitsPerEm == -1)) {
-global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable header = this.GetHeader();
-if ((header != default!)) {
-this.unitsPerEm = header.GetUnitsPerEm();
-} else {
-this.unitsPerEm = 0;
-}
-}
-return this.unitsPerEm;
-}
+  public virtual int GetUnitsPerEm() {
+    if ((this.unitsPerEm == -1)) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable header = this.GetHeader();
+      if ((header != default!)) {
+        this.unitsPerEm = header.GetUnitsPerEm();
+      } else {
+        this.unitsPerEm = 0;
+      }
+    }
+    return this.unitsPerEm;
+  }
 
-public virtual int GetAdvanceWidth(int gid) {
-global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable hmtx = this.GetHorizontalMetrics();
-if ((hmtx != default!)) {
-return hmtx.GetAdvanceWidth(gid);
-} else {
-return 250;
-}
-}
+  public virtual int GetAdvanceWidth(int gid) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable hmtx = this.GetHorizontalMetrics();
+    if ((hmtx != default!)) {
+      return hmtx.GetAdvanceWidth(gid);
+    } else {
+      return 250;
+    }
+  }
 
-public virtual int GetAdvanceHeight(int gid) {
-global::DripSharp.PdfCarton.Fonts.Ttf.VerticalMetricsTable vmtx = this.GetVerticalMetrics();
-if ((vmtx != default!)) {
-return vmtx.GetAdvanceHeight(gid);
-} else {
-return 250;
-}
-}
+  public virtual int GetAdvanceHeight(int gid) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.VerticalMetricsTable vmtx = this.GetVerticalMetrics();
+    if ((vmtx != default!)) {
+      return vmtx.GetAdvanceHeight(gid);
+    } else {
+      return 250;
+    }
+  }
 
-public virtual string GetName() {
-global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable namingTable = this.GetNaming();
-if ((namingTable != default!)) {
-return namingTable.GetPostScriptName();
-} else {
-return default!;
-}
-}
+  public virtual string GetName() {
+    global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable namingTable = this.GetNaming();
+    if ((namingTable != default!)) {
+      return namingTable.GetPostScriptName();
+    } else {
+      return default!;
+    }
+  }
 
-private void readPostScriptNames() {
-global::System.Collections.Generic.IDictionary<string, int> psnames = this.postScriptNames;
-if ((psnames == default!)) {
-global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable post = this.GetPostScript();
-lock (this.lockPSNames) {
-psnames = this.postScriptNames;
-if ((psnames == default!)) {
-string[] names = ((post != default!) ? post.GetGlyphNames() : (string[])(default!));
-if ((names != default!)) {
-psnames = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string, int>(names.Length);
-for (int i = 0; (i < names.Length); i++) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(psnames, names[i], i);
-}
-} else {
-psnames = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string, int>();
-}
-this.postScriptNames = psnames;
-}
-}
-}
-}
+  private void readPostScriptNames() {
+    global::System.Collections.Generic.IDictionary<string, int> psnames = this.postScriptNames;
+    if ((psnames == default!)) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable post = this.GetPostScript();
+      lock (this.lockPSNames) {
+        psnames = this.postScriptNames;
+        if ((psnames == default!)) {
+          string[] names = ((post != default!) ? post.GetGlyphNames() : (string[])(default!));
+          if ((names != default!)) {
+            psnames = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string,
+              int>(names.Length);
+            for (int i = 0; (i < names.Length); i++) {
+              global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(psnames, names[i], i);
+            }
+          } else {
+            psnames = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string,
+              int>();
+          }
+          this.postScriptNames = psnames;
+        }
+      }
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup GetUnicodeCmapLookup() {
-return this.GetUnicodeCmapLookup(true);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup GetUnicodeCmapLookup() {
+    return this.GetUnicodeCmapLookup(true);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup GetUnicodeCmapLookup(bool isStrict) {
-global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmap = this.getUnicodeCmapImpl(isStrict);
-if (!(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListIsEmpty(this.enabledGsubFeatures))) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable table = this.GetGsub();
-if ((table != default!)) {
-return new global::DripSharp.PdfCarton.Fonts.Ttf.SubstitutingCmapLookup(cmap, table, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(this.enabledGsubFeatures));
-}
-}
-return cmap;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup GetUnicodeCmapLookup(bool isStrict) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmap = this.getUnicodeCmapImpl(isStrict);
+    if (!global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListIsEmpty(this.enabledGsubFeatures)) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable table = this.GetGsub();
+      if ((table != default!)) {
+        return new global::DripSharp.PdfCarton.Fonts.Ttf.SubstitutingCmapLookup(cmap, table,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(this.enabledGsubFeatures));
+      }
+    }
+    return cmap;
+  }
 
-private global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable getUnicodeCmapImpl(bool isStrict) {
-global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable cmapTable = this.GetCmap();
-if ((cmapTable == default!)) {
-if (isStrict) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("The TrueType font ", this.GetName()), " does not contain a 'cmap' table"));
-} else {
-return default!;
-}
-}
-global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmap = cmapTable.GetSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.PlatformUnicode, global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.EncodingUnicode20Full);
-if ((cmap == default!)) {
-cmap = cmapTable.GetSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.PlatformWindows, global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.EncodingWinUnicodeFull);
-}
-if ((cmap == default!)) {
-cmap = cmapTable.GetSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.PlatformUnicode, global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.EncodingUnicode20Bmp);
-}
-if ((cmap == default!)) {
-cmap = cmapTable.GetSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.PlatformWindows, global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.EncodingWinUnicodeBmp);
-}
-if ((cmap == default!)) {
-cmap = cmapTable.GetSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.PlatformWindows, global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.EncodingWinSymbol);
-}
-if ((cmap == default!)) {
-cmap = cmapTable.GetSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.PlatformUnicode, global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.EncodingUnicode11);
-}
-if ((cmap == default!)) {
-if (isStrict) {
-throw new global::System.IO.IOException("The TrueType font does not contain a Unicode cmap");
-} else {
-if ((cmapTable.GetCmaps().Length > 0)) {
-cmap = cmapTable.GetCmaps()[0];
-}
-}
-}
-return cmap;
-}
+  private global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable getUnicodeCmapImpl(bool isStrict) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable cmapTable = this.GetCmap();
+    if ((cmapTable == default!)) {
+      if (isStrict) {
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("The TrueType font ",
+          this.GetName()), " does not contain a 'cmap' table"));
+      } else {
+        return default!;
+      }
+    }
+    global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmap
+      = cmapTable.GetSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.PlatformUnicode,
+      global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.EncodingUnicode20Full);
+    if ((cmap == default!)) {
+      cmap = cmapTable.GetSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.PlatformWindows,
+        global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.EncodingWinUnicodeFull);
+    }
+    if ((cmap == default!)) {
+      cmap = cmapTable.GetSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.PlatformUnicode,
+        global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.EncodingUnicode20Bmp);
+    }
+    if ((cmap == default!)) {
+      cmap = cmapTable.GetSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.PlatformWindows,
+        global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.EncodingWinUnicodeBmp);
+    }
+    if ((cmap == default!)) {
+      cmap = cmapTable.GetSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.PlatformWindows,
+        global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.EncodingWinSymbol);
+    }
+    if ((cmap == default!)) {
+      cmap = cmapTable.GetSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.PlatformUnicode,
+        global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.EncodingUnicode11);
+    }
+    if ((cmap == default!)) {
+      if (isStrict) {
+        throw new global::System.IO.IOException("The TrueType font does not contain a Unicode cmap");
+      } else {
+        if ((cmapTable.GetCmaps().Length > 0)) {
+          cmap = cmapTable.GetCmaps()[0];
+        }
+      }
+    }
+    return cmap;
+  }
 
-public virtual int NameToGID(string name) {
-this.readPostScriptNames();
-if ((this.postScriptNames != default!)) {
-int? gid = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.postScriptNames, name);
-if ((((gid != default!) && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(gid) > 0)) && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(gid) < this.GetMaximumProfile().GetNumGlyphs()))) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(gid);
-}
-}
-int uni = this.parseUniName(name);
-if ((uni > -1)) {
-global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmap = this.GetUnicodeCmapLookup(false);
-return cmap.GetGlyphId(uni);
-}
-if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringMatches(name, "g\\d+")) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(name.Substring(1), 10);
-}
-return 0;
-}
+  public virtual int NameToGID(string name) {
+    this.readPostScriptNames();
+    if ((this.postScriptNames != default!)) {
+      int? gid
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.postScriptNames,
+        name);
+      if ((((gid != default!)
+        && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(gid) > 0))
+        && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(gid) < this.GetMaximumProfile().GetNumGlyphs()))) {
+        return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(gid);
+      }
+    }
+    int uni = this.parseUniName(name);
+    if ((uni > -1)) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmap = this.GetUnicodeCmapLookup(false);
+      return cmap.GetGlyphId(uni);
+    }
+    if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringMatches(name, "g\\d+")) {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(name.Substring(1), 10);
+    }
+    return 0;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData GetGsubData() {
-if (!(this.enableGsub)) {
-return global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubDataStatics.NoDataFound;
-}
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable table = this.GetGsub();
-if ((table == default!)) {
-return global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubDataStatics.NoDataFound;
-}
-return table.GetGsubData();
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData GetGsubData() {
+    if (!(this.enableGsub)) {
+      return global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubDataStatics.NoDataFound;
+    }
+    global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable table = this.GetGsub();
+    if ((table == default!)) {
+      return global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubDataStatics.NoDataFound;
+    }
+    return table.GetGsubData();
+  }
 
-private int parseUniName(string name) {
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringStartsWith(name, "uni") && (name.Length == 7))) {
-int nameLength = name.Length;
-global::System.Text.StringBuilder uniStr = new global::System.Text.StringBuilder();
-try {
-for (int chPos = 3; ((chPos + 4) <= nameLength); chPos += 4) {
-int codePoint = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(name, chPos, (chPos + 4)), 16);
-if (((codePoint <= 55295) || (codePoint >= 57344))) {
-uniStr.Append(unchecked((char)(unchecked((char)(codePoint)))));
-}
-}
-string unicode = uniStr.ToString();
-if ((unicode.Length == 0)) {
-return -1;
-}
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CodePointAt(unicode, 0);
-} catch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaNumberFormatException) {
-return -1;
-}
-}
-return -1;
-}
+  private int parseUniName(string name) {
+    if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringStartsWith(name, "uni")
+      && (name.Length == 7))) {
+      int nameLength = name.Length;
+      global::System.Text.StringBuilder uniStr = new global::System.Text.StringBuilder();
+      try {
+        for (int chPos = 3; ((chPos + 4) <= nameLength); chPos += 4) {
+          int codePoint
+            = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(name,
+            chPos, (chPos + 4)), 16);
+          if (((codePoint <= 55295) || (codePoint >= 57344))) {
+            uniStr.Append(unchecked((char)(unchecked((char)(codePoint)))));
+          }
+        }
+        string unicode = uniStr.ToString();
+        if ((unicode.Length == 0)) {
+          return -1;
+        }
+        return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CodePointAt(unicode, 0);
+      } catch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaNumberFormatException) {
+        return -1;
+      }
+    }
+    return -1;
+  }
 
-public virtual global::SkiaSharp.SKPath GetPath(string name) {
-int gid = this.NameToGID(name);
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData glyph = this.GetGlyph().GetGlyph(gid);
-if ((glyph == default!)) {
-return new global::SkiaSharp.SKPath();
-} else {
-return glyph.GetPath();
-}
-}
+  public virtual global::SkiaSharp.SKPath GetPath(string name) {
+    int gid = this.NameToGID(name);
+    global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData glyph = this.GetGlyph().GetGlyph(gid);
+    if ((glyph == default!)) {
+      return new global::SkiaSharp.SKPath();
+    } else {
+      return glyph.GetPath();
+    }
+  }
 
-public virtual float GetWidth(string name) {
-int gid = this.NameToGID(name);
-return this.GetAdvanceWidth(gid);
-}
+  public virtual float GetWidth(string name) {
+    int gid = this.NameToGID(name);
+    return this.GetAdvanceWidth(gid);
+  }
 
-public virtual bool HasGlyph(string name) {
-return (this.NameToGID(name) != 0);
-}
+  public virtual bool HasGlyph(string name) {
+    return (this.NameToGID(name) != 0);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetFontBBox() {
-global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable headerTable = this.GetHeader();
-short xMin = headerTable.GetXMin();
-short xMax = headerTable.GetXMax();
-short yMin = headerTable.GetYMin();
-short yMax = headerTable.GetYMax();
-float scale = ((float)(1000.0F) / this.GetUnitsPerEm());
-return new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox((xMin * scale), (yMin * scale), (xMax * scale), (yMax * scale));
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetFontBBox() {
+    global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable headerTable = this.GetHeader();
+    short xMin = headerTable.GetXMin();
+    short xMax = headerTable.GetXMax();
+    short yMin = headerTable.GetYMin();
+    short yMax = headerTable.GetYMax();
+    float scale = ((float)1000.0F / this.GetUnitsPerEm());
+    return new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox((xMin * scale), (yMin * scale),
+      (xMax * scale), (yMax * scale));
+  }
 
-public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetFontMatrix() {
-float scale = ((float)(1000.0F) / this.GetUnitsPerEm());
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<global::System.IConvertible>((0.001F * scale), 0, 0, (0.001F * scale), 0, 0);
-}
+  public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetFontMatrix() {
+    float scale = ((float)1000.0F / this.GetUnitsPerEm());
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<global::System.IConvertible>((0.001F
+      * scale), 0, 0, (0.001F * scale), 0, 0);
+  }
 
-public virtual void EnableGsubFeature(string featureTag) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.enabledGsubFeatures, featureTag);
-}
+  public virtual void EnableGsubFeature(string featureTag) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.enabledGsubFeatures, featureTag);
+  }
 
-public virtual void DisableGsubFeature(string featureTag) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionRemove(this.enabledGsubFeatures, featureTag);
-}
+  public virtual void DisableGsubFeature(string featureTag) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionRemove(this.enabledGsubFeatures,
+      featureTag);
+  }
 
-public virtual void EnableVerticalSubstitutions() {
-this.EnableGsubFeature("vrt2");
-this.EnableGsubFeature("vert");
-}
+  public virtual void EnableVerticalSubstitutions() {
+    this.EnableGsubFeature("vrt2");
+    this.EnableGsubFeature("vert");
+  }
 
-public override string ToString() {
-try {
-global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable namingTable = this.GetNaming();
-if ((namingTable != default!)) {
-return namingTable.GetPostScriptName();
-} else {
-return "(null)";
-}
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont.LOG, (global::System.Exception)e, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Error getting the NamingTable for the font"));
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("(null - ", global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ExceptionMessage(e)), ")");
-}
-}
+  public override string ToString() {
+    try {
+      global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable namingTable = this.GetNaming();
+      if ((namingTable != default!)) {
+        return namingTable.GetPostScriptName();
+      } else {
+        return "(null)";
+      }
+    } catch (global::System.IO.IOException e) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont.LOG,
+        (global::System.Exception)e,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Error getting the NamingTable for the font"));
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("(null - ",
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ExceptionMessage(e)), ")");
+    }
+  }
 }

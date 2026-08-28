@@ -9,20 +9,32 @@
 namespace DripSharp.PdfCarton.Preflight.Action;
 
 public class NamedAction : global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager {
-public NamedAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact, global::DripSharp.PdfCarton.Cos.COSDictionary adict, global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) : base(amFact, adict, ctx, aaKey) {
+  public NamedAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact,
+    global::DripSharp.PdfCarton.Cos.COSDictionary adict,
+    global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) : base(amFact, adict,
+    ctx, aaKey) {
 
-}
+  }
 
-protected internal override bool InnerValid() {
-string n = this.ActionDictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.N);
-if (((n == default!) || (n.Length == 0))) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionMisingKey, "N entry is mandatory for the NamedActions"));
-return false;
-}
-if (!((((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ActionDictionaryValueAtypeNamedFirst, n) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ActionDictionaryValueAtypeNamedLast, n)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ActionDictionaryValueAtypeNamedNext, n)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ActionDictionaryValueAtypeNamedPrev, n)))) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenActionsNamed, global::DripSharp.Runtime.JavaCompat.Concat(n, " isn't authorized as named action")));
-return false;
-}
-return true;
-}
+  protected internal override bool InnerValid() {
+    string n = this.ActionDictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.N);
+    if (((n == default!) || (n.Length == 0))) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionMisingKey,
+        "N entry is mandatory for the NamedActions"));
+      return false;
+    }
+    if (!((((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ActionDictionaryValueAtypeNamedFirst,
+      n)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ActionDictionaryValueAtypeNamedLast,
+      n))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ActionDictionaryValueAtypeNamedNext,
+      n))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ActionDictionaryValueAtypeNamedPrev,
+      n)))) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenActionsNamed,
+        global::DripSharp.Runtime.JavaCompat.Concat(n, " isn't authorized as named action")));
+      return false;
+    }
+    return true;
+  }
 }

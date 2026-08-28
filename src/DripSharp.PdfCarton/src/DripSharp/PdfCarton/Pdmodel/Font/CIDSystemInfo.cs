@@ -9,31 +9,32 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public sealed class CIDSystemInfo {
-private readonly string registry = null!;
+  private readonly string registry = null!;
 
-private readonly string ordering = null!;
+  private readonly string ordering = null!;
 
-private readonly int supplement = default;
+  private readonly int supplement = default;
 
-public CIDSystemInfo(string registry, string ordering, int supplement) {
-this.registry = registry;
-this.ordering = ordering;
-this.supplement = supplement;
-}
+  public CIDSystemInfo(string registry, string ordering, int supplement) {
+    this.registry = registry;
+    this.ordering = ordering;
+    this.supplement = supplement;
+  }
 
-public string GetRegistry() {
-return this.registry;
-}
+  public string GetRegistry() {
+    return this.registry;
+  }
 
-public string GetOrdering() {
-return this.ordering;
-}
+  public string GetOrdering() {
+    return this.ordering;
+  }
 
-public int GetSupplement() {
-return this.supplement;
-}
+  public int GetSupplement() {
+    return this.supplement;
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.GetRegistry(), "-"), this.GetOrdering()), "-"), this.GetSupplement());
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.GetRegistry(),
+      "-"), this.GetOrdering()), "-"), this.GetSupplement());
+  }
 }

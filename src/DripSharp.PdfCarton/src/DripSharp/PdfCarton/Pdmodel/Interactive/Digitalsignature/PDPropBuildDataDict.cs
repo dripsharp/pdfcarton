@@ -9,104 +9,109 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 
 public class PDPropBuildDataDict : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public PDPropBuildDataDict() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.dictionary.SetDirect(true);
-}
+  public PDPropBuildDataDict() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.dictionary.SetDirect(true);
+  }
 
-public PDPropBuildDataDict(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
-this.dictionary = dict;
-this.dictionary.SetDirect(true);
-}
+  public PDPropBuildDataDict(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
+    this.dictionary = dict;
+    this.dictionary.SetDirect(true);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public virtual string GetName() {
-return this.dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Name);
-}
+  public virtual string GetName() {
+    return this.dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Name);
+  }
 
-public virtual void SetName(string name) {
-this.dictionary.SetName(global::DripSharp.PdfCarton.Cos.COSName.Name, name);
-}
+  public virtual void SetName(string name) {
+    this.dictionary.SetName(global::DripSharp.PdfCarton.Cos.COSName.Name, name);
+  }
 
-public virtual string GetDate() {
-return this.dictionary.GetString(global::DripSharp.PdfCarton.Cos.COSName.Date);
-}
+  public virtual string GetDate() {
+    return this.dictionary.GetString(global::DripSharp.PdfCarton.Cos.COSName.Date);
+  }
 
-public virtual void SetDate(string date) {
-this.dictionary.SetString(global::DripSharp.PdfCarton.Cos.COSName.Date, date);
-}
+  public virtual void SetDate(string date) {
+    this.dictionary.SetString(global::DripSharp.PdfCarton.Cos.COSName.Date, date);
+  }
 
-public virtual void SetVersion(string applicationVersion) {
-this.dictionary.SetString("REx", applicationVersion);
-}
+  public virtual void SetVersion(string applicationVersion) {
+    this.dictionary.SetString("REx", applicationVersion);
+  }
 
-public virtual string GetVersion() {
-return this.dictionary.GetString("REx");
-}
+  public virtual string GetVersion() {
+    return this.dictionary.GetString("REx");
+  }
 
-public virtual long GetRevision() {
-return this.dictionary.GetLong(global::DripSharp.PdfCarton.Cos.COSName.R);
-}
+  public virtual long GetRevision() {
+    return this.dictionary.GetLong(global::DripSharp.PdfCarton.Cos.COSName.R);
+  }
 
-public virtual void SetRevision(long revision) {
-this.dictionary.SetLong(global::DripSharp.PdfCarton.Cos.COSName.R, revision);
-}
+  public virtual void SetRevision(long revision) {
+    this.dictionary.SetLong(global::DripSharp.PdfCarton.Cos.COSName.R, revision);
+  }
 
-public virtual long GetMinimumRevision() {
-return this.dictionary.GetLong(global::DripSharp.PdfCarton.Cos.COSName.V);
-}
+  public virtual long GetMinimumRevision() {
+    return this.dictionary.GetLong(global::DripSharp.PdfCarton.Cos.COSName.V);
+  }
 
-public virtual void SetMinimumRevision(long revision) {
-this.dictionary.SetLong(global::DripSharp.PdfCarton.Cos.COSName.V, revision);
-}
+  public virtual void SetMinimumRevision(long revision) {
+    this.dictionary.SetLong(global::DripSharp.PdfCarton.Cos.COSName.V, revision);
+  }
 
-public virtual bool GetPreRelease() {
-return this.dictionary.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.PreRelease, false);
-}
+  public virtual bool GetPreRelease() {
+    return this.dictionary.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.PreRelease, false);
+  }
 
-public virtual void SetPreRelease(bool preRelease) {
-this.dictionary.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.PreRelease, preRelease);
-}
+  public virtual void SetPreRelease(bool preRelease) {
+    this.dictionary.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.PreRelease, preRelease);
+  }
 
-public virtual string GetOS() {
-global::DripSharp.PdfCarton.Cos.COSArray osArray = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Os);
-return ((osArray != default!) ? osArray.GetName(0) : this.dictionary.GetString(global::DripSharp.PdfCarton.Cos.COSName.Os));
-}
+  public virtual string GetOS() {
+    global::DripSharp.PdfCarton.Cos.COSArray osArray
+      = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Os);
+    return ((osArray != default!) ? osArray.GetName(0)
+      : this.dictionary.GetString(global::DripSharp.PdfCarton.Cos.COSName.Os));
+  }
 
-public virtual void SetOS(string os) {
-if ((os == default!)) {
-this.dictionary.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Os);
-} else {
-global::DripSharp.PdfCarton.Cos.COSArray osArray = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Os);
-if ((osArray == default!)) {
-osArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-osArray.SetDirect(true);
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Os, osArray);
-}
-osArray.Add(0, global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(os));
-}
-}
+  public virtual void SetOS(string os) {
+    if ((os == default!)) {
+      this.dictionary.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Os);
+    } else {
+      global::DripSharp.PdfCarton.Cos.COSArray osArray
+        = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Os);
+      if ((osArray == default!)) {
+        osArray = new global::DripSharp.PdfCarton.Cos.COSArray();
+        osArray.SetDirect(true);
+        this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Os, osArray);
+      }
+      osArray.Add(0, global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(os));
+    }
+  }
 
-public virtual bool GetNonEFontNoWarn() {
-return this.dictionary.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.NonEfontNoWarn, true);
-}
+  public virtual bool GetNonEFontNoWarn() {
+    return this.dictionary.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.NonEfontNoWarn, true);
+  }
 
-public virtual void SetNonEFontNoWarn(bool noEmbedFontWarning) {
-this.dictionary.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.NonEfontNoWarn, noEmbedFontWarning);
-}
+  public virtual void SetNonEFontNoWarn(bool noEmbedFontWarning) {
+    this.dictionary.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.NonEfontNoWarn,
+      noEmbedFontWarning);
+  }
 
-public virtual bool GetTrustedMode() {
-return this.dictionary.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.TrustedMode, false);
-}
+  public virtual bool GetTrustedMode() {
+    return this.dictionary.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.TrustedMode, false);
+  }
 
-public virtual void SetTrustedMode(bool trustedMode) {
-this.dictionary.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.TrustedMode, trustedMode);
-}
+  public virtual void SetTrustedMode(bool trustedMode) {
+    this.dictionary.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.TrustedMode, trustedMode);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

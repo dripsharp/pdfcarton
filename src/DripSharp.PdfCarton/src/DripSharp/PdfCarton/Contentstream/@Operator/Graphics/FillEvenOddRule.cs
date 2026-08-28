@@ -8,16 +8,19 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Graphics;
 
-public sealed class FillEvenOddRule : global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
-public FillEvenOddRule(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context) : base(context) {
+public sealed class FillEvenOddRule
+: global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
+  public FillEvenOddRule(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-this.GetGraphicsContext().FillPath(global::DripSharp.Runtime.JavaPathIterator.WIND_EVEN_ODD);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    this.GetGraphicsContext().FillPath(global::DripSharp.Runtime.JavaPathIterator.WIND_EVEN_ODD);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd;
+  }
 }

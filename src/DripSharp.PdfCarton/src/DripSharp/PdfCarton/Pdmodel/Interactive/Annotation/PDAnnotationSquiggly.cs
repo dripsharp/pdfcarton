@@ -8,33 +8,38 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
-public class PDAnnotationSquiggly : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationTextMarkup {
-public const string SubType = "Squiggly";
+public class PDAnnotationSquiggly
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationTextMarkup {
+  public const string SubType = "Squiggly";
 
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler
+    = null!;
 
-public PDAnnotationSquiggly() : base(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquiggly.SubType) {
+  public PDAnnotationSquiggly()
+  : base(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquiggly.SubType) {
 
-}
+  }
 
-public PDAnnotationSquiggly(global::DripSharp.PdfCarton.Cos.COSDictionary dict) : base(dict) {
+  public PDAnnotationSquiggly(global::DripSharp.PdfCarton.Cos.COSDictionary dict) : base(dict) {
 
-}
+  }
 
-public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
-this.customAppearanceHandler = appearanceHandler;
-}
+  public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
+    this.customAppearanceHandler = appearanceHandler;
+  }
 
-public override void ConstructAppearances() {
-this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
-}
+  public override void ConstructAppearances() {
+    this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
+  }
 
-public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-if ((this.customAppearanceHandler == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDSquigglyAppearanceHandler appearanceHandler = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDSquigglyAppearanceHandler(this, document);
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
-} else {
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
-}
-}
+  public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    if ((this.customAppearanceHandler == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDSquigglyAppearanceHandler appearanceHandler
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDSquigglyAppearanceHandler(this,
+        document);
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
+    } else {
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
+    }
+  }
 }

@@ -9,19 +9,19 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public abstract class CoverageTable {
-private readonly int coverageFormat = default;
+  private readonly int coverageFormat = default;
 
-public CoverageTable(int coverageFormat) {
-this.coverageFormat = coverageFormat;
-}
+  public CoverageTable(int coverageFormat) {
+    this.coverageFormat = coverageFormat;
+  }
 
-public abstract int GetCoverageIndex(int gid);
+  public abstract int GetCoverageIndex(int gid);
 
-public abstract int GetGlyphId(int index);
+  public abstract int GetGlyphId(int index);
 
-public abstract int GetSize();
+  public abstract int GetSize();
 
-public virtual int GetCoverageFormat() {
-return this.coverageFormat;
-}
+  public virtual int GetCoverageFormat() {
+    return this.coverageFormat;
+  }
 }

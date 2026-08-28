@@ -9,51 +9,58 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public sealed class PageMode {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("USE_NONE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PageMode UseNone = new global::DripSharp.PdfCarton.Pdmodel.PageMode("UseNone");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("USE_NONE")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.PageMode UseNone
+    = new global::DripSharp.PdfCarton.Pdmodel.PageMode("UseNone");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("USE_OUTLINES")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PageMode UseOutlines = new global::DripSharp.PdfCarton.Pdmodel.PageMode("UseOutlines");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("USE_OUTLINES")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.PageMode UseOutlines
+    = new global::DripSharp.PdfCarton.Pdmodel.PageMode("UseOutlines");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("USE_THUMBS")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PageMode UseThumbs = new global::DripSharp.PdfCarton.Pdmodel.PageMode("UseThumbs");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("USE_THUMBS")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.PageMode UseThumbs
+    = new global::DripSharp.PdfCarton.Pdmodel.PageMode("UseThumbs");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("FULL_SCREEN")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PageMode FullScreen = new global::DripSharp.PdfCarton.Pdmodel.PageMode("FullScreen");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("FULL_SCREEN")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.PageMode FullScreen
+    = new global::DripSharp.PdfCarton.Pdmodel.PageMode("FullScreen");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("USE_OPTIONAL_CONTENT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PageMode UseOptionalContent = new global::DripSharp.PdfCarton.Pdmodel.PageMode("UseOC");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("USE_OPTIONAL_CONTENT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.PageMode UseOptionalContent
+    = new global::DripSharp.PdfCarton.Pdmodel.PageMode("UseOC");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("USE_ATTACHMENTS")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PageMode UseAttachments = new global::DripSharp.PdfCarton.Pdmodel.PageMode("UseAttachments");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("USE_ATTACHMENTS")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(5)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.PageMode UseAttachments
+    = new global::DripSharp.PdfCarton.Pdmodel.PageMode("UseAttachments");
 
-public static global::DripSharp.PdfCarton.Pdmodel.PageMode FromString(string value) {
-foreach (global::DripSharp.PdfCarton.Pdmodel.PageMode instance in global::DripSharp.PdfCarton.Pdmodel.PageMode.values()) {
-if (global::DripSharp.Runtime.JavaCompat.Equals(instance.value, value)) {
-return instance;
-}
-}
-throw new global::System.ArgumentException(value);
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PageMode FromString(string value) {
+    foreach (global::DripSharp.PdfCarton.Pdmodel.PageMode instance in global::DripSharp.PdfCarton.Pdmodel.PageMode.values()) {
+      if (global::DripSharp.Runtime.JavaCompat.Equals(instance.value, value)) {
+        return instance;
+      }
+    }
+    throw new global::System.ArgumentException(value);
+  }
 
-private readonly string value = null!;
+  private readonly string value = null!;
 
-private PageMode(string value) {
-this.value = value;
-}
+  private PageMode(string value) {
+    this.value = value;
+  }
 
-public string StringValue() {
-return this.value;
-}
+  public string StringValue() {
+    return this.value;
+  }
 
-public static PageMode[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<PageMode>();
-public static PageMode valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<PageMode>(name);
+  public static PageMode[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<PageMode>();
+  public static PageMode valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<PageMode>(name);
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

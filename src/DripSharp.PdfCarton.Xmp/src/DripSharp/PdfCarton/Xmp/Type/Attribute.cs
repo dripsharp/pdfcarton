@@ -9,43 +9,44 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class Attribute {
-private string nsURI = null!;
+  private string nsURI = null!;
 
-private string name = null!;
+  private string name = null!;
 
-private string value = null!;
+  private string value = null!;
 
-public Attribute(string nsURI, string localName, string value) {
-this.nsURI = nsURI;
-this.name = localName;
-this.value = value;
-}
+  public Attribute(string nsURI, string localName, string value) {
+    this.nsURI = nsURI;
+    this.name = localName;
+    this.value = value;
+  }
 
-public virtual string GetName() {
-return this.name;
-}
+  public virtual string GetName() {
+    return this.name;
+  }
 
-public virtual void SetName(string lname) {
-this.name = lname;
-}
+  public virtual void SetName(string lname) {
+    this.name = lname;
+  }
 
-public virtual string GetNamespace() {
-return this.nsURI;
-}
+  public virtual string GetNamespace() {
+    return this.nsURI;
+  }
 
-public virtual void SetNsURI(string nsURI) {
-this.nsURI = nsURI;
-}
+  public virtual void SetNsURI(string nsURI) {
+    this.nsURI = nsURI;
+  }
 
-public virtual string GetValue() {
-return this.value;
-}
+  public virtual string GetValue() {
+    return this.value;
+  }
 
-public virtual void SetValue(string value) {
-this.value = value;
-}
+  public virtual void SetValue(string value) {
+    this.value = value;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("[attr:{", this.nsURI), "}"), this.name), "="), this.value), "]");
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("[attr:{",
+      this.nsURI), "}"), this.name), "="), this.value), "]");
+  }
 }

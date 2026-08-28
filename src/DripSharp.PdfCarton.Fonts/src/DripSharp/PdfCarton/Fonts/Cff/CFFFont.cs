@@ -9,95 +9,103 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public abstract class CFFFont : global::DripSharp.PdfCarton.Fonts.FontBoxFont {
-private string fontName = null!;
+  private string fontName = null!;
 
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset = null!;
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset = null!;
 
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource source = null!;
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource source = null!;
 
-protected internal readonly global::System.Collections.Generic.IDictionary<string, object> TopDict = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<string, object>();
+  protected internal readonly global::System.Collections.Generic.IDictionary<string, object> TopDict
+    = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<string, object>();
 
-protected internal sbyte[][] CharStrings = null!;
+  protected internal sbyte[][] CharStrings = null!;
 
-protected internal sbyte[][] GlobalSubrIndex = null!;
+  protected internal sbyte[][] GlobalSubrIndex = null!;
 
-public virtual string GetName() {
-return this.fontName;
-}
+  public virtual string GetName() {
+    return this.fontName;
+  }
 
-internal virtual void setName(string name) {
-this.fontName = name;
-}
+  internal virtual void setName(string name) {
+    this.fontName = name;
+  }
 
-public virtual void AddValueToTopDict(string name, object value) {
-if ((value != default!)) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.TopDict, name, value);
-}
-}
+  public virtual void AddValueToTopDict(string name, object value) {
+    if ((value != default!)) {
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.TopDict, name, value);
+    }
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<string, object> GetTopDict() {
-return this.TopDict;
-}
+  public virtual global::System.Collections.Generic.IDictionary<string, object> GetTopDict() {
+    return this.TopDict;
+  }
 
-public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetFontMatrix() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastList<global::System.IConvertible>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.TopDict, "FontMatrix"));
-}
+  public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetFontMatrix() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastList<global::System.IConvertible>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.TopDict,
+      "FontMatrix"));
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetFontBBox() {
-global::System.Collections.Generic.IList<global::System.IConvertible> numbers = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastList<global::System.IConvertible>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.TopDict, "FontBBox"));
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) < 4)) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("FontBBox must have 4 numbers, but is ", numbers));
-}
-return new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox(numbers);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetFontBBox() {
+    global::System.Collections.Generic.IList<global::System.IConvertible> numbers
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastList<global::System.IConvertible>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.TopDict,
+      "FontBBox"));
+    if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) < 4)) {
+      throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("FontBBox must have 4 numbers, but is ",
+        numbers));
+    }
+    return new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox(numbers);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset GetCharset() {
-return this.charset;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset GetCharset() {
+    return this.charset;
+  }
 
-internal virtual void setCharset(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset) {
-this.charset = charset;
-}
+  internal virtual void setCharset(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset) {
+    this.charset = charset;
+  }
 
-public global::System.Collections.Generic.IList<sbyte[]> GetCharStringBytes() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<sbyte[]>(this.CharStrings);
-}
+  public global::System.Collections.Generic.IList<sbyte[]> GetCharStringBytes() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<sbyte[]>(this.CharStrings);
+  }
 
-internal void setData(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource source) {
-this.source = source;
-}
+  internal void setData(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource source) {
+    this.source = source;
+  }
 
-public virtual sbyte[] GetData() {
-return this.source.GetBytes();
-}
+  public virtual sbyte[] GetData() {
+    return this.source.GetBytes();
+  }
 
-public virtual int GetNumCharStrings() {
-return this.CharStrings.Length;
-}
+  public virtual int GetNumCharStrings() {
+    return this.CharStrings.Length;
+  }
 
-internal virtual void setGlobalSubrIndex(sbyte[][] globalSubrIndexValue) {
-this.GlobalSubrIndex = globalSubrIndexValue;
-}
+  internal virtual void setGlobalSubrIndex(sbyte[][] globalSubrIndexValue) {
+    this.GlobalSubrIndex = globalSubrIndexValue;
+  }
 
-public virtual global::System.Collections.Generic.IList<sbyte[]> GetGlobalSubrIndex() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<sbyte[]>(this.GlobalSubrIndex);
-}
+  public virtual global::System.Collections.Generic.IList<sbyte[]> GetGlobalSubrIndex() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<sbyte[]>(this.GlobalSubrIndex);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString GetType2CharString(int cidOrGid) {
-return ((global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString)(this.__DripSharpCovariantBridgeGetType2CharString(cidOrGid)));
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString GetType2CharString(int cidOrGid) {
+    return ((global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString)(this.__DripSharpCovariantBridgeGetType2CharString(cidOrGid)));
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(((object)(this)).GetType().Name, "[name="), this.fontName), ", topDict="), this.TopDict), ", charset="), this.charset), ", charStrings="), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.DeepArrayString(this.CharStrings)), "]");
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(((object)(this)).GetType().Name,
+      "[name="), this.fontName), ", topDict="), this.TopDict), ", charset="), this.charset),
+      ", charStrings="),
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.DeepArrayString(this.CharStrings)), "]");
+  }
 
-protected abstract global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString __DripSharpCovariantBridgeGetType2CharString(int cidOrGid);
+  protected abstract global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString __DripSharpCovariantBridgeGetType2CharString(int cidOrGid);
 
-public abstract global::SkiaSharp.SKPath GetPath(string name);
+  public abstract global::SkiaSharp.SKPath GetPath(string name);
 
-public abstract float GetWidth(string name);
+  public abstract float GetWidth(string name);
 
-public abstract bool HasGlyph(string name);
+  public abstract bool HasGlyph(string name);
 
-public CFFFont() {}
+  public CFFFont() {}
 }

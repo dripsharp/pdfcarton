@@ -9,9 +9,9 @@
 namespace DripSharp.PdfCarton.IO;
 
 public class RandomAccessStreamCacheImpl : global::DripSharp.PdfCarton.IO.RandomAccessStreamCache {
-public virtual void Dispose() {}
+  public virtual void Dispose() {}
 
-public virtual global::DripSharp.PdfCarton.IO.RandomAccess CreateBuffer() {
-return new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer();
-}
+  public virtual global::DripSharp.PdfCarton.IO.RandomAccess CreateBuffer() {
+    return new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer();
+  }
 }

@@ -8,154 +8,187 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font.Descriptor;
 
-public abstract class FontDescriptorHelper<T> where T : global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer {
-protected internal T FContainer = default!;
+public abstract class FontDescriptorHelper<T> where T
+: global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer {
+  protected internal T FContainer = default!;
 
-protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Context = null!;
+  protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Context = null!;
 
-protected internal global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike Font = null!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike Font = null!;
 
-protected internal global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor FontDescriptor = null!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor FontDescriptor
+    = null!;
 
-private static readonly global::System.Collections.Generic.ISet<string> MANDATORYFIELDS = null!;
+  private static readonly global::System.Collections.Generic.ISet<string> MANDATORYFIELDS = null!;
 
-static FontDescriptorHelper() {
-{
-global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS = new global::System.Collections.Generic.HashSet<string>();
-global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.Flags.GetName());
-global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.ItalicAngle.GetName());
-global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.CapHeight.GetName());
-global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.FontBbox.GetName());
-global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.Ascent.GetName());
-global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.Descent.GetName());
-global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.StemV.GetName());
-global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.FontName.GetName());
-global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.Type.GetName());
-}
-}
+  static FontDescriptorHelper() { {
+      global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS
+        = new global::System.Collections.Generic.HashSet<string>();
+      global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.Flags.GetName());
+      global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.ItalicAngle.GetName());
+      global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.CapHeight.GetName());
+      global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.FontBbox.GetName());
+      global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.Ascent.GetName());
+      global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.Descent.GetName());
+      global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.StemV.GetName());
+      global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.FontName.GetName());
+      global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS.Add(global::DripSharp.PdfCarton.Cos.COSName.Type.GetName());
+    }
+  }
 
-public FontDescriptorHelper(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike font, T fontContainer) : base() {
-this.FContainer = fontContainer;
-this.Context = context;
-this.Font = font;
-}
+  public FontDescriptorHelper(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike font, T fontContainer) : base() {
+    this.FContainer = fontContainer;
+    this.Context = context;
+    this.Font = font;
+  }
 
-public virtual void Validate() {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fd = this.Font.GetFontDescriptor();
-bool isStandard14 = false;
-if ((this.Font is global::DripSharp.PdfCarton.Pdmodel.Font.PDFont)) {
-isStandard14 = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDFont)(this.Font!)).IsStandard14();
-}
-if ((fd != default!)) {
-this.FontDescriptor = fd;
-if (!isStandard14) {
-this.CheckMandatoryFields(this.FontDescriptor.GetCOSObject());
-}
-if (this.HasOnlyOneFontFile(this.FontDescriptor)) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDStream fontFile = this.ExtractFontFile(this.FontDescriptor);
-if ((fontFile != default!)) {
-this.ProcessFontFile(this.FontDescriptor, fontFile);
-this.CheckFontFileMetaData(this.FontDescriptor, fontFile);
-}
-} else {
-if (this.FontFileNotEmbedded(this.FontDescriptor)) {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsFontFilexInvalid, global::DripSharp.Runtime.JavaCompat.Concat(this.FontDescriptor.GetFontName(), ": FontFile entry is missing from FontDescriptor")));
-this.FContainer.NotEmbedded();
-} else {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsFontFilexInvalid, global::DripSharp.Runtime.JavaCompat.Concat(this.FontDescriptor.GetFontName(), ": They is more than one FontFile")));
-}
-}
-} else {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDescriptorInvalid, global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(), ": FontDescriptor is null or is an AFM Descriptor")));
-this.FContainer.NotEmbedded();
-}
-}
+  public virtual void Validate() {
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fd = this.Font.GetFontDescriptor();
+    bool isStandard14 = false;
+    if ((this.Font is global::DripSharp.PdfCarton.Pdmodel.Font.PDFont)) {
+      isStandard14 = ((global::DripSharp.PdfCarton.Pdmodel.Font.PDFont)(this.Font!)).IsStandard14();
+    }
+    if ((fd != default!)) {
+      this.FontDescriptor = fd;
+      if (!isStandard14) {
+        this.CheckMandatoryFields(this.FontDescriptor.GetCOSObject());
+      }
+      if (this.HasOnlyOneFontFile(this.FontDescriptor)) {
+        global::DripSharp.PdfCarton.Pdmodel.Common.PDStream fontFile
+          = this.ExtractFontFile(this.FontDescriptor);
+        if ((fontFile != default!)) {
+          this.ProcessFontFile(this.FontDescriptor, fontFile);
+          this.CheckFontFileMetaData(this.FontDescriptor, fontFile);
+        }
+      } else {
+        if (this.FontFileNotEmbedded(this.FontDescriptor)) {
+          this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsFontFilexInvalid,
+            global::DripSharp.Runtime.JavaCompat.Concat(this.FontDescriptor.GetFontName(),
+            ": FontFile entry is missing from FontDescriptor")));
+          this.FContainer.NotEmbedded();
+        } else {
+          this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsFontFilexInvalid,
+            global::DripSharp.Runtime.JavaCompat.Concat(this.FontDescriptor.GetFontName(),
+            ": They is more than one FontFile")));
+        }
+      }
+    } else {
+      this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDescriptorInvalid,
+        global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
+        ": FontDescriptor is null or is an AFM Descriptor")));
+      this.FContainer.NotEmbedded();
+    }
+  }
 
-protected internal virtual bool CheckMandatoryFields(global::DripSharp.PdfCarton.Cos.COSDictionary fDescriptor) {
-bool result = true;
-global::System.Text.StringBuilder missingFields = new global::System.Text.StringBuilder();
-foreach (string field in global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS) {
-if (!(fDescriptor.ContainsKey(field))) {
-if ((missingFields.Length > 1)) {
-missingFields.Append(", ");
-}
-missingFields.Append(field);
-}
-}
-if (fDescriptor.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Type)) {
-global::DripSharp.PdfCarton.Cos.COSBase type = fDescriptor.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Type);
-if (!(global::DripSharp.PdfCarton.Cos.COSName.FontDesc.Equals(type))) {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDescriptorInvalid, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(), ": /Type in FontDescriptor must be /FontDescriptor, but is "), type)));
-result = false;
-}
-}
-if ((missingFields.Length > 0)) {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDescriptorInvalid, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(), ": some mandatory fields are missing from the FontDescriptor: "), missingFields), ".")));
-result = false;
-}
-return result;
-}
+  protected internal virtual bool CheckMandatoryFields(global::DripSharp.PdfCarton.Cos.COSDictionary fDescriptor) {
+    bool result = true;
+    global::System.Text.StringBuilder missingFields = new global::System.Text.StringBuilder();
+    foreach (string field in global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.MANDATORYFIELDS) {
+      if (!(fDescriptor.ContainsKey(field))) {
+        if ((missingFields.Length > 1)) {
+          missingFields.Append(", ");
+        }
+        missingFields.Append(field);
+      }
+    }
+    if (fDescriptor.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Type)) {
+      global::DripSharp.PdfCarton.Cos.COSBase type
+        = fDescriptor.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Type);
+      if (!(global::DripSharp.PdfCarton.Cos.COSName.FontDesc.Equals(type))) {
+        this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDescriptorInvalid,
+          global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
+          ": /Type in FontDescriptor must be /FontDescriptor, but is "), type)));
+        result = false;
+      }
+    }
+    if ((missingFields.Length > 0)) {
+      this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDescriptorInvalid,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
+        ": some mandatory fields are missing from the FontDescriptor: "), missingFields), ".")));
+      result = false;
+    }
+    return result;
+  }
 
-public abstract global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ExtractFontFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor);
+  public abstract global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ExtractFontFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor);
 
-protected internal virtual bool HasOnlyOneFontFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff1 = fontDescriptor.GetFontFile();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff2 = fontDescriptor.GetFontFile2();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff3 = fontDescriptor.GetFontFile3();
-return (((ff1 != default!) ^ (ff2 != default!)) ^ (ff3 != default!));
-}
+  protected internal virtual bool HasOnlyOneFontFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff1 = fontDescriptor.GetFontFile();
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff2 = fontDescriptor.GetFontFile2();
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff3 = fontDescriptor.GetFontFile3();
+    return (((ff1 != default!) ^ (ff2 != default!)) ^ (ff3 != default!));
+  }
 
-protected internal virtual bool FontFileNotEmbedded(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff1 = fontDescriptor.GetFontFile();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff2 = fontDescriptor.GetFontFile2();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff3 = fontDescriptor.GetFontFile3();
-return (((ff1 == default!) && (ff2 == default!)) && (ff3 == default!));
-}
+  protected internal virtual bool FontFileNotEmbedded(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff1 = fontDescriptor.GetFontFile();
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff2 = fontDescriptor.GetFontFile2();
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff3 = fontDescriptor.GetFontFile3();
+    return (((ff1 == default!) && (ff2 == default!)) && (ff3 == default!));
+  }
 
-protected internal abstract void ProcessFontFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor, global::DripSharp.PdfCarton.Pdmodel.Common.PDStream fontFile);
+  protected internal abstract void ProcessFontFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor,
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDStream fontFile);
 
-protected internal virtual void CheckFontFileMetaData(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor, global::DripSharp.PdfCarton.Pdmodel.Common.PDStream fontFile) {
-try {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDMetadata metadata = fontFile.GetMetadata();
-if ((metadata != default!)) {
-sbyte[] mdAsBytes = this.GetMetaDataStreamAsBytes(metadata);
-try {
-global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser xmpBuilder = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
-global::DripSharp.PdfCarton.Xmp.XMPMetadata xmpMeta = xmpBuilder.Parse(mdAsBytes);
-global::DripSharp.PdfCarton.Preflight.Font.Util.FontMetaDataValidation fontMDval = new global::DripSharp.PdfCarton.Preflight.Font.Util.FontMetaDataValidation();
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError>();
-fontMDval.AnalyseFontName(xmpMeta, fontDescriptor, ve);
-fontMDval.AnalyseRights(xmpMeta, fontDescriptor, ve);
-this.FContainer.Push(ve);
-} catch (global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException e) {
-if ((e.GetErrorType() == global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoValueType)) {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataUnknownValuetype, global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e), e));
-} else {
-if ((e.GetErrorType() == global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadEnd)) {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataFormatXpacket, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(), ": Unable to parse font metadata due to : "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
-} else {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataFormat, global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e), e));
-}
-}
-}
-}
-} catch (global::System.InvalidOperationException e) {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataFormatUnknown, global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(), ": The Metadata entry doesn't reference a stream object"), e));
-}
-}
+  protected internal virtual void CheckFontFileMetaData(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor,
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDStream fontFile) {
+    try {
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDMetadata metadata = fontFile.GetMetadata();
+      if ((metadata != default!)) {
+        sbyte[] mdAsBytes = this.GetMetaDataStreamAsBytes(metadata);
+        try {
+          global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser xmpBuilder
+            = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
+          global::DripSharp.PdfCarton.Xmp.XMPMetadata xmpMeta = xmpBuilder.Parse(mdAsBytes);
+          global::DripSharp.PdfCarton.Preflight.Font.Util.FontMetaDataValidation fontMDval
+            = new global::DripSharp.PdfCarton.Preflight.Font.Util.FontMetaDataValidation();
+          global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve
+            = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError>();
+          fontMDval.AnalyseFontName(xmpMeta, fontDescriptor, ve);
+          fontMDval.AnalyseRights(xmpMeta, fontDescriptor, ve);
+          this.FContainer.Push(ve);
+        } catch (global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException e) {
+          if ((e.GetErrorType()
+            == global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoValueType)) {
+            this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataUnknownValuetype,
+              global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e), e));
+          } else {
+            if ((e.GetErrorType()
+              == global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadEnd)) {
+              this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataFormatXpacket,
+                global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
+                ": Unable to parse font metadata due to : "),
+                global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
+            } else {
+              this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataFormat,
+                global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e), e));
+            }
+          }
+        }
+      }
+    } catch (global::System.InvalidOperationException e) {
+      this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataFormatUnknown,
+        global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
+        ": The Metadata entry doesn't reference a stream object"), e));
+    }
+  }
 
-protected internal sbyte[] GetMetaDataStreamAsBytes(global::DripSharp.PdfCarton.Pdmodel.Common.PDMetadata metadata) {
-try {
-using (global::System.IO.Stream metaDataContent = metadata.CreateInputStream()) {
-return global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(metaDataContent);
-}
-} catch (global::System.IO.IOException e) {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataFormatStream, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(), ": Unable to read font metadata due to : "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
-return default!;
-}
-}
+  protected internal sbyte[] GetMetaDataStreamAsBytes(global::DripSharp.PdfCarton.Pdmodel.Common.PDMetadata metadata) {
+    try {
+      using (global::System.IO.Stream metaDataContent = metadata.CreateInputStream()) {
+        return global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(metaDataContent);
+      }
+    } catch (global::System.IO.IOException e) {
+      this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataFormatStream,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
+        ": Unable to read font metadata due to : "),
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
+      return default!;
+    }
+  }
 
-public static bool IsSubSet(string fontName) {
-return ((fontName != default!) && global::DripSharp.Runtime.JavaCompat.StringMatches(fontName, "^[A-Z]{6}\\+.*"));
-}
+  public static bool IsSubSet(string fontName) {
+    return ((fontName != default!) && global::DripSharp.Runtime.JavaCompat.StringMatches(fontName,
+      "^[A-Z]{6}\\+.*"));
+  }
 }

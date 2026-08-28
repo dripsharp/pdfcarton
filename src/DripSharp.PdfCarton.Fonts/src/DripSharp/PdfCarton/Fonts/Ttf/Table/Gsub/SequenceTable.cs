@@ -9,24 +9,27 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
 public class SequenceTable {
-private readonly int glyphCount = default;
+  private readonly int glyphCount = default;
 
-private readonly int[] substituteGlyphIDs = null!;
+  private readonly int[] substituteGlyphIDs = null!;
 
-public SequenceTable(int glyphCount, int[] substituteGlyphIDs) {
-this.glyphCount = glyphCount;
-this.substituteGlyphIDs = substituteGlyphIDs;
-}
+  public SequenceTable(int glyphCount, int[] substituteGlyphIDs) {
+    this.glyphCount = glyphCount;
+    this.substituteGlyphIDs = substituteGlyphIDs;
+  }
 
-public virtual int GetGlyphCount() {
-return this.glyphCount;
-}
+  public virtual int GetGlyphCount() {
+    return this.glyphCount;
+  }
 
-public virtual int[] GetSubstituteGlyphIDs() {
-return this.substituteGlyphIDs;
-}
+  public virtual int[] GetSubstituteGlyphIDs() {
+    return this.substituteGlyphIDs;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("SequenceTable{", "glyphCount="), this.glyphCount), ", substituteGlyphIDs="), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(this.substituteGlyphIDs)), '}');
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("SequenceTable{",
+      "glyphCount="), this.glyphCount), ", substituteGlyphIDs="),
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(this.substituteGlyphIDs)),
+      '}');
+  }
 }

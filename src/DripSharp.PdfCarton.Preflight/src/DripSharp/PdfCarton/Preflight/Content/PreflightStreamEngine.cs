@@ -8,345 +8,526 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Content;
 
-public abstract class PreflightStreamEngine : global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine {
-internal sealed class ColorSpaceType {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("RGB")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType Rgb = new global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType();
+public abstract class PreflightStreamEngine
+: global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine {
+  internal sealed class ColorSpaceType {
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("RGB")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+    public static readonly global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType Rgb
+      = new global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("CMYK")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType Cmyk = new global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType();
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("CMYK")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+    public static readonly global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType Cmyk
+      = new global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("ALL")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType All = new global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType();
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("ALL")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+    public static readonly global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType All
+      = new global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType();
 
-private ColorSpaceType() {}
+    private ColorSpaceType() {}
 
+    public static ColorSpaceType[] values()
+      => global::DripSharp.Runtime.JavaCompat.EnumValues<ColorSpaceType>();
+    public static ColorSpaceType valueOf(string name)
+      => global::DripSharp.Runtime.JavaCompat.EnumValueOf<ColorSpaceType>(name);
 
-public static ColorSpaceType[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<ColorSpaceType>();
-public static ColorSpaceType valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<ColorSpaceType>(name);
+    public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  }
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
-}
+  protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Context = default!;
 
-protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Context = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.PDPage ProcessedPage = default!;
 
-protected internal global::DripSharp.PdfCarton.Pdmodel.PDPage ProcessedPage = default!;
+  public PreflightStreamEngine(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    this.Context = context;
+    this.ProcessedPage = page;
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetLineWidth(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Concatenate(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingColorSpace(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingColorSpace(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetLineDashPattern(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.DrawObject(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetLineJoinStyle(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetLineCapStyle(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingDeviceCMYKColor(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingDeviceCMYKColor(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingDeviceRGBColor(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingDeviceRGBColor(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingDeviceGrayColor(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingDeviceGrayColor(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingColor(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingColorN(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingColor(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingColorN(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Restore(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Save(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.BeginText(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.EndText(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetGraphicsStateParameters(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetFontAndSize(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextRenderingMode(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetMatrix(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.MoveText(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.NextLine(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.MoveTextSetLeading(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetCharSpacing(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextLeading(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextRise(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetWordSpacing(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextHorizontalScaling(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LineTo));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.AppendRect));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveTo));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateFinalPoint));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateInitialPoint));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Endpath));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImageData));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndInlineImage));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveTo));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipEvenOdd));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipNonZero));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClosePath));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowText));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOddAndStroke));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContentSeq));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContent));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPointWithProps));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndMarkedContent));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginCompatibilitySection));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndCompatibilitySection));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D0));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D1));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZero));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineMiterlimit));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPoint));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFlatness));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetRenderingintent));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseAndStroke));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokePath));
+    this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShadingFill));
+  }
 
-public PreflightStreamEngine(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-this.Context = context;
-this.ProcessedPage = page;
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetLineWidth(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Concatenate(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingColorSpace(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingColorSpace(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetLineDashPattern(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.DrawObject(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetLineJoinStyle(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetLineCapStyle(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingDeviceCMYKColor(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingDeviceCMYKColor(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingDeviceRGBColor(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingDeviceRGBColor(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingDeviceGrayColor(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingDeviceGrayColor(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingColor(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingColorN(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingColor(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingColorN(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Restore(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Save(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.BeginText(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.EndText(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetGraphicsStateParameters(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetFontAndSize(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextRenderingMode(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetMatrix(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.MoveText(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.NextLine(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.MoveTextSetLeading(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetCharSpacing(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextLeading(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextRise(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetWordSpacing(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetTextHorizontalScaling(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LineTo));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.AppendRect));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveTo));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateFinalPoint));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateInitialPoint));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Endpath));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImageData));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndInlineImage));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveTo));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipEvenOdd));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipNonZero));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClosePath));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowText));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOddAndStroke));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContentSeq));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContent));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPointWithProps));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndMarkedContent));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginCompatibilitySection));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndCompatibilitySection));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D0));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D1));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZero));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineMiterlimit));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPoint));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFlatness));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetRenderingintent));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseAndStroke));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokePath));
-this.AddOperator(new global::DripSharp.PdfCarton.Preflight.Content.StubOperator(this, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShadingFill));
-}
+  protected internal virtual void ValidateRenderingIntent(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetRenderingintent,
+      @operator.GetName()) && (global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+      0) is global::DripSharp.PdfCarton.Cos.COSName))
+      && !(global::DripSharp.PdfCarton.Preflight.Utils.RenderingIntents.Contains((global::DripSharp.PdfCarton.Cos.COSName)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+      0)!))))) {
+      this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected value '",
+        global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0)), "' for ri operand. "),
+        global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey);
+    }
+  }
 
-protected internal virtual void ValidateRenderingIntent(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetRenderingintent, @operator.GetName()) && (global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0) is global::DripSharp.PdfCarton.Cos.COSName)) && !(global::DripSharp.PdfCarton.Preflight.Utils.RenderingIntents.Contains((global::DripSharp.PdfCarton.Cos.COSName)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0)!))))) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected value '", global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0)), "' for ri operand. "), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey);
-}
-}
+  protected internal virtual void ValidateNumberOfGraphicStates(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator) {
+    if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Save,
+      @operator.GetName())) {
+      int numberOfGraphicStates = this.GetGraphicsStackSize();
+      if ((numberOfGraphicStates > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxGraphicStates)) {
+        this.RegisterError("Too many graphic states",
+          global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicTooManyGraphicStates);
+      }
+    }
+  }
 
-protected internal virtual void ValidateNumberOfGraphicStates(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator) {
-if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Save, @operator.GetName())) {
-int numberOfGraphicStates = this.GetGraphicsStackSize();
-if ((numberOfGraphicStates > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxGraphicStates)) {
-this.RegisterError("Too many graphic states", global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicTooManyGraphicStates);
-}
-}
-}
+  protected internal virtual void ValidateInlineImageFilter(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary dict = @operator.GetImageParameters();
+    global::DripSharp.PdfCarton.Cos.COSBase filter
+      = dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.F,
+      global::DripSharp.PdfCarton.Cos.COSName.Filter);
+    global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.IsAuthorizedFilter(this.Context,
+      ((filter is global::DripSharp.PdfCarton.Cos.COSName)
+      ? ((global::DripSharp.PdfCarton.Cos.COSName)(filter!)).GetName() : (string)(default!)));
+  }
 
-protected internal virtual void ValidateInlineImageFilter(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dict = @operator.GetImageParameters();
-global::DripSharp.PdfCarton.Cos.COSBase filter = dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.F, global::DripSharp.PdfCarton.Cos.COSName.Filter);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.IsAuthorizedFilter(this.Context, ((filter is global::DripSharp.PdfCarton.Cos.COSName) ? ((global::DripSharp.PdfCarton.Cos.COSName)(filter!)).GetName() : (string)(default!)));
-}
+  protected internal virtual void ValidateInlineImageColorSpace(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary dict = @operator.GetImageParameters();
+    global::DripSharp.PdfCarton.Cos.COSBase csInlinedBase
+      = dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Cs,
+      global::DripSharp.PdfCarton.Cos.COSName.Colorspace);
+    global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper csHelper = default!;
+    if ((csInlinedBase != default!)) {
+      if ((csInlinedBase is global::DripSharp.PdfCarton.Cos.COSName)) {
+        string colorSpace = ((global::DripSharp.PdfCarton.Cos.COSName)(csInlinedBase!)).GetName();
+        global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces cs = default!;
+        try {
+          cs = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(colorSpace);
+        } catch (global::System.ArgumentException) {
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pdCS__298_34
+            = this.GetResources().GetColorSpace(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(colorSpace));
+          if ((pdCS__298_34 != default!)) {
+            cs
+              = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(pdCS__298_34.GetName());
+            csHelper = this.getColorSpaceHelper(pdCS__298_34);
+          }
+        }
+        if ((cs! == default!)) {
+          this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The ColorSpace ",
+            colorSpace), " is unknown"),
+            global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey);
+          return;
+        }
+      }
+      if ((csHelper! == default!)) {
+        csInlinedBase = this.toLongName(csInlinedBase);
+        if (((csInlinedBase is global::DripSharp.PdfCarton.Cos.COSArray)
+          && (((global::DripSharp.PdfCarton.Cos.COSArray)(csInlinedBase!)).Size() > 1))) {
+          global::DripSharp.PdfCarton.Cos.COSArray srcArray
+            = (global::DripSharp.PdfCarton.Cos.COSArray)(csInlinedBase!);
+          global::DripSharp.PdfCarton.Cos.COSBase csType = srcArray.Get(0);
+          if ((global::DripSharp.PdfCarton.Cos.COSName.I.Equals(csType)
+            || global::DripSharp.PdfCarton.Cos.COSName.Indexed.Equals(csType))) {
+            global::DripSharp.PdfCarton.Cos.COSArray dstArray
+              = new global::DripSharp.PdfCarton.Cos.COSArray();
+            dstArray.AddAll(srcArray);
+            dstArray.Set(0, global::DripSharp.PdfCarton.Cos.COSName.Indexed);
+            dstArray.Set(1, this.toLongName(srcArray.Get(1)));
+            csInlinedBase = dstArray;
+          }
+        }
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pdCS__330_30
+          = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(csInlinedBase);
+        csHelper = this.getColorSpaceHelper(pdCS__330_30);
+      }
+      csHelper!.Validate();
+    }
+  }
 
-protected internal virtual void ValidateInlineImageColorSpace(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dict = @operator.GetImageParameters();
-global::DripSharp.PdfCarton.Cos.COSBase csInlinedBase = dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Cs, global::DripSharp.PdfCarton.Cos.COSName.Colorspace);
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper csHelper = default!;
-if ((csInlinedBase != default!)) {
-if ((csInlinedBase is global::DripSharp.PdfCarton.Cos.COSName)) {
-string colorSpace = ((global::DripSharp.PdfCarton.Cos.COSName)(csInlinedBase!)).GetName();
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces cs = default!;
-try {
-cs = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(colorSpace);
-} catch (global::System.ArgumentException) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pdCS__298_34 = this.GetResources().GetColorSpace(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(colorSpace));
-if ((pdCS__298_34 != default!)) {
-cs = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(pdCS__298_34.GetName());
-csHelper = this.getColorSpaceHelper(pdCS__298_34);
-}
-}
-if ((cs! == default!)) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The ColorSpace ", colorSpace), " is unknown"), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey);
-return;
-}
-}
-if ((csHelper! == default!)) {
-csInlinedBase = this.toLongName(csInlinedBase);
-if (((csInlinedBase is global::DripSharp.PdfCarton.Cos.COSArray) && (((global::DripSharp.PdfCarton.Cos.COSArray)(csInlinedBase!)).Size() > 1))) {
-global::DripSharp.PdfCarton.Cos.COSArray srcArray = (global::DripSharp.PdfCarton.Cos.COSArray)(csInlinedBase!);
-global::DripSharp.PdfCarton.Cos.COSBase csType = srcArray.Get(0);
-if ((global::DripSharp.PdfCarton.Cos.COSName.I.Equals(csType) || global::DripSharp.PdfCarton.Cos.COSName.Indexed.Equals(csType))) {
-global::DripSharp.PdfCarton.Cos.COSArray dstArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-dstArray.AddAll(srcArray);
-dstArray.Set(0, global::DripSharp.PdfCarton.Cos.COSName.Indexed);
-dstArray.Set(1, this.toLongName(srcArray.Get(1)));
-csInlinedBase = dstArray;
-}
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pdCS__330_30 = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(csInlinedBase);
-csHelper = this.getColorSpaceHelper(pdCS__330_30);
-}
-csHelper!.Validate();
-}
-}
+  private global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper getColorSpaceHelper(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pdCS) {
+    global::DripSharp.PdfCarton.Preflight.PreflightConfiguration cfg = this.Context.GetConfig();
+    global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory csFact
+      = cfg.GetColorSpaceHelperFact();
+    return csFact.GetColorSpaceHelper(this.Context, pdCS,
+      global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.OnlyDevice);
+  }
 
-private global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper getColorSpaceHelper(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pdCS) {
-global::DripSharp.PdfCarton.Preflight.PreflightConfiguration cfg = this.Context.GetConfig();
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory csFact = cfg.GetColorSpaceHelperFact();
-return csFact.GetColorSpaceHelper(this.Context, pdCS, global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.OnlyDevice);
-}
+  private global::DripSharp.PdfCarton.Cos.COSBase toLongName(global::DripSharp.PdfCarton.Cos.COSBase cs) {
+    if (global::DripSharp.PdfCarton.Cos.COSName.Rgb.Equals(cs)) {
+      return global::DripSharp.PdfCarton.Cos.COSName.Devicergb;
+    }
+    if (global::DripSharp.PdfCarton.Cos.COSName.Cmyk.Equals(cs)) {
+      return global::DripSharp.PdfCarton.Cos.COSName.Devicecmyk;
+    }
+    if (global::DripSharp.PdfCarton.Cos.COSName.G.Equals(cs)) {
+      return global::DripSharp.PdfCarton.Cos.COSName.Devicegray;
+    }
+    return cs;
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSBase toLongName(global::DripSharp.PdfCarton.Cos.COSBase cs) {
-if (global::DripSharp.PdfCarton.Cos.COSName.Rgb.Equals(cs)) {
-return global::DripSharp.PdfCarton.Cos.COSName.Devicergb;
-}
-if (global::DripSharp.PdfCarton.Cos.COSName.Cmyk.Equals(cs)) {
-return global::DripSharp.PdfCarton.Cos.COSName.Devicecmyk;
-}
-if (global::DripSharp.PdfCarton.Cos.COSName.G.Equals(cs)) {
-return global::DripSharp.PdfCarton.Cos.COSName.Devicegray;
-}
-return cs;
-}
+  protected internal virtual void CheckColorOperators(string operation) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace cs
+      = this.getColorSpace(operation);
+    if (((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingRgb,
+      operation)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorRgb,
+      operation)) && !(this.validColorSpace(cs,
+      global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType.Rgb)))) {
+      this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The operator \"",
+        operation), "\" can't be used without RGB Color Profile"),
+        global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceRgb);
+      return;
+    }
+    if (((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingCmyk,
+      operation)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorCmyk,
+      operation)) && !(this.validColorSpace(cs,
+      global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType.Cmyk)))) {
+      this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The operator \"",
+        operation), "\" can't be used without CMYK Color Profile"),
+        global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceCmyk);
+      return;
+    }
+    if ((((((((((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray,
+      operation)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorGray,
+      operation))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZero,
+      operation))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero,
+      operation))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd,
+      operation))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke,
+      operation))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOddAndStroke,
+      operation))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke,
+      operation))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke,
+      operation)) && !(this.validColorSpace(cs,
+      global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType.All)))) {
+      this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The operator \"",
+        operation), "\" can't be used without Color Profile"),
+        global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing);
+    }
+  }
 
-protected internal virtual void CheckColorOperators(string operation) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace cs = this.getColorSpace(operation);
-if (((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingRgb, operation) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorRgb, operation)) && !(this.validColorSpace(cs, global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType.Rgb)))) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The operator \"", operation), "\" can't be used without RGB Color Profile"), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceRgb);
-return;
-}
-if (((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingCmyk, operation) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorCmyk, operation)) && !(this.validColorSpace(cs, global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType.Cmyk)))) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The operator \"", operation), "\" can't be used without CMYK Color Profile"), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceCmyk);
-return;
-}
-if ((((((((((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray, operation) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorGray, operation)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZero, operation)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero, operation)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd, operation)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke, operation)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOddAndStroke, operation)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke, operation)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke, operation)) && !(this.validColorSpace(cs, global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType.All)))) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The operator \"", operation), "\" can't be used without Color Profile"), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing);
-}
-}
+  internal virtual void validateDefaultColorSpace(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator) {
+    bool v = false;
+    string op = @operator.GetName();
+    if ((((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowText,
+      op)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted,
+      op))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine,
+      op))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace,
+      op))) {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode rm
+        = this.GetGraphicsState().GetTextState().GetRenderingMode();
+      if ((rm.IsFill()
+        && (this.GetGraphicsState().GetNonStrokingColor().GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray))) {
+        v = true;
+      }
+      if ((rm.IsStroke()
+        && (this.GetGraphicsState().GetStrokingColor().GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray))) {
+        v = true;
+      }
+    }
+    if ((((((((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZero,
+      op)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero,
+      op))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd,
+      op))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke,
+      op))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOddAndStroke,
+      op))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke,
+      op))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke,
+      op))
+      && (this.GetGraphicsState().GetNonStrokingColor().GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray))) {
+      v = true;
+    }
+    if (((((((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke,
+      op)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOddAndStroke,
+      op))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke,
+      op))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke,
+      op))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseAndStroke,
+      op))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokePath,
+      op))
+      && (this.GetGraphicsState().GetStrokingColor().GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray))) {
+      v = true;
+    }
+    if ((v
+      && !(this.validColorSpaceDestOutputProfile(global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType.All)))) {
+      this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("/DeviceGray default for operator \"",
+        op), "\" can't be used without Color Profile"),
+        global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing);
+    }
+  }
 
-internal virtual void validateDefaultColorSpace(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator) {
-bool v = false;
-string op = @operator.GetName();
-if ((((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowText, op) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace, op))) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode rm = this.GetGraphicsState().GetTextState().GetRenderingMode();
-if ((rm.IsFill() && (this.GetGraphicsState().GetNonStrokingColor().GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray))) {
-v = true;
-}
-if ((rm.IsStroke() && (this.GetGraphicsState().GetStrokingColor().GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray))) {
-v = true;
-}
-}
-if ((((((((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZero, op) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOddAndStroke, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke, op)) && (this.GetGraphicsState().GetNonStrokingColor().GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray))) {
-v = true;
-}
-if (((((((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke, op) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOddAndStroke, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseAndStroke, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokePath, op)) && (this.GetGraphicsState().GetStrokingColor().GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray))) {
-v = true;
-}
-if ((v && !(this.validColorSpaceDestOutputProfile(global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType.All)))) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("/DeviceGray default for operator \"", op), "\" can't be used without Color Profile"), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing);
-}
-}
+  private bool validColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace,
+    global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType expectedIccType) {
+    if ((colorSpace == default!)) {
+      return this.validColorSpaceDestOutputProfile(expectedIccType);
+    } else {
+      return (this.isDeviceIndependent(colorSpace, expectedIccType)
+        || this.validColorSpaceDestOutputProfile(expectedIccType));
+    }
+  }
 
-private bool validColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace, global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType expectedIccType) {
-if ((colorSpace == default!)) {
-return this.validColorSpaceDestOutputProfile(expectedIccType);
-} else {
-return (this.isDeviceIndependent(colorSpace, expectedIccType) || this.validColorSpaceDestOutputProfile(expectedIccType));
-}
-}
+  private bool validColorSpaceDestOutputProfile(global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType expectedType) {
+    try {
+      global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper profileWrapper
+        = global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper.GetOrSearchICCProfile(this.Context);
+      if ((profileWrapper == default!)) {
+        return false;
+      }
+      switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(expectedType)) {
+        case 0:
+          return profileWrapper.IsRGBColorSpace();
+        case 1:
+          return profileWrapper.IsCMYKColorSpace();
+        default:
+          return true;
+      }
+    } catch (global::DripSharp.PdfCarton.Preflight.Exception.ValidationException e) {
+      throw new global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException(e);
+    }
+  }
 
-private bool validColorSpaceDestOutputProfile(global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType expectedType) {
-try {
-global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper profileWrapper = global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper.GetOrSearchICCProfile(this.Context);
-if ((profileWrapper == default!)) {
-return false;
-}
-switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(expectedType)) {
-case 0:
-return profileWrapper.IsRGBColorSpace();
-case 1:
-return profileWrapper.IsCMYKColorSpace();
-default:
-return true;
-}
-} catch (global::DripSharp.PdfCarton.Preflight.Exception.ValidationException e) {
-throw new global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException(e);
-}
-}
+  private bool isDeviceIndependent(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace cs,
+    global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType expectedIccType) {
+    if ((cs is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)) {
+      int type
+        = ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(cs!)).GetColorSpaceType();
+      switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(expectedIccType)) {
+        case 0:
+          return (type == global::DripSharp.Runtime.JavaColorSpace.TYPE_RGB);
+        case 1:
+          return (type == global::DripSharp.Runtime.JavaColorSpace.TYPE_CMYK);
+        default:
+          return true;
+      }
+    } else {
+      if ((cs is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation)) {
+        return this.isDeviceIndependent(((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation)(cs!)).GetAlternateColorSpace(),
+          expectedIccType);
+      } else {
+        return (cs is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEBasedColorSpace);
+      }
+    }
+  }
 
-private bool isDeviceIndependent(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace cs, global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine.ColorSpaceType expectedIccType) {
-if ((cs is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)) {
-int type = ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(cs!)).GetColorSpaceType();
-switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(expectedIccType)) {
-case 0:
-return (type == global::DripSharp.Runtime.JavaColorSpace.TYPE_RGB);
-case 1:
-return (type == global::DripSharp.Runtime.JavaColorSpace.TYPE_CMYK);
-default:
-return true;
-}
-} else {
-if ((cs is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation)) {
-return this.isDeviceIndependent(((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation)(cs!)).GetAlternateColorSpace(), expectedIccType);
-} else {
-return (cs is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEBasedColorSpace);
-}
-}
-}
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace getColorSpace(string operation) {
+    if ((this.GetGraphicsState() == default!)) {
+      return default!;
+    }
+    if ((((((global::DripSharp.Runtime.JavaCompat.Equals(operation, "rg")
+      || global::DripSharp.Runtime.JavaCompat.Equals(operation, "g"))
+      || global::DripSharp.Runtime.JavaCompat.Equals(operation, "k"))
+      || global::DripSharp.Runtime.JavaCompat.Equals(operation, "f"))
+      || global::DripSharp.Runtime.JavaCompat.Equals(operation, "F"))
+      || global::DripSharp.Runtime.JavaCompat.Equals(operation, "f*"))) {
+      return this.GetGraphicsState().GetNonStrokingColorSpace();
+    } else {
+      return this.GetGraphicsState().GetStrokingColorSpace();
+    }
+  }
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace getColorSpace(string operation) {
-if ((this.GetGraphicsState() == default!)) {
-return default!;
-}
-if ((((((global::DripSharp.Runtime.JavaCompat.Equals(operation, "rg") || global::DripSharp.Runtime.JavaCompat.Equals(operation, "g")) || global::DripSharp.Runtime.JavaCompat.Equals(operation, "k")) || global::DripSharp.Runtime.JavaCompat.Equals(operation, "f")) || global::DripSharp.Runtime.JavaCompat.Equals(operation, "F")) || global::DripSharp.Runtime.JavaCompat.Equals(operation, "f*"))) {
-return this.GetGraphicsState().GetNonStrokingColorSpace();
-} else {
-return this.GetGraphicsState().GetStrokingColorSpace();
-}
-}
+  protected internal virtual void CheckSetColorSpaceOperators(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if ((!global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorspace,
+      @operator.GetName())
+      && !global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingColorspace,
+      @operator.GetName()))) {
+      return;
+    }
+    string colorSpaceName;
+    if ((global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+      0) is global::DripSharp.PdfCarton.Cos.COSString)) {
+      colorSpaceName
+        = global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+        0));
+    } else {
+      if ((global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+        0) is global::DripSharp.PdfCarton.Cos.COSName)) {
+        colorSpaceName
+          = ((global::DripSharp.PdfCarton.Cos.COSName)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+          0)!)).GetName();
+      } else {
+        this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The operand ",
+          global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0)), " for colorSpace operator "),
+          @operator.GetName()), " doesn't have the expected type"),
+          global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey);
+        return;
+      }
+    }
+    global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper csHelper = default!;
+    global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces cs = default!;
+    try {
+      cs = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(colorSpaceName);
+    } catch (global::System.ArgumentException) {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pdCS__605_26
+        = this.GetResources().GetColorSpace(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(colorSpaceName));
+      if ((pdCS__605_26 != default!)) {
+        cs
+          = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(pdCS__605_26.GetName());
+        global::DripSharp.PdfCarton.Preflight.PreflightConfiguration cfg__609_40
+          = this.Context.GetConfig();
+        global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory csFact__610_41
+          = cfg__609_40.GetColorSpaceHelperFact();
+        csHelper = csFact__610_41.GetColorSpaceHelper(this.Context, pdCS__605_26,
+          global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.NoRestriction);
+      }
+    }
+    if ((cs! == default!)) {
+      this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The ColorSpace ",
+        colorSpaceName), " is unknown"),
+        global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey);
+      return;
+    }
+    if ((csHelper! == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pdCS__623_26
+        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(colorSpaceName));
+      global::DripSharp.PdfCarton.Preflight.PreflightConfiguration cfg__624_36
+        = this.Context.GetConfig();
+      global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory csFact__625_37
+        = cfg__624_36.GetColorSpaceHelperFact();
+      csHelper = csFact__625_37.GetColorSpaceHelper(this.Context, pdCS__623_26,
+        global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.NoRestriction);
+    }
+    csHelper!.Validate();
+  }
 
-protected internal virtual void CheckSetColorSpaceOperators(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if ((!(global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorspace, @operator.GetName())) && !(global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingColorspace, @operator.GetName())))) {
-return;
-}
-string colorSpaceName;
-if ((global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0) is global::DripSharp.PdfCarton.Cos.COSString)) {
-colorSpaceName = global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0));
-} else {
-if ((global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0) is global::DripSharp.PdfCarton.Cos.COSName)) {
-colorSpaceName = ((global::DripSharp.PdfCarton.Cos.COSName)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0)!)).GetName();
-} else {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The operand ", global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0)), " for colorSpace operator "), @operator.GetName()), " doesn't have the expected type"), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey);
-return;
-}
-}
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper csHelper = default!;
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces cs = default!;
-try {
-cs = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(colorSpaceName);
-} catch (global::System.ArgumentException) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pdCS__605_26 = this.GetResources().GetColorSpace(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(colorSpaceName));
-if ((pdCS__605_26 != default!)) {
-cs = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(pdCS__605_26.GetName());
-global::DripSharp.PdfCarton.Preflight.PreflightConfiguration cfg__609_40 = this.Context.GetConfig();
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory csFact__610_41 = cfg__609_40.GetColorSpaceHelperFact();
-csHelper = csFact__610_41.GetColorSpaceHelper(this.Context, pdCS__605_26, global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.NoRestriction);
-}
-}
-if ((cs! == default!)) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The ColorSpace ", colorSpaceName), " is unknown"), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey);
-return;
-}
-if ((csHelper! == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pdCS__623_26 = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(colorSpaceName));
-global::DripSharp.PdfCarton.Preflight.PreflightConfiguration cfg__624_36 = this.Context.GetConfig();
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory csFact__625_37 = cfg__624_36.GetColorSpaceHelperFact();
-csHelper = csFact__625_37.GetColorSpaceHelper(this.Context, pdCS__623_26, global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.NoRestriction);
-}
-csHelper!.Validate();
-}
+  protected internal virtual void RegisterError(string msg, string errorCode) {
+    this.RegisterError(msg, errorCode, (global::System.Exception)default!);
+  }
 
-protected internal virtual void RegisterError(string msg, string errorCode) {
-this.RegisterError(msg, errorCode, (global::System.Exception)default!);
-}
+  public virtual void RegisterError(string msg, string errorCode, global::System.Exception cause) {
+    this.RegisterError(msg, errorCode, false, cause);
+  }
 
-public virtual void RegisterError(string msg, string errorCode, global::System.Exception cause) {
-this.RegisterError(msg, errorCode, false, cause);
-}
+  protected internal virtual void RegisterError(string msg, string errorCode, bool warning) {
+    this.RegisterError(msg, errorCode, warning, (global::System.Exception)default!);
+  }
 
-protected internal virtual void RegisterError(string msg, string errorCode, bool warning) {
-this.RegisterError(msg, errorCode, warning, (global::System.Exception)default!);
-}
-
-public virtual void RegisterError(string msg, string errorCode, bool warning, global::System.Exception cause) {
-global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error = new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(errorCode, msg, cause);
-error.SetWarning(warning);
-this.Context.AddValidationError(error);
-}
+  public virtual void RegisterError(string msg, string errorCode, bool warning,
+    global::System.Exception cause) {
+    global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error
+      = new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(errorCode, msg,
+      cause);
+    error.SetWarning(warning);
+    this.Context.AddValidationError(error);
+  }
 }

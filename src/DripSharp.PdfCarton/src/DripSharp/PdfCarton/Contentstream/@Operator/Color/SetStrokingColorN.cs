@@ -8,12 +8,14 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Color;
 
-public class SetStrokingColorN : global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingColor {
-public SetStrokingColorN(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class SetStrokingColorN
+: global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingColor {
+  public SetStrokingColorN(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorN;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorN;
+  }
 }

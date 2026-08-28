@@ -8,37 +8,56 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Graphics;
 
-public sealed class CurveToReplicateFinalPoint : global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public sealed class CurveToReplicateFinalPoint
+: global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public CurveToReplicateFinalPoint(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context) : base(context) {
+  public CurveToReplicateFinalPoint(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(operands) < 4)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, operands);
-}
-if (!(this.CheckArrayTypesClass(operands, typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber x1 = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0)!);
-global::DripSharp.PdfCarton.Cos.COSNumber y1 = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 1)!);
-global::DripSharp.PdfCarton.Cos.COSNumber x3 = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 2)!);
-global::DripSharp.PdfCarton.Cos.COSNumber y3 = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 3)!);
-global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context = this.GetGraphicsContext();
-global::DripSharp.Runtime.JavaPoint2D currentPoint = context.GetCurrentPoint();
-global::DripSharp.Runtime.JavaPoint2D point1 = context.TransformedPoint(x1.FloatValue(), y1.FloatValue());
-global::DripSharp.Runtime.JavaPoint2D point3 = context.TransformedPoint(x3.FloatValue(), y3.FloatValue());
-if ((currentPoint == default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.CurveToReplicateFinalPoint.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("curveTo (", (float)(point3.X)), ","), (float)(point3.Y)), ") without initial MoveTo")));
-context.MoveTo((float)(point3.X), (float)(point3.Y));
-} else {
-context.CurveTo((float)(point1.X), (float)(point1.Y), (float)(point3.X), (float)(point3.Y), (float)(point3.X), (float)(point3.Y));
-}
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(operands) < 4)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        operands);
+    }
+    if (!(this.CheckArrayTypesClass(operands, typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSNumber x1
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+      0)!);
+    global::DripSharp.PdfCarton.Cos.COSNumber y1
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+      1)!);
+    global::DripSharp.PdfCarton.Cos.COSNumber x3
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+      2)!);
+    global::DripSharp.PdfCarton.Cos.COSNumber y3
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+      3)!);
+    global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context
+      = this.GetGraphicsContext();
+    global::DripSharp.Runtime.JavaPoint2D currentPoint = context.GetCurrentPoint();
+    global::DripSharp.Runtime.JavaPoint2D point1 = context.TransformedPoint(x1.FloatValue(),
+      y1.FloatValue());
+    global::DripSharp.Runtime.JavaPoint2D point3 = context.TransformedPoint(x3.FloatValue(),
+      y3.FloatValue());
+    if ((currentPoint == default!)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.CurveToReplicateFinalPoint.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("curveTo (",
+        (float)(point3.X)), ","), (float)(point3.Y)), ") without initial MoveTo")));
+      context.MoveTo((float)(point3.X), (float)(point3.Y));
+    } else {
+      context.CurveTo((float)(point1.X), (float)(point1.Y), (float)(point3.X), (float)(point3.Y),
+        (float)(point3.X), (float)(point3.Y));
+    }
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateFinalPoint;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateFinalPoint;
+  }
 }

@@ -8,47 +8,54 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdfparser.Xref;
 
-public class ObjectStreamXReference : global::DripSharp.PdfCarton.Pdfparser.Xref.AbstractXReference {
-private readonly int objectStreamIndex = default;
+public class ObjectStreamXReference
+: global::DripSharp.PdfCarton.Pdfparser.Xref.AbstractXReference {
+  private readonly int objectStreamIndex = default;
 
-private readonly global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
 
-private readonly global::DripSharp.PdfCarton.Cos.COSBase @object = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSBase @object = null!;
 
-private readonly global::DripSharp.PdfCarton.Cos.COSObjectKey parentKey = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSObjectKey parentKey = null!;
 
-public ObjectStreamXReference(int objectStreamIndex, global::DripSharp.PdfCarton.Cos.COSObjectKey key, global::DripSharp.PdfCarton.Cos.COSBase @object, global::DripSharp.PdfCarton.Cos.COSObjectKey parentKey) : base(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType.ObjectStreamEntry) {
-this.objectStreamIndex = objectStreamIndex;
-this.key = key;
-this.@object = @object;
-this.parentKey = parentKey;
-}
+  public ObjectStreamXReference(int objectStreamIndex,
+    global::DripSharp.PdfCarton.Cos.COSObjectKey key,
+    global::DripSharp.PdfCarton.Cos.COSBase @object,
+    global::DripSharp.PdfCarton.Cos.COSObjectKey parentKey)
+  : base(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType.ObjectStreamEntry) {
+    this.objectStreamIndex = objectStreamIndex;
+    this.key = key;
+    this.@object = @object;
+    this.parentKey = parentKey;
+  }
 
-public virtual int GetObjectStreamIndex() {
-return this.objectStreamIndex;
-}
+  public virtual int GetObjectStreamIndex() {
+    return this.objectStreamIndex;
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSObjectKey GetReferencedKey() {
-return this.key;
-}
+  public override global::DripSharp.PdfCarton.Cos.COSObjectKey GetReferencedKey() {
+    return this.key;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetObject() {
-return this.@object;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetObject() {
+    return this.@object;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSObjectKey GetParentKey() {
-return this.parentKey;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSObjectKey GetParentKey() {
+    return this.parentKey;
+  }
 
-public override long GetSecondColumnValue() {
-return this.GetParentKey().GetNumber();
-}
+  public override long GetSecondColumnValue() {
+    return this.GetParentKey().GetNumber();
+  }
 
-public override long GetThirdColumnValue() {
-return this.GetObjectStreamIndex();
-}
+  public override long GetThirdColumnValue() {
+    return this.GetObjectStreamIndex();
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("ObjectStreamEntry{", " key="), this.key), ", type="), this.GetType().GetNumericValue()), ", objectStreamIndex="), this.objectStreamIndex), ", parent="), this.parentKey), " }");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("ObjectStreamEntry{",
+      " key="), this.key), ", type="), this.GetType().GetNumericValue()), ", objectStreamIndex="),
+      this.objectStreamIndex), ", parent="), this.parentKey), " }");
+  }
 }

@@ -9,34 +9,40 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class ArrayProperty : global::DripSharp.PdfCarton.Xmp.Type.AbstractComplexProperty {
-private readonly global::DripSharp.PdfCarton.Xmp.Type.Cardinality arrayType = null!;
+  private readonly global::DripSharp.PdfCarton.Xmp.Type.Cardinality arrayType = null!;
 
-private readonly string @namespace = null!;
+  private readonly string @namespace = null!;
 
-private readonly string prefix = null!;
+  private readonly string prefix = null!;
 
-public ArrayProperty(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string @namespace, string prefix, string propertyName, global::DripSharp.PdfCarton.Xmp.Type.Cardinality type) : base(metadata, propertyName) {
-this.arrayType = type;
-this.@namespace = @namespace;
-this.prefix = prefix;
-}
+  public ArrayProperty(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string @namespace,
+    string prefix, string propertyName, global::DripSharp.PdfCarton.Xmp.Type.Cardinality type)
+  : base(metadata, propertyName) {
+    this.arrayType = type;
+    this.@namespace = @namespace;
+    this.prefix = prefix;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.Cardinality GetArrayType() {
-return this.arrayType;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.Cardinality GetArrayType() {
+    return this.arrayType;
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetElementsAsString() {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> allProperties = this.GetContainer().GetAllProperties();
-global::System.Collections.Generic.IList<string> retval = new global::System.Collections.Generic.List<string>(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CollectionCount(allProperties));
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(allProperties, (tmp) => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(retval, ((global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty)(tmp!)).GetStringValue()));
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.UnmodifiableList(retval);
-}
+  public virtual global::System.Collections.Generic.IList<string> GetElementsAsString() {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> allProperties
+      = this.GetContainer().GetAllProperties();
+    global::System.Collections.Generic.IList<string> retval
+      = new global::System.Collections.Generic.List<string>(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CollectionCount(allProperties));
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(allProperties, (tmp)
+      => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(retval,
+      ((global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty)(tmp!)).GetStringValue()));
+    return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.UnmodifiableList(retval);
+  }
 
-public override string GetNamespace() {
-return this.@namespace;
-}
+  public override string GetNamespace() {
+    return this.@namespace;
+  }
 
-public override string GetPrefix() {
-return this.prefix;
-}
+  public override string GetPrefix() {
+    return this.prefix;
+  }
 }

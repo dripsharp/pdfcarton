@@ -8,16 +8,21 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font;
 
-public class CIDType0FontValidator : global::DripSharp.PdfCarton.Preflight.Font.DescendantFontValidator<global::DripSharp.PdfCarton.Preflight.Font.Container.CIDType0Container> {
-public CIDType0FontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType0 font) : base(context, font, new global::DripSharp.PdfCarton.Preflight.Font.Container.CIDType0Container(font)) {
+public class CIDType0FontValidator
+: global::DripSharp.PdfCarton.Preflight.Font.DescendantFontValidator<global::DripSharp.PdfCarton.Preflight.Font.Container.CIDType0Container> {
+  public CIDType0FontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType0 font) : base(context, font,
+    new global::DripSharp.PdfCarton.Preflight.Font.Container.CIDType0Container(font)) {
 
-}
+  }
 
-protected internal override void CheckCIDToGIDMap(global::DripSharp.PdfCarton.Cos.COSBase ctog) {
-this.CheckCIDToGIDMap(ctog, false);
-}
+  protected internal override void CheckCIDToGIDMap(global::DripSharp.PdfCarton.Cos.COSBase ctog) {
+    this.CheckCIDToGIDMap(ctog, false);
+  }
 
-protected internal override void CreateFontDescriptorHelper() {
-this.DescriptorHelper = new global::DripSharp.PdfCarton.Preflight.Font.Descriptor.CIDType0DescriptorHelper(base.Context, base.Font, base.FontContainer);
-}
+  protected internal override void CreateFontDescriptorHelper() {
+    this.DescriptorHelper
+      = new global::DripSharp.PdfCarton.Preflight.Font.Descriptor.CIDType0DescriptorHelper(base.Context,
+      base.Font, base.FontContainer);
+  }
 }

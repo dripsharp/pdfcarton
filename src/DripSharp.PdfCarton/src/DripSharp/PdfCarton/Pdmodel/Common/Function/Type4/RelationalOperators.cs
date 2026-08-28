@@ -9,74 +9,99 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function.Type4;
 
 internal class RelationalOperators {
-private RelationalOperators() {}
+  private RelationalOperators() {}
 
-internal class Eq : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
-public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
-global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-object op2 = stack.Pop();
-object op1 = stack.Pop();
-bool result = this.IsEqual(op1, op2);
-stack.Push(result);
-}
+  internal class Eq : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
+    public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
+      global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
+      object op2 = stack.Pop();
+      object op1 = stack.Pop();
+      bool result = this.IsEqual(op1, op2);
+      stack.Push(result);
+    }
 
-protected internal virtual bool IsEqual(object op1, object op2) {
-bool result;
-if (((op1 is global::System.IConvertible) && (op2 is global::System.IConvertible))) {
-global::System.IConvertible num1 = (global::System.IConvertible)(op1!);
-global::System.IConvertible num2 = (global::System.IConvertible)(op2!);
-result = (global::DripSharp.Runtime.JavaCompat.CompareFloat(global::System.Convert.ToSingle(num1, global::System.Globalization.CultureInfo.InvariantCulture), global::System.Convert.ToSingle(num2, global::System.Globalization.CultureInfo.InvariantCulture)) == 0);
-} else {
-result = global::DripSharp.Runtime.JavaCompat.Equals(op1, op2);
-}
-return result;
-}
-}
+    protected internal virtual bool IsEqual(object op1, object op2) {
+      bool result;
+      if (((op1 is global::System.IConvertible) && (op2 is global::System.IConvertible))) {
+        global::System.IConvertible num1 = (global::System.IConvertible)(op1!);
+        global::System.IConvertible num2 = (global::System.IConvertible)(op2!);
+        result
+          = (global::DripSharp.Runtime.JavaCompat.CompareFloat(global::System.Convert.ToSingle(num1,
+          global::System.Globalization.CultureInfo.InvariantCulture),
+          global::System.Convert.ToSingle(num2,
+          global::System.Globalization.CultureInfo.InvariantCulture)) == 0);
+      } else {
+        result = global::DripSharp.Runtime.JavaCompat.Equals(op1, op2);
+      }
+      return result;
+    }
+  }
 
-internal abstract class AbstractNumberComparisonOperator : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
-public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
-global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-object op2 = stack.Pop();
-object op1 = stack.Pop();
-global::System.IConvertible num1 = (global::System.IConvertible)(op1!);
-global::System.IConvertible num2 = (global::System.IConvertible)(op2!);
-bool result = this.Compare(num1, num2);
-stack.Push(result);
-}
+  internal abstract class AbstractNumberComparisonOperator
+  : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
+    public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
+      global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
+      object op2 = stack.Pop();
+      object op1 = stack.Pop();
+      global::System.IConvertible num1 = (global::System.IConvertible)(op1!);
+      global::System.IConvertible num2 = (global::System.IConvertible)(op2!);
+      bool result = this.Compare(num1, num2);
+      stack.Push(result);
+    }
 
-protected internal abstract bool Compare(global::System.IConvertible num1, global::System.IConvertible num2);
+    protected internal abstract bool Compare(global::System.IConvertible num1,
+      global::System.IConvertible num2);
 
-internal AbstractNumberComparisonOperator() {}
-}
+    internal AbstractNumberComparisonOperator() {}
+  }
 
-internal class Ge : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.AbstractNumberComparisonOperator {
-protected internal override bool Compare(global::System.IConvertible num1, global::System.IConvertible num2) {
-return (global::System.Convert.ToSingle(num1, global::System.Globalization.CultureInfo.InvariantCulture) >= global::System.Convert.ToSingle(num2, global::System.Globalization.CultureInfo.InvariantCulture));
-}
-}
+  internal class Ge
+  : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.AbstractNumberComparisonOperator {
+    protected internal override bool Compare(global::System.IConvertible num1,
+      global::System.IConvertible num2) {
+      return (global::System.Convert.ToSingle(num1,
+        global::System.Globalization.CultureInfo.InvariantCulture)
+        >= global::System.Convert.ToSingle(num2,
+        global::System.Globalization.CultureInfo.InvariantCulture));
+    }
+  }
 
-internal class Gt : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.AbstractNumberComparisonOperator {
-protected internal override bool Compare(global::System.IConvertible num1, global::System.IConvertible num2) {
-return (global::System.Convert.ToSingle(num1, global::System.Globalization.CultureInfo.InvariantCulture) > global::System.Convert.ToSingle(num2, global::System.Globalization.CultureInfo.InvariantCulture));
-}
-}
+  internal class Gt
+  : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.AbstractNumberComparisonOperator {
+    protected internal override bool Compare(global::System.IConvertible num1,
+      global::System.IConvertible num2) {
+      return (global::System.Convert.ToSingle(num1,
+        global::System.Globalization.CultureInfo.InvariantCulture) > global::System.Convert.ToSingle(num2,
+        global::System.Globalization.CultureInfo.InvariantCulture));
+    }
+  }
 
-internal class Le : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.AbstractNumberComparisonOperator {
-protected internal override bool Compare(global::System.IConvertible num1, global::System.IConvertible num2) {
-return (global::System.Convert.ToSingle(num1, global::System.Globalization.CultureInfo.InvariantCulture) <= global::System.Convert.ToSingle(num2, global::System.Globalization.CultureInfo.InvariantCulture));
-}
-}
+  internal class Le
+  : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.AbstractNumberComparisonOperator {
+    protected internal override bool Compare(global::System.IConvertible num1,
+      global::System.IConvertible num2) {
+      return (global::System.Convert.ToSingle(num1,
+        global::System.Globalization.CultureInfo.InvariantCulture)
+        <= global::System.Convert.ToSingle(num2,
+        global::System.Globalization.CultureInfo.InvariantCulture));
+    }
+  }
 
-internal class Lt : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.AbstractNumberComparisonOperator {
-protected internal override bool Compare(global::System.IConvertible num1, global::System.IConvertible num2) {
-return (global::System.Convert.ToSingle(num1, global::System.Globalization.CultureInfo.InvariantCulture) < global::System.Convert.ToSingle(num2, global::System.Globalization.CultureInfo.InvariantCulture));
-}
-}
+  internal class Lt
+  : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.AbstractNumberComparisonOperator {
+    protected internal override bool Compare(global::System.IConvertible num1,
+      global::System.IConvertible num2) {
+      return (global::System.Convert.ToSingle(num1,
+        global::System.Globalization.CultureInfo.InvariantCulture) < global::System.Convert.ToSingle(num2,
+        global::System.Globalization.CultureInfo.InvariantCulture));
+    }
+  }
 
-internal class Ne : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Eq {
-protected internal override bool IsEqual(object op1, object op2) {
-bool result = base.IsEqual(op1, op2);
-return !result;
-}
-}
+  internal class Ne
+  : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Eq {
+    protected internal override bool IsEqual(object op1, object op2) {
+      bool result = base.IsEqual(op1, op2);
+      return !result;
+    }
+  }
 }

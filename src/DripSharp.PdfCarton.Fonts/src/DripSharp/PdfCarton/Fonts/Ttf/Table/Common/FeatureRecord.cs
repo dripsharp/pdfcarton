@@ -9,24 +9,27 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class FeatureRecord {
-private readonly string featureTag = null!;
+  private readonly string featureTag = null!;
 
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureTable featureTable = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureTable featureTable
+    = null!;
 
-public FeatureRecord(string featureTag, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureTable featureTable) {
-this.featureTag = featureTag;
-this.featureTable = featureTable;
-}
+  public FeatureRecord(string featureTag,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureTable featureTable) {
+    this.featureTag = featureTag;
+    this.featureTable = featureTable;
+  }
 
-public virtual string GetFeatureTag() {
-return this.featureTag;
-}
+  public virtual string GetFeatureTag() {
+    return this.featureTag;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureTable GetFeatureTable() {
-return this.featureTable;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureTable GetFeatureTable() {
+    return this.featureTable;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("FeatureRecord[featureTag=%s]", this.featureTag);
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("FeatureRecord[featureTag=%s]",
+      this.featureTag);
+  }
 }

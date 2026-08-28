@@ -9,33 +9,34 @@
 namespace DripSharp.PdfCarton.Pdfparser;
 
 public class FDFParser : global::DripSharp.PdfCarton.Pdfparser.COSParser {
-public FDFParser(global::DripSharp.PdfCarton.IO.RandomAccessRead source) : base(source) {
+  public FDFParser(global::DripSharp.PdfCarton.IO.RandomAccessRead source) : base(source) {
 
-}
+  }
 
-private void initialParse() {
-global::DripSharp.PdfCarton.Cos.COSDictionary trailer = this.RetrieveTrailer();
-global::DripSharp.PdfCarton.Cos.COSDictionary root = trailer.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Root);
-if ((root == default!)) {
-throw new global::System.IO.IOException("Missing root object specification in trailer.");
-}
-base.InitialParseDone = true;
-}
+  private void initialParse() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary trailer = this.RetrieveTrailer();
+    global::DripSharp.PdfCarton.Cos.COSDictionary root
+      = trailer.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Root);
+    if ((root == default!)) {
+      throw new global::System.IO.IOException("Missing root object specification in trailer.");
+    }
+    base.InitialParseDone = true;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument Parse() {
-bool exceptionOccurred = true;
-try {
-if (!(this.ParseFDFHeader())) {
-throw new global::System.IO.IOException("Error: Header doesn't contain versioninfo");
-}
-this.initialParse();
-exceptionOccurred = false;
-return new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument(base.Document, base.Source);
-} finally {
-if ((exceptionOccurred && (base.Document != default!))) {
-global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(base.Document);
-base.Document = default!;
-}
-}
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument Parse() {
+    bool exceptionOccurred = true;
+    try {
+      if (!(this.ParseFDFHeader())) {
+        throw new global::System.IO.IOException("Error: Header doesn't contain versioninfo");
+      }
+      this.initialParse();
+      exceptionOccurred = false;
+      return new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument(base.Document, base.Source);
+    } finally {
+      if ((exceptionOccurred && (base.Document != default!))) {
+        global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(base.Document);
+        base.Document = default!;
+      }
+    }
+  }
 }

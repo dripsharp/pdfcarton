@@ -9,38 +9,41 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class LookupTable {
-private readonly int lookupType = default;
+  private readonly int lookupType = default;
 
-private readonly int lookupFlag = default;
+  private readonly int lookupFlag = default;
 
-private readonly int markFilteringSet = default;
+  private readonly int markFilteringSet = default;
 
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable[] subTables = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable[] subTables
+    = null!;
 
-public LookupTable(int lookupType, int lookupFlag, int markFilteringSet, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable[] subTables) {
-this.lookupType = lookupType;
-this.lookupFlag = lookupFlag;
-this.markFilteringSet = markFilteringSet;
-this.subTables = subTables;
-}
+  public LookupTable(int lookupType, int lookupFlag, int markFilteringSet,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable[] subTables) {
+    this.lookupType = lookupType;
+    this.lookupFlag = lookupFlag;
+    this.markFilteringSet = markFilteringSet;
+    this.subTables = subTables;
+  }
 
-public virtual int GetLookupType() {
-return this.lookupType;
-}
+  public virtual int GetLookupType() {
+    return this.lookupType;
+  }
 
-public virtual int GetLookupFlag() {
-return this.lookupFlag;
-}
+  public virtual int GetLookupFlag() {
+    return this.lookupFlag;
+  }
 
-public virtual int GetMarkFilteringSet() {
-return this.markFilteringSet;
-}
+  public virtual int GetMarkFilteringSet() {
+    return this.markFilteringSet;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable[] GetSubTables() {
-return this.subTables;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable[] GetSubTables() {
+    return this.subTables;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("LookupTable[lookupType=%d,lookupFlag=%d,markFilteringSet=%d]", this.lookupType, this.lookupFlag, this.markFilteringSet);
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("LookupTable[lookupType=%d,lookupFlag=%d,markFilteringSet=%d]",
+      this.lookupType, this.lookupFlag, this.markFilteringSet);
+  }
 }

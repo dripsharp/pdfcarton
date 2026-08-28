@@ -9,69 +9,74 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class GlyphData {
-private short xMin = default;
+  private short xMin = default;
 
-private short yMin = default;
+  private short yMin = default;
 
-private short xMax = default;
+  private short xMax = default;
 
-private short yMax = default;
+  private short yMax = default;
 
-private global::DripSharp.PdfCarton.Fonts.Util.BoundingBox boundingBox = default!;
+  private global::DripSharp.PdfCarton.Fonts.Util.BoundingBox boundingBox = default!;
 
-private short numberOfContours = default;
+  private short numberOfContours = default;
 
-private global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript glyphDescription = default!;
+  private global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript glyphDescription = default!;
 
-internal virtual void initData(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable glyphTable, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, int leftSideBearing, int level) {
-this.numberOfContours = data.ReadSignedShort();
-this.xMin = data.ReadSignedShort();
-this.yMin = data.ReadSignedShort();
-this.xMax = data.ReadSignedShort();
-this.yMax = data.ReadSignedShort();
-this.boundingBox = new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox((float)(this.xMin), (float)(this.yMin), (float)(this.xMax), (float)(this.yMax));
-if (((int)(this.numberOfContours) >= 0)) {
-short x0 = unchecked((short)(unchecked((short)((leftSideBearing - this.xMin)))));
-this.glyphDescription = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyfSimpleDescript(this.numberOfContours, data, x0);
-} else {
-this.glyphDescription = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript(data, glyphTable, (level + 1));
-}
-}
+  internal virtual void initData(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable glyphTable,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, int leftSideBearing, int level) {
+    this.numberOfContours = data.ReadSignedShort();
+    this.xMin = data.ReadSignedShort();
+    this.yMin = data.ReadSignedShort();
+    this.xMax = data.ReadSignedShort();
+    this.yMax = data.ReadSignedShort();
+    this.boundingBox = new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox((float)(this.xMin),
+      (float)(this.yMin), (float)(this.xMax), (float)(this.yMax));
+    if (((int)(this.numberOfContours) >= 0)) {
+      short x0 = unchecked((short)(unchecked((short)((leftSideBearing - this.xMin)))));
+      this.glyphDescription
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyfSimpleDescript(this.numberOfContours, data,
+        x0);
+    } else {
+      this.glyphDescription = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript(data,
+        glyphTable, (level + 1));
+    }
+  }
 
-internal virtual void initEmptyData() {
-this.glyphDescription = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyfSimpleDescript();
-this.boundingBox = new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox();
-}
+  internal virtual void initEmptyData() {
+    this.glyphDescription = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyfSimpleDescript();
+    this.boundingBox = new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox();
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetBoundingBox() {
-return this.boundingBox;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetBoundingBox() {
+    return this.boundingBox;
+  }
 
-public virtual short GetNumberOfContours() {
-return this.numberOfContours;
-}
+  public virtual short GetNumberOfContours() {
+    return this.numberOfContours;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription GetDescription() {
-return this.glyphDescription;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription GetDescription() {
+    return this.glyphDescription;
+  }
 
-public virtual global::SkiaSharp.SKPath GetPath() {
-return new global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer(this.glyphDescription).GetPath();
-}
+  public virtual global::SkiaSharp.SKPath GetPath() {
+    return new global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer(this.glyphDescription).GetPath();
+  }
 
-public virtual short GetXMaximum() {
-return this.xMax;
-}
+  public virtual short GetXMaximum() {
+    return this.xMax;
+  }
 
-public virtual short GetXMinimum() {
-return this.xMin;
-}
+  public virtual short GetXMinimum() {
+    return this.xMin;
+  }
 
-public virtual short GetYMaximum() {
-return this.yMax;
-}
+  public virtual short GetYMaximum() {
+    return this.yMax;
+  }
 
-public virtual short GetYMinimum() {
-return this.yMin;
-}
+  public virtual short GetYMinimum() {
+    return this.yMin;
+  }
 }

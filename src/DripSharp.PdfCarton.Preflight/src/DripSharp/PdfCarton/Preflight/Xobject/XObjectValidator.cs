@@ -9,17 +9,18 @@
 namespace DripSharp.PdfCarton.Preflight.Xobject;
 
 public interface XObjectValidator {
-public void Validate();
+  public void Validate();
 }
 
-public sealed class __XObjectValidatorFunctionalAdapter : global::DripSharp.PdfCarton.Preflight.Xobject.XObjectValidator {
-private readonly global::System.Action implementation;
+public sealed class __XObjectValidatorFunctionalAdapter
+: global::DripSharp.PdfCarton.Preflight.Xobject.XObjectValidator {
+  private readonly global::System.Action implementation;
 
-public __XObjectValidatorFunctionalAdapter(global::System.Action implementation) {
-this.implementation = implementation;
-}
+  public __XObjectValidatorFunctionalAdapter(global::System.Action implementation) {
+    this.implementation = implementation;
+  }
 
-public void Validate() {
-this.implementation();
-}
+  public void Validate() {
+    this.implementation();
+  }
 }

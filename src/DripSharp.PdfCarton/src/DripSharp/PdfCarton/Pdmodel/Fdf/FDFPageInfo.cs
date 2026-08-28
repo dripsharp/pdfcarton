@@ -9,19 +9,20 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFPageInfo : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary pageInfo = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary pageInfo = null!;
 
-public FDFPageInfo() {
-this.pageInfo = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public FDFPageInfo() {
+    this.pageInfo = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public FDFPageInfo(global::DripSharp.PdfCarton.Cos.COSDictionary p) {
-this.pageInfo = p;
-}
+  public FDFPageInfo(global::DripSharp.PdfCarton.Cos.COSDictionary p) {
+    this.pageInfo = p;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.pageInfo;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.pageInfo;
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

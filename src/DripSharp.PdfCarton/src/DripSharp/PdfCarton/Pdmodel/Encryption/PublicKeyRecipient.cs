@@ -9,23 +9,23 @@
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 public class PublicKeyRecipient {
-private global::System.Security.Cryptography.X509Certificates.X509Certificate2 x509 = null!;
+  private global::System.Security.Cryptography.X509Certificates.X509Certificate2 x509 = null!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permission = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permission = null!;
 
-public virtual global::System.Security.Cryptography.X509Certificates.X509Certificate2 GetX509() {
-return this.x509;
-}
+  public virtual global::System.Security.Cryptography.X509Certificates.X509Certificate2 GetX509() {
+    return this.x509;
+  }
 
-public virtual void SetX509(global::System.Security.Cryptography.X509Certificates.X509Certificate2 aX509) {
-this.x509 = aX509;
-}
+  public virtual void SetX509(global::System.Security.Cryptography.X509Certificates.X509Certificate2 aX509) {
+    this.x509 = aX509;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission GetPermission() {
-return this.permission;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission GetPermission() {
+    return this.permission;
+  }
 
-public virtual void SetPermission(global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permissions) {
-this.permission = permissions;
-}
+  public virtual void SetPermission(global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permissions) {
+    this.permission = permissions;
+  }
 }

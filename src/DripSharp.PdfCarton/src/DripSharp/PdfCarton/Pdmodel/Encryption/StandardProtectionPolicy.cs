@@ -8,40 +8,42 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
-public sealed class StandardProtectionPolicy : global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy {
-private global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permissions = null!;
+public sealed class StandardProtectionPolicy
+: global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy {
+  private global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permissions = null!;
 
-private string ownerPassword = "";
+  private string ownerPassword = "";
 
-private string userPassword = "";
+  private string userPassword = "";
 
-public StandardProtectionPolicy(string ownerPassword, string userPassword, global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permissions) {
-this.ownerPassword = ownerPassword;
-this.userPassword = userPassword;
-this.permissions = permissions;
-}
+  public StandardProtectionPolicy(string ownerPassword, string userPassword,
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permissions) {
+    this.ownerPassword = ownerPassword;
+    this.userPassword = userPassword;
+    this.permissions = permissions;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission GetPermissions() {
-return this.permissions;
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission GetPermissions() {
+    return this.permissions;
+  }
 
-public void SetPermissions(global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permissions) {
-this.permissions = permissions;
-}
+  public void SetPermissions(global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permissions) {
+    this.permissions = permissions;
+  }
 
-public string GetOwnerPassword() {
-return this.ownerPassword;
-}
+  public string GetOwnerPassword() {
+    return this.ownerPassword;
+  }
 
-public void SetOwnerPassword(string ownerPassword) {
-this.ownerPassword = ownerPassword;
-}
+  public void SetOwnerPassword(string ownerPassword) {
+    this.ownerPassword = ownerPassword;
+  }
 
-public string GetUserPassword() {
-return this.userPassword;
-}
+  public string GetUserPassword() {
+    return this.userPassword;
+  }
 
-public void SetUserPassword(string userPassword) {
-this.userPassword = userPassword;
-}
+  public void SetUserPassword(string userPassword) {
+    this.userPassword = userPassword;
+  }
 }

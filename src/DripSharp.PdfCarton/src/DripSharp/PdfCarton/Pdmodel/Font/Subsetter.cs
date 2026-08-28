@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 internal interface Subsetter {
-public void AddToSubset(int codePoint);
+  public void AddToSubset(int codePoint);
 
-public void Subset();
+  public void Subset();
 }

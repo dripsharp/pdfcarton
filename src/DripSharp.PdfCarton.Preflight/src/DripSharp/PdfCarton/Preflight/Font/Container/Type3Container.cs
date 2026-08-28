@@ -8,12 +8,13 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font.Container;
 
-public class Type3Container : global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font> {
-public Type3Container(global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font font) : base(font) {
+public class Type3Container
+: global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font> {
+  public Type3Container(global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font font) : base(font) {
 
-}
+  }
 
-public override bool HasGlyph(int code) {
-return (base.Font.GetCharProc(code) != default!);
-}
+  public override bool HasGlyph(int code) {
+    return (base.Font.GetCharProc(code) != default!);
+  }
 }

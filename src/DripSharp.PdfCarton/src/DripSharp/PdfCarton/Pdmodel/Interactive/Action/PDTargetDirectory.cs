@@ -9,95 +9,102 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDTargetDirectory : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dict = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dict = null!;
 
-public PDTargetDirectory() {
-this.dict = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDTargetDirectory() {
+    this.dict = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDTargetDirectory(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-this.dict = dictionary;
-}
+  public PDTargetDirectory(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    this.dict = dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dict;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dict;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSName GetRelationship() {
-return this.dict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.R);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSName GetRelationship() {
+    return this.dict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.R);
+  }
 
-public virtual void SetRelationship(global::DripSharp.PdfCarton.Cos.COSName relationship) {
-if ((!(global::DripSharp.PdfCarton.Cos.COSName.P.Equals(relationship)) && !(global::DripSharp.PdfCarton.Cos.COSName.C.Equals(relationship)))) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("The only valid are P or C, not ", relationship.GetName()));
-}
-this.dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.R, relationship);
-}
+  public virtual void SetRelationship(global::DripSharp.PdfCarton.Cos.COSName relationship) {
+    if ((!(global::DripSharp.PdfCarton.Cos.COSName.P.Equals(relationship))
+      && !(global::DripSharp.PdfCarton.Cos.COSName.C.Equals(relationship)))) {
+      throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("The only valid are P or C, not ",
+        relationship.GetName()));
+    }
+    this.dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.R, relationship);
+  }
 
-public virtual string GetFilename() {
-return this.dict.GetString(global::DripSharp.PdfCarton.Cos.COSName.N);
-}
+  public virtual string GetFilename() {
+    return this.dict.GetString(global::DripSharp.PdfCarton.Cos.COSName.N);
+  }
 
-public virtual void SetFilename(string filename) {
-this.dict.SetString(global::DripSharp.PdfCarton.Cos.COSName.N, filename);
-}
+  public virtual void SetFilename(string filename) {
+    this.dict.SetString(global::DripSharp.PdfCarton.Cos.COSName.N, filename);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDTargetDirectory GetTargetDirectory() {
-global::DripSharp.PdfCarton.Cos.COSDictionary targetDict = this.dict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.T);
-return ((targetDict != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDTargetDirectory(targetDict) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDTargetDirectory)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDTargetDirectory GetTargetDirectory() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary targetDict
+      = this.dict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.T);
+    return ((targetDict != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDTargetDirectory(targetDict)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDTargetDirectory)(default!));
+  }
 
-public virtual void SetTargetDirectory(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDTargetDirectory targetDirectory) {
-this.dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.T, targetDirectory);
-}
+  public virtual void SetTargetDirectory(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDTargetDirectory targetDirectory) {
+    this.dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.T, targetDirectory);
+  }
 
-public virtual int GetPageNumber() {
-return this.dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.P, -1);
-}
+  public virtual int GetPageNumber() {
+    return this.dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.P, -1);
+  }
 
-public virtual void SetPageNumber(int pageNumber) {
-if ((pageNumber < 0)) {
-this.dict.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.P);
-} else {
-this.dict.SetInt(global::DripSharp.PdfCarton.Cos.COSName.P, pageNumber);
-}
-}
+  public virtual void SetPageNumber(int pageNumber) {
+    if ((pageNumber < 0)) {
+      this.dict.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.P);
+    } else {
+      this.dict.SetInt(global::DripSharp.PdfCarton.Cos.COSName.P, pageNumber);
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDNamedDestination GetNamedDestination() {
-global::DripSharp.PdfCarton.Cos.COSBase @base = this.dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.P);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDNamedDestination((global::DripSharp.PdfCarton.Cos.COSString)(@base!));
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDNamedDestination GetNamedDestination() {
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = this.dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.P);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDNamedDestination((global::DripSharp.PdfCarton.Cos.COSString)(@base!));
+    }
+    return default!;
+  }
 
-public virtual void SetNamedDestination(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDNamedDestination dest) {
-if ((dest == default!)) {
-this.dict.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.P);
-} else {
-this.dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, dest);
-}
-}
+  public virtual void SetNamedDestination(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDNamedDestination dest) {
+    if ((dest == default!)) {
+      this.dict.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.P);
+    } else {
+      this.dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, dest);
+    }
+  }
 
-public virtual int GetAnnotationIndex() {
-return this.dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.A, -1);
-}
+  public virtual int GetAnnotationIndex() {
+    return this.dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.A, -1);
+  }
 
-public virtual void SetAnnotationIndex(int index) {
-if ((index < 0)) {
-this.dict.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.A);
-} else {
-this.dict.SetInt(global::DripSharp.PdfCarton.Cos.COSName.A, index);
-}
-}
+  public virtual void SetAnnotationIndex(int index) {
+    if ((index < 0)) {
+      this.dict.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.A);
+    } else {
+      this.dict.SetInt(global::DripSharp.PdfCarton.Cos.COSName.A, index);
+    }
+  }
 
-public virtual string GetAnnotationName() {
-return this.dict.GetString(global::DripSharp.PdfCarton.Cos.COSName.A);
-}
+  public virtual string GetAnnotationName() {
+    return this.dict.GetString(global::DripSharp.PdfCarton.Cos.COSName.A);
+  }
 
-public virtual void SetAnnotationName(string name) {
-this.dict.SetString(global::DripSharp.PdfCarton.Cos.COSName.A, name);
-}
+  public virtual void SetAnnotationName(string name) {
+    this.dict.SetString(global::DripSharp.PdfCarton.Cos.COSName.A, name);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

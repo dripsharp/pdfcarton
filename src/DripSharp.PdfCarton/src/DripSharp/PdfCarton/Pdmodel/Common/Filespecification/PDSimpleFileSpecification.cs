@@ -8,26 +8,27 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Common.Filespecification;
 
-public class PDSimpleFileSpecification : global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification {
-private global::DripSharp.PdfCarton.Cos.COSString file = null!;
+public class PDSimpleFileSpecification
+: global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification {
+  private global::DripSharp.PdfCarton.Cos.COSString file = null!;
 
-public PDSimpleFileSpecification() {
-this.file = new global::DripSharp.PdfCarton.Cos.COSString("");
-}
+  public PDSimpleFileSpecification() {
+    this.file = new global::DripSharp.PdfCarton.Cos.COSString("");
+  }
 
-public PDSimpleFileSpecification(global::DripSharp.PdfCarton.Cos.COSString fileName) {
-this.file = fileName;
-}
+  public PDSimpleFileSpecification(global::DripSharp.PdfCarton.Cos.COSString fileName) {
+    this.file = fileName;
+  }
 
-public override string GetFile() {
-return this.file.GetString();
-}
+  public override string GetFile() {
+    return this.file.GetString();
+  }
 
-public override void SetFile(string fileName) {
-this.file = new global::DripSharp.PdfCarton.Cos.COSString(fileName);
-}
+  public override void SetFile(string fileName) {
+    this.file = new global::DripSharp.PdfCarton.Cos.COSString(fileName);
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.file;
-}
+  public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.file;
+  }
 }

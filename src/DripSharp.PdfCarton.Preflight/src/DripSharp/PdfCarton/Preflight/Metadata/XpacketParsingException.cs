@@ -9,23 +9,26 @@
 namespace DripSharp.PdfCarton.Preflight.Metadata;
 
 public class XpacketParsingException : global::System.Exception {
-internal const long serialVersionUID = 1L;
+  internal const long serialVersionUID = 1L;
 
-protected internal global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError Error = null!;
+  protected internal global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError Error
+    = null!;
 
-public XpacketParsingException(string message, global::System.Exception cause) : base(message, cause) {
+  public XpacketParsingException(string message, global::System.Exception cause) : base(message,
+    cause) {
 
-}
+  }
 
-public XpacketParsingException(string message) : base(message) {
+  public XpacketParsingException(string message) : base(message) {
 
-}
+  }
 
-public XpacketParsingException(string message, global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error) : base(message) {
-this.Error = error;
-}
+  public XpacketParsingException(string message,
+    global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error) : base(message) {
+    this.Error = error;
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError GetError() {
-return this.Error;
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError GetError() {
+    return this.Error;
+  }
 }

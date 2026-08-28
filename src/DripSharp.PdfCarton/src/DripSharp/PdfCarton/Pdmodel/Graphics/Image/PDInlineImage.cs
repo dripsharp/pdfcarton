@@ -9,239 +9,281 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public sealed class PDInlineImage : global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary parameters = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary parameters = null!;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.PDResources resources = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.PDResources resources = null!;
 
-private readonly sbyte[] rawData = null!;
+  private readonly sbyte[] rawData = null!;
 
-private readonly sbyte[] decodedData = null!;
+  private readonly sbyte[] decodedData = null!;
 
-public PDInlineImage(global::DripSharp.PdfCarton.Cos.COSDictionary parameters, sbyte[] data, global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
-this.parameters = parameters;
-this.resources = resources;
-this.rawData = data;
-global::DripSharp.PdfCarton.Filter.DecodeResult decodeResult = default!;
-global::System.Collections.Generic.IList<string> filters = this.GetFilters();
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(filters)) {
-this.decodedData = data;
-} else {
-global::System.IO.MemoryStream @in = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(data);
-global::DripSharp.Runtime.JavaByteArrayOutputStream @out = new global::DripSharp.Runtime.JavaByteArrayOutputStream(data.Length);
-sbyte[] ba = default!;
-for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(filters)); i++) {
-global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(@out);
-global::DripSharp.PdfCarton.Filter.Filter filter = global::DripSharp.PdfCarton.Filter.FilterFactory.Instance.GetFilter(global::DripSharp.Runtime.JavaCompat.ListGet(filters, i));
-decodeResult = filter.Decode(@in, @out, parameters, i);
-ba = global::DripSharp.Runtime.JavaCompat.ToSignedBytes(@out);
-@in = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(ba!);
-}
-this.decodedData = ba!;
-}
-if ((decodeResult! != default!)) {
-parameters.AddAll(decodeResult!.GetParameters());
-}
-}
+  public PDInlineImage(global::DripSharp.PdfCarton.Cos.COSDictionary parameters, sbyte[] data,
+    global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
+    this.parameters = parameters;
+    this.resources = resources;
+    this.rawData = data;
+    global::DripSharp.PdfCarton.Filter.DecodeResult decodeResult = default!;
+    global::System.Collections.Generic.IList<string> filters = this.GetFilters();
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(filters)) {
+      this.decodedData = data;
+    } else {
+      global::System.IO.MemoryStream @in
+        = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(data);
+      global::DripSharp.Runtime.JavaByteArrayOutputStream @out
+        = new global::DripSharp.Runtime.JavaByteArrayOutputStream(data.Length);
+      sbyte[] ba = default!;
+      for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(filters)); i++) {
+        global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(@out);
+        global::DripSharp.PdfCarton.Filter.Filter filter
+          = global::DripSharp.PdfCarton.Filter.FilterFactory.Instance.GetFilter(global::DripSharp.Runtime.JavaCompat.ListGet(filters,
+          i));
+        decodeResult = filter.Decode(@in, @out, parameters, i);
+        ba = global::DripSharp.Runtime.JavaCompat.ToSignedBytes(@out);
+        @in = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(ba!);
+      }
+      this.decodedData = ba!;
+    }
+    if ((decodeResult! != default!)) {
+      parameters.AddAll(decodeResult!.GetParameters());
+    }
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.parameters;
-}
+  public global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.parameters;
+  }
 
-public int GetBitsPerComponent() {
-if (this.IsStencil()) {
-return 1;
-} else {
-return this.parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Bpc, global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent, -1);
-}
-}
+  public int GetBitsPerComponent() {
+    if (this.IsStencil()) {
+      return 1;
+    } else {
+      return this.parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Bpc,
+        global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent, -1);
+    }
+  }
 
-public void SetBitsPerComponent(int bitsPerComponent) {
-this.parameters.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Bpc, bitsPerComponent);
-}
+  public void SetBitsPerComponent(int bitsPerComponent) {
+    this.parameters.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Bpc, bitsPerComponent);
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace() {
-global::DripSharp.PdfCarton.Cos.COSBase cs = this.parameters.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Cs, global::DripSharp.PdfCarton.Cos.COSName.Colorspace);
-if ((cs != default!)) {
-return this.createColorSpace(cs);
-} else {
-if (this.IsStencil()) {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance;
-} else {
-throw new global::System.IO.IOException("could not determine inline image color space");
-}
-}
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace() {
+    global::DripSharp.PdfCarton.Cos.COSBase cs
+      = this.parameters.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Cs,
+      global::DripSharp.PdfCarton.Cos.COSName.Colorspace);
+    if ((cs != default!)) {
+      return this.createColorSpace(cs);
+    } else {
+      if (this.IsStencil()) {
+        return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance;
+      } else {
+        throw new global::System.IO.IOException("could not determine inline image color space");
+      }
+    }
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSBase toLongName(global::DripSharp.PdfCarton.Cos.COSBase cs) {
-if (global::DripSharp.PdfCarton.Cos.COSName.Rgb.Equals(cs)) {
-return global::DripSharp.PdfCarton.Cos.COSName.Devicergb;
-}
-if (global::DripSharp.PdfCarton.Cos.COSName.Cmyk.Equals(cs)) {
-return global::DripSharp.PdfCarton.Cos.COSName.Devicecmyk;
-}
-if (global::DripSharp.PdfCarton.Cos.COSName.G.Equals(cs)) {
-return global::DripSharp.PdfCarton.Cos.COSName.Devicegray;
-}
-return cs;
-}
+  private global::DripSharp.PdfCarton.Cos.COSBase toLongName(global::DripSharp.PdfCarton.Cos.COSBase cs) {
+    if (global::DripSharp.PdfCarton.Cos.COSName.Rgb.Equals(cs)) {
+      return global::DripSharp.PdfCarton.Cos.COSName.Devicergb;
+    }
+    if (global::DripSharp.PdfCarton.Cos.COSName.Cmyk.Equals(cs)) {
+      return global::DripSharp.PdfCarton.Cos.COSName.Devicecmyk;
+    }
+    if (global::DripSharp.PdfCarton.Cos.COSName.G.Equals(cs)) {
+      return global::DripSharp.PdfCarton.Cos.COSName.Devicegray;
+    }
+    return cs;
+  }
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace createColorSpace(global::DripSharp.PdfCarton.Cos.COSBase cs) {
-if ((cs is global::DripSharp.PdfCarton.Cos.COSName)) {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(this.toLongName(cs), this.resources);
-}
-if (((cs is global::DripSharp.PdfCarton.Cos.COSArray) && (((global::DripSharp.PdfCarton.Cos.COSArray)(cs!)).Size() > 1))) {
-global::DripSharp.PdfCarton.Cos.COSArray srcArray = (global::DripSharp.PdfCarton.Cos.COSArray)(cs!);
-global::DripSharp.PdfCarton.Cos.COSBase csType = srcArray.Get(0);
-if ((global::DripSharp.PdfCarton.Cos.COSName.I.Equals(csType) || global::DripSharp.PdfCarton.Cos.COSName.Indexed.Equals(csType))) {
-global::DripSharp.PdfCarton.Cos.COSArray dstArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-dstArray.AddAll(srcArray);
-dstArray.Set(0, global::DripSharp.PdfCarton.Cos.COSName.Indexed);
-dstArray.Set(1, this.toLongName(srcArray.Get(1)));
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(dstArray, this.resources);
-}
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Illegal type of inline image color space: ", csType));
-}
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Illegal type of object for inline image color space: ", cs));
-}
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace createColorSpace(global::DripSharp.PdfCarton.Cos.COSBase cs) {
+    if ((cs is global::DripSharp.PdfCarton.Cos.COSName)) {
+      return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(this.toLongName(cs),
+        this.resources);
+    }
+    if (((cs is global::DripSharp.PdfCarton.Cos.COSArray)
+      && (((global::DripSharp.PdfCarton.Cos.COSArray)(cs!)).Size() > 1))) {
+      global::DripSharp.PdfCarton.Cos.COSArray srcArray
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(cs!);
+      global::DripSharp.PdfCarton.Cos.COSBase csType = srcArray.Get(0);
+      if ((global::DripSharp.PdfCarton.Cos.COSName.I.Equals(csType)
+        || global::DripSharp.PdfCarton.Cos.COSName.Indexed.Equals(csType))) {
+        global::DripSharp.PdfCarton.Cos.COSArray dstArray
+          = new global::DripSharp.PdfCarton.Cos.COSArray();
+        dstArray.AddAll(srcArray);
+        dstArray.Set(0, global::DripSharp.PdfCarton.Cos.COSName.Indexed);
+        dstArray.Set(1, this.toLongName(srcArray.Get(1)));
+        return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(dstArray,
+          this.resources);
+      }
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Illegal type of inline image color space: ",
+        csType));
+    }
+    throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Illegal type of object for inline image color space: ",
+      cs));
+  }
 
-public void SetColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = default!;
-if ((colorSpace != default!)) {
-@base = colorSpace.GetCOSObject();
-}
-this.parameters.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Cs, @base!);
-}
+  public void SetColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    global::DripSharp.PdfCarton.Cos.COSBase @base = default!;
+    if ((colorSpace != default!)) {
+      @base = colorSpace.GetCOSObject();
+    }
+    this.parameters.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Cs, @base!);
+  }
 
-public int GetHeight() {
-return this.parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.H, global::DripSharp.PdfCarton.Cos.COSName.Height, -1);
-}
+  public int GetHeight() {
+    return this.parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.H,
+      global::DripSharp.PdfCarton.Cos.COSName.Height, -1);
+  }
 
-public void SetHeight(int height) {
-this.parameters.SetInt(global::DripSharp.PdfCarton.Cos.COSName.H, height);
-}
+  public void SetHeight(int height) {
+    this.parameters.SetInt(global::DripSharp.PdfCarton.Cos.COSName.H, height);
+  }
 
-public int GetWidth() {
-return this.parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.W, global::DripSharp.PdfCarton.Cos.COSName.Width, -1);
-}
+  public int GetWidth() {
+    return this.parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.W,
+      global::DripSharp.PdfCarton.Cos.COSName.Width, -1);
+  }
 
-public void SetWidth(int width) {
-this.parameters.SetInt(global::DripSharp.PdfCarton.Cos.COSName.W, width);
-}
+  public void SetWidth(int width) {
+    this.parameters.SetInt(global::DripSharp.PdfCarton.Cos.COSName.W, width);
+  }
 
-public bool GetInterpolate() {
-return this.parameters.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.I, global::DripSharp.PdfCarton.Cos.COSName.Interpolate, false);
-}
+  public bool GetInterpolate() {
+    return this.parameters.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.I,
+      global::DripSharp.PdfCarton.Cos.COSName.Interpolate, false);
+  }
 
-public void SetInterpolate(bool value) {
-this.parameters.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.I, value);
-}
+  public void SetInterpolate(bool value) {
+    this.parameters.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.I, value);
+  }
 
-public global::System.Collections.Generic.IList<string> GetFilters() {
-global::DripSharp.PdfCarton.Cos.COSBase filters = this.parameters.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.F, global::DripSharp.PdfCarton.Cos.COSName.Filter);
-if ((filters is global::DripSharp.PdfCarton.Cos.COSName)) {
-global::DripSharp.PdfCarton.Cos.COSName name = (global::DripSharp.PdfCarton.Cos.COSName)(filters!);
-return global::DripSharp.Runtime.JavaCompat.ListOf<string>(name.GetName());
-} else {
-if ((filters is global::DripSharp.PdfCarton.Cos.COSArray)) {
-return ((global::DripSharp.PdfCarton.Cos.COSArray)(filters!)).ToCOSNameStringList();
-}
-}
-return global::System.Array.Empty<string>();
-}
+  public global::System.Collections.Generic.IList<string> GetFilters() {
+    global::DripSharp.PdfCarton.Cos.COSBase filters
+      = this.parameters.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.F,
+      global::DripSharp.PdfCarton.Cos.COSName.Filter);
+    if ((filters is global::DripSharp.PdfCarton.Cos.COSName)) {
+      global::DripSharp.PdfCarton.Cos.COSName name
+        = (global::DripSharp.PdfCarton.Cos.COSName)(filters!);
+      return global::DripSharp.Runtime.JavaCompat.ListOf<string>(name.GetName());
+    } else {
+      if ((filters is global::DripSharp.PdfCarton.Cos.COSArray)) {
+        return ((global::DripSharp.PdfCarton.Cos.COSArray)(filters!)).ToCOSNameStringList();
+      }
+    }
+    return global::System.Array.Empty<string>();
+  }
 
-public void SetFilters(global::System.Collections.Generic.IList<string> filters) {
-global::DripSharp.PdfCarton.Cos.COSBase obj = global::DripSharp.PdfCarton.Cos.COSArray.OfCOSNames(filters);
-this.parameters.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, obj);
-}
+  public void SetFilters(global::System.Collections.Generic.IList<string> filters) {
+    global::DripSharp.PdfCarton.Cos.COSBase obj
+      = global::DripSharp.PdfCarton.Cos.COSArray.OfCOSNames(filters);
+    this.parameters.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, obj);
+  }
 
-public void SetDecode(global::DripSharp.PdfCarton.Cos.COSArray decode) {
-this.parameters.SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, decode);
-}
+  public void SetDecode(global::DripSharp.PdfCarton.Cos.COSArray decode) {
+    this.parameters.SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, decode);
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSArray GetDecode() {
-global::DripSharp.PdfCarton.Cos.COSBase decode = this.parameters.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.D, global::DripSharp.PdfCarton.Cos.COSName.Decode);
-if ((decode is global::DripSharp.PdfCarton.Cos.COSArray)) {
-return (global::DripSharp.PdfCarton.Cos.COSArray)(decode!);
-}
-return default!;
-}
+  public global::DripSharp.PdfCarton.Cos.COSArray GetDecode() {
+    global::DripSharp.PdfCarton.Cos.COSBase decode
+      = this.parameters.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.D,
+      global::DripSharp.PdfCarton.Cos.COSName.Decode);
+    if ((decode is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      return (global::DripSharp.PdfCarton.Cos.COSArray)(decode!);
+    }
+    return default!;
+  }
 
-public bool IsStencil() {
-return this.parameters.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Im, global::DripSharp.PdfCarton.Cos.COSName.ImageMask, false);
-}
+  public bool IsStencil() {
+    return this.parameters.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Im,
+      global::DripSharp.PdfCarton.Cos.COSName.ImageMask, false);
+  }
 
-public void SetStencil(bool isStencil) {
-this.parameters.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Im, isStencil);
-}
+  public void SetStencil(bool isStencil) {
+    this.parameters.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Im, isStencil);
+  }
 
-public global::System.IO.Stream CreateInputStream() {
-return global::DripSharp.Runtime.JavaCompat.NewMemoryStream(this.decodedData);
-}
+  public global::System.IO.Stream CreateInputStream() {
+    return global::DripSharp.Runtime.JavaCompat.NewMemoryStream(this.decodedData);
+  }
 
-public global::System.IO.Stream CreateInputStream(global::DripSharp.PdfCarton.Filter.DecodeOptions options) {
-return this.CreateInputStream();
-}
+  public global::System.IO.Stream CreateInputStream(global::DripSharp.PdfCarton.Filter.DecodeOptions options) {
+    return this.CreateInputStream();
+  }
 
-public global::System.IO.Stream CreateInputStream(global::System.Collections.Generic.IList<string> stopFilters) {
-global::System.Collections.Generic.IList<string> filters = this.GetFilters();
-global::System.IO.MemoryStream @in = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(this.rawData);
-global::DripSharp.Runtime.JavaByteArrayOutputStream @out = new global::DripSharp.Runtime.JavaByteArrayOutputStream(this.rawData.Length);
-for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(filters)); i++) {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(stopFilters, global::DripSharp.Runtime.JavaCompat.ListGet(filters, i))) {
-break;
-}
-global::DripSharp.PdfCarton.Filter.Filter filter = global::DripSharp.PdfCarton.Filter.FilterFactory.Instance.GetFilter(global::DripSharp.Runtime.JavaCompat.ListGet(filters, i));
-global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(@out);
-filter.Decode(@in, @out, this.parameters, i);
-@in = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(@out));
-}
-return @in;
-}
+  public global::System.IO.Stream CreateInputStream(global::System.Collections.Generic.IList<string> stopFilters) {
+    global::System.Collections.Generic.IList<string> filters = this.GetFilters();
+    global::System.IO.MemoryStream @in
+      = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(this.rawData);
+    global::DripSharp.Runtime.JavaByteArrayOutputStream @out
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(this.rawData.Length);
+    for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(filters)); i++) {
+      if (global::DripSharp.Runtime.JavaCompat.CollectionContains(stopFilters,
+        global::DripSharp.Runtime.JavaCompat.ListGet(filters, i))) {
+        break;
+      }
+      global::DripSharp.PdfCarton.Filter.Filter filter
+        = global::DripSharp.PdfCarton.Filter.FilterFactory.Instance.GetFilter(global::DripSharp.Runtime.JavaCompat.ListGet(filters,
+        i));
+      global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(@out);
+      filter.Decode(@in, @out, this.parameters, i);
+      @in
+        = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(@out));
+    }
+    return @in;
+  }
 
-public bool IsEmpty() {
-return (this.decodedData.Length == 0);
-}
+  public bool IsEmpty() {
+    return (this.decodedData.Length == 0);
+  }
 
-public sbyte[] GetData() {
-return this.decodedData;
-}
+  public sbyte[] GetData() {
+    return this.decodedData;
+  }
 
-public global::SkiaSharp.SKBitmap GetImage() {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetRGBImage(this, (global::DripSharp.PdfCarton.Cos.COSArray)default!);
-}
+  public global::SkiaSharp.SKBitmap GetImage() {
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetRGBImage(this,
+      (global::DripSharp.PdfCarton.Cos.COSArray)default!);
+  }
 
-public global::SkiaSharp.SKBitmap GetImage(global::SkiaSharp.SKRectI region, int subsampling) {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetRGBImage(this, region, subsampling, (global::DripSharp.PdfCarton.Cos.COSArray)default!);
-}
+  public global::SkiaSharp.SKBitmap GetImage(global::SkiaSharp.SKRectI region, int subsampling) {
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetRGBImage(this,
+      region, subsampling, (global::DripSharp.PdfCarton.Cos.COSArray)default!);
+  }
 
-public global::DripSharp.Runtime.JavaRaster GetRawRaster() {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetRawRaster(this);
-}
+  public global::DripSharp.Runtime.JavaRaster GetRawRaster() {
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetRawRaster(this);
+  }
 
-public global::SkiaSharp.SKBitmap GetRawImage() {
-return this.GetColorSpace().ToRawImage(this.GetRawRaster());
-}
+  public global::SkiaSharp.SKBitmap GetRawImage() {
+    return this.GetColorSpace().ToRawImage(this.GetRawRaster());
+  }
 
-public global::SkiaSharp.SKBitmap GetStencilImage(global::DripSharp.Runtime.JavaPaint paint) {
-if (!(this.IsStencil())) {
-throw new global::System.InvalidOperationException("Image is not a stencil");
-}
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetStencilImage(this, paint);
-}
+  public global::SkiaSharp.SKBitmap GetStencilImage(global::DripSharp.Runtime.JavaPaint paint) {
+    if (!(this.IsStencil())) {
+      throw new global::System.InvalidOperationException("Image is not a stencil");
+    }
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetStencilImage(this,
+      paint);
+  }
 
-public string GetSuffix() {
-global::System.Collections.Generic.IList<string> filters = this.GetFilters();
-if (((filters == default!) || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(filters))) {
-return "png";
-}
-if ((global::DripSharp.Runtime.JavaCompat.CollectionContains(filters, global::DripSharp.PdfCarton.Cos.COSName.DctDecode.GetName()) || global::DripSharp.Runtime.JavaCompat.CollectionContains(filters, global::DripSharp.PdfCarton.Cos.COSName.DctDecodeAbbreviation.GetName()))) {
-return "jpg";
-}
-if ((global::DripSharp.Runtime.JavaCompat.CollectionContains(filters, global::DripSharp.PdfCarton.Cos.COSName.CcittfaxDecode.GetName()) || global::DripSharp.Runtime.JavaCompat.CollectionContains(filters, global::DripSharp.PdfCarton.Cos.COSName.CcittfaxDecodeAbbreviation.GetName()))) {
-return "tiff";
-}
-return "png";
-}
+  public string GetSuffix() {
+    global::System.Collections.Generic.IList<string> filters = this.GetFilters();
+    if (((filters == default!) || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(filters))) {
+      return "png";
+    }
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionContains(filters,
+      global::DripSharp.PdfCarton.Cos.COSName.DctDecode.GetName())
+      || global::DripSharp.Runtime.JavaCompat.CollectionContains(filters,
+      global::DripSharp.PdfCarton.Cos.COSName.DctDecodeAbbreviation.GetName()))) {
+      return "jpg";
+    }
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionContains(filters,
+      global::DripSharp.PdfCarton.Cos.COSName.CcittfaxDecode.GetName())
+      || global::DripSharp.Runtime.JavaCompat.CollectionContains(filters,
+      global::DripSharp.PdfCarton.Cos.COSName.CcittfaxDecodeAbbreviation.GetName()))) {
+      return "tiff";
+    }
+    return "png";
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

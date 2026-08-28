@@ -8,23 +8,30 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.State;
 
-public class SetLineJoinStyle : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public SetLineJoinStyle(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class SetLineJoinStyle
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public SetLineJoinStyle(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-if (!(this.CheckArrayTypesClass(arguments, typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
-return;
-}
-int lineJoinStyle = ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0)!)).IntValue();
-this.GetContext().GetGraphicsState().SetLineJoin(lineJoinStyle);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        arguments);
+    }
+    if (!(this.CheckArrayTypesClass(arguments,
+      typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
+      return;
+    }
+    int lineJoinStyle
+      = ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+      0)!)).IntValue();
+    this.GetContext().GetGraphicsState().SetLineJoin(lineJoinStyle);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineJoinstyle;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineJoinstyle;
+  }
 }

@@ -8,29 +8,37 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Text;
 
-public class SetTextRenderingMode : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public SetTextRenderingMode(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class SetTextRenderingMode
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public SetTextRenderingMode(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-global::DripSharp.PdfCarton.Cos.COSBase base0 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-if (!((base0 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber mode = (global::DripSharp.PdfCarton.Cos.COSNumber)(base0!);
-int val = mode.IntValue();
-if (((val < 0) || (val >= global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.values().Length))) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode = global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FromInt(val);
-this.GetContext().GetGraphicsState().GetTextState().SetRenderingMode(renderingMode);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        arguments);
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base0
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+    if (!((base0 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSNumber mode
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(base0!);
+    int val = mode.IntValue();
+    if (((val < 0) || (val
+      >= global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.values().Length))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode
+      = global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.FromInt(val);
+    this.GetContext().GetGraphicsState().GetTextState().SetRenderingMode(renderingMode);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetTextRenderingmode;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetTextRenderingmode;
+  }
 }

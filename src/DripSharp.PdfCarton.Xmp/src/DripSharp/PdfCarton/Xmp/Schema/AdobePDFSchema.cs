@@ -8,97 +8,109 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Schema;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/pdf/1.3/", "pdf")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/pdf/1.3/",
+  "pdf")]
 public class AdobePDFSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string Keywords = "Keywords";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string Keywords = "Keywords";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string PdfVersion = "PDFVersion";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string PdfVersion = "PDFVersion";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string Producer = "Producer";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string Producer = "Producer";
 
-public AdobePDFSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+  public AdobePDFSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
-}
+  }
 
-public AdobePDFSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string ownPrefix) : base(metadata, ownPrefix) {
+  public AdobePDFSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string ownPrefix)
+  : base(metadata, ownPrefix) {
 
-}
+  }
 
-public virtual void SetKeywords(string value) {
-global::DripSharp.PdfCarton.Xmp.Type.TextType keywords = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.Keywords, value);
-this.AddProperty(keywords);
-}
+  public virtual void SetKeywords(string value) {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType keywords
+      = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.Keywords, value);
+    this.AddProperty(keywords);
+  }
 
-public virtual void SetKeywordsProperty(global::DripSharp.PdfCarton.Xmp.Type.TextType keywords) {
-this.AddProperty(keywords);
-}
+  public virtual void SetKeywordsProperty(global::DripSharp.PdfCarton.Xmp.Type.TextType keywords) {
+    this.AddProperty(keywords);
+  }
 
-public virtual void SetPDFVersion(string value) {
-global::DripSharp.PdfCarton.Xmp.Type.TextType version = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.PdfVersion, value);
-this.AddProperty(version);
-}
+  public virtual void SetPDFVersion(string value) {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType version
+      = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.PdfVersion,
+      value);
+    this.AddProperty(version);
+  }
 
-public virtual void SetPDFVersionProperty(global::DripSharp.PdfCarton.Xmp.Type.TextType version) {
-this.AddProperty(version);
-}
+  public virtual void SetPDFVersionProperty(global::DripSharp.PdfCarton.Xmp.Type.TextType version) {
+    this.AddProperty(version);
+  }
 
-public virtual void SetProducer(string value) {
-global::DripSharp.PdfCarton.Xmp.Type.TextType producer = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.Producer, value);
-this.AddProperty(producer);
-}
+  public virtual void SetProducer(string value) {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType producer
+      = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.Producer, value);
+    this.AddProperty(producer);
+  }
 
-public virtual void SetProducerProperty(global::DripSharp.PdfCarton.Xmp.Type.TextType producer) {
-this.AddProperty(producer);
-}
+  public virtual void SetProducerProperty(global::DripSharp.PdfCarton.Xmp.Type.TextType producer) {
+    this.AddProperty(producer);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType GetKeywordsProperty() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.Keywords);
-if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
-return (global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!);
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType GetKeywordsProperty() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp
+      = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.Keywords);
+    if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
+      return (global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!);
+    }
+    return default!;
+  }
 
-public virtual string GetKeywords() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.Keywords);
-if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!)).GetStringValue();
-}
-return default!;
-}
+  public virtual string GetKeywords() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp
+      = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.Keywords);
+    if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!)).GetStringValue();
+    }
+    return default!;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType GetPDFVersionProperty() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.PdfVersion);
-if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
-return (global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!);
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType GetPDFVersionProperty() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp
+      = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.PdfVersion);
+    if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
+      return (global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!);
+    }
+    return default!;
+  }
 
-public virtual string GetPDFVersion() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.PdfVersion);
-if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!)).GetStringValue();
-}
-return default!;
-}
+  public virtual string GetPDFVersion() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp
+      = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.PdfVersion);
+    if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!)).GetStringValue();
+    }
+    return default!;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType GetProducerProperty() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.Producer);
-if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
-return (global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!);
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType GetProducerProperty() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp
+      = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.Producer);
+    if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
+      return (global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!);
+    }
+    return default!;
+  }
 
-public virtual string GetProducer() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.Producer);
-if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!)).GetStringValue();
-}
-return default!;
-}
+  public virtual string GetProducer() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp
+      = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema.Producer);
+    if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!)).GetStringValue();
+    }
+    return default!;
+  }
 }

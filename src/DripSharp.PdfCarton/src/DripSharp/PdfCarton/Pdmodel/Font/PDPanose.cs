@@ -9,20 +9,20 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public class PDPanose {
-public const int Length = 12;
+  public const int Length = 12;
 
-private readonly sbyte[] bytes = null!;
+  private readonly sbyte[] bytes = null!;
 
-public PDPanose(sbyte[] bytes) {
-this.bytes = bytes;
-}
+  public PDPanose(sbyte[] bytes) {
+    this.bytes = bytes;
+  }
 
-public virtual int GetFamilyClass() {
-return ((this.bytes[0] << unchecked((int)(8))) | (this.bytes[1] & 255));
-}
+  public virtual int GetFamilyClass() {
+    return ((this.bytes[0] << unchecked((int)(8))) | (this.bytes[1] & 255));
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDPanoseClassification GetPanose() {
-sbyte[] panose = global::DripSharp.Runtime.JavaCompat.CopyOfRange<sbyte>(this.bytes, 2, 12);
-return new global::DripSharp.PdfCarton.Pdmodel.Font.PDPanoseClassification(panose);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDPanoseClassification GetPanose() {
+    sbyte[] panose = global::DripSharp.Runtime.JavaCompat.CopyOfRange<sbyte>(this.bytes, 2, 12);
+    return new global::DripSharp.PdfCarton.Pdmodel.Font.PDPanoseClassification(panose);
+  }
 }

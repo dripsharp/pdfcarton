@@ -8,22 +8,23 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 
-public class SigningSupport : global::System.IDisposable, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.ExternalSigningSupport {
-private global::DripSharp.PdfCarton.Pdfwriter.COSWriter cosWriter = null!;
+public class SigningSupport : global::System.IDisposable,
+global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.ExternalSigningSupport {
+  private global::DripSharp.PdfCarton.Pdfwriter.COSWriter cosWriter = null!;
 
-public SigningSupport(global::DripSharp.PdfCarton.Pdfwriter.COSWriter cosWriter) {
-this.cosWriter = cosWriter;
-}
+  public SigningSupport(global::DripSharp.PdfCarton.Pdfwriter.COSWriter cosWriter) {
+    this.cosWriter = cosWriter;
+  }
 
-public virtual global::System.IO.Stream GetContent() {
-return this.cosWriter.GetDataToSign();
-}
+  public virtual global::System.IO.Stream GetContent() {
+    return this.cosWriter.GetDataToSign();
+  }
 
-public virtual void SetSignature(sbyte[] signature) {
-this.cosWriter.WriteExternalSignature(signature);
-}
+  public virtual void SetSignature(sbyte[] signature) {
+    this.cosWriter.WriteExternalSignature(signature);
+  }
 
-public virtual void Dispose() {
-this.cosWriter = default!;
-}
+  public virtual void Dispose() {
+    this.cosWriter = default!;
+  }
 }

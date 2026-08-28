@@ -8,210 +8,225 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf;
 
-public abstract class PDStandardAttributeObject : global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject {
-protected internal const float Unspecified = -1.0F;
+public abstract class PDStandardAttributeObject
+: global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject {
+  protected internal const float Unspecified = -1.0F;
 
-public PDStandardAttributeObject() {}
+  public PDStandardAttributeObject() {}
 
-public PDStandardAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : base(dictionary) {
+  public PDStandardAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary)
+  : base(dictionary) {
 
-}
+  }
 
-public virtual bool IsSpecified(string name) {
-return (this.GetCOSObject().GetDictionaryObject(name) != default!);
-}
+  public virtual bool IsSpecified(string name) {
+    return (this.GetCOSObject().GetDictionaryObject(name) != default!);
+  }
 
-protected internal virtual string GetString(string name) {
-return this.GetCOSObject().GetString(name);
-}
+  protected internal virtual string GetString(string name) {
+    return this.GetCOSObject().GetString(name);
+  }
 
-protected internal virtual void SetString(string name, string value) {
-global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
-this.GetCOSObject().SetString(name, value);
-global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
-this.PotentiallyNotifyChanged(oldBase, newBase);
-}
+  protected internal virtual void SetString(string name, string value) {
+    global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.GetCOSObject().SetString(name, value);
+    global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.PotentiallyNotifyChanged(oldBase, newBase);
+  }
 
-protected internal virtual string[] GetArrayOfString(string name) {
-global::DripSharp.PdfCarton.Cos.COSBase v = this.GetCOSObject().GetDictionaryObject(name);
-if ((v is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(v!);
-string[] strings = new string[array.Size()];
-for (int i = 0; (i < array.Size()); i++) {
-strings[i] = ((global::DripSharp.PdfCarton.Cos.COSName)(array.GetObject(i)!)).GetName();
-}
-return strings;
-}
-return default!;
-}
+  protected internal virtual string[] GetArrayOfString(string name) {
+    global::DripSharp.PdfCarton.Cos.COSBase v = this.GetCOSObject().GetDictionaryObject(name);
+    if ((v is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      global::DripSharp.PdfCarton.Cos.COSArray array
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(v!);
+      string[] strings = new string[array.Size()];
+      for (int i = 0; (i < array.Size()); i++) {
+        strings[i] = ((global::DripSharp.PdfCarton.Cos.COSName)(array.GetObject(i)!)).GetName();
+      }
+      return strings;
+    }
+    return default!;
+  }
 
-protected internal virtual void SetArrayOfString(string name, string[] values) {
-global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (string value in values) {
-array.Add(new global::DripSharp.PdfCarton.Cos.COSString(value));
-}
-this.GetCOSObject().SetItem(name, array);
-global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
-this.PotentiallyNotifyChanged(oldBase, newBase);
-}
+  protected internal virtual void SetArrayOfString(string name, string[] values) {
+    global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (string value in values) {
+      array.Add(new global::DripSharp.PdfCarton.Cos.COSString(value));
+    }
+    this.GetCOSObject().SetItem(name, array);
+    global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.PotentiallyNotifyChanged(oldBase, newBase);
+  }
 
-protected internal virtual string GetName(string name) {
-return this.GetCOSObject().GetNameAsString(name);
-}
+  protected internal virtual string GetName(string name) {
+    return this.GetCOSObject().GetNameAsString(name);
+  }
 
-protected internal virtual string GetName(string name, string defaultValue) {
-return this.GetCOSObject().GetNameAsString(name, defaultValue);
-}
+  protected internal virtual string GetName(string name, string defaultValue) {
+    return this.GetCOSObject().GetNameAsString(name, defaultValue);
+  }
 
-protected internal virtual object GetNameOrArrayOfName(string name, string defaultValue) {
-global::DripSharp.PdfCarton.Cos.COSBase v = this.GetCOSObject().GetDictionaryObject(name);
-if ((v is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(v!);
-string[] names = new string[array.Size()];
-for (int i = 0; (i < array.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase item = array.GetObject(i);
-if ((item is global::DripSharp.PdfCarton.Cos.COSName)) {
-names[i] = ((global::DripSharp.PdfCarton.Cos.COSName)(item!)).GetName();
-}
-}
-return names;
-}
-if ((v is global::DripSharp.PdfCarton.Cos.COSName)) {
-return ((global::DripSharp.PdfCarton.Cos.COSName)(v!)).GetName();
-}
-return defaultValue;
-}
+  protected internal virtual object GetNameOrArrayOfName(string name, string defaultValue) {
+    global::DripSharp.PdfCarton.Cos.COSBase v = this.GetCOSObject().GetDictionaryObject(name);
+    if ((v is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      global::DripSharp.PdfCarton.Cos.COSArray array
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(v!);
+      string[] names = new string[array.Size()];
+      for (int i = 0; (i < array.Size()); i++) {
+        global::DripSharp.PdfCarton.Cos.COSBase item = array.GetObject(i);
+        if ((item is global::DripSharp.PdfCarton.Cos.COSName)) {
+          names[i] = ((global::DripSharp.PdfCarton.Cos.COSName)(item!)).GetName();
+        }
+      }
+      return names;
+    }
+    if ((v is global::DripSharp.PdfCarton.Cos.COSName)) {
+      return ((global::DripSharp.PdfCarton.Cos.COSName)(v!)).GetName();
+    }
+    return defaultValue;
+  }
 
-protected internal virtual void SetName(string name, string value) {
-global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
-this.GetCOSObject().SetName(name, value);
-global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
-this.PotentiallyNotifyChanged(oldBase, newBase);
-}
+  protected internal virtual void SetName(string name, string value) {
+    global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.GetCOSObject().SetName(name, value);
+    global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.PotentiallyNotifyChanged(oldBase, newBase);
+  }
 
-protected internal virtual void SetArrayOfName(string name, string[] values) {
-global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (string value in values) {
-array.Add(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(value));
-}
-this.GetCOSObject().SetItem(name, array);
-global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
-this.PotentiallyNotifyChanged(oldBase, newBase);
-}
+  protected internal virtual void SetArrayOfName(string name, string[] values) {
+    global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (string value in values) {
+      array.Add(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(value));
+    }
+    this.GetCOSObject().SetItem(name, array);
+    global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.PotentiallyNotifyChanged(oldBase, newBase);
+  }
 
-protected internal virtual object GetNumberOrName(string name, string defaultValue) {
-global::DripSharp.PdfCarton.Cos.COSBase value = this.GetCOSObject().GetDictionaryObject(name);
-if ((value is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-return ((global::DripSharp.PdfCarton.Cos.COSNumber)(value!)).FloatValue();
-}
-if ((value is global::DripSharp.PdfCarton.Cos.COSName)) {
-return ((global::DripSharp.PdfCarton.Cos.COSName)(value!)).GetName();
-}
-return defaultValue;
-}
+  protected internal virtual object GetNumberOrName(string name, string defaultValue) {
+    global::DripSharp.PdfCarton.Cos.COSBase value = this.GetCOSObject().GetDictionaryObject(name);
+    if ((value is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+      return ((global::DripSharp.PdfCarton.Cos.COSNumber)(value!)).FloatValue();
+    }
+    if ((value is global::DripSharp.PdfCarton.Cos.COSName)) {
+      return ((global::DripSharp.PdfCarton.Cos.COSName)(value!)).GetName();
+    }
+    return defaultValue;
+  }
 
-protected internal virtual int GetInteger(string name, int defaultValue) {
-return this.GetCOSObject().GetInt(name, defaultValue);
-}
+  protected internal virtual int GetInteger(string name, int defaultValue) {
+    return this.GetCOSObject().GetInt(name, defaultValue);
+  }
 
-protected internal virtual void SetInteger(string name, int value) {
-global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
-this.GetCOSObject().SetInt(name, value);
-global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
-this.PotentiallyNotifyChanged(oldBase, newBase);
-}
+  protected internal virtual void SetInteger(string name, int value) {
+    global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.GetCOSObject().SetInt(name, value);
+    global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.PotentiallyNotifyChanged(oldBase, newBase);
+  }
 
-protected internal virtual float GetNumber(string name, float defaultValue) {
-return this.GetCOSObject().GetFloat(name, defaultValue);
-}
+  protected internal virtual float GetNumber(string name, float defaultValue) {
+    return this.GetCOSObject().GetFloat(name, defaultValue);
+  }
 
-protected internal virtual float GetNumber(string name) {
-return this.GetCOSObject().GetFloat(name);
-}
+  protected internal virtual float GetNumber(string name) {
+    return this.GetCOSObject().GetFloat(name);
+  }
 
-protected internal virtual object GetNumberOrArrayOfNumber(string name, float defaultValue) {
-global::DripSharp.PdfCarton.Cos.COSBase v = this.GetCOSObject().GetDictionaryObject(name);
-if ((v is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(v!);
-float[] values = new float[array.Size()];
-for (int i = 0; (i < array.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase item = array.GetObject(i);
-if ((item is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-values[i] = ((global::DripSharp.PdfCarton.Cos.COSNumber)(item!)).FloatValue();
-}
-}
-return values;
-}
-if ((v is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-return ((global::DripSharp.PdfCarton.Cos.COSNumber)(v!)).FloatValue();
-}
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(defaultValue, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject.Unspecified) == 0)) {
-return default!;
-}
-return defaultValue;
-}
+  protected internal virtual object GetNumberOrArrayOfNumber(string name, float defaultValue) {
+    global::DripSharp.PdfCarton.Cos.COSBase v = this.GetCOSObject().GetDictionaryObject(name);
+    if ((v is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      global::DripSharp.PdfCarton.Cos.COSArray array
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(v!);
+      float[] values = new float[array.Size()];
+      for (int i = 0; (i < array.Size()); i++) {
+        global::DripSharp.PdfCarton.Cos.COSBase item = array.GetObject(i);
+        if ((item is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+          values[i] = ((global::DripSharp.PdfCarton.Cos.COSNumber)(item!)).FloatValue();
+        }
+      }
+      return values;
+    }
+    if ((v is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+      return ((global::DripSharp.PdfCarton.Cos.COSNumber)(v!)).FloatValue();
+    }
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(defaultValue,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject.Unspecified)
+      == 0)) {
+      return default!;
+    }
+    return defaultValue;
+  }
 
-protected internal virtual void SetNumber(string name, float value) {
-global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
-this.GetCOSObject().SetFloat(name, value);
-global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
-this.PotentiallyNotifyChanged(oldBase, newBase);
-}
+  protected internal virtual void SetNumber(string name, float value) {
+    global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.GetCOSObject().SetFloat(name, value);
+    global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.PotentiallyNotifyChanged(oldBase, newBase);
+  }
 
-protected internal virtual void SetNumber(string name, int value) {
-global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
-this.GetCOSObject().SetInt(name, value);
-global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
-this.PotentiallyNotifyChanged(oldBase, newBase);
-}
+  protected internal virtual void SetNumber(string name, int value) {
+    global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.GetCOSObject().SetInt(name, value);
+    global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.PotentiallyNotifyChanged(oldBase, newBase);
+  }
 
-protected internal virtual void SetArrayOfNumber(string name, float[] values) {
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (float value in values) {
-array.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(value));
-}
-global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
-this.GetCOSObject().SetItem(name, array);
-global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
-this.PotentiallyNotifyChanged(oldBase, newBase);
-}
+  protected internal virtual void SetArrayOfNumber(string name, float[] values) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (float value in values) {
+      array.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(value));
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase oldBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.GetCOSObject().SetItem(name, array);
+    global::DripSharp.PdfCarton.Cos.COSBase newBase = this.GetCOSObject().GetDictionaryObject(name);
+    this.PotentiallyNotifyChanged(oldBase, newBase);
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetColor(string name) {
-global::DripSharp.PdfCarton.Cos.COSArray c = (global::DripSharp.PdfCarton.Cos.COSArray)(this.GetCOSObject().GetDictionaryObject(name)!);
-if ((c != default!)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma(c);
-}
-return default!;
-}
+  protected internal virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetColor(string name) {
+    global::DripSharp.PdfCarton.Cos.COSArray c
+      = (global::DripSharp.PdfCarton.Cos.COSArray)(this.GetCOSObject().GetDictionaryObject(name)!);
+    if ((c != default!)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma(c);
+    }
+    return default!;
+  }
 
-protected internal virtual object GetColorOrFourColors(string name) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(this.GetCOSObject().GetDictionaryObject(name)!);
-if ((array == default!)) {
-return default!;
-}
-if ((array.Size() == 3)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma(array);
-} else {
-if ((array.Size() == 4)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDFourColours(array);
-}
-}
-return default!;
-}
+  protected internal virtual object GetColorOrFourColors(string name) {
+    global::DripSharp.PdfCarton.Cos.COSArray array
+      = (global::DripSharp.PdfCarton.Cos.COSArray)(this.GetCOSObject().GetDictionaryObject(name)!);
+    if ((array == default!)) {
+      return default!;
+    }
+    if ((array.Size() == 3)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma(array);
+    } else {
+      if ((array.Size() == 4)) {
+        return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDFourColours(array);
+      }
+    }
+    return default!;
+  }
 
-protected internal virtual void SetColor(string name, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma value) {
-global::DripSharp.PdfCarton.Cos.COSBase oldValue = this.GetCOSObject().GetDictionaryObject(name);
-this.GetCOSObject().SetItem(name, value);
-global::DripSharp.PdfCarton.Cos.COSBase newValue = ((value == default!) ? (global::DripSharp.PdfCarton.Cos.COSBase)(default!) : value.GetCOSObject());
-this.PotentiallyNotifyChanged(oldValue, newValue);
-}
+  protected internal virtual void SetColor(string name,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma value) {
+    global::DripSharp.PdfCarton.Cos.COSBase oldValue
+      = this.GetCOSObject().GetDictionaryObject(name);
+    this.GetCOSObject().SetItem(name, value);
+    global::DripSharp.PdfCarton.Cos.COSBase newValue = ((value == default!)
+      ? (global::DripSharp.PdfCarton.Cos.COSBase)(default!) : value.GetCOSObject());
+    this.PotentiallyNotifyChanged(oldValue, newValue);
+  }
 
-protected internal virtual void SetFourColors(string name, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDFourColours value) {
-global::DripSharp.PdfCarton.Cos.COSBase oldValue = this.GetCOSObject().GetDictionaryObject(name);
-this.GetCOSObject().SetItem(name, value);
-global::DripSharp.PdfCarton.Cos.COSBase newValue = ((value == default!) ? (global::DripSharp.PdfCarton.Cos.COSBase)(default!) : value.GetCOSObject());
-this.PotentiallyNotifyChanged(oldValue, newValue);
-}
+  protected internal virtual void SetFourColors(string name,
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDFourColours value) {
+    global::DripSharp.PdfCarton.Cos.COSBase oldValue
+      = this.GetCOSObject().GetDictionaryObject(name);
+    this.GetCOSObject().SetItem(name, value);
+    global::DripSharp.PdfCarton.Cos.COSBase newValue = ((value == default!)
+      ? (global::DripSharp.PdfCarton.Cos.COSBase)(default!) : value.GetCOSObject());
+    this.PotentiallyNotifyChanged(oldValue, newValue);
+  }
 }

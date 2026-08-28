@@ -9,155 +9,179 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout;
 
 public class PlainText {
-private const float FONTSCALE = 1000.0F;
+  private const float FONTSCALE = 1000.0F;
 
-private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Paragraph> paragraphs = null!;
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Paragraph> paragraphs
+    = null!;
 
-public PlainText(string textValue) {
-string[] parts = global::DripSharp.Runtime.JavaCompat.StringSplit(textValue.Replace('\t', ' '), "\\R", 0);
-this.paragraphs = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Paragraph>(parts.Length);
-foreach (string __foreachValue_part in parts) {
-string part = __foreachValue_part;
-{
-if ((part.Length == 0)) {
-part = " ";
-}
-global::DripSharp.Runtime.JavaCompat.Add(this.paragraphs, new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Paragraph(part));
-}
-}
-}
+  public PlainText(string textValue) {
+    string[] parts = global::DripSharp.Runtime.JavaCompat.StringSplit(textValue.Replace('\t', ' '),
+      "\\R", 0);
+    this.paragraphs
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Paragraph>(parts.Length);
+    foreach (string __foreachValue_part in parts) {
+      string part = __foreachValue_part; {
+        if ((part.Length == 0)) {
+          part = " ";
+        }
+        global::DripSharp.Runtime.JavaCompat.Add(this.paragraphs,
+          new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Paragraph(part));
+      }
+    }
+  }
 
-public PlainText(global::System.Collections.Generic.IList<string> listValue) {
-this.paragraphs = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Paragraph>(global::DripSharp.Runtime.JavaCompat.CollectionCount(listValue));
-global::DripSharp.Runtime.JavaCompat.ForEach(listValue, (part) => global::DripSharp.Runtime.JavaCompat.Add(this.paragraphs, new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Paragraph(part)));
-}
+  public PlainText(global::System.Collections.Generic.IList<string> listValue) {
+    this.paragraphs
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Paragraph>(global::DripSharp.Runtime.JavaCompat.CollectionCount(listValue));
+    global::DripSharp.Runtime.JavaCompat.ForEach(listValue, (part)
+      => global::DripSharp.Runtime.JavaCompat.Add(this.paragraphs,
+      new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Paragraph(part)));
+  }
 
-internal virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Paragraph> getParagraphs() {
-return this.paragraphs;
-}
+  internal virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Paragraph> getParagraphs() {
+    return this.paragraphs;
+  }
 
-internal class TextAttribute : global::DripSharp.Runtime.JavaAttributedCharacterAttribute {
-internal const long serialVersionUID = -3138885145941283005L;
+  internal class TextAttribute : global::DripSharp.Runtime.JavaAttributedCharacterAttribute {
+    internal const long serialVersionUID = -3138885145941283005L;
 
-public static readonly global::DripSharp.Runtime.JavaAttributedCharacterAttribute Width = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.TextAttribute("width");
+    public static readonly global::DripSharp.Runtime.JavaAttributedCharacterAttribute Width
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.TextAttribute("width");
 
-protected internal TextAttribute(string name) : base(name) {
+    protected internal TextAttribute(string name) : base(name) {
 
-}
-}
+    }
+  }
 
-internal class Paragraph {
-internal readonly string textContent = null!;
+  internal class Paragraph {
+    internal readonly string textContent = null!;
 
-internal Paragraph(string text) {
-this.textContent = text;
-}
+    internal Paragraph(string text) {
+      this.textContent = text;
+    }
 
-internal virtual string getText() {
-return this.textContent;
-}
+    internal virtual string getText() {
+      return this.textContent;
+    }
 
-internal virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line> getLines(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font, float fontSize, float width) {
-if ((width <= 0)) {
-return global::System.Array.Empty<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line>();
-}
-global::DripSharp.Runtime.JavaLineBreakIterator iterator = new global::DripSharp.Runtime.JavaLineBreakIterator();
-iterator.SetText(this.textContent);
-float scale = ((float)(fontSize) / (float)(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.FONTSCALE));
-int start = iterator.First();
-int end = iterator.Next();
-float lineWidth = 0;
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line> textLines = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line>();
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line textLine = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line();
-while ((end != global::DripSharp.Runtime.JavaLineBreakIterator.DONE)) {
-string word = global::DripSharp.Runtime.JavaCompat.StringSubstring(this.textContent, start, end);
-float wordWidth = (font.GetStringWidth(word) * scale);
-lineWidth = (lineWidth + wordWidth);
-if (((lineWidth >= width) && global::DripSharp.Runtime.JavaCompat.IsWhitespace(word[(word.Length - 1)]))) {
-float whitespaceWidth = (font.GetStringWidth(word.Substring((word.Length - 1))) * scale);
-lineWidth = (lineWidth - whitespaceWidth);
-}
-if ((lineWidth >= width)) {
-textLine.setWidth(textLine.calculateWidth(font, fontSize));
-global::DripSharp.Runtime.JavaCompat.Add(textLines, textLine);
-textLine = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line();
-lineWidth = (font.GetStringWidth(word) * scale);
-}
-global::DripSharp.Runtime.JavaAttributedString @as = new global::DripSharp.Runtime.JavaAttributedString(word);
-@as.AddAttribute(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.TextAttribute.Width, wordWidth);
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word wordInstance = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word(word);
-wordInstance.setAttributes(@as);
-textLine.addWord(wordInstance);
-start = end;
-end = iterator.Next();
-}
-textLine.setWidth(textLine.calculateWidth(font, fontSize));
-global::DripSharp.Runtime.JavaCompat.Add(textLines, textLine);
-return textLines;
-}
-}
+    internal virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line> getLines(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font,
+      float fontSize, float width) {
+      if ((width <= 0)) {
+        return global::System.Array.Empty<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line>();
+      }
+      global::DripSharp.Runtime.JavaLineBreakIterator iterator
+        = new global::DripSharp.Runtime.JavaLineBreakIterator();
+      iterator.SetText(this.textContent);
+      float scale = ((float)fontSize
+        / (float)(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.FONTSCALE));
+      int start = iterator.First();
+      int end = iterator.Next();
+      float lineWidth = 0;
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line> textLines
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line>();
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line textLine
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line();
+      while ((end != global::DripSharp.Runtime.JavaLineBreakIterator.DONE)) {
+        string word = global::DripSharp.Runtime.JavaCompat.StringSubstring(this.textContent, start,
+          end);
+        float wordWidth = (font.GetStringWidth(word) * scale);
+        lineWidth = (lineWidth + wordWidth);
+        if (((lineWidth >= width)
+          && global::DripSharp.Runtime.JavaCompat.IsWhitespace(word[(word.Length - 1)]))) {
+          float whitespaceWidth = (font.GetStringWidth(word.Substring((word.Length - 1))) * scale);
+          lineWidth = (lineWidth - whitespaceWidth);
+        }
+        if ((lineWidth >= width)) {
+          textLine.setWidth(textLine.calculateWidth(font, fontSize));
+          global::DripSharp.Runtime.JavaCompat.Add(textLines, textLine);
+          textLine
+            = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Line();
+          lineWidth = (font.GetStringWidth(word) * scale);
+        }
+        global::DripSharp.Runtime.JavaAttributedString @as
+          = new global::DripSharp.Runtime.JavaAttributedString(word);
+        @as.AddAttribute(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.TextAttribute.Width,
+          wordWidth);
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word wordInstance
+          = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word(word);
+        wordInstance.setAttributes(@as);
+        textLine.addWord(wordInstance);
+        start = end;
+        end = iterator.Next();
+      }
+      textLine.setWidth(textLine.calculateWidth(font, fontSize));
+      global::DripSharp.Runtime.JavaCompat.Add(textLines, textLine);
+      return textLines;
+    }
+  }
 
-internal class Line {
-internal readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word> words = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word>();
+  internal class Line {
+    internal readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word> words
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word>();
 
-internal float lineWidth = default;
+    internal float lineWidth = default;
 
-internal virtual float getWidth() {
-return this.lineWidth;
-}
+    internal virtual float getWidth() {
+      return this.lineWidth;
+    }
 
-internal virtual void setWidth(float width) {
-this.lineWidth = width;
-}
+    internal virtual void setWidth(float width) {
+      this.lineWidth = width;
+    }
 
-internal virtual float calculateWidth(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font, float fontSize) {
-float scale = ((float)(fontSize) / (float)(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.FONTSCALE));
-float calculatedWidth = 0.0F;
-int indexOfWord = 0;
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word word in this.words) {
-calculatedWidth = (calculatedWidth + global::DripSharp.Runtime.JavaCompat.UnboxObject<float>((float?)(word.getAttributes().GetIterator().GetAttribute(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.TextAttribute.Width))));
-string text = word.getText();
-if (((indexOfWord == (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.words) - 1)) && global::DripSharp.Runtime.JavaCompat.IsWhitespace(text[(text.Length - 1)]))) {
-float whitespaceWidth = (font.GetStringWidth(text.Substring((text.Length - 1))) * scale);
-calculatedWidth = (calculatedWidth - whitespaceWidth);
-}
-++indexOfWord;
-}
-return calculatedWidth;
-}
+    internal virtual float calculateWidth(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font,
+      float fontSize) {
+      float scale = ((float)fontSize
+        / (float)(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.FONTSCALE));
+      float calculatedWidth = 0.0F;
+      int indexOfWord = 0;
+      foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word word in this.words) {
+        calculatedWidth = (calculatedWidth
+          + global::DripSharp.Runtime.JavaCompat.UnboxObject<float>((float?)(word.getAttributes().GetIterator().GetAttribute(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.TextAttribute.Width))));
+        string text = word.getText();
+        if (((indexOfWord == (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.words) - 1))
+          && global::DripSharp.Runtime.JavaCompat.IsWhitespace(text[(text.Length - 1)]))) {
+          float whitespaceWidth = (font.GetStringWidth(text.Substring((text.Length - 1))) * scale);
+          calculatedWidth = (calculatedWidth - whitespaceWidth);
+        }
+        ++indexOfWord;
+      }
+      return calculatedWidth;
+    }
 
-internal virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word> getWords() {
-return this.words;
-}
+    internal virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word> getWords() {
+      return this.words;
+    }
 
-internal virtual float getInterWordSpacing(float width) {
-return ((float)((width - this.lineWidth)) / (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.words) - 1));
-}
+    internal virtual float getInterWordSpacing(float width) {
+      return ((float)((width - this.lineWidth))
+        / (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.words) - 1));
+    }
 
-internal virtual void addWord(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word word) {
-global::DripSharp.Runtime.JavaCompat.Add(this.words, word);
-}
-}
+    internal virtual void addWord(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.Word word) {
+      global::DripSharp.Runtime.JavaCompat.Add(this.words, word);
+    }
+  }
 
-internal class Word {
-internal global::DripSharp.Runtime.JavaAttributedString attributedString = null!;
+  internal class Word {
+    internal global::DripSharp.Runtime.JavaAttributedString attributedString = null!;
 
-internal readonly string textContent = null!;
+    internal readonly string textContent = null!;
 
-internal Word(string text) {
-this.textContent = text;
-}
+    internal Word(string text) {
+      this.textContent = text;
+    }
 
-internal virtual string getText() {
-return this.textContent;
-}
+    internal virtual string getText() {
+      return this.textContent;
+    }
 
-internal virtual global::DripSharp.Runtime.JavaAttributedString getAttributes() {
-return this.attributedString;
-}
+    internal virtual global::DripSharp.Runtime.JavaAttributedString getAttributes() {
+      return this.attributedString;
+    }
 
-internal virtual void setAttributes(global::DripSharp.Runtime.JavaAttributedString @as) {
-this.attributedString = @as;
-}
-}
+    internal virtual void setAttributes(global::DripSharp.Runtime.JavaAttributedString @as) {
+      this.attributedString = @as;
+    }
+  }
 }

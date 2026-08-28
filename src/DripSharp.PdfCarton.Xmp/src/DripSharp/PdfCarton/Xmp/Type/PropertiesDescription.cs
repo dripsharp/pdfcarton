@@ -9,29 +9,33 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class PropertiesDescription {
-private readonly global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Xmp.Type.PropertyType> types = null!;
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Xmp.Type.PropertyType> types = null!;
 
-public PropertiesDescription() {
-this.types = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewJavaDictionary<string, global::DripSharp.PdfCarton.Xmp.Type.PropertyType>();
-}
+  public PropertiesDescription() {
+    this.types = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewJavaDictionary<string,
+      global::DripSharp.PdfCarton.Xmp.Type.PropertyType>();
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetPropertiesName() {
-return this.GetPropertiesNames();
-}
+  public virtual global::System.Collections.Generic.IList<string> GetPropertiesName() {
+    return this.GetPropertiesNames();
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetPropertiesNames() {
-return new global::System.Collections.Generic.List<string>(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapKeySet(this.types));
-}
+  public virtual global::System.Collections.Generic.IList<string> GetPropertiesNames() {
+    return new global::System.Collections.Generic.List<string>(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapKeySet(this.types));
+  }
 
-public virtual void AddNewProperty(string name, global::DripSharp.PdfCarton.Xmp.Type.PropertyType type) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapPut(this.types, name, type);
-}
+  public virtual void AddNewProperty(string name,
+    global::DripSharp.PdfCarton.Xmp.Type.PropertyType type) {
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapPut(this.types, name, type);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.PropertyType GetPropertyType(string name) {
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapGet(this.types, name);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.PropertyType GetPropertyType(string name) {
+    return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapGet(this.types, name);
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("PropertiesDescription{", "types="), this.types), '}');
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("PropertiesDescription{",
+      "types="), this.types), '}');
+  }
 }

@@ -9,24 +9,31 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class ScriptTable {
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable defaultLangSysTable = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable defaultLangSysTable
+    = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable> langSysTables = null!;
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable> langSysTables = null!;
 
-public ScriptTable(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable defaultLangSysTable, global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable> langSysTables) {
-this.defaultLangSysTable = defaultLangSysTable;
-this.langSysTables = langSysTables;
-}
+  public ScriptTable(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable defaultLangSysTable,
+    global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable> langSysTables) {
+    this.defaultLangSysTable = defaultLangSysTable;
+    this.langSysTables = langSysTables;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable GetDefaultLangSysTable() {
-return this.defaultLangSysTable;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable GetDefaultLangSysTable() {
+    return this.defaultLangSysTable;
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable> GetLangSysTables() {
-return this.langSysTables;
-}
+  public virtual global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable> GetLangSysTables() {
+    return this.langSysTables;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("ScriptTable[hasDefault=%s,langSysRecordsCount=%d]", (this.defaultLangSysTable != default!), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapCount(this.langSysTables));
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("ScriptTable[hasDefault=%s,langSysRecordsCount=%d]",
+      (this.defaultLangSysTable != default!),
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapCount(this.langSysTables));
+  }
 }

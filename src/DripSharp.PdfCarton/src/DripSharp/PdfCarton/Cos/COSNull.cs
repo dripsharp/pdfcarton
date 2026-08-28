@@ -9,21 +9,24 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public sealed class COSNull : global::DripSharp.PdfCarton.Cos.COSBase {
-public static readonly sbyte[] NullBytes = new sbyte[] { unchecked((sbyte)(110)), unchecked((sbyte)(117)), unchecked((sbyte)(108)), unchecked((sbyte)(108)) };
+  public static readonly sbyte[] NullBytes = new sbyte[] { unchecked((sbyte)(110)),
+    unchecked((sbyte)(117)), unchecked((sbyte)(108)), unchecked((sbyte)(108)) };
 
-public static readonly global::DripSharp.PdfCarton.Cos.COSNull Null = new global::DripSharp.PdfCarton.Cos.COSNull();
+  public static readonly global::DripSharp.PdfCarton.Cos.COSNull Null
+    = new global::DripSharp.PdfCarton.Cos.COSNull();
 
-private COSNull() {}
+  private COSNull() {}
 
-public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
-visitor.VisitFromNull(this);
-}
+  public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
+    visitor.VisitFromNull(this);
+  }
 
-public void WritePDF(global::System.IO.Stream output) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, global::DripSharp.PdfCarton.Cos.COSNull.NullBytes);
-}
+  public void WritePDF(global::System.IO.Stream output) {
+    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output,
+      global::DripSharp.PdfCarton.Cos.COSNull.NullBytes);
+  }
 
-public override string ToString() {
-return "COSNull{}";
-}
+  public override string ToString() {
+    return "COSNull{}";
+  }
 }

@@ -8,36 +8,40 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
-public abstract class PDCIEBasedColorSpace : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace {
-public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
-int width = raster.Width;
-int height = raster.Height;
-global::SkiaSharp.SKBitmap rgbImage = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
-global::DripSharp.Runtime.JavaRaster rgbRaster = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(rgbImage);
-float[] abc = new float[3];
-for (int y = 0; (y < height); y++) {
-for (int x = 0; (x < width); x++) {
-raster.GetPixel(x, y, abc);
-abc[0] /= 255;
-abc[1] /= 255;
-abc[2] /= 255;
-float[] rgb = this.ToRGB(abc);
-rgb[0] *= 255;
-rgb[1] *= 255;
-rgb[2] *= 255;
-rgbRaster.SetPixel(x, y, rgb);
-}
-}
-return rgbImage;
-}
+public abstract class PDCIEBasedColorSpace
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace {
+  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+    int width = raster.Width;
+    int height = raster.Height;
+    global::SkiaSharp.SKBitmap rgbImage
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
+    global::DripSharp.Runtime.JavaRaster rgbRaster
+      = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(rgbImage);
+    float[] abc = new float[3];
+    for (int y = 0; (y < height); y++) {
+      for (int x = 0; (x < width); x++) {
+        raster.GetPixel(x, y, abc);
+        abc[0] /= 255;
+        abc[1] /= 255;
+        abc[2] /= 255;
+        float[] rgb = this.ToRGB(abc);
+        rgb[0] *= 255;
+        rgb[1] *= 255;
+        rgb[2] *= 255;
+        rgbRaster.SetPixel(x, y, rgb);
+      }
+    }
+    return rgbImage;
+  }
 
-public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
-return default!;
-}
+  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+    return default!;
+  }
 
-public override string ToString() {
-return this.GetName();
-}
+  public override string ToString() {
+    return this.GetName();
+  }
 
-public PDCIEBasedColorSpace() {}
+  public PDCIEBasedColorSpace() {}
 }

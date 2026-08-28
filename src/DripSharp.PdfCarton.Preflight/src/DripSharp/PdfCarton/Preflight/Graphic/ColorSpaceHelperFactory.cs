@@ -9,36 +9,45 @@
 namespace DripSharp.PdfCarton.Preflight.Graphic;
 
 public class ColorSpaceHelperFactory {
-public virtual global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper GetColorSpaceHelper(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace cs, global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction csr) {
-switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(csr)) {
-case 1:
-return new global::DripSharp.PdfCarton.Preflight.Graphic.NoPatternColorSpaceHelper(context, cs);
-case 2:
-return new global::DripSharp.PdfCarton.Preflight.Graphic.DeviceColorSpaceHelper(context, cs);
-default:
-return new global::DripSharp.PdfCarton.Preflight.Graphic.StandardColorSpaceHelper(context, cs);
-}
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper GetColorSpaceHelper(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace cs,
+    global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction csr) {
+    switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(csr)) {
+      case 1:
+        return new global::DripSharp.PdfCarton.Preflight.Graphic.NoPatternColorSpaceHelper(context,
+          cs);
+      case 2:
+        return new global::DripSharp.PdfCarton.Preflight.Graphic.DeviceColorSpaceHelper(context,
+          cs);
+      default:
+        return new global::DripSharp.PdfCarton.Preflight.Graphic.StandardColorSpaceHelper(context,
+          cs);
+    }
+  }
 
-public sealed class ColorSpaceRestriction {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("NO_RESTRICTION")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction NoRestriction = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction();
+  public sealed class ColorSpaceRestriction {
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("NO_RESTRICTION")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+    public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction NoRestriction
+      = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("NO_PATTERN")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction NoPattern = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction();
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("NO_PATTERN")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+    public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction NoPattern
+      = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("ONLY_DEVICE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction OnlyDevice = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction();
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("ONLY_DEVICE")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+    public static readonly global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction OnlyDevice
+      = new global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction();
 
-private ColorSpaceRestriction() {}
+    private ColorSpaceRestriction() {}
 
+    public static ColorSpaceRestriction[] values()
+      => global::DripSharp.Runtime.JavaCompat.EnumValues<ColorSpaceRestriction>();
+    public static ColorSpaceRestriction valueOf(string name)
+      => global::DripSharp.Runtime.JavaCompat.EnumValueOf<ColorSpaceRestriction>(name);
 
-public static ColorSpaceRestriction[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<ColorSpaceRestriction>();
-public static ColorSpaceRestriction valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<ColorSpaceRestriction>(name);
-
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
-}
+    public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  }
 }

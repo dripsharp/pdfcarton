@@ -9,22 +9,30 @@
 namespace DripSharp.PdfCarton.Util;
 
 public sealed class Version {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private const string PDFBOX_VERSION_PROPERTIES = "/org/apache/pdfbox/resources/version.properties";
+  private const string PDFBOX_VERSION_PROPERTIES
+    = "/org/apache/pdfbox/resources/version.properties";
 
-private Version() {}
+  private Version() {}
 
-public static string GetVersion() {
-try {
-using (global::System.IO.Stream resourceAsStream = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Util.Version), global::DripSharp.PdfCarton.Util.Version.PDFBOX_VERSION_PROPERTIES)) using (global::System.IO.Stream @is = new global::System.IO.BufferedStream(resourceAsStream)) {
-global::DripSharp.Runtime.JavaProperties properties = new global::DripSharp.Runtime.JavaProperties();
-properties.Load(@is);
-return properties.GetProperty("pdfbox.version", (string)default!);
-}
-} catch (global::System.IO.IOException io) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Util.Version.LOG, (global::System.Exception)io, global::DripSharp.Runtime.JavaCompat.StringValueOf("Unable to read version from properties - returning null"));
-return default!;
-}
-}
+  public static string GetVersion() {
+    try {
+      using (global::System.IO.Stream resourceAsStream
+        = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Util.Version),
+        global::DripSharp.PdfCarton.Util.Version.PDFBOX_VERSION_PROPERTIES)) using (global::System.IO.Stream @is
+        = new global::System.IO.BufferedStream(resourceAsStream)) {
+        global::DripSharp.Runtime.JavaProperties properties
+          = new global::DripSharp.Runtime.JavaProperties();
+        properties.Load(@is);
+        return properties.GetProperty("pdfbox.version", (string)default!);
+      }
+    } catch (global::System.IO.IOException io) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Util.Version.LOG,
+        (global::System.Exception)io,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("Unable to read version from properties - returning null"));
+      return default!;
+    }
+  }
 }

@@ -8,33 +8,38 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
-public class PDAnnotationSound : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
-public const string SubType = "Sound";
+public class PDAnnotationSound
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
+  public const string SubType = "Sound";
 
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler
+    = null!;
 
-public PDAnnotationSound() {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSound.SubType);
-}
+  public PDAnnotationSound() {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSound.SubType);
+  }
 
-public PDAnnotationSound(global::DripSharp.PdfCarton.Cos.COSDictionary field) : base(field) {
+  public PDAnnotationSound(global::DripSharp.PdfCarton.Cos.COSDictionary field) : base(field) {
 
-}
+  }
 
-public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
-this.customAppearanceHandler = appearanceHandler;
-}
+  public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
+    this.customAppearanceHandler = appearanceHandler;
+  }
 
-public override void ConstructAppearances() {
-this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
-}
+  public override void ConstructAppearances() {
+    this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
+  }
 
-public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-if ((this.customAppearanceHandler == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDSoundAppearanceHandler appearanceHandler = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDSoundAppearanceHandler(this, document);
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
-} else {
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
-}
-}
+  public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    if ((this.customAppearanceHandler == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDSoundAppearanceHandler appearanceHandler
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDSoundAppearanceHandler(this,
+        document);
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
+    } else {
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
+    }
+  }
 }

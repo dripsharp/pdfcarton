@@ -8,18 +8,21 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
-public class FDFAnnotationSquiggly : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTextMarkup {
-public const string Subtype = "Squiggly";
+public class FDFAnnotationSquiggly
+: global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTextMarkup {
+  public const string Subtype = "Squiggly";
 
-public FDFAnnotationSquiggly() : base() {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationSquiggly.Subtype);
-}
+  public FDFAnnotationSquiggly() : base() {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationSquiggly.Subtype);
+  }
 
-public FDFAnnotationSquiggly(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public FDFAnnotationSquiggly(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public FDFAnnotationSquiggly(global::System.Xml.XmlElement element) : base(element) {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationSquiggly.Subtype);
-}
+  public FDFAnnotationSquiggly(global::System.Xml.XmlElement element) : base(element) {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationSquiggly.Subtype);
+  }
 }

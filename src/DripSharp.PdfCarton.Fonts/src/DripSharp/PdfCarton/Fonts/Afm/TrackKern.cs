@@ -9,41 +9,42 @@
 namespace DripSharp.PdfCarton.Fonts.Afm;
 
 public class TrackKern {
-private readonly int degree = default;
+  private readonly int degree = default;
 
-private readonly float minPointSize = default;
+  private readonly float minPointSize = default;
 
-private readonly float minKern = default;
+  private readonly float minKern = default;
 
-private readonly float maxPointSize = default;
+  private readonly float maxPointSize = default;
 
-private readonly float maxKern = default;
+  private readonly float maxKern = default;
 
-public TrackKern(int degree, float minPointSize, float minKern, float maxPointSize, float maxKern) {
-this.degree = degree;
-this.minPointSize = minPointSize;
-this.minKern = minKern;
-this.maxPointSize = maxPointSize;
-this.maxKern = maxKern;
-}
+  public TrackKern(int degree, float minPointSize, float minKern, float maxPointSize,
+    float maxKern) {
+    this.degree = degree;
+    this.minPointSize = minPointSize;
+    this.minKern = minKern;
+    this.maxPointSize = maxPointSize;
+    this.maxKern = maxKern;
+  }
 
-public virtual int GetDegree() {
-return this.degree;
-}
+  public virtual int GetDegree() {
+    return this.degree;
+  }
 
-public virtual float GetMaxKern() {
-return this.maxKern;
-}
+  public virtual float GetMaxKern() {
+    return this.maxKern;
+  }
 
-public virtual float GetMaxPointSize() {
-return this.maxPointSize;
-}
+  public virtual float GetMaxPointSize() {
+    return this.maxPointSize;
+  }
 
-public virtual float GetMinKern() {
-return this.minKern;
-}
+  public virtual float GetMinKern() {
+    return this.minKern;
+  }
 
-public virtual float GetMinPointSize() {
-return this.minPointSize;
-}
+  public virtual float GetMinPointSize() {
+    return this.minPointSize;
+  }
 }

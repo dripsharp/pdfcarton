@@ -9,109 +9,118 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public class COSUpdateState {
-private readonly global::DripSharp.PdfCarton.Cos.COSUpdateInfo updateInfo = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSUpdateInfo updateInfo = null!;
 
-private global::DripSharp.PdfCarton.Cos.COSDocumentState originDocumentState = default!;
+  private global::DripSharp.PdfCarton.Cos.COSDocumentState originDocumentState = default!;
 
-private bool updated = false;
+  private bool updated = false;
 
-public COSUpdateState(global::DripSharp.PdfCarton.Cos.COSUpdateInfo updateInfo) {
-this.updateInfo = updateInfo;
-}
+  public COSUpdateState(global::DripSharp.PdfCarton.Cos.COSUpdateInfo updateInfo) {
+    this.updateInfo = updateInfo;
+  }
 
-public virtual void SetOriginDocumentState(global::DripSharp.PdfCarton.Cos.COSDocumentState originDocumentState) {
-this.setOriginDocumentState(originDocumentState, false);
-}
+  public virtual void SetOriginDocumentState(global::DripSharp.PdfCarton.Cos.COSDocumentState originDocumentState) {
+    this.setOriginDocumentState(originDocumentState, false);
+  }
 
-private void setOriginDocumentState(global::DripSharp.PdfCarton.Cos.COSDocumentState originDocumentState, bool dereferencing) {
-if (((this.originDocumentState != default!) || (originDocumentState == default!))) {
-return;
-}
-this.originDocumentState = originDocumentState;
-if (!dereferencing) {
-this.update();
-}
-if ((this.updateInfo is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = (global::DripSharp.PdfCarton.Cos.COSDictionary)(this.updateInfo!);
-foreach (global::DripSharp.PdfCarton.Cos.COSBase entry__133_25 in dictionary.GetValues()) {
-if ((entry__133_25 is global::DripSharp.PdfCarton.Cos.COSUpdateInfo)) {
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(entry__133_25!)).GetUpdateState().setOriginDocumentState(originDocumentState, dereferencing);
-}
-}
-} else {
-if ((this.updateInfo is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(this.updateInfo!);
-foreach (global::DripSharp.PdfCarton.Cos.COSBase entry__144_25 in array) {
-if ((entry__144_25 is global::DripSharp.PdfCarton.Cos.COSUpdateInfo)) {
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(entry__144_25!)).GetUpdateState().setOriginDocumentState(originDocumentState, dereferencing);
-}
-}
-} else {
-if ((this.updateInfo is global::DripSharp.PdfCarton.Cos.COSObject)) {
-global::DripSharp.PdfCarton.Cos.COSObject @object = (global::DripSharp.PdfCarton.Cos.COSObject)(this.updateInfo!);
-if (@object.IsDereferenced()) {
-global::DripSharp.PdfCarton.Cos.COSBase reference = @object.GetObject();
-if ((reference is global::DripSharp.PdfCarton.Cos.COSUpdateInfo)) {
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(reference!)).GetUpdateState().setOriginDocumentState(originDocumentState, dereferencing);
-}
-}
-}
-}
-}
-}
+  private void setOriginDocumentState(global::DripSharp.PdfCarton.Cos.COSDocumentState originDocumentState,
+    bool dereferencing) {
+    if (((this.originDocumentState != default!) || (originDocumentState == default!))) {
+      return;
+    }
+    this.originDocumentState = originDocumentState;
+    if (!dereferencing) {
+      this.update();
+    }
+    if ((this.updateInfo is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+      global::DripSharp.PdfCarton.Cos.COSDictionary dictionary
+        = (global::DripSharp.PdfCarton.Cos.COSDictionary)(this.updateInfo!);
+      foreach (global::DripSharp.PdfCarton.Cos.COSBase entry__133_25 in dictionary.GetValues()) {
+        if ((entry__133_25 is global::DripSharp.PdfCarton.Cos.COSUpdateInfo)) {
+          ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(entry__133_25!)).GetUpdateState().setOriginDocumentState(originDocumentState,
+            dereferencing);
+        }
+      }
+    } else {
+      if ((this.updateInfo is global::DripSharp.PdfCarton.Cos.COSArray)) {
+        global::DripSharp.PdfCarton.Cos.COSArray array
+          = (global::DripSharp.PdfCarton.Cos.COSArray)(this.updateInfo!);
+        foreach (global::DripSharp.PdfCarton.Cos.COSBase entry__144_25 in array) {
+          if ((entry__144_25 is global::DripSharp.PdfCarton.Cos.COSUpdateInfo)) {
+            ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(entry__144_25!)).GetUpdateState().setOriginDocumentState(originDocumentState,
+              dereferencing);
+          }
+        }
+      } else {
+        if ((this.updateInfo is global::DripSharp.PdfCarton.Cos.COSObject)) {
+          global::DripSharp.PdfCarton.Cos.COSObject @object
+            = (global::DripSharp.PdfCarton.Cos.COSObject)(this.updateInfo!);
+          if (@object.IsDereferenced()) {
+            global::DripSharp.PdfCarton.Cos.COSBase reference = @object.GetObject();
+            if ((reference is global::DripSharp.PdfCarton.Cos.COSUpdateInfo)) {
+              ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(reference!)).GetUpdateState().setOriginDocumentState(originDocumentState,
+                dereferencing);
+            }
+          }
+        }
+      }
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDocumentState GetOriginDocumentState() {
-return this.originDocumentState;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDocumentState GetOriginDocumentState() {
+    return this.originDocumentState;
+  }
 
-internal virtual bool isAcceptingUpdates() {
-return ((this.originDocumentState != default!) && this.originDocumentState.IsAcceptingUpdates());
-}
+  internal virtual bool isAcceptingUpdates() {
+    return ((this.originDocumentState != default!)
+      && this.originDocumentState.IsAcceptingUpdates());
+  }
 
-public virtual bool IsUpdated() {
-return this.updated;
-}
+  public virtual bool IsUpdated() {
+    return this.updated;
+  }
 
-internal virtual void update() {
-this.update(true);
-}
+  internal virtual void update() {
+    this.update(true);
+  }
 
-internal virtual void update(bool updated) {
-if (this.isAcceptingUpdates()) {
-this.updated = updated;
-}
-}
+  internal virtual void update(bool updated) {
+    if (this.isAcceptingUpdates()) {
+      this.updated = updated;
+    }
+  }
 
-internal virtual void update(global::DripSharp.PdfCarton.Cos.COSBase child) {
-this.update();
-if ((child is global::DripSharp.PdfCarton.Cos.COSUpdateInfo)) {
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(child!)).GetUpdateState().SetOriginDocumentState(this.originDocumentState);
-}
-}
+  internal virtual void update(global::DripSharp.PdfCarton.Cos.COSBase child) {
+    this.update();
+    if ((child is global::DripSharp.PdfCarton.Cos.COSUpdateInfo)) {
+      ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(child!)).GetUpdateState().SetOriginDocumentState(this.originDocumentState);
+    }
+  }
 
-internal virtual void update(global::DripSharp.PdfCarton.Cos.COSArray children) {
-this.update((global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Cos.COSBase>)(children!));
-}
+  internal virtual void update(global::DripSharp.PdfCarton.Cos.COSArray children) {
+    this.update((global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Cos.COSBase>)(children!));
+  }
 
-internal virtual void update(global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Cos.COSBase> children) {
-this.update();
-if ((children == default!)) {
-return;
-}
-foreach (global::DripSharp.PdfCarton.Cos.COSBase child in children) {
-if ((child is global::DripSharp.PdfCarton.Cos.COSUpdateInfo)) {
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(child!)).GetUpdateState().SetOriginDocumentState(this.originDocumentState);
-}
-}
-}
+  internal virtual void update(global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Cos.COSBase> children) {
+    this.update();
+    if ((children == default!)) {
+      return;
+    }
+    foreach (global::DripSharp.PdfCarton.Cos.COSBase child in children) {
+      if ((child is global::DripSharp.PdfCarton.Cos.COSUpdateInfo)) {
+        ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(child!)).GetUpdateState().SetOriginDocumentState(this.originDocumentState);
+      }
+    }
+  }
 
-internal virtual void dereferenceChild(global::DripSharp.PdfCarton.Cos.COSBase child) {
-if ((child is global::DripSharp.PdfCarton.Cos.COSUpdateInfo)) {
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(child!)).GetUpdateState().setOriginDocumentState(this.originDocumentState, true);
-}
-}
+  internal virtual void dereferenceChild(global::DripSharp.PdfCarton.Cos.COSBase child) {
+    if ((child is global::DripSharp.PdfCarton.Cos.COSUpdateInfo)) {
+      ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(child!)).GetUpdateState().setOriginDocumentState(this.originDocumentState,
+        true);
+    }
+  }
 
-internal virtual global::DripSharp.PdfCarton.Cos.COSIncrement toIncrement() {
-return new global::DripSharp.PdfCarton.Cos.COSIncrement(this.updateInfo);
-}
+  internal virtual global::DripSharp.PdfCarton.Cos.COSIncrement toIncrement() {
+    return new global::DripSharp.PdfCarton.Cos.COSIncrement(this.updateInfo);
+  }
 }

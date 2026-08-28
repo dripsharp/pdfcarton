@@ -8,275 +8,320 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/sType/ResourceRef#", "stRef")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/sType/ResourceRef#",
+  "stRef")]
 public class ResourceRefType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URI", "Simple")]
-public const string DocumentId = "documentID";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URI", "Simple")]
+  public const string DocumentId = "documentID";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URI", "Simple")]
-public const string FilePath = "filePath";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URI", "Simple")]
+  public const string FilePath = "filePath";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URI", "Simple")]
-public const string InstanceId = "instanceID";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URI", "Simple")]
+  public const string InstanceId = "instanceID";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Date", "Simple")]
-public const string LastModifyDate = "lastModifyDate";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Date", "Simple")]
+  public const string LastModifyDate = "lastModifyDate";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URI", "Simple")]
-public const string ManageTo = "manageTo";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URI", "Simple")]
+  public const string ManageTo = "manageTo";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URI", "Simple")]
-public const string ManageUi = "manageUI";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URI", "Simple")]
+  public const string ManageUi = "manageUI";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("AgentName", "Simple")]
-public const string Manager = "manager";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("AgentName", "Simple")]
+  public const string Manager = "manager";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string ManagerVariant = "managerVariant";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string ManagerVariant = "managerVariant";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string PartMapping = "partMapping";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string PartMapping = "partMapping";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string RenditionParams = "renditionParams";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string RenditionParams = "renditionParams";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string VersionId = "versionID";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string VersionId = "versionID";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
-public const string MaskMarkers = "maskMarkers";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
+  public const string MaskMarkers = "maskMarkers";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("RenditionClass", "Simple")]
-public const string RenditionClass = "renditionClass";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("RenditionClass", "Simple")]
+  public const string RenditionClass = "renditionClass";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Part", "Simple")]
-public const string FromPart = "fromPart";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Part", "Simple")]
+  public const string FromPart = "fromPart";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Part", "Simple")]
-public const string ToPart = "toPart";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Part", "Simple")]
+  public const string ToPart = "toPart";
 
-public const string AlternatePaths = "alternatePaths";
+  public const string AlternatePaths = "alternatePaths";
 
-public ResourceRefType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
-this.AddNamespace(this.GetNamespace(), this.GetPreferedPrefix());
-}
+  public ResourceRefType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+    this.AddNamespace(this.GetNamespace(), this.GetPreferedPrefix());
+  }
 
-public virtual string GetDocumentID() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.DocumentId, typeof(global::DripSharp.PdfCarton.Xmp.Type.URIType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetDocumentID() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.DocumentId,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.URIType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetDocumentID(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.DocumentId, value);
-}
+  public virtual void SetDocumentID(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.DocumentId, value);
+  }
 
-public virtual string GetFilePath() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.FilePath, typeof(global::DripSharp.PdfCarton.Xmp.Type.URIType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetFilePath() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.FilePath,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.URIType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetFilePath(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.FilePath, value);
-}
+  public virtual void SetFilePath(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.FilePath, value);
+  }
 
-public virtual string GetInstanceID() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.InstanceId, typeof(global::DripSharp.PdfCarton.Xmp.Type.URIType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetInstanceID() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.InstanceId,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.URIType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetInstanceID(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.InstanceId, value);
-}
+  public virtual void SetInstanceID(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.InstanceId, value);
+  }
 
-public virtual global::System.DateTimeOffset? GetLastModifyDate() {
-global::DripSharp.PdfCarton.Xmp.Type.DateType absProp = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.LastModifyDate, typeof(global::DripSharp.PdfCarton.Xmp.Type.DateType))!);
-if ((absProp != default!)) {
-return absProp.GetValue();
-} else {
-return default!;
-}
-}
+  public virtual global::System.DateTimeOffset? GetLastModifyDate() {
+    global::DripSharp.PdfCarton.Xmp.Type.DateType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.LastModifyDate,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.DateType))!);
+    if ((absProp != default!)) {
+      return absProp.GetValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetLastModifyDate(global::System.DateTimeOffset? value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.LastModifyDate, value);
-}
+  public virtual void SetLastModifyDate(global::System.DateTimeOffset? value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.LastModifyDate,
+      value);
+  }
 
-public virtual string GetManageUI() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ManageUi, typeof(global::DripSharp.PdfCarton.Xmp.Type.URIType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetManageUI() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ManageUi,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.URIType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetManageUI(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ManageUi, value);
-}
+  public virtual void SetManageUI(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ManageUi, value);
+  }
 
-public virtual string GetManageTo() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ManageTo, typeof(global::DripSharp.PdfCarton.Xmp.Type.URIType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetManageTo() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ManageTo,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.URIType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetManageTo(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ManageTo, value);
-}
+  public virtual void SetManageTo(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ManageTo, value);
+  }
 
-public virtual string GetManager() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.Manager, typeof(global::DripSharp.PdfCarton.Xmp.Type.AgentNameType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetManager() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.Manager,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.AgentNameType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetManager(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.Manager, value);
-}
+  public virtual void SetManager(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.Manager, value);
+  }
 
-public virtual string GetManagerVariant() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ManagerVariant, typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetManagerVariant() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ManagerVariant,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetManagerVariant(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ManagerVariant, value);
-}
+  public virtual void SetManagerVariant(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ManagerVariant,
+      value);
+  }
 
-public virtual string GetPartMapping() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.PartMapping, typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetPartMapping() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.PartMapping,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetPartMapping(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.PartMapping, value);
-}
+  public virtual void SetPartMapping(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.PartMapping, value);
+  }
 
-public virtual string GetRenditionParams() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.RenditionParams, typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetRenditionParams() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.RenditionParams,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetRenditionParams(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.RenditionParams, value);
-}
+  public virtual void SetRenditionParams(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.RenditionParams,
+      value);
+  }
 
-public virtual string GetVersionID() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.VersionId, typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetVersionID() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.VersionId,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetVersionID(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.VersionId, value);
-}
+  public virtual void SetVersionID(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.VersionId, value);
+  }
 
-public virtual string GetMaskMarkers() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.MaskMarkers, typeof(global::DripSharp.PdfCarton.Xmp.Type.ChoiceType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetMaskMarkers() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.MaskMarkers,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.ChoiceType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetMaskMarkers(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.MaskMarkers, value);
-}
+  public virtual void SetMaskMarkers(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.MaskMarkers, value);
+  }
 
-public virtual string GetRenditionClass() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.RenditionClass, typeof(global::DripSharp.PdfCarton.Xmp.Type.RenditionClassType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetRenditionClass() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.RenditionClass,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.RenditionClassType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetRenditionClass(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.RenditionClass, value);
-}
+  public virtual void SetRenditionClass(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.RenditionClass,
+      value);
+  }
 
-public virtual string GetFromPart() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.FromPart, typeof(global::DripSharp.PdfCarton.Xmp.Type.PartType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetFromPart() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.FromPart,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.PartType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetFromPart(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.FromPart, value);
-}
+  public virtual void SetFromPart(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.FromPart, value);
+  }
 
-public virtual string GetToPart() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType absProp = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ToPart, typeof(global::DripSharp.PdfCarton.Xmp.Type.PartType))!);
-if ((absProp != default!)) {
-return absProp.GetStringValue();
-} else {
-return default!;
-}
-}
+  public virtual string GetToPart() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ToPart,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.PartType))!);
+    if ((absProp != default!)) {
+      return absProp.GetStringValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual void SetToPart(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ToPart, value);
-}
+  public virtual void SetToPart(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.ToPart, value);
+  }
 
-public virtual void AddAlternatePath(string value) {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.AlternatePaths, typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))!);
-if ((seq == default!)) {
-seq = this.GetMetadata().GetTypeMapping().CreateArrayProperty((string)default!, this.GetPreferedPrefix(), global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.AlternatePaths, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Seq);
-this.AddProperty(seq);
-}
-global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = this.GetMetadata().GetTypeMapping();
-global::DripSharp.PdfCarton.Xmp.Type.TextType tt = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(tm.InstanciateSimpleProperty((string)default!, "rdf", "li", value, global::DripSharp.PdfCarton.Xmp.Type.Types.Text)!);
-seq.AddProperty(tt);
-}
+  public virtual void AddAlternatePath(string value) {
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq
+      = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.AlternatePaths,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))!);
+    if ((seq == default!)) {
+      seq = this.GetMetadata().GetTypeMapping().CreateArrayProperty((string)default!,
+        this.GetPreferedPrefix(),
+        global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.AlternatePaths,
+        global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Seq);
+      this.AddProperty(seq);
+    }
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = this.GetMetadata().GetTypeMapping();
+    global::DripSharp.PdfCarton.Xmp.Type.TextType tt
+      = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(tm.InstanciateSimpleProperty((string)default!,
+      "rdf", "li", value, global::DripSharp.PdfCarton.Xmp.Type.Types.Text)!);
+    seq.AddProperty(tt);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetAlternatePathsProperty() {
-return (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.AlternatePaths, typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))!);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetAlternatePathsProperty() {
+    return (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.AlternatePaths,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))!);
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetAlternatePaths() {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.AlternatePaths, typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))!);
-if ((seq != default!)) {
-return seq.GetElementsAsString();
-} else {
-return default!;
-}
-}
+  public virtual global::System.Collections.Generic.IList<string> GetAlternatePaths() {
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq
+      = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceRefType.AlternatePaths,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))!);
+    if ((seq != default!)) {
+      return seq.GetElementsAsString();
+    } else {
+      return default!;
+    }
+  }
 }

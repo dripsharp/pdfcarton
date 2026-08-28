@@ -8,14 +8,17 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public abstract class MarkupAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationTextMarkup PdMarkup = default!;
+public abstract class MarkupAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationTextMarkup PdMarkup
+    = default!;
 
-protected internal MarkupAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+  protected internal MarkupAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
 
-}
+  }
 
-protected internal override bool CheckSpecificMandatoryFields() {
-return this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Quadpoints);
-}
+  protected internal override bool CheckSpecificMandatoryFields() {
+    return this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Quadpoints);
+  }
 }

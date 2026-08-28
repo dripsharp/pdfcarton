@@ -9,53 +9,56 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFAnnotationText : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation {
-public const string Subtype = "Text";
+  public const string Subtype = "Text";
 
-public FDFAnnotationText() : base() {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationText.Subtype);
-}
+  public FDFAnnotationText() : base() {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationText.Subtype);
+  }
 
-public FDFAnnotationText(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public FDFAnnotationText(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public FDFAnnotationText(global::System.Xml.XmlElement element) : base(element) {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationText.Subtype);
-string icon = element.GetAttribute("icon");
-if (((icon != default!) && !((icon.Length == 0)))) {
-this.SetIcon(icon);
-}
-string state = element.GetAttribute("state");
-if (((state != default!) && !((state.Length == 0)))) {
-string statemodel = element.GetAttribute("statemodel");
-if (((statemodel != default!) && !((statemodel.Length == 0)))) {
-this.SetState(state);
-this.SetStateModel(statemodel);
-}
-}
-}
+  public FDFAnnotationText(global::System.Xml.XmlElement element) : base(element) {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationText.Subtype);
+    string icon = element.GetAttribute("icon");
+    if (((icon != default!) && !((icon.Length == 0)))) {
+      this.SetIcon(icon);
+    }
+    string state = element.GetAttribute("state");
+    if (((state != default!) && !((state.Length == 0)))) {
+      string statemodel = element.GetAttribute("statemodel");
+      if (((statemodel != default!) && !((statemodel.Length == 0)))) {
+        this.SetState(state);
+        this.SetStateModel(statemodel);
+      }
+    }
+  }
 
-public void SetIcon(string icon) {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Name, icon);
-}
+  public void SetIcon(string icon) {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Name, icon);
+  }
 
-public virtual string GetIcon() {
-return base.Annot.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Name, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText.NameNote);
-}
+  public virtual string GetIcon() {
+    return base.Annot.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Name,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText.NameNote);
+  }
 
-public virtual string GetState() {
-return base.Annot.GetString(global::DripSharp.PdfCarton.Cos.COSName.State);
-}
+  public virtual string GetState() {
+    return base.Annot.GetString(global::DripSharp.PdfCarton.Cos.COSName.State);
+  }
 
-public void SetState(string state) {
-base.Annot.SetString(global::DripSharp.PdfCarton.Cos.COSName.State, state);
-}
+  public void SetState(string state) {
+    base.Annot.SetString(global::DripSharp.PdfCarton.Cos.COSName.State, state);
+  }
 
-public virtual string GetStateModel() {
-return base.Annot.GetString(global::DripSharp.PdfCarton.Cos.COSName.StateModel);
-}
+  public virtual string GetStateModel() {
+    return base.Annot.GetString(global::DripSharp.PdfCarton.Cos.COSName.StateModel);
+  }
 
-public void SetStateModel(string stateModel) {
-base.Annot.SetString(global::DripSharp.PdfCarton.Cos.COSName.StateModel, stateModel);
-}
+  public void SetStateModel(string stateModel) {
+    base.Annot.SetString(global::DripSharp.PdfCarton.Cos.COSName.StateModel, stateModel);
+  }
 }

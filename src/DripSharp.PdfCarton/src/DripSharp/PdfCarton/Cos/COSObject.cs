@@ -8,101 +8,111 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Cos;
 
-public class COSObject : global::DripSharp.PdfCarton.Cos.COSBase, global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
-private global::DripSharp.PdfCarton.Cos.COSBase baseObject = null!;
+public class COSObject : global::DripSharp.PdfCarton.Cos.COSBase,
+global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
+  private global::DripSharp.PdfCarton.Cos.COSBase baseObject = null!;
 
-private global::DripSharp.PdfCarton.Cos.ICOSParser parser = null!;
+  private global::DripSharp.PdfCarton.Cos.ICOSParser parser = null!;
 
-private bool __field_isDereferenced = false;
+  private bool __field_isDereferenced = false;
 
-private readonly global::DripSharp.PdfCarton.Cos.COSUpdateState updateState = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSUpdateState updateState = null!;
 
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public COSObject(global::DripSharp.PdfCarton.Cos.COSBase @object) {
-this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
-this.baseObject = @object;
-this.__field_isDereferenced = true;
-}
+  public COSObject(global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
+    this.baseObject = @object;
+    this.__field_isDereferenced = true;
+  }
 
-public COSObject(global::DripSharp.PdfCarton.Cos.COSBase @object, global::DripSharp.PdfCarton.Cos.COSObjectKey objectKey) : this(objectKey, (global::DripSharp.PdfCarton.Cos.ICOSParser)default!) {
-this.baseObject = @object;
-this.__field_isDereferenced = true;
-}
+  public COSObject(global::DripSharp.PdfCarton.Cos.COSBase @object,
+    global::DripSharp.PdfCarton.Cos.COSObjectKey objectKey) : this(objectKey,
+    (global::DripSharp.PdfCarton.Cos.ICOSParser)default!) {
+    this.baseObject = @object;
+    this.__field_isDereferenced = true;
+  }
 
-public COSObject(global::DripSharp.PdfCarton.Cos.COSBase @object, global::DripSharp.PdfCarton.Cos.ICOSParser parser) {
-this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
-this.baseObject = @object;
-this.__field_isDereferenced = (@object != default!);
-this.parser = parser;
-}
+  public COSObject(global::DripSharp.PdfCarton.Cos.COSBase @object,
+    global::DripSharp.PdfCarton.Cos.ICOSParser parser) {
+    this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
+    this.baseObject = @object;
+    this.__field_isDereferenced = (@object != default!);
+    this.parser = parser;
+  }
 
-public COSObject(global::DripSharp.PdfCarton.Cos.COSObjectKey key, global::DripSharp.PdfCarton.Cos.ICOSParser parser) {
-this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
-this.parser = parser;
-this.SetKey(key);
-}
+  public COSObject(global::DripSharp.PdfCarton.Cos.COSObjectKey key,
+    global::DripSharp.PdfCarton.Cos.ICOSParser parser) {
+    this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
+    this.parser = parser;
+    this.SetKey(key);
+  }
 
-public virtual bool IsObjectNull() {
-return (this.baseObject == default!);
-}
+  public virtual bool IsObjectNull() {
+    return (this.baseObject == default!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetObject() {
-if ((!(this.__field_isDereferenced) && (this.parser != default!))) {
-try {
-this.__field_isDereferenced = true;
-this.baseObject = this.parser.DereferenceCOSObject(this);
-this.GetUpdateState().dereferenceChild(this.baseObject);
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Cos.COSObject.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Can't dereference ", this)));
-} finally {
-this.parser = default!;
-}
-}
-return this.baseObject;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetObject() {
+    if ((!(this.__field_isDereferenced) && (this.parser != default!))) {
+      try {
+        this.__field_isDereferenced = true;
+        this.baseObject = this.parser.DereferenceCOSObject(this);
+        this.GetUpdateState().dereferenceChild(this.baseObject);
+      } catch (global::System.IO.IOException e) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Cos.COSObject.LOG,
+          (global::System.Exception)e,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Can't dereference ",
+          this)));
+      } finally {
+        this.parser = default!;
+      }
+    }
+    return this.baseObject;
+  }
 
-public void SetToNull() {
-if ((this.baseObject != default!)) {
-this.GetUpdateState().update();
-}
-this.baseObject = global::DripSharp.PdfCarton.Cos.COSNull.Null;
-this.parser = default!;
-}
+  public void SetToNull() {
+    if ((this.baseObject != default!)) {
+      this.GetUpdateState().update();
+    }
+    this.baseObject = global::DripSharp.PdfCarton.Cos.COSNull.Null;
+    this.parser = default!;
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("COSObject{", this.GetKey()), "}");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("COSObject{",
+      this.GetKey()), "}");
+  }
 
-public virtual long GetObjectNumber() {
-return ((this.GetKey() != default!) ? this.GetKey().GetNumber() : 0);
-}
+  public virtual long GetObjectNumber() {
+    return ((this.GetKey() != default!) ? this.GetKey().GetNumber() : 0);
+  }
 
-public virtual int GetGenerationNumber() {
-return ((this.GetKey() != default!) ? this.GetKey().GetGeneration() : 0);
-}
+  public virtual int GetGenerationNumber() {
+    return ((this.GetKey() != default!) ? this.GetKey().GetGeneration() : 0);
+  }
 
-public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
-((global::DripSharp.PdfCarton.Cos.ICOSVisitor)(visitor)).VisitFromObject(this);
-}
+  public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
+    ((global::DripSharp.PdfCarton.Cos.ICOSVisitor)(visitor)).VisitFromObject(this);
+  }
 
-public virtual bool IsDereferenced() {
-return this.__field_isDereferenced;
-}
+  public virtual bool IsDereferenced() {
+    return this.__field_isDereferenced;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSUpdateState GetUpdateState() {
-return this.updateState;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSUpdateState GetUpdateState() {
+    return this.updateState;
+  }
 
-public virtual bool IsNeedToBeUpdated() {
-return this.GetUpdateState().IsUpdated();
-}
+  public virtual bool IsNeedToBeUpdated() {
+    return this.GetUpdateState().IsUpdated();
+  }
 
-public virtual void SetNeedToBeUpdated(bool flag) {
-this.GetUpdateState().update(flag);
-}
+  public virtual void SetNeedToBeUpdated(bool flag) {
+    this.GetUpdateState().update(flag);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSIncrement ToIncrement() {
-return this.GetUpdateState().toIncrement();
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSIncrement ToIncrement() {
+    return this.GetUpdateState().toIncrement();
+  }
 }

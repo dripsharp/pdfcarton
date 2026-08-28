@@ -9,367 +9,390 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public sealed class PDFontDescriptor : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private const int FLAG_FIXED_PITCH = 1;
+  private const int FLAG_FIXED_PITCH = 1;
 
-private const int FLAG_SERIF = 2;
+  private const int FLAG_SERIF = 2;
 
-private const int FLAG_SYMBOLIC = 4;
+  private const int FLAG_SYMBOLIC = 4;
 
-private const int FLAG_SCRIPT = 8;
+  private const int FLAG_SCRIPT = 8;
 
-private const int FLAG_NON_SYMBOLIC = 32;
+  private const int FLAG_NON_SYMBOLIC = 32;
 
-private const int FLAG_ITALIC = 64;
+  private const int FLAG_ITALIC = 64;
 
-private const int FLAG_ALL_CAP = 65536;
+  private const int FLAG_ALL_CAP = 65536;
 
-private const int FLAG_SMALL_CAP = 131072;
+  private const int FLAG_SMALL_CAP = 131072;
 
-private const int FLAG_FORCE_BOLD = 262144;
+  private const int FLAG_FORCE_BOLD = 262144;
 
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dic = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dic = null!;
 
-private float xHeight = float.NegativeInfinity;
+  private float xHeight = float.NegativeInfinity;
 
-private float capHeight = float.NegativeInfinity;
+  private float capHeight = float.NegativeInfinity;
 
-private int flags = -1;
+  private int flags = -1;
 
-internal PDFontDescriptor() {
-this.dic = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.FontDesc);
-}
+  internal PDFontDescriptor() {
+    this.dic = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.FontDesc);
+  }
 
-public PDFontDescriptor(global::DripSharp.PdfCarton.Cos.COSDictionary desc) {
-this.dic = desc;
-}
+  public PDFontDescriptor(global::DripSharp.PdfCarton.Cos.COSDictionary desc) {
+    this.dic = desc;
+  }
 
-public bool IsFixedPitch() {
-return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_FIXED_PITCH);
-}
+  public bool IsFixedPitch() {
+    return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_FIXED_PITCH);
+  }
 
-public void SetFixedPitch(bool flag) {
-this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_FIXED_PITCH, flag);
-}
+  public void SetFixedPitch(bool flag) {
+    this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_FIXED_PITCH,
+      flag);
+  }
 
-public bool IsSerif() {
-return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SERIF);
-}
+  public bool IsSerif() {
+    return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SERIF);
+  }
 
-public void SetSerif(bool flag) {
-this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SERIF, flag);
-}
+  public void SetSerif(bool flag) {
+    this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SERIF, flag);
+  }
 
-public bool IsSymbolic() {
-return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SYMBOLIC);
-}
+  public bool IsSymbolic() {
+    return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SYMBOLIC);
+  }
 
-public void SetSymbolic(bool flag) {
-this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SYMBOLIC, flag);
-}
+  public void SetSymbolic(bool flag) {
+    this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SYMBOLIC, flag);
+  }
 
-public bool IsScript() {
-return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SCRIPT);
-}
+  public bool IsScript() {
+    return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SCRIPT);
+  }
 
-public void SetScript(bool flag) {
-this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SCRIPT, flag);
-}
+  public void SetScript(bool flag) {
+    this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SCRIPT, flag);
+  }
 
-public bool IsNonSymbolic() {
-return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_NON_SYMBOLIC);
-}
+  public bool IsNonSymbolic() {
+    return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_NON_SYMBOLIC);
+  }
 
-public void SetNonSymbolic(bool flag) {
-this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_NON_SYMBOLIC, flag);
-}
-
-public bool IsItalic() {
-return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_ITALIC);
-}
-
-public void SetItalic(bool flag) {
-this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_ITALIC, flag);
-}
-
-public bool IsAllCap() {
-return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_ALL_CAP);
-}
-
-public void SetAllCap(bool flag) {
-this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_ALL_CAP, flag);
-}
-
-public bool IsSmallCap() {
-return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SMALL_CAP);
-}
-
-public void SetSmallCap(bool flag) {
-this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SMALL_CAP, flag);
-}
-
-public bool IsForceBold() {
-return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_FORCE_BOLD);
-}
-
-public void SetForceBold(bool flag) {
-this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_FORCE_BOLD, flag);
-}
-
-private bool isFlagBitOn(int bit) {
-return ((this.GetFlags() & bit) != 0);
-}
-
-private void setFlagBit(int bit, bool value) {
-int flags = this.GetFlags();
-if (value) {
-flags = (flags | bit);
-} else {
-flags = (flags & ~bit);
-}
-this.SetFlags(flags);
-}
-
-public global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dic;
-}
-
-public string GetFontName() {
-return this.dic.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.FontName);
-}
-
-public void SetFontName(string fontName) {
-global::DripSharp.PdfCarton.Cos.COSName name = default!;
-if ((fontName != default!)) {
-name = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(fontName);
-}
-this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontName, name!);
-}
-
-public string GetFontFamily() {
-return this.dic.GetString(global::DripSharp.PdfCarton.Cos.COSName.FontFamily);
-}
-
-public void SetFontFamily(string fontFamily) {
-global::DripSharp.PdfCarton.Cos.COSString name = default!;
-if ((fontFamily != default!)) {
-name = new global::DripSharp.PdfCarton.Cos.COSString(fontFamily);
-}
-this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontFamily, name!);
-}
-
-public float GetFontWeight() {
-return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.FontWeight, (float)(0));
-}
-
-public void SetFontWeight(float fontWeight) {
-this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.FontWeight, fontWeight);
-}
-
-public string GetFontStretch() {
-return this.dic.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.FontStretch);
-}
-
-public void SetFontStretch(string fontStretch) {
-global::DripSharp.PdfCarton.Cos.COSName name = default!;
-if ((fontStretch != default!)) {
-name = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(fontStretch);
-}
-this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontStretch, name!);
-}
-
-public int GetFlags() {
-if ((this.flags == -1)) {
-this.flags = this.dic.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, 0);
-}
-return this.flags;
-}
-
-public void SetFlags(int flags) {
-this.dic.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, flags);
-this.flags = flags;
-}
-
-public global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetFontBoundingBox() {
-global::DripSharp.PdfCarton.Cos.COSArray rect = this.dic.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.FontBbox);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle retval = default!;
-if ((rect != default!)) {
-retval = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(rect);
-}
-return retval!;
-}
-
-public void SetFontBoundingBox(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect) {
-global::DripSharp.PdfCarton.Cos.COSArray array = default!;
-if ((rect != default!)) {
-array = rect.GetCOSArray();
-}
-this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontBbox, array!);
-}
-
-public float GetItalicAngle() {
-return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.ItalicAngle, (float)(0));
-}
-
-public void SetItalicAngle(float angle) {
-this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.ItalicAngle, angle);
-}
-
-public float GetAscent() {
-return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Ascent, (float)(0));
-}
-
-public void SetAscent(float ascent) {
-this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Ascent, ascent);
-}
-
-public float GetDescent() {
-return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Descent, (float)(0));
-}
-
-public void SetDescent(float descent) {
-this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Descent, descent);
-}
-
-public float GetLeading() {
-return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Leading, (float)(0));
-}
-
-public void SetLeading(float leading) {
-this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Leading, leading);
-}
-
-public float GetCapHeight() {
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(this.capHeight, float.NegativeInfinity) == 0)) {
-this.capHeight = global::System.Math.Abs(this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.CapHeight, (float)(0)));
-}
-return this.capHeight;
-}
-
-public void SetCapHeight(float capHeight) {
-this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.CapHeight, capHeight);
-this.capHeight = capHeight;
-}
-
-public float GetXHeight() {
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(this.xHeight, float.NegativeInfinity) == 0)) {
-this.xHeight = global::System.Math.Abs(this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Xheight, (float)(0)));
-}
-return this.xHeight;
-}
-
-public void SetXHeight(float xHeight) {
-this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Xheight, xHeight);
-this.xHeight = xHeight;
-}
-
-public float GetStemV() {
-return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.StemV, (float)(0));
-}
-
-public void SetStemV(float stemV) {
-this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.StemV, stemV);
-}
-
-public float GetStemH() {
-return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.StemH, (float)(0));
-}
-
-public void SetStemH(float stemH) {
-this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.StemH, stemH);
-}
-
-public float GetAverageWidth() {
-return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.AvgWidth, (float)(0));
-}
-
-public void SetAverageWidth(float averageWidth) {
-this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.AvgWidth, averageWidth);
-}
-
-public float GetMaxWidth() {
-return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.MaxWidth, (float)(0));
-}
-
-public void SetMaxWidth(float maxWidth) {
-this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.MaxWidth, maxWidth);
-}
-
-public bool HasWidths() {
-return (this.dic.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Widths) || this.dic.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.MissingWidth));
-}
-
-public bool HasMissingWidth() {
-return this.dic.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.MissingWidth);
-}
-
-public float GetMissingWidth() {
-return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.MissingWidth, (float)(0));
-}
-
-public void SetMissingWidth(float missingWidth) {
-this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.MissingWidth, missingWidth);
-}
-
-public string GetCharSet() {
-return this.dic.GetString(global::DripSharp.PdfCarton.Cos.COSName.CharSet);
-}
-
-public void SetCharacterSet(string charSet) {
-global::DripSharp.PdfCarton.Cos.COSString name = default!;
-if ((charSet != default!)) {
-name = new global::DripSharp.PdfCarton.Cos.COSString(charSet);
-}
-this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.CharSet, name!);
-}
-
-public global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetFontFile() {
-global::DripSharp.PdfCarton.Cos.COSStream stream = this.dic.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.FontFile);
-return ((stream != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(stream) : (global::DripSharp.PdfCarton.Pdmodel.Common.PDStream)(default!));
-}
-
-public void SetFontFile(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream type1Stream) {
-this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontFile, type1Stream);
-}
-
-public global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetFontFile2() {
-global::DripSharp.PdfCarton.Cos.COSStream stream = this.dic.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.FontFile2);
-return ((stream != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(stream) : (global::DripSharp.PdfCarton.Pdmodel.Common.PDStream)(default!));
-}
-
-public void SetFontFile2(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ttfStream) {
-this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontFile2, ttfStream);
-}
-
-public global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetFontFile3() {
-global::DripSharp.PdfCarton.Cos.COSStream stream = this.dic.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.FontFile3);
-return ((stream != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(stream) : (global::DripSharp.PdfCarton.Pdmodel.Common.PDStream)(default!));
-}
-
-public void SetFontFile3(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream) {
-this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontFile3, stream);
-}
-
-public global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetCIDSet() {
-global::DripSharp.PdfCarton.Cos.COSStream cidSet = this.dic.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.CidSet);
-return ((cidSet != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(cidSet) : (global::DripSharp.PdfCarton.Pdmodel.Common.PDStream)(default!));
-}
-
-public void SetCIDSet(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream) {
-this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.CidSet, stream);
-}
-
-public global::DripSharp.PdfCarton.Pdmodel.Font.PDPanose GetPanose() {
-global::DripSharp.PdfCarton.Cos.COSDictionary style = this.dic.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Style);
-if ((style != default!)) {
-global::DripSharp.PdfCarton.Cos.COSString panose = (global::DripSharp.PdfCarton.Cos.COSString)(style.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Panose)!);
-sbyte[] bytes = panose.GetBytes();
-if ((bytes.Length >= global::DripSharp.PdfCarton.Pdmodel.Font.PDPanose.Length)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Font.PDPanose(bytes);
-}
-}
-return default!;
-}
-
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  public void SetNonSymbolic(bool flag) {
+    this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_NON_SYMBOLIC,
+      flag);
+  }
+
+  public bool IsItalic() {
+    return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_ITALIC);
+  }
+
+  public void SetItalic(bool flag) {
+    this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_ITALIC, flag);
+  }
+
+  public bool IsAllCap() {
+    return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_ALL_CAP);
+  }
+
+  public void SetAllCap(bool flag) {
+    this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_ALL_CAP, flag);
+  }
+
+  public bool IsSmallCap() {
+    return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SMALL_CAP);
+  }
+
+  public void SetSmallCap(bool flag) {
+    this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_SMALL_CAP, flag);
+  }
+
+  public bool IsForceBold() {
+    return this.isFlagBitOn(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_FORCE_BOLD);
+  }
+
+  public void SetForceBold(bool flag) {
+    this.setFlagBit(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor.FLAG_FORCE_BOLD,
+      flag);
+  }
+
+  private bool isFlagBitOn(int bit) {
+    return ((this.GetFlags() & bit) != 0);
+  }
+
+  private void setFlagBit(int bit, bool value) {
+    int flags = this.GetFlags();
+    if (value) {
+      flags = (flags | bit);
+    } else {
+      flags = (flags & ~bit);
+    }
+    this.SetFlags(flags);
+  }
+
+  public global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dic;
+  }
+
+  public string GetFontName() {
+    return this.dic.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.FontName);
+  }
+
+  public void SetFontName(string fontName) {
+    global::DripSharp.PdfCarton.Cos.COSName name = default!;
+    if ((fontName != default!)) {
+      name = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(fontName);
+    }
+    this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontName, name!);
+  }
+
+  public string GetFontFamily() {
+    return this.dic.GetString(global::DripSharp.PdfCarton.Cos.COSName.FontFamily);
+  }
+
+  public void SetFontFamily(string fontFamily) {
+    global::DripSharp.PdfCarton.Cos.COSString name = default!;
+    if ((fontFamily != default!)) {
+      name = new global::DripSharp.PdfCarton.Cos.COSString(fontFamily);
+    }
+    this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontFamily, name!);
+  }
+
+  public float GetFontWeight() {
+    return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.FontWeight, (float)(0));
+  }
+
+  public void SetFontWeight(float fontWeight) {
+    this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.FontWeight, fontWeight);
+  }
+
+  public string GetFontStretch() {
+    return this.dic.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.FontStretch);
+  }
+
+  public void SetFontStretch(string fontStretch) {
+    global::DripSharp.PdfCarton.Cos.COSName name = default!;
+    if ((fontStretch != default!)) {
+      name = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(fontStretch);
+    }
+    this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontStretch, name!);
+  }
+
+  public int GetFlags() {
+    if ((this.flags == -1)) {
+      this.flags = this.dic.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, 0);
+    }
+    return this.flags;
+  }
+
+  public void SetFlags(int flags) {
+    this.dic.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, flags);
+    this.flags = flags;
+  }
+
+  public global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetFontBoundingBox() {
+    global::DripSharp.PdfCarton.Cos.COSArray rect
+      = this.dic.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.FontBbox);
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle retval = default!;
+    if ((rect != default!)) {
+      retval = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(rect);
+    }
+    return retval!;
+  }
+
+  public void SetFontBoundingBox(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = default!;
+    if ((rect != default!)) {
+      array = rect.GetCOSArray();
+    }
+    this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontBbox, array!);
+  }
+
+  public float GetItalicAngle() {
+    return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.ItalicAngle, (float)(0));
+  }
+
+  public void SetItalicAngle(float angle) {
+    this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.ItalicAngle, angle);
+  }
+
+  public float GetAscent() {
+    return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Ascent, (float)(0));
+  }
+
+  public void SetAscent(float ascent) {
+    this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Ascent, ascent);
+  }
+
+  public float GetDescent() {
+    return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Descent, (float)(0));
+  }
+
+  public void SetDescent(float descent) {
+    this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Descent, descent);
+  }
+
+  public float GetLeading() {
+    return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Leading, (float)(0));
+  }
+
+  public void SetLeading(float leading) {
+    this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Leading, leading);
+  }
+
+  public float GetCapHeight() {
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(this.capHeight, float.NegativeInfinity)
+      == 0)) {
+      this.capHeight
+        = global::System.Math.Abs(this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.CapHeight,
+        (float)(0)));
+    }
+    return this.capHeight;
+  }
+
+  public void SetCapHeight(float capHeight) {
+    this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.CapHeight, capHeight);
+    this.capHeight = capHeight;
+  }
+
+  public float GetXHeight() {
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(this.xHeight, float.NegativeInfinity)
+      == 0)) {
+      this.xHeight
+        = global::System.Math.Abs(this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Xheight,
+        (float)(0)));
+    }
+    return this.xHeight;
+  }
+
+  public void SetXHeight(float xHeight) {
+    this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Xheight, xHeight);
+    this.xHeight = xHeight;
+  }
+
+  public float GetStemV() {
+    return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.StemV, (float)(0));
+  }
+
+  public void SetStemV(float stemV) {
+    this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.StemV, stemV);
+  }
+
+  public float GetStemH() {
+    return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.StemH, (float)(0));
+  }
+
+  public void SetStemH(float stemH) {
+    this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.StemH, stemH);
+  }
+
+  public float GetAverageWidth() {
+    return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.AvgWidth, (float)(0));
+  }
+
+  public void SetAverageWidth(float averageWidth) {
+    this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.AvgWidth, averageWidth);
+  }
+
+  public float GetMaxWidth() {
+    return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.MaxWidth, (float)(0));
+  }
+
+  public void SetMaxWidth(float maxWidth) {
+    this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.MaxWidth, maxWidth);
+  }
+
+  public bool HasWidths() {
+    return (this.dic.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Widths)
+      || this.dic.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.MissingWidth));
+  }
+
+  public bool HasMissingWidth() {
+    return this.dic.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.MissingWidth);
+  }
+
+  public float GetMissingWidth() {
+    return this.dic.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.MissingWidth, (float)(0));
+  }
+
+  public void SetMissingWidth(float missingWidth) {
+    this.dic.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.MissingWidth, missingWidth);
+  }
+
+  public string GetCharSet() {
+    return this.dic.GetString(global::DripSharp.PdfCarton.Cos.COSName.CharSet);
+  }
+
+  public void SetCharacterSet(string charSet) {
+    global::DripSharp.PdfCarton.Cos.COSString name = default!;
+    if ((charSet != default!)) {
+      name = new global::DripSharp.PdfCarton.Cos.COSString(charSet);
+    }
+    this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.CharSet, name!);
+  }
+
+  public global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetFontFile() {
+    global::DripSharp.PdfCarton.Cos.COSStream stream
+      = this.dic.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.FontFile);
+    return ((stream != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(stream)
+      : (global::DripSharp.PdfCarton.Pdmodel.Common.PDStream)(default!));
+  }
+
+  public void SetFontFile(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream type1Stream) {
+    this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontFile, type1Stream);
+  }
+
+  public global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetFontFile2() {
+    global::DripSharp.PdfCarton.Cos.COSStream stream
+      = this.dic.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.FontFile2);
+    return ((stream != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(stream)
+      : (global::DripSharp.PdfCarton.Pdmodel.Common.PDStream)(default!));
+  }
+
+  public void SetFontFile2(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ttfStream) {
+    this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontFile2, ttfStream);
+  }
+
+  public global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetFontFile3() {
+    global::DripSharp.PdfCarton.Cos.COSStream stream
+      = this.dic.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.FontFile3);
+    return ((stream != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(stream)
+      : (global::DripSharp.PdfCarton.Pdmodel.Common.PDStream)(default!));
+  }
+
+  public void SetFontFile3(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream) {
+    this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontFile3, stream);
+  }
+
+  public global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetCIDSet() {
+    global::DripSharp.PdfCarton.Cos.COSStream cidSet
+      = this.dic.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.CidSet);
+    return ((cidSet != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(cidSet)
+      : (global::DripSharp.PdfCarton.Pdmodel.Common.PDStream)(default!));
+  }
+
+  public void SetCIDSet(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream) {
+    this.dic.SetItem(global::DripSharp.PdfCarton.Cos.COSName.CidSet, stream);
+  }
+
+  public global::DripSharp.PdfCarton.Pdmodel.Font.PDPanose GetPanose() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary style
+      = this.dic.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Style);
+    if ((style != default!)) {
+      global::DripSharp.PdfCarton.Cos.COSString panose
+        = (global::DripSharp.PdfCarton.Cos.COSString)(style.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Panose)!);
+      sbyte[] bytes = panose.GetBytes();
+      if ((bytes.Length >= global::DripSharp.PdfCarton.Pdmodel.Font.PDPanose.Length)) {
+        return new global::DripSharp.PdfCarton.Pdmodel.Font.PDPanose(bytes);
+      }
+    }
+    return default!;
+  }
+
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

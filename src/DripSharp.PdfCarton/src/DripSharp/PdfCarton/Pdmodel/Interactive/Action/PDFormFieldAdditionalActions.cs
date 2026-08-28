@@ -8,56 +8,70 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
-public class PDFormFieldAdditionalActions : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary actions = null!;
+public class PDFormFieldAdditionalActions
+: global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary actions = null!;
 
-public PDFormFieldAdditionalActions() {
-this.actions = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDFormFieldAdditionalActions() {
+    this.actions = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDFormFieldAdditionalActions(global::DripSharp.PdfCarton.Cos.COSDictionary a) {
-this.actions = a;
-}
+  public PDFormFieldAdditionalActions(global::DripSharp.PdfCarton.Cos.COSDictionary a) {
+    this.actions = a;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.actions;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.actions;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction GetK() {
-global::DripSharp.PdfCarton.Cos.COSDictionary k = this.actions.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.K);
-return ((k != default!) ? global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction(k) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction GetK() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary k
+      = this.actions.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.K);
+    return ((k != default!)
+      ? global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction(k)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction)(default!));
+  }
 
-public virtual void SetK(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction k) {
-this.actions.SetItem(global::DripSharp.PdfCarton.Cos.COSName.K, k);
-}
+  public virtual void SetK(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction k) {
+    this.actions.SetItem(global::DripSharp.PdfCarton.Cos.COSName.K, k);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction GetF() {
-global::DripSharp.PdfCarton.Cos.COSDictionary f = this.actions.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.F);
-return ((f != default!) ? global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction(f) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction GetF() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary f
+      = this.actions.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.F);
+    return ((f != default!)
+      ? global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction(f)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction)(default!));
+  }
 
-public virtual void SetF(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction f) {
-this.actions.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, f);
-}
+  public virtual void SetF(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction f) {
+    this.actions.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, f);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction GetV() {
-global::DripSharp.PdfCarton.Cos.COSDictionary v = this.actions.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.V);
-return ((v != default!) ? global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction(v) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction GetV() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary v
+      = this.actions.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.V);
+    return ((v != default!)
+      ? global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction(v)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction)(default!));
+  }
 
-public virtual void SetV(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction v) {
-this.actions.SetItem(global::DripSharp.PdfCarton.Cos.COSName.V, v);
-}
+  public virtual void SetV(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction v) {
+    this.actions.SetItem(global::DripSharp.PdfCarton.Cos.COSName.V, v);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction GetC() {
-global::DripSharp.PdfCarton.Cos.COSDictionary c = this.actions.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.C);
-return ((c != default!) ? global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction(c) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction GetC() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary c
+      = this.actions.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.C);
+    return ((c != default!)
+      ? global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction(c)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction)(default!));
+  }
 
-public virtual void SetC(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction c) {
-this.actions.SetItem(global::DripSharp.PdfCarton.Cos.COSName.C, c);
-}
+  public virtual void SetC(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction c) {
+    this.actions.SetItem(global::DripSharp.PdfCarton.Cos.COSName.C, c);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

@@ -8,22 +8,26 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
-public class LookupTypeSingleSubstFormat1 : global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable {
-private readonly short deltaGlyphID = default;
+public class LookupTypeSingleSubstFormat1
+: global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable {
+  private readonly short deltaGlyphID = default;
 
-public LookupTypeSingleSubstFormat1(int substFormat, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable, short deltaGlyphID) : base(substFormat, coverageTable) {
-this.deltaGlyphID = deltaGlyphID;
-}
+  public LookupTypeSingleSubstFormat1(int substFormat,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable,
+    short deltaGlyphID) : base(substFormat, coverageTable) {
+    this.deltaGlyphID = deltaGlyphID;
+  }
 
-public override int DoSubstitution(int gid, int coverageIndex) {
-return ((coverageIndex < 0) ? gid : (gid + this.deltaGlyphID));
-}
+  public override int DoSubstitution(int gid, int coverageIndex) {
+    return ((coverageIndex < 0) ? gid : (gid + this.deltaGlyphID));
+  }
 
-public virtual short GetDeltaGlyphID() {
-return this.deltaGlyphID;
-}
+  public virtual short GetDeltaGlyphID() {
+    return this.deltaGlyphID;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("LookupTypeSingleSubstFormat1[substFormat=%d,deltaGlyphID=%d]", this.GetSubstFormat(), this.deltaGlyphID);
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("LookupTypeSingleSubstFormat1[substFormat=%d,deltaGlyphID=%d]",
+      this.GetSubstFormat(), this.deltaGlyphID);
+  }
 }

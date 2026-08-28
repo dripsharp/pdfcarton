@@ -9,15 +9,17 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public class PDShadingType3 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType2 {
-public PDShadingType3(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary) : base(shadingDictionary) {
+  public PDShadingType3(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary)
+  : base(shadingDictionary) {
 
-}
+  }
 
-public override int GetShadingType() {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType3;
-}
+  public override int GetShadingType() {
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType3;
+  }
 
-public override global::DripSharp.Runtime.JavaPaint ToPaint(global::DripSharp.PdfCarton.Util.Matrix matrix) {
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.RadialShadingPaint(this, matrix);
-}
+  public override global::DripSharp.Runtime.JavaPaint ToPaint(global::DripSharp.PdfCarton.Util.Matrix matrix) {
+    return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.RadialShadingPaint(this,
+      matrix);
+  }
 }

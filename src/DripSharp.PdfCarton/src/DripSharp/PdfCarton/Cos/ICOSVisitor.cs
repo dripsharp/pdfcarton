@@ -9,25 +9,25 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public interface ICOSVisitor {
-public void VisitFromArray(global::DripSharp.PdfCarton.Cos.COSArray obj);
+  public void VisitFromArray(global::DripSharp.PdfCarton.Cos.COSArray obj);
 
-public void VisitFromBoolean(global::DripSharp.PdfCarton.Cos.COSBoolean obj);
+  public void VisitFromBoolean(global::DripSharp.PdfCarton.Cos.COSBoolean obj);
 
-public void VisitFromDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary obj);
+  public void VisitFromDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary obj);
 
-public void VisitFromDocument(global::DripSharp.PdfCarton.Cos.COSDocument obj);
+  public void VisitFromDocument(global::DripSharp.PdfCarton.Cos.COSDocument obj);
 
-public void VisitFromFloat(global::DripSharp.PdfCarton.Cos.COSFloat obj);
+  public void VisitFromFloat(global::DripSharp.PdfCarton.Cos.COSFloat obj);
 
-public void VisitFromInt(global::DripSharp.PdfCarton.Cos.COSInteger obj);
+  public void VisitFromInt(global::DripSharp.PdfCarton.Cos.COSInteger obj);
 
-public void VisitFromName(global::DripSharp.PdfCarton.Cos.COSName obj);
+  public void VisitFromName(global::DripSharp.PdfCarton.Cos.COSName obj);
 
-public void VisitFromNull(global::DripSharp.PdfCarton.Cos.COSNull obj);
+  public void VisitFromNull(global::DripSharp.PdfCarton.Cos.COSNull obj);
 
-public void VisitFromStream(global::DripSharp.PdfCarton.Cos.COSStream obj);
+  public void VisitFromStream(global::DripSharp.PdfCarton.Cos.COSStream obj);
 
-public void VisitFromString(global::DripSharp.PdfCarton.Cos.COSString obj);
+  public void VisitFromString(global::DripSharp.PdfCarton.Cos.COSString obj);
 
-public void VisitFromObject(global::DripSharp.PdfCarton.Cos.COSObject obj);
+  public void VisitFromObject(global::DripSharp.PdfCarton.Cos.COSObject obj);
 }

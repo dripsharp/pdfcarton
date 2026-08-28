@@ -8,118 +8,135 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
-public class PDAnnotationFreeText : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
-public const string SubType = "FreeText";
+public class PDAnnotationFreeText
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
+  public const string SubType = "FreeText";
 
-public const string ItFreeText = "FreeText";
+  public const string ItFreeText = "FreeText";
 
-public const string ItFreeTextCallout = "FreeTextCallout";
+  public const string ItFreeTextCallout = "FreeTextCallout";
 
-public const string ItFreeTextTypeWriter = "FreeTextTypeWriter";
+  public const string ItFreeTextTypeWriter = "FreeTextTypeWriter";
 
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler
+    = null!;
 
-public PDAnnotationFreeText() {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationFreeText.SubType);
-}
+  public PDAnnotationFreeText() {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationFreeText.SubType);
+  }
 
-public PDAnnotationFreeText(global::DripSharp.PdfCarton.Cos.COSDictionary field) : base(field) {
+  public PDAnnotationFreeText(global::DripSharp.PdfCarton.Cos.COSDictionary field) : base(field) {
 
-}
+  }
 
-public virtual string GetDefaultAppearance() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Da);
-}
+  public virtual string GetDefaultAppearance() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Da);
+  }
 
-public virtual void SetDefaultAppearance(string daValue) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Da, daValue);
-}
+  public virtual void SetDefaultAppearance(string daValue) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Da, daValue);
+  }
 
-public virtual string GetDefaultStyleString() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Ds);
-}
+  public virtual string GetDefaultStyleString() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Ds);
+  }
 
-public virtual void SetDefaultStyleString(string defaultStyleString) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Ds, defaultStyleString);
-}
+  public virtual void SetDefaultStyleString(string defaultStyleString) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Ds, defaultStyleString);
+  }
 
-public virtual int GetQ() {
-return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.Q, 0);
-}
+  public virtual int GetQ() {
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.Q, 0);
+  }
 
-public virtual void SetQ(int q) {
-this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.Q, q);
-}
+  public virtual void SetQ(int q) {
+    this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.Q, q);
+  }
 
-public virtual void SetRectDifferences(float difference) {
-this.SetRectDifferences(difference, difference, difference, difference);
-}
+  public virtual void SetRectDifferences(float difference) {
+    this.SetRectDifferences(difference, difference, difference, difference);
+  }
 
-public virtual void SetRectDifferences(float differenceLeft, float differenceTop, float differenceRight, float differenceBottom) {
-global::DripSharp.PdfCarton.Cos.COSArray margins = new global::DripSharp.PdfCarton.Cos.COSArray();
-margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceLeft));
-margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceTop));
-margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceRight));
-margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceBottom));
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Rd, margins);
-}
+  public virtual void SetRectDifferences(float differenceLeft, float differenceTop,
+    float differenceRight, float differenceBottom) {
+    global::DripSharp.PdfCarton.Cos.COSArray margins
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceLeft));
+    margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceTop));
+    margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceRight));
+    margins.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(differenceBottom));
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Rd, margins);
+  }
 
-public virtual float[] GetRectDifferences() {
-global::DripSharp.PdfCarton.Cos.COSArray margin = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Rd);
-return ((margin != default!) ? margin.ToFloatArray() : new float[] {  });
-}
+  public virtual float[] GetRectDifferences() {
+    global::DripSharp.PdfCarton.Cos.COSArray margin
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Rd);
+    return ((margin != default!) ? margin.ToFloatArray() : new float[] {  });
+  }
 
-public void SetCallout(float[] callout) {
-global::DripSharp.PdfCarton.Cos.COSArray newCallout = new global::DripSharp.PdfCarton.Cos.COSArray();
-newCallout.SetFloatArray(callout);
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Cl, newCallout);
-}
+  public void SetCallout(float[] callout) {
+    global::DripSharp.PdfCarton.Cos.COSArray newCallout
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    newCallout.SetFloatArray(callout);
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Cl, newCallout);
+  }
 
-public virtual float[] GetCallout() {
-global::DripSharp.PdfCarton.Cos.COSArray callout = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Cl);
-return ((callout != default!) ? callout.ToFloatArray() : (float[])(default!));
-}
+  public virtual float[] GetCallout() {
+    global::DripSharp.PdfCarton.Cos.COSArray callout
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Cl);
+    return ((callout != default!) ? callout.ToFloatArray() : (float[])(default!));
+  }
 
-public void SetLineEndingStyle(string style) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Le, style);
-}
+  public void SetLineEndingStyle(string style) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Le, style);
+  }
 
-public virtual string GetLineEndingStyle() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Le, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine.LeNone);
-}
+  public virtual string GetLineEndingStyle() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Le,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine.LeNone);
+  }
 
-public virtual void SetBorderEffect(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary be) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Be, be);
-}
+  public virtual void SetBorderEffect(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary be) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Be, be);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary GetBorderEffect() {
-global::DripSharp.PdfCarton.Cos.COSDictionary effectDict = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Be);
-return ((effectDict != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary(effectDict) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary GetBorderEffect() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary effectDict
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Be);
+    return ((effectDict != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary(effectDict)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary)(default!));
+  }
 
-public virtual void SetRectDifference(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rd) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Rd, rd);
-}
+  public virtual void SetRectDifference(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rd) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Rd, rd);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetRectDifference() {
-global::DripSharp.PdfCarton.Cos.COSArray rectDifference = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Rd);
-return ((rectDifference != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(rectDifference) : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetRectDifference() {
+    global::DripSharp.PdfCarton.Cos.COSArray rectDifference
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Rd);
+    return ((rectDifference != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(rectDifference)
+      : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
+  }
 
-public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
-this.customAppearanceHandler = appearanceHandler;
-}
+  public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
+    this.customAppearanceHandler = appearanceHandler;
+  }
 
-public override void ConstructAppearances() {
-this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
-}
+  public override void ConstructAppearances() {
+    this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
+  }
 
-public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-if ((this.customAppearanceHandler == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDFreeTextAppearanceHandler appearanceHandler = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDFreeTextAppearanceHandler(this, document);
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
-} else {
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
-}
-}
+  public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    if ((this.customAppearanceHandler == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDFreeTextAppearanceHandler appearanceHandler
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDFreeTextAppearanceHandler(this,
+        document);
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
+    } else {
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
+    }
+  }
 }

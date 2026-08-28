@@ -9,36 +9,38 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class VerticalOriginTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-public const string Tag = "VORG";
+  public const string Tag = "VORG";
 
-private float version = default;
+  private float version = default;
 
-private int defaultVertOriginY = default;
+  private int defaultVertOriginY = default;
 
-private global::System.Collections.Generic.IDictionary<int, int> origins = null!;
+  private global::System.Collections.Generic.IDictionary<int, int> origins = null!;
 
-internal VerticalOriginTable() : base() {
+  internal VerticalOriginTable() : base() {
 
-}
+  }
 
-internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-this.version = data.Read32Fixed();
-this.defaultVertOriginY = data.ReadSignedShort();
-int numVertOriginYMetrics = data.ReadUnsignedShort();
-this.origins = new global::System.Collections.Concurrent.ConcurrentDictionary<int, int>();
-for (int i = 0; (i < numVertOriginYMetrics); ++i) {
-int g = data.ReadUnsignedShort();
-int y = data.ReadSignedShort();
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.origins, g, y);
-}
-base.Initialized = true;
-}
+  internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    this.version = data.Read32Fixed();
+    this.defaultVertOriginY = data.ReadSignedShort();
+    int numVertOriginYMetrics = data.ReadUnsignedShort();
+    this.origins = new global::System.Collections.Concurrent.ConcurrentDictionary<int, int>();
+    for (int i = 0; (i < numVertOriginYMetrics); ++i) {
+      int g = data.ReadUnsignedShort();
+      int y = data.ReadSignedShort();
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.origins, g, y);
+    }
+    base.Initialized = true;
+  }
 
-public virtual float GetVersion() {
-return this.version;
-}
+  public virtual float GetVersion() {
+    return this.version;
+  }
 
-public virtual int GetOriginY(int gid) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetOrDefault(this.origins, gid, this.defaultVertOriginY));
-}
+  public virtual int GetOriginY(int gid) {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetOrDefault(this.origins,
+      gid, this.defaultVertOriginY));
+  }
 }

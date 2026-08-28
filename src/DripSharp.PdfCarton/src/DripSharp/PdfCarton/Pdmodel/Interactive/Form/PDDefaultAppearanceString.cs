@@ -9,153 +9,175 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 internal class PDDefaultAppearanceString {
-private const float DEFAULT_FONT_SIZE = 12;
+  private const float DEFAULT_FONT_SIZE = 12;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.PDResources defaultResources = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.PDResources defaultResources = null!;
 
-private global::DripSharp.PdfCarton.Cos.COSName fontName = null!;
+  private global::DripSharp.PdfCarton.Cos.COSName fontName = null!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = null!;
 
-private float fontSize = global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDDefaultAppearanceString.DEFAULT_FONT_SIZE;
+  private float fontSize
+    = global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDDefaultAppearanceString.DEFAULT_FONT_SIZE;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor fontColor = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor fontColor = null!;
 
-internal PDDefaultAppearanceString(global::DripSharp.PdfCarton.Cos.COSString defaultAppearance, global::DripSharp.PdfCarton.Pdmodel.PDResources defaultResources) {
-if ((defaultAppearance == default!)) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("/DA is a required entry. ", "Please set a default appearance first."));
-}
-if ((defaultResources == default!)) {
-throw new global::System.ArgumentException("/DR is a required entry");
-}
-this.defaultResources = defaultResources;
-this.processAppearanceStringOperators(defaultAppearance.GetBytes());
-}
+  internal PDDefaultAppearanceString(global::DripSharp.PdfCarton.Cos.COSString defaultAppearance,
+    global::DripSharp.PdfCarton.Pdmodel.PDResources defaultResources) {
+    if ((defaultAppearance == default!)) {
+      throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("/DA is a required entry. ",
+        "Please set a default appearance first."));
+    }
+    if ((defaultResources == default!)) {
+      throw new global::System.ArgumentException("/DR is a required entry");
+    }
+    this.defaultResources = defaultResources;
+    this.processAppearanceStringOperators(defaultAppearance.GetBytes());
+  }
 
-private void processAppearanceStringOperators(sbyte[] content) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>();
-global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser parser = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(content);
-object token = parser.ParseNextToken();
-while ((token != default!)) {
-if ((token is global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)) {
-this.processOperator((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(token!), arguments);
-arguments = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>();
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(arguments, (global::DripSharp.PdfCarton.Cos.COSBase)(token!));
-}
-token = parser.ParseNextToken();
-}
-}
+  private void processAppearanceStringOperators(sbyte[] content) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>();
+    global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser parser
+      = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(content);
+    object token = parser.ParseNextToken();
+    while ((token != default!)) {
+      if ((token is global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)) {
+        this.processOperator((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(token!),
+          arguments);
+        arguments
+          = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>();
+      } else {
+        global::DripSharp.Runtime.JavaCompat.Add(arguments,
+          (global::DripSharp.PdfCarton.Cos.COSBase)(token!));
+      }
+      token = parser.ParseNextToken();
+    }
+  }
 
-private void processOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-switch (@operator.GetName()) {
-case var __case_127_18_0 when global::System.Object.Equals(__case_127_18_0, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFontAndSize):
-this.processSetFont(operands);
-break;
-case var __case_130_18_0 when global::System.Object.Equals(__case_130_18_0, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray):
-case var __case_131_18_0 when global::System.Object.Equals(__case_131_18_0, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingRgb):
-case var __case_132_18_0 when global::System.Object.Equals(__case_132_18_0, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingCmyk):
-this.processSetFontColor(operands);
-break;
-default:
-break;
-}
-}
+  private void processOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    switch (@operator.GetName()) {
+      case var __case_127_18_0 when global::System.Object.Equals(__case_127_18_0,
+          global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFontAndSize):
+        this.processSetFont(operands);
+        break;
+      case var __case_130_18_0 when global::System.Object.Equals(__case_130_18_0,
+          global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray):
+      case var __case_131_18_0 when global::System.Object.Equals(__case_131_18_0,
+          global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingRgb):
+      case var __case_132_18_0 when global::System.Object.Equals(__case_132_18_0,
+          global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingCmyk):
+        this.processSetFontColor(operands);
+        break;
+      default:
+        break;
+    }
+  }
 
-private void processSetFont(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(operands) < 2)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Missing operands for set font operator ", global::DripSharp.Runtime.JavaCompat.ArrayToString(global::DripSharp.Runtime.JavaCompat.ToObjectArray(operands))));
-}
-global::DripSharp.PdfCarton.Cos.COSBase base0 = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0);
-global::DripSharp.PdfCarton.Cos.COSBase base1 = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 1);
-if (!((base0 is global::DripSharp.PdfCarton.Cos.COSName))) {
-return;
-}
-if (!((base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSName fontName = (global::DripSharp.PdfCarton.Cos.COSName)(base0!);
-global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = this.defaultResources.GetFont(fontName);
-float fontSize = ((global::DripSharp.PdfCarton.Cos.COSNumber)(base1!)).FloatValue();
-if ((font == default!)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Could not find font: /", fontName.GetName()));
-}
-this.setFontName(fontName);
-this.setFont(font);
-this.setFontSize(fontSize);
-}
+  private void processSetFont(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(operands) < 2)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Missing operands for set font operator ",
+        global::DripSharp.Runtime.JavaCompat.ArrayToString(global::DripSharp.Runtime.JavaCompat.ToObjectArray(operands))));
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base0
+      = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0);
+    global::DripSharp.PdfCarton.Cos.COSBase base1
+      = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 1);
+    if (!((base0 is global::DripSharp.PdfCarton.Cos.COSName))) {
+      return;
+    }
+    if (!((base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSName fontName
+      = (global::DripSharp.PdfCarton.Cos.COSName)(base0!);
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = this.defaultResources.GetFont(fontName);
+    float fontSize = ((global::DripSharp.PdfCarton.Cos.COSNumber)(base1!)).FloatValue();
+    if ((font == default!)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Could not find font: /",
+        fontName.GetName()));
+    }
+    this.setFontName(fontName);
+    this.setFont(font);
+    this.setFontSize(fontSize);
+  }
 
-private void processSetFontColor(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace;
-switch (global::DripSharp.Runtime.JavaCompat.CollectionCount(operands)) {
-case var __case_192_18_0 when __case_192_18_0 == 1:
-colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance;
-break;
-case var __case_195_18_0 when __case_195_18_0 == 3:
-colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance;
-break;
-case var __case_198_18_0 when __case_198_18_0 == 4:
-colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceCMYK.Instance;
-break;
-default:
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Missing operands for set non stroking color operator ", global::DripSharp.Runtime.JavaCompat.ArrayToString(global::DripSharp.Runtime.JavaCompat.ToObjectArray(operands))));
-}
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-array.AddAll(operands);
-this.setFontColor(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(array, colorSpace));
-}
+  private void processSetFontColor(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace;
+    switch (global::DripSharp.Runtime.JavaCompat.CollectionCount(operands)) {
+      case var __case_192_18_0 when __case_192_18_0 == 1:
+        colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance;
+        break;
+      case var __case_195_18_0 when __case_195_18_0 == 3:
+        colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance;
+        break;
+      case var __case_198_18_0 when __case_198_18_0 == 4:
+        colorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceCMYK.Instance;
+        break;
+      default:
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Missing operands for set non stroking color operator ",
+          global::DripSharp.Runtime.JavaCompat.ArrayToString(global::DripSharp.Runtime.JavaCompat.ToObjectArray(operands))));
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    array.AddAll(operands);
+    this.setFontColor(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(array,
+      colorSpace));
+  }
 
-internal virtual global::DripSharp.PdfCarton.Cos.COSName getFontName() {
-return this.fontName;
-}
+  internal virtual global::DripSharp.PdfCarton.Cos.COSName getFontName() {
+    return this.fontName;
+  }
 
-internal virtual void setFontName(global::DripSharp.PdfCarton.Cos.COSName fontName) {
-this.fontName = fontName;
-}
+  internal virtual void setFontName(global::DripSharp.PdfCarton.Cos.COSName fontName) {
+    this.fontName = fontName;
+  }
 
-internal virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDFont getFont() {
-return this.font;
-}
+  internal virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDFont getFont() {
+    return this.font;
+  }
 
-internal virtual void setFont(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) {
-this.font = font;
-}
+  internal virtual void setFont(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) {
+    this.font = font;
+  }
 
-public virtual float GetFontSize() {
-return this.fontSize;
-}
+  public virtual float GetFontSize() {
+    return this.fontSize;
+  }
 
-internal virtual void setFontSize(float fontSize) {
-this.fontSize = fontSize;
-}
+  internal virtual void setFontSize(float fontSize) {
+    this.fontSize = fontSize;
+  }
 
-internal virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor getFontColor() {
-return this.fontColor;
-}
+  internal virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor getFontColor() {
+    return this.fontColor;
+  }
 
-internal virtual void setFontColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor fontColor) {
-this.fontColor = fontColor;
-}
+  internal virtual void setFontColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor fontColor) {
+    this.fontColor = fontColor;
+  }
 
-internal virtual void writeTo(global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contents, float zeroFontSize) {
-float fontSize = this.GetFontSize();
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(fontSize, (float)(0)) == 0)) {
-fontSize = zeroFontSize;
-}
-contents.SetFont(this.getFont(), fontSize);
-if ((this.getFontColor() != default!)) {
-contents.SetNonStrokingColor(this.getFontColor());
-}
-}
+  internal virtual void writeTo(global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contents,
+    float zeroFontSize) {
+    float fontSize = this.GetFontSize();
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(fontSize, (float)(0)) == 0)) {
+      fontSize = zeroFontSize;
+    }
+    contents.SetFont(this.getFont(), fontSize);
+    if ((this.getFontColor() != default!)) {
+      contents.SetNonStrokingColor(this.getFontColor());
+    }
+  }
 
-internal virtual void copyNeededResourcesTo(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream) {
-global::DripSharp.PdfCarton.Pdmodel.PDResources streamResources = appearanceStream.GetResources();
-if ((streamResources == default!)) {
-streamResources = new global::DripSharp.PdfCarton.Pdmodel.PDResources();
-appearanceStream.SetResources(streamResources);
-}
-if ((streamResources.GetFont(this.fontName) == default!)) {
-streamResources.Put(this.fontName, this.getFont());
-}
-}
+  internal virtual void copyNeededResourcesTo(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream) {
+    global::DripSharp.PdfCarton.Pdmodel.PDResources streamResources
+      = appearanceStream.GetResources();
+    if ((streamResources == default!)) {
+      streamResources = new global::DripSharp.PdfCarton.Pdmodel.PDResources();
+      appearanceStream.SetResources(streamResources);
+    }
+    if ((streamResources.GetFont(this.fontName) == default!)) {
+      streamResources.Put(this.fontName, this.getFont());
+    }
+  }
 }

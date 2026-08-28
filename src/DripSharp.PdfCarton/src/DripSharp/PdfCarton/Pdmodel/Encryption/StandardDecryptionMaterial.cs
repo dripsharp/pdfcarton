@@ -8,14 +8,15 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
-public class StandardDecryptionMaterial : global::DripSharp.PdfCarton.Pdmodel.Encryption.DecryptionMaterial {
-private readonly string password = null!;
+public class StandardDecryptionMaterial
+: global::DripSharp.PdfCarton.Pdmodel.Encryption.DecryptionMaterial {
+  private readonly string password = null!;
 
-public StandardDecryptionMaterial(string pwd) {
-this.password = pwd;
-}
+  public StandardDecryptionMaterial(string pwd) {
+    this.password = pwd;
+  }
 
-public virtual string GetPassword() {
-return this.password;
-}
+  public virtual string GetPassword() {
+    return this.password;
+  }
 }

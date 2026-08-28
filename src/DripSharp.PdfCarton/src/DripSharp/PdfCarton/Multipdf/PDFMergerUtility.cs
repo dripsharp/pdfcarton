@@ -9,882 +9,1137 @@
 namespace DripSharp.PdfCarton.Multipdf;
 
 public class PDFMergerUtility {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly global::System.Collections.Generic.IList<object> sources = null!;
+  private readonly global::System.Collections.Generic.IList<object> sources = null!;
 
-private string destinationFileName = null!;
+  private string destinationFileName = null!;
 
-private global::System.IO.Stream destinationStream = null!;
+  private global::System.IO.Stream destinationStream = null!;
 
-private bool ignoreAcroFormErrors = false;
+  private bool ignoreAcroFormErrors = false;
 
-private global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation destinationDocumentInformation = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation destinationDocumentInformation
+    = default!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Common.PDMetadata destinationMetadata = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Common.PDMetadata destinationMetadata = default!;
 
-private global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode documentMergeMode = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode.PdfboxLegacyMode;
+  private global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode documentMergeMode
+    = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode.PdfboxLegacyMode;
 
-private global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode acroFormMergeMode = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode.PdfboxLegacyMode;
+  private global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode acroFormMergeMode
+    = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode.PdfboxLegacyMode;
 
-public sealed class DocumentMergeMode {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("OPTIMIZE_RESOURCES_MODE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode OptimizeResourcesMode = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode();
+  public sealed class DocumentMergeMode {
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("OPTIMIZE_RESOURCES_MODE")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+    public static readonly global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode OptimizeResourcesMode
+      = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("PDFBOX_LEGACY_MODE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode PdfboxLegacyMode = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode();
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("PDFBOX_LEGACY_MODE")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+    public static readonly global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode PdfboxLegacyMode
+      = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode();
 
-private DocumentMergeMode() {}
+    private DocumentMergeMode() {}
 
+    public static DocumentMergeMode[] values()
+      => global::DripSharp.Runtime.JavaCompat.EnumValues<DocumentMergeMode>();
+    public static DocumentMergeMode valueOf(string name)
+      => global::DripSharp.Runtime.JavaCompat.EnumValueOf<DocumentMergeMode>(name);
 
-public static DocumentMergeMode[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<DocumentMergeMode>();
-public static DocumentMergeMode valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<DocumentMergeMode>(name);
+    public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  }
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
-}
+  public sealed class AcroFormMergeMode {
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("JOIN_FORM_FIELDS_MODE")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+    public static readonly global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode JoinFormFieldsMode
+      = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode();
 
-public sealed class AcroFormMergeMode {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("JOIN_FORM_FIELDS_MODE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode JoinFormFieldsMode = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode();
-
-[global::DripSharp.Runtime.JavaEnumNameAttribute("PDFBOX_LEGACY_MODE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode PdfboxLegacyMode = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode();
-
-private AcroFormMergeMode() {}
-
-
-public static AcroFormMergeMode[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<AcroFormMergeMode>();
-public static AcroFormMergeMode valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<AcroFormMergeMode>(name);
-
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
-}
-
-public PDFMergerUtility() {
-this.sources = new global::System.Collections.Generic.List<object>();
-}
-
-public virtual global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode GetAcroFormMergeMode() {
-return this.acroFormMergeMode;
-}
-
-public virtual void SetAcroFormMergeMode(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode theAcroFormMergeMode) {
-this.acroFormMergeMode = theAcroFormMergeMode;
-}
-
-public virtual global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode GetDocumentMergeMode() {
-return this.documentMergeMode;
-}
-
-public virtual void SetDocumentMergeMode(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode theDocumentMergeMode) {
-this.documentMergeMode = theDocumentMergeMode;
-}
-
-public virtual string GetDestinationFileName() {
-return this.destinationFileName;
-}
-
-public virtual void SetDestinationFileName(string destination) {
-this.destinationFileName = destination;
-}
-
-public virtual global::System.IO.Stream GetDestinationStream() {
-return this.destinationStream;
-}
-
-public virtual void SetDestinationStream(global::System.IO.Stream destStream) {
-this.destinationStream = destStream;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation GetDestinationDocumentInformation() {
-return this.destinationDocumentInformation;
-}
-
-public virtual void SetDestinationDocumentInformation(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation info) {
-this.destinationDocumentInformation = info;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDMetadata GetDestinationMetadata() {
-return this.destinationMetadata;
-}
-
-public virtual void SetDestinationMetadata(global::DripSharp.PdfCarton.Pdmodel.Common.PDMetadata meta) {
-this.destinationMetadata = meta;
-}
-
-public virtual void AddSource(string source) {
-this.AddSource(new global::System.IO.FileInfo(source));
-}
-
-public virtual void AddSource(global::System.IO.FileInfo source) {
-global::DripSharp.Runtime.JavaCompat.Add(this.sources, source);
-}
-
-public virtual void AddSource(global::DripSharp.PdfCarton.IO.RandomAccessRead source) {
-global::DripSharp.Runtime.JavaCompat.Add(this.sources, source);
-}
-
-public virtual void AddSources(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.IO.RandomAccessRead> sourcesList) {
-global::DripSharp.Runtime.JavaCompat.AddAll(this.sources, sourcesList);
-}
-
-public virtual void MergeDocuments(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
-this.MergeDocuments(streamCacheCreateFunction, global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.DefaultCompression);
-}
-
-public virtual void MergeDocuments(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction, global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters compressParameters) {
-if ((this.documentMergeMode == global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode.PdfboxLegacyMode)) {
-this.legacyMergeDocuments(streamCacheCreateFunction, compressParameters);
-} else {
-if ((this.documentMergeMode == global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode.OptimizeResourcesMode)) {
-this.optimizedMergeDocuments(streamCacheCreateFunction, compressParameters);
-}
-}
-}
-
-private void optimizedMergeDocuments(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction, global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters compressParameters) {
-global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction strmCacheFunc = ((streamCacheCreateFunction != default!) ? streamCacheCreateFunction : global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-using (global::DripSharp.PdfCarton.Pdmodel.PDDocument destination = new global::DripSharp.PdfCarton.Pdmodel.PDDocument(strmCacheFunc)) {
-global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner = new global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility(destination);
-global::DripSharp.PdfCarton.Pdmodel.PDPageTree destinationPageTree = destination.GetPages();
-foreach (object sourceObject in this.sources) {
-global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDoc = default!;
-try {
-if ((sourceObject is global::System.IO.FileInfo)) {
-sourceDoc = global::DripSharp.PdfCarton.Loader.LoadPDF((global::System.IO.FileInfo)(sourceObject!));
-} else {
-sourceDoc = global::DripSharp.PdfCarton.Loader.LoadPDF((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sourceObject!));
-}
-foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page in sourceDoc!.GetPages()) {
-global::DripSharp.PdfCarton.Pdmodel.PDPage newPage = new global::DripSharp.PdfCarton.Pdmodel.PDPage(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(page.GetCOSObject()));
-newPage.SetCropBox(page.GetCropBox());
-newPage.SetMediaBox(page.GetMediaBox());
-newPage.SetRotation(page.GetRotation());
-global::DripSharp.PdfCarton.Pdmodel.PDResources resources = page.GetResources();
-if ((resources != default!)) {
-newPage.SetResources(new global::DripSharp.PdfCarton.Pdmodel.PDResources(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(resources.GetCOSObject())));
-} else {
-newPage.SetResources(new global::DripSharp.PdfCarton.Pdmodel.PDResources());
-}
-destinationPageTree.Add(newPage);
-}
-} finally {
-global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(sourceDoc!);
-}
-}
-if ((this.destinationStream == default!)) {
-destination.Save(this.destinationFileName, compressParameters);
-} else {
-destination.Save(this.destinationStream, compressParameters);
-}
-}
-}
-
-private void legacyMergeDocuments(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction, global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters compressParameters) {
-if (!(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.sources))) {
-global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction strmCacheFunc = ((streamCacheCreateFunction != default!) ? streamCacheCreateFunction : global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-using (global::DripSharp.PdfCarton.Pdmodel.PDDocument destination = new global::DripSharp.PdfCarton.Pdmodel.PDDocument(strmCacheFunc)) {
-foreach (object sourceObject in this.sources) {
-global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDoc;
-if ((sourceObject is global::System.IO.FileInfo)) {
-sourceDoc = global::DripSharp.PdfCarton.Loader.LoadPDF((global::System.IO.FileInfo)(sourceObject!));
-} else {
-sourceDoc = global::DripSharp.PdfCarton.Loader.LoadPDF((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sourceObject!));
-}
-try {
-this.AppendDocument(destination, sourceDoc);
-} finally {
-global::DripSharp.PdfCarton.IO.IOUtils.CloseAndLogException(sourceDoc, global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG, "PDDocument", (global::System.IO.IOException)default!);
-}
-}
-if ((this.destinationDocumentInformation != default!)) {
-destination.SetDocumentInformation(this.destinationDocumentInformation);
-}
-if ((this.destinationMetadata != default!)) {
-destination.GetDocumentCatalog().SetMetadata(this.destinationMetadata);
-}
-if ((this.destinationStream == default!)) {
-destination.Save(this.destinationFileName, compressParameters);
-} else {
-destination.Save(this.destinationStream, compressParameters);
-}
-}
-}
-}
-
-public virtual void AppendDocument(global::DripSharp.PdfCarton.Pdmodel.PDDocument destination, global::DripSharp.PdfCarton.Pdmodel.PDDocument source) {
-global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner = new global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility(destination);
-if (source.GetDocument().IsClosed()) {
-throw new global::System.IO.IOException("Error: source PDF is closed.");
-}
-if (destination.GetDocument().IsClosed()) {
-throw new global::System.IO.IOException("Error: destination PDF is closed.");
-}
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog = source.GetDocumentCatalog();
-if (this.isDynamicXfa(srcCatalog.GetAcroForm())) {
-throw new global::System.IO.IOException("Error: can't merge source document containing dynamic XFA form content.");
-}
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation destInfo = destination.GetDocumentInformation();
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation srcInfo = source.GetDocumentInformation();
-this.mergeInto(srcInfo.GetCOSObject(), destInfo.GetCOSObject(), cloner, global::DripSharp.Runtime.JavaCompat.EmptySet<global::DripSharp.PdfCarton.Cos.COSName>());
-float destVersion = destination.GetVersion();
-float srcVersion = source.GetVersion();
-if ((destVersion < srcVersion)) {
-destination.SetVersion(srcVersion);
-}
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog destCatalog = destination.GetDocumentCatalog();
-this.mergeAcroForm(cloner, destCatalog, srcCatalog);
-global::DripSharp.PdfCarton.Cos.COSArray destThreads = destCatalog.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Threads);
-global::DripSharp.PdfCarton.Cos.COSArray srcThreads = cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSArray>(destCatalog.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Threads));
-if ((destThreads == default!)) {
-destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Threads, srcThreads);
-} else {
-destThreads.AddAll(srcThreads);
-}
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDictionary destNames = destCatalog.GetNames();
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDictionary srcNames = srcCatalog.GetNames();
-if ((srcNames != default!)) {
-if ((destNames == default!)) {
-destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Names, cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcNames.GetCOSObject()));
-} else {
-cloner.cloneMerge(srcNames, destNames);
-}
-}
-if (((destNames != default!) && destNames.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.IdTree))) {
-destNames.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.IdTree);
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("Removed /IDTree from /Names dictionary, doesn't belong there"));
-}
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDestinationDictionary srcDests = srcCatalog.GetDests();
-if ((srcDests != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDestinationDictionary destDests = destCatalog.GetDests();
-if ((destDests == default!)) {
-destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Dests, cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcDests.GetCOSObject()));
-} else {
-cloner.cloneMerge(srcDests, destDests);
-}
-}
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDDocumentOutline srcOutline = srcCatalog.GetDocumentOutline();
-if ((srcOutline != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDDocumentOutline destOutline = destCatalog.GetDocumentOutline();
-if (((destOutline == default!) || (destOutline.GetFirstChild() == default!))) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDDocumentOutline cloned = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDDocumentOutline(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcOutline.GetCOSObject()));
-destCatalog.SetDocumentOutline(cloned);
-} else {
-global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSDictionary> visited = new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSDictionary>();
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem destLastOutlineItem = destOutline.GetFirstChild();
-while (true) {
-if (!(visited.Add(destLastOutlineItem.GetCOSObject()))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Outline ignored: ", destLastOutlineItem.GetCOSObject())));
-break;
-}
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem outlineItem = destLastOutlineItem.GetNextSibling();
-if ((outlineItem == default!)) {
-break;
-}
-destLastOutlineItem = outlineItem;
-}
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem item in srcOutline.Children()) {
-global::DripSharp.PdfCarton.Cos.COSDictionary clonedDict = cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(item.GetCOSObject());
-clonedDict.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Prev);
-clonedDict.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Next);
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem clonedItem = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem(clonedDict);
-destLastOutlineItem.InsertSiblingAfter(clonedItem);
-destLastOutlineItem = destLastOutlineItem.GetNextSibling();
-}
-}
-}
-global::DripSharp.PdfCarton.Pdmodel.PageMode destPageMode = destCatalog.GetPageMode();
-if ((destPageMode == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.PageMode srcPageMode = srcCatalog.GetPageMode();
-destCatalog.SetPageMode(srcPageMode);
-}
-global::DripSharp.PdfCarton.Cos.COSDictionary srcLabels = srcCatalog.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.PageLabels);
-if ((srcLabels != default!)) {
-int destPageCount = destination.GetNumberOfPages();
-global::DripSharp.PdfCarton.Cos.COSArray destNums;
-global::DripSharp.PdfCarton.Cos.COSDictionary destLabels = destCatalog.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.PageLabels);
-if ((destLabels == default!)) {
-destLabels = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-destNums = new global::DripSharp.PdfCarton.Cos.COSArray();
-destLabels.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Nums, destNums);
-destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.PageLabels, destLabels);
-} else {
-destNums = destLabels.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Nums);
-}
-global::DripSharp.PdfCarton.Cos.COSArray srcNums = srcLabels.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Nums);
-if ((srcNums != default!)) {
-int startSize = destNums.Size();
-for (int i__664_26 = 0; (i__664_26 < srcNums.Size()); i__664_26 += 2) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = srcNums.GetObject(i__664_26);
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("page labels ignored, index ", i__664_26), " should be a number, but is "), @base)));
-while ((destNums.Size() > startSize)) {
-destNums.Remove(startSize);
-}
-break;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber labelIndex = (global::DripSharp.PdfCarton.Cos.COSNumber)(@base!);
-long labelIndexValue = labelIndex.IntValue();
-destNums.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((labelIndexValue + destPageCount)));
-destNums.Add(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(srcNums.GetObject((i__664_26 + 1))));
-}
-}
-}
-global::DripSharp.PdfCarton.Cos.COSStream destMetadata = destCatalog.GetCOSObject().GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Metadata);
-global::DripSharp.PdfCarton.Cos.COSStream srcMetadata = srcCatalog.GetCOSObject().GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Metadata);
-if (((destMetadata == default!) && (srcMetadata != default!))) {
-try {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDStream newStream = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(destination, srcMetadata.CreateInputStream(), (global::DripSharp.PdfCarton.Cos.COSName)default!);
-this.mergeInto(srcMetadata, newStream.GetCOSObject(), cloner, new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSName>(global::DripSharp.Runtime.JavaCompat.AsList<global::DripSharp.PdfCarton.Cos.COSName>(global::DripSharp.PdfCarton.Cos.COSName.Filter, global::DripSharp.PdfCarton.Cos.COSName.Length)));
-destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Metadata, newStream);
-} catch (global::System.IO.IOException ex) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG, (global::System.Exception)ex, global::DripSharp.Runtime.JavaCompat.StringValueOf("Metadata skipped because it could not be read"));
-}
-}
-global::DripSharp.PdfCarton.Cos.COSDictionary destOCP = destCatalog.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Ocproperties);
-global::DripSharp.PdfCarton.Cos.COSDictionary srcOCP = srcCatalog.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Ocproperties);
-if (((destOCP == default!) && (srcOCP != default!))) {
-destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ocproperties, cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcOCP));
-} else {
-if (((destOCP != default!) && (srcOCP != default!))) {
-cloner.cloneMerge(srcOCP, destOCP);
-}
-}
-this.mergeOutputIntents(srcCatalog, destCatalog, cloner);
-bool mergeStructTree = false;
-int destParentTreeNextKey = -1;
-global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> srcNumberTreeAsMap = default!;
-global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> destNumberTreeAsMap = default!;
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot srcStructTree = srcCatalog.GetStructureTreeRoot();
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot destStructTree = destCatalog.GetStructureTreeRoot();
-if (((destStructTree == default!) && (srcStructTree != default!))) {
-destStructTree = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot();
-destCatalog.SetStructureTreeRoot(destStructTree);
-destStructTree.SetParentTree(new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDParentTreeValue)));
-foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page__731_25 in destCatalog.GetPages()) {
-page__731_25.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.StructParents);
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation ann__734_35 in page__731_25.GetAnnotations()) {
-ann__734_35.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.StructParent);
-}
-}
-}
-if ((destStructTree != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode destParentTree = destStructTree.GetParentTree();
-destParentTreeNextKey = destStructTree.GetParentTreeNextKey();
-if ((destParentTree != default!)) {
-destNumberTreeAsMap = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(destParentTree);
-if ((destParentTreeNextKey < 0)) {
-if (global::DripSharp.Runtime.JavaCompat.MapIsEmpty(destNumberTreeAsMap!)) {
-destParentTreeNextKey = 0;
-} else {
-destParentTreeNextKey = (global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(destNumberTreeAsMap!)) + 1);
-}
-}
-if (((destParentTreeNextKey >= 0) && (srcStructTree != default!))) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode srcParentTree = srcStructTree.GetParentTree();
-if ((srcParentTree != default!)) {
-srcNumberTreeAsMap = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(srcParentTree);
-if (!(global::DripSharp.Runtime.JavaCompat.MapIsEmpty(srcNumberTreeAsMap!))) {
-mergeStructTree = true;
-}
-}
-}
-}
-}
-global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary, global::DripSharp.PdfCarton.Cos.COSDictionary> objMapping = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary, global::DripSharp.PdfCarton.Cos.COSDictionary>();
-global::DripSharp.PdfCarton.Pdmodel.PDPageTree destinationPageTree = destination.GetPages();
-foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page__775_21 in srcCatalog.GetPages()) {
-global::DripSharp.PdfCarton.Pdmodel.PDPage newPage = new global::DripSharp.PdfCarton.Pdmodel.PDPage(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(page__775_21.GetCOSObject()));
-if (!mergeStructTree) {
-newPage.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.StructParents);
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation ann__782_35 in newPage.GetAnnotations()) {
-ann__782_35.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.StructParent);
-}
-}
-newPage.SetCropBox(page__775_21.GetCropBox());
-newPage.SetMediaBox(page__775_21.GetMediaBox());
-newPage.SetRotation(page__775_21.GetRotation());
-global::DripSharp.PdfCarton.Pdmodel.PDResources resources = page__775_21.GetResources();
-if ((resources != default!)) {
-newPage.SetResources(new global::DripSharp.PdfCarton.Pdmodel.PDResources(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(resources.GetCOSObject())));
-} else {
-newPage.SetResources(new global::DripSharp.PdfCarton.Pdmodel.PDResources());
-}
-if (mergeStructTree) {
-this.updateStructParentEntries(newPage, destParentTreeNextKey);
-global::DripSharp.Runtime.JavaCompat.MapPut(objMapping, page__775_21.GetCOSObject(), newPage.GetCOSObject());
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> oldAnnots = page__775_21.GetAnnotations();
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> newAnnots = newPage.GetAnnotations();
-for (int i__809_26 = 0; (i__809_26 < global::DripSharp.Runtime.JavaCompat.CollectionCount(oldAnnots)); i__809_26++) {
-global::DripSharp.Runtime.JavaCompat.MapPut(objMapping, global::DripSharp.Runtime.JavaCompat.ListGet(oldAnnots, i__809_26).GetCOSObject(), global::DripSharp.Runtime.JavaCompat.ListGet(newAnnots, i__809_26).GetCOSObject());
-}
-}
-destinationPageTree.Add(newPage);
-}
-this.mergeOpenAction(srcCatalog, destCatalog, cloner);
-if (mergeStructTree) {
-this.updatePageReferences(cloner, srcNumberTreeAsMap!, objMapping);
-int maxSrcKey = -1;
-foreach (global::DripSharp.Runtime.JavaMapEntry<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> entry in global::DripSharp.Runtime.JavaCompat.MapEntrySet(srcNumberTreeAsMap!)) {
-int srcKey = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(entry.Key);
-maxSrcKey = global::System.Math.Max(srcKey, maxSrcKey);
-global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable value = entry.Value;
-if ((value != default!)) {
-value = cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(value.GetCOSObject());
-global::DripSharp.Runtime.JavaCompat.MapPut(destNumberTreeAsMap!, (destParentTreeNextKey + srcKey), value);
-}
-}
-destParentTreeNextKey += (maxSrcKey + 1);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode newParentTreeNode = new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDParentTreeValue));
-newParentTreeNode.SetNumbers(global::DripSharp.Runtime.JavaCompat.CastDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(destNumberTreeAsMap!));
-destStructTree.SetParentTree(newParentTreeNode);
-destStructTree.SetParentTreeNextKey(destParentTreeNextKey);
-this.mergeKEntries(cloner, srcStructTree, destStructTree);
-this.mergeRoleMap(srcStructTree, destStructTree, cloner);
-this.mergeIDTree(cloner, srcStructTree, destStructTree);
-this.mergeMarkInfo(destCatalog, srcCatalog);
-this.mergeLanguage(destCatalog, srcCatalog);
-this.mergeViewerPreferences(destCatalog, srcCatalog, cloner);
-}
-}
-
-private void mergeOpenAction(global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog, global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog dstCatalog, global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDDestinationOrAction srcOpenAction = default!;
-global::DripSharp.PdfCarton.Pdmodel.Common.PDDestinationOrAction dstOpenAction = default!;
-try {
-dstOpenAction = dstCatalog.GetOpenAction();
-srcOpenAction = srcCatalog.GetOpenAction();
-} catch (global::System.IO.IOException ex) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG, (global::System.Exception)ex, global::DripSharp.Runtime.JavaCompat.StringValueOf("Invalid OpenAction ignored"));
-}
-if (((dstOpenAction! == default!) && (srcOpenAction! != default!))) {
-global::DripSharp.PdfCarton.Cos.COSBase clonedOpenActionBase = cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(srcOpenAction!.GetCOSObject());
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination openActionDestination = default!;
-if ((clonedOpenActionBase is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction action = global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction((global::DripSharp.PdfCarton.Cos.COSDictionary)(clonedOpenActionBase!));
-if ((action is global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)) {
-openActionDestination = ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(action!)).GetDestination();
-}
-dstCatalog.SetOpenAction(action);
-} else {
-if ((clonedOpenActionBase is global::DripSharp.PdfCarton.Cos.COSArray)) {
-openActionDestination = global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination.Create(clonedOpenActionBase);
-dstCatalog.SetOpenAction(openActionDestination!);
-}
-}
-if ((openActionDestination! is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)) {
-global::DripSharp.PdfCarton.Pdmodel.PDPage page = ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(openActionDestination!)).GetPage();
-if (((page != default!) && (dstCatalog.GetPages().IndexOf(page) == -1))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("OpenAction entry ignored because destination page doesn't exist"));
-dstCatalog.SetOpenAction((global::DripSharp.PdfCarton.Pdmodel.Common.PDDestinationOrAction)default!);
-}
-}
-}
-}
-
-private void mergeViewerPreferences(global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog destCatalog, global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog, global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Viewerpreferences.PDViewerPreferences srcViewerPreferences = srcCatalog.GetViewerPreferences();
-if ((srcViewerPreferences == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Viewerpreferences.PDViewerPreferences destViewerPreferences = destCatalog.GetViewerPreferences();
-if ((destViewerPreferences == default!)) {
-destViewerPreferences = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Viewerpreferences.PDViewerPreferences();
-destCatalog.SetViewerPreferences(destViewerPreferences);
-}
-this.mergeInto(srcViewerPreferences.GetCOSObject(), destViewerPreferences.GetCOSObject(), cloner, global::DripSharp.Runtime.JavaCompat.EmptySet<global::DripSharp.PdfCarton.Cos.COSName>());
-if ((srcViewerPreferences.HideToolbar() || destViewerPreferences.HideToolbar())) {
-destViewerPreferences.SetHideToolbar(true);
-}
-if ((srcViewerPreferences.HideMenubar() || destViewerPreferences.HideMenubar())) {
-destViewerPreferences.SetHideMenubar(true);
-}
-if ((srcViewerPreferences.HideWindowUI() || destViewerPreferences.HideWindowUI())) {
-destViewerPreferences.SetHideWindowUI(true);
-}
-if ((srcViewerPreferences.FitWindow() || destViewerPreferences.FitWindow())) {
-destViewerPreferences.SetFitWindow(true);
-}
-if ((srcViewerPreferences.CenterWindow() || destViewerPreferences.CenterWindow())) {
-destViewerPreferences.SetCenterWindow(true);
-}
-if ((srcViewerPreferences.DisplayDocTitle() || destViewerPreferences.DisplayDocTitle())) {
-destViewerPreferences.SetDisplayDocTitle(true);
-}
-}
-
-private void mergeLanguage(global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog destCatalog, global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog) {
-if ((destCatalog.GetLanguage() == default!)) {
-string srcLanguage = srcCatalog.GetLanguage();
-if ((srcLanguage != default!)) {
-destCatalog.SetLanguage(srcLanguage);
-}
-}
-}
-
-private void mergeMarkInfo(global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog destCatalog, global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog) {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkInfo destMark = destCatalog.GetMarkInfo();
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkInfo srcMark = srcCatalog.GetMarkInfo();
-if ((destMark == default!)) {
-destMark = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkInfo();
-}
-if ((srcMark == default!)) {
-srcMark = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkInfo();
-}
-destMark.SetMarked(true);
-destMark.SetSuspect((srcMark.IsSuspect() || destMark.IsSuspect()));
-destMark.SetSuspect((srcMark.UsesUserProperties() || destMark.UsesUserProperties()));
-destCatalog.SetMarkInfo(destMark);
-}
-
-private void mergeKEntries(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot srcStructTree, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot destStructTree) {
-global::DripSharp.PdfCarton.Cos.COSBase srcKEntry = srcStructTree.GetK();
-global::DripSharp.PdfCarton.Cos.COSArray srcKArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-global::DripSharp.PdfCarton.Cos.COSBase clonedSrcKEntry = cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(srcKEntry);
-if ((clonedSrcKEntry is global::DripSharp.PdfCarton.Cos.COSArray)) {
-srcKArray.AddAll((global::DripSharp.PdfCarton.Cos.COSArray)(clonedSrcKEntry!));
-} else {
-if ((clonedSrcKEntry is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-srcKArray.Add(clonedSrcKEntry);
-}
-}
-if ((srcKArray.Size() == 0)) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSArray dstKArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-global::DripSharp.PdfCarton.Cos.COSBase dstKEntry = destStructTree.GetK();
-if ((dstKEntry is global::DripSharp.PdfCarton.Cos.COSArray)) {
-dstKArray.AddAll((global::DripSharp.PdfCarton.Cos.COSArray)(dstKEntry!));
-} else {
-if ((dstKEntry is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-dstKArray.Add(dstKEntry);
-}
-}
-if (((dstKArray.Size() == 1) && (dstKArray.GetObject(0) is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
-global::DripSharp.PdfCarton.Cos.COSDictionary topKDict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(dstKArray.GetObject(0)!);
-if (global::DripSharp.PdfCarton.Cos.COSName.Document.Equals(topKDict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.S))) {
-global::DripSharp.PdfCarton.Cos.COSArray kLevelOneArray = topKDict.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.K);
-if ((kLevelOneArray != default!)) {
-bool onlyDocuments = this.hasOnlyDocumentsOrParts(kLevelOneArray);
-if (onlyDocuments) {
-kLevelOneArray.AddAll(srcKArray);
-this.updateParentEntry(kLevelOneArray, topKDict, global::DripSharp.PdfCarton.Cos.COSName.Part);
-return;
-}
-}
-}
-}
-if ((dstKArray.Size() == 0)) {
-this.updateParentEntry(srcKArray, destStructTree.GetCOSObject(), (global::DripSharp.PdfCarton.Cos.COSName)default!);
-destStructTree.SetK(srcKArray);
-return;
-}
-dstKArray.AddAll(srcKArray);
-global::DripSharp.PdfCarton.Cos.COSDictionary kLevelZeroDict = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-global::DripSharp.PdfCarton.Cos.COSName newStructureType = (this.hasOnlyDocumentsOrParts(dstKArray) ? global::DripSharp.PdfCarton.Cos.COSName.Part : (global::DripSharp.PdfCarton.Cos.COSName)(default!));
-this.updateParentEntry(dstKArray, kLevelZeroDict, newStructureType);
-kLevelZeroDict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.K, dstKArray);
-kLevelZeroDict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, destStructTree);
-kLevelZeroDict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.S, global::DripSharp.PdfCarton.Cos.COSName.Document);
-destStructTree.SetK(kLevelZeroDict);
-}
-
-private bool hasOnlyDocumentsOrParts(global::DripSharp.PdfCarton.Cos.COSArray kLevelOneArray) {
-for (int i = 0; (i < kLevelOneArray.Size()); ++i) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = kLevelOneArray.GetObject(i);
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
-return false;
-}
-global::DripSharp.PdfCarton.Cos.COSDictionary dict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!);
-global::DripSharp.PdfCarton.Cos.COSName sEntry = dict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.S);
-if ((!(global::DripSharp.PdfCarton.Cos.COSName.Document.Equals(sEntry)) && !(global::DripSharp.PdfCarton.Cos.COSName.Part.Equals(sEntry)))) {
-return false;
-}
-}
-return true;
-}
-
-private void updateParentEntry(global::DripSharp.PdfCarton.Cos.COSArray kArray, global::DripSharp.PdfCarton.Cos.COSDictionary newParent, global::DripSharp.PdfCarton.Cos.COSName newStructureType) {
-for (int i = 0; (i < kArray.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase subEntry = kArray.GetObject(i);
-if ((subEntry is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dictEntry = (global::DripSharp.PdfCarton.Cos.COSDictionary)(subEntry!);
-dictEntry.SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, newParent);
-if ((newStructureType != default!)) {
-dictEntry.SetItem(global::DripSharp.PdfCarton.Cos.COSName.S, newStructureType);
-}
-}
-}
-}
-
-private void mergeIDTree(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot srcStructTree, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot destStructTree) {
-if ((srcStructTree == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> srcIDTree = srcStructTree.GetIDTree();
-if ((srcIDTree == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> destIDTree = destStructTree.GetIDTree();
-if ((destIDTree == default!)) {
-destIDTree = new global::DripSharp.PdfCarton.Pdmodel.PDStructureElementNameTreeNode();
-}
-global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> srcNames = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getIDTreeAsMap(srcIDTree);
-global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> destNames = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getIDTreeAsMap(destIDTree);
-foreach (global::DripSharp.Runtime.JavaMapEntry<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> entry in global::DripSharp.Runtime.JavaCompat.MapEntrySet(srcNames)) {
-if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(destNames, entry.Key)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("key '", entry.Key), "' already exists in destination IDTree")));
-} else {
-if ((entry.Value != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement structureElement = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(entry.Value.GetCOSObject()));
-global::DripSharp.Runtime.JavaCompat.MapPut(destNames, entry.Key, structureElement);
-}
-}
-}
-destIDTree = new global::DripSharp.PdfCarton.Pdmodel.PDStructureElementNameTreeNode();
-destIDTree.SetNames(destNames);
-destStructTree.SetIDTree(destIDTree);
-}
-
-internal static global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> getIDTreeAsMap(global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> idTree) {
-if ((idTree == default!)) {
-return new global::DripSharp.Runtime.JavaLinkedHashMap<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>();
-}
-global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> names = idTree.GetNames();
-if ((names == default!)) {
-names = new global::DripSharp.Runtime.JavaLinkedHashMap<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>();
-} else {
-names = new global::DripSharp.Runtime.JavaLinkedHashMap<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>(global::DripSharp.Runtime.JavaCompat.CastDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>(names));
-}
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>> kids = idTree.GetKids();
-if ((kids != default!)) {
-foreach (global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> kid in kids) {
-global::DripSharp.Runtime.JavaCompat.MapPutAll(names, global::DripSharp.Runtime.JavaCompat.CastDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getIDTreeAsMap(kid)));
-}
-}
-return names;
-}
-
-internal static global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> getNumberTreeAsMap(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode tree) {
-if ((tree == default!)) {
-return new global::DripSharp.Runtime.JavaLinkedHashMap<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>();
-}
-global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> numbers = tree.GetNumbers();
-if ((numbers == default!)) {
-numbers = new global::DripSharp.Runtime.JavaLinkedHashMap<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>();
-} else {
-numbers = new global::DripSharp.Runtime.JavaLinkedHashMap<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(global::DripSharp.Runtime.JavaCompat.CastDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(numbers));
-}
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> kids = tree.GetKids();
-if ((kids != default!)) {
-foreach (global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode kid in kids) {
-global::DripSharp.Runtime.JavaCompat.MapPutAll(numbers, global::DripSharp.Runtime.JavaCompat.CastDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(kid)));
-}
-}
-return numbers;
-}
-
-private void mergeRoleMap(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot srcStructTree, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot destStructTree, global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner) {
-global::DripSharp.PdfCarton.Cos.COSDictionary srcDict = srcStructTree.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.RoleMap);
-if ((srcDict == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSDictionary destDict = destStructTree.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.RoleMap);
-if ((destDict == default!)) {
-destStructTree.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.RoleMap, cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcDict));
-return;
-}
-foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Cos.COSBase> entry in srcDict.EntrySet()) {
-global::DripSharp.PdfCarton.Cos.COSBase destValue = destDict.GetDictionaryObject(entry.Key);
-if (((destValue != default!) && global::DripSharp.Runtime.JavaCompat.Equals(destValue, entry.Value))) {
-continue;
-}
-if (destDict.ContainsKey(entry.Key)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("key '", entry.Key), "' already exists in destination RoleMap")));
-} else {
-destDict.SetItem(entry.Key, cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(entry.Value));
-}
-}
-}
-
-private void mergeAcroForm(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner, global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog destCatalog, global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog) {
-try {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm destAcroForm = destCatalog.GetAcroForm();
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm srcAcroForm = srcCatalog.GetAcroForm();
-if (((destAcroForm == default!) && (srcAcroForm != default!))) {
-destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.AcroForm, cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcAcroForm.GetCOSObject()));
-} else {
-if ((srcAcroForm != default!)) {
-if ((this.acroFormMergeMode == global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode.PdfboxLegacyMode)) {
-this.acroFormLegacyMode(cloner, destAcroForm, srcAcroForm);
-} else {
-if ((this.acroFormMergeMode == global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode.JoinFormFieldsMode)) {
-this.acroFormJoinFieldsMode(cloner, destAcroForm, srcAcroForm);
-}
-}
-}
-}
-} catch (global::System.IO.IOException e) {
-if (!(this.ignoreAcroFormErrors)) {
-throw new global::System.IO.IOException(null, e);
-}
-}
-}
-
-private void acroFormJoinFieldsMode(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm destAcroForm, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm srcAcroForm) {
-this.acroFormLegacyMode(cloner, destAcroForm, srcAcroForm);
-}
-
-private void acroFormLegacyMode(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm destAcroForm, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm srcAcroForm) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> srcFields = srcAcroForm.GetFields();
-global::DripSharp.PdfCarton.Cos.COSArray destFields;
-if (!(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(srcFields))) {
-string prefix = "dummyFieldName";
-int prefixLength = prefix.Length;
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField destField in destAcroForm.GetFieldTree()) {
-string fieldName = destField.GetPartialName();
-if (((fieldName != default!) && global::DripSharp.Runtime.JavaCompat.StringStartsWith(fieldName, prefix))) {
-string suffix = fieldName.Substring(prefixLength);
-if (global::DripSharp.Runtime.JavaCompat.StringMatches(suffix, "\\d+")) {
-this.nextFieldNum = global::System.Math.Max(this.nextFieldNum, (global::DripSharp.Runtime.JavaCompat.ParseInt(suffix, 10) + 1));
-}
-}
-}
-global::DripSharp.PdfCarton.Cos.COSBase @base = destAcroForm.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.Fields);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
-destFields = (global::DripSharp.PdfCarton.Cos.COSArray)(@base!);
-} else {
-destFields = new global::DripSharp.PdfCarton.Cos.COSArray();
-}
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField srcField in srcAcroForm.GetFields()) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dstField = cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcField.GetCOSObject());
-if ((destAcroForm.GetField(srcField.GetFullyQualifiedName()) != default!)) {
-dstField.SetString(global::DripSharp.PdfCarton.Cos.COSName.T, global::DripSharp.Runtime.JavaCompat.Concat(prefix, this.nextFieldNum++));
-}
-destFields.Add(dstField);
-}
-destAcroForm.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fields, destFields);
-}
-}
-
-private void mergeOutputIntents(global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog, global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog destCatalog, global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent> srcOutputIntents = srcCatalog.GetOutputIntents();
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent> dstOutputIntents = destCatalog.GetOutputIntents();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent srcOI in srcOutputIntents) {
-string srcOCI = srcOI.GetOutputConditionIdentifier();
-if (((srcOCI != default!) && !(global::DripSharp.Runtime.JavaCompat.Equals("Custom", srcOCI)))) {
-bool skip = false;
-foreach (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent dstOI in dstOutputIntents) {
-if (global::DripSharp.Runtime.JavaCompat.Equals(srcOCI, dstOI.GetOutputConditionIdentifier())) {
-skip = true;
-break;
-}
-}
-if (skip) {
-continue;
-}
-}
-destCatalog.AddOutputIntent(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcOI.GetCOSObject())));
-global::DripSharp.Runtime.JavaCompat.Add(dstOutputIntents, srcOI);
-}
-}
-
-private int nextFieldNum = 1;
-
-public virtual bool IsIgnoreAcroFormErrors() {
-return this.ignoreAcroFormErrors;
-}
-
-public virtual void SetIgnoreAcroFormErrors(bool ignoreAcroFormErrorsValue) {
-this.ignoreAcroFormErrors = ignoreAcroFormErrorsValue;
-}
-
-private void updatePageReferences(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner, global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> numberTreeAsMap, global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary, global::DripSharp.PdfCarton.Cos.COSDictionary> objMapping) {
-foreach (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable obj in numberTreeAsMap.Values) {
-if ((obj == default!)) {
-continue;
-}
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDParentTreeValue val = (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDParentTreeValue)(obj!);
-global::DripSharp.PdfCarton.Cos.COSBase @base = val.GetCOSObject();
-if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
-this.updatePageReferences(cloner, (global::DripSharp.PdfCarton.Cos.COSArray)(@base!), objMapping);
-} else {
-this.updatePageReferences(cloner, (global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!), objMapping);
-}
-}
-}
-
-private void updatePageReferences(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner, global::DripSharp.PdfCarton.Cos.COSDictionary parentTreeEntry, global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary, global::DripSharp.PdfCarton.Cos.COSDictionary> objMapping) {
-global::DripSharp.PdfCarton.Cos.COSDictionary pageDict = parentTreeEntry.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Pg);
-if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(objMapping, pageDict)) {
-parentTreeEntry.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Pg, global::DripSharp.Runtime.JavaCompat.MapGet(objMapping, pageDict));
-}
-global::DripSharp.PdfCarton.Cos.COSDictionary objDict = parentTreeEntry.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Obj);
-if ((objDict != default!)) {
-if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(objMapping, objDict)) {
-parentTreeEntry.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Obj, global::DripSharp.Runtime.JavaCompat.MapGet(objMapping, objDict));
-} else {
-global::DripSharp.PdfCarton.Cos.COSBase item = parentTreeEntry.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Obj);
-if ((item is global::DripSharp.PdfCarton.Cos.COSObject)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("clone potential orphan object in structure tree: ", item), ", Type: "), objDict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type)), ", Subtype: "), objDict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype)), ", T: "), objDict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.T))));
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("clone potential orphan object in structure tree", ", Type: "), objDict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type)), ", Subtype: "), objDict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype)), ", T: "), objDict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.T))));
-}
-parentTreeEntry.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Obj, cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(objDict));
-}
-}
-global::DripSharp.PdfCarton.Cos.COSBase kSubEntry = parentTreeEntry.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.K);
-if ((kSubEntry is global::DripSharp.PdfCarton.Cos.COSArray)) {
-this.updatePageReferences(cloner, (global::DripSharp.PdfCarton.Cos.COSArray)(kSubEntry!), objMapping);
-} else {
-if ((kSubEntry is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-this.updatePageReferences(cloner, (global::DripSharp.PdfCarton.Cos.COSDictionary)(kSubEntry!), objMapping);
-}
-}
-}
-
-private void updatePageReferences(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner, global::DripSharp.PdfCarton.Cos.COSArray parentTreeEntry, global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary, global::DripSharp.PdfCarton.Cos.COSDictionary> objMapping) {
-for (int i = 0; (i < parentTreeEntry.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase subEntry = parentTreeEntry.GetObject(i);
-if ((subEntry is global::DripSharp.PdfCarton.Cos.COSArray)) {
-this.updatePageReferences(cloner, (global::DripSharp.PdfCarton.Cos.COSArray)(subEntry!), objMapping);
-} else {
-if ((subEntry is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-this.updatePageReferences(cloner, (global::DripSharp.PdfCarton.Cos.COSDictionary)(subEntry!), objMapping);
-}
-}
-}
-}
-
-private void updateStructParentEntries(global::DripSharp.PdfCarton.Pdmodel.PDPage page, int structParentOffset) {
-int structParents = page.GetStructParents();
-if ((structParents >= 0)) {
-page.SetStructParents((structParents + structParentOffset));
-}
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annots = page.GetAnnotations();
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> newannots = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation>(global::DripSharp.Runtime.JavaCompat.CollectionCount(annots));
-global::DripSharp.Runtime.JavaCompat.ForEach(annots, (annot) => {
-int structParent = annot.GetStructParent();
-if ((structParent >= 0)) {
-annot.SetStructParent((structParent + structParentOffset));
-}
-global::DripSharp.Runtime.JavaCompat.Add(newannots, annot);
-});
-page.SetAnnotations(newannots);
-}
-
-private bool isDynamicXfa(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) {
-return ((acroForm != default!) && acroForm.XfaIsDynamic());
-}
-
-private void mergeInto(global::DripSharp.PdfCarton.Cos.COSDictionary src, global::DripSharp.PdfCarton.Cos.COSDictionary dst, global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner, global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSName> exclude) {
-foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Cos.COSBase> entry in src.EntrySet()) {
-if ((!(global::DripSharp.Runtime.JavaCompat.CollectionContains(exclude, entry.Key)) && !(dst.ContainsKey(entry.Key)))) {
-dst.SetItem(entry.Key, cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(entry.Value));
-}
-}
-}
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("PDFBOX_LEGACY_MODE")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+    public static readonly global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode PdfboxLegacyMode
+      = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode();
+
+    private AcroFormMergeMode() {}
+
+    public static AcroFormMergeMode[] values()
+      => global::DripSharp.Runtime.JavaCompat.EnumValues<AcroFormMergeMode>();
+    public static AcroFormMergeMode valueOf(string name)
+      => global::DripSharp.Runtime.JavaCompat.EnumValueOf<AcroFormMergeMode>(name);
+
+    public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  }
+
+  public PDFMergerUtility() {
+    this.sources = new global::System.Collections.Generic.List<object>();
+  }
+
+  public virtual global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode GetAcroFormMergeMode() {
+    return this.acroFormMergeMode;
+  }
+
+  public virtual void SetAcroFormMergeMode(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode theAcroFormMergeMode) {
+    this.acroFormMergeMode = theAcroFormMergeMode;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode GetDocumentMergeMode() {
+    return this.documentMergeMode;
+  }
+
+  public virtual void SetDocumentMergeMode(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode theDocumentMergeMode) {
+    this.documentMergeMode = theDocumentMergeMode;
+  }
+
+  public virtual string GetDestinationFileName() {
+    return this.destinationFileName;
+  }
+
+  public virtual void SetDestinationFileName(string destination) {
+    this.destinationFileName = destination;
+  }
+
+  public virtual global::System.IO.Stream GetDestinationStream() {
+    return this.destinationStream;
+  }
+
+  public virtual void SetDestinationStream(global::System.IO.Stream destStream) {
+    this.destinationStream = destStream;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation GetDestinationDocumentInformation() {
+    return this.destinationDocumentInformation;
+  }
+
+  public virtual void SetDestinationDocumentInformation(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation info) {
+    this.destinationDocumentInformation = info;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDMetadata GetDestinationMetadata() {
+    return this.destinationMetadata;
+  }
+
+  public virtual void SetDestinationMetadata(global::DripSharp.PdfCarton.Pdmodel.Common.PDMetadata meta) {
+    this.destinationMetadata = meta;
+  }
+
+  public virtual void AddSource(string source) {
+    this.AddSource(new global::System.IO.FileInfo(source));
+  }
+
+  public virtual void AddSource(global::System.IO.FileInfo source) {
+    global::DripSharp.Runtime.JavaCompat.Add(this.sources, source);
+  }
+
+  public virtual void AddSource(global::DripSharp.PdfCarton.IO.RandomAccessRead source) {
+    global::DripSharp.Runtime.JavaCompat.Add(this.sources, source);
+  }
+
+  public virtual void AddSources(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.IO.RandomAccessRead> sourcesList) {
+    global::DripSharp.Runtime.JavaCompat.AddAll(this.sources, sourcesList);
+  }
+
+  public virtual void MergeDocuments(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
+    this.MergeDocuments(streamCacheCreateFunction,
+      global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.DefaultCompression);
+  }
+
+  public virtual void MergeDocuments(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction,
+    global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters compressParameters) {
+    if ((this.documentMergeMode
+      == global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode.PdfboxLegacyMode)) {
+      this.legacyMergeDocuments(streamCacheCreateFunction, compressParameters);
+    } else {
+      if ((this.documentMergeMode
+        == global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.DocumentMergeMode.OptimizeResourcesMode)) {
+        this.optimizedMergeDocuments(streamCacheCreateFunction, compressParameters);
+      }
+    }
+  }
+
+  private void optimizedMergeDocuments(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction,
+    global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters compressParameters) {
+    global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction strmCacheFunc
+      = ((streamCacheCreateFunction != default!) ? streamCacheCreateFunction
+      : global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument destination
+      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument(strmCacheFunc)) {
+      global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner
+        = new global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility(destination);
+      global::DripSharp.PdfCarton.Pdmodel.PDPageTree destinationPageTree = destination.GetPages();
+      foreach (object sourceObject in this.sources) {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDoc = default!;
+        try {
+          if ((sourceObject is global::System.IO.FileInfo)) {
+            sourceDoc
+              = global::DripSharp.PdfCarton.Loader.LoadPDF((global::System.IO.FileInfo)(sourceObject!));
+          } else {
+            sourceDoc
+              = global::DripSharp.PdfCarton.Loader.LoadPDF((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sourceObject!));
+          }
+          foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page in sourceDoc!.GetPages()) {
+            global::DripSharp.PdfCarton.Pdmodel.PDPage newPage
+              = new global::DripSharp.PdfCarton.Pdmodel.PDPage(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(page.GetCOSObject()));
+            newPage.SetCropBox(page.GetCropBox());
+            newPage.SetMediaBox(page.GetMediaBox());
+            newPage.SetRotation(page.GetRotation());
+            global::DripSharp.PdfCarton.Pdmodel.PDResources resources = page.GetResources();
+            if ((resources != default!)) {
+              newPage.SetResources(new global::DripSharp.PdfCarton.Pdmodel.PDResources(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(resources.GetCOSObject())));
+            } else {
+              newPage.SetResources(new global::DripSharp.PdfCarton.Pdmodel.PDResources());
+            }
+            destinationPageTree.Add(newPage);
+          }
+        } finally {
+          global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(sourceDoc!);
+        }
+      }
+      if ((this.destinationStream == default!)) {
+        destination.Save(this.destinationFileName, compressParameters);
+      } else {
+        destination.Save(this.destinationStream, compressParameters);
+      }
+    }
+  }
+
+  private void legacyMergeDocuments(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction,
+    global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters compressParameters) {
+    if (!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.sources)) {
+      global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction strmCacheFunc
+        = ((streamCacheCreateFunction != default!) ? streamCacheCreateFunction
+        : global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+      using (global::DripSharp.PdfCarton.Pdmodel.PDDocument destination
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument(strmCacheFunc)) {
+        foreach (object sourceObject in this.sources) {
+          global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDoc;
+          if ((sourceObject is global::System.IO.FileInfo)) {
+            sourceDoc
+              = global::DripSharp.PdfCarton.Loader.LoadPDF((global::System.IO.FileInfo)(sourceObject!));
+          } else {
+            sourceDoc
+              = global::DripSharp.PdfCarton.Loader.LoadPDF((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sourceObject!));
+          }
+          try {
+            this.AppendDocument(destination, sourceDoc);
+          } finally {
+            global::DripSharp.PdfCarton.IO.IOUtils.CloseAndLogException(sourceDoc,
+              global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG, "PDDocument",
+              (global::System.IO.IOException)default!);
+          }
+        }
+        if ((this.destinationDocumentInformation != default!)) {
+          destination.SetDocumentInformation(this.destinationDocumentInformation);
+        }
+        if ((this.destinationMetadata != default!)) {
+          destination.GetDocumentCatalog().SetMetadata(this.destinationMetadata);
+        }
+        if ((this.destinationStream == default!)) {
+          destination.Save(this.destinationFileName, compressParameters);
+        } else {
+          destination.Save(this.destinationStream, compressParameters);
+        }
+      }
+    }
+  }
+
+  public virtual void AppendDocument(global::DripSharp.PdfCarton.Pdmodel.PDDocument destination,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocument source) {
+    global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner
+      = new global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility(destination);
+    if (source.GetDocument().IsClosed()) {
+      throw new global::System.IO.IOException("Error: source PDF is closed.");
+    }
+    if (destination.GetDocument().IsClosed()) {
+      throw new global::System.IO.IOException("Error: destination PDF is closed.");
+    }
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog = source.GetDocumentCatalog();
+    if (this.isDynamicXfa(srcCatalog.GetAcroForm())) {
+      throw new global::System.IO.IOException("Error: can't merge source document containing dynamic XFA form content.");
+    }
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation destInfo
+      = destination.GetDocumentInformation();
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation srcInfo
+      = source.GetDocumentInformation();
+    this.mergeInto(srcInfo.GetCOSObject(), destInfo.GetCOSObject(), cloner,
+      global::DripSharp.Runtime.JavaCompat.EmptySet<global::DripSharp.PdfCarton.Cos.COSName>());
+    float destVersion = destination.GetVersion();
+    float srcVersion = source.GetVersion();
+    if ((destVersion < srcVersion)) {
+      destination.SetVersion(srcVersion);
+    }
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog destCatalog
+      = destination.GetDocumentCatalog();
+    this.mergeAcroForm(cloner, destCatalog, srcCatalog);
+    global::DripSharp.PdfCarton.Cos.COSArray destThreads
+      = destCatalog.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Threads);
+    global::DripSharp.PdfCarton.Cos.COSArray srcThreads
+      = cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSArray>(destCatalog.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Threads));
+    if ((destThreads == default!)) {
+      destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Threads,
+        srcThreads);
+    } else {
+      destThreads.AddAll(srcThreads);
+    }
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDictionary destNames = destCatalog.GetNames();
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDictionary srcNames = srcCatalog.GetNames();
+    if ((srcNames != default!)) {
+      if ((destNames == default!)) {
+        destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Names,
+          cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcNames.GetCOSObject()));
+      } else {
+        cloner.cloneMerge(srcNames, destNames);
+      }
+    }
+    if (((destNames != default!)
+      && destNames.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.IdTree))) {
+      destNames.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.IdTree);
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("Removed /IDTree from /Names dictionary, doesn't belong there"));
+    }
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDestinationDictionary srcDests
+      = srcCatalog.GetDests();
+    if ((srcDests != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDestinationDictionary destDests
+        = destCatalog.GetDests();
+      if ((destDests == default!)) {
+        destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Dests,
+          cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcDests.GetCOSObject()));
+      } else {
+        cloner.cloneMerge(srcDests, destDests);
+      }
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDDocumentOutline srcOutline
+      = srcCatalog.GetDocumentOutline();
+    if ((srcOutline != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDDocumentOutline destOutline
+        = destCatalog.GetDocumentOutline();
+      if (((destOutline == default!) || (destOutline.GetFirstChild() == default!))) {
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDDocumentOutline cloned
+          = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDDocumentOutline(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcOutline.GetCOSObject()));
+        destCatalog.SetDocumentOutline(cloned);
+      } else {
+        global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSDictionary> visited
+          = new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSDictionary>();
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem destLastOutlineItem
+          = destOutline.GetFirstChild();
+        while (true) {
+          if (!(visited.Add(destLastOutlineItem.GetCOSObject()))) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Outline ignored: ",
+              destLastOutlineItem.GetCOSObject())));
+            break;
+          }
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem outlineItem
+            = destLastOutlineItem.GetNextSibling();
+          if ((outlineItem == default!)) {
+            break;
+          }
+          destLastOutlineItem = outlineItem;
+        }
+        foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem item in srcOutline.Children()) {
+          global::DripSharp.PdfCarton.Cos.COSDictionary clonedDict
+            = cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(item.GetCOSObject());
+          clonedDict.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Prev);
+          clonedDict.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Next);
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem clonedItem
+            = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem(clonedDict);
+          destLastOutlineItem.InsertSiblingAfter(clonedItem);
+          destLastOutlineItem = destLastOutlineItem.GetNextSibling();
+        }
+      }
+    }
+    global::DripSharp.PdfCarton.Pdmodel.PageMode destPageMode = destCatalog.GetPageMode();
+    if ((destPageMode == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.PageMode srcPageMode = srcCatalog.GetPageMode();
+      destCatalog.SetPageMode(srcPageMode);
+    }
+    global::DripSharp.PdfCarton.Cos.COSDictionary srcLabels
+      = srcCatalog.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.PageLabels);
+    if ((srcLabels != default!)) {
+      int destPageCount = destination.GetNumberOfPages();
+      global::DripSharp.PdfCarton.Cos.COSArray destNums;
+      global::DripSharp.PdfCarton.Cos.COSDictionary destLabels
+        = destCatalog.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.PageLabels);
+      if ((destLabels == default!)) {
+        destLabels = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+        destNums = new global::DripSharp.PdfCarton.Cos.COSArray();
+        destLabels.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Nums, destNums);
+        destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.PageLabels,
+          destLabels);
+      } else {
+        destNums = destLabels.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Nums);
+      }
+      global::DripSharp.PdfCarton.Cos.COSArray srcNums
+        = srcLabels.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Nums);
+      if ((srcNums != default!)) {
+        int startSize = destNums.Size();
+        for (int i__664_26 = 0; (i__664_26 < srcNums.Size()); i__664_26 += 2) {
+          global::DripSharp.PdfCarton.Cos.COSBase @base = srcNums.GetObject(i__664_26);
+          if (!((@base is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("page labels ignored, index ",
+              i__664_26), " should be a number, but is "), @base)));
+            while ((destNums.Size() > startSize)) {
+              destNums.Remove(startSize);
+            }
+            break;
+          }
+          global::DripSharp.PdfCarton.Cos.COSNumber labelIndex
+            = (global::DripSharp.PdfCarton.Cos.COSNumber)(@base!);
+          long labelIndexValue = labelIndex.IntValue();
+          destNums.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((labelIndexValue
+            + destPageCount)));
+          destNums.Add(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(srcNums.GetObject((i__664_26
+            + 1))));
+        }
+      }
+    }
+    global::DripSharp.PdfCarton.Cos.COSStream destMetadata
+      = destCatalog.GetCOSObject().GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Metadata);
+    global::DripSharp.PdfCarton.Cos.COSStream srcMetadata
+      = srcCatalog.GetCOSObject().GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Metadata);
+    if (((destMetadata == default!) && (srcMetadata != default!))) {
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Common.PDStream newStream
+          = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(destination,
+          srcMetadata.CreateInputStream(), (global::DripSharp.PdfCarton.Cos.COSName)default!);
+        this.mergeInto(srcMetadata, newStream.GetCOSObject(), cloner,
+          new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSName>(global::DripSharp.Runtime.JavaCompat.AsList<global::DripSharp.PdfCarton.Cos.COSName>(global::DripSharp.PdfCarton.Cos.COSName.Filter,
+          global::DripSharp.PdfCarton.Cos.COSName.Length)));
+        destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Metadata,
+          newStream);
+      } catch (global::System.IO.IOException ex) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG,
+          (global::System.Exception)ex,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf("Metadata skipped because it could not be read"));
+      }
+    }
+    global::DripSharp.PdfCarton.Cos.COSDictionary destOCP
+      = destCatalog.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Ocproperties);
+    global::DripSharp.PdfCarton.Cos.COSDictionary srcOCP
+      = srcCatalog.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Ocproperties);
+    if (((destOCP == default!) && (srcOCP != default!))) {
+      destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ocproperties,
+        cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcOCP));
+    } else {
+      if (((destOCP != default!) && (srcOCP != default!))) {
+        cloner.cloneMerge(srcOCP, destOCP);
+      }
+    }
+    this.mergeOutputIntents(srcCatalog, destCatalog, cloner);
+    bool mergeStructTree = false;
+    int destParentTreeNextKey = -1;
+    global::System.Collections.Generic.IDictionary<int,
+      global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> srcNumberTreeAsMap = default!;
+    global::System.Collections.Generic.IDictionary<int,
+      global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> destNumberTreeAsMap = default!;
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot srcStructTree
+      = srcCatalog.GetStructureTreeRoot();
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot destStructTree
+      = destCatalog.GetStructureTreeRoot();
+    if (((destStructTree == default!) && (srcStructTree != default!))) {
+      destStructTree
+        = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot();
+      destCatalog.SetStructureTreeRoot(destStructTree);
+      destStructTree.SetParentTree(new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDParentTreeValue)));
+      foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page__731_25 in destCatalog.GetPages()) {
+        page__731_25.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.StructParents);
+        foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation ann__734_35 in page__731_25.GetAnnotations()) {
+          ann__734_35.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.StructParent);
+        }
+      }
+    }
+    if ((destStructTree != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode destParentTree
+        = destStructTree.GetParentTree();
+      destParentTreeNextKey = destStructTree.GetParentTreeNextKey();
+      if ((destParentTree != default!)) {
+        destNumberTreeAsMap
+          = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(destParentTree);
+        if ((destParentTreeNextKey < 0)) {
+          if (global::DripSharp.Runtime.JavaCompat.MapIsEmpty(destNumberTreeAsMap!)) {
+            destParentTreeNextKey = 0;
+          } else {
+            destParentTreeNextKey
+              = (global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(destNumberTreeAsMap!))
+              + 1);
+          }
+        }
+        if (((destParentTreeNextKey >= 0) && (srcStructTree != default!))) {
+          global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode srcParentTree
+            = srcStructTree.GetParentTree();
+          if ((srcParentTree != default!)) {
+            srcNumberTreeAsMap
+              = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(srcParentTree);
+            if (!global::DripSharp.Runtime.JavaCompat.MapIsEmpty(srcNumberTreeAsMap!)) {
+              mergeStructTree = true;
+            }
+          }
+        }
+      }
+    }
+    global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary,
+      global::DripSharp.PdfCarton.Cos.COSDictionary> objMapping
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary,
+      global::DripSharp.PdfCarton.Cos.COSDictionary>();
+    global::DripSharp.PdfCarton.Pdmodel.PDPageTree destinationPageTree = destination.GetPages();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page__775_21 in srcCatalog.GetPages()) {
+      global::DripSharp.PdfCarton.Pdmodel.PDPage newPage
+        = new global::DripSharp.PdfCarton.Pdmodel.PDPage(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(page__775_21.GetCOSObject()));
+      if (!mergeStructTree) {
+        newPage.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.StructParents);
+        foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation ann__782_35 in newPage.GetAnnotations()) {
+          ann__782_35.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.StructParent);
+        }
+      }
+      newPage.SetCropBox(page__775_21.GetCropBox());
+      newPage.SetMediaBox(page__775_21.GetMediaBox());
+      newPage.SetRotation(page__775_21.GetRotation());
+      global::DripSharp.PdfCarton.Pdmodel.PDResources resources = page__775_21.GetResources();
+      if ((resources != default!)) {
+        newPage.SetResources(new global::DripSharp.PdfCarton.Pdmodel.PDResources(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(resources.GetCOSObject())));
+      } else {
+        newPage.SetResources(new global::DripSharp.PdfCarton.Pdmodel.PDResources());
+      }
+      if (mergeStructTree) {
+        this.updateStructParentEntries(newPage, destParentTreeNextKey);
+        global::DripSharp.Runtime.JavaCompat.MapPut(objMapping, page__775_21.GetCOSObject(),
+          newPage.GetCOSObject());
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> oldAnnots
+          = page__775_21.GetAnnotations();
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> newAnnots
+          = newPage.GetAnnotations();
+        for (int i__809_26 = 0;
+          (i__809_26 < global::DripSharp.Runtime.JavaCompat.CollectionCount(oldAnnots));
+          i__809_26++) {
+          global::DripSharp.Runtime.JavaCompat.MapPut(objMapping,
+            global::DripSharp.Runtime.JavaCompat.ListGet(oldAnnots, i__809_26).GetCOSObject(),
+            global::DripSharp.Runtime.JavaCompat.ListGet(newAnnots, i__809_26).GetCOSObject());
+        }
+      }
+      destinationPageTree.Add(newPage);
+    }
+    this.mergeOpenAction(srcCatalog, destCatalog, cloner);
+    if (mergeStructTree) {
+      this.updatePageReferences(cloner, srcNumberTreeAsMap!, objMapping);
+      int maxSrcKey = -1;
+      foreach (global::DripSharp.Runtime.JavaMapEntry<int,
+        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> entry in global::DripSharp.Runtime.JavaCompat.MapEntrySet(srcNumberTreeAsMap!)) {
+        int srcKey = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(entry.Key);
+        maxSrcKey = global::System.Math.Max(srcKey, maxSrcKey);
+        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable value = entry.Value;
+        if ((value != default!)) {
+          value
+            = cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(value.GetCOSObject());
+          global::DripSharp.Runtime.JavaCompat.MapPut(destNumberTreeAsMap!, (destParentTreeNextKey
+            + srcKey), value);
+        }
+      }
+      destParentTreeNextKey += (maxSrcKey + 1);
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode newParentTreeNode
+        = new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDParentTreeValue));
+      newParentTreeNode.SetNumbers(global::DripSharp.Runtime.JavaCompat.CastDictionary<int,
+        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(destNumberTreeAsMap!));
+      destStructTree.SetParentTree(newParentTreeNode);
+      destStructTree.SetParentTreeNextKey(destParentTreeNextKey);
+      this.mergeKEntries(cloner, srcStructTree, destStructTree);
+      this.mergeRoleMap(srcStructTree, destStructTree, cloner);
+      this.mergeIDTree(cloner, srcStructTree, destStructTree);
+      this.mergeMarkInfo(destCatalog, srcCatalog);
+      this.mergeLanguage(destCatalog, srcCatalog);
+      this.mergeViewerPreferences(destCatalog, srcCatalog, cloner);
+    }
+  }
+
+  private void mergeOpenAction(global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog dstCatalog,
+    global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDDestinationOrAction srcOpenAction = default!;
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDDestinationOrAction dstOpenAction = default!;
+    try {
+      dstOpenAction = dstCatalog.GetOpenAction();
+      srcOpenAction = srcCatalog.GetOpenAction();
+    } catch (global::System.IO.IOException ex) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG,
+        (global::System.Exception)ex,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("Invalid OpenAction ignored"));
+    }
+    if (((dstOpenAction! == default!) && (srcOpenAction! != default!))) {
+      global::DripSharp.PdfCarton.Cos.COSBase clonedOpenActionBase
+        = cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(srcOpenAction!.GetCOSObject());
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination openActionDestination
+        = default!;
+      if ((clonedOpenActionBase is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction action
+          = global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction((global::DripSharp.PdfCarton.Cos.COSDictionary)(clonedOpenActionBase!));
+        if ((action is global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)) {
+          openActionDestination
+            = ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(action!)).GetDestination();
+        }
+        dstCatalog.SetOpenAction(action);
+      } else {
+        if ((clonedOpenActionBase is global::DripSharp.PdfCarton.Cos.COSArray)) {
+          openActionDestination
+            = global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination.Create(clonedOpenActionBase);
+          dstCatalog.SetOpenAction(openActionDestination!);
+        }
+      }
+      if ((openActionDestination! is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)) {
+        global::DripSharp.PdfCarton.Pdmodel.PDPage page
+          = ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(openActionDestination!)).GetPage();
+        if (((page != default!) && (dstCatalog.GetPages().IndexOf(page) == -1))) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf("OpenAction entry ignored because destination page doesn't exist"));
+          dstCatalog.SetOpenAction((global::DripSharp.PdfCarton.Pdmodel.Common.PDDestinationOrAction)default!);
+        }
+      }
+    }
+  }
+
+  private void mergeViewerPreferences(global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog destCatalog,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog,
+    global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner) {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Viewerpreferences.PDViewerPreferences srcViewerPreferences
+      = srcCatalog.GetViewerPreferences();
+    if ((srcViewerPreferences == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Viewerpreferences.PDViewerPreferences destViewerPreferences
+      = destCatalog.GetViewerPreferences();
+    if ((destViewerPreferences == default!)) {
+      destViewerPreferences
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Viewerpreferences.PDViewerPreferences();
+      destCatalog.SetViewerPreferences(destViewerPreferences);
+    }
+    this.mergeInto(srcViewerPreferences.GetCOSObject(), destViewerPreferences.GetCOSObject(),
+      cloner,
+      global::DripSharp.Runtime.JavaCompat.EmptySet<global::DripSharp.PdfCarton.Cos.COSName>());
+    if ((srcViewerPreferences.HideToolbar() || destViewerPreferences.HideToolbar())) {
+      destViewerPreferences.SetHideToolbar(true);
+    }
+    if ((srcViewerPreferences.HideMenubar() || destViewerPreferences.HideMenubar())) {
+      destViewerPreferences.SetHideMenubar(true);
+    }
+    if ((srcViewerPreferences.HideWindowUI() || destViewerPreferences.HideWindowUI())) {
+      destViewerPreferences.SetHideWindowUI(true);
+    }
+    if ((srcViewerPreferences.FitWindow() || destViewerPreferences.FitWindow())) {
+      destViewerPreferences.SetFitWindow(true);
+    }
+    if ((srcViewerPreferences.CenterWindow() || destViewerPreferences.CenterWindow())) {
+      destViewerPreferences.SetCenterWindow(true);
+    }
+    if ((srcViewerPreferences.DisplayDocTitle() || destViewerPreferences.DisplayDocTitle())) {
+      destViewerPreferences.SetDisplayDocTitle(true);
+    }
+  }
+
+  private void mergeLanguage(global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog destCatalog,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog) {
+    if ((destCatalog.GetLanguage() == default!)) {
+      string srcLanguage = srcCatalog.GetLanguage();
+      if ((srcLanguage != default!)) {
+        destCatalog.SetLanguage(srcLanguage);
+      }
+    }
+  }
+
+  private void mergeMarkInfo(global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog destCatalog,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog) {
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkInfo destMark
+      = destCatalog.GetMarkInfo();
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkInfo srcMark
+      = srcCatalog.GetMarkInfo();
+    if ((destMark == default!)) {
+      destMark
+        = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkInfo();
+    }
+    if ((srcMark == default!)) {
+      srcMark
+        = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkInfo();
+    }
+    destMark.SetMarked(true);
+    destMark.SetSuspect((srcMark.IsSuspect() || destMark.IsSuspect()));
+    destMark.SetSuspect((srcMark.UsesUserProperties() || destMark.UsesUserProperties()));
+    destCatalog.SetMarkInfo(destMark);
+  }
+
+  private void mergeKEntries(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner,
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot srcStructTree,
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot destStructTree) {
+    global::DripSharp.PdfCarton.Cos.COSBase srcKEntry = srcStructTree.GetK();
+    global::DripSharp.PdfCarton.Cos.COSArray srcKArray
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    global::DripSharp.PdfCarton.Cos.COSBase clonedSrcKEntry
+      = cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(srcKEntry);
+    if ((clonedSrcKEntry is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      srcKArray.AddAll((global::DripSharp.PdfCarton.Cos.COSArray)(clonedSrcKEntry!));
+    } else {
+      if ((clonedSrcKEntry is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        srcKArray.Add(clonedSrcKEntry);
+      }
+    }
+    if ((srcKArray.Size() == 0)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray dstKArray
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    global::DripSharp.PdfCarton.Cos.COSBase dstKEntry = destStructTree.GetK();
+    if ((dstKEntry is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      dstKArray.AddAll((global::DripSharp.PdfCarton.Cos.COSArray)(dstKEntry!));
+    } else {
+      if ((dstKEntry is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        dstKArray.Add(dstKEntry);
+      }
+    }
+    if (((dstKArray.Size() == 1)
+      && (dstKArray.GetObject(0) is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
+      global::DripSharp.PdfCarton.Cos.COSDictionary topKDict
+        = (global::DripSharp.PdfCarton.Cos.COSDictionary)(dstKArray.GetObject(0)!);
+      if (global::DripSharp.PdfCarton.Cos.COSName.Document.Equals(topKDict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.S))) {
+        global::DripSharp.PdfCarton.Cos.COSArray kLevelOneArray
+          = topKDict.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.K);
+        if ((kLevelOneArray != default!)) {
+          bool onlyDocuments = this.hasOnlyDocumentsOrParts(kLevelOneArray);
+          if (onlyDocuments) {
+            kLevelOneArray.AddAll(srcKArray);
+            this.updateParentEntry(kLevelOneArray, topKDict,
+              global::DripSharp.PdfCarton.Cos.COSName.Part);
+            return;
+          }
+        }
+      }
+    }
+    if ((dstKArray.Size() == 0)) {
+      this.updateParentEntry(srcKArray, destStructTree.GetCOSObject(),
+        (global::DripSharp.PdfCarton.Cos.COSName)default!);
+      destStructTree.SetK(srcKArray);
+      return;
+    }
+    dstKArray.AddAll(srcKArray);
+    global::DripSharp.PdfCarton.Cos.COSDictionary kLevelZeroDict
+      = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    global::DripSharp.PdfCarton.Cos.COSName newStructureType
+      = (this.hasOnlyDocumentsOrParts(dstKArray) ? global::DripSharp.PdfCarton.Cos.COSName.Part
+      : (global::DripSharp.PdfCarton.Cos.COSName)(default!));
+    this.updateParentEntry(dstKArray, kLevelZeroDict, newStructureType);
+    kLevelZeroDict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.K, dstKArray);
+    kLevelZeroDict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, destStructTree);
+    kLevelZeroDict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.S,
+      global::DripSharp.PdfCarton.Cos.COSName.Document);
+    destStructTree.SetK(kLevelZeroDict);
+  }
+
+  private bool hasOnlyDocumentsOrParts(global::DripSharp.PdfCarton.Cos.COSArray kLevelOneArray) {
+    for (int i = 0; (i < kLevelOneArray.Size()); ++i) {
+      global::DripSharp.PdfCarton.Cos.COSBase @base = kLevelOneArray.GetObject(i);
+      if (!((@base is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
+        return false;
+      }
+      global::DripSharp.PdfCarton.Cos.COSDictionary dict
+        = (global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!);
+      global::DripSharp.PdfCarton.Cos.COSName sEntry
+        = dict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.S);
+      if ((!(global::DripSharp.PdfCarton.Cos.COSName.Document.Equals(sEntry))
+        && !(global::DripSharp.PdfCarton.Cos.COSName.Part.Equals(sEntry)))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private void updateParentEntry(global::DripSharp.PdfCarton.Cos.COSArray kArray,
+    global::DripSharp.PdfCarton.Cos.COSDictionary newParent,
+    global::DripSharp.PdfCarton.Cos.COSName newStructureType) {
+    for (int i = 0; (i < kArray.Size()); i++) {
+      global::DripSharp.PdfCarton.Cos.COSBase subEntry = kArray.GetObject(i);
+      if ((subEntry is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary dictEntry
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(subEntry!);
+        dictEntry.SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, newParent);
+        if ((newStructureType != default!)) {
+          dictEntry.SetItem(global::DripSharp.PdfCarton.Cos.COSName.S, newStructureType);
+        }
+      }
+    }
+  }
+
+  private void mergeIDTree(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner,
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot srcStructTree,
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot destStructTree) {
+    if ((srcStructTree == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> srcIDTree
+      = srcStructTree.GetIDTree();
+    if ((srcIDTree == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> destIDTree
+      = destStructTree.GetIDTree();
+    if ((destIDTree == default!)) {
+      destIDTree = new global::DripSharp.PdfCarton.Pdmodel.PDStructureElementNameTreeNode();
+    }
+    global::System.Collections.Generic.IDictionary<string,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> srcNames
+      = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getIDTreeAsMap(srcIDTree);
+    global::System.Collections.Generic.IDictionary<string,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> destNames
+      = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getIDTreeAsMap(destIDTree);
+    foreach (global::DripSharp.Runtime.JavaMapEntry<string,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> entry in global::DripSharp.Runtime.JavaCompat.MapEntrySet(srcNames)) {
+      if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(destNames, entry.Key)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("key '",
+          entry.Key), "' already exists in destination IDTree")));
+      } else {
+        if ((entry.Value != default!)) {
+          global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement structureElement
+            = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(entry.Value.GetCOSObject()));
+          global::DripSharp.Runtime.JavaCompat.MapPut(destNames, entry.Key, structureElement);
+        }
+      }
+    }
+    destIDTree = new global::DripSharp.PdfCarton.Pdmodel.PDStructureElementNameTreeNode();
+    destIDTree.SetNames(destNames);
+    destStructTree.SetIDTree(destIDTree);
+  }
+
+  internal static global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> getIDTreeAsMap(global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> idTree) {
+    if ((idTree == default!)) {
+      return new global::DripSharp.Runtime.JavaLinkedHashMap<string,
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>();
+    }
+    global::System.Collections.Generic.IDictionary<string,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> names
+      = idTree.GetNames();
+    if ((names == default!)) {
+      names = new global::DripSharp.Runtime.JavaLinkedHashMap<string,
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>();
+    } else {
+      names = new global::DripSharp.Runtime.JavaLinkedHashMap<string,
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>(global::DripSharp.Runtime.JavaCompat.CastDictionary<string,
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>(names));
+    }
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>> kids
+      = idTree.GetKids();
+    if ((kids != default!)) {
+      foreach (global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> kid in kids) {
+        global::DripSharp.Runtime.JavaCompat.MapPutAll(names,
+          global::DripSharp.Runtime.JavaCompat.CastDictionary<string,
+          global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getIDTreeAsMap(kid)));
+      }
+    }
+    return names;
+  }
+
+  internal static global::System.Collections.Generic.IDictionary<int,
+    global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> getNumberTreeAsMap(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode tree) {
+    if ((tree == default!)) {
+      return new global::DripSharp.Runtime.JavaLinkedHashMap<int,
+        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>();
+    }
+    global::System.Collections.Generic.IDictionary<int,
+      global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> numbers = tree.GetNumbers();
+    if ((numbers == default!)) {
+      numbers = new global::DripSharp.Runtime.JavaLinkedHashMap<int,
+        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>();
+    } else {
+      numbers = new global::DripSharp.Runtime.JavaLinkedHashMap<int,
+        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(global::DripSharp.Runtime.JavaCompat.CastDictionary<int,
+        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(numbers));
+    }
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> kids
+      = tree.GetKids();
+    if ((kids != default!)) {
+      foreach (global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode kid in kids) {
+        global::DripSharp.Runtime.JavaCompat.MapPutAll(numbers,
+          global::DripSharp.Runtime.JavaCompat.CastDictionary<int,
+          global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(kid)));
+      }
+    }
+    return numbers;
+  }
+
+  private void mergeRoleMap(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot srcStructTree,
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot destStructTree,
+    global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary srcDict
+      = srcStructTree.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.RoleMap);
+    if ((srcDict == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSDictionary destDict
+      = destStructTree.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.RoleMap);
+    if ((destDict == default!)) {
+      destStructTree.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.RoleMap,
+        cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcDict));
+      return;
+    }
+    foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName,
+      global::DripSharp.PdfCarton.Cos.COSBase> entry in srcDict.EntrySet()) {
+      global::DripSharp.PdfCarton.Cos.COSBase destValue = destDict.GetDictionaryObject(entry.Key);
+      if (((destValue != default!) && global::DripSharp.Runtime.JavaCompat.Equals(destValue,
+        entry.Value))) {
+        continue;
+      }
+      if (destDict.ContainsKey(entry.Key)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("key '",
+          entry.Key), "' already exists in destination RoleMap")));
+      } else {
+        destDict.SetItem(entry.Key,
+          cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(entry.Value));
+      }
+    }
+  }
+
+  private void mergeAcroForm(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog destCatalog,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog) {
+    try {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm destAcroForm
+        = destCatalog.GetAcroForm();
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm srcAcroForm
+        = srcCatalog.GetAcroForm();
+      if (((destAcroForm == default!) && (srcAcroForm != default!))) {
+        destCatalog.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.AcroForm,
+          cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcAcroForm.GetCOSObject()));
+      } else {
+        if ((srcAcroForm != default!)) {
+          if ((this.acroFormMergeMode
+            == global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode.PdfboxLegacyMode)) {
+            this.acroFormLegacyMode(cloner, destAcroForm, srcAcroForm);
+          } else {
+            if ((this.acroFormMergeMode
+              == global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode.JoinFormFieldsMode)) {
+              this.acroFormJoinFieldsMode(cloner, destAcroForm, srcAcroForm);
+            }
+          }
+        }
+      }
+    } catch (global::System.IO.IOException e) {
+      if (!(this.ignoreAcroFormErrors)) {
+        throw new global::System.IO.IOException(null, e);
+      }
+    }
+  }
+
+  private void acroFormJoinFieldsMode(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm destAcroForm,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm srcAcroForm) {
+    this.acroFormLegacyMode(cloner, destAcroForm, srcAcroForm);
+  }
+
+  private void acroFormLegacyMode(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm destAcroForm,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm srcAcroForm) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> srcFields
+      = srcAcroForm.GetFields();
+    global::DripSharp.PdfCarton.Cos.COSArray destFields;
+    if (!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(srcFields)) {
+      string prefix = "dummyFieldName";
+      int prefixLength = prefix.Length;
+      foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField destField in destAcroForm.GetFieldTree()) {
+        string fieldName = destField.GetPartialName();
+        if (((fieldName != default!)
+          && global::DripSharp.Runtime.JavaCompat.StringStartsWith(fieldName, prefix))) {
+          string suffix = fieldName.Substring(prefixLength);
+          if (global::DripSharp.Runtime.JavaCompat.StringMatches(suffix, "\\d+")) {
+            this.nextFieldNum = global::System.Math.Max(this.nextFieldNum,
+              (global::DripSharp.Runtime.JavaCompat.ParseInt(suffix, 10) + 1));
+          }
+        }
+      }
+      global::DripSharp.PdfCarton.Cos.COSBase @base
+        = destAcroForm.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.Fields);
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
+        destFields = (global::DripSharp.PdfCarton.Cos.COSArray)(@base!);
+      } else {
+        destFields = new global::DripSharp.PdfCarton.Cos.COSArray();
+      }
+      foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField srcField in srcAcroForm.GetFields()) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary dstField
+          = cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcField.GetCOSObject());
+        if ((destAcroForm.GetField(srcField.GetFullyQualifiedName()) != default!)) {
+          dstField.SetString(global::DripSharp.PdfCarton.Cos.COSName.T,
+            global::DripSharp.Runtime.JavaCompat.Concat(prefix, this.nextFieldNum++));
+        }
+        destFields.Add(dstField);
+      }
+      destAcroForm.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fields,
+        destFields);
+    }
+  }
+
+  private void mergeOutputIntents(global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog destCatalog,
+    global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent> srcOutputIntents
+      = srcCatalog.GetOutputIntents();
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent> dstOutputIntents
+      = destCatalog.GetOutputIntents();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent srcOI in srcOutputIntents) {
+      string srcOCI = srcOI.GetOutputConditionIdentifier();
+      if (((srcOCI != default!) && !global::DripSharp.Runtime.JavaCompat.Equals("Custom",
+        srcOCI))) {
+        bool skip = false;
+        foreach (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent dstOI in dstOutputIntents) {
+          if (global::DripSharp.Runtime.JavaCompat.Equals(srcOCI,
+            dstOI.GetOutputConditionIdentifier())) {
+            skip = true;
+            break;
+          }
+        }
+        if (skip) {
+          continue;
+        }
+      }
+      destCatalog.AddOutputIntent(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent(cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcOI.GetCOSObject())));
+      global::DripSharp.Runtime.JavaCompat.Add(dstOutputIntents, srcOI);
+    }
+  }
+
+  private int nextFieldNum = 1;
+
+  public virtual bool IsIgnoreAcroFormErrors() {
+    return this.ignoreAcroFormErrors;
+  }
+
+  public virtual void SetIgnoreAcroFormErrors(bool ignoreAcroFormErrorsValue) {
+    this.ignoreAcroFormErrors = ignoreAcroFormErrorsValue;
+  }
+
+  private void updatePageReferences(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner,
+    global::System.Collections.Generic.IDictionary<int,
+    global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> numberTreeAsMap,
+    global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary,
+    global::DripSharp.PdfCarton.Cos.COSDictionary> objMapping) {
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable obj in numberTreeAsMap.Values) {
+      if ((obj == default!)) {
+        continue;
+      }
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDParentTreeValue val
+        = (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDParentTreeValue)(obj!);
+      global::DripSharp.PdfCarton.Cos.COSBase @base = val.GetCOSObject();
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
+        this.updatePageReferences(cloner, (global::DripSharp.PdfCarton.Cos.COSArray)(@base!),
+          objMapping);
+      } else {
+        this.updatePageReferences(cloner, (global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!),
+          objMapping);
+      }
+    }
+  }
+
+  private void updatePageReferences(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner,
+    global::DripSharp.PdfCarton.Cos.COSDictionary parentTreeEntry,
+    global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary,
+    global::DripSharp.PdfCarton.Cos.COSDictionary> objMapping) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary pageDict
+      = parentTreeEntry.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Pg);
+    if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(objMapping, pageDict)) {
+      parentTreeEntry.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Pg,
+        global::DripSharp.Runtime.JavaCompat.MapGet(objMapping, pageDict));
+    }
+    global::DripSharp.PdfCarton.Cos.COSDictionary objDict
+      = parentTreeEntry.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Obj);
+    if ((objDict != default!)) {
+      if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(objMapping, objDict)) {
+        parentTreeEntry.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Obj,
+          global::DripSharp.Runtime.JavaCompat.MapGet(objMapping, objDict));
+      } else {
+        global::DripSharp.PdfCarton.Cos.COSBase item
+          = parentTreeEntry.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Obj);
+        if ((item is global::DripSharp.PdfCarton.Cos.COSObject)) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("clone potential orphan object in structure tree: ",
+            item), ", Type: "),
+            objDict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type)), ", Subtype: "),
+            objDict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype)), ", T: "),
+            objDict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.T))));
+        } else {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("clone potential orphan object in structure tree",
+            ", Type: "), objDict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type)),
+            ", Subtype: "),
+            objDict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype)), ", T: "),
+            objDict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.T))));
+        }
+        parentTreeEntry.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Obj,
+          cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(objDict));
+      }
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase kSubEntry
+      = parentTreeEntry.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.K);
+    if ((kSubEntry is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      this.updatePageReferences(cloner, (global::DripSharp.PdfCarton.Cos.COSArray)(kSubEntry!),
+        objMapping);
+    } else {
+      if ((kSubEntry is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        this.updatePageReferences(cloner,
+          (global::DripSharp.PdfCarton.Cos.COSDictionary)(kSubEntry!), objMapping);
+      }
+    }
+  }
+
+  private void updatePageReferences(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner,
+    global::DripSharp.PdfCarton.Cos.COSArray parentTreeEntry,
+    global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary,
+    global::DripSharp.PdfCarton.Cos.COSDictionary> objMapping) {
+    for (int i = 0; (i < parentTreeEntry.Size()); i++) {
+      global::DripSharp.PdfCarton.Cos.COSBase subEntry = parentTreeEntry.GetObject(i);
+      if ((subEntry is global::DripSharp.PdfCarton.Cos.COSArray)) {
+        this.updatePageReferences(cloner, (global::DripSharp.PdfCarton.Cos.COSArray)(subEntry!),
+          objMapping);
+      } else {
+        if ((subEntry is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+          this.updatePageReferences(cloner,
+            (global::DripSharp.PdfCarton.Cos.COSDictionary)(subEntry!), objMapping);
+        }
+      }
+    }
+  }
+
+  private void updateStructParentEntries(global::DripSharp.PdfCarton.Pdmodel.PDPage page,
+    int structParentOffset) {
+    int structParents = page.GetStructParents();
+    if ((structParents >= 0)) {
+      page.SetStructParents((structParents + structParentOffset));
+    }
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annots
+      = page.GetAnnotations();
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> newannots
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation>(global::DripSharp.Runtime.JavaCompat.CollectionCount(annots));
+    global::DripSharp.Runtime.JavaCompat.ForEach(annots, (annot) => {
+        int structParent = annot.GetStructParent();
+        if ((structParent >= 0)) {
+          annot.SetStructParent((structParent + structParentOffset));
+        }
+        global::DripSharp.Runtime.JavaCompat.Add(newannots, annot);
+      });
+    page.SetAnnotations(newannots);
+  }
+
+  private bool isDynamicXfa(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) {
+    return ((acroForm != default!) && acroForm.XfaIsDynamic());
+  }
+
+  private void mergeInto(global::DripSharp.PdfCarton.Cos.COSDictionary src,
+    global::DripSharp.PdfCarton.Cos.COSDictionary dst,
+    global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner,
+    global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSName> exclude) {
+    foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName,
+      global::DripSharp.PdfCarton.Cos.COSBase> entry in src.EntrySet()) {
+      if ((!global::DripSharp.Runtime.JavaCompat.CollectionContains(exclude, entry.Key)
+        && !(dst.ContainsKey(entry.Key)))) {
+        dst.SetItem(entry.Key,
+          cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(entry.Value));
+      }
+    }
+  }
 }

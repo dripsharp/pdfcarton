@@ -8,261 +8,276 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
-public class PDFileAttachmentAppearanceHandler : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class PDFileAttachmentAppearanceHandler
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public PDFileAttachmentAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation) : base(annotation) {
+  public PDFileAttachmentAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
+  : base(annotation) {
 
-}
+  }
 
-public PDFileAttachmentAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation, global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(annotation, document) {
+  public PDFileAttachmentAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(annotation, document) {
 
-}
+  }
 
-public override void GenerateNormalAppearance() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationFileAttachment annotation = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationFileAttachment)(this.getAnnotation()!);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = this.getRectangle();
-if ((rect == default!)) {
-return;
-}
-try {
-using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream = this.getNormalAppearanceAsContentStream()) {
-this.setOpacity(contentStream, annotation.GetConstantOpacity());
-int size = 18;
-rect.SetUpperRightX((rect.GetLowerLeftX() + size));
-rect.SetLowerLeftY((rect.GetUpperRightY() - size));
-annotation.SetRectangle(rect);
-annotation.GetNormalAppearanceStream().SetBBox(new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle((float)(size), (float)(size)));
-string attachmentName = annotation.GetAttachmentName();
-switch (attachmentName) {
-case var __case_72_22_0 when global::System.Object.Equals(__case_72_22_0, "Paperclip"):
-this.drawPaperclip(contentStream);
-break;
-case var __case_75_22_0 when global::System.Object.Equals(__case_75_22_0, "Graph"):
-this.drawGraph(contentStream);
-break;
-case var __case_78_22_0 when global::System.Object.Equals(__case_78_22_0, "Tag"):
-this.drawTag(contentStream);
-break;
-default:
-this.drawPushPin(contentStream);
-break;
-}
-}
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDFileAttachmentAppearanceHandler.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(e));
-}
-}
+  public override void GenerateNormalAppearance() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationFileAttachment annotation
+      = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationFileAttachment)(this.getAnnotation()!);
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = this.getRectangle();
+    if ((rect == default!)) {
+      return;
+    }
+    try {
+      using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
+        = this.getNormalAppearanceAsContentStream()) {
+        this.setOpacity(contentStream, annotation.GetConstantOpacity());
+        int size = 18;
+        rect.SetUpperRightX((rect.GetLowerLeftX() + size));
+        rect.SetLowerLeftY((rect.GetUpperRightY() - size));
+        annotation.SetRectangle(rect);
+        annotation.GetNormalAppearanceStream().SetBBox(new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle((float)(size),
+          (float)(size)));
+        string attachmentName = annotation.GetAttachmentName();
+        switch (attachmentName) {
+          case var __case_72_22_0 when global::System.Object.Equals(__case_72_22_0, "Paperclip"):
+            this.drawPaperclip(contentStream);
+            break;
+          case var __case_75_22_0 when global::System.Object.Equals(__case_75_22_0, "Graph"):
+            this.drawGraph(contentStream);
+            break;
+          case var __case_78_22_0 when global::System.Object.Equals(__case_78_22_0, "Tag"):
+            this.drawTag(contentStream);
+            break;
+          default:
+            this.drawPushPin(contentStream);
+            break;
+        }
+      }
+    } catch (global::System.IO.IOException e) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDFileAttachmentAppearanceHandler.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(e));
+    }
+  }
 
-private void drawPaperclip(global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream) {
-contentStream.MoveTo(13.574F, 9.301F);
-contentStream.LineTo(8.926F, 13.949F);
-contentStream.CurveTo(7.648F, 15.227F, 5.625F, 15.227F, 4.426F, 13.949F);
-contentStream.CurveTo(3.148F, 12.676F, 3.148F, 10.648F, 4.426F, 9.449F);
-contentStream.LineTo(10.426F, 3.449F);
-contentStream.CurveTo(11.176F, 2.773F, 12.301F, 2.773F, 13.051F, 3.449F);
-contentStream.CurveTo(13.801F, 4.199F, 13.801F, 5.398F, 13.051F, 6.074F);
-contentStream.LineTo(7.875F, 11.25F);
-contentStream.CurveTo(7.648F, 11.477F, 7.273F, 11.477F, 7.051F, 11.25F);
-contentStream.CurveTo(6.824F, 11.023F, 6.824F, 10.648F, 7.051F, 10.426F);
-contentStream.LineTo(10.875F, 6.602F);
-contentStream.CurveTo(11.176F, 6.301F, 11.176F, 5.852F, 10.875F, 5.551F);
-contentStream.CurveTo(10.574F, 5.25F, 10.125F, 5.25F, 9.824F, 5.551F);
-contentStream.LineTo(6.0F, 9.449F);
-contentStream.CurveTo(5.176F, 10.273F, 5.176F, 11.551F, 6.0F, 12.375F);
-contentStream.CurveTo(6.824F, 13.125F, 8.102F, 13.125F, 8.926F, 12.375F);
-contentStream.LineTo(14.102F, 7.199F);
-contentStream.CurveTo(15.449F, 5.852F, 15.449F, 3.75F, 14.102F, 2.398F);
-contentStream.CurveTo(12.75F, 1.051F, 10.648F, 1.051F, 9.301F, 2.398F);
-contentStream.LineTo(3.301F, 8.398F);
-contentStream.CurveTo(2.398F, 9.301F, 1.949F, 10.5F, 1.949F, 11.699F);
-contentStream.CurveTo(1.949F, 14.324F, 4.051F, 16.352F, 6.676F, 16.352F);
-contentStream.CurveTo(7.949F, 16.352F, 9.074F, 15.824F, 9.977F, 15.0F);
-contentStream.LineTo(14.625F, 10.352F);
-contentStream.CurveTo(14.926F, 10.051F, 14.926F, 9.602F, 14.625F, 9.301F);
-contentStream.CurveTo(14.324F, 9.0F, 13.875F, 9.0F, 13.574F, 9.301F);
-contentStream.ClosePath();
-contentStream.Fill();
-}
+  private void drawPaperclip(global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream) {
+    contentStream.MoveTo(13.574F, 9.301F);
+    contentStream.LineTo(8.926F, 13.949F);
+    contentStream.CurveTo(7.648F, 15.227F, 5.625F, 15.227F, 4.426F, 13.949F);
+    contentStream.CurveTo(3.148F, 12.676F, 3.148F, 10.648F, 4.426F, 9.449F);
+    contentStream.LineTo(10.426F, 3.449F);
+    contentStream.CurveTo(11.176F, 2.773F, 12.301F, 2.773F, 13.051F, 3.449F);
+    contentStream.CurveTo(13.801F, 4.199F, 13.801F, 5.398F, 13.051F, 6.074F);
+    contentStream.LineTo(7.875F, 11.25F);
+    contentStream.CurveTo(7.648F, 11.477F, 7.273F, 11.477F, 7.051F, 11.25F);
+    contentStream.CurveTo(6.824F, 11.023F, 6.824F, 10.648F, 7.051F, 10.426F);
+    contentStream.LineTo(10.875F, 6.602F);
+    contentStream.CurveTo(11.176F, 6.301F, 11.176F, 5.852F, 10.875F, 5.551F);
+    contentStream.CurveTo(10.574F, 5.25F, 10.125F, 5.25F, 9.824F, 5.551F);
+    contentStream.LineTo(6.0F, 9.449F);
+    contentStream.CurveTo(5.176F, 10.273F, 5.176F, 11.551F, 6.0F, 12.375F);
+    contentStream.CurveTo(6.824F, 13.125F, 8.102F, 13.125F, 8.926F, 12.375F);
+    contentStream.LineTo(14.102F, 7.199F);
+    contentStream.CurveTo(15.449F, 5.852F, 15.449F, 3.75F, 14.102F, 2.398F);
+    contentStream.CurveTo(12.75F, 1.051F, 10.648F, 1.051F, 9.301F, 2.398F);
+    contentStream.LineTo(3.301F, 8.398F);
+    contentStream.CurveTo(2.398F, 9.301F, 1.949F, 10.5F, 1.949F, 11.699F);
+    contentStream.CurveTo(1.949F, 14.324F, 4.051F, 16.352F, 6.676F, 16.352F);
+    contentStream.CurveTo(7.949F, 16.352F, 9.074F, 15.824F, 9.977F, 15.0F);
+    contentStream.LineTo(14.625F, 10.352F);
+    contentStream.CurveTo(14.926F, 10.051F, 14.926F, 9.602F, 14.625F, 9.301F);
+    contentStream.CurveTo(14.324F, 9.0F, 13.875F, 9.0F, 13.574F, 9.301F);
+    contentStream.ClosePath();
+    contentStream.Fill();
+  }
 
-private void drawPushPin(global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream) {
-contentStream.Transform(new global::DripSharp.PdfCarton.Util.Matrix(0.022F, (float)(0), (float)(0), -0.022F, 0.0F, 18.0F));
-contentStream.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance(586.47F, 178.97F));
-contentStream.MoveTo((float)(0), (float)(0));
-contentStream.CurveTo(13.0F, 0.0F, 23.43F, -10.58F, 23.43F, -23.57F);
-contentStream.LineTo(23.43F, -70.53F);
-contentStream.CurveTo(23.43F, -109.32F, -8.19F, -141.06F, -47.03F, -141.06F);
-contentStream.LineTo(-329.17F, -141.06F);
-contentStream.CurveTo(-368.17F, -141.06F, -399.79F, -109.32F, -399.79F, -70.53F);
-contentStream.LineTo(-399.79F, -23.57F);
-contentStream.CurveTo(-399.79F, -10.58F, -389.19F, 0.0F, -376.19F, 0.0F);
-contentStream.LineTo(-305.74F, 0.0F);
-contentStream.LineTo(-305.74F, 129.52F);
-contentStream.CurveTo(-364.0F, 168.47F, -399.79F, 234.67F, -399.79F, 305.36F);
-contentStream.CurveTo(-399.79F, 318.34F, -389.19F, 328.76F, -376.19F, 328.76F);
-contentStream.LineTo(-211.69F, 328.76F);
-contentStream.LineTo(-211.69F, 555.9F);
-contentStream.CurveTo(-211.69F, 568.88F, -201.1F, 579.3F, -188.1F, 579.3F);
-contentStream.CurveTo(-175.1F, 579.3F, -164.67F, 568.88F, -164.67F, 555.9F);
-contentStream.LineTo(-164.67F, 328.76F);
-contentStream.LineTo(0.0F, 328.76F);
-contentStream.CurveTo(13.0F, 328.76F, 23.43F, 318.34F, 23.43F, 305.36F);
-contentStream.CurveTo(23.43F, 234.67F, -12.2F, 168.47F, -70.62F, 129.52F);
-contentStream.LineTo(-70.62F, 0.0F);
-contentStream.LineTo(0.0F, 0.0F);
-contentStream.ClosePath();
-contentStream.MoveTo(-25.2F, 281.79F);
-contentStream.LineTo(-351.0F, 281.79F);
-contentStream.CurveTo(-343.77F, 232.42F, -314.24F, 188.18F, -270.43F, 162.86F);
-contentStream.CurveTo(-263.21F, 158.69F, -258.71F, 150.99F, -258.71F, 142.5F);
-contentStream.LineTo(-258.71F, 0.0F);
-contentStream.LineTo(-117.64F, 0.0F);
-contentStream.LineTo(-117.64F, 142.5F);
-contentStream.CurveTo(-117.64F, 150.99F, -113.15F, 158.69F, -105.77F, 162.86F);
-contentStream.CurveTo(-61.95F, 188.18F, -32.42F, 232.42F, -25.2F, 281.79F);
-contentStream.ClosePath();
-contentStream.MoveTo(-352.76F, -46.97F);
-contentStream.LineTo(-352.76F, -70.53F);
-contentStream.CurveTo(-352.76F, -83.52F, -342.17F, -93.93F, -329.17F, -93.93F);
-contentStream.LineTo(-47.03F, -93.93F);
-contentStream.CurveTo(-34.03F, -93.93F, -23.59F, -83.52F, -23.59F, -70.53F);
-contentStream.LineTo(-23.59F, -46.97F);
-contentStream.LineTo(-352.76F, -46.97F);
-contentStream.LineTo(-352.76F, -46.97F);
-contentStream.ClosePath();
-contentStream.Fill();
-}
+  private void drawPushPin(global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream) {
+    contentStream.Transform(new global::DripSharp.PdfCarton.Util.Matrix(0.022F, (float)(0),
+      (float)(0), -0.022F, 0.0F, 18.0F));
+    contentStream.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance(586.47F,
+      178.97F));
+    contentStream.MoveTo((float)(0), (float)(0));
+    contentStream.CurveTo(13.0F, 0.0F, 23.43F, -10.58F, 23.43F, -23.57F);
+    contentStream.LineTo(23.43F, -70.53F);
+    contentStream.CurveTo(23.43F, -109.32F, -8.19F, -141.06F, -47.03F, -141.06F);
+    contentStream.LineTo(-329.17F, -141.06F);
+    contentStream.CurveTo(-368.17F, -141.06F, -399.79F, -109.32F, -399.79F, -70.53F);
+    contentStream.LineTo(-399.79F, -23.57F);
+    contentStream.CurveTo(-399.79F, -10.58F, -389.19F, 0.0F, -376.19F, 0.0F);
+    contentStream.LineTo(-305.74F, 0.0F);
+    contentStream.LineTo(-305.74F, 129.52F);
+    contentStream.CurveTo(-364.0F, 168.47F, -399.79F, 234.67F, -399.79F, 305.36F);
+    contentStream.CurveTo(-399.79F, 318.34F, -389.19F, 328.76F, -376.19F, 328.76F);
+    contentStream.LineTo(-211.69F, 328.76F);
+    contentStream.LineTo(-211.69F, 555.9F);
+    contentStream.CurveTo(-211.69F, 568.88F, -201.1F, 579.3F, -188.1F, 579.3F);
+    contentStream.CurveTo(-175.1F, 579.3F, -164.67F, 568.88F, -164.67F, 555.9F);
+    contentStream.LineTo(-164.67F, 328.76F);
+    contentStream.LineTo(0.0F, 328.76F);
+    contentStream.CurveTo(13.0F, 328.76F, 23.43F, 318.34F, 23.43F, 305.36F);
+    contentStream.CurveTo(23.43F, 234.67F, -12.2F, 168.47F, -70.62F, 129.52F);
+    contentStream.LineTo(-70.62F, 0.0F);
+    contentStream.LineTo(0.0F, 0.0F);
+    contentStream.ClosePath();
+    contentStream.MoveTo(-25.2F, 281.79F);
+    contentStream.LineTo(-351.0F, 281.79F);
+    contentStream.CurveTo(-343.77F, 232.42F, -314.24F, 188.18F, -270.43F, 162.86F);
+    contentStream.CurveTo(-263.21F, 158.69F, -258.71F, 150.99F, -258.71F, 142.5F);
+    contentStream.LineTo(-258.71F, 0.0F);
+    contentStream.LineTo(-117.64F, 0.0F);
+    contentStream.LineTo(-117.64F, 142.5F);
+    contentStream.CurveTo(-117.64F, 150.99F, -113.15F, 158.69F, -105.77F, 162.86F);
+    contentStream.CurveTo(-61.95F, 188.18F, -32.42F, 232.42F, -25.2F, 281.79F);
+    contentStream.ClosePath();
+    contentStream.MoveTo(-352.76F, -46.97F);
+    contentStream.LineTo(-352.76F, -70.53F);
+    contentStream.CurveTo(-352.76F, -83.52F, -342.17F, -93.93F, -329.17F, -93.93F);
+    contentStream.LineTo(-47.03F, -93.93F);
+    contentStream.CurveTo(-34.03F, -93.93F, -23.59F, -83.52F, -23.59F, -70.53F);
+    contentStream.LineTo(-23.59F, -46.97F);
+    contentStream.LineTo(-352.76F, -46.97F);
+    contentStream.LineTo(-352.76F, -46.97F);
+    contentStream.ClosePath();
+    contentStream.Fill();
+  }
 
-private void drawGraph(global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream) {
-contentStream.Transform(new global::DripSharp.PdfCarton.Util.Matrix(0.022F, (float)(0), (float)(0), -0.022F, 0.0F, 18.0F));
-contentStream.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance(736.04F, 907.89F));
-contentStream.MoveTo(0.0F, 0.0F);
-contentStream.LineTo(-675.23F, 0.0F);
-contentStream.CurveTo(-679.72F, 0.0F, -683.41F, -3.53F, -683.41F, -8.01F);
-contentStream.LineTo(-683.41F, -683.37F);
-contentStream.LineTo(-667.22F, -683.37F);
-contentStream.LineTo(-667.22F, -353.95F);
-contentStream.CurveTo(-583.85F, -357.8F, -541.53F, -419.99F, -500.49F, -480.27F);
-contentStream.CurveTo(-459.93F, -539.74F, -418.09F, -601.46F, -337.61F, -601.46F);
-contentStream.CurveTo(-257.14F, -601.46F, -215.3F, -539.74F, -174.74F, -480.27F);
-contentStream.CurveTo(-132.58F, -418.07F, -88.81F, -353.79F, 0.0F, -353.79F);
-contentStream.LineTo(0.0F, -337.6F);
-contentStream.CurveTo(-97.31F, -337.6F, -143.48F, -405.41F, -188.2F, -471.13F);
-contentStream.CurveTo(-228.12F, -529.8F, -265.8F, -585.27F, -337.61F, -585.27F);
-contentStream.CurveTo(-409.43F, -585.27F, -447.11F, -529.8F, -487.03F, -471.13F);
-contentStream.CurveTo(-530.47F, -407.33F, -575.36F, -341.45F, -667.22F, -337.76F);
-contentStream.LineTo(-667.22F, -16.19F);
-contentStream.LineTo(-615.76F, -16.19F);
-contentStream.LineTo(-615.76F, -255.68F);
-contentStream.CurveTo(-615.76F, -260.17F, -612.23F, -263.7F, -607.74F, -263.7F);
-contentStream.LineTo(-525.82F, -263.7F);
-contentStream.LineTo(-525.82F, -345.77F);
-contentStream.CurveTo(-525.82F, -350.26F, -522.13F, -353.79F, -517.64F, -353.79F);
-contentStream.LineTo(-435.73F, -353.79F);
-contentStream.LineTo(-435.73F, -458.31F);
-contentStream.CurveTo(-435.73F, -462.8F, -432.2F, -466.32F, -427.71F, -466.32F);
-contentStream.LineTo(-337.61F, -466.32F);
-contentStream.CurveTo(-333.13F, -466.32F, -329.6F, -462.8F, -329.6F, -458.31F);
-contentStream.LineTo(-329.6F, -421.28F);
-contentStream.LineTo(-247.68F, -421.28F);
-contentStream.CurveTo(-243.19F, -421.28F, -239.5F, -417.75F, -239.5F, -413.26F);
-contentStream.LineTo(-239.5F, -331.35F);
-contentStream.LineTo(-157.58F, -331.35F);
-contentStream.CurveTo(-153.1F, -331.35F, -149.41F, -327.66F, -149.41F, -323.17F);
-contentStream.LineTo(-149.41F, -218.81F);
-contentStream.LineTo(-67.49F, -218.81F);
-contentStream.CurveTo(-63.0F, -218.81F, -59.47F, -215.13F, -59.47F, -210.64F);
-contentStream.LineTo(-59.47F, -16.19F);
-contentStream.LineTo(0.0F, -16.19F);
-contentStream.LineTo(0.0F, 0.0F);
-contentStream.ClosePath();
-contentStream.MoveTo(-149.41F, -16.19F);
-contentStream.LineTo(-75.67F, -16.19F);
-contentStream.LineTo(-75.67F, -202.62F);
-contentStream.LineTo(-149.41F, -202.62F);
-contentStream.LineTo(-149.41F, -16.19F);
-contentStream.ClosePath();
-contentStream.MoveTo(-239.5F, -16.19F);
-contentStream.LineTo(-165.76F, -16.19F);
-contentStream.LineTo(-165.76F, -315.16F);
-contentStream.LineTo(-239.5F, -315.16F);
-contentStream.LineTo(-239.5F, -16.19F);
-contentStream.ClosePath();
-contentStream.MoveTo(-329.6F, -16.19F);
-contentStream.LineTo(-255.7F, -16.19F);
-contentStream.LineTo(-255.7F, -405.09F);
-contentStream.LineTo(-329.6F, -405.09F);
-contentStream.LineTo(-329.6F, -16.19F);
-contentStream.ClosePath();
-contentStream.MoveTo(-419.53F, -16.19F);
-contentStream.LineTo(-345.79F, -16.19F);
-contentStream.LineTo(-345.79F, -450.13F);
-contentStream.LineTo(-419.53F, -450.13F);
-contentStream.LineTo(-419.53F, -16.19F);
-contentStream.ClosePath();
-contentStream.MoveTo(-509.63F, -16.19F);
-contentStream.LineTo(-435.73F, -16.19F);
-contentStream.LineTo(-435.73F, -337.6F);
-contentStream.LineTo(-509.63F, -337.6F);
-contentStream.LineTo(-509.63F, -16.19F);
-contentStream.ClosePath();
-contentStream.MoveTo(-599.56F, -16.19F);
-contentStream.LineTo(-525.82F, -16.19F);
-contentStream.LineTo(-525.82F, -247.51F);
-contentStream.LineTo(-599.56F, -247.51F);
-contentStream.LineTo(-599.56F, -16.19F);
-contentStream.ClosePath();
-contentStream.Fill();
-}
+  private void drawGraph(global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream) {
+    contentStream.Transform(new global::DripSharp.PdfCarton.Util.Matrix(0.022F, (float)(0),
+      (float)(0), -0.022F, 0.0F, 18.0F));
+    contentStream.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance(736.04F,
+      907.89F));
+    contentStream.MoveTo(0.0F, 0.0F);
+    contentStream.LineTo(-675.23F, 0.0F);
+    contentStream.CurveTo(-679.72F, 0.0F, -683.41F, -3.53F, -683.41F, -8.01F);
+    contentStream.LineTo(-683.41F, -683.37F);
+    contentStream.LineTo(-667.22F, -683.37F);
+    contentStream.LineTo(-667.22F, -353.95F);
+    contentStream.CurveTo(-583.85F, -357.8F, -541.53F, -419.99F, -500.49F, -480.27F);
+    contentStream.CurveTo(-459.93F, -539.74F, -418.09F, -601.46F, -337.61F, -601.46F);
+    contentStream.CurveTo(-257.14F, -601.46F, -215.3F, -539.74F, -174.74F, -480.27F);
+    contentStream.CurveTo(-132.58F, -418.07F, -88.81F, -353.79F, 0.0F, -353.79F);
+    contentStream.LineTo(0.0F, -337.6F);
+    contentStream.CurveTo(-97.31F, -337.6F, -143.48F, -405.41F, -188.2F, -471.13F);
+    contentStream.CurveTo(-228.12F, -529.8F, -265.8F, -585.27F, -337.61F, -585.27F);
+    contentStream.CurveTo(-409.43F, -585.27F, -447.11F, -529.8F, -487.03F, -471.13F);
+    contentStream.CurveTo(-530.47F, -407.33F, -575.36F, -341.45F, -667.22F, -337.76F);
+    contentStream.LineTo(-667.22F, -16.19F);
+    contentStream.LineTo(-615.76F, -16.19F);
+    contentStream.LineTo(-615.76F, -255.68F);
+    contentStream.CurveTo(-615.76F, -260.17F, -612.23F, -263.7F, -607.74F, -263.7F);
+    contentStream.LineTo(-525.82F, -263.7F);
+    contentStream.LineTo(-525.82F, -345.77F);
+    contentStream.CurveTo(-525.82F, -350.26F, -522.13F, -353.79F, -517.64F, -353.79F);
+    contentStream.LineTo(-435.73F, -353.79F);
+    contentStream.LineTo(-435.73F, -458.31F);
+    contentStream.CurveTo(-435.73F, -462.8F, -432.2F, -466.32F, -427.71F, -466.32F);
+    contentStream.LineTo(-337.61F, -466.32F);
+    contentStream.CurveTo(-333.13F, -466.32F, -329.6F, -462.8F, -329.6F, -458.31F);
+    contentStream.LineTo(-329.6F, -421.28F);
+    contentStream.LineTo(-247.68F, -421.28F);
+    contentStream.CurveTo(-243.19F, -421.28F, -239.5F, -417.75F, -239.5F, -413.26F);
+    contentStream.LineTo(-239.5F, -331.35F);
+    contentStream.LineTo(-157.58F, -331.35F);
+    contentStream.CurveTo(-153.1F, -331.35F, -149.41F, -327.66F, -149.41F, -323.17F);
+    contentStream.LineTo(-149.41F, -218.81F);
+    contentStream.LineTo(-67.49F, -218.81F);
+    contentStream.CurveTo(-63.0F, -218.81F, -59.47F, -215.13F, -59.47F, -210.64F);
+    contentStream.LineTo(-59.47F, -16.19F);
+    contentStream.LineTo(0.0F, -16.19F);
+    contentStream.LineTo(0.0F, 0.0F);
+    contentStream.ClosePath();
+    contentStream.MoveTo(-149.41F, -16.19F);
+    contentStream.LineTo(-75.67F, -16.19F);
+    contentStream.LineTo(-75.67F, -202.62F);
+    contentStream.LineTo(-149.41F, -202.62F);
+    contentStream.LineTo(-149.41F, -16.19F);
+    contentStream.ClosePath();
+    contentStream.MoveTo(-239.5F, -16.19F);
+    contentStream.LineTo(-165.76F, -16.19F);
+    contentStream.LineTo(-165.76F, -315.16F);
+    contentStream.LineTo(-239.5F, -315.16F);
+    contentStream.LineTo(-239.5F, -16.19F);
+    contentStream.ClosePath();
+    contentStream.MoveTo(-329.6F, -16.19F);
+    contentStream.LineTo(-255.7F, -16.19F);
+    contentStream.LineTo(-255.7F, -405.09F);
+    contentStream.LineTo(-329.6F, -405.09F);
+    contentStream.LineTo(-329.6F, -16.19F);
+    contentStream.ClosePath();
+    contentStream.MoveTo(-419.53F, -16.19F);
+    contentStream.LineTo(-345.79F, -16.19F);
+    contentStream.LineTo(-345.79F, -450.13F);
+    contentStream.LineTo(-419.53F, -450.13F);
+    contentStream.LineTo(-419.53F, -16.19F);
+    contentStream.ClosePath();
+    contentStream.MoveTo(-509.63F, -16.19F);
+    contentStream.LineTo(-435.73F, -16.19F);
+    contentStream.LineTo(-435.73F, -337.6F);
+    contentStream.LineTo(-509.63F, -337.6F);
+    contentStream.LineTo(-509.63F, -16.19F);
+    contentStream.ClosePath();
+    contentStream.MoveTo(-599.56F, -16.19F);
+    contentStream.LineTo(-525.82F, -16.19F);
+    contentStream.LineTo(-525.82F, -247.51F);
+    contentStream.LineTo(-599.56F, -247.51F);
+    contentStream.LineTo(-599.56F, -16.19F);
+    contentStream.ClosePath();
+    contentStream.Fill();
+  }
 
-private void drawTag(global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream) {
-contentStream.Transform(new global::DripSharp.PdfCarton.Util.Matrix(0.022F, (float)(0), (float)(0), -0.022F, 0.0F, 18.0F));
-contentStream.SaveGraphicsState();
-contentStream.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance(209.26F, 128.32F));
-contentStream.MoveTo(0.0F, 0.0F);
-contentStream.CurveTo(-44.73F, 0.0F, -80.64F, 36.23F, -80.64F, 80.64F);
-contentStream.CurveTo(-80.64F, 125.2F, -44.57F, 161.27F, 0.0F, 161.27F);
-contentStream.CurveTo(44.56F, 161.27F, 80.47F, 125.04F, 80.47F, 80.64F);
-contentStream.CurveTo(80.63F, 36.07F, 44.56F, 0.0F, 0.0F, 0.0F);
-contentStream.ClosePath();
-contentStream.MoveTo(0.0F, 132.74F);
-contentStream.CurveTo(-28.7F, 132.74F, -52.1F, 109.33F, -52.1F, 80.64F);
-contentStream.CurveTo(-52.1F, 51.94F, -28.7F, 28.54F, 0.0F, 28.54F);
-contentStream.CurveTo(28.69F, 28.54F, 51.93F, 51.94F, 51.93F, 80.64F);
-contentStream.CurveTo(51.93F, 109.33F, 28.85F, 132.74F, 0.0F, 132.74F);
-contentStream.ClosePath();
-contentStream.Fill();
-contentStream.RestoreGraphicsState();
-contentStream.SaveGraphicsState();
-contentStream.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance(382.22F, 79.91F));
-contentStream.MoveTo(0.0F, 0.0F);
-contentStream.CurveTo(-14.58F, -16.19F, -35.1F, -24.85F, -57.22F, -24.85F);
-contentStream.LineTo(-208.23F, -26.45F);
-contentStream.CurveTo(-240.45F, -26.45F, -271.23F, -14.75F, -293.35F, 8.66F);
-contentStream.CurveTo(-316.76F, 30.78F, -328.46F, 61.56F, -328.46F, 93.78F);
-contentStream.LineTo(-327.02F, 244.95F);
-contentStream.CurveTo(-325.57F, 265.47F, -318.2F, 285.98F, -302.17F, 302.18F);
-contentStream.LineTo(58.68F, 663.02F);
-contentStream.LineTo(360.85F, 360.69F);
-contentStream.LineTo(0.0F, 0.0F);
-contentStream.LineTo(0.0F, 0.0F);
-contentStream.ClosePath();
-contentStream.MoveTo(57.23F, 621.82F);
-contentStream.LineTo(-283.09F, 281.5F);
-contentStream.CurveTo(-293.35F, 271.24F, -299.12F, 258.09F, -299.12F, 243.34F);
-contentStream.LineTo(-300.57F, 93.78F);
-contentStream.CurveTo(-300.57F, 70.38F, -290.31F, 46.81F, -274.12F, 29.34F);
-contentStream.CurveTo(-256.64F, 11.7F, -233.08F, 1.44F, -208.23F, 1.44F);
-contentStream.LineTo(-58.67F, 2.89F);
-contentStream.CurveTo(-44.08F, 2.89F, -30.77F, 8.66F, -20.51F, 19.08F);
-contentStream.LineTo(319.81F, 359.4F);
-contentStream.LineTo(57.23F, 621.82F);
-contentStream.ClosePath();
-contentStream.Fill();
-contentStream.RestoreGraphicsState();
-}
+  private void drawTag(global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream) {
+    contentStream.Transform(new global::DripSharp.PdfCarton.Util.Matrix(0.022F, (float)(0),
+      (float)(0), -0.022F, 0.0F, 18.0F));
+    contentStream.SaveGraphicsState();
+    contentStream.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance(209.26F,
+      128.32F));
+    contentStream.MoveTo(0.0F, 0.0F);
+    contentStream.CurveTo(-44.73F, 0.0F, -80.64F, 36.23F, -80.64F, 80.64F);
+    contentStream.CurveTo(-80.64F, 125.2F, -44.57F, 161.27F, 0.0F, 161.27F);
+    contentStream.CurveTo(44.56F, 161.27F, 80.47F, 125.04F, 80.47F, 80.64F);
+    contentStream.CurveTo(80.63F, 36.07F, 44.56F, 0.0F, 0.0F, 0.0F);
+    contentStream.ClosePath();
+    contentStream.MoveTo(0.0F, 132.74F);
+    contentStream.CurveTo(-28.7F, 132.74F, -52.1F, 109.33F, -52.1F, 80.64F);
+    contentStream.CurveTo(-52.1F, 51.94F, -28.7F, 28.54F, 0.0F, 28.54F);
+    contentStream.CurveTo(28.69F, 28.54F, 51.93F, 51.94F, 51.93F, 80.64F);
+    contentStream.CurveTo(51.93F, 109.33F, 28.85F, 132.74F, 0.0F, 132.74F);
+    contentStream.ClosePath();
+    contentStream.Fill();
+    contentStream.RestoreGraphicsState();
+    contentStream.SaveGraphicsState();
+    contentStream.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance(382.22F,
+      79.91F));
+    contentStream.MoveTo(0.0F, 0.0F);
+    contentStream.CurveTo(-14.58F, -16.19F, -35.1F, -24.85F, -57.22F, -24.85F);
+    contentStream.LineTo(-208.23F, -26.45F);
+    contentStream.CurveTo(-240.45F, -26.45F, -271.23F, -14.75F, -293.35F, 8.66F);
+    contentStream.CurveTo(-316.76F, 30.78F, -328.46F, 61.56F, -328.46F, 93.78F);
+    contentStream.LineTo(-327.02F, 244.95F);
+    contentStream.CurveTo(-325.57F, 265.47F, -318.2F, 285.98F, -302.17F, 302.18F);
+    contentStream.LineTo(58.68F, 663.02F);
+    contentStream.LineTo(360.85F, 360.69F);
+    contentStream.LineTo(0.0F, 0.0F);
+    contentStream.LineTo(0.0F, 0.0F);
+    contentStream.ClosePath();
+    contentStream.MoveTo(57.23F, 621.82F);
+    contentStream.LineTo(-283.09F, 281.5F);
+    contentStream.CurveTo(-293.35F, 271.24F, -299.12F, 258.09F, -299.12F, 243.34F);
+    contentStream.LineTo(-300.57F, 93.78F);
+    contentStream.CurveTo(-300.57F, 70.38F, -290.31F, 46.81F, -274.12F, 29.34F);
+    contentStream.CurveTo(-256.64F, 11.7F, -233.08F, 1.44F, -208.23F, 1.44F);
+    contentStream.LineTo(-58.67F, 2.89F);
+    contentStream.CurveTo(-44.08F, 2.89F, -30.77F, 8.66F, -20.51F, 19.08F);
+    contentStream.LineTo(319.81F, 359.4F);
+    contentStream.LineTo(57.23F, 621.82F);
+    contentStream.ClosePath();
+    contentStream.Fill();
+    contentStream.RestoreGraphicsState();
+  }
 
-public override void GenerateRolloverAppearance() {}
+  public override void GenerateRolloverAppearance() {}
 
-public override void GenerateDownAppearance() {}
+  public override void GenerateDownAppearance() {}
 }

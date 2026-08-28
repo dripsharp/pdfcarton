@@ -9,13 +9,17 @@
 namespace DripSharp.PdfCarton.Preflight.Process;
 
 public class XRefValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-global::DripSharp.PdfCarton.Cos.COSDocument document = ctx.GetDocument().GetDocument();
-if (document.IsXRefStream()) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailer, "/XRef cross reference streams are not allowed"));
-}
-if ((global::DripSharp.Runtime.JavaCompat.MapCount(document.GetXrefTable()) > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxIndirectObj)) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxIndirectObjRange, "Too many indirect objects"));
-}
-}
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    global::DripSharp.PdfCarton.Cos.COSDocument document = ctx.GetDocument().GetDocument();
+    if (document.IsXRefStream()) {
+      this.AddValidationError(ctx,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailer,
+        "/XRef cross reference streams are not allowed"));
+    }
+    if ((global::DripSharp.Runtime.JavaCompat.MapCount(document.GetXrefTable()) > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxIndirectObj)) {
+      this.AddValidationError(ctx,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxIndirectObjRange,
+        "Too many indirect objects"));
+    }
+  }
 }

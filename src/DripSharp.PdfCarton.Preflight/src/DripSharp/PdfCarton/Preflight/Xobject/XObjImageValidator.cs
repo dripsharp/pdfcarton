@@ -8,89 +8,118 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Xobject;
 
-public class XObjImageValidator : global::DripSharp.PdfCarton.Preflight.Xobject.AbstractXObjValidator {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOGGER = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class XObjImageValidator
+: global::DripSharp.PdfCarton.Preflight.Xobject.AbstractXObjValidator {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOGGER
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-protected internal global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject XImage = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject XImage
+    = default!;
 
-public XObjImageValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject xobj) : base(context, xobj.GetCOSObject()) {
-this.XImage = xobj;
-}
+  public XObjImageValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject xobj) : base(context,
+    xobj.GetCOSObject()) {
+    this.XImage = xobj;
+  }
 
-protected internal override void CheckMandatoryFields() {
-bool res = (this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Width) != default!);
-res = (res && (this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Height) != default!));
-if (!res) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicMissingField));
-}
-}
+  protected internal override void CheckMandatoryFields() {
+    bool res = (this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Width) != default!);
+    res = (res && (this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Height)
+      != default!));
+    if (!res) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicMissingField));
+    }
+  }
 
-protected internal virtual void CheckAlternates() {
-if ((this.Xobject.GetItem("Alternates") != default!)) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedKey, "Unexpected 'Alternates' Key"));
-}
-}
+  protected internal virtual void CheckAlternates() {
+    if ((this.Xobject.GetItem("Alternates") != default!)) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedKey,
+        "Unexpected 'Alternates' Key"));
+    }
+  }
 
-protected internal virtual void CheckInterpolate() {
-if (((this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Interpolate) != default!) && this.Xobject.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Interpolate, true))) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey, "Unexpected 'true' value for 'Interpolate' Key"));
-}
-}
+  protected internal virtual void CheckInterpolate() {
+    if (((this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Interpolate) != default!)
+      && this.Xobject.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Interpolate, true))) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey,
+        "Unexpected 'true' value for 'Interpolate' Key"));
+    }
+  }
 
-protected internal virtual void CheckIntent() {
-global::DripSharp.PdfCarton.Cos.COSName renderingIntent = base.Xobject.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Intent);
-if (((renderingIntent != default!) && !(global::DripSharp.PdfCarton.Preflight.Utils.RenderingIntents.Contains(renderingIntent)))) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected value '", renderingIntent.GetName()), "' for Intent key in image")));
-}
-}
+  protected internal virtual void CheckIntent() {
+    global::DripSharp.PdfCarton.Cos.COSName renderingIntent
+      = base.Xobject.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Intent);
+    if (((renderingIntent != default!)
+      && !(global::DripSharp.PdfCarton.Preflight.Utils.RenderingIntents.Contains(renderingIntent)))) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected value '",
+        renderingIntent.GetName()), "' for Intent key in image")));
+    }
+  }
 
-protected internal virtual void CheckBPC() {
-int bpc = this.XImage.GetBitsPerComponent();
-if (((((bpc != 1) && (bpc != 2)) && (bpc != 4)) && (bpc != 8))) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected value ", bpc), " for BitsPerComponent key in image")));
-}
-}
+  protected internal virtual void CheckBPC() {
+    int bpc = this.XImage.GetBitsPerComponent();
+    if (((((bpc != 1) && (bpc != 2)) && (bpc != 4)) && (bpc != 8))) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected value ",
+        bpc), " for BitsPerComponent key in image")));
+    }
+  }
 
-protected internal virtual void CheckColorSpaceAndImageMask() {
-global::DripSharp.PdfCarton.Cos.COSBase csImg = this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Colorspace);
-global::DripSharp.PdfCarton.Cos.COSBase bitsPerComp = this.Xobject.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent);
-global::DripSharp.PdfCarton.Cos.COSBase mask = this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Mask);
-if (this.isImageMaskTrue()) {
-if (((csImg != default!) || (mask != default!))) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedKey, "ImageMask entry is true, ColorSpace and Mask are forbidden."));
-}
-if (((bitsPerComp is global::DripSharp.PdfCarton.Cos.COSInteger) && (((global::DripSharp.PdfCarton.Cos.COSInteger)(bitsPerComp!)).IntValue() != 1))) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey, "ImageMask entry is true, BitsPerComponent must be absent or 1."));
-}
-} else {
-try {
-global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = base.Context.GetConfig();
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory csFact = config.GetColorSpaceHelperFact();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pdCS = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(csImg);
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper csh = csFact.GetColorSpaceHelper(base.Context, pdCS, global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.NoPattern);
-csh.Validate();
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Preflight.Xobject.XObjImageValidator.LOGGER, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Couldn't create PDColorSpace ", csImg)));
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidUnknownColorSpace));
-}
-}
-}
+  protected internal virtual void CheckColorSpaceAndImageMask() {
+    global::DripSharp.PdfCarton.Cos.COSBase csImg
+      = this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Colorspace);
+    global::DripSharp.PdfCarton.Cos.COSBase bitsPerComp
+      = this.Xobject.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent);
+    global::DripSharp.PdfCarton.Cos.COSBase mask
+      = this.Xobject.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Mask);
+    if (this.isImageMaskTrue()) {
+      if (((csImg != default!) || (mask != default!))) {
+        base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedKey,
+          "ImageMask entry is true, ColorSpace and Mask are forbidden."));
+      }
+      if (((bitsPerComp is global::DripSharp.PdfCarton.Cos.COSInteger)
+        && (((global::DripSharp.PdfCarton.Cos.COSInteger)(bitsPerComp!)).IntValue() != 1))) {
+        base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey,
+          "ImageMask entry is true, BitsPerComponent must be absent or 1."));
+      }
+    } else {
+      try {
+        global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config
+          = base.Context.GetConfig();
+        global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory csFact
+          = config.GetColorSpaceHelperFact();
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace pdCS
+          = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(csImg);
+        global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper csh
+          = csFact.GetColorSpaceHelper(base.Context, pdCS,
+          global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.NoPattern);
+        csh.Validate();
+      } catch (global::System.IO.IOException e) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Preflight.Xobject.XObjImageValidator.LOGGER,
+          (global::System.Exception)e,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Couldn't create PDColorSpace ",
+          csImg)));
+        base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidUnknownColorSpace));
+      }
+    }
+  }
 
-private bool isImageMaskTrue() {
-global::DripSharp.PdfCarton.Cos.COSBase imgMask = this.Xobject.GetItem("ImageMask");
-if ((imgMask is global::DripSharp.PdfCarton.Cos.COSBoolean)) {
-return ((global::DripSharp.PdfCarton.Cos.COSBoolean)(imgMask!)).GetValue();
-} else {
-return false;
-}
-}
+  private bool isImageMaskTrue() {
+    global::DripSharp.PdfCarton.Cos.COSBase imgMask = this.Xobject.GetItem("ImageMask");
+    if ((imgMask is global::DripSharp.PdfCarton.Cos.COSBoolean)) {
+      return ((global::DripSharp.PdfCarton.Cos.COSBoolean)(imgMask!)).GetValue();
+    } else {
+      return false;
+    }
+  }
 
-public override void Validate() {
-base.Validate();
-this.CheckAlternates();
-this.CheckInterpolate();
-this.CheckIntent();
-this.CheckBPC();
-this.CheckColorSpaceAndImageMask();
-}
+  public override void Validate() {
+    base.Validate();
+    this.CheckAlternates();
+    this.CheckInterpolate();
+    this.CheckIntent();
+    this.CheckBPC();
+    this.CheckColorSpaceAndImageMask();
+  }
 }

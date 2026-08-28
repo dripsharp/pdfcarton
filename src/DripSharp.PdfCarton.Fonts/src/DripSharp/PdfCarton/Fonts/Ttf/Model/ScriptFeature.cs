@@ -9,11 +9,11 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Model;
 
 public interface ScriptFeature {
-public string GetName();
+  public string GetName();
 
-public global::System.Collections.Generic.ISet<global::System.Collections.Generic.IList<int>> GetAllGlyphIdsForSubstitution();
+  public global::System.Collections.Generic.ISet<global::System.Collections.Generic.IList<int>> GetAllGlyphIdsForSubstitution();
 
-public bool CanReplaceGlyphs(global::System.Collections.Generic.IList<int> glyphIds);
+  public bool CanReplaceGlyphs(global::System.Collections.Generic.IList<int> glyphIds);
 
-public int? GetReplacementForGlyphs(global::System.Collections.Generic.IList<int> glyphIds);
+  public int? GetReplacementForGlyphs(global::System.Collections.Generic.IList<int> glyphIds);
 }

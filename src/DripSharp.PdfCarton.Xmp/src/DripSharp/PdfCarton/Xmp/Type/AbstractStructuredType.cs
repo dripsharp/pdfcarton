@@ -8,93 +8,109 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-public abstract class AbstractStructuredType : global::DripSharp.PdfCarton.Xmp.Type.AbstractComplexProperty {
-protected internal const string StructureArrayName = "li";
+public abstract class AbstractStructuredType
+: global::DripSharp.PdfCarton.Xmp.Type.AbstractComplexProperty {
+  protected internal const string StructureArrayName = "li";
 
-private string @namespace = null!;
+  private string @namespace = null!;
 
-private string preferedPrefix = null!;
+  private string preferedPrefix = null!;
 
-private string prefix = null!;
+  private string prefix = null!;
 
-public AbstractStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : this(metadata, (string)default!, (string)default!, (string)default!) {
+  public AbstractStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata)
+  : this(metadata, (string)default!, (string)default!, (string)default!) {
 
-}
+  }
 
-public AbstractStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI) : this(metadata, namespaceURI, (string)default!, (string)default!) {
-global::DripSharp.PdfCarton.Xmp.Type.StructuredType st = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(((object)(this)).GetType(), typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!;
-if ((st != default!)) {
-this.@namespace = st.@Namespace();
-this.preferedPrefix = st.PreferedPrefix();
-} else {
-throw new global::System.ArgumentException(" StructuredType annotation cannot be null");
-}
-this.prefix = this.preferedPrefix;
-}
+  public AbstractStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata,
+    string namespaceURI) : this(metadata, namespaceURI, (string)default!, (string)default!) {
+    global::DripSharp.PdfCarton.Xmp.Type.StructuredType st
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(((object)(this)).GetType(),
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!;
+    if ((st != default!)) {
+      this.@namespace = st.@Namespace();
+      this.preferedPrefix = st.PreferedPrefix();
+    } else {
+      throw new global::System.ArgumentException(" StructuredType annotation cannot be null");
+    }
+    this.prefix = this.preferedPrefix;
+  }
 
-public AbstractStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string fieldPrefix, string propertyName) : base(metadata, propertyName) {
-global::DripSharp.PdfCarton.Xmp.Type.StructuredType st = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(((object)(this)).GetType(), typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!;
-if ((st != default!)) {
-this.@namespace = st.@Namespace();
-this.preferedPrefix = st.PreferedPrefix();
-} else {
-if ((namespaceURI == default!)) {
-throw new global::System.ArgumentException("Both StructuredType annotation and namespace parameter cannot be null");
-}
-this.@namespace = namespaceURI;
-this.preferedPrefix = fieldPrefix;
-}
-this.prefix = ((fieldPrefix == default!) ? this.preferedPrefix : fieldPrefix);
-}
+  public AbstractStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata,
+    string namespaceURI, string fieldPrefix, string propertyName) : base(metadata, propertyName) {
+    global::DripSharp.PdfCarton.Xmp.Type.StructuredType st
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(((object)(this)).GetType(),
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!;
+    if ((st != default!)) {
+      this.@namespace = st.@Namespace();
+      this.preferedPrefix = st.PreferedPrefix();
+    } else {
+      if ((namespaceURI == default!)) {
+        throw new global::System.ArgumentException("Both StructuredType annotation and namespace parameter cannot be null");
+      }
+      this.@namespace = namespaceURI;
+      this.preferedPrefix = fieldPrefix;
+    }
+    this.prefix = ((fieldPrefix == default!) ? this.preferedPrefix : fieldPrefix);
+  }
 
-public override string GetNamespace() {
-return this.@namespace;
-}
+  public override string GetNamespace() {
+    return this.@namespace;
+  }
 
-public void SetNamespace(string ns) {
-this.@namespace = ns;
-}
+  public void SetNamespace(string ns) {
+    this.@namespace = ns;
+  }
 
-public override string GetPrefix() {
-return this.prefix;
-}
+  public override string GetPrefix() {
+    return this.prefix;
+  }
 
-public void SetPrefix(string pf) {
-this.prefix = pf;
-}
+  public void SetPrefix(string pf) {
+    this.prefix = pf;
+  }
 
-public string GetPreferedPrefix() {
-return this.preferedPrefix;
-}
+  public string GetPreferedPrefix() {
+    return this.preferedPrefix;
+  }
 
-protected internal virtual void AddSimpleProperty(string propertyName, object value) {
-global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = this.GetMetadata().GetTypeMapping();
-global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty asp = tm.InstanciateSimpleField(((object)(this)).GetType(), (string)default!, this.GetPrefix(), propertyName, value);
-this.AddProperty(asp);
-}
+  protected internal virtual void AddSimpleProperty(string propertyName, object value) {
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = this.GetMetadata().GetTypeMapping();
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty asp
+      = tm.InstanciateSimpleField(((object)(this)).GetType(), (string)default!, this.GetPrefix(),
+      propertyName, value);
+    this.AddProperty(asp);
+  }
 
-protected internal virtual string GetPropertyValueAsString(string fieldName) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp = this.GetProperty(fieldName);
-if ((absProp is global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty)(absProp!)).GetStringValue();
-}
-return default!;
-}
+  protected internal virtual string GetPropertyValueAsString(string fieldName) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp = this.GetProperty(fieldName);
+    if ((absProp is global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty)(absProp!)).GetStringValue();
+    }
+    return default!;
+  }
 
-protected internal virtual global::System.DateTimeOffset? GetDatePropertyAsCalendar(string fieldName) {
-global::DripSharp.PdfCarton.Xmp.Type.DateType absProp = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(this.GetFirstEquivalentProperty(fieldName, typeof(global::DripSharp.PdfCarton.Xmp.Type.DateType))!);
-if ((absProp != default!)) {
-return absProp.GetValue();
-} else {
-return default!;
-}
-}
+  protected internal virtual global::System.DateTimeOffset? GetDatePropertyAsCalendar(string fieldName) {
+    global::DripSharp.PdfCarton.Xmp.Type.DateType absProp
+      = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(this.GetFirstEquivalentProperty(fieldName,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.DateType))!);
+    if ((absProp != default!)) {
+      return absProp.GetValue();
+    } else {
+      return default!;
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType CreateTextType(string propertyName, string value) {
-return this.GetMetadata().GetTypeMapping().CreateText(this.GetNamespace(), this.GetPrefix(), propertyName, value);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType CreateTextType(string propertyName,
+    string value) {
+    return this.GetMetadata().GetTypeMapping().CreateText(this.GetNamespace(), this.GetPrefix(),
+      propertyName, value);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty CreateArrayProperty(string propertyName, global::DripSharp.PdfCarton.Xmp.Type.Cardinality type) {
-return this.GetMetadata().GetTypeMapping().CreateArrayProperty(this.GetNamespace(), this.GetPrefix(), propertyName, type);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty CreateArrayProperty(string propertyName,
+    global::DripSharp.PdfCarton.Xmp.Type.Cardinality type) {
+    return this.GetMetadata().GetTypeMapping().CreateArrayProperty(this.GetNamespace(),
+      this.GetPrefix(), propertyName, type);
+  }
 }

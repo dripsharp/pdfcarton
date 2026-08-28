@@ -8,37 +8,44 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
-internal abstract class GouraudShadingContext : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.TriangleBasedShadingContext {
-private global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle> triangleList = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle>();
+internal abstract class GouraudShadingContext
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.TriangleBasedShadingContext {
+  private global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle> triangleList
+    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle>();
 
-protected internal GouraudShadingContext(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading, global::DripSharp.Runtime.JavaColorModel colorModel, global::SkiaSharp.SKMatrix xform, global::DripSharp.PdfCarton.Util.Matrix matrix) : base(shading, colorModel, xform, matrix) {
+  protected internal GouraudShadingContext(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading,
+    global::DripSharp.Runtime.JavaColorModel colorModel, global::SkiaSharp.SKMatrix xform,
+    global::DripSharp.PdfCarton.Util.Matrix matrix) : base(shading, colorModel, xform, matrix) {
 
-}
+  }
 
-internal void setTriangleList(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle> triangleList) {
-this.triangleList = triangleList;
-}
+  internal void setTriangleList(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle> triangleList) {
+    this.triangleList = triangleList;
+  }
 
-protected internal override global::System.Collections.Generic.IDictionary<global::DripSharp.Runtime.JavaPoint, int> calcPixelTable(global::SkiaSharp.SKRectI deviceBounds) {
-return global::DripSharp.Runtime.JavaCompat.EmptyMap<global::DripSharp.Runtime.JavaPoint, int>();
-}
+  protected internal override global::System.Collections.Generic.IDictionary<global::DripSharp.Runtime.JavaPoint,
+    int> calcPixelTable(global::SkiaSharp.SKRectI deviceBounds) {
+    return global::DripSharp.Runtime.JavaCompat.EmptyMap<global::DripSharp.Runtime.JavaPoint,
+      int>();
+  }
 
-protected internal override int[][] calcPixelTableArray(global::SkiaSharp.SKRectI deviceBounds) {
-int[][] array = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<int>((deviceBounds.Width + 1), (deviceBounds.Height + 1));
-int initialValue = ((this.getBackground() != default!) ? this.getRgbBackground() : -1);
-for (int i = 0; (i < (deviceBounds.Width + 1)); i++) {
-global::DripSharp.Runtime.JavaCompat.Fill(array[i], initialValue);
-}
-this.CalcPixelTable(this.triangleList, array, deviceBounds);
-return array;
-}
+  protected internal override int[][] calcPixelTableArray(global::SkiaSharp.SKRectI deviceBounds) {
+    int[][] array = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<int>((deviceBounds.Width
+      + 1), (deviceBounds.Height + 1));
+    int initialValue = ((this.getBackground() != default!) ? this.getRgbBackground() : -1);
+    for (int i = 0; (i < (deviceBounds.Width + 1)); i++) {
+      global::DripSharp.Runtime.JavaCompat.Fill(array[i], initialValue);
+    }
+    this.CalcPixelTable(this.triangleList, array, deviceBounds);
+    return array;
+  }
 
-public override void Dispose() {
-this.triangleList = default!;
-base.Dispose();
-}
+  public override void Dispose() {
+    this.triangleList = default!;
+    base.Dispose();
+  }
 
-protected internal override bool isDataEmpty() {
-return global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.triangleList);
-}
+  protected internal override bool isDataEmpty() {
+    return global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.triangleList);
+  }
 }

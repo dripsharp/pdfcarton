@@ -8,18 +8,21 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
-public class FDFAnnotationUnderline : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTextMarkup {
-public const string Subtype = "Underline";
+public class FDFAnnotationUnderline
+: global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTextMarkup {
+  public const string Subtype = "Underline";
 
-public FDFAnnotationUnderline() : base() {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationUnderline.Subtype);
-}
+  public FDFAnnotationUnderline() : base() {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationUnderline.Subtype);
+  }
 
-public FDFAnnotationUnderline(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public FDFAnnotationUnderline(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public FDFAnnotationUnderline(global::System.Xml.XmlElement element) : base(element) {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationUnderline.Subtype);
-}
+  public FDFAnnotationUnderline(global::System.Xml.XmlElement element) : base(element) {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationUnderline.Subtype);
+  }
 }

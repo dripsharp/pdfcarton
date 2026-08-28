@@ -9,14 +9,21 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public sealed class FontCache {
-private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo, global::DripSharp.Runtime.JavaSoftReference<global::DripSharp.PdfCarton.Fonts.FontBoxFont>> cache = new global::System.Collections.Concurrent.ConcurrentDictionary<global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo, global::DripSharp.Runtime.JavaSoftReference<global::DripSharp.PdfCarton.Fonts.FontBoxFont>>();
+  private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo,
+    global::DripSharp.Runtime.JavaSoftReference<global::DripSharp.PdfCarton.Fonts.FontBoxFont>> cache
+    = new global::System.Collections.Concurrent.ConcurrentDictionary<global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo,
+    global::DripSharp.Runtime.JavaSoftReference<global::DripSharp.PdfCarton.Fonts.FontBoxFont>>();
 
-public void AddFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info, global::DripSharp.PdfCarton.Fonts.FontBoxFont font) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.cache, info, new global::DripSharp.Runtime.JavaSoftReference<global::DripSharp.PdfCarton.Fonts.FontBoxFont>(font));
-}
+  public void AddFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info,
+    global::DripSharp.PdfCarton.Fonts.FontBoxFont font) {
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.cache, info,
+      new global::DripSharp.Runtime.JavaSoftReference<global::DripSharp.PdfCarton.Fonts.FontBoxFont>(font));
+  }
 
-public global::DripSharp.PdfCarton.Fonts.FontBoxFont GetFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info) {
-global::DripSharp.Runtime.JavaSoftReference<global::DripSharp.PdfCarton.Fonts.FontBoxFont> reference = global::DripSharp.Runtime.JavaCompat.MapGet(this.cache, info);
-return ((reference != default!) ? reference.Get() : (global::DripSharp.PdfCarton.Fonts.FontBoxFont)(default!));
-}
+  public global::DripSharp.PdfCarton.Fonts.FontBoxFont GetFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info) {
+    global::DripSharp.Runtime.JavaSoftReference<global::DripSharp.PdfCarton.Fonts.FontBoxFont> reference
+      = global::DripSharp.Runtime.JavaCompat.MapGet(this.cache, info);
+    return ((reference != default!) ? reference.Get()
+      : (global::DripSharp.PdfCarton.Fonts.FontBoxFont)(default!));
+  }
 }

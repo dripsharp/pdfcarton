@@ -9,39 +9,52 @@
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
 public abstract class AnnotationValidatorFactory {
-protected internal global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory ActionFact = default!;
+  protected internal global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory ActionFact
+    = default!;
 
-protected internal readonly global::System.Collections.Generic.IDictionary<string, global::System.Type> ValidatorClasses = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, global::System.Type>();
+  protected internal readonly global::System.Collections.Generic.IDictionary<string,
+    global::System.Type> ValidatorClasses
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, global::System.Type>();
 
-public AnnotationValidatorFactory() {
-this.InitializeClasses();
-}
+  public AnnotationValidatorFactory() {
+    this.InitializeClasses();
+  }
 
-public AnnotationValidatorFactory(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory actionFact) : base() {
-this.ActionFact = actionFact;
-}
+  public AnnotationValidatorFactory(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory actionFact)
+  : base() {
+    this.ActionFact = actionFact;
+  }
 
-public void SetActionFact(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory _actionFact) {
-this.ActionFact = _actionFact;
-}
+  public void SetActionFact(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory _actionFact) {
+    this.ActionFact = _actionFact;
+  }
 
-protected internal abstract void InitializeClasses();
+  protected internal abstract void InitializeClasses();
 
-public global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator GetAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDic) {
-global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator result = default!;
-string subtype = annotDic.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
-global::System.Type clazz = global::DripSharp.Runtime.JavaCompat.MapGet(this.ValidatorClasses, subtype);
-if ((clazz == default!)) {
-ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotForbiddenSubtype, global::DripSharp.Runtime.JavaCompat.Concat("The subtype isn't authorized : ", subtype)));
-} else {
-try {
-global::System.Reflection.ConstructorInfo constructor = global::DripSharp.Runtime.JavaCompat.ClassGetDeclaredConstructor(clazz, typeof(global::DripSharp.PdfCarton.Preflight.PreflightContext), typeof(global::DripSharp.PdfCarton.Cos.COSDictionary));
-result = global::DripSharp.Runtime.JavaCompat.ConstructorInvoke<global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator>(constructor, ctx, annotDic);
-result!.SetFactory(this);
-} catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e), e);
-}
-}
-return result!;
-}
+  public global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator GetAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDic) {
+    global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator result = default!;
+    string subtype = annotDic.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
+    global::System.Type clazz = global::DripSharp.Runtime.JavaCompat.MapGet(this.ValidatorClasses,
+      subtype);
+    if ((clazz == default!)) {
+      ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotForbiddenSubtype,
+        global::DripSharp.Runtime.JavaCompat.Concat("The subtype isn't authorized : ", subtype)));
+    } else {
+      try {
+        global::System.Reflection.ConstructorInfo constructor
+          = global::DripSharp.Runtime.JavaCompat.ClassGetDeclaredConstructor(clazz,
+          typeof(global::DripSharp.PdfCarton.Preflight.PreflightContext),
+          typeof(global::DripSharp.PdfCarton.Cos.COSDictionary));
+        result
+          = global::DripSharp.Runtime.JavaCompat.ConstructorInvoke<global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator>(constructor,
+          ctx, annotDic);
+        result!.SetFactory(this);
+      } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
+        throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e),
+          e);
+      }
+    }
+    return result!;
+  }
 }

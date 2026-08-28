@@ -9,79 +9,85 @@
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Prepress;
 
 public class PDBoxStyle : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-public const string GuidelineStyleSolid = "S";
+  public const string GuidelineStyleSolid = "S";
 
-public const string GuidelineStyleDashed = "D";
+  public const string GuidelineStyleDashed = "D";
 
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public PDBoxStyle() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDBoxStyle() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDBoxStyle(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
-this.dictionary = dic;
-}
+  public PDBoxStyle(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
+    this.dictionary = dic;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetGuidelineColor() {
-global::DripSharp.PdfCarton.Cos.COSArray colorValues = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.C);
-if ((colorValues == default!)) {
-colorValues = new global::DripSharp.PdfCarton.Cos.COSArray();
-colorValues.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Zero);
-colorValues.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Zero);
-colorValues.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Zero);
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.C, colorValues);
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(colorValues.ToFloatArray(), global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetGuidelineColor() {
+    global::DripSharp.PdfCarton.Cos.COSArray colorValues
+      = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.C);
+    if ((colorValues == default!)) {
+      colorValues = new global::DripSharp.PdfCarton.Cos.COSArray();
+      colorValues.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Zero);
+      colorValues.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Zero);
+      colorValues.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Zero);
+      this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.C, colorValues);
+    }
+    return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(colorValues.ToFloatArray(),
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance);
+  }
 
-public virtual void SetGuideLineColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
-global::DripSharp.PdfCarton.Cos.COSArray values = default!;
-if ((color != default!)) {
-values = color.ToCOSArray();
-}
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.C, values!);
-}
+  public virtual void SetGuideLineColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
+    global::DripSharp.PdfCarton.Cos.COSArray values = default!;
+    if ((color != default!)) {
+      values = color.ToCOSArray();
+    }
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.C, values!);
+  }
 
-public virtual float GetGuidelineWidth() {
-return this.dictionary.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.W, (float)(1));
-}
+  public virtual float GetGuidelineWidth() {
+    return this.dictionary.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.W, (float)(1));
+  }
 
-public virtual void SetGuidelineWidth(float width) {
-this.dictionary.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.W, width);
-}
+  public virtual void SetGuidelineWidth(float width) {
+    this.dictionary.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.W, width);
+  }
 
-public virtual string GetGuidelineStyle() {
-return this.dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.S, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Prepress.PDBoxStyle.GuidelineStyleSolid);
-}
+  public virtual string GetGuidelineStyle() {
+    return this.dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.S,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Prepress.PDBoxStyle.GuidelineStyleSolid);
+  }
 
-public virtual void SetGuidelineStyle(string style) {
-this.dictionary.SetName(global::DripSharp.PdfCarton.Cos.COSName.S, style);
-}
+  public virtual void SetGuidelineStyle(string style) {
+    this.dictionary.SetName(global::DripSharp.PdfCarton.Cos.COSName.S, style);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern GetLineDashPattern() {
-global::DripSharp.PdfCarton.Cos.COSArray d = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.D);
-if ((d == default!)) {
-d = new global::DripSharp.PdfCarton.Cos.COSArray();
-d.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Three);
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, d);
-}
-global::DripSharp.PdfCarton.Cos.COSArray lineArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-lineArray.Add(d);
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern(lineArray, 0);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern GetLineDashPattern() {
+    global::DripSharp.PdfCarton.Cos.COSArray d
+      = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.D);
+    if ((d == default!)) {
+      d = new global::DripSharp.PdfCarton.Cos.COSArray();
+      d.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Three);
+      this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, d);
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray lineArray
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    lineArray.Add(d);
+    return new global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern(lineArray, 0);
+  }
 
-public virtual void SetLineDashPattern(global::DripSharp.PdfCarton.Cos.COSArray dashArray) {
-global::DripSharp.PdfCarton.Cos.COSArray array = default!;
-if ((dashArray != default!)) {
-array = dashArray;
-}
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, array!);
-}
+  public virtual void SetLineDashPattern(global::DripSharp.PdfCarton.Cos.COSArray dashArray) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = default!;
+    if ((dashArray != default!)) {
+      array = dashArray;
+    }
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, array!);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

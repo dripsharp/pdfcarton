@@ -8,32 +8,41 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Graphic;
 
-public class DeviceColorSpaceHelper : global::DripSharp.PdfCarton.Preflight.Graphic.StandardColorSpaceHelper {
-public DeviceColorSpaceHelper(global::DripSharp.PdfCarton.Preflight.PreflightContext _context, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace _cs) : base(_context, _cs) {
+public class DeviceColorSpaceHelper
+: global::DripSharp.PdfCarton.Preflight.Graphic.StandardColorSpaceHelper {
+  public DeviceColorSpaceHelper(global::DripSharp.PdfCarton.Preflight.PreflightContext _context,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace _cs) : base(_context, _cs) {
 
-}
+  }
 
-protected internal override void ProcessPatternColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceForbidden, "Pattern ColorSpace is forbidden"));
-}
+  protected internal override void ProcessPatternColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceForbidden,
+      "Pattern ColorSpace is forbidden"));
+  }
 
-protected internal override void ProcessDeviceNColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceForbidden, "DeviceN ColorSpace is forbidden"));
-}
+  protected internal override void ProcessDeviceNColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceForbidden,
+      "DeviceN ColorSpace is forbidden"));
+  }
 
-protected internal override void ProcessIndexedColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed indexed = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed)(colorSpace!);
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace baseColorSpace = indexed.GetBaseColorSpace();
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces colorSpaces = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(baseColorSpace.GetName());
-switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(colorSpaces)) {
-case 4:
-case 5:
-case 6:
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceForbidden, global::DripSharp.Runtime.JavaCompat.Concat(colorSpaces.GetLabel(), " ColorSpace is forbidden")));
-break;
-default:
-this.ProcessAllColorSpace(baseColorSpace);
-break;
-}
-}
+  protected internal override void ProcessIndexedColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed indexed
+      = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed)(colorSpace!);
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace baseColorSpace
+      = indexed.GetBaseColorSpace();
+    global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces colorSpaces
+      = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(baseColorSpace.GetName());
+    switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(colorSpaces)) {
+      case 4:
+      case 5:
+      case 6:
+        base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceForbidden,
+          global::DripSharp.Runtime.JavaCompat.Concat(colorSpaces.GetLabel(),
+          " ColorSpace is forbidden")));
+        break;
+      default:
+        this.ProcessAllColorSpace(baseColorSpace);
+        break;
+    }
+  }
 }

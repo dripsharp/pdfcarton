@@ -9,58 +9,72 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator;
 
 public sealed class Operator {
-private readonly string theOperator = null!;
+  private readonly string theOperator = null!;
 
-private sbyte[] imageData = null!;
+  private sbyte[] imageData = null!;
 
-private global::DripSharp.PdfCarton.Cos.COSDictionary imageParameters = null!;
+  private global::DripSharp.PdfCarton.Cos.COSDictionary imageParameters = null!;
 
-private static readonly global::System.Collections.Concurrent.ConcurrentDictionary<string, global::DripSharp.PdfCarton.Contentstream.@Operator.Operator> operators = new global::System.Collections.Concurrent.ConcurrentDictionary<string, global::DripSharp.PdfCarton.Contentstream.@Operator.Operator>();
+  private static readonly global::System.Collections.Concurrent.ConcurrentDictionary<string,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.Operator> operators
+    = new global::System.Collections.Concurrent.ConcurrentDictionary<string,
+    global::DripSharp.PdfCarton.Contentstream.@Operator.Operator>();
 
-private Operator(string aOperator) {
-this.theOperator = aOperator;
-if (global::DripSharp.Runtime.JavaCompat.StringStartsWith(aOperator, "/")) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Operators are not allowed to start with / '", aOperator), "'"));
-}
-}
+  private Operator(string aOperator) {
+    this.theOperator = aOperator;
+    if (global::DripSharp.Runtime.JavaCompat.StringStartsWith(aOperator, "/")) {
+      throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Operators are not allowed to start with / '",
+        aOperator), "'"));
+    }
+  }
 
-public static global::DripSharp.PdfCarton.Contentstream.@Operator.Operator GetOperator(string @operator) {
-global::DripSharp.PdfCarton.Contentstream.@Operator.Operator operation;
-if ((global::DripSharp.Runtime.JavaCompat.Equals(@operator, global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImageData) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage, @operator))) {
-operation = new global::DripSharp.PdfCarton.Contentstream.@Operator.Operator(@operator);
-} else {
-operation = global::DripSharp.Runtime.JavaCompat.MapGet(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator.operators, @operator);
-if ((operation == default!)) {
-operation = global::DripSharp.Runtime.JavaCompat.MapPutIfAbsent(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator.operators, @operator, new global::DripSharp.PdfCarton.Contentstream.@Operator.Operator(@operator));
-if ((operation == default!)) {
-operation = global::DripSharp.Runtime.JavaCompat.MapGet(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator.operators, @operator);
-}
-}
-}
-return operation;
-}
+  public static global::DripSharp.PdfCarton.Contentstream.@Operator.Operator GetOperator(string @operator) {
+    global::DripSharp.PdfCarton.Contentstream.@Operator.Operator operation;
+    if ((global::DripSharp.Runtime.JavaCompat.Equals(@operator,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImageData)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage,
+      @operator))) {
+      operation = new global::DripSharp.PdfCarton.Contentstream.@Operator.Operator(@operator);
+    } else {
+      operation
+        = global::DripSharp.Runtime.JavaCompat.MapGet(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator.operators,
+        @operator);
+      if ((operation == default!)) {
+        operation
+          = global::DripSharp.Runtime.JavaCompat.MapPutIfAbsent(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator.operators,
+          @operator, new global::DripSharp.PdfCarton.Contentstream.@Operator.Operator(@operator));
+        if ((operation == default!)) {
+          operation
+            = global::DripSharp.Runtime.JavaCompat.MapGet(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator.operators,
+            @operator);
+        }
+      }
+    }
+    return operation;
+  }
 
-public string GetName() {
-return this.theOperator;
-}
+  public string GetName() {
+    return this.theOperator;
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("PDFOperator{", this.theOperator), "}");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("PDFOperator{",
+      this.theOperator), "}");
+  }
 
-public sbyte[] GetImageData() {
-return this.imageData;
-}
+  public sbyte[] GetImageData() {
+    return this.imageData;
+  }
 
-public void SetImageData(sbyte[] imageDataArray) {
-this.imageData = imageDataArray;
-}
+  public void SetImageData(sbyte[] imageDataArray) {
+    this.imageData = imageDataArray;
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSDictionary GetImageParameters() {
-return this.imageParameters;
-}
+  public global::DripSharp.PdfCarton.Cos.COSDictionary GetImageParameters() {
+    return this.imageParameters;
+  }
 
-public void SetImageParameters(global::DripSharp.PdfCarton.Cos.COSDictionary @params) {
-this.imageParameters = @params;
-}
+  public void SetImageParameters(global::DripSharp.PdfCarton.Cos.COSDictionary @params) {
+    this.imageParameters = @params;
+  }
 }

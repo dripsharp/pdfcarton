@@ -8,18 +8,23 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Graphics;
 
-public sealed class CloseFillNonZeroAndStrokePath : global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
-public CloseFillNonZeroAndStrokePath(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context) : base(context) {
+public sealed class CloseFillNonZeroAndStrokePath
+: global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
+  public CloseFillNonZeroAndStrokePath(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClosePath, operands);
-context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke, operands);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClosePath,
+      operands);
+    context.ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke,
+      operands);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke;
+  }
 }

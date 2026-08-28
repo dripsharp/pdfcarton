@@ -9,57 +9,65 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public sealed class COSBoolean : global::DripSharp.PdfCarton.Cos.COSBase {
-private static readonly sbyte[] TRUE_BYTES = new sbyte[] { unchecked((sbyte)(116)), unchecked((sbyte)(114)), unchecked((sbyte)(117)), unchecked((sbyte)(101)) };
+  private static readonly sbyte[] TRUE_BYTES = new sbyte[] { unchecked((sbyte)(116)),
+    unchecked((sbyte)(114)), unchecked((sbyte)(117)), unchecked((sbyte)(101)) };
 
-private static readonly sbyte[] FALSE_BYTES = new sbyte[] { unchecked((sbyte)(102)), unchecked((sbyte)(97)), unchecked((sbyte)(108)), unchecked((sbyte)(115)), unchecked((sbyte)(101)) };
+  private static readonly sbyte[] FALSE_BYTES = new sbyte[] { unchecked((sbyte)(102)),
+    unchecked((sbyte)(97)), unchecked((sbyte)(108)), unchecked((sbyte)(115)),
+    unchecked((sbyte)(101)) };
 
-public static readonly global::DripSharp.PdfCarton.Cos.COSBoolean True = new global::DripSharp.PdfCarton.Cos.COSBoolean(true);
+  public static readonly global::DripSharp.PdfCarton.Cos.COSBoolean True
+    = new global::DripSharp.PdfCarton.Cos.COSBoolean(true);
 
-public static readonly global::DripSharp.PdfCarton.Cos.COSBoolean False = new global::DripSharp.PdfCarton.Cos.COSBoolean(false);
+  public static readonly global::DripSharp.PdfCarton.Cos.COSBoolean False
+    = new global::DripSharp.PdfCarton.Cos.COSBoolean(false);
 
-private readonly bool value = default;
+  private readonly bool value = default;
 
-private COSBoolean(bool aValue) {
-this.value = aValue;
-}
+  private COSBoolean(bool aValue) {
+    this.value = aValue;
+  }
 
-public bool GetValue() {
-return this.value;
-}
+  public bool GetValue() {
+    return this.value;
+  }
 
-public bool? GetValueAsObject() {
-return (this.value ? (bool?)(true) : (bool?)(false));
-}
+  public bool? GetValueAsObject() {
+    return (this.value ? (bool?)(true) : (bool?)(false));
+  }
 
-public static global::DripSharp.PdfCarton.Cos.COSBoolean GetBoolean(bool value) {
-return (value ? global::DripSharp.PdfCarton.Cos.COSBoolean.True : global::DripSharp.PdfCarton.Cos.COSBoolean.False);
-}
+  public static global::DripSharp.PdfCarton.Cos.COSBoolean GetBoolean(bool value) {
+    return (value ? global::DripSharp.PdfCarton.Cos.COSBoolean.True
+      : global::DripSharp.PdfCarton.Cos.COSBoolean.False);
+  }
 
-public static global::DripSharp.PdfCarton.Cos.COSBoolean GetBoolean(bool? value) {
-return global::DripSharp.PdfCarton.Cos.COSBoolean.GetBoolean(global::DripSharp.Runtime.JavaCompat.Unbox(value));
-}
+  public static global::DripSharp.PdfCarton.Cos.COSBoolean GetBoolean(bool? value) {
+    return global::DripSharp.PdfCarton.Cos.COSBoolean.GetBoolean(global::DripSharp.Runtime.JavaCompat.Unbox(value));
+  }
 
-public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
-visitor.VisitFromBoolean(this);
-}
+  public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
+    visitor.VisitFromBoolean(this);
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.StringValueOf(this.value);
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.StringValueOf(this.value);
+  }
 
-public override int GetHashCode() {
-return (this.value ? 1231 : 1237);
-}
+  public override int GetHashCode() {
+    return (this.value ? 1231 : 1237);
+  }
 
-public override bool Equals(object obj) {
-return (this == obj);
-}
+  public override bool Equals(object obj) {
+    return (this == obj);
+  }
 
-public void WritePDF(global::System.IO.Stream output) {
-if (this.value) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, global::DripSharp.PdfCarton.Cos.COSBoolean.TRUE_BYTES);
-} else {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, global::DripSharp.PdfCarton.Cos.COSBoolean.FALSE_BYTES);
-}
-}
+  public void WritePDF(global::System.IO.Stream output) {
+    if (this.value) {
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output,
+        global::DripSharp.PdfCarton.Cos.COSBoolean.TRUE_BYTES);
+    } else {
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output,
+        global::DripSharp.PdfCarton.Cos.COSBoolean.FALSE_BYTES);
+    }
+  }
 }

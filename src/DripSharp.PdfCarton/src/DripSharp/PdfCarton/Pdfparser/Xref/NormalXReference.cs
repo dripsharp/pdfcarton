@@ -9,51 +9,58 @@
 namespace DripSharp.PdfCarton.Pdfparser.Xref;
 
 public class NormalXReference : global::DripSharp.PdfCarton.Pdfparser.Xref.AbstractXReference {
-private readonly long byteOffset = default;
+  private readonly long byteOffset = default;
 
-private readonly global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
 
-private readonly global::DripSharp.PdfCarton.Cos.COSBase @object = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSBase @object = null!;
 
-private readonly bool objectStream = default;
+  private readonly bool objectStream = default;
 
-public NormalXReference(long byteOffset, global::DripSharp.PdfCarton.Cos.COSObjectKey key, global::DripSharp.PdfCarton.Cos.COSBase @object) : base(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType.Normal) {
-this.byteOffset = byteOffset;
-this.key = key;
-this.@object = @object;
-global::DripSharp.PdfCarton.Cos.COSBase @base = ((@object is global::DripSharp.PdfCarton.Cos.COSObject) ? ((global::DripSharp.PdfCarton.Cos.COSObject)(@object!)).GetObject() : @object);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
-this.objectStream = global::DripSharp.PdfCarton.Cos.COSName.ObjStm.Equals(((global::DripSharp.PdfCarton.Cos.COSStream)(@base!)).GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Type));
-} else {
-this.objectStream = false;
-}
-}
+  public NormalXReference(long byteOffset, global::DripSharp.PdfCarton.Cos.COSObjectKey key,
+    global::DripSharp.PdfCarton.Cos.COSBase @object)
+  : base(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType.Normal) {
+    this.byteOffset = byteOffset;
+    this.key = key;
+    this.@object = @object;
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = ((@object is global::DripSharp.PdfCarton.Cos.COSObject)
+      ? ((global::DripSharp.PdfCarton.Cos.COSObject)(@object!)).GetObject() : @object);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
+      this.objectStream
+        = global::DripSharp.PdfCarton.Cos.COSName.ObjStm.Equals(((global::DripSharp.PdfCarton.Cos.COSStream)(@base!)).GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Type));
+    } else {
+      this.objectStream = false;
+    }
+  }
 
-public virtual long GetByteOffset() {
-return this.byteOffset;
-}
+  public virtual long GetByteOffset() {
+    return this.byteOffset;
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSObjectKey GetReferencedKey() {
-return this.key;
-}
+  public override global::DripSharp.PdfCarton.Cos.COSObjectKey GetReferencedKey() {
+    return this.key;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetObject() {
-return this.@object;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetObject() {
+    return this.@object;
+  }
 
-public virtual bool IsObjectStream() {
-return this.objectStream;
-}
+  public virtual bool IsObjectStream() {
+    return this.objectStream;
+  }
 
-public override long GetSecondColumnValue() {
-return this.GetByteOffset();
-}
+  public override long GetSecondColumnValue() {
+    return this.GetByteOffset();
+  }
 
-public override long GetThirdColumnValue() {
-return this.GetReferencedKey().GetGeneration();
-}
+  public override long GetThirdColumnValue() {
+    return this.GetReferencedKey().GetGeneration();
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat((this.IsObjectStream() ? "ObjectStreamParent{" : "NormalReference{"), " key="), this.key), ", type="), this.GetType().GetNumericValue()), ", byteOffset="), this.byteOffset), " }");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat((this.IsObjectStream()
+      ? "ObjectStreamParent{" : "NormalReference{"), " key="), this.key), ", type="),
+      this.GetType().GetNumericValue()), ", byteOffset="), this.byteOffset), " }");
+  }
 }

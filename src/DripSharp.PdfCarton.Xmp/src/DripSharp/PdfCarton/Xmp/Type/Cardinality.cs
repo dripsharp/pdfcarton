@@ -9,34 +9,41 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public sealed class Cardinality {
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Simple")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Type.Cardinality Simple = new global::DripSharp.PdfCarton.Xmp.Type.Cardinality(false);
+  [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Simple")]
+  [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Xmp.Type.Cardinality Simple
+    = new global::DripSharp.PdfCarton.Xmp.Type.Cardinality(false);
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Bag")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Type.Cardinality Bag = new global::DripSharp.PdfCarton.Xmp.Type.Cardinality(true);
+  [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Bag")]
+  [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Xmp.Type.Cardinality Bag
+    = new global::DripSharp.PdfCarton.Xmp.Type.Cardinality(true);
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Seq")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Type.Cardinality Seq = new global::DripSharp.PdfCarton.Xmp.Type.Cardinality(true);
+  [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Seq")]
+  [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Xmp.Type.Cardinality Seq
+    = new global::DripSharp.PdfCarton.Xmp.Type.Cardinality(true);
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Alt")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Type.Cardinality Alt = new global::DripSharp.PdfCarton.Xmp.Type.Cardinality(true);
+  [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Alt")]
+  [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Xmp.Type.Cardinality Alt
+    = new global::DripSharp.PdfCarton.Xmp.Type.Cardinality(true);
 
-private readonly bool array = default;
+  private readonly bool array = default;
 
-private Cardinality(bool a) {
-this.array = a;
-}
+  private Cardinality(bool a) {
+    this.array = a;
+  }
 
-public bool IsArray() {
-return this.array;
-}
+  public bool IsArray() {
+    return this.array;
+  }
 
-public static Cardinality[] values() => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumValues<Cardinality>();
-public static Cardinality valueOf(string name) => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumValueOf<Cardinality>(name);
+  public static Cardinality[] values()
+    => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumValues<Cardinality>();
+  public static Cardinality valueOf(string name)
+    => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumValueOf<Cardinality>(name);
 
-public override string ToString() => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumName(this);
+  public override string ToString()
+    => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumName(this);
 }

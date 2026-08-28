@@ -9,11 +9,11 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
 public interface PDAppearanceHandler {
-public void GenerateAppearanceStreams();
+  public void GenerateAppearanceStreams();
 
-public void GenerateNormalAppearance();
+  public void GenerateNormalAppearance();
 
-public void GenerateRolloverAppearance();
+  public void GenerateRolloverAppearance();
 
-public void GenerateDownAppearance();
+  public void GenerateDownAppearance();
 }

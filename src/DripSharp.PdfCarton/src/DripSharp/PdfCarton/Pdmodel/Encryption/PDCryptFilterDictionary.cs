@@ -9,47 +9,50 @@
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 public class PDCryptFilterDictionary : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-protected internal global::DripSharp.PdfCarton.Cos.COSDictionary CryptFilterDictionary = default!;
+  protected internal global::DripSharp.PdfCarton.Cos.COSDictionary CryptFilterDictionary = default!;
 
-public PDCryptFilterDictionary() {
-this.CryptFilterDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDCryptFilterDictionary() {
+    this.CryptFilterDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDCryptFilterDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary d) {
-this.CryptFilterDictionary = d;
-}
+  public PDCryptFilterDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary d) {
+    this.CryptFilterDictionary = d;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.CryptFilterDictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.CryptFilterDictionary;
+  }
 
-public virtual void SetLength(int length) {
-this.CryptFilterDictionary.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Length, length);
-}
+  public virtual void SetLength(int length) {
+    this.CryptFilterDictionary.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Length, length);
+  }
 
-public virtual int GetLength() {
-return this.CryptFilterDictionary.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Length, 40);
-}
+  public virtual int GetLength() {
+    return this.CryptFilterDictionary.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Length, 40);
+  }
 
-public virtual void SetCryptFilterMethod(global::DripSharp.PdfCarton.Cos.COSName cfm) {
-this.CryptFilterDictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Cfm, cfm);
-}
+  public virtual void SetCryptFilterMethod(global::DripSharp.PdfCarton.Cos.COSName cfm) {
+    this.CryptFilterDictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Cfm, cfm);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSName GetCryptFilterMethod() {
-return this.CryptFilterDictionary.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Cfm);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSName GetCryptFilterMethod() {
+    return this.CryptFilterDictionary.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Cfm);
+  }
 
-public virtual bool IsEncryptMetaData() {
-global::DripSharp.PdfCarton.Cos.COSBase value = this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.EncryptMetaData);
-if ((value is global::DripSharp.PdfCarton.Cos.COSBoolean)) {
-return ((global::DripSharp.PdfCarton.Cos.COSBoolean)(value!)).GetValue();
-}
-return true;
-}
+  public virtual bool IsEncryptMetaData() {
+    global::DripSharp.PdfCarton.Cos.COSBase value
+      = this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.EncryptMetaData);
+    if ((value is global::DripSharp.PdfCarton.Cos.COSBoolean)) {
+      return ((global::DripSharp.PdfCarton.Cos.COSBoolean)(value!)).GetValue();
+    }
+    return true;
+  }
 
-public virtual void SetEncryptMetaData(bool encryptMetaData) {
-this.GetCOSObject().SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.EncryptMetaData, encryptMetaData);
-}
+  public virtual void SetEncryptMetaData(bool encryptMetaData) {
+    this.GetCOSObject().SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.EncryptMetaData,
+      encryptMetaData);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

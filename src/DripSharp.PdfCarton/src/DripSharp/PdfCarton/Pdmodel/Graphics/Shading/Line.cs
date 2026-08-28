@@ -9,66 +9,75 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public class Line {
-private readonly global::DripSharp.Runtime.JavaPoint point0 = null!;
+  private readonly global::DripSharp.Runtime.JavaPoint point0 = null!;
 
-private readonly global::DripSharp.Runtime.JavaPoint point1 = null!;
+  private readonly global::DripSharp.Runtime.JavaPoint point1 = null!;
 
-private readonly float[] color0 = null!;
+  private readonly float[] color0 = null!;
 
-private readonly float[] color1 = null!;
+  private readonly float[] color1 = null!;
 
-protected internal readonly global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaPoint> LinePoints = null!;
+  protected internal readonly global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaPoint> LinePoints
+    = null!;
 
-internal Line(global::DripSharp.Runtime.JavaPoint p0, global::DripSharp.Runtime.JavaPoint p1, float[] c0, float[] c1) {
-this.point0 = p0;
-this.point1 = p1;
-this.color0 = global::DripSharp.Runtime.JavaCompat.Clone(c0);
-this.color1 = global::DripSharp.Runtime.JavaCompat.Clone(c1);
-this.LinePoints = this.calcLine(this.point0.IntX, this.point0.IntY, this.point1.IntX, this.point1.IntY);
-}
+  internal Line(global::DripSharp.Runtime.JavaPoint p0, global::DripSharp.Runtime.JavaPoint p1,
+    float[] c0, float[] c1) {
+    this.point0 = p0;
+    this.point1 = p1;
+    this.color0 = global::DripSharp.Runtime.JavaCompat.Clone(c0);
+    this.color1 = global::DripSharp.Runtime.JavaCompat.Clone(c1);
+    this.LinePoints = this.calcLine(this.point0.IntX, this.point0.IntY, this.point1.IntX,
+      this.point1.IntY);
+  }
 
-private global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaPoint> calcLine(int x0, int y0, int x1, int y1) {
-global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaPoint> points = new global::System.Collections.Generic.HashSet<global::DripSharp.Runtime.JavaPoint>();
-int dx = global::System.Math.Abs((x1 - x0));
-int dy = global::System.Math.Abs((y1 - y0));
-int sx = ((x0 < x1) ? 1 : -1);
-int sy = ((y0 < y1) ? 1 : -1);
-int err = (dx - dy);
-while (true) {
-points.Add(new global::DripSharp.Runtime.JavaPoint(x0, y0));
-if (((x0 == x1) && (y0 == y1))) {
-break;
-}
-int e2 = (2 * err);
-if ((e2 > -dy)) {
-err -= dy;
-x0 += sx;
-}
-if ((e2 < dx)) {
-err += dx;
-y0 += sy;
-}
-}
-return points;
-}
+  private global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaPoint> calcLine(int x0,
+    int y0, int x1, int y1) {
+    global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaPoint> points
+      = new global::System.Collections.Generic.HashSet<global::DripSharp.Runtime.JavaPoint>();
+    int dx = global::System.Math.Abs((x1 - x0));
+    int dy = global::System.Math.Abs((y1 - y0));
+    int sx = ((x0 < x1) ? 1 : -1);
+    int sy = ((y0 < y1) ? 1 : -1);
+    int err = (dx - dy);
+    while (true) {
+      points.Add(new global::DripSharp.Runtime.JavaPoint(x0, y0));
+      if (((x0 == x1) && (y0 == y1))) {
+        break;
+      }
+      int e2 = (2 * err);
+      if ((e2 > -dy)) {
+        err -= dy;
+        x0 += sx;
+      }
+      if ((e2 < dx)) {
+        err += dx;
+        y0 += sy;
+      }
+    }
+    return points;
+  }
 
-protected internal virtual float[] CalcColor(global::DripSharp.Runtime.JavaPoint p) {
-if (((this.point0.IntX == this.point1.IntX) && (this.point0.IntY == this.point1.IntY))) {
-return this.color0;
-}
-int numberOfColorComponents = this.color0.Length;
-float[] pc = new float[numberOfColorComponents];
-if ((this.point0.IntX == this.point1.IntX)) {
-float l__113_19 = (this.point1.IntY - this.point0.IntY);
-for (int i__114_22 = 0; (i__114_22 < numberOfColorComponents); i__114_22++) {
-pc[i__114_22] = (((float)((this.color0[i__114_22] * (this.point1.IntY - p.IntY))) / (float)(l__113_19)) + ((float)((this.color1[i__114_22] * (p.IntY - this.point0.IntY))) / (float)(l__113_19)));
-}
-} else {
-float l__122_19 = (this.point1.IntX - this.point0.IntX);
-for (int i__123_22 = 0; (i__123_22 < numberOfColorComponents); i__123_22++) {
-pc[i__123_22] = (((float)((this.color0[i__123_22] * (this.point1.IntX - p.IntX))) / (float)(l__122_19)) + ((float)((this.color1[i__123_22] * (p.IntX - this.point0.IntX))) / (float)(l__122_19)));
-}
-}
-return pc;
-}
+  protected internal virtual float[] CalcColor(global::DripSharp.Runtime.JavaPoint p) {
+    if (((this.point0.IntX == this.point1.IntX) && (this.point0.IntY == this.point1.IntY))) {
+      return this.color0;
+    }
+    int numberOfColorComponents = this.color0.Length;
+    float[] pc = new float[numberOfColorComponents];
+    if ((this.point0.IntX == this.point1.IntX)) {
+      float l__113_19 = (this.point1.IntY - this.point0.IntY);
+      for (int i__114_22 = 0; (i__114_22 < numberOfColorComponents); i__114_22++) {
+        pc[i__114_22] = (((float)((this.color0[i__114_22] * (this.point1.IntY - p.IntY)))
+          / (float)l__113_19) + ((float)((this.color1[i__114_22] * (p.IntY - this.point0.IntY)))
+          / (float)l__113_19));
+      }
+    } else {
+      float l__122_19 = (this.point1.IntX - this.point0.IntX);
+      for (int i__123_22 = 0; (i__123_22 < numberOfColorComponents); i__123_22++) {
+        pc[i__123_22] = (((float)((this.color0[i__123_22] * (this.point1.IntX - p.IntX)))
+          / (float)l__122_19) + ((float)((this.color1[i__123_22] * (p.IntX - this.point0.IntX)))
+          / (float)l__122_19));
+      }
+    }
+    return pc;
+  }
 }

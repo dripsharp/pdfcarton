@@ -9,30 +9,31 @@
 namespace DripSharp.PdfCarton.Preflight.Font.Util;
 
 public class GlyphException : global::System.Exception {
-private readonly string errorCode = null!;
+  private readonly string errorCode = null!;
 
-private readonly int invalidCid = default;
+  private readonly int invalidCid = default;
 
-public GlyphException(string errorCode, int cid) : base() {
-this.errorCode = errorCode;
-this.invalidCid = cid;
-}
+  public GlyphException(string errorCode, int cid) : base() {
+    this.errorCode = errorCode;
+    this.invalidCid = cid;
+  }
 
-public GlyphException(string errorCode, int cid, string message) : base(message) {
-this.errorCode = errorCode;
-this.invalidCid = cid;
-}
+  public GlyphException(string errorCode, int cid, string message) : base(message) {
+    this.errorCode = errorCode;
+    this.invalidCid = cid;
+  }
 
-public GlyphException(string errorCode, int cid, string message, global::System.Exception cause) : base(message, cause) {
-this.errorCode = errorCode;
-this.invalidCid = cid;
-}
+  public GlyphException(string errorCode, int cid, string message, global::System.Exception cause)
+  : base(message, cause) {
+    this.errorCode = errorCode;
+    this.invalidCid = cid;
+  }
 
-public virtual string GetErrorCode() {
-return this.errorCode;
-}
+  public virtual string GetErrorCode() {
+    return this.errorCode;
+  }
 
-public virtual int GetInvalidCid() {
-return this.invalidCid;
-}
+  public virtual int GetInvalidCid() {
+    return this.invalidCid;
+  }
 }

@@ -8,18 +8,21 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
-public class FDFAnnotationHighlight : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTextMarkup {
-public const string Subtype = "Highlight";
+public class FDFAnnotationHighlight
+: global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTextMarkup {
+  public const string Subtype = "Highlight";
 
-public FDFAnnotationHighlight() : base() {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationHighlight.Subtype);
-}
+  public FDFAnnotationHighlight() : base() {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationHighlight.Subtype);
+  }
 
-public FDFAnnotationHighlight(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public FDFAnnotationHighlight(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public FDFAnnotationHighlight(global::System.Xml.XmlElement element) : base(element) {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationHighlight.Subtype);
-}
+  public FDFAnnotationHighlight(global::System.Xml.XmlElement element) : base(element) {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationHighlight.Subtype);
+  }
 }

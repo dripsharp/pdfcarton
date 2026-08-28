@@ -9,21 +9,75 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font.Encoding;
 
 public class StandardEncoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding {
-private static readonly object[][] STANDARD_ENCODING_TABLE = new object[][] { new object[] { 65, "A" }, new object[] { 225, "AE" }, new object[] { 66, "B" }, new object[] { 67, "C" }, new object[] { 68, "D" }, new object[] { 69, "E" }, new object[] { 70, "F" }, new object[] { 71, "G" }, new object[] { 72, "H" }, new object[] { 73, "I" }, new object[] { 74, "J" }, new object[] { 75, "K" }, new object[] { 76, "L" }, new object[] { 232, "Lslash" }, new object[] { 77, "M" }, new object[] { 78, "N" }, new object[] { 79, "O" }, new object[] { 234, "OE" }, new object[] { 233, "Oslash" }, new object[] { 80, "P" }, new object[] { 81, "Q" }, new object[] { 82, "R" }, new object[] { 83, "S" }, new object[] { 84, "T" }, new object[] { 85, "U" }, new object[] { 86, "V" }, new object[] { 87, "W" }, new object[] { 88, "X" }, new object[] { 89, "Y" }, new object[] { 90, "Z" }, new object[] { 97, "a" }, new object[] { 194, "acute" }, new object[] { 241, "ae" }, new object[] { 38, "ampersand" }, new object[] { 94, "asciicircum" }, new object[] { 126, "asciitilde" }, new object[] { 42, "asterisk" }, new object[] { 64, "at" }, new object[] { 98, "b" }, new object[] { 92, "backslash" }, new object[] { 124, "bar" }, new object[] { 123, "braceleft" }, new object[] { 125, "braceright" }, new object[] { 91, "bracketleft" }, new object[] { 93, "bracketright" }, new object[] { 198, "breve" }, new object[] { 183, "bullet" }, new object[] { 99, "c" }, new object[] { 207, "caron" }, new object[] { 203, "cedilla" }, new object[] { 162, "cent" }, new object[] { 195, "circumflex" }, new object[] { 58, "colon" }, new object[] { 44, "comma" }, new object[] { 168, "currency" }, new object[] { 100, "d" }, new object[] { 178, "dagger" }, new object[] { 179, "daggerdbl" }, new object[] { 200, "dieresis" }, new object[] { 36, "dollar" }, new object[] { 199, "dotaccent" }, new object[] { 245, "dotlessi" }, new object[] { 101, "e" }, new object[] { 56, "eight" }, new object[] { 188, "ellipsis" }, new object[] { 208, "emdash" }, new object[] { 177, "endash" }, new object[] { 61, "equal" }, new object[] { 33, "exclam" }, new object[] { 161, "exclamdown" }, new object[] { 102, "f" }, new object[] { 174, "fi" }, new object[] { 53, "five" }, new object[] { 175, "fl" }, new object[] { 166, "florin" }, new object[] { 52, "four" }, new object[] { 164, "fraction" }, new object[] { 103, "g" }, new object[] { 251, "germandbls" }, new object[] { 193, "grave" }, new object[] { 62, "greater" }, new object[] { 171, "guillemotleft" }, new object[] { 187, "guillemotright" }, new object[] { 172, "guilsinglleft" }, new object[] { 173, "guilsinglright" }, new object[] { 104, "h" }, new object[] { 205, "hungarumlaut" }, new object[] { 45, "hyphen" }, new object[] { 105, "i" }, new object[] { 106, "j" }, new object[] { 107, "k" }, new object[] { 108, "l" }, new object[] { 60, "less" }, new object[] { 248, "lslash" }, new object[] { 109, "m" }, new object[] { 197, "macron" }, new object[] { 110, "n" }, new object[] { 57, "nine" }, new object[] { 35, "numbersign" }, new object[] { 111, "o" }, new object[] { 250, "oe" }, new object[] { 206, "ogonek" }, new object[] { 49, "one" }, new object[] { 227, "ordfeminine" }, new object[] { 235, "ordmasculine" }, new object[] { 249, "oslash" }, new object[] { 112, "p" }, new object[] { 182, "paragraph" }, new object[] { 40, "parenleft" }, new object[] { 41, "parenright" }, new object[] { 37, "percent" }, new object[] { 46, "period" }, new object[] { 180, "periodcentered" }, new object[] { 189, "perthousand" }, new object[] { 43, "plus" }, new object[] { 113, "q" }, new object[] { 63, "question" }, new object[] { 191, "questiondown" }, new object[] { 34, "quotedbl" }, new object[] { 185, "quotedblbase" }, new object[] { 170, "quotedblleft" }, new object[] { 186, "quotedblright" }, new object[] { 96, "quoteleft" }, new object[] { 39, "quoteright" }, new object[] { 184, "quotesinglbase" }, new object[] { 169, "quotesingle" }, new object[] { 114, "r" }, new object[] { 202, "ring" }, new object[] { 115, "s" }, new object[] { 167, "section" }, new object[] { 59, "semicolon" }, new object[] { 55, "seven" }, new object[] { 54, "six" }, new object[] { 47, "slash" }, new object[] { 32, "space" }, new object[] { 163, "sterling" }, new object[] { 116, "t" }, new object[] { 51, "three" }, new object[] { 196, "tilde" }, new object[] { 50, "two" }, new object[] { 117, "u" }, new object[] { 95, "underscore" }, new object[] { 118, "v" }, new object[] { 119, "w" }, new object[] { 120, "x" }, new object[] { 121, "y" }, new object[] { 165, "yen" }, new object[] { 122, "z" }, new object[] { 48, "zero" } };
+  private static readonly object[][] STANDARD_ENCODING_TABLE = new object[][] { new object[] { 65,
+    "A" }, new object[] { 225, "AE" }, new object[] { 66, "B" }, new object[] { 67, "C" },
+    new object[] { 68, "D" }, new object[] { 69, "E" }, new object[] { 70, "F" }, new object[] { 71,
+    "G" }, new object[] { 72, "H" }, new object[] { 73, "I" }, new object[] { 74, "J" },
+    new object[] { 75, "K" }, new object[] { 76, "L" }, new object[] { 232, "Lslash" },
+    new object[] { 77, "M" }, new object[] { 78, "N" }, new object[] { 79, "O" },
+    new object[] { 234, "OE" }, new object[] { 233, "Oslash" }, new object[] { 80, "P" },
+    new object[] { 81, "Q" }, new object[] { 82, "R" }, new object[] { 83, "S" }, new object[] { 84,
+    "T" }, new object[] { 85, "U" }, new object[] { 86, "V" }, new object[] { 87, "W" },
+    new object[] { 88, "X" }, new object[] { 89, "Y" }, new object[] { 90, "Z" }, new object[] { 97,
+    "a" }, new object[] { 194, "acute" }, new object[] { 241, "ae" }, new object[] { 38,
+    "ampersand" }, new object[] { 94, "asciicircum" }, new object[] { 126, "asciitilde" },
+    new object[] { 42, "asterisk" }, new object[] { 64, "at" }, new object[] { 98, "b" },
+    new object[] { 92, "backslash" }, new object[] { 124, "bar" }, new object[] { 123,
+    "braceleft" }, new object[] { 125, "braceright" }, new object[] { 91, "bracketleft" },
+    new object[] { 93, "bracketright" }, new object[] { 198, "breve" }, new object[] { 183,
+    "bullet" }, new object[] { 99, "c" }, new object[] { 207, "caron" }, new object[] { 203,
+    "cedilla" }, new object[] { 162, "cent" }, new object[] { 195, "circumflex" },
+    new object[] { 58, "colon" }, new object[] { 44, "comma" }, new object[] { 168, "currency" },
+    new object[] { 100, "d" }, new object[] { 178, "dagger" }, new object[] { 179, "daggerdbl" },
+    new object[] { 200, "dieresis" }, new object[] { 36, "dollar" }, new object[] { 199,
+    "dotaccent" }, new object[] { 245, "dotlessi" }, new object[] { 101, "e" }, new object[] { 56,
+    "eight" }, new object[] { 188, "ellipsis" }, new object[] { 208, "emdash" }, new object[] { 177,
+    "endash" }, new object[] { 61, "equal" }, new object[] { 33, "exclam" }, new object[] { 161,
+    "exclamdown" }, new object[] { 102, "f" }, new object[] { 174, "fi" }, new object[] { 53,
+    "five" }, new object[] { 175, "fl" }, new object[] { 166, "florin" }, new object[] { 52,
+    "four" }, new object[] { 164, "fraction" }, new object[] { 103, "g" }, new object[] { 251,
+    "germandbls" }, new object[] { 193, "grave" }, new object[] { 62, "greater" },
+    new object[] { 171, "guillemotleft" }, new object[] { 187, "guillemotright" },
+    new object[] { 172, "guilsinglleft" }, new object[] { 173, "guilsinglright" },
+    new object[] { 104, "h" }, new object[] { 205, "hungarumlaut" }, new object[] { 45, "hyphen" },
+    new object[] { 105, "i" }, new object[] { 106, "j" }, new object[] { 107, "k" },
+    new object[] { 108, "l" }, new object[] { 60, "less" }, new object[] { 248, "lslash" },
+    new object[] { 109, "m" }, new object[] { 197, "macron" }, new object[] { 110, "n" },
+    new object[] { 57, "nine" }, new object[] { 35, "numbersign" }, new object[] { 111, "o" },
+    new object[] { 250, "oe" }, new object[] { 206, "ogonek" }, new object[] { 49, "one" },
+    new object[] { 227, "ordfeminine" }, new object[] { 235, "ordmasculine" }, new object[] { 249,
+    "oslash" }, new object[] { 112, "p" }, new object[] { 182, "paragraph" }, new object[] { 40,
+    "parenleft" }, new object[] { 41, "parenright" }, new object[] { 37, "percent" },
+    new object[] { 46, "period" }, new object[] { 180, "periodcentered" }, new object[] { 189,
+    "perthousand" }, new object[] { 43, "plus" }, new object[] { 113, "q" }, new object[] { 63,
+    "question" }, new object[] { 191, "questiondown" }, new object[] { 34, "quotedbl" },
+    new object[] { 185, "quotedblbase" }, new object[] { 170, "quotedblleft" }, new object[] { 186,
+    "quotedblright" }, new object[] { 96, "quoteleft" }, new object[] { 39, "quoteright" },
+    new object[] { 184, "quotesinglbase" }, new object[] { 169, "quotesingle" }, new object[] { 114,
+    "r" }, new object[] { 202, "ring" }, new object[] { 115, "s" }, new object[] { 167, "section" },
+    new object[] { 59, "semicolon" }, new object[] { 55, "seven" }, new object[] { 54, "six" },
+    new object[] { 47, "slash" }, new object[] { 32, "space" }, new object[] { 163, "sterling" },
+    new object[] { 116, "t" }, new object[] { 51, "three" }, new object[] { 196, "tilde" },
+    new object[] { 50, "two" }, new object[] { 117, "u" }, new object[] { 95, "underscore" },
+    new object[] { 118, "v" }, new object[] { 119, "w" }, new object[] { 120, "x" },
+    new object[] { 121, "y" }, new object[] { 165, "yen" }, new object[] { 122, "z" },
+    new object[] { 48, "zero" } };
 
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.StandardEncoding Instance = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.StandardEncoding();
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.StandardEncoding Instance
+    = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.StandardEncoding();
 
-private StandardEncoding() {
-foreach (object[] encodingEntry in global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.StandardEncoding.STANDARD_ENCODING_TABLE) {
-this.Add((int)(global::DripSharp.Runtime.JavaCompat.Unbox((int?)(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharCode]))), global::DripSharp.Runtime.JavaCompat.StringValueOf(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharName]));
-}
-}
+  private StandardEncoding() {
+    foreach (object[] encodingEntry in global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.StandardEncoding.STANDARD_ENCODING_TABLE) {
+      this.Add((int)(global::DripSharp.Runtime.JavaCompat.Unbox((int?)(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharCode]))),
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharName]));
+    }
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return global::DripSharp.PdfCarton.Cos.COSName.StandardEncoding;
-}
+  public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return global::DripSharp.PdfCarton.Cos.COSName.StandardEncoding;
+  }
 
-public override string GetEncodingName() {
-return "StandardEncoding";
-}
+  public override string GetEncodingName() {
+    return "StandardEncoding";
+  }
 }

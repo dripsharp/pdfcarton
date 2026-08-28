@@ -9,25 +9,35 @@
 namespace DripSharp.PdfCarton.Preflight.Action;
 
 public class HideAction : global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager {
-public HideAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact, global::DripSharp.PdfCarton.Cos.COSDictionary adict, global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) : base(amFact, adict, ctx, aaKey) {
+  public HideAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact,
+    global::DripSharp.PdfCarton.Cos.COSDictionary adict,
+    global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) : base(amFact, adict,
+    ctx, aaKey) {
 
-}
+  }
 
-protected internal override bool InnerValid() {
-global::DripSharp.PdfCarton.Cos.COSBase t = this.ActionDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.T);
-if ((t == default!)) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionMisingKey, "T entry is mandatory for the NamedActions"));
-return false;
-}
-if (!(((((t is global::DripSharp.PdfCarton.Cos.COSDictionary) || (t is global::DripSharp.PdfCarton.Cos.COSArray)) || (t is global::DripSharp.PdfCarton.Cos.COSString)) || (t is global::DripSharp.PdfCarton.Cos.COSName)))) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionInvalidType, "T entry type is invalid"));
-return false;
-}
-bool h = this.ActionDictionary.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.H, true);
-if (h) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionHideHInvalid, "H entry is \"true\""));
-return false;
-}
-return true;
-}
+  protected internal override bool InnerValid() {
+    global::DripSharp.PdfCarton.Cos.COSBase t
+      = this.ActionDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.T);
+    if ((t == default!)) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionMisingKey,
+        "T entry is mandatory for the NamedActions"));
+      return false;
+    }
+    if (!(((((t is global::DripSharp.PdfCarton.Cos.COSDictionary)
+      || (t is global::DripSharp.PdfCarton.Cos.COSArray))
+      || (t is global::DripSharp.PdfCarton.Cos.COSString))
+      || (t is global::DripSharp.PdfCarton.Cos.COSName)))) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionInvalidType,
+        "T entry type is invalid"));
+      return false;
+    }
+    bool h = this.ActionDictionary.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.H, true);
+    if (h) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionHideHInvalid,
+        "H entry is \"true\""));
+      return false;
+    }
+    return true;
+  }
 }

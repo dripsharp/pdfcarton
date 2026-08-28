@@ -9,11 +9,12 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
 public class PDAppearanceStream : global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject {
-public PDAppearanceStream(global::DripSharp.PdfCarton.Cos.COSStream stream) : base(stream) {
+  public PDAppearanceStream(global::DripSharp.PdfCarton.Cos.COSStream stream) : base(stream) {
 
-}
+  }
 
-public PDAppearanceStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(document) {
+  public PDAppearanceStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document)
+  : base(document) {
 
-}
+  }
 }

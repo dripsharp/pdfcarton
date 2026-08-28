@@ -8,22 +8,26 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Color;
 
-public class SetNonStrokingDeviceGrayColor : global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingColor {
-public SetNonStrokingDeviceGrayColor(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class SetNonStrokingDeviceGrayColor
+: global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingColor {
+  public SetNonStrokingDeviceGrayColor(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-if (!(context.IsShouldProcessColorOperators())) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace cs = context.GetResources().GetColorSpace(global::DripSharp.PdfCarton.Cos.COSName.Devicegray);
-context.GetGraphicsState().SetNonStrokingColorSpace(cs);
-base.Process(@operator, arguments);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    if (!(context.IsShouldProcessColorOperators())) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace cs
+      = context.GetResources().GetColorSpace(global::DripSharp.PdfCarton.Cos.COSName.Devicegray);
+    context.GetGraphicsState().SetNonStrokingColorSpace(cs);
+    base.Process(@operator, arguments);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray;
+  }
 }

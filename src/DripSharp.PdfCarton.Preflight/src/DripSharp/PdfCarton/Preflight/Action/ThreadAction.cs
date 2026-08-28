@@ -9,20 +9,29 @@
 namespace DripSharp.PdfCarton.Preflight.Action;
 
 public class ThreadAction : global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager {
-public ThreadAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact, global::DripSharp.PdfCarton.Cos.COSDictionary adict, global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) : base(amFact, adict, ctx, aaKey) {
+  public ThreadAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact,
+    global::DripSharp.PdfCarton.Cos.COSDictionary adict,
+    global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) : base(amFact, adict,
+    ctx, aaKey) {
 
-}
+  }
 
-protected internal override bool InnerValid() {
-global::DripSharp.PdfCarton.Cos.COSBase d = this.ActionDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.D);
-if ((d == default!)) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionMisingKey, "D entry is mandatory for the ThreadAction"));
-return false;
-}
-if (!(((((d is global::DripSharp.PdfCarton.Cos.COSInteger) || (d is global::DripSharp.PdfCarton.Cos.COSName)) || (d is global::DripSharp.PdfCarton.Cos.COSString)) || (d is global::DripSharp.PdfCarton.Cos.COSDictionary)))) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionInvalidType, "D entry type is invalid"));
-return false;
-}
-return true;
-}
+  protected internal override bool InnerValid() {
+    global::DripSharp.PdfCarton.Cos.COSBase d
+      = this.ActionDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.D);
+    if ((d == default!)) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionMisingKey,
+        "D entry is mandatory for the ThreadAction"));
+      return false;
+    }
+    if (!(((((d is global::DripSharp.PdfCarton.Cos.COSInteger)
+      || (d is global::DripSharp.PdfCarton.Cos.COSName))
+      || (d is global::DripSharp.PdfCarton.Cos.COSString))
+      || (d is global::DripSharp.PdfCarton.Cos.COSDictionary)))) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionInvalidType,
+        "D entry type is invalid"));
+      return false;
+    }
+    return true;
+  }
 }

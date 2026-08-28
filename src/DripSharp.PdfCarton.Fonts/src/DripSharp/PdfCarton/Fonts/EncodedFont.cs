@@ -9,17 +9,17 @@
 namespace DripSharp.PdfCarton.Fonts;
 
 public interface EncodedFont {
-public global::DripSharp.PdfCarton.Fonts.Encoding.Encoding GetEncoding();
+  public global::DripSharp.PdfCarton.Fonts.Encoding.Encoding GetEncoding();
 }
 
 public sealed class __EncodedFontFunctionalAdapter : global::DripSharp.PdfCarton.Fonts.EncodedFont {
-private readonly global::System.Func<global::DripSharp.PdfCarton.Fonts.Encoding.Encoding> implementation;
+  private readonly global::System.Func<global::DripSharp.PdfCarton.Fonts.Encoding.Encoding> implementation;
 
-public __EncodedFontFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.Fonts.Encoding.Encoding> implementation) {
-this.implementation = implementation;
-}
+  public __EncodedFontFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.Fonts.Encoding.Encoding> implementation) {
+    this.implementation = implementation;
+  }
 
-public global::DripSharp.PdfCarton.Fonts.Encoding.Encoding GetEncoding() {
-return this.implementation();
-}
+  public global::DripSharp.PdfCarton.Fonts.Encoding.Encoding GetEncoding() {
+    return this.implementation();
+  }
 }

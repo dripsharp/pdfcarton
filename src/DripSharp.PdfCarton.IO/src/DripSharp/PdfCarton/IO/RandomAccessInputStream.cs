@@ -9,60 +9,66 @@
 namespace DripSharp.PdfCarton.IO;
 
 public class RandomAccessInputStream : global::DripSharp.Runtime.JavaInputStream {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly global::DripSharp.PdfCarton.IO.RandomAccessRead input = null!;
+  private readonly global::DripSharp.PdfCarton.IO.RandomAccessRead input = null!;
 
-private long position = default;
+  private long position = default;
 
-public RandomAccessInputStream(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
-this.input = randomAccessRead;
-this.position = 0;
-}
+  public RandomAccessInputStream(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
+    this.input = randomAccessRead;
+    this.position = 0;
+  }
 
-internal virtual void restorePosition() {
-this.input.Seek(this.position);
-}
+  internal virtual void restorePosition() {
+    this.input.Seek(this.position);
+  }
 
-public override int Available() {
-return (int)(global::System.Math.Max((long)(0), global::System.Math.Min((this.input.Length() - this.position), (long)(int.MaxValue))));
-}
+  public override int Available() {
+    return (int)(global::System.Math.Max((long)(0), global::System.Math.Min((this.input.Length()
+      - this.position), (long)(int.MaxValue))));
+  }
 
-public override int Read() {
-this.restorePosition();
-if (this.input.IsEOF()) {
-return -1;
-}
-int b = this.input.Read();
-if ((b != -1)) {
-this.position += 1;
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.IO.RandomAccessInputStream.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("read() returns -1, assumed position: ", this.position), ", actual position: "), this.input.GetPosition())));
-}
-return b;
-}
+  public override int Read() {
+    this.restorePosition();
+    if (this.input.IsEOF()) {
+      return -1;
+    }
+    int b = this.input.Read();
+    if ((b != -1)) {
+      this.position += 1;
+    } else {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.IO.RandomAccessInputStream.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("read() returns -1, assumed position: ",
+        this.position), ", actual position: "), this.input.GetPosition())));
+    }
+    return b;
+  }
 
-public override int Read(sbyte[] b, int off, int len) {
-this.restorePosition();
-if (this.input.IsEOF()) {
-return -1;
-}
-int n = this.input.Read(b, off, len);
-if ((n != -1)) {
-this.position += n;
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.IO.RandomAccessInputStream.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("read() returns -1, assumed position: ", this.position), ", actual position: "), this.input.GetPosition())));
-}
-return n;
-}
+  public override int Read(sbyte[] b, int off, int len) {
+    this.restorePosition();
+    if (this.input.IsEOF()) {
+      return -1;
+    }
+    int n = this.input.Read(b, off, len);
+    if ((n != -1)) {
+      this.position += n;
+    } else {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.IO.RandomAccessInputStream.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("read() returns -1, assumed position: ",
+        this.position), ", actual position: "), this.input.GetPosition())));
+    }
+    return n;
+  }
 
-public override long Skip(long n) {
-if ((n <= 0)) {
-return 0;
-}
-this.restorePosition();
-this.input.Seek((this.position + n));
-this.position += n;
-return n;
-}
+  public override long Skip(long n) {
+    if ((n <= 0)) {
+      return 0;
+    }
+    this.restorePosition();
+    this.input.Seek((this.position + n));
+    this.position += n;
+    return n;
+  }
 }

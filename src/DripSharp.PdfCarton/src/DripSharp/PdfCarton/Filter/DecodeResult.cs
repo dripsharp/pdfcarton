@@ -9,42 +9,43 @@
 namespace DripSharp.PdfCarton.Filter;
 
 public sealed class DecodeResult {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary parameters = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary parameters = null!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace colorSpace = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace colorSpace = null!;
 
-private global::SkiaSharp.SKBitmap smask = null!;
+  private global::SkiaSharp.SKBitmap smask = null!;
 
-internal DecodeResult(global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
-this.parameters = parameters;
-}
+  internal DecodeResult(global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
+    this.parameters = parameters;
+  }
 
-internal DecodeResult(global::DripSharp.PdfCarton.Cos.COSDictionary parameters, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace colorSpace) {
-this.parameters = parameters;
-this.colorSpace = colorSpace;
-}
+  internal DecodeResult(global::DripSharp.PdfCarton.Cos.COSDictionary parameters,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace colorSpace) {
+    this.parameters = parameters;
+    this.colorSpace = colorSpace;
+  }
 
-public static global::DripSharp.PdfCarton.Filter.DecodeResult CreateDefault() {
-return new global::DripSharp.PdfCarton.Filter.DecodeResult(new global::DripSharp.PdfCarton.Cos.COSDictionary());
-}
+  public static global::DripSharp.PdfCarton.Filter.DecodeResult CreateDefault() {
+    return new global::DripSharp.PdfCarton.Filter.DecodeResult(new global::DripSharp.PdfCarton.Cos.COSDictionary());
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSDictionary GetParameters() {
-return this.parameters;
-}
+  public global::DripSharp.PdfCarton.Cos.COSDictionary GetParameters() {
+    return this.parameters;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace GetJPXColorSpace() {
-return this.colorSpace;
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace GetJPXColorSpace() {
+    return this.colorSpace;
+  }
 
-internal void setColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace colorSpace) {
-this.colorSpace = colorSpace;
-}
+  internal void setColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace colorSpace) {
+    this.colorSpace = colorSpace;
+  }
 
-internal void setJPXSMask(global::SkiaSharp.SKBitmap smask) {
-this.smask = smask;
-}
+  internal void setJPXSMask(global::SkiaSharp.SKBitmap smask) {
+    this.smask = smask;
+  }
 
-public global::SkiaSharp.SKBitmap GetJPXSMask() {
-return this.smask;
-}
+  public global::SkiaSharp.SKBitmap GetJPXSMask() {
+    return this.smask;
+  }
 }

@@ -8,26 +8,29 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel;
 
-public class PDDestinationNameTreeNode : global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination> {
-public PDDestinationNameTreeNode() {}
+public class PDDestinationNameTreeNode
+: global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination> {
+  public PDDestinationNameTreeNode() {}
 
-public PDDestinationNameTreeNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
+  public PDDestinationNameTreeNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
 
-}
+  }
 
-protected internal override global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination ConvertCOSToPD(global::DripSharp.PdfCarton.Cos.COSBase @base) {
-global::DripSharp.PdfCarton.Cos.COSBase destination = @base;
-if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-destination = ((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!)).GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.D);
-}
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination dest = global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination.Create(destination);
-if ((dest is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)) {
-return (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(dest!);
-}
-return default!;
-}
+  protected internal override global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination ConvertCOSToPD(global::DripSharp.PdfCarton.Cos.COSBase @base) {
+    global::DripSharp.PdfCarton.Cos.COSBase destination = @base;
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+      destination
+        = ((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!)).GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.D);
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination dest
+      = global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination.Create(destination);
+    if ((dest is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)) {
+      return (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(dest!);
+    }
+    return default!;
+  }
 
-protected internal override global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination> CreateChildNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
-return new global::DripSharp.PdfCarton.Pdmodel.PDDestinationNameTreeNode(dic);
-}
+  protected internal override global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination> CreateChildNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
+    return new global::DripSharp.PdfCarton.Pdmodel.PDDestinationNameTreeNode(dic);
+  }
 }

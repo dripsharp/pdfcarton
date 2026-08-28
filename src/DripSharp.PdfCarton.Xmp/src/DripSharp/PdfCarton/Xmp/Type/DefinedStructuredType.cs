@@ -9,21 +9,31 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class DefinedStructuredType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-private global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Xmp.Type.PropertyType> definedProperties = default!;
+  private global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Xmp.Type.PropertyType> definedProperties = default!;
 
-public DefinedStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string fieldPrefix, string propertyName) : base(metadata, namespaceURI, fieldPrefix, propertyName) {
-this.definedProperties = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewJavaDictionary<string, global::DripSharp.PdfCarton.Xmp.Type.PropertyType>();
-}
+  public DefinedStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata,
+    string namespaceURI, string fieldPrefix, string propertyName) : base(metadata, namespaceURI,
+    fieldPrefix, propertyName) {
+    this.definedProperties
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewJavaDictionary<string,
+      global::DripSharp.PdfCarton.Xmp.Type.PropertyType>();
+  }
 
-public DefinedStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
-this.definedProperties = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewJavaDictionary<string, global::DripSharp.PdfCarton.Xmp.Type.PropertyType>();
-}
+  public DefinedStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata)
+  : base(metadata) {
+    this.definedProperties
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewJavaDictionary<string,
+      global::DripSharp.PdfCarton.Xmp.Type.PropertyType>();
+  }
 
-public virtual void AddProperty(string name, global::DripSharp.PdfCarton.Xmp.Type.PropertyType type) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapPut(this.definedProperties, name, type);
-}
+  public virtual void AddProperty(string name,
+    global::DripSharp.PdfCarton.Xmp.Type.PropertyType type) {
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapPut(this.definedProperties, name, type);
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Xmp.Type.PropertyType> GetDefinedProperties() {
-return this.definedProperties;
-}
+  public virtual global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Xmp.Type.PropertyType> GetDefinedProperties() {
+    return this.definedProperties;
+  }
 }

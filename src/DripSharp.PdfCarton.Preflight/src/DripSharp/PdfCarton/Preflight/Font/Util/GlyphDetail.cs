@@ -9,27 +9,28 @@
 namespace DripSharp.PdfCarton.Preflight.Font.Util;
 
 public class GlyphDetail {
-private readonly int code = default;
+  private readonly int code = default;
 
-private readonly global::DripSharp.PdfCarton.Preflight.Font.Util.GlyphException exception = null!;
+  private readonly global::DripSharp.PdfCarton.Preflight.Font.Util.GlyphException exception = null!;
 
-public GlyphDetail(int code) {
-this.code = code;
-this.exception = default!;
-}
+  public GlyphDetail(int code) {
+    this.code = code;
+    this.exception = default!;
+  }
 
-public GlyphDetail(int code, global::DripSharp.PdfCarton.Preflight.Font.Util.GlyphException error) {
-this.code = code;
-this.exception = error;
-}
+  public GlyphDetail(int code,
+    global::DripSharp.PdfCarton.Preflight.Font.Util.GlyphException error) {
+    this.code = code;
+    this.exception = error;
+  }
 
-public virtual void ThrowExceptionIfNotValid() {
-if ((this.exception != default!)) {
-throw this.exception;
-}
-}
+  public virtual void ThrowExceptionIfNotValid() {
+    if ((this.exception != default!)) {
+      throw this.exception;
+    }
+  }
 
-public virtual int GetCode() {
-return this.code;
-}
+  public virtual int GetCode() {
+    return this.code;
+  }
 }

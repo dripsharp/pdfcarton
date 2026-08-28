@@ -9,32 +9,34 @@
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent;
 
 public class PDPropertyList : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary Dict = null!;
+  protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary Dict = null!;
 
-public static global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList Create(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
-global::DripSharp.PdfCarton.Cos.COSBase item = dict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Type);
-if (global::DripSharp.PdfCarton.Cos.COSName.Ocg.Equals(item)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup(dict);
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSName.Ocmd.Equals(item)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentMembershipDictionary(dict);
-} else {
-return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList(dict);
-}
-}
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList Create(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
+    global::DripSharp.PdfCarton.Cos.COSBase item
+      = dict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Type);
+    if (global::DripSharp.PdfCarton.Cos.COSName.Ocg.Equals(item)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup(dict);
+    } else {
+      if (global::DripSharp.PdfCarton.Cos.COSName.Ocmd.Equals(item)) {
+        return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentMembershipDictionary(dict);
+      } else {
+        return new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList(dict);
+      }
+    }
+  }
 
-protected internal PDPropertyList() {
-this.Dict = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  protected internal PDPropertyList() {
+    this.Dict = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-protected internal PDPropertyList(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
-this.Dict = dict;
-}
+  protected internal PDPropertyList(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
+    this.Dict = dict;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.Dict;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.Dict;
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

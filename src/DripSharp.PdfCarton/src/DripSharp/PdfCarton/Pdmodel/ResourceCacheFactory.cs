@@ -9,23 +9,26 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public class ResourceCacheFactory {
-private static global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction resourceCacheCreateFunction = default!;
+  private static global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction resourceCacheCreateFunction
+    = default!;
 
-static ResourceCacheFactory() {
-{
-global::DripSharp.PdfCarton.Pdmodel.ResourceCacheFactory.SetResourceCacheCreateFunction(new global::DripSharp.PdfCarton.Pdmodel.DefaultResourceCacheCreateImpl());
-}
-}
+  static ResourceCacheFactory() { {
+      global::DripSharp.PdfCarton.Pdmodel.ResourceCacheFactory.SetResourceCacheCreateFunction(new global::DripSharp.PdfCarton.Pdmodel.DefaultResourceCacheCreateImpl());
+    }
+  }
 
-public static void SetResourceCacheCreateFunction(global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction function) {
-global::DripSharp.PdfCarton.Pdmodel.ResourceCacheFactory.resourceCacheCreateFunction = function;
-}
+  public static void SetResourceCacheCreateFunction(global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction function) {
+    global::DripSharp.PdfCarton.Pdmodel.ResourceCacheFactory.resourceCacheCreateFunction = function;
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction GetResourceCacheCreateFunction() {
-return global::DripSharp.PdfCarton.Pdmodel.ResourceCacheFactory.resourceCacheCreateFunction;
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction GetResourceCacheCreateFunction() {
+    return global::DripSharp.PdfCarton.Pdmodel.ResourceCacheFactory.resourceCacheCreateFunction;
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.ResourceCache CreateResourceCache() {
-return ((global::DripSharp.PdfCarton.Pdmodel.ResourceCacheFactory.resourceCacheCreateFunction != default!) ? global::DripSharp.PdfCarton.Pdmodel.ResourceCacheFactory.resourceCacheCreateFunction.Create() : (global::DripSharp.PdfCarton.Pdmodel.ResourceCache)(default!));
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.ResourceCache CreateResourceCache() {
+    return ((global::DripSharp.PdfCarton.Pdmodel.ResourceCacheFactory.resourceCacheCreateFunction
+      != default!)
+      ? global::DripSharp.PdfCarton.Pdmodel.ResourceCacheFactory.resourceCacheCreateFunction.Create()
+      : (global::DripSharp.PdfCarton.Pdmodel.ResourceCache)(default!));
+  }
 }

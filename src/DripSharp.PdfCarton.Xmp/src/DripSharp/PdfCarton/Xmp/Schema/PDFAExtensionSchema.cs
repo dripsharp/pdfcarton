@@ -8,20 +8,24 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Schema;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://www.aiim.org/pdfa/ns/extension/", "pdfaExtension")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://www.aiim.org/pdfa/ns/extension/",
+  "pdfaExtension")]
 public class PDFAExtensionSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("PDFASchema", "Bag")]
-public const string Schemas = "schemas";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("PDFASchema", "Bag")]
+  public const string Schemas = "schemas";
 
-public PDFAExtensionSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+  public PDFAExtensionSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata)
+  : base(metadata) {
 
-}
+  }
 
-public PDFAExtensionSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string prefix) : base(metadata, prefix) {
+  public PDFAExtensionSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string prefix)
+  : base(metadata, prefix) {
 
-}
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetSchemasProperty() {
-return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty>(global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema.Schemas, typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty));
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetSchemasProperty() {
+    return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty>(global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema.Schemas,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty));
+  }
 }

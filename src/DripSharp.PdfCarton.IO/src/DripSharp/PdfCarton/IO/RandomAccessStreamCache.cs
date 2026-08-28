@@ -9,21 +9,22 @@
 namespace DripSharp.PdfCarton.IO;
 
 public interface RandomAccessStreamCache : global::System.IDisposable {
-public interface StreamCacheCreateFunction {
-public global::DripSharp.PdfCarton.IO.RandomAccessStreamCache Create();
-}
+  public interface StreamCacheCreateFunction {
+    public global::DripSharp.PdfCarton.IO.RandomAccessStreamCache Create();
+  }
 
-public sealed class __StreamCacheCreateFunctionFunctionalAdapter : global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction {
-private readonly global::System.Func<global::DripSharp.PdfCarton.IO.RandomAccessStreamCache> implementation;
+  public sealed class __StreamCacheCreateFunctionFunctionalAdapter
+  : global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction {
+    private readonly global::System.Func<global::DripSharp.PdfCarton.IO.RandomAccessStreamCache> implementation;
 
-public __StreamCacheCreateFunctionFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.IO.RandomAccessStreamCache> implementation) {
-this.implementation = implementation;
-}
+    public __StreamCacheCreateFunctionFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.IO.RandomAccessStreamCache> implementation) {
+      this.implementation = implementation;
+    }
 
-public global::DripSharp.PdfCarton.IO.RandomAccessStreamCache Create() {
-return this.implementation();
-}
-}
+    public global::DripSharp.PdfCarton.IO.RandomAccessStreamCache Create() {
+      return this.implementation();
+    }
+  }
 
-public global::DripSharp.PdfCarton.IO.RandomAccess CreateBuffer();
+  public global::DripSharp.PdfCarton.IO.RandomAccess CreateBuffer();
 }

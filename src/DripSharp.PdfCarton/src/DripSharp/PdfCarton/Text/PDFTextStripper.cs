@@ -9,1123 +9,1281 @@
 namespace DripSharp.PdfCarton.Text;
 
 public class PDFTextStripper : global::DripSharp.PdfCarton.Text.LegacyPDFStreamEngine {
-private static float defaultIndentThreshold = 2.0F;
+  private static float defaultIndentThreshold = 2.0F;
 
-private static float defaultDropThreshold = 2.5F;
+  private static float defaultDropThreshold = 2.5F;
 
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-static PDFTextStripper() {
-{
-string strDrop = default!;
-string strIndent = default!;
-try {
-string className = typeof(global::DripSharp.PdfCarton.Text.PDFTextStripper).Name.ToLowerInvariant();
-string prop = global::DripSharp.Runtime.JavaCompat.Concat(className, ".indent");
-strIndent = global::DripSharp.Runtime.JavaCompat.GetProperty(prop);
-prop = global::DripSharp.Runtime.JavaCompat.Concat(className, ".drop");
-strDrop = global::DripSharp.Runtime.JavaCompat.GetProperty(prop);
-} catch (global::System.Security.SecurityException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Text.PDFTextStripper.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf("Couldn't read system properties - using defaults"));
-}
-if (((strIndent! != default!) && !((strIndent!.Length == 0)))) {
-try {
-global::DripSharp.PdfCarton.Text.PDFTextStripper.defaultIndentThreshold = global::DripSharp.Runtime.JavaCompat.ParseFloat(strIndent!);
-} catch (global::DripSharp.Runtime.JavaNumberFormatException) {}
-}
-if (((strDrop! != default!) && !((strDrop!.Length == 0)))) {
-try {
-global::DripSharp.PdfCarton.Text.PDFTextStripper.defaultDropThreshold = global::DripSharp.Runtime.JavaCompat.ParseFloat(strDrop!);
-} catch (global::DripSharp.Runtime.JavaNumberFormatException) {}
-}
-}
-{
-string path = "/org/apache/pdfbox/resources/text/BidiMirroring.txt";
-try {
-using (global::System.IO.Stream resourceAsStream = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Text.PDFTextStripper), path)) using (global::System.IO.Stream input = new global::System.IO.BufferedStream(resourceAsStream)) {
-global::DripSharp.PdfCarton.Text.PDFTextStripper.parseBidiFile(input);
-}
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Text.PDFTextStripper.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Could not parse BidiMirroring.txt, mirroring char map will be empty: ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
-}
-}
-}
+  static PDFTextStripper() { {
+      string strDrop = default!;
+      string strIndent = default!;
+      try {
+        string className
+          = typeof(global::DripSharp.PdfCarton.Text.PDFTextStripper).Name.ToLowerInvariant();
+        string prop = global::DripSharp.Runtime.JavaCompat.Concat(className, ".indent");
+        strIndent = global::DripSharp.Runtime.JavaCompat.GetProperty(prop);
+        prop = global::DripSharp.Runtime.JavaCompat.Concat(className, ".drop");
+        strDrop = global::DripSharp.Runtime.JavaCompat.GetProperty(prop);
+      } catch (global::System.Security.SecurityException e) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Text.PDFTextStripper.LOG,
+          (global::System.Exception)e,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf("Couldn't read system properties - using defaults"));
+      }
+      if (((strIndent! != default!) && !((strIndent!.Length == 0)))) {
+        try {
+          global::DripSharp.PdfCarton.Text.PDFTextStripper.defaultIndentThreshold
+            = global::DripSharp.Runtime.JavaCompat.ParseFloat(strIndent!);
+        } catch (global::DripSharp.Runtime.JavaNumberFormatException) {}
+      }
+      if (((strDrop! != default!) && !((strDrop!.Length == 0)))) {
+        try {
+          global::DripSharp.PdfCarton.Text.PDFTextStripper.defaultDropThreshold
+            = global::DripSharp.Runtime.JavaCompat.ParseFloat(strDrop!);
+        } catch (global::DripSharp.Runtime.JavaNumberFormatException) {}
+      }
+    } {
+      string path = "/org/apache/pdfbox/resources/text/BidiMirroring.txt";
+      try {
+        using (global::System.IO.Stream resourceAsStream
+          = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Text.PDFTextStripper),
+          path)) using (global::System.IO.Stream input
+          = new global::System.IO.BufferedStream(resourceAsStream)) {
+          global::DripSharp.PdfCarton.Text.PDFTextStripper.parseBidiFile(input);
+        }
+      } catch (global::System.IO.IOException e) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Text.PDFTextStripper.LOG,
+          (global::System.Exception)e,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Could not parse BidiMirroring.txt, mirroring char map will be empty: ",
+          global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
+      }
+    }
+  }
 
-protected internal static readonly string LineSeparator = global::System.Environment.NewLine;
+  protected internal static readonly string LineSeparator = global::System.Environment.NewLine;
 
-private string lineSeparator = global::DripSharp.PdfCarton.Text.PDFTextStripper.LineSeparator;
+  private string lineSeparator = global::DripSharp.PdfCarton.Text.PDFTextStripper.LineSeparator;
 
-private string wordSeparator = " ";
+  private string wordSeparator = " ";
 
-private string paragraphStart = "";
+  private string paragraphStart = "";
 
-private string paragraphEnd = "";
+  private string paragraphEnd = "";
 
-private string pageStart = "";
+  private string pageStart = "";
 
-private string pageEnd = global::DripSharp.PdfCarton.Text.PDFTextStripper.LineSeparator;
+  private string pageEnd = global::DripSharp.PdfCarton.Text.PDFTextStripper.LineSeparator;
+
+  private string articleStart = "";
 
-private string articleStart = "";
-
-private string articleEnd = "";
-
-private int currentPageNo = 1;
-
-private int __field_startPage = 1;
-
-private int __field_endPage = int.MaxValue;
-
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem startBookmark = default!;
-
-private int startBookmarkPageNumber = -1;
-
-private int endBookmarkPageNumber = -1;
-
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem endBookmark = default!;
-
-private bool suppressDuplicateOverlappingText = true;
-
-private bool shouldSeparateByBeads = true;
-
-private bool sortByPosition = false;
-
-private bool addMoreFormatting = false;
-
-private bool ignoreContentStreamSpaceGlyphs = false;
-
-private float indentThreshold = global::DripSharp.PdfCarton.Text.PDFTextStripper.defaultIndentThreshold;
-
-private float dropThreshold = global::DripSharp.PdfCarton.Text.PDFTextStripper.defaultDropThreshold;
-
-private float spacingTolerance = 0.5F;
-
-private float averageCharTolerance = 0.3F;
-
-private global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle> beadRectangles = default!;
-
-private readonly global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent> currentMarkedContents = new global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent>();
-
-private bool firstActualTextPosition = false;
-
-private string actualText = default!;
-
-protected internal global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>> CharactersByArticle = new global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>();
-
-private readonly global::System.Collections.Generic.IDictionary<string, global::System.Collections.Generic.SortedDictionary<float, global::System.Collections.Generic.SortedSet<float>>> characterListMapping = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, global::System.Collections.Generic.SortedDictionary<float, global::System.Collections.Generic.SortedSet<float>>>();
-
-protected internal global::DripSharp.PdfCarton.Pdmodel.PDDocument Document = null!;
-
-protected internal global::System.IO.TextWriter Output = null!;
-
-private bool inParagraph = default;
-
-public PDFTextStripper() {
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent.BeginMarkedContentSequenceWithProperties(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent.BeginMarkedContentSequence(this));
-this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent.EndMarkedContentSequence(this));
-}
-
-public virtual string GetText(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc) {
-global::System.IO.StringWriter outputStream = new global::System.IO.StringWriter();
-this.WriteText(doc, outputStream);
-return outputStream.ToString();
-}
-
-private void resetEngine() {
-this.currentPageNo = 1;
-this.Document = default!;
-(this.CharactersByArticle).Clear();
-this.characterListMapping.Clear();
-}
-
-public virtual void WriteText(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc, global::System.IO.TextWriter outputStream) {
-this.resetEngine();
-this.Document = doc;
-this.Output = outputStream;
-if (this.GetAddMoreFormatting()) {
-this.paragraphEnd = this.lineSeparator;
-this.pageStart = this.lineSeparator;
-this.articleStart = this.lineSeparator;
-this.articleEnd = this.lineSeparator;
-}
-this.StartDocument(this.Document);
-this.ProcessPages(this.Document.GetPages());
-this.EndDocument(this.Document);
-}
-
-protected internal virtual void ProcessPages(global::DripSharp.PdfCarton.Pdmodel.PDPageTree pages) {
-global::DripSharp.PdfCarton.Pdmodel.PDPage startBookmarkPage = ((this.startBookmark == default!) ? (global::DripSharp.PdfCarton.Pdmodel.PDPage)(default!) : this.startBookmark.FindDestinationPage(this.Document));
-if ((startBookmarkPage != default!)) {
-this.startBookmarkPageNumber = (pages.IndexOf(startBookmarkPage) + 1);
-} else {
-this.startBookmarkPageNumber = -1;
-}
-global::DripSharp.PdfCarton.Pdmodel.PDPage endBookmarkPage = ((this.endBookmark == default!) ? (global::DripSharp.PdfCarton.Pdmodel.PDPage)(default!) : this.endBookmark.FindDestinationPage(this.Document));
-if ((endBookmarkPage != default!)) {
-this.endBookmarkPageNumber = (pages.IndexOf(endBookmarkPage) + 1);
-} else {
-this.endBookmarkPageNumber = -1;
-}
-if ((((((this.startBookmarkPageNumber == -1) && (this.startBookmark != default!)) && (this.endBookmarkPageNumber == -1)) && (this.endBookmark != default!)) && (this.startBookmark.GetCOSObject() == this.endBookmark.GetCOSObject()))) {
-this.startBookmarkPageNumber = 0;
-this.endBookmarkPageNumber = 0;
-}
-foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page in pages) {
-if (page.HasContents()) {
-this.ProcessPage(page);
-}
-this.currentPageNo++;
-}
-}
-
-protected internal virtual void StartDocument(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {}
-
-protected internal virtual void EndDocument(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {}
-
-public override void ProcessPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-if (((((this.currentPageNo >= this.__field_startPage) && (this.currentPageNo <= this.__field_endPage)) && ((this.startBookmarkPageNumber == -1) || (this.currentPageNo >= this.startBookmarkPageNumber))) && ((this.endBookmarkPageNumber == -1) || (this.currentPageNo <= this.endBookmarkPageNumber)))) {
-this.StartPage(page);
-int numberOfArticleSections = 1;
-if (this.shouldSeparateByBeads) {
-this.fillBeadRectangles(page);
-numberOfArticleSections += (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.beadRectangles) * 2);
-}
-int originalSize = global::DripSharp.Runtime.JavaCompat.CollectionCount(this.CharactersByArticle);
-global::DripSharp.Runtime.JavaCompat.EnsureCapacity(this.CharactersByArticle, numberOfArticleSections);
-int lastIndex = global::System.Math.Max(numberOfArticleSections, originalSize);
-for (int i = 0; (i < lastIndex); i++) {
-if ((i < originalSize)) {
-global::DripSharp.Runtime.JavaCompat.ListGet(this.CharactersByArticle, i).Clear();
-} else {
-if ((numberOfArticleSections < originalSize)) {
-global::DripSharp.Runtime.JavaCompat.ListRemove(this.CharactersByArticle, i);
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(this.CharactersByArticle, new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Text.TextPosition>());
-}
-}
-}
-this.characterListMapping.Clear();
-base.ProcessPage(page);
-this.WritePage();
-this.EndPage(page);
-page.RemovePageResourceFromCache();
-}
-}
-
-private void fillBeadRectangles(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThreadBead> threadBeads = page.GetThreadBeads();
-this.beadRectangles = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle>(global::DripSharp.Runtime.JavaCompat.CollectionCount(threadBeads));
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThreadBead bead in threadBeads) {
-if (((bead == default!) || (bead.GetRectangle() == default!))) {
-global::DripSharp.Runtime.JavaCompat.Add(this.beadRectangles, default!);
-continue;
-}
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = bead.GetRectangle();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle mediaBox = page.GetMediaBox();
-float upperRightY = (mediaBox.GetUpperRightY() - rect.GetLowerLeftY());
-float lowerLeftY = (mediaBox.GetUpperRightY() - rect.GetUpperRightY());
-rect.SetLowerLeftY(lowerLeftY);
-rect.SetUpperRightY(upperRightY);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = page.GetCropBox();
-if (((global::DripSharp.Runtime.JavaCompat.CompareFloat(cropBox.GetLowerLeftX(), (float)(0)) != 0) || (global::DripSharp.Runtime.JavaCompat.CompareFloat(cropBox.GetLowerLeftY(), (float)(0)) != 0))) {
-rect.SetLowerLeftX((rect.GetLowerLeftX() - cropBox.GetLowerLeftX()));
-rect.SetLowerLeftY((rect.GetLowerLeftY() - cropBox.GetLowerLeftY()));
-rect.SetUpperRightX((rect.GetUpperRightX() - cropBox.GetLowerLeftX()));
-rect.SetUpperRightY((rect.GetUpperRightY() - cropBox.GetLowerLeftY()));
-}
-global::DripSharp.Runtime.JavaCompat.Add(this.beadRectangles, rect);
-}
-}
-
-protected internal virtual void StartArticle() {
-this.StartArticle(true);
-}
-
-protected internal virtual void StartArticle(bool isLTR) {
-(this.Output).Write(this.GetArticleStart());
-}
-
-protected internal virtual void EndArticle() {
-(this.Output).Write(this.GetArticleEnd());
-}
-
-protected internal virtual void StartPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {}
-
-protected internal virtual void EndPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {}
-
-private const float END_OF_LAST_TEXT_X_RESET_VALUE = -1;
-
-private static readonly float MAX_Y_FOR_LINE_RESET_VALUE = -(float.MaxValue);
-
-private static readonly float EXPECTED_START_OF_NEXT_WORD_X_RESET_VALUE = -(float.MaxValue);
-
-private const float MAX_HEIGHT_FOR_LINE_RESET_VALUE = -1;
-
-private static readonly float MIN_Y_TOP_FOR_LINE_RESET_VALUE = float.MaxValue;
-
-private const float LAST_WORD_SPACING_RESET_VALUE = -1;
-
-protected internal virtual void WritePage() {
-float maxYForLine = global::DripSharp.PdfCarton.Text.PDFTextStripper.MAX_Y_FOR_LINE_RESET_VALUE;
-float minYTopForLine = global::DripSharp.PdfCarton.Text.PDFTextStripper.MIN_Y_TOP_FOR_LINE_RESET_VALUE;
-float endOfLastTextX = global::DripSharp.PdfCarton.Text.PDFTextStripper.END_OF_LAST_TEXT_X_RESET_VALUE;
-float lastWordSpacing = global::DripSharp.PdfCarton.Text.PDFTextStripper.LAST_WORD_SPACING_RESET_VALUE;
-float maxHeightForLine = global::DripSharp.PdfCarton.Text.PDFTextStripper.MAX_HEIGHT_FOR_LINE_RESET_VALUE;
-global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper lastPosition = default!;
-global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper lastLineStartPosition = default!;
-bool startOfPage = true;
-bool startOfArticle;
-if (!(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.CharactersByArticle))) {
-this.WritePageStart();
-}
-foreach (global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> textList in this.CharactersByArticle) {
-if (this.GetSortByPosition()) {
-global::DripSharp.PdfCarton.Text.TextPositionComparator comparator = new global::DripSharp.PdfCarton.Text.TextPositionComparator();
-try {
-global::DripSharp.Runtime.JavaCompat.SortList(textList, comparator);
-} catch (global::System.ArgumentException) {
-global::DripSharp.PdfCarton.Util.IterativeMergeSort.Sort<global::DripSharp.PdfCarton.Text.TextPosition>(textList, comparator);
-}
-this.removeContainedSpaces(textList);
-}
-this.StartArticle();
-startOfArticle = true;
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem> line = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem>();
-global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Text.TextPosition> textIter = global::DripSharp.Runtime.JavaCompat.Iterator(textList);
-float previousAveCharWidth = -1;
-while (textIter.HasNext()) {
-global::DripSharp.PdfCarton.Text.TextPosition position = textIter.Next()!;
-global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper current = new global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper(position);
-string characterValue = position.GetUnicode();
-if ((global::DripSharp.Runtime.JavaCompat.Equals(" ", characterValue) && this.GetIgnoreContentStreamSpaceGlyphs())) {
-continue;
-}
-if (((lastPosition! != default!) && this.hasFontOrSizeChanged(position, lastPosition!.GetTextPosition()))) {
-previousAveCharWidth = -1;
-}
-float positionX;
-float positionY;
-float positionWidth;
-float positionHeight;
-if (this.GetSortByPosition()) {
-positionX = position.GetXDirAdj();
-positionY = position.GetYDirAdj();
-positionWidth = position.GetWidthDirAdj();
-positionHeight = position.GetHeightDir();
-} else {
-positionX = position.GetX();
-positionY = position.GetY();
-positionWidth = position.GetWidth();
-positionHeight = position.GetHeight();
-}
-int wordCharCount = position.GetIndividualWidths().Length;
-float wordSpacing = position.GetWidthOfSpace();
-float deltaSpace;
-if (((global::DripSharp.Runtime.JavaCompat.CompareFloat(wordSpacing, (float)(0)) == 0) || float.IsNaN(wordSpacing))) {
-deltaSpace = float.MaxValue;
-} else {
-if ((lastWordSpacing < 0)) {
-deltaSpace = (wordSpacing * this.GetSpacingTolerance());
-} else {
-deltaSpace = (((float)((wordSpacing + lastWordSpacing)) / (float)(2.0F)) * this.GetSpacingTolerance());
-}
-}
-float averageCharWidth;
-if ((previousAveCharWidth < 0)) {
-averageCharWidth = ((float)(positionWidth) / wordCharCount);
-} else {
-averageCharWidth = ((float)((previousAveCharWidth + ((float)(positionWidth) / wordCharCount))) / (float)(2.0F));
-}
-float deltaCharWidth = (averageCharWidth * this.GetAverageCharTolerance());
-float expectedStartOfNextWordX = global::DripSharp.PdfCarton.Text.PDFTextStripper.EXPECTED_START_OF_NEXT_WORD_X_RESET_VALUE;
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(endOfLastTextX, global::DripSharp.PdfCarton.Text.PDFTextStripper.END_OF_LAST_TEXT_X_RESET_VALUE) != 0)) {
-expectedStartOfNextWordX = (endOfLastTextX + global::System.Math.Min(deltaSpace, deltaCharWidth));
-}
-if ((lastPosition! != default!)) {
-if (startOfArticle) {
-lastPosition!.SetArticleStart();
-startOfArticle = false;
-}
-if (!(this.overlap(positionY, positionHeight, maxYForLine, maxHeightForLine))) {
-this.writeLine(this.normalize(line));
-line.Clear();
-lastLineStartPosition = this.handleLineSeparation(current, lastPosition!, lastLineStartPosition!, maxHeightForLine);
-expectedStartOfNextWordX = global::DripSharp.PdfCarton.Text.PDFTextStripper.EXPECTED_START_OF_NEXT_WORD_X_RESET_VALUE;
-maxYForLine = global::DripSharp.PdfCarton.Text.PDFTextStripper.MAX_Y_FOR_LINE_RESET_VALUE;
-maxHeightForLine = global::DripSharp.PdfCarton.Text.PDFTextStripper.MAX_HEIGHT_FOR_LINE_RESET_VALUE;
-minYTopForLine = global::DripSharp.PdfCarton.Text.PDFTextStripper.MIN_Y_TOP_FOR_LINE_RESET_VALUE;
-}
-if ((((global::DripSharp.Runtime.JavaCompat.CompareFloat(expectedStartOfNextWordX, global::DripSharp.PdfCarton.Text.PDFTextStripper.EXPECTED_START_OF_NEXT_WORD_X_RESET_VALUE) != 0) && (expectedStartOfNextWordX < positionX)) && ((this.wordSeparator.Length == 0) || ((lastPosition!.GetTextPosition().GetUnicode() != default!) && !(global::DripSharp.Runtime.JavaCompat.StringEndsWith(lastPosition!.GetTextPosition().GetUnicode(), this.wordSeparator)))))) {
-global::DripSharp.Runtime.JavaCompat.Add(line, global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem.GetWordSeparator());
-}
-if ((global::System.Math.Abs((position.GetX() - lastPosition!.GetTextPosition().GetX())) > (wordSpacing + deltaSpace))) {
-maxYForLine = global::DripSharp.PdfCarton.Text.PDFTextStripper.MAX_Y_FOR_LINE_RESET_VALUE;
-maxHeightForLine = global::DripSharp.PdfCarton.Text.PDFTextStripper.MAX_HEIGHT_FOR_LINE_RESET_VALUE;
-minYTopForLine = global::DripSharp.PdfCarton.Text.PDFTextStripper.MIN_Y_TOP_FOR_LINE_RESET_VALUE;
-}
-}
-if ((positionY >= maxYForLine)) {
-maxYForLine = positionY;
-}
-endOfLastTextX = (positionX + positionWidth);
-if ((characterValue != default!)) {
-if ((startOfPage && (lastPosition! == default!))) {
-this.WriteParagraphStart();
-}
-global::DripSharp.Runtime.JavaCompat.Add(line, new global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem(position));
-}
-maxHeightForLine = global::System.Math.Max(maxHeightForLine, positionHeight);
-minYTopForLine = global::System.Math.Min(minYTopForLine, (positionY - positionHeight));
-lastPosition = current;
-if (startOfPage) {
-lastPosition!.SetParagraphStart();
-lastPosition!.SetLineStart();
-lastLineStartPosition = lastPosition!;
-startOfPage = false;
-}
-lastWordSpacing = wordSpacing;
-previousAveCharWidth = averageCharWidth;
-}
-if (!(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(line))) {
-this.writeLine(this.normalize(line));
-this.WriteParagraphEnd();
-}
-this.EndArticle();
-}
-this.WritePageEnd();
-}
-
-private bool hasFontOrSizeChanged(global::DripSharp.PdfCarton.Text.TextPosition current, global::DripSharp.PdfCarton.Text.TextPosition last) {
-if ((last == default!)) {
-return false;
-}
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(current.GetFontSize(), last.GetFontSize()) != 0)) {
-return true;
-}
-if ((current.GetFont() == last.GetFont())) {
-return false;
-}
-string currentFontName = current.GetFont().GetName();
-string lastFontName = last.GetFont().GetName();
-if ((currentFontName != default!)) {
-return !(global::DripSharp.Runtime.JavaCompat.Equals(currentFontName, lastFontName));
-}
-if ((lastFontName != default!)) {
-return true;
-}
-return (current.GetFont().GetHashCode() != last.GetFont().GetHashCode());
-}
-
-private bool overlap(float y1, float height1, float y2, float height2) {
-return ((this.within(y1, y2, 0.1F) || ((y2 <= y1) && (y2 >= (y1 - height1)))) || ((y1 <= y2) && (y1 >= (y2 - height2))));
-}
-
-private void removeContainedSpaces(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> textList) {
-global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Text.TextPosition> iterator = global::DripSharp.Runtime.JavaCompat.Iterator(textList);
-if (!iterator.HasNext()) {
-return;
-}
-global::DripSharp.PdfCarton.Text.TextPosition previousPosition = iterator.Next()!;
-while (iterator.HasNext()) {
-global::DripSharp.PdfCarton.Text.TextPosition position = iterator.Next()!;
-if ((global::DripSharp.Runtime.JavaCompat.Equals(" ", position.GetUnicode()) && previousPosition.CompletelyContains(position))) {
-iterator.Remove();
-} else {
-previousPosition = position;
-}
-}
-}
-
-protected internal virtual void WriteLineSeparator() {
-(this.Output).Write(this.GetLineSeparator());
-}
-
-protected internal virtual void WriteWordSeparator() {
-(this.Output).Write(this.GetWordSeparator());
-}
-
-protected internal virtual void WriteCharacters(global::DripSharp.PdfCarton.Text.TextPosition text) {
-(this.Output).Write(text.GetUnicode());
-}
-
-protected internal virtual void WriteString(string text, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> textPositions) {
-this.WriteString(text);
-}
-
-protected internal virtual void WriteString(string text) {
-(this.Output).Write(text);
-}
-
-private bool within(float first, float second, float variance) {
-return ((second < (first + variance)) && (second > (first - variance)));
-}
-
-public override void BeginMarkedContentSequence(global::DripSharp.PdfCarton.Cos.COSName tag, global::DripSharp.PdfCarton.Cos.COSDictionary properties) {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent markedContent = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent.Create(tag, properties);
-global::DripSharp.Runtime.JavaCompat.DequePush(this.currentMarkedContents, markedContent);
-this.actualText = markedContent.GetActualText();
-if ((this.actualText != default!)) {
-this.actualText = global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(this.actualText, "\u00AD", "");
-this.firstActualTextPosition = true;
-}
-base.BeginMarkedContentSequence(tag, properties);
-}
-
-public override void EndMarkedContentSequence() {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent markedContent = global::DripSharp.Runtime.JavaCompat.DequePeek(this.currentMarkedContents);
-if ((markedContent != default!)) {
-if ((markedContent.GetActualText() != default!)) {
-this.actualText = default!;
-}
-this.currentMarkedContents.Pop();
-}
-base.EndMarkedContentSequence();
-}
-
-protected internal override void ProcessTextPosition(global::DripSharp.PdfCarton.Text.TextPosition text) {
-if ((this.actualText != default!)) {
-if (this.firstActualTextPosition) {
-text.setUnicode(this.actualText);
-this.firstActualTextPosition = false;
-} else {
-text.setUnicode("");
-}
-}
-bool showCharacter = true;
-if ((this.suppressDuplicateOverlappingText && (this.actualText == default!))) {
-showCharacter = false;
-string textCharacter = text.GetUnicode();
-float textX = text.GetX();
-float textY = text.GetY();
-global::System.Collections.Generic.SortedDictionary<float, global::System.Collections.Generic.SortedSet<float>> sameTextCharacters = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.characterListMapping, textCharacter, (k) => global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<float, global::System.Collections.Generic.SortedSet<float>>());
-bool suppressCharacter = false;
-float tolerance = ((float)(((float)(text.GetWidth()) / textCharacter.Length)) / (float)(3.0F));
-global::System.Collections.Generic.IDictionary<float, global::System.Collections.Generic.SortedSet<float>> xMatches = global::DripSharp.Runtime.JavaCompat.SortedSubMap(sameTextCharacters, (textX - tolerance), (textX + tolerance));
-foreach (global::System.Collections.Generic.SortedSet<float> xMatch in xMatches.Values) {
-global::System.Collections.Generic.ISet<float> yMatches = global::DripSharp.Runtime.JavaCompat.SortedSubSet(xMatch, (textY - tolerance), (textY + tolerance));
-if (!(global::DripSharp.Runtime.JavaCompat.CollectionIsEmpty(yMatches))) {
-suppressCharacter = true;
-break;
-}
-}
-if (!suppressCharacter) {
-global::System.Collections.Generic.SortedSet<float> ySet = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(sameTextCharacters, textX, (k) => global::DripSharp.Runtime.JavaCompat.NewSortedSet<float>());
-ySet.Add(textY);
-showCharacter = true;
-}
-}
-if (showCharacter) {
-int foundArticleDivisionIndex = -1;
-int notFoundButFirstLeftAndAboveArticleDivisionIndex = -1;
-int notFoundButFirstLeftArticleDivisionIndex = -1;
-int notFoundButFirstAboveArticleDivisionIndex = -1;
-float x = text.GetX();
-float y = text.GetY();
-if (this.shouldSeparateByBeads) {
-for (int i = 0; ((i < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.beadRectangles)) && (foundArticleDivisionIndex == -1)); i++) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = global::DripSharp.Runtime.JavaCompat.ListGet(this.beadRectangles, i);
-if ((rect != default!)) {
-if (rect.Contains(x, y)) {
-foundArticleDivisionIndex = ((i * 2) + 1);
-} else {
-if ((((x < rect.GetLowerLeftX()) || (y < rect.GetUpperRightY())) && (notFoundButFirstLeftAndAboveArticleDivisionIndex == -1))) {
-notFoundButFirstLeftAndAboveArticleDivisionIndex = (i * 2);
-} else {
-if (((x < rect.GetLowerLeftX()) && (notFoundButFirstLeftArticleDivisionIndex == -1))) {
-notFoundButFirstLeftArticleDivisionIndex = (i * 2);
-} else {
-if (((y < rect.GetUpperRightY()) && (notFoundButFirstAboveArticleDivisionIndex == -1))) {
-notFoundButFirstAboveArticleDivisionIndex = (i * 2);
-}
-}
-}
-}
-} else {
-foundArticleDivisionIndex = 0;
-}
-}
-} else {
-foundArticleDivisionIndex = 0;
-}
-int articleDivisionIndex;
-if ((foundArticleDivisionIndex != -1)) {
-articleDivisionIndex = foundArticleDivisionIndex;
-} else {
-if ((notFoundButFirstLeftAndAboveArticleDivisionIndex != -1)) {
-articleDivisionIndex = notFoundButFirstLeftAndAboveArticleDivisionIndex;
-} else {
-if ((notFoundButFirstLeftArticleDivisionIndex != -1)) {
-articleDivisionIndex = notFoundButFirstLeftArticleDivisionIndex;
-} else {
-if ((notFoundButFirstAboveArticleDivisionIndex != -1)) {
-articleDivisionIndex = notFoundButFirstAboveArticleDivisionIndex;
-} else {
-articleDivisionIndex = (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.CharactersByArticle) - 1);
-}
-}
-}
-}
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> textList = global::DripSharp.Runtime.JavaCompat.ListGet(this.CharactersByArticle, articleDivisionIndex);
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(textList)) {
-global::DripSharp.Runtime.JavaCompat.Add(textList, text);
-} else {
-global::DripSharp.PdfCarton.Text.TextPosition previousTextPosition = global::DripSharp.Runtime.JavaCompat.ListGet(textList, (global::DripSharp.Runtime.JavaCompat.CollectionCount(textList) - 1));
-if ((text.IsDiacritic() && previousTextPosition.Contains(text))) {
-previousTextPosition.MergeDiacritic(text);
-} else {
-if ((previousTextPosition.IsDiacritic() && text.Contains(previousTextPosition))) {
-text.MergeDiacritic(previousTextPosition);
-global::DripSharp.Runtime.JavaCompat.ListRemove(textList, (global::DripSharp.Runtime.JavaCompat.CollectionCount(textList) - 1));
-global::DripSharp.Runtime.JavaCompat.Add(textList, text);
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(textList, text);
-}
-}
-}
-}
-}
-
-public virtual int GetStartPage() {
-return this.__field_startPage;
-}
-
-public virtual void SetStartPage(int startPageValue) {
-if ((startPageValue <= 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Text.PDFTextStripper.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Parameter must be 1-based, but is ", startPageValue)));
-}
-this.__field_startPage = startPageValue;
-}
-
-public virtual int GetEndPage() {
-return this.__field_endPage;
-}
-
-public virtual void SetEndPage(int endPageValue) {
-if ((endPageValue <= 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Text.PDFTextStripper.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Parameter must be 1-based, but is ", endPageValue)));
-}
-this.__field_endPage = endPageValue;
-}
-
-public virtual void SetLineSeparator(string separator) {
-this.lineSeparator = separator;
-}
-
-public virtual string GetLineSeparator() {
-return this.lineSeparator;
-}
-
-public virtual string GetWordSeparator() {
-return this.wordSeparator;
-}
-
-public virtual void SetWordSeparator(string separator) {
-this.wordSeparator = separator;
-}
-
-public virtual bool GetSuppressDuplicateOverlappingText() {
-return this.suppressDuplicateOverlappingText;
-}
-
-protected internal virtual int GetCurrentPageNo() {
-return this.currentPageNo;
-}
-
-protected internal virtual global::System.IO.TextWriter GetOutput() {
-return this.Output;
-}
-
-protected internal virtual global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>> GetCharactersByArticle() {
-return this.CharactersByArticle;
-}
-
-public virtual void SetSuppressDuplicateOverlappingText(bool suppressDuplicateOverlappingTextValue) {
-this.suppressDuplicateOverlappingText = suppressDuplicateOverlappingTextValue;
-}
-
-public virtual bool GetSeparateByBeads() {
-return this.shouldSeparateByBeads;
-}
-
-public virtual void SetShouldSeparateByBeads(bool aShouldSeparateByBeads) {
-this.shouldSeparateByBeads = aShouldSeparateByBeads;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem GetEndBookmark() {
-return this.endBookmark;
-}
-
-public virtual void SetEndBookmark(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem aEndBookmark) {
-this.endBookmark = aEndBookmark;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem GetStartBookmark() {
-return this.startBookmark;
-}
-
-public virtual void SetStartBookmark(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem aStartBookmark) {
-this.startBookmark = aStartBookmark;
-}
-
-public virtual bool GetAddMoreFormatting() {
-return this.addMoreFormatting;
-}
-
-public virtual void SetAddMoreFormatting(bool newAddMoreFormatting) {
-this.addMoreFormatting = newAddMoreFormatting;
-}
-
-public virtual bool GetSortByPosition() {
-return this.sortByPosition;
-}
-
-public virtual void SetSortByPosition(bool newSortByPosition) {
-this.sortByPosition = newSortByPosition;
-}
-
-public virtual bool GetIgnoreContentStreamSpaceGlyphs() {
-return this.ignoreContentStreamSpaceGlyphs;
-}
-
-public virtual void SetIgnoreContentStreamSpaceGlyphs(bool newIgnoreContentStreamSpaceGlyphs) {
-this.ignoreContentStreamSpaceGlyphs = newIgnoreContentStreamSpaceGlyphs;
-}
-
-public virtual float GetSpacingTolerance() {
-return this.spacingTolerance;
-}
-
-public virtual void SetSpacingTolerance(float spacingToleranceValue) {
-this.spacingTolerance = spacingToleranceValue;
-}
-
-public virtual float GetAverageCharTolerance() {
-return this.averageCharTolerance;
-}
-
-public virtual void SetAverageCharTolerance(float averageCharToleranceValue) {
-this.averageCharTolerance = averageCharToleranceValue;
-}
-
-public virtual float GetIndentThreshold() {
-return this.indentThreshold;
-}
-
-public virtual void SetIndentThreshold(float indentThresholdValue) {
-this.indentThreshold = indentThresholdValue;
-}
-
-public virtual float GetDropThreshold() {
-return this.dropThreshold;
-}
-
-public virtual void SetDropThreshold(float dropThresholdValue) {
-this.dropThreshold = dropThresholdValue;
-}
-
-public virtual string GetParagraphStart() {
-return this.paragraphStart;
-}
-
-public virtual void SetParagraphStart(string s) {
-this.paragraphStart = s;
-}
-
-public virtual string GetParagraphEnd() {
-return this.paragraphEnd;
-}
-
-public virtual void SetParagraphEnd(string s) {
-this.paragraphEnd = s;
-}
-
-public virtual string GetPageStart() {
-return this.pageStart;
-}
-
-public virtual void SetPageStart(string pageStartValue) {
-this.pageStart = pageStartValue;
-}
-
-public virtual string GetPageEnd() {
-return this.pageEnd;
-}
-
-public virtual void SetPageEnd(string pageEndValue) {
-this.pageEnd = pageEndValue;
-}
-
-public virtual string GetArticleStart() {
-return this.articleStart;
-}
-
-public virtual void SetArticleStart(string articleStartValue) {
-this.articleStart = articleStartValue;
-}
-
-public virtual string GetArticleEnd() {
-return this.articleEnd;
-}
-
-public virtual void SetArticleEnd(string articleEndValue) {
-this.articleEnd = articleEndValue;
-}
-
-private global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper handleLineSeparation(global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper current, global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper lastPosition, global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper lastLineStartPosition, float maxHeightForLine) {
-current.SetLineStart();
-this.isParagraphSeparation(current, lastPosition, lastLineStartPosition, maxHeightForLine);
-lastLineStartPosition = current;
-if (current.IsParagraphStart()) {
-if (lastPosition.IsArticleStart()) {
-if (lastPosition.IsLineStart()) {
-this.WriteLineSeparator();
-}
-this.WriteParagraphStart();
-} else {
-this.WriteLineSeparator();
-this.WriteParagraphSeparator();
-}
-} else {
-this.WriteLineSeparator();
-}
-return lastLineStartPosition;
-}
-
-private void isParagraphSeparation(global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper position, global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper lastPosition, global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper lastLineStartPosition, float maxHeightForLine) {
-bool result = false;
-if ((lastLineStartPosition == default!)) {
-result = true;
-} else {
-float yGap = global::System.Math.Abs((position.GetTextPosition().GetYDirAdj() - lastPosition.GetTextPosition().GetYDirAdj()));
-float newYVal = this.multiplyFloat(this.GetDropThreshold(), maxHeightForLine);
-float xGap = (position.GetTextPosition().GetXDirAdj() - lastLineStartPosition.GetTextPosition().GetXDirAdj());
-float newXVal = this.multiplyFloat(this.GetIndentThreshold(), position.GetTextPosition().GetWidthOfSpace());
-float positionWidth = this.multiplyFloat(0.25F, position.GetTextPosition().GetWidth());
-if ((yGap > newYVal)) {
-result = true;
-} else {
-if ((xGap > newXVal)) {
-if (!(lastLineStartPosition.IsParagraphStart())) {
-result = true;
-} else {
-position.SetHangingIndent();
-}
-} else {
-if ((xGap < -(position.GetTextPosition().GetWidthOfSpace()))) {
-if (!(lastLineStartPosition.IsParagraphStart())) {
-result = true;
-}
-} else {
-if ((global::System.Math.Abs(xGap) < positionWidth)) {
-if (lastLineStartPosition.IsHangingIndent()) {
-position.SetHangingIndent();
-} else {
-if (lastLineStartPosition.IsParagraphStart()) {
-global::System.Text.RegularExpressions.Regex liPattern = this.matchListItemPattern(lastLineStartPosition);
-if ((liPattern != default!)) {
-global::System.Text.RegularExpressions.Regex currentPattern = this.matchListItemPattern(position);
-if ((liPattern == currentPattern)) {
-result = true;
-}
-}
-}
-}
-}
-}
-}
-}
-}
-if (result) {
-position.SetParagraphStart();
-}
-}
-
-private float multiplyFloat(float value1, float value2) {
-return (global::DripSharp.Runtime.JavaCompat.MathRoundFloat(((value1 * value2) * 1000)) / (float)(1000.0F));
-}
-
-protected internal virtual void WriteParagraphSeparator() {
-this.WriteParagraphEnd();
-this.WriteParagraphStart();
-}
-
-protected internal virtual void WriteParagraphStart() {
-if (this.inParagraph) {
-this.WriteParagraphEnd();
-this.inParagraph = false;
-}
-(this.Output).Write(this.GetParagraphStart());
-this.inParagraph = true;
-}
-
-protected internal virtual void WriteParagraphEnd() {
-if (!(this.inParagraph)) {
-this.WriteParagraphStart();
-}
-(this.Output).Write(this.GetParagraphEnd());
-this.inParagraph = false;
-}
-
-protected internal virtual void WritePageStart() {
-(this.Output).Write(this.GetPageStart());
-}
-
-protected internal virtual void WritePageEnd() {
-(this.Output).Write(this.GetPageEnd());
-}
-
-private global::System.Text.RegularExpressions.Regex matchListItemPattern(global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper pw) {
-global::DripSharp.PdfCarton.Text.TextPosition tp = pw.GetTextPosition();
-string txt = tp.GetUnicode();
-return global::DripSharp.PdfCarton.Text.PDFTextStripper.MatchPattern(txt, this.GetListItemPatterns());
-}
-
-private static readonly string[] LIST_ITEM_EXPRESSIONS = new string[] { "\\.", "\\d+\\.", "\\[\\d+\\]", "\\d+\\)", "[A-Z]\\.", "[a-z]\\.", "[A-Z]\\)", "[a-z]\\)", "[IVXL]+\\.", "[ivxl]+\\." };
-
-private global::System.Collections.Generic.IList<global::System.Text.RegularExpressions.Regex> listOfPatterns = default!;
-
-protected internal virtual void SetListItemPatterns(global::System.Collections.Generic.IList<global::System.Text.RegularExpressions.Regex> patterns) {
-this.listOfPatterns = patterns;
-}
-
-protected internal virtual global::System.Collections.Generic.IList<global::System.Text.RegularExpressions.Regex> GetListItemPatterns() {
-if ((this.listOfPatterns == default!)) {
-this.listOfPatterns = new global::System.Collections.Generic.List<global::System.Text.RegularExpressions.Regex>(global::DripSharp.PdfCarton.Text.PDFTextStripper.LIST_ITEM_EXPRESSIONS.Length);
-foreach (string expression in global::DripSharp.PdfCarton.Text.PDFTextStripper.LIST_ITEM_EXPRESSIONS) {
-global::System.Text.RegularExpressions.Regex p = global::DripSharp.Runtime.JavaCompat.CompileRegex(expression);
-global::DripSharp.Runtime.JavaCompat.Add(this.listOfPatterns, p);
-}
-}
-return this.listOfPatterns;
-}
-
-protected internal static global::System.Text.RegularExpressions.Regex MatchPattern(string @string, global::System.Collections.Generic.IList<global::System.Text.RegularExpressions.Regex> patterns) {
-foreach (global::System.Text.RegularExpressions.Regex p in patterns) {
-if (global::DripSharp.Runtime.JavaCompat.RegexMatcher(p, @string).Matches()) {
-return p;
-}
-}
-return default!;
-}
-
-private void writeLine(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions> line) {
-int numberOfStrings = global::DripSharp.Runtime.JavaCompat.CollectionCount(line);
-for (int i = 0; (i < numberOfStrings); i++) {
-global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions word = global::DripSharp.Runtime.JavaCompat.ListGet(line, i);
-this.WriteString(word.GetText(), word.GetTextPositions());
-if ((i < (numberOfStrings - 1))) {
-this.WriteWordSeparator();
-}
-}
-}
-
-private global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions> normalize(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem> line) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions> normalized = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions>();
-global::System.Text.StringBuilder lineBuilder = new global::System.Text.StringBuilder();
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> wordPositions = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Text.TextPosition>();
-foreach (global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem item in line) {
-lineBuilder = this.normalizeAdd(normalized, lineBuilder, wordPositions, item);
-}
-if ((lineBuilder.Length > 0)) {
-global::DripSharp.Runtime.JavaCompat.Add(normalized, this.createWord(lineBuilder.ToString(), wordPositions));
-}
-return normalized;
-}
-
-private string handleDirection(string word) {
-global::DripSharp.Runtime.JavaBidi bidi = new global::DripSharp.Runtime.JavaBidi(word, global::DripSharp.Runtime.JavaBidi.DirectionDefaultLeftToRight);
-if ((!(bidi.IsMixed()) && (bidi.GetBaseLevel() == global::DripSharp.Runtime.JavaBidi.DirectionLeftToRight))) {
-return word;
-}
-int runCount = bidi.GetRunCount();
-sbyte[] levels = new sbyte[runCount];
-int[] runs = new int[runCount];
-for (int i__1921_18 = 0; (i__1921_18 < runCount); i__1921_18++) {
-levels[i__1921_18] = unchecked((sbyte)(unchecked((sbyte)(bidi.GetRunLevel(i__1921_18)))));
-runs[i__1921_18] = i__1921_18;
-}
-global::DripSharp.Runtime.JavaBidi.ReorderVisually(levels, 0, runs, 0, runCount);
-global::System.Text.StringBuilder result = new global::System.Text.StringBuilder();
-for (int i__1933_18 = 0; (i__1933_18 < runCount); i__1933_18++) {
-int index = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(runs[i__1933_18]);
-int start = bidi.GetRunStart(index);
-int end = bidi.GetRunLimit(index);
-int level = levels[index];
-if (((level & 1) != 0)) {
-while ((--end >= start)) {
-char character = word[end];
-if (global::DripSharp.Runtime.JavaBidi.IsMirrored(global::DripSharp.Runtime.JavaCompat.CodePointAt(word, end))) {
-if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(global::DripSharp.PdfCarton.Text.PDFTextStripper.MIRRORING_CHAR_MAP, character)) {
-result.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.MapGetNullable(global::DripSharp.PdfCarton.Text.PDFTextStripper.MIRRORING_CHAR_MAP, character)));
-} else {
-result.Append(character);
-}
-} else {
-result.Append(character);
-}
-}
-} else {
-result.Append(word, start, (end - start));
-}
-}
-return result.ToString();
-}
-
-private static readonly global::System.Collections.Generic.IDictionary<char, char> MIRRORING_CHAR_MAP = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<char, char>();
+  private string articleEnd = "";
+
+  private int currentPageNo = 1;
+
+  private int __field_startPage = 1;
+
+  private int __field_endPage = int.MaxValue;
+
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem startBookmark
+    = default!;
+
+  private int startBookmarkPageNumber = -1;
+
+  private int endBookmarkPageNumber = -1;
+
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem endBookmark
+    = default!;
+
+  private bool suppressDuplicateOverlappingText = true;
+
+  private bool shouldSeparateByBeads = true;
+
+  private bool sortByPosition = false;
+
+  private bool addMoreFormatting = false;
+
+  private bool ignoreContentStreamSpaceGlyphs = false;
+
+  private float indentThreshold
+    = global::DripSharp.PdfCarton.Text.PDFTextStripper.defaultIndentThreshold;
+
+  private float dropThreshold
+    = global::DripSharp.PdfCarton.Text.PDFTextStripper.defaultDropThreshold;
+
+  private float spacingTolerance = 0.5F;
+
+  private float averageCharTolerance = 0.3F;
+
+  private global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle> beadRectangles
+    = default!;
+
+  private readonly global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent> currentMarkedContents
+    = new global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent>();
+
+  private bool firstActualTextPosition = false;
+
+  private string actualText = default!;
+
+  protected internal global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>> CharactersByArticle
+    = new global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>();
+
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::System.Collections.Generic.SortedDictionary<float,
+    global::System.Collections.Generic.SortedSet<float>>> characterListMapping
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+    global::System.Collections.Generic.SortedDictionary<float,
+    global::System.Collections.Generic.SortedSet<float>>>();
+
+  protected internal global::DripSharp.PdfCarton.Pdmodel.PDDocument Document = null!;
+
+  protected internal global::System.IO.TextWriter Output = null!;
+
+  private bool inParagraph = default;
+
+  public PDFTextStripper() {
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent.BeginMarkedContentSequenceWithProperties(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent.BeginMarkedContentSequence(this));
+    this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent.EndMarkedContentSequence(this));
+  }
+
+  public virtual string GetText(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc) {
+    global::System.IO.StringWriter outputStream = new global::System.IO.StringWriter();
+    this.WriteText(doc, outputStream);
+    return outputStream.ToString();
+  }
+
+  private void resetEngine() {
+    this.currentPageNo = 1;
+    this.Document = default!;
+    (this.CharactersByArticle).Clear();
+    this.characterListMapping.Clear();
+  }
+
+  public virtual void WriteText(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
+    global::System.IO.TextWriter outputStream) {
+    this.resetEngine();
+    this.Document = doc;
+    this.Output = outputStream;
+    if (this.GetAddMoreFormatting()) {
+      this.paragraphEnd = this.lineSeparator;
+      this.pageStart = this.lineSeparator;
+      this.articleStart = this.lineSeparator;
+      this.articleEnd = this.lineSeparator;
+    }
+    this.StartDocument(this.Document);
+    this.ProcessPages(this.Document.GetPages());
+    this.EndDocument(this.Document);
+  }
+
+  protected internal virtual void ProcessPages(global::DripSharp.PdfCarton.Pdmodel.PDPageTree pages) {
+    global::DripSharp.PdfCarton.Pdmodel.PDPage startBookmarkPage = ((this.startBookmark == default!)
+      ? (global::DripSharp.PdfCarton.Pdmodel.PDPage)(default!)
+      : this.startBookmark.FindDestinationPage(this.Document));
+    if ((startBookmarkPage != default!)) {
+      this.startBookmarkPageNumber = (pages.IndexOf(startBookmarkPage) + 1);
+    } else {
+      this.startBookmarkPageNumber = -1;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.PDPage endBookmarkPage = ((this.endBookmark == default!)
+      ? (global::DripSharp.PdfCarton.Pdmodel.PDPage)(default!)
+      : this.endBookmark.FindDestinationPage(this.Document));
+    if ((endBookmarkPage != default!)) {
+      this.endBookmarkPageNumber = (pages.IndexOf(endBookmarkPage) + 1);
+    } else {
+      this.endBookmarkPageNumber = -1;
+    }
+    if ((((((this.startBookmarkPageNumber == -1) && (this.startBookmark != default!))
+      && (this.endBookmarkPageNumber == -1)) && (this.endBookmark != default!))
+      && (this.startBookmark.GetCOSObject() == this.endBookmark.GetCOSObject()))) {
+      this.startBookmarkPageNumber = 0;
+      this.endBookmarkPageNumber = 0;
+    }
+    foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page in pages) {
+      if (page.HasContents()) {
+        this.ProcessPage(page);
+      }
+      this.currentPageNo++;
+    }
+  }
+
+  protected internal virtual void StartDocument(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {}
+
+  protected internal virtual void EndDocument(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {}
+
+  public override void ProcessPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    if (((((this.currentPageNo >= this.__field_startPage) && (this.currentPageNo
+      <= this.__field_endPage)) && ((this.startBookmarkPageNumber == -1) || (this.currentPageNo
+      >= this.startBookmarkPageNumber))) && ((this.endBookmarkPageNumber == -1)
+      || (this.currentPageNo <= this.endBookmarkPageNumber)))) {
+      this.StartPage(page);
+      int numberOfArticleSections = 1;
+      if (this.shouldSeparateByBeads) {
+        this.fillBeadRectangles(page);
+        numberOfArticleSections
+          += (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.beadRectangles) * 2);
+      }
+      int originalSize
+        = global::DripSharp.Runtime.JavaCompat.CollectionCount(this.CharactersByArticle);
+      global::DripSharp.Runtime.JavaCompat.EnsureCapacity(this.CharactersByArticle,
+        numberOfArticleSections);
+      int lastIndex = global::System.Math.Max(numberOfArticleSections, originalSize);
+      for (int i = 0; (i < lastIndex); i++) {
+        if ((i < originalSize)) {
+          global::DripSharp.Runtime.JavaCompat.ListGet(this.CharactersByArticle, i).Clear();
+        } else {
+          if ((numberOfArticleSections < originalSize)) {
+            global::DripSharp.Runtime.JavaCompat.ListRemove(this.CharactersByArticle, i);
+          } else {
+            global::DripSharp.Runtime.JavaCompat.Add(this.CharactersByArticle,
+              new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Text.TextPosition>());
+          }
+        }
+      }
+      this.characterListMapping.Clear();
+      base.ProcessPage(page);
+      this.WritePage();
+      this.EndPage(page);
+      page.RemovePageResourceFromCache();
+    }
+  }
+
+  private void fillBeadRectangles(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThreadBead> threadBeads
+      = page.GetThreadBeads();
+    this.beadRectangles
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle>(global::DripSharp.Runtime.JavaCompat.CollectionCount(threadBeads));
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThreadBead bead in threadBeads) {
+      if (((bead == default!) || (bead.GetRectangle() == default!))) {
+        global::DripSharp.Runtime.JavaCompat.Add(this.beadRectangles, default!);
+        continue;
+      }
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = bead.GetRectangle();
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle mediaBox = page.GetMediaBox();
+      float upperRightY = (mediaBox.GetUpperRightY() - rect.GetLowerLeftY());
+      float lowerLeftY = (mediaBox.GetUpperRightY() - rect.GetUpperRightY());
+      rect.SetLowerLeftY(lowerLeftY);
+      rect.SetUpperRightY(upperRightY);
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = page.GetCropBox();
+      if (((global::DripSharp.Runtime.JavaCompat.CompareFloat(cropBox.GetLowerLeftX(), (float)(0))
+        != 0) || (global::DripSharp.Runtime.JavaCompat.CompareFloat(cropBox.GetLowerLeftY(),
+        (float)(0)) != 0))) {
+        rect.SetLowerLeftX((rect.GetLowerLeftX() - cropBox.GetLowerLeftX()));
+        rect.SetLowerLeftY((rect.GetLowerLeftY() - cropBox.GetLowerLeftY()));
+        rect.SetUpperRightX((rect.GetUpperRightX() - cropBox.GetLowerLeftX()));
+        rect.SetUpperRightY((rect.GetUpperRightY() - cropBox.GetLowerLeftY()));
+      }
+      global::DripSharp.Runtime.JavaCompat.Add(this.beadRectangles, rect);
+    }
+  }
+
+  protected internal virtual void StartArticle() {
+    this.StartArticle(true);
+  }
+
+  protected internal virtual void StartArticle(bool isLTR) {
+    (this.Output).Write(this.GetArticleStart());
+  }
+
+  protected internal virtual void EndArticle() {
+    (this.Output).Write(this.GetArticleEnd());
+  }
+
+  protected internal virtual void StartPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {}
+
+  protected internal virtual void EndPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {}
+
+  private const float END_OF_LAST_TEXT_X_RESET_VALUE = -1;
+
+  private static readonly float MAX_Y_FOR_LINE_RESET_VALUE = -(float.MaxValue);
+
+  private static readonly float EXPECTED_START_OF_NEXT_WORD_X_RESET_VALUE = -(float.MaxValue);
+
+  private const float MAX_HEIGHT_FOR_LINE_RESET_VALUE = -1;
+
+  private static readonly float MIN_Y_TOP_FOR_LINE_RESET_VALUE = float.MaxValue;
+
+  private const float LAST_WORD_SPACING_RESET_VALUE = -1;
+
+  protected internal virtual void WritePage() {
+    float maxYForLine = global::DripSharp.PdfCarton.Text.PDFTextStripper.MAX_Y_FOR_LINE_RESET_VALUE;
+    float minYTopForLine
+      = global::DripSharp.PdfCarton.Text.PDFTextStripper.MIN_Y_TOP_FOR_LINE_RESET_VALUE;
+    float endOfLastTextX
+      = global::DripSharp.PdfCarton.Text.PDFTextStripper.END_OF_LAST_TEXT_X_RESET_VALUE;
+    float lastWordSpacing
+      = global::DripSharp.PdfCarton.Text.PDFTextStripper.LAST_WORD_SPACING_RESET_VALUE;
+    float maxHeightForLine
+      = global::DripSharp.PdfCarton.Text.PDFTextStripper.MAX_HEIGHT_FOR_LINE_RESET_VALUE;
+    global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper lastPosition = default!;
+    global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper lastLineStartPosition
+      = default!;
+    bool startOfPage = true;
+    bool startOfArticle;
+    if (!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.CharactersByArticle)) {
+      this.WritePageStart();
+    }
+    foreach (global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> textList in this.CharactersByArticle) {
+      if (this.GetSortByPosition()) {
+        global::DripSharp.PdfCarton.Text.TextPositionComparator comparator
+          = new global::DripSharp.PdfCarton.Text.TextPositionComparator();
+        try {
+          global::DripSharp.Runtime.JavaCompat.SortList(textList, comparator);
+        } catch (global::System.ArgumentException) {
+          global::DripSharp.PdfCarton.Util.IterativeMergeSort.Sort<global::DripSharp.PdfCarton.Text.TextPosition>(textList,
+            comparator);
+        }
+        this.removeContainedSpaces(textList);
+      }
+      this.StartArticle();
+      startOfArticle = true;
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem> line
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem>();
+      global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Text.TextPosition> textIter
+        = global::DripSharp.Runtime.JavaCompat.Iterator(textList);
+      float previousAveCharWidth = -1;
+      while (textIter.HasNext()) {
+        global::DripSharp.PdfCarton.Text.TextPosition position = textIter.Next()!;
+        global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper current
+          = new global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper(position);
+        string characterValue = position.GetUnicode();
+        if ((global::DripSharp.Runtime.JavaCompat.Equals(" ", characterValue)
+          && this.GetIgnoreContentStreamSpaceGlyphs())) {
+          continue;
+        }
+        if (((lastPosition! != default!) && this.hasFontOrSizeChanged(position,
+          lastPosition!.GetTextPosition()))) {
+          previousAveCharWidth = -1;
+        }
+        float positionX;
+        float positionY;
+        float positionWidth;
+        float positionHeight;
+        if (this.GetSortByPosition()) {
+          positionX = position.GetXDirAdj();
+          positionY = position.GetYDirAdj();
+          positionWidth = position.GetWidthDirAdj();
+          positionHeight = position.GetHeightDir();
+        } else {
+          positionX = position.GetX();
+          positionY = position.GetY();
+          positionWidth = position.GetWidth();
+          positionHeight = position.GetHeight();
+        }
+        int wordCharCount = position.GetIndividualWidths().Length;
+        float wordSpacing = position.GetWidthOfSpace();
+        float deltaSpace;
+        if (((global::DripSharp.Runtime.JavaCompat.CompareFloat(wordSpacing, (float)(0)) == 0)
+          || float.IsNaN(wordSpacing))) {
+          deltaSpace = float.MaxValue;
+        } else {
+          if ((lastWordSpacing < 0)) {
+            deltaSpace = (wordSpacing * this.GetSpacingTolerance());
+          } else {
+            deltaSpace = (((float)((wordSpacing + lastWordSpacing)) / (float)2.0F)
+              * this.GetSpacingTolerance());
+          }
+        }
+        float averageCharWidth;
+        if ((previousAveCharWidth < 0)) {
+          averageCharWidth = ((float)positionWidth / wordCharCount);
+        } else {
+          averageCharWidth = ((float)((previousAveCharWidth + ((float)positionWidth
+            / wordCharCount))) / (float)2.0F);
+        }
+        float deltaCharWidth = (averageCharWidth * this.GetAverageCharTolerance());
+        float expectedStartOfNextWordX
+          = global::DripSharp.PdfCarton.Text.PDFTextStripper.EXPECTED_START_OF_NEXT_WORD_X_RESET_VALUE;
+        if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(endOfLastTextX,
+          global::DripSharp.PdfCarton.Text.PDFTextStripper.END_OF_LAST_TEXT_X_RESET_VALUE) != 0)) {
+          expectedStartOfNextWordX = (endOfLastTextX + global::System.Math.Min(deltaSpace,
+            deltaCharWidth));
+        }
+        if ((lastPosition! != default!)) {
+          if (startOfArticle) {
+            lastPosition!.SetArticleStart();
+            startOfArticle = false;
+          }
+          if (!(this.overlap(positionY, positionHeight, maxYForLine, maxHeightForLine))) {
+            this.writeLine(this.normalize(line));
+            line.Clear();
+            lastLineStartPosition = this.handleLineSeparation(current, lastPosition!,
+              lastLineStartPosition!, maxHeightForLine);
+            expectedStartOfNextWordX
+              = global::DripSharp.PdfCarton.Text.PDFTextStripper.EXPECTED_START_OF_NEXT_WORD_X_RESET_VALUE;
+            maxYForLine
+              = global::DripSharp.PdfCarton.Text.PDFTextStripper.MAX_Y_FOR_LINE_RESET_VALUE;
+            maxHeightForLine
+              = global::DripSharp.PdfCarton.Text.PDFTextStripper.MAX_HEIGHT_FOR_LINE_RESET_VALUE;
+            minYTopForLine
+              = global::DripSharp.PdfCarton.Text.PDFTextStripper.MIN_Y_TOP_FOR_LINE_RESET_VALUE;
+          }
+          if ((((global::DripSharp.Runtime.JavaCompat.CompareFloat(expectedStartOfNextWordX,
+            global::DripSharp.PdfCarton.Text.PDFTextStripper.EXPECTED_START_OF_NEXT_WORD_X_RESET_VALUE)
+            != 0) && (expectedStartOfNextWordX < positionX)) && ((this.wordSeparator.Length == 0)
+            || ((lastPosition!.GetTextPosition().GetUnicode() != default!)
+            && !global::DripSharp.Runtime.JavaCompat.StringEndsWith(lastPosition!.GetTextPosition().GetUnicode(),
+            this.wordSeparator))))) {
+            global::DripSharp.Runtime.JavaCompat.Add(line,
+              global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem.GetWordSeparator());
+          }
+          if ((global::System.Math.Abs((position.GetX()
+            - lastPosition!.GetTextPosition().GetX())) > (wordSpacing + deltaSpace))) {
+            maxYForLine
+              = global::DripSharp.PdfCarton.Text.PDFTextStripper.MAX_Y_FOR_LINE_RESET_VALUE;
+            maxHeightForLine
+              = global::DripSharp.PdfCarton.Text.PDFTextStripper.MAX_HEIGHT_FOR_LINE_RESET_VALUE;
+            minYTopForLine
+              = global::DripSharp.PdfCarton.Text.PDFTextStripper.MIN_Y_TOP_FOR_LINE_RESET_VALUE;
+          }
+        }
+        if ((positionY >= maxYForLine)) {
+          maxYForLine = positionY;
+        }
+        endOfLastTextX = (positionX + positionWidth);
+        if ((characterValue != default!)) {
+          if ((startOfPage && (lastPosition! == default!))) {
+            this.WriteParagraphStart();
+          }
+          global::DripSharp.Runtime.JavaCompat.Add(line,
+            new global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem(position));
+        }
+        maxHeightForLine = global::System.Math.Max(maxHeightForLine, positionHeight);
+        minYTopForLine = global::System.Math.Min(minYTopForLine, (positionY - positionHeight));
+        lastPosition = current;
+        if (startOfPage) {
+          lastPosition!.SetParagraphStart();
+          lastPosition!.SetLineStart();
+          lastLineStartPosition = lastPosition!;
+          startOfPage = false;
+        }
+        lastWordSpacing = wordSpacing;
+        previousAveCharWidth = averageCharWidth;
+      }
+      if (!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(line)) {
+        this.writeLine(this.normalize(line));
+        this.WriteParagraphEnd();
+      }
+      this.EndArticle();
+    }
+    this.WritePageEnd();
+  }
+
+  private bool hasFontOrSizeChanged(global::DripSharp.PdfCarton.Text.TextPosition current,
+    global::DripSharp.PdfCarton.Text.TextPosition last) {
+    if ((last == default!)) {
+      return false;
+    }
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(current.GetFontSize(),
+      last.GetFontSize()) != 0)) {
+      return true;
+    }
+    if ((current.GetFont() == last.GetFont())) {
+      return false;
+    }
+    string currentFontName = current.GetFont().GetName();
+    string lastFontName = last.GetFont().GetName();
+    if ((currentFontName != default!)) {
+      return !global::DripSharp.Runtime.JavaCompat.Equals(currentFontName, lastFontName);
+    }
+    if ((lastFontName != default!)) {
+      return true;
+    }
+    return (current.GetFont().GetHashCode() != last.GetFont().GetHashCode());
+  }
+
+  private bool overlap(float y1, float height1, float y2, float height2) {
+    return ((this.within(y1, y2, 0.1F) || ((y2 <= y1) && (y2 >= (y1 - height1)))) || ((y1 <= y2)
+      && (y1 >= (y2 - height2))));
+  }
+
+  private void removeContainedSpaces(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> textList) {
+    global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Text.TextPosition> iterator
+      = global::DripSharp.Runtime.JavaCompat.Iterator(textList);
+    if (!iterator.HasNext()) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Text.TextPosition previousPosition = iterator.Next()!;
+    while (iterator.HasNext()) {
+      global::DripSharp.PdfCarton.Text.TextPosition position = iterator.Next()!;
+      if ((global::DripSharp.Runtime.JavaCompat.Equals(" ", position.GetUnicode())
+        && previousPosition.CompletelyContains(position))) {
+        iterator.Remove();
+      } else {
+        previousPosition = position;
+      }
+    }
+  }
+
+  protected internal virtual void WriteLineSeparator() {
+    (this.Output).Write(this.GetLineSeparator());
+  }
+
+  protected internal virtual void WriteWordSeparator() {
+    (this.Output).Write(this.GetWordSeparator());
+  }
+
+  protected internal virtual void WriteCharacters(global::DripSharp.PdfCarton.Text.TextPosition text) {
+    (this.Output).Write(text.GetUnicode());
+  }
+
+  protected internal virtual void WriteString(string text,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> textPositions) {
+    this.WriteString(text);
+  }
+
+  protected internal virtual void WriteString(string text) {
+    (this.Output).Write(text);
+  }
+
+  private bool within(float first, float second, float variance) {
+    return ((second < (first + variance)) && (second > (first - variance)));
+  }
+
+  public override void BeginMarkedContentSequence(global::DripSharp.PdfCarton.Cos.COSName tag,
+    global::DripSharp.PdfCarton.Cos.COSDictionary properties) {
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent markedContent
+      = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent.Create(tag,
+      properties);
+    global::DripSharp.Runtime.JavaCompat.DequePush(this.currentMarkedContents, markedContent);
+    this.actualText = markedContent.GetActualText();
+    if ((this.actualText != default!)) {
+      this.actualText = global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(this.actualText,
+        "\u00AD", "");
+      this.firstActualTextPosition = true;
+    }
+    base.BeginMarkedContentSequence(tag, properties);
+  }
+
+  public override void EndMarkedContentSequence() {
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent markedContent
+      = global::DripSharp.Runtime.JavaCompat.DequePeek(this.currentMarkedContents);
+    if ((markedContent != default!)) {
+      if ((markedContent.GetActualText() != default!)) {
+        this.actualText = default!;
+      }
+      this.currentMarkedContents.Pop();
+    }
+    base.EndMarkedContentSequence();
+  }
+
+  protected internal override void ProcessTextPosition(global::DripSharp.PdfCarton.Text.TextPosition text) {
+    if ((this.actualText != default!)) {
+      if (this.firstActualTextPosition) {
+        text.setUnicode(this.actualText);
+        this.firstActualTextPosition = false;
+      } else {
+        text.setUnicode("");
+      }
+    }
+    bool showCharacter = true;
+    if ((this.suppressDuplicateOverlappingText && (this.actualText == default!))) {
+      showCharacter = false;
+      string textCharacter = text.GetUnicode();
+      float textX = text.GetX();
+      float textY = text.GetY();
+      global::System.Collections.Generic.SortedDictionary<float,
+        global::System.Collections.Generic.SortedSet<float>> sameTextCharacters
+        = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.characterListMapping,
+        textCharacter, (k) => global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<float,
+        global::System.Collections.Generic.SortedSet<float>>());
+      bool suppressCharacter = false;
+      float tolerance = ((float)(((float)(text.GetWidth()) / textCharacter.Length)) / (float)3.0F);
+      global::System.Collections.Generic.IDictionary<float,
+        global::System.Collections.Generic.SortedSet<float>> xMatches
+        = global::DripSharp.Runtime.JavaCompat.SortedSubMap(sameTextCharacters, (textX - tolerance),
+        (textX + tolerance));
+      foreach (global::System.Collections.Generic.SortedSet<float> xMatch in xMatches.Values) {
+        global::System.Collections.Generic.ISet<float> yMatches
+          = global::DripSharp.Runtime.JavaCompat.SortedSubSet(xMatch, (textY - tolerance), (textY
+          + tolerance));
+        if (!global::DripSharp.Runtime.JavaCompat.CollectionIsEmpty(yMatches)) {
+          suppressCharacter = true;
+          break;
+        }
+      }
+      if (!suppressCharacter) {
+        global::System.Collections.Generic.SortedSet<float> ySet
+          = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(sameTextCharacters, textX, (k)
+          => global::DripSharp.Runtime.JavaCompat.NewSortedSet<float>());
+        ySet.Add(textY);
+        showCharacter = true;
+      }
+    }
+    if (showCharacter) {
+      int foundArticleDivisionIndex = -1;
+      int notFoundButFirstLeftAndAboveArticleDivisionIndex = -1;
+      int notFoundButFirstLeftArticleDivisionIndex = -1;
+      int notFoundButFirstAboveArticleDivisionIndex = -1;
+      float x = text.GetX();
+      float y = text.GetY();
+      if (this.shouldSeparateByBeads) {
+        for (int i = 0;
+          ((i < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.beadRectangles))
+          && (foundArticleDivisionIndex == -1)); i++) {
+          global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect
+            = global::DripSharp.Runtime.JavaCompat.ListGet(this.beadRectangles, i);
+          if ((rect != default!)) {
+            if (rect.Contains(x, y)) {
+              foundArticleDivisionIndex = ((i * 2) + 1);
+            } else {
+              if ((((x < rect.GetLowerLeftX()) || (y < rect.GetUpperRightY()))
+                && (notFoundButFirstLeftAndAboveArticleDivisionIndex == -1))) {
+                notFoundButFirstLeftAndAboveArticleDivisionIndex = (i * 2);
+              } else {
+                if (((x < rect.GetLowerLeftX()) && (notFoundButFirstLeftArticleDivisionIndex ==
+                  -1))) {
+                  notFoundButFirstLeftArticleDivisionIndex = (i * 2);
+                } else {
+                  if (((y < rect.GetUpperRightY()) && (notFoundButFirstAboveArticleDivisionIndex ==
+                    -1))) {
+                    notFoundButFirstAboveArticleDivisionIndex = (i * 2);
+                  }
+                }
+              }
+            }
+          } else {
+            foundArticleDivisionIndex = 0;
+          }
+        }
+      } else {
+        foundArticleDivisionIndex = 0;
+      }
+      int articleDivisionIndex;
+      if ((foundArticleDivisionIndex != -1)) {
+        articleDivisionIndex = foundArticleDivisionIndex;
+      } else {
+        if ((notFoundButFirstLeftAndAboveArticleDivisionIndex != -1)) {
+          articleDivisionIndex = notFoundButFirstLeftAndAboveArticleDivisionIndex;
+        } else {
+          if ((notFoundButFirstLeftArticleDivisionIndex != -1)) {
+            articleDivisionIndex = notFoundButFirstLeftArticleDivisionIndex;
+          } else {
+            if ((notFoundButFirstAboveArticleDivisionIndex != -1)) {
+              articleDivisionIndex = notFoundButFirstAboveArticleDivisionIndex;
+            } else {
+              articleDivisionIndex
+                = (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.CharactersByArticle)
+                - 1);
+            }
+          }
+        }
+      }
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> textList
+        = global::DripSharp.Runtime.JavaCompat.ListGet(this.CharactersByArticle,
+        articleDivisionIndex);
+      if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(textList)) {
+        global::DripSharp.Runtime.JavaCompat.Add(textList, text);
+      } else {
+        global::DripSharp.PdfCarton.Text.TextPosition previousTextPosition
+          = global::DripSharp.Runtime.JavaCompat.ListGet(textList,
+          (global::DripSharp.Runtime.JavaCompat.CollectionCount(textList) - 1));
+        if ((text.IsDiacritic() && previousTextPosition.Contains(text))) {
+          previousTextPosition.MergeDiacritic(text);
+        } else {
+          if ((previousTextPosition.IsDiacritic() && text.Contains(previousTextPosition))) {
+            text.MergeDiacritic(previousTextPosition);
+            global::DripSharp.Runtime.JavaCompat.ListRemove(textList,
+              (global::DripSharp.Runtime.JavaCompat.CollectionCount(textList) - 1));
+            global::DripSharp.Runtime.JavaCompat.Add(textList, text);
+          } else {
+            global::DripSharp.Runtime.JavaCompat.Add(textList, text);
+          }
+        }
+      }
+    }
+  }
+
+  public virtual int GetStartPage() {
+    return this.__field_startPage;
+  }
+
+  public virtual void SetStartPage(int startPageValue) {
+    if ((startPageValue <= 0)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Text.PDFTextStripper.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Parameter must be 1-based, but is ",
+        startPageValue)));
+    }
+    this.__field_startPage = startPageValue;
+  }
+
+  public virtual int GetEndPage() {
+    return this.__field_endPage;
+  }
+
+  public virtual void SetEndPage(int endPageValue) {
+    if ((endPageValue <= 0)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Text.PDFTextStripper.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Parameter must be 1-based, but is ",
+        endPageValue)));
+    }
+    this.__field_endPage = endPageValue;
+  }
+
+  public virtual void SetLineSeparator(string separator) {
+    this.lineSeparator = separator;
+  }
+
+  public virtual string GetLineSeparator() {
+    return this.lineSeparator;
+  }
+
+  public virtual string GetWordSeparator() {
+    return this.wordSeparator;
+  }
+
+  public virtual void SetWordSeparator(string separator) {
+    this.wordSeparator = separator;
+  }
+
+  public virtual bool GetSuppressDuplicateOverlappingText() {
+    return this.suppressDuplicateOverlappingText;
+  }
+
+  protected internal virtual int GetCurrentPageNo() {
+    return this.currentPageNo;
+  }
+
+  protected internal virtual global::System.IO.TextWriter GetOutput() {
+    return this.Output;
+  }
+
+  protected internal virtual global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>> GetCharactersByArticle() {
+    return this.CharactersByArticle;
+  }
+
+  public virtual void SetSuppressDuplicateOverlappingText(bool suppressDuplicateOverlappingTextValue) {
+    this.suppressDuplicateOverlappingText = suppressDuplicateOverlappingTextValue;
+  }
+
+  public virtual bool GetSeparateByBeads() {
+    return this.shouldSeparateByBeads;
+  }
+
+  public virtual void SetShouldSeparateByBeads(bool aShouldSeparateByBeads) {
+    this.shouldSeparateByBeads = aShouldSeparateByBeads;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem GetEndBookmark() {
+    return this.endBookmark;
+  }
+
+  public virtual void SetEndBookmark(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem aEndBookmark) {
+    this.endBookmark = aEndBookmark;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem GetStartBookmark() {
+    return this.startBookmark;
+  }
+
+  public virtual void SetStartBookmark(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem aStartBookmark) {
+    this.startBookmark = aStartBookmark;
+  }
+
+  public virtual bool GetAddMoreFormatting() {
+    return this.addMoreFormatting;
+  }
+
+  public virtual void SetAddMoreFormatting(bool newAddMoreFormatting) {
+    this.addMoreFormatting = newAddMoreFormatting;
+  }
+
+  public virtual bool GetSortByPosition() {
+    return this.sortByPosition;
+  }
+
+  public virtual void SetSortByPosition(bool newSortByPosition) {
+    this.sortByPosition = newSortByPosition;
+  }
+
+  public virtual bool GetIgnoreContentStreamSpaceGlyphs() {
+    return this.ignoreContentStreamSpaceGlyphs;
+  }
+
+  public virtual void SetIgnoreContentStreamSpaceGlyphs(bool newIgnoreContentStreamSpaceGlyphs) {
+    this.ignoreContentStreamSpaceGlyphs = newIgnoreContentStreamSpaceGlyphs;
+  }
+
+  public virtual float GetSpacingTolerance() {
+    return this.spacingTolerance;
+  }
+
+  public virtual void SetSpacingTolerance(float spacingToleranceValue) {
+    this.spacingTolerance = spacingToleranceValue;
+  }
+
+  public virtual float GetAverageCharTolerance() {
+    return this.averageCharTolerance;
+  }
+
+  public virtual void SetAverageCharTolerance(float averageCharToleranceValue) {
+    this.averageCharTolerance = averageCharToleranceValue;
+  }
+
+  public virtual float GetIndentThreshold() {
+    return this.indentThreshold;
+  }
+
+  public virtual void SetIndentThreshold(float indentThresholdValue) {
+    this.indentThreshold = indentThresholdValue;
+  }
+
+  public virtual float GetDropThreshold() {
+    return this.dropThreshold;
+  }
+
+  public virtual void SetDropThreshold(float dropThresholdValue) {
+    this.dropThreshold = dropThresholdValue;
+  }
+
+  public virtual string GetParagraphStart() {
+    return this.paragraphStart;
+  }
+
+  public virtual void SetParagraphStart(string s) {
+    this.paragraphStart = s;
+  }
+
+  public virtual string GetParagraphEnd() {
+    return this.paragraphEnd;
+  }
+
+  public virtual void SetParagraphEnd(string s) {
+    this.paragraphEnd = s;
+  }
+
+  public virtual string GetPageStart() {
+    return this.pageStart;
+  }
+
+  public virtual void SetPageStart(string pageStartValue) {
+    this.pageStart = pageStartValue;
+  }
+
+  public virtual string GetPageEnd() {
+    return this.pageEnd;
+  }
+
+  public virtual void SetPageEnd(string pageEndValue) {
+    this.pageEnd = pageEndValue;
+  }
+
+  public virtual string GetArticleStart() {
+    return this.articleStart;
+  }
+
+  public virtual void SetArticleStart(string articleStartValue) {
+    this.articleStart = articleStartValue;
+  }
+
+  public virtual string GetArticleEnd() {
+    return this.articleEnd;
+  }
+
+  public virtual void SetArticleEnd(string articleEndValue) {
+    this.articleEnd = articleEndValue;
+  }
+
+  private global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper handleLineSeparation(global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper current,
+    global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper lastPosition,
+    global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper lastLineStartPosition,
+    float maxHeightForLine) {
+    current.SetLineStart();
+    this.isParagraphSeparation(current, lastPosition, lastLineStartPosition, maxHeightForLine);
+    lastLineStartPosition = current;
+    if (current.IsParagraphStart()) {
+      if (lastPosition.IsArticleStart()) {
+        if (lastPosition.IsLineStart()) {
+          this.WriteLineSeparator();
+        }
+        this.WriteParagraphStart();
+      } else {
+        this.WriteLineSeparator();
+        this.WriteParagraphSeparator();
+      }
+    } else {
+      this.WriteLineSeparator();
+    }
+    return lastLineStartPosition;
+  }
+
+  private void isParagraphSeparation(global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper position,
+    global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper lastPosition,
+    global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper lastLineStartPosition,
+    float maxHeightForLine) {
+    bool result = false;
+    if ((lastLineStartPosition == default!)) {
+      result = true;
+    } else {
+      float yGap = global::System.Math.Abs((position.GetTextPosition().GetYDirAdj()
+        - lastPosition.GetTextPosition().GetYDirAdj()));
+      float newYVal = this.multiplyFloat(this.GetDropThreshold(), maxHeightForLine);
+      float xGap = (position.GetTextPosition().GetXDirAdj()
+        - lastLineStartPosition.GetTextPosition().GetXDirAdj());
+      float newXVal = this.multiplyFloat(this.GetIndentThreshold(),
+        position.GetTextPosition().GetWidthOfSpace());
+      float positionWidth = this.multiplyFloat(0.25F, position.GetTextPosition().GetWidth());
+      if ((yGap > newYVal)) {
+        result = true;
+      } else {
+        if ((xGap > newXVal)) {
+          if (!(lastLineStartPosition.IsParagraphStart())) {
+            result = true;
+          } else {
+            position.SetHangingIndent();
+          }
+        } else {
+          if ((xGap < -(position.GetTextPosition().GetWidthOfSpace()))) {
+            if (!(lastLineStartPosition.IsParagraphStart())) {
+              result = true;
+            }
+          } else {
+            if ((global::System.Math.Abs(xGap) < positionWidth)) {
+              if (lastLineStartPosition.IsHangingIndent()) {
+                position.SetHangingIndent();
+              } else {
+                if (lastLineStartPosition.IsParagraphStart()) {
+                  global::System.Text.RegularExpressions.Regex liPattern
+                    = this.matchListItemPattern(lastLineStartPosition);
+                  if ((liPattern != default!)) {
+                    global::System.Text.RegularExpressions.Regex currentPattern
+                      = this.matchListItemPattern(position);
+                    if ((liPattern == currentPattern)) {
+                      result = true;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    if (result) {
+      position.SetParagraphStart();
+    }
+  }
+
+  private float multiplyFloat(float value1, float value2) {
+    return (global::DripSharp.Runtime.JavaCompat.MathRoundFloat(((value1 * value2) * 1000))
+      / (float)1000.0F);
+  }
+
+  protected internal virtual void WriteParagraphSeparator() {
+    this.WriteParagraphEnd();
+    this.WriteParagraphStart();
+  }
+
+  protected internal virtual void WriteParagraphStart() {
+    if (this.inParagraph) {
+      this.WriteParagraphEnd();
+      this.inParagraph = false;
+    }
+    (this.Output).Write(this.GetParagraphStart());
+    this.inParagraph = true;
+  }
+
+  protected internal virtual void WriteParagraphEnd() {
+    if (!(this.inParagraph)) {
+      this.WriteParagraphStart();
+    }
+    (this.Output).Write(this.GetParagraphEnd());
+    this.inParagraph = false;
+  }
+
+  protected internal virtual void WritePageStart() {
+    (this.Output).Write(this.GetPageStart());
+  }
+
+  protected internal virtual void WritePageEnd() {
+    (this.Output).Write(this.GetPageEnd());
+  }
+
+  private global::System.Text.RegularExpressions.Regex matchListItemPattern(global::DripSharp.PdfCarton.Text.PDFTextStripper.PositionWrapper pw) {
+    global::DripSharp.PdfCarton.Text.TextPosition tp = pw.GetTextPosition();
+    string txt = tp.GetUnicode();
+    return global::DripSharp.PdfCarton.Text.PDFTextStripper.MatchPattern(txt,
+      this.GetListItemPatterns());
+  }
+
+  private static readonly string[] LIST_ITEM_EXPRESSIONS = new string[] { "\\.", "\\d+\\.",
+    "\\[\\d+\\]", "\\d+\\)", "[A-Z]\\.", "[a-z]\\.", "[A-Z]\\)", "[a-z]\\)", "[IVXL]+\\.",
+  "[ivxl]+\\." };
+
+  private global::System.Collections.Generic.IList<global::System.Text.RegularExpressions.Regex> listOfPatterns
+    = default!;
+
+  protected internal virtual void SetListItemPatterns(global::System.Collections.Generic.IList<global::System.Text.RegularExpressions.Regex> patterns) {
+    this.listOfPatterns = patterns;
+  }
+
+  protected internal virtual global::System.Collections.Generic.IList<global::System.Text.RegularExpressions.Regex> GetListItemPatterns() {
+    if ((this.listOfPatterns == default!)) {
+      this.listOfPatterns
+        = new global::System.Collections.Generic.List<global::System.Text.RegularExpressions.Regex>(global::DripSharp.PdfCarton.Text.PDFTextStripper.LIST_ITEM_EXPRESSIONS.Length);
+      foreach (string expression in global::DripSharp.PdfCarton.Text.PDFTextStripper.LIST_ITEM_EXPRESSIONS) {
+        global::System.Text.RegularExpressions.Regex p
+          = global::DripSharp.Runtime.JavaCompat.CompileRegex(expression);
+        global::DripSharp.Runtime.JavaCompat.Add(this.listOfPatterns, p);
+      }
+    }
+    return this.listOfPatterns;
+  }
+
+  protected internal static global::System.Text.RegularExpressions.Regex MatchPattern(string @string,
+    global::System.Collections.Generic.IList<global::System.Text.RegularExpressions.Regex> patterns) {
+    foreach (global::System.Text.RegularExpressions.Regex p in patterns) {
+      if (global::DripSharp.Runtime.JavaCompat.RegexMatcher(p, @string).Matches()) {
+        return p;
+      }
+    }
+    return default!;
+  }
+
+  private void writeLine(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions> line) {
+    int numberOfStrings = global::DripSharp.Runtime.JavaCompat.CollectionCount(line);
+    for (int i = 0; (i < numberOfStrings); i++) {
+      global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions word
+        = global::DripSharp.Runtime.JavaCompat.ListGet(line, i);
+      this.WriteString(word.GetText(), word.GetTextPositions());
+      if ((i < (numberOfStrings - 1))) {
+        this.WriteWordSeparator();
+      }
+    }
+  }
+
+  private global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions> normalize(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem> line) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions> normalized
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions>();
+    global::System.Text.StringBuilder lineBuilder = new global::System.Text.StringBuilder();
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> wordPositions
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Text.TextPosition>();
+    foreach (global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem item in line) {
+      lineBuilder = this.normalizeAdd(normalized, lineBuilder, wordPositions, item);
+    }
+    if ((lineBuilder.Length > 0)) {
+      global::DripSharp.Runtime.JavaCompat.Add(normalized, this.createWord(lineBuilder.ToString(),
+        wordPositions));
+    }
+    return normalized;
+  }
+
+  private string handleDirection(string word) {
+    global::DripSharp.Runtime.JavaBidi bidi = new global::DripSharp.Runtime.JavaBidi(word,
+      global::DripSharp.Runtime.JavaBidi.DirectionDefaultLeftToRight);
+    if ((!(bidi.IsMixed()) && (bidi.GetBaseLevel()
+      == global::DripSharp.Runtime.JavaBidi.DirectionLeftToRight))) {
+      return word;
+    }
+    int runCount = bidi.GetRunCount();
+    sbyte[] levels = new sbyte[runCount];
+    int[] runs = new int[runCount];
+    for (int i__1921_18 = 0; (i__1921_18 < runCount); i__1921_18++) {
+      levels[i__1921_18] = unchecked((sbyte)(unchecked((sbyte)(bidi.GetRunLevel(i__1921_18)))));
+      runs[i__1921_18] = i__1921_18;
+    }
+    global::DripSharp.Runtime.JavaBidi.ReorderVisually(levels, 0, runs, 0, runCount);
+    global::System.Text.StringBuilder result = new global::System.Text.StringBuilder();
+    for (int i__1933_18 = 0; (i__1933_18 < runCount); i__1933_18++) {
+      int index = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(runs[i__1933_18]);
+      int start = bidi.GetRunStart(index);
+      int end = bidi.GetRunLimit(index);
+      int level = levels[index];
+      if (((level & 1) != 0)) {
+        while ((--end >= start)) {
+          char character = word[end];
+          if (global::DripSharp.Runtime.JavaBidi.IsMirrored(global::DripSharp.Runtime.JavaCompat.CodePointAt(word,
+            end))) {
+            if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(global::DripSharp.PdfCarton.Text.PDFTextStripper.MIRRORING_CHAR_MAP,
+              character)) {
+              result.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.MapGetNullable(global::DripSharp.PdfCarton.Text.PDFTextStripper.MIRRORING_CHAR_MAP,
+                character)));
+            } else {
+              result.Append(character);
+            }
+          } else {
+            result.Append(character);
+          }
+        }
+      } else {
+        result.Append(word, start, (end - start));
+      }
+    }
+    return result.ToString();
+  }
+
+  private static readonly global::System.Collections.Generic.IDictionary<char,
+    char> MIRRORING_CHAR_MAP = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<char, char>();
 
 /* merged static initializer */
 
-private static void parseBidiFile(global::System.IO.Stream inputStream) {
-global::DripSharp.Runtime.JavaLineNumberReader rd = new global::DripSharp.Runtime.JavaLineNumberReader(new global::System.IO.StreamReader(inputStream, global::DripSharp.Runtime.JavaStandardCharsets.USASCII));
-do {
-string s = rd.ReadLine();
-if ((s == default!)) {
-break;
-}
-int comment = global::DripSharp.Runtime.JavaCompat.StringIndexOf(s, (int)('#'));
-if ((comment != -1)) {
-s = global::DripSharp.Runtime.JavaCompat.StringSubstring(s, 0, comment);
-}
-if ((s.Length < 2)) {
-continue;
-}
-global::DripSharp.Runtime.JavaStringTokenizer st = new global::DripSharp.Runtime.JavaStringTokenizer(s, ";");
-int nFields = st.countTokens();
-char[] fields = new char[nFields];
-for (int i = 0; (i < nFields); i++) {
-fields[i] = unchecked((char)(global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.Runtime.JavaCompat.StringTrim(st.nextToken()), 16)));
-}
-if ((fields.Length == 2)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(global::DripSharp.PdfCarton.Text.PDFTextStripper.MIRRORING_CHAR_MAP, fields[0], fields[1]);
-}
-} while (true);
-}
+  private static void parseBidiFile(global::System.IO.Stream inputStream) {
+    global::DripSharp.Runtime.JavaLineNumberReader rd
+      = new global::DripSharp.Runtime.JavaLineNumberReader(new global::System.IO.StreamReader(inputStream,
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII));
+    do {
+      string s = rd.ReadLine();
+      if ((s == default!)) {
+        break;
+      }
+      int comment = global::DripSharp.Runtime.JavaCompat.StringIndexOf(s, (int)('#'));
+      if ((comment != -1)) {
+        s = global::DripSharp.Runtime.JavaCompat.StringSubstring(s, 0, comment);
+      }
+      if ((s.Length < 2)) {
+        continue;
+      }
+      global::DripSharp.Runtime.JavaStringTokenizer st
+        = new global::DripSharp.Runtime.JavaStringTokenizer(s, ";");
+      int nFields = st.countTokens();
+      char[] fields = new char[nFields];
+      for (int i = 0; (i < nFields); i++) {
+        fields[i]
+          = unchecked((char)(global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.Runtime.JavaCompat.StringTrim(st.nextToken()),
+          16)));
+      }
+      if ((fields.Length == 2)) {
+        global::DripSharp.Runtime.JavaCompat.MapPut(global::DripSharp.PdfCarton.Text.PDFTextStripper.MIRRORING_CHAR_MAP,
+          fields[0], fields[1]);
+      }
+    } while (true);
+  }
 
-private global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions createWord(string word, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> wordPositions) {
-return new global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions(this.normalizeWord(word), wordPositions);
-}
+  private global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions createWord(string word,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> wordPositions) {
+    return new global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions(this.normalizeWord(word),
+      wordPositions);
+  }
 
-private string normalizeWord(string word) {
-return this.handleDirection(global::DripSharp.Runtime.PdfBoxTextCompatibility.NormalizeVisualWord(word, this.sortByPosition));
-}
+  private string normalizeWord(string word) {
+    return this.handleDirection(global::DripSharp.Runtime.PdfBoxTextCompatibility.NormalizeVisualWord(word,
+      this.sortByPosition));
+  }
 
-private global::System.Text.StringBuilder normalizeAdd(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions> normalized, global::System.Text.StringBuilder lineBuilder, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> wordPositions, global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem item) {
-if (item.IsWordSeparator()) {
-global::DripSharp.Runtime.JavaCompat.Add(normalized, this.createWord(lineBuilder.ToString(), new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Text.TextPosition>(wordPositions)));
-lineBuilder = new global::System.Text.StringBuilder();
-wordPositions.Clear();
-} else {
-global::DripSharp.PdfCarton.Text.TextPosition text = item.GetTextPosition();
-lineBuilder.Append(text.GetVisuallyOrderedUnicode());
-global::DripSharp.Runtime.JavaCompat.Add(wordPositions, text);
-}
-return lineBuilder;
-}
+  private global::System.Text.StringBuilder normalizeAdd(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions> normalized,
+    global::System.Text.StringBuilder lineBuilder,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> wordPositions,
+    global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem item) {
+    if (item.IsWordSeparator()) {
+      global::DripSharp.Runtime.JavaCompat.Add(normalized, this.createWord(lineBuilder.ToString(),
+        new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Text.TextPosition>(wordPositions)));
+      lineBuilder = new global::System.Text.StringBuilder();
+      wordPositions.Clear();
+    } else {
+      global::DripSharp.PdfCarton.Text.TextPosition text = item.GetTextPosition();
+      lineBuilder.Append(text.GetVisuallyOrderedUnicode());
+      global::DripSharp.Runtime.JavaCompat.Add(wordPositions, text);
+    }
+    return lineBuilder;
+  }
 
-internal sealed class LineItem {
-public static readonly global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem WordSeparator = new global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem();
+  internal sealed class LineItem {
+    public static readonly global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem WordSeparator
+      = new global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem();
 
-public static global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem GetWordSeparator() {
-return global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem.WordSeparator;
-}
+    public static global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem GetWordSeparator() {
+      return global::DripSharp.PdfCarton.Text.PDFTextStripper.LineItem.WordSeparator;
+    }
 
-internal readonly global::DripSharp.PdfCarton.Text.TextPosition textPosition = null!;
+    internal readonly global::DripSharp.PdfCarton.Text.TextPosition textPosition = null!;
 
-internal LineItem() {
-this.textPosition = default!;
-}
+    internal LineItem() {
+      this.textPosition = default!;
+    }
 
-internal LineItem(global::DripSharp.PdfCarton.Text.TextPosition textPosition) {
-this.textPosition = textPosition;
-}
+    internal LineItem(global::DripSharp.PdfCarton.Text.TextPosition textPosition) {
+      this.textPosition = textPosition;
+    }
 
-public global::DripSharp.PdfCarton.Text.TextPosition GetTextPosition() {
-return this.textPosition;
-}
+    public global::DripSharp.PdfCarton.Text.TextPosition GetTextPosition() {
+      return this.textPosition;
+    }
 
-public bool IsWordSeparator() {
-return (this.textPosition == default!);
-}
-}
+    public bool IsWordSeparator() {
+      return (this.textPosition == default!);
+    }
+  }
 
-internal sealed class WordWithTextPositions {
-internal readonly string text = null!;
+  internal sealed class WordWithTextPositions {
+    internal readonly string text = null!;
 
-internal readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> textPositions = null!;
+    internal readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> textPositions
+      = null!;
 
-internal WordWithTextPositions(string word, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> positions) {
-this.text = word;
-this.textPositions = positions;
-}
+    internal WordWithTextPositions(string word,
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> positions) {
+      this.text = word;
+      this.textPositions = positions;
+    }
 
-public string GetText() {
-return this.text;
-}
+    public string GetText() {
+      return this.text;
+    }
 
-public global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> GetTextPositions() {
-return this.textPositions;
-}
-}
+    public global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition> GetTextPositions() {
+      return this.textPositions;
+    }
+  }
 
-internal sealed class PositionWrapper {
-internal bool __field_isLineStart = false;
+  internal sealed class PositionWrapper {
+    internal bool __field_isLineStart = false;
 
-internal bool __field_isParagraphStart = false;
+    internal bool __field_isParagraphStart = false;
 
-internal bool __field_isPageBreak = false;
+    internal bool __field_isPageBreak = false;
 
-internal bool __field_isHangingIndent = false;
+    internal bool __field_isHangingIndent = false;
 
-internal bool __field_isArticleStart = false;
+    internal bool __field_isArticleStart = false;
 
-internal global::DripSharp.PdfCarton.Text.TextPosition position = default!;
+    internal global::DripSharp.PdfCarton.Text.TextPosition position = default!;
 
-internal PositionWrapper(global::DripSharp.PdfCarton.Text.TextPosition position) {
-this.position = position;
-}
+    internal PositionWrapper(global::DripSharp.PdfCarton.Text.TextPosition position) {
+      this.position = position;
+    }
 
-public global::DripSharp.PdfCarton.Text.TextPosition GetTextPosition() {
-return this.position;
-}
+    public global::DripSharp.PdfCarton.Text.TextPosition GetTextPosition() {
+      return this.position;
+    }
 
-public bool IsLineStart() {
-return this.__field_isLineStart;
-}
+    public bool IsLineStart() {
+      return this.__field_isLineStart;
+    }
 
-public void SetLineStart() {
-this.__field_isLineStart = true;
-}
+    public void SetLineStart() {
+      this.__field_isLineStart = true;
+    }
 
-public bool IsParagraphStart() {
-return this.__field_isParagraphStart;
-}
+    public bool IsParagraphStart() {
+      return this.__field_isParagraphStart;
+    }
 
-public void SetParagraphStart() {
-this.__field_isParagraphStart = true;
-}
+    public void SetParagraphStart() {
+      this.__field_isParagraphStart = true;
+    }
 
-public bool IsArticleStart() {
-return this.__field_isArticleStart;
-}
+    public bool IsArticleStart() {
+      return this.__field_isArticleStart;
+    }
 
-public void SetArticleStart() {
-this.__field_isArticleStart = true;
-}
+    public void SetArticleStart() {
+      this.__field_isArticleStart = true;
+    }
 
-public bool IsPageBreak() {
-return this.__field_isPageBreak;
-}
+    public bool IsPageBreak() {
+      return this.__field_isPageBreak;
+    }
 
-public void SetPageBreak() {
-this.__field_isPageBreak = true;
-}
+    public void SetPageBreak() {
+      this.__field_isPageBreak = true;
+    }
 
-public bool IsHangingIndent() {
-return this.__field_isHangingIndent;
-}
+    public bool IsHangingIndent() {
+      return this.__field_isHangingIndent;
+    }
 
-public void SetHangingIndent() {
-this.__field_isHangingIndent = true;
-}
-}
+    public void SetHangingIndent() {
+      this.__field_isHangingIndent = true;
+    }
+  }
 }

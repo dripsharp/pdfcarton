@@ -9,55 +9,57 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDWindowsLaunchParams : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-public const string OperationOpen = "open";
+  public const string OperationOpen = "open";
 
-public const string OperationPrint = "print";
+  public const string OperationPrint = "print";
 
-protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary @Params = null!;
+  protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary @Params = null!;
 
-public PDWindowsLaunchParams() {
-this.@Params = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDWindowsLaunchParams() {
+    this.@Params = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDWindowsLaunchParams(global::DripSharp.PdfCarton.Cos.COSDictionary p) {
-this.@Params = p;
-}
+  public PDWindowsLaunchParams(global::DripSharp.PdfCarton.Cos.COSDictionary p) {
+    this.@Params = p;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.@Params;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.@Params;
+  }
 
-public virtual string GetFilename() {
-return this.@Params.GetString(global::DripSharp.PdfCarton.Cos.COSName.F);
-}
+  public virtual string GetFilename() {
+    return this.@Params.GetString(global::DripSharp.PdfCarton.Cos.COSName.F);
+  }
 
-public virtual void SetFilename(string file) {
-this.@Params.SetString(global::DripSharp.PdfCarton.Cos.COSName.F, file);
-}
+  public virtual void SetFilename(string file) {
+    this.@Params.SetString(global::DripSharp.PdfCarton.Cos.COSName.F, file);
+  }
 
-public virtual string GetDirectory() {
-return this.@Params.GetString(global::DripSharp.PdfCarton.Cos.COSName.D);
-}
+  public virtual string GetDirectory() {
+    return this.@Params.GetString(global::DripSharp.PdfCarton.Cos.COSName.D);
+  }
 
-public virtual void SetDirectory(string dir) {
-this.@Params.SetString(global::DripSharp.PdfCarton.Cos.COSName.D, dir);
-}
+  public virtual void SetDirectory(string dir) {
+    this.@Params.SetString(global::DripSharp.PdfCarton.Cos.COSName.D, dir);
+  }
 
-public virtual string GetOperation() {
-return this.@Params.GetString(global::DripSharp.PdfCarton.Cos.COSName.O, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDWindowsLaunchParams.OperationOpen);
-}
+  public virtual string GetOperation() {
+    return this.@Params.GetString(global::DripSharp.PdfCarton.Cos.COSName.O,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDWindowsLaunchParams.OperationOpen);
+  }
 
-public virtual void SetOperation(string op) {
-this.@Params.SetString(global::DripSharp.PdfCarton.Cos.COSName.D, op);
-}
+  public virtual void SetOperation(string op) {
+    this.@Params.SetString(global::DripSharp.PdfCarton.Cos.COSName.D, op);
+  }
 
-public virtual string GetExecuteParam() {
-return this.@Params.GetString(global::DripSharp.PdfCarton.Cos.COSName.P);
-}
+  public virtual string GetExecuteParam() {
+    return this.@Params.GetString(global::DripSharp.PdfCarton.Cos.COSName.P);
+  }
 
-public virtual void SetExecuteParam(string param) {
-this.@Params.SetString(global::DripSharp.PdfCarton.Cos.COSName.P, param);
-}
+  public virtual void SetExecuteParam(string param) {
+    this.@Params.SetString(global::DripSharp.PdfCarton.Cos.COSName.P, param);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

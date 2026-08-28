@@ -9,28 +9,38 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public sealed class COSInputStream : global::DripSharp.Runtime.JavaFilterInputStream {
-internal static global::DripSharp.PdfCarton.Cos.COSInputStream create(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Filter.Filter> filters, global::DripSharp.PdfCarton.Cos.COSDictionary parameters, global::System.IO.Stream @in, global::DripSharp.PdfCarton.Filter.DecodeOptions options) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(filters)) {
-return new global::DripSharp.PdfCarton.Cos.COSInputStream(@in, (global::DripSharp.PdfCarton.Filter.DecodeResult)default!);
-}
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Filter.DecodeResult> results = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Filter.DecodeResult>(global::DripSharp.Runtime.JavaCompat.CollectionCount(filters));
-global::DripSharp.PdfCarton.IO.RandomAccessRead decoded = global::DripSharp.PdfCarton.Filter.Filter.Decode(@in, filters, parameters, options, results);
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(results)) {
-return new global::DripSharp.PdfCarton.Cos.COSInputStream(@in, (global::DripSharp.PdfCarton.Filter.DecodeResult)default!);
-}
-return new global::DripSharp.PdfCarton.Cos.COSInputStream(new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(decoded), global::DripSharp.Runtime.JavaCompat.ListGet(results, (global::DripSharp.Runtime.JavaCompat.CollectionCount(results) - 1)));
-}
+  internal static global::DripSharp.PdfCarton.Cos.COSInputStream create(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Filter.Filter> filters,
+    global::DripSharp.PdfCarton.Cos.COSDictionary parameters, global::System.IO.Stream @in,
+    global::DripSharp.PdfCarton.Filter.DecodeOptions options) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(filters)) {
+      return new global::DripSharp.PdfCarton.Cos.COSInputStream(@in,
+        (global::DripSharp.PdfCarton.Filter.DecodeResult)default!);
+    }
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Filter.DecodeResult> results
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Filter.DecodeResult>(global::DripSharp.Runtime.JavaCompat.CollectionCount(filters));
+    global::DripSharp.PdfCarton.IO.RandomAccessRead decoded
+      = global::DripSharp.PdfCarton.Filter.Filter.Decode(@in, filters, parameters, options,
+      results);
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(results)) {
+      return new global::DripSharp.PdfCarton.Cos.COSInputStream(@in,
+        (global::DripSharp.PdfCarton.Filter.DecodeResult)default!);
+    }
+    return new global::DripSharp.PdfCarton.Cos.COSInputStream(new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(decoded),
+      global::DripSharp.Runtime.JavaCompat.ListGet(results,
+      (global::DripSharp.Runtime.JavaCompat.CollectionCount(results) - 1)));
+  }
 
-private readonly global::DripSharp.PdfCarton.Filter.DecodeResult decodeResult = null!;
+  private readonly global::DripSharp.PdfCarton.Filter.DecodeResult decodeResult = null!;
 
-private COSInputStream(global::System.IO.Stream input, global::DripSharp.PdfCarton.Filter.DecodeResult decodeResult) : base(input) {
-this.decodeResult = decodeResult;
-}
+  private COSInputStream(global::System.IO.Stream input,
+    global::DripSharp.PdfCarton.Filter.DecodeResult decodeResult) : base(input) {
+    this.decodeResult = decodeResult;
+  }
 
-public global::DripSharp.PdfCarton.Filter.DecodeResult GetDecodeResult() {
-if ((this.decodeResult == default!)) {
-return global::DripSharp.PdfCarton.Filter.DecodeResult.CreateDefault();
-}
-return this.decodeResult;
-}
+  public global::DripSharp.PdfCarton.Filter.DecodeResult GetDecodeResult() {
+    if ((this.decodeResult == default!)) {
+      return global::DripSharp.PdfCarton.Filter.DecodeResult.CreateDefault();
+    }
+    return this.decodeResult;
+  }
 }

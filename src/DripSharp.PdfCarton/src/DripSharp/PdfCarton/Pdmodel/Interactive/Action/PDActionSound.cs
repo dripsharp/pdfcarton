@@ -9,57 +9,57 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDActionSound : global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction {
-public const string SubType = "Sound";
+  public const string SubType = "Sound";
 
-public PDActionSound() {
-this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionSound.SubType);
-}
+  public PDActionSound() {
+    this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionSound.SubType);
+  }
 
-public PDActionSound(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public PDActionSound(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public virtual void SetSound(global::DripSharp.PdfCarton.Cos.COSStream sound) {
-base.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Sound, sound);
-}
+  public virtual void SetSound(global::DripSharp.PdfCarton.Cos.COSStream sound) {
+    base.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Sound, sound);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSStream GetSound() {
-return base.Action.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Sound);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSStream GetSound() {
+    return base.Action.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Sound);
+  }
 
-public virtual void SetVolume(float volume) {
-if (((volume < -1) || (volume > 1))) {
-throw new global::System.ArgumentException("volume outside of the range \u22121.0 to 1.0");
-}
-base.Action.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Volume, volume);
-}
+  public virtual void SetVolume(float volume) {
+    if (((volume < -1) || (volume > 1))) {
+      throw new global::System.ArgumentException("volume outside of the range \u22121.0 to 1.0");
+    }
+    base.Action.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Volume, volume);
+  }
 
-public virtual float GetVolume() {
-float volume = base.Action.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Volume, 1.0F);
-return (((volume < -1) || (volume > 1)) ? 1 : volume);
-}
+  public virtual float GetVolume() {
+    float volume = base.Action.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Volume, 1.0F);
+    return (((volume < -1) || (volume > 1)) ? 1 : volume);
+  }
 
-public virtual void SetSynchronous(bool synchronous) {
-base.Action.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Synchronous, synchronous);
-}
+  public virtual void SetSynchronous(bool synchronous) {
+    base.Action.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Synchronous, synchronous);
+  }
 
-public virtual bool GetSynchronous() {
-return base.Action.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Synchronous, false);
-}
+  public virtual bool GetSynchronous() {
+    return base.Action.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Synchronous, false);
+  }
 
-public virtual void SetRepeat(bool repeat) {
-base.Action.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Repeat, repeat);
-}
+  public virtual void SetRepeat(bool repeat) {
+    base.Action.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Repeat, repeat);
+  }
 
-public virtual bool GetRepeat() {
-return base.Action.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Repeat, false);
-}
+  public virtual bool GetRepeat() {
+    return base.Action.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Repeat, false);
+  }
 
-public virtual void SetMix(bool mix) {
-base.Action.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Mix, mix);
-}
+  public virtual void SetMix(bool mix) {
+    base.Action.SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Mix, mix);
+  }
 
-public virtual bool GetMix() {
-return base.Action.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Mix, false);
-}
+  public virtual bool GetMix() {
+    return base.Action.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Mix, false);
+  }
 }

@@ -9,70 +9,77 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common;
 
 public class PDPageLabelRange : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary root = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary root = null!;
 
-private static readonly global::DripSharp.PdfCarton.Cos.COSName KEY_START = global::DripSharp.PdfCarton.Cos.COSName.St;
+  private static readonly global::DripSharp.PdfCarton.Cos.COSName KEY_START
+    = global::DripSharp.PdfCarton.Cos.COSName.St;
 
-private static readonly global::DripSharp.PdfCarton.Cos.COSName KEY_PREFIX = global::DripSharp.PdfCarton.Cos.COSName.P;
+  private static readonly global::DripSharp.PdfCarton.Cos.COSName KEY_PREFIX
+    = global::DripSharp.PdfCarton.Cos.COSName.P;
 
-private static readonly global::DripSharp.PdfCarton.Cos.COSName KEY_STYLE = global::DripSharp.PdfCarton.Cos.COSName.S;
+  private static readonly global::DripSharp.PdfCarton.Cos.COSName KEY_STYLE
+    = global::DripSharp.PdfCarton.Cos.COSName.S;
 
-public const string StyleDecimal = "D";
+  public const string StyleDecimal = "D";
 
-public const string StyleRomanUpper = "R";
+  public const string StyleRomanUpper = "R";
 
-public const string StyleRomanLower = "r";
+  public const string StyleRomanLower = "r";
 
-public const string StyleLettersUpper = "A";
+  public const string StyleLettersUpper = "A";
 
-public const string StyleLettersLower = "a";
+  public const string StyleLettersLower = "a";
 
-public PDPageLabelRange() : this(new global::DripSharp.PdfCarton.Cos.COSDictionary()) {
+  public PDPageLabelRange() : this(new global::DripSharp.PdfCarton.Cos.COSDictionary()) {
 
-}
+  }
 
-public PDPageLabelRange(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
-this.root = dict;
-}
+  public PDPageLabelRange(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
+    this.root = dict;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.root;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.root;
+  }
 
-public virtual string GetStyle() {
-return this.root.GetNameAsString(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_STYLE);
-}
+  public virtual string GetStyle() {
+    return this.root.GetNameAsString(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_STYLE);
+  }
 
-public virtual void SetStyle(string style) {
-if ((style != default!)) {
-this.root.SetName(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_STYLE, style);
-} else {
-this.root.RemoveItem(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_STYLE);
-}
-}
+  public virtual void SetStyle(string style) {
+    if ((style != default!)) {
+      this.root.SetName(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_STYLE,
+        style);
+    } else {
+      this.root.RemoveItem(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_STYLE);
+    }
+  }
 
-public virtual int GetStart() {
-return this.root.GetInt(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_START, 1);
-}
+  public virtual int GetStart() {
+    return this.root.GetInt(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_START,
+      1);
+  }
 
-public virtual void SetStart(int start) {
-if ((start <= 0)) {
-throw new global::System.ArgumentException("The page numbering start value must be a positive integer");
-}
-this.root.SetInt(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_START, start);
-}
+  public virtual void SetStart(int start) {
+    if ((start <= 0)) {
+      throw new global::System.ArgumentException("The page numbering start value must be a positive integer");
+    }
+    this.root.SetInt(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_START, start);
+  }
 
-public virtual string GetPrefix() {
-return this.root.GetString(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_PREFIX);
-}
+  public virtual string GetPrefix() {
+    return this.root.GetString(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_PREFIX);
+  }
 
-public virtual void SetPrefix(string prefix) {
-if ((prefix != default!)) {
-this.root.SetString(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_PREFIX, prefix);
-} else {
-this.root.RemoveItem(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_PREFIX);
-}
-}
+  public virtual void SetPrefix(string prefix) {
+    if ((prefix != default!)) {
+      this.root.SetString(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_PREFIX,
+        prefix);
+    } else {
+      this.root.RemoveItem(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_PREFIX);
+    }
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

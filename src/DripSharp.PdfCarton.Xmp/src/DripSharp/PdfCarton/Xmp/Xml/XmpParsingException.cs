@@ -9,81 +9,99 @@
 namespace DripSharp.PdfCarton.Xmp.Xml;
 
 public class XmpParsingException : global::System.Exception {
-public sealed class ErrorType {
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Undefined")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType Undefined = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+  public sealed class ErrorType {
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Undefined")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(0)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType Undefined
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Configuration")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType Configuration = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Configuration")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(1)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType Configuration
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("XpacketBadStart")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType XpacketBadStart = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("XpacketBadStart")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(2)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType XpacketBadStart
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("XpacketBadEnd")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType XpacketBadEnd = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("XpacketBadEnd")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(3)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType XpacketBadEnd
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("NoRootElement")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType NoRootElement = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("NoRootElement")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(4)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType NoRootElement
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("NoSchema")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType NoSchema = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("NoSchema")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(5)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType NoSchema
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("InvalidPdfaSchema")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(6)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType InvalidPdfaSchema = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("InvalidPdfaSchema")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(6)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType InvalidPdfaSchema
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("NoType")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(7)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType NoType = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("NoType")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(7)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType NoType
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("InvalidType")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(8)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType InvalidType = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("InvalidType")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(8)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType InvalidType
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Format")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(9)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType Format = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("Format")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(9)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType Format
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("NoValueType")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(10)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType NoValueType = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("NoValueType")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(10)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType NoValueType
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("RequiredProperty")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(11)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType RequiredProperty = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("RequiredProperty")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(11)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType RequiredProperty
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("InvalidPrefix")]
-[global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(12)]
-public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType InvalidPrefix = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumNameAttribute("InvalidPrefix")]
+    [global::DripSharp.PdfCarton.Runtime.Xmp.JavaEnumOrdinalAttribute(12)]
+    public static readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType InvalidPrefix
+      = new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType();
 
-private ErrorType() {}
+    private ErrorType() {}
 
+    public static ErrorType[] values()
+      => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumValues<ErrorType>();
+    public static ErrorType valueOf(string name)
+      => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumValueOf<ErrorType>(name);
 
-public static ErrorType[] values() => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumValues<ErrorType>();
-public static ErrorType valueOf(string name) => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumValueOf<ErrorType>(name);
+    public override string ToString()
+      => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumName(this);
+  }
 
-public override string ToString() => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumName(this);
-}
+  private readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType errorType
+    = null!;
 
-private readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType errorType = null!;
+  internal const long serialVersionUID = -8843096358184702908L;
 
-internal const long serialVersionUID = -8843096358184702908L;
+  public XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType error,
+    string message, global::System.Exception cause) : base(message, cause) {
+    this.errorType = error;
+  }
 
-public XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType error, string message, global::System.Exception cause) : base(message, cause) {
-this.errorType = error;
-}
+  public XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType error,
+    string message) : base(message) {
+    this.errorType = error;
+  }
 
-public XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType error, string message) : base(message) {
-this.errorType = error;
-}
-
-public virtual global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType GetErrorType() {
-return this.errorType;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType GetErrorType() {
+    return this.errorType;
+  }
 }

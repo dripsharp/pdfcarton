@@ -9,31 +9,34 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function.Type4;
 
 public class ExecutionContext {
-private readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators operators = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators operators
+    = null!;
 
-private readonly global::DripSharp.Runtime.JavaStack<object> stack = new global::DripSharp.Runtime.JavaStack<object>();
+  private readonly global::DripSharp.Runtime.JavaStack<object> stack
+    = new global::DripSharp.Runtime.JavaStack<object>();
 
-public ExecutionContext(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators operatorSet) {
-this.operators = operatorSet;
-}
+  public ExecutionContext(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators operatorSet) {
+    this.operators = operatorSet;
+  }
 
-public virtual global::DripSharp.Runtime.JavaStack<object> GetStack() {
-return this.stack;
-}
+  public virtual global::DripSharp.Runtime.JavaStack<object> GetStack() {
+    return this.stack;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators GetOperators() {
-return this.operators;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators GetOperators() {
+    return this.operators;
+  }
 
-public virtual global::System.IConvertible PopNumber() {
-return (global::System.IConvertible)(this.stack.Pop()!);
-}
+  public virtual global::System.IConvertible PopNumber() {
+    return (global::System.IConvertible)(this.stack.Pop()!);
+  }
 
-public virtual int PopInt() {
-return global::DripSharp.Runtime.JavaCompat.Unbox((int?)(this.stack.Pop()));
-}
+  public virtual int PopInt() {
+    return global::DripSharp.Runtime.JavaCompat.Unbox((int?)(this.stack.Pop()));
+  }
 
-public virtual float PopReal() {
-return global::System.Convert.ToSingle(((global::System.IConvertible)(this.stack.Pop()!)), global::System.Globalization.CultureInfo.InvariantCulture);
-}
+  public virtual float PopReal() {
+    return global::System.Convert.ToSingle(((global::System.IConvertible)(this.stack.Pop()!)),
+      global::System.Globalization.CultureInfo.InvariantCulture);
+  }
 }

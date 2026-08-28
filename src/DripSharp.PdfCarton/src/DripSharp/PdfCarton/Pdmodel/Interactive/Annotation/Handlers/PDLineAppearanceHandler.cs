@@ -8,177 +8,207 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
-public class PDLineAppearanceHandler : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class PDLineAppearanceHandler
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-internal const int FONT_SIZE = 9;
+  internal const int FONT_SIZE = 9;
 
-public PDLineAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation) : base(annotation) {
+  public PDLineAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
+  : base(annotation) {
 
-}
+  }
 
-public PDLineAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation, global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(annotation, document) {
+  public PDLineAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(annotation, document) {
 
-}
+  }
 
-public override void GenerateNormalAppearance() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine annotation = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine)(this.getAnnotation()!);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = annotation.GetRectangle();
-if ((rect == default!)) {
-return;
-}
-float[] pathsArray = annotation.GetLine();
-if ((pathsArray == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.AnnotationBorder ab = global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.AnnotationBorder.getAnnotationBorder(annotation, annotation.GetBorderStyle());
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color = annotation.GetColor();
-if (((color == default!) || (color.GetComponents().Length == 0))) {
-return;
-}
-float ll = annotation.GetLeaderLineLength();
-float lle = annotation.GetLeaderLineExtensionLength();
-float llo = annotation.GetLeaderLineOffsetLength();
-float minX = float.MaxValue;
-float minY = float.MaxValue;
-float maxX = float.Epsilon;
-float maxY = float.Epsilon;
-for (int i = 0; (i < (pathsArray.Length / 2)); ++i) {
-float x = pathsArray[(i * 2)];
-float y__83_19 = pathsArray[((i * 2) + 1)];
-minX = global::System.Math.Min(minX, x);
-minY = global::System.Math.Min(minY, y__83_19);
-maxX = global::System.Math.Max(maxX, x);
-maxY = global::System.Math.Max(maxY, y__83_19);
-}
-if ((ll < 0)) {
-llo = -llo;
-lle = -lle;
-}
-float lineEndingSize = ((ab.width < 1.0E-5D) ? 1 : ab.width);
-float max = global::System.Math.Max((lineEndingSize * 10), global::System.Math.Abs(((llo + ll) + lle)));
-rect.SetLowerLeftX(global::System.Math.Min((minX - max), rect.GetLowerLeftX()));
-rect.SetLowerLeftY(global::System.Math.Min((minY - max), rect.GetLowerLeftY()));
-rect.SetUpperRightX(global::System.Math.Max((maxX + max), rect.GetUpperRightX()));
-rect.SetUpperRightY(global::System.Math.Max((maxY + max), rect.GetUpperRightY()));
-annotation.SetRectangle(rect);
-try {
-using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream cs = this.getNormalAppearanceAsContentStream()) {
-this.setOpacity(cs, annotation.GetConstantOpacity());
-bool hasStroke = cs.SetStrokingColorOnDemand(color);
-if ((ab.dashArray != default!)) {
-cs.SetLineDashPattern(ab.dashArray, (float)(0));
-}
-cs.SetLineWidth(ab.width);
-float x1 = pathsArray[0];
-float y1 = pathsArray[1];
-float x2 = pathsArray[2];
-float y2 = pathsArray[3];
-float y__141_19 = (llo + ll);
-string contents = annotation.GetContents();
-if ((contents == default!)) {
-contents = "";
-}
-cs.SaveGraphicsState();
-double angle = global::System.Math.Atan2((double)((y2 - y1)), (double)((x2 - x1)));
-cs.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetRotateInstance(angle, x1, y1));
-float lineLength = (float)(global::System.Math.Sqrt((double)((((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1))))));
-cs.MoveTo((float)(0), llo);
-cs.LineTo((float)(0), ((llo + ll) + lle));
-cs.MoveTo(lineLength, llo);
-cs.LineTo(lineLength, ((llo + ll) + lle));
-string startPointEndingStyle = annotation.GetStartPointEndingStyle();
-string endPointEndingStyle = annotation.GetEndPointEndingStyle();
-if ((annotation.HasCaption() && !((contents.Length == 0)))) {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = this.GetDefaultFont();
-float contentLength = 0;
-try {
-contentLength = (((float)(font.GetStringWidth(contents)) / 1000) * global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDLineAppearanceHandler.FONT_SIZE);
-} catch (global::System.ArgumentException ex) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDLineAppearanceHandler.LOG, (global::System.Exception)ex, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("line text '", contents), "' can't be shown")));
-}
-float xOffset = ((float)((lineLength - contentLength)) / 2);
-float yOffset;
-string captionPositioning = annotation.GetCaptionPositioning();
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.ShortStyles, startPointEndingStyle)) {
-cs.MoveTo(lineEndingSize, y__141_19);
-} else {
-cs.MoveTo((float)(0), y__141_19);
-}
-if (global::DripSharp.Runtime.JavaCompat.Equals("Top", captionPositioning)) {
-yOffset = 1.908F;
-} else {
-yOffset = -2.6F;
-cs.LineTo((xOffset - lineEndingSize), y__141_19);
-cs.MoveTo(((lineLength - xOffset) + lineEndingSize), y__141_19);
-}
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.ShortStyles, endPointEndingStyle)) {
-cs.LineTo((lineLength - lineEndingSize), y__141_19);
-} else {
-cs.LineTo(lineLength, y__141_19);
-}
-cs.DrawShape(lineEndingSize, hasStroke, false);
-float captionHorizontalOffset = annotation.GetCaptionHorizontalOffset();
-float captionVerticalOffset = annotation.GetCaptionVerticalOffset();
-if ((contentLength > 0)) {
-cs.BeginText();
-cs.SetFont(font, (float)(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDLineAppearanceHandler.FONT_SIZE));
-cs.NewLineAtOffset((xOffset + captionHorizontalOffset), ((y__141_19 + yOffset) + captionVerticalOffset));
-cs.ShowText(contents);
-cs.EndText();
-}
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(captionVerticalOffset, (float)(0)) != 0)) {
-cs.MoveTo((0 + ((float)(lineLength) / 2)), y__141_19);
-cs.LineTo((0 + ((float)(lineLength) / 2)), (y__141_19 + captionVerticalOffset));
-cs.DrawShape(lineEndingSize, hasStroke, false);
-}
-} else {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.ShortStyles, startPointEndingStyle)) {
-cs.MoveTo(lineEndingSize, y__141_19);
-} else {
-cs.MoveTo((float)(0), y__141_19);
-}
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.ShortStyles, endPointEndingStyle)) {
-cs.LineTo((lineLength - lineEndingSize), y__141_19);
-} else {
-cs.LineTo(lineLength, y__141_19);
-}
-cs.DrawShape(lineEndingSize, hasStroke, false);
-}
-cs.RestoreGraphicsState();
-bool hasBackground = cs.SetNonStrokingColorOnDemand(annotation.GetInteriorColor());
-if ((ab.width < 1.0E-5D)) {
-hasStroke = false;
-}
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine.LeNone, startPointEndingStyle))) {
-cs.SaveGraphicsState();
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.AngledStyles, startPointEndingStyle)) {
-cs.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetRotateInstance(angle, x1, y1));
-this.drawStyle(startPointEndingStyle, cs, (float)(0), y__141_19, lineEndingSize, hasStroke, hasBackground, false);
-} else {
-float xx1 = (x1 - (float)((y__141_19 * global::System.Math.Sin(angle))));
-float yy1 = (y1 + (float)((y__141_19 * global::System.Math.Cos(angle))));
-this.drawStyle(startPointEndingStyle, cs, xx1, yy1, lineEndingSize, hasStroke, hasBackground, false);
-}
-cs.RestoreGraphicsState();
-}
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine.LeNone, endPointEndingStyle))) {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.AngledStyles, endPointEndingStyle)) {
-cs.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetRotateInstance(angle, x2, y2));
-this.drawStyle(endPointEndingStyle, cs, (float)(0), y__141_19, lineEndingSize, hasStroke, hasBackground, true);
-} else {
-float xx2 = (x2 - (float)((y__141_19 * global::System.Math.Sin(angle))));
-float yy2 = (y2 + (float)((y__141_19 * global::System.Math.Cos(angle))));
-this.drawStyle(endPointEndingStyle, cs, xx2, yy2, lineEndingSize, hasStroke, hasBackground, true);
-}
-}
-}
-} catch (global::System.IO.IOException ex) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDLineAppearanceHandler.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(ex));
-}
-}
+  public override void GenerateNormalAppearance() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine annotation
+      = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine)(this.getAnnotation()!);
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = annotation.GetRectangle();
+    if ((rect == default!)) {
+      return;
+    }
+    float[] pathsArray = annotation.GetLine();
+    if ((pathsArray == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.AnnotationBorder ab
+      = global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.AnnotationBorder.getAnnotationBorder(annotation,
+      annotation.GetBorderStyle());
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color = annotation.GetColor();
+    if (((color == default!) || (color.GetComponents().Length == 0))) {
+      return;
+    }
+    float ll = annotation.GetLeaderLineLength();
+    float lle = annotation.GetLeaderLineExtensionLength();
+    float llo = annotation.GetLeaderLineOffsetLength();
+    float minX = float.MaxValue;
+    float minY = float.MaxValue;
+    float maxX = float.Epsilon;
+    float maxY = float.Epsilon;
+    for (int i = 0; (i < (pathsArray.Length / 2)); ++i) {
+      float x = pathsArray[(i * 2)];
+      float y__83_19 = pathsArray[((i * 2) + 1)];
+      minX = global::System.Math.Min(minX, x);
+      minY = global::System.Math.Min(minY, y__83_19);
+      maxX = global::System.Math.Max(maxX, x);
+      maxY = global::System.Math.Max(maxY, y__83_19);
+    }
+    if ((ll < 0)) {
+      llo = -llo;
+      lle = -lle;
+    }
+    float lineEndingSize = ((ab.width < 1.0E-5D) ? 1 : ab.width);
+    float max = global::System.Math.Max((lineEndingSize * 10), global::System.Math.Abs(((llo + ll)
+      + lle)));
+    rect.SetLowerLeftX(global::System.Math.Min((minX - max), rect.GetLowerLeftX()));
+    rect.SetLowerLeftY(global::System.Math.Min((minY - max), rect.GetLowerLeftY()));
+    rect.SetUpperRightX(global::System.Math.Max((maxX + max), rect.GetUpperRightX()));
+    rect.SetUpperRightY(global::System.Math.Max((maxY + max), rect.GetUpperRightY()));
+    annotation.SetRectangle(rect);
+    try {
+      using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream cs
+        = this.getNormalAppearanceAsContentStream()) {
+        this.setOpacity(cs, annotation.GetConstantOpacity());
+        bool hasStroke = cs.SetStrokingColorOnDemand(color);
+        if ((ab.dashArray != default!)) {
+          cs.SetLineDashPattern(ab.dashArray, (float)(0));
+        }
+        cs.SetLineWidth(ab.width);
+        float x1 = pathsArray[0];
+        float y1 = pathsArray[1];
+        float x2 = pathsArray[2];
+        float y2 = pathsArray[3];
+        float y__141_19 = (llo + ll);
+        string contents = annotation.GetContents();
+        if ((contents == default!)) {
+          contents = "";
+        }
+        cs.SaveGraphicsState();
+        double angle = global::System.Math.Atan2((double)((y2 - y1)), (double)((x2 - x1)));
+        cs.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetRotateInstance(angle, x1, y1));
+        float lineLength = (float)(global::System.Math.Sqrt((double)((((x2 - x1) * (x2 - x1)) + ((y2
+          - y1) * (y2 - y1))))));
+        cs.MoveTo((float)(0), llo);
+        cs.LineTo((float)(0), ((llo + ll) + lle));
+        cs.MoveTo(lineLength, llo);
+        cs.LineTo(lineLength, ((llo + ll) + lle));
+        string startPointEndingStyle = annotation.GetStartPointEndingStyle();
+        string endPointEndingStyle = annotation.GetEndPointEndingStyle();
+        if ((annotation.HasCaption() && !((contents.Length == 0)))) {
+          global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = this.GetDefaultFont();
+          float contentLength = 0;
+          try {
+            contentLength = (((float)(font.GetStringWidth(contents)) / 1000)
+              * global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDLineAppearanceHandler.FONT_SIZE);
+          } catch (global::System.ArgumentException ex) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDLineAppearanceHandler.LOG,
+              (global::System.Exception)ex,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("line text '",
+              contents), "' can't be shown")));
+          }
+          float xOffset = ((float)((lineLength - contentLength)) / 2);
+          float yOffset;
+          string captionPositioning = annotation.GetCaptionPositioning();
+          if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.ShortStyles,
+            startPointEndingStyle)) {
+            cs.MoveTo(lineEndingSize, y__141_19);
+          } else {
+            cs.MoveTo((float)(0), y__141_19);
+          }
+          if (global::DripSharp.Runtime.JavaCompat.Equals("Top", captionPositioning)) {
+            yOffset = 1.908F;
+          } else {
+            yOffset = -2.6F;
+            cs.LineTo((xOffset - lineEndingSize), y__141_19);
+            cs.MoveTo(((lineLength - xOffset) + lineEndingSize), y__141_19);
+          }
+          if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.ShortStyles,
+            endPointEndingStyle)) {
+            cs.LineTo((lineLength - lineEndingSize), y__141_19);
+          } else {
+            cs.LineTo(lineLength, y__141_19);
+          }
+          cs.DrawShape(lineEndingSize, hasStroke, false);
+          float captionHorizontalOffset = annotation.GetCaptionHorizontalOffset();
+          float captionVerticalOffset = annotation.GetCaptionVerticalOffset();
+          if ((contentLength > 0)) {
+            cs.BeginText();
+            cs.SetFont(font,
+              (float)(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDLineAppearanceHandler.FONT_SIZE));
+            cs.NewLineAtOffset((xOffset + captionHorizontalOffset), ((y__141_19 + yOffset)
+              + captionVerticalOffset));
+            cs.ShowText(contents);
+            cs.EndText();
+          }
+          if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(captionVerticalOffset, (float)(0))
+            != 0)) {
+            cs.MoveTo((0 + ((float)lineLength / 2)), y__141_19);
+            cs.LineTo((0 + ((float)lineLength / 2)), (y__141_19 + captionVerticalOffset));
+            cs.DrawShape(lineEndingSize, hasStroke, false);
+          }
+        } else {
+          if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.ShortStyles,
+            startPointEndingStyle)) {
+            cs.MoveTo(lineEndingSize, y__141_19);
+          } else {
+            cs.MoveTo((float)(0), y__141_19);
+          }
+          if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.ShortStyles,
+            endPointEndingStyle)) {
+            cs.LineTo((lineLength - lineEndingSize), y__141_19);
+          } else {
+            cs.LineTo(lineLength, y__141_19);
+          }
+          cs.DrawShape(lineEndingSize, hasStroke, false);
+        }
+        cs.RestoreGraphicsState();
+        bool hasBackground = cs.SetNonStrokingColorOnDemand(annotation.GetInteriorColor());
+        if ((ab.width < 1.0E-5D)) {
+          hasStroke = false;
+        }
+        if (!global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine.LeNone,
+          startPointEndingStyle)) {
+          cs.SaveGraphicsState();
+          if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.AngledStyles,
+            startPointEndingStyle)) {
+            cs.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetRotateInstance(angle, x1, y1));
+            this.drawStyle(startPointEndingStyle, cs, (float)(0), y__141_19, lineEndingSize,
+              hasStroke, hasBackground, false);
+          } else {
+            float xx1 = (x1 - (float)((y__141_19 * global::System.Math.Sin(angle))));
+            float yy1 = (y1 + (float)((y__141_19 * global::System.Math.Cos(angle))));
+            this.drawStyle(startPointEndingStyle, cs, xx1, yy1, lineEndingSize, hasStroke,
+              hasBackground, false);
+          }
+          cs.RestoreGraphicsState();
+        }
+        if (!global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine.LeNone,
+          endPointEndingStyle)) {
+          if (global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.AngledStyles,
+            endPointEndingStyle)) {
+            cs.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetRotateInstance(angle, x2, y2));
+            this.drawStyle(endPointEndingStyle, cs, (float)(0), y__141_19, lineEndingSize,
+              hasStroke, hasBackground, true);
+          } else {
+            float xx2 = (x2 - (float)((y__141_19 * global::System.Math.Sin(angle))));
+            float yy2 = (y2 + (float)((y__141_19 * global::System.Math.Cos(angle))));
+            this.drawStyle(endPointEndingStyle, cs, xx2, yy2, lineEndingSize, hasStroke,
+              hasBackground, true);
+          }
+        }
+      }
+    } catch (global::System.IO.IOException ex) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDLineAppearanceHandler.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(ex));
+    }
+  }
 
-public override void GenerateRolloverAppearance() {}
+  public override void GenerateRolloverAppearance() {}
 
-public override void GenerateDownAppearance() {}
+  public override void GenerateDownAppearance() {}
 }

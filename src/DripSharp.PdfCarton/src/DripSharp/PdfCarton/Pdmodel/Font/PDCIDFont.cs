@@ -8,310 +8,369 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
-public abstract class PDCIDFont : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable, global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike, global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public abstract class PDCIDFont : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable,
+global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike,
+global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-protected internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font Parent = null!;
+  protected internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font Parent = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<int, float> widths = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, float>();
+  private readonly global::System.Collections.Generic.IDictionary<int, float> widths
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, float>();
 
-private float defaultWidth = default;
+  private float defaultWidth = default;
 
-private float averageWidth = default;
+  private float averageWidth = default;
 
-private readonly global::System.Collections.Generic.IDictionary<int, float> verticalDisplacementY = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, float>();
+  private readonly global::System.Collections.Generic.IDictionary<int, float> verticalDisplacementY
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, float>();
 
-private readonly global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Util.Vector> positionVectors = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, global::DripSharp.PdfCarton.Util.Vector>();
+  private readonly global::System.Collections.Generic.IDictionary<int,
+    global::DripSharp.PdfCarton.Util.Vector> positionVectors
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int,
+    global::DripSharp.PdfCarton.Util.Vector>();
 
-private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange> displacementRanges = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange>();
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange> displacementRanges
+    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange>();
 
-private readonly float[] dw2 = new float[] { 880, -1000 };
+  private readonly float[] dw2 = new float[] { 880, -1000 };
 
-protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary Dict = null!;
+  protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary Dict = null!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor = null!;
 
-internal PDCIDFont(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary, global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font parent) {
-this.Dict = fontDictionary;
-this.Parent = parent;
-this.readWidths();
-this.readVerticalDisplacements();
-}
+  internal PDCIDFont(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font parent) {
+    this.Dict = fontDictionary;
+    this.Parent = parent;
+    this.readWidths();
+    this.readVerticalDisplacements();
+  }
 
-private void readWidths() {
-global::DripSharp.PdfCarton.Cos.COSArray wArray = this.Dict.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.W);
-if ((wArray != default!)) {
-int size = wArray.Size();
-int counter = 0;
-while ((counter < (size - 1))) {
-global::DripSharp.PdfCarton.Cos.COSBase firstCodeBase = wArray.GetObject(counter++);
-if (!((firstCodeBase is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Expected a number array member, got ", firstCodeBase)));
-continue;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber firstCode = (global::DripSharp.PdfCarton.Cos.COSNumber)(firstCodeBase!);
-global::DripSharp.PdfCarton.Cos.COSBase next = wArray.GetObject(counter++);
-if ((next is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(next!);
-int startRange__102_25 = firstCode.IntValue();
-int arraySize = array.Size();
-for (int i__104_30 = 0; (i__104_30 < arraySize); i__104_30++) {
-global::DripSharp.PdfCarton.Cos.COSBase widthBase = array.GetObject(i__104_30);
-if ((widthBase is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-global::DripSharp.PdfCarton.Cos.COSNumber width__109_39 = (global::DripSharp.PdfCarton.Cos.COSNumber)(widthBase!);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.widths, (startRange__102_25 + i__104_30), width__109_39.FloatValue());
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Expected a number array member, got ", widthBase)));
-}
-}
-} else {
-if ((counter >= size)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("premature end of widths array"));
-break;
-}
-global::DripSharp.PdfCarton.Cos.COSBase secondCodeBase = next;
-global::DripSharp.PdfCarton.Cos.COSBase rangeWidthBase = wArray.GetObject(counter++);
-if ((!((secondCodeBase is global::DripSharp.PdfCarton.Cos.COSNumber)) || !((rangeWidthBase is global::DripSharp.PdfCarton.Cos.COSNumber)))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Expected two numbers, got ", secondCodeBase), " and "), rangeWidthBase)));
-continue;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber secondCode = (global::DripSharp.PdfCarton.Cos.COSNumber)(secondCodeBase!);
-global::DripSharp.PdfCarton.Cos.COSNumber rangeWidth = (global::DripSharp.PdfCarton.Cos.COSNumber)(rangeWidthBase!);
-int startRange__134_25 = firstCode.IntValue();
-int endRange = secondCode.IntValue();
-float width__136_27 = rangeWidth.FloatValue();
-for (int i__137_30 = startRange__134_25; (i__137_30 <= endRange); i__137_30++) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.widths, i__137_30, width__136_27);
-}
-}
-}
-}
-}
+  private void readWidths() {
+    global::DripSharp.PdfCarton.Cos.COSArray wArray
+      = this.Dict.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.W);
+    if ((wArray != default!)) {
+      int size = wArray.Size();
+      int counter = 0;
+      while ((counter < (size - 1))) {
+        global::DripSharp.PdfCarton.Cos.COSBase firstCodeBase = wArray.GetObject(counter++);
+        if (!((firstCodeBase is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Expected a number array member, got ",
+            firstCodeBase)));
+          continue;
+        }
+        global::DripSharp.PdfCarton.Cos.COSNumber firstCode
+          = (global::DripSharp.PdfCarton.Cos.COSNumber)(firstCodeBase!);
+        global::DripSharp.PdfCarton.Cos.COSBase next = wArray.GetObject(counter++);
+        if ((next is global::DripSharp.PdfCarton.Cos.COSArray)) {
+          global::DripSharp.PdfCarton.Cos.COSArray array
+            = (global::DripSharp.PdfCarton.Cos.COSArray)(next!);
+          int startRange__102_25 = firstCode.IntValue();
+          int arraySize = array.Size();
+          for (int i__104_30 = 0; (i__104_30 < arraySize); i__104_30++) {
+            global::DripSharp.PdfCarton.Cos.COSBase widthBase = array.GetObject(i__104_30);
+            if ((widthBase is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+              global::DripSharp.PdfCarton.Cos.COSNumber width__109_39
+                = (global::DripSharp.PdfCarton.Cos.COSNumber)(widthBase!);
+              global::DripSharp.Runtime.JavaCompat.MapPut(this.widths, (startRange__102_25
+                + i__104_30), width__109_39.FloatValue());
+            } else {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.LOG,
+                global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Expected a number array member, got ",
+                widthBase)));
+            }
+          }
+        } else {
+          if ((counter >= size)) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf("premature end of widths array"));
+            break;
+          }
+          global::DripSharp.PdfCarton.Cos.COSBase secondCodeBase = next;
+          global::DripSharp.PdfCarton.Cos.COSBase rangeWidthBase = wArray.GetObject(counter++);
+          if ((!((secondCodeBase is global::DripSharp.PdfCarton.Cos.COSNumber))
+            || !((rangeWidthBase is global::DripSharp.PdfCarton.Cos.COSNumber)))) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Expected two numbers, got ",
+              secondCodeBase), " and "), rangeWidthBase)));
+            continue;
+          }
+          global::DripSharp.PdfCarton.Cos.COSNumber secondCode
+            = (global::DripSharp.PdfCarton.Cos.COSNumber)(secondCodeBase!);
+          global::DripSharp.PdfCarton.Cos.COSNumber rangeWidth
+            = (global::DripSharp.PdfCarton.Cos.COSNumber)(rangeWidthBase!);
+          int startRange__134_25 = firstCode.IntValue();
+          int endRange = secondCode.IntValue();
+          float width__136_27 = rangeWidth.FloatValue();
+          for (int i__137_30 = startRange__134_25; (i__137_30 <= endRange); i__137_30++) {
+            global::DripSharp.Runtime.JavaCompat.MapPut(this.widths, i__137_30, width__136_27);
+          }
+        }
+      }
+    }
+  }
 
-private void readVerticalDisplacements() {
-global::DripSharp.PdfCarton.Cos.COSArray dw2Array = this.Dict.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Dw2);
-if ((dw2Array != default!)) {
-global::DripSharp.PdfCarton.Cos.COSBase base0 = dw2Array.GetObject(0);
-global::DripSharp.PdfCarton.Cos.COSBase base1 = dw2Array.GetObject(1);
-if (((base0 is global::DripSharp.PdfCarton.Cos.COSNumber) && (base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-this.dw2[0] = ((global::DripSharp.PdfCarton.Cos.COSNumber)(base0!)).FloatValue();
-this.dw2[1] = ((global::DripSharp.PdfCarton.Cos.COSNumber)(base1!)).FloatValue();
-}
-}
-global::DripSharp.PdfCarton.Cos.COSArray w2Array = this.Dict.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.W2);
-if ((w2Array != default!)) {
-for (int i = 0; (i < w2Array.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSNumber c = (global::DripSharp.PdfCarton.Cos.COSNumber)(w2Array.GetObject(i)!);
-global::DripSharp.PdfCarton.Cos.COSBase next = w2Array.GetObject(++i);
-if ((next is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(next!);
-for (int j = 0; (j < array.Size()); j++) {
-int cid = (c.IntValue() + (j / 3));
-global::DripSharp.PdfCarton.Cos.COSNumber w1y__175_35 = (global::DripSharp.PdfCarton.Cos.COSNumber)(array.GetObject(j)!);
-global::DripSharp.PdfCarton.Cos.COSNumber v1x__176_35 = (global::DripSharp.PdfCarton.Cos.COSNumber)(array.GetObject(++j)!);
-global::DripSharp.PdfCarton.Cos.COSNumber v1y__177_35 = (global::DripSharp.PdfCarton.Cos.COSNumber)(array.GetObject(++j)!);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.verticalDisplacementY, cid, w1y__175_35.FloatValue());
-global::DripSharp.Runtime.JavaCompat.MapPut(this.positionVectors, cid, new global::DripSharp.PdfCarton.Util.Vector(v1x__176_35.FloatValue(), v1y__177_35.FloatValue()));
-}
-} else {
-int first = c.IntValue();
-int last = ((global::DripSharp.PdfCarton.Cos.COSNumber)(next!)).IntValue();
-global::DripSharp.PdfCarton.Cos.COSNumber w1y__186_31 = (global::DripSharp.PdfCarton.Cos.COSNumber)(w2Array.GetObject(++i)!);
-global::DripSharp.PdfCarton.Cos.COSNumber v1x__187_31 = (global::DripSharp.PdfCarton.Cos.COSNumber)(w2Array.GetObject(++i)!);
-global::DripSharp.PdfCarton.Cos.COSNumber v1y__188_31 = (global::DripSharp.PdfCarton.Cos.COSNumber)(w2Array.GetObject(++i)!);
-global::DripSharp.Runtime.JavaCompat.Add(this.displacementRanges, new global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange(first, last, new global::DripSharp.PdfCarton.Util.Vector(v1x__187_31.FloatValue(), v1y__188_31.FloatValue()), w1y__186_31.FloatValue()));
-}
-}
-}
-}
+  private void readVerticalDisplacements() {
+    global::DripSharp.PdfCarton.Cos.COSArray dw2Array
+      = this.Dict.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Dw2);
+    if ((dw2Array != default!)) {
+      global::DripSharp.PdfCarton.Cos.COSBase base0 = dw2Array.GetObject(0);
+      global::DripSharp.PdfCarton.Cos.COSBase base1 = dw2Array.GetObject(1);
+      if (((base0 is global::DripSharp.PdfCarton.Cos.COSNumber)
+        && (base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+        this.dw2[0] = ((global::DripSharp.PdfCarton.Cos.COSNumber)(base0!)).FloatValue();
+        this.dw2[1] = ((global::DripSharp.PdfCarton.Cos.COSNumber)(base1!)).FloatValue();
+      }
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray w2Array
+      = this.Dict.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.W2);
+    if ((w2Array != default!)) {
+      for (int i = 0; (i < w2Array.Size()); i++) {
+        global::DripSharp.PdfCarton.Cos.COSNumber c
+          = (global::DripSharp.PdfCarton.Cos.COSNumber)(w2Array.GetObject(i)!);
+        global::DripSharp.PdfCarton.Cos.COSBase next = w2Array.GetObject(++i);
+        if ((next is global::DripSharp.PdfCarton.Cos.COSArray)) {
+          global::DripSharp.PdfCarton.Cos.COSArray array
+            = (global::DripSharp.PdfCarton.Cos.COSArray)(next!);
+          for (int j = 0; (j < array.Size()); j++) {
+            int cid = (c.IntValue() + (j / 3));
+            global::DripSharp.PdfCarton.Cos.COSNumber w1y__175_35
+              = (global::DripSharp.PdfCarton.Cos.COSNumber)(array.GetObject(j)!);
+            global::DripSharp.PdfCarton.Cos.COSNumber v1x__176_35
+              = (global::DripSharp.PdfCarton.Cos.COSNumber)(array.GetObject(++j)!);
+            global::DripSharp.PdfCarton.Cos.COSNumber v1y__177_35
+              = (global::DripSharp.PdfCarton.Cos.COSNumber)(array.GetObject(++j)!);
+            global::DripSharp.Runtime.JavaCompat.MapPut(this.verticalDisplacementY, cid,
+              w1y__175_35.FloatValue());
+            global::DripSharp.Runtime.JavaCompat.MapPut(this.positionVectors, cid,
+              new global::DripSharp.PdfCarton.Util.Vector(v1x__176_35.FloatValue(),
+              v1y__177_35.FloatValue()));
+          }
+        } else {
+          int first = c.IntValue();
+          int last = ((global::DripSharp.PdfCarton.Cos.COSNumber)(next!)).IntValue();
+          global::DripSharp.PdfCarton.Cos.COSNumber w1y__186_31
+            = (global::DripSharp.PdfCarton.Cos.COSNumber)(w2Array.GetObject(++i)!);
+          global::DripSharp.PdfCarton.Cos.COSNumber v1x__187_31
+            = (global::DripSharp.PdfCarton.Cos.COSNumber)(w2Array.GetObject(++i)!);
+          global::DripSharp.PdfCarton.Cos.COSNumber v1y__188_31
+            = (global::DripSharp.PdfCarton.Cos.COSNumber)(w2Array.GetObject(++i)!);
+          global::DripSharp.Runtime.JavaCompat.Add(this.displacementRanges,
+            new global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange(first,
+            last, new global::DripSharp.PdfCarton.Util.Vector(v1x__187_31.FloatValue(),
+            v1y__188_31.FloatValue()), w1y__186_31.FloatValue()));
+        }
+      }
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.Dict;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.Dict;
+  }
 
-public virtual string GetBaseFont() {
-return this.Dict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.BaseFont);
-}
+  public virtual string GetBaseFont() {
+    return this.Dict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.BaseFont);
+  }
 
-public virtual string GetName() {
-return this.GetBaseFont();
-}
+  public virtual string GetName() {
+    return this.GetBaseFont();
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor GetFontDescriptor() {
-if ((this.fontDescriptor == default!)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary fd = this.Dict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.FontDesc);
-if ((fd != default!)) {
-this.fontDescriptor = new global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor(fd);
-}
-}
-return this.fontDescriptor;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor GetFontDescriptor() {
+    if ((this.fontDescriptor == default!)) {
+      global::DripSharp.PdfCarton.Cos.COSDictionary fd
+        = this.Dict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.FontDesc);
+      if ((fd != default!)) {
+        this.fontDescriptor = new global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor(fd);
+      }
+    }
+    return this.fontDescriptor;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font GetParent() {
-return this.Parent;
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font GetParent() {
+    return this.Parent;
+  }
 
-private float getDefaultWidth() {
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(this.defaultWidth, (float)(0)) == 0)) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = this.Dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Dw);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-this.defaultWidth = ((global::DripSharp.PdfCarton.Cos.COSNumber)(@base!)).FloatValue();
-} else {
-this.defaultWidth = 1000;
-}
-}
-return this.defaultWidth;
-}
+  private float getDefaultWidth() {
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(this.defaultWidth, (float)(0)) == 0)) {
+      global::DripSharp.PdfCarton.Cos.COSBase @base
+        = this.Dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Dw);
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+        this.defaultWidth = ((global::DripSharp.PdfCarton.Cos.COSNumber)(@base!)).FloatValue();
+      } else {
+        this.defaultWidth = 1000;
+      }
+    }
+    return this.defaultWidth;
+  }
 
-private global::DripSharp.PdfCarton.Util.Vector getDefaultPositionVector(int cid) {
-return new global::DripSharp.PdfCarton.Util.Vector(((float)(this.getWidthForCID(cid)) / 2), this.dw2[0]);
-}
+  private global::DripSharp.PdfCarton.Util.Vector getDefaultPositionVector(int cid) {
+    return new global::DripSharp.PdfCarton.Util.Vector(((float)(this.getWidthForCID(cid)) / 2),
+      this.dw2[0]);
+  }
 
-private float getWidthForCID(int cid) {
-float? width = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.widths, cid);
-if ((width == default!)) {
-width = this.getDefaultWidth();
-}
-return global::DripSharp.Runtime.JavaCompat.UnboxObject<float>(width);
-}
+  private float getWidthForCID(int cid) {
+    float? width = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.widths, cid);
+    if ((width == default!)) {
+      width = this.getDefaultWidth();
+    }
+    return global::DripSharp.Runtime.JavaCompat.UnboxObject<float>(width);
+  }
 
-public virtual bool HasExplicitWidth(int code) {
-return (global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.widths, this.CodeToCID(code)) != default!);
-}
+  public virtual bool HasExplicitWidth(int code) {
+    return (global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.widths, this.CodeToCID(code))
+      != default!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Util.Vector GetPositionVector(int code) {
-int cid = this.CodeToCID(code);
-global::DripSharp.PdfCarton.Util.Vector v = global::DripSharp.Runtime.JavaCompat.MapGet(this.positionVectors, cid);
-if ((v == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange vdRange = global::DripSharp.Runtime.JavaCompat.FindFirstOptional(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(this.displacementRanges), (vdr) => vdr.RangeMatches(cid))).OrElse(default!);
-if ((vdRange != default!)) {
-v = vdRange.GetPositionVector();
-} else {
-v = this.getDefaultPositionVector(cid);
-}
-}
-return v;
-}
+  public virtual global::DripSharp.PdfCarton.Util.Vector GetPositionVector(int code) {
+    int cid = this.CodeToCID(code);
+    global::DripSharp.PdfCarton.Util.Vector v
+      = global::DripSharp.Runtime.JavaCompat.MapGet(this.positionVectors, cid);
+    if ((v == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange vdRange
+        = global::DripSharp.Runtime.JavaCompat.FindFirstOptional(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(this.displacementRanges),
+        (vdr) => vdr.RangeMatches(cid))).OrElse(default!);
+      if ((vdRange != default!)) {
+        v = vdRange.GetPositionVector();
+      } else {
+        v = this.getDefaultPositionVector(cid);
+      }
+    }
+    return v;
+  }
 
-public virtual float GetVerticalDisplacementVectorY(int code) {
-int cid = this.CodeToCID(code);
-float? w1y = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.verticalDisplacementY, cid);
-if ((w1y == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange vdRange = global::DripSharp.Runtime.JavaCompat.FindFirstOptional(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(this.displacementRanges), (vdr) => vdr.RangeMatches(cid))).OrElse(default!);
-if ((vdRange != default!)) {
-w1y = vdRange.GetVerticalDisplacement();
-} else {
-w1y = this.dw2[1];
-}
-}
-return global::DripSharp.Runtime.JavaCompat.UnboxObject<float>(w1y);
-}
+  public virtual float GetVerticalDisplacementVectorY(int code) {
+    int cid = this.CodeToCID(code);
+    float? w1y = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.verticalDisplacementY,
+      cid);
+    if ((w1y == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange vdRange
+        = global::DripSharp.Runtime.JavaCompat.FindFirstOptional(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(this.displacementRanges),
+        (vdr) => vdr.RangeMatches(cid))).OrElse(default!);
+      if ((vdRange != default!)) {
+        w1y = vdRange.GetVerticalDisplacement();
+      } else {
+        w1y = this.dw2[1];
+      }
+    }
+    return global::DripSharp.Runtime.JavaCompat.UnboxObject<float>(w1y);
+  }
 
-public virtual float GetWidth(int code) {
-return this.getWidthForCID(this.CodeToCID(code));
-}
+  public virtual float GetWidth(int code) {
+    return this.getWidthForCID(this.CodeToCID(code));
+  }
 
-public virtual float GetAverageFontWidth() {
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(this.averageWidth, (float)(0)) == 0)) {
-float totalWidths = 0.0F;
-int characterCount = 0;
-if (!(global::DripSharp.Runtime.JavaCompat.MapIsEmpty(this.widths))) {
-foreach (float width in this.widths.Values) {
-if ((width > 0)) {
-totalWidths += width;
-++characterCount;
-}
-}
-}
-if ((characterCount != 0)) {
-this.averageWidth = ((float)(totalWidths) / characterCount);
-}
-if (((this.averageWidth <= 0) || float.IsNaN(this.averageWidth))) {
-this.averageWidth = this.getDefaultWidth();
-}
-}
-return this.averageWidth;
-}
+  public virtual float GetAverageFontWidth() {
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(this.averageWidth, (float)(0)) == 0)) {
+      float totalWidths = 0.0F;
+      int characterCount = 0;
+      if (!global::DripSharp.Runtime.JavaCompat.MapIsEmpty(this.widths)) {
+        foreach (float width in this.widths.Values) {
+          if ((width > 0)) {
+            totalWidths += width;
+            ++characterCount;
+          }
+        }
+      }
+      if ((characterCount != 0)) {
+        this.averageWidth = ((float)totalWidths / characterCount);
+      }
+      if (((this.averageWidth <= 0) || float.IsNaN(this.averageWidth))) {
+        this.averageWidth = this.getDefaultWidth();
+      }
+    }
+    return this.averageWidth;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo GetCIDSystemInfo() {
-global::DripSharp.PdfCarton.Cos.COSDictionary cidSystemInfo = this.Dict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Cidsysteminfo);
-return ((cidSystemInfo != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo(cidSystemInfo) : (global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo GetCIDSystemInfo() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary cidSystemInfo
+      = this.Dict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Cidsysteminfo);
+    return ((cidSystemInfo != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo(cidSystemInfo)
+      : (global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo)(default!));
+  }
 
-public abstract int CodeToCID(int code);
+  public abstract int CodeToCID(int code);
 
-public abstract int CodeToGID(int code);
+  public abstract int CodeToGID(int code);
 
-public abstract sbyte[] EncodeGlyphId(int glyphId);
+  public abstract sbyte[] EncodeGlyphId(int glyphId);
 
-public abstract sbyte[] Encode(int unicode);
+  public abstract sbyte[] Encode(int unicode);
 
-internal int[] readCIDToGIDMap() {
-int[] cid2gid = default!;
-global::DripSharp.PdfCarton.Cos.COSStream stream = this.Dict.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.CidToGidMap);
-if ((stream != default!)) {
-sbyte[] mapAsBytes;
-using (global::System.IO.Stream @is = stream.CreateInputStream()) {
-mapAsBytes = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
-}
-int numberOfInts = (mapAsBytes.Length / 2);
-cid2gid = new int[numberOfInts];
-int offset = 0;
-for (int index = 0; (index < numberOfInts); index++) {
-int gid = (((mapAsBytes[offset] & 255) << unchecked((int)(8))) | (mapAsBytes[(offset + 1)] & 255));
-cid2gid![index] = gid;
-offset += 2;
-}
-}
-return cid2gid!;
-}
+  internal int[] readCIDToGIDMap() {
+    int[] cid2gid = default!;
+    global::DripSharp.PdfCarton.Cos.COSStream stream
+      = this.Dict.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.CidToGidMap);
+    if ((stream != default!)) {
+      sbyte[] mapAsBytes;
+      using (global::System.IO.Stream @is = stream.CreateInputStream()) {
+        mapAsBytes = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
+      }
+      int numberOfInts = (mapAsBytes.Length / 2);
+      cid2gid = new int[numberOfInts];
+      int offset = 0;
+      for (int index = 0; (index < numberOfInts); index++) {
+        int gid = (((mapAsBytes[offset] & 255) << unchecked((int)(8))) | (mapAsBytes[(offset
+          + 1)] & 255));
+        cid2gid![index] = gid;
+        offset += 2;
+      }
+    }
+    return cid2gid!;
+  }
 
-internal class VerticalDisplacementRange {
-internal readonly int rangeStart = default;
+  internal class VerticalDisplacementRange {
+    internal readonly int rangeStart = default;
 
-internal readonly int rangeEnd = default;
+    internal readonly int rangeEnd = default;
 
-internal readonly global::DripSharp.PdfCarton.Util.Vector positionVector = null!;
+    internal readonly global::DripSharp.PdfCarton.Util.Vector positionVector = null!;
 
-internal readonly float verticalDisplacment = default;
+    internal readonly float verticalDisplacment = default;
 
-public VerticalDisplacementRange(int start, int end, global::DripSharp.PdfCarton.Util.Vector vector, float displacement) {
-this.rangeStart = start;
-this.rangeEnd = end;
-this.positionVector = vector;
-this.verticalDisplacment = displacement;
-}
+    public VerticalDisplacementRange(int start, int end,
+      global::DripSharp.PdfCarton.Util.Vector vector, float displacement) {
+      this.rangeStart = start;
+      this.rangeEnd = end;
+      this.positionVector = vector;
+      this.verticalDisplacment = displacement;
+    }
 
-public virtual bool RangeMatches(int value) {
-return ((value >= this.rangeStart) && (value <= this.rangeEnd));
-}
+    public virtual bool RangeMatches(int value) {
+      return ((value >= this.rangeStart) && (value <= this.rangeEnd));
+    }
 
-public virtual global::DripSharp.PdfCarton.Util.Vector GetPositionVector() {
-return this.positionVector;
-}
+    public virtual global::DripSharp.PdfCarton.Util.Vector GetPositionVector() {
+      return this.positionVector;
+    }
 
-public virtual float GetVerticalDisplacement() {
-return this.verticalDisplacment;
-}
-}
+    public virtual float GetVerticalDisplacement() {
+      return this.verticalDisplacment;
+    }
+  }
 
-public abstract global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetBoundingBox();
+  public abstract global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetBoundingBox();
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 
-public abstract global::DripSharp.PdfCarton.Util.Matrix GetFontMatrix();
+  public abstract global::DripSharp.PdfCarton.Util.Matrix GetFontMatrix();
 
-public abstract float GetHeight(int code);
+  public abstract float GetHeight(int code);
 
-public abstract global::SkiaSharp.SKPath GetNormalizedPath(int code);
+  public abstract global::SkiaSharp.SKPath GetNormalizedPath(int code);
 
-public abstract global::SkiaSharp.SKPath GetPath(int code);
+  public abstract global::SkiaSharp.SKPath GetPath(int code);
 
-public abstract float GetWidthFromFont(int code);
+  public abstract float GetWidthFromFont(int code);
 
-public abstract bool HasGlyph(int code);
+  public abstract bool HasGlyph(int code);
 
-public abstract bool IsDamaged();
+  public abstract bool IsDamaged();
 
-public abstract bool IsEmbedded();
+  public abstract bool IsEmbedded();
 }

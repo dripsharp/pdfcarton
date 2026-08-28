@@ -8,139 +8,152 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
-public sealed class PDLab : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEDictionaryBasedColorSpace {
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor initialColor = null!;
+public sealed class PDLab
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEDictionaryBasedColorSpace {
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor initialColor = null!;
 
-public PDLab() : base(global::DripSharp.PdfCarton.Cos.COSName.Lab) {
+  public PDLab() : base(global::DripSharp.PdfCarton.Cos.COSName.Lab) {
 
-}
+  }
 
-public PDLab(global::DripSharp.PdfCarton.Cos.COSArray lab) : base(lab) {
+  public PDLab(global::DripSharp.PdfCarton.Cos.COSArray lab) : base(lab) {
 
-}
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Cos.COSName.Lab.GetName();
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Cos.COSName.Lab.GetName();
+  }
 
-public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
-int width = raster.Width;
-int height = raster.Height;
-global::SkiaSharp.SKBitmap rgbImage = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
-global::DripSharp.Runtime.JavaRaster rgbRaster = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(rgbImage);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRange aRange = this.GetARange();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRange bRange = this.GetBRange();
-float minA = aRange.GetMin();
-float maxA = aRange.GetMax();
-float minB = bRange.GetMin();
-float maxB = bRange.GetMax();
-float deltaA = (maxA - minA);
-float deltaB = (maxB - minB);
-float[] abc = new float[3];
-for (int y = 0; (y < height); y++) {
-for (int x = 0; (x < width); x++) {
-raster.GetPixel(x, y, abc);
-abc[0] /= 255;
-abc[1] /= 255;
-abc[2] /= 255;
-abc[0] *= 100;
-abc[1] = (minA + (abc[1] * deltaA));
-abc[2] = (minB + (abc[2] * deltaB));
-float[] rgb = this.ToRGB(abc);
-rgb[0] *= 255;
-rgb[1] *= 255;
-rgb[2] *= 255;
-rgbRaster.SetPixel(x, y, rgb);
-}
-}
-return rgbImage;
-}
+  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+    int width = raster.Width;
+    int height = raster.Height;
+    global::SkiaSharp.SKBitmap rgbImage
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
+    global::DripSharp.Runtime.JavaRaster rgbRaster
+      = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(rgbImage);
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRange aRange = this.GetARange();
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRange bRange = this.GetBRange();
+    float minA = aRange.GetMin();
+    float maxA = aRange.GetMax();
+    float minB = bRange.GetMin();
+    float maxB = bRange.GetMax();
+    float deltaA = (maxA - minA);
+    float deltaB = (maxB - minB);
+    float[] abc = new float[3];
+    for (int y = 0; (y < height); y++) {
+      for (int x = 0; (x < width); x++) {
+        raster.GetPixel(x, y, abc);
+        abc[0] /= 255;
+        abc[1] /= 255;
+        abc[2] /= 255;
+        abc[0] *= 100;
+        abc[1] = (minA + (abc[1] * deltaA));
+        abc[2] = (minB + (abc[2] * deltaB));
+        float[] rgb = this.ToRGB(abc);
+        rgb[0] *= 255;
+        rgb[1] *= 255;
+        rgb[2] *= 255;
+        rgbRaster.SetPixel(x, y, rgb);
+      }
+    }
+    return rgbImage;
+  }
 
-public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
-return default!;
-}
+  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+    return default!;
+  }
 
-public override float[] ToRGB(float[] value) {
-float lstar = ((value[0] + 16.0F) * ((float)(1.0F) / (float)(116.0F)));
-float x = (base.WpX * this.inverse((lstar + (value[1] * ((float)(1.0F) / (float)(500.0F))))));
-float y = (base.WpY * this.inverse(lstar));
-float z = (base.WpZ * this.inverse((lstar - (value[2] * ((float)(1.0F) / (float)(200.0F))))));
-return this.ConvXYZtoRGB(x, y, z);
-}
+  public override float[] ToRGB(float[] value) {
+    float lstar = ((value[0] + 16.0F) * ((float)1.0F / (float)116.0F));
+    float x = (base.WpX * this.inverse((lstar + (value[1] * ((float)1.0F / (float)500.0F)))));
+    float y = (base.WpY * this.inverse(lstar));
+    float z = (base.WpZ * this.inverse((lstar - (value[2] * ((float)1.0F / (float)200.0F)))));
+    return this.ConvXYZtoRGB(x, y, z);
+  }
 
-private float inverse(float x) {
-if ((x > ((double)(6.0D) / (double)(29.0D)))) {
-return ((x * x) * x);
-} else {
-return (((float)(108.0F) / (float)(841.0F)) * (x - ((float)(4.0F) / (float)(29.0F))));
-}
-}
+  private float inverse(float x) {
+    if ((x > ((double)6.0D / (double)29.0D))) {
+      return ((x * x) * x);
+    } else {
+      return (((float)108.0F / (float)841.0F) * (x - ((float)4.0F / (float)29.0F)));
+    }
+  }
 
-public override int GetNumberOfComponents() {
-return 3;
-}
+  public override int GetNumberOfComponents() {
+    return 3;
+  }
 
-public override float[] GetDefaultDecode(int bitsPerComponent) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRange a = this.GetARange();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRange b = this.GetBRange();
-return new float[] { 0, 100, a.GetMin(), a.GetMax(), b.GetMin(), b.GetMax() };
-}
+  public override float[] GetDefaultDecode(int bitsPerComponent) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRange a = this.GetARange();
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRange b = this.GetBRange();
+    return new float[] { 0, 100, a.GetMin(), a.GetMax(), b.GetMin(), b.GetMax() };
+  }
 
-public override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetInitialColor() {
-if ((this.initialColor == default!)) {
-this.initialColor = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 0, global::System.Math.Max((float)(0), this.GetARange().GetMin()), global::System.Math.Max((float)(0), this.GetBRange().GetMin()) }, this);
-}
-return this.initialColor;
-}
+  public override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetInitialColor() {
+    if ((this.initialColor == default!)) {
+      this.initialColor
+        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 0,
+          global::System.Math.Max((float)(0), this.GetARange().GetMin()),
+          global::System.Math.Max((float)(0), this.GetBRange().GetMin()) }, this);
+    }
+    return this.initialColor;
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSArray getDefaultRangeArray() {
-global::DripSharp.PdfCarton.Cos.COSFloat minus100 = new global::DripSharp.PdfCarton.Cos.COSFloat(-100.0F);
-global::DripSharp.PdfCarton.Cos.COSFloat plus100 = new global::DripSharp.PdfCarton.Cos.COSFloat(100.0F);
-global::DripSharp.PdfCarton.Cos.COSArray range = new global::DripSharp.PdfCarton.Cos.COSArray();
-range.Add(minus100);
-range.Add(plus100);
-range.Add(minus100);
-range.Add(plus100);
-return range;
-}
+  private global::DripSharp.PdfCarton.Cos.COSArray getDefaultRangeArray() {
+    global::DripSharp.PdfCarton.Cos.COSFloat minus100
+      = new global::DripSharp.PdfCarton.Cos.COSFloat(-100.0F);
+    global::DripSharp.PdfCarton.Cos.COSFloat plus100
+      = new global::DripSharp.PdfCarton.Cos.COSFloat(100.0F);
+    global::DripSharp.PdfCarton.Cos.COSArray range = new global::DripSharp.PdfCarton.Cos.COSArray();
+    range.Add(minus100);
+    range.Add(plus100);
+    range.Add(minus100);
+    range.Add(plus100);
+    return range;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetARange() {
-global::DripSharp.PdfCarton.Cos.COSArray rangeArray = base.Dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Range);
-if ((rangeArray == default!)) {
-rangeArray = this.getDefaultRangeArray();
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(rangeArray, 0);
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetARange() {
+    global::DripSharp.PdfCarton.Cos.COSArray rangeArray
+      = base.Dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Range);
+    if ((rangeArray == default!)) {
+      rangeArray = this.getDefaultRangeArray();
+    }
+    return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(rangeArray, 0);
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetBRange() {
-global::DripSharp.PdfCarton.Cos.COSArray rangeArray = base.Dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Range);
-if ((rangeArray == default!)) {
-rangeArray = this.getDefaultRangeArray();
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(rangeArray, 1);
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetBRange() {
+    global::DripSharp.PdfCarton.Cos.COSArray rangeArray
+      = base.Dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Range);
+    if ((rangeArray == default!)) {
+      rangeArray = this.getDefaultRangeArray();
+    }
+    return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(rangeArray, 1);
+  }
 
-public void SetARange(global::DripSharp.PdfCarton.Pdmodel.Common.PDRange range) {
-this.setComponentRangeArray(range, 0);
-}
+  public void SetARange(global::DripSharp.PdfCarton.Pdmodel.Common.PDRange range) {
+    this.setComponentRangeArray(range, 0);
+  }
 
-public void SetBRange(global::DripSharp.PdfCarton.Pdmodel.Common.PDRange range) {
-this.setComponentRangeArray(range, 2);
-}
+  public void SetBRange(global::DripSharp.PdfCarton.Pdmodel.Common.PDRange range) {
+    this.setComponentRangeArray(range, 2);
+  }
 
-private void setComponentRangeArray(global::DripSharp.PdfCarton.Pdmodel.Common.PDRange range, int index) {
-global::DripSharp.PdfCarton.Cos.COSArray rangeArray = base.Dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Range);
-if ((rangeArray == default!)) {
-rangeArray = this.getDefaultRangeArray();
-}
-if ((range == default!)) {
-rangeArray.Set(index, new global::DripSharp.PdfCarton.Cos.COSFloat((float)(-100)));
-rangeArray.Set((index + 1), new global::DripSharp.PdfCarton.Cos.COSFloat((float)(100)));
-} else {
-rangeArray.Set(index, new global::DripSharp.PdfCarton.Cos.COSFloat(range.GetMin()));
-rangeArray.Set((index + 1), new global::DripSharp.PdfCarton.Cos.COSFloat(range.GetMax()));
-}
-base.Dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Range, rangeArray);
-this.initialColor = default!;
-}
+  private void setComponentRangeArray(global::DripSharp.PdfCarton.Pdmodel.Common.PDRange range,
+    int index) {
+    global::DripSharp.PdfCarton.Cos.COSArray rangeArray
+      = base.Dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Range);
+    if ((rangeArray == default!)) {
+      rangeArray = this.getDefaultRangeArray();
+    }
+    if ((range == default!)) {
+      rangeArray.Set(index, new global::DripSharp.PdfCarton.Cos.COSFloat((float)(-100)));
+      rangeArray.Set((index + 1), new global::DripSharp.PdfCarton.Cos.COSFloat((float)(100)));
+    } else {
+      rangeArray.Set(index, new global::DripSharp.PdfCarton.Cos.COSFloat(range.GetMin()));
+      rangeArray.Set((index + 1), new global::DripSharp.PdfCarton.Cos.COSFloat(range.GetMax()));
+    }
+    base.Dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Range, rangeArray);
+    this.initialColor = default!;
+  }
 }

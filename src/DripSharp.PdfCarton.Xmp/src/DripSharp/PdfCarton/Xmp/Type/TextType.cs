@@ -9,29 +9,32 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class TextType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty {
-private string textValue = null!;
+  private string textValue = null!;
 
-public TextType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix, propertyName, value) {
+  public TextType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI,
+    string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix,
+    propertyName, value) {
 
-}
+  }
 
-public override void SetValue(object value) {
-if (!((value is string))) {
-throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Value given is not allowed for the Text type : '", value), "'"));
-} else {
-this.textValue = (string)(value!);
-}
-}
+  public override void SetValue(object value) {
+    if (!((value is string))) {
+      throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Value given is not allowed for the Text type : '",
+        value), "'"));
+    } else {
+      this.textValue = (string)(value!);
+    }
+  }
 
-public override string GetStringValue() {
-return this.textValue;
-}
+  public override string GetStringValue() {
+    return this.textValue;
+  }
 
-public override object GetValue() {
-return this.textValue;
-}
+  public override object GetValue() {
+    return this.textValue;
+  }
 
-protected override object __DripSharpCovariantBridgeGetValue() {
-return this.GetValue();
-}
+  protected override object __DripSharpCovariantBridgeGetValue() {
+    return this.GetValue();
+  }
 }

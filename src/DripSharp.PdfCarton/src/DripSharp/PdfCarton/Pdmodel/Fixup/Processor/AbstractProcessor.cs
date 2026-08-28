@@ -8,12 +8,13 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Fixup.Processor;
 
-public abstract class AbstractProcessor : global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.PDDocumentProcessor {
-protected internal readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument Document = null!;
+public abstract class AbstractProcessor
+: global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.PDDocumentProcessor {
+  protected internal readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument Document = null!;
 
-protected internal AbstractProcessor(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-this.Document = document;
-}
+  protected internal AbstractProcessor(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    this.Document = document;
+  }
 
-public abstract void Process();
+  public abstract void Process();
 }

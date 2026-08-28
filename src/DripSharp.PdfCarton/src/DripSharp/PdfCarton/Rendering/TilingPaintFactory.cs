@@ -9,98 +9,122 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 internal class TilingPaintFactory {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly global::DripSharp.PdfCarton.Rendering.PageDrawer drawer = null!;
+  private readonly global::DripSharp.PdfCarton.Rendering.PageDrawer drawer = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter, global::DripSharp.Runtime.JavaWeakReference<global::DripSharp.Runtime.JavaPaint>> weakCache = new global::DripSharp.Runtime.JavaWeakHashMap<global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter, global::DripSharp.Runtime.JavaWeakReference<global::DripSharp.Runtime.JavaPaint>>();
+  private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter,
+    global::DripSharp.Runtime.JavaWeakReference<global::DripSharp.Runtime.JavaPaint>> weakCache
+    = new global::DripSharp.Runtime.JavaWeakHashMap<global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter,
+    global::DripSharp.Runtime.JavaWeakReference<global::DripSharp.Runtime.JavaPaint>>();
 
-internal TilingPaintFactory(global::DripSharp.PdfCarton.Rendering.PageDrawer drawer) {
-this.drawer = drawer;
-}
+  internal TilingPaintFactory(global::DripSharp.PdfCarton.Rendering.PageDrawer drawer) {
+    this.drawer = drawer;
+  }
 
-internal virtual global::DripSharp.Runtime.JavaPaint create(global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color, global::SkiaSharp.SKMatrix xform) {
-global::DripSharp.Runtime.JavaPaint paint = default!;
-global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter tilingPaintParameter = new global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter(this.drawer.GetInitialMatrix(), pattern.GetCOSObject(), colorSpace, color, xform);
-global::DripSharp.Runtime.JavaWeakReference<global::DripSharp.Runtime.JavaPaint> weakRef = global::DripSharp.Runtime.JavaCompat.MapGet(this.weakCache, tilingPaintParameter);
-if ((weakRef != default!)) {
-paint = weakRef.Get();
-}
-if ((paint! == default!)) {
-paint = new global::DripSharp.PdfCarton.Rendering.TilingPaint(this.drawer, pattern, colorSpace, color, xform);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.weakCache, tilingPaintParameter, new global::DripSharp.Runtime.JavaWeakReference<global::DripSharp.Runtime.JavaPaint>(paint!));
-}
-return paint!;
-}
+  internal virtual global::DripSharp.Runtime.JavaPaint create(global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color,
+    global::SkiaSharp.SKMatrix xform) {
+    global::DripSharp.Runtime.JavaPaint paint = default!;
+    global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter tilingPaintParameter
+      = new global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter(this.drawer.GetInitialMatrix(),
+      pattern.GetCOSObject(), colorSpace, color, xform);
+    global::DripSharp.Runtime.JavaWeakReference<global::DripSharp.Runtime.JavaPaint> weakRef
+      = global::DripSharp.Runtime.JavaCompat.MapGet(this.weakCache, tilingPaintParameter);
+    if ((weakRef != default!)) {
+      paint = weakRef.Get();
+    }
+    if ((paint! == default!)) {
+      paint = new global::DripSharp.PdfCarton.Rendering.TilingPaint(this.drawer, pattern,
+        colorSpace, color, xform);
+      global::DripSharp.Runtime.JavaCompat.MapPut(this.weakCache, tilingPaintParameter,
+        new global::DripSharp.Runtime.JavaWeakReference<global::DripSharp.Runtime.JavaPaint>(paint!));
+    }
+    return paint!;
+  }
 
-internal class TilingPaintParameter {
-internal readonly global::DripSharp.PdfCarton.Util.Matrix matrix = null!;
+  internal class TilingPaintParameter {
+    internal readonly global::DripSharp.PdfCarton.Util.Matrix matrix = null!;
 
-internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary patternDict = null!;
+    internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary patternDict = null!;
 
-internal readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace = null!;
+    internal readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace
+      = null!;
 
-internal readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color = null!;
+    internal readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color = null!;
 
-internal readonly global::SkiaSharp.SKMatrix xform = default;
+    internal readonly global::SkiaSharp.SKMatrix xform = default;
 
-internal TilingPaintParameter(global::DripSharp.PdfCarton.Util.Matrix matrix, global::DripSharp.PdfCarton.Cos.COSDictionary patternDict, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color, global::SkiaSharp.SKMatrix xform) {
-this.matrix = matrix.Clone();
-this.patternDict = patternDict;
-this.colorSpace = colorSpace;
-this.color = color;
-this.xform = xform;
-}
+    internal TilingPaintParameter(global::DripSharp.PdfCarton.Util.Matrix matrix,
+      global::DripSharp.PdfCarton.Cos.COSDictionary patternDict,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color,
+      global::SkiaSharp.SKMatrix xform) {
+      this.matrix = matrix.Clone();
+      this.patternDict = patternDict;
+      this.colorSpace = colorSpace;
+      this.color = color;
+      this.xform = xform;
+    }
 
-public override bool Equals(object obj) {
-if ((this == obj)) {
-return true;
-}
-if (!((obj is global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter))) {
-return false;
-}
-global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter other = (global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter)(obj!);
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(this.matrix, other.matrix))) {
-return false;
-}
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(this.patternDict, other.patternDict))) {
-return false;
-}
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(this.colorSpace, other.colorSpace))) {
-return false;
-}
-if (((this.color == default!) && (other.color != default!))) {
-return false;
-}
-if (((this.color != default!) && (other.color == default!))) {
-return false;
-}
-if (((this.color != default!) && (this.color.GetColorSpace() != other.color.GetColorSpace()))) {
-return false;
-}
-try {
-if (((((this.color != default!) && (other.color != default!)) && (this.color != other.color)) && (this.color.ToRGB() != other.color.ToRGB()))) {
-return false;
-}
-} catch (global::System.IO.IOException ex) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.LOG, (global::System.Exception)ex, global::DripSharp.Runtime.JavaCompat.StringValueOf("Couldn't convert color to RGB - treating as not equal"));
-return false;
-}
-return global::DripSharp.Runtime.JavaCompat.Equals(this.xform, other.xform);
-}
+    public override bool Equals(object obj) {
+      if ((this == obj)) {
+        return true;
+      }
+      if (!((obj is global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter))) {
+        return false;
+      }
+      global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter other
+        = (global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.TilingPaintParameter)(obj!);
+      if (!global::DripSharp.Runtime.JavaCompat.Equals(this.matrix, other.matrix)) {
+        return false;
+      }
+      if (!global::DripSharp.Runtime.JavaCompat.Equals(this.patternDict, other.patternDict)) {
+        return false;
+      }
+      if (!global::DripSharp.Runtime.JavaCompat.Equals(this.colorSpace, other.colorSpace)) {
+        return false;
+      }
+      if (((this.color == default!) && (other.color != default!))) {
+        return false;
+      }
+      if (((this.color != default!) && (other.color == default!))) {
+        return false;
+      }
+      if (((this.color != default!) && (this.color.GetColorSpace()
+        != other.color.GetColorSpace()))) {
+        return false;
+      }
+      try {
+        if (((((this.color != default!) && (other.color != default!)) && (this.color
+          != other.color)) && (this.color.ToRGB() != other.color.ToRGB()))) {
+          return false;
+        }
+      } catch (global::System.IO.IOException ex) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Rendering.TilingPaintFactory.LOG,
+          (global::System.Exception)ex,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf("Couldn't convert color to RGB - treating as not equal"));
+        return false;
+      }
+      return global::DripSharp.Runtime.JavaCompat.Equals(this.xform, other.xform);
+    }
 
-public override int GetHashCode() {
-int hash = 7;
-hash = ((23 * hash) + ((this.matrix != default!) ? this.matrix.GetHashCode() : 0));
-hash = ((23 * hash) + ((this.patternDict != default!) ? this.patternDict.GetHashCode() : 0));
-hash = ((23 * hash) + ((this.colorSpace != default!) ? this.colorSpace.GetHashCode() : 0));
-hash = ((23 * hash) + ((this.color != default!) ? this.color.GetHashCode() : 0));
-hash = ((23 * hash) + ((this.xform != default!) ? this.xform.GetHashCode() : 0));
-return hash;
-}
+    public override int GetHashCode() {
+      int hash = 7;
+      hash = ((23 * hash) + ((this.matrix != default!) ? this.matrix.GetHashCode() : 0));
+      hash = ((23 * hash) + ((this.patternDict != default!) ? this.patternDict.GetHashCode() : 0));
+      hash = ((23 * hash) + ((this.colorSpace != default!) ? this.colorSpace.GetHashCode() : 0));
+      hash = ((23 * hash) + ((this.color != default!) ? this.color.GetHashCode() : 0));
+      hash = ((23 * hash) + ((this.xform != default!) ? this.xform.GetHashCode() : 0));
+      return hash;
+    }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("TilingPaintParameter{", "matrix="), this.matrix), ", pattern="), this.patternDict), ", colorSpace="), this.colorSpace), ", color="), this.color), ", xform="), this.xform), '}');
-}
-}
+    public override string ToString() {
+      return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("TilingPaintParameter{",
+        "matrix="), this.matrix), ", pattern="), this.patternDict), ", colorSpace="),
+        this.colorSpace), ", color="), this.color), ", xform="), this.xform), '}');
+    }
+  }
 }

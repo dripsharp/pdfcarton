@@ -9,13 +9,14 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class BadFieldValueException : global::System.Exception {
-internal const long serialVersionUID = 8100277682314632644L;
+  internal const long serialVersionUID = 8100277682314632644L;
 
-public BadFieldValueException(string message) : base(message) {
+  public BadFieldValueException(string message) : base(message) {
 
-}
+  }
 
-public BadFieldValueException(string message, global::System.Exception cause) : base(message, cause) {
+  public BadFieldValueException(string message, global::System.Exception cause) : base(message,
+    cause) {
 
-}
+  }
 }

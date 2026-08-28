@@ -8,6 +8,7 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process;
 
-public class EmptyValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.ValidationProcess {
-public virtual void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {}
+public class EmptyValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.ValidationProcess {
+  public virtual void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {}
 }

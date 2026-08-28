@@ -8,21 +8,25 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public class TextAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText PdText = default!;
+public class TextAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText PdText
+    = default!;
 
-public TextAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
-this.PdText = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText(annotDictionary);
-this.PdAnnot = this.PdText;
-}
+  public TextAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdText
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText(annotDictionary);
+    this.PdAnnot = this.PdText;
+  }
 
-protected internal override bool CheckFlags() {
-bool result = base.CheckFlags();
-result = (result && this.PdAnnot.IsNoRotate());
-result = (result && this.PdAnnot.IsNoZoom());
-if (!result) {
-base.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotNotRecommendedFlag));
-}
-return result;
-}
+  protected internal override bool CheckFlags() {
+    bool result = base.CheckFlags();
+    result = (result && this.PdAnnot.IsNoRotate());
+    result = (result && this.PdAnnot.IsNoZoom());
+    if (!result) {
+      base.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotNotRecommendedFlag));
+    }
+    return result;
+  }
 }

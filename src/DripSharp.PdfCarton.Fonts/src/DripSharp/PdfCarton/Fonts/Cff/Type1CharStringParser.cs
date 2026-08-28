@@ -9,153 +9,209 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public class Type1CharStringParser {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private const int CALLSUBR = 10;
+  private const int CALLSUBR = 10;
 
-private const int TWO_BYTE = 12;
+  private const int TWO_BYTE = 12;
 
-private const int CALLOTHERSUBR = 16;
+  private const int CALLOTHERSUBR = 16;
 
-private const int POP = 17;
+  private const int POP = 17;
 
-private readonly string fontName = null!;
+  private readonly string fontName = null!;
 
-private string currentGlyph = null!;
+  private string currentGlyph = null!;
 
-public Type1CharStringParser(string fontName) {
-this.fontName = fontName;
-}
+  public Type1CharStringParser(string fontName) {
+    this.fontName = fontName;
+  }
 
-public virtual global::System.Collections.Generic.IList<object> Parse(sbyte[] bytes, global::System.Collections.Generic.IList<sbyte[]> subrs, string glyphName) {
-this.currentGlyph = glyphName;
-return this.parse(bytes, subrs, new global::System.Collections.Generic.List<object>());
-}
+  public virtual global::System.Collections.Generic.IList<object> Parse(sbyte[] bytes,
+    global::System.Collections.Generic.IList<sbyte[]> subrs, string glyphName) {
+    this.currentGlyph = glyphName;
+    return this.parse(bytes, subrs, new global::System.Collections.Generic.List<object>());
+  }
 
-private global::System.Collections.Generic.IList<object> parse(sbyte[] bytes, global::System.Collections.Generic.IList<sbyte[]> subrs, global::System.Collections.Generic.IList<object> sequence) {
-global::DripSharp.PdfCarton.Fonts.Cff.DataInput input = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray(bytes);
-while (input.HasRemaining()) {
-int b0 = input.ReadUnsignedByte();
-if ((b0 == global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.CALLSUBR)) {
-this.processCallSubr(subrs, sequence);
-} else {
-if (((b0 == global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.TWO_BYTE) && (input.PeekUnsignedByte(0) == global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.CALLOTHERSUBR))) {
-this.processCallOtherSubr(input, sequence);
-} else {
-if (((b0 >= 0) && (b0 <= 31))) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence, this.readCommand(input, b0));
-} else {
-if (((b0 >= 32) && (b0 <= 255))) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(this.readNumber(input, b0)));
-} else {
-throw new global::System.ArgumentException();
-}
-}
-}
-}
-}
-return sequence;
-}
+  private global::System.Collections.Generic.IList<object> parse(sbyte[] bytes,
+    global::System.Collections.Generic.IList<sbyte[]> subrs,
+    global::System.Collections.Generic.IList<object> sequence) {
+    global::DripSharp.PdfCarton.Fonts.Cff.DataInput input
+      = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray(bytes);
+    while (input.HasRemaining()) {
+      int b0 = input.ReadUnsignedByte();
+      if ((b0 == global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.CALLSUBR)) {
+        this.processCallSubr(subrs, sequence);
+      } else {
+        if (((b0 == global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.TWO_BYTE)
+          && (input.PeekUnsignedByte(0)
+          == global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.CALLOTHERSUBR))) {
+          this.processCallOtherSubr(input, sequence);
+        } else {
+          if (((b0 >= 0) && (b0 <= 31))) {
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence,
+              this.readCommand(input, b0));
+          } else {
+            if (((b0 >= 32) && (b0 <= 255))) {
+              global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence,
+                global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(this.readNumber(input,
+                b0)));
+            } else {
+              throw new global::System.ArgumentException();
+            }
+          }
+        }
+      }
+    }
+    return sequence;
+  }
 
-private void processCallSubr(global::System.Collections.Generic.IList<sbyte[]> subrs, global::System.Collections.Generic.IList<object> sequence) {
-object obj = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1));
-if (!((obj is int))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Parameter ", obj), " for CALLSUBR is ignored, integer expected in glyph '"), this.currentGlyph), "' of font "), this.fontName)));
-return;
-}
-int operand = (int)(obj);
-if (((operand >= 0) && (operand < global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(subrs)))) {
-sbyte[] subrBytes = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(subrs, operand);
-this.parse(subrBytes, subrs, sequence);
-object lastItem = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(sequence, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1));
-if (((lastItem is global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand) && (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.Ret == ((global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand)(lastItem!)).GetType1KeyWord()))) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1));
-}
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("CALLSUBR is ignored, operand: ", operand), ", subrs.size(): "), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(subrs)), " in glyph '"), this.currentGlyph), "' of font "), this.fontName)));
-while ((!(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListIsEmpty(sequence)) && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(sequence, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1)) is int))) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1));
-}
-}
-}
+  private void processCallSubr(global::System.Collections.Generic.IList<sbyte[]> subrs,
+    global::System.Collections.Generic.IList<object> sequence) {
+    object obj = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence,
+      (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1));
+    if (!((obj is int))) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Parameter ",
+        obj), " for CALLSUBR is ignored, integer expected in glyph '"), this.currentGlyph),
+        "' of font "), this.fontName)));
+      return;
+    }
+    int operand = (int)obj;
+    if (((operand >= 0)
+      && (operand < global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(subrs)))) {
+      sbyte[] subrBytes = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(subrs,
+        operand);
+      this.parse(subrBytes, subrs, sequence);
+      object lastItem = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(sequence,
+        (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1));
+      if (((lastItem is global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand)
+        && (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.Ret
+        == ((global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand)(lastItem!)).GetType1KeyWord()))) {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence,
+          (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1));
+      }
+    } else {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("CALLSUBR is ignored, operand: ",
+        operand), ", subrs.size(): "),
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(subrs)),
+        " in glyph '"), this.currentGlyph), "' of font "), this.fontName)));
+      while ((!global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListIsEmpty(sequence)
+        && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(sequence,
+        (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence)
+        - 1)) is int))) {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence,
+          (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1));
+      }
+    }
+  }
 
-private void processCallOtherSubr(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input, global::System.Collections.Generic.IList<object> sequence) {
-input.ReadByte();
-int othersubrNum = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox((int?)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1))));
-int numArgs = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox((int?)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1))));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaDeque<int> results = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaDeque<int>();
-switch (othersubrNum) {
-case var __case_155_14_0 when global::System.Object.Equals(__case_155_14_0, 0):
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.DequePush(results, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.removeInteger(sequence)));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.DequePush(results, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.removeInteger(sequence)));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence, 0);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CommandCallothersubr);
-break;
-case var __case_163_14_0 when global::System.Object.Equals(__case_163_14_0, 1):
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence, 1);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CommandCallothersubr);
-break;
-case var __case_168_14_0 when global::System.Object.Equals(__case_168_14_0, 3):
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.DequePush(results, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.removeInteger(sequence)));
-break;
-default:
-for (int i = 0; (i < numArgs); i++) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.DequePush(results, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.removeInteger(sequence)));
-}
-break;
-}
-while (((input.PeekUnsignedByte(0) == global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.TWO_BYTE) && (input.PeekUnsignedByte(1) == global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.POP))) {
-input.ReadByte();
-input.ReadByte();
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence, results.Pop());
-}
-if (!(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionIsEmpty(results))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Value left on the PostScript stack in glyph ", this.currentGlyph), " of font "), this.fontName)));
-}
-}
+  private void processCallOtherSubr(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input,
+    global::System.Collections.Generic.IList<object> sequence) {
+    input.ReadByte();
+    int othersubrNum
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox((int?)global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence,
+      (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1)));
+    int numArgs
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox((int?)global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence,
+      (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1)));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaDeque<int> results
+      = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaDeque<int>();
+    switch (othersubrNum) {
+      case var __case_155_14_0 when global::System.Object.Equals(__case_155_14_0, 0):
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.DequePush(results,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.removeInteger(sequence)));
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.DequePush(results,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.removeInteger(sequence)));
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence,
+          (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1));
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence, 0);
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence,
+          global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CommandCallothersubr);
+        break;
+      case var __case_163_14_0 when global::System.Object.Equals(__case_163_14_0, 1):
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence, 1);
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence,
+          global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CommandCallothersubr);
+        break;
+      case var __case_168_14_0 when global::System.Object.Equals(__case_168_14_0, 3):
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.DequePush(results,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.removeInteger(sequence)));
+        break;
+      default:
+        for (int i = 0; (i < numArgs); i++) {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.DequePush(results,
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.removeInteger(sequence)));
+        }
+        break;
+    }
+    while (((input.PeekUnsignedByte(0)
+      == global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.TWO_BYTE)
+      && (input.PeekUnsignedByte(1)
+      == global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.POP))) {
+      input.ReadByte();
+      input.ReadByte();
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(sequence, results.Pop());
+    }
+    if (!global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionIsEmpty(results)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharStringParser.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Value left on the PostScript stack in glyph ",
+        this.currentGlyph), " of font "), this.fontName)));
+    }
+  }
 
-private static int? removeInteger(global::System.Collections.Generic.IList<object> sequence) {
-object item = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1));
-if ((item is int)) {
-return (int?)(item);
-}
-global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand command = (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand)(item!);
-if ((global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.Div == command.GetType1KeyWord())) {
-int a = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox((int?)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1))));
-int b = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox((int?)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1))));
-return (b / a);
-}
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Unexpected char string command: ", command.GetType1KeyWord()));
-}
+  private static int? removeInteger(global::System.Collections.Generic.IList<object> sequence) {
+    object item = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence,
+      (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1));
+    if ((item is int)) {
+      return (int?)item;
+    }
+    global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand command
+      = (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand)(item!);
+    if ((global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.Div
+      == command.GetType1KeyWord())) {
+      int a
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox((int?)global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence,
+        (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1)));
+      int b
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox((int?)global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(sequence,
+        (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence) - 1)));
+      return (b / a);
+    }
+    throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Unexpected char string command: ",
+      command.GetType1KeyWord()));
+  }
 
-private global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand readCommand(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input, int b0) {
-if ((b0 == 12)) {
-int b1 = input.ReadUnsignedByte();
-return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(b0, b1);
-}
-return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(b0);
-}
+  private global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand readCommand(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input,
+    int b0) {
+    if ((b0 == 12)) {
+      int b1 = input.ReadUnsignedByte();
+      return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(b0, b1);
+    }
+    return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(b0);
+  }
 
-private int? readNumber(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input, int b0) {
-if (((b0 >= 32) && (b0 <= 246))) {
-return (b0 - 139);
-} else {
-if (((b0 >= 247) && (b0 <= 250))) {
-int b1__235_17 = input.ReadUnsignedByte();
-return ((((b0 - 247) * 256) + b1__235_17) + 108);
-} else {
-if (((b0 >= 251) && (b0 <= 254))) {
-int b1__240_17 = input.ReadUnsignedByte();
-return (((-((b0 - 251)) * 256) - b1__240_17) - 108);
-} else {
-if ((b0 == 255)) {
-return ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadInt();
-} else {
-throw new global::System.ArgumentException();
-}
-}
-}
-}
-}
+  private int? readNumber(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input, int b0) {
+    if (((b0 >= 32) && (b0 <= 246))) {
+      return (b0 - 139);
+    } else {
+      if (((b0 >= 247) && (b0 <= 250))) {
+        int b1__235_17 = input.ReadUnsignedByte();
+        return ((((b0 - 247) * 256) + b1__235_17) + 108);
+      } else {
+        if (((b0 >= 251) && (b0 <= 254))) {
+          int b1__240_17 = input.ReadUnsignedByte();
+          return (((-((b0 - 251)) * 256) - b1__240_17) - 108);
+        } else {
+          if ((b0 == 255)) {
+            return ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadInt();
+          } else {
+            throw new global::System.ArgumentException();
+          }
+        }
+      }
+    }
+  }
 }

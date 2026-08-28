@@ -8,35 +8,36 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdfparser.Xref;
 
-public abstract class AbstractXReference : global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry {
-private readonly global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType type = null!;
+public abstract class AbstractXReference
+: global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry {
+  private readonly global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType type = null!;
 
-protected internal AbstractXReference(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType type) {
-this.type = type;
-}
+  protected internal AbstractXReference(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType type) {
+    this.type = type;
+  }
 
-public new virtual global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType GetType() {
-return this.type;
-}
+  public new virtual global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType GetType() {
+    return this.type;
+  }
 
-public virtual long GetFirstColumnValue() {
-return this.GetType().GetNumericValue();
-}
+  public virtual long GetFirstColumnValue() {
+    return this.GetType().GetNumericValue();
+  }
 
-public virtual int CompareTo(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry xReferenceEntry) {
-if ((this.GetReferencedKey() == default!)) {
-return -1;
-} else {
-if (((xReferenceEntry == default!) || (xReferenceEntry.GetReferencedKey() == default!))) {
-return 1;
-}
-}
-return this.GetReferencedKey().CompareTo(xReferenceEntry.GetReferencedKey());
-}
+  public virtual int CompareTo(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry xReferenceEntry) {
+    if ((this.GetReferencedKey() == default!)) {
+      return -1;
+    } else {
+      if (((xReferenceEntry == default!) || (xReferenceEntry.GetReferencedKey() == default!))) {
+        return 1;
+      }
+    }
+    return this.GetReferencedKey().CompareTo(xReferenceEntry.GetReferencedKey());
+  }
 
-public abstract global::DripSharp.PdfCarton.Cos.COSObjectKey GetReferencedKey();
+  public abstract global::DripSharp.PdfCarton.Cos.COSObjectKey GetReferencedKey();
 
-public abstract long GetSecondColumnValue();
+  public abstract long GetSecondColumnValue();
 
-public abstract long GetThirdColumnValue();
+  public abstract long GetThirdColumnValue();
 }

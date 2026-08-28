@@ -9,191 +9,214 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class KerningSubtable {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private const int COVERAGE_HORIZONTAL = 1;
+  private const int COVERAGE_HORIZONTAL = 1;
 
-private const int COVERAGE_MINIMUMS = 2;
+  private const int COVERAGE_MINIMUMS = 2;
 
-private const int COVERAGE_CROSS_STREAM = 4;
+  private const int COVERAGE_CROSS_STREAM = 4;
 
-private const int COVERAGE_FORMAT = 65280;
+  private const int COVERAGE_FORMAT = 65280;
 
-private const int COVERAGE_HORIZONTAL_SHIFT = 0;
+  private const int COVERAGE_HORIZONTAL_SHIFT = 0;
 
-private const int COVERAGE_MINIMUMS_SHIFT = 1;
+  private const int COVERAGE_MINIMUMS_SHIFT = 1;
 
-private const int COVERAGE_CROSS_STREAM_SHIFT = 2;
+  private const int COVERAGE_CROSS_STREAM_SHIFT = 2;
 
-private const int COVERAGE_FORMAT_SHIFT = 8;
+  private const int COVERAGE_FORMAT_SHIFT = 8;
 
-private bool horizontal = default;
+  private bool horizontal = default;
 
-private bool minimums = default;
+  private bool minimums = default;
 
-private bool crossStream = default;
+  private bool crossStream = default;
 
-private global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.PairData pairs = null!;
+  private global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.PairData pairs = null!;
 
-internal KerningSubtable() {}
+  internal KerningSubtable() {}
 
-internal virtual void read(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, int version) {
-if ((version == 0)) {
-this.readSubtable0(data);
-} else {
-if ((version == 1)) {
-this.readSubtable1(data);
-} else {
-throw new global::System.InvalidOperationException();
-}
-}
-}
+  internal virtual void read(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
+    int version) {
+    if ((version == 0)) {
+      this.readSubtable0(data);
+    } else {
+      if ((version == 1)) {
+        this.readSubtable1(data);
+      } else {
+        throw new global::System.InvalidOperationException();
+      }
+    }
+  }
 
-public virtual bool IsHorizontalKerning() {
-return this.IsHorizontalKerning(false);
-}
+  public virtual bool IsHorizontalKerning() {
+    return this.IsHorizontalKerning(false);
+  }
 
-public virtual bool IsHorizontalKerning(bool cross) {
-if (!(this.horizontal)) {
-return false;
-} else {
-if (this.minimums) {
-return false;
-} else {
-if (cross) {
-return this.crossStream;
-} else {
-return !(this.crossStream);
-}
-}
-}
-}
+  public virtual bool IsHorizontalKerning(bool cross) {
+    if (!(this.horizontal)) {
+      return false;
+    } else {
+      if (this.minimums) {
+        return false;
+      } else {
+        if (cross) {
+          return this.crossStream;
+        } else {
+          return !(this.crossStream);
+        }
+      }
+    }
+  }
 
-public virtual int[] GetKerning(int[] glyphs) {
-int[] kerning = default!;
-if ((this.pairs != default!)) {
-int ng = glyphs.Length;
-kerning = new int[ng];
-for (int i = 0; (i < ng); ++i) {
-int l = glyphs[i];
-int r = -1;
-for (int k = (i + 1); (k < ng); ++k) {
-int g = glyphs[k];
-if ((g >= 0)) {
-r = g;
-break;
-}
-}
-kerning![i] = this.GetKerning(l, r);
-}
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("No kerning subtable data available due to an unsupported kerning subtable version"));
-}
-return kerning!;
-}
+  public virtual int[] GetKerning(int[] glyphs) {
+    int[] kerning = default!;
+    if ((this.pairs != default!)) {
+      int ng = glyphs.Length;
+      kerning = new int[ng];
+      for (int i = 0; (i < ng); ++i) {
+        int l = glyphs[i];
+        int r = -1;
+        for (int k = (i + 1); (k < ng); ++k) {
+          int g = glyphs[k];
+          if ((g >= 0)) {
+            r = g;
+            break;
+          }
+        }
+        kerning![i] = this.GetKerning(l, r);
+      }
+    } else {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("No kerning subtable data available due to an unsupported kerning subtable version"));
+    }
+    return kerning!;
+  }
 
-public virtual int GetKerning(int l, int r) {
-if ((this.pairs == default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("No kerning subtable data available due to an unsupported kerning subtable version"));
-return 0;
-}
-return this.pairs.GetKerning(l, r);
-}
+  public virtual int GetKerning(int l, int r) {
+    if ((this.pairs == default!)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("No kerning subtable data available due to an unsupported kerning subtable version"));
+      return 0;
+    }
+    return this.pairs.GetKerning(l, r);
+  }
 
-private void readSubtable0(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-int version = data.ReadUnsignedShort();
-if ((version != 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Unsupported kerning sub-table version: ", version)));
-return;
-}
-int length = data.ReadUnsignedShort();
-if ((length < 6)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Kerning sub-table too short, got ", length), " bytes, expect 6 or more.")));
-return;
-}
-int coverage = data.ReadUnsignedShort();
-if (global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.isBitsSet(coverage, global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_HORIZONTAL, global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_HORIZONTAL_SHIFT)) {
-this.horizontal = true;
-}
-if (global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.isBitsSet(coverage, global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_MINIMUMS, global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_MINIMUMS_SHIFT)) {
-this.minimums = true;
-}
-if (global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.isBitsSet(coverage, global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_CROSS_STREAM, global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_CROSS_STREAM_SHIFT)) {
-this.crossStream = true;
-}
-int format = global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.getBits(coverage, global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_FORMAT, global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_FORMAT_SHIFT);
-if ((format == 0)) {
-this.readSubtable0Format0(data);
-} else {
-if ((format == 2)) {
-this.readSubtable0Format2(data);
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Skipped kerning subtable due to an unsupported kerning subtable version: ", format)));
-}
-}
-}
+  private void readSubtable0(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    int version = data.ReadUnsignedShort();
+    if ((version != 0)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Unsupported kerning sub-table version: ",
+        version)));
+      return;
+    }
+    int length = data.ReadUnsignedShort();
+    if ((length < 6)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Kerning sub-table too short, got ",
+        length), " bytes, expect 6 or more.")));
+      return;
+    }
+    int coverage = data.ReadUnsignedShort();
+    if (global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.isBitsSet(coverage,
+      global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_HORIZONTAL,
+      global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_HORIZONTAL_SHIFT)) {
+      this.horizontal = true;
+    }
+    if (global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.isBitsSet(coverage,
+      global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_MINIMUMS,
+      global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_MINIMUMS_SHIFT)) {
+      this.minimums = true;
+    }
+    if (global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.isBitsSet(coverage,
+      global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_CROSS_STREAM,
+      global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_CROSS_STREAM_SHIFT)) {
+      this.crossStream = true;
+    }
+    int format = global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.getBits(coverage,
+      global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_FORMAT,
+      global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.COVERAGE_FORMAT_SHIFT);
+    if ((format == 0)) {
+      this.readSubtable0Format0(data);
+    } else {
+      if ((format == 2)) {
+        this.readSubtable0Format2(data);
+      } else {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Skipped kerning subtable due to an unsupported kerning subtable version: ",
+          format)));
+      }
+    }
+  }
 
-private void readSubtable0Format0(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-this.pairs = new global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.PairData0Format0();
-this.pairs.Read(data);
-}
+  private void readSubtable0Format0(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    this.pairs = new global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.PairData0Format0();
+    this.pairs.Read(data);
+  }
 
-private void readSubtable0Format2(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Kerning subtable format 2 not yet supported."));
-}
+  private void readSubtable0Format2(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG,
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Kerning subtable format 2 not yet supported."));
+  }
 
-private void readSubtable1(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Kerning subtable format 1 not yet supported."));
-}
+  private void readSubtable1(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.LOG,
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Kerning subtable format 1 not yet supported."));
+  }
 
-private static bool isBitsSet(int bits, int mask, int shift) {
-return (global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.getBits(bits, mask, shift) != 0);
-}
+  private static bool isBitsSet(int bits, int mask, int shift) {
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.getBits(bits, mask, shift) != 0);
+  }
 
-private static int getBits(int bits, int mask, int shift) {
-return ((bits & mask) >> unchecked((int)(shift)));
-}
+  private static int getBits(int bits, int mask, int shift) {
+    return ((bits & mask) >> unchecked((int)(shift)));
+  }
 
-internal interface PairData {
-public void Read(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data);
+  internal interface PairData {
+    public void Read(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data);
 
-public int GetKerning(int l, int r);
-}
+    public int GetKerning(int l, int r);
+  }
 
-internal class PairData0Format0 : global::System.Collections.Generic.IComparer<int[]>, global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.PairData {
-internal int[][] pairs = null!;
+  internal class PairData0Format0 : global::System.Collections.Generic.IComparer<int[]>,
+  global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable.PairData {
+    internal int[][] pairs = null!;
 
-public virtual void Read(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-int numPairs = data.ReadUnsignedShort();
-int searchRange = (data.ReadUnsignedShort() / 6);
-int entrySelector = data.ReadUnsignedShort();
-int rangeShift = data.ReadUnsignedShort();
-this.pairs = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJaggedArray<int>(numPairs, 3);
-for (int i = 0; (i < numPairs); ++i) {
-int left = data.ReadUnsignedShort();
-int right = data.ReadUnsignedShort();
-int value = data.ReadSignedShort();
-this.pairs[i][0] = left;
-this.pairs[i][1] = right;
-this.pairs[i][2] = value;
-}
-}
+    public virtual void Read(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+      int numPairs = data.ReadUnsignedShort();
+      int searchRange = (data.ReadUnsignedShort() / 6);
+      int entrySelector = data.ReadUnsignedShort();
+      int rangeShift = data.ReadUnsignedShort();
+      this.pairs
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJaggedArray<int>(numPairs, 3);
+      for (int i = 0; (i < numPairs); ++i) {
+        int left = data.ReadUnsignedShort();
+        int right = data.ReadUnsignedShort();
+        int value = data.ReadSignedShort();
+        this.pairs[i][0] = left;
+        this.pairs[i][1] = right;
+        this.pairs[i][2] = value;
+      }
+    }
 
-public virtual int GetKerning(int l, int r) {
-int[] key = new int[] { l, r, 0 };
-int index = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.BinarySearch(this.pairs, key, this);
-if ((index >= 0)) {
-return this.pairs[index][2];
-}
-return 0;
-}
+    public virtual int GetKerning(int l, int r) {
+      int[] key = new int[] { l, r, 0 };
+      int index = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.BinarySearch(this.pairs, key,
+        this);
+      if ((index >= 0)) {
+        return this.pairs[index][2];
+      }
+      return 0;
+    }
 
-public virtual int Compare(int[] p1, int[] p2) {
-int cmp1 = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareInt(p1[0], p2[0]);
-if ((cmp1 != 0)) {
-return cmp1;
-}
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareInt(p1[1], p2[1]);
-}
-}
+    public virtual int Compare(int[] p1, int[] p2) {
+      int cmp1 = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareInt(p1[0], p2[0]);
+      if ((cmp1 != 0)) {
+        return cmp1;
+      }
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareInt(p1[1], p2[1]);
+    }
+  }
 }

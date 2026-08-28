@@ -9,17 +9,19 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFAnnotationFileAttachment : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation {
-public const string Subtype = "FileAttachment";
+  public const string Subtype = "FileAttachment";
 
-public FDFAnnotationFileAttachment() : base() {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFileAttachment.Subtype);
-}
+  public FDFAnnotationFileAttachment() : base() {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFileAttachment.Subtype);
+  }
 
-public FDFAnnotationFileAttachment(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public FDFAnnotationFileAttachment(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public FDFAnnotationFileAttachment(global::System.Xml.XmlElement element) : base(element) {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFileAttachment.Subtype);
-}
+  public FDFAnnotationFileAttachment(global::System.Xml.XmlElement element) : base(element) {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFileAttachment.Subtype);
+  }
 }

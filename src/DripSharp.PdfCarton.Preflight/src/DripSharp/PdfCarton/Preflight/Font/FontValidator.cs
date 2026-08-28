@@ -8,28 +8,33 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font;
 
-public abstract class FontValidator<T> : IFontValidator where T : global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer {
-global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer IFontValidator.GetFontContainer() => GetFontContainer();
+public abstract class FontValidator<T> : IFontValidator where T
+: global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer {
+  global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer IFontValidator.GetFontContainer()
+    => GetFontContainer();
 
-protected internal readonly T FontContainer = default!;
+  protected internal readonly T FontContainer = default!;
 
-protected internal readonly global::DripSharp.PdfCarton.Preflight.PreflightContext Context = null!;
+  protected internal readonly global::DripSharp.PdfCarton.Preflight.PreflightContext Context
+    = null!;
 
-protected internal global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<T> DescriptorHelper = null!;
+  protected internal global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<T> DescriptorHelper
+    = null!;
 
-public FontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSDictionary dict, T fContainer) : base() {
-this.Context = context;
-this.FontContainer = fContainer;
-this.Context.AddFontContainer(dict, fContainer);
-}
+  public FontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Cos.COSDictionary dict, T fContainer) : base() {
+    this.Context = context;
+    this.FontContainer = fContainer;
+    this.Context.AddFontContainer(dict, fContainer);
+  }
 
-public abstract void Validate();
+  public abstract void Validate();
 
-protected internal virtual void CheckEncoding() {}
+  protected internal virtual void CheckEncoding() {}
 
-protected internal virtual void CheckToUnicode() {}
+  protected internal virtual void CheckToUnicode() {}
 
-public virtual T GetFontContainer() {
-return this.FontContainer;
-}
+  public virtual T GetFontContainer() {
+    return this.FontContainer;
+  }
 }

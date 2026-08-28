@@ -9,54 +9,55 @@
 namespace DripSharp.PdfCarton.Fonts.Cmap;
 
 internal class CIDRange {
-private readonly int from = default;
+  private readonly int from = default;
 
-private int to = default;
+  private int to = default;
 
-private readonly int unicode = default;
+  private readonly int unicode = default;
 
-private readonly int codeLength = default;
+  private readonly int codeLength = default;
 
-internal CIDRange(int from, int to, int unicode, int codeLength) {
-this.from = from;
-this.to = to;
-this.unicode = unicode;
-this.codeLength = codeLength;
-}
+  internal CIDRange(int from, int to, int unicode, int codeLength) {
+    this.from = from;
+    this.to = to;
+    this.unicode = unicode;
+    this.codeLength = codeLength;
+  }
 
-public virtual int GetCodeLength() {
-return this.codeLength;
-}
+  public virtual int GetCodeLength() {
+    return this.codeLength;
+  }
 
-public virtual int Map(sbyte[] bytes) {
-if ((bytes.Length == this.codeLength)) {
-int ch = global::DripSharp.PdfCarton.Fonts.Cmap.CMap.toInt(bytes);
-if (((this.from <= ch) && (ch <= this.to))) {
-return (this.unicode + (ch - this.from));
-}
-}
-return -1;
-}
+  public virtual int Map(sbyte[] bytes) {
+    if ((bytes.Length == this.codeLength)) {
+      int ch = global::DripSharp.PdfCarton.Fonts.Cmap.CMap.toInt(bytes);
+      if (((this.from <= ch) && (ch <= this.to))) {
+        return (this.unicode + (ch - this.from));
+      }
+    }
+    return -1;
+  }
 
-public virtual int Map(int code, int length) {
-if ((((length == this.codeLength) && (this.from <= code)) && (code <= this.to))) {
-return (this.unicode + (code - this.from));
-}
-return -1;
-}
+  public virtual int Map(int code, int length) {
+    if ((((length == this.codeLength) && (this.from <= code)) && (code <= this.to))) {
+      return (this.unicode + (code - this.from));
+    }
+    return -1;
+  }
 
-public virtual int Unmap(int code) {
-if (((this.unicode <= code) && (code <= (this.unicode + (this.to - this.from))))) {
-return (this.from + (code - this.unicode));
-}
-return -1;
-}
+  public virtual int Unmap(int code) {
+    if (((this.unicode <= code) && (code <= (this.unicode + (this.to - this.from))))) {
+      return (this.from + (code - this.unicode));
+    }
+    return -1;
+  }
 
-public virtual bool Extend(int newFrom, int newTo, int newCid, int length) {
-if ((((this.codeLength == length) && (newFrom == (this.to + 1))) && (newCid == (((this.unicode + this.to) - this.from) + 1)))) {
-this.to = newTo;
-return true;
-}
-return false;
-}
+  public virtual bool Extend(int newFrom, int newTo, int newCid, int length) {
+    if ((((this.codeLength == length) && (newFrom == (this.to + 1))) && (newCid == (((this.unicode
+      + this.to) - this.from) + 1)))) {
+      this.to = newTo;
+      return true;
+    }
+    return false;
+  }
 }

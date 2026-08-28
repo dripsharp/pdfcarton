@@ -8,69 +8,76 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
-public sealed class PDPattern : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSpecialColorSpace {
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor EMPTY_PATTERN = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] {  }, (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace)default!);
+public sealed class PDPattern
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSpecialColorSpace {
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor EMPTY_PATTERN
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] {  },
+    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace)default!);
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.PDResources resources = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.PDResources resources = null!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace underlyingColorSpace = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace underlyingColorSpace
+    = null!;
 
-public PDPattern(global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
-this.resources = resources;
-base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
-base.Array.Add(global::DripSharp.PdfCarton.Cos.COSName.Pattern);
-}
+  public PDPattern(global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
+    this.resources = resources;
+    base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    base.Array.Add(global::DripSharp.PdfCarton.Cos.COSName.Pattern);
+  }
 
-public PDPattern(global::DripSharp.PdfCarton.Pdmodel.PDResources resources, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-this.resources = resources;
-this.underlyingColorSpace = colorSpace;
-base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
-base.Array.Add(global::DripSharp.PdfCarton.Cos.COSName.Pattern);
-base.Array.Add(colorSpace);
-}
+  public PDPattern(global::DripSharp.PdfCarton.Pdmodel.PDResources resources,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    this.resources = resources;
+    this.underlyingColorSpace = colorSpace;
+    base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    base.Array.Add(global::DripSharp.PdfCarton.Cos.COSName.Pattern);
+    base.Array.Add(colorSpace);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Cos.COSName.Pattern.GetName();
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Cos.COSName.Pattern.GetName();
+  }
 
-public override int GetNumberOfComponents() {
-throw new global::System.NotSupportedException();
-}
+  public override int GetNumberOfComponents() {
+    throw new global::System.NotSupportedException();
+  }
 
-public override float[] GetDefaultDecode(int bitsPerComponent) {
-throw new global::System.NotSupportedException();
-}
+  public override float[] GetDefaultDecode(int bitsPerComponent) {
+    throw new global::System.NotSupportedException();
+  }
 
-public override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetInitialColor() {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern.EMPTY_PATTERN;
-}
+  public override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetInitialColor() {
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern.EMPTY_PATTERN;
+  }
 
-public override float[] ToRGB(float[] value) {
-throw new global::System.NotSupportedException();
-}
+  public override float[] ToRGB(float[] value) {
+    throw new global::System.NotSupportedException();
+  }
 
-public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
-throw new global::System.NotSupportedException();
-}
+  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+    throw new global::System.NotSupportedException();
+  }
 
-public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
-throw new global::System.NotSupportedException();
-}
+  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+    throw new global::System.NotSupportedException();
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern GetPattern(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern pattern = this.resources.GetPattern(color.GetPatternName());
-if ((pattern == default!)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("pattern ", color.GetPatternName()), " was not found"));
-} else {
-return pattern;
-}
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern GetPattern(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern pattern
+      = this.resources.GetPattern(color.GetPatternName());
+    if ((pattern == default!)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("pattern ",
+        color.GetPatternName()), " was not found"));
+    } else {
+      return pattern;
+    }
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetUnderlyingColorSpace() {
-return this.underlyingColorSpace;
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetUnderlyingColorSpace() {
+    return this.underlyingColorSpace;
+  }
 
-public override string ToString() {
-return "Pattern";
-}
+  public override string ToString() {
+    return "Pattern";
+  }
 }

@@ -9,17 +9,17 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public interface FDSelect {
-public int GetFDIndex(int gid);
+  public int GetFDIndex(int gid);
 }
 
 public sealed class __FDSelectFunctionalAdapter : global::DripSharp.PdfCarton.Fonts.Cff.FDSelect {
-private readonly global::System.Func<int, int> implementation;
+  private readonly global::System.Func<int, int> implementation;
 
-public __FDSelectFunctionalAdapter(global::System.Func<int, int> implementation) {
-this.implementation = implementation;
-}
+  public __FDSelectFunctionalAdapter(global::System.Func<int, int> implementation) {
+    this.implementation = implementation;
+  }
 
-public int GetFDIndex(int gid) {
-return this.implementation(gid);
-}
+  public int GetFDIndex(int gid) {
+    return this.implementation(gid);
+  }
 }

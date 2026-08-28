@@ -8,11 +8,15 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public class PopupAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup PdPopup = default!;
+public class PopupAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup PdPopup
+    = default!;
 
-public PopupAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
-this.PdPopup = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup(annotDictionary);
-this.PdAnnot = this.PdPopup;
-}
+  public PopupAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdPopup
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup(annotDictionary);
+    this.PdAnnot = this.PdPopup;
+  }
 }

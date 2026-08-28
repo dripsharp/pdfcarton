@@ -9,43 +9,63 @@
 namespace DripSharp.PdfCarton.Preflight.Process.Reflect;
 
 public class FontValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
-global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
-if (vPath.IsEmpty()) {
-return;
-}
-if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont)))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsInvalidData, "Font validation process needs at least one PDFont object"));
-} else {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = (global::DripSharp.PdfCarton.Pdmodel.Font.PDFont)(vPath.Peek()!);
-var fontContainer = context.GetFontContainer(font.GetCOSObject());
-if ((fontContainer == default!)) {
-var validator = this.GetFontValidator(context, font);
-if ((validator != default!)) {
-validator.Validate();
-}
-}
-}
-}
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
+    global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
+    if (vPath.IsEmpty()) {
+      return;
+    }
+    if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont)))) {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsInvalidData,
+        "Font validation process needs at least one PDFont object"));
+    } else {
+      global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font
+        = (global::DripSharp.PdfCarton.Pdmodel.Font.PDFont)(vPath.Peek()!);
+      var fontContainer = context.GetFontContainer(font.GetCOSObject());
+      if ((fontContainer == default!)) {
+        var validator = this.GetFontValidator(context, font);
+        if ((validator != default!)) {
+          validator.Validate();
+        }
+      }
+    }
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Preflight.Font.IFontValidator GetFontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) {
-string subtype = font.GetSubType();
-if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueTruetype, subtype)) {
-return new global::DripSharp.PdfCarton.Preflight.Font.TrueTypeFontValidator(context, (global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont)(font!));
-}
-if ((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueMmtype, subtype) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueType1, subtype))) {
-return new global::DripSharp.PdfCarton.Preflight.Font.Type1FontValidator(context, (global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont)(font!));
-}
-if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueType3, subtype)) {
-return new global::DripSharp.PdfCarton.Preflight.Font.Type3FontValidator(context, (global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font)(font!));
-}
-if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueComposite, subtype)) {
-return new global::DripSharp.PdfCarton.Preflight.Font.Type0FontValidator(context, font);
-}
-if ((((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueType2, subtype) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueType1c, subtype)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueType0c, subtype)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueType0, subtype))) {
-return default!;
-}
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontType, global::DripSharp.Runtime.JavaCompat.Concat("Unknown font type: ", subtype)));
-return default!;
-}
+  protected internal virtual global::DripSharp.PdfCarton.Preflight.Font.IFontValidator GetFontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) {
+    string subtype = font.GetSubType();
+    if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueTruetype,
+      subtype)) {
+      return new global::DripSharp.PdfCarton.Preflight.Font.TrueTypeFontValidator(context,
+        (global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont)(font!));
+    }
+    if ((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueMmtype,
+      subtype)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueType1,
+      subtype))) {
+      return new global::DripSharp.PdfCarton.Preflight.Font.Type1FontValidator(context,
+        (global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont)(font!));
+    }
+    if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueType3,
+      subtype)) {
+      return new global::DripSharp.PdfCarton.Preflight.Font.Type3FontValidator(context,
+        (global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font)(font!));
+    }
+    if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueComposite,
+      subtype)) {
+      return new global::DripSharp.PdfCarton.Preflight.Font.Type0FontValidator(context, font);
+    }
+    if ((((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueType2,
+      subtype)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueType1c,
+      subtype))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueType0c,
+      subtype))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryValueType0,
+      subtype))) {
+      return default!;
+    }
+    context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontType,
+      global::DripSharp.Runtime.JavaCompat.Concat("Unknown font type: ", subtype)));
+    return default!;
+  }
 }

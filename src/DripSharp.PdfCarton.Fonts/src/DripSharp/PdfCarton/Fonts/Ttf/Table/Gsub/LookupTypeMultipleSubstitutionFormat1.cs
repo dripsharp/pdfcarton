@@ -8,18 +8,23 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
-public class LookupTypeMultipleSubstitutionFormat1 : global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable {
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.SequenceTable[] sequenceTables = null!;
+public class LookupTypeMultipleSubstitutionFormat1
+: global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable {
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.SequenceTable[] sequenceTables
+    = null!;
 
-public LookupTypeMultipleSubstitutionFormat1(int substFormat, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.SequenceTable[] sequenceTables) : base(substFormat, coverageTable) {
-this.sequenceTables = sequenceTables;
-}
+  public LookupTypeMultipleSubstitutionFormat1(int substFormat,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.SequenceTable[] sequenceTables)
+  : base(substFormat, coverageTable) {
+    this.sequenceTables = sequenceTables;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.SequenceTable[] GetSequenceTables() {
-return this.sequenceTables;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.SequenceTable[] GetSequenceTables() {
+    return this.sequenceTables;
+  }
 
-public override int DoSubstitution(int gid, int coverageIndex) {
-throw new global::System.NotSupportedException("not applicable");
-}
+  public override int DoSubstitution(int gid, int coverageIndex) {
+    throw new global::System.NotSupportedException("not applicable");
+  }
 }

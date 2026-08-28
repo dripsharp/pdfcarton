@@ -9,17 +9,23 @@
 namespace DripSharp.PdfCarton.Preflight.Action;
 
 public class GoToAction : global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager {
-public GoToAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact, global::DripSharp.PdfCarton.Cos.COSDictionary adict, global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) : base(amFact, adict, ctx, aaKey) {
+  public GoToAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact,
+    global::DripSharp.PdfCarton.Cos.COSDictionary adict,
+    global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey) : base(amFact, adict,
+    ctx, aaKey) {
 
-}
+  }
 
-protected internal override bool InnerValid() {
-global::DripSharp.PdfCarton.Cos.COSBase dest = this.ActionDictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.D);
-if ((dest == default!)) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionMisingKey, "D entry is mandatory for the GoToActions"));
-return false;
-}
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(base.Context, dest, global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.DestinationProcess);
-return true;
-}
+  protected internal override bool InnerValid() {
+    global::DripSharp.PdfCarton.Cos.COSBase dest
+      = this.ActionDictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.D);
+    if ((dest == default!)) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionMisingKey,
+        "D entry is mandatory for the GoToActions"));
+      return false;
+    }
+    global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(base.Context, dest,
+      global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.DestinationProcess);
+    return true;
+  }
 }

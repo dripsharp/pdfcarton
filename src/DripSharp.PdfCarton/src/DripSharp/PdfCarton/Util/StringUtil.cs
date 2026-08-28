@@ -9,13 +9,18 @@
 namespace DripSharp.PdfCarton.Util;
 
 public sealed class StringUtil {
-public static readonly global::System.Text.RegularExpressions.Regex PatternSpace = global::DripSharp.Runtime.JavaCompat.CompileRegex("\\s");
+  public static readonly global::System.Text.RegularExpressions.Regex PatternSpace
+    = global::DripSharp.Runtime.JavaCompat.CompileRegex("\\s");
 
-public static string[] SplitOnSpace(string s) {
-return global::DripSharp.Runtime.JavaCompat.RegexSplit(global::DripSharp.PdfCarton.Util.StringUtil.PatternSpace, s, 0);
-}
+  public static string[] SplitOnSpace(string s) {
+    return global::DripSharp.Runtime.JavaCompat.RegexSplit(global::DripSharp.PdfCarton.Util.StringUtil.PatternSpace,
+      s, 0);
+  }
 
-public static string[] TokenizeOnSpace(string s) {
-return global::DripSharp.Runtime.JavaCompat.StringSplit(s, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("(?<=", global::DripSharp.PdfCarton.Util.StringUtil.PatternSpace), ")|(?="), global::DripSharp.PdfCarton.Util.StringUtil.PatternSpace), ")"), 0);
-}
+  public static string[] TokenizeOnSpace(string s) {
+    return global::DripSharp.Runtime.JavaCompat.StringSplit(s,
+      global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("(?<=",
+      global::DripSharp.PdfCarton.Util.StringUtil.PatternSpace), ")|(?="),
+      global::DripSharp.PdfCarton.Util.StringUtil.PatternSpace), ")"), 0);
+  }
 }

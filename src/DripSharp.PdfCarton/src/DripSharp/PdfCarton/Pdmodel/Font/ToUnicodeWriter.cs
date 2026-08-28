@@ -9,116 +9,143 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 internal sealed class ToUnicodeWriter {
-private readonly global::System.Collections.Generic.IDictionary<int, string> cidToUnicode = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int, string>();
+  private readonly global::System.Collections.Generic.IDictionary<int, string> cidToUnicode
+    = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int, string>();
 
-private int wMode = default;
+  private int wMode = default;
 
-internal const int MAX_ENTRIES_PER_OPERATOR = 100;
+  internal const int MAX_ENTRIES_PER_OPERATOR = 100;
 
-internal ToUnicodeWriter() {
-this.wMode = 0;
-}
+  internal ToUnicodeWriter() {
+    this.wMode = 0;
+  }
 
-public void SetWMode(int wMode) {
-this.wMode = wMode;
-}
+  public void SetWMode(int wMode) {
+    this.wMode = wMode;
+  }
 
-public void Add(int cid, string text) {
-if (((cid < 0) || (cid > 65535))) {
-throw new global::System.ArgumentException("CID is not valid");
-}
-if (((text == default!) || (text.Length == 0))) {
-throw new global::System.ArgumentException("Text is null or empty");
-}
-global::DripSharp.Runtime.JavaCompat.MapPut(this.cidToUnicode, cid, text);
-}
+  public void Add(int cid, string text) {
+    if (((cid < 0) || (cid > 65535))) {
+      throw new global::System.ArgumentException("CID is not valid");
+    }
+    if (((text == default!) || (text.Length == 0))) {
+      throw new global::System.ArgumentException("Text is null or empty");
+    }
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.cidToUnicode, cid, text);
+  }
 
-public void WriteTo(global::System.IO.Stream @out) {
-global::System.IO.TextWriter writer = new global::System.IO.StreamWriter(@out, global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
-this.writeLine(writer, "/CIDInit /ProcSet findresource begin");
-this.writeLine(writer, "12 dict begin\n");
-this.writeLine(writer, "begincmap");
-this.writeLine(writer, "/CIDSystemInfo");
-this.writeLine(writer, "<< /Registry (Adobe)");
-this.writeLine(writer, "/Ordering (UCS)");
-this.writeLine(writer, "/Supplement 0");
-this.writeLine(writer, ">> def\n");
-this.writeLine(writer, global::DripSharp.Runtime.JavaCompat.Concat("/CMapName /Adobe-Identity-UCS", " def"));
-this.writeLine(writer, "/CMapType 2 def\n");
-if ((this.wMode != 0)) {
-this.writeLine(writer, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("/WMode /", this.wMode), " def"));
-}
-this.writeLine(writer, "1 begincodespacerange");
-this.writeLine(writer, "<0000> <FFFF>");
-this.writeLine(writer, "endcodespacerange\n");
-global::System.Collections.Generic.IList<int> srcFrom = new global::System.Collections.Generic.List<int>();
-global::System.Collections.Generic.IList<int> srcTo = new global::System.Collections.Generic.List<int>();
-global::System.Collections.Generic.IList<string> dstString = new global::System.Collections.Generic.List<string>();
-global::DripSharp.Runtime.JavaMapEntry<int, string> prev = default!;
-foreach (global::DripSharp.Runtime.JavaMapEntry<int, string> next in global::DripSharp.Runtime.JavaCompat.MapEntrySet(this.cidToUnicode)) {
-if (global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.allowCIDToUnicodeRange(prev!, next)) {
-global::DripSharp.Runtime.JavaCompat.ListSet(srcTo, (global::DripSharp.Runtime.JavaCompat.CollectionCount(srcTo) - 1), next.Key);
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(srcFrom, next.Key);
-global::DripSharp.Runtime.JavaCompat.Add(srcTo, next.Key);
-global::DripSharp.Runtime.JavaCompat.Add(dstString, next.Value);
-}
-prev = next;
-}
-int batchCount = (int)(global::System.Math.Ceiling((double)((global::DripSharp.Runtime.JavaCompat.CollectionCount(srcFrom) / (double)((double)(global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR))))));
-for (int batch = 0; (batch < batchCount); batch++) {
-int count = ((batch == (batchCount - 1)) ? (global::DripSharp.Runtime.JavaCompat.CollectionCount(srcFrom) - (global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR * batch)) : global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR);
-writer.Write(global::DripSharp.Runtime.JavaCompat.Concat(count, " beginbfrange\n"));
-for (int j = 0; (j < count); j++) {
-int index = ((batch * global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR) + j);
-global::DripSharp.Runtime.JavaCompat.WriterWriteCharCode(writer, (int)('<'));
-writer.Write(global::DripSharp.PdfCarton.Util.Hex.GetChars(unchecked((short)global::DripSharp.Runtime.JavaCompat.ListGet(srcFrom, index))));
-writer.Write("> ");
-global::DripSharp.Runtime.JavaCompat.WriterWriteCharCode(writer, (int)('<'));
-writer.Write(global::DripSharp.PdfCarton.Util.Hex.GetChars(unchecked((short)global::DripSharp.Runtime.JavaCompat.ListGet(srcTo, index))));
-writer.Write("> ");
-global::DripSharp.Runtime.JavaCompat.WriterWriteCharCode(writer, (int)('<'));
-writer.Write(global::DripSharp.PdfCarton.Util.Hex.GetCharsUTF16BE(global::DripSharp.Runtime.JavaCompat.ListGet(dstString, index)));
-writer.Write(">\n");
-}
-this.writeLine(writer, "endbfrange\n");
-}
-this.writeLine(writer, "endcmap");
-this.writeLine(writer, "CMapName currentdict /CMap defineresource pop");
-this.writeLine(writer, "end");
-this.writeLine(writer, "end");
-writer.Flush();
-}
+  public void WriteTo(global::System.IO.Stream @out) {
+    global::System.IO.TextWriter writer = new global::System.IO.StreamWriter(@out,
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    this.writeLine(writer, "/CIDInit /ProcSet findresource begin");
+    this.writeLine(writer, "12 dict begin\n");
+    this.writeLine(writer, "begincmap");
+    this.writeLine(writer, "/CIDSystemInfo");
+    this.writeLine(writer, "<< /Registry (Adobe)");
+    this.writeLine(writer, "/Ordering (UCS)");
+    this.writeLine(writer, "/Supplement 0");
+    this.writeLine(writer, ">> def\n");
+    this.writeLine(writer,
+      global::DripSharp.Runtime.JavaCompat.Concat("/CMapName /Adobe-Identity-UCS", " def"));
+    this.writeLine(writer, "/CMapType 2 def\n");
+    if ((this.wMode != 0)) {
+      this.writeLine(writer,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("/WMode /",
+        this.wMode), " def"));
+    }
+    this.writeLine(writer, "1 begincodespacerange");
+    this.writeLine(writer, "<0000> <FFFF>");
+    this.writeLine(writer, "endcodespacerange\n");
+    global::System.Collections.Generic.IList<int> srcFrom
+      = new global::System.Collections.Generic.List<int>();
+    global::System.Collections.Generic.IList<int> srcTo
+      = new global::System.Collections.Generic.List<int>();
+    global::System.Collections.Generic.IList<string> dstString
+      = new global::System.Collections.Generic.List<string>();
+    global::DripSharp.Runtime.JavaMapEntry<int, string> prev = default!;
+    foreach (global::DripSharp.Runtime.JavaMapEntry<int,
+      string> next in global::DripSharp.Runtime.JavaCompat.MapEntrySet(this.cidToUnicode)) {
+      if (global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.allowCIDToUnicodeRange(prev!,
+        next)) {
+        global::DripSharp.Runtime.JavaCompat.ListSet(srcTo,
+          (global::DripSharp.Runtime.JavaCompat.CollectionCount(srcTo) - 1), next.Key);
+      } else {
+        global::DripSharp.Runtime.JavaCompat.Add(srcFrom, next.Key);
+        global::DripSharp.Runtime.JavaCompat.Add(srcTo, next.Key);
+        global::DripSharp.Runtime.JavaCompat.Add(dstString, next.Value);
+      }
+      prev = next;
+    }
+    int batchCount
+      = (int)(global::System.Math.Ceiling((double)((global::DripSharp.Runtime.JavaCompat.CollectionCount(srcFrom)
+      / (double)(double)(global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR)))));
+    for (int batch = 0; (batch < batchCount); batch++) {
+      int count = ((batch == (batchCount - 1))
+        ? (global::DripSharp.Runtime.JavaCompat.CollectionCount(srcFrom)
+        - (global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR
+        * batch))
+        : global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR);
+      writer.Write(global::DripSharp.Runtime.JavaCompat.Concat(count, " beginbfrange\n"));
+      for (int j = 0; (j < count); j++) {
+        int index = ((batch
+          * global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR) + j);
+        global::DripSharp.Runtime.JavaCompat.WriterWriteCharCode(writer, (int)('<'));
+        writer.Write(global::DripSharp.PdfCarton.Util.Hex.GetChars(unchecked((short)global::DripSharp.Runtime.JavaCompat.ListGet(srcFrom,
+          index))));
+        writer.Write("> ");
+        global::DripSharp.Runtime.JavaCompat.WriterWriteCharCode(writer, (int)('<'));
+        writer.Write(global::DripSharp.PdfCarton.Util.Hex.GetChars(unchecked((short)global::DripSharp.Runtime.JavaCompat.ListGet(srcTo,
+          index))));
+        writer.Write("> ");
+        global::DripSharp.Runtime.JavaCompat.WriterWriteCharCode(writer, (int)('<'));
+        writer.Write(global::DripSharp.PdfCarton.Util.Hex.GetCharsUTF16BE(global::DripSharp.Runtime.JavaCompat.ListGet(dstString,
+          index)));
+        writer.Write(">\n");
+      }
+      this.writeLine(writer, "endbfrange\n");
+    }
+    this.writeLine(writer, "endcmap");
+    this.writeLine(writer, "CMapName currentdict /CMap defineresource pop");
+    this.writeLine(writer, "end");
+    this.writeLine(writer, "end");
+    writer.Flush();
+  }
 
-private void writeLine(global::System.IO.TextWriter writer, string text) {
-writer.Write(text);
-global::DripSharp.Runtime.JavaCompat.WriterWriteCharCode(writer, (int)('\n'));
-}
+  private void writeLine(global::System.IO.TextWriter writer, string text) {
+    writer.Write(text);
+    global::DripSharp.Runtime.JavaCompat.WriterWriteCharCode(writer, (int)('\n'));
+  }
 
-internal static bool allowCIDToUnicodeRange(global::DripSharp.Runtime.JavaMapEntry<int, string> prev, global::DripSharp.Runtime.JavaMapEntry<int, string> next) {
-if (((prev == default!) || (next == default!))) {
-return false;
-}
-return (global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.allowCodeRange((int)(prev.Key), (int)(next.Key)) && global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.allowDestinationRange(prev.Value, next.Value));
-}
+  internal static bool allowCIDToUnicodeRange(global::DripSharp.Runtime.JavaMapEntry<int,
+    string> prev, global::DripSharp.Runtime.JavaMapEntry<int, string> next) {
+    if (((prev == default!) || (next == default!))) {
+      return false;
+    }
+    return (global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.allowCodeRange((int)(prev.Key),
+      (int)(next.Key))
+      && global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.allowDestinationRange(prev.Value,
+      next.Value));
+  }
 
-internal static bool allowCodeRange(int prev, int next) {
-if (((prev + 1) != next)) {
-return false;
-}
-int prevH = ((prev >> unchecked((int)(8))) & 255);
-int prevL = (prev & 255);
-int nextH = ((next >> unchecked((int)(8))) & 255);
-int nextL = (next & 255);
-return ((prevH == nextH) && (prevL < nextL));
-}
+  internal static bool allowCodeRange(int prev, int next) {
+    if (((prev + 1) != next)) {
+      return false;
+    }
+    int prevH = ((prev >> unchecked((int)(8))) & 255);
+    int prevL = (prev & 255);
+    int nextH = ((next >> unchecked((int)(8))) & 255);
+    int nextL = (next & 255);
+    return ((prevH == nextH) && (prevL < nextL));
+  }
 
-internal static bool allowDestinationRange(string prev, string next) {
-if (((prev.Length == 0) || (next.Length == 0))) {
-return false;
-}
-int prevCode = global::DripSharp.Runtime.JavaCompat.CodePointAt(prev, 0);
-int nextCode = global::DripSharp.Runtime.JavaCompat.CodePointAt(next, 0);
-return (global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.allowCodeRange(prevCode, nextCode) && (global::DripSharp.Runtime.JavaCompat.StringCodePointCount(prev, 0, prev.Length) == 1));
-}
+  internal static bool allowDestinationRange(string prev, string next) {
+    if (((prev.Length == 0) || (next.Length == 0))) {
+      return false;
+    }
+    int prevCode = global::DripSharp.Runtime.JavaCompat.CodePointAt(prev, 0);
+    int nextCode = global::DripSharp.Runtime.JavaCompat.CodePointAt(next, 0);
+    return (global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.allowCodeRange(prevCode,
+      nextCode) && (global::DripSharp.Runtime.JavaCompat.StringCodePointCount(prev, 0, prev.Length)
+      == 1));
+  }
 }

@@ -9,24 +9,28 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class FeatureListTable {
-private readonly int featureCount = default;
+  private readonly int featureCount = default;
 
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureRecord[] featureRecords = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureRecord[] featureRecords
+    = null!;
 
-public FeatureListTable(int featureCount, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureRecord[] featureRecords) {
-this.featureCount = featureCount;
-this.featureRecords = featureRecords;
-}
+  public FeatureListTable(int featureCount,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureRecord[] featureRecords) {
+    this.featureCount = featureCount;
+    this.featureRecords = featureRecords;
+  }
 
-public virtual int GetFeatureCount() {
-return this.featureCount;
-}
+  public virtual int GetFeatureCount() {
+    return this.featureCount;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureRecord[] GetFeatureRecords() {
-return this.featureRecords;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureRecord[] GetFeatureRecords() {
+    return this.featureRecords;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("%s[featureCount=%d]", typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureListTable).Name, this.featureCount);
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("%s[featureCount=%d]",
+      typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureListTable).Name,
+      this.featureCount);
+  }
 }

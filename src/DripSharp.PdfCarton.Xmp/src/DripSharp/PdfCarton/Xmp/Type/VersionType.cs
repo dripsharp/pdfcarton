@@ -8,64 +8,66 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/sType/Version#", "stVer")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/sType/Version#",
+  "stVer")]
 public class VersionType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string Comments = "comments";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string Comments = "comments";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("ResourceEvent", "Simple")]
-public const string Event = "event";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("ResourceEvent", "Simple")]
+  public const string Event = "event";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("ProperName", "Simple")]
-public const string Modifier = "modifier";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("ProperName", "Simple")]
+  public const string Modifier = "modifier";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Date", "Simple")]
-public const string ModifyDate = "modifyDate";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Date", "Simple")]
+  public const string ModifyDate = "modifyDate";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string Version = "version";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string Version = "version";
 
-public VersionType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
-this.AddNamespace(this.GetNamespace(), this.GetPreferedPrefix());
-}
+  public VersionType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+    this.AddNamespace(this.GetNamespace(), this.GetPreferedPrefix());
+  }
 
-public virtual string GetComments() {
-return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Comments);
-}
+  public virtual string GetComments() {
+    return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Comments);
+  }
 
-public virtual void SetComments(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Comments, value);
-}
+  public virtual void SetComments(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Comments, value);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType GetEvent() {
-return (global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Event, typeof(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType))!);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType GetEvent() {
+    return (global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType)(this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Event,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType))!);
+  }
 
-public virtual void SetEvent(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType value) {
-this.AddProperty(value);
-}
+  public virtual void SetEvent(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType value) {
+    this.AddProperty(value);
+  }
 
-public virtual global::System.DateTimeOffset? GetModifyDate() {
-return this.GetDatePropertyAsCalendar(global::DripSharp.PdfCarton.Xmp.Type.VersionType.ModifyDate);
-}
+  public virtual global::System.DateTimeOffset? GetModifyDate() {
+    return this.GetDatePropertyAsCalendar(global::DripSharp.PdfCarton.Xmp.Type.VersionType.ModifyDate);
+  }
 
-public virtual void SetModifyDate(global::System.DateTimeOffset? value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.VersionType.ModifyDate, value);
-}
+  public virtual void SetModifyDate(global::System.DateTimeOffset? value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.VersionType.ModifyDate, value);
+  }
 
-public virtual string GetVersion() {
-return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Version);
-}
+  public virtual string GetVersion() {
+    return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Version);
+  }
 
-public virtual void SetVersion(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Version, value);
-}
+  public virtual void SetVersion(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Version, value);
+  }
 
-public virtual string GetModifier() {
-return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Modifier);
-}
+  public virtual string GetModifier() {
+    return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Modifier);
+  }
 
-public virtual void SetModifier(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Modifier, value);
-}
+  public virtual void SetModifier(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Modifier, value);
+  }
 }

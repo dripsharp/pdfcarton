@@ -8,50 +8,58 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Pattern;
 
-public class PDShadingPattern : global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern {
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState extendedGraphicsState = null!;
+public class PDShadingPattern
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern {
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState extendedGraphicsState
+    = null!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading = null!;
 
-public PDShadingPattern() {
-this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.PatternType, global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern.TypeShadingPattern);
-}
+  public PDShadingPattern() {
+    this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.PatternType,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern.TypeShadingPattern);
+  }
 
-public PDShadingPattern(global::DripSharp.PdfCarton.Cos.COSDictionary resourceDictionary) : base(resourceDictionary) {
+  public PDShadingPattern(global::DripSharp.PdfCarton.Cos.COSDictionary resourceDictionary)
+  : base(resourceDictionary) {
 
-}
+  }
 
-public override int GetPatternType() {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern.TypeShadingPattern;
-}
+  public override int GetPatternType() {
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern.TypeShadingPattern;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState GetExtendedGraphicsState() {
-if ((this.extendedGraphicsState == default!)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary @base = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.ExtGState);
-if ((@base != default!)) {
-this.extendedGraphicsState = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState(@base);
-}
-}
-return this.extendedGraphicsState;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState GetExtendedGraphicsState() {
+    if ((this.extendedGraphicsState == default!)) {
+      global::DripSharp.PdfCarton.Cos.COSDictionary @base
+        = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.ExtGState);
+      if ((@base != default!)) {
+        this.extendedGraphicsState
+          = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState(@base);
+      }
+    }
+    return this.extendedGraphicsState;
+  }
 
-public virtual void SetExtendedGraphicsState(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState extendedGraphicsState) {
-this.extendedGraphicsState = extendedGraphicsState;
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.ExtGState, extendedGraphicsState);
-}
+  public virtual void SetExtendedGraphicsState(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState extendedGraphicsState) {
+    this.extendedGraphicsState = extendedGraphicsState;
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.ExtGState,
+      extendedGraphicsState);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading GetShading() {
-if ((this.shading == default!)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary @base = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Shading);
-if ((@base != default!)) {
-this.shading = global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.Create(@base);
-}
-}
-return this.shading;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading GetShading() {
+    if ((this.shading == default!)) {
+      global::DripSharp.PdfCarton.Cos.COSDictionary @base
+        = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Shading);
+      if ((@base != default!)) {
+        this.shading = global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.Create(@base);
+      }
+    }
+    return this.shading;
+  }
 
-public virtual void SetShading(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shadingResources) {
-this.shading = shadingResources;
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Shading, shadingResources);
-}
+  public virtual void SetShading(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shadingResources) {
+    this.shading = shadingResources;
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Shading, shadingResources);
+  }
 }

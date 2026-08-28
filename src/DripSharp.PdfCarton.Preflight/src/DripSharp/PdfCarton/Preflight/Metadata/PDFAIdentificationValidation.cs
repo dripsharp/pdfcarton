@@ -9,45 +9,74 @@
 namespace DripSharp.PdfCarton.Preflight.Metadata;
 
 public class PDFAIdentificationValidation {
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ValidatePDFAIdentifer(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError>();
-global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema id = metadata.GetPDFAIdentificationSchema();
-if ((id == default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPdfaIdMissing, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("PDF/A identification schema ", global::DripSharp.Runtime.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema), typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!.@Namespace()), " is missing")));
-return ve;
-}
-global::DripSharp.PdfCarton.Xmp.Type.StructuredType stBasic = global::DripSharp.Runtime.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema), typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!;
-global::DripSharp.PdfCarton.Xmp.Type.StructuredType stPdfaIdent = global::DripSharp.Runtime.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema), typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!;
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(id.GetPrefix(), stPdfaIdent.PreferedPrefix()))) {
-if ((metadata.GetSchema(stPdfaIdent.PreferedPrefix(), stBasic.@Namespace()) == default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnexpectedPrefixFoundError(id.GetPrefix(), stPdfaIdent.PreferedPrefix(), global::DripSharp.Runtime.JavaCompat.ClassName(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema), "DripSharp.PdfCarton.Preflight", "org.apache.pdfbox.preflight")));
-} else {
-id = (global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema)(metadata.GetSchema(stPdfaIdent.PreferedPrefix(), stPdfaIdent.@Namespace())!);
-}
-}
-this.CheckConformanceLevel(ve, id.GetConformance());
-this.CheckPartNumber(ve, ((id.GetPart() == default!) ? -1 : global::DripSharp.Runtime.JavaCompat.Unbox(id.GetPart())));
-if ((id.GetRevProperty() != default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPropertyUnknown, "'rev' isn't defined for PDF/A-1"));
-}
-return ve;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ValidatePDFAIdentifer(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError>();
+    global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema id
+      = metadata.GetPDFAIdentificationSchema();
+    if ((id == default!)) {
+      global::DripSharp.Runtime.JavaCompat.Add(ve,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPdfaIdMissing,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("PDF/A identification schema ",
+        global::DripSharp.Runtime.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema),
+        typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!.@Namespace()),
+        " is missing")));
+      return ve;
+    }
+    global::DripSharp.PdfCarton.Xmp.Type.StructuredType stBasic
+      = global::DripSharp.Runtime.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema),
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!;
+    global::DripSharp.PdfCarton.Xmp.Type.StructuredType stPdfaIdent
+      = global::DripSharp.Runtime.JavaCompat.ClassGetAnnotation<global::DripSharp.PdfCarton.Xmp.Type.StructuredType>(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema),
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.StructuredType))!;
+    if (!global::DripSharp.Runtime.JavaCompat.Equals(id.GetPrefix(),
+      stPdfaIdent.PreferedPrefix())) {
+      if ((metadata.GetSchema(stPdfaIdent.PreferedPrefix(), stBasic.@Namespace()) == default!)) {
+        global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnexpectedPrefixFoundError(id.GetPrefix(),
+          stPdfaIdent.PreferedPrefix(),
+          global::DripSharp.Runtime.JavaCompat.ClassName(typeof(global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema),
+          "DripSharp.PdfCarton.Preflight", "org.apache.pdfbox.preflight")));
+      } else {
+        id
+          = (global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema)(metadata.GetSchema(stPdfaIdent.PreferedPrefix(),
+          stPdfaIdent.@Namespace())!);
+      }
+    }
+    this.CheckConformanceLevel(ve, id.GetConformance());
+    this.CheckPartNumber(ve, ((id.GetPart() == default!) ? -1
+      : global::DripSharp.Runtime.JavaCompat.Unbox(id.GetPart())));
+    if ((id.GetRevProperty() != default!)) {
+      global::DripSharp.Runtime.JavaCompat.Add(ve,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPropertyUnknown,
+        "'rev' isn't defined for PDF/A-1"));
+    }
+    return ve;
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError UnexpectedPrefixFoundError(string prefFound, string prefExpected, string schema) {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(80);
-sb.Append(schema).Append(" found but prefix used is '").Append(prefFound).Append("', prefix '").Append(prefExpected).Append("' is expected.");
-return new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataWrongNsPrefix, sb.ToString());
-}
+  protected internal virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError UnexpectedPrefixFoundError(string prefFound,
+    string prefExpected, string schema) {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(80);
+    sb.Append(schema).Append(" found but prefix used is '").Append(prefFound).Append("', prefix '").Append(prefExpected).Append("' is expected.");
+    return new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataWrongNsPrefix,
+      sb.ToString());
+  }
 
-protected internal virtual void CheckConformanceLevel(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve, string value) {
-if (((value == default!) || !((global::DripSharp.Runtime.JavaCompat.Equals(value, "A") || global::DripSharp.Runtime.JavaCompat.Equals(value, "B"))))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataInvalidPdfaConformance, "conformance level must be A or B"));
-}
-}
+  protected internal virtual void CheckConformanceLevel(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve,
+    string value) {
+    if (((value == default!) || !((global::DripSharp.Runtime.JavaCompat.Equals(value, "A")
+      || global::DripSharp.Runtime.JavaCompat.Equals(value, "B"))))) {
+      global::DripSharp.Runtime.JavaCompat.Add(ve,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataInvalidPdfaConformance,
+        "conformance level must be A or B"));
+    }
+  }
 
-protected internal virtual void CheckPartNumber(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve, int value) {
-if ((value != 1)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataInvalidPdfaVersionId, "part must be 1"));
-}
-}
+  protected internal virtual void CheckPartNumber(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve,
+    int value) {
+    if ((value != 1)) {
+      global::DripSharp.Runtime.JavaCompat.Add(ve,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataInvalidPdfaVersionId,
+        "part must be 1"));
+    }
+  }
 }

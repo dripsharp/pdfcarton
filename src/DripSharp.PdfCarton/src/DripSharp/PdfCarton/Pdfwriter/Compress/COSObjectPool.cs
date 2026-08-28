@@ -9,57 +9,70 @@
 namespace DripSharp.PdfCarton.Pdfwriter.Compress;
 
 public class COSObjectPool {
-private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, global::DripSharp.PdfCarton.Cos.COSBase> keyPool = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, global::DripSharp.PdfCarton.Cos.COSBase>();
+  private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+    global::DripSharp.PdfCarton.Cos.COSBase> keyPool
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+    global::DripSharp.PdfCarton.Cos.COSBase>();
 
-private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSBase, global::DripSharp.PdfCarton.Cos.COSObjectKey> objectPool = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSBase, global::DripSharp.PdfCarton.Cos.COSObjectKey>();
+  private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSBase,
+    global::DripSharp.PdfCarton.Cos.COSObjectKey> objectPool
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSBase,
+    global::DripSharp.PdfCarton.Cos.COSObjectKey>();
 
-private long highestXRefObjectNumber = 0;
+  private long highestXRefObjectNumber = 0;
 
-public COSObjectPool(long highestXRefObjectNumber) {
-this.highestXRefObjectNumber = global::System.Math.Max(this.highestXRefObjectNumber, highestXRefObjectNumber);
-}
+  public COSObjectPool(long highestXRefObjectNumber) {
+    this.highestXRefObjectNumber = global::System.Math.Max(this.highestXRefObjectNumber,
+      highestXRefObjectNumber);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSObjectKey Put(global::DripSharp.PdfCarton.Cos.COSObjectKey key, global::DripSharp.PdfCarton.Cos.COSBase @object) {
-if (((@object == default!) || (this.Contains(@object) && this.GetKey(@object).Equals(key)))) {
-return default!;
-}
-global::DripSharp.PdfCarton.Cos.COSObjectKey actualKey = key;
-if (((actualKey == default!) || this.Contains(actualKey))) {
-this.highestXRefObjectNumber++;
-actualKey = new global::DripSharp.PdfCarton.Cos.COSObjectKey(this.highestXRefObjectNumber, 0);
-@object.SetKey(actualKey);
-} else {
-this.highestXRefObjectNumber = global::System.Math.Max(key.GetNumber(), this.highestXRefObjectNumber);
-}
-global::DripSharp.Runtime.JavaCompat.MapPut(this.keyPool, actualKey, @object);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.objectPool, @object, actualKey);
-return actualKey;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSObjectKey Put(global::DripSharp.PdfCarton.Cos.COSObjectKey key,
+    global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    if (((@object == default!) || (this.Contains(@object) && this.GetKey(@object).Equals(key)))) {
+      return default!;
+    }
+    global::DripSharp.PdfCarton.Cos.COSObjectKey actualKey = key;
+    if (((actualKey == default!) || this.Contains(actualKey))) {
+      this.highestXRefObjectNumber++;
+      actualKey = new global::DripSharp.PdfCarton.Cos.COSObjectKey(this.highestXRefObjectNumber, 0);
+      @object.SetKey(actualKey);
+    } else {
+      this.highestXRefObjectNumber = global::System.Math.Max(key.GetNumber(),
+        this.highestXRefObjectNumber);
+    }
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.keyPool, actualKey, @object);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.objectPool, @object, actualKey);
+    return actualKey;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSObjectKey GetKey(global::DripSharp.PdfCarton.Cos.COSBase @object) {
-global::DripSharp.PdfCarton.Cos.COSObjectKey key = default!;
-if ((@object is global::DripSharp.PdfCarton.Cos.COSObject)) {
-key = global::DripSharp.Runtime.JavaCompat.MapGet(this.objectPool, ((global::DripSharp.PdfCarton.Cos.COSObject)(@object!)).GetObject());
-}
-if ((key! == default!)) {
-return global::DripSharp.Runtime.JavaCompat.MapGet(this.objectPool, @object);
-}
-return key!;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSObjectKey GetKey(global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    global::DripSharp.PdfCarton.Cos.COSObjectKey key = default!;
+    if ((@object is global::DripSharp.PdfCarton.Cos.COSObject)) {
+      key = global::DripSharp.Runtime.JavaCompat.MapGet(this.objectPool,
+        ((global::DripSharp.PdfCarton.Cos.COSObject)(@object!)).GetObject());
+    }
+    if ((key! == default!)) {
+      return global::DripSharp.Runtime.JavaCompat.MapGet(this.objectPool, @object);
+    }
+    return key!;
+  }
 
-public virtual bool Contains(global::DripSharp.PdfCarton.Cos.COSObjectKey key) {
-return global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.keyPool, key);
-}
+  public virtual bool Contains(global::DripSharp.PdfCarton.Cos.COSObjectKey key) {
+    return global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.keyPool, key);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetObject(global::DripSharp.PdfCarton.Cos.COSObjectKey key) {
-return global::DripSharp.Runtime.JavaCompat.MapGet(this.keyPool, key);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetObject(global::DripSharp.PdfCarton.Cos.COSObjectKey key) {
+    return global::DripSharp.Runtime.JavaCompat.MapGet(this.keyPool, key);
+  }
 
-public virtual bool Contains(global::DripSharp.PdfCarton.Cos.COSBase @object) {
-return (((@object is global::DripSharp.PdfCarton.Cos.COSObject) && global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.objectPool, ((global::DripSharp.PdfCarton.Cos.COSObject)(@object!)).GetObject())) || global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.objectPool, @object));
-}
+  public virtual bool Contains(global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    return (((@object is global::DripSharp.PdfCarton.Cos.COSObject)
+      && global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.objectPool,
+      ((global::DripSharp.PdfCarton.Cos.COSObject)(@object!)).GetObject()))
+      || global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.objectPool, @object));
+  }
 
-public virtual long GetHighestXRefObjectNumber() {
-return this.highestXRefObjectNumber;
-}
+  public virtual long GetHighestXRefObjectNumber() {
+    return this.highestXRefObjectNumber;
+  }
 }

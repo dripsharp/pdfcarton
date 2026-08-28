@@ -8,16 +8,19 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent;
 
-public class EndMarkedContentSequence : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public EndMarkedContentSequence(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class EndMarkedContentSequence
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public EndMarkedContentSequence(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-this.GetContext().EndMarkedContentSequence();
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    this.GetContext().EndMarkedContentSequence();
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndMarkedContent;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndMarkedContent;
+  }
 }

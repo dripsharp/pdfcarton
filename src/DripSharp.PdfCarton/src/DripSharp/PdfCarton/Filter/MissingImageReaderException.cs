@@ -9,9 +9,9 @@
 namespace DripSharp.PdfCarton.Filter;
 
 public class MissingImageReaderException : global::System.IO.IOException {
-internal const long serialVersionUID = 1L;
+  internal const long serialVersionUID = 1L;
 
-public MissingImageReaderException(string message) : base(message) {
+  public MissingImageReaderException(string message) : base(message) {
 
-}
+  }
 }

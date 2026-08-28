@@ -9,46 +9,55 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Model;
 
 public class MapBackedScriptFeature : global::DripSharp.PdfCarton.Fonts.Ttf.Model.ScriptFeature {
-private readonly string name = null!;
+  private readonly string name = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<global::System.Collections.Generic.IList<int>, int> featureMap = null!;
+  private readonly global::System.Collections.Generic.IDictionary<global::System.Collections.Generic.IList<int>,
+    int> featureMap = null!;
 
-public MapBackedScriptFeature(string name, global::System.Collections.Generic.IDictionary<global::System.Collections.Generic.IList<int>, int> featureMap) {
-this.name = name;
-this.featureMap = featureMap;
-}
+  public MapBackedScriptFeature(string name,
+    global::System.Collections.Generic.IDictionary<global::System.Collections.Generic.IList<int>,
+    int> featureMap) {
+    this.name = name;
+    this.featureMap = featureMap;
+  }
 
-public virtual string GetName() {
-return this.name;
-}
+  public virtual string GetName() {
+    return this.name;
+  }
 
-public virtual global::System.Collections.Generic.ISet<global::System.Collections.Generic.IList<int>> GetAllGlyphIdsForSubstitution() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapKeySet(this.featureMap);
-}
+  public virtual global::System.Collections.Generic.ISet<global::System.Collections.Generic.IList<int>> GetAllGlyphIdsForSubstitution() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapKeySet(this.featureMap);
+  }
 
-public virtual bool CanReplaceGlyphs(global::System.Collections.Generic.IList<int> glyphIds) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(this.featureMap, glyphIds);
-}
+  public virtual bool CanReplaceGlyphs(global::System.Collections.Generic.IList<int> glyphIds) {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(this.featureMap,
+      glyphIds);
+  }
 
-public virtual int? GetReplacementForGlyphs(global::System.Collections.Generic.IList<int> glyphIds) {
-if (!(this.CanReplaceGlyphs(glyphIds))) {
-throw new global::System.NotSupportedException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("The glyphs ", glyphIds), " cannot be replaced"));
-}
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.featureMap, glyphIds);
-}
+  public virtual int? GetReplacementForGlyphs(global::System.Collections.Generic.IList<int> glyphIds) {
+    if (!(this.CanReplaceGlyphs(glyphIds))) {
+      throw new global::System.NotSupportedException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("The glyphs ",
+        glyphIds), " cannot be replaced"));
+    }
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.featureMap,
+      glyphIds);
+  }
 
-public override int GetHashCode() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Hash(this.featureMap, this.name);
-}
+  public override int GetHashCode() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Hash(this.featureMap, this.name);
+  }
 
-public override bool Equals(object obj) {
-if ((this == obj)) {
-return true;
-}
-if (((obj == default!) || (((object)(this)).GetType() != ((object)(obj)).GetType()))) {
-return false;
-}
-global::DripSharp.PdfCarton.Fonts.Ttf.Model.MapBackedScriptFeature other = (global::DripSharp.PdfCarton.Fonts.Ttf.Model.MapBackedScriptFeature)(obj!);
-return (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(other.name, this.name) && global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(other.featureMap, this.featureMap));
-}
+  public override bool Equals(object obj) {
+    if ((this == obj)) {
+      return true;
+    }
+    if (((obj == default!) || (((object)(this)).GetType() != ((object)(obj)).GetType()))) {
+      return false;
+    }
+    global::DripSharp.PdfCarton.Fonts.Ttf.Model.MapBackedScriptFeature other
+      = (global::DripSharp.PdfCarton.Fonts.Ttf.Model.MapBackedScriptFeature)(obj!);
+    return (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(other.name, this.name)
+      && global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(other.featureMap,
+      this.featureMap));
+  }
 }

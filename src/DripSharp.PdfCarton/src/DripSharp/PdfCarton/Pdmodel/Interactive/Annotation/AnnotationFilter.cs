@@ -9,17 +9,20 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
 public interface AnnotationFilter {
-public bool Accept(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation);
+  public bool Accept(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation);
 }
 
-public sealed class __AnnotationFilterFunctionalAdapter : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter {
-private readonly global::System.Func<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation, bool> implementation;
+public sealed class __AnnotationFilterFunctionalAdapter
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter {
+  private readonly global::System.Func<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation,
+    bool> implementation;
 
-public __AnnotationFilterFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation, bool> implementation) {
-this.implementation = implementation;
-}
+  public __AnnotationFilterFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation,
+    bool> implementation) {
+    this.implementation = implementation;
+  }
 
-public bool Accept(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation) {
-return this.implementation(annotation);
-}
+  public bool Accept(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation) {
+    return this.implementation(annotation);
+  }
 }

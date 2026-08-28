@@ -9,33 +9,37 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class RealType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty {
-private float realValue = default;
+  private float realValue = default;
 
-public RealType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix, propertyName, value) {
+  public RealType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI,
+    string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix,
+    propertyName, value) {
 
-}
+  }
 
-public new virtual float? GetValue() {
-return this.realValue;
-}
+  public new virtual float? GetValue() {
+    return this.realValue;
+  }
 
-public override void SetValue(object value) {
-if ((value is float)) {
-this.realValue = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Unbox((float?)(value));
-} else {
-if ((value is string)) {
-this.realValue = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseFloat((string)(value!));
-} else {
-throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Value given is not allowed for the Real type: ", value));
-}
-}
-}
+  public override void SetValue(object value) {
+    if ((value is float)) {
+      this.realValue = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Unbox((float?)value);
+    } else {
+      if ((value is string)) {
+        this.realValue
+          = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseFloat((string)(value!));
+      } else {
+        throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Value given is not allowed for the Real type: ",
+          value));
+      }
+    }
+  }
 
-public override string GetStringValue() {
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringValueOf(this.realValue);
-}
+  public override string GetStringValue() {
+    return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringValueOf(this.realValue);
+  }
 
-protected override object __DripSharpCovariantBridgeGetValue() {
-return this.GetValue();
-}
+  protected override object __DripSharpCovariantBridgeGetValue() {
+    return this.GetValue();
+  }
 }

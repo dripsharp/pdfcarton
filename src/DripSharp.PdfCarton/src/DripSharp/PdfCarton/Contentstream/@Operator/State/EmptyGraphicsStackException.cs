@@ -9,9 +9,10 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator.State;
 
 public sealed class EmptyGraphicsStackException : global::System.IO.IOException {
-internal const long serialVersionUID = 1L;
+  internal const long serialVersionUID = 1L;
 
-internal EmptyGraphicsStackException() : base("Cannot execute restore, the graphics stack is empty") {
+  internal EmptyGraphicsStackException()
+  : base("Cannot execute restore, the graphics stack is empty") {
 
-}
+  }
 }

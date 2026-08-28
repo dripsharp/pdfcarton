@@ -9,38 +9,47 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Model;
 
 public class MapBackedGsubData : global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData {
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language language = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language language = null!;
 
-private readonly string activeScriptName = null!;
+  private readonly string activeScriptName = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<string, global::System.Collections.Generic.IDictionary<global::System.Collections.Generic.IList<int>, int>> glyphSubstitutionMap = null!;
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::System.Collections.Generic.IDictionary<global::System.Collections.Generic.IList<int>,
+    int>> glyphSubstitutionMap = null!;
 
-public MapBackedGsubData(global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language language, string activeScriptName, global::System.Collections.Generic.IDictionary<string, global::System.Collections.Generic.IDictionary<global::System.Collections.Generic.IList<int>, int>> glyphSubstitutionMap) {
-this.language = language;
-this.activeScriptName = activeScriptName;
-this.glyphSubstitutionMap = glyphSubstitutionMap;
-}
+  public MapBackedGsubData(global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language language,
+    string activeScriptName, global::System.Collections.Generic.IDictionary<string,
+    global::System.Collections.Generic.IDictionary<global::System.Collections.Generic.IList<int>,
+    int>> glyphSubstitutionMap) {
+    this.language = language;
+    this.activeScriptName = activeScriptName;
+    this.glyphSubstitutionMap = glyphSubstitutionMap;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language GetLanguage() {
-return this.language;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language GetLanguage() {
+    return this.language;
+  }
 
-public virtual string GetActiveScriptName() {
-return this.activeScriptName;
-}
+  public virtual string GetActiveScriptName() {
+    return this.activeScriptName;
+  }
 
-public virtual bool IsFeatureSupported(string featureName) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(this.glyphSubstitutionMap, featureName);
-}
+  public virtual bool IsFeatureSupported(string featureName) {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(this.glyphSubstitutionMap,
+      featureName);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Model.ScriptFeature GetFeature(string featureName) {
-if (!(this.IsFeatureSupported(featureName))) {
-throw new global::System.NotSupportedException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("The feature ", featureName), " is not supported!"));
-}
-return new global::DripSharp.PdfCarton.Fonts.Ttf.Model.MapBackedScriptFeature(featureName, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.glyphSubstitutionMap, featureName));
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Model.ScriptFeature GetFeature(string featureName) {
+    if (!(this.IsFeatureSupported(featureName))) {
+      throw new global::System.NotSupportedException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("The feature ",
+        featureName), " is not supported!"));
+    }
+    return new global::DripSharp.PdfCarton.Fonts.Ttf.Model.MapBackedScriptFeature(featureName,
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.glyphSubstitutionMap,
+      featureName));
+  }
 
-public virtual global::System.Collections.Generic.ISet<string> GetSupportedFeatures() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapKeySet(this.glyphSubstitutionMap);
-}
+  public virtual global::System.Collections.Generic.ISet<string> GetSupportedFeatures() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapKeySet(this.glyphSubstitutionMap);
+  }
 }

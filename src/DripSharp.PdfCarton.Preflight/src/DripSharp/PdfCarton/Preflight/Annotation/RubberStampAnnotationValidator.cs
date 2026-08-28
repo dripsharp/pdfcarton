@@ -8,11 +8,15 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public class RubberStampAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationRubberStamp PdRStamp = default!;
+public class RubberStampAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationRubberStamp PdRStamp
+    = default!;
 
-public RubberStampAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
-this.PdRStamp = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationRubberStamp(annotDictionary);
-this.PdAnnot = this.PdRStamp;
-}
+  public RubberStampAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdRStamp
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationRubberStamp(annotDictionary);
+    this.PdAnnot = this.PdRStamp;
+  }
 }

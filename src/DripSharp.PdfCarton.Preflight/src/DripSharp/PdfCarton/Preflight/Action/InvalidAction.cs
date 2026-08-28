@@ -9,14 +9,19 @@
 namespace DripSharp.PdfCarton.Preflight.Action;
 
 public class InvalidAction : global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager {
-private string actionName = default!;
+  private string actionName = default!;
 
-public InvalidAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact, global::DripSharp.PdfCarton.Cos.COSDictionary adict, global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey, string name) : base(amFact, adict, ctx, aaKey) {
-this.actionName = name;
-}
+  public InvalidAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact,
+    global::DripSharp.PdfCarton.Cos.COSDictionary adict,
+    global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey, string name)
+  : base(amFact, adict, ctx, aaKey) {
+    this.actionName = name;
+  }
 
-protected internal override bool InnerValid() {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenActionsExplicitlyForbidden, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The action ", this.actionName), " is forbidden")));
-return false;
-}
+  protected internal override bool InnerValid() {
+    base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenActionsExplicitlyForbidden,
+      global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The action ",
+      this.actionName), " is forbidden")));
+    return false;
+  }
 }

@@ -9,24 +9,27 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public class LookupListTable {
-private readonly int lookupCount = default;
+  private readonly int lookupCount = default;
 
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupTable[] lookups = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupTable[] lookups = null!;
 
-public LookupListTable(int lookupCount, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupTable[] lookups) {
-this.lookupCount = lookupCount;
-this.lookups = lookups;
-}
+  public LookupListTable(int lookupCount,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupTable[] lookups) {
+    this.lookupCount = lookupCount;
+    this.lookups = lookups;
+  }
 
-public virtual int GetLookupCount() {
-return this.lookupCount;
-}
+  public virtual int GetLookupCount() {
+    return this.lookupCount;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupTable[] GetLookups() {
-return this.lookups;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupTable[] GetLookups() {
+    return this.lookups;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("%s[lookupCount=%d]", typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupListTable).Name, this.lookupCount);
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("%s[lookupCount=%d]",
+      typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupListTable).Name,
+      this.lookupCount);
+  }
 }

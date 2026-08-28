@@ -9,22 +9,27 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator.State;
 
 public class SetFlatness : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public SetFlatness(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+  public SetFlatness(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(operands)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, operands);
-}
-if (!(this.CheckArrayTypesClass(operands, typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber value = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0)!);
-this.GetContext().GetGraphicsState().SetFlatness((double)(value.FloatValue()));
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(operands)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        operands);
+    }
+    if (!(this.CheckArrayTypesClass(operands, typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSNumber value
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+      0)!);
+    this.GetContext().GetGraphicsState().SetFlatness((double)(value.FloatValue()));
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFlatness;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFlatness;
+  }
 }

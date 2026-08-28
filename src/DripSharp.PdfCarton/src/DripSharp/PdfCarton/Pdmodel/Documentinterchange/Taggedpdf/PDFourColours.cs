@@ -9,77 +9,79 @@
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf;
 
 public class PDFourColours : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSArray array = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSArray array = null!;
 
-public PDFourColours() {
-this.array = new global::DripSharp.PdfCarton.Cos.COSArray();
-this.array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
-this.array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
-this.array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
-this.array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
-}
+  public PDFourColours() {
+    this.array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    this.array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
+    this.array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
+    this.array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
+    this.array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
+  }
 
-public PDFourColours(global::DripSharp.PdfCarton.Cos.COSArray array) {
-this.array = array;
-if ((this.array.Size() < 4)) {
-for (int i = (this.array.Size() - 1); (i < 4); i++) {
-this.array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
-}
-}
-}
+  public PDFourColours(global::DripSharp.PdfCarton.Cos.COSArray array) {
+    this.array = array;
+    if ((this.array.Size() < 4)) {
+      for (int i = (this.array.Size() - 1); (i < 4); i++) {
+        this.array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
+      }
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetBeforeColour() {
-return this.getColourByIndex(0);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetBeforeColour() {
+    return this.getColourByIndex(0);
+  }
 
-public virtual void SetBeforeColour(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma colour) {
-this.setColourByIndex(0, colour);
-}
+  public virtual void SetBeforeColour(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma colour) {
+    this.setColourByIndex(0, colour);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetAfterColour() {
-return this.getColourByIndex(1);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetAfterColour() {
+    return this.getColourByIndex(1);
+  }
 
-public virtual void SetAfterColour(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma colour) {
-this.setColourByIndex(1, colour);
-}
+  public virtual void SetAfterColour(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma colour) {
+    this.setColourByIndex(1, colour);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetStartColour() {
-return this.getColourByIndex(2);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetStartColour() {
+    return this.getColourByIndex(2);
+  }
 
-public virtual void SetStartColour(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma colour) {
-this.setColourByIndex(2, colour);
-}
+  public virtual void SetStartColour(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma colour) {
+    this.setColourByIndex(2, colour);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetEndColour() {
-return this.getColourByIndex(3);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma GetEndColour() {
+    return this.getColourByIndex(3);
+  }
 
-public virtual void SetEndColour(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma colour) {
-this.setColourByIndex(3, colour);
-}
+  public virtual void SetEndColour(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma colour) {
+    this.setColourByIndex(3, colour);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.array;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.array;
+  }
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma getColourByIndex(int index) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma retval = default!;
-global::DripSharp.PdfCarton.Cos.COSBase item = this.array.GetObject(index);
-if ((item is global::DripSharp.PdfCarton.Cos.COSArray)) {
-retval = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma((global::DripSharp.PdfCarton.Cos.COSArray)(item!));
-}
-return retval!;
-}
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma getColourByIndex(int index) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma retval = default!;
+    global::DripSharp.PdfCarton.Cos.COSBase item = this.array.GetObject(index);
+    if ((item is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      retval
+        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma((global::DripSharp.PdfCarton.Cos.COSArray)(item!));
+    }
+    return retval!;
+  }
 
-private void setColourByIndex(int index, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma colour) {
-global::DripSharp.PdfCarton.Cos.COSBase @base;
-if ((colour == default!)) {
-@base = global::DripSharp.PdfCarton.Cos.COSNull.Null;
-} else {
-@base = colour.GetCOSArray();
-}
-this.array.Set(index, @base);
-}
+  private void setColourByIndex(int index,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDGamma colour) {
+    global::DripSharp.PdfCarton.Cos.COSBase @base;
+    if ((colour == default!)) {
+      @base = global::DripSharp.PdfCarton.Cos.COSNull.Null;
+    } else {
+      @base = colour.GetCOSArray();
+    }
+    this.array.Set(index, @base);
+  }
 }

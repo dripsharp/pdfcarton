@@ -9,30 +9,35 @@
 namespace DripSharp.PdfCarton.Pdfparser.Xref;
 
 public sealed class XReferenceType {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("FREE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType Free = new global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType(0);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("FREE")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType Free
+    = new global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType(0);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("NORMAL")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType Normal = new global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType(1);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("NORMAL")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType Normal
+    = new global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType(1);
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("OBJECT_STREAM_ENTRY")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType ObjectStreamEntry = new global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType(2);
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("OBJECT_STREAM_ENTRY")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType ObjectStreamEntry
+    = new global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType(2);
 
-private readonly int numericValue = default;
+  private readonly int numericValue = default;
 
-private XReferenceType(int numericValue) {
-this.numericValue = numericValue;
-}
+  private XReferenceType(int numericValue) {
+    this.numericValue = numericValue;
+  }
 
-public int GetNumericValue() {
-return this.numericValue;
-}
+  public int GetNumericValue() {
+    return this.numericValue;
+  }
 
-public static XReferenceType[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<XReferenceType>();
-public static XReferenceType valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<XReferenceType>(name);
+  public static XReferenceType[] values()
+    => global::DripSharp.Runtime.JavaCompat.EnumValues<XReferenceType>();
+  public static XReferenceType valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<XReferenceType>(name);
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

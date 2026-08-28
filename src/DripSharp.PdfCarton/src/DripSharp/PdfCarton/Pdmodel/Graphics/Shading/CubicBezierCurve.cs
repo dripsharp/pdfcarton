@@ -9,51 +9,56 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 internal class CubicBezierCurve {
-private readonly global::DripSharp.Runtime.JavaPoint2D[] controlPoints = null!;
+  private readonly global::DripSharp.Runtime.JavaPoint2D[] controlPoints = null!;
 
-private readonly int level = default;
+  private readonly int level = default;
 
-private readonly global::DripSharp.Runtime.JavaPoint2D[] curve = null!;
+  private readonly global::DripSharp.Runtime.JavaPoint2D[] curve = null!;
 
-internal CubicBezierCurve(global::DripSharp.Runtime.JavaPoint2D[] ctrlPnts, int l) {
-this.controlPoints = global::DripSharp.Runtime.JavaCompat.Clone(ctrlPnts);
-this.level = l;
-this.curve = this.getPoints(this.level);
-}
+  internal CubicBezierCurve(global::DripSharp.Runtime.JavaPoint2D[] ctrlPnts, int l) {
+    this.controlPoints = global::DripSharp.Runtime.JavaCompat.Clone(ctrlPnts);
+    this.level = l;
+    this.curve = this.getPoints(this.level);
+  }
 
-internal virtual int getLevel() {
-return this.level;
-}
+  internal virtual int getLevel() {
+    return this.level;
+  }
 
-private global::DripSharp.Runtime.JavaPoint2D[] getPoints(int l) {
-if ((l < 0)) {
-l = 0;
-}
-int sz = ((1 << unchecked((int)(l))) + 1);
-global::DripSharp.Runtime.JavaPoint2D[] res = new global::DripSharp.Runtime.JavaPoint2D[sz];
-double step = ((double)(1) / (sz - 1));
-double t = -step;
-for (int i = 0; (i < sz); i++) {
-t += step;
-double tmpX = (((((((1 - t) * (1 - t)) * (1 - t)) * this.controlPoints[0].X) + ((((3 * t) * (1 - t)) * (1 - t)) * this.controlPoints[1].X)) + ((((3 * t) * t) * (1 - t)) * this.controlPoints[2].X)) + (((t * t) * t) * this.controlPoints[3].X));
-double tmpY = (((((((1 - t) * (1 - t)) * (1 - t)) * this.controlPoints[0].Y) + ((((3 * t) * (1 - t)) * (1 - t)) * this.controlPoints[1].Y)) + ((((3 * t) * t) * (1 - t)) * this.controlPoints[2].Y)) + (((t * t) * t) * this.controlPoints[3].Y));
-res[i] = new global::DripSharp.Runtime.JavaPoint2D(tmpX, tmpY);
-}
-return res;
-}
+  private global::DripSharp.Runtime.JavaPoint2D[] getPoints(int l) {
+    if ((l < 0)) {
+      l = 0;
+    }
+    int sz = ((1 << unchecked((int)(l))) + 1);
+    global::DripSharp.Runtime.JavaPoint2D[] res = new global::DripSharp.Runtime.JavaPoint2D[sz];
+    double step = ((double)1 / (sz - 1));
+    double t = -step;
+    for (int i = 0; (i < sz); i++) {
+      t += step;
+      double tmpX = (((((((1 - t) * (1 - t)) * (1 - t)) * this.controlPoints[0].X) + ((((3 * t) * (1
+        - t)) * (1 - t)) * this.controlPoints[1].X)) + ((((3 * t) * t) * (1 - t))
+        * this.controlPoints[2].X)) + (((t * t) * t) * this.controlPoints[3].X));
+      double tmpY = (((((((1 - t) * (1 - t)) * (1 - t)) * this.controlPoints[0].Y) + ((((3 * t) * (1
+        - t)) * (1 - t)) * this.controlPoints[1].Y)) + ((((3 * t) * t) * (1 - t))
+        * this.controlPoints[2].Y)) + (((t * t) * t) * this.controlPoints[3].Y));
+      res[i] = new global::DripSharp.Runtime.JavaPoint2D(tmpX, tmpY);
+    }
+    return res;
+  }
 
-internal virtual global::DripSharp.Runtime.JavaPoint2D[] getCubicBezierCurve() {
-return this.curve;
-}
+  internal virtual global::DripSharp.Runtime.JavaPoint2D[] getCubicBezierCurve() {
+    return this.curve;
+  }
 
-public override string ToString() {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
-foreach (global::DripSharp.Runtime.JavaPoint2D p in this.controlPoints) {
-if ((sb.Length > 0)) {
-sb.Append(' ');
-}
-sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(p));
-}
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Cubic Bezier curve{control points p0, p1, p2, p3: ", sb), "}");
-}
+  public override string ToString() {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
+    foreach (global::DripSharp.Runtime.JavaPoint2D p in this.controlPoints) {
+      if ((sb.Length > 0)) {
+        sb.Append(' ');
+      }
+      sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(p));
+    }
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Cubic Bezier curve{control points p0, p1, p2, p3: ",
+      sb), "}");
+  }
 }

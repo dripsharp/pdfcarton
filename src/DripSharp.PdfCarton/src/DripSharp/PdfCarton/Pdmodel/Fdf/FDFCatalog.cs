@@ -9,62 +9,68 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFCatalog : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary catalog = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary catalog = null!;
 
-public FDFCatalog() {
-this.catalog = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public FDFCatalog() {
+    this.catalog = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public FDFCatalog(global::DripSharp.PdfCarton.Cos.COSDictionary cat) {
-this.catalog = cat;
-}
+  public FDFCatalog(global::DripSharp.PdfCarton.Cos.COSDictionary cat) {
+    this.catalog = cat;
+  }
 
-public FDFCatalog(global::System.Xml.XmlElement element) : this() {
-global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary fdfDict = new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary(element);
-this.SetFDF(fdfDict);
-}
+  public FDFCatalog(global::System.Xml.XmlElement element) : this() {
+    global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary fdfDict
+      = new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary(element);
+    this.SetFDF(fdfDict);
+  }
 
-public virtual void WriteXML(global::System.IO.TextWriter output) {
-global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary fdf = this.GetFDF();
-fdf.WriteXML(output);
-}
+  public virtual void WriteXML(global::System.IO.TextWriter output) {
+    global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary fdf = this.GetFDF();
+    fdf.WriteXML(output);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.catalog;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.catalog;
+  }
 
-public virtual string GetVersion() {
-return this.catalog.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Version);
-}
+  public virtual string GetVersion() {
+    return this.catalog.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Version);
+  }
 
-public virtual void SetVersion(string version) {
-this.catalog.SetName(global::DripSharp.PdfCarton.Cos.COSName.Version, version);
-}
+  public virtual void SetVersion(string version) {
+    this.catalog.SetName(global::DripSharp.PdfCarton.Cos.COSName.Version, version);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary GetFDF() {
-global::DripSharp.PdfCarton.Cos.COSDictionary fdf = this.catalog.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Fdf);
-global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary retval;
-if ((fdf != default!)) {
-retval = new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary(fdf);
-} else {
-retval = new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary();
-this.SetFDF(retval);
-}
-return retval;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary GetFDF() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary fdf
+      = this.catalog.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Fdf);
+    global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary retval;
+    if ((fdf != default!)) {
+      retval = new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary(fdf);
+    } else {
+      retval = new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary();
+      this.SetFDF(retval);
+    }
+    return retval;
+  }
 
-public void SetFDF(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary fdf) {
-this.catalog.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fdf, fdf);
-}
+  public void SetFDF(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary fdf) {
+    this.catalog.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fdf, fdf);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature GetSignature() {
-global::DripSharp.PdfCarton.Cos.COSDictionary sig = this.catalog.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Sig);
-return ((sig != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature(sig) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature GetSignature() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary sig
+      = this.catalog.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Sig);
+    return ((sig != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature(sig)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature)(default!));
+  }
 
-public virtual void SetSignature(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature sig) {
-this.catalog.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Sig, sig);
-}
+  public virtual void SetSignature(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSignature sig) {
+    this.catalog.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Sig, sig);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

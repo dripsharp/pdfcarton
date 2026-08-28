@@ -9,17 +9,22 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public interface CustomFactory {
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromByteArray(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, sbyte[] byteArray);
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromByteArray(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    sbyte[] byteArray);
 }
 
-public sealed class __CustomFactoryFunctionalAdapter : global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CustomFactory {
-private readonly global::System.Func<global::DripSharp.PdfCarton.Pdmodel.PDDocument, sbyte[], global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject> implementation;
+public sealed class __CustomFactoryFunctionalAdapter
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CustomFactory {
+  private readonly global::System.Func<global::DripSharp.PdfCarton.Pdmodel.PDDocument, sbyte[],
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject> implementation;
 
-public __CustomFactoryFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.Pdmodel.PDDocument, sbyte[], global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject> implementation) {
-this.implementation = implementation;
-}
+  public __CustomFactoryFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.Pdmodel.PDDocument,
+    sbyte[], global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject> implementation) {
+    this.implementation = implementation;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromByteArray(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, sbyte[] byteArray) {
-return this.implementation(document, byteArray);
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromByteArray(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    sbyte[] byteArray) {
+    return this.implementation(document, byteArray);
+  }
 }

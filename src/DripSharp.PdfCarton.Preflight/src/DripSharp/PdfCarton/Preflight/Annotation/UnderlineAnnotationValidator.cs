@@ -8,9 +8,12 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public class UnderlineAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.MarkupAnnotationValidator {
-protected internal UnderlineAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
-this.PdMarkup = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnderline(annotDictionary);
-this.PdAnnot = this.PdMarkup;
-}
+public class UnderlineAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.MarkupAnnotationValidator {
+  protected internal UnderlineAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdMarkup
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnderline(annotDictionary);
+    this.PdAnnot = this.PdMarkup;
+  }
 }

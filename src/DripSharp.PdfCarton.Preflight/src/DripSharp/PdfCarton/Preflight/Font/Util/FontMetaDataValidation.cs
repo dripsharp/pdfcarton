@@ -9,75 +9,102 @@
 namespace DripSharp.PdfCarton.Preflight.Font.Util;
 
 public class FontMetaDataValidation {
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ValidatePDFAIdentifer(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDesc) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError>();
-this.AnalyseFontName(metadata, fontDesc, ve);
-this.AnalyseRights(metadata, fontDesc, ve);
-return ve;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ValidatePDFAIdentifer(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDesc) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError>();
+    this.AnalyseFontName(metadata, fontDesc, ve);
+    this.AnalyseRights(metadata, fontDesc, ve);
+    return ve;
+  }
 
-public virtual bool AnalyseFontName(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDesc, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
-string fontName = fontDesc.GetFontName();
-string noSubSetName = fontName;
-if (global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.IsSubSet(fontName)) {
-noSubSetName = global::DripSharp.Runtime.JavaCompat.StringSplit(fontName, "\\+", 0)[1];
-}
-global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = metadata.GetDublinCoreSchema();
-if (((dc != default!) && (dc.GetTitleProperty() != default!))) {
-string defaultTitle;
-try {
-defaultTitle = dc.GetTitle("x-default");
-} catch (global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPropertyFormat, "Title property of XMP information is not a multi-lingual property"));
-return false;
-}
-if ((defaultTitle != default!)) {
-if ((!(global::DripSharp.Runtime.JavaCompat.Equals(defaultTitle, fontName)) && ((noSubSetName != default!) && !(global::DripSharp.Runtime.JavaCompat.Equals(defaultTitle, noSubSetName))))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataMismatch, global::DripSharp.Runtime.JavaCompat.Concat("FontName present in the FontDescriptor dictionary doesn't match with ", "XMP information dc:title of the Font File Stream.")));
-return false;
-}
-return true;
-} else {
-global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> it = global::DripSharp.Runtime.JavaCompat.Iterator(dc.GetTitleProperty().GetContainer().GetAllProperties());
-bool empty = true;
-while (it.HasNext()) {
-empty = false;
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp = it.Next()!;
-if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
-string val = ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!)).GetStringValue();
-if ((global::DripSharp.Runtime.JavaCompat.Equals(val, fontName) || global::DripSharp.Runtime.JavaCompat.Equals(val, noSubSetName))) {
-return true;
-}
-}
-}
-if (empty) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPropertyMissing, global::DripSharp.Runtime.JavaCompat.Concat("FontName present in the FontDescriptor dictionary can't be found in ", "XMP information the Font File Stream.")));
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataMismatch, global::DripSharp.Runtime.JavaCompat.Concat("FontName present in the FontDescriptor dictionary doesn't match with XMP ", "information dc:title of the Font File Stream.")));
-}
-return false;
-}
-}
-return true;
-}
+  public virtual bool AnalyseFontName(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDesc,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
+    string fontName = fontDesc.GetFontName();
+    string noSubSetName = fontName;
+    if (global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>.IsSubSet(fontName)) {
+      noSubSetName = global::DripSharp.Runtime.JavaCompat.StringSplit(fontName, "\\+", 0)[1];
+    }
+    global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = metadata.GetDublinCoreSchema();
+    if (((dc != default!) && (dc.GetTitleProperty() != default!))) {
+      string defaultTitle;
+      try {
+        defaultTitle = dc.GetTitle("x-default");
+      } catch (global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException) {
+        global::DripSharp.Runtime.JavaCompat.Add(ve,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPropertyFormat,
+          "Title property of XMP information is not a multi-lingual property"));
+        return false;
+      }
+      if ((defaultTitle != default!)) {
+        if ((!global::DripSharp.Runtime.JavaCompat.Equals(defaultTitle, fontName) && ((noSubSetName
+          != default!) && !global::DripSharp.Runtime.JavaCompat.Equals(defaultTitle,
+          noSubSetName)))) {
+          global::DripSharp.Runtime.JavaCompat.Add(ve,
+            new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataMismatch,
+            global::DripSharp.Runtime.JavaCompat.Concat("FontName present in the FontDescriptor dictionary doesn't match with ",
+            "XMP information dc:title of the Font File Stream.")));
+          return false;
+        }
+        return true;
+      } else {
+        global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> it
+          = global::DripSharp.Runtime.JavaCompat.Iterator(dc.GetTitleProperty().GetContainer().GetAllProperties());
+        bool empty = true;
+        while (it.HasNext()) {
+          empty = false;
+          global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp = it.Next()!;
+          if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
+            string val = ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!)).GetStringValue();
+            if ((global::DripSharp.Runtime.JavaCompat.Equals(val, fontName)
+              || global::DripSharp.Runtime.JavaCompat.Equals(val, noSubSetName))) {
+              return true;
+            }
+          }
+        }
+        if (empty) {
+          global::DripSharp.Runtime.JavaCompat.Add(ve,
+            new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPropertyMissing,
+            global::DripSharp.Runtime.JavaCompat.Concat("FontName present in the FontDescriptor dictionary can't be found in ",
+            "XMP information the Font File Stream.")));
+        } else {
+          global::DripSharp.Runtime.JavaCompat.Add(ve,
+            new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataMismatch,
+            global::DripSharp.Runtime.JavaCompat.Concat("FontName present in the FontDescriptor dictionary doesn't match with XMP ",
+            "information dc:title of the Font File Stream.")));
+        }
+        return false;
+      }
+    }
+    return true;
+  }
 
-public virtual bool AnalyseRights(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDesc, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
-global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = metadata.GetDublinCoreSchema();
-if ((dc != default!)) {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty copyrights = dc.GetRightsProperty();
-if ((((copyrights == default!) || (copyrights.GetContainer() == default!)) || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(copyrights.GetContainer().GetAllProperties()))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPropertyMissing, "CopyRights is missing from the XMP information (dc:rights) of the Font File Stream."));
-return false;
-}
-}
-global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema rights = metadata.GetXMPRightsManagementSchema();
-if ((rights != default!)) {
-global::DripSharp.PdfCarton.Xmp.Type.BooleanType marked = rights.GetMarkedProperty();
-if (((marked != default!) && !((bool)(marked.GetValue())))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPropertyMissing, "the XMP information (xmpRights:Marked) is invalid for the Font File Stream."));
-return false;
-}
-}
-return true;
-}
+  public virtual bool AnalyseRights(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDesc,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
+    global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = metadata.GetDublinCoreSchema();
+    if ((dc != default!)) {
+      global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty copyrights = dc.GetRightsProperty();
+      if ((((copyrights == default!) || (copyrights.GetContainer() == default!))
+        || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(copyrights.GetContainer().GetAllProperties()))) {
+        global::DripSharp.Runtime.JavaCompat.Add(ve,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPropertyMissing,
+          "CopyRights is missing from the XMP information (dc:rights) of the Font File Stream."));
+        return false;
+      }
+    }
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema rights
+      = metadata.GetXMPRightsManagementSchema();
+    if ((rights != default!)) {
+      global::DripSharp.PdfCarton.Xmp.Type.BooleanType marked = rights.GetMarkedProperty();
+      if (((marked != default!) && !((bool)(marked.GetValue())))) {
+        global::DripSharp.Runtime.JavaCompat.Add(ve,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataPropertyMissing,
+          "the XMP information (xmpRights:Marked) is invalid for the Font File Stream."));
+        return false;
+      }
+    }
+    return true;
+  }
 }

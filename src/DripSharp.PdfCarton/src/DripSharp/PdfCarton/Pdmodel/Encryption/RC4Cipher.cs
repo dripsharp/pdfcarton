@@ -9,76 +9,79 @@
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 internal class RC4Cipher {
-private readonly int[] salt = null!;
+  private readonly int[] salt = null!;
 
-private int b = default;
+  private int b = default;
 
-private int c = default;
+  private int c = default;
 
-internal RC4Cipher() {
-this.salt = new int[256];
-}
+  internal RC4Cipher() {
+    this.salt = new int[256];
+  }
 
-public virtual void SetKey(sbyte[] key) {
-this.b = 0;
-this.c = 0;
-if (((key.Length < 1) || (key.Length > 32))) {
-throw new global::System.ArgumentException("number of bytes must be between 1 and 32");
-}
-for (int i__56_17 = 0; (i__56_17 < this.salt.Length); i__56_17++) {
-this.salt[i__56_17] = i__56_17;
-}
-int keyIndex = 0;
-int saltIndex = 0;
-for (int i__63_18 = 0; (i__63_18 < this.salt.Length); i__63_18++) {
-saltIndex = (((global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher.fixByte(key[keyIndex]) + this.salt[i__63_18]) + saltIndex) % 256);
-global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher.swap(this.salt, i__63_18, saltIndex);
-keyIndex = ((keyIndex + 1) % key.Length);
-}
-}
+  public virtual void SetKey(sbyte[] key) {
+    this.b = 0;
+    this.c = 0;
+    if (((key.Length < 1) || (key.Length > 32))) {
+      throw new global::System.ArgumentException("number of bytes must be between 1 and 32");
+    }
+    for (int i__56_17 = 0; (i__56_17 < this.salt.Length); i__56_17++) {
+      this.salt[i__56_17] = i__56_17;
+    }
+    int keyIndex = 0;
+    int saltIndex = 0;
+    for (int i__63_18 = 0; (i__63_18 < this.salt.Length); i__63_18++) {
+      saltIndex = (((global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher.fixByte(key[keyIndex])
+        + this.salt[i__63_18]) + saltIndex) % 256);
+      global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher.swap(this.salt, i__63_18, saltIndex);
+      keyIndex = ((keyIndex + 1) % key.Length);
+    }
+  }
 
-private static int fixByte(sbyte aByte) {
-return (((int)(aByte) < 0) ? (256 + aByte) : aByte);
-}
+  private static int fixByte(sbyte aByte) {
+    return (((int)aByte < 0) ? (256 + aByte) : aByte);
+  }
 
-private static void swap(int[] data, int firstIndex, int secondIndex) {
-int tmp = data[firstIndex];
-data[firstIndex] = data[secondIndex];
-data[secondIndex] = tmp;
-}
+  private static void swap(int[] data, int firstIndex, int secondIndex) {
+    int tmp = data[firstIndex];
+    data[firstIndex] = data[secondIndex];
+    data[secondIndex] = tmp;
+  }
 
-private int encrypt(sbyte aByte) {
-this.b = ((this.b + 1) % 256);
-this.c = ((this.salt[this.b] + this.c) % 256);
-global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher.swap(this.salt, this.b, this.c);
-int saltIndex = ((this.salt[this.b] + this.salt[this.c]) % 256);
-return (aByte ^ unchecked((sbyte)(this.salt[saltIndex])));
-}
+  private int encrypt(sbyte aByte) {
+    this.b = ((this.b + 1) % 256);
+    this.c = ((this.salt[this.b] + this.c) % 256);
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher.swap(this.salt, this.b, this.c);
+    int saltIndex = ((this.salt[this.b] + this.salt[this.c]) % 256);
+    return (aByte ^ unchecked((sbyte)(this.salt[saltIndex])));
+  }
 
-public virtual void Write(sbyte aByte, global::System.IO.Stream output) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, this.encrypt(aByte));
-}
+  public virtual void Write(sbyte aByte, global::System.IO.Stream output) {
+    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, this.encrypt(aByte));
+  }
 
-public virtual void Write(sbyte[] data, global::System.IO.Stream output) {
-this.write(data, 0, data.Length, output, new sbyte[data.Length]);
-}
+  public virtual void Write(sbyte[] data, global::System.IO.Stream output) {
+    this.write(data, 0, data.Length, output, new sbyte[data.Length]);
+  }
 
-public virtual void Write(global::System.IO.Stream data, global::System.IO.Stream output) {
-sbyte[] buffer = new sbyte[1024];
-int amountRead;
-while (((amountRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(data, buffer)) != -1)) {
-this.write(buffer, 0, amountRead, output, buffer);
-}
-}
+  public virtual void Write(global::System.IO.Stream data, global::System.IO.Stream output) {
+    sbyte[] buffer = new sbyte[1024];
+    int amountRead;
+    while (((amountRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(data, buffer)) !=
+      -1)) {
+      this.write(buffer, 0, amountRead, output, buffer);
+    }
+  }
 
-public virtual void Write(sbyte[] data, int offset, int len, global::System.IO.Stream output) {
-this.write(data, offset, len, output, new sbyte[len]);
-}
+  public virtual void Write(sbyte[] data, int offset, int len, global::System.IO.Stream output) {
+    this.write(data, offset, len, output, new sbyte[len]);
+  }
 
-private void write(sbyte[] data, int offset, int len, global::System.IO.Stream output, sbyte[] buffer) {
-for (int i = 0, j = offset; (i < len); ++i, ++j) {
-buffer[i] = unchecked((sbyte)(unchecked((sbyte)(this.encrypt(data[j])))));
-}
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, buffer, 0, len);
-}
+  private void write(sbyte[] data, int offset, int len, global::System.IO.Stream output,
+    sbyte[] buffer) {
+    for (int i = 0, j = offset; (i < len); ++i, ++j) {
+      buffer[i] = unchecked((sbyte)(unchecked((sbyte)(this.encrypt(data[j])))));
+    }
+    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, buffer, 0, len);
+  }
 }

@@ -9,129 +9,145 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class TrueTypeCollection : global::System.IDisposable {
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream = null!;
 
-private readonly int numFonts = default;
+  private readonly int numFonts = default;
 
-private readonly long[] fontOffsets = null!;
+  private readonly long[] fontOffsets = null!;
 
-public TrueTypeCollection(global::System.IO.FileInfo file) : this(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.createBufferedDataStream(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file), true)) {
+  public TrueTypeCollection(global::System.IO.FileInfo file)
+  : this(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.createBufferedDataStream(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file),
+    true)) {
 
-}
+  }
 
-public TrueTypeCollection(global::System.IO.Stream stream) : this(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.createBufferedDataStream(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(stream), false)) {
+  public TrueTypeCollection(global::System.IO.Stream stream)
+  : this(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.createBufferedDataStream(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(stream),
+    false)) {
 
-}
+  }
 
-private TrueTypeCollection(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream) {
-this.stream = stream;
-string tag = stream.ReadTag();
-if (!(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(tag, "ttcf"))) {
-throw new global::System.IO.IOException("Missing TTC header");
-}
-float version = stream.Read32Fixed();
-this.numFonts = (int)(stream.ReadUnsignedInt());
-if (((this.numFonts <= 0) || (this.numFonts > 1024))) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid number of fonts ", this.numFonts));
-}
-this.fontOffsets = new long[this.numFonts];
-for (int i = 0; (i < this.numFonts); i++) {
-this.fontOffsets[i] = stream.ReadUnsignedInt();
-}
-if ((version >= 2)) {
-int ulDsigTag = stream.ReadUnsignedShort();
-int ulDsigLength = stream.ReadUnsignedShort();
-int ulDsigOffset = stream.ReadUnsignedShort();
-}
-}
+  private TrueTypeCollection(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream) {
+    this.stream = stream;
+    string tag = stream.ReadTag();
+    if (!global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(tag, "ttcf")) {
+      throw new global::System.IO.IOException("Missing TTC header");
+    }
+    float version = stream.Read32Fixed();
+    this.numFonts = (int)(stream.ReadUnsignedInt());
+    if (((this.numFonts <= 0) || (this.numFonts > 1024))) {
+      throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid number of fonts ",
+        this.numFonts));
+    }
+    this.fontOffsets = new long[this.numFonts];
+    for (int i = 0; (i < this.numFonts); i++) {
+      this.fontOffsets[i] = stream.ReadUnsignedInt();
+    }
+    if ((version >= 2)) {
+      int ulDsigTag = stream.ReadUnsignedShort();
+      int ulDsigLength = stream.ReadUnsignedShort();
+      int ulDsigOffset = stream.ReadUnsignedShort();
+    }
+  }
 
-private static global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream createBufferedDataStream(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, bool closeAfterReading) {
-try {
-return new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadDataStream(randomAccessRead);
-} finally {
-if (closeAfterReading) {
-global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(randomAccessRead);
-}
-}
-}
+  private static global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream createBufferedDataStream(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead,
+    bool closeAfterReading) {
+    try {
+      return new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadDataStream(randomAccessRead);
+    } finally {
+      if (closeAfterReading) {
+        global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(randomAccessRead);
+      }
+    }
+  }
 
-public virtual void ProcessAllFonts(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontProcessor trueTypeFontProcessor) {
-for (int i = 0; (i < this.numFonts); i++) {
-global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont font = this.getFontAtIndex(i);
-trueTypeFontProcessor.Process(font);
-}
-}
+  public virtual void ProcessAllFonts(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontProcessor trueTypeFontProcessor) {
+    for (int i = 0; (i < this.numFonts); i++) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont font = this.getFontAtIndex(i);
+      trueTypeFontProcessor.Process(font);
+    }
+  }
 
-public static void ProcessAllFontHeaders(global::System.IO.FileInfo ttcFile, global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontHeadersProcessor trueTypeFontProcessor) {
-using (global::DripSharp.PdfCarton.IO.RandomAccessRead read = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(ttcFile)) using (global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream = new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadUnbufferedDataStream(read)) using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection ttc = new global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection(stream)) {
-for (int i = 0; (i < ttc.numFonts); i++) {
-global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser parser = ttc.createFontParserAtIndexAndSeek(i);
-global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders headers = parser.parseTableHeaders(new global::DripSharp.PdfCarton.Fonts.Ttf.TTCDataStream(ttc.stream));
-trueTypeFontProcessor.Process(headers);
-}
-}
-}
+  public static void ProcessAllFontHeaders(global::System.IO.FileInfo ttcFile,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontHeadersProcessor trueTypeFontProcessor) {
+    using (global::DripSharp.PdfCarton.IO.RandomAccessRead read
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(ttcFile)) using (global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream
+      = new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadUnbufferedDataStream(read)) using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection ttc
+      = new global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection(stream)) {
+      for (int i = 0; (i < ttc.numFonts); i++) {
+        global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser parser
+          = ttc.createFontParserAtIndexAndSeek(i);
+        global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders headers
+          = parser.parseTableHeaders(new global::DripSharp.PdfCarton.Fonts.Ttf.TTCDataStream(ttc.stream));
+        trueTypeFontProcessor.Process(headers);
+      }
+    }
+  }
 
-private global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont getFontAtIndex(int idx) {
-global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser parser = this.createFontParserAtIndexAndSeek(idx);
-return parser.parse(new global::DripSharp.PdfCarton.Fonts.Ttf.TTCDataStream(this.stream));
-}
+  private global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont getFontAtIndex(int idx) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser parser
+      = this.createFontParserAtIndexAndSeek(idx);
+    return parser.parse(new global::DripSharp.PdfCarton.Fonts.Ttf.TTCDataStream(this.stream));
+  }
 
-private global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser createFontParserAtIndexAndSeek(int idx) {
-this.stream.Seek(this.fontOffsets[idx]);
-global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser parser;
-if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(this.stream.ReadTag(), "OTTO")) {
-parser = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser(false);
-} else {
-parser = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(false);
-}
-this.stream.Seek(this.fontOffsets[idx]);
-return parser;
-}
+  private global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser createFontParserAtIndexAndSeek(int idx) {
+    this.stream.Seek(this.fontOffsets[idx]);
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser parser;
+    if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(this.stream.ReadTag(),
+      "OTTO")) {
+      parser = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser(false);
+    } else {
+      parser = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(false);
+    }
+    this.stream.Seek(this.fontOffsets[idx]);
+    return parser;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont GetFontByName(string name) {
-for (int i = 0; (i < this.numFonts); i++) {
-global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont font = this.getFontAtIndex(i);
-if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(font.GetName(), name)) {
-return font;
-}
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont GetFontByName(string name) {
+    for (int i = 0; (i < this.numFonts); i++) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont font = this.getFontAtIndex(i);
+      if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(font.GetName(), name)) {
+        return font;
+      }
+    }
+    return default!;
+  }
 
-public interface TrueTypeFontProcessor {
-public void Process(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf);
-}
+  public interface TrueTypeFontProcessor {
+    public void Process(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf);
+  }
 
-public sealed class __TrueTypeFontProcessorFunctionalAdapter : global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontProcessor {
-private readonly global::System.Action<global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont> implementation;
+  public sealed class __TrueTypeFontProcessorFunctionalAdapter
+  : global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontProcessor {
+    private readonly global::System.Action<global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont> implementation;
 
-public __TrueTypeFontProcessorFunctionalAdapter(global::System.Action<global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont> implementation) {
-this.implementation = implementation;
-}
+    public __TrueTypeFontProcessorFunctionalAdapter(global::System.Action<global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont> implementation) {
+      this.implementation = implementation;
+    }
 
-public void Process(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf) {
-this.implementation(ttf);
-}
-}
+    public void Process(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf) {
+      this.implementation(ttf);
+    }
+  }
 
-public interface TrueTypeFontHeadersProcessor {
-public void Process(global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders fontHeaders);
-}
+  public interface TrueTypeFontHeadersProcessor {
+    public void Process(global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders fontHeaders);
+  }
 
-public sealed class __TrueTypeFontHeadersProcessorFunctionalAdapter : global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontHeadersProcessor {
-private readonly global::System.Action<global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders> implementation;
+  public sealed class __TrueTypeFontHeadersProcessorFunctionalAdapter
+  : global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontHeadersProcessor {
+    private readonly global::System.Action<global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders> implementation;
 
-public __TrueTypeFontHeadersProcessorFunctionalAdapter(global::System.Action<global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders> implementation) {
-this.implementation = implementation;
-}
+    public __TrueTypeFontHeadersProcessorFunctionalAdapter(global::System.Action<global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders> implementation) {
+      this.implementation = implementation;
+    }
 
-public void Process(global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders fontHeaders) {
-this.implementation(fontHeaders);
-}
-}
+    public void Process(global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders fontHeaders) {
+      this.implementation(fontHeaders);
+    }
+  }
 
-public virtual void Dispose() {
-this.stream.Dispose();
-}
+  public virtual void Dispose() {
+    this.stream.Dispose();
+  }
 }

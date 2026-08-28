@@ -9,183 +9,224 @@
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
 public abstract class AnnotationValidator {
-private global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory annotFact = default!;
+  private global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory annotFact
+    = default!;
 
-protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Ctx = default!;
+  protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Ctx = default!;
 
-protected internal global::DripSharp.PdfCarton.Cos.COSDictionary AnnotDictionary = default!;
+  protected internal global::DripSharp.PdfCarton.Cos.COSDictionary AnnotDictionary = default!;
 
-protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation PdAnnot = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation PdAnnot
+    = default!;
 
-public AnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) {
-this.Ctx = context;
-this.AnnotDictionary = annotDictionary;
-}
+  public AnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) {
+    this.Ctx = context;
+    this.AnnotDictionary = annotDictionary;
+  }
 
-protected internal virtual bool CheckFlags() {
-bool result = this.PdAnnot.IsPrinted();
-result = (result && !(this.PdAnnot.IsHidden()));
-result = (result && !(this.PdAnnot.IsInvisible()));
-result = (result && !(this.PdAnnot.IsNoView()));
-if (!result) {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotForbiddenFlag, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Flags of ", this.PdAnnot.GetSubtype()), " annotation are invalid")));
-}
-return result;
-}
+  protected internal virtual bool CheckFlags() {
+    bool result = this.PdAnnot.IsPrinted();
+    result = (result && !(this.PdAnnot.IsHidden()));
+    result = (result && !(this.PdAnnot.IsInvisible()));
+    result = (result && !(this.PdAnnot.IsNoView()));
+    if (!result) {
+      this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotForbiddenFlag,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Flags of ",
+        this.PdAnnot.GetSubtype()), " annotation are invalid")));
+    }
+    return result;
+  }
 
-protected internal virtual bool CheckCA() {
-global::DripSharp.PdfCarton.Cos.COSBase ca = this.PdAnnot.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ca);
-if ((ca is global::DripSharp.PdfCarton.Cos.COSFloat)) {
-float caf = ((global::DripSharp.PdfCarton.Cos.COSFloat)(ca!)).FloatValue();
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(caf, 1.0F) != 0)) {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidCa, global::DripSharp.Runtime.JavaCompat.Concat("CA entry is invalid. Expected 1.0 / Read ", caf)));
-return false;
-}
-}
-return true;
-}
+  protected internal virtual bool CheckCA() {
+    global::DripSharp.PdfCarton.Cos.COSBase ca
+      = this.PdAnnot.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ca);
+    if ((ca is global::DripSharp.PdfCarton.Cos.COSFloat)) {
+      float caf = ((global::DripSharp.PdfCarton.Cos.COSFloat)(ca!)).FloatValue();
+      if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(caf, 1.0F) != 0)) {
+        this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidCa,
+          global::DripSharp.Runtime.JavaCompat.Concat("CA entry is invalid. Expected 1.0 / Read ",
+          caf)));
+        return false;
+      }
+    }
+    return true;
+  }
 
-protected internal virtual bool CheckColors() {
-if (((this.PdAnnot.GetColor() != default!) && !(this.SearchRGBProfile()))) {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotForbiddenColor, "Annotation uses a Color profile which isn't the same than the profile contained by the OutputIntent"));
-return false;
-}
-return true;
-}
+  protected internal virtual bool CheckColors() {
+    if (((this.PdAnnot.GetColor() != default!) && !(this.SearchRGBProfile()))) {
+      this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotForbiddenColor,
+        "Annotation uses a Color profile which isn't the same than the profile contained by the OutputIntent"));
+      return false;
+    }
+    return true;
+  }
 
-protected internal virtual bool SearchRGBProfile() {
-global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper iccpw = global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper.GetOrSearchICCProfile(this.Ctx);
-if ((iccpw != default!)) {
-return iccpw.IsRGBColorSpace();
-}
-return false;
-}
+  protected internal virtual bool SearchRGBProfile() {
+    global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper iccpw
+      = global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper.GetOrSearchICCProfile(this.Ctx);
+    if ((iccpw != default!)) {
+      return iccpw.IsRGBColorSpace();
+    }
+    return false;
+  }
 
-protected internal virtual bool CheckAP() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceDictionary ap = this.PdAnnot.GetAppearance();
-if ((ap != default!)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary apDict = ap.GetCOSObject();
-if (((apDict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.D) != default!) || (apDict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.R) != default!))) {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent, "Only the N Appearance is authorized"));
-return false;
-} else {
-if ((apDict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.N) == default!)) {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotMissingApNContent, "The N Appearance must be present"));
-return false;
-} else {
-global::DripSharp.PdfCarton.Cos.COSBase apn = apDict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.N);
-global::DripSharp.PdfCarton.Cos.COSName subtype = this.AnnotDictionary.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
-global::DripSharp.PdfCarton.Cos.COSBase ft = this.getFieldType();
-if ((global::DripSharp.PdfCarton.Cos.COSName.Widget.Equals(subtype) && global::DripSharp.PdfCarton.Cos.COSName.Btn.Equals(ft))) {
-if ((apn is global::DripSharp.PdfCarton.Cos.COSStream)) {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent, "The N Appearance of a Btn widget must not be a stream, but an appearance subdictionary"));
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(this.Ctx, new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject((global::DripSharp.PdfCarton.Cos.COSStream)(apn!)), global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.GraphicProcess);
-return false;
-}
-if ((apn is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-if ((this.PdAnnot.GetAppearanceState() == default!)) {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent, "The appearance state is required if the appearance contains a subdictionary"));
-return false;
-}
-if ((((global::DripSharp.PdfCarton.Cos.COSDictionary)(apn!)).Size() == 0)) {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent, "The N Appearance of a Btn widget must not be empty"));
-return false;
-}
-foreach (global::DripSharp.PdfCarton.Cos.COSBase __foreachValue_val in ((global::DripSharp.PdfCarton.Cos.COSDictionary)(apn!)).GetValues()) {
-global::DripSharp.PdfCarton.Cos.COSBase val = __foreachValue_val;
-{
-if ((val is global::DripSharp.PdfCarton.Cos.COSObject)) {
-val = ((global::DripSharp.PdfCarton.Cos.COSObject)(val!)).GetObject();
-}
-if (!((val is global::DripSharp.PdfCarton.Cos.COSStream))) {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent, "The N Appearance of a Btn widget must be a stream"));
-return false;
-}
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(this.Ctx, new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject((global::DripSharp.PdfCarton.Cos.COSStream)(val!)), global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.GraphicProcess);
-}
-}
-} else {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent, "The N Appearance must be an appearance subdictionary"));
-return false;
-}
-} else {
-if ((apn is global::DripSharp.PdfCarton.Cos.COSStream)) {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(this.Ctx, new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject((global::DripSharp.PdfCarton.Cos.COSStream)(apn!)), global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.GraphicProcess);
-} else {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent, "The N Appearance must be a Stream"));
-return false;
-}
-}
-}
-}
-} else {
-if (((this.PdAnnot is global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget) && (this.PdAnnot.GetAppearance() == default!))) {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent, "widget annotation lacks an appearance dictionary"));
-return false;
-}
-}
-return true;
-}
+  protected internal virtual bool CheckAP() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceDictionary ap
+      = this.PdAnnot.GetAppearance();
+    if ((ap != default!)) {
+      global::DripSharp.PdfCarton.Cos.COSDictionary apDict = ap.GetCOSObject();
+      if (((apDict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.D) != default!)
+        || (apDict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.R) != default!))) {
+        this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent,
+          "Only the N Appearance is authorized"));
+        return false;
+      } else {
+        if ((apDict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.N) == default!)) {
+          this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotMissingApNContent,
+            "The N Appearance must be present"));
+          return false;
+        } else {
+          global::DripSharp.PdfCarton.Cos.COSBase apn
+            = apDict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.N);
+          global::DripSharp.PdfCarton.Cos.COSName subtype
+            = this.AnnotDictionary.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
+          global::DripSharp.PdfCarton.Cos.COSBase ft = this.getFieldType();
+          if ((global::DripSharp.PdfCarton.Cos.COSName.Widget.Equals(subtype)
+            && global::DripSharp.PdfCarton.Cos.COSName.Btn.Equals(ft))) {
+            if ((apn is global::DripSharp.PdfCarton.Cos.COSStream)) {
+              this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent,
+                "The N Appearance of a Btn widget must not be a stream, but an appearance subdictionary"));
+              global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(this.Ctx,
+                new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject((global::DripSharp.PdfCarton.Cos.COSStream)(apn!)),
+                global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.GraphicProcess);
+              return false;
+            }
+            if ((apn is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+              if ((this.PdAnnot.GetAppearanceState() == default!)) {
+                this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent,
+                  "The appearance state is required if the appearance contains a subdictionary"));
+                return false;
+              }
+              if ((((global::DripSharp.PdfCarton.Cos.COSDictionary)(apn!)).Size() == 0)) {
+                this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent,
+                  "The N Appearance of a Btn widget must not be empty"));
+                return false;
+              }
+              foreach (global::DripSharp.PdfCarton.Cos.COSBase __foreachValue_val in ((global::DripSharp.PdfCarton.Cos.COSDictionary)(apn!)).GetValues()) {
+                global::DripSharp.PdfCarton.Cos.COSBase val = __foreachValue_val; {
+                  if ((val is global::DripSharp.PdfCarton.Cos.COSObject)) {
+                    val = ((global::DripSharp.PdfCarton.Cos.COSObject)(val!)).GetObject();
+                  }
+                  if (!((val is global::DripSharp.PdfCarton.Cos.COSStream))) {
+                    this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent,
+                      "The N Appearance of a Btn widget must be a stream"));
+                    return false;
+                  }
+                  global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(this.Ctx,
+                    new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject((global::DripSharp.PdfCarton.Cos.COSStream)(val!)),
+                    global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.GraphicProcess);
+                }
+              }
+            } else {
+              this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent,
+                "The N Appearance must be an appearance subdictionary"));
+              return false;
+            }
+          } else {
+            if ((apn is global::DripSharp.PdfCarton.Cos.COSStream)) {
+              global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(this.Ctx,
+                new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject((global::DripSharp.PdfCarton.Cos.COSStream)(apn!)),
+                global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.GraphicProcess);
+            } else {
+              this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent,
+                "The N Appearance must be a Stream"));
+              return false;
+            }
+          }
+        }
+      }
+    } else {
+      if (((this.PdAnnot is global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget)
+        && (this.PdAnnot.GetAppearance() == default!))) {
+        this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidApContent,
+          "widget annotation lacks an appearance dictionary"));
+        return false;
+      }
+    }
+    return true;
+  }
 
-protected internal virtual bool CheckActions() {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(this.Ctx, this.AnnotDictionary, global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ActionsProcess);
-return true;
-}
+  protected internal virtual bool CheckActions() {
+    global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(this.Ctx,
+      this.AnnotDictionary,
+      global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ActionsProcess);
+    return true;
+  }
 
-protected internal virtual bool CheckPopup() {
-global::DripSharp.PdfCarton.Cos.COSBase cosPopup = this.AnnotDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup.SubType));
-if ((cosPopup != default!)) {
-if (!((cosPopup is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxDictInvalid, "An Annotation has a Popup entry, but the value is missing or isn't a dictionary"));
-return false;
-}
-global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator popupVal = this.annotFact.GetAnnotationValidator(this.Ctx, (global::DripSharp.PdfCarton.Cos.COSDictionary)(cosPopup!));
-return popupVal.Validate();
-}
-return true;
-}
+  protected internal virtual bool CheckPopup() {
+    global::DripSharp.PdfCarton.Cos.COSBase cosPopup
+      = this.AnnotDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup.SubType));
+    if ((cosPopup != default!)) {
+      if (!((cosPopup is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
+        this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxDictInvalid,
+          "An Annotation has a Popup entry, but the value is missing or isn't a dictionary"));
+        return false;
+      }
+      global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator popupVal
+        = this.annotFact.GetAnnotationValidator(this.Ctx,
+        (global::DripSharp.PdfCarton.Cos.COSDictionary)(cosPopup!));
+      return popupVal.Validate();
+    }
+    return true;
+  }
 
-public virtual bool Validate() {
-bool isValid = this.CheckMandatoryFields();
-isValid = (this.CheckFlags() && isValid);
-isValid = (this.CheckColors() && isValid);
-isValid = (this.CheckAP() && isValid);
-isValid = (this.CheckCA() && isValid);
-isValid = (this.CheckActions() && isValid);
-isValid = (this.CheckPopup() && isValid);
-return isValid;
-}
+  public virtual bool Validate() {
+    bool isValid = this.CheckMandatoryFields();
+    isValid = (this.CheckFlags() && isValid);
+    isValid = (this.CheckColors() && isValid);
+    isValid = (this.CheckAP() && isValid);
+    isValid = (this.CheckCA() && isValid);
+    isValid = (this.CheckActions() && isValid);
+    isValid = (this.CheckPopup() && isValid);
+    return isValid;
+  }
 
-protected internal virtual bool CheckMandatoryFields() {
-bool subtype = this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
-bool rect = this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Rect);
-bool result = ((subtype && rect) && this.CheckSpecificMandatoryFields());
-if (!result) {
-this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotMissingFields, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("A mandatory field for the ", this.PdAnnot.GetSubtype()), " annotation is missing")));
-}
-return result;
-}
+  protected internal virtual bool CheckMandatoryFields() {
+    bool subtype
+      = this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
+    bool rect = this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Rect);
+    bool result = ((subtype && rect) && this.CheckSpecificMandatoryFields());
+    if (!result) {
+      this.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotMissingFields,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("A mandatory field for the ",
+        this.PdAnnot.GetSubtype()), " annotation is missing")));
+    }
+    return result;
+  }
 
-protected internal virtual bool CheckSpecificMandatoryFields() {
-return true;
-}
+  protected internal virtual bool CheckSpecificMandatoryFields() {
+    return true;
+  }
 
-public void SetFactory(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory fact) {
-this.annotFact = fact;
-}
+  public void SetFactory(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory fact) {
+    this.annotFact = fact;
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSBase getFieldType() {
-global::DripSharp.PdfCarton.Cos.COSBase ft = this.AnnotDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ft);
-global::DripSharp.PdfCarton.Cos.COSDictionary parent = this.AnnotDictionary;
-while ((ft == default!)) {
-global::DripSharp.PdfCarton.Cos.COSBase parentBase = parent.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Parent);
-if ((parentBase is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-parent = (global::DripSharp.PdfCarton.Cos.COSDictionary)(parentBase!);
-ft = parent.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ft);
-} else {
-break;
-}
-}
-return ft;
-}
+  private global::DripSharp.PdfCarton.Cos.COSBase getFieldType() {
+    global::DripSharp.PdfCarton.Cos.COSBase ft
+      = this.AnnotDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ft);
+    global::DripSharp.PdfCarton.Cos.COSDictionary parent = this.AnnotDictionary;
+    while ((ft == default!)) {
+      global::DripSharp.PdfCarton.Cos.COSBase parentBase
+        = parent.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Parent);
+      if ((parentBase is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        parent = (global::DripSharp.PdfCarton.Cos.COSDictionary)(parentBase!);
+        ft = parent.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ft);
+      } else {
+        break;
+      }
+    }
+    return ft;
+  }
 }

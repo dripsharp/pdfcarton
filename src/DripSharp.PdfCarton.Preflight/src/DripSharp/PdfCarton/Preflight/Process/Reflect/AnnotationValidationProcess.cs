@@ -8,23 +8,28 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process.Reflect;
 
-public class AnnotationValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
-global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
-if (vPath.IsEmpty()) {
-return;
-} else {
-if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Cos.COSDictionary)))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidElement, "Annotation validation process needs at least one COSDictionary object"));
-} else {
-global::DripSharp.PdfCarton.Cos.COSDictionary annotDict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(vPath.Peek()!);
-global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = context.GetConfig();
-global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory factory = config.GetAnnotFact();
-global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator annotValidator = factory.GetAnnotationValidator(context, annotDict);
-if ((annotValidator != default!)) {
-annotValidator.Validate();
-}
-}
-}
-}
+public class AnnotationValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
+    global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
+    if (vPath.IsEmpty()) {
+      return;
+    } else {
+      if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Cos.COSDictionary)))) {
+        context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotInvalidElement,
+          "Annotation validation process needs at least one COSDictionary object"));
+      } else {
+        global::DripSharp.PdfCarton.Cos.COSDictionary annotDict
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(vPath.Peek()!);
+        global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = context.GetConfig();
+        global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory factory
+          = config.GetAnnotFact();
+        global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator annotValidator
+          = factory.GetAnnotationValidator(context, annotDict);
+        if ((annotValidator != default!)) {
+          annotValidator.Validate();
+        }
+      }
+    }
+  }
 }

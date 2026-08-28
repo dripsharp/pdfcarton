@@ -8,39 +8,47 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/photoshop/1.0/", "photoshop")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/photoshop/1.0/",
+  "photoshop")]
 public class LayerType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string LayerName = "LayerName";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string LayerName = "LayerName";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string LayerText = "LayerText";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string LayerText = "LayerText";
 
-public LayerType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
-this.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace, "parseType", "Resource"));
-}
+  public LayerType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+    this.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace,
+      "parseType", "Resource"));
+  }
 
-public virtual string GetLayerName() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.LayerType.LayerName, typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType));
-if ((absProp != default!)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(absProp!)).GetStringValue();
-}
-return default!;
-}
+  public virtual string GetLayerName() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp
+      = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.LayerType.LayerName,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType));
+    if ((absProp != default!)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(absProp!)).GetStringValue();
+    }
+    return default!;
+  }
 
-public virtual void SetLayerName(string image) {
-this.AddProperty(this.CreateTextType(global::DripSharp.PdfCarton.Xmp.Type.LayerType.LayerName, image));
-}
+  public virtual void SetLayerName(string image) {
+    this.AddProperty(this.CreateTextType(global::DripSharp.PdfCarton.Xmp.Type.LayerType.LayerName,
+      image));
+  }
 
-public virtual string GetLayerText() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.LayerType.LayerText, typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType));
-if ((absProp != default!)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(absProp!)).GetStringValue();
-}
-return default!;
-}
+  public virtual string GetLayerText() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp
+      = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.LayerType.LayerText,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType));
+    if ((absProp != default!)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(absProp!)).GetStringValue();
+    }
+    return default!;
+  }
 
-public virtual void SetLayerText(string image) {
-this.AddProperty(this.CreateTextType(global::DripSharp.PdfCarton.Xmp.Type.LayerType.LayerText, image));
-}
+  public virtual void SetLayerText(string image) {
+    this.AddProperty(this.CreateTextType(global::DripSharp.PdfCarton.Xmp.Type.LayerType.LayerText,
+      image));
+  }
 }

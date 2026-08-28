@@ -9,107 +9,136 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Filespecification;
 
 public class PDEmbeddedFile : global::DripSharp.PdfCarton.Pdmodel.Common.PDStream {
-public PDEmbeddedFile(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(document) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.EmbeddedFile);
-}
+  public PDEmbeddedFile(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(document) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.EmbeddedFile);
+  }
 
-public PDEmbeddedFile(global::DripSharp.PdfCarton.Cos.COSStream str) : base(str) {
+  public PDEmbeddedFile(global::DripSharp.PdfCarton.Cos.COSStream str) : base(str) {
 
-}
+  }
 
-public PDEmbeddedFile(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc, global::System.IO.Stream str) : base(doc, str) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.EmbeddedFile);
-}
+  public PDEmbeddedFile(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
+    global::System.IO.Stream str) : base(doc, str) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.EmbeddedFile);
+  }
 
-public PDEmbeddedFile(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc, global::System.IO.Stream input, global::DripSharp.PdfCarton.Cos.COSName filter) : base(doc, input, filter) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.EmbeddedFile);
-}
+  public PDEmbeddedFile(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
+    global::System.IO.Stream input, global::DripSharp.PdfCarton.Cos.COSName filter) : base(doc,
+    input, filter) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.EmbeddedFile);
+  }
 
-public virtual void SetSubtype(string mimeType) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, mimeType);
-}
+  public virtual void SetSubtype(string mimeType) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, mimeType);
+  }
 
-public virtual string GetSubtype() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
-}
+  public virtual string GetSubtype() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
+  }
 
-public virtual int GetSize() {
-return this.GetCOSObject().GetEmbeddedInt(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.Size);
-}
+  public virtual int GetSize() {
+    return this.GetCOSObject().GetEmbeddedInt(global::DripSharp.PdfCarton.Cos.COSName.Params,
+      global::DripSharp.PdfCarton.Cos.COSName.Size);
+  }
 
-public virtual void SetSize(int size) {
-this.GetCOSObject().SetEmbeddedInt(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.Size, size);
-}
+  public virtual void SetSize(int size) {
+    this.GetCOSObject().SetEmbeddedInt(global::DripSharp.PdfCarton.Cos.COSName.Params,
+      global::DripSharp.PdfCarton.Cos.COSName.Size, size);
+  }
 
-public virtual global::System.DateTimeOffset? GetCreationDate() {
-return this.GetCOSObject().GetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.CreationDate);
-}
+  public virtual global::System.DateTimeOffset? GetCreationDate() {
+    return this.GetCOSObject().GetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName.Params,
+      global::DripSharp.PdfCarton.Cos.COSName.CreationDate);
+  }
 
-public virtual void SetCreationDate(global::System.DateTimeOffset? creation) {
-this.GetCOSObject().SetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.CreationDate, creation);
-}
+  public virtual void SetCreationDate(global::System.DateTimeOffset? creation) {
+    this.GetCOSObject().SetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName.Params,
+      global::DripSharp.PdfCarton.Cos.COSName.CreationDate, creation);
+  }
 
-public virtual global::System.DateTimeOffset? GetModDate() {
-return this.GetCOSObject().GetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.ModDate);
-}
+  public virtual global::System.DateTimeOffset? GetModDate() {
+    return this.GetCOSObject().GetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName.Params,
+      global::DripSharp.PdfCarton.Cos.COSName.ModDate);
+  }
 
-public virtual void SetModDate(global::System.DateTimeOffset? mod) {
-this.GetCOSObject().SetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.ModDate, mod);
-}
+  public virtual void SetModDate(global::System.DateTimeOffset? mod) {
+    this.GetCOSObject().SetEmbeddedDate(global::DripSharp.PdfCarton.Cos.COSName.Params,
+      global::DripSharp.PdfCarton.Cos.COSName.ModDate, mod);
+  }
 
-public virtual string GetCheckSum() {
-return this.GetCOSObject().GetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.CheckSum);
-}
+  public virtual string GetCheckSum() {
+    return this.GetCOSObject().GetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Params,
+      global::DripSharp.PdfCarton.Cos.COSName.CheckSum);
+  }
 
-public virtual void SetCheckSum(string checksum) {
-this.GetCOSObject().SetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Params, global::DripSharp.PdfCarton.Cos.COSName.CheckSum, checksum);
-}
+  public virtual void SetCheckSum(string checksum) {
+    this.GetCOSObject().SetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Params,
+      global::DripSharp.PdfCarton.Cos.COSName.CheckSum, checksum);
+  }
 
-public virtual string GetMacSubtype() {
-global::DripSharp.PdfCarton.Cos.COSDictionary @params = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Params);
-return ((@params != default!) ? @params.GetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Mac, global::DripSharp.PdfCarton.Cos.COSName.Subtype) : (string)(default!));
-}
+  public virtual string GetMacSubtype() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary @params
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Params);
+    return ((@params != default!)
+      ? @params.GetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Mac,
+      global::DripSharp.PdfCarton.Cos.COSName.Subtype) : (string)(default!));
+  }
 
-public virtual void SetMacSubtype(string macSubtype) {
-global::DripSharp.PdfCarton.Cos.COSDictionary @params = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Params);
-if (((@params == default!) && (macSubtype != default!))) {
-@params = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Params, @params);
-}
-if ((@params != default!)) {
-@params.SetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Mac, global::DripSharp.PdfCarton.Cos.COSName.Subtype, macSubtype);
-}
-}
+  public virtual void SetMacSubtype(string macSubtype) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary @params
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Params);
+    if (((@params == default!) && (macSubtype != default!))) {
+      @params = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+      this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Params, @params);
+    }
+    if ((@params != default!)) {
+      @params.SetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Mac,
+        global::DripSharp.PdfCarton.Cos.COSName.Subtype, macSubtype);
+    }
+  }
 
-public virtual string GetMacCreator() {
-global::DripSharp.PdfCarton.Cos.COSDictionary @params = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Params);
-return ((@params != default!) ? @params.GetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Mac, global::DripSharp.PdfCarton.Cos.COSName.Creator) : (string)(default!));
-}
+  public virtual string GetMacCreator() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary @params
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Params);
+    return ((@params != default!)
+      ? @params.GetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Mac,
+      global::DripSharp.PdfCarton.Cos.COSName.Creator) : (string)(default!));
+  }
 
-public virtual void SetMacCreator(string macCreator) {
-global::DripSharp.PdfCarton.Cos.COSDictionary @params = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Params);
-if (((@params == default!) && (macCreator != default!))) {
-@params = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Params, @params);
-}
-if ((@params != default!)) {
-@params.SetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Mac, global::DripSharp.PdfCarton.Cos.COSName.Creator, macCreator);
-}
-}
+  public virtual void SetMacCreator(string macCreator) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary @params
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Params);
+    if (((@params == default!) && (macCreator != default!))) {
+      @params = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+      this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Params, @params);
+    }
+    if ((@params != default!)) {
+      @params.SetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Mac,
+        global::DripSharp.PdfCarton.Cos.COSName.Creator, macCreator);
+    }
+  }
 
-public virtual string GetMacResFork() {
-global::DripSharp.PdfCarton.Cos.COSDictionary @params = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Params);
-return ((@params != default!) ? @params.GetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Mac, global::DripSharp.PdfCarton.Cos.COSName.ResFork) : (string)(default!));
-}
+  public virtual string GetMacResFork() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary @params
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Params);
+    return ((@params != default!)
+      ? @params.GetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Mac,
+      global::DripSharp.PdfCarton.Cos.COSName.ResFork) : (string)(default!));
+  }
 
-public virtual void SetMacResFork(string macResFork) {
-global::DripSharp.PdfCarton.Cos.COSDictionary @params = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Params);
-if (((@params == default!) && (macResFork != default!))) {
-@params = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Params, @params);
-}
-if ((@params != default!)) {
-@params.SetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Mac, global::DripSharp.PdfCarton.Cos.COSName.ResFork, macResFork);
-}
-}
+  public virtual void SetMacResFork(string macResFork) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary @params
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Params);
+    if (((@params == default!) && (macResFork != default!))) {
+      @params = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+      this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Params, @params);
+    }
+    if ((@params != default!)) {
+      @params.SetEmbeddedString(global::DripSharp.PdfCarton.Cos.COSName.Mac,
+        global::DripSharp.PdfCarton.Cos.COSName.ResFork, macResFork);
+    }
+  }
 }

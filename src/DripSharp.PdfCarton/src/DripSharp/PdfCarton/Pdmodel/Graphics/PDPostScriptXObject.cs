@@ -9,7 +9,8 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics;
 
 public class PDPostScriptXObject : global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject {
-public PDPostScriptXObject(global::DripSharp.PdfCarton.Cos.COSStream stream) : base(stream, global::DripSharp.PdfCarton.Cos.COSName.Ps) {
+  public PDPostScriptXObject(global::DripSharp.PdfCarton.Cos.COSStream stream) : base(stream,
+    global::DripSharp.PdfCarton.Cos.COSName.Ps) {
 
-}
+  }
 }

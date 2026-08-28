@@ -9,142 +9,171 @@
 namespace DripSharp.PdfCarton.Fonts.Type1;
 
 internal class Token {
-internal sealed class Kind {
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("NONE")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind None = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+  internal sealed class Kind {
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("NONE")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(0)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind None
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("STRING")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind String = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("STRING")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(1)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind String
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("NAME")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind Name = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("NAME")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(2)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind Name
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("LITERAL")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind Literal = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("LITERAL")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(3)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind Literal
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("REAL")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind Real = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("REAL")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(4)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind Real
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("INTEGER")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind Integer = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("INTEGER")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(5)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind Integer
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("START_ARRAY")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(6)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind StartArray = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("START_ARRAY")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(6)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind StartArray
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("END_ARRAY")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(7)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind EndArray = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("END_ARRAY")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(7)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind EndArray
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("START_PROC")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(8)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind StartProc = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("START_PROC")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(8)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind StartProc
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("END_PROC")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(9)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind EndProc = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("END_PROC")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(9)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind EndProc
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("START_DICT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(10)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind StartDict = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("START_DICT")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(10)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind StartDict
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("END_DICT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(11)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind EndDict = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("END_DICT")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(11)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind EndDict
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CHARSTRING")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(12)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind Charstring = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CHARSTRING")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(12)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind Charstring
+      = new global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind();
 
-private Kind() {}
+    private Kind() {}
 
+    public static Kind[] values()
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValues<Kind>();
+    public static Kind valueOf(string name)
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValueOf<Kind>(name);
 
-public static Kind[] values() => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValues<Kind>();
-public static Kind valueOf(string name) => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValueOf<Kind>(name);
+    public override string ToString()
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumName(this);
+  }
 
-public override string ToString() => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumName(this);
-}
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind STRING
+    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.String;
 
-internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind STRING = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.String;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind NAME
+    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Name;
 
-internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind NAME = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Name;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind LITERAL
+    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Literal;
 
-internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind LITERAL = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Literal;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind REAL
+    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Real;
 
-internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind REAL = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Real;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind INTEGER
+    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Integer;
 
-internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind INTEGER = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Integer;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind START_ARRAY
+    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.StartArray;
 
-internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind START_ARRAY = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.StartArray;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind END_ARRAY
+    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.EndArray;
 
-internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind END_ARRAY = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.EndArray;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind START_PROC
+    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.StartProc;
 
-internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind START_PROC = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.StartProc;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind END_PROC
+    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.EndProc;
 
-internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind END_PROC = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.EndProc;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind CHARSTRING
+    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Charstring;
 
-internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind CHARSTRING = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Charstring;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind START_DICT
+    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.StartDict;
 
-internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind START_DICT = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.StartDict;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind END_DICT
+    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.EndDict;
 
-internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind END_DICT = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.EndDict;
+  private string text = null!;
 
-private string text = null!;
+  private sbyte[] data = null!;
 
-private sbyte[] data = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind kind = null!;
 
-private readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind kind = null!;
+  internal Token(string text, global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind type) {
+    this.text = text;
+    this.kind = type;
+  }
 
-internal Token(string text, global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind type) {
-this.text = text;
-this.kind = type;
-}
+  internal Token(char character, global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind type) {
+    this.text = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CodePointToString(character);
+    this.kind = type;
+  }
 
-internal Token(char character, global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind type) {
-this.text = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CodePointToString(character);
-this.kind = type;
-}
+  internal Token(sbyte[] data, global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind type) {
+    this.data = data;
+    this.kind = type;
+  }
 
-internal Token(sbyte[] data, global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind type) {
-this.data = data;
-this.kind = type;
-}
+  public virtual string GetText() {
+    return this.text;
+  }
 
-public virtual string GetText() {
-return this.text;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind GetKind() {
+    return this.kind;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind GetKind() {
-return this.kind;
-}
+  public virtual int IntValue() {
+    return (int)global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseFloat(this.text);
+  }
 
-public virtual int IntValue() {
-return (int)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseFloat(this.text));
-}
+  public virtual float FloatValue() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseFloat(this.text);
+  }
 
-public virtual float FloatValue() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseFloat(this.text);
-}
+  public virtual bool BooleanValue() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(this.text, "true");
+  }
 
-public virtual bool BooleanValue() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(this.text, "true");
-}
+  public virtual sbyte[] GetData() {
+    return this.data;
+  }
 
-public virtual sbyte[] GetData() {
-return this.data;
-}
-
-public override string ToString() {
-if ((this.kind == global::DripSharp.PdfCarton.Fonts.Type1.Token.CHARSTRING)) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Token[kind=CHARSTRING, data=", this.data.Length), " bytes]");
-} else {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Token[kind=", this.kind), ", text="), this.text), "]");
-}
-}
+  public override string ToString() {
+    if ((this.kind == global::DripSharp.PdfCarton.Fonts.Type1.Token.CHARSTRING)) {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Token[kind=CHARSTRING, data=",
+        this.data.Length), " bytes]");
+    } else {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Token[kind=",
+        this.kind), ", text="), this.text), "]");
+    }
+  }
 }

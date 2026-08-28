@@ -9,22 +9,24 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Common;
 
 public abstract class LookupSubTable {
-private readonly int substFormat = default;
+  private readonly int substFormat = default;
 
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable
+    = null!;
 
-public LookupSubTable(int substFormat, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable) {
-this.substFormat = substFormat;
-this.coverageTable = coverageTable;
-}
+  public LookupSubTable(int substFormat,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable) {
+    this.substFormat = substFormat;
+    this.coverageTable = coverageTable;
+  }
 
-public abstract int DoSubstitution(int gid, int coverageIndex);
+  public abstract int DoSubstitution(int gid, int coverageIndex);
 
-public virtual int GetSubstFormat() {
-return this.substFormat;
-}
+  public virtual int GetSubstFormat() {
+    return this.substFormat;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable GetCoverageTable() {
-return this.coverageTable;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable GetCoverageTable() {
+    return this.coverageTable;
+  }
 }

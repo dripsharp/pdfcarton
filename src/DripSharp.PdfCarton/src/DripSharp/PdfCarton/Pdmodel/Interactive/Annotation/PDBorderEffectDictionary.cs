@@ -9,39 +9,41 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
 public class PDBorderEffectDictionary : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-public const string StyleSolid = "S";
+  public const string StyleSolid = "S";
 
-public const string StyleCloudy = "C";
+  public const string StyleCloudy = "C";
 
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public PDBorderEffectDictionary() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDBorderEffectDictionary() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDBorderEffectDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
-this.dictionary = dict;
-}
+  public PDBorderEffectDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
+    this.dictionary = dict;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public virtual void SetIntensity(float i) {
-this.GetCOSObject().SetFloat("I", i);
-}
+  public virtual void SetIntensity(float i) {
+    this.GetCOSObject().SetFloat("I", i);
+  }
 
-public virtual float GetIntensity() {
-return this.GetCOSObject().GetFloat("I", (float)(0));
-}
+  public virtual float GetIntensity() {
+    return this.GetCOSObject().GetFloat("I", (float)(0));
+  }
 
-public virtual void SetStyle(string s) {
-this.GetCOSObject().SetName("S", s);
-}
+  public virtual void SetStyle(string s) {
+    this.GetCOSObject().SetName("S", s);
+  }
 
-public virtual string GetStyle() {
-return this.GetCOSObject().GetNameAsString("S", global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary.StyleSolid);
-}
+  public virtual string GetStyle() {
+    return this.GetCOSObject().GetNameAsString("S",
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary.StyleSolid);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

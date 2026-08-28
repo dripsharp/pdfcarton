@@ -9,114 +9,132 @@
 namespace DripSharp.PdfCarton.Preflight.Parser;
 
 public class XmlResultParser {
-public virtual global::System.Xml.XmlElement Validate(global::System.IO.FileInfo file) {
-return this.validate(file, file.Name);
-}
+  public virtual global::System.Xml.XmlElement Validate(global::System.IO.FileInfo file) {
+    return this.validate(file, file.Name);
+  }
 
-public virtual global::System.Xml.XmlElement Validate(global::System.Xml.XmlDocument rdocument, global::System.IO.FileInfo file) {
-return this.validate(rdocument, file, file.Name);
-}
+  public virtual global::System.Xml.XmlElement Validate(global::System.Xml.XmlDocument rdocument,
+    global::System.IO.FileInfo file) {
+    return this.validate(rdocument, file, file.Name);
+  }
 
-private global::System.Xml.XmlElement validate(global::System.IO.FileInfo file, string name) {
-try {
-global::System.Xml.XmlDocument rdocument = new global::System.Xml.XmlDocument();
-return this.validate(rdocument, file, name);
-} catch (global::System.Xml.XmlException e) {
-throw new global::System.IO.IOException("Failed to init document builder", e);
-}
-}
+  private global::System.Xml.XmlElement validate(global::System.IO.FileInfo file, string name) {
+    try {
+      global::System.Xml.XmlDocument rdocument = new global::System.Xml.XmlDocument();
+      return this.validate(rdocument, file, name);
+    } catch (global::System.Xml.XmlException e) {
+      throw new global::System.IO.IOException("Failed to init document builder", e);
+    }
+  }
 
-private global::System.Xml.XmlElement validate(global::System.Xml.XmlDocument rdocument, global::System.IO.FileInfo file, string name) {
-string pdfType = global::DripSharp.PdfCarton.Preflight.Format.PdfA1b.GetFname();
-global::DripSharp.PdfCarton.Preflight.ValidationResult result;
-long before = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-try {
-result = global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser.Validate(file);
-} catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
-long after__96_18 = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-return this.generateFailureResponse(rdocument, name, (after__96_18 - before), pdfType, e);
-}
-long after__100_14 = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-if (result.IsValid()) {
-global::System.Xml.XmlElement preflight__103_21 = this.GenerateResponseSkeleton(rdocument, name, (after__100_14 - before));
-global::System.Xml.XmlElement valid = rdocument.CreateElement("isValid");
-valid.SetAttribute("type", pdfType);
-valid.InnerText = "true";
-preflight__103_21.AppendChild(valid);
-return preflight__103_21;
-} else {
-global::System.Xml.XmlElement preflight__113_21 = this.GenerateResponseSkeleton(rdocument, name, (after__100_14 - before));
-this.CreateResponseWithError(rdocument, pdfType, result, preflight__113_21);
-return preflight__113_21;
-}
-}
+  private global::System.Xml.XmlElement validate(global::System.Xml.XmlDocument rdocument,
+    global::System.IO.FileInfo file, string name) {
+    string pdfType = global::DripSharp.PdfCarton.Preflight.Format.PdfA1b.GetFname();
+    global::DripSharp.PdfCarton.Preflight.ValidationResult result;
+    long before = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+    try {
+      result = global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser.Validate(file);
+    } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
+      long after__96_18 = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+      return this.generateFailureResponse(rdocument, name, (after__96_18 - before), pdfType, e);
+    }
+    long after__100_14 = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+    if (result.IsValid()) {
+      global::System.Xml.XmlElement preflight__103_21 = this.GenerateResponseSkeleton(rdocument,
+        name, (after__100_14 - before));
+      global::System.Xml.XmlElement valid = rdocument.CreateElement("isValid");
+      valid.SetAttribute("type", pdfType);
+      valid.InnerText = "true";
+      preflight__103_21.AppendChild(valid);
+      return preflight__103_21;
+    } else {
+      global::System.Xml.XmlElement preflight__113_21 = this.GenerateResponseSkeleton(rdocument,
+        name, (after__100_14 - before));
+      this.CreateResponseWithError(rdocument, pdfType, result, preflight__113_21);
+      return preflight__113_21;
+    }
+  }
 
-protected internal virtual void CreateResponseWithError(global::System.Xml.XmlDocument rdocument, string pdfType, global::DripSharp.PdfCarton.Preflight.ValidationResult result, global::System.Xml.XmlElement preflight) {
-global::System.Xml.XmlElement valid = rdocument.CreateElement("isValid");
-valid.SetAttribute("type", pdfType);
-valid.InnerText = "false";
-preflight.AppendChild(valid);
-global::System.Xml.XmlElement errors = rdocument.CreateElement("errors");
-global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError, int> cleaned = this.cleanErrorList(result.GetErrorsList());
-preflight.AppendChild(errors);
-int totalCount = 0;
-foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError, int> entry in global::DripSharp.Runtime.JavaCompat.MapEntrySet(cleaned)) {
-global::System.Xml.XmlElement error = rdocument.CreateElement("error");
-int count = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(entry.Value);
-error.SetAttribute("count", global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%d", count));
-totalCount += count;
-global::System.Xml.XmlElement code = rdocument.CreateElement("code");
-global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError ve = entry.Key;
-code.InnerText = ve.GetErrorCode();
-error.AppendChild(code);
-global::System.Xml.XmlElement detail = rdocument.CreateElement("details");
-detail.InnerText = ve.GetDetails();
-error.AppendChild(detail);
-if ((ve.GetPageNumber() != default!)) {
-global::System.Xml.XmlElement page = rdocument.CreateElement("page");
-page.InnerText = global::DripSharp.Runtime.JavaCompat.StringValueOf(ve.GetPageNumber());
-error.AppendChild(page);
-}
-errors.AppendChild(error);
-}
-errors.SetAttribute("count", global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%d", totalCount));
-}
+  protected internal virtual void CreateResponseWithError(global::System.Xml.XmlDocument rdocument,
+    string pdfType, global::DripSharp.PdfCarton.Preflight.ValidationResult result,
+    global::System.Xml.XmlElement preflight) {
+    global::System.Xml.XmlElement valid = rdocument.CreateElement("isValid");
+    valid.SetAttribute("type", pdfType);
+    valid.InnerText = "false";
+    preflight.AppendChild(valid);
+    global::System.Xml.XmlElement errors = rdocument.CreateElement("errors");
+    global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError,
+      int> cleaned = this.cleanErrorList(result.GetErrorsList());
+    preflight.AppendChild(errors);
+    int totalCount = 0;
+    foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError,
+      int> entry in global::DripSharp.Runtime.JavaCompat.MapEntrySet(cleaned)) {
+      global::System.Xml.XmlElement error = rdocument.CreateElement("error");
+      int count = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(entry.Value);
+      error.SetAttribute("count", global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%d",
+        count));
+      totalCount += count;
+      global::System.Xml.XmlElement code = rdocument.CreateElement("code");
+      global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError ve = entry.Key;
+      code.InnerText = ve.GetErrorCode();
+      error.AppendChild(code);
+      global::System.Xml.XmlElement detail = rdocument.CreateElement("details");
+      detail.InnerText = ve.GetDetails();
+      error.AppendChild(detail);
+      if ((ve.GetPageNumber() != default!)) {
+        global::System.Xml.XmlElement page = rdocument.CreateElement("page");
+        page.InnerText = global::DripSharp.Runtime.JavaCompat.StringValueOf(ve.GetPageNumber());
+        error.AppendChild(page);
+      }
+      errors.AppendChild(error);
+    }
+    errors.SetAttribute("count", global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%d",
+      totalCount));
+  }
 
-private global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError, int> cleanErrorList(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> errors) {
-global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError, int> cleaned = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError, int>(global::DripSharp.Runtime.JavaCompat.CollectionCount(errors));
-foreach (global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError ve in errors) {
-global::DripSharp.Runtime.JavaCompat.MapMerge(cleaned, ve, 1, global::DripSharp.Runtime.JavaCompat.SumInt);
-}
-return cleaned;
-}
+  private global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError,
+    int> cleanErrorList(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> errors) {
+    global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError,
+      int> cleaned
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError,
+      int>(global::DripSharp.Runtime.JavaCompat.CollectionCount(errors));
+    foreach (global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError ve in errors) {
+      global::DripSharp.Runtime.JavaCompat.MapMerge(cleaned, ve, 1,
+        global::DripSharp.Runtime.JavaCompat.SumInt);
+    }
+    return cleaned;
+  }
 
-private global::System.Xml.XmlElement generateFailureResponse(global::System.Xml.XmlDocument rdocument, string name, long duration, string pdfType, global::System.Exception e) {
-global::System.Xml.XmlElement preflight = this.GenerateResponseSkeleton(rdocument, name, duration);
-global::System.Xml.XmlElement valid = rdocument.CreateElement("isValid");
-valid.SetAttribute("type", pdfType);
-valid.InnerText = "false";
-preflight.AppendChild(valid);
-global::System.Xml.XmlElement exception = rdocument.CreateElement("exceptionThrown");
-global::System.Xml.XmlElement message = rdocument.CreateElement("message");
-message.InnerText = global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e);
-global::System.IO.StringWriter sw = new global::System.IO.StringWriter();
-global::System.IO.TextWriter pw = sw;
-global::DripSharp.Runtime.JavaCompat.PrintStackTrace(e, pw);
-pw.Dispose();
-global::System.Xml.XmlElement stack = rdocument.CreateElement("stackTrace");
-stack.InnerText = sw.ToString();
-exception.AppendChild(message);
-exception.AppendChild(stack);
-preflight.AppendChild(exception);
-return preflight;
-}
+  private global::System.Xml.XmlElement generateFailureResponse(global::System.Xml.XmlDocument rdocument,
+    string name, long duration, string pdfType, global::System.Exception e) {
+    global::System.Xml.XmlElement preflight = this.GenerateResponseSkeleton(rdocument, name,
+      duration);
+    global::System.Xml.XmlElement valid = rdocument.CreateElement("isValid");
+    valid.SetAttribute("type", pdfType);
+    valid.InnerText = "false";
+    preflight.AppendChild(valid);
+    global::System.Xml.XmlElement exception = rdocument.CreateElement("exceptionThrown");
+    global::System.Xml.XmlElement message = rdocument.CreateElement("message");
+    message.InnerText = global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e);
+    global::System.IO.StringWriter sw = new global::System.IO.StringWriter();
+    global::System.IO.TextWriter pw = sw;
+    global::DripSharp.Runtime.JavaCompat.PrintStackTrace(e, pw);
+    pw.Dispose();
+    global::System.Xml.XmlElement stack = rdocument.CreateElement("stackTrace");
+    stack.InnerText = sw.ToString();
+    exception.AppendChild(message);
+    exception.AppendChild(stack);
+    preflight.AppendChild(exception);
+    return preflight;
+  }
 
-protected internal virtual global::System.Xml.XmlElement GenerateResponseSkeleton(global::System.Xml.XmlDocument rdocument, string name, long duration) {
-global::System.Xml.XmlElement preflight = rdocument.CreateElement("preflight");
-preflight.SetAttribute("name", name);
-global::System.Xml.XmlElement eduration = rdocument.CreateElement("executionTimeMS");
-eduration.InnerText = global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%d", duration);
-preflight.AppendChild(eduration);
-return preflight;
-}
+  protected internal virtual global::System.Xml.XmlElement GenerateResponseSkeleton(global::System.Xml.XmlDocument rdocument,
+    string name, long duration) {
+    global::System.Xml.XmlElement preflight = rdocument.CreateElement("preflight");
+    preflight.SetAttribute("name", name);
+    global::System.Xml.XmlElement eduration = rdocument.CreateElement("executionTimeMS");
+    eduration.InnerText = global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%d", duration);
+    preflight.AppendChild(eduration);
+    return preflight;
+  }
 }

@@ -9,101 +9,110 @@
 namespace DripSharp.PdfCarton.Cos;
 
 internal sealed class PDFDocEncoding {
-private const char REPLACEMENT_CHARACTER = '\uFFFD';
+  private const char REPLACEMENT_CHARACTER = '\uFFFD';
 
-private static readonly int[] CODE_TO_UNI = null!;
+  private static readonly int[] CODE_TO_UNI = null!;
 
-private static readonly global::System.Collections.Generic.IDictionary<char, int> UNI_TO_CODE = null!;
+  private static readonly global::System.Collections.Generic.IDictionary<char, int> UNI_TO_CODE
+    = null!;
 
-static PDFDocEncoding() {
-{
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.CODE_TO_UNI = new int[256];
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.UNI_TO_CODE = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<char, int>(256);
-for (int i = 0; (i < 256); i++) {
-if (((i > 23) && (i < 32))) {
-continue;
-}
-if (((i > 126) && (i < 161))) {
-continue;
-}
-if ((i == 173)) {
-continue;
-}
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(i, unchecked((char)(unchecked((char)(i)))));
-}
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(24, '\u02D8');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(25, '\u02C7');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(26, '\u02C6');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(27, '\u02D9');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(28, '\u02DD');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(29, '\u02DB');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(30, '\u02DA');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(31, '\u02DC');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(127, global::DripSharp.PdfCarton.Cos.PDFDocEncoding.REPLACEMENT_CHARACTER);
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(128, '\u2022');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(129, '\u2020');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(130, '\u2021');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(131, '\u2026');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(132, '\u2014');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(133, '\u2013');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(134, '\u0192');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(135, '\u2044');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(136, '\u2039');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(137, '\u203A');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(138, '\u2212');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(139, '\u2030');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(140, '\u201E');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(141, '\u201C');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(142, '\u201D');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(143, '\u2018');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(144, '\u2019');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(145, '\u201A');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(146, '\u2122');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(147, '\uFB01');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(148, '\uFB02');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(149, '\u0141');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(150, '\u0152');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(151, '\u0160');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(152, '\u0178');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(153, '\u017D');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(154, '\u0131');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(155, '\u0142');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(156, '\u0153');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(157, '\u0161');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(158, '\u017E');
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(159, global::DripSharp.PdfCarton.Cos.PDFDocEncoding.REPLACEMENT_CHARACTER);
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(160, '\u20AC');
-}
-}
+  static PDFDocEncoding() { {
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.CODE_TO_UNI = new int[256];
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.UNI_TO_CODE
+        = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<char, int>(256);
+      for (int i = 0; (i < 256); i++) {
+        if (((i > 23) && (i < 32))) {
+          continue;
+        }
+        if (((i > 126) && (i < 161))) {
+          continue;
+        }
+        if ((i == 173)) {
+          continue;
+        }
+        global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(i,
+          unchecked((char)(unchecked((char)(i)))));
+      }
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(24, '\u02D8');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(25, '\u02C7');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(26, '\u02C6');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(27, '\u02D9');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(28, '\u02DD');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(29, '\u02DB');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(30, '\u02DA');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(31, '\u02DC');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(127,
+        global::DripSharp.PdfCarton.Cos.PDFDocEncoding.REPLACEMENT_CHARACTER);
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(128, '\u2022');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(129, '\u2020');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(130, '\u2021');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(131, '\u2026');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(132, '\u2014');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(133, '\u2013');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(134, '\u0192');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(135, '\u2044');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(136, '\u2039');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(137, '\u203A');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(138, '\u2212');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(139, '\u2030');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(140, '\u201E');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(141, '\u201C');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(142, '\u201D');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(143, '\u2018');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(144, '\u2019');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(145, '\u201A');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(146, '\u2122');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(147, '\uFB01');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(148, '\uFB02');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(149, '\u0141');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(150, '\u0152');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(151, '\u0160');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(152, '\u0178');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(153, '\u017D');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(154, '\u0131');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(155, '\u0142');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(156, '\u0153');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(157, '\u0161');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(158, '\u017E');
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(159,
+        global::DripSharp.PdfCarton.Cos.PDFDocEncoding.REPLACEMENT_CHARACTER);
+      global::DripSharp.PdfCarton.Cos.PDFDocEncoding.set(160, '\u20AC');
+    }
+  }
 
-private PDFDocEncoding() {}
+  private PDFDocEncoding() {}
 
-private static void set(int code, char unicode) {
-global::DripSharp.PdfCarton.Cos.PDFDocEncoding.CODE_TO_UNI[code] = unicode;
-global::DripSharp.Runtime.JavaCompat.MapPut(global::DripSharp.PdfCarton.Cos.PDFDocEncoding.UNI_TO_CODE, unicode, code);
-}
+  private static void set(int code, char unicode) {
+    global::DripSharp.PdfCarton.Cos.PDFDocEncoding.CODE_TO_UNI[code] = unicode;
+    global::DripSharp.Runtime.JavaCompat.MapPut(global::DripSharp.PdfCarton.Cos.PDFDocEncoding.UNI_TO_CODE,
+      unicode, code);
+  }
 
-public static string ToString(sbyte[] bytes) {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(bytes.Length);
-foreach (sbyte b in bytes) {
-if (((b & 255) >= global::DripSharp.PdfCarton.Cos.PDFDocEncoding.CODE_TO_UNI.Length)) {
-sb.Append('?');
-} else {
-sb.Append(unchecked((char)(unchecked((char)(global::DripSharp.PdfCarton.Cos.PDFDocEncoding.CODE_TO_UNI[(b & 255)])))));
-}
-}
-return sb.ToString();
-}
+  public static string ToString(sbyte[] bytes) {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(bytes.Length);
+    foreach (sbyte b in bytes) {
+      if (((b & 255) >= global::DripSharp.PdfCarton.Cos.PDFDocEncoding.CODE_TO_UNI.Length)) {
+        sb.Append('?');
+      } else {
+        sb.Append(unchecked((char)(unchecked((char)(global::DripSharp.PdfCarton.Cos.PDFDocEncoding.CODE_TO_UNI[(b & 255)])))));
+      }
+    }
+    return sb.ToString();
+  }
 
-public static sbyte[] GetBytes(string text) {
-global::DripSharp.Runtime.JavaByteArrayOutputStream @out = new global::DripSharp.Runtime.JavaByteArrayOutputStream(text.Length);
-foreach (char c in text.ToCharArray()) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)(global::DripSharp.Runtime.JavaCompat.MapGetOrDefault(global::DripSharp.PdfCarton.Cos.PDFDocEncoding.UNI_TO_CODE, c, 0)));
-}
-return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(@out);
-}
+  public static sbyte[] GetBytes(string text) {
+    global::DripSharp.Runtime.JavaByteArrayOutputStream @out
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(text.Length);
+    foreach (char c in text.ToCharArray()) {
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out,
+        (int)(global::DripSharp.Runtime.JavaCompat.MapGetOrDefault(global::DripSharp.PdfCarton.Cos.PDFDocEncoding.UNI_TO_CODE,
+        c, 0)));
+    }
+    return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(@out);
+  }
 
-public static bool ContainsChar(char character) {
-return global::DripSharp.Runtime.JavaCompat.MapContainsKey(global::DripSharp.PdfCarton.Cos.PDFDocEncoding.UNI_TO_CODE, character);
-}
+  public static bool ContainsChar(char character) {
+    return global::DripSharp.Runtime.JavaCompat.MapContainsKey(global::DripSharp.PdfCarton.Cos.PDFDocEncoding.UNI_TO_CODE,
+      character);
+  }
 }

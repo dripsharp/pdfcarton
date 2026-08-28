@@ -8,18 +8,23 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
-public class LookupTypeAlternateSubstitutionFormat1 : global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable {
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.AlternateSetTable[] alternateSetTables = null!;
+public class LookupTypeAlternateSubstitutionFormat1
+: global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable {
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.AlternateSetTable[] alternateSetTables
+    = null!;
 
-public LookupTypeAlternateSubstitutionFormat1(int substFormat, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.AlternateSetTable[] alternateSetTables) : base(substFormat, coverageTable) {
-this.alternateSetTables = alternateSetTables;
-}
+  public LookupTypeAlternateSubstitutionFormat1(int substFormat,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.AlternateSetTable[] alternateSetTables)
+  : base(substFormat, coverageTable) {
+    this.alternateSetTables = alternateSetTables;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.AlternateSetTable[] GetAlternateSetTables() {
-return this.alternateSetTables;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.AlternateSetTable[] GetAlternateSetTables() {
+    return this.alternateSetTables;
+  }
 
-public override int DoSubstitution(int gid, int coverageIndex) {
-throw new global::System.NotSupportedException("not applicable");
-}
+  public override int DoSubstitution(int gid, int coverageIndex) {
+    throw new global::System.NotSupportedException("not applicable");
+  }
 }

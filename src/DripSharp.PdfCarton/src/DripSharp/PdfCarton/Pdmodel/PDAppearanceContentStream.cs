@@ -8,119 +8,133 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel;
 
-public sealed class PDAppearanceContentStream : global::DripSharp.PdfCarton.Pdmodel.PDAbstractContentStream, global::System.IDisposable {
-public PDAppearanceContentStream(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearance) : this(appearance, appearance.GetStream().CreateOutputStream()) {
+public sealed class PDAppearanceContentStream
+: global::DripSharp.PdfCarton.Pdmodel.PDAbstractContentStream, global::System.IDisposable {
+  public PDAppearanceContentStream(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearance)
+  : this(appearance, appearance.GetStream().CreateOutputStream()) {
 
-}
+  }
 
-public PDAppearanceContentStream(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearance, bool compress) : this(appearance, appearance.GetStream().CreateOutputStream((compress ? global::DripSharp.PdfCarton.Cos.COSName.FlateDecode : (global::DripSharp.PdfCarton.Cos.COSName)(default!)))) {
+  public PDAppearanceContentStream(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearance,
+    bool compress) : this(appearance, appearance.GetStream().CreateOutputStream((compress
+    ? global::DripSharp.PdfCarton.Cos.COSName.FlateDecode
+    : (global::DripSharp.PdfCarton.Cos.COSName)(default!)))) {
 
-}
+  }
 
-public PDAppearanceContentStream(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearance, global::System.IO.Stream outputStream) : base((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!, outputStream, appearance.GetResources()) {
+  public PDAppearanceContentStream(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearance,
+    global::System.IO.Stream outputStream)
+  : base((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!, outputStream,
+    appearance.GetResources()) {
 
-}
+  }
 
-public bool SetStrokingColorOnDemand(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
-if ((color != default!)) {
-float[] components = color.GetComponents();
-if ((components.Length > 0)) {
-this.SetStrokingColor(components);
-return true;
-}
-}
-return false;
-}
+  public bool SetStrokingColorOnDemand(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
+    if ((color != default!)) {
+      float[] components = color.GetComponents();
+      if ((components.Length > 0)) {
+        this.SetStrokingColor(components);
+        return true;
+      }
+    }
+    return false;
+  }
 
-public void SetStrokingColor(float[] components) {
-foreach (float value in components) {
-this.WriteOperand(value);
-}
-int numComponents = components.Length;
-switch (numComponents) {
-case var __case_120_14_0 when __case_120_14_0 == 1:
-this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorGray);
-break;
-case var __case_123_14_0 when __case_123_14_0 == 3:
-this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorRgb);
-break;
-case var __case_126_14_0 when __case_126_14_0 == 4:
-this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorCmyk);
-break;
-default:
-break;
-}
-}
+  public void SetStrokingColor(float[] components) {
+    foreach (float value in components) {
+      this.WriteOperand(value);
+    }
+    int numComponents = components.Length;
+    switch (numComponents) {
+      case var __case_120_14_0 when __case_120_14_0 == 1:
+        this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorGray);
+        break;
+      case var __case_123_14_0 when __case_123_14_0 == 3:
+        this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorRgb);
+        break;
+      case var __case_126_14_0 when __case_126_14_0 == 4:
+        this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorCmyk);
+        break;
+      default:
+        break;
+    }
+  }
 
-public bool SetNonStrokingColorOnDemand(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
-if ((color != default!)) {
-float[] components = color.GetComponents();
-if ((components.Length > 0)) {
-this.SetNonStrokingColor(components);
-return true;
-}
-}
-return false;
-}
+  public bool SetNonStrokingColorOnDemand(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
+    if ((color != default!)) {
+      float[] components = color.GetComponents();
+      if ((components.Length > 0)) {
+        this.SetNonStrokingColor(components);
+        return true;
+      }
+    }
+    return false;
+  }
 
-public void SetNonStrokingColor(float[] components) {
-foreach (float value in components) {
-this.WriteOperand(value);
-}
-int numComponents = components.Length;
-switch (numComponents) {
-case var __case_180_14_0 when __case_180_14_0 == 1:
-this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray);
-break;
-case var __case_183_14_0 when __case_183_14_0 == 3:
-this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingRgb);
-break;
-case var __case_186_14_0 when __case_186_14_0 == 4:
-this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingCmyk);
-break;
-default:
-break;
-}
-}
+  public void SetNonStrokingColor(float[] components) {
+    foreach (float value in components) {
+      this.WriteOperand(value);
+    }
+    int numComponents = components.Length;
+    switch (numComponents) {
+      case var __case_180_14_0 when __case_180_14_0 == 1:
+        this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray);
+        break;
+      case var __case_183_14_0 when __case_183_14_0 == 3:
+        this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingRgb);
+        break;
+      case var __case_186_14_0 when __case_186_14_0 == 4:
+        this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingCmyk);
+        break;
+      default:
+        break;
+    }
+  }
 
-public void SetBorderLine(float lineWidth, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary bs, global::DripSharp.PdfCarton.Cos.COSArray border) {
-if ((((bs != default!) && bs.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.D)) && global::DripSharp.Runtime.JavaCompat.Equals(bs.GetStyle(), global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary.StyleDashed))) {
-this.SetLineDashPattern(bs.GetDashStyle().GetDashArray(), (float)(0));
-} else {
-if (((bs == default!) && (border.Size() > 3))) {
-if ((border.GetObject(3) is global::DripSharp.PdfCarton.Cos.COSArray)) {
-this.SetLineDashPattern(((global::DripSharp.PdfCarton.Cos.COSArray)(border.GetObject(3)!)).ToFloatArray(), (float)(0));
-} else {
-this.SetLineDashPattern(new float[1], (float)(0));
-}
-}
-}
-this.SetLineWidthOnDemand(lineWidth);
-}
+  public void SetBorderLine(float lineWidth,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary bs,
+    global::DripSharp.PdfCarton.Cos.COSArray border) {
+    if ((((bs != default!)
+      && bs.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.D))
+      && global::DripSharp.Runtime.JavaCompat.Equals(bs.GetStyle(),
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary.StyleDashed))) {
+      this.SetLineDashPattern(bs.GetDashStyle().GetDashArray(), (float)(0));
+    } else {
+      if (((bs == default!) && (border.Size() > 3))) {
+        if ((border.GetObject(3) is global::DripSharp.PdfCarton.Cos.COSArray)) {
+          this.SetLineDashPattern(((global::DripSharp.PdfCarton.Cos.COSArray)(border.GetObject(3)!)).ToFloatArray(),
+            (float)(0));
+        } else {
+          this.SetLineDashPattern(new float[1], (float)(0));
+        }
+      }
+    }
+    this.SetLineWidthOnDemand(lineWidth);
+  }
 
-public void SetLineWidthOnDemand(float lineWidth) {
-if ((global::System.Math.Abs((lineWidth - 1)) >= 1.0E-6D)) {
-this.SetLineWidth(lineWidth);
-}
-}
+  public void SetLineWidthOnDemand(float lineWidth) {
+    if ((global::System.Math.Abs((lineWidth - 1)) >= 1.0E-6D)) {
+      this.SetLineWidth(lineWidth);
+    }
+  }
 
-public void DrawShape(float lineWidth, bool hasStroke, bool hasFill) {
-bool resolvedHasStroke = hasStroke;
-if ((lineWidth < 1.0E-6D)) {
-resolvedHasStroke = false;
-}
-if ((hasFill && resolvedHasStroke)) {
-this.FillAndStroke();
-} else {
-if (resolvedHasStroke) {
-this.Stroke();
-} else {
-if (hasFill) {
-this.Fill();
-} else {
-this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Endpath);
-}
-}
-}
-}
+  public void DrawShape(float lineWidth, bool hasStroke, bool hasFill) {
+    bool resolvedHasStroke = hasStroke;
+    if ((lineWidth < 1.0E-6D)) {
+      resolvedHasStroke = false;
+    }
+    if ((hasFill && resolvedHasStroke)) {
+      this.FillAndStroke();
+    } else {
+      if (resolvedHasStroke) {
+        this.Stroke();
+      } else {
+        if (hasFill) {
+          this.Fill();
+        } else {
+          this.WriteOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Endpath);
+        }
+      }
+    }
+  }
 }

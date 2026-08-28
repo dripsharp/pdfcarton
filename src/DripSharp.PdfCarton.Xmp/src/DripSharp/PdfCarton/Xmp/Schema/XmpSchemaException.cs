@@ -9,13 +9,13 @@
 namespace DripSharp.PdfCarton.Xmp.Schema;
 
 public class XmpSchemaException : global::System.Exception {
-internal const long serialVersionUID = -980712488563404867L;
+  internal const long serialVersionUID = -980712488563404867L;
 
-public XmpSchemaException(string message) : base(message) {
+  public XmpSchemaException(string message) : base(message) {
 
-}
+  }
 
-public XmpSchemaException(string message, global::System.Exception cause) : base(message, cause) {
+  public XmpSchemaException(string message, global::System.Exception cause) : base(message, cause) {
 
-}
+  }
 }

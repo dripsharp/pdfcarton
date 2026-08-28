@@ -9,30 +9,33 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function.Type4;
 
 internal class ConditionalOperators {
-private ConditionalOperators() {}
+  private ConditionalOperators() {}
 
-internal class If : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
-public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
-global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence proc = (global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence)(stack.Pop()!);
-bool condition = global::DripSharp.Runtime.JavaCompat.Unbox((bool?)(stack.Pop()));
-if (condition) {
-proc.Execute(context);
-}
-}
-}
+  internal class If : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
+    public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
+      global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence proc
+        = (global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence)(stack.Pop()!);
+      bool condition = global::DripSharp.Runtime.JavaCompat.Unbox((bool?)(stack.Pop()));
+      if (condition) {
+        proc.Execute(context);
+      }
+    }
+  }
 
-internal class IfElse : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
-public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
-global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence proc2 = (global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence)(stack.Pop()!);
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence proc1 = (global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence)(stack.Pop()!);
-bool condition = global::DripSharp.Runtime.JavaCompat.Unbox((bool?)(stack.Pop()));
-if (condition) {
-proc1.Execute(context);
-} else {
-proc2.Execute(context);
-}
-}
-}
+  internal class IfElse : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
+    public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
+      global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence proc2
+        = (global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence)(stack.Pop()!);
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence proc1
+        = (global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence)(stack.Pop()!);
+      bool condition = global::DripSharp.Runtime.JavaCompat.Unbox((bool?)(stack.Pop()));
+      if (condition) {
+        proc1.Execute(context);
+      } else {
+        proc2.Execute(context);
+      }
+    }
+  }
 }

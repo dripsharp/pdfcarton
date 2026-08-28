@@ -9,45 +9,52 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public interface ResourceCache {
-public global::DripSharp.PdfCarton.Pdmodel.Font.PDFont GetFont(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Font.PDFont GetFont(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState GetExtGState(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState GetExtGState(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading GetShading(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading GetShading(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern GetPattern(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern GetPattern(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList GetProperties(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList GetProperties(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject GetXObject(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject GetXObject(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect, global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font);
+  public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font);
 
-public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace);
+  public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace);
 
-public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect, global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState extGState);
+  public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState extGState);
 
-public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect, global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading);
+  public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading);
 
-public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect, global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern pattern);
+  public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern pattern);
 
-public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList propertyList);
+  public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect,
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList propertyList);
 
-public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect, global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject xobject);
+  public void Put(global::DripSharp.PdfCarton.Cos.COSObject indirect,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject xobject);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace RemoveColorSpace(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace RemoveColorSpace(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState RemoveExtState(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState RemoveExtState(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Font.PDFont RemoveFont(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Font.PDFont RemoveFont(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading RemoveShading(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading RemoveShading(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern RemovePattern(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern RemovePattern(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList RemoveProperties(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList RemoveProperties(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject RemoveXObject(global::DripSharp.PdfCarton.Cos.COSObject indirect);
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject RemoveXObject(global::DripSharp.PdfCarton.Cos.COSObject indirect);
 }

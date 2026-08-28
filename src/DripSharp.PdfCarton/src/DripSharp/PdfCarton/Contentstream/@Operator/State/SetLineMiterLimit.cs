@@ -8,23 +8,30 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.State;
 
-public class SetLineMiterLimit : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public SetLineMiterLimit(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class SetLineMiterLimit
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public SetLineMiterLimit(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-if (!(this.CheckArrayTypesClass(arguments, typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber miterLimit = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0)!);
-this.GetContext().GetGraphicsState().SetMiterLimit(miterLimit.FloatValue());
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        arguments);
+    }
+    if (!(this.CheckArrayTypesClass(arguments,
+      typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSNumber miterLimit
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
+      0)!);
+    this.GetContext().GetGraphicsState().SetMiterLimit(miterLimit.FloatValue());
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineMiterlimit;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineMiterlimit;
+  }
 }

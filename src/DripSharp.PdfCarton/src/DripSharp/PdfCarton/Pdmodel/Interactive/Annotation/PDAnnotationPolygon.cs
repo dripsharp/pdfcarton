@@ -8,79 +8,89 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
-public class PDAnnotationPolygon : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
-public const string SubType = "Polygon";
+public class PDAnnotationPolygon
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
+  public const string SubType = "Polygon";
 
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler
+    = null!;
 
-public PDAnnotationPolygon() {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPolygon.SubType);
-}
+  public PDAnnotationPolygon() {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPolygon.SubType);
+  }
 
-public PDAnnotationPolygon(global::DripSharp.PdfCarton.Cos.COSDictionary dict) : base(dict) {
+  public PDAnnotationPolygon(global::DripSharp.PdfCarton.Cos.COSDictionary dict) : base(dict) {
 
-}
+  }
 
-public virtual void SetInteriorColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor ic) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ic, ic.ToCOSArray());
-}
+  public virtual void SetInteriorColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor ic) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ic, ic.ToCOSArray());
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetInteriorColor() {
-return this.GetColor(global::DripSharp.PdfCarton.Cos.COSName.Ic);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetInteriorColor() {
+    return this.GetColor(global::DripSharp.PdfCarton.Cos.COSName.Ic);
+  }
 
-public virtual void SetBorderEffect(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary be) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Be, be);
-}
+  public virtual void SetBorderEffect(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary be) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Be, be);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary GetBorderEffect() {
-global::DripSharp.PdfCarton.Cos.COSDictionary be = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Be);
-return ((be != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary(be) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary GetBorderEffect() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary be
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Be);
+    return ((be != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary(be)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary)(default!));
+  }
 
-public virtual float[] GetVertices() {
-global::DripSharp.PdfCarton.Cos.COSArray array = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Vertices);
-return ((array != default!) ? array.ToFloatArray() : (float[])(default!));
-}
+  public virtual float[] GetVertices() {
+    global::DripSharp.PdfCarton.Cos.COSArray array
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Vertices);
+    return ((array != default!) ? array.ToFloatArray() : (float[])(default!));
+  }
 
-public virtual void SetVertices(float[] points) {
-global::DripSharp.PdfCarton.Cos.COSArray ar = new global::DripSharp.PdfCarton.Cos.COSArray();
-ar.SetFloatArray(points);
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Vertices, ar);
-}
+  public virtual void SetVertices(float[] points) {
+    global::DripSharp.PdfCarton.Cos.COSArray ar = new global::DripSharp.PdfCarton.Cos.COSArray();
+    ar.SetFloatArray(points);
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Vertices, ar);
+  }
 
-public virtual float[][] GetPath() {
-global::DripSharp.PdfCarton.Cos.COSArray array = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Path);
-if ((array != default!)) {
-float[][] pathArray = new float[array.Size()][];
-float[] emptyArray = new float[0];
-for (int i = 0; (i < array.Size()); ++i) {
-global::DripSharp.PdfCarton.Cos.COSBase base2 = array.GetObject(i);
-if ((base2 is global::DripSharp.PdfCarton.Cos.COSArray)) {
-pathArray[i] = ((global::DripSharp.PdfCarton.Cos.COSArray)(base2!)).ToFloatArray();
-} else {
-pathArray[i] = emptyArray;
-}
-}
-return pathArray;
-}
-return default!;
-}
+  public virtual float[][] GetPath() {
+    global::DripSharp.PdfCarton.Cos.COSArray array
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Path);
+    if ((array != default!)) {
+      float[][] pathArray = new float[array.Size()][];
+      float[] emptyArray = new float[0];
+      for (int i = 0; (i < array.Size()); ++i) {
+        global::DripSharp.PdfCarton.Cos.COSBase base2 = array.GetObject(i);
+        if ((base2 is global::DripSharp.PdfCarton.Cos.COSArray)) {
+          pathArray[i] = ((global::DripSharp.PdfCarton.Cos.COSArray)(base2!)).ToFloatArray();
+        } else {
+          pathArray[i] = emptyArray;
+        }
+      }
+      return pathArray;
+    }
+    return default!;
+  }
 
-public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
-this.customAppearanceHandler = appearanceHandler;
-}
+  public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
+    this.customAppearanceHandler = appearanceHandler;
+  }
 
-public override void ConstructAppearances() {
-this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
-}
+  public override void ConstructAppearances() {
+    this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
+  }
 
-public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-if ((this.customAppearanceHandler == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDPolygonAppearanceHandler appearanceHandler = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDPolygonAppearanceHandler(this, document);
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
-} else {
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
-}
-}
+  public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    if ((this.customAppearanceHandler == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDPolygonAppearanceHandler appearanceHandler
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDPolygonAppearanceHandler(this,
+        document);
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
+    } else {
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
+    }
+  }
 }

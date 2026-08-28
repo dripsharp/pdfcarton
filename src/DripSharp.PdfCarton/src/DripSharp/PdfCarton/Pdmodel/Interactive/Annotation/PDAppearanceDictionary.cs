@@ -9,59 +9,70 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
 public class PDAppearanceDictionary : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public PDAppearanceDictionary() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.N, new global::DripSharp.PdfCarton.Cos.COSDictionary());
-}
+  public PDAppearanceDictionary() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.N,
+      new global::DripSharp.PdfCarton.Cos.COSDictionary());
+  }
 
-public PDAppearanceDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-this.dictionary = dictionary;
-}
+  public PDAppearanceDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    this.dictionary = dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry GetNormalAppearance() {
-global::DripSharp.PdfCarton.Cos.COSDictionary entry = this.dictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.N);
-return ((entry != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry(entry) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry GetNormalAppearance() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary entry
+      = this.dictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.N);
+    return ((entry != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry(entry)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry)(default!));
+  }
 
-public virtual void SetNormalAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry entry) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.N, entry);
-}
+  public virtual void SetNormalAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry entry) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.N, entry);
+  }
 
-public virtual void SetNormalAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream ap) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.N, ap);
-}
+  public virtual void SetNormalAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream ap) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.N, ap);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry GetRolloverAppearance() {
-global::DripSharp.PdfCarton.Cos.COSDictionary entry = this.dictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.R);
-return ((entry != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry(entry) : this.GetNormalAppearance());
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry GetRolloverAppearance() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary entry
+      = this.dictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.R);
+    return ((entry != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry(entry)
+      : this.GetNormalAppearance());
+  }
 
-public virtual void SetRolloverAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry entry) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.R, entry);
-}
+  public virtual void SetRolloverAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry entry) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.R, entry);
+  }
 
-public virtual void SetRolloverAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream ap) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.R, ap);
-}
+  public virtual void SetRolloverAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream ap) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.R, ap);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry GetDownAppearance() {
-global::DripSharp.PdfCarton.Cos.COSDictionary entry = this.dictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.D);
-return ((entry != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry(entry) : this.GetNormalAppearance());
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry GetDownAppearance() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary entry
+      = this.dictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.D);
+    return ((entry != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry(entry)
+      : this.GetNormalAppearance());
+  }
 
-public virtual void SetDownAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry entry) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, entry);
-}
+  public virtual void SetDownAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry entry) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, entry);
+  }
 
-public virtual void SetDownAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream ap) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, ap);
-}
+  public virtual void SetDownAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream ap) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, ap);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

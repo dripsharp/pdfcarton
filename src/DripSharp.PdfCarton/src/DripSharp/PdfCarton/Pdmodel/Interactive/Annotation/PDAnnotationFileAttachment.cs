@@ -8,57 +8,64 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
-public class PDAnnotationFileAttachment : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
-public const string AttachmentNamePushPin = "PushPin";
+public class PDAnnotationFileAttachment
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
+  public const string AttachmentNamePushPin = "PushPin";
 
-public const string AttachmentNameGraph = "Graph";
+  public const string AttachmentNameGraph = "Graph";
 
-public const string AttachmentNamePaperclip = "Paperclip";
+  public const string AttachmentNamePaperclip = "Paperclip";
 
-public const string AttachmentNameTag = "Tag";
+  public const string AttachmentNameTag = "Tag";
 
-public const string SubType = "FileAttachment";
+  public const string SubType = "FileAttachment";
 
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler customAppearanceHandler
+    = null!;
 
-public PDAnnotationFileAttachment() {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationFileAttachment.SubType);
-}
+  public PDAnnotationFileAttachment() {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationFileAttachment.SubType);
+  }
 
-public PDAnnotationFileAttachment(global::DripSharp.PdfCarton.Cos.COSDictionary field) : base(field) {
+  public PDAnnotationFileAttachment(global::DripSharp.PdfCarton.Cos.COSDictionary field)
+  : base(field) {
 
-}
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification GetFile() {
-return global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification.CreateFS(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Fs));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification GetFile() {
+    return global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification.CreateFS(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Fs));
+  }
 
-public virtual void SetFile(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification file) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fs, file);
-}
+  public virtual void SetFile(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification file) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fs, file);
+  }
 
-public virtual string GetAttachmentName() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Name, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationFileAttachment.AttachmentNamePushPin);
-}
+  public virtual string GetAttachmentName() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Name,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationFileAttachment.AttachmentNamePushPin);
+  }
 
-public virtual void SetAttachmentName(string name) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Name, name);
-}
+  public virtual void SetAttachmentName(string name) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Name, name);
+  }
 
-public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
-this.customAppearanceHandler = appearanceHandler;
-}
+  public virtual void SetCustomAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler appearanceHandler) {
+    this.customAppearanceHandler = appearanceHandler;
+  }
 
-public override void ConstructAppearances() {
-this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
-}
+  public override void ConstructAppearances() {
+    this.ConstructAppearances((global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!);
+  }
 
-public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-if ((this.customAppearanceHandler == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDFileAttachmentAppearanceHandler appearanceHandler = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDFileAttachmentAppearanceHandler(this, document);
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
-} else {
-((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
-}
-}
+  public override void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    if ((this.customAppearanceHandler == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDFileAttachmentAppearanceHandler appearanceHandler
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDFileAttachmentAppearanceHandler(this,
+        document);
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(appearanceHandler)).GenerateAppearanceStreams();
+    } else {
+      ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
+    }
+  }
 }

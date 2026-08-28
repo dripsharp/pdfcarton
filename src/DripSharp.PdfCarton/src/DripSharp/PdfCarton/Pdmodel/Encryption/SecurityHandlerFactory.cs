@@ -9,51 +9,70 @@
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 public sealed class SecurityHandlerFactory {
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandlerFactory Instance = new global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandlerFactory();
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandlerFactory Instance
+    = new global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandlerFactory();
 
-private readonly global::System.Collections.Generic.IDictionary<string, global::System.Type> nameToHandler = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, global::System.Type>();
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::System.Type> nameToHandler
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, global::System.Type>();
 
-private readonly global::System.Collections.Generic.IDictionary<global::System.Type, global::System.Type> policyToHandler = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::System.Type, global::System.Type>();
+  private readonly global::System.Collections.Generic.IDictionary<global::System.Type,
+    global::System.Type> policyToHandler
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::System.Type,
+    global::System.Type>();
 
-private SecurityHandlerFactory() {
-this.RegisterHandler(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.Filter, typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler), typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy));
-this.RegisterHandler(global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeySecurityHandler.Filter, typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeySecurityHandler), typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyProtectionPolicy));
-}
+  private SecurityHandlerFactory() {
+    this.RegisterHandler(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.Filter,
+      typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler),
+      typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy));
+    this.RegisterHandler(global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeySecurityHandler.Filter,
+      typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeySecurityHandler),
+      typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyProtectionPolicy));
+  }
 
-public void RegisterHandler(string name, global::System.Type securityHandler, global::System.Type protectionPolicy) {
-if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.nameToHandler, name)) {
-throw new global::System.InvalidOperationException("The security handler name is already registered");
-}
-global::DripSharp.Runtime.JavaCompat.MapPut(this.nameToHandler, name, securityHandler);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.policyToHandler, protectionPolicy, securityHandler);
-}
+  public void RegisterHandler(string name, global::System.Type securityHandler,
+    global::System.Type protectionPolicy) {
+    if (global::DripSharp.Runtime.JavaCompat.MapContainsKey(this.nameToHandler, name)) {
+      throw new global::System.InvalidOperationException("The security handler name is already registered");
+    }
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.nameToHandler, name, securityHandler);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.policyToHandler, protectionPolicy,
+      securityHandler);
+  }
 
-public global::DripSharp.Runtime.PdfBoxSecurityHandler NewSecurityHandlerForPolicy(global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy policy) {
-global::System.Type handlerClass = global::DripSharp.Runtime.JavaCompat.MapGet(this.policyToHandler, ((object)(policy)).GetType());
-if ((handlerClass == default!)) {
-return default!;
-}
-global::System.Type[] argsClasses = new global::System.Type[] { ((object)(policy)).GetType() };
-object[] args = new object[] { policy };
-return this.newSecurityHandler(handlerClass, argsClasses, args);
-}
+  public global::DripSharp.Runtime.PdfBoxSecurityHandler NewSecurityHandlerForPolicy(global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy policy) {
+    global::System.Type handlerClass
+      = global::DripSharp.Runtime.JavaCompat.MapGet(this.policyToHandler,
+      ((object)(policy)).GetType());
+    if ((handlerClass == default!)) {
+      return default!;
+    }
+    global::System.Type[] argsClasses = new global::System.Type[] { ((object)(policy)).GetType() };
+    object[] args = new object[] { policy };
+    return this.newSecurityHandler(handlerClass, argsClasses, args);
+  }
 
-public global::DripSharp.Runtime.PdfBoxSecurityHandler NewSecurityHandlerForFilter(string name) {
-global::System.Type handlerClass = global::DripSharp.Runtime.JavaCompat.MapGet(this.nameToHandler, name);
-if ((handlerClass == default!)) {
-return default!;
-}
-global::System.Type[] argsClasses = new global::System.Type[] {  };
-object[] args = new object[] {  };
-return this.newSecurityHandler(handlerClass, argsClasses, args);
-}
+  public global::DripSharp.Runtime.PdfBoxSecurityHandler NewSecurityHandlerForFilter(string name) {
+    global::System.Type handlerClass
+      = global::DripSharp.Runtime.JavaCompat.MapGet(this.nameToHandler, name);
+    if ((handlerClass == default!)) {
+      return default!;
+    }
+    global::System.Type[] argsClasses = new global::System.Type[] {  };
+    object[] args = new object[] {  };
+    return this.newSecurityHandler(handlerClass, argsClasses, args);
+  }
 
-private global::DripSharp.Runtime.PdfBoxSecurityHandler newSecurityHandler(global::System.Type handlerClass, global::System.Type[] argsClasses, object[] args) {
-try {
-global::System.Reflection.ConstructorInfo ctor = global::DripSharp.Runtime.JavaCompat.ClassGetDeclaredConstructor(handlerClass, argsClasses);
-return global::DripSharp.Runtime.JavaCompat.ConstructorInvoke<global::DripSharp.Runtime.PdfBoxSecurityHandler>(ctor, args);
-} catch (global::System.Exception e) when (e is global::System.MissingMethodException or global::System.MemberAccessException or global::System.Reflection.TargetInvocationException) {
-throw new global::System.Exception(null, e);
-}
-}
+  private global::DripSharp.Runtime.PdfBoxSecurityHandler newSecurityHandler(global::System.Type handlerClass,
+    global::System.Type[] argsClasses, object[] args) {
+    try {
+      global::System.Reflection.ConstructorInfo ctor
+        = global::DripSharp.Runtime.JavaCompat.ClassGetDeclaredConstructor(handlerClass,
+        argsClasses);
+      return global::DripSharp.Runtime.JavaCompat.ConstructorInvoke<global::DripSharp.Runtime.PdfBoxSecurityHandler>(ctor,
+        args);
+    } catch (global::System.Exception e) when (e is global::System.MissingMethodException or global::System.MemberAccessException or global::System.Reflection.TargetInvocationException) {
+      throw new global::System.Exception(null, e);
+    }
+  }
 }

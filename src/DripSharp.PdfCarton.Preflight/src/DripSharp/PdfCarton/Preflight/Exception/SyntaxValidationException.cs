@@ -8,22 +8,26 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Exception;
 
-public class SyntaxValidationException : global::DripSharp.PdfCarton.Preflight.Exception.ValidationException {
-private readonly global::DripSharp.PdfCarton.Preflight.ValidationResult result = null!;
+public class SyntaxValidationException
+: global::DripSharp.PdfCarton.Preflight.Exception.ValidationException {
+  private readonly global::DripSharp.PdfCarton.Preflight.ValidationResult result = null!;
 
-public SyntaxValidationException(string message, global::System.Exception cause, global::DripSharp.PdfCarton.Preflight.ValidationResult result) : base(message, cause) {
-this.result = result;
-}
+  public SyntaxValidationException(string message, global::System.Exception cause,
+    global::DripSharp.PdfCarton.Preflight.ValidationResult result) : base(message, cause) {
+    this.result = result;
+  }
 
-public SyntaxValidationException(string message, global::DripSharp.PdfCarton.Preflight.ValidationResult result) : base(message) {
-this.result = result;
-}
+  public SyntaxValidationException(string message,
+    global::DripSharp.PdfCarton.Preflight.ValidationResult result) : base(message) {
+    this.result = result;
+  }
 
-public SyntaxValidationException(global::System.Exception cause, global::DripSharp.PdfCarton.Preflight.ValidationResult result) : base(cause) {
-this.result = result;
-}
+  public SyntaxValidationException(global::System.Exception cause,
+    global::DripSharp.PdfCarton.Preflight.ValidationResult result) : base(cause) {
+    this.result = result;
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.ValidationResult GetResult() {
-return this.result;
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.ValidationResult GetResult() {
+    return this.result;
+  }
 }

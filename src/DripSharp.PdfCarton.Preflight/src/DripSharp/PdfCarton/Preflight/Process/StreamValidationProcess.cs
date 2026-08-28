@@ -8,53 +8,72 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process;
 
-public class StreamValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-global::DripSharp.PdfCarton.Cos.COSDocument cosDocument = ctx.GetDocument().GetDocument();
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSObjectKey> objectKeys = global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamSorted(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(global::DripSharp.Runtime.JavaCompat.MapEntrySet(cosDocument.GetXrefTable())), (e) => (e.Value > 0L)), global::DripSharp.Runtime.JavaCompat.ComparatorComparing<global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSObjectKey, long>, long>((value0) => value0.Value)), (value0) => value0.Key));
-foreach (global::DripSharp.PdfCarton.Cos.COSObjectKey objectKey in objectKeys) {
-global::DripSharp.PdfCarton.Cos.COSBase cBase = cosDocument.GetObjectFromPool(objectKey).GetObject();
-if ((cBase is global::DripSharp.PdfCarton.Cos.COSStream)) {
-this.ValidateStreamObject(ctx, cBase);
-}
-}
-}
+public class StreamValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    global::DripSharp.PdfCarton.Cos.COSDocument cosDocument = ctx.GetDocument().GetDocument();
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSObjectKey> objectKeys
+      = global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamSorted(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(global::DripSharp.Runtime.JavaCompat.MapEntrySet(cosDocument.GetXrefTable())),
+      (e) => (e.Value > 0L)),
+      global::DripSharp.Runtime.JavaCompat.ComparatorComparing<global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+      long>, long>((value0) => value0.Value)), (value0) => value0.Key));
+    foreach (global::DripSharp.PdfCarton.Cos.COSObjectKey objectKey in objectKeys) {
+      global::DripSharp.PdfCarton.Cos.COSBase cBase
+        = cosDocument.GetObjectFromPool(objectKey).GetObject();
+      if ((cBase is global::DripSharp.PdfCarton.Cos.COSStream)) {
+        this.ValidateStreamObject(ctx, cBase);
+      }
+    }
+  }
 
-public virtual void ValidateStreamObject(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSBase cObj) {
-global::DripSharp.PdfCarton.Cos.COSStream streamObj = (global::DripSharp.PdfCarton.Cos.COSStream)(cObj!);
-this.CheckDictionaryEntries(context, streamObj);
-this.CheckFilters(streamObj, context);
-}
+  public virtual void ValidateStreamObject(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Cos.COSBase cObj) {
+    global::DripSharp.PdfCarton.Cos.COSStream streamObj
+      = (global::DripSharp.PdfCarton.Cos.COSStream)(cObj!);
+    this.CheckDictionaryEntries(context, streamObj);
+    this.CheckFilters(streamObj, context);
+  }
 
-protected internal virtual void CheckFilters(global::DripSharp.PdfCarton.Cos.COSStream stream, global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
-global::DripSharp.PdfCarton.Cos.COSBase bFilter = stream.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Filter);
-if ((bFilter is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray afName = (global::DripSharp.PdfCarton.Cos.COSArray)(bFilter!);
-for (int i = 0; (i < afName.Size()); ++i) {
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.IsAuthorizedFilter(context, afName.GetString(i));
-}
-} else {
-if ((bFilter is global::DripSharp.PdfCarton.Cos.COSName)) {
-string fName = ((global::DripSharp.PdfCarton.Cos.COSName)(bFilter!)).GetName();
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.IsAuthorizedFilter(context, fName);
-} else {
-if ((bFilter != default!)) {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamInvalidFilter, "Filter should be a Name or an Array"));
-}
-}
-}
-}
+  protected internal virtual void CheckFilters(global::DripSharp.PdfCarton.Cos.COSStream stream,
+    global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
+    global::DripSharp.PdfCarton.Cos.COSBase bFilter
+      = stream.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Filter);
+    if ((bFilter is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      global::DripSharp.PdfCarton.Cos.COSArray afName
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(bFilter!);
+      for (int i = 0; (i < afName.Size()); ++i) {
+        global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.IsAuthorizedFilter(context,
+          afName.GetString(i));
+      }
+    } else {
+      if ((bFilter is global::DripSharp.PdfCarton.Cos.COSName)) {
+        string fName = ((global::DripSharp.PdfCarton.Cos.COSName)(bFilter!)).GetName();
+        global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.IsAuthorizedFilter(context, fName);
+      } else {
+        if ((bFilter != default!)) {
+          this.AddValidationError(context,
+            new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamInvalidFilter,
+            "Filter should be a Name or an Array"));
+        }
+      }
+    }
+  }
 
-protected internal virtual void CheckDictionaryEntries(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSStream streamObj) {
-bool len = streamObj.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Length);
-bool f = streamObj.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.F);
-bool ffilter = streamObj.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.FFilter);
-bool fdecParams = streamObj.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.FDecodeParms);
-if (!len) {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamLengthMissing, "Stream length is missing"));
-}
-if (((f || ffilter) || fdecParams)) {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamFxKeys, "F, FFilter or FDecodeParms keys are present in the stream dictionary"));
-}
-}
+  protected internal virtual void CheckDictionaryEntries(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Cos.COSStream streamObj) {
+    bool len = streamObj.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Length);
+    bool f = streamObj.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.F);
+    bool ffilter = streamObj.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.FFilter);
+    bool fdecParams = streamObj.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.FDecodeParms);
+    if (!len) {
+      this.AddValidationError(context,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamLengthMissing,
+        "Stream length is missing"));
+    }
+    if (((f || ffilter) || fdecParams)) {
+      this.AddValidationError(context,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamFxKeys,
+        "F, FFilter or FDecodeParms keys are present in the stream dictionary"));
+    }
+  }
 }

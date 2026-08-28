@@ -9,9 +9,9 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class OTLTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-public const string Tag = "JSTF";
+  public const string Tag = "JSTF";
 
-internal OTLTable() : base() {
+  internal OTLTable() : base() {
 
-}
+  }
 }

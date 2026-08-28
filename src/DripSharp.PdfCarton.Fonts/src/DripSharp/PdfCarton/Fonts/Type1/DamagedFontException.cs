@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Type1;
 
 public class DamagedFontException : global::System.IO.IOException {
-public DamagedFontException(string message) : base(message) {
+  public DamagedFontException(string message) : base(message) {
 
-}
+  }
 }

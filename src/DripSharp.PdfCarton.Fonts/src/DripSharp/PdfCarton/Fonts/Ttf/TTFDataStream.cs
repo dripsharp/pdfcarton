@@ -9,123 +9,135 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 internal abstract class TTFDataStream : global::System.IDisposable {
-private static readonly global::System.TimeZoneInfo TIMEZONE_UTC = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetTimeZone("UTC");
+  private static readonly global::System.TimeZoneInfo TIMEZONE_UTC
+    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetTimeZone("UTC");
 
-internal TTFDataStream() {}
+  internal TTFDataStream() {}
 
-public virtual float Read32Fixed() {
-float retval = this.ReadSignedShort();
-retval += (this.ReadUnsignedShort() / (float)(65536.0F));
-return retval;
-}
+  public virtual float Read32Fixed() {
+    float retval = this.ReadSignedShort();
+    retval += (this.ReadUnsignedShort() / (float)65536.0F);
+    return retval;
+  }
 
-public virtual string ReadString(int length) {
-return this.ReadString(length, global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.ISO88591);
-}
+  public virtual string ReadString(int length) {
+    return this.ReadString(length,
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.ISO88591);
+  }
 
-public virtual string ReadString(int length, global::System.Text.Encoding charset) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(this.Read(length), charset);
-}
+  public virtual string ReadString(int length, global::System.Text.Encoding charset) {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(this.Read(length),
+      charset);
+  }
 
-public abstract int Read();
+  public abstract int Read();
 
-public abstract long ReadLong();
+  public abstract long ReadLong();
 
-public virtual int ReadSignedByte() {
-int signedByte = this.Read();
-return ((signedByte <= 127) ? signedByte : (signedByte - 256));
-}
+  public virtual int ReadSignedByte() {
+    int signedByte = this.Read();
+    return ((signedByte <= 127) ? signedByte : (signedByte - 256));
+  }
 
-public virtual int ReadUnsignedByte() {
-int unsignedByte = this.Read();
-if ((unsignedByte == -1)) {
-throw new global::System.IO.EndOfStreamException("premature EOF");
-}
-return unsignedByte;
-}
+  public virtual int ReadUnsignedByte() {
+    int unsignedByte = this.Read();
+    if ((unsignedByte == -1)) {
+      throw new global::System.IO.EndOfStreamException("premature EOF");
+    }
+    return unsignedByte;
+  }
 
-public virtual long ReadUnsignedInt() {
-long byte1 = this.Read();
-long byte2 = this.Read();
-long byte3 = this.Read();
-long byte4 = this.Read();
-if ((byte4 < 0)) {
-throw new global::System.IO.EndOfStreamException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("EOF at ", this.GetCurrentPosition()), ", b1: "), byte1), ", b2: "), byte2), ", b3: "), byte3), ", b4: "), byte4));
-}
-return ((((byte1 << unchecked((int)(24))) + (byte2 << unchecked((int)(16)))) + (byte3 << unchecked((int)(8)))) + byte4);
-}
+  public virtual long ReadUnsignedInt() {
+    long byte1 = this.Read();
+    long byte2 = this.Read();
+    long byte3 = this.Read();
+    long byte4 = this.Read();
+    if ((byte4 < 0)) {
+      throw new global::System.IO.EndOfStreamException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("EOF at ",
+        this.GetCurrentPosition()), ", b1: "), byte1), ", b2: "), byte2), ", b3: "), byte3),
+        ", b4: "), byte4));
+    }
+    return ((((byte1 << unchecked((int)(24))) + (byte2 << unchecked((int)(16))))
+      + (byte3 << unchecked((int)(8)))) + byte4);
+  }
 
-public virtual int ReadUnsignedShort() {
-int b1 = this.Read();
-int b2 = this.Read();
-if (((b1 | b2) < 0)) {
-throw new global::System.IO.EndOfStreamException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("EOF at ", this.GetCurrentPosition()), ", b1: "), b1), ", b2: "), b2));
-}
-return ((b1 << unchecked((int)(8))) + b2);
-}
+  public virtual int ReadUnsignedShort() {
+    int b1 = this.Read();
+    int b2 = this.Read();
+    if (((b1 | b2) < 0)) {
+      throw new global::System.IO.EndOfStreamException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("EOF at ",
+        this.GetCurrentPosition()), ", b1: "), b1), ", b2: "), b2));
+    }
+    return ((b1 << unchecked((int)(8))) + b2);
+  }
 
-public virtual int[] ReadUnsignedByteArray(int length) {
-int[] array = new int[length];
-for (int i = 0; (i < length); i++) {
-array[i] = this.Read();
-}
-return array;
-}
+  public virtual int[] ReadUnsignedByteArray(int length) {
+    int[] array = new int[length];
+    for (int i = 0; (i < length); i++) {
+      array[i] = this.Read();
+    }
+    return array;
+  }
 
-public virtual int[] ReadUnsignedShortArray(int length) {
-int[] array = new int[length];
-for (int i = 0; (i < length); i++) {
-array[i] = this.ReadUnsignedShort();
-}
-return array;
-}
+  public virtual int[] ReadUnsignedShortArray(int length) {
+    int[] array = new int[length];
+    for (int i = 0; (i < length); i++) {
+      array[i] = this.ReadUnsignedShort();
+    }
+    return array;
+  }
 
-public virtual short ReadSignedShort() {
-return unchecked((short)(unchecked((short)(this.ReadUnsignedShort()))));
-}
+  public virtual short ReadSignedShort() {
+    return unchecked((short)(unchecked((short)(this.ReadUnsignedShort()))));
+  }
 
-public virtual global::System.DateTimeOffset? ReadInternationalDate() {
-long secondsSince1904 = this.ReadLong();
-global::System.DateTimeOffset? cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarInstance((global::System.TimeZoneInfo)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Clone(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream.TIMEZONE_UTC)!));
-cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarSet(cal, 1904, 0, 1, 0, 0, 0);
-cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarSet(cal, 14, 0);
-long millisFor1904 = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarGetTimeInMillis(cal);
-millisFor1904 += (secondsSince1904 * 1000);
-cal = global::System.DateTimeOffset.FromUnixTimeMilliseconds(millisFor1904);
-return cal;
-}
+  public virtual global::System.DateTimeOffset? ReadInternationalDate() {
+    long secondsSince1904 = this.ReadLong();
+    global::System.DateTimeOffset? cal
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarInstance((global::System.TimeZoneInfo)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Clone(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream.TIMEZONE_UTC)!));
+    cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarSet(cal, 1904, 0, 1, 0, 0,
+      0);
+    cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarSet(cal, 14, 0);
+    long millisFor1904
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarGetTimeInMillis(cal);
+    millisFor1904 += (secondsSince1904 * 1000);
+    cal = global::System.DateTimeOffset.FromUnixTimeMilliseconds(millisFor1904);
+    return cal;
+  }
 
-public virtual string ReadTag() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(this.Read(4), global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.USASCII);
-}
+  public virtual string ReadTag() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(this.Read(4),
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.USASCII);
+  }
 
-public abstract void Seek(long pos);
+  public abstract void Seek(long pos);
 
-public virtual sbyte[] Read(int numberOfBytes) {
-sbyte[] data = new sbyte[numberOfBytes];
-int amountRead = 0;
-int totalAmountRead = 0;
-while (((totalAmountRead < numberOfBytes) && ((amountRead = this.Read(data, totalAmountRead, (numberOfBytes - totalAmountRead))) != -1))) {
-totalAmountRead += amountRead;
-}
-if ((totalAmountRead == numberOfBytes)) {
-return data;
-} else {
-throw new global::System.IO.IOException("Unexpected end of TTF stream reached");
-}
-}
+  public virtual sbyte[] Read(int numberOfBytes) {
+    sbyte[] data = new sbyte[numberOfBytes];
+    int amountRead = 0;
+    int totalAmountRead = 0;
+    while (((totalAmountRead < numberOfBytes) && ((amountRead = this.Read(data, totalAmountRead,
+      (numberOfBytes - totalAmountRead))) != -1))) {
+      totalAmountRead += amountRead;
+    }
+    if ((totalAmountRead == numberOfBytes)) {
+      return data;
+    } else {
+      throw new global::System.IO.IOException("Unexpected end of TTF stream reached");
+    }
+  }
 
-public abstract int Read(sbyte[] b, int off, int len);
+  public abstract int Read(sbyte[] b, int off, int len);
 
-public virtual global::DripSharp.PdfCarton.IO.RandomAccessRead CreateSubView(long length) {
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.IO.RandomAccessRead CreateSubView(long length) {
+    return default!;
+  }
 
-public abstract long GetCurrentPosition();
+  public abstract long GetCurrentPosition();
 
-public abstract global::System.IO.Stream GetOriginalData();
+  public abstract global::System.IO.Stream GetOriginalData();
 
-public abstract long GetOriginalDataSize();
+  public abstract long GetOriginalDataSize();
 
-public abstract void Dispose();
+  public abstract void Dispose();
 }

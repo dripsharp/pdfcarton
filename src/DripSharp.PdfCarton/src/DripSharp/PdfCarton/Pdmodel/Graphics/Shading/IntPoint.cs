@@ -9,30 +9,33 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 internal class IntPoint : global::DripSharp.Runtime.JavaPoint {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-internal IntPoint(int x, int y) : base(x, y) {
+  internal IntPoint(int x, int y) : base(x, y) {
 
-}
+  }
 
-public override int GetHashCode() {
-return ((89 * (623 + this.IntX)) + this.IntY);
-}
+  public override int GetHashCode() {
+    return ((89 * (623 + this.IntX)) + this.IntY);
+  }
 
-public override bool Equals(object obj) {
-if ((this == obj)) {
-return true;
-}
-if ((obj == default!)) {
-return false;
-}
-if ((((object)(this)).GetType() != ((object)(obj)).GetType())) {
-if ((obj is global::DripSharp.Runtime.JavaPoint2D)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.IntPoint.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("IntPoint should not be used together with its base class"));
-}
-return false;
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.IntPoint other = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.IntPoint)(obj!);
-return ((this.IntX == other.IntX) && (this.IntY == other.IntY));
-}
+  public override bool Equals(object obj) {
+    if ((this == obj)) {
+      return true;
+    }
+    if ((obj == default!)) {
+      return false;
+    }
+    if ((((object)(this)).GetType() != ((object)(obj)).GetType())) {
+      if ((obj is global::DripSharp.Runtime.JavaPoint2D)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.IntPoint.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf("IntPoint should not be used together with its base class"));
+      }
+      return false;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.IntPoint other
+      = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.IntPoint)(obj!);
+    return ((this.IntX == other.IntX) && (this.IntY == other.IntY));
+  }
 }

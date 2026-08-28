@@ -9,9 +9,13 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public interface FontMapper {
-public global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont> GetTrueTypeFont(string baseFont, global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor);
+  public global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont> GetTrueTypeFont(string baseFont,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor);
 
-public global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.FontBoxFont> GetFontBoxFont(string baseFont, global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor);
+  public global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.FontBoxFont> GetFontBoxFont(string baseFont,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor);
 
-public global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping GetCIDFont(string baseFont, global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor, global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo cidSystemInfo);
+  public global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping GetCIDFont(string baseFont,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo cidSystemInfo);
 }

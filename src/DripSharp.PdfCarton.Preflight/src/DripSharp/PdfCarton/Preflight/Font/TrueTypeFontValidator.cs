@@ -8,28 +8,43 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font;
 
-public class TrueTypeFontValidator : global::DripSharp.PdfCarton.Preflight.Font.SimpleFontValidator<global::DripSharp.PdfCarton.Preflight.Font.Container.TrueTypeContainer> {
-public TrueTypeFontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont font) : base(context, font, font.GetCOSObject(), new global::DripSharp.PdfCarton.Preflight.Font.Container.TrueTypeContainer(font)) {
+public class TrueTypeFontValidator
+: global::DripSharp.PdfCarton.Preflight.Font.SimpleFontValidator<global::DripSharp.PdfCarton.Preflight.Font.Container.TrueTypeContainer> {
+  public TrueTypeFontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont font) : base(context, font,
+    font.GetCOSObject(),
+    new global::DripSharp.PdfCarton.Preflight.Font.Container.TrueTypeContainer(font)) {
 
-}
+  }
 
-protected internal override void CreateFontDescriptorHelper() {
-this.DescriptorHelper = new global::DripSharp.PdfCarton.Preflight.Font.Descriptor.TrueTypeDescriptorHelper(base.Context, (global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont)(base.Font!), base.FontContainer);
-}
+  protected internal override void CreateFontDescriptorHelper() {
+    this.DescriptorHelper
+      = new global::DripSharp.PdfCarton.Preflight.Font.Descriptor.TrueTypeDescriptorHelper(base.Context,
+      (global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont)(base.Font!), base.FontContainer);
+  }
 
-protected internal override void CheckEncoding() {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont ttFont = (global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont)(base.Font!);
-global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fd = ttFont.GetFontDescriptor();
-if ((fd != default!)) {
-if (fd.IsNonSymbolic()) {
-global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding encodingValue = ttFont.GetEncoding();
-if (!(((encodingValue is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacRomanEncoding) || (encodingValue is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.WinAnsiEncoding)))) {
-this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsEncoding, global::DripSharp.Runtime.JavaCompat.Concat(fd.GetFontName(), ": The Encoding is invalid for the NonSymbolic TTF")));
-}
-}
-if ((fd.IsSymbolic() && (base.FontDictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Encoding) != default!))) {
-this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsEncoding, global::DripSharp.Runtime.JavaCompat.Concat(fd.GetFontName(), ": The Encoding should be missing for the Symbolic TTF")));
-}
-}
-}
+  protected internal override void CheckEncoding() {
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont ttFont
+      = (global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont)(base.Font!);
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fd = ttFont.GetFontDescriptor();
+    if ((fd != default!)) {
+      if (fd.IsNonSymbolic()) {
+        global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding encodingValue
+          = ttFont.GetEncoding();
+        if (!(((encodingValue is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacRomanEncoding)
+          || (encodingValue is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.WinAnsiEncoding)))) {
+          this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsEncoding,
+            global::DripSharp.Runtime.JavaCompat.Concat(fd.GetFontName(),
+            ": The Encoding is invalid for the NonSymbolic TTF")));
+        }
+      }
+      if ((fd.IsSymbolic()
+        && (base.FontDictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Encoding)
+        != default!))) {
+        this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsEncoding,
+          global::DripSharp.Runtime.JavaCompat.Concat(fd.GetFontName(),
+          ": The Encoding should be missing for the Symbolic TTF")));
+      }
+    }
+  }
 }

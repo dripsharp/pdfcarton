@@ -9,55 +9,58 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class TTFTable {
-private string tag = null!;
+  private string tag = null!;
 
-private long checkSum = default;
+  private long checkSum = default;
 
-private long offset = default;
+  private long offset = default;
 
-private long length = default;
+  private long length = default;
 
-protected internal bool Initialized = default;
+  protected internal bool Initialized = default;
 
-internal TTFTable() {}
+  internal TTFTable() {}
 
-public virtual long GetCheckSum() {
-return this.checkSum;
-}
+  public virtual long GetCheckSum() {
+    return this.checkSum;
+  }
 
-internal virtual void setCheckSum(long checkSumValue) {
-this.checkSum = checkSumValue;
-}
+  internal virtual void setCheckSum(long checkSumValue) {
+    this.checkSum = checkSumValue;
+  }
 
-public virtual long GetLength() {
-return this.length;
-}
+  public virtual long GetLength() {
+    return this.length;
+  }
 
-internal virtual void setLength(long lengthValue) {
-this.length = lengthValue;
-}
+  internal virtual void setLength(long lengthValue) {
+    this.length = lengthValue;
+  }
 
-public virtual long GetOffset() {
-return this.offset;
-}
+  public virtual long GetOffset() {
+    return this.offset;
+  }
 
-internal virtual void setOffset(long offsetValue) {
-this.offset = offsetValue;
-}
+  internal virtual void setOffset(long offsetValue) {
+    this.offset = offsetValue;
+  }
 
-public virtual string GetTag() {
-return this.tag;
-}
+  public virtual string GetTag() {
+    return this.tag;
+  }
 
-internal virtual void setTag(string tagValue) {
-this.tag = tagValue;
-}
+  internal virtual void setTag(string tagValue) {
+    this.tag = tagValue;
+  }
 
-public virtual bool GetInitialized() {
-return this.Initialized;
-}
+  public virtual bool GetInitialized() {
+    return this.Initialized;
+  }
 
-internal virtual void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {}
+  internal virtual void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {}
 
-internal virtual void readHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) {}
+  internal virtual void readHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
+    global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) {}
 }

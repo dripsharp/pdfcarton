@@ -9,14 +9,17 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class IdentityFilter : global::DripSharp.PdfCarton.Filter.Filter {
-public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded, global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters, int index) {
-global::DripSharp.PdfCarton.IO.IOUtils.Copy(encoded, decoded);
-decoded.Flush();
-return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
-}
+  public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded,
+    global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters,
+    int index) {
+    global::DripSharp.PdfCarton.IO.IOUtils.Copy(encoded, decoded);
+    decoded.Flush();
+    return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
+  }
 
-public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
-global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, encoded);
-encoded.Flush();
-}
+  public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded,
+    global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
+    global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, encoded);
+    encoded.Flush();
+  }
 }

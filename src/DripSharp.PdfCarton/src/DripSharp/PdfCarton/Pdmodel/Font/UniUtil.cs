@@ -9,19 +9,20 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 internal sealed class UniUtil {
-private UniUtil() {}
+  private UniUtil() {}
 
-internal static string getUniNameOfCodePoint(int codePoint) {
-string hex = global::DripSharp.Runtime.JavaCompat.ToStringRadix(codePoint, 16).ToUpperInvariant();
-switch (hex.Length) {
-case var __case_37_18_0 when __case_37_18_0 == 1:
-return global::DripSharp.Runtime.JavaCompat.Concat("uni000", hex);
-case var __case_39_18_0 when __case_39_18_0 == 2:
-return global::DripSharp.Runtime.JavaCompat.Concat("uni00", hex);
-case var __case_41_18_0 when __case_41_18_0 == 3:
-return global::DripSharp.Runtime.JavaCompat.Concat("uni0", hex);
-default:
-return global::DripSharp.Runtime.JavaCompat.Concat("uni", hex);
-}
-}
+  internal static string getUniNameOfCodePoint(int codePoint) {
+    string hex = global::DripSharp.Runtime.JavaCompat.ToStringRadix(codePoint,
+      16).ToUpperInvariant();
+    switch (hex.Length) {
+      case var __case_37_18_0 when __case_37_18_0 == 1:
+        return global::DripSharp.Runtime.JavaCompat.Concat("uni000", hex);
+      case var __case_39_18_0 when __case_39_18_0 == 2:
+        return global::DripSharp.Runtime.JavaCompat.Concat("uni00", hex);
+      case var __case_41_18_0 when __case_41_18_0 == 3:
+        return global::DripSharp.Runtime.JavaCompat.Concat("uni0", hex);
+      default:
+        return global::DripSharp.Runtime.JavaCompat.Concat("uni", hex);
+    }
+  }
 }

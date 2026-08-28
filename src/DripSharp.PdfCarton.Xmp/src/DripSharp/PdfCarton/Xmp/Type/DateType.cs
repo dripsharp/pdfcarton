@@ -9,67 +9,70 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class DateType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty {
-private global::System.DateTimeOffset? dateValue = default;
+  private global::System.DateTimeOffset? dateValue = default;
 
-public DateType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix, propertyName, value) {
+  public DateType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI,
+    string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix,
+    propertyName, value) {
 
-}
+  }
 
-private void setValueFromCalendar(global::System.DateTimeOffset? value) {
-this.dateValue = value;
-}
+  private void setValueFromCalendar(global::System.DateTimeOffset? value) {
+    this.dateValue = value;
+  }
 
-public new virtual global::System.DateTimeOffset? GetValue() {
-return this.dateValue;
-}
+  public new virtual global::System.DateTimeOffset? GetValue() {
+    return this.dateValue;
+  }
 
-private bool isGoodType(object value) {
-if ((value is global::System.DateTimeOffset?)) {
-return true;
-} else {
-if ((value is string)) {
-try {
-global::DripSharp.PdfCarton.Xmp.DateConverter.ToCalendar((string)(value!));
-return true;
-} catch (global::System.IO.IOException) {
-return false;
-}
-}
-}
-return false;
-}
+  private bool isGoodType(object value) {
+    if ((value is global::System.DateTimeOffset?)) {
+      return true;
+    } else {
+      if ((value is string)) {
+        try {
+          global::DripSharp.PdfCarton.Xmp.DateConverter.ToCalendar((string)(value!));
+          return true;
+        } catch (global::System.IO.IOException) {
+          return false;
+        }
+      }
+    }
+    return false;
+  }
 
-public override void SetValue(object value) {
-if (!(this.isGoodType(value))) {
-if ((value == default!)) {
-throw new global::System.ArgumentException("Value null is not allowed for the Date type");
-}
-throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Value given is not allowed for the Date type: ", ((object)(value)).GetType()), ", value: "), value));
-} else {
-if ((value is string)) {
-this.setValueFromString((string)(value!));
-} else {
-this.setValueFromCalendar((global::System.DateTimeOffset?)(value!));
-}
-}
-}
+  public override void SetValue(object value) {
+    if (!(this.isGoodType(value))) {
+      if ((value == default!)) {
+        throw new global::System.ArgumentException("Value null is not allowed for the Date type");
+      }
+      throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Value given is not allowed for the Date type: ",
+        ((object)(value)).GetType()), ", value: "), value));
+    } else {
+      if ((value is string)) {
+        this.setValueFromString((string)(value!));
+      } else {
+        this.setValueFromCalendar((global::System.DateTimeOffset?)(value!));
+      }
+    }
+  }
 
-public override string GetStringValue() {
-if ((this.dateValue == default!)) {
-return default!;
-}
-return global::DripSharp.PdfCarton.Xmp.DateConverter.ToISO8601(this.dateValue);
-}
+  public override string GetStringValue() {
+    if ((this.dateValue == default!)) {
+      return default!;
+    }
+    return global::DripSharp.PdfCarton.Xmp.DateConverter.ToISO8601(this.dateValue);
+  }
 
-private void setValueFromString(string value) {
-try {
-this.setValueFromCalendar(global::DripSharp.PdfCarton.Xmp.DateConverter.ToCalendar(value));
-} catch (global::System.IO.IOException e) {
-throw new global::System.ArgumentException(null, e);
-}
-}
+  private void setValueFromString(string value) {
+    try {
+      this.setValueFromCalendar(global::DripSharp.PdfCarton.Xmp.DateConverter.ToCalendar(value));
+    } catch (global::System.IO.IOException e) {
+      throw new global::System.ArgumentException(null, e);
+    }
+  }
 
-protected override object __DripSharpCovariantBridgeGetValue() {
-return this.GetValue();
-}
+  protected override object __DripSharpCovariantBridgeGetValue() {
+    return this.GetValue();
+  }
 }

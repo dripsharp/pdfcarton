@@ -8,58 +8,60 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination;
 
-public class PDPageXYZDestination : global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination {
-protected internal const string Type = "XYZ";
+public class PDPageXYZDestination
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination {
+  protected internal const string Type = "XYZ";
 
-public PDPageXYZDestination() {
-base.Array.GrowToSize(5);
-base.Array.SetName(1, global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageXYZDestination.Type);
-}
+  public PDPageXYZDestination() {
+    base.Array.GrowToSize(5);
+    base.Array.SetName(1,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageXYZDestination.Type);
+  }
 
-public PDPageXYZDestination(global::DripSharp.PdfCarton.Cos.COSArray arr) : base(arr) {
+  public PDPageXYZDestination(global::DripSharp.PdfCarton.Cos.COSArray arr) : base(arr) {
 
-}
+  }
 
-public virtual int GetLeft() {
-return base.Array.GetInt(2);
-}
+  public virtual int GetLeft() {
+    return base.Array.GetInt(2);
+  }
 
-public virtual void SetLeft(int x) {
-base.Array.GrowToSize(5);
-if ((x == -1)) {
-base.Array.Set(2, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
-} else {
-base.Array.SetInt(2, x);
-}
-}
+  public virtual void SetLeft(int x) {
+    base.Array.GrowToSize(5);
+    if ((x == -1)) {
+      base.Array.Set(2, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+    } else {
+      base.Array.SetInt(2, x);
+    }
+  }
 
-public virtual int GetTop() {
-return base.Array.GetInt(3);
-}
+  public virtual int GetTop() {
+    return base.Array.GetInt(3);
+  }
 
-public virtual void SetTop(int y) {
-base.Array.GrowToSize(5);
-if ((y == -1)) {
-base.Array.Set(3, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
-} else {
-base.Array.SetInt(3, y);
-}
-}
+  public virtual void SetTop(int y) {
+    base.Array.GrowToSize(5);
+    if ((y == -1)) {
+      base.Array.Set(3, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+    } else {
+      base.Array.SetInt(3, y);
+    }
+  }
 
-public virtual float GetZoom() {
-global::DripSharp.PdfCarton.Cos.COSBase obj = base.Array.GetObject(4);
-if ((obj is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-return ((global::DripSharp.PdfCarton.Cos.COSNumber)(obj!)).FloatValue();
-}
-return -1;
-}
+  public virtual float GetZoom() {
+    global::DripSharp.PdfCarton.Cos.COSBase obj = base.Array.GetObject(4);
+    if ((obj is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+      return ((global::DripSharp.PdfCarton.Cos.COSNumber)(obj!)).FloatValue();
+    }
+    return -1;
+  }
 
-public virtual void SetZoom(float zoom) {
-base.Array.GrowToSize(5);
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(zoom, (float)(-1)) == 0)) {
-base.Array.Set(4, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
-} else {
-base.Array.Set(4, new global::DripSharp.PdfCarton.Cos.COSFloat(zoom));
-}
-}
+  public virtual void SetZoom(float zoom) {
+    base.Array.GrowToSize(5);
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(zoom, (float)(-1)) == 0)) {
+      base.Array.Set(4, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+    } else {
+      base.Array.Set(4, new global::DripSharp.PdfCarton.Cos.COSFloat(zoom));
+    }
+  }
 }

@@ -9,29 +9,29 @@
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 internal sealed class MessageDigests {
-private MessageDigests() {}
+  private MessageDigests() {}
 
-internal static global::DripSharp.Runtime.JavaMessageDigest getMD5() {
-try {
-return global::DripSharp.Runtime.JavaMessageDigest.GetInstance("MD5");
-} catch (global::DripSharp.Runtime.JavaNoSuchAlgorithmException e) {
-throw new global::System.Exception(null, e);
-}
-}
+  internal static global::DripSharp.Runtime.JavaMessageDigest getMD5() {
+    try {
+      return global::DripSharp.Runtime.JavaMessageDigest.GetInstance("MD5");
+    } catch (global::DripSharp.Runtime.JavaNoSuchAlgorithmException e) {
+      throw new global::System.Exception(null, e);
+    }
+  }
 
-internal static global::DripSharp.Runtime.JavaMessageDigest getSHA1() {
-try {
-return global::DripSharp.Runtime.JavaMessageDigest.GetInstance("SHA-1");
-} catch (global::DripSharp.Runtime.JavaNoSuchAlgorithmException e) {
-throw new global::System.Exception(null, e);
-}
-}
+  internal static global::DripSharp.Runtime.JavaMessageDigest getSHA1() {
+    try {
+      return global::DripSharp.Runtime.JavaMessageDigest.GetInstance("SHA-1");
+    } catch (global::DripSharp.Runtime.JavaNoSuchAlgorithmException e) {
+      throw new global::System.Exception(null, e);
+    }
+  }
 
-internal static global::DripSharp.Runtime.JavaMessageDigest getSHA256() {
-try {
-return global::DripSharp.Runtime.JavaMessageDigest.GetInstance("SHA-256");
-} catch (global::DripSharp.Runtime.JavaNoSuchAlgorithmException e) {
-throw new global::System.Exception(null, e);
-}
-}
+  internal static global::DripSharp.Runtime.JavaMessageDigest getSHA256() {
+    try {
+      return global::DripSharp.Runtime.JavaMessageDigest.GetInstance("SHA-256");
+    } catch (global::DripSharp.Runtime.JavaNoSuchAlgorithmException e) {
+      throw new global::System.Exception(null, e);
+    }
+  }
 }

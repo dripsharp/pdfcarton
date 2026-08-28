@@ -8,55 +8,67 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Graphics;
 
-public sealed class DrawObject : global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public sealed class DrawObject
+: global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public DrawObject(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context) : base(context) {
+  public DrawObject(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(operands)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, operands);
-}
-global::DripSharp.PdfCarton.Cos.COSBase base0 = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0);
-if (!((base0 is global::DripSharp.PdfCarton.Cos.COSName))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSName objectName = (global::DripSharp.PdfCarton.Cos.COSName)(base0!);
-global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context = this.GetGraphicsContext();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject xobject = context.GetResources().GetXObject(objectName);
-if ((xobject == default!)) {
-throw new global::DripSharp.PdfCarton.Pdmodel.MissingResourceException(global::DripSharp.Runtime.JavaCompat.Concat("Missing XObject: ", objectName.GetName()));
-} else {
-if ((xobject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(xobject!);
-if ((!(image.IsStencil()) && !(context.IsShouldProcessColorOperators()))) {
-return;
-}
-context.DrawImage(image);
-} else {
-if ((xobject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)) {
-try {
-context.IncreaseLevel();
-if ((context.GetLevel() > 50)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.DrawObject.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("recursion is too deep, skipping form XObject"));
-return;
-}
-if ((xobject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)) {
-context.ShowTransparencyGroup((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)(xobject!));
-} else {
-context.ShowForm((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(xobject!));
-}
-} finally {
-context.DecreaseLevel();
-}
-}
-}
-}
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(operands)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        operands);
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base0
+      = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0);
+    if (!((base0 is global::DripSharp.PdfCarton.Cos.COSName))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSName objectName
+      = (global::DripSharp.PdfCarton.Cos.COSName)(base0!);
+    global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context
+      = this.GetGraphicsContext();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject xobject
+      = context.GetResources().GetXObject(objectName);
+    if ((xobject == default!)) {
+      throw new global::DripSharp.PdfCarton.Pdmodel.MissingResourceException(global::DripSharp.Runtime.JavaCompat.Concat("Missing XObject: ",
+        objectName.GetName()));
+    } else {
+      if ((xobject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)) {
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image
+          = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(xobject!);
+        if ((!(image.IsStencil()) && !(context.IsShouldProcessColorOperators()))) {
+          return;
+        }
+        context.DrawImage(image);
+      } else {
+        if ((xobject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)) {
+          try {
+            context.IncreaseLevel();
+            if ((context.GetLevel() > 50)) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.DrawObject.LOG,
+                global::DripSharp.Runtime.JavaCompat.StringValueOf("recursion is too deep, skipping form XObject"));
+              return;
+            }
+            if ((xobject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)) {
+              context.ShowTransparencyGroup((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)(xobject!));
+            } else {
+              context.ShowForm((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(xobject!));
+            }
+          } finally {
+            context.DecreaseLevel();
+          }
+        }
+      }
+    }
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.DrawObject;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.DrawObject;
+  }
 }

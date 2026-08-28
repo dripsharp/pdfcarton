@@ -9,146 +9,159 @@
 namespace DripSharp.PdfCarton.IO;
 
 public class RandomAccessReadMemoryMappedFile : global::DripSharp.PdfCarton.IO.RandomAccessRead {
-private global::DripSharp.Runtime.JavaByteBuffer mappedByteBuffer = null!;
+  private global::DripSharp.Runtime.JavaByteBuffer mappedByteBuffer = null!;
 
-private readonly long size = default;
+  private readonly long size = default;
 
-private readonly global::DripSharp.Runtime.JavaFileChannel fileChannel = null!;
+  private readonly global::DripSharp.Runtime.JavaFileChannel fileChannel = null!;
 
-private readonly global::System.Action<global::DripSharp.Runtime.JavaByteBuffer> unmapper = null!;
+  private readonly global::System.Action<global::DripSharp.Runtime.JavaByteBuffer> unmapper = null!;
 
-public RandomAccessReadMemoryMappedFile(string filename) : this(new global::System.IO.FileInfo(filename)) {
+  public RandomAccessReadMemoryMappedFile(string filename)
+  : this(new global::System.IO.FileInfo(filename)) {
 
-}
+  }
 
-public RandomAccessReadMemoryMappedFile(global::System.IO.FileInfo file) : this(new global::DripSharp.Runtime.JavaPath(file.FullName)) {
+  public RandomAccessReadMemoryMappedFile(global::System.IO.FileInfo file)
+  : this(new global::DripSharp.Runtime.JavaPath(file.FullName)) {
 
-}
+  }
 
-public RandomAccessReadMemoryMappedFile(global::DripSharp.Runtime.JavaPath path) {
-this.fileChannel = global::DripSharp.Runtime.JavaFileChannel.open(path, global::DripSharp.Runtime.JavaCompat.EnumSetOf<global::DripSharp.Runtime.JavaStandardOpenOption>(global::DripSharp.Runtime.JavaStandardOpenOption.READ));
-this.size = this.fileChannel.size();
-if ((this.size > int.MaxValue)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"), " doesn't yet support files bigger than "), int.MaxValue));
-}
-this.mappedByteBuffer = this.fileChannel.map(global::DripSharp.Runtime.JavaFileChannelMapMode.READ_ONLY, (long)(0), this.size);
-this.unmapper = global::DripSharp.PdfCarton.IO.IOUtils.Unmap;
-}
+  public RandomAccessReadMemoryMappedFile(global::DripSharp.Runtime.JavaPath path) {
+    this.fileChannel = global::DripSharp.Runtime.JavaFileChannel.open(path,
+      global::DripSharp.Runtime.JavaCompat.EnumSetOf<global::DripSharp.Runtime.JavaStandardOpenOption>(global::DripSharp.Runtime.JavaStandardOpenOption.READ));
+    this.size = this.fileChannel.size();
+    if ((this.size > int.MaxValue)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(this)).GetType(),
+        "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"),
+        " doesn't yet support files bigger than "), int.MaxValue));
+    }
+    this.mappedByteBuffer
+      = this.fileChannel.map(global::DripSharp.Runtime.JavaFileChannelMapMode.READ_ONLY, (long)(0),
+      this.size);
+    this.unmapper = global::DripSharp.PdfCarton.IO.IOUtils.Unmap;
+  }
 
-private RandomAccessReadMemoryMappedFile(global::DripSharp.PdfCarton.IO.RandomAccessReadMemoryMappedFile parent) {
-this.mappedByteBuffer = parent.mappedByteBuffer.duplicate();
-this.size = parent.size;
-this.mappedByteBuffer.rewind();
-this.unmapper = default!;
-this.fileChannel = default!;
-}
+  private RandomAccessReadMemoryMappedFile(global::DripSharp.PdfCarton.IO.RandomAccessReadMemoryMappedFile parent) {
+    this.mappedByteBuffer = parent.mappedByteBuffer.duplicate();
+    this.size = parent.size;
+    this.mappedByteBuffer.rewind();
+    this.unmapper = default!;
+    this.fileChannel = default!;
+  }
 
-public virtual void Dispose() {
-if (this.IsClosed()) {
-return;
-}
-if ((this.fileChannel != default!)) {
-this.fileChannel.close();
-}
-if ((this.mappedByteBuffer != default!)) {
-global::DripSharp.Runtime.JavaOptional<global::System.Action<global::DripSharp.Runtime.JavaByteBuffer>>.OfNullable(this.unmapper).IfPresent((u) => u(this.mappedByteBuffer));
-this.mappedByteBuffer = default!;
-}
-}
+  public virtual void Dispose() {
+    if (this.IsClosed()) {
+      return;
+    }
+    if ((this.fileChannel != default!)) {
+      this.fileChannel.close();
+    }
+    if ((this.mappedByteBuffer != default!)) {
+      global::DripSharp.Runtime.JavaOptional<global::System.Action<global::DripSharp.Runtime.JavaByteBuffer>>.OfNullable(this.unmapper).IfPresent((u)
+        => u(this.mappedByteBuffer));
+      this.mappedByteBuffer = default!;
+    }
+  }
 
-public virtual void Seek(long position) {
-this.checkClosed();
-if ((position < 0)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid position ", position));
-}
-this.mappedByteBuffer.position((int)((int)(global::System.Math.Min(position, this.size))));
-}
+  public virtual void Seek(long position) {
+    this.checkClosed();
+    if ((position < 0)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid position ",
+        position));
+    }
+    this.mappedByteBuffer.position((int)((int)(global::System.Math.Min(position, this.size))));
+  }
 
-public virtual long GetPosition() {
-this.checkClosed();
-return this.mappedByteBuffer.position();
-}
+  public virtual long GetPosition() {
+    this.checkClosed();
+    return this.mappedByteBuffer.position();
+  }
 
-public virtual int Read() {
-if (this.IsEOF()) {
-return -1;
-}
-return (this.mappedByteBuffer.get() & 255);
-}
+  public virtual int Read() {
+    if (this.IsEOF()) {
+      return -1;
+    }
+    return (this.mappedByteBuffer.get() & 255);
+  }
 
-public virtual int Read(sbyte[] b, int offset, int length) {
-if (this.IsEOF()) {
-return -1;
-}
-int remainingBytes = ((int)(this.size) - this.mappedByteBuffer.position());
-remainingBytes = global::System.Math.Min(remainingBytes, length);
-this.mappedByteBuffer.get(b, offset, remainingBytes);
-return remainingBytes;
-}
+  public virtual int Read(sbyte[] b, int offset, int length) {
+    if (this.IsEOF()) {
+      return -1;
+    }
+    int remainingBytes = ((int)(this.size) - this.mappedByteBuffer.position());
+    remainingBytes = global::System.Math.Min(remainingBytes, length);
+    this.mappedByteBuffer.get(b, offset, remainingBytes);
+    return remainingBytes;
+  }
 
-public virtual long Length() {
-this.checkClosed();
-return this.size;
-}
+  public virtual long Length() {
+    this.checkClosed();
+    return this.size;
+  }
 
-private void checkClosed() {
-if (this.IsClosed()) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(((object)(this)).GetType().Name, " already closed"));
-}
-}
+  private void checkClosed() {
+    if (this.IsClosed()) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(((object)(this)).GetType().Name,
+        " already closed"));
+    }
+  }
 
-public virtual bool IsClosed() {
-return (this.mappedByteBuffer == default!);
-}
+  public virtual bool IsClosed() {
+    return (this.mappedByteBuffer == default!);
+  }
 
-public virtual bool IsEOF() {
-this.checkClosed();
-return (this.mappedByteBuffer.position() >= this.size);
-}
+  public virtual bool IsEOF() {
+    this.checkClosed();
+    return (this.mappedByteBuffer.position() >= this.size);
+  }
 
-public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition, long streamLength) {
-return new global::DripSharp.PdfCarton.IO.RandomAccessReadView(new global::DripSharp.PdfCarton.IO.RandomAccessReadMemoryMappedFile(this), startPosition, streamLength, true);
-}
+  public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition,
+    long streamLength) {
+    return new global::DripSharp.PdfCarton.IO.RandomAccessReadView(new global::DripSharp.PdfCarton.IO.RandomAccessReadMemoryMappedFile(this),
+      startPosition, streamLength, true);
+  }
 
-public virtual int Available() {
-return (int)(global::System.Math.Min((this.Length() - this.GetPosition()), (long)(int.MaxValue)));
-}
+  public virtual int Available() {
+    return (int)(global::System.Math.Min((this.Length() - this.GetPosition()),
+      (long)(int.MaxValue)));
+  }
 
-public virtual int Peek() {
-int result = this.Read();
-if ((result != -1)) {
-((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
-}
-return result;
-}
+  public virtual int Peek() {
+    int result = this.Read();
+    if ((result != -1)) {
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
+    }
+    return result;
+  }
 
-public virtual int Read(sbyte[] b) {
-return this.Read(b, 0, b.Length);
-}
+  public virtual int Read(sbyte[] b) {
+    return this.Read(b, 0, b.Length);
+  }
 
-public virtual void ReadFully(sbyte[] b) {
-((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).ReadFully(b, 0, b.Length);
-}
+  public virtual void ReadFully(sbyte[] b) {
+    ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).ReadFully(b, 0, b.Length);
+  }
 
-public virtual void ReadFully(sbyte[] b, int offset, int length) {
-if (((this.Length() - this.GetPosition()) < length)) {
-throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
-}
-int bytesReadTotal = 0;
-while ((bytesReadTotal < length)) {
-int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
-if ((bytesReadNow <= 0)) {
-throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
-}
-bytesReadTotal += bytesReadNow;
-}
-}
+  public virtual void ReadFully(sbyte[] b, int offset, int length) {
+    if (((this.Length() - this.GetPosition()) < length)) {
+      throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
+    }
+    int bytesReadTotal = 0;
+    while ((bytesReadTotal < length)) {
+      int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
+      if ((bytesReadNow <= 0)) {
+        throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
+      }
+      bytesReadTotal += bytesReadNow;
+    }
+  }
 
-public virtual void Rewind(int bytes) {
-this.Seek((this.GetPosition() - bytes));
-}
+  public virtual void Rewind(int bytes) {
+    this.Seek((this.GetPosition() - bytes));
+  }
 
-public virtual void Skip(int length) {
-this.Seek((this.GetPosition() + length));
-}
+  public virtual void Skip(int length) {
+    this.Seek((this.GetPosition() + length));
+  }
 }

@@ -9,28 +9,32 @@
 namespace DripSharp.PdfCarton.Preflight.Metadata;
 
 public class RDFAboutAttributeConcordanceValidation {
-public virtual void ValidateRDFAboutAttributes(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema> schemas = metadata.GetAllSchemas();
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(schemas)) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("No schema found in the given metadata representation");
-}
-string about = global::DripSharp.Runtime.JavaCompat.ListGet(schemas, 0).GetAboutValue();
-foreach (global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema xmpSchema in schemas) {
-string schemaAboutValue = xmpSchema.GetAboutValue();
-if (!(((global::DripSharp.Runtime.JavaCompat.Equals("", schemaAboutValue) || global::DripSharp.Runtime.JavaCompat.Equals("", about)) || global::DripSharp.Runtime.JavaCompat.Equals(about, schemaAboutValue)))) {
-throw new global::DripSharp.PdfCarton.Preflight.Metadata.RDFAboutAttributeConcordanceValidation.DifferentRDFAboutException();
-}
-if (global::DripSharp.Runtime.JavaCompat.Equals("", about)) {
-about = schemaAboutValue;
-}
-}
-}
+  public virtual void ValidateRDFAboutAttributes(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema> schemas
+      = metadata.GetAllSchemas();
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(schemas)) {
+      throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("No schema found in the given metadata representation");
+    }
+    string about = global::DripSharp.Runtime.JavaCompat.ListGet(schemas, 0).GetAboutValue();
+    foreach (global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema xmpSchema in schemas) {
+      string schemaAboutValue = xmpSchema.GetAboutValue();
+      if (!(((global::DripSharp.Runtime.JavaCompat.Equals("", schemaAboutValue)
+        || global::DripSharp.Runtime.JavaCompat.Equals("", about))
+        || global::DripSharp.Runtime.JavaCompat.Equals(about, schemaAboutValue)))) {
+        throw new global::DripSharp.PdfCarton.Preflight.Metadata.RDFAboutAttributeConcordanceValidation.DifferentRDFAboutException();
+      }
+      if (global::DripSharp.Runtime.JavaCompat.Equals("", about)) {
+        about = schemaAboutValue;
+      }
+    }
+  }
 
-public class DifferentRDFAboutException : global::System.Exception {
-internal const long serialVersionUID = 1L;
+  public class DifferentRDFAboutException : global::System.Exception {
+    internal const long serialVersionUID = 1L;
 
-public DifferentRDFAboutException() : base("all rdf:about in RDF:rdf must have the same value") {
+    public DifferentRDFAboutException()
+    : base("all rdf:about in RDF:rdf must have the same value") {
 
-}
-}
+    }
+  }
 }

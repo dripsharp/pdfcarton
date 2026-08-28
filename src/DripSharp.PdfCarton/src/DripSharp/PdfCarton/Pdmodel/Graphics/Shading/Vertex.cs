@@ -9,23 +9,24 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public class Vertex {
-internal readonly global::DripSharp.Runtime.JavaPoint2D point = null!;
+  internal readonly global::DripSharp.Runtime.JavaPoint2D point = null!;
 
-internal readonly float[] color = null!;
+  internal readonly float[] color = null!;
 
-internal Vertex(global::DripSharp.Runtime.JavaPoint2D p, float[] c) {
-this.point = p;
-this.color = global::DripSharp.Runtime.JavaCompat.Clone(c);
-}
+  internal Vertex(global::DripSharp.Runtime.JavaPoint2D p, float[] c) {
+    this.point = p;
+    this.color = global::DripSharp.Runtime.JavaCompat.Clone(c);
+  }
 
-public override string ToString() {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
-foreach (float f in this.color) {
-if ((sb.Length > 0)) {
-sb.Append(' ');
-}
-sb.Append(global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%3.2f", f));
-}
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Vertex{ ", this.point), ", colors=["), sb), "] }");
-}
+  public override string ToString() {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
+    foreach (float f in this.color) {
+      if ((sb.Length > 0)) {
+        sb.Append(' ');
+      }
+      sb.Append(global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%3.2f", f));
+    }
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Vertex{ ",
+      this.point), ", colors=["), sb), "] }");
+  }
 }

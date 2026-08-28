@@ -9,146 +9,161 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public sealed class COSString : global::DripSharp.PdfCarton.Cos.COSBase {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private sbyte[] bytes = null!;
+  private sbyte[] bytes = null!;
 
-private bool forceHexForm = default;
+  private bool forceHexForm = default;
 
-public static readonly bool ForceParsing = global::DripSharp.Runtime.JavaCompat.GetBoolean("org.apache.pdfbox.forceParsing");
+  public static readonly bool ForceParsing
+    = global::DripSharp.Runtime.JavaCompat.GetBoolean("org.apache.pdfbox.forceParsing");
 
-public COSString(sbyte[] bytes) : this(bytes, false) {
+  public COSString(sbyte[] bytes) : this(bytes, false) {
 
-}
+  }
 
-public COSString(sbyte[] bytes, bool forceHex) {
-this.forceHexForm = forceHex;
-this.bytes = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(bytes, bytes.Length);
-}
+  public COSString(sbyte[] bytes, bool forceHex) {
+    this.forceHexForm = forceHex;
+    this.bytes = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(bytes, bytes.Length);
+  }
 
-public COSString(string text) : this(text, false) {
+  public COSString(string text) : this(text, false) {
 
-}
+  }
 
-public COSString(string text, bool forceHex) {
-this.forceHexForm = forceHex;
-bool isOnlyPDFDocEncoding = true;
-foreach (char c in text.ToCharArray()) {
-if (!(global::DripSharp.PdfCarton.Cos.PDFDocEncoding.ContainsChar(c))) {
-isOnlyPDFDocEncoding = false;
-break;
-}
-}
-if (isOnlyPDFDocEncoding) {
-this.bytes = global::DripSharp.PdfCarton.Cos.PDFDocEncoding.GetBytes(text);
-} else {
-sbyte[] data = global::DripSharp.Runtime.JavaCompat.StringGetBytes(text, global::DripSharp.Runtime.JavaStandardCharsets.UTF16BE);
-this.bytes = new sbyte[(data.Length + 2)];
-this.bytes[0] = unchecked((sbyte)(254));
-this.bytes[1] = unchecked((sbyte)(255));
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(data, 0, this.bytes, 2, data.Length);
-}
-}
+  public COSString(string text, bool forceHex) {
+    this.forceHexForm = forceHex;
+    bool isOnlyPDFDocEncoding = true;
+    foreach (char c in text.ToCharArray()) {
+      if (!(global::DripSharp.PdfCarton.Cos.PDFDocEncoding.ContainsChar(c))) {
+        isOnlyPDFDocEncoding = false;
+        break;
+      }
+    }
+    if (isOnlyPDFDocEncoding) {
+      this.bytes = global::DripSharp.PdfCarton.Cos.PDFDocEncoding.GetBytes(text);
+    } else {
+      sbyte[] data = global::DripSharp.Runtime.JavaCompat.StringGetBytes(text,
+        global::DripSharp.Runtime.JavaStandardCharsets.UTF16BE);
+      this.bytes = new sbyte[(data.Length + 2)];
+      this.bytes[0] = unchecked((sbyte)(254));
+      this.bytes[1] = unchecked((sbyte)(255));
+      global::DripSharp.Runtime.JavaCompat.ArrayCopy(data, 0, this.bytes, 2, data.Length);
+    }
+  }
 
-public static global::DripSharp.PdfCarton.Cos.COSString ParseHex(string hex) {
-int end = hex.Length;
-while (((end > 0) && global::DripSharp.Runtime.JavaCompat.IsWhitespace(hex[(end - 1)]))) {
-end--;
-}
-int start = 0;
-while (((start < end) && global::DripSharp.Runtime.JavaCompat.IsWhitespace(hex[start]))) {
-start++;
-}
-int length = (end - start);
-global::DripSharp.Runtime.JavaByteArrayOutputStream bytes = new global::DripSharp.Runtime.JavaByteArrayOutputStream(((length + 1) / 2));
-bool isLengthUneven = ((length % 2) != 0);
-if (isLengthUneven) {
-length--;
-}
-for (int i = 0; (i < length); i += 2) {
-int value__160_17 = ((16 * global::DripSharp.PdfCarton.Util.Hex.GetHexValue(hex[i])) + global::DripSharp.PdfCarton.Util.Hex.GetHexValue(hex[(i + 1)]));
-if ((value__160_17 >= 0)) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(bytes, value__160_17);
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSString.ForceParsing) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Cos.COSString.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("Encountered a malformed hex string"));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(bytes, (int)('?'));
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex string: ", hex));
-}
-}
-}
-if (isLengthUneven) {
-int value__177_17 = (16 * global::DripSharp.PdfCarton.Util.Hex.GetHexValue(hex[length]));
-if ((value__177_17 >= 0)) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(bytes, value__177_17);
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSString.ForceParsing) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Cos.COSString.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("Encountered a malformed hex string"));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(bytes, (int)('?'));
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex string: ", hex));
-}
-}
-}
-return new global::DripSharp.PdfCarton.Cos.COSString(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(bytes));
-}
+  public static global::DripSharp.PdfCarton.Cos.COSString ParseHex(string hex) {
+    int end = hex.Length;
+    while (((end > 0) && global::DripSharp.Runtime.JavaCompat.IsWhitespace(hex[(end - 1)]))) {
+      end--;
+    }
+    int start = 0;
+    while (((start < end) && global::DripSharp.Runtime.JavaCompat.IsWhitespace(hex[start]))) {
+      start++;
+    }
+    int length = (end - start);
+    global::DripSharp.Runtime.JavaByteArrayOutputStream bytes
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(((length + 1) / 2));
+    bool isLengthUneven = ((length % 2) != 0);
+    if (isLengthUneven) {
+      length--;
+    }
+    for (int i = 0; (i < length); i += 2) {
+      int value__160_17 = ((16 * global::DripSharp.PdfCarton.Util.Hex.GetHexValue(hex[i]))
+        + global::DripSharp.PdfCarton.Util.Hex.GetHexValue(hex[(i + 1)]));
+      if ((value__160_17 >= 0)) {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(bytes, value__160_17);
+      } else {
+        if (global::DripSharp.PdfCarton.Cos.COSString.ForceParsing) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Cos.COSString.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf("Encountered a malformed hex string"));
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(bytes, (int)('?'));
+        } else {
+          throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex string: ",
+            hex));
+        }
+      }
+    }
+    if (isLengthUneven) {
+      int value__177_17 = (16 * global::DripSharp.PdfCarton.Util.Hex.GetHexValue(hex[length]));
+      if ((value__177_17 >= 0)) {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(bytes, value__177_17);
+      } else {
+        if (global::DripSharp.PdfCarton.Cos.COSString.ForceParsing) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Cos.COSString.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf("Encountered a malformed hex string"));
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(bytes, (int)('?'));
+        } else {
+          throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex string: ",
+            hex));
+        }
+      }
+    }
+    return new global::DripSharp.PdfCarton.Cos.COSString(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(bytes));
+  }
 
-public void SetValue(sbyte[] value) {
-this.bytes = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(value, value.Length);
-}
+  public void SetValue(sbyte[] value) {
+    this.bytes = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(value, value.Length);
+  }
 
-public void SetForceHexForm(bool value) {
-this.forceHexForm = value;
-}
+  public void SetForceHexForm(bool value) {
+    this.forceHexForm = value;
+  }
 
-public bool GetForceHexForm() {
-return this.forceHexForm;
-}
+  public bool GetForceHexForm() {
+    return this.forceHexForm;
+  }
 
-public string GetString() {
-if ((this.bytes.Length >= 2)) {
-if ((((this.bytes[0] & 255) == 254) && ((this.bytes[1] & 255) == 255))) {
-return global::DripSharp.Runtime.JavaCompat.NewString(this.bytes, 2, (this.bytes.Length - 2), global::DripSharp.Runtime.JavaStandardCharsets.UTF16BE);
-} else {
-if ((((this.bytes[0] & 255) == 255) && ((this.bytes[1] & 255) == 254))) {
-return global::DripSharp.Runtime.JavaCompat.NewString(this.bytes, 2, (this.bytes.Length - 2), global::DripSharp.Runtime.JavaStandardCharsets.UTF16LE);
-}
-}
-}
-return global::DripSharp.PdfCarton.Cos.PDFDocEncoding.ToString(this.bytes);
-}
+  public string GetString() {
+    if ((this.bytes.Length >= 2)) {
+      if ((((this.bytes[0] & 255) == 254) && ((this.bytes[1] & 255) == 255))) {
+        return global::DripSharp.Runtime.JavaCompat.NewString(this.bytes, 2, (this.bytes.Length
+          - 2), global::DripSharp.Runtime.JavaStandardCharsets.UTF16BE);
+      } else {
+        if ((((this.bytes[0] & 255) == 255) && ((this.bytes[1] & 255) == 254))) {
+          return global::DripSharp.Runtime.JavaCompat.NewString(this.bytes, 2, (this.bytes.Length
+            - 2), global::DripSharp.Runtime.JavaStandardCharsets.UTF16LE);
+        }
+      }
+    }
+    return global::DripSharp.PdfCarton.Cos.PDFDocEncoding.ToString(this.bytes);
+  }
 
-public string GetASCII() {
-return global::DripSharp.Runtime.JavaCompat.NewString(this.bytes, global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
-}
+  public string GetASCII() {
+    return global::DripSharp.Runtime.JavaCompat.NewString(this.bytes,
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  }
 
-public sbyte[] GetBytes() {
-return global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(this.bytes, this.bytes.Length);
-}
+  public sbyte[] GetBytes() {
+    return global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(this.bytes, this.bytes.Length);
+  }
 
-public string ToHexString() {
-return global::DripSharp.PdfCarton.Util.Hex.GetString(this.bytes);
-}
+  public string ToHexString() {
+    return global::DripSharp.PdfCarton.Util.Hex.GetString(this.bytes);
+  }
 
-public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
-visitor.VisitFromString(this);
-}
+  public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
+    visitor.VisitFromString(this);
+  }
 
-public override bool Equals(object obj) {
-if ((obj is global::DripSharp.PdfCarton.Cos.COSString)) {
-global::DripSharp.PdfCarton.Cos.COSString strObj = (global::DripSharp.PdfCarton.Cos.COSString)(obj!);
-return (global::DripSharp.Runtime.JavaCompat.Equals(this.GetString(), strObj.GetString()) && (this.forceHexForm == strObj.forceHexForm));
-}
-return false;
-}
+  public override bool Equals(object obj) {
+    if ((obj is global::DripSharp.PdfCarton.Cos.COSString)) {
+      global::DripSharp.PdfCarton.Cos.COSString strObj
+        = (global::DripSharp.PdfCarton.Cos.COSString)(obj!);
+      return (global::DripSharp.Runtime.JavaCompat.Equals(this.GetString(), strObj.GetString())
+        && (this.forceHexForm == strObj.forceHexForm));
+    }
+    return false;
+  }
 
-public override int GetHashCode() {
-int result = global::DripSharp.Runtime.JavaCompat.ArrayHash(this.bytes);
-return (result + (this.forceHexForm ? 17 : 0));
-}
+  public override int GetHashCode() {
+    int result = global::DripSharp.Runtime.JavaCompat.ArrayHash(this.bytes);
+    return (result + (this.forceHexForm ? 17 : 0));
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("COSString{", this.GetString()), "}");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("COSString{",
+      this.GetString()), "}");
+  }
 }

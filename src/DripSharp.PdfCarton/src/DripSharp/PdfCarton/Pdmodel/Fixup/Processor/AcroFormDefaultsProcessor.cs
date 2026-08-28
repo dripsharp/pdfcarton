@@ -8,44 +8,52 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Fixup.Processor;
 
-public class AcroFormDefaultsProcessor : global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AbstractProcessor {
-public AcroFormDefaultsProcessor(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : base(document) {
+public class AcroFormDefaultsProcessor
+: global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AbstractProcessor {
+  public AcroFormDefaultsProcessor(global::DripSharp.PdfCarton.Pdmodel.PDDocument document)
+  : base(document) {
 
-}
+  }
 
-public override void Process() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm = base.Document.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!);
-if ((acroForm != default!)) {
-this.verifyOrCreateDefaults(acroForm);
-}
-}
+  public override void Process() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
+      = base.Document.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!);
+    if ((acroForm != default!)) {
+      this.verifyOrCreateDefaults(acroForm);
+    }
+  }
 
-private void verifyOrCreateDefaults(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) {
-string adobeDefaultAppearanceString = "/Helv 0 Tf 0 g ";
-if ((acroForm.GetDefaultAppearance().Length == 0)) {
-acroForm.SetDefaultAppearance(adobeDefaultAppearanceString);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(acroForm.GetCOSObject())).SetNeedToBeUpdated(true);
-}
-global::DripSharp.PdfCarton.Pdmodel.PDResources defaultResources = acroForm.GetDefaultResources();
-if ((defaultResources == default!)) {
-defaultResources = new global::DripSharp.PdfCarton.Pdmodel.PDResources();
-acroForm.SetDefaultResources(defaultResources);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(acroForm.GetCOSObject())).SetNeedToBeUpdated(true);
-}
-global::DripSharp.PdfCarton.Cos.COSDictionary fontDict = defaultResources.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Font);
-if ((fontDict == default!)) {
-fontDict = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-defaultResources.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Font, fontDict);
-}
-if (!(fontDict.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Helv))) {
-defaultResources.Put(global::DripSharp.PdfCarton.Cos.COSName.Helv, new global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.Helvetica));
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(defaultResources.GetCOSObject())).SetNeedToBeUpdated(true);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(fontDict)).SetNeedToBeUpdated(true);
-}
-if (!(fontDict.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.ZaDb))) {
-defaultResources.Put(global::DripSharp.PdfCarton.Cos.COSName.ZaDb, new global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.ZapfDingbats));
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(defaultResources.GetCOSObject())).SetNeedToBeUpdated(true);
-((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(fontDict)).SetNeedToBeUpdated(true);
-}
-}
+  private void verifyOrCreateDefaults(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) {
+    string adobeDefaultAppearanceString = "/Helv 0 Tf 0 g ";
+    if ((acroForm.GetDefaultAppearance().Length == 0)) {
+      acroForm.SetDefaultAppearance(adobeDefaultAppearanceString);
+      ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(acroForm.GetCOSObject())).SetNeedToBeUpdated(true);
+    }
+    global::DripSharp.PdfCarton.Pdmodel.PDResources defaultResources
+      = acroForm.GetDefaultResources();
+    if ((defaultResources == default!)) {
+      defaultResources = new global::DripSharp.PdfCarton.Pdmodel.PDResources();
+      acroForm.SetDefaultResources(defaultResources);
+      ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(acroForm.GetCOSObject())).SetNeedToBeUpdated(true);
+    }
+    global::DripSharp.PdfCarton.Cos.COSDictionary fontDict
+      = defaultResources.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Font);
+    if ((fontDict == default!)) {
+      fontDict = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+      defaultResources.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Font,
+        fontDict);
+    }
+    if (!(fontDict.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Helv))) {
+      defaultResources.Put(global::DripSharp.PdfCarton.Cos.COSName.Helv,
+        new global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.Helvetica));
+      ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(defaultResources.GetCOSObject())).SetNeedToBeUpdated(true);
+      ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(fontDict)).SetNeedToBeUpdated(true);
+    }
+    if (!(fontDict.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.ZaDb))) {
+      defaultResources.Put(global::DripSharp.PdfCarton.Cos.COSName.ZaDb,
+        new global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.ZapfDingbats));
+      ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(defaultResources.GetCOSObject())).SetNeedToBeUpdated(true);
+      ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(fontDict)).SetNeedToBeUpdated(true);
+    }
+  }
 }

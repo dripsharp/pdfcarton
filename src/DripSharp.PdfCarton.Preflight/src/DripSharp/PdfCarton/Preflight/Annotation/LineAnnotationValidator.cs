@@ -8,29 +8,34 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public class LineAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine PdLine = default!;
+public class LineAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine PdLine
+    = default!;
 
-public LineAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
-this.PdLine = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine(annotDictionary);
-this.PdAnnot = this.PdLine;
-}
+  public LineAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdLine
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine(annotDictionary);
+    this.PdAnnot = this.PdLine;
+  }
 
-public override bool Validate() {
-bool isValid = base.Validate();
-isValid = (this.CheckIColors() && isValid);
-return isValid;
-}
+  public override bool Validate() {
+    bool isValid = base.Validate();
+    isValid = (this.CheckIColors() && isValid);
+    return isValid;
+  }
 
-protected internal virtual bool CheckIColors() {
-if (((this.PdLine.GetInteriorColor() != default!) && !(this.SearchRGBProfile()))) {
-base.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotForbiddenColor, "Annotation uses a Color profile which isn't the same than the profile contained by the OutputIntent"));
-return false;
-}
-return true;
-}
+  protected internal virtual bool CheckIColors() {
+    if (((this.PdLine.GetInteriorColor() != default!) && !(this.SearchRGBProfile()))) {
+      base.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotForbiddenColor,
+        "Annotation uses a Color profile which isn't the same than the profile contained by the OutputIntent"));
+      return false;
+    }
+    return true;
+  }
 
-protected internal override bool CheckSpecificMandatoryFields() {
-return this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.L);
-}
+  protected internal override bool CheckSpecificMandatoryFields() {
+    return this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.L);
+  }
 }

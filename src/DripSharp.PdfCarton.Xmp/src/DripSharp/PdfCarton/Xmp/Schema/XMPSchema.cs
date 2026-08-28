@@ -9,564 +9,681 @@
 namespace DripSharp.PdfCarton.Xmp.Schema;
 
 public class XMPSchema : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-public XMPSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string prefix, string name) : base(metadata, namespaceURI, prefix, name) {
-this.AddNamespace(this.GetNamespace(), this.GetPrefix());
-}
+  public XMPSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI,
+    string prefix, string name) : base(metadata, namespaceURI, prefix, name) {
+    this.AddNamespace(this.GetNamespace(), this.GetPrefix());
+  }
 
-public XMPSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : this(metadata, (string)default!, (string)default!, (string)default!) {
+  public XMPSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : this(metadata,
+    (string)default!, (string)default!, (string)default!) {
 
-}
+  }
 
-public XMPSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string prefix) : this(metadata, (string)default!, prefix, (string)default!) {
+  public XMPSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string prefix)
+  : this(metadata, (string)default!, prefix, (string)default!) {
 
-}
+  }
 
-public XMPSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string prefix) : this(metadata, namespaceURI, prefix, (string)default!) {
+  public XMPSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI,
+    string prefix) : this(metadata, namespaceURI, prefix, (string)default!) {
 
-}
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.AbstractField GetAbstractProperty(string qualifiedName) {
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in this.GetContainer().GetAllProperties()) {
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child.GetPropertyName(), qualifiedName)) {
-return child;
-}
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.AbstractField GetAbstractProperty(string qualifiedName) {
+    foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in this.GetContainer().GetAllProperties()) {
+      if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child.GetPropertyName(),
+        qualifiedName)) {
+        return child;
+      }
+    }
+    return default!;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.Attribute GetAboutAttribute() {
-return this.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.Attribute GetAboutAttribute() {
+    return this.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName);
+  }
 
-public virtual string GetAboutValue() {
-global::DripSharp.PdfCarton.Xmp.Type.Attribute prop = this.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName);
-if ((prop != default!)) {
-return prop.GetValue();
-}
-return "";
-}
+  public virtual string GetAboutValue() {
+    global::DripSharp.PdfCarton.Xmp.Type.Attribute prop
+      = this.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName);
+    if ((prop != default!)) {
+      return prop.GetValue();
+    }
+    return "";
+  }
 
-public virtual void SetAbout(global::DripSharp.PdfCarton.Xmp.Type.Attribute about) {
-if ((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace, about.GetNamespace()) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName, about.GetName()))) {
-this.SetAttribute(about);
-return;
-}
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Attribute 'about' must be named 'rdf:about' or 'about'");
-}
+  public virtual void SetAbout(global::DripSharp.PdfCarton.Xmp.Type.Attribute about) {
+    if ((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace,
+      about.GetNamespace())
+      && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName,
+      about.GetName()))) {
+      this.SetAttribute(about);
+      return;
+    }
+    throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Attribute 'about' must be named 'rdf:about' or 'about'");
+  }
 
-public virtual void SetAboutAsSimple(string about) {
-if ((about == default!)) {
-this.RemoveAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName);
-} else {
-this.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace, global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName, about));
-}
-}
+  public virtual void SetAboutAsSimple(string about) {
+    if ((about == default!)) {
+      this.RemoveAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName);
+    } else {
+      this.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace,
+        global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName, about));
+    }
+  }
 
-private void setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.Types type, string qualifiedName, object propertyValue) {
-if ((propertyValue == default!)) {
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child__192_32 in this.GetContainer().GetAllProperties()) {
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child__192_32.GetPropertyName(), qualifiedName)) {
-this.GetContainer().RemoveProperty(child__192_32);
-return;
-}
-}
-} else {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty specifiedTypeProperty;
-try {
-global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = this.GetMetadata().GetTypeMapping();
-specifiedTypeProperty = tm.InstanciateSimpleProperty((string)default!, this.GetPrefix(), qualifiedName, propertyValue, type);
-} catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
-throw new global::System.ArgumentException("Failed to create property with the specified type given in parameters", e);
-}
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child__217_32 in this.GetAllProperties()) {
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child__217_32.GetPropertyName(), qualifiedName)) {
-this.RemoveProperty(child__217_32);
-this.AddProperty(specifiedTypeProperty);
-return;
-}
-}
-this.AddProperty(specifiedTypeProperty);
-}
-}
+  private void setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.Types type,
+    string qualifiedName, object propertyValue) {
+    if ((propertyValue == default!)) {
+      foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child__192_32 in this.GetContainer().GetAllProperties()) {
+        if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child__192_32.GetPropertyName(),
+          qualifiedName)) {
+          this.GetContainer().RemoveProperty(child__192_32);
+          return;
+        }
+      }
+    } else {
+      global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty specifiedTypeProperty;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = this.GetMetadata().GetTypeMapping();
+        specifiedTypeProperty = tm.InstanciateSimpleProperty((string)default!, this.GetPrefix(),
+          qualifiedName, propertyValue, type);
+      } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
+        throw new global::System.ArgumentException("Failed to create property with the specified type given in parameters",
+          e);
+      }
+      foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child__217_32 in this.GetAllProperties()) {
+        if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child__217_32.GetPropertyName(),
+          qualifiedName)) {
+          this.RemoveProperty(child__217_32);
+          this.AddProperty(specifiedTypeProperty);
+          return;
+        }
+      }
+      this.AddProperty(specifiedTypeProperty);
+    }
+  }
 
-private void setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty prop) {
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in this.GetAllProperties()) {
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child.GetPropertyName(), prop.GetPropertyName())) {
-this.RemoveProperty(child);
-this.AddProperty(prop);
-return;
-}
-}
-this.AddProperty(prop);
-}
+  private void setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty prop) {
+    foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in this.GetAllProperties()) {
+      if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child.GetPropertyName(),
+        prop.GetPropertyName())) {
+        this.RemoveProperty(child);
+        this.AddProperty(prop);
+        return;
+      }
+    }
+    this.AddProperty(prop);
+  }
 
-public virtual void SetTextProperty(global::DripSharp.PdfCarton.Xmp.Type.TextType prop) {
-this.setSpecifiedSimpleTypeProperty(prop);
-}
+  public virtual void SetTextProperty(global::DripSharp.PdfCarton.Xmp.Type.TextType prop) {
+    this.setSpecifiedSimpleTypeProperty(prop);
+  }
 
-public virtual void SetTextPropertyValue(string qualifiedName, string propertyValue) {
-this.setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.Types.Text, qualifiedName, propertyValue);
-}
+  public virtual void SetTextPropertyValue(string qualifiedName, string propertyValue) {
+    this.setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.Types.Text,
+      qualifiedName, propertyValue);
+  }
 
-public virtual void SetTextPropertyValueAsSimple(string simpleName, string propertyValue) {
-this.SetTextPropertyValue(simpleName, propertyValue);
-}
+  public virtual void SetTextPropertyValueAsSimple(string simpleName, string propertyValue) {
+    this.SetTextPropertyValue(simpleName, propertyValue);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType GetUnqualifiedTextProperty(string name) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetAbstractProperty(name);
-if ((prop != default!)) {
-if ((prop is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
-return (global::DripSharp.PdfCarton.Xmp.Type.TextType)(prop!);
-}
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Text Property");
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType GetUnqualifiedTextProperty(string name) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetAbstractProperty(name);
+    if ((prop != default!)) {
+      if ((prop is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
+        return (global::DripSharp.PdfCarton.Xmp.Type.TextType)(prop!);
+      }
+      throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Text Property");
+    }
+    return default!;
+  }
 
-public virtual string GetUnqualifiedTextPropertyValue(string name) {
-global::DripSharp.PdfCarton.Xmp.Type.TextType tt = this.GetUnqualifiedTextProperty(name);
-return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
-}
+  public virtual string GetUnqualifiedTextPropertyValue(string name) {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType tt = this.GetUnqualifiedTextProperty(name);
+    return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.DateType GetDateProperty(string qualifiedName) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetAbstractProperty(qualifiedName);
-if ((prop != default!)) {
-if ((prop is global::DripSharp.PdfCarton.Xmp.Type.DateType)) {
-return (global::DripSharp.PdfCarton.Xmp.Type.DateType)(prop!);
-}
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Date Property");
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.DateType GetDateProperty(string qualifiedName) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop
+      = this.GetAbstractProperty(qualifiedName);
+    if ((prop != default!)) {
+      if ((prop is global::DripSharp.PdfCarton.Xmp.Type.DateType)) {
+        return (global::DripSharp.PdfCarton.Xmp.Type.DateType)(prop!);
+      }
+      throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Date Property");
+    }
+    return default!;
+  }
 
-public virtual global::System.DateTimeOffset? GetDatePropertyValueAsSimple(string simpleName) {
-return this.GetDatePropertyValue(simpleName);
-}
+  public virtual global::System.DateTimeOffset? GetDatePropertyValueAsSimple(string simpleName) {
+    return this.GetDatePropertyValue(simpleName);
+  }
 
-public virtual global::System.DateTimeOffset? GetDatePropertyValue(string qualifiedName) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetAbstractProperty(qualifiedName);
-if ((prop != default!)) {
-if ((prop is global::DripSharp.PdfCarton.Xmp.Type.DateType)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.DateType)(prop!)).GetValue();
-}
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Date Property");
-}
-return default!;
-}
+  public virtual global::System.DateTimeOffset? GetDatePropertyValue(string qualifiedName) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop
+      = this.GetAbstractProperty(qualifiedName);
+    if ((prop != default!)) {
+      if ((prop is global::DripSharp.PdfCarton.Xmp.Type.DateType)) {
+        return ((global::DripSharp.PdfCarton.Xmp.Type.DateType)(prop!)).GetValue();
+      }
+      throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Date Property");
+    }
+    return default!;
+  }
 
-public virtual void SetDateProperty(global::DripSharp.PdfCarton.Xmp.Type.DateType date) {
-this.setSpecifiedSimpleTypeProperty(date);
-}
+  public virtual void SetDateProperty(global::DripSharp.PdfCarton.Xmp.Type.DateType date) {
+    this.setSpecifiedSimpleTypeProperty(date);
+  }
 
-public virtual void SetDatePropertyValueAsSimple(string simpleName, global::System.DateTimeOffset? date) {
-this.SetDatePropertyValue(simpleName, date);
-}
+  public virtual void SetDatePropertyValueAsSimple(string simpleName,
+    global::System.DateTimeOffset? date) {
+    this.SetDatePropertyValue(simpleName, date);
+  }
 
-public virtual void SetDatePropertyValue(string qualifiedName, global::System.DateTimeOffset? date) {
-this.setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.Types.Date, qualifiedName, date);
-}
+  public virtual void SetDatePropertyValue(string qualifiedName,
+    global::System.DateTimeOffset? date) {
+    this.setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.Types.Date,
+      qualifiedName, date);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.BooleanType GetBooleanProperty(string qualifiedName) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetAbstractProperty(qualifiedName);
-if ((prop != default!)) {
-if ((prop is global::DripSharp.PdfCarton.Xmp.Type.BooleanType)) {
-return (global::DripSharp.PdfCarton.Xmp.Type.BooleanType)(prop!);
-} else {
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Boolean Property");
-}
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.BooleanType GetBooleanProperty(string qualifiedName) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop
+      = this.GetAbstractProperty(qualifiedName);
+    if ((prop != default!)) {
+      if ((prop is global::DripSharp.PdfCarton.Xmp.Type.BooleanType)) {
+        return (global::DripSharp.PdfCarton.Xmp.Type.BooleanType)(prop!);
+      } else {
+        throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Boolean Property");
+      }
+    }
+    return default!;
+  }
 
-public virtual bool? GetBooleanPropertyValueAsSimple(string simpleName) {
-return this.GetBooleanPropertyValue(simpleName);
-}
+  public virtual bool? GetBooleanPropertyValueAsSimple(string simpleName) {
+    return this.GetBooleanPropertyValue(simpleName);
+  }
 
-public virtual bool? GetBooleanPropertyValue(string qualifiedName) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetAbstractProperty(qualifiedName);
-if ((prop != default!)) {
-if ((prop is global::DripSharp.PdfCarton.Xmp.Type.BooleanType)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.BooleanType)(prop!)).GetValue();
-} else {
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Boolean Property");
-}
-}
-return default!;
-}
+  public virtual bool? GetBooleanPropertyValue(string qualifiedName) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop
+      = this.GetAbstractProperty(qualifiedName);
+    if ((prop != default!)) {
+      if ((prop is global::DripSharp.PdfCarton.Xmp.Type.BooleanType)) {
+        return ((global::DripSharp.PdfCarton.Xmp.Type.BooleanType)(prop!)).GetValue();
+      } else {
+        throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not a Boolean Property");
+      }
+    }
+    return default!;
+  }
 
-public virtual void SetBooleanProperty(global::DripSharp.PdfCarton.Xmp.Type.BooleanType @bool) {
-this.setSpecifiedSimpleTypeProperty(@bool);
-}
+  public virtual void SetBooleanProperty(global::DripSharp.PdfCarton.Xmp.Type.BooleanType @bool) {
+    this.setSpecifiedSimpleTypeProperty(@bool);
+  }
 
-public virtual void SetBooleanPropertyValueAsSimple(string simpleName, bool? @bool) {
-this.SetBooleanPropertyValue(simpleName, @bool);
-}
+  public virtual void SetBooleanPropertyValueAsSimple(string simpleName, bool? @bool) {
+    this.SetBooleanPropertyValue(simpleName, @bool);
+  }
 
-public virtual void SetBooleanPropertyValue(string qualifiedName, bool? @bool) {
-this.setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.Types.Boolean, qualifiedName, @bool);
-}
+  public virtual void SetBooleanPropertyValue(string qualifiedName, bool? @bool) {
+    this.setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.Types.Boolean,
+      qualifiedName, @bool);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.IntegerType GetIntegerProperty(string qualifiedName) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetAbstractProperty(qualifiedName);
-if ((prop != default!)) {
-if ((prop is global::DripSharp.PdfCarton.Xmp.Type.IntegerType)) {
-return (global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(prop!);
-}
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not an Integer Property");
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.IntegerType GetIntegerProperty(string qualifiedName) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop
+      = this.GetAbstractProperty(qualifiedName);
+    if ((prop != default!)) {
+      if ((prop is global::DripSharp.PdfCarton.Xmp.Type.IntegerType)) {
+        return (global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(prop!);
+      }
+      throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not an Integer Property");
+    }
+    return default!;
+  }
 
-public virtual int? GetIntegerPropertyValueAsSimple(string simpleName) {
-return this.GetIntegerPropertyValue(simpleName);
-}
+  public virtual int? GetIntegerPropertyValueAsSimple(string simpleName) {
+    return this.GetIntegerPropertyValue(simpleName);
+  }
 
-public virtual int? GetIntegerPropertyValue(string qualifiedName) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetAbstractProperty(qualifiedName);
-if ((prop != default!)) {
-if ((prop is global::DripSharp.PdfCarton.Xmp.Type.IntegerType)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(prop!)).GetValue();
-}
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not an Integer Property");
-}
-return default!;
-}
+  public virtual int? GetIntegerPropertyValue(string qualifiedName) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop
+      = this.GetAbstractProperty(qualifiedName);
+    if ((prop != default!)) {
+      if ((prop is global::DripSharp.PdfCarton.Xmp.Type.IntegerType)) {
+        return ((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(prop!)).GetValue();
+      }
+      throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not an Integer Property");
+    }
+    return default!;
+  }
 
-public virtual void SetIntegerProperty(global::DripSharp.PdfCarton.Xmp.Type.IntegerType prop) {
-this.setSpecifiedSimpleTypeProperty(prop);
-}
+  public virtual void SetIntegerProperty(global::DripSharp.PdfCarton.Xmp.Type.IntegerType prop) {
+    this.setSpecifiedSimpleTypeProperty(prop);
+  }
 
-public virtual void SetIntegerPropertyValueAsSimple(string simpleName, int? intValue) {
-this.SetIntegerPropertyValue(simpleName, intValue);
-}
+  public virtual void SetIntegerPropertyValueAsSimple(string simpleName, int? intValue) {
+    this.SetIntegerPropertyValue(simpleName, intValue);
+  }
 
-public virtual void SetIntegerPropertyValue(string qualifiedName, int? intValue) {
-this.setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.Types.Integer, qualifiedName, intValue);
-}
+  public virtual void SetIntegerPropertyValue(string qualifiedName, int? intValue) {
+    this.setSpecifiedSimpleTypeProperty(global::DripSharp.PdfCarton.Xmp.Type.Types.Integer,
+      qualifiedName, intValue);
+  }
 
-private void removeUnqualifiedArrayValue(string arrayName, string fieldValue) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty = this.GetAbstractProperty(arrayName);
-if (!((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))) {
-return;
-}
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty array = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!);
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> toDelete = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>();
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractField in array.GetContainer().GetAllProperties()) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty tmp = (global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty)(abstractField!);
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmp.GetStringValue(), fieldValue)) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(toDelete, tmp);
-}
-}
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(toDelete, array.GetContainer().RemoveProperty);
-}
+  private void removeUnqualifiedArrayValue(string arrayName, string fieldValue) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty
+      = this.GetAbstractProperty(arrayName);
+    if (!((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty array
+      = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!);
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> toDelete
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>();
+    foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractField in array.GetContainer().GetAllProperties()) {
+      global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty tmp
+        = (global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty)(abstractField!);
+      if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmp.GetStringValue(),
+        fieldValue)) {
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(toDelete, tmp);
+      }
+    }
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(toDelete,
+      array.GetContainer().RemoveProperty);
+  }
 
-public virtual void RemoveUnqualifiedBagValue(string bagName, string bagValue) {
-this.removeUnqualifiedArrayValue(bagName, bagValue);
-}
+  public virtual void RemoveUnqualifiedBagValue(string bagName, string bagValue) {
+    this.removeUnqualifiedArrayValue(bagName, bagValue);
+  }
 
-public virtual void AddBagValueAsSimple(string simpleName, string bagValue) {
-this.internalAddBagValue(simpleName, bagValue);
-}
+  public virtual void AddBagValueAsSimple(string simpleName, string bagValue) {
+    this.internalAddBagValue(simpleName, bagValue);
+  }
 
-private void internalAddBagValue(string qualifiedBagName, string bagValue) {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty bag = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetAbstractProperty(qualifiedBagName)!);
-global::DripSharp.PdfCarton.Xmp.Type.TextType li = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, bagValue);
-if ((bag != default!)) {
-bag.GetContainer().AddProperty(li);
-} else {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty newBag = this.CreateArrayProperty(qualifiedBagName, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Bag);
-newBag.GetContainer().AddProperty(li);
-this.AddProperty(newBag);
-}
-}
+  private void internalAddBagValue(string qualifiedBagName, string bagValue) {
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty bag
+      = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetAbstractProperty(qualifiedBagName)!);
+    global::DripSharp.PdfCarton.Xmp.Type.TextType li
+      = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, bagValue);
+    if ((bag != default!)) {
+      bag.GetContainer().AddProperty(li);
+    } else {
+      global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty newBag
+        = this.CreateArrayProperty(qualifiedBagName,
+        global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Bag);
+      newBag.GetContainer().AddProperty(li);
+      this.AddProperty(newBag);
+    }
+  }
 
-public virtual void AddQualifiedBagValue(string simpleName, string bagValue) {
-this.internalAddBagValue(simpleName, bagValue);
-}
+  public virtual void AddQualifiedBagValue(string simpleName, string bagValue) {
+    this.internalAddBagValue(simpleName, bagValue);
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetUnqualifiedBagValueList(string bagName) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty = this.GetAbstractProperty(bagName);
-if ((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!)).GetElementsAsString();
-}
-return default!;
-}
+  public virtual global::System.Collections.Generic.IList<string> GetUnqualifiedBagValueList(string bagName) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty
+      = this.GetAbstractProperty(bagName);
+    if ((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!)).GetElementsAsString();
+    }
+    return default!;
+  }
 
-public virtual void RemoveUnqualifiedSequenceValue(string qualifiedSeqName, string seqValue) {
-this.removeUnqualifiedArrayValue(qualifiedSeqName, seqValue);
-}
+  public virtual void RemoveUnqualifiedSequenceValue(string qualifiedSeqName, string seqValue) {
+    this.removeUnqualifiedArrayValue(qualifiedSeqName, seqValue);
+  }
 
-public virtual void RemoveUnqualifiedArrayValue(string arrayName, global::DripSharp.PdfCarton.Xmp.Type.AbstractField fieldValue) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty = this.GetAbstractProperty(arrayName);
-if (!((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))) {
-return;
-}
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty array = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!);
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> toDelete = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>();
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractField in array.GetContainer().GetAllProperties()) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty tmp = (global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty)(abstractField!);
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmp, fieldValue)) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(toDelete, tmp);
-}
-}
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(toDelete, array.GetContainer().RemoveProperty);
-}
+  public virtual void RemoveUnqualifiedArrayValue(string arrayName,
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField fieldValue) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty
+      = this.GetAbstractProperty(arrayName);
+    if (!((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty array
+      = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!);
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> toDelete
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>();
+    foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractField in array.GetContainer().GetAllProperties()) {
+      global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty tmp
+        = (global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty)(abstractField!);
+      if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmp, fieldValue)) {
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(toDelete, tmp);
+      }
+    }
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(toDelete,
+      array.GetContainer().RemoveProperty);
+  }
 
-public virtual void RemoveUnqualifiedSequenceValue(string qualifiedSeqName, global::DripSharp.PdfCarton.Xmp.Type.AbstractField seqValue) {
-this.RemoveUnqualifiedArrayValue(qualifiedSeqName, seqValue);
-}
+  public virtual void RemoveUnqualifiedSequenceValue(string qualifiedSeqName,
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField seqValue) {
+    this.RemoveUnqualifiedArrayValue(qualifiedSeqName, seqValue);
+  }
 
-public virtual void AddUnqualifiedSequenceValue(string simpleSeqName, string seqValue) {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetAbstractProperty(simpleSeqName)!);
-global::DripSharp.PdfCarton.Xmp.Type.TextType li = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, seqValue);
-if ((seq != default!)) {
-seq.GetContainer().AddProperty(li);
-} else {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty newSeq = this.CreateArrayProperty(simpleSeqName, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Seq);
-newSeq.GetContainer().AddProperty(li);
-this.AddProperty(newSeq);
-}
-}
+  public virtual void AddUnqualifiedSequenceValue(string simpleSeqName, string seqValue) {
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq
+      = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetAbstractProperty(simpleSeqName)!);
+    global::DripSharp.PdfCarton.Xmp.Type.TextType li
+      = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, seqValue);
+    if ((seq != default!)) {
+      seq.GetContainer().AddProperty(li);
+    } else {
+      global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty newSeq
+        = this.CreateArrayProperty(simpleSeqName,
+        global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Seq);
+      newSeq.GetContainer().AddProperty(li);
+      this.AddProperty(newSeq);
+    }
+  }
 
-public virtual void AddBagValue(string qualifiedSeqName, global::DripSharp.PdfCarton.Xmp.Type.AbstractField seqValue) {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty bag = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetAbstractProperty(qualifiedSeqName)!);
-if ((bag != default!)) {
-bag.GetContainer().AddProperty(seqValue);
-} else {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty newBag = this.CreateArrayProperty(qualifiedSeqName, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Bag);
-newBag.GetContainer().AddProperty(seqValue);
-this.AddProperty(newBag);
-}
-}
+  public virtual void AddBagValue(string qualifiedSeqName,
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField seqValue) {
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty bag
+      = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetAbstractProperty(qualifiedSeqName)!);
+    if ((bag != default!)) {
+      bag.GetContainer().AddProperty(seqValue);
+    } else {
+      global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty newBag
+        = this.CreateArrayProperty(qualifiedSeqName,
+        global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Bag);
+      newBag.GetContainer().AddProperty(seqValue);
+      this.AddProperty(newBag);
+    }
+  }
 
-public virtual void AddUnqualifiedSequenceValue(string seqName, global::DripSharp.PdfCarton.Xmp.Type.AbstractField seqValue) {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetAbstractProperty(seqName)!);
-if ((seq != default!)) {
-seq.GetContainer().AddProperty(seqValue);
-} else {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty newSeq = this.CreateArrayProperty(seqName, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Seq);
-newSeq.GetContainer().AddProperty(seqValue);
-this.AddProperty(newSeq);
-}
-}
+  public virtual void AddUnqualifiedSequenceValue(string seqName,
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField seqValue) {
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq
+      = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(this.GetAbstractProperty(seqName)!);
+    if ((seq != default!)) {
+      seq.GetContainer().AddProperty(seqValue);
+    } else {
+      global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty newSeq = this.CreateArrayProperty(seqName,
+        global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Seq);
+      newSeq.GetContainer().AddProperty(seqValue);
+      this.AddProperty(newSeq);
+    }
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetUnqualifiedSequenceValueList(string seqName) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty = this.GetAbstractProperty(seqName);
-if ((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!)).GetElementsAsString();
-}
-return default!;
-}
+  public virtual global::System.Collections.Generic.IList<string> GetUnqualifiedSequenceValueList(string seqName) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty
+      = this.GetAbstractProperty(seqName);
+    if ((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!)).GetElementsAsString();
+    }
+    return default!;
+  }
 
-public virtual void RemoveUnqualifiedSequenceDateValue(string seqName, global::System.DateTimeOffset? date) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty = this.GetAbstractProperty(seqName);
-if (!((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))) {
-return;
-}
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!);
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> toDelete = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>();
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp in seq.GetContainer().GetAllProperties()) {
-if (((tmp is global::DripSharp.PdfCarton.Xmp.Type.DateType) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(tmp!)).GetValue(), date))) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(toDelete, tmp);
-}
-}
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(toDelete, seq.GetContainer().RemoveProperty);
-}
+  public virtual void RemoveUnqualifiedSequenceDateValue(string seqName,
+    global::System.DateTimeOffset? date) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty
+      = this.GetAbstractProperty(seqName);
+    if (!((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq
+      = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!);
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> toDelete
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>();
+    foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp in seq.GetContainer().GetAllProperties()) {
+      if (((tmp is global::DripSharp.PdfCarton.Xmp.Type.DateType)
+        && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(((global::DripSharp.PdfCarton.Xmp.Type.DateType)(tmp!)).GetValue(),
+        date))) {
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(toDelete, tmp);
+      }
+    }
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(toDelete,
+      seq.GetContainer().RemoveProperty);
+  }
 
-public virtual void AddSequenceDateValueAsSimple(string simpleName, global::System.DateTimeOffset? date) {
-this.AddUnqualifiedSequenceDateValue(simpleName, date);
-}
+  public virtual void AddSequenceDateValueAsSimple(string simpleName,
+    global::System.DateTimeOffset? date) {
+    this.AddUnqualifiedSequenceDateValue(simpleName, date);
+  }
 
-public virtual void AddUnqualifiedSequenceDateValue(string seqName, global::System.DateTimeOffset? date) {
-this.AddUnqualifiedSequenceValue(seqName, this.GetMetadata().GetTypeMapping().CreateDate((string)default!, global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfLocalName, global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, date));
-}
+  public virtual void AddUnqualifiedSequenceDateValue(string seqName,
+    global::System.DateTimeOffset? date) {
+    this.AddUnqualifiedSequenceValue(seqName,
+      this.GetMetadata().GetTypeMapping().CreateDate((string)default!,
+      global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfLocalName,
+      global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, date));
+  }
 
-public virtual global::System.Collections.Generic.IList<global::System.DateTimeOffset?> GetUnqualifiedSequenceDateValueList(string seqName) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty = this.GetAbstractProperty(seqName);
-if (!((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))) {
-return default!;
-}
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!);
-global::System.Collections.Generic.IList<global::System.DateTimeOffset?> retval = new global::System.Collections.Generic.List<global::System.DateTimeOffset?>();
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in seq.GetContainer().GetAllProperties()) {
-if ((child is global::DripSharp.PdfCarton.Xmp.Type.DateType)) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(retval, ((global::DripSharp.PdfCarton.Xmp.Type.DateType)(child!)).GetValue());
-}
-}
-return retval;
-}
+  public virtual global::System.Collections.Generic.IList<global::System.DateTimeOffset?> GetUnqualifiedSequenceDateValueList(string seqName) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractProperty
+      = this.GetAbstractProperty(seqName);
+    if (!((abstractProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty))) {
+      return default!;
+    }
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty seq
+      = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(abstractProperty!);
+    global::System.Collections.Generic.IList<global::System.DateTimeOffset?> retval
+      = new global::System.Collections.Generic.List<global::System.DateTimeOffset?>();
+    foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in seq.GetContainer().GetAllProperties()) {
+      if ((child is global::DripSharp.PdfCarton.Xmp.Type.DateType)) {
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(retval,
+          ((global::DripSharp.PdfCarton.Xmp.Type.DateType)(child!)).GetValue());
+      }
+    }
+    return retval;
+  }
 
-public virtual void ReorganizeAltOrder(global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer alt) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaIterator<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> it = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Iterator(alt.GetAllProperties());
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField xdefault = default!;
-bool xdefaultFound = false;
-if ((it.HasNext() && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(it.Next()!.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName).GetValue(), global::DripSharp.PdfCarton.Xmp.XmpConstants.XDefault))) {
-return;
-}
-while ((it.HasNext() && !xdefaultFound)) {
-xdefault = it.Next()!;
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(xdefault!.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName).GetValue(), global::DripSharp.PdfCarton.Xmp.XmpConstants.XDefault)) {
-alt.RemoveProperty(xdefault!);
-xdefaultFound = true;
-}
-}
-if (xdefaultFound) {
-it = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Iterator(alt.GetAllProperties());
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> reordered = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>();
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> toDelete = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>();
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(reordered, xdefault!);
-while (it.HasNext()) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp = it.Next()!;
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(reordered, tmp);
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(toDelete, tmp);
-}
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(toDelete, alt.RemoveProperty);
-it = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Iterator(reordered);
-while (it.HasNext()) {
-alt.AddProperty(it.Next()!);
-}
-}
-}
+  public virtual void ReorganizeAltOrder(global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer alt) {
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaIterator<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> it
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Iterator(alt.GetAllProperties());
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField xdefault = default!;
+    bool xdefaultFound = false;
+    if ((it.HasNext()
+      && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(it.Next()!.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName).GetValue(),
+      global::DripSharp.PdfCarton.Xmp.XmpConstants.XDefault))) {
+      return;
+    }
+    while ((it.HasNext() && !xdefaultFound)) {
+      xdefault = it.Next()!;
+      if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(xdefault!.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName).GetValue(),
+        global::DripSharp.PdfCarton.Xmp.XmpConstants.XDefault)) {
+        alt.RemoveProperty(xdefault!);
+        xdefaultFound = true;
+      }
+    }
+    if (xdefaultFound) {
+      it = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Iterator(alt.GetAllProperties());
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> reordered
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>();
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> toDelete
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>();
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(reordered, xdefault!);
+      while (it.HasNext()) {
+        global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp = it.Next()!;
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(reordered, tmp);
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(toDelete, tmp);
+      }
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(toDelete, alt.RemoveProperty);
+      it = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Iterator(reordered);
+      while (it.HasNext()) {
+        alt.AddProperty(it.Next()!);
+      }
+    }
+  }
 
-public virtual void SetUnqualifiedLanguagePropertyValue(string name, string language, string value) {
-if (((language == default!) || (language.Length == 0))) {
-language = global::DripSharp.PdfCarton.Xmp.XmpConstants.XDefault;
-}
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField property = this.GetAbstractProperty(name);
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty arrayProp;
-if ((property != default!)) {
-if ((property is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
-arrayProp = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(property!);
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in arrayProp.GetContainer().GetAllProperties()) {
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName).GetValue(), language)) {
-arrayProp.GetContainer().RemoveProperty(child);
-if ((value != default!)) {
-global::DripSharp.PdfCarton.Xmp.Type.TextType langValue__1029_38 = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, value);
-langValue__1029_38.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute("http://www.w3.org/XML/1998/namespace", global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName, language));
-arrayProp.GetContainer().AddProperty(langValue__1029_38);
-}
-this.ReorganizeAltOrder(arrayProp.GetContainer());
-return;
-}
-}
-global::DripSharp.PdfCarton.Xmp.Type.TextType langValue__1039_26 = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, value);
-langValue__1039_26.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute("http://www.w3.org/XML/1998/namespace", global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName, language));
-arrayProp.GetContainer().AddProperty(langValue__1039_26);
-this.ReorganizeAltOrder(arrayProp.GetContainer());
-}
-} else {
-arrayProp = this.CreateArrayProperty(name, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Alt);
-global::DripSharp.PdfCarton.Xmp.Type.TextType langValue__1048_22 = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, value);
-langValue__1048_22.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute("http://www.w3.org/XML/1998/namespace", global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName, language));
-arrayProp.GetContainer().AddProperty(langValue__1048_22);
-this.AddProperty(arrayProp);
-}
-}
+  public virtual void SetUnqualifiedLanguagePropertyValue(string name, string language,
+    string value) {
+    if (((language == default!) || (language.Length == 0))) {
+      language = global::DripSharp.PdfCarton.Xmp.XmpConstants.XDefault;
+    }
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField property = this.GetAbstractProperty(name);
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty arrayProp;
+    if ((property != default!)) {
+      if ((property is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
+        arrayProp = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(property!);
+        foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in arrayProp.GetContainer().GetAllProperties()) {
+          if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName).GetValue(),
+            language)) {
+            arrayProp.GetContainer().RemoveProperty(child);
+            if ((value != default!)) {
+              global::DripSharp.PdfCarton.Xmp.Type.TextType langValue__1029_38
+                = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, value);
+              langValue__1029_38.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute("http://www.w3.org/XML/1998/namespace",
+                global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName, language));
+              arrayProp.GetContainer().AddProperty(langValue__1029_38);
+            }
+            this.ReorganizeAltOrder(arrayProp.GetContainer());
+            return;
+          }
+        }
+        global::DripSharp.PdfCarton.Xmp.Type.TextType langValue__1039_26
+          = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, value);
+        langValue__1039_26.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute("http://www.w3.org/XML/1998/namespace",
+          global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName, language));
+        arrayProp.GetContainer().AddProperty(langValue__1039_26);
+        this.ReorganizeAltOrder(arrayProp.GetContainer());
+      }
+    } else {
+      arrayProp = this.CreateArrayProperty(name,
+        global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Alt);
+      global::DripSharp.PdfCarton.Xmp.Type.TextType langValue__1048_22
+        = this.CreateTextType(global::DripSharp.PdfCarton.Xmp.XmpConstants.ListName, value);
+      langValue__1048_22.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute("http://www.w3.org/XML/1998/namespace",
+        global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName, language));
+      arrayProp.GetContainer().AddProperty(langValue__1048_22);
+      this.AddProperty(arrayProp);
+    }
+  }
 
-public virtual string GetUnqualifiedLanguagePropertyValue(string name, string expectedLanguage) {
-string language = ((expectedLanguage != default!) ? expectedLanguage : global::DripSharp.PdfCarton.Xmp.XmpConstants.XDefault);
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField property = this.GetAbstractProperty(name);
-if ((property != default!)) {
-if ((property is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty arrayProp = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(property!);
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in arrayProp.GetContainer().GetAllProperties()) {
-global::DripSharp.PdfCarton.Xmp.Type.Attribute text = child.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName);
-if (((text != default!) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(text.GetValue(), language))) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(child!)).GetStringValue();
-}
-}
-return default!;
-}
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("The property '", name), "' is not of Lang Alt type"));
-}
-return default!;
-}
+  public virtual string GetUnqualifiedLanguagePropertyValue(string name, string expectedLanguage) {
+    string language = ((expectedLanguage != default!) ? expectedLanguage
+      : global::DripSharp.PdfCarton.Xmp.XmpConstants.XDefault);
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField property = this.GetAbstractProperty(name);
+    if ((property != default!)) {
+      if ((property is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
+        global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty arrayProp
+          = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(property!);
+        foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in arrayProp.GetContainer().GetAllProperties()) {
+          global::DripSharp.PdfCarton.Xmp.Type.Attribute text
+            = child.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName);
+          if (((text != default!)
+            && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(text.GetValue(),
+            language))) {
+            return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(child!)).GetStringValue();
+          }
+        }
+        return default!;
+      }
+      throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("The property '",
+        name), "' is not of Lang Alt type"));
+    }
+    return default!;
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetUnqualifiedLanguagePropertyLanguagesValue(string name) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField property = this.GetAbstractProperty(name);
-if ((property != default!)) {
-if ((property is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty arrayProp = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(property!);
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> allProperties = arrayProp.GetContainer().GetAllProperties();
-global::System.Collections.Generic.IList<string> retval = new global::System.Collections.Generic.List<string>(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CollectionCount(allProperties));
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in allProperties) {
-global::DripSharp.PdfCarton.Xmp.Type.Attribute text = child.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName);
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(retval, ((text != default!) ? text.GetValue() : global::DripSharp.PdfCarton.Xmp.XmpConstants.XDefault));
-}
-return retval;
-}
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("The property '", name), "' is not of Lang Alt type"));
-}
-return default!;
-}
+  public virtual global::System.Collections.Generic.IList<string> GetUnqualifiedLanguagePropertyLanguagesValue(string name) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField property = this.GetAbstractProperty(name);
+    if ((property != default!)) {
+      if ((property is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
+        global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty arrayProp
+          = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(property!);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> allProperties
+          = arrayProp.GetContainer().GetAllProperties();
+        global::System.Collections.Generic.IList<string> retval
+          = new global::System.Collections.Generic.List<string>(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CollectionCount(allProperties));
+        foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in allProperties) {
+          global::DripSharp.PdfCarton.Xmp.Type.Attribute text
+            = child.GetAttribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.LangName);
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(retval, ((text != default!)
+            ? text.GetValue() : global::DripSharp.PdfCarton.Xmp.XmpConstants.XDefault));
+        }
+        return retval;
+      }
+      throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("The property '",
+        name), "' is not of Lang Alt type"));
+    }
+    return default!;
+  }
 
-public virtual void Merge(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema xmpSchema) {
-if (!(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(((object)(xmpSchema)).GetType(), ((object)(this)).GetType()))) {
-throw new global::System.IO.IOException("Can only merge schemas of the same type.");
-}
-foreach (global::DripSharp.PdfCarton.Xmp.Type.Attribute att in xmpSchema.GetAllAttributes()) {
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(att.GetNamespace(), this.GetNamespace())) {
-this.SetAttribute(att);
-}
-}
-string analyzedPropQualifiedName;
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in xmpSchema.GetContainer().GetAllProperties()) {
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child.GetPrefix(), this.GetPrefix())) {
-if ((child is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
-analyzedPropQualifiedName = child.GetPropertyName();
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmpEmbeddedProperty in this.GetAllProperties()) {
-if (((tmpEmbeddedProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmpEmbeddedProperty.GetPropertyName(), analyzedPropQualifiedName))) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaIterator<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> itNewValues = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Iterator(((global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(child!)).GetContainer().GetAllProperties());
-if (this.mergeComplexProperty(itNewValues, (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(tmpEmbeddedProperty!))) {
-return;
-}
-}
-}
-} else {
-this.AddProperty(child);
-}
-}
-}
-}
+  public virtual void Merge(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema xmpSchema) {
+    if (!global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(((object)(xmpSchema)).GetType(),
+      ((object)(this)).GetType())) {
+      throw new global::System.IO.IOException("Can only merge schemas of the same type.");
+    }
+    foreach (global::DripSharp.PdfCarton.Xmp.Type.Attribute att in xmpSchema.GetAllAttributes()) {
+      if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(att.GetNamespace(),
+        this.GetNamespace())) {
+        this.SetAttribute(att);
+      }
+    }
+    string analyzedPropQualifiedName;
+    foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in xmpSchema.GetContainer().GetAllProperties()) {
+      if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child.GetPrefix(),
+        this.GetPrefix())) {
+        if ((child is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
+          analyzedPropQualifiedName = child.GetPropertyName();
+          foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmpEmbeddedProperty in this.GetAllProperties()) {
+            if (((tmpEmbeddedProperty is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)
+              && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmpEmbeddedProperty.GetPropertyName(),
+              analyzedPropQualifiedName))) {
+              global::DripSharp.PdfCarton.Runtime.Xmp.JavaIterator<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> itNewValues
+                = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Iterator(((global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(child!)).GetContainer().GetAllProperties());
+              if (this.mergeComplexProperty(itNewValues,
+                (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(tmpEmbeddedProperty!))) {
+                return;
+              }
+            }
+          }
+        } else {
+          this.AddProperty(child);
+        }
+      }
+    }
+  }
 
-private bool mergeComplexProperty(global::DripSharp.PdfCarton.Runtime.Xmp.JavaIterator<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> itNewValues, global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty arrayProperty) {
-while (itNewValues.HasNext()) {
-global::DripSharp.PdfCarton.Xmp.Type.TextType tmpNewValue = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(itNewValues.Next()!);
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractField in arrayProperty.GetContainer().GetAllProperties()) {
-global::DripSharp.PdfCarton.Xmp.Type.TextType tmpOldValue = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(abstractField!);
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmpOldValue.GetStringValue(), tmpNewValue.GetStringValue())) {
-return true;
-}
-}
-arrayProperty.GetContainer().AddProperty(tmpNewValue);
-}
-return false;
-}
+  private bool mergeComplexProperty(global::DripSharp.PdfCarton.Runtime.Xmp.JavaIterator<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> itNewValues,
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty arrayProperty) {
+    while (itNewValues.HasNext()) {
+      global::DripSharp.PdfCarton.Xmp.Type.TextType tmpNewValue
+        = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(itNewValues.Next()!);
+      foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField abstractField in arrayProperty.GetContainer().GetAllProperties()) {
+        global::DripSharp.PdfCarton.Xmp.Type.TextType tmpOldValue
+          = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(abstractField!);
+        if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(tmpOldValue.GetStringValue(),
+          tmpNewValue.GetStringValue())) {
+          return true;
+        }
+      }
+      arrayProperty.GetContainer().AddProperty(tmpNewValue);
+    }
+    return false;
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> GetUnqualifiedArrayList(string name) {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty array = default!;
-foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in this.GetAllProperties()) {
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child.GetPropertyName(), name)) {
-if ((child is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
-array = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(child!);
-break;
-}
-throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not an array");
-}
-}
-if ((array! != default!)) {
-return new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>(array!.GetContainer().GetAllProperties());
-}
-return default!;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> GetUnqualifiedArrayList(string name) {
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty array = default!;
+    foreach (global::DripSharp.PdfCarton.Xmp.Type.AbstractField child in this.GetAllProperties()) {
+      if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(child.GetPropertyName(),
+        name)) {
+        if ((child is global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)) {
+          array = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(child!);
+          break;
+        }
+        throw new global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException("Property asked is not an array");
+      }
+    }
+    if ((array! != default!)) {
+      return new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.AbstractField>(array!.GetContainer().GetAllProperties());
+    }
+    return default!;
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty InstanciateSimple(string propertyName, object value) {
-global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = this.GetMetadata().GetTypeMapping();
-return tm.InstanciateSimpleField(((object)(this)).GetType(), (string)default!, this.GetPrefix(), propertyName, value);
-}
+  protected internal virtual global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty InstanciateSimple(string propertyName,
+    object value) {
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = this.GetMetadata().GetTypeMapping();
+    return tm.InstanciateSimpleField(((object)(this)).GetType(), (string)default!, this.GetPrefix(),
+      propertyName, value);
+  }
 
-internal virtual T getPropertyAs<T>(string name, global::System.Type type) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField property = this.GetProperty(name);
-return (type.IsInstanceOfType(property) ? (T)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassCast<T>(type, property)) : (T)(default!));
-}
+  internal virtual T getPropertyAs<T>(string name, global::System.Type type) {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField property = this.GetProperty(name);
+    return (type.IsInstanceOfType(property)
+      ? (T)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassCast<T>(type, property))
+      : (T)(default!));
+  }
 }

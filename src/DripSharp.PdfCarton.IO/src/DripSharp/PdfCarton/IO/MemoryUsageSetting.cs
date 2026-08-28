@@ -9,101 +9,120 @@
 namespace DripSharp.PdfCarton.IO;
 
 public sealed class MemoryUsageSetting {
-private readonly bool __field_useMainMemory = default;
+  private readonly bool __field_useMainMemory = default;
 
-private readonly bool __field_useTempFile = default;
+  private readonly bool __field_useTempFile = default;
 
-private readonly long maxMainMemoryBytes = default;
+  private readonly long maxMainMemoryBytes = default;
 
-private readonly long maxStorageBytes = default;
+  private readonly long maxStorageBytes = default;
 
-private global::System.IO.FileInfo tempDir = null!;
+  private global::System.IO.FileInfo tempDir = null!;
 
-public readonly global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction StreamCache;
+  public readonly global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction StreamCache;
 
-private MemoryUsageSetting(bool useMainMemory, bool useTempFile, long maxMainMemoryBytes, long maxStorageBytes) {
-this.StreamCache = new global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.__StreamCacheCreateFunctionFunctionalAdapter(() => new global::DripSharp.PdfCarton.IO.ScratchFile(this));
+  private MemoryUsageSetting(bool useMainMemory, bool useTempFile, long maxMainMemoryBytes,
+    long maxStorageBytes) {
+    this.StreamCache
+      = new global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.__StreamCacheCreateFunctionFunctionalAdapter(()
+      => new global::DripSharp.PdfCarton.IO.ScratchFile(this));
 
-bool locUseMainMemory = (!useTempFile || useMainMemory);
-long locMaxMainMemoryBytes = (useMainMemory ? maxMainMemoryBytes : -1);
-long locMaxStorageBytes = ((maxStorageBytes > 0) ? maxStorageBytes : -1);
-if ((locMaxMainMemoryBytes < -1)) {
-locMaxMainMemoryBytes = -1;
-}
-if ((locUseMainMemory && (locMaxMainMemoryBytes == 0))) {
-if (useTempFile) {
-locUseMainMemory = false;
-} else {
-locMaxMainMemoryBytes = locMaxStorageBytes;
-}
-}
-if (((locUseMainMemory && (locMaxStorageBytes > -1)) && ((locMaxMainMemoryBytes == -1) || (locMaxMainMemoryBytes > locMaxStorageBytes)))) {
-locMaxStorageBytes = locMaxMainMemoryBytes;
-}
-this.__field_useMainMemory = locUseMainMemory;
-this.__field_useTempFile = useTempFile;
-this.maxMainMemoryBytes = locMaxMainMemoryBytes;
-this.maxStorageBytes = locMaxStorageBytes;
-}
+    bool locUseMainMemory = (!useTempFile || useMainMemory);
+    long locMaxMainMemoryBytes = (useMainMemory ? maxMainMemoryBytes : -1);
+    long locMaxStorageBytes = ((maxStorageBytes > 0) ? maxStorageBytes : -1);
+    if ((locMaxMainMemoryBytes < -1)) {
+      locMaxMainMemoryBytes = -1;
+    }
+    if ((locUseMainMemory && (locMaxMainMemoryBytes == 0))) {
+      if (useTempFile) {
+        locUseMainMemory = false;
+      } else {
+        locMaxMainMemoryBytes = locMaxStorageBytes;
+      }
+    }
+    if (((locUseMainMemory && (locMaxStorageBytes > -1)) && ((locMaxMainMemoryBytes == -1)
+      || (locMaxMainMemoryBytes > locMaxStorageBytes)))) {
+      locMaxStorageBytes = locMaxMainMemoryBytes;
+    }
+    this.__field_useMainMemory = locUseMainMemory;
+    this.__field_useTempFile = useTempFile;
+    this.maxMainMemoryBytes = locMaxMainMemoryBytes;
+    this.maxStorageBytes = locMaxStorageBytes;
+  }
 
-public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupMainMemoryOnly() {
-return global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupMainMemoryOnly((long)(-1));
-}
+  public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupMainMemoryOnly() {
+    return global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupMainMemoryOnly((long)(-1));
+  }
 
-public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupMainMemoryOnly(long maxMainMemoryBytes) {
-return new global::DripSharp.PdfCarton.IO.MemoryUsageSetting(true, false, maxMainMemoryBytes, maxMainMemoryBytes);
-}
+  public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupMainMemoryOnly(long maxMainMemoryBytes) {
+    return new global::DripSharp.PdfCarton.IO.MemoryUsageSetting(true, false, maxMainMemoryBytes,
+      maxMainMemoryBytes);
+  }
 
-public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupTempFileOnly() {
-return global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupTempFileOnly((long)(-1));
-}
+  public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupTempFileOnly() {
+    return global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupTempFileOnly((long)(-1));
+  }
 
-public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupTempFileOnly(long maxStorageBytes) {
-return new global::DripSharp.PdfCarton.IO.MemoryUsageSetting(false, true, (long)(0), maxStorageBytes);
-}
+  public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupTempFileOnly(long maxStorageBytes) {
+    return new global::DripSharp.PdfCarton.IO.MemoryUsageSetting(false, true, (long)(0),
+      maxStorageBytes);
+  }
 
-public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupMixed(long maxMainMemoryBytes) {
-return global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupMixed(maxMainMemoryBytes, (long)(-1));
-}
+  public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupMixed(long maxMainMemoryBytes) {
+    return global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupMixed(maxMainMemoryBytes,
+      (long)(-1));
+  }
 
-public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupMixed(long maxMainMemoryBytes, long maxStorageBytes) {
-return new global::DripSharp.PdfCarton.IO.MemoryUsageSetting(true, true, maxMainMemoryBytes, maxStorageBytes);
-}
+  public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupMixed(long maxMainMemoryBytes,
+    long maxStorageBytes) {
+    return new global::DripSharp.PdfCarton.IO.MemoryUsageSetting(true, true, maxMainMemoryBytes,
+      maxStorageBytes);
+  }
 
-public global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetTempDir(global::System.IO.FileInfo tempDir) {
-this.tempDir = tempDir;
-return this;
-}
+  public global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetTempDir(global::System.IO.FileInfo tempDir) {
+    this.tempDir = tempDir;
+    return this;
+  }
 
-public bool UseMainMemory() {
-return this.__field_useMainMemory;
-}
+  public bool UseMainMemory() {
+    return this.__field_useMainMemory;
+  }
 
-public bool UseTempFile() {
-return this.__field_useTempFile;
-}
+  public bool UseTempFile() {
+    return this.__field_useTempFile;
+  }
 
-public bool IsMainMemoryRestricted() {
-return (this.maxMainMemoryBytes >= 0);
-}
+  public bool IsMainMemoryRestricted() {
+    return (this.maxMainMemoryBytes >= 0);
+  }
 
-public bool IsStorageRestricted() {
-return (this.maxStorageBytes > 0);
-}
+  public bool IsStorageRestricted() {
+    return (this.maxStorageBytes > 0);
+  }
 
-public long GetMaxMainMemoryBytes() {
-return this.maxMainMemoryBytes;
-}
+  public long GetMaxMainMemoryBytes() {
+    return this.maxMainMemoryBytes;
+  }
 
-public long GetMaxStorageBytes() {
-return this.maxStorageBytes;
-}
+  public long GetMaxStorageBytes() {
+    return this.maxStorageBytes;
+  }
 
-public global::System.IO.FileInfo GetTempDir() {
-return this.tempDir;
-}
+  public global::System.IO.FileInfo GetTempDir() {
+    return this.tempDir;
+  }
 
-public override string ToString() {
-return (this.__field_useMainMemory ? (this.__field_useTempFile ? global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Mixed mode with max. of ", this.maxMainMemoryBytes), " main memory bytes"), (this.IsStorageRestricted() ? global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(" and max. of ", this.maxStorageBytes), " storage bytes") : " and unrestricted scratch file size")) : (this.IsMainMemoryRestricted() ? global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Main memory only with max. of ", this.maxMainMemoryBytes), " bytes") : "Main memory only with no size restriction")) : (this.IsStorageRestricted() ? global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Scratch file only with max. of ", this.maxStorageBytes), " bytes") : "Scratch file only with no size restriction"));
-}
+  public override string ToString() {
+    return (this.__field_useMainMemory ? (this.__field_useTempFile
+      ? global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Mixed mode with max. of ",
+      this.maxMainMemoryBytes), " main memory bytes"), (this.IsStorageRestricted()
+      ? global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(" and max. of ",
+      this.maxStorageBytes), " storage bytes") : " and unrestricted scratch file size"))
+      : (this.IsMainMemoryRestricted()
+      ? global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Main memory only with max. of ",
+      this.maxMainMemoryBytes), " bytes") : "Main memory only with no size restriction"))
+      : (this.IsStorageRestricted()
+      ? global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Scratch file only with max. of ",
+      this.maxStorageBytes), " bytes") : "Scratch file only with no size restriction"));
+  }
 }

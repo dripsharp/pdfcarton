@@ -9,97 +9,99 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public class DataInputRandomAccessRead : global::DripSharp.PdfCarton.Fonts.Cff.DataInput {
-private readonly global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead = null!;
+  private readonly global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead = null!;
 
-public DataInputRandomAccessRead(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
-this.randomAccessRead = randomAccessRead;
-}
+  public DataInputRandomAccessRead(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
+    this.randomAccessRead = randomAccessRead;
+  }
 
-public virtual bool HasRemaining() {
-return (this.randomAccessRead.Available() > 0);
-}
+  public virtual bool HasRemaining() {
+    return (this.randomAccessRead.Available() > 0);
+  }
 
-public virtual int GetPosition() {
-return (int)(this.randomAccessRead.GetPosition());
-}
+  public virtual int GetPosition() {
+    return (int)(this.randomAccessRead.GetPosition());
+  }
 
-public virtual void SetPosition(int position) {
-if ((position < 0)) {
-throw new global::System.IO.IOException("position is negative");
-}
-if ((position >= this.randomAccessRead.Length())) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("New position is out of range ", position), " >= "), this.randomAccessRead.Length()));
-}
-this.randomAccessRead.Seek((long)(position));
-}
+  public virtual void SetPosition(int position) {
+    if ((position < 0)) {
+      throw new global::System.IO.IOException("position is negative");
+    }
+    if ((position >= this.randomAccessRead.Length())) {
+      throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("New position is out of range ",
+        position), " >= "), this.randomAccessRead.Length()));
+    }
+    this.randomAccessRead.Seek((long)(position));
+  }
 
-public virtual sbyte ReadByte() {
-if (!(this.HasRemaining())) {
-throw new global::System.IO.IOException("End of buffer reached!");
-}
-return unchecked((sbyte)(unchecked((sbyte)(this.randomAccessRead.Read()))));
-}
+  public virtual sbyte ReadByte() {
+    if (!(this.HasRemaining())) {
+      throw new global::System.IO.IOException("End of buffer reached!");
+    }
+    return unchecked((sbyte)(unchecked((sbyte)(this.randomAccessRead.Read()))));
+  }
 
-public virtual int ReadUnsignedByte() {
-if (!(this.HasRemaining())) {
-throw new global::System.IO.IOException("End of buffer reached!");
-}
-return this.randomAccessRead.Read();
-}
+  public virtual int ReadUnsignedByte() {
+    if (!(this.HasRemaining())) {
+      throw new global::System.IO.IOException("End of buffer reached!");
+    }
+    return this.randomAccessRead.Read();
+  }
 
-public virtual int PeekUnsignedByte(int offset) {
-if ((offset < 0)) {
-throw new global::System.IO.IOException("offset is negative");
-}
-if ((offset == 0)) {
-return this.randomAccessRead.Peek();
-}
-long currentPosition = this.randomAccessRead.GetPosition();
-if (((currentPosition + offset) >= this.randomAccessRead.Length())) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Offset position is out of range ", (currentPosition + offset)), " >= "), this.randomAccessRead.Length()));
-}
-this.randomAccessRead.Seek((currentPosition + offset));
-int peekValue = this.randomAccessRead.Read();
-this.randomAccessRead.Seek(currentPosition);
-return peekValue;
-}
+  public virtual int PeekUnsignedByte(int offset) {
+    if ((offset < 0)) {
+      throw new global::System.IO.IOException("offset is negative");
+    }
+    if ((offset == 0)) {
+      return this.randomAccessRead.Peek();
+    }
+    long currentPosition = this.randomAccessRead.GetPosition();
+    if (((currentPosition + offset) >= this.randomAccessRead.Length())) {
+      throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Offset position is out of range ",
+        (currentPosition + offset)), " >= "), this.randomAccessRead.Length()));
+    }
+    this.randomAccessRead.Seek((currentPosition + offset));
+    int peekValue = this.randomAccessRead.Read();
+    this.randomAccessRead.Seek(currentPosition);
+    return peekValue;
+  }
 
-public virtual sbyte[] ReadBytes(int length) {
-if ((length < 0)) {
-throw new global::System.IO.IOException("length is negative");
-}
-sbyte[] bytes = new sbyte[length];
-this.randomAccessRead.ReadFully(bytes);
-return bytes;
-}
+  public virtual sbyte[] ReadBytes(int length) {
+    if ((length < 0)) {
+      throw new global::System.IO.IOException("length is negative");
+    }
+    sbyte[] bytes = new sbyte[length];
+    this.randomAccessRead.ReadFully(bytes);
+    return bytes;
+  }
 
-public virtual int Length() {
-return (int)(this.randomAccessRead.Length());
-}
+  public virtual int Length() {
+    return (int)(this.randomAccessRead.Length());
+  }
 
-public virtual int ReadInt() {
-int b1 = this.ReadUnsignedByte();
-int b2 = this.ReadUnsignedByte();
-int b3 = this.ReadUnsignedByte();
-int b4 = this.ReadUnsignedByte();
-return ((((b1 << unchecked((int)(24))) | (b2 << unchecked((int)(16)))) | (b3 << unchecked((int)(8)))) | b4);
-}
+  public virtual int ReadInt() {
+    int b1 = this.ReadUnsignedByte();
+    int b2 = this.ReadUnsignedByte();
+    int b3 = this.ReadUnsignedByte();
+    int b4 = this.ReadUnsignedByte();
+    return ((((b1 << unchecked((int)(24))) | (b2 << unchecked((int)(16)))) | (b3 << unchecked((int)(8)))) | b4);
+  }
 
-public virtual int ReadOffset(int offSize) {
-int value = 0;
-for (int i = 0; (i < offSize); i++) {
-value = ((value << unchecked((int)(8))) | this.ReadUnsignedByte());
-}
-return value;
-}
+  public virtual int ReadOffset(int offSize) {
+    int value = 0;
+    for (int i = 0; (i < offSize); i++) {
+      value = ((value << unchecked((int)(8))) | this.ReadUnsignedByte());
+    }
+    return value;
+  }
 
-public virtual short ReadShort() {
-return unchecked((short)(unchecked((short)(((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(this)).ReadUnsignedShort()))));
-}
+  public virtual short ReadShort() {
+    return unchecked((short)(unchecked((short)(((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(this)).ReadUnsignedShort()))));
+  }
 
-public virtual int ReadUnsignedShort() {
-int b1 = this.ReadUnsignedByte();
-int b2 = this.ReadUnsignedByte();
-return ((b1 << unchecked((int)(8))) | b2);
-}
+  public virtual int ReadUnsignedShort() {
+    int b1 = this.ReadUnsignedByte();
+    int b2 = this.ReadUnsignedByte();
+    return ((b1 << unchecked((int)(8))) | b2);
+  }
 }

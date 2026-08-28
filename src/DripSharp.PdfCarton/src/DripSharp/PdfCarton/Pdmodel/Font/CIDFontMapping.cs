@@ -8,18 +8,21 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
-public sealed class CIDFontMapping : global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont> {
-private readonly global::DripSharp.PdfCarton.Fonts.FontBoxFont ttf = null!;
+public sealed class CIDFontMapping
+: global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont> {
+  private readonly global::DripSharp.PdfCarton.Fonts.FontBoxFont ttf = null!;
 
-public CIDFontMapping(global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont font, global::DripSharp.PdfCarton.Fonts.FontBoxFont fontBoxFont, bool isFallback) : base(font, isFallback) {
-this.ttf = fontBoxFont;
-}
+  public CIDFontMapping(global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont font,
+    global::DripSharp.PdfCarton.Fonts.FontBoxFont fontBoxFont, bool isFallback) : base(font,
+    isFallback) {
+    this.ttf = fontBoxFont;
+  }
 
-public global::DripSharp.PdfCarton.Fonts.FontBoxFont GetTrueTypeFont() {
-return this.ttf;
-}
+  public global::DripSharp.PdfCarton.Fonts.FontBoxFont GetTrueTypeFont() {
+    return this.ttf;
+  }
 
-public bool IsCIDFont() {
-return (this.GetFont() is not null);
-}
+  public bool IsCIDFont() {
+    return (this.GetFont() is not null);
+  }
 }

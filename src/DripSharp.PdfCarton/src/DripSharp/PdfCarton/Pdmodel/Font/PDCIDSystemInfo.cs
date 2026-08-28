@@ -9,36 +9,37 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public sealed class PDCIDSystemInfo : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-internal PDCIDSystemInfo(string registry, string ordering, int supplement) {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.dictionary.SetString(global::DripSharp.PdfCarton.Cos.COSName.Registry, registry);
-this.dictionary.SetString(global::DripSharp.PdfCarton.Cos.COSName.Ordering, ordering);
-this.dictionary.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Supplement, supplement);
-}
+  internal PDCIDSystemInfo(string registry, string ordering, int supplement) {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.dictionary.SetString(global::DripSharp.PdfCarton.Cos.COSName.Registry, registry);
+    this.dictionary.SetString(global::DripSharp.PdfCarton.Cos.COSName.Ordering, ordering);
+    this.dictionary.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Supplement, supplement);
+  }
 
-internal PDCIDSystemInfo(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-this.dictionary = dictionary;
-}
+  internal PDCIDSystemInfo(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    this.dictionary = dictionary;
+  }
 
-public string GetRegistry() {
-return this.dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Registry);
-}
+  public string GetRegistry() {
+    return this.dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Registry);
+  }
 
-public string GetOrdering() {
-return this.dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Ordering);
-}
+  public string GetOrdering() {
+    return this.dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Ordering);
+  }
 
-public int GetSupplement() {
-return this.dictionary.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Supplement);
-}
+  public int GetSupplement() {
+    return this.dictionary.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Supplement);
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.dictionary;
-}
+  public global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.dictionary;
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.GetRegistry(), "-"), this.GetOrdering()), "-"), this.GetSupplement());
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.GetRegistry(),
+      "-"), this.GetOrdering()), "-"), this.GetSupplement());
+  }
 }

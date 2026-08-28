@@ -9,288 +9,314 @@
 namespace DripSharp.PdfCarton.IO;
 
 public class RandomAccessReadBuffer : global::DripSharp.PdfCarton.IO.RandomAccessRead {
-public const int DefaultChunkSize4kb = (1 << unchecked((int)(12)));
+  public const int DefaultChunkSize4kb = (1 << unchecked((int)(12)));
 
-protected internal int ChunkSize = global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb;
+  protected internal int ChunkSize
+    = global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb;
 
-private readonly global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaByteBuffer> bufferList = null!;
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaByteBuffer> bufferList
+    = null!;
 
-protected internal global::DripSharp.Runtime.JavaByteBuffer CurrentBuffer = null!;
+  protected internal global::DripSharp.Runtime.JavaByteBuffer CurrentBuffer = null!;
 
-protected internal long Pointer = 0;
+  protected internal long Pointer = 0;
 
-protected internal int CurrentBufferPointer = 0;
+  protected internal int CurrentBufferPointer = 0;
 
-protected internal long Size = 0;
+  protected internal long Size = 0;
 
-private int bufferListIndex = 0;
+  private int bufferListIndex = 0;
 
-private int bufferListMaxIndex = 0;
+  private int bufferListMaxIndex = 0;
 
-private readonly global::System.Collections.Concurrent.ConcurrentDictionary<long, global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer> rarbCopies = new global::System.Collections.Concurrent.ConcurrentDictionary<long, global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer>();
+  private readonly global::System.Collections.Concurrent.ConcurrentDictionary<long,
+    global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer> rarbCopies
+    = new global::System.Collections.Concurrent.ConcurrentDictionary<long,
+    global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer>();
 
-protected internal RandomAccessReadBuffer() : this(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb) {
+  protected internal RandomAccessReadBuffer()
+  : this(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb) {
 
-}
+  }
 
-protected internal RandomAccessReadBuffer(int definedChunkSize) {
-this.ChunkSize = definedChunkSize;
-this.CurrentBuffer = global::DripSharp.Runtime.JavaByteBuffer.allocate(this.ChunkSize);
-this.bufferList = new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaByteBuffer>(1);
-global::DripSharp.Runtime.JavaCompat.Add(this.bufferList, this.CurrentBuffer);
-}
+  protected internal RandomAccessReadBuffer(int definedChunkSize) {
+    this.ChunkSize = definedChunkSize;
+    this.CurrentBuffer = global::DripSharp.Runtime.JavaByteBuffer.allocate(this.ChunkSize);
+    this.bufferList
+      = new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaByteBuffer>(1);
+    global::DripSharp.Runtime.JavaCompat.Add(this.bufferList, this.CurrentBuffer);
+  }
 
-public RandomAccessReadBuffer(sbyte[] input) : this(global::DripSharp.Runtime.JavaByteBuffer.wrap(input)) {
+  public RandomAccessReadBuffer(sbyte[] input)
+  : this(global::DripSharp.Runtime.JavaByteBuffer.wrap(input)) {
 
-}
+  }
 
-public RandomAccessReadBuffer(global::DripSharp.Runtime.JavaByteBuffer input) {
-this.ChunkSize = input.limit();
-this.Size = this.ChunkSize;
-this.CurrentBuffer = input;
-this.bufferList = new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaByteBuffer>(1);
-global::DripSharp.Runtime.JavaCompat.Add(this.bufferList, this.CurrentBuffer);
-}
+  public RandomAccessReadBuffer(global::DripSharp.Runtime.JavaByteBuffer input) {
+    this.ChunkSize = input.limit();
+    this.Size = this.ChunkSize;
+    this.CurrentBuffer = input;
+    this.bufferList
+      = new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaByteBuffer>(1);
+    global::DripSharp.Runtime.JavaCompat.Add(this.bufferList, this.CurrentBuffer);
+  }
 
-public RandomAccessReadBuffer(global::System.IO.Stream input) : this() {
-int bytesRead = 0;
-int remainingBytes = this.ChunkSize;
-int offset = 0;
-sbyte[] eofCheck = new sbyte[1];
-while (((remainingBytes > 0) && ((bytesRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(input, this.CurrentBuffer.array(), offset, remainingBytes)) > -1))) {
-remainingBytes -= bytesRead;
-offset += bytesRead;
-this.Size += bytesRead;
-if (((remainingBytes == 0) && (global::DripSharp.Runtime.JavaCompat.InputStreamRead(input, eofCheck) > 0))) {
-this.ExpandBuffer();
-this.CurrentBuffer.put(eofCheck);
-offset = 1;
-remainingBytes = (this.ChunkSize - 1);
-this.Size++;
-}
-}
-this.CurrentBuffer.limit(offset);
-this.Seek((long)(0));
-}
+  public RandomAccessReadBuffer(global::System.IO.Stream input) : this() {
+    int bytesRead = 0;
+    int remainingBytes = this.ChunkSize;
+    int offset = 0;
+    sbyte[] eofCheck = new sbyte[1];
+    while (((remainingBytes > 0) && ((bytesRead
+      = global::DripSharp.Runtime.JavaCompat.InputStreamRead(input, this.CurrentBuffer.array(),
+      offset, remainingBytes)) > -1))) {
+      remainingBytes -= bytesRead;
+      offset += bytesRead;
+      this.Size += bytesRead;
+      if (((remainingBytes == 0) && (global::DripSharp.Runtime.JavaCompat.InputStreamRead(input,
+        eofCheck) > 0))) {
+        this.ExpandBuffer();
+        this.CurrentBuffer.put(eofCheck);
+        offset = 1;
+        remainingBytes = (this.ChunkSize - 1);
+        this.Size++;
+      }
+    }
+    this.CurrentBuffer.limit(offset);
+    this.Seek((long)(0));
+  }
 
-private RandomAccessReadBuffer(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer parent) {
-this.ChunkSize = parent.ChunkSize;
-this.Size = parent.Size;
-this.bufferListMaxIndex = parent.bufferListMaxIndex;
-this.bufferList = new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaByteBuffer>(global::DripSharp.Runtime.JavaCompat.CollectionCount(parent.bufferList));
-foreach (global::DripSharp.Runtime.JavaByteBuffer buffer in parent.bufferList) {
-global::DripSharp.Runtime.JavaByteBuffer newBuffer = buffer.duplicate();
-newBuffer.rewind();
-global::DripSharp.Runtime.JavaCompat.Add(this.bufferList, newBuffer);
-}
-this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList, 0);
-}
+  private RandomAccessReadBuffer(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer parent) {
+    this.ChunkSize = parent.ChunkSize;
+    this.Size = parent.Size;
+    this.bufferListMaxIndex = parent.bufferListMaxIndex;
+    this.bufferList
+      = new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaByteBuffer>(global::DripSharp.Runtime.JavaCompat.CollectionCount(parent.bufferList));
+    foreach (global::DripSharp.Runtime.JavaByteBuffer buffer in parent.bufferList) {
+      global::DripSharp.Runtime.JavaByteBuffer newBuffer = buffer.duplicate();
+      newBuffer.rewind();
+      global::DripSharp.Runtime.JavaCompat.Add(this.bufferList, newBuffer);
+    }
+    this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList, 0);
+  }
 
-public virtual void Dispose() {
-if (!(this.IsClosed())) {
-global::DripSharp.Runtime.JavaCompat.ForEach(this.rarbCopies.Values, global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly);
-this.rarbCopies.Clear();
-this.CurrentBuffer = default!;
-(this.bufferList).Clear();
-}
-}
+  public virtual void Dispose() {
+    if (!(this.IsClosed())) {
+      global::DripSharp.Runtime.JavaCompat.ForEach(this.rarbCopies.Values,
+        global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly);
+      this.rarbCopies.Clear();
+      this.CurrentBuffer = default!;
+      (this.bufferList).Clear();
+    }
+  }
 
-public virtual void Seek(long position) {
-this.CheckClosed();
-if ((position < 0)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid position ", position));
-}
-if ((position < this.Size)) {
-this.Pointer = position;
-this.bufferListIndex = ((this.ChunkSize > 0) ? (int)((this.Pointer / this.ChunkSize)) : 0);
-this.CurrentBufferPointer = ((this.ChunkSize > 0) ? (int)((this.Pointer % this.ChunkSize)) : 0);
-this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList, this.bufferListIndex);
-} else {
-this.Pointer = this.Size;
-this.bufferListIndex = this.bufferListMaxIndex;
-this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList, this.bufferListIndex);
-this.CurrentBufferPointer = ((this.ChunkSize > 0) ? (int)((this.Size % this.ChunkSize)) : 0);
-}
-this.CurrentBuffer.position(this.CurrentBufferPointer);
-}
+  public virtual void Seek(long position) {
+    this.CheckClosed();
+    if ((position < 0)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid position ",
+        position));
+    }
+    if ((position < this.Size)) {
+      this.Pointer = position;
+      this.bufferListIndex = ((this.ChunkSize > 0) ? (int)((this.Pointer / this.ChunkSize)) : 0);
+      this.CurrentBufferPointer = ((this.ChunkSize > 0) ? (int)((this.Pointer % this.ChunkSize))
+        : 0);
+      this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList,
+        this.bufferListIndex);
+    } else {
+      this.Pointer = this.Size;
+      this.bufferListIndex = this.bufferListMaxIndex;
+      this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList,
+        this.bufferListIndex);
+      this.CurrentBufferPointer = ((this.ChunkSize > 0) ? (int)((this.Size % this.ChunkSize)) : 0);
+    }
+    this.CurrentBuffer.position(this.CurrentBufferPointer);
+  }
 
-public virtual long GetPosition() {
-this.CheckClosed();
-return this.Pointer;
-}
+  public virtual long GetPosition() {
+    this.CheckClosed();
+    return this.Pointer;
+  }
 
-public virtual int Read() {
-this.CheckClosed();
-if ((this.Pointer >= this.Size)) {
-return -1;
-}
-if ((this.CurrentBufferPointer >= this.ChunkSize)) {
-if ((this.bufferListIndex >= this.bufferListMaxIndex)) {
-return -1;
-} else {
-this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList, ++(this.bufferListIndex));
-this.CurrentBufferPointer = 0;
-}
-}
-this.Pointer++;
-return (this.CurrentBuffer.get(this.CurrentBufferPointer++) & 255);
-}
+  public virtual int Read() {
+    this.CheckClosed();
+    if ((this.Pointer >= this.Size)) {
+      return -1;
+    }
+    if ((this.CurrentBufferPointer >= this.ChunkSize)) {
+      if ((this.bufferListIndex >= this.bufferListMaxIndex)) {
+        return -1;
+      } else {
+        this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList,
+          ++(this.bufferListIndex));
+        this.CurrentBufferPointer = 0;
+      }
+    }
+    this.Pointer++;
+    return (this.CurrentBuffer.get(this.CurrentBufferPointer++) & 255);
+  }
 
-public virtual int Read(sbyte[] b, int offset, int length) {
-this.CheckClosed();
-int bytesRead = this.readRemainingBytes(b, offset, length);
-if ((bytesRead == -1)) {
-if ((((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Available() > 0)) {
-bytesRead = 0;
-} else {
-return -1;
-}
-}
-while (((bytesRead < length) && (((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Available() > 0))) {
-if ((this.CurrentBufferPointer == this.ChunkSize)) {
-this.nextBuffer();
-}
-bytesRead += this.readRemainingBytes(b, (offset + bytesRead), (length - bytesRead));
-}
-return bytesRead;
-}
+  public virtual int Read(sbyte[] b, int offset, int length) {
+    this.CheckClosed();
+    int bytesRead = this.readRemainingBytes(b, offset, length);
+    if ((bytesRead == -1)) {
+      if ((((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Available() > 0)) {
+        bytesRead = 0;
+      } else {
+        return -1;
+      }
+    }
+    while (((bytesRead < length)
+      && (((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Available() > 0))) {
+      if ((this.CurrentBufferPointer == this.ChunkSize)) {
+        this.nextBuffer();
+      }
+      bytesRead += this.readRemainingBytes(b, (offset + bytesRead), (length - bytesRead));
+    }
+    return bytesRead;
+  }
 
-private int readRemainingBytes(sbyte[] b, int offset, int length) {
-if ((this.Pointer >= this.Size)) {
-return -1;
-}
-int maxLength = (int)(global::System.Math.Min((long)(length), (this.Size - this.Pointer)));
-int remainingBytes = (this.ChunkSize - this.CurrentBufferPointer);
-if ((remainingBytes == 0)) {
-return -1;
-}
-if ((maxLength >= remainingBytes)) {
-this.CurrentBuffer.position(this.CurrentBufferPointer);
-this.CurrentBuffer.get(b, offset, remainingBytes);
-this.CurrentBufferPointer += remainingBytes;
-this.Pointer += remainingBytes;
-return remainingBytes;
-} else {
-this.CurrentBuffer.position(this.CurrentBufferPointer);
-this.CurrentBuffer.get(b, offset, maxLength);
-this.CurrentBufferPointer += maxLength;
-this.Pointer += maxLength;
-return maxLength;
-}
-}
+  private int readRemainingBytes(sbyte[] b, int offset, int length) {
+    if ((this.Pointer >= this.Size)) {
+      return -1;
+    }
+    int maxLength = (int)(global::System.Math.Min((long)(length), (this.Size - this.Pointer)));
+    int remainingBytes = (this.ChunkSize - this.CurrentBufferPointer);
+    if ((remainingBytes == 0)) {
+      return -1;
+    }
+    if ((maxLength >= remainingBytes)) {
+      this.CurrentBuffer.position(this.CurrentBufferPointer);
+      this.CurrentBuffer.get(b, offset, remainingBytes);
+      this.CurrentBufferPointer += remainingBytes;
+      this.Pointer += remainingBytes;
+      return remainingBytes;
+    } else {
+      this.CurrentBuffer.position(this.CurrentBufferPointer);
+      this.CurrentBuffer.get(b, offset, maxLength);
+      this.CurrentBufferPointer += maxLength;
+      this.Pointer += maxLength;
+      return maxLength;
+    }
+  }
 
-public virtual long Length() {
-this.CheckClosed();
-return this.Size;
-}
+  public virtual long Length() {
+    this.CheckClosed();
+    return this.Size;
+  }
 
-protected internal virtual void ExpandBuffer() {
-if ((this.bufferListMaxIndex > this.bufferListIndex)) {
-this.nextBuffer();
-} else {
-this.CurrentBuffer = global::DripSharp.Runtime.JavaByteBuffer.allocate(this.ChunkSize);
-global::DripSharp.Runtime.JavaCompat.Add(this.bufferList, this.CurrentBuffer);
-this.CurrentBufferPointer = 0;
-this.bufferListMaxIndex++;
-this.bufferListIndex++;
-}
-}
+  protected internal virtual void ExpandBuffer() {
+    if ((this.bufferListMaxIndex > this.bufferListIndex)) {
+      this.nextBuffer();
+    } else {
+      this.CurrentBuffer = global::DripSharp.Runtime.JavaByteBuffer.allocate(this.ChunkSize);
+      global::DripSharp.Runtime.JavaCompat.Add(this.bufferList, this.CurrentBuffer);
+      this.CurrentBufferPointer = 0;
+      this.bufferListMaxIndex++;
+      this.bufferListIndex++;
+    }
+  }
 
-private void nextBuffer() {
-if ((this.bufferListIndex == this.bufferListMaxIndex)) {
-throw new global::System.IO.IOException("No more chunks available, end of buffer reached");
-}
-this.CurrentBufferPointer = 0;
-this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList, ++(this.bufferListIndex));
-this.CurrentBuffer.rewind();
-}
+  private void nextBuffer() {
+    if ((this.bufferListIndex == this.bufferListMaxIndex)) {
+      throw new global::System.IO.IOException("No more chunks available, end of buffer reached");
+    }
+    this.CurrentBufferPointer = 0;
+    this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList,
+      ++(this.bufferListIndex));
+    this.CurrentBuffer.rewind();
+  }
 
-protected internal virtual void CheckClosed() {
-if ((this.CurrentBuffer == default!)) {
-throw new global::System.IO.IOException("RandomAccessBuffer already closed");
-}
-}
+  protected internal virtual void CheckClosed() {
+    if ((this.CurrentBuffer == default!)) {
+      throw new global::System.IO.IOException("RandomAccessBuffer already closed");
+    }
+  }
 
-public virtual bool IsClosed() {
-return (this.CurrentBuffer == default!);
-}
+  public virtual bool IsClosed() {
+    return (this.CurrentBuffer == default!);
+  }
 
-public virtual bool IsEOF() {
-this.CheckClosed();
-return (this.Pointer >= this.Size);
-}
+  public virtual bool IsEOF() {
+    this.CheckClosed();
+    return (this.Pointer >= this.Size);
+  }
 
-public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition, long streamLength) {
-long currentThreadID = global::DripSharp.Runtime.JavaThread.CurrentThread().getId();
-global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer randomAccessReadBuffer = global::DripSharp.Runtime.JavaCompat.MapGet(this.rarbCopies, currentThreadID);
-if (((randomAccessReadBuffer == default!) || randomAccessReadBuffer.IsClosed())) {
-randomAccessReadBuffer = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(this);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.rarbCopies, currentThreadID, randomAccessReadBuffer);
-}
-return new global::DripSharp.PdfCarton.IO.RandomAccessReadView(randomAccessReadBuffer, startPosition, streamLength);
-}
+  public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition,
+    long streamLength) {
+    long currentThreadID = global::DripSharp.Runtime.JavaThread.CurrentThread().getId();
+    global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer randomAccessReadBuffer
+      = global::DripSharp.Runtime.JavaCompat.MapGet(this.rarbCopies, currentThreadID);
+    if (((randomAccessReadBuffer == default!) || randomAccessReadBuffer.IsClosed())) {
+      randomAccessReadBuffer = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(this);
+      global::DripSharp.Runtime.JavaCompat.MapPut(this.rarbCopies, currentThreadID,
+        randomAccessReadBuffer);
+    }
+    return new global::DripSharp.PdfCarton.IO.RandomAccessReadView(randomAccessReadBuffer,
+      startPosition, streamLength);
+  }
 
-public static global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer CreateBufferFromStream(global::System.IO.Stream inputStream) {
-global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer randomAccessRead = default!;
-try {
-randomAccessRead = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(inputStream);
-} finally {
-inputStream.Dispose();
-}
-return randomAccessRead!;
-}
+  public static global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer CreateBufferFromStream(global::System.IO.Stream inputStream) {
+    global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer randomAccessRead = default!;
+    try {
+      randomAccessRead = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(inputStream);
+    } finally {
+      inputStream.Dispose();
+    }
+    return randomAccessRead!;
+  }
 
-protected internal virtual void ResetBuffers() {
-this.Size = 0;
-this.Pointer = 0;
-this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList, 0);
-this.CurrentBuffer.position(0);
-this.CurrentBufferPointer = 0;
-this.bufferListIndex = 0;
-this.bufferListMaxIndex = 0;
-(this.bufferList).Clear();
-global::DripSharp.Runtime.JavaCompat.Add(this.bufferList, this.CurrentBuffer);
-}
+  protected internal virtual void ResetBuffers() {
+    this.Size = 0;
+    this.Pointer = 0;
+    this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList, 0);
+    this.CurrentBuffer.position(0);
+    this.CurrentBufferPointer = 0;
+    this.bufferListIndex = 0;
+    this.bufferListMaxIndex = 0;
+    (this.bufferList).Clear();
+    global::DripSharp.Runtime.JavaCompat.Add(this.bufferList, this.CurrentBuffer);
+  }
 
-public virtual int Available() {
-return (int)(global::System.Math.Min((this.Length() - this.GetPosition()), (long)(int.MaxValue)));
-}
+  public virtual int Available() {
+    return (int)(global::System.Math.Min((this.Length() - this.GetPosition()),
+      (long)(int.MaxValue)));
+  }
 
-public virtual int Peek() {
-int result = this.Read();
-if ((result != -1)) {
-((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
-}
-return result;
-}
+  public virtual int Peek() {
+    int result = this.Read();
+    if ((result != -1)) {
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
+    }
+    return result;
+  }
 
-public virtual int Read(sbyte[] b) {
-return this.Read(b, 0, b.Length);
-}
+  public virtual int Read(sbyte[] b) {
+    return this.Read(b, 0, b.Length);
+  }
 
-public virtual void ReadFully(sbyte[] b) {
-((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).ReadFully(b, 0, b.Length);
-}
+  public virtual void ReadFully(sbyte[] b) {
+    ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).ReadFully(b, 0, b.Length);
+  }
 
-public virtual void ReadFully(sbyte[] b, int offset, int length) {
-if (((this.Length() - this.GetPosition()) < length)) {
-throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
-}
-int bytesReadTotal = 0;
-while ((bytesReadTotal < length)) {
-int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
-if ((bytesReadNow <= 0)) {
-throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
-}
-bytesReadTotal += bytesReadNow;
-}
-}
+  public virtual void ReadFully(sbyte[] b, int offset, int length) {
+    if (((this.Length() - this.GetPosition()) < length)) {
+      throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
+    }
+    int bytesReadTotal = 0;
+    while ((bytesReadTotal < length)) {
+      int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
+      if ((bytesReadNow <= 0)) {
+        throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
+      }
+      bytesReadTotal += bytesReadNow;
+    }
+  }
 
-public virtual void Rewind(int bytes) {
-this.Seek((this.GetPosition() - bytes));
-}
+  public virtual void Rewind(int bytes) {
+    this.Seek((this.GetPosition() - bytes));
+  }
 
-public virtual void Skip(int length) {
-this.Seek((this.GetPosition() + length));
-}
+  public virtual void Skip(int length) {
+    this.Seek((this.GetPosition() + length));
+  }
 }

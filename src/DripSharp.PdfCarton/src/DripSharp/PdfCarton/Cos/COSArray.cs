@@ -8,456 +8,495 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Cos;
 
-public class COSArray : global::DripSharp.PdfCarton.Cos.COSBase, global::DripSharp.Runtime.JavaIterableContract<global::DripSharp.PdfCarton.Cos.COSBase>, global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
-private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> objects = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>();
+public class COSArray : global::DripSharp.PdfCarton.Cos.COSBase,
+global::DripSharp.Runtime.JavaIterableContract<global::DripSharp.PdfCarton.Cos.COSBase>,
+global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> objects
+    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>();
 
-private readonly global::DripSharp.PdfCarton.Cos.COSUpdateState updateState = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSUpdateState updateState = null!;
 
-public COSArray() {
-this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
-this.SetDirect(true);
-}
+  public COSArray() {
+    this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
+    this.SetDirect(true);
+  }
 
-public COSArray(global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> cosObjectables) {
-if ((cosObjectables == default!)) {
-throw new global::System.ArgumentException("List of COSObjectables cannot be null");
-}
-this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
-this.SetDirect(true);
-global::DripSharp.Runtime.JavaCompat.ForEach(cosObjectables, (cosObjectable) => global::DripSharp.Runtime.JavaCompat.Add(this.objects, ((cosObjectable is not null) ? cosObjectable.GetCOSObject() : (global::DripSharp.PdfCarton.Cos.COSBase)(default!))));
-}
+  public COSArray(global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> cosObjectables) {
+    if ((cosObjectables == default!)) {
+      throw new global::System.ArgumentException("List of COSObjectables cannot be null");
+    }
+    this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
+    this.SetDirect(true);
+    global::DripSharp.Runtime.JavaCompat.ForEach(cosObjectables, (cosObjectable)
+      => global::DripSharp.Runtime.JavaCompat.Add(this.objects, ((cosObjectable is not null)
+      ? cosObjectable.GetCOSObject() : (global::DripSharp.PdfCarton.Cos.COSBase)(default!))));
+  }
 
-public virtual void Add(global::DripSharp.PdfCarton.Cos.COSBase @object) {
-global::DripSharp.PdfCarton.Cos.COSBase objectToAdd = this.MaybeWrap(@object);
-global::DripSharp.Runtime.JavaCompat.Add(this.objects, objectToAdd);
-this.GetUpdateState().update(objectToAdd);
-}
+  public virtual void Add(global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    global::DripSharp.PdfCarton.Cos.COSBase objectToAdd = this.MaybeWrap(@object);
+    global::DripSharp.Runtime.JavaCompat.Add(this.objects, objectToAdd);
+    this.GetUpdateState().update(objectToAdd);
+  }
 
-public virtual void Add(global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable @object) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = default!;
-if ((@object != default!)) {
-@base = @object.GetCOSObject();
-}
-this.Add(@base!);
-}
+  public virtual void Add(global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable @object) {
+    global::DripSharp.PdfCarton.Cos.COSBase @base = default!;
+    if ((@object != default!)) {
+      @base = @object.GetCOSObject();
+    }
+    this.Add(@base!);
+  }
 
-public virtual void Add(int i, global::DripSharp.PdfCarton.Cos.COSBase @object) {
-global::DripSharp.PdfCarton.Cos.COSBase objectToAdd = this.MaybeWrap(@object);
-global::DripSharp.Runtime.JavaCompat.ListAdd(this.objects, i, objectToAdd);
-this.GetUpdateState().update(objectToAdd);
-}
+  public virtual void Add(int i, global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    global::DripSharp.PdfCarton.Cos.COSBase objectToAdd = this.MaybeWrap(@object);
+    global::DripSharp.Runtime.JavaCompat.ListAdd(this.objects, i, objectToAdd);
+    this.GetUpdateState().update(objectToAdd);
+  }
 
-public virtual void Clear() {
-(this.objects).Clear();
-this.GetUpdateState().update();
-}
+  public virtual void Clear() {
+    (this.objects).Clear();
+    this.GetUpdateState().update();
+  }
 
-public virtual void RemoveAll(global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSBase> objectsList) {
-global::DripSharp.Runtime.JavaCompat.RemoveAll(this.objects, global::DripSharp.Runtime.JavaCompat.CastObjects(objectsList));
-this.GetUpdateState().update();
-}
+  public virtual void RemoveAll(global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSBase> objectsList) {
+    global::DripSharp.Runtime.JavaCompat.RemoveAll(this.objects,
+      global::DripSharp.Runtime.JavaCompat.CastObjects(objectsList));
+    this.GetUpdateState().update();
+  }
 
-public virtual void RetainAll(global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSBase> objectsList) {
-if (global::DripSharp.Runtime.JavaCompat.RetainAll(this.objects, global::DripSharp.Runtime.JavaCompat.CastObjects(objectsList))) {
-this.GetUpdateState().update();
-}
-}
+  public virtual void RetainAll(global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSBase> objectsList) {
+    if (global::DripSharp.Runtime.JavaCompat.RetainAll(this.objects,
+      global::DripSharp.Runtime.JavaCompat.CastObjects(objectsList))) {
+      this.GetUpdateState().update();
+    }
+  }
 
-public virtual void AddAll(global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSBase> objectsList) {
-if (global::DripSharp.Runtime.JavaCompat.AddAll(this.objects, objectsList)) {
-this.GetUpdateState().update(objectsList);
-}
-}
+  public virtual void AddAll(global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSBase> objectsList) {
+    if (global::DripSharp.Runtime.JavaCompat.AddAll(this.objects, objectsList)) {
+      this.GetUpdateState().update(objectsList);
+    }
+  }
 
-public virtual void AddAll(global::DripSharp.PdfCarton.Cos.COSArray objectList) {
-if ((objectList == default!)) {
-return;
-}
-if (global::DripSharp.Runtime.JavaCompat.AddAll(this.objects, objectList.objects)) {
-this.GetUpdateState().update(objectList);
-}
-}
+  public virtual void AddAll(global::DripSharp.PdfCarton.Cos.COSArray objectList) {
+    if ((objectList == default!)) {
+      return;
+    }
+    if (global::DripSharp.Runtime.JavaCompat.AddAll(this.objects, objectList.objects)) {
+      this.GetUpdateState().update(objectList);
+    }
+  }
 
-public virtual void AddAll(int i, global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSBase> objectList) {
-if (global::DripSharp.Runtime.JavaCompat.ListAddAll(this.objects, i, objectList)) {
-this.GetUpdateState().update(objectList);
-}
-}
+  public virtual void AddAll(int i,
+    global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSBase> objectList) {
+    if (global::DripSharp.Runtime.JavaCompat.ListAddAll(this.objects, i, objectList)) {
+      this.GetUpdateState().update(objectList);
+    }
+  }
 
-public virtual void Set(int index, global::DripSharp.PdfCarton.Cos.COSBase @object) {
-global::DripSharp.PdfCarton.Cos.COSBase objectToAdd = this.MaybeWrap(@object);
-global::DripSharp.Runtime.JavaCompat.ListSet(this.objects, index, objectToAdd);
-this.GetUpdateState().update(objectToAdd);
-}
+  public virtual void Set(int index, global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    global::DripSharp.PdfCarton.Cos.COSBase objectToAdd = this.MaybeWrap(@object);
+    global::DripSharp.Runtime.JavaCompat.ListSet(this.objects, index, objectToAdd);
+    this.GetUpdateState().update(objectToAdd);
+  }
 
-public virtual void Set(int index, int intVal) {
-global::DripSharp.Runtime.JavaCompat.ListSet(this.objects, index, global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(intVal)));
-this.GetUpdateState().update();
-}
+  public virtual void Set(int index, int intVal) {
+    global::DripSharp.Runtime.JavaCompat.ListSet(this.objects, index,
+      global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(intVal)));
+    this.GetUpdateState().update();
+  }
 
-public virtual void Set(int index, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable @object) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = default!;
-if ((@object != default!)) {
-@base = @object.GetCOSObject();
-}
-this.Set(index, @base!);
-}
+  public virtual void Set(int index,
+    global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable @object) {
+    global::DripSharp.PdfCarton.Cos.COSBase @base = default!;
+    if ((@object != default!)) {
+      @base = @object.GetCOSObject();
+    }
+    this.Set(index, @base!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetObject(int index) {
-global::DripSharp.PdfCarton.Cos.COSBase obj = global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, index);
-if ((obj is global::DripSharp.PdfCarton.Cos.COSObject)) {
-obj = ((global::DripSharp.PdfCarton.Cos.COSObject)(obj!)).GetObject();
-}
-if ((obj is global::DripSharp.PdfCarton.Cos.COSNull)) {
-obj = default!;
-}
-return obj;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetObject(int index) {
+    global::DripSharp.PdfCarton.Cos.COSBase obj
+      = global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, index);
+    if ((obj is global::DripSharp.PdfCarton.Cos.COSObject)) {
+      obj = ((global::DripSharp.PdfCarton.Cos.COSObject)(obj!)).GetObject();
+    }
+    if ((obj is global::DripSharp.PdfCarton.Cos.COSNull)) {
+      obj = default!;
+    }
+    return obj;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase Get(int index) {
-return global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, index);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase Get(int index) {
+    return global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, index);
+  }
 
-public virtual int GetInt(int index) {
-return this.GetInt(index, -1);
-}
+  public virtual int GetInt(int index) {
+    return this.GetInt(index, -1);
+  }
 
-public virtual int GetInt(int index, int defaultValue) {
-int retval = defaultValue;
-if ((index < this.Size())) {
-object obj = global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, index);
-if ((obj is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-retval = ((global::DripSharp.PdfCarton.Cos.COSNumber)(obj!)).IntValue();
-}
-}
-return retval;
-}
+  public virtual int GetInt(int index, int defaultValue) {
+    int retval = defaultValue;
+    if ((index < this.Size())) {
+      object obj = global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, index);
+      if ((obj is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+        retval = ((global::DripSharp.PdfCarton.Cos.COSNumber)(obj!)).IntValue();
+      }
+    }
+    return retval;
+  }
 
-public virtual void SetInt(int index, int value) {
-this.Set(index, global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(value)));
-}
+  public virtual void SetInt(int index, int value) {
+    this.Set(index, global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(value)));
+  }
 
-public virtual void SetName(int index, string name) {
-this.Set(index, global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(name));
-}
+  public virtual void SetName(int index, string name) {
+    this.Set(index, global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(name));
+  }
 
-public virtual string GetName(int index) {
-return this.GetName(index, (string)default!);
-}
+  public virtual string GetName(int index) {
+    return this.GetName(index, (string)default!);
+  }
 
-public virtual string GetName(int index, string defaultValue) {
-string retval = defaultValue;
-if ((index < this.Size())) {
-object obj = global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, index);
-if ((obj is global::DripSharp.PdfCarton.Cos.COSName)) {
-retval = ((global::DripSharp.PdfCarton.Cos.COSName)(obj!)).GetName();
-}
-}
-return retval;
-}
+  public virtual string GetName(int index, string defaultValue) {
+    string retval = defaultValue;
+    if ((index < this.Size())) {
+      object obj = global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, index);
+      if ((obj is global::DripSharp.PdfCarton.Cos.COSName)) {
+        retval = ((global::DripSharp.PdfCarton.Cos.COSName)(obj!)).GetName();
+      }
+    }
+    return retval;
+  }
 
-public virtual void SetString(int index, string @string) {
-if ((@string != default!)) {
-this.Set(index, new global::DripSharp.PdfCarton.Cos.COSString(@string));
-} else {
-this.Set(index, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
-}
-}
+  public virtual void SetString(int index, string @string) {
+    if ((@string != default!)) {
+      this.Set(index, new global::DripSharp.PdfCarton.Cos.COSString(@string));
+    } else {
+      this.Set(index, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+    }
+  }
 
-public virtual string GetString(int index) {
-return this.GetString(index, (string)default!);
-}
+  public virtual string GetString(int index) {
+    return this.GetString(index, (string)default!);
+  }
 
-public virtual string GetString(int index, string defaultValue) {
-string retval = defaultValue;
-if ((index < this.Size())) {
-object obj = global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, index);
-if ((obj is global::DripSharp.PdfCarton.Cos.COSString)) {
-retval = ((global::DripSharp.PdfCarton.Cos.COSString)(obj!)).GetString();
-}
-}
-return retval;
-}
+  public virtual string GetString(int index, string defaultValue) {
+    string retval = defaultValue;
+    if ((index < this.Size())) {
+      object obj = global::DripSharp.Runtime.JavaCompat.ListGet(this.objects, index);
+      if ((obj is global::DripSharp.PdfCarton.Cos.COSString)) {
+        retval = ((global::DripSharp.PdfCarton.Cos.COSString)(obj!)).GetString();
+      }
+    }
+    return retval;
+  }
 
-public virtual int Size() {
-return global::DripSharp.Runtime.JavaCompat.CollectionCount(this.objects);
-}
+  public virtual int Size() {
+    return global::DripSharp.Runtime.JavaCompat.CollectionCount(this.objects);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase Remove(int i) {
-global::DripSharp.PdfCarton.Cos.COSBase removedEntry = global::DripSharp.Runtime.JavaCompat.ListRemove(this.objects, i);
-this.GetUpdateState().update();
-return removedEntry;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase Remove(int i) {
+    global::DripSharp.PdfCarton.Cos.COSBase removedEntry
+      = global::DripSharp.Runtime.JavaCompat.ListRemove(this.objects, i);
+    this.GetUpdateState().update();
+    return removedEntry;
+  }
 
-public virtual bool Remove(global::DripSharp.PdfCarton.Cos.COSBase o) {
-bool removed = global::DripSharp.Runtime.JavaCompat.CollectionRemove(this.objects, o);
-if (removed) {
-this.GetUpdateState().update();
-}
-return removed;
-}
+  public virtual bool Remove(global::DripSharp.PdfCarton.Cos.COSBase o) {
+    bool removed = global::DripSharp.Runtime.JavaCompat.CollectionRemove(this.objects, o);
+    if (removed) {
+      this.GetUpdateState().update();
+    }
+    return removed;
+  }
 
-public virtual bool RemoveObject(global::DripSharp.PdfCarton.Cos.COSBase o) {
-bool removed = this.Remove(o);
-if (!removed) {
-for (int i = 0; (i < this.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase entry = this.Get(i);
-if ((entry is global::DripSharp.PdfCarton.Cos.COSObject)) {
-global::DripSharp.PdfCarton.Cos.COSObject objEntry = (global::DripSharp.PdfCarton.Cos.COSObject)(entry!);
-if (global::DripSharp.Runtime.JavaCompat.Equals(objEntry.GetObject(), o)) {
-return this.Remove(entry);
-}
-}
-}
-}
-return removed;
-}
+  public virtual bool RemoveObject(global::DripSharp.PdfCarton.Cos.COSBase o) {
+    bool removed = this.Remove(o);
+    if (!removed) {
+      for (int i = 0; (i < this.Size()); i++) {
+        global::DripSharp.PdfCarton.Cos.COSBase entry = this.Get(i);
+        if ((entry is global::DripSharp.PdfCarton.Cos.COSObject)) {
+          global::DripSharp.PdfCarton.Cos.COSObject objEntry
+            = (global::DripSharp.PdfCarton.Cos.COSObject)(entry!);
+          if (global::DripSharp.Runtime.JavaCompat.Equals(objEntry.GetObject(), o)) {
+            return this.Remove(entry);
+          }
+        }
+      }
+    }
+    return removed;
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("COSArray{", this.objects), "}");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("COSArray{",
+      this.objects), "}");
+  }
 
-public virtual global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Cos.COSBase> Iterator() {
-return global::DripSharp.Runtime.JavaCompat.Iterator(this.objects);
-}
+  public virtual global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Cos.COSBase> Iterator() {
+    return global::DripSharp.Runtime.JavaCompat.Iterator(this.objects);
+  }
 
-public virtual int IndexOf(global::DripSharp.PdfCarton.Cos.COSBase @object) {
-for (int i = 0; (i < this.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase item = this.Get(i);
-if ((item == default!)) {
-if ((@object == default!)) {
-return i;
-}
-} else {
-if (global::DripSharp.Runtime.JavaCompat.Equals(item, @object)) {
-return i;
-}
-}
-}
-return -1;
-}
+  public virtual int IndexOf(global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    for (int i = 0; (i < this.Size()); i++) {
+      global::DripSharp.PdfCarton.Cos.COSBase item = this.Get(i);
+      if ((item == default!)) {
+        if ((@object == default!)) {
+          return i;
+        }
+      } else {
+        if (global::DripSharp.Runtime.JavaCompat.Equals(item, @object)) {
+          return i;
+        }
+      }
+    }
+    return -1;
+  }
 
-public virtual int IndexOfObject(global::DripSharp.PdfCarton.Cos.COSBase @object) {
-for (int i = 0; (i < this.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase item = this.Get(i);
-if ((item == default!)) {
-if ((item == @object)) {
-return i;
-}
-} else {
-if (global::DripSharp.Runtime.JavaCompat.Equals(item, @object)) {
-return i;
-} else {
-if ((item is global::DripSharp.PdfCarton.Cos.COSObject)) {
-global::DripSharp.PdfCarton.Cos.COSBase cosBase = ((global::DripSharp.PdfCarton.Cos.COSObject)(item!)).GetObject();
-if (((cosBase != default!) && global::DripSharp.Runtime.JavaCompat.Equals(cosBase, @object))) {
-return i;
-}
-}
-}
-}
-}
-return -1;
-}
+  public virtual int IndexOfObject(global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    for (int i = 0; (i < this.Size()); i++) {
+      global::DripSharp.PdfCarton.Cos.COSBase item = this.Get(i);
+      if ((item == default!)) {
+        if ((item == @object)) {
+          return i;
+        }
+      } else {
+        if (global::DripSharp.Runtime.JavaCompat.Equals(item, @object)) {
+          return i;
+        } else {
+          if ((item is global::DripSharp.PdfCarton.Cos.COSObject)) {
+            global::DripSharp.PdfCarton.Cos.COSBase cosBase
+              = ((global::DripSharp.PdfCarton.Cos.COSObject)(item!)).GetObject();
+            if (((cosBase != default!) && global::DripSharp.Runtime.JavaCompat.Equals(cosBase,
+              @object))) {
+              return i;
+            }
+          }
+        }
+      }
+    }
+    return -1;
+  }
 
-public virtual void GrowToSize(int size) {
-this.GrowToSize(size, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
-}
+  public virtual void GrowToSize(int size) {
+    this.GrowToSize(size, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+  }
 
-public virtual void GrowToSize(int size, global::DripSharp.PdfCarton.Cos.COSBase @object) {
-while ((this.Size() < size)) {
-this.Add(@object);
-}
-this.GetUpdateState().update();
-}
+  public virtual void GrowToSize(int size, global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    while ((this.Size() < size)) {
+      this.Add(@object);
+    }
+    this.GetUpdateState().update();
+  }
 
-public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
-visitor.VisitFromArray(this);
-}
+  public override void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor) {
+    visitor.VisitFromArray(this);
+  }
 
-public virtual float[] ToFloatArray() {
-float[] retval = new float[this.Size()];
-for (int i = 0; (i < retval.Length); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = this.GetObject(i);
-retval[i] = ((@base is global::DripSharp.PdfCarton.Cos.COSNumber) ? ((global::DripSharp.PdfCarton.Cos.COSNumber)(@base!)).FloatValue() : 0);
-}
-return retval;
-}
+  public virtual float[] ToFloatArray() {
+    float[] retval = new float[this.Size()];
+    for (int i = 0; (i < retval.Length); i++) {
+      global::DripSharp.PdfCarton.Cos.COSBase @base = this.GetObject(i);
+      retval[i] = ((@base is global::DripSharp.PdfCarton.Cos.COSNumber)
+        ? ((global::DripSharp.PdfCarton.Cos.COSNumber)(@base!)).FloatValue() : 0);
+    }
+    return retval;
+  }
 
-public virtual void SetFloatArray(float[] value) {
-this.Clear();
-foreach (float aValue in value) {
-this.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(aValue));
-}
-}
+  public virtual void SetFloatArray(float[] value) {
+    this.Clear();
+    foreach (float aValue in value) {
+      this.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(aValue));
+    }
+  }
 
-public virtual global::System.Collections.Generic.IReadOnlyList<global::DripSharp.PdfCarton.Cos.COSBase> ToList() {
-return new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>(this.objects);
-}
+  public virtual global::System.Collections.Generic.IReadOnlyList<global::DripSharp.PdfCarton.Cos.COSBase> ToList() {
+    return new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>(this.objects);
+  }
 
-public virtual global::System.Collections.Generic.IList<string> ToCOSNameStringList() {
-return global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.Stream(this.objects), (o) => ((global::DripSharp.PdfCarton.Cos.COSName)(o!)).GetName()));
-}
+  public virtual global::System.Collections.Generic.IList<string> ToCOSNameStringList() {
+    return global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.Stream(this.objects),
+      (o) => ((global::DripSharp.PdfCarton.Cos.COSName)(o!)).GetName()));
+  }
 
-public virtual global::System.Collections.Generic.IList<string> ToCOSStringStringList() {
-return global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.Stream(this.objects), (o) => ((global::DripSharp.PdfCarton.Cos.COSString)(o!)).GetString()));
-}
+  public virtual global::System.Collections.Generic.IList<string> ToCOSStringStringList() {
+    return global::DripSharp.Runtime.JavaCompat.ToListValues(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.Stream(this.objects),
+      (o) => ((global::DripSharp.PdfCarton.Cos.COSString)(o!)).GetString()));
+  }
 
-public virtual global::System.Collections.Generic.IList<float?> ToCOSNumberFloatList() {
-global::System.Collections.Generic.IList<float?> numbers = global::DripSharp.Runtime.JavaCompat.CastList<float?>(new global::System.Collections.Generic.List<float>(this.Size()));
-for (int i = 0; (i < this.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase num = this.GetObject(i);
-if ((num is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-global::DripSharp.Runtime.JavaCompat.Add(numbers, ((global::DripSharp.PdfCarton.Cos.COSNumber)(num!)).FloatValue());
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(numbers, (object)default!);
-}
-}
-return global::DripSharp.Runtime.JavaCompat.CastList<float?>(numbers);
-}
+  public virtual global::System.Collections.Generic.IList<float?> ToCOSNumberFloatList() {
+    global::System.Collections.Generic.IList<float?> numbers
+      = global::DripSharp.Runtime.JavaCompat.CastList<float?>(new global::System.Collections.Generic.List<float>(this.Size()));
+    for (int i = 0; (i < this.Size()); i++) {
+      global::DripSharp.PdfCarton.Cos.COSBase num = this.GetObject(i);
+      if ((num is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+        global::DripSharp.Runtime.JavaCompat.Add(numbers,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(num!)).FloatValue());
+      } else {
+        global::DripSharp.Runtime.JavaCompat.Add(numbers, (object)default!);
+      }
+    }
+    return global::DripSharp.Runtime.JavaCompat.CastList<float?>(numbers);
+  }
 
-public virtual global::System.Collections.Generic.IList<int?> ToCOSNumberIntegerList() {
-global::System.Collections.Generic.IList<int?> numbers = global::DripSharp.Runtime.JavaCompat.CastList<int?>(new global::System.Collections.Generic.List<int>(this.Size()));
-for (int i = 0; (i < this.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase num = this.GetObject(i);
-if ((num is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-global::DripSharp.Runtime.JavaCompat.Add(numbers, ((global::DripSharp.PdfCarton.Cos.COSNumber)(num!)).IntValue());
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(numbers, (object)default!);
-}
-}
-return global::DripSharp.Runtime.JavaCompat.CastList<int?>(numbers);
-}
+  public virtual global::System.Collections.Generic.IList<int?> ToCOSNumberIntegerList() {
+    global::System.Collections.Generic.IList<int?> numbers
+      = global::DripSharp.Runtime.JavaCompat.CastList<int?>(new global::System.Collections.Generic.List<int>(this.Size()));
+    for (int i = 0; (i < this.Size()); i++) {
+      global::DripSharp.PdfCarton.Cos.COSBase num = this.GetObject(i);
+      if ((num is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+        global::DripSharp.Runtime.JavaCompat.Add(numbers,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(num!)).IntValue());
+      } else {
+        global::DripSharp.Runtime.JavaCompat.Add(numbers, (object)default!);
+      }
+    }
+    return global::DripSharp.Runtime.JavaCompat.CastList<int?>(numbers);
+  }
 
-public static global::DripSharp.PdfCarton.Cos.COSArray OfCOSIntegers(global::System.Collections.Generic.IList<int> integer) {
-global::DripSharp.PdfCarton.Cos.COSArray retval = new global::DripSharp.PdfCarton.Cos.COSArray();
-global::DripSharp.Runtime.JavaCompat.ForEach(integer, (s) => retval.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(global::System.Convert.ToInt64(s, global::System.Globalization.CultureInfo.InvariantCulture))));
-return retval;
-}
+  public static global::DripSharp.PdfCarton.Cos.COSArray OfCOSIntegers(global::System.Collections.Generic.IList<int> integer) {
+    global::DripSharp.PdfCarton.Cos.COSArray retval
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    global::DripSharp.Runtime.JavaCompat.ForEach(integer, (s)
+      => retval.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(global::System.Convert.ToInt64(s,
+      global::System.Globalization.CultureInfo.InvariantCulture))));
+    return retval;
+  }
 
-public static global::DripSharp.PdfCarton.Cos.COSArray OfCOSNames(global::System.Collections.Generic.IList<string> strings) {
-global::DripSharp.PdfCarton.Cos.COSArray retval = new global::DripSharp.PdfCarton.Cos.COSArray();
-global::DripSharp.Runtime.JavaCompat.ForEach(strings, (s) => retval.Add(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(s)));
-return retval;
-}
+  public static global::DripSharp.PdfCarton.Cos.COSArray OfCOSNames(global::System.Collections.Generic.IList<string> strings) {
+    global::DripSharp.PdfCarton.Cos.COSArray retval
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    global::DripSharp.Runtime.JavaCompat.ForEach(strings, (s)
+      => retval.Add(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(s)));
+    return retval;
+  }
 
-public static global::DripSharp.PdfCarton.Cos.COSArray OfCOSStrings(global::System.Collections.Generic.IList<string> strings) {
-global::DripSharp.PdfCarton.Cos.COSArray retval = new global::DripSharp.PdfCarton.Cos.COSArray();
-global::DripSharp.Runtime.JavaCompat.ForEach(strings, (s) => retval.Add(new global::DripSharp.PdfCarton.Cos.COSString(s)));
-return retval;
-}
+  public static global::DripSharp.PdfCarton.Cos.COSArray OfCOSStrings(global::System.Collections.Generic.IList<string> strings) {
+    global::DripSharp.PdfCarton.Cos.COSArray retval
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    global::DripSharp.Runtime.JavaCompat.ForEach(strings, (s)
+      => retval.Add(new global::DripSharp.PdfCarton.Cos.COSString(s)));
+    return retval;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSUpdateState GetUpdateState() {
-return this.updateState;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSUpdateState GetUpdateState() {
+    return this.updateState;
+  }
 
-public virtual void GetIndirectObjectKeys(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSObjectKey> indirectObjects) {
-this.GetIndirectObjectKeys((global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSObjectKey>)(indirectObjects!));
-}
+  public virtual void GetIndirectObjectKeys(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSObjectKey> indirectObjects) {
+    this.GetIndirectObjectKeys((global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSObjectKey>)(indirectObjects!));
+  }
 
-public virtual void GetIndirectObjectKeys(global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSObjectKey> indirectObjects) {
-if ((indirectObjects == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSObjectKey key = this.GetKey();
-if ((key != default!)) {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(indirectObjects, key)) {
-return;
-}
-global::DripSharp.Runtime.JavaCompat.Add(indirectObjects, key);
-}
-foreach (global::DripSharp.PdfCarton.Cos.COSBase __foreachValue_cosBase in this.objects) {
-global::DripSharp.PdfCarton.Cos.COSBase cosBase = __foreachValue_cosBase;
-{
-if ((cosBase == default!)) {
-continue;
-}
-global::DripSharp.PdfCarton.Cos.COSObjectKey indirectObjectKey = ((cosBase is global::DripSharp.PdfCarton.Cos.COSObject) ? cosBase.GetKey() : (global::DripSharp.PdfCarton.Cos.COSObjectKey)(default!));
-if ((indirectObjectKey != default!)) {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(indirectObjects, indirectObjectKey)) {
-continue;
-}
-cosBase = ((global::DripSharp.PdfCarton.Cos.COSObject)(cosBase!)).GetObject();
-}
-if ((cosBase is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-((global::DripSharp.PdfCarton.Cos.COSDictionary)(cosBase!)).GetIndirectObjectKeys(indirectObjects);
-} else {
-if ((cosBase is global::DripSharp.PdfCarton.Cos.COSArray)) {
-((global::DripSharp.PdfCarton.Cos.COSArray)(cosBase!)).GetIndirectObjectKeys(indirectObjects);
-} else {
-if ((indirectObjectKey != default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(indirectObjects, indirectObjectKey);
-}
-}
-}
-}
-}
-}
+  public virtual void GetIndirectObjectKeys(global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSObjectKey> indirectObjects) {
+    if ((indirectObjects == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSObjectKey key = this.GetKey();
+    if ((key != default!)) {
+      if (global::DripSharp.Runtime.JavaCompat.CollectionContains(indirectObjects, key)) {
+        return;
+      }
+      global::DripSharp.Runtime.JavaCompat.Add(indirectObjects, key);
+    }
+    foreach (global::DripSharp.PdfCarton.Cos.COSBase __foreachValue_cosBase in this.objects) {
+      global::DripSharp.PdfCarton.Cos.COSBase cosBase = __foreachValue_cosBase; {
+        if ((cosBase == default!)) {
+          continue;
+        }
+        global::DripSharp.PdfCarton.Cos.COSObjectKey indirectObjectKey
+          = ((cosBase is global::DripSharp.PdfCarton.Cos.COSObject) ? cosBase.GetKey()
+          : (global::DripSharp.PdfCarton.Cos.COSObjectKey)(default!));
+        if ((indirectObjectKey != default!)) {
+          if (global::DripSharp.Runtime.JavaCompat.CollectionContains(indirectObjects,
+            indirectObjectKey)) {
+            continue;
+          }
+          cosBase = ((global::DripSharp.PdfCarton.Cos.COSObject)(cosBase!)).GetObject();
+        }
+        if ((cosBase is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+          ((global::DripSharp.PdfCarton.Cos.COSDictionary)(cosBase!)).GetIndirectObjectKeys(indirectObjects);
+        } else {
+          if ((cosBase is global::DripSharp.PdfCarton.Cos.COSArray)) {
+            ((global::DripSharp.PdfCarton.Cos.COSArray)(cosBase!)).GetIndirectObjectKeys(indirectObjects);
+          } else {
+            if ((indirectObjectKey != default!)) {
+              global::DripSharp.Runtime.JavaCompat.Add(indirectObjects, indirectObjectKey);
+            }
+          }
+        }
+      }
+    }
+  }
 
-protected internal virtual global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSObjectKey> ResetObjectKeys(global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSObjectKey> indirectObjects) {
-if ((indirectObjects == default!)) {
-return indirectObjects;
-}
-global::DripSharp.PdfCarton.Cos.COSObjectKey key = this.GetKey();
-if ((key != default!)) {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(indirectObjects, key)) {
-return indirectObjects;
-}
-global::DripSharp.Runtime.JavaCompat.Add(indirectObjects, key);
-this.SetKey((global::DripSharp.PdfCarton.Cos.COSObjectKey)default!);
-}
-foreach (global::DripSharp.PdfCarton.Cos.COSBase __foreachValue_cosBase in this.objects) {
-global::DripSharp.PdfCarton.Cos.COSBase cosBase = __foreachValue_cosBase;
-{
-if ((cosBase == default!)) {
-continue;
-}
-global::DripSharp.PdfCarton.Cos.COSObjectKey indirectObjectKey = ((cosBase is global::DripSharp.PdfCarton.Cos.COSObject) ? cosBase.GetKey() : (global::DripSharp.PdfCarton.Cos.COSObjectKey)(default!));
-if ((indirectObjectKey != default!)) {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(indirectObjects, indirectObjectKey)) {
-continue;
-}
-global::DripSharp.PdfCarton.Cos.COSBase dereferencedObject = ((global::DripSharp.PdfCarton.Cos.COSObject)(cosBase!)).GetObject();
-cosBase.SetKey((global::DripSharp.PdfCarton.Cos.COSObjectKey)default!);
-cosBase = dereferencedObject;
-}
-if ((cosBase is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-((global::DripSharp.PdfCarton.Cos.COSDictionary)(cosBase!)).ResetObjectKeys(indirectObjects);
-} else {
-if ((cosBase is global::DripSharp.PdfCarton.Cos.COSArray)) {
-((global::DripSharp.PdfCarton.Cos.COSArray)(cosBase!)).ResetObjectKeys(indirectObjects);
-} else {
-if ((indirectObjectKey != default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(indirectObjects, indirectObjectKey);
-}
-}
-}
-}
-}
-return indirectObjects;
-}
+  protected internal virtual global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSObjectKey> ResetObjectKeys(global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Cos.COSObjectKey> indirectObjects) {
+    if ((indirectObjects == default!)) {
+      return indirectObjects;
+    }
+    global::DripSharp.PdfCarton.Cos.COSObjectKey key = this.GetKey();
+    if ((key != default!)) {
+      if (global::DripSharp.Runtime.JavaCompat.CollectionContains(indirectObjects, key)) {
+        return indirectObjects;
+      }
+      global::DripSharp.Runtime.JavaCompat.Add(indirectObjects, key);
+      this.SetKey((global::DripSharp.PdfCarton.Cos.COSObjectKey)default!);
+    }
+    foreach (global::DripSharp.PdfCarton.Cos.COSBase __foreachValue_cosBase in this.objects) {
+      global::DripSharp.PdfCarton.Cos.COSBase cosBase = __foreachValue_cosBase; {
+        if ((cosBase == default!)) {
+          continue;
+        }
+        global::DripSharp.PdfCarton.Cos.COSObjectKey indirectObjectKey
+          = ((cosBase is global::DripSharp.PdfCarton.Cos.COSObject) ? cosBase.GetKey()
+          : (global::DripSharp.PdfCarton.Cos.COSObjectKey)(default!));
+        if ((indirectObjectKey != default!)) {
+          if (global::DripSharp.Runtime.JavaCompat.CollectionContains(indirectObjects,
+            indirectObjectKey)) {
+            continue;
+          }
+          global::DripSharp.PdfCarton.Cos.COSBase dereferencedObject
+            = ((global::DripSharp.PdfCarton.Cos.COSObject)(cosBase!)).GetObject();
+          cosBase.SetKey((global::DripSharp.PdfCarton.Cos.COSObjectKey)default!);
+          cosBase = dereferencedObject;
+        }
+        if ((cosBase is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+          ((global::DripSharp.PdfCarton.Cos.COSDictionary)(cosBase!)).ResetObjectKeys(indirectObjects);
+        } else {
+          if ((cosBase is global::DripSharp.PdfCarton.Cos.COSArray)) {
+            ((global::DripSharp.PdfCarton.Cos.COSArray)(cosBase!)).ResetObjectKeys(indirectObjects);
+          } else {
+            if ((indirectObjectKey != default!)) {
+              global::DripSharp.Runtime.JavaCompat.Add(indirectObjects, indirectObjectKey);
+            }
+          }
+        }
+      }
+    }
+    return indirectObjects;
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSBase MaybeWrap(global::DripSharp.PdfCarton.Cos.COSBase @object) {
-global::DripSharp.PdfCarton.Cos.COSBase objectToAdd = @object;
-if (((((@object is global::DripSharp.PdfCarton.Cos.COSDictionary) || (@object is global::DripSharp.PdfCarton.Cos.COSArray)) && !(@object.IsDirect())) && (@object.GetKey() != default!))) {
-objectToAdd = new global::DripSharp.PdfCarton.Cos.COSObject(@object, @object.GetKey());
-}
-return objectToAdd;
-}
+  private global::DripSharp.PdfCarton.Cos.COSBase MaybeWrap(global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    global::DripSharp.PdfCarton.Cos.COSBase objectToAdd = @object;
+    if (((((@object is global::DripSharp.PdfCarton.Cos.COSDictionary)
+      || (@object is global::DripSharp.PdfCarton.Cos.COSArray)) && !(@object.IsDirect()))
+      && (@object.GetKey() != default!))) {
+      objectToAdd = new global::DripSharp.PdfCarton.Cos.COSObject(@object, @object.GetKey());
+    }
+    return objectToAdd;
+  }
 
-public virtual bool IsNeedToBeUpdated() {
-return this.GetUpdateState().IsUpdated();
-}
+  public virtual bool IsNeedToBeUpdated() {
+    return this.GetUpdateState().IsUpdated();
+  }
 
-public virtual void SetNeedToBeUpdated(bool flag) {
-this.GetUpdateState().update(flag);
-}
+  public virtual void SetNeedToBeUpdated(bool flag) {
+    this.GetUpdateState().update(flag);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSIncrement ToIncrement() {
-return this.GetUpdateState().toIncrement();
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSIncrement ToIncrement() {
+    return this.GetUpdateState().toIncrement();
+  }
 
-global::System.Collections.Generic.IEnumerator<global::DripSharp.PdfCarton.Cos.COSBase> global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Cos.COSBase>.GetEnumerator() {return global::DripSharp.Runtime.JavaCompat.AsEnumerator(this.Iterator());}
+  global::System.Collections.Generic.IEnumerator<global::DripSharp.PdfCarton.Cos.COSBase> global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Cos.COSBase>.GetEnumerator() {return global::DripSharp.Runtime.JavaCompat.AsEnumerator(this.Iterator());
+  }
 
-global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() {return ((global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Cos.COSBase>)this).GetEnumerator();}
+  global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() {return ((global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Cos.COSBase>)this).GetEnumerator();
+  }
 }

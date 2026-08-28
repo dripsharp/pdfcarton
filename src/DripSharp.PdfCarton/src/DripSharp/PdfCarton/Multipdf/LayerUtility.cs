@@ -9,154 +9,209 @@
 namespace DripSharp.PdfCarton.Multipdf;
 
 public class LayerUtility {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private const bool DEBUG = true;
+  private const bool DEBUG = true;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument targetDoc = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument targetDoc = null!;
 
-private readonly global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner = null!;
+  private readonly global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility cloner = null!;
 
-public LayerUtility(global::DripSharp.PdfCarton.Pdmodel.PDDocument targetDoc) {
-this.targetDoc = targetDoc;
-this.cloner = new global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility(targetDoc);
-}
+  public LayerUtility(global::DripSharp.PdfCarton.Pdmodel.PDDocument targetDoc) {
+    this.targetDoc = targetDoc;
+    this.cloner = new global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility(targetDoc);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.PDDocument GetDocument() {
-return this.targetDoc;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.PDDocument GetDocument() {
+    return this.targetDoc;
+  }
 
-public virtual void WrapInSaveRestore(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-global::DripSharp.PdfCarton.Cos.COSStream saveGraphicsStateStream = this.GetDocument().GetDocument().CreateCOSStream();
-using (global::System.IO.Stream saveStream = saveGraphicsStateStream.CreateOutputStream()) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(saveStream, global::DripSharp.Runtime.JavaCompat.StringGetBytes("q\n", global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
-}
-global::DripSharp.PdfCarton.Cos.COSStream restoreGraphicsStateStream = this.GetDocument().GetDocument().CreateCOSStream();
-using (global::System.IO.Stream restoreStream = restoreGraphicsStateStream.CreateOutputStream()) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(restoreStream, global::DripSharp.Runtime.JavaCompat.StringGetBytes("Q\n", global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
-}
-global::DripSharp.PdfCarton.Cos.COSDictionary pageDictionary = page.GetCOSObject();
-global::DripSharp.PdfCarton.Cos.COSBase contents = pageDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Contents);
-if ((contents is global::DripSharp.PdfCarton.Cos.COSStream)) {
-global::DripSharp.PdfCarton.Cos.COSStream contentsStream = (global::DripSharp.PdfCarton.Cos.COSStream)(contents!);
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-array.Add(saveGraphicsStateStream);
-array.Add(contentsStream);
-array.Add(restoreGraphicsStateStream);
-pageDictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Contents, array);
-} else {
-if ((contents is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray contentsArray = (global::DripSharp.PdfCarton.Cos.COSArray)(contents!);
-contentsArray.Add(0, saveGraphicsStateStream);
-contentsArray.Add(restoreGraphicsStateStream);
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Contents are unknown type: ", global::DripSharp.Runtime.JavaCompat.ClassName(((object)(contents)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox")));
-}
-}
-}
+  public virtual void WrapInSaveRestore(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    global::DripSharp.PdfCarton.Cos.COSStream saveGraphicsStateStream
+      = this.GetDocument().GetDocument().CreateCOSStream();
+    using (global::System.IO.Stream saveStream = saveGraphicsStateStream.CreateOutputStream()) {
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(saveStream,
+        global::DripSharp.Runtime.JavaCompat.StringGetBytes("q\n",
+        global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+    }
+    global::DripSharp.PdfCarton.Cos.COSStream restoreGraphicsStateStream
+      = this.GetDocument().GetDocument().CreateCOSStream();
+    using (global::System.IO.Stream restoreStream
+      = restoreGraphicsStateStream.CreateOutputStream()) {
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(restoreStream,
+        global::DripSharp.Runtime.JavaCompat.StringGetBytes("Q\n",
+        global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+    }
+    global::DripSharp.PdfCarton.Cos.COSDictionary pageDictionary = page.GetCOSObject();
+    global::DripSharp.PdfCarton.Cos.COSBase contents
+      = pageDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Contents);
+    if ((contents is global::DripSharp.PdfCarton.Cos.COSStream)) {
+      global::DripSharp.PdfCarton.Cos.COSStream contentsStream
+        = (global::DripSharp.PdfCarton.Cos.COSStream)(contents!);
+      global::DripSharp.PdfCarton.Cos.COSArray array
+        = new global::DripSharp.PdfCarton.Cos.COSArray();
+      array.Add(saveGraphicsStateStream);
+      array.Add(contentsStream);
+      array.Add(restoreGraphicsStateStream);
+      pageDictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Contents, array);
+    } else {
+      if ((contents is global::DripSharp.PdfCarton.Cos.COSArray)) {
+        global::DripSharp.PdfCarton.Cos.COSArray contentsArray
+          = (global::DripSharp.PdfCarton.Cos.COSArray)(contents!);
+        contentsArray.Add(0, saveGraphicsStateStream);
+        contentsArray.Add(restoreGraphicsStateStream);
+      } else {
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Contents are unknown type: ",
+          global::DripSharp.Runtime.JavaCompat.ClassName(((object)(contents)).GetType(),
+          "DripSharp.PdfCarton", "org.apache.pdfbox")));
+      }
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject ImportPageAsForm(global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDoc, int pageNumber) {
-global::DripSharp.PdfCarton.Pdmodel.PDPage page = sourceDoc.GetPage(pageNumber);
-return this.ImportPageAsForm(sourceDoc, page);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject ImportPageAsForm(global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDoc,
+    int pageNumber) {
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page = sourceDoc.GetPage(pageNumber);
+    return this.ImportPageAsForm(sourceDoc, page);
+  }
 
-private static readonly global::System.Collections.Generic.ISet<string> PAGE_TO_FORM_FILTER = new global::System.Collections.Generic.HashSet<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("Group", "LastModified", "Metadata"));
+  private static readonly global::System.Collections.Generic.ISet<string> PAGE_TO_FORM_FILTER
+    = new global::System.Collections.Generic.HashSet<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("Group",
+    "LastModified", "Metadata"));
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject ImportPageAsForm(global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDoc, global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-this.importOcProperties(sourceDoc);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDStream newStream = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(this.targetDoc, page.GetContents(), global::DripSharp.PdfCarton.Cos.COSName.FlateDecode);
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject form = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(newStream);
-global::DripSharp.PdfCarton.Pdmodel.PDResources pageRes = page.GetResources();
-global::DripSharp.PdfCarton.Pdmodel.PDResources formRes = new global::DripSharp.PdfCarton.Pdmodel.PDResources();
-this.cloner.cloneMerge(pageRes, formRes);
-form.SetResources(formRes);
-this.transferDict(page.GetCOSObject(), form.GetCOSObject(), global::DripSharp.PdfCarton.Multipdf.LayerUtility.PAGE_TO_FORM_FILTER);
-global::DripSharp.PdfCarton.Util.Matrix matrix = form.GetMatrix();
-global::SkiaSharp.SKMatrix at = matrix.CreateAffineTransform();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle mediaBox = page.GetMediaBox();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = page.GetCropBox();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle viewBox = ((cropBox != default!) ? cropBox : mediaBox);
-int rotation = page.GetRotation();
-global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref at, (double)((mediaBox.GetLowerLeftX() - viewBox.GetLowerLeftX())), (double)((mediaBox.GetLowerLeftY() - viewBox.GetLowerLeftY())));
-switch (rotation) {
-case var __case_195_14_0 when __case_195_14_0 == 90:
-global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref at, (double)(((float)(viewBox.GetWidth()) / (float)(viewBox.GetHeight()))), (double)(((float)(viewBox.GetHeight()) / (float)(viewBox.GetWidth()))));
-global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref at, (double)(0), (double)(viewBox.GetWidth()));
-global::DripSharp.Runtime.PdfCartonFontCompat.QuadrantRotateInPlace(ref at, 3);
-break;
-case var __case_200_14_0 when __case_200_14_0 == 180:
-global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref at, (double)(viewBox.GetWidth()), (double)(viewBox.GetHeight()));
-global::DripSharp.Runtime.PdfCartonFontCompat.QuadrantRotateInPlace(ref at, 2);
-break;
-case var __case_204_14_0 when __case_204_14_0 == 270:
-global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref at, (double)(((float)(viewBox.GetWidth()) / (float)(viewBox.GetHeight()))), (double)(((float)(viewBox.GetHeight()) / (float)(viewBox.GetWidth()))));
-global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref at, (double)(viewBox.GetHeight()), (double)(0));
-global::DripSharp.Runtime.PdfCartonFontCompat.QuadrantRotateInPlace(ref at, 1);
-break;
-default:
-break;
-}
-global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref at, (double)(-(viewBox.GetLowerLeftX())), (double)(-(viewBox.GetLowerLeftY())));
-if (!(global::DripSharp.Runtime.PdfCartonFontCompat.IsIdentity(at))) {
-form.SetMatrix(at);
-}
-global::DripSharp.PdfCarton.Fonts.Util.BoundingBox bbox = new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox();
-bbox.SetLowerLeftX(viewBox.GetLowerLeftX());
-bbox.SetLowerLeftY(viewBox.GetLowerLeftY());
-bbox.SetUpperRightX(viewBox.GetUpperRightX());
-bbox.SetUpperRightY(viewBox.GetUpperRightY());
-form.SetBBox(new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(bbox));
-return form;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject ImportPageAsForm(global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDoc,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    this.importOcProperties(sourceDoc);
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDStream newStream
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(this.targetDoc, page.GetContents(),
+      global::DripSharp.PdfCarton.Cos.COSName.FlateDecode);
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject form
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(newStream);
+    global::DripSharp.PdfCarton.Pdmodel.PDResources pageRes = page.GetResources();
+    global::DripSharp.PdfCarton.Pdmodel.PDResources formRes
+      = new global::DripSharp.PdfCarton.Pdmodel.PDResources();
+    this.cloner.cloneMerge(pageRes, formRes);
+    form.SetResources(formRes);
+    this.transferDict(page.GetCOSObject(), form.GetCOSObject(),
+      global::DripSharp.PdfCarton.Multipdf.LayerUtility.PAGE_TO_FORM_FILTER);
+    global::DripSharp.PdfCarton.Util.Matrix matrix = form.GetMatrix();
+    global::SkiaSharp.SKMatrix at = matrix.CreateAffineTransform();
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle mediaBox = page.GetMediaBox();
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = page.GetCropBox();
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle viewBox = ((cropBox != default!)
+      ? cropBox : mediaBox);
+    int rotation = page.GetRotation();
+    global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref at,
+      (double)((mediaBox.GetLowerLeftX() - viewBox.GetLowerLeftX())),
+      (double)((mediaBox.GetLowerLeftY() - viewBox.GetLowerLeftY())));
+    switch (rotation) {
+      case var __case_195_14_0 when __case_195_14_0 == 90:
+        global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref at,
+          (double)(((float)(viewBox.GetWidth()) / (float)(viewBox.GetHeight()))),
+          (double)(((float)(viewBox.GetHeight()) / (float)(viewBox.GetWidth()))));
+        global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref at, (double)(0),
+          (double)(viewBox.GetWidth()));
+        global::DripSharp.Runtime.PdfCartonFontCompat.QuadrantRotateInPlace(ref at, 3);
+        break;
+      case var __case_200_14_0 when __case_200_14_0 == 180:
+        global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref at,
+          (double)(viewBox.GetWidth()), (double)(viewBox.GetHeight()));
+        global::DripSharp.Runtime.PdfCartonFontCompat.QuadrantRotateInPlace(ref at, 2);
+        break;
+      case var __case_204_14_0 when __case_204_14_0 == 270:
+        global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref at,
+          (double)(((float)(viewBox.GetWidth()) / (float)(viewBox.GetHeight()))),
+          (double)(((float)(viewBox.GetHeight()) / (float)(viewBox.GetWidth()))));
+        global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref at,
+          (double)(viewBox.GetHeight()), (double)(0));
+        global::DripSharp.Runtime.PdfCartonFontCompat.QuadrantRotateInPlace(ref at, 1);
+        break;
+      default:
+        break;
+    }
+    global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref at,
+      (double)(-(viewBox.GetLowerLeftX())), (double)(-(viewBox.GetLowerLeftY())));
+    if (!(global::DripSharp.Runtime.PdfCartonFontCompat.IsIdentity(at))) {
+      form.SetMatrix(at);
+    }
+    global::DripSharp.PdfCarton.Fonts.Util.BoundingBox bbox
+      = new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox();
+    bbox.SetLowerLeftX(viewBox.GetLowerLeftX());
+    bbox.SetLowerLeftY(viewBox.GetLowerLeftY());
+    bbox.SetUpperRightX(viewBox.GetUpperRightX());
+    bbox.SetUpperRightY(viewBox.GetUpperRightY());
+    form.SetBBox(new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(bbox));
+    return form;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup AppendFormAsLayer(global::DripSharp.PdfCarton.Pdmodel.PDPage targetPage, global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject form, global::SkiaSharp.SKMatrix transform, string layerName) {
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = this.targetDoc.GetDocumentCatalog();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentProperties ocprops = catalog.GetOCProperties();
-if ((ocprops == default!)) {
-ocprops = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentProperties();
-catalog.SetOCProperties(ocprops);
-}
-if (ocprops.HasGroup(layerName)) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("Optional group (layer) already exists: ", layerName));
-}
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = targetPage.GetCropBox();
-if ((((cropBox.GetLowerLeftX() < 0) || (cropBox.GetLowerLeftY() < 0)) && global::DripSharp.Runtime.PdfCartonFontCompat.IsIdentity(transform))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.LayerUtility.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Negative cropBox ", cropBox), " and identity transform may make your form invisible")));
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup layer = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup(layerName);
-ocprops.AddGroup(layer);
-using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(this.targetDoc, targetPage, global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Append, !(global::DripSharp.PdfCarton.Multipdf.LayerUtility.DEBUG))) {
-contentStream.BeginMarkedContent(global::DripSharp.PdfCarton.Cos.COSName.Oc, layer);
-contentStream.SaveGraphicsState();
-contentStream.Transform(new global::DripSharp.PdfCarton.Util.Matrix(transform));
-contentStream.DrawForm(form);
-contentStream.RestoreGraphicsState();
-contentStream.EndMarkedContent();
-}
-return layer;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup AppendFormAsLayer(global::DripSharp.PdfCarton.Pdmodel.PDPage targetPage,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject form,
+    global::SkiaSharp.SKMatrix transform, string layerName) {
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog
+      = this.targetDoc.GetDocumentCatalog();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentProperties ocprops
+      = catalog.GetOCProperties();
+    if ((ocprops == default!)) {
+      ocprops
+        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentProperties();
+      catalog.SetOCProperties(ocprops);
+    }
+    if (ocprops.HasGroup(layerName)) {
+      throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("Optional group (layer) already exists: ",
+        layerName));
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = targetPage.GetCropBox();
+    if ((((cropBox.GetLowerLeftX() < 0) || (cropBox.GetLowerLeftY() < 0))
+      && global::DripSharp.Runtime.PdfCartonFontCompat.IsIdentity(transform))) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.LayerUtility.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Negative cropBox ",
+        cropBox), " and identity transform may make your form invisible")));
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup layer
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup(layerName);
+    ocprops.AddGroup(layer);
+    using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
+      = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(this.targetDoc, targetPage,
+      global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Append,
+      !(global::DripSharp.PdfCarton.Multipdf.LayerUtility.DEBUG))) {
+      contentStream.BeginMarkedContent(global::DripSharp.PdfCarton.Cos.COSName.Oc, layer);
+      contentStream.SaveGraphicsState();
+      contentStream.Transform(new global::DripSharp.PdfCarton.Util.Matrix(transform));
+      contentStream.DrawForm(form);
+      contentStream.RestoreGraphicsState();
+      contentStream.EndMarkedContent();
+    }
+    return layer;
+  }
 
-private void transferDict(global::DripSharp.PdfCarton.Cos.COSDictionary orgDict, global::DripSharp.PdfCarton.Cos.COSDictionary targetDict, global::System.Collections.Generic.ISet<string> filter) {
-foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Cos.COSBase> entry in orgDict.EntrySet()) {
-global::DripSharp.PdfCarton.Cos.COSName key = entry.Key;
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(filter, key.GetName())) {
-targetDict.SetItem(key, this.cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(entry.Value));
-}
-}
-}
+  private void transferDict(global::DripSharp.PdfCarton.Cos.COSDictionary orgDict,
+    global::DripSharp.PdfCarton.Cos.COSDictionary targetDict,
+    global::System.Collections.Generic.ISet<string> filter) {
+    foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName,
+      global::DripSharp.PdfCarton.Cos.COSBase> entry in orgDict.EntrySet()) {
+      global::DripSharp.PdfCarton.Cos.COSName key = entry.Key;
+      if (global::DripSharp.Runtime.JavaCompat.CollectionContains(filter, key.GetName())) {
+        targetDict.SetItem(key,
+          this.cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(entry.Value));
+      }
+    }
+  }
 
-private void importOcProperties(global::DripSharp.PdfCarton.Pdmodel.PDDocument srcDoc) {
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog = srcDoc.GetDocumentCatalog();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentProperties srcOCProperties = srcCatalog.GetOCProperties();
-if ((srcOCProperties == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog dstCatalog = this.targetDoc.GetDocumentCatalog();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentProperties dstOCProperties = dstCatalog.GetOCProperties();
-if ((dstOCProperties == default!)) {
-dstCatalog.SetOCProperties(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentProperties(this.cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcOCProperties.GetCOSObject())));
-} else {
-this.cloner.cloneMerge(srcOCProperties, dstOCProperties);
-}
-}
+  private void importOcProperties(global::DripSharp.PdfCarton.Pdmodel.PDDocument srcDoc) {
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog srcCatalog = srcDoc.GetDocumentCatalog();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentProperties srcOCProperties
+      = srcCatalog.GetOCProperties();
+    if ((srcOCProperties == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog dstCatalog
+      = this.targetDoc.GetDocumentCatalog();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentProperties dstOCProperties
+      = dstCatalog.GetOCProperties();
+    if ((dstOCProperties == default!)) {
+      dstCatalog.SetOCProperties(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentProperties(this.cloner.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSDictionary>(srcOCProperties.GetCOSObject())));
+    } else {
+      this.cloner.cloneMerge(srcOCProperties, dstOCProperties);
+    }
+  }
 }

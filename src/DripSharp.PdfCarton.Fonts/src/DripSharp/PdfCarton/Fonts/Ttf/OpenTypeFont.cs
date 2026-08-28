@@ -9,49 +9,64 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class OpenTypeFont : global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont {
-private bool hasPostScriptTag = default;
+  private bool hasPostScriptTag = default;
 
-internal OpenTypeFont(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream fontData) : base(fontData) {
+  internal OpenTypeFont(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream fontData)
+  : base(fontData) {
 
-}
+  }
 
-internal override void setVersion(float versionValue) {
-this.hasPostScriptTag = (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.FloatToIntBits(versionValue) == 1184802985);
-base.setVersion(versionValue);
-}
+  internal override void setVersion(float versionValue) {
+    this.hasPostScriptTag
+      = (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.FloatToIntBits(versionValue)
+      == 1184802985);
+    base.setVersion(versionValue);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable GetCFF() {
-if (!(this.hasPostScriptTag)) {
-throw new global::System.NotSupportedException("TTF fonts do not have a CFF table");
-}
-return (global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag)!);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable GetCFF() {
+    if (!(this.hasPostScriptTag)) {
+      throw new global::System.NotSupportedException("TTF fonts do not have a CFF table");
+    }
+    return (global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable)(this.GetTable(global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag)!);
+  }
 
-public override global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable GetGlyph() {
-if (this.hasPostScriptTag) {
-throw new global::System.NotSupportedException("OTF fonts do not have a glyf table");
-}
-return base.GetGlyph();
-}
+  public override global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable GetGlyph() {
+    if (this.hasPostScriptTag) {
+      throw new global::System.NotSupportedException("OTF fonts do not have a glyf table");
+    }
+    return base.GetGlyph();
+  }
 
-public override global::SkiaSharp.SKPath GetPath(string name) {
-if ((this.hasPostScriptTag && this.IsSupportedOTF())) {
-int gid = this.NameToGID(name);
-return this.GetCFF().GetFont().GetType2CharString(gid).GetPath();
-} else {
-return base.GetPath(name);
-}
-}
+  public override global::SkiaSharp.SKPath GetPath(string name) {
+    if ((this.hasPostScriptTag && this.IsSupportedOTF())) {
+      int gid = this.NameToGID(name);
+      return this.GetCFF().GetFont().GetType2CharString(gid).GetPath();
+    } else {
+      return base.GetPath(name);
+    }
+  }
 
-public virtual bool IsPostScript() {
-return ((this.hasPostScriptTag || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables, global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag)) || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables, "CFF2"));
-}
+  public virtual bool IsPostScript() {
+    return ((this.hasPostScriptTag
+      || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables,
+      global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag))
+      || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables, "CFF2"));
+  }
 
-public virtual bool IsSupportedOTF() {
-return !(((this.hasPostScriptTag && !(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables, global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag))) && global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables, "CFF2")));
-}
+  public virtual bool IsSupportedOTF() {
+    return !(((this.hasPostScriptTag
+      && !global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables,
+      global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag))
+      && global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables, "CFF2")));
+  }
 
-public virtual bool HasLayoutTables() {
-return ((((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables, "BASE") || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables, "GDEF")) || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables, "GPOS")) || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables, global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.Tag)) || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables, global::DripSharp.PdfCarton.Fonts.Ttf.OTLTable.Tag));
-}
+  public virtual bool HasLayoutTables() {
+    return ((((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables,
+      "BASE") || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables,
+      "GDEF")) || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables,
+      "GPOS")) || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables,
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.Tag))
+      || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables,
+      global::DripSharp.PdfCarton.Fonts.Ttf.OTLTable.Tag));
+  }
 }

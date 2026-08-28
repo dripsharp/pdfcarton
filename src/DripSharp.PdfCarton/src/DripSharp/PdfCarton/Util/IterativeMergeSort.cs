@@ -9,54 +9,61 @@
 namespace DripSharp.PdfCarton.Util;
 
 public sealed class IterativeMergeSort {
-private IterativeMergeSort() {}
+  private IterativeMergeSort() {}
 
-public static void Sort<T>(global::System.Collections.Generic.IList<T> list, global::System.Collections.Generic.IComparer<T> cmp) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(list) < 2)) {
-return;
-}
-object[] arr = global::DripSharp.Runtime.JavaCompat.ToObjectArray(list);
-global::DripSharp.PdfCarton.Util.IterativeMergeSort.iterativeMergeSort<object>(arr, global::DripSharp.Runtime.JavaCompat.EraseComparer(cmp));
-global::DripSharp.Runtime.JavaListIterator<T> i = global::DripSharp.Runtime.JavaCompat.ListIterator(list);
-foreach (object e in arr) {
-i.Next();
-i.Set(global::DripSharp.Runtime.JavaCompat.CastReference<T>(e));
-}
-}
+  public static void Sort<T>(global::System.Collections.Generic.IList<T> list,
+    global::System.Collections.Generic.IComparer<T> cmp) {
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(list) < 2)) {
+      return;
+    }
+    object[] arr = global::DripSharp.Runtime.JavaCompat.ToObjectArray(list);
+    global::DripSharp.PdfCarton.Util.IterativeMergeSort.iterativeMergeSort<object>(arr,
+      global::DripSharp.Runtime.JavaCompat.EraseComparer(cmp));
+    global::DripSharp.Runtime.JavaListIterator<T> i
+      = global::DripSharp.Runtime.JavaCompat.ListIterator(list);
+    foreach (object e in arr) {
+      i.Next();
+      i.Set(global::DripSharp.Runtime.JavaCompat.CastReference<T>(e));
+    }
+  }
 
-private static void iterativeMergeSort<T>(T[] arr, global::System.Collections.Generic.IComparer<T> cmp) {
-T[] aux = global::DripSharp.Runtime.JavaCompat.Clone(arr);
-for (int blockSize = 1; (blockSize < arr.Length); blockSize = (blockSize << unchecked((int)(1)))) {
-for (int start = 0; (start < arr.Length); start += (blockSize << unchecked((int)(1)))) {
-global::DripSharp.PdfCarton.Util.IterativeMergeSort.merge(arr, aux, start, (start + blockSize), (start + (blockSize << unchecked((int)(1)))), cmp);
-}
-}
-}
+  private static void iterativeMergeSort<T>(T[] arr,
+    global::System.Collections.Generic.IComparer<T> cmp) {
+    T[] aux = global::DripSharp.Runtime.JavaCompat.Clone(arr);
+    for (int blockSize = 1; (blockSize < arr.Length); blockSize
+      = (blockSize << unchecked((int)(1)))) {
+      for (int start = 0; (start < arr.Length); start += (blockSize << unchecked((int)(1)))) {
+        global::DripSharp.PdfCarton.Util.IterativeMergeSort.merge(arr, aux, start, (start
+          + blockSize), (start + (blockSize << unchecked((int)(1)))), cmp);
+      }
+    }
+  }
 
-private static void merge<T>(T[] arr, T[] aux, int from, int mid, int to, global::System.Collections.Generic.IComparer<T> cmp) {
-if ((mid >= arr.Length)) {
-return;
-}
-if ((to > arr.Length)) {
-to = arr.Length;
-}
-int i = from;
-int j = mid;
-for (int k = from; (k < to); k++) {
-if ((i == mid)) {
-aux[k] = arr[j++];
-} else {
-if ((j == to)) {
-aux[k] = arr[i++];
-} else {
-if ((global::DripSharp.Runtime.JavaCompat.ComparatorCompare(cmp, arr[j], arr[i]) < 0)) {
-aux[k] = arr[j++];
-} else {
-aux[k] = arr[i++];
-}
-}
-}
-}
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(aux, from, arr, from, (to - from));
-}
+  private static void merge<T>(T[] arr, T[] aux, int from, int mid, int to,
+    global::System.Collections.Generic.IComparer<T> cmp) {
+    if ((mid >= arr.Length)) {
+      return;
+    }
+    if ((to > arr.Length)) {
+      to = arr.Length;
+    }
+    int i = from;
+    int j = mid;
+    for (int k = from; (k < to); k++) {
+      if ((i == mid)) {
+        aux[k] = arr[j++];
+      } else {
+        if ((j == to)) {
+          aux[k] = arr[i++];
+        } else {
+          if ((global::DripSharp.Runtime.JavaCompat.ComparatorCompare(cmp, arr[j], arr[i]) < 0)) {
+            aux[k] = arr[j++];
+          } else {
+            aux[k] = arr[i++];
+          }
+        }
+      }
+    }
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(aux, from, arr, from, (to - from));
+  }
 }

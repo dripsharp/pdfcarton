@@ -8,166 +8,217 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Content;
 
-public class PreflightContentStream : global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine {
-public PreflightContentStream(global::DripSharp.PdfCarton.Preflight.PreflightContext _context, global::DripSharp.PdfCarton.Pdmodel.PDPage _page) : base(_context, _page) {
+public class PreflightContentStream
+: global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine {
+  public PreflightContentStream(global::DripSharp.PdfCarton.Preflight.PreflightContext _context,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage _page) : base(_context, _page) {
 
-}
+  }
 
-public virtual void ValidatePageContentStream() {
-try {
-if (base.ProcessedPage.HasContents()) {
-this.ProcessPage(base.ProcessedPage);
-}
-} catch (global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException e) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(e.GetErrorCode(), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)));
-} catch (global::System.IO.IOException e) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(global::DripSharp.Runtime.JavaCompat.Concat("Unable to check the Page ContentStream : ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e);
-}
-}
+  public virtual void ValidatePageContentStream() {
+    try {
+      if (base.ProcessedPage.HasContents()) {
+        this.ProcessPage(base.ProcessedPage);
+      }
+    } catch (global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException e) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(e.GetErrorCode(),
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)));
+    } catch (global::System.IO.IOException e) {
+      throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(global::DripSharp.Runtime.JavaCompat.Concat("Unable to check the Page ContentStream : ",
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e);
+    }
+  }
 
-public virtual void ValidateXObjContentStream(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject form) {
-try {
-if ((base.ProcessedPage == default!)) {
-this.ProcessChildStream(form, new global::DripSharp.PdfCarton.Pdmodel.PDPage());
-} else {
-this.ProcessChildStream(form, base.ProcessedPage);
-}
-} catch (global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException e) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(e.GetErrorCode(), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)));
-} catch (global::System.IO.IOException e) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(global::DripSharp.Runtime.JavaCompat.Concat("Unable to check the XObject ContentStream : ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e);
-}
-}
+  public virtual void ValidateXObjContentStream(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject form) {
+    try {
+      if ((base.ProcessedPage == default!)) {
+        this.ProcessChildStream(form, new global::DripSharp.PdfCarton.Pdmodel.PDPage());
+      } else {
+        this.ProcessChildStream(form, base.ProcessedPage);
+      }
+    } catch (global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException e) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(e.GetErrorCode(),
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)));
+    } catch (global::System.IO.IOException e) {
+      throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(global::DripSharp.Runtime.JavaCompat.Concat("Unable to check the XObject ContentStream : ",
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e);
+    }
+  }
 
-public virtual void ValidatePatternContentStream(global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern) {
-try {
-this.ProcessChildStream(pattern, base.ProcessedPage);
-} catch (global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException e) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(e.GetErrorCode(), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)));
-} catch (global::System.IO.IOException e) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(global::DripSharp.Runtime.JavaCompat.Concat("Unable to check the Pattern ContentStream : ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e);
-}
-}
+  public virtual void ValidatePatternContentStream(global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern) {
+    try {
+      this.ProcessChildStream(pattern, base.ProcessedPage);
+    } catch (global::DripSharp.PdfCarton.Preflight.Content.ContentStreamException e) {
+      base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(e.GetErrorCode(),
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)));
+    } catch (global::System.IO.IOException e) {
+      throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(global::DripSharp.Runtime.JavaCompat.Concat("Unable to check the Pattern ContentStream : ",
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e);
+    }
+  }
 
-protected internal override void ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-base.ProcessOperator(@operator, operands);
-if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage, @operator.GetName())) {
-this.ValidateInlineImageFilter(@operator);
-this.ValidateInlineImageColorSpace(@operator);
-}
-this.CheckShowTextOperators(@operator, global::DripSharp.Runtime.JavaCompat.CastObjects(operands));
-this.CheckColorOperators(@operator.GetName());
-this.ValidateRenderingIntent(@operator, operands);
-this.CheckSetColorSpaceOperators(@operator, operands);
-this.ValidateNumberOfGraphicStates(@operator);
-this.validateDefaultColorSpace(@operator);
-}
+  protected internal override void ProcessOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    base.ProcessOperator(@operator, operands);
+    if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage,
+      @operator.GetName())) {
+      this.ValidateInlineImageFilter(@operator);
+      this.ValidateInlineImageColorSpace(@operator);
+    }
+    this.CheckShowTextOperators(@operator,
+      global::DripSharp.Runtime.JavaCompat.CastObjects(operands));
+    this.CheckColorOperators(@operator.GetName());
+    this.ValidateRenderingIntent(@operator, operands);
+    this.CheckSetColorSpaceOperators(@operator, operands);
+    this.ValidateNumberOfGraphicStates(@operator);
+    this.validateDefaultColorSpace(@operator);
+  }
 
-protected internal override void UnsupportedOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The operator \"", @operator.GetName()), "\" isn't supported."), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamUnsupportedOp);
-}
+  protected internal override void UnsupportedOperator(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The operator \"",
+      @operator.GetName()), "\" isn't supported."),
+      global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamUnsupportedOp);
+  }
 
-protected internal virtual void CheckShowTextOperators(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IEnumerable<object> arguments) {
-string op = @operator.GetName();
-if (((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowText, op) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine, op)) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace, op))) {
-this.validateStringDefinition(@operator, global::DripSharp.Runtime.JavaCompat.CastObjects(arguments));
-}
-if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted, op)) {
-this.validateStringArray(@operator, global::DripSharp.Runtime.JavaCompat.CastObjects(arguments));
-}
-}
+  protected internal virtual void CheckShowTextOperators(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IEnumerable<object> arguments) {
+    string op = @operator.GetName();
+    if (((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowText,
+      op)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine,
+      op))
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace,
+      op))) {
+      this.validateStringDefinition(@operator,
+        global::DripSharp.Runtime.JavaCompat.CastObjects(arguments));
+    }
+    if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted,
+      op)) {
+      this.validateStringArray(@operator,
+        global::DripSharp.Runtime.JavaCompat.CastObjects(arguments));
+    }
+  }
 
-private void validateStringDefinition(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IEnumerable<object> arguments) {
-if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace, @operator.GetName())) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) != 3)) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat("Invalid argument for the operator : ", @operator.GetName()), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamInvalidArgument);
-return;
-}
-object arg0 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-object arg1 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 1);
-object arg2 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 2);
-if ((!(((arg0 is global::DripSharp.PdfCarton.Cos.COSInteger) || (arg0 is global::DripSharp.PdfCarton.Cos.COSFloat))) || !(((arg1 is global::DripSharp.PdfCarton.Cos.COSInteger) || (arg1 is global::DripSharp.PdfCarton.Cos.COSFloat))))) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat("Invalid argument for the operator : ", @operator.GetName()), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamInvalidArgument);
-return;
-}
-if ((arg2 is global::DripSharp.PdfCarton.Cos.COSString)) {
-this.ValidateText(((global::DripSharp.PdfCarton.Cos.COSString)(arg2!)).GetBytes());
-} else {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat("Invalid argument for the operator : ", @operator.GetName()), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamInvalidArgument);
-}
-} else {
-object objStr = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-if ((objStr is global::DripSharp.PdfCarton.Cos.COSString)) {
-this.ValidateText(((global::DripSharp.PdfCarton.Cos.COSString)(objStr!)).GetBytes());
-} else {
-if (!((objStr is global::DripSharp.PdfCarton.Cos.COSInteger))) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat("Invalid argument for the operator : ", @operator.GetName()), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamInvalidArgument);
-}
-}
-}
-}
+  private void validateStringDefinition(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IEnumerable<object> arguments) {
+    if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace,
+      @operator.GetName())) {
+      if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) != 3)) {
+        this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat("Invalid argument for the operator : ",
+          @operator.GetName()),
+          global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamInvalidArgument);
+        return;
+      }
+      object arg0 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+      object arg1 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 1);
+      object arg2 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 2);
+      if ((!(((arg0 is global::DripSharp.PdfCarton.Cos.COSInteger)
+        || (arg0 is global::DripSharp.PdfCarton.Cos.COSFloat)))
+        || !(((arg1 is global::DripSharp.PdfCarton.Cos.COSInteger)
+        || (arg1 is global::DripSharp.PdfCarton.Cos.COSFloat))))) {
+        this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat("Invalid argument for the operator : ",
+          @operator.GetName()),
+          global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamInvalidArgument);
+        return;
+      }
+      if ((arg2 is global::DripSharp.PdfCarton.Cos.COSString)) {
+        this.ValidateText(((global::DripSharp.PdfCarton.Cos.COSString)(arg2!)).GetBytes());
+      } else {
+        this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat("Invalid argument for the operator : ",
+          @operator.GetName()),
+          global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamInvalidArgument);
+      }
+    } else {
+      object objStr = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+      if ((objStr is global::DripSharp.PdfCarton.Cos.COSString)) {
+        this.ValidateText(((global::DripSharp.PdfCarton.Cos.COSString)(objStr!)).GetBytes());
+      } else {
+        if (!((objStr is global::DripSharp.PdfCarton.Cos.COSInteger))) {
+          this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat("Invalid argument for the operator : ",
+            @operator.GetName()),
+            global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamInvalidArgument);
+        }
+      }
+    }
+  }
 
-private void validateStringArray(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IEnumerable<object> arguments) {
-foreach (object @object in arguments) {
-if ((@object is global::DripSharp.PdfCarton.Cos.COSArray)) {
-this.validateStringArray(@operator, global::DripSharp.Runtime.JavaCompat.CastObjects(((global::DripSharp.PdfCarton.Cos.COSArray)(@object!)).ToList()));
-} else {
-if ((@object is global::DripSharp.PdfCarton.Cos.COSString)) {
-this.ValidateText(((global::DripSharp.PdfCarton.Cos.COSString)(@object!)).GetBytes());
-} else {
-if (!(((@object is global::DripSharp.PdfCarton.Cos.COSInteger) || (@object is global::DripSharp.PdfCarton.Cos.COSFloat)))) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat("Invalid argument for the operator : ", @operator.GetName()), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamInvalidArgument);
-return;
-}
-}
-}
-}
-}
+  private void validateStringArray(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IEnumerable<object> arguments) {
+    foreach (object @object in arguments) {
+      if ((@object is global::DripSharp.PdfCarton.Cos.COSArray)) {
+        this.validateStringArray(@operator,
+          global::DripSharp.Runtime.JavaCompat.CastObjects(((global::DripSharp.PdfCarton.Cos.COSArray)(@object!)).ToList()));
+      } else {
+        if ((@object is global::DripSharp.PdfCarton.Cos.COSString)) {
+          this.ValidateText(((global::DripSharp.PdfCarton.Cos.COSString)(@object!)).GetBytes());
+        } else {
+          if (!(((@object is global::DripSharp.PdfCarton.Cos.COSInteger)
+            || (@object is global::DripSharp.PdfCarton.Cos.COSFloat)))) {
+            this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat("Invalid argument for the operator : ",
+              @operator.GetName()),
+              global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxContentStreamInvalidArgument);
+            return;
+          }
+        }
+      }
+    }
+  }
 
-public virtual void ValidateText(sbyte[] @string) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState textState = this.GetGraphicsState().GetTextState();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode = textState.GetRenderingMode();
-global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = textState.GetFont();
-if ((font == default!)) {
-this.RegisterError("Text operator can't be processed without a Font", global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontRef);
-return;
-}
-var fontContainer = base.Context.GetFontContainer(font.GetCOSObject());
-if (((renderingMode == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Neither) && ((fontContainer == default!) || !(fontContainer.IsEmbeddedFont())))) {
-return;
-} else {
-if ((fontContainer == default!)) {
-if ((font.GetName() == default!)) {
-this.RegisterError("invalid font dictionary", global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontRef);
-} else {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("font '", font.GetName()), "' is missing"), global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontRef);
-}
-return;
-} else {
-if ((!(fontContainer.IsValid()) && !(fontContainer.ErrorsAleadyMerged()))) {
-base.Context.AddValidationErrors(fontContainer.GetAllErrors());
-fontContainer.SetErrorsAlreadyMerged(true);
-return;
-}
-}
-}
-if ((!(fontContainer.IsValid()) && fontContainer.ErrorsAleadyMerged())) {
-return;
-}
-global::System.IO.Stream @in = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(@string);
-while ((global::DripSharp.Runtime.JavaCompat.InputStreamAvailable(@in) > 0)) {
-try {
-int code = font.ReadCode(@in);
-fontContainer.CheckGlyphWidth(code);
-} catch (global::System.IO.IOException e) {
-this.RegisterError("Encoding can't interpret the character code", global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsEncodingError, e);
-return;
-} catch (global::DripSharp.PdfCarton.Preflight.Font.Util.GlyphException e) {
-if ((renderingMode != global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Neither)) {
-this.RegisterError(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e), e.GetErrorCode(), e);
-return;
-}
-}
-}
-}
+  public virtual void ValidateText(sbyte[] @string) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState textState
+      = this.GetGraphicsState().GetTextState();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode
+      = textState.GetRenderingMode();
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = textState.GetFont();
+    if ((font == default!)) {
+      this.RegisterError("Text operator can't be processed without a Font",
+        global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontRef);
+      return;
+    }
+    var fontContainer = base.Context.GetFontContainer(font.GetCOSObject());
+    if (((renderingMode == global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Neither)
+      && ((fontContainer == default!) || !(fontContainer.IsEmbeddedFont())))) {
+      return;
+    } else {
+      if ((fontContainer == default!)) {
+        if ((font.GetName() == default!)) {
+          this.RegisterError("invalid font dictionary",
+            global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontRef);
+        } else {
+          this.RegisterError(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("font '",
+            font.GetName()), "' is missing"),
+            global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontRef);
+        }
+        return;
+      } else {
+        if ((!(fontContainer.IsValid()) && !(fontContainer.ErrorsAleadyMerged()))) {
+          base.Context.AddValidationErrors(fontContainer.GetAllErrors());
+          fontContainer.SetErrorsAlreadyMerged(true);
+          return;
+        }
+      }
+    }
+    if ((!(fontContainer.IsValid()) && fontContainer.ErrorsAleadyMerged())) {
+      return;
+    }
+    global::System.IO.Stream @in = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(@string);
+    while ((global::DripSharp.Runtime.JavaCompat.InputStreamAvailable(@in) > 0)) {
+      try {
+        int code = font.ReadCode(@in);
+        fontContainer.CheckGlyphWidth(code);
+      } catch (global::System.IO.IOException e) {
+        this.RegisterError("Encoding can't interpret the character code",
+          global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsEncodingError, e);
+        return;
+      } catch (global::DripSharp.PdfCarton.Preflight.Font.Util.GlyphException e) {
+        if ((renderingMode
+          != global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Neither)) {
+          this.RegisterError(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e),
+            e.GetErrorCode(), e);
+          return;
+        }
+      }
+    }
+  }
 }

@@ -8,42 +8,48 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
-public sealed class PDDeviceRGB : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceColorSpace {
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB Instance = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB();
+public sealed class PDDeviceRGB
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceColorSpace {
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB Instance
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB();
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor initialColor;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor initialColor;
 
-private PDDeviceRGB() {
-this.initialColor = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 0, 0, 0 }, this);
-}
+  private PDDeviceRGB() {
+    this.initialColor
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 0, 0, 0 },
+      this);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Cos.COSName.Devicergb.GetName();
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Cos.COSName.Devicergb.GetName();
+  }
 
-public override int GetNumberOfComponents() {
-return 3;
-}
+  public override int GetNumberOfComponents() {
+    return 3;
+  }
 
-public override float[] GetDefaultDecode(int bitsPerComponent) {
-return new float[] { 0, 1, 0, 1, 0, 1 };
-}
+  public override float[] GetDefaultDecode(int bitsPerComponent) {
+    return new float[] { 0, 1, 0, 1, 0, 1 };
+  }
 
-public override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetInitialColor() {
-return this.initialColor;
-}
+  public override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetInitialColor() {
+    return this.initialColor;
+  }
 
-public override float[] ToRGB(float[] value) {
-return value;
-}
+  public override float[] ToRGB(float[] value) {
+    return value;
+  }
 
-public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
-global::SkiaSharp.SKBitmap image = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(raster.Width, raster.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
-global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(image, raster);
-return image;
-}
+  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+    global::SkiaSharp.SKBitmap image
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(raster.Width, raster.Height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
+    global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(image, raster);
+    return image;
+  }
 
-public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
-return default!;
-}
+  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+    return default!;
+  }
 }

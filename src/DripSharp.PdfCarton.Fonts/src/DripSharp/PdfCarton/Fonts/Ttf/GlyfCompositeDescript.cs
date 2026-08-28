@@ -9,179 +9,224 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class GlyfCompositeDescript : global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp> components = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp>();
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp> components
+    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp>();
 
-private readonly global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription> descriptions = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription>();
+  private readonly global::System.Collections.Generic.IDictionary<int,
+    global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription> descriptions
+    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int,
+    global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription>();
 
-private global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable glyphTable = default!;
+  private global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable glyphTable = default!;
 
-private bool beingResolved = false;
+  private bool beingResolved = false;
 
-private bool resolved = false;
+  private bool resolved = false;
 
-private int pointCount = -1;
+  private int pointCount = -1;
 
-private int contourCount = -1;
+  private int contourCount = -1;
 
-internal GlyfCompositeDescript(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais, global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable glyphTable, int level) : base(unchecked((short)(unchecked((short)(-1))))) {
-this.glyphTable = glyphTable;
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp comp;
-do {
-comp = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp(bais);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.components, comp);
-} while (((comp.GetFlags() & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.MoreComponents) != 0));
-if (((comp.GetFlags() & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.WeHaveInstructions) != 0)) {
-this.readInstructions(bais, bais.ReadUnsignedShort());
-}
-this.initDescriptions(level);
-}
+  internal GlyfCompositeDescript(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais,
+    global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable glyphTable, int level)
+  : base(unchecked((short)(unchecked((short)(-1))))) {
+    this.glyphTable = glyphTable;
+    global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp comp;
+    do {
+      comp = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp(bais);
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.components, comp);
+    } while (((comp.GetFlags() & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.MoreComponents)
+      != 0));
+    if (((comp.GetFlags() & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp.WeHaveInstructions)
+      != 0)) {
+      this.readInstructions(bais, bais.ReadUnsignedShort());
+    }
+    this.initDescriptions(level);
+  }
 
-public override void Resolve() {
-if (this.resolved) {
-return;
-}
-if (this.beingResolved) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Circular reference in GlyfCompositeDesc"));
-return;
-}
-this.beingResolved = true;
-int firstIndex = 0;
-int firstContour = 0;
-foreach (global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp comp in this.components) {
-comp.SetFirstIndex(firstIndex);
-comp.SetFirstContour(firstContour);
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription desc = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions, comp.GetGlyphIndex());
-if ((desc != default!)) {
-desc.Resolve();
-firstIndex += desc.GetPointCount();
-firstContour += desc.GetContourCount();
-}
-}
-this.resolved = true;
-this.beingResolved = false;
-}
+  public override void Resolve() {
+    if (this.resolved) {
+      return;
+    }
+    if (this.beingResolved) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Circular reference in GlyfCompositeDesc"));
+      return;
+    }
+    this.beingResolved = true;
+    int firstIndex = 0;
+    int firstContour = 0;
+    foreach (global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp comp in this.components) {
+      comp.SetFirstIndex(firstIndex);
+      comp.SetFirstContour(firstContour);
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription desc
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions,
+        comp.GetGlyphIndex());
+      if ((desc != default!)) {
+        desc.Resolve();
+        firstIndex += desc.GetPointCount();
+        firstContour += desc.GetContourCount();
+      }
+    }
+    this.resolved = true;
+    this.beingResolved = false;
+  }
 
-public override int GetEndPtOfContours(int i) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c = this.getCompositeCompEndPt(i);
-if ((c != default!)) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions, c.GetGlyphIndex());
-return (gd.GetEndPtOfContours((i - c.GetFirstContour())) + c.GetFirstIndex());
-}
-return 0;
-}
+  public override int GetEndPtOfContours(int i) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c = this.getCompositeCompEndPt(i);
+    if ((c != default!)) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions,
+        c.GetGlyphIndex());
+      return (gd.GetEndPtOfContours((i - c.GetFirstContour())) + c.GetFirstIndex());
+    }
+    return 0;
+  }
 
-public override sbyte GetFlags(int i) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c = this.getCompositeComp(i);
-if ((c != default!)) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions, c.GetGlyphIndex());
-return gd.GetFlags((i - c.GetFirstIndex()));
-}
-return unchecked((sbyte)(0));
-}
+  public override sbyte GetFlags(int i) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c = this.getCompositeComp(i);
+    if ((c != default!)) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions,
+        c.GetGlyphIndex());
+      return gd.GetFlags((i - c.GetFirstIndex()));
+    }
+    return unchecked((sbyte)(0));
+  }
 
-public override short GetXCoordinate(int i) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c = this.getCompositeComp(i);
-if ((c != default!)) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions, c.GetGlyphIndex());
-int n = (i - c.GetFirstIndex());
-int x = gd.GetXCoordinate(n);
-int y = gd.GetYCoordinate(n);
-return unchecked((short)(unchecked((short)((c.ScaleX(x, y) + c.GetXTranslate())))));
-}
-return unchecked((short)(0));
-}
+  public override short GetXCoordinate(int i) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c = this.getCompositeComp(i);
+    if ((c != default!)) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions,
+        c.GetGlyphIndex());
+      int n = (i - c.GetFirstIndex());
+      int x = gd.GetXCoordinate(n);
+      int y = gd.GetYCoordinate(n);
+      return unchecked((short)(unchecked((short)((c.ScaleX(x, y) + c.GetXTranslate())))));
+    }
+    return unchecked((short)(0));
+  }
 
-public override short GetYCoordinate(int i) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c = this.getCompositeComp(i);
-if ((c != default!)) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions, c.GetGlyphIndex());
-int n = (i - c.GetFirstIndex());
-int x = gd.GetXCoordinate(n);
-int y = gd.GetYCoordinate(n);
-return unchecked((short)(unchecked((short)((c.ScaleY(x, y) + c.GetYTranslate())))));
-}
-return unchecked((short)(0));
-}
+  public override short GetYCoordinate(int i) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c = this.getCompositeComp(i);
+    if ((c != default!)) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions,
+        c.GetGlyphIndex());
+      int n = (i - c.GetFirstIndex());
+      int x = gd.GetXCoordinate(n);
+      int y = gd.GetYCoordinate(n);
+      return unchecked((short)(unchecked((short)((c.ScaleY(x, y) + c.GetYTranslate())))));
+    }
+    return unchecked((short)(0));
+  }
 
-public override bool IsComposite() {
-return true;
-}
+  public override bool IsComposite() {
+    return true;
+  }
 
-public override int GetPointCount() {
-if (!(this.resolved)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("getPointCount called on unresolved GlyfCompositeDescript"));
-}
-if ((this.pointCount < 0)) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.components, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(this.components) - 1));
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions, c.GetGlyphIndex());
-if ((gd == default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("GlyphDescription for index ", c.GetGlyphIndex()), " is null, returning 0")));
-this.pointCount = 0;
-} else {
-this.pointCount = (c.GetFirstIndex() + gd.GetPointCount());
-}
-}
-return this.pointCount;
-}
+  public override int GetPointCount() {
+    if (!(this.resolved)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("getPointCount called on unresolved GlyfCompositeDescript"));
+    }
+    if ((this.pointCount < 0)) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.components,
+        (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(this.components)
+        - 1));
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions,
+        c.GetGlyphIndex());
+      if ((gd == default!)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript.LOG,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("GlyphDescription for index ",
+          c.GetGlyphIndex()), " is null, returning 0")));
+        this.pointCount = 0;
+      } else {
+        this.pointCount = (c.GetFirstIndex() + gd.GetPointCount());
+      }
+    }
+    return this.pointCount;
+  }
 
-public override int GetContourCount() {
-if (!(this.resolved)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("getContourCount called on unresolved GlyfCompositeDescript"));
-}
-if ((this.contourCount < 0)) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.components, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(this.components) - 1));
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions, c.GetGlyphIndex());
-if ((gd == default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("missing glyph description for index ", c.GetGlyphIndex())));
-this.contourCount = 0;
-} else {
-this.contourCount = (c.GetFirstContour() + gd.GetContourCount());
-}
-}
-return this.contourCount;
-}
+  public override int GetContourCount() {
+    if (!(this.resolved)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("getContourCount called on unresolved GlyfCompositeDescript"));
+    }
+    if ((this.contourCount < 0)) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.components,
+        (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(this.components)
+        - 1));
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions,
+        c.GetGlyphIndex());
+      if ((gd == default!)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript.LOG,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("missing glyph description for index ",
+          c.GetGlyphIndex())));
+        this.contourCount = 0;
+      } else {
+        this.contourCount = (c.GetFirstContour() + gd.GetContourCount());
+      }
+    }
+    return this.contourCount;
+  }
 
-public virtual int GetComponentCount() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(this.components);
-}
+  public virtual int GetComponentCount() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(this.components);
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp> GetComponents() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(this.components);
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp> GetComponents() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(this.components);
+  }
 
-private global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp getCompositeComp(int i) {
-foreach (global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c in this.components) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions, c.GetGlyphIndex());
-if ((((c.GetFirstIndex() <= i) && (gd != default!)) && (i < (c.GetFirstIndex() + gd.GetPointCount())))) {
-return c;
-}
-}
-return default!;
-}
+  private global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp getCompositeComp(int i) {
+    foreach (global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c in this.components) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions,
+        c.GetGlyphIndex());
+      if ((((c.GetFirstIndex() <= i) && (gd != default!)) && (i < (c.GetFirstIndex()
+        + gd.GetPointCount())))) {
+        return c;
+      }
+    }
+    return default!;
+  }
 
-private global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp getCompositeCompEndPt(int i) {
-foreach (global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c in this.components) {
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions, c.GetGlyphIndex());
-if ((((c.GetFirstContour() <= i) && (gd != default!)) && (i < (c.GetFirstContour() + gd.GetContourCount())))) {
-return c;
-}
-}
-return default!;
-}
+  private global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp getCompositeCompEndPt(int i) {
+    foreach (global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp c in this.components) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.descriptions,
+        c.GetGlyphIndex());
+      if ((((c.GetFirstContour() <= i) && (gd != default!)) && (i < (c.GetFirstContour()
+        + gd.GetContourCount())))) {
+        return c;
+      }
+    }
+    return default!;
+  }
 
-private void initDescriptions(int level) {
-foreach (global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp component in this.components) {
-try {
-int index = component.GetGlyphIndex();
-global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData glyph = this.glyphTable.getGlyph(index, level);
-if ((glyph != default!)) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.descriptions, index, glyph.GetDescription());
-}
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(e));
-}
-}
-}
+  private void initDescriptions(int level) {
+    foreach (global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeComp component in this.components) {
+      try {
+        int index = component.GetGlyphIndex();
+        global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData glyph = this.glyphTable.getGlyph(index,
+          level);
+        if ((glyph != default!)) {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.descriptions, index,
+            glyph.GetDescription());
+        }
+      } catch (global::System.IO.IOException e) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript.LOG,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(e));
+      }
+    }
+  }
 }

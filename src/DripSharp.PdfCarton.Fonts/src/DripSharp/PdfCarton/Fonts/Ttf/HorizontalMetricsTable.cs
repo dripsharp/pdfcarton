@@ -9,70 +9,71 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class HorizontalMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-public const string Tag = "hmtx";
+  public const string Tag = "hmtx";
 
-private int[] advanceWidth = null!;
+  private int[] advanceWidth = null!;
 
-private short[] leftSideBearing = null!;
+  private short[] leftSideBearing = null!;
 
-private short[] nonHorizontalLeftSideBearing = null!;
+  private short[] nonHorizontalLeftSideBearing = null!;
 
-private int numHMetrics = default;
+  private int numHMetrics = default;
 
-internal HorizontalMetricsTable() : base() {
+  internal HorizontalMetricsTable() : base() {
 
-}
+  }
 
-internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalHeaderTable hHeader = ttf.GetHorizontalHeader();
-if ((hHeader == default!)) {
-throw new global::System.IO.IOException("Could not get hmtx table");
-}
-this.numHMetrics = hHeader.GetNumberOfHMetrics();
-int numGlyphs = ttf.GetNumberOfGlyphs();
-int bytesRead = 0;
-this.advanceWidth = new int[this.numHMetrics];
-this.leftSideBearing = new short[this.numHMetrics];
-for (int i__64_18 = 0; (i__64_18 < this.numHMetrics); i__64_18++) {
-this.advanceWidth[i__64_18] = data.ReadUnsignedShort();
-this.leftSideBearing[i__64_18] = data.ReadSignedShort();
-bytesRead += 4;
-}
-int numberNonHorizontal = (numGlyphs - this.numHMetrics);
-if ((numberNonHorizontal < 0)) {
-numberNonHorizontal = numGlyphs;
-}
-this.nonHorizontalLeftSideBearing = new short[numberNonHorizontal];
-if ((bytesRead < this.GetLength())) {
-for (int i__85_22 = 0; (i__85_22 < numberNonHorizontal); i__85_22++) {
-if ((bytesRead < this.GetLength())) {
-this.nonHorizontalLeftSideBearing[i__85_22] = data.ReadSignedShort();
-bytesRead += 2;
-}
-}
-}
-base.Initialized = true;
-}
+  internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalHeaderTable hHeader = ttf.GetHorizontalHeader();
+    if ((hHeader == default!)) {
+      throw new global::System.IO.IOException("Could not get hmtx table");
+    }
+    this.numHMetrics = hHeader.GetNumberOfHMetrics();
+    int numGlyphs = ttf.GetNumberOfGlyphs();
+    int bytesRead = 0;
+    this.advanceWidth = new int[this.numHMetrics];
+    this.leftSideBearing = new short[this.numHMetrics];
+    for (int i__64_18 = 0; (i__64_18 < this.numHMetrics); i__64_18++) {
+      this.advanceWidth[i__64_18] = data.ReadUnsignedShort();
+      this.leftSideBearing[i__64_18] = data.ReadSignedShort();
+      bytesRead += 4;
+    }
+    int numberNonHorizontal = (numGlyphs - this.numHMetrics);
+    if ((numberNonHorizontal < 0)) {
+      numberNonHorizontal = numGlyphs;
+    }
+    this.nonHorizontalLeftSideBearing = new short[numberNonHorizontal];
+    if ((bytesRead < this.GetLength())) {
+      for (int i__85_22 = 0; (i__85_22 < numberNonHorizontal); i__85_22++) {
+        if ((bytesRead < this.GetLength())) {
+          this.nonHorizontalLeftSideBearing[i__85_22] = data.ReadSignedShort();
+          bytesRead += 2;
+        }
+      }
+    }
+    base.Initialized = true;
+  }
 
-public virtual int GetAdvanceWidth(int gid) {
-if ((this.advanceWidth.Length == 0)) {
-return 250;
-}
-if ((gid < this.numHMetrics)) {
-return this.advanceWidth[gid];
-} else {
-return this.advanceWidth[(this.advanceWidth.Length - 1)];
-}
-}
+  public virtual int GetAdvanceWidth(int gid) {
+    if ((this.advanceWidth.Length == 0)) {
+      return 250;
+    }
+    if ((gid < this.numHMetrics)) {
+      return this.advanceWidth[gid];
+    } else {
+      return this.advanceWidth[(this.advanceWidth.Length - 1)];
+    }
+  }
 
-public virtual int GetLeftSideBearing(int gid) {
-if ((this.leftSideBearing.Length == 0)) {
-return 0;
-}
-if ((gid < this.numHMetrics)) {
-return this.leftSideBearing[gid];
-} else {
-return this.nonHorizontalLeftSideBearing[(gid - this.numHMetrics)];
-}
-}
+  public virtual int GetLeftSideBearing(int gid) {
+    if ((this.leftSideBearing.Length == 0)) {
+      return 0;
+    }
+    if ((gid < this.numHMetrics)) {
+      return this.leftSideBearing[gid];
+    } else {
+      return this.nonHorizontalLeftSideBearing[(gid - this.numHMetrics)];
+    }
+  }
 }

@@ -8,182 +8,207 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline;
 
-public sealed class PDOutlineItem : global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode {
-private const int ITALIC_FLAG = 1;
+public sealed class PDOutlineItem
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode {
+  private const int ITALIC_FLAG = 1;
 
-private const int BOLD_FLAG = 2;
+  private const int BOLD_FLAG = 2;
 
-public PDOutlineItem() : base() {
+  public PDOutlineItem() : base() {
 
-}
+  }
 
-public PDOutlineItem(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
+  public PDOutlineItem(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
 
-}
+  }
 
-public void InsertSiblingAfter(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem newSibling) {
-this.requireSingleNode(newSibling);
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode parent = this.getParent();
-newSibling.setParent(parent);
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem next = this.GetNextSibling();
-this.setNextSibling(newSibling);
-newSibling.setPreviousSibling(this);
-if ((next != default!)) {
-newSibling.setNextSibling(next);
-next.setPreviousSibling(newSibling);
-} else {
-if ((parent != default!)) {
-this.getParent().setLastChild(newSibling);
-}
-}
-this.updateParentOpenCountForAddedChild(newSibling);
-}
+  public void InsertSiblingAfter(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem newSibling) {
+    this.requireSingleNode(newSibling);
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode parent
+      = this.getParent();
+    newSibling.setParent(parent);
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem next
+      = this.GetNextSibling();
+    this.setNextSibling(newSibling);
+    newSibling.setPreviousSibling(this);
+    if ((next != default!)) {
+      newSibling.setNextSibling(next);
+      next.setPreviousSibling(newSibling);
+    } else {
+      if ((parent != default!)) {
+        this.getParent().setLastChild(newSibling);
+      }
+    }
+    this.updateParentOpenCountForAddedChild(newSibling);
+  }
 
-public void InsertSiblingBefore(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem newSibling) {
-this.requireSingleNode(newSibling);
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode parent = this.getParent();
-newSibling.setParent(parent);
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem previous = this.GetPreviousSibling();
-this.setPreviousSibling(newSibling);
-newSibling.setNextSibling(this);
-if ((previous != default!)) {
-previous.setNextSibling(newSibling);
-newSibling.setPreviousSibling(previous);
-} else {
-if ((parent != default!)) {
-this.getParent().setFirstChild(newSibling);
-}
-}
-this.updateParentOpenCountForAddedChild(newSibling);
-}
+  public void InsertSiblingBefore(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem newSibling) {
+    this.requireSingleNode(newSibling);
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode parent
+      = this.getParent();
+    newSibling.setParent(parent);
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem previous
+      = this.GetPreviousSibling();
+    this.setPreviousSibling(newSibling);
+    newSibling.setNextSibling(this);
+    if ((previous != default!)) {
+      previous.setNextSibling(newSibling);
+      newSibling.setPreviousSibling(previous);
+    } else {
+      if ((parent != default!)) {
+        this.getParent().setFirstChild(newSibling);
+      }
+    }
+    this.updateParentOpenCountForAddedChild(newSibling);
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem GetPreviousSibling() {
-return this.getOutlineItem(global::DripSharp.PdfCarton.Cos.COSName.Prev);
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem GetPreviousSibling() {
+    return this.getOutlineItem(global::DripSharp.PdfCarton.Cos.COSName.Prev);
+  }
 
-internal void setPreviousSibling(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode outlineNode) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Prev, outlineNode);
-}
+  internal void setPreviousSibling(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode outlineNode) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Prev, outlineNode);
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem GetNextSibling() {
-return this.getOutlineItem(global::DripSharp.PdfCarton.Cos.COSName.Next);
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem GetNextSibling() {
+    return this.getOutlineItem(global::DripSharp.PdfCarton.Cos.COSName.Next);
+  }
 
-internal void setNextSibling(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode outlineNode) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Next, outlineNode);
-}
+  internal void setNextSibling(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode outlineNode) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Next, outlineNode);
+  }
 
-public string GetTitle() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Title);
-}
+  public string GetTitle() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Title);
+  }
 
-public void SetTitle(string title) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Title, title);
-}
+  public void SetTitle(string title) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.Title, title);
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination GetDestination() {
-return global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination.Create(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Dest));
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination GetDestination() {
+    return global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination.Create(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Dest));
+  }
 
-public void SetDestination(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination dest) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Dest, dest);
-}
+  public void SetDestination(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination dest) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Dest, dest);
+  }
 
-public void SetDestination(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageXYZDestination dest = default!;
-if ((page != default!)) {
-dest = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageXYZDestination();
-dest!.SetPage(page);
-}
-this.SetDestination(dest!);
-}
+  public void SetDestination(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageXYZDestination dest
+      = default!;
+    if ((page != default!)) {
+      dest
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageXYZDestination();
+      dest!.SetPage(page);
+    }
+    this.SetDestination(dest!);
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.PDPage FindDestinationPage(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination dest = this.GetDestination();
-if ((dest == default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction outlineAction = this.GetAction();
-if ((outlineAction is global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)) {
-dest = ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(outlineAction!)).GetDestination();
-}
-}
-if ((dest == default!)) {
-return default!;
-}
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pageDestination = default!;
-if ((dest is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDNamedDestination)) {
-pageDestination = doc.GetDocumentCatalog().FindNamedDestinationPage((global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDNamedDestination)(dest!));
-if ((pageDestination! == default!)) {
-return default!;
-}
-} else {
-if ((dest is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)) {
-pageDestination = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(dest!);
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error: Unknown destination type ", dest));
-}
-}
-global::DripSharp.PdfCarton.Pdmodel.PDPage page = pageDestination!.GetPage();
-if ((page == default!)) {
-int pageNumber = pageDestination!.GetPageNumber();
-if ((pageNumber != -1)) {
-page = doc.GetPage(pageNumber);
-}
-}
-return page;
-}
+  public global::DripSharp.PdfCarton.Pdmodel.PDPage FindDestinationPage(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc) {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination dest
+      = this.GetDestination();
+    if ((dest == default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction outlineAction
+        = this.GetAction();
+      if ((outlineAction is global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)) {
+        dest
+          = ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(outlineAction!)).GetDestination();
+      }
+    }
+    if ((dest == default!)) {
+      return default!;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pageDestination
+      = default!;
+    if ((dest is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDNamedDestination)) {
+      pageDestination
+        = doc.GetDocumentCatalog().FindNamedDestinationPage((global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDNamedDestination)(dest!));
+      if ((pageDestination! == default!)) {
+        return default!;
+      }
+    } else {
+      if ((dest is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)) {
+        pageDestination
+          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(dest!);
+      } else {
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error: Unknown destination type ",
+          dest));
+      }
+    }
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page = pageDestination!.GetPage();
+    if ((page == default!)) {
+      int pageNumber = pageDestination!.GetPageNumber();
+      if ((pageNumber != -1)) {
+        page = doc.GetPage(pageNumber);
+      }
+    }
+    return page;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction GetAction() {
-return global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction(this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.A));
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction GetAction() {
+    return global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction(this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.A));
+  }
 
-public void SetAction(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction action) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.A, action);
-}
+  public void SetAction(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction action) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.A, action);
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement GetStructureElement() {
-global::DripSharp.PdfCarton.Cos.COSDictionary dic = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Se);
-return ((dic != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement(dic) : (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement)(default!));
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement GetStructureElement() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary dic
+      = this.GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Se);
+    return ((dic != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement(dic)
+      : (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement)(default!));
+  }
 
-public void SetStructureElement(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement structureElement) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Se, structureElement);
-}
+  public void SetStructureElement(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement structureElement) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Se, structureElement);
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetTextColor() {
-global::DripSharp.PdfCarton.Cos.COSArray csValues = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.C);
-if ((csValues == default!)) {
-csValues = new global::DripSharp.PdfCarton.Cos.COSArray();
-csValues.GrowToSize(3, new global::DripSharp.PdfCarton.Cos.COSFloat((float)(0)));
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.C, csValues);
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(csValues, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance);
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetTextColor() {
+    global::DripSharp.PdfCarton.Cos.COSArray csValues
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.C);
+    if ((csValues == default!)) {
+      csValues = new global::DripSharp.PdfCarton.Cos.COSArray();
+      csValues.GrowToSize(3, new global::DripSharp.PdfCarton.Cos.COSFloat((float)(0)));
+      this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.C, csValues);
+    }
+    return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(csValues,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance);
+  }
 
-public void SetTextColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor textColor) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.C, textColor.ToCOSArray());
-}
+  public void SetTextColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor textColor) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.C, textColor.ToCOSArray());
+  }
 
-public void SetTextColor(global::DripSharp.Runtime.JavaColor textColor) {
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-array.Add(new global::DripSharp.PdfCarton.Cos.COSFloat((textColor.Red / (float)(255.0F))));
-array.Add(new global::DripSharp.PdfCarton.Cos.COSFloat((textColor.Green / (float)(255.0F))));
-array.Add(new global::DripSharp.PdfCarton.Cos.COSFloat((textColor.Blue / (float)(255.0F))));
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.C, array);
-}
+  public void SetTextColor(global::DripSharp.Runtime.JavaColor textColor) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    array.Add(new global::DripSharp.PdfCarton.Cos.COSFloat((textColor.Red / (float)255.0F)));
+    array.Add(new global::DripSharp.PdfCarton.Cos.COSFloat((textColor.Green / (float)255.0F)));
+    array.Add(new global::DripSharp.PdfCarton.Cos.COSFloat((textColor.Blue / (float)255.0F)));
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.C, array);
+  }
 
-public bool IsItalic() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.F, global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem.ITALIC_FLAG);
-}
+  public bool IsItalic() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.F,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem.ITALIC_FLAG);
+  }
 
-public void SetItalic(bool italic) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.F, global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem.ITALIC_FLAG, italic);
-}
+  public void SetItalic(bool italic) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.F,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem.ITALIC_FLAG,
+      italic);
+  }
 
-public bool IsBold() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.F, global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem.BOLD_FLAG);
-}
+  public bool IsBold() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.F,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem.BOLD_FLAG);
+  }
 
-public void SetBold(bool bold) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.F, global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem.BOLD_FLAG, bold);
-}
+  public void SetBold(bool bold) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.F,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem.BOLD_FLAG,
+      bold);
+  }
 }

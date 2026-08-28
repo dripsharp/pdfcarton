@@ -9,30 +9,35 @@
 namespace DripSharp.PdfCarton.Pdfparser.Xref;
 
 public class FreeXReference : global::DripSharp.PdfCarton.Pdfparser.Xref.AbstractXReference {
-public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference NullEntry = new global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference(new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(0), 65535), (long)(0));
+  public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference NullEntry
+    = new global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference(new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(0),
+    65535), (long)(0));
 
-private readonly global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
 
-private readonly long nextFreeObject = default;
+  private readonly long nextFreeObject = default;
 
-public FreeXReference(global::DripSharp.PdfCarton.Cos.COSObjectKey key, long nextFreeObject) : base(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType.Free) {
-this.key = key;
-this.nextFreeObject = nextFreeObject;
-}
+  public FreeXReference(global::DripSharp.PdfCarton.Cos.COSObjectKey key, long nextFreeObject)
+  : base(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceType.Free) {
+    this.key = key;
+    this.nextFreeObject = nextFreeObject;
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSObjectKey GetReferencedKey() {
-return this.key;
-}
+  public override global::DripSharp.PdfCarton.Cos.COSObjectKey GetReferencedKey() {
+    return this.key;
+  }
 
-public override long GetSecondColumnValue() {
-return this.nextFreeObject;
-}
+  public override long GetSecondColumnValue() {
+    return this.nextFreeObject;
+  }
 
-public override long GetThirdColumnValue() {
-return this.GetReferencedKey().GetGeneration();
-}
+  public override long GetThirdColumnValue() {
+    return this.GetReferencedKey().GetGeneration();
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("FreeReference{", "key="), this.key), ", nextFreeObject="), this.nextFreeObject), ", type="), this.GetType().GetNumericValue()), " }");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("FreeReference{",
+      "key="), this.key), ", nextFreeObject="), this.nextFreeObject), ", type="),
+      this.GetType().GetNumericValue()), " }");
+  }
 }

@@ -9,26 +9,28 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font.Encoding;
 
 public class Type1Encoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding {
-public static global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Type1Encoding FromFontBox(global::DripSharp.PdfCarton.Fonts.Encoding.Encoding encoding) {
-global::System.Collections.Generic.IDictionary<int, string> codeToName = encoding.GetCodeToNameMap();
-global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Type1Encoding enc = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Type1Encoding();
-global::DripSharp.Runtime.JavaCompat.ForEach(codeToName, enc.Add);
-return enc;
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Type1Encoding FromFontBox(global::DripSharp.PdfCarton.Fonts.Encoding.Encoding encoding) {
+    global::System.Collections.Generic.IDictionary<int, string> codeToName
+      = encoding.GetCodeToNameMap();
+    global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Type1Encoding enc
+      = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Type1Encoding();
+    global::DripSharp.Runtime.JavaCompat.ForEach(codeToName, enc.Add);
+    return enc;
+  }
 
-public Type1Encoding() {}
+  public Type1Encoding() {}
 
-public Type1Encoding(global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics fontMetrics) {
-foreach (global::DripSharp.PdfCarton.Fonts.Afm.CharMetric nextMetric in fontMetrics.GetCharMetrics()) {
-this.Add(nextMetric.GetCharacterCode(), nextMetric.GetName());
-}
-}
+  public Type1Encoding(global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics fontMetrics) {
+    foreach (global::DripSharp.PdfCarton.Fonts.Afm.CharMetric nextMetric in fontMetrics.GetCharMetrics()) {
+      this.Add(nextMetric.GetCharacterCode(), nextMetric.GetName());
+    }
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return default!;
-}
+  public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return default!;
+  }
 
-public override string GetEncodingName() {
-return "built-in (Type 1)";
-}
+  public override string GetEncodingName() {
+    return "built-in (Type 1)";
+  }
 }

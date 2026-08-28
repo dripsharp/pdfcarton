@@ -10,14 +10,15 @@ namespace DripSharp.PdfCarton.Pdmodel.Common;
 
 public interface PDDestinationOrAction : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {}
 
-public sealed class __PDDestinationOrActionFunctionalAdapter : global::DripSharp.PdfCarton.Pdmodel.Common.PDDestinationOrAction {
-private readonly global::System.Func<global::DripSharp.PdfCarton.Cos.COSBase> implementation;
+public sealed class __PDDestinationOrActionFunctionalAdapter
+: global::DripSharp.PdfCarton.Pdmodel.Common.PDDestinationOrAction {
+  private readonly global::System.Func<global::DripSharp.PdfCarton.Cos.COSBase> implementation;
 
-public __PDDestinationOrActionFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.Cos.COSBase> implementation) {
-this.implementation = implementation;
-}
+  public __PDDestinationOrActionFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.Cos.COSBase> implementation) {
+    this.implementation = implementation;
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.implementation();
-}
+  public global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.implementation();
+  }
 }

@@ -8,32 +8,41 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process;
 
-public class PageTreeValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = context.GetDocument().GetDocumentCatalog();
-if ((catalog != default!)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary catalogDict = catalog.GetCOSObject();
-if (!((catalogDict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Pages) is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorPdfProcessingMissing, "/Pages dictionary entry is missing in document catalog"));
-return;
-}
-int p = 0;
-foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page in context.GetDocument().GetPages()) {
-context.SetCurrentPageNumber(p);
-this.validatePage(context, page);
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(context.GetDocument().GetValidationErrors()) > context.GetConfig().GetMaxErrors())) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorUnknownError, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Over ", context.GetConfig().GetMaxErrors()), " errors, page tree validation process aborted")));
-break;
-}
-context.SetCurrentPageNumber((int?)default!);
-++p;
-}
-} else {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNocatalog, "There are no Catalog entry in the Document"));
-}
-}
+public class PageTreeValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog
+      = context.GetDocument().GetDocumentCatalog();
+    if ((catalog != default!)) {
+      global::DripSharp.PdfCarton.Cos.COSDictionary catalogDict = catalog.GetCOSObject();
+      if (!((catalogDict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Pages) is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
+        this.AddValidationError(context,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorPdfProcessingMissing,
+          "/Pages dictionary entry is missing in document catalog"));
+        return;
+      }
+      int p = 0;
+      foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page in context.GetDocument().GetPages()) {
+        context.SetCurrentPageNumber(p);
+        this.validatePage(context, page);
+        if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(context.GetDocument().GetValidationErrors()) > context.GetConfig().GetMaxErrors())) {
+          context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorUnknownError,
+            global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Over ",
+            context.GetConfig().GetMaxErrors()), " errors, page tree validation process aborted")));
+          break;
+        }
+        context.SetCurrentPageNumber((int?)default!);
+        ++p;
+      }
+    } else {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNocatalog,
+        "There are no Catalog entry in the Document"));
+    }
+  }
 
-private void validatePage(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(context, page, global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.PageProcess);
-}
+  private void validatePage(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(context, page,
+      global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.PageProcess);
+  }
 }

@@ -8,8 +8,9 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
-public class PDAnnotationUnknown : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation {
-public PDAnnotationUnknown(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
+public class PDAnnotationUnknown
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation {
+  public PDAnnotationUnknown(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
 
-}
+  }
 }

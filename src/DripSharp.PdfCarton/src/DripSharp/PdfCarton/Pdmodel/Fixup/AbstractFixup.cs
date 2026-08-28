@@ -9,11 +9,11 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fixup;
 
 public abstract class AbstractFixup : global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup {
-protected internal readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument Document = null!;
+  protected internal readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument Document = null!;
 
-protected internal AbstractFixup(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-this.Document = document;
-}
+  protected internal AbstractFixup(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    this.Document = document;
+  }
 
-public abstract void Apply();
+  public abstract void Apply();
 }

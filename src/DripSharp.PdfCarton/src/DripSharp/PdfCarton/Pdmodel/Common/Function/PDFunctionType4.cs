@@ -9,39 +9,48 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function;
 
 public class PDFunctionType4 : global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction {
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators OPERATORS = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators OPERATORS
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators();
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence instructions = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence instructions
+    = null!;
 
-public PDFunctionType4(global::DripSharp.PdfCarton.Cos.COSBase functionStream) : base(functionStream) {
-sbyte[] bytes = this.GetPDStream().ToByteArray();
-string @string = global::DripSharp.Runtime.JavaCompat.NewString(bytes, global::DripSharp.Runtime.JavaStandardCharsets.ISO88591);
-this.instructions = global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder.Parse(@string);
-}
+  public PDFunctionType4(global::DripSharp.PdfCarton.Cos.COSBase functionStream)
+  : base(functionStream) {
+    sbyte[] bytes = this.GetPDStream().ToByteArray();
+    string @string = global::DripSharp.Runtime.JavaCompat.NewString(bytes,
+      global::DripSharp.Runtime.JavaStandardCharsets.ISO88591);
+    this.instructions
+      = global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder.Parse(@string);
+  }
 
-public override int GetFunctionType() {
-return 4;
-}
+  public override int GetFunctionType() {
+    return 4;
+  }
 
-public override float[] Eval(float[] input) {
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext(global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionType4.OPERATORS);
-for (int i__73_18 = 0; (i__73_18 < input.Length); i__73_18++) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRange domain = this.GetDomainForInput(i__73_18);
-float value = this.ClipToRange(input[i__73_18], domain.GetMin(), domain.GetMax());
-context.GetStack().Push(value);
-}
-this.instructions.Execute(context);
-int numberOfOutputValues = this.GetNumberOfOutputParameters();
-int numberOfActualOutputValues = context.GetStack().Count;
-if ((numberOfActualOutputValues < numberOfOutputValues)) {
-throw new global::System.InvalidOperationException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The type 4 function returned ", numberOfActualOutputValues), " values but the Range entry indicates that "), numberOfOutputValues), " values be returned."));
-}
-float[] outputValues = new float[numberOfOutputValues];
-for (int i__94_18 = (numberOfOutputValues - 1); (i__94_18 >= 0); i__94_18--) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRange range = this.GetRangeForOutput(i__94_18);
-outputValues[i__94_18] = context.PopReal();
-outputValues[i__94_18] = this.ClipToRange(outputValues[i__94_18], range.GetMin(), range.GetMax());
-}
-return outputValues;
-}
+  public override float[] Eval(float[] input) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext(global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionType4.OPERATORS);
+    for (int i__73_18 = 0; (i__73_18 < input.Length); i__73_18++) {
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDRange domain = this.GetDomainForInput(i__73_18);
+      float value = this.ClipToRange(input[i__73_18], domain.GetMin(), domain.GetMax());
+      context.GetStack().Push(value);
+    }
+    this.instructions.Execute(context);
+    int numberOfOutputValues = this.GetNumberOfOutputParameters();
+    int numberOfActualOutputValues = context.GetStack().Count;
+    if ((numberOfActualOutputValues < numberOfOutputValues)) {
+      throw new global::System.InvalidOperationException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The type 4 function returned ",
+        numberOfActualOutputValues), " values but the Range entry indicates that "),
+        numberOfOutputValues), " values be returned."));
+    }
+    float[] outputValues = new float[numberOfOutputValues];
+    for (int i__94_18 = (numberOfOutputValues - 1); (i__94_18 >= 0); i__94_18--) {
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDRange range = this.GetRangeForOutput(i__94_18);
+      outputValues[i__94_18] = context.PopReal();
+      outputValues[i__94_18] = this.ClipToRange(outputValues[i__94_18], range.GetMin(),
+        range.GetMax());
+    }
+    return outputValues;
+  }
 }

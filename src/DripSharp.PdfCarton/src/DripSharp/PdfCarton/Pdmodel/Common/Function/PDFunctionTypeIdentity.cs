@@ -8,24 +8,26 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function;
 
-public class PDFunctionTypeIdentity : global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction {
-public PDFunctionTypeIdentity(global::DripSharp.PdfCarton.Cos.COSBase function) : base((global::DripSharp.PdfCarton.Cos.COSBase)default!) {
+public class PDFunctionTypeIdentity
+: global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction {
+  public PDFunctionTypeIdentity(global::DripSharp.PdfCarton.Cos.COSBase function)
+  : base((global::DripSharp.PdfCarton.Cos.COSBase)default!) {
 
-}
+  }
 
-public override int GetFunctionType() {
-throw new global::System.NotSupportedException();
-}
+  public override int GetFunctionType() {
+    throw new global::System.NotSupportedException();
+  }
 
-public override float[] Eval(float[] input) {
-return input;
-}
+  public override float[] Eval(float[] input) {
+    return input;
+  }
 
-protected internal override global::DripSharp.PdfCarton.Cos.COSArray GetRangeValues() {
-return default!;
-}
+  protected internal override global::DripSharp.PdfCarton.Cos.COSArray GetRangeValues() {
+    return default!;
+  }
 
-public override string ToString() {
-return "FunctionTypeIdentity";
-}
+  public override string ToString() {
+    return "FunctionTypeIdentity";
+  }
 }

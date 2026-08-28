@@ -9,57 +9,70 @@
 namespace DripSharp.PdfCarton.Xmp.Xml;
 
 public sealed class DomHelper {
-private DomHelper() {}
+  private DomHelper() {}
 
-public static global::System.Xml.XmlElement GetUniqueElementChild(global::System.Xml.XmlElement description) {
-global::System.Xml.XmlNodeList nl = description.ChildNodes;
-int pos = -1;
-for (int i = 0; (i < nl.Count); i++) {
-if ((nl.Item(i) is global::System.Xml.XmlElement)) {
-if ((pos >= 0)) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Undefined, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Found two child elements in ", description));
-} else {
-pos = i;
-}
-}
-}
-return (global::System.Xml.XmlElement)(nl.Item(pos)!);
-}
+  public static global::System.Xml.XmlElement GetUniqueElementChild(global::System.Xml.XmlElement description) {
+    global::System.Xml.XmlNodeList nl = description.ChildNodes;
+    int pos = -1;
+    for (int i = 0; (i < nl.Count); i++) {
+      if ((nl.Item(i) is global::System.Xml.XmlElement)) {
+        if ((pos >= 0)) {
+          throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Undefined,
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Found two child elements in ",
+            description));
+        } else {
+          pos = i;
+        }
+      }
+    }
+    return (global::System.Xml.XmlElement)(nl.Item(pos)!);
+  }
 
-public static global::System.Xml.XmlElement GetFirstChildElement(global::System.Xml.XmlElement description) {
-global::System.Xml.XmlNodeList nl = description.ChildNodes;
-for (int i = 0; (i < nl.Count); i++) {
-if ((nl.Item(i) is global::System.Xml.XmlElement)) {
-return (global::System.Xml.XmlElement)(nl.Item(i)!);
-}
-}
-return default!;
-}
+  public static global::System.Xml.XmlElement GetFirstChildElement(global::System.Xml.XmlElement description) {
+    global::System.Xml.XmlNodeList nl = description.ChildNodes;
+    for (int i = 0; (i < nl.Count); i++) {
+      if ((nl.Item(i) is global::System.Xml.XmlElement)) {
+        return (global::System.Xml.XmlElement)(nl.Item(i)!);
+      }
+    }
+    return default!;
+  }
 
-public static global::System.Collections.Generic.IList<global::System.Xml.XmlElement> GetElementChildren(global::System.Xml.XmlElement description) {
-global::System.Xml.XmlNodeList nl = description.ChildNodes;
-global::System.Collections.Generic.IList<global::System.Xml.XmlElement> ret = new global::System.Collections.Generic.List<global::System.Xml.XmlElement>(nl.Count);
-for (int i = 0; (i < nl.Count); i++) {
-if ((nl.Item(i) is global::System.Xml.XmlElement)) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(ret, (global::System.Xml.XmlElement)(nl.Item(i)!));
-}
-}
-return ret;
-}
+  public static global::System.Collections.Generic.IList<global::System.Xml.XmlElement> GetElementChildren(global::System.Xml.XmlElement description) {
+    global::System.Xml.XmlNodeList nl = description.ChildNodes;
+    global::System.Collections.Generic.IList<global::System.Xml.XmlElement> ret
+      = new global::System.Collections.Generic.List<global::System.Xml.XmlElement>(nl.Count);
+    for (int i = 0; (i < nl.Count); i++) {
+      if ((nl.Item(i) is global::System.Xml.XmlElement)) {
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(ret,
+          (global::System.Xml.XmlElement)(nl.Item(i)!));
+      }
+    }
+    return ret;
+  }
 
-public static global::System.Xml.XmlQualifiedName GetQName(global::System.Xml.XmlElement element) {
-if ((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(element) == default!)) {
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewXmlQualifiedName(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(element), element.LocalName);
-}
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewXmlQualifiedName(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(element), element.LocalName, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(element));
-}
+  public static global::System.Xml.XmlQualifiedName GetQName(global::System.Xml.XmlElement element) {
+    if ((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(element) == default!)) {
+      return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewXmlQualifiedName(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(element),
+        element.LocalName);
+    }
+    return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewXmlQualifiedName(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(element),
+      element.LocalName, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(element));
+  }
 
-public static bool IsRdfDescription(global::System.Xml.XmlElement element) {
-return (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfPrefix, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(element)) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.DescriptionName, element.LocalName));
-}
+  public static bool IsRdfDescription(global::System.Xml.XmlElement element) {
+    return (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfPrefix,
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(element))
+      && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.DescriptionName,
+      element.LocalName));
+  }
 
-public static bool IsParseTypeResource(global::System.Xml.XmlElement element) {
-global::System.Xml.XmlAttribute parseType = element.GetAttributeNode(global::DripSharp.PdfCarton.Xmp.XmpConstants.ParseType, global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace);
-return ((parseType != default!) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.ResourceName, parseType.Value));
-}
+  public static bool IsParseTypeResource(global::System.Xml.XmlElement element) {
+    global::System.Xml.XmlAttribute parseType
+      = element.GetAttributeNode(global::DripSharp.PdfCarton.Xmp.XmpConstants.ParseType,
+      global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace);
+    return ((parseType != default!)
+      && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.ResourceName,
+      parseType.Value));
+  }
 }

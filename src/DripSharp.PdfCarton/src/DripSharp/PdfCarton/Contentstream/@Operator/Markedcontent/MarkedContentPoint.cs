@@ -8,23 +8,29 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent;
 
-public class MarkedContentPoint : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public MarkedContentPoint(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class MarkedContentPoint
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public MarkedContentPoint(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(operands)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, operands);
-}
-global::DripSharp.PdfCarton.Cos.COSBase base0 = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0);
-if (!((base0 is global::DripSharp.PdfCarton.Cos.COSName))) {
-return;
-}
-this.GetContext().MarkedContentPoint((global::DripSharp.PdfCarton.Cos.COSName)(base0!), (global::DripSharp.PdfCarton.Cos.COSDictionary)default!);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(operands)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        operands);
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base0
+      = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0);
+    if (!((base0 is global::DripSharp.PdfCarton.Cos.COSName))) {
+      return;
+    }
+    this.GetContext().MarkedContentPoint((global::DripSharp.PdfCarton.Cos.COSName)(base0!),
+      (global::DripSharp.PdfCarton.Cos.COSDictionary)default!);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPoint;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPoint;
+  }
 }

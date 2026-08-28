@@ -9,43 +9,49 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.State;
 
 public sealed class RenderingIntent {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("ABSOLUTE_COLORIMETRIC")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent AbsoluteColorimetric = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent("AbsoluteColorimetric");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("ABSOLUTE_COLORIMETRIC")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent AbsoluteColorimetric
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent("AbsoluteColorimetric");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("RELATIVE_COLORIMETRIC")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent RelativeColorimetric = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent("RelativeColorimetric");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("RELATIVE_COLORIMETRIC")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent RelativeColorimetric
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent("RelativeColorimetric");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("SATURATION")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent Saturation = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent("Saturation");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("SATURATION")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent Saturation
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent("Saturation");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("PERCEPTUAL")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent Perceptual = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent("Perceptual");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("PERCEPTUAL")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent Perceptual
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent("Perceptual");
 
-public static global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent FromString(string value) {
-foreach (global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent instance in global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent.values()) {
-if (global::DripSharp.Runtime.JavaCompat.Equals(instance.value, value)) {
-return instance;
-}
-}
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent.RelativeColorimetric;
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent FromString(string value) {
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent instance in global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent.values()) {
+      if (global::DripSharp.Runtime.JavaCompat.Equals(instance.value, value)) {
+        return instance;
+      }
+    }
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent.RelativeColorimetric;
+  }
 
-private readonly string value = null!;
+  private readonly string value = null!;
 
-private RenderingIntent(string value) {
-this.value = value;
-}
+  private RenderingIntent(string value) {
+    this.value = value;
+  }
 
-public string StringValue() {
-return this.value;
-}
+  public string StringValue() {
+    return this.value;
+  }
 
-public static RenderingIntent[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<RenderingIntent>();
-public static RenderingIntent valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<RenderingIntent>(name);
+  public static RenderingIntent[] values()
+    => global::DripSharp.Runtime.JavaCompat.EnumValues<RenderingIntent>();
+  public static RenderingIntent valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<RenderingIntent>(name);
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

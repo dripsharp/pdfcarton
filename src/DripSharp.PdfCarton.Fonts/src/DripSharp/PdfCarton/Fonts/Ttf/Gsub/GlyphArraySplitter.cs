@@ -9,17 +9,20 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Gsub;
 
 public interface GlyphArraySplitter {
-public global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>> Split(global::System.Collections.Generic.IList<int> glyphIds);
+  public global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>> Split(global::System.Collections.Generic.IList<int> glyphIds);
 }
 
-public sealed class __GlyphArraySplitterFunctionalAdapter : global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitter {
-private readonly global::System.Func<global::System.Collections.Generic.IList<int>, global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>>> implementation;
+public sealed class __GlyphArraySplitterFunctionalAdapter
+: global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitter {
+  private readonly global::System.Func<global::System.Collections.Generic.IList<int>,
+    global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>>> implementation;
 
-public __GlyphArraySplitterFunctionalAdapter(global::System.Func<global::System.Collections.Generic.IList<int>, global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>>> implementation) {
-this.implementation = implementation;
-}
+  public __GlyphArraySplitterFunctionalAdapter(global::System.Func<global::System.Collections.Generic.IList<int>,
+    global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>>> implementation) {
+    this.implementation = implementation;
+  }
 
-public global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>> Split(global::System.Collections.Generic.IList<int> glyphIds) {
-return this.implementation(glyphIds);
-}
+  public global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>> Split(global::System.Collections.Generic.IList<int> glyphIds) {
+    return this.implementation(glyphIds);
+  }
 }

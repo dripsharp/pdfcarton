@@ -9,39 +9,47 @@
 namespace DripSharp.PdfCarton.Util;
 
 public sealed class XMLUtil {
-private XMLUtil() {}
+  private XMLUtil() {}
 
-public static global::System.Xml.XmlDocument Parse(global::System.IO.Stream @is) {
-return global::DripSharp.PdfCarton.Util.XMLUtil.Parse(@is, false);
-}
+  public static global::System.Xml.XmlDocument Parse(global::System.IO.Stream @is) {
+    return global::DripSharp.PdfCarton.Util.XMLUtil.Parse(@is, false);
+  }
 
-public static global::System.Xml.XmlDocument Parse(global::System.IO.Stream @is, bool nsAware) {
-try {
-global::System.Xml.XmlReaderSettings builderFactory = global::DripSharp.Runtime.JavaCompat.NewXmlReaderSettings();
-global::DripSharp.Runtime.JavaCompat.XmlReaderSetFeature(builderFactory, "http://apache.org/xml/features/disallow-doctype-decl", true);
-global::DripSharp.Runtime.JavaCompat.XmlReaderSetFeature(builderFactory, "http://xml.org/sax/features/external-general-entities", false);
-global::DripSharp.Runtime.JavaCompat.XmlReaderSetFeature(builderFactory, "http://xml.org/sax/features/external-parameter-entities", false);
-global::DripSharp.Runtime.JavaCompat.XmlReaderSetFeature(builderFactory, "http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-global::DripSharp.Runtime.JavaCompat.XmlReaderSetXIncludeAware(builderFactory, false);
-global::DripSharp.Runtime.JavaCompat.XmlReaderSetExpandEntityReferences(builderFactory, false);
-global::DripSharp.Runtime.JavaCompat.XmlReaderSetNamespaceAware(builderFactory, nsAware);
-global::System.Xml.XmlReaderSettings builder = global::DripSharp.Runtime.JavaCompat.XmlReaderSettingsClone(builderFactory);
-return global::DripSharp.Runtime.JavaCompat.XmlParse(builder, @is);
-} catch (global::System.Xml.XmlException e) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e), e);
-}
-}
+  public static global::System.Xml.XmlDocument Parse(global::System.IO.Stream @is, bool nsAware) {
+    try {
+      global::System.Xml.XmlReaderSettings builderFactory
+        = global::DripSharp.Runtime.JavaCompat.NewXmlReaderSettings();
+      global::DripSharp.Runtime.JavaCompat.XmlReaderSetFeature(builderFactory,
+        "http://apache.org/xml/features/disallow-doctype-decl", true);
+      global::DripSharp.Runtime.JavaCompat.XmlReaderSetFeature(builderFactory,
+        "http://xml.org/sax/features/external-general-entities", false);
+      global::DripSharp.Runtime.JavaCompat.XmlReaderSetFeature(builderFactory,
+        "http://xml.org/sax/features/external-parameter-entities", false);
+      global::DripSharp.Runtime.JavaCompat.XmlReaderSetFeature(builderFactory,
+        "http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+      global::DripSharp.Runtime.JavaCompat.XmlReaderSetXIncludeAware(builderFactory, false);
+      global::DripSharp.Runtime.JavaCompat.XmlReaderSetExpandEntityReferences(builderFactory,
+        false);
+      global::DripSharp.Runtime.JavaCompat.XmlReaderSetNamespaceAware(builderFactory, nsAware);
+      global::System.Xml.XmlReaderSettings builder
+        = global::DripSharp.Runtime.JavaCompat.XmlReaderSettingsClone(builderFactory);
+      return global::DripSharp.Runtime.JavaCompat.XmlParse(builder, @is);
+    } catch (global::System.Xml.XmlException e) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e),
+        e);
+    }
+  }
 
-public static string GetNodeValue(global::System.Xml.XmlElement node) {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
-global::System.Xml.XmlNodeList children = node.ChildNodes;
-int numNodes = children.Count;
-for (int i = 0; (i < numNodes); i++) {
-global::System.Xml.XmlNode next = children.Item(i);
-if ((next is global::System.Xml.XmlText)) {
-sb.Append(next.Value);
-}
-}
-return sb.ToString();
-}
+  public static string GetNodeValue(global::System.Xml.XmlElement node) {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
+    global::System.Xml.XmlNodeList children = node.ChildNodes;
+    int numNodes = children.Count;
+    for (int i = 0; (i < numNodes); i++) {
+      global::System.Xml.XmlNode next = children.Item(i);
+      if ((next is global::System.Xml.XmlText)) {
+        sb.Append(next.Value);
+      }
+    }
+    return sb.ToString();
+  }
 }

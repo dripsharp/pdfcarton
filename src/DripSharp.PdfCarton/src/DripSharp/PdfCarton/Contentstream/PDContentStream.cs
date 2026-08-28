@@ -9,15 +9,15 @@
 namespace DripSharp.PdfCarton.Contentstream;
 
 public interface PDContentStream {
-public global::System.IO.Stream GetContents();
+  public global::System.IO.Stream GetContents();
 
-public global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForRandomAccess();
+  public global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForRandomAccess();
 
-public global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForStreamParsing();
+  public global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForStreamParsing();
 
-public global::DripSharp.PdfCarton.Pdmodel.PDResources GetResources();
+  public global::DripSharp.PdfCarton.Pdmodel.PDResources GetResources();
 
-public global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetBBox();
+  public global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetBBox();
 
-public global::DripSharp.PdfCarton.Util.Matrix GetMatrix();
+  public global::DripSharp.PdfCarton.Util.Matrix GetMatrix();
 }

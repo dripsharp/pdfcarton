@@ -8,25 +8,28 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
-public abstract class ShadingPaint<T> : global::DripSharp.Runtime.JavaPaint where T : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading {
-protected internal readonly T Shading = default!;
+public abstract class ShadingPaint<T> : global::DripSharp.Runtime.JavaPaint where T
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading {
+  protected internal readonly T Shading = default!;
 
-protected internal readonly global::DripSharp.PdfCarton.Util.Matrix Matrix = null!;
+  protected internal readonly global::DripSharp.PdfCarton.Util.Matrix Matrix = null!;
 
-internal ShadingPaint(T shading, global::DripSharp.PdfCarton.Util.Matrix matrix) {
-this.Shading = shading;
-this.Matrix = matrix;
-}
+  internal ShadingPaint(T shading, global::DripSharp.PdfCarton.Util.Matrix matrix) {
+    this.Shading = shading;
+    this.Matrix = matrix;
+  }
 
-public virtual T GetShading() {
-return this.Shading;
-}
+  public virtual T GetShading() {
+    return this.Shading;
+  }
 
-public virtual global::DripSharp.PdfCarton.Util.Matrix GetMatrix() {
-return this.Matrix;
-}
+  public virtual global::DripSharp.PdfCarton.Util.Matrix GetMatrix() {
+    return this.Matrix;
+  }
 
-public abstract global::DripSharp.Runtime.JavaPaintContext CreateContext(global::DripSharp.Runtime.JavaColorModel colorModel, global::SkiaSharp.SKRectI deviceBounds, global::SkiaSharp.SKRect userBounds, global::SkiaSharp.SKMatrix transform, global::DripSharp.Runtime.PdfCartonRenderingHints hints);
+  public abstract global::DripSharp.Runtime.JavaPaintContext CreateContext(global::DripSharp.Runtime.JavaColorModel colorModel,
+    global::SkiaSharp.SKRectI deviceBounds, global::SkiaSharp.SKRect userBounds,
+    global::SkiaSharp.SKMatrix transform, global::DripSharp.Runtime.PdfCartonRenderingHints hints);
 
-public abstract int GetTransparency();
+  public abstract int GetTransparency();
 }

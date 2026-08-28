@@ -9,141 +9,176 @@
 namespace DripSharp.PdfCarton.Multipdf;
 
 public class PDFCloneUtility {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument destination = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument destination = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSBase, global::DripSharp.PdfCarton.Cos.COSBase> clonedVersion = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSBase, global::DripSharp.PdfCarton.Cos.COSBase>();
+  private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSBase,
+    global::DripSharp.PdfCarton.Cos.COSBase> clonedVersion
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSBase,
+    global::DripSharp.PdfCarton.Cos.COSBase>();
 
-private readonly global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSBase> clonedValues = new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSBase>();
+  private readonly global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSBase> clonedValues
+    = new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSBase>();
 
-protected internal PDFCloneUtility(global::DripSharp.PdfCarton.Pdmodel.PDDocument dest) {
-this.destination = dest;
-}
+  protected internal PDFCloneUtility(global::DripSharp.PdfCarton.Pdmodel.PDDocument dest) {
+    this.destination = dest;
+  }
 
-internal virtual global::DripSharp.PdfCarton.Pdmodel.PDDocument getDestination() {
-return this.destination;
-}
+  internal virtual global::DripSharp.PdfCarton.Pdmodel.PDDocument getDestination() {
+    return this.destination;
+  }
 
-public virtual TCOSBASE CloneForNewDocument<TCOSBASE>(TCOSBASE @base) where TCOSBASE : global::DripSharp.PdfCarton.Cos.COSBase {
-if ((@base is null)) {
-return default!;
-}
-global::DripSharp.PdfCarton.Cos.COSBase retval = global::DripSharp.Runtime.JavaCompat.MapGet(this.clonedVersion, @base);
-if ((retval != default!)) {
-return global::DripSharp.Runtime.JavaCompat.CastReference<TCOSBASE>(retval);
-}
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.clonedValues, @base)) {
-return @base;
-}
-retval = this.cloneCOSBaseForNewDocument(@base);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.clonedVersion, @base, retval);
-this.clonedValues.Add(retval);
-return global::DripSharp.Runtime.JavaCompat.CastReference<TCOSBASE>(retval);
-}
+  public virtual TCOSBASE CloneForNewDocument<TCOSBASE>(TCOSBASE @base) where TCOSBASE
+  : global::DripSharp.PdfCarton.Cos.COSBase {
+    if ((@base is null)) {
+      return default!;
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase retval
+      = global::DripSharp.Runtime.JavaCompat.MapGet(this.clonedVersion, @base);
+    if ((retval != default!)) {
+      return global::DripSharp.Runtime.JavaCompat.CastReference<TCOSBASE>(retval);
+    }
+    if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.clonedValues, @base)) {
+      return @base;
+    }
+    retval = this.cloneCOSBaseForNewDocument(@base);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.clonedVersion, @base, retval);
+    this.clonedValues.Add(retval);
+    return global::DripSharp.Runtime.JavaCompat.CastReference<TCOSBASE>(retval);
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSBase cloneCOSBaseForNewDocument(global::DripSharp.PdfCarton.Cos.COSBase @base) {
-if ((@base is global::DripSharp.PdfCarton.Cos.COSObject)) {
-return this.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(((global::DripSharp.PdfCarton.Cos.COSObject)(@base!)).GetObject());
-}
-if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
-return this.cloneCOSArray((global::DripSharp.PdfCarton.Cos.COSArray)(@base!));
-}
-if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
-return this.cloneCOSStream((global::DripSharp.PdfCarton.Cos.COSStream)(@base!));
-}
-if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-return this.cloneCOSDictionary((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
-}
-return @base;
-}
+  private global::DripSharp.PdfCarton.Cos.COSBase cloneCOSBaseForNewDocument(global::DripSharp.PdfCarton.Cos.COSBase @base) {
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSObject)) {
+      return this.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(((global::DripSharp.PdfCarton.Cos.COSObject)(@base!)).GetObject());
+    }
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      return this.cloneCOSArray((global::DripSharp.PdfCarton.Cos.COSArray)(@base!));
+    }
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
+      return this.cloneCOSStream((global::DripSharp.PdfCarton.Cos.COSStream)(@base!));
+    }
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+      return this.cloneCOSDictionary((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
+    }
+    return @base;
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSArray cloneCOSArray(global::DripSharp.PdfCarton.Cos.COSArray array) {
-global::DripSharp.PdfCarton.Cos.COSArray newArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-for (int i = 0; (i < array.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase value = array.Get(i);
-if (this.hasSelfReference(array, value)) {
-newArray.Add(newArray);
-} else {
-newArray.Add(this.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(value));
-}
-}
-return newArray;
-}
+  private global::DripSharp.PdfCarton.Cos.COSArray cloneCOSArray(global::DripSharp.PdfCarton.Cos.COSArray array) {
+    global::DripSharp.PdfCarton.Cos.COSArray newArray
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    for (int i = 0; (i < array.Size()); i++) {
+      global::DripSharp.PdfCarton.Cos.COSBase value = array.Get(i);
+      if (this.hasSelfReference(array, value)) {
+        newArray.Add(newArray);
+      } else {
+        newArray.Add(this.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(value));
+      }
+    }
+    return newArray;
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSStream cloneCOSStream(global::DripSharp.PdfCarton.Cos.COSStream stream) {
-global::DripSharp.PdfCarton.Cos.COSStream newStream = this.destination.GetDocument().CreateCOSStream();
-using (global::System.IO.Stream output = newStream.CreateRawOutputStream()) using (global::System.IO.Stream input = stream.CreateRawInputStream()) {
-global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, output);
-}
-global::DripSharp.Runtime.JavaCompat.MapPut(this.clonedVersion, stream, newStream);
-foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Cos.COSBase> entry in stream.EntrySet()) {
-global::DripSharp.PdfCarton.Cos.COSBase value = entry.Value;
-if (this.hasSelfReference(stream, value)) {
-newStream.SetItem(entry.Key, newStream);
-} else {
-newStream.SetItem(entry.Key, this.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(value));
-}
-}
-return newStream;
-}
+  private global::DripSharp.PdfCarton.Cos.COSStream cloneCOSStream(global::DripSharp.PdfCarton.Cos.COSStream stream) {
+    global::DripSharp.PdfCarton.Cos.COSStream newStream
+      = this.destination.GetDocument().CreateCOSStream();
+    using (global::System.IO.Stream output
+      = newStream.CreateRawOutputStream()) using (global::System.IO.Stream input
+      = stream.CreateRawInputStream()) {
+      global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, output);
+    }
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.clonedVersion, stream, newStream);
+    foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName,
+      global::DripSharp.PdfCarton.Cos.COSBase> entry in stream.EntrySet()) {
+      global::DripSharp.PdfCarton.Cos.COSBase value = entry.Value;
+      if (this.hasSelfReference(stream, value)) {
+        newStream.SetItem(entry.Key, newStream);
+      } else {
+        newStream.SetItem(entry.Key,
+          this.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(value));
+      }
+    }
+    return newStream;
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSDictionary cloneCOSDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-global::DripSharp.PdfCarton.Cos.COSDictionary newDictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-global::DripSharp.Runtime.JavaCompat.MapPut(this.clonedVersion, dictionary, newDictionary);
-foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Cos.COSBase> entry in dictionary.EntrySet()) {
-global::DripSharp.PdfCarton.Cos.COSBase value = entry.Value;
-if (this.hasSelfReference(dictionary, value)) {
-newDictionary.SetItem(entry.Key, newDictionary);
-} else {
-newDictionary.SetItem(entry.Key, this.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(value));
-}
-}
-return newDictionary;
-}
+  private global::DripSharp.PdfCarton.Cos.COSDictionary cloneCOSDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary newDictionary
+      = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.clonedVersion, dictionary, newDictionary);
+    foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName,
+      global::DripSharp.PdfCarton.Cos.COSBase> entry in dictionary.EntrySet()) {
+      global::DripSharp.PdfCarton.Cos.COSBase value = entry.Value;
+      if (this.hasSelfReference(dictionary, value)) {
+        newDictionary.SetItem(entry.Key, newDictionary);
+      } else {
+        newDictionary.SetItem(entry.Key,
+          this.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(value));
+      }
+    }
+    return newDictionary;
+  }
 
-internal virtual void cloneMerge(global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable @base, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable target) {
-if (((@base == default!) || (@base == target))) {
-return;
-}
-this.cloneMergeCOSBase(@base.GetCOSObject(), target.GetCOSObject());
-}
+  internal virtual void cloneMerge(global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable @base,
+    global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable target) {
+    if (((@base == default!) || (@base == target))) {
+      return;
+    }
+    this.cloneMergeCOSBase(@base.GetCOSObject(), target.GetCOSObject());
+  }
 
-private void cloneMergeCOSBase(global::DripSharp.PdfCarton.Cos.COSBase source, global::DripSharp.PdfCarton.Cos.COSBase target) {
-global::DripSharp.PdfCarton.Cos.COSBase sourceBase = ((source is global::DripSharp.PdfCarton.Cos.COSObject) ? ((global::DripSharp.PdfCarton.Cos.COSObject)(source!)).GetObject() : source);
-global::DripSharp.PdfCarton.Cos.COSBase targetBase = ((target is global::DripSharp.PdfCarton.Cos.COSObject) ? ((global::DripSharp.PdfCarton.Cos.COSObject)(target!)).GetObject() : target);
-if (((sourceBase is global::DripSharp.PdfCarton.Cos.COSArray) && (targetBase is global::DripSharp.PdfCarton.Cos.COSArray))) {
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(sourceBase!);
-global::DripSharp.PdfCarton.Cos.COSArray targetBaseArray = (global::DripSharp.PdfCarton.Cos.COSArray)(targetBase!);
-for (int i = 0; (i < array.Size()); i++) {
-targetBaseArray.Add(this.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(array.Get(i)));
-}
-} else {
-if (((sourceBase is global::DripSharp.PdfCarton.Cos.COSDictionary) && (targetBase is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
-global::DripSharp.PdfCarton.Cos.COSDictionary sourceDict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(sourceBase!);
-global::DripSharp.PdfCarton.Cos.COSDictionary targetDict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(targetBase!);
-foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Cos.COSBase> entry in sourceDict.EntrySet()) {
-global::DripSharp.PdfCarton.Cos.COSName key = entry.Key;
-global::DripSharp.PdfCarton.Cos.COSBase value = entry.Value;
-if ((targetDict.GetItem(key) != default!)) {
-this.cloneMerge(value, targetDict.GetItem(key));
-} else {
-targetDict.SetItem(key, this.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(value));
-}
-}
-}
-}
-}
+  private void cloneMergeCOSBase(global::DripSharp.PdfCarton.Cos.COSBase source,
+    global::DripSharp.PdfCarton.Cos.COSBase target) {
+    global::DripSharp.PdfCarton.Cos.COSBase sourceBase
+      = ((source is global::DripSharp.PdfCarton.Cos.COSObject)
+      ? ((global::DripSharp.PdfCarton.Cos.COSObject)(source!)).GetObject() : source);
+    global::DripSharp.PdfCarton.Cos.COSBase targetBase
+      = ((target is global::DripSharp.PdfCarton.Cos.COSObject)
+      ? ((global::DripSharp.PdfCarton.Cos.COSObject)(target!)).GetObject() : target);
+    if (((sourceBase is global::DripSharp.PdfCarton.Cos.COSArray)
+      && (targetBase is global::DripSharp.PdfCarton.Cos.COSArray))) {
+      global::DripSharp.PdfCarton.Cos.COSArray array
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(sourceBase!);
+      global::DripSharp.PdfCarton.Cos.COSArray targetBaseArray
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(targetBase!);
+      for (int i = 0; (i < array.Size()); i++) {
+        targetBaseArray.Add(this.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(array.Get(i)));
+      }
+    } else {
+      if (((sourceBase is global::DripSharp.PdfCarton.Cos.COSDictionary)
+        && (targetBase is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary sourceDict
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(sourceBase!);
+        global::DripSharp.PdfCarton.Cos.COSDictionary targetDict
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(targetBase!);
+        foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName,
+          global::DripSharp.PdfCarton.Cos.COSBase> entry in sourceDict.EntrySet()) {
+          global::DripSharp.PdfCarton.Cos.COSName key = entry.Key;
+          global::DripSharp.PdfCarton.Cos.COSBase value = entry.Value;
+          if ((targetDict.GetItem(key) != default!)) {
+            this.cloneMerge(value, targetDict.GetItem(key));
+          } else {
+            targetDict.SetItem(key,
+              this.CloneForNewDocument<global::DripSharp.PdfCarton.Cos.COSBase>(value));
+          }
+        }
+      }
+    }
+  }
 
-private bool hasSelfReference(global::DripSharp.PdfCarton.Cos.COSBase parent, global::DripSharp.PdfCarton.Cos.COSBase value) {
-if ((value is global::DripSharp.PdfCarton.Cos.COSObject)) {
-global::DripSharp.PdfCarton.Cos.COSBase actual = ((global::DripSharp.PdfCarton.Cos.COSObject)(value!)).GetObject();
-if ((actual == parent)) {
-global::DripSharp.PdfCarton.Cos.COSObject cosObj = (global::DripSharp.PdfCarton.Cos.COSObject)(value!);
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(((object)(parent)).GetType().Name, " object has a reference to itself: "), cosObj.GetKey())));
-return true;
-}
-}
-return false;
-}
+  private bool hasSelfReference(global::DripSharp.PdfCarton.Cos.COSBase parent,
+    global::DripSharp.PdfCarton.Cos.COSBase value) {
+    if ((value is global::DripSharp.PdfCarton.Cos.COSObject)) {
+      global::DripSharp.PdfCarton.Cos.COSBase actual
+        = ((global::DripSharp.PdfCarton.Cos.COSObject)(value!)).GetObject();
+      if ((actual == parent)) {
+        global::DripSharp.PdfCarton.Cos.COSObject cosObj
+          = (global::DripSharp.PdfCarton.Cos.COSObject)(value!);
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.PDFCloneUtility.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(((object)(parent)).GetType().Name,
+          " object has a reference to itself: "), cosObj.GetKey())));
+        return true;
+      }
+    }
+    return false;
+  }
 }

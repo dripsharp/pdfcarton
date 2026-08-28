@@ -9,294 +9,389 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFDictionary : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary fdf = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary fdf = null!;
 
-public FDFDictionary() {
-this.fdf = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public FDFDictionary() {
+    this.fdf = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public FDFDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary fdfDictionary) {
-this.fdf = fdfDictionary;
-}
+  public FDFDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary fdfDictionary) {
+    this.fdf = fdfDictionary;
+  }
 
-public FDFDictionary(global::System.Xml.XmlElement fdfXML) : this() {
-global::System.Xml.XmlNodeList nodeList = fdfXML.ChildNodes;
-for (int i = 0; (i < nodeList.Count); i++) {
-global::System.Xml.XmlNode node = nodeList.Item(i);
-if ((node is global::System.Xml.XmlElement)) {
-global::System.Xml.XmlElement child = (global::System.Xml.XmlElement)(node!);
-switch (child.Name) {
-case var __case_86_26_0 when global::System.Object.Equals(__case_86_26_0, "f"):
-global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDSimpleFileSpecification fs = new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDSimpleFileSpecification();
-fs.SetFile(child.GetAttribute("href"));
-this.SetFile(fs);
-break;
-case var __case_91_26_0 when global::System.Object.Equals(__case_91_26_0, "ids"):
-global::DripSharp.PdfCarton.Cos.COSArray ids = new global::DripSharp.PdfCarton.Cos.COSArray();
-string original = child.GetAttribute("original");
-string modified = child.GetAttribute("modified");
-try {
-ids.Add(global::DripSharp.PdfCarton.Cos.COSString.ParseHex(original));
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error parsing ID entry for attribute 'original' [", original), "]. ID entry ignored.")));
-}
-try {
-ids.Add(global::DripSharp.PdfCarton.Cos.COSString.ParseHex(modified));
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error parsing ID entry for attribute 'modified' [", modified), "]. ID entry ignored.")));
-}
-this.SetID(ids);
-break;
-case var __case_115_26_0 when global::System.Object.Equals(__case_115_26_0, "fields"):
-global::System.Xml.XmlNodeList fields = child.ChildNodes;
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fieldList = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField>();
-for (int f = 0; (f < fields.Count); f++) {
-global::System.Xml.XmlNode currentNode = fields.Item(f);
-if (((currentNode is global::System.Xml.XmlElement) && global::DripSharp.Runtime.JavaCompat.Equals(((global::System.Xml.XmlElement)(currentNode!)).Name, "field"))) {
-try {
-global::DripSharp.Runtime.JavaCompat.Add(fieldList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField((global::System.Xml.XmlElement)(currentNode!)));
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error parsing field entry [", currentNode.Value), "]. Field ignored.")));
-}
-}
-}
-this.SetFields(fieldList);
-break;
-case var __case_137_26_0 when global::System.Object.Equals(__case_137_26_0, "annots"):
-global::System.Xml.XmlNodeList annots = child.ChildNodes;
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> annotList = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation>();
-for (int j = 0; (j < annots.Count); j++) {
-global::System.Xml.XmlNode annotNode = annots.Item(j);
-if ((annotNode is global::System.Xml.XmlElement)) {
-global::System.Xml.XmlElement annot = (global::System.Xml.XmlElement)(annotNode!);
-string annotationName = annot.Name;
-try {
-switch (annotationName) {
-case var __case_152_46_0 when global::System.Object.Equals(__case_152_46_0, "text"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationText(annot));
-break;
-case var __case_155_46_0 when global::System.Object.Equals(__case_155_46_0, "caret"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationCaret(annot));
-break;
-case var __case_158_46_0 when global::System.Object.Equals(__case_158_46_0, "freetext"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFreeText(annot));
-break;
-case var __case_161_46_0 when global::System.Object.Equals(__case_161_46_0, "fileattachment"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFileAttachment(annot));
-break;
-case var __case_164_46_0 when global::System.Object.Equals(__case_164_46_0, "highlight"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationHighlight(annot));
-break;
-case var __case_167_46_0 when global::System.Object.Equals(__case_167_46_0, "ink"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationInk(annot));
-break;
-case var __case_170_46_0 when global::System.Object.Equals(__case_170_46_0, "line"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationLine(annot));
-break;
-case var __case_173_46_0 when global::System.Object.Equals(__case_173_46_0, "link"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationLink(annot));
-break;
-case var __case_176_46_0 when global::System.Object.Equals(__case_176_46_0, "circle"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationCircle(annot));
-break;
-case var __case_179_46_0 when global::System.Object.Equals(__case_179_46_0, "square"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationSquare(annot));
-break;
-case var __case_182_46_0 when global::System.Object.Equals(__case_182_46_0, "polygon"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationPolygon(annot));
-break;
-case var __case_185_46_0 when global::System.Object.Equals(__case_185_46_0, "polyline"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationPolyline(annot));
-break;
-case var __case_188_46_0 when global::System.Object.Equals(__case_188_46_0, "sound"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationSound(annot));
-break;
-case var __case_191_46_0 when global::System.Object.Equals(__case_191_46_0, "squiggly"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationSquiggly(annot));
-break;
-case var __case_194_46_0 when global::System.Object.Equals(__case_194_46_0, "stamp"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStamp(annot));
-break;
-case var __case_197_46_0 when global::System.Object.Equals(__case_197_46_0, "strikeout"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStrikeOut(annot));
-break;
-case var __case_200_46_0 when global::System.Object.Equals(__case_200_46_0, "underline"):
-global::DripSharp.Runtime.JavaCompat.Add(annotList, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationUnderline(annot));
-break;
-default:
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unknown or unsupported annotation type '", annotationName), "'")));
-break;
-}
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error parsing annotation information [", annot.Value), "]. Annotation ignored")));
-}
-}
-}
-this.SetAnnotations(annotList);
-break;
-default:
-break;
-}
-}
-}
-}
+  public FDFDictionary(global::System.Xml.XmlElement fdfXML) : this() {
+    global::System.Xml.XmlNodeList nodeList = fdfXML.ChildNodes;
+    for (int i = 0; (i < nodeList.Count); i++) {
+      global::System.Xml.XmlNode node = nodeList.Item(i);
+      if ((node is global::System.Xml.XmlElement)) {
+        global::System.Xml.XmlElement child = (global::System.Xml.XmlElement)(node!);
+        switch (child.Name) {
+          case var __case_86_26_0 when global::System.Object.Equals(__case_86_26_0, "f"):
+            global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDSimpleFileSpecification fs
+              = new global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDSimpleFileSpecification();
+            fs.SetFile(child.GetAttribute("href"));
+            this.SetFile(fs);
+            break;
+          case var __case_91_26_0 when global::System.Object.Equals(__case_91_26_0, "ids"):
+            global::DripSharp.PdfCarton.Cos.COSArray ids
+              = new global::DripSharp.PdfCarton.Cos.COSArray();
+            string original = child.GetAttribute("original");
+            string modified = child.GetAttribute("modified");
+            try {
+              ids.Add(global::DripSharp.PdfCarton.Cos.COSString.ParseHex(original));
+            } catch (global::System.IO.IOException e) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary.LOG,
+                (global::System.Exception)e,
+                global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error parsing ID entry for attribute 'original' [",
+                original), "]. ID entry ignored.")));
+            }
+            try {
+              ids.Add(global::DripSharp.PdfCarton.Cos.COSString.ParseHex(modified));
+            } catch (global::System.IO.IOException e) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary.LOG,
+                (global::System.Exception)e,
+                global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error parsing ID entry for attribute 'modified' [",
+                modified), "]. ID entry ignored.")));
+            }
+            this.SetID(ids);
+            break;
+          case var __case_115_26_0 when global::System.Object.Equals(__case_115_26_0, "fields"):
+            global::System.Xml.XmlNodeList fields = child.ChildNodes;
+            global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fieldList
+              = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField>();
+            for (int f = 0; (f < fields.Count); f++) {
+              global::System.Xml.XmlNode currentNode = fields.Item(f);
+              if (((currentNode is global::System.Xml.XmlElement)
+                && global::DripSharp.Runtime.JavaCompat.Equals(((global::System.Xml.XmlElement)(currentNode!)).Name,
+                "field"))) {
+                try {
+                  global::DripSharp.Runtime.JavaCompat.Add(fieldList,
+                    new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField((global::System.Xml.XmlElement)(currentNode!)));
+                } catch (global::System.IO.IOException e) {
+                  global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary.LOG,
+                    (global::System.Exception)e,
+                    global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error parsing field entry [",
+                    currentNode.Value), "]. Field ignored.")));
+                }
+              }
+            }
+            this.SetFields(fieldList);
+            break;
+          case var __case_137_26_0 when global::System.Object.Equals(__case_137_26_0, "annots"):
+            global::System.Xml.XmlNodeList annots = child.ChildNodes;
+            global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> annotList
+              = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation>();
+            for (int j = 0; (j < annots.Count); j++) {
+              global::System.Xml.XmlNode annotNode = annots.Item(j);
+              if ((annotNode is global::System.Xml.XmlElement)) {
+                global::System.Xml.XmlElement annot = (global::System.Xml.XmlElement)(annotNode!);
+                string annotationName = annot.Name;
+                try {
+                  switch (annotationName) {
+                    case var __case_152_46_0 when global::System.Object.Equals(__case_152_46_0,
+                        "text"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationText(annot));
+                      break;
+                    case var __case_155_46_0 when global::System.Object.Equals(__case_155_46_0,
+                        "caret"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationCaret(annot));
+                      break;
+                    case var __case_158_46_0 when global::System.Object.Equals(__case_158_46_0,
+                        "freetext"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFreeText(annot));
+                      break;
+                    case var __case_161_46_0 when global::System.Object.Equals(__case_161_46_0,
+                        "fileattachment"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFileAttachment(annot));
+                      break;
+                    case var __case_164_46_0 when global::System.Object.Equals(__case_164_46_0,
+                        "highlight"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationHighlight(annot));
+                      break;
+                    case var __case_167_46_0 when global::System.Object.Equals(__case_167_46_0,
+                        "ink"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationInk(annot));
+                      break;
+                    case var __case_170_46_0 when global::System.Object.Equals(__case_170_46_0,
+                        "line"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationLine(annot));
+                      break;
+                    case var __case_173_46_0 when global::System.Object.Equals(__case_173_46_0,
+                        "link"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationLink(annot));
+                      break;
+                    case var __case_176_46_0 when global::System.Object.Equals(__case_176_46_0,
+                        "circle"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationCircle(annot));
+                      break;
+                    case var __case_179_46_0 when global::System.Object.Equals(__case_179_46_0,
+                        "square"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationSquare(annot));
+                      break;
+                    case var __case_182_46_0 when global::System.Object.Equals(__case_182_46_0,
+                        "polygon"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationPolygon(annot));
+                      break;
+                    case var __case_185_46_0 when global::System.Object.Equals(__case_185_46_0,
+                        "polyline"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationPolyline(annot));
+                      break;
+                    case var __case_188_46_0 when global::System.Object.Equals(__case_188_46_0,
+                        "sound"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationSound(annot));
+                      break;
+                    case var __case_191_46_0 when global::System.Object.Equals(__case_191_46_0,
+                        "squiggly"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationSquiggly(annot));
+                      break;
+                    case var __case_194_46_0 when global::System.Object.Equals(__case_194_46_0,
+                        "stamp"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStamp(annot));
+                      break;
+                    case var __case_197_46_0 when global::System.Object.Equals(__case_197_46_0,
+                        "strikeout"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStrikeOut(annot));
+                      break;
+                    case var __case_200_46_0 when global::System.Object.Equals(__case_200_46_0,
+                        "underline"):
+                      global::DripSharp.Runtime.JavaCompat.Add(annotList,
+                        new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationUnderline(annot));
+                      break;
+                    default:
+                      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary.LOG,
+                        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unknown or unsupported annotation type '",
+                        annotationName), "'")));
+                      break;
+                  }
+                } catch (global::System.IO.IOException e) {
+                  global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDictionary.LOG,
+                    (global::System.Exception)e,
+                    global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error parsing annotation information [",
+                    annot.Value), "]. Annotation ignored")));
+                }
+              }
+            }
+            this.SetAnnotations(annotList);
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
 
-public virtual void WriteXML(global::System.IO.TextWriter output) {
-global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification fs = this.GetFile();
-if ((fs != default!)) {
-output.Write(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("<f href=\"", fs.GetFile()), "\" />\n"));
-}
-global::DripSharp.PdfCarton.Cos.COSArray ids = this.GetID();
-if ((ids != default!)) {
-global::DripSharp.PdfCarton.Cos.COSString original = (global::DripSharp.PdfCarton.Cos.COSString)(ids.GetObject(0)!);
-global::DripSharp.PdfCarton.Cos.COSString modified = (global::DripSharp.PdfCarton.Cos.COSString)(ids.GetObject(1)!);
-output.Write(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("<ids original=\"", original.ToHexString()), "\" "));
-output.Write(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("modified=\"", modified.ToHexString()), "\" />\n"));
-}
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fields = this.GetFields();
-if (((fields != default!) && (global::DripSharp.Runtime.JavaCompat.CollectionCount(fields) > 0))) {
-output.Write("<fields>\n");
-foreach (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField field in fields) {
-field.WriteXML(output);
-}
-output.Write("</fields>\n");
-}
-}
+  public virtual void WriteXML(global::System.IO.TextWriter output) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification fs
+      = this.GetFile();
+    if ((fs != default!)) {
+      output.Write(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("<f href=\"",
+        fs.GetFile()), "\" />\n"));
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray ids = this.GetID();
+    if ((ids != default!)) {
+      global::DripSharp.PdfCarton.Cos.COSString original
+        = (global::DripSharp.PdfCarton.Cos.COSString)(ids.GetObject(0)!);
+      global::DripSharp.PdfCarton.Cos.COSString modified
+        = (global::DripSharp.PdfCarton.Cos.COSString)(ids.GetObject(1)!);
+      output.Write(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("<ids original=\"",
+        original.ToHexString()), "\" "));
+      output.Write(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("modified=\"",
+        modified.ToHexString()), "\" />\n"));
+    }
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fields
+      = this.GetFields();
+    if (((fields != default!)
+      && (global::DripSharp.Runtime.JavaCompat.CollectionCount(fields) > 0))) {
+      output.Write("<fields>\n");
+      foreach (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField field in fields) {
+        field.WriteXML(output);
+      }
+      output.Write("</fields>\n");
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.fdf;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.fdf;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification GetFile() {
-return global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification.CreateFS(this.fdf.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.F));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification GetFile() {
+    return global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification.CreateFS(this.fdf.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.F));
+  }
 
-public void SetFile(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification fs) {
-this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, fs);
-}
+  public void SetFile(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification fs) {
+    this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, fs);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSArray GetID() {
-return this.fdf.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Id);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSArray GetID() {
+    return this.fdf.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Id);
+  }
 
-public void SetID(global::DripSharp.PdfCarton.Cos.COSArray id) {
-this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Id, id);
-}
+  public void SetID(global::DripSharp.PdfCarton.Cos.COSArray id) {
+    this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Id, id);
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> GetFields() {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> retval = default!;
-global::DripSharp.PdfCarton.Cos.COSArray fieldArray = this.fdf.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Fields);
-if ((fieldArray != default!)) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fields = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField>(fieldArray.Size());
-for (int i = 0; (i < fieldArray.Size()); i++) {
-global::DripSharp.Runtime.JavaCompat.Add(fields, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField((global::DripSharp.PdfCarton.Cos.COSDictionary)(fieldArray.GetObject(i)!)));
-}
-retval = new global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField>(fields, fieldArray);
-}
-return retval!;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> GetFields() {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> retval
+      = default!;
+    global::DripSharp.PdfCarton.Cos.COSArray fieldArray
+      = this.fdf.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Fields);
+    if ((fieldArray != default!)) {
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fields
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField>(fieldArray.Size());
+      for (int i = 0; (i < fieldArray.Size()); i++) {
+        global::DripSharp.Runtime.JavaCompat.Add(fields,
+          new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField((global::DripSharp.PdfCarton.Cos.COSDictionary)(fieldArray.GetObject(i)!)));
+      }
+      retval
+        = new global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField>(fields,
+        fieldArray);
+    }
+    return retval!;
+  }
 
-public void SetFields(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fields) {
-this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fields, new global::DripSharp.PdfCarton.Cos.COSArray(fields));
-}
+  public void SetFields(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fields) {
+    this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fields,
+      new global::DripSharp.PdfCarton.Cos.COSArray(fields));
+  }
 
-public virtual string GetStatus() {
-return this.fdf.GetString(global::DripSharp.PdfCarton.Cos.COSName.Status);
-}
+  public virtual string GetStatus() {
+    return this.fdf.GetString(global::DripSharp.PdfCarton.Cos.COSName.Status);
+  }
 
-public virtual void SetStatus(string status) {
-this.fdf.SetString(global::DripSharp.PdfCarton.Cos.COSName.Status, status);
-}
+  public virtual void SetStatus(string status) {
+    this.fdf.SetString(global::DripSharp.PdfCarton.Cos.COSName.Status, status);
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage> GetPages() {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage> retval = default!;
-global::DripSharp.PdfCarton.Cos.COSArray pageArray = this.fdf.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Pages);
-if ((pageArray != default!)) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage> pages = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage>(pageArray.Size());
-for (int i = 0; (i < pageArray.Size()); i++) {
-global::DripSharp.Runtime.JavaCompat.Add(pages, new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage((global::DripSharp.PdfCarton.Cos.COSDictionary)(pageArray.Get(i)!)));
-}
-retval = new global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage>(pages, pageArray);
-}
-return retval!;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage> GetPages() {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage> retval
+      = default!;
+    global::DripSharp.PdfCarton.Cos.COSArray pageArray
+      = this.fdf.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Pages);
+    if ((pageArray != default!)) {
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage> pages
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage>(pageArray.Size());
+      for (int i = 0; (i < pageArray.Size()); i++) {
+        global::DripSharp.Runtime.JavaCompat.Add(pages,
+          new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage((global::DripSharp.PdfCarton.Cos.COSDictionary)(pageArray.Get(i)!)));
+      }
+      retval
+        = new global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage>(pages,
+        pageArray);
+    }
+    return retval!;
+  }
 
-public virtual void SetPages(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage> pages) {
-this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Pages, new global::DripSharp.PdfCarton.Cos.COSArray(pages));
-}
+  public virtual void SetPages(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFPage> pages) {
+    this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Pages,
+      new global::DripSharp.PdfCarton.Cos.COSArray(pages));
+  }
 
-public virtual string GetEncoding() {
-string encoding = this.fdf.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Encoding);
-if ((encoding == default!)) {
-encoding = "PDFDocEncoding";
-}
-return encoding;
-}
+  public virtual string GetEncoding() {
+    string encoding = this.fdf.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Encoding);
+    if ((encoding == default!)) {
+      encoding = "PDFDocEncoding";
+    }
+    return encoding;
+  }
 
-public virtual void SetEncoding(string encoding) {
-this.fdf.SetName(global::DripSharp.PdfCarton.Cos.COSName.Encoding, encoding);
-}
+  public virtual void SetEncoding(string encoding) {
+    this.fdf.SetName(global::DripSharp.PdfCarton.Cos.COSName.Encoding, encoding);
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> GetAnnotations() {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> retval = default!;
-global::DripSharp.PdfCarton.Cos.COSArray annotArray = this.fdf.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Annots);
-if ((annotArray != default!)) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> annots = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation>(annotArray.Size());
-for (int i = 0; (i < annotArray.Size()); i++) {
-global::DripSharp.Runtime.JavaCompat.Add(annots, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(annotArray.GetObject(i)!)));
-}
-retval = new global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation>(annots, annotArray);
-}
-return retval!;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> GetAnnotations() {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> retval
+      = default!;
+    global::DripSharp.PdfCarton.Cos.COSArray annotArray
+      = this.fdf.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Annots);
+    if ((annotArray != default!)) {
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> annots
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation>(annotArray.Size());
+      for (int i = 0; (i < annotArray.Size()); i++) {
+        global::DripSharp.Runtime.JavaCompat.Add(annots,
+          global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(annotArray.GetObject(i)!)));
+      }
+      retval
+        = new global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation>(annots,
+        annotArray);
+    }
+    return retval!;
+  }
 
-public void SetAnnotations(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> annots) {
-this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Annots, new global::DripSharp.PdfCarton.Cos.COSArray(annots));
-}
+  public void SetAnnotations(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> annots) {
+    this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Annots,
+      new global::DripSharp.PdfCarton.Cos.COSArray(annots));
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSStream GetDifferences() {
-return this.fdf.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Differences);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSStream GetDifferences() {
+    return this.fdf.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Differences);
+  }
 
-public virtual void SetDifferences(global::DripSharp.PdfCarton.Cos.COSStream diff) {
-this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Differences, diff);
-}
+  public virtual void SetDifferences(global::DripSharp.PdfCarton.Cos.COSStream diff) {
+    this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Differences, diff);
+  }
 
-public virtual string GetTarget() {
-return this.fdf.GetString(global::DripSharp.PdfCarton.Cos.COSName.Target);
-}
+  public virtual string GetTarget() {
+    return this.fdf.GetString(global::DripSharp.PdfCarton.Cos.COSName.Target);
+  }
 
-public virtual void SetTarget(string target) {
-this.fdf.SetString(global::DripSharp.PdfCarton.Cos.COSName.Target, target);
-}
+  public virtual void SetTarget(string target) {
+    this.fdf.SetString(global::DripSharp.PdfCarton.Cos.COSName.Target, target);
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification> GetEmbeddedFDFs() {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification> retval = default!;
-global::DripSharp.PdfCarton.Cos.COSArray embeddedArray = this.fdf.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.EmbeddedFdfs);
-if ((embeddedArray != default!)) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification> embedded = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification>(embeddedArray.Size());
-for (int i = 0; (i < embeddedArray.Size()); i++) {
-global::DripSharp.Runtime.JavaCompat.Add(embedded, global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification.CreateFS(embeddedArray.Get(i)));
-}
-retval = new global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification>(embedded, embeddedArray);
-}
-return retval!;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification> GetEmbeddedFDFs() {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification> retval
+      = default!;
+    global::DripSharp.PdfCarton.Cos.COSArray embeddedArray
+      = this.fdf.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.EmbeddedFdfs);
+    if ((embeddedArray != default!)) {
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification> embedded
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification>(embeddedArray.Size());
+      for (int i = 0; (i < embeddedArray.Size()); i++) {
+        global::DripSharp.Runtime.JavaCompat.Add(embedded,
+          global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification.CreateFS(embeddedArray.Get(i)));
+      }
+      retval
+        = new global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification>(embedded,
+        embeddedArray);
+    }
+    return retval!;
+  }
 
-public virtual void SetEmbeddedFDFs(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification> embedded) {
-this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.EmbeddedFdfs, new global::DripSharp.PdfCarton.Cos.COSArray(embedded));
-}
+  public virtual void SetEmbeddedFDFs(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification> embedded) {
+    this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.EmbeddedFdfs,
+      new global::DripSharp.PdfCarton.Cos.COSArray(embedded));
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFJavaScript GetJavaScript() {
-global::DripSharp.PdfCarton.Cos.COSDictionary dic = this.fdf.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.JavaScript);
-return ((dic != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFJavaScript(dic) : (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFJavaScript)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFJavaScript GetJavaScript() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary dic
+      = this.fdf.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.JavaScript);
+    return ((dic != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFJavaScript(dic)
+      : (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFJavaScript)(default!));
+  }
 
-public virtual void SetJavaScript(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFJavaScript js) {
-this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.JavaScript, js);
-}
+  public virtual void SetJavaScript(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFJavaScript js) {
+    this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.JavaScript, js);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

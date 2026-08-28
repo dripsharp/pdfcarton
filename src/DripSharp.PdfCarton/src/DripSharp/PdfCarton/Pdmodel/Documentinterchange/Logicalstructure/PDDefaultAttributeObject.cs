@@ -8,47 +8,58 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
-public class PDDefaultAttributeObject : global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject {
-public PDDefaultAttributeObject() {}
+public class PDDefaultAttributeObject
+: global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject {
+  public PDDefaultAttributeObject() {}
 
-public PDDefaultAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : base(dictionary) {
+  public PDDefaultAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary)
+  : base(dictionary) {
 
-}
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetAttributeNames() {
-global::System.Collections.Generic.IList<string> attrNames = new global::System.Collections.Generic.List<string>();
-global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(this.GetCOSObject().KeySet()), (key) => !(global::DripSharp.PdfCarton.Cos.COSName.O.Equals(key))), (value0) => value0.GetName()), (value0) => { attrNames.Add(value0); });
-return attrNames;
-}
+  public virtual global::System.Collections.Generic.IList<string> GetAttributeNames() {
+    global::System.Collections.Generic.IList<string> attrNames
+      = new global::System.Collections.Generic.List<string>();
+    global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.Map(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(this.GetCOSObject().KeySet()),
+      (key) => !(global::DripSharp.PdfCarton.Cos.COSName.O.Equals(key))), (value0)
+      => value0.GetName()), (value0) => { attrNames.Add(value0); });
+    return attrNames;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetAttributeValue(string attrName) {
-return this.GetCOSObject().GetDictionaryObject(attrName);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetAttributeValue(string attrName) {
+    return this.GetCOSObject().GetDictionaryObject(attrName);
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Cos.COSBase GetAttributeValue(string attrName, global::DripSharp.PdfCarton.Cos.COSBase defaultValue) {
-global::DripSharp.PdfCarton.Cos.COSBase value = this.GetCOSObject().GetDictionaryObject(attrName);
-if ((value == default!)) {
-return defaultValue;
-}
-return value;
-}
+  protected internal virtual global::DripSharp.PdfCarton.Cos.COSBase GetAttributeValue(string attrName,
+    global::DripSharp.PdfCarton.Cos.COSBase defaultValue) {
+    global::DripSharp.PdfCarton.Cos.COSBase value
+      = this.GetCOSObject().GetDictionaryObject(attrName);
+    if ((value == default!)) {
+      return defaultValue;
+    }
+    return value;
+  }
 
-public virtual void SetAttribute(string attrName, global::DripSharp.PdfCarton.Cos.COSBase attrValue) {
-global::DripSharp.PdfCarton.Cos.COSBase old = this.GetAttributeValue(attrName);
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(attrName), attrValue);
-this.PotentiallyNotifyChanged(old, attrValue);
-}
+  public virtual void SetAttribute(string attrName,
+    global::DripSharp.PdfCarton.Cos.COSBase attrValue) {
+    global::DripSharp.PdfCarton.Cos.COSBase old = this.GetAttributeValue(attrName);
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(attrName),
+      attrValue);
+    this.PotentiallyNotifyChanged(old, attrValue);
+  }
 
-public override string ToString() {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder().Append(base.ToString()).Append(", attributes={");
-global::DripSharp.Runtime.JavaIterator<string> it = global::DripSharp.Runtime.JavaCompat.Iterator(this.GetAttributeNames());
-while (it.HasNext()) {
-string name = it.Next()!;
-sb.Append(name).Append('=').Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetAttributeValue(name)));
-if (it.HasNext()) {
-sb.Append(", ");
-}
-}
-return sb.Append('}').ToString();
-}
+  public override string ToString() {
+    global::System.Text.StringBuilder sb
+      = new global::System.Text.StringBuilder().Append(base.ToString()).Append(", attributes={");
+    global::DripSharp.Runtime.JavaIterator<string> it
+      = global::DripSharp.Runtime.JavaCompat.Iterator(this.GetAttributeNames());
+    while (it.HasNext()) {
+      string name = it.Next()!;
+      sb.Append(name).Append('=').Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetAttributeValue(name)));
+      if (it.HasNext()) {
+        sb.Append(", ");
+      }
+    }
+    return sb.Append('}').ToString();
+  }
 }

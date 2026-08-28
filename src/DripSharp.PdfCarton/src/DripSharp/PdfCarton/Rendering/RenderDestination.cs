@@ -9,23 +9,27 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 public sealed class RenderDestination {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("EXPORT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Rendering.RenderDestination Export = new global::DripSharp.PdfCarton.Rendering.RenderDestination();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("EXPORT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Rendering.RenderDestination Export
+    = new global::DripSharp.PdfCarton.Rendering.RenderDestination();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("VIEW")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Rendering.RenderDestination View = new global::DripSharp.PdfCarton.Rendering.RenderDestination();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("VIEW")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Rendering.RenderDestination View
+    = new global::DripSharp.PdfCarton.Rendering.RenderDestination();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("PRINT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Rendering.RenderDestination Print = new global::DripSharp.PdfCarton.Rendering.RenderDestination();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("PRINT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Rendering.RenderDestination Print
+    = new global::DripSharp.PdfCarton.Rendering.RenderDestination();
 
-private RenderDestination() {}
+  private RenderDestination() {}
 
+  public static RenderDestination[] values()
+    => global::DripSharp.Runtime.JavaCompat.EnumValues<RenderDestination>();
+  public static RenderDestination valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<RenderDestination>(name);
 
-public static RenderDestination[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<RenderDestination>();
-public static RenderDestination valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<RenderDestination>(name);
-
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

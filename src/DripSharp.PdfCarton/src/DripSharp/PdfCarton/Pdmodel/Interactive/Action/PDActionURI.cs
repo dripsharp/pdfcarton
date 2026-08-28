@@ -9,42 +9,44 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDActionURI : global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction {
-public const string SubType = "URI";
+  public const string SubType = "URI";
 
-public PDActionURI() {
-this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionURI.SubType);
-}
+  public PDActionURI() {
+    this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionURI.SubType);
+  }
 
-public PDActionURI(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public PDActionURI(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public virtual string GetURI() {
-global::DripSharp.PdfCarton.Cos.COSBase @base = base.Action.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Uri);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
-sbyte[] bytes = ((global::DripSharp.PdfCarton.Cos.COSString)(@base!)).GetBytes();
-if ((bytes.Length >= 2)) {
-if ((((bytes[0] & 255) == 254) && ((bytes[1] & 255) == 255))) {
-return base.Action.GetString(global::DripSharp.PdfCarton.Cos.COSName.Uri);
-}
-if ((((bytes[0] & 255) == 255) && ((bytes[1] & 255) == 254))) {
-return base.Action.GetString(global::DripSharp.PdfCarton.Cos.COSName.Uri);
-}
-}
-return global::DripSharp.Runtime.JavaCompat.NewString(bytes, global::DripSharp.Runtime.JavaStandardCharsets.UTF8);
-}
-return default!;
-}
+  public virtual string GetURI() {
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = base.Action.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Uri);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
+      sbyte[] bytes = ((global::DripSharp.PdfCarton.Cos.COSString)(@base!)).GetBytes();
+      if ((bytes.Length >= 2)) {
+        if ((((bytes[0] & 255) == 254) && ((bytes[1] & 255) == 255))) {
+          return base.Action.GetString(global::DripSharp.PdfCarton.Cos.COSName.Uri);
+        }
+        if ((((bytes[0] & 255) == 255) && ((bytes[1] & 255) == 254))) {
+          return base.Action.GetString(global::DripSharp.PdfCarton.Cos.COSName.Uri);
+        }
+      }
+      return global::DripSharp.Runtime.JavaCompat.NewString(bytes,
+        global::DripSharp.Runtime.JavaStandardCharsets.UTF8);
+    }
+    return default!;
+  }
 
-public virtual void SetURI(string uri) {
-base.Action.SetString(global::DripSharp.PdfCarton.Cos.COSName.Uri, uri);
-}
+  public virtual void SetURI(string uri) {
+    base.Action.SetString(global::DripSharp.PdfCarton.Cos.COSName.Uri, uri);
+  }
 
-public virtual bool ShouldTrackMousePosition() {
-return this.Action.GetBoolean("IsMap", false);
-}
+  public virtual bool ShouldTrackMousePosition() {
+    return this.Action.GetBoolean("IsMap", false);
+  }
 
-public virtual void SetTrackMousePosition(bool value) {
-this.Action.SetBoolean("IsMap", value);
-}
+  public virtual void SetTrackMousePosition(bool value) {
+    this.Action.SetBoolean("IsMap", value);
+  }
 }

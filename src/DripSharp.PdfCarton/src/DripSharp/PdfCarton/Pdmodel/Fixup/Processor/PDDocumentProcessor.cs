@@ -9,17 +9,18 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fixup.Processor;
 
 public interface PDDocumentProcessor {
-public void Process();
+  public void Process();
 }
 
-public sealed class __PDDocumentProcessorFunctionalAdapter : global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.PDDocumentProcessor {
-private readonly global::System.Action implementation;
+public sealed class __PDDocumentProcessorFunctionalAdapter
+: global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.PDDocumentProcessor {
+  private readonly global::System.Action implementation;
 
-public __PDDocumentProcessorFunctionalAdapter(global::System.Action implementation) {
-this.implementation = implementation;
-}
+  public __PDDocumentProcessorFunctionalAdapter(global::System.Action implementation) {
+    this.implementation = implementation;
+  }
 
-public void Process() {
-this.implementation();
-}
+  public void Process() {
+    this.implementation();
+  }
 }

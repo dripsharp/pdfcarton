@@ -9,74 +9,79 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public sealed class Type1FontUtil {
-private Type1FontUtil() {}
+  private Type1FontUtil() {}
 
-public static string HexEncode(sbyte[] bytes) {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
-foreach (sbyte aByte in bytes) {
-string @string = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ToHexString((aByte & 255));
-if ((@string.Length == 1)) {
-sb.Append('0');
-}
-sb.Append(@string.ToUpperInvariant());
-}
-return sb.ToString();
-}
+  public static string HexEncode(sbyte[] bytes) {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
+    foreach (sbyte aByte in bytes) {
+      string @string
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ToHexString((aByte & 255));
+      if ((@string.Length == 1)) {
+        sb.Append('0');
+      }
+      sb.Append(@string.ToUpperInvariant());
+    }
+    return sb.ToString();
+  }
 
-public static sbyte[] HexDecode(string @string) {
-if (((@string.Length % 2) != 0)) {
-throw new global::System.ArgumentException();
-}
-sbyte[] bytes = new sbyte[(@string.Length / 2)];
-for (int i = 0; (i < @string.Length); i += 2) {
-bytes[(i / 2)] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(@string, i, (i + 2)), 16)))));
-}
-return bytes;
-}
+  public static sbyte[] HexDecode(string @string) {
+    if (((@string.Length % 2) != 0)) {
+      throw new global::System.ArgumentException();
+    }
+    sbyte[] bytes = new sbyte[(@string.Length / 2)];
+    for (int i = 0; (i < @string.Length); i += 2) {
+      bytes[(i / 2)]
+        = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(@string,
+        i, (i + 2)), 16)))));
+    }
+    return bytes;
+  }
 
-public static sbyte[] EexecEncrypt(sbyte[] buffer) {
-return global::DripSharp.PdfCarton.Fonts.Cff.Type1FontUtil.encrypt(buffer, 55665, 4);
-}
+  public static sbyte[] EexecEncrypt(sbyte[] buffer) {
+    return global::DripSharp.PdfCarton.Fonts.Cff.Type1FontUtil.encrypt(buffer, 55665, 4);
+  }
 
-public static sbyte[] CharstringEncrypt(sbyte[] buffer, int n) {
-return global::DripSharp.PdfCarton.Fonts.Cff.Type1FontUtil.encrypt(buffer, 4330, n);
-}
+  public static sbyte[] CharstringEncrypt(sbyte[] buffer, int n) {
+    return global::DripSharp.PdfCarton.Fonts.Cff.Type1FontUtil.encrypt(buffer, 4330, n);
+  }
 
-private static sbyte[] encrypt(sbyte[] plaintextBytes, int r, int n) {
-sbyte[] buffer = new sbyte[(plaintextBytes.Length + n)];
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayCopy(plaintextBytes, 0, buffer, n, (buffer.Length - n));
-int c1 = 52845;
-int c2 = 22719;
-sbyte[] ciphertextBytes = new sbyte[buffer.Length];
-for (int i = 0; (i < buffer.Length); i++) {
-int plain = (buffer[i] & 255);
-int cipher = (plain ^ (r >> unchecked((int)(8))));
-ciphertextBytes[i] = unchecked((sbyte)(unchecked((sbyte)(cipher))));
-r = ((((cipher + r) * c1) + c2) & 65535);
-}
-return ciphertextBytes;
-}
+  private static sbyte[] encrypt(sbyte[] plaintextBytes, int r, int n) {
+    sbyte[] buffer = new sbyte[(plaintextBytes.Length + n)];
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayCopy(plaintextBytes, 0, buffer, n,
+      (buffer.Length - n));
+    int c1 = 52845;
+    int c2 = 22719;
+    sbyte[] ciphertextBytes = new sbyte[buffer.Length];
+    for (int i = 0; (i < buffer.Length); i++) {
+      int plain = (buffer[i] & 255);
+      int cipher = (plain ^ (r >> unchecked((int)(8))));
+      ciphertextBytes[i] = unchecked((sbyte)(unchecked((sbyte)(cipher))));
+      r = ((((cipher + r) * c1) + c2) & 65535);
+    }
+    return ciphertextBytes;
+  }
 
-public static sbyte[] EexecDecrypt(sbyte[] buffer) {
-return global::DripSharp.PdfCarton.Fonts.Cff.Type1FontUtil.decrypt(buffer, 55665, 4);
-}
+  public static sbyte[] EexecDecrypt(sbyte[] buffer) {
+    return global::DripSharp.PdfCarton.Fonts.Cff.Type1FontUtil.decrypt(buffer, 55665, 4);
+  }
 
-public static sbyte[] CharstringDecrypt(sbyte[] buffer, int n) {
-return global::DripSharp.PdfCarton.Fonts.Cff.Type1FontUtil.decrypt(buffer, 4330, n);
-}
+  public static sbyte[] CharstringDecrypt(sbyte[] buffer, int n) {
+    return global::DripSharp.PdfCarton.Fonts.Cff.Type1FontUtil.decrypt(buffer, 4330, n);
+  }
 
-private static sbyte[] decrypt(sbyte[] ciphertextBytes, int r, int n) {
-sbyte[] buffer = new sbyte[ciphertextBytes.Length];
-int c1 = 52845;
-int c2 = 22719;
-for (int i = 0; (i < ciphertextBytes.Length); i++) {
-int cipher = (ciphertextBytes[i] & 255);
-int plain = (cipher ^ (r >> unchecked((int)(8))));
-buffer[i] = unchecked((sbyte)(unchecked((sbyte)(plain))));
-r = ((((cipher + r) * c1) + c2) & 65535);
-}
-sbyte[] plaintextBytes = new sbyte[(ciphertextBytes.Length - n)];
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayCopy(buffer, n, plaintextBytes, 0, plaintextBytes.Length);
-return plaintextBytes;
-}
+  private static sbyte[] decrypt(sbyte[] ciphertextBytes, int r, int n) {
+    sbyte[] buffer = new sbyte[ciphertextBytes.Length];
+    int c1 = 52845;
+    int c2 = 22719;
+    for (int i = 0; (i < ciphertextBytes.Length); i++) {
+      int cipher = (ciphertextBytes[i] & 255);
+      int plain = (cipher ^ (r >> unchecked((int)(8))));
+      buffer[i] = unchecked((sbyte)(unchecked((sbyte)(plain))));
+      r = ((((cipher + r) * c1) + c2) & 65535);
+    }
+    sbyte[] plaintextBytes = new sbyte[(ciphertextBytes.Length - n)];
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayCopy(buffer, n, plaintextBytes, 0,
+      plaintextBytes.Length);
+    return plaintextBytes;
+  }
 }

@@ -9,13 +9,13 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDActionMovie : global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction {
-public const string SubType = "Movie";
+  public const string SubType = "Movie";
 
-public PDActionMovie() {
-this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionMovie.SubType);
-}
+  public PDActionMovie() {
+    this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionMovie.SubType);
+  }
 
-public PDActionMovie(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public PDActionMovie(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 }

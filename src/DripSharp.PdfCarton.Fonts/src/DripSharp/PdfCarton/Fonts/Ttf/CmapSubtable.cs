@@ -9,444 +9,528 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class CmapSubtable : global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private const long LEAD_OFFSET = (55296L - (65536 >> unchecked((int)(10))));
+  private const long LEAD_OFFSET = (55296L - (65536 >> unchecked((int)(10))));
 
-private const long SURROGATE_OFFSET = ((65536L - (55296 << unchecked((int)(10)))) - 56320);
+  private const long SURROGATE_OFFSET = ((65536L - (55296 << unchecked((int)(10)))) - 56320);
 
-private int platformId = default;
+  private int platformId = default;
 
-private int platformEncodingId = default;
+  private int platformEncodingId = default;
 
-private long subTableOffset = default;
+  private long subTableOffset = default;
 
-private int[] glyphIdToCharacterCode = null!;
+  private int[] glyphIdToCharacterCode = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<int, global::System.Collections.Generic.IList<int>> glyphIdToCharacterCodeMultiple = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, global::System.Collections.Generic.IList<int>>();
+  private readonly global::System.Collections.Generic.IDictionary<int,
+    global::System.Collections.Generic.IList<int>> glyphIdToCharacterCodeMultiple
+    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int,
+    global::System.Collections.Generic.IList<int>>();
 
-private global::System.Collections.Generic.IDictionary<int, int> characterCodeToGlyphId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EmptyMap<int, int>();
+  private global::System.Collections.Generic.IDictionary<int, int> characterCodeToGlyphId
+    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EmptyMap<int, int>();
 
-internal virtual void initData(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-this.platformId = data.ReadUnsignedShort();
-this.platformEncodingId = data.ReadUnsignedShort();
-this.subTableOffset = data.ReadUnsignedInt();
-}
+  internal virtual void initData(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    this.platformId = data.ReadUnsignedShort();
+    this.platformEncodingId = data.ReadUnsignedShort();
+    this.subTableOffset = data.ReadUnsignedInt();
+  }
 
-internal virtual void initSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable cmap, int numGlyphs, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-data.Seek((cmap.GetOffset() + this.subTableOffset));
-int subtableFormat = data.ReadUnsignedShort();
-long length;
-long version;
-if ((subtableFormat < 8)) {
-length = data.ReadUnsignedShort();
-version = data.ReadUnsignedShort();
-} else {
-data.ReadUnsignedShort();
-length = data.ReadUnsignedInt();
-version = data.ReadUnsignedInt();
-}
-switch (subtableFormat) {
-case var __case_93_14_0 when __case_93_14_0 == 0:
-this.processSubtype0(data);
-break;
-case var __case_96_14_0 when __case_96_14_0 == 2:
-this.processSubtype2(data, numGlyphs);
-break;
-case var __case_99_14_0 when __case_99_14_0 == 4:
-this.processSubtype4(data, numGlyphs);
-break;
-case var __case_102_14_0 when __case_102_14_0 == 6:
-this.processSubtype6(data, numGlyphs);
-break;
-case var __case_105_14_0 when __case_105_14_0 == 8:
-this.processSubtype8(data, numGlyphs);
-break;
-case var __case_108_14_0 when __case_108_14_0 == 10:
-this.processSubtype10(data, numGlyphs);
-break;
-case var __case_111_14_0 when __case_111_14_0 == 12:
-this.processSubtype12(data, numGlyphs);
-break;
-case var __case_114_14_0 when __case_114_14_0 == 13:
-this.processSubtype13(data, numGlyphs);
-break;
-case var __case_117_14_0 when __case_117_14_0 == 14:
-this.processSubtype14(data, numGlyphs);
-break;
-default:
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Unknown cmap format:", subtableFormat));
-}
-}
+  internal virtual void initSubtable(global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable cmap,
+    int numGlyphs, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    data.Seek((cmap.GetOffset() + this.subTableOffset));
+    int subtableFormat = data.ReadUnsignedShort();
+    long length;
+    long version;
+    if ((subtableFormat < 8)) {
+      length = data.ReadUnsignedShort();
+      version = data.ReadUnsignedShort();
+    } else {
+      data.ReadUnsignedShort();
+      length = data.ReadUnsignedInt();
+      version = data.ReadUnsignedInt();
+    }
+    switch (subtableFormat) {
+      case var __case_93_14_0 when __case_93_14_0 == 0:
+        this.processSubtype0(data);
+        break;
+      case var __case_96_14_0 when __case_96_14_0 == 2:
+        this.processSubtype2(data, numGlyphs);
+        break;
+      case var __case_99_14_0 when __case_99_14_0 == 4:
+        this.processSubtype4(data, numGlyphs);
+        break;
+      case var __case_102_14_0 when __case_102_14_0 == 6:
+        this.processSubtype6(data, numGlyphs);
+        break;
+      case var __case_105_14_0 when __case_105_14_0 == 8:
+        this.processSubtype8(data, numGlyphs);
+        break;
+      case var __case_108_14_0 when __case_108_14_0 == 10:
+        this.processSubtype10(data, numGlyphs);
+        break;
+      case var __case_111_14_0 when __case_111_14_0 == 12:
+        this.processSubtype12(data, numGlyphs);
+        break;
+      case var __case_114_14_0 when __case_114_14_0 == 13:
+        this.processSubtype13(data, numGlyphs);
+        break;
+      case var __case_117_14_0 when __case_117_14_0 == 14:
+        this.processSubtype14(data, numGlyphs);
+        break;
+      default:
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Unknown cmap format:",
+          subtableFormat));
+    }
+  }
 
-internal virtual void processSubtype8(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, int numGlyphs) {
-int[] is32 = data.ReadUnsignedByteArray(8192);
-long nbGroups = data.ReadUnsignedInt();
-if ((nbGroups > 65536)) {
-throw new global::System.IO.IOException("CMap ( Subtype8 ) is invalid");
-}
-this.glyphIdToCharacterCode = this.newGlyphIdToCharacterCode(numGlyphs);
-this.characterCodeToGlyphId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(numGlyphs);
-if ((numGlyphs == 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("subtable has no glyphs"));
-return;
-}
-for (long i = 0; (i < nbGroups); ++i) {
-long firstCode = data.ReadUnsignedInt();
-long endCode = data.ReadUnsignedInt();
-long startGlyph = data.ReadUnsignedInt();
-if (((firstCode > endCode) || (0 > firstCode))) {
-throw new global::System.IO.IOException("Range invalid");
-}
-for (long j = firstCode; (j <= endCode); ++j) {
-if ((j > int.MaxValue)) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("[Sub Format 8] Invalid character code ", j));
-}
-if ((((int)(j) / 8) >= is32.Length)) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("[Sub Format 8] Invalid character code ", j));
-}
-int currentCharCode;
-if (((is32[((int)(j) / 8)] & (1 << unchecked((int)(((int)(j) % 8))))) == 0)) {
-currentCharCode = (int)(j);
-} else {
-long lead = (global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LEAD_OFFSET + (j >> unchecked((int)(10))));
-long trail = (56320 + (j & 1023));
-long codepoint = (((lead << unchecked((int)(10))) + trail) + global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.SURROGATE_OFFSET);
-if ((codepoint > int.MaxValue)) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("[Sub Format 8] Invalid character code ", codepoint));
-}
-currentCharCode = (int)(codepoint);
-}
-long glyphIndex = (startGlyph + (j - firstCode));
-if (((glyphIndex > numGlyphs) || (glyphIndex > int.MaxValue))) {
-throw new global::System.IO.IOException("CMap contains an invalid glyph index");
-}
-this.glyphIdToCharacterCode[(int)(glyphIndex)] = currentCharCode;
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId, currentCharCode, (int)(glyphIndex));
-}
-}
-}
+  internal virtual void processSubtype8(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
+    int numGlyphs) {
+    int[] is32 = data.ReadUnsignedByteArray(8192);
+    long nbGroups = data.ReadUnsignedInt();
+    if ((nbGroups > 65536)) {
+      throw new global::System.IO.IOException("CMap ( Subtype8 ) is invalid");
+    }
+    this.glyphIdToCharacterCode = this.newGlyphIdToCharacterCode(numGlyphs);
+    this.characterCodeToGlyphId
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(numGlyphs);
+    if ((numGlyphs == 0)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("subtable has no glyphs"));
+      return;
+    }
+    for (long i = 0; (i < nbGroups); ++i) {
+      long firstCode = data.ReadUnsignedInt();
+      long endCode = data.ReadUnsignedInt();
+      long startGlyph = data.ReadUnsignedInt();
+      if (((firstCode > endCode) || (0 > firstCode))) {
+        throw new global::System.IO.IOException("Range invalid");
+      }
+      for (long j = firstCode; (j <= endCode); ++j) {
+        if ((j > int.MaxValue)) {
+          throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("[Sub Format 8] Invalid character code ",
+            j));
+        }
+        if ((((int)j / 8) >= is32.Length)) {
+          throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("[Sub Format 8] Invalid character code ",
+            j));
+        }
+        int currentCharCode;
+        if (((is32[((int)j / 8)] & (1 << unchecked((int)(((int)j % 8))))) == 0)) {
+          currentCharCode = (int)j;
+        } else {
+          long lead = (global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LEAD_OFFSET
+            + (j >> unchecked((int)(10))));
+          long trail = (56320 + (j & 1023));
+          long codepoint = (((lead << unchecked((int)(10))) + trail)
+            + global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.SURROGATE_OFFSET);
+          if ((codepoint > int.MaxValue)) {
+            throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("[Sub Format 8] Invalid character code ",
+              codepoint));
+          }
+          currentCharCode = (int)codepoint;
+        }
+        long glyphIndex = (startGlyph + (j - firstCode));
+        if (((glyphIndex > numGlyphs) || (glyphIndex > int.MaxValue))) {
+          throw new global::System.IO.IOException("CMap contains an invalid glyph index");
+        }
+        this.glyphIdToCharacterCode[(int)glyphIndex] = currentCharCode;
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId,
+          currentCharCode, (int)glyphIndex);
+      }
+    }
+  }
 
-internal virtual void processSubtype10(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, int numGlyphs) {
-long startCode = data.ReadUnsignedInt();
-long numChars = data.ReadUnsignedInt();
-if ((numChars > int.MaxValue)) {
-throw new global::System.IO.IOException("Invalid number of Characters");
-}
-if (((((startCode < 0) || (startCode > 1114111)) || ((startCode + numChars) > 1114111)) || (((startCode + numChars) >= 55296) && ((startCode + numChars) <= 57343)))) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid character codes, ", global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("startCode: 0x%X, numChars: %d", startCode, numChars)));
-}
-}
+  internal virtual void processSubtype10(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
+    int numGlyphs) {
+    long startCode = data.ReadUnsignedInt();
+    long numChars = data.ReadUnsignedInt();
+    if ((numChars > int.MaxValue)) {
+      throw new global::System.IO.IOException("Invalid number of Characters");
+    }
+    if (((((startCode < 0) || (startCode > 1114111)) || ((startCode + numChars) > 1114111))
+      || (((startCode + numChars) >= 55296) && ((startCode + numChars) <= 57343)))) {
+      throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid character codes, ",
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("startCode: 0x%X, numChars: %d",
+        startCode, numChars)));
+    }
+  }
 
-internal virtual void processSubtype12(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, int numGlyphs) {
-int maxGlyphId = 0;
-long nbGroups = data.ReadUnsignedInt();
-this.glyphIdToCharacterCode = this.newGlyphIdToCharacterCode(numGlyphs);
-this.characterCodeToGlyphId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(numGlyphs);
-if ((numGlyphs == 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("subtable has no glyphs"));
-return;
-}
-for (long i = 0; (i < nbGroups); ++i) {
-long firstCode = data.ReadUnsignedInt();
-long endCode = data.ReadUnsignedInt();
-long startGlyph = data.ReadUnsignedInt();
-if ((((firstCode < 0) || (firstCode > 1114111)) || ((firstCode >= 55296) && (firstCode <= 57343)))) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid character code ", global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("0x%X", firstCode)));
-}
-if (((((endCode > 0) && (endCode < firstCode)) || (endCode > 1114111)) || ((endCode >= 55296) && (endCode <= 57343)))) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid character code ", global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("0x%X", endCode)));
-}
-for (long j = 0; (j <= (endCode - firstCode)); ++j) {
-long glyphIndex = (startGlyph + j);
-if ((glyphIndex >= numGlyphs)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Format 12 cmap contains an invalid glyph index"));
-break;
-}
-if (((firstCode + j) > 1114111)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Format 12 cmap contains character beyond UCS-4"));
-}
-maxGlyphId = global::System.Math.Max(maxGlyphId, (int)((int)(glyphIndex)));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId, (int)((firstCode + j)), (int)(glyphIndex));
-}
-}
-this.buildGlyphIdToCharacterCodeLookup(maxGlyphId);
-}
+  internal virtual void processSubtype12(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
+    int numGlyphs) {
+    int maxGlyphId = 0;
+    long nbGroups = data.ReadUnsignedInt();
+    this.glyphIdToCharacterCode = this.newGlyphIdToCharacterCode(numGlyphs);
+    this.characterCodeToGlyphId
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(numGlyphs);
+    if ((numGlyphs == 0)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("subtable has no glyphs"));
+      return;
+    }
+    for (long i = 0; (i < nbGroups); ++i) {
+      long firstCode = data.ReadUnsignedInt();
+      long endCode = data.ReadUnsignedInt();
+      long startGlyph = data.ReadUnsignedInt();
+      if ((((firstCode < 0) || (firstCode > 1114111)) || ((firstCode >= 55296) && (firstCode
+        <= 57343)))) {
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid character code ",
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("0x%X",
+          firstCode)));
+      }
+      if (((((endCode > 0) && (endCode < firstCode)) || (endCode > 1114111)) || ((endCode >= 55296)
+        && (endCode <= 57343)))) {
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid character code ",
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("0x%X", endCode)));
+      }
+      for (long j = 0; (j <= (endCode - firstCode)); ++j) {
+        long glyphIndex = (startGlyph + j);
+        if ((glyphIndex >= numGlyphs)) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG,
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Format 12 cmap contains an invalid glyph index"));
+          break;
+        }
+        if (((firstCode + j) > 1114111)) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG,
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Format 12 cmap contains character beyond UCS-4"));
+        }
+        maxGlyphId = global::System.Math.Max(maxGlyphId, (int)((int)glyphIndex));
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId,
+          (int)((firstCode + j)), (int)glyphIndex);
+      }
+    }
+    this.buildGlyphIdToCharacterCodeLookup(maxGlyphId);
+  }
 
-internal virtual void processSubtype13(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, int numGlyphs) {
-long nbGroups = data.ReadUnsignedInt();
-this.glyphIdToCharacterCode = this.newGlyphIdToCharacterCode(numGlyphs);
-this.characterCodeToGlyphId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(numGlyphs);
-if ((numGlyphs == 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("subtable has no glyphs"));
-return;
-}
-for (long i = 0; (i < nbGroups); ++i) {
-long firstCode = data.ReadUnsignedInt();
-long endCode = data.ReadUnsignedInt();
-long glyphId = data.ReadUnsignedInt();
-if ((glyphId > numGlyphs)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Format 13 cmap contains an invalid glyph index"));
-break;
-}
-if ((((firstCode < 0) || (firstCode > 1114111)) || ((firstCode >= 55296) && (firstCode <= 57343)))) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid character code ", global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("0x%X", firstCode)));
-}
-if (((((endCode > 0) && (endCode < firstCode)) || (endCode > 1114111)) || ((endCode >= 55296) && (endCode <= 57343)))) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid character code ", global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("0x%X", endCode)));
-}
-for (long j = 0; (j <= (endCode - firstCode)); ++j) {
-if (((firstCode + j) > int.MaxValue)) {
-throw new global::System.IO.IOException("Character Code greater than Integer.MAX_VALUE");
-}
-if (((firstCode + j) > 1114111)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Format 13 cmap contains character beyond UCS-4"));
-}
-this.glyphIdToCharacterCode[(int)(glyphId)] = (int)((firstCode + j));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId, (int)((firstCode + j)), (int)(glyphId));
-}
-}
-}
+  internal virtual void processSubtype13(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
+    int numGlyphs) {
+    long nbGroups = data.ReadUnsignedInt();
+    this.glyphIdToCharacterCode = this.newGlyphIdToCharacterCode(numGlyphs);
+    this.characterCodeToGlyphId
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(numGlyphs);
+    if ((numGlyphs == 0)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("subtable has no glyphs"));
+      return;
+    }
+    for (long i = 0; (i < nbGroups); ++i) {
+      long firstCode = data.ReadUnsignedInt();
+      long endCode = data.ReadUnsignedInt();
+      long glyphId = data.ReadUnsignedInt();
+      if ((glyphId > numGlyphs)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Format 13 cmap contains an invalid glyph index"));
+        break;
+      }
+      if ((((firstCode < 0) || (firstCode > 1114111)) || ((firstCode >= 55296) && (firstCode
+        <= 57343)))) {
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid character code ",
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("0x%X",
+          firstCode)));
+      }
+      if (((((endCode > 0) && (endCode < firstCode)) || (endCode > 1114111)) || ((endCode >= 55296)
+        && (endCode <= 57343)))) {
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid character code ",
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("0x%X", endCode)));
+      }
+      for (long j = 0; (j <= (endCode - firstCode)); ++j) {
+        if (((firstCode + j) > int.MaxValue)) {
+          throw new global::System.IO.IOException("Character Code greater than Integer.MAX_VALUE");
+        }
+        if (((firstCode + j) > 1114111)) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG,
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Format 13 cmap contains character beyond UCS-4"));
+        }
+        this.glyphIdToCharacterCode[(int)glyphId] = (int)((firstCode + j));
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId,
+          (int)((firstCode + j)), (int)glyphId);
+      }
+    }
+  }
 
-internal virtual void processSubtype14(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, int numGlyphs) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Format 14 cmap table is not supported and will be ignored"));
-}
+  internal virtual void processSubtype14(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
+    int numGlyphs) {
+    global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG,
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Format 14 cmap table is not supported and will be ignored"));
+  }
 
-internal virtual void processSubtype6(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, int numGlyphs) {
-int firstCode = data.ReadUnsignedShort();
-int entryCount = data.ReadUnsignedShort();
-if ((entryCount == 0)) {
-return;
-}
-this.characterCodeToGlyphId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(numGlyphs);
-int[] glyphIdArray = data.ReadUnsignedShortArray(entryCount);
-int maxGlyphId = 0;
-for (int i = 0; (i < entryCount); i++) {
-maxGlyphId = global::System.Math.Max(maxGlyphId, glyphIdArray[i]);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId, (firstCode + i), glyphIdArray[i]);
-}
-this.buildGlyphIdToCharacterCodeLookup(maxGlyphId);
-}
+  internal virtual void processSubtype6(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
+    int numGlyphs) {
+    int firstCode = data.ReadUnsignedShort();
+    int entryCount = data.ReadUnsignedShort();
+    if ((entryCount == 0)) {
+      return;
+    }
+    this.characterCodeToGlyphId
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(numGlyphs);
+    int[] glyphIdArray = data.ReadUnsignedShortArray(entryCount);
+    int maxGlyphId = 0;
+    for (int i = 0; (i < entryCount); i++) {
+      maxGlyphId = global::System.Math.Max(maxGlyphId, glyphIdArray[i]);
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId,
+        (firstCode + i), glyphIdArray[i]);
+    }
+    this.buildGlyphIdToCharacterCodeLookup(maxGlyphId);
+  }
 
-internal virtual void processSubtype4(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, int numGlyphs) {
-int segCountX2 = data.ReadUnsignedShort();
-int segCount = (segCountX2 / 2);
-int searchRange = data.ReadUnsignedShort();
-int entrySelector = data.ReadUnsignedShort();
-int rangeShift = data.ReadUnsignedShort();
-int[] endCount = data.ReadUnsignedShortArray(segCount);
-int reservedPad = data.ReadUnsignedShort();
-int[] startCount = data.ReadUnsignedShortArray(segCount);
-int[] idDelta = data.ReadUnsignedShortArray(segCount);
-long idRangeOffsetPosition = data.GetCurrentPosition();
-int[] idRangeOffset = data.ReadUnsignedShortArray(segCount);
-this.characterCodeToGlyphId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(numGlyphs);
-int maxGlyphId = 0;
-for (int i = 0; (i < segCount); i++) {
-int start = startCount[i];
-int end = endCount[i];
-if (((start != 65535) && (end != 65535))) {
-int delta = idDelta[i];
-int rangeOffset = idRangeOffset[i];
-long segmentRangeOffset = ((idRangeOffsetPosition + (i * 2L)) + rangeOffset);
-for (int j = start; (j <= end); j++) {
-if ((rangeOffset == 0)) {
-int glyphid = ((j + delta) & 65535);
-maxGlyphId = global::System.Math.Max(glyphid, maxGlyphId);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId, j, glyphid);
-} else {
-long glyphOffset = (segmentRangeOffset + ((j - start) * 2L));
-data.Seek(glyphOffset);
-int glyphIndex = data.ReadUnsignedShort();
-if ((glyphIndex != 0)) {
-glyphIndex = ((glyphIndex + delta) & 65535);
-maxGlyphId = global::System.Math.Max(glyphIndex, maxGlyphId);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId, j, glyphIndex);
-}
-}
-}
-}
-}
-if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapIsEmpty(this.characterCodeToGlyphId)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("cmap format 4 subtable is empty"));
-return;
-}
-this.buildGlyphIdToCharacterCodeLookup(maxGlyphId);
-}
+  internal virtual void processSubtype4(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
+    int numGlyphs) {
+    int segCountX2 = data.ReadUnsignedShort();
+    int segCount = (segCountX2 / 2);
+    int searchRange = data.ReadUnsignedShort();
+    int entrySelector = data.ReadUnsignedShort();
+    int rangeShift = data.ReadUnsignedShort();
+    int[] endCount = data.ReadUnsignedShortArray(segCount);
+    int reservedPad = data.ReadUnsignedShort();
+    int[] startCount = data.ReadUnsignedShortArray(segCount);
+    int[] idDelta = data.ReadUnsignedShortArray(segCount);
+    long idRangeOffsetPosition = data.GetCurrentPosition();
+    int[] idRangeOffset = data.ReadUnsignedShortArray(segCount);
+    this.characterCodeToGlyphId
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(numGlyphs);
+    int maxGlyphId = 0;
+    for (int i = 0; (i < segCount); i++) {
+      int start = startCount[i];
+      int end = endCount[i];
+      if (((start != 65535) && (end != 65535))) {
+        int delta = idDelta[i];
+        int rangeOffset = idRangeOffset[i];
+        long segmentRangeOffset = ((idRangeOffsetPosition + (i * 2L)) + rangeOffset);
+        for (int j = start; (j <= end); j++) {
+          if ((rangeOffset == 0)) {
+            int glyphid = ((j + delta) & 65535);
+            maxGlyphId = global::System.Math.Max(glyphid, maxGlyphId);
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId,
+              j, glyphid);
+          } else {
+            long glyphOffset = (segmentRangeOffset + ((j - start) * 2L));
+            data.Seek(glyphOffset);
+            int glyphIndex = data.ReadUnsignedShort();
+            if ((glyphIndex != 0)) {
+              glyphIndex = ((glyphIndex + delta) & 65535);
+              maxGlyphId = global::System.Math.Max(glyphIndex, maxGlyphId);
+              global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId,
+                j, glyphIndex);
+            }
+          }
+        }
+      }
+    }
+    if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapIsEmpty(this.characterCodeToGlyphId)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("cmap format 4 subtable is empty"));
+      return;
+    }
+    this.buildGlyphIdToCharacterCodeLookup(maxGlyphId);
+  }
 
-private void buildGlyphIdToCharacterCodeLookup(int maxGlyphId) {
-this.glyphIdToCharacterCode = this.newGlyphIdToCharacterCode((maxGlyphId + 1));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(this.characterCodeToGlyphId, (key, value) => {
-if ((this.glyphIdToCharacterCode[value] == -1)) {
-this.glyphIdToCharacterCode[value] = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(key);
-} else {
-global::System.Collections.Generic.IList<int> mappedValues = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.glyphIdToCharacterCodeMultiple, value);
-if ((mappedValues == default!)) {
-mappedValues = new global::System.Collections.Generic.List<int>(2);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.glyphIdToCharacterCodeMultiple, value, mappedValues);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(mappedValues, this.glyphIdToCharacterCode[value]);
-this.glyphIdToCharacterCode[value] = int.MinValue;
-}
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(mappedValues, key);
-}
-});
-}
+  private void buildGlyphIdToCharacterCodeLookup(int maxGlyphId) {
+    this.glyphIdToCharacterCode = this.newGlyphIdToCharacterCode((maxGlyphId + 1));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(this.characterCodeToGlyphId, (key,
+      value) => {
+        if ((this.glyphIdToCharacterCode[value] == -1)) {
+          this.glyphIdToCharacterCode[value]
+          = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(key);
+        } else {
+          global::System.Collections.Generic.IList<int> mappedValues
+          = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.glyphIdToCharacterCodeMultiple,
+          value);
+          if ((mappedValues == default!)) {
+            mappedValues = new global::System.Collections.Generic.List<int>(2);
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.glyphIdToCharacterCodeMultiple,
+            value, mappedValues);
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(mappedValues,
+            this.glyphIdToCharacterCode[value]);
+            this.glyphIdToCharacterCode[value] = int.MinValue;
+          }
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(mappedValues, key);
+        }
+      });
+  }
 
-internal virtual void processSubtype2(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data, int numGlyphs) {
-int[] subHeaderKeys = new int[256];
-int maxSubHeaderIndex = 0;
-for (int i__498_18 = 0; (i__498_18 < 256); i__498_18++) {
-subHeaderKeys[i__498_18] = data.ReadUnsignedShort();
-maxSubHeaderIndex = global::System.Math.Max(maxSubHeaderIndex, (subHeaderKeys[i__498_18] / 8));
-}
-global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.SubHeader[] subHeaders = new global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.SubHeader[(maxSubHeaderIndex + 1)];
-for (int i__506_18 = 0; (i__506_18 <= maxSubHeaderIndex); ++i__506_18) {
-int firstCode__508_17 = data.ReadUnsignedShort();
-int entryCount__509_17 = data.ReadUnsignedShort();
-short idDelta__510_19 = data.ReadSignedShort();
-int idRangeOffset__511_17 = ((data.ReadUnsignedShort() - ((((maxSubHeaderIndex + 1) - i__506_18) - 1) * 8)) - 2);
-subHeaders[i__506_18] = new global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.SubHeader(firstCode__508_17, entryCount__509_17, idDelta__510_19, idRangeOffset__511_17);
-}
-long startGlyphIndexOffset = data.GetCurrentPosition();
-this.glyphIdToCharacterCode = this.newGlyphIdToCharacterCode(numGlyphs);
-this.characterCodeToGlyphId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(numGlyphs);
-if ((numGlyphs == 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("subtable has no glyphs"));
-return;
-}
-global::System.Collections.Generic.ISet<int> logged = new global::System.Collections.Generic.HashSet<int>();
-bool maxLoggingReached = false;
-for (int i__524_18 = 0; (i__524_18 <= maxSubHeaderIndex); ++i__524_18) {
-global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.SubHeader sh = subHeaders[i__524_18];
-int firstCode__527_17 = sh.getFirstCode();
-int idRangeOffset__528_17 = sh.getIdRangeOffset();
-int idDelta__529_17 = sh.getIdDelta();
-int entryCount__530_17 = sh.getEntryCount();
-data.Seek((startGlyphIndexOffset + idRangeOffset__528_17));
-for (int j = 0; (j < entryCount__530_17); ++j) {
-int charCode = i__524_18;
-charCode = ((charCode << unchecked((int)(8))) + (firstCode__527_17 + j));
-int p = data.ReadUnsignedShort();
-if ((p > 0)) {
-p = ((p + idDelta__529_17) % 65536);
-if ((p < 0)) {
-p += 65536;
-}
-}
-if ((p >= numGlyphs)) {
-if ((!maxLoggingReached && !(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(logged, p)))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("glyphId ", p), " for charcode "), charCode), " ignored, numGlyphs is "), numGlyphs)));
-logged.Add(p);
-if ((logged.Count > 10)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("too many bad glyphIds, more won't be reported for this table"));
-maxLoggingReached = true;
-}
-}
-continue;
-}
-this.glyphIdToCharacterCode[p] = charCode;
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId, charCode, p);
-}
-}
-}
+  internal virtual void processSubtype2(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
+    int numGlyphs) {
+    int[] subHeaderKeys = new int[256];
+    int maxSubHeaderIndex = 0;
+    for (int i__498_18 = 0; (i__498_18 < 256); i__498_18++) {
+      subHeaderKeys[i__498_18] = data.ReadUnsignedShort();
+      maxSubHeaderIndex = global::System.Math.Max(maxSubHeaderIndex, (subHeaderKeys[i__498_18]
+        / 8));
+    }
+    global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.SubHeader[] subHeaders
+      = new global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.SubHeader[(maxSubHeaderIndex + 1)];
+    for (int i__506_18 = 0; (i__506_18 <= maxSubHeaderIndex); ++i__506_18) {
+      int firstCode__508_17 = data.ReadUnsignedShort();
+      int entryCount__509_17 = data.ReadUnsignedShort();
+      short idDelta__510_19 = data.ReadSignedShort();
+      int idRangeOffset__511_17 = ((data.ReadUnsignedShort() - ((((maxSubHeaderIndex + 1)
+        - i__506_18) - 1) * 8)) - 2);
+      subHeaders[i__506_18]
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.SubHeader(firstCode__508_17,
+        entryCount__509_17, idDelta__510_19, idRangeOffset__511_17);
+    }
+    long startGlyphIndexOffset = data.GetCurrentPosition();
+    this.glyphIdToCharacterCode = this.newGlyphIdToCharacterCode(numGlyphs);
+    this.characterCodeToGlyphId
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(numGlyphs);
+    if ((numGlyphs == 0)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("subtable has no glyphs"));
+      return;
+    }
+    global::System.Collections.Generic.ISet<int> logged
+      = new global::System.Collections.Generic.HashSet<int>();
+    bool maxLoggingReached = false;
+    for (int i__524_18 = 0; (i__524_18 <= maxSubHeaderIndex); ++i__524_18) {
+      global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.SubHeader sh = subHeaders[i__524_18];
+      int firstCode__527_17 = sh.getFirstCode();
+      int idRangeOffset__528_17 = sh.getIdRangeOffset();
+      int idDelta__529_17 = sh.getIdDelta();
+      int entryCount__530_17 = sh.getEntryCount();
+      data.Seek((startGlyphIndexOffset + idRangeOffset__528_17));
+      for (int j = 0; (j < entryCount__530_17); ++j) {
+        int charCode = i__524_18;
+        charCode = ((charCode << unchecked((int)(8))) + (firstCode__527_17 + j));
+        int p = data.ReadUnsignedShort();
+        if ((p > 0)) {
+          p = ((p + idDelta__529_17) % 65536);
+          if ((p < 0)) {
+            p += 65536;
+          }
+        }
+        if ((p >= numGlyphs)) {
+          if ((!maxLoggingReached
+            && !global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(logged,
+            p))) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG,
+              global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("glyphId ",
+              p), " for charcode "), charCode), " ignored, numGlyphs is "), numGlyphs)));
+            logged.Add(p);
+            if ((logged.Count > 10)) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable.LOG,
+                global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("too many bad glyphIds, more won't be reported for this table"));
+              maxLoggingReached = true;
+            }
+          }
+          continue;
+        }
+        this.glyphIdToCharacterCode[p] = charCode;
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId,
+          charCode, p);
+      }
+    }
+  }
 
-internal virtual void processSubtype0(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-sbyte[] glyphMapping = data.Read(256);
-this.glyphIdToCharacterCode = this.newGlyphIdToCharacterCode(256);
-this.characterCodeToGlyphId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>(glyphMapping.Length);
-for (int i = 0; (i < glyphMapping.Length); i++) {
-int glyphIndex = (glyphMapping[i] & 255);
-this.glyphIdToCharacterCode[glyphIndex] = i;
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId, i, glyphIndex);
-}
-}
+  internal virtual void processSubtype0(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    sbyte[] glyphMapping = data.Read(256);
+    this.glyphIdToCharacterCode = this.newGlyphIdToCharacterCode(256);
+    this.characterCodeToGlyphId
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int,
+      int>(glyphMapping.Length);
+    for (int i = 0; (i < glyphMapping.Length); i++) {
+      int glyphIndex = (glyphMapping[i] & 255);
+      this.glyphIdToCharacterCode[glyphIndex] = i;
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.characterCodeToGlyphId, i,
+        glyphIndex);
+    }
+  }
 
-private int[] newGlyphIdToCharacterCode(int size) {
-int[] gidToCode = new int[size];
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Fill(gidToCode, -1);
-return gidToCode;
-}
+  private int[] newGlyphIdToCharacterCode(int size) {
+    int[] gidToCode = new int[size];
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Fill(gidToCode, -1);
+    return gidToCode;
+  }
 
-public virtual int GetPlatformEncodingId() {
-return this.platformEncodingId;
-}
+  public virtual int GetPlatformEncodingId() {
+    return this.platformEncodingId;
+  }
 
-public virtual void SetPlatformEncodingId(int platformEncodingIdValue) {
-this.platformEncodingId = platformEncodingIdValue;
-}
+  public virtual void SetPlatformEncodingId(int platformEncodingIdValue) {
+    this.platformEncodingId = platformEncodingIdValue;
+  }
 
-public virtual int GetPlatformId() {
-return this.platformId;
-}
+  public virtual int GetPlatformId() {
+    return this.platformId;
+  }
 
-public virtual void SetPlatformId(int platformIdValue) {
-this.platformId = platformIdValue;
-}
+  public virtual void SetPlatformId(int platformIdValue) {
+    this.platformId = platformIdValue;
+  }
 
-public virtual int GetGlyphId(int characterCode) {
-int? glyphId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.characterCodeToGlyphId, characterCode);
-return ((glyphId == default!) ? 0 : global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(glyphId));
-}
+  public virtual int GetGlyphId(int characterCode) {
+    int? glyphId
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.characterCodeToGlyphId,
+      characterCode);
+    return ((glyphId == default!) ? 0
+      : global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(glyphId));
+  }
 
-private int getCharCode(int gid) {
-if ((((gid < 0) || (this.glyphIdToCharacterCode == default!)) || (gid >= this.glyphIdToCharacterCode.Length))) {
-return -1;
-}
-return this.glyphIdToCharacterCode[gid];
-}
+  private int getCharCode(int gid) {
+    if ((((gid < 0) || (this.glyphIdToCharacterCode == default!)) || (gid
+      >= this.glyphIdToCharacterCode.Length))) {
+      return -1;
+    }
+    return this.glyphIdToCharacterCode[gid];
+  }
 
-public virtual global::System.Collections.Generic.IList<int> GetCharCodes(int gid) {
-int code = this.getCharCode(gid);
-if ((code == -1)) {
-return default!;
-}
-global::System.Collections.Generic.IList<int> codes = default!;
-if ((code == int.MinValue)) {
-global::System.Collections.Generic.IList<int> mappedValues = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.glyphIdToCharacterCodeMultiple, gid);
-if ((mappedValues != default!)) {
-codes = new global::System.Collections.Generic.List<int>(mappedValues);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.SortList(codes!);
-}
-} else {
-codes = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListOf<int>(code);
-}
-return codes!;
-}
+  public virtual global::System.Collections.Generic.IList<int> GetCharCodes(int gid) {
+    int code = this.getCharCode(gid);
+    if ((code == -1)) {
+      return default!;
+    }
+    global::System.Collections.Generic.IList<int> codes = default!;
+    if ((code == int.MinValue)) {
+      global::System.Collections.Generic.IList<int> mappedValues
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.glyphIdToCharacterCodeMultiple,
+        gid);
+      if ((mappedValues != default!)) {
+        codes = new global::System.Collections.Generic.List<int>(mappedValues);
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.SortList(codes!);
+      }
+    } else {
+      codes = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListOf<int>(code);
+    }
+    return codes!;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("{", this.GetPlatformId()), " "), this.GetPlatformEncodingId()), "}");
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("{",
+      this.GetPlatformId()), " "), this.GetPlatformEncodingId()), "}");
+  }
 
-internal class SubHeader {
-internal readonly int firstCode = default;
+  internal class SubHeader {
+    internal readonly int firstCode = default;
 
-internal readonly int entryCount = default;
+    internal readonly int entryCount = default;
 
-internal readonly short idDelta = default;
+    internal readonly short idDelta = default;
 
-internal readonly int idRangeOffset = default;
+    internal readonly int idRangeOffset = default;
 
-internal SubHeader(int firstCodeValue, int entryCountValue, short idDeltaValue, int idRangeOffsetValue) {
-this.firstCode = firstCodeValue;
-this.entryCount = entryCountValue;
-this.idDelta = idDeltaValue;
-this.idRangeOffset = idRangeOffsetValue;
-}
+    internal SubHeader(int firstCodeValue, int entryCountValue, short idDeltaValue,
+      int idRangeOffsetValue) {
+      this.firstCode = firstCodeValue;
+      this.entryCount = entryCountValue;
+      this.idDelta = idDeltaValue;
+      this.idRangeOffset = idRangeOffsetValue;
+    }
 
-internal int getFirstCode() {
-return this.firstCode;
-}
+    internal int getFirstCode() {
+      return this.firstCode;
+    }
 
-internal int getEntryCount() {
-return this.entryCount;
-}
+    internal int getEntryCount() {
+      return this.entryCount;
+    }
 
-internal short getIdDelta() {
-return this.idDelta;
-}
+    internal short getIdDelta() {
+      return this.idDelta;
+    }
 
-internal int getIdRangeOffset() {
-return this.idRangeOffset;
-}
-}
+    internal int getIdRangeOffset() {
+      return this.idRangeOffset;
+    }
+  }
 }

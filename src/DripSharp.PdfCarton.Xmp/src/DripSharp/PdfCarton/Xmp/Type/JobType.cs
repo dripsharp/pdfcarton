@@ -8,46 +8,49 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/sType/Job#", "stJob")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/sType/Job#",
+  "stJob")]
 public class JobType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string Id = "id";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string Id = "id";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string Name = "name";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string Name = "name";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URL", "Simple")]
-public const string Url = "url";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URL", "Simple")]
+  public const string Url = "url";
 
-public JobType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : this(metadata, (string)default!) {
+  public JobType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : this(metadata,
+    (string)default!) {
 
-}
+  }
 
-public JobType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string fieldPrefix) : base(metadata, (string)default!, fieldPrefix, (string)default!) {
-this.AddNamespace(this.GetNamespace(), this.GetPrefix());
-}
+  public JobType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string fieldPrefix)
+  : base(metadata, (string)default!, fieldPrefix, (string)default!) {
+    this.AddNamespace(this.GetNamespace(), this.GetPrefix());
+  }
 
-public virtual void SetId(string id) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.JobType.Id, id);
-}
+  public virtual void SetId(string id) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.JobType.Id, id);
+  }
 
-public virtual void SetName(string name) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.JobType.Name, name);
-}
+  public virtual void SetName(string name) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.JobType.Name, name);
+  }
 
-public virtual void SetUrl(string name) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.JobType.Url, name);
-}
+  public virtual void SetUrl(string name) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.JobType.Url, name);
+  }
 
-public virtual string GetId() {
-return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.JobType.Id);
-}
+  public virtual string GetId() {
+    return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.JobType.Id);
+  }
 
-public virtual string GetName() {
-return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.JobType.Name);
-}
+  public virtual string GetName() {
+    return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.JobType.Name);
+  }
 
-public virtual string GetUrl() {
-return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.JobType.Url);
-}
+  public virtual string GetUrl() {
+    return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.JobType.Url);
+  }
 }

@@ -9,56 +9,63 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
 public class PDDeviceNProcess {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public PDDeviceNProcess() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDDeviceNProcess() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDDeviceNProcess(global::DripSharp.PdfCarton.Cos.COSDictionary attributes) {
-this.dictionary = attributes;
-}
+  public PDDeviceNProcess(global::DripSharp.PdfCarton.Cos.COSDictionary attributes) {
+    this.dictionary = attributes;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSDictionary() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSDictionary() {
+    return this.dictionary;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace() {
-global::DripSharp.PdfCarton.Cos.COSBase cosColorSpace = this.dictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Colorspace);
-if ((cosColorSpace == default!)) {
-return default!;
-}
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(cosColorSpace);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace() {
+    global::DripSharp.PdfCarton.Cos.COSBase cosColorSpace
+      = this.dictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Colorspace);
+    if ((cosColorSpace == default!)) {
+      return default!;
+    }
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(cosColorSpace);
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetComponents() {
-global::DripSharp.PdfCarton.Cos.COSArray cosComponents = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Components);
-if ((cosComponents == default!)) {
-return new global::System.Collections.Generic.List<string>(0);
-}
-global::System.Collections.Generic.IList<string> components = new global::System.Collections.Generic.List<string>(cosComponents.Size());
-foreach (global::DripSharp.PdfCarton.Cos.COSBase name in cosComponents) {
-global::DripSharp.Runtime.JavaCompat.Add(components, ((global::DripSharp.PdfCarton.Cos.COSName)(name!)).GetName());
-}
-return components;
-}
+  public virtual global::System.Collections.Generic.IList<string> GetComponents() {
+    global::DripSharp.PdfCarton.Cos.COSArray cosComponents
+      = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Components);
+    if ((cosComponents == default!)) {
+      return new global::System.Collections.Generic.List<string>(0);
+    }
+    global::System.Collections.Generic.IList<string> components
+      = new global::System.Collections.Generic.List<string>(cosComponents.Size());
+    foreach (global::DripSharp.PdfCarton.Cos.COSBase name in cosComponents) {
+      global::DripSharp.Runtime.JavaCompat.Add(components,
+        ((global::DripSharp.PdfCarton.Cos.COSName)(name!)).GetName());
+    }
+    return components;
+  }
 
-public override string ToString() {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder("Process{");
-try {
-sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetColorSpace()));
-foreach (string component in this.GetComponents()) {
-sb.Append(" \"");
-sb.Append(component);
-sb.Append('"');
-}
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceNProcess.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf("Couldn't get the colorants information - returning 'ERROR' instead'"));
-sb.Append("ERROR");
-}
-sb.Append('}');
-return sb.ToString();
-}
+  public override string ToString() {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder("Process{");
+    try {
+      sb.Append(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.GetColorSpace()));
+      foreach (string component in this.GetComponents()) {
+        sb.Append(" \"");
+        sb.Append(component);
+        sb.Append('"');
+      }
+    } catch (global::System.IO.IOException e) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceNProcess.LOG,
+        (global::System.Exception)e,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("Couldn't get the colorants information - returning 'ERROR' instead'"));
+      sb.Append("ERROR");
+    }
+    sb.Append('}');
+    return sb.ToString();
+  }
 }

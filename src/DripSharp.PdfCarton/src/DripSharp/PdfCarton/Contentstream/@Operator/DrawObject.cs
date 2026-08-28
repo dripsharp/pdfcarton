@@ -9,45 +9,53 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator;
 
 public class DrawObject : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public DrawObject(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+  public DrawObject(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-global::DripSharp.PdfCarton.Cos.COSBase base0 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-if (!((base0 is global::DripSharp.PdfCarton.Cos.COSName))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSName name = (global::DripSharp.PdfCarton.Cos.COSName)(base0!);
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-if (context.GetResources().IsImageXObject(name)) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject xobject = context.GetResources().GetXObject(name);
-if ((xobject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)) {
-try {
-context.IncreaseLevel();
-if ((context.GetLevel() > 50)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Contentstream.@Operator.DrawObject.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("recursion is too deep, skipping form XObject"));
-return;
-}
-if ((xobject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)) {
-context.ShowTransparencyGroup((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)(xobject!));
-} else {
-context.ShowForm((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(xobject!));
-}
-} finally {
-context.DecreaseLevel();
-}
-}
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        arguments);
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base0
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+    if (!((base0 is global::DripSharp.PdfCarton.Cos.COSName))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSName name
+      = (global::DripSharp.PdfCarton.Cos.COSName)(base0!);
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    if (context.GetResources().IsImageXObject(name)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject xobject
+      = context.GetResources().GetXObject(name);
+    if ((xobject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)) {
+      try {
+        context.IncreaseLevel();
+        if ((context.GetLevel() > 50)) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Contentstream.@Operator.DrawObject.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf("recursion is too deep, skipping form XObject"));
+          return;
+        }
+        if ((xobject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)) {
+          context.ShowTransparencyGroup((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)(xobject!));
+        } else {
+          context.ShowForm((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(xobject!));
+        }
+      } finally {
+        context.DecreaseLevel();
+      }
+    }
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.DrawObject;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.DrawObject;
+  }
 }

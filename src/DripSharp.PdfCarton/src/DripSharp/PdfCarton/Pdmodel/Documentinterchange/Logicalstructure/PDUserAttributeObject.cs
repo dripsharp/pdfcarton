@@ -8,53 +8,62 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
-public class PDUserAttributeObject : global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject {
-public const string OwnerUserProperties = "UserProperties";
+public class PDUserAttributeObject
+: global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject {
+  public const string OwnerUserProperties = "UserProperties";
 
-public PDUserAttributeObject() {
-this.SetOwner(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserAttributeObject.OwnerUserProperties);
-}
+  public PDUserAttributeObject() {
+    this.SetOwner(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserAttributeObject.OwnerUserProperties);
+  }
 
-public PDUserAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : base(dictionary) {
+  public PDUserAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary)
+  : base(dictionary) {
 
-}
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty> GetOwnerUserProperties() {
-global::DripSharp.PdfCarton.Cos.COSArray p = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.P);
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty> properties = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty>(p.Size());
-for (int i = 0; (i < p.Size()); i++) {
-global::DripSharp.Runtime.JavaCompat.Add(properties, new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty((global::DripSharp.PdfCarton.Cos.COSDictionary)(p.GetObject(i)!), this));
-}
-return properties;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty> GetOwnerUserProperties() {
+    global::DripSharp.PdfCarton.Cos.COSArray p
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.P);
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty> properties
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty>(p.Size());
+    for (int i = 0; (i < p.Size()); i++) {
+      global::DripSharp.Runtime.JavaCompat.Add(properties,
+        new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty((global::DripSharp.PdfCarton.Cos.COSDictionary)(p.GetObject(i)!),
+        this));
+    }
+    return properties;
+  }
 
-public virtual void SetUserProperties(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty> userProperties) {
-global::DripSharp.PdfCarton.Cos.COSArray p = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty userProperty in userProperties) {
-p.Add(userProperty);
-}
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, p);
-}
+  public virtual void SetUserProperties(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty> userProperties) {
+    global::DripSharp.PdfCarton.Cos.COSArray p = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty userProperty in userProperties) {
+      p.Add(userProperty);
+    }
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, p);
+  }
 
-public virtual void AddUserProperty(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty userProperty) {
-global::DripSharp.PdfCarton.Cos.COSArray p = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.P);
-p.Add(userProperty);
-this.NotifyChanged();
-}
+  public virtual void AddUserProperty(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty userProperty) {
+    global::DripSharp.PdfCarton.Cos.COSArray p
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.P);
+    p.Add(userProperty);
+    this.NotifyChanged();
+  }
 
-public virtual void RemoveUserProperty(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty userProperty) {
-if ((userProperty == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSArray p = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.P);
-if (p.Remove(userProperty.GetCOSObject())) {
-this.NotifyChanged();
-}
-}
+  public virtual void RemoveUserProperty(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty userProperty) {
+    if ((userProperty == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray p
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.P);
+    if (p.Remove(userProperty.GetCOSObject())) {
+      this.NotifyChanged();
+    }
+  }
 
-public virtual void UserPropertyChanged(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty userProperty) {}
+  public virtual void UserPropertyChanged(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty userProperty) {}
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(base.ToString(), ", userProperties="), this.GetOwnerUserProperties());
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(base.ToString(),
+      ", userProperties="), this.GetOwnerUserProperties());
+  }
 }

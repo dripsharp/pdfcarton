@@ -9,29 +9,30 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDActionHide : global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction {
-public const string SubType = "Hide";
+  public const string SubType = "Hide";
 
-public PDActionHide() {
-this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionHide.SubType);
-}
+  public PDActionHide() {
+    this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionHide.SubType);
+  }
 
-public PDActionHide(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public PDActionHide(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetT() {
-return this.Action.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.T);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetT() {
+    return this.Action.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.T);
+  }
 
-public virtual void SetT(global::DripSharp.PdfCarton.Cos.COSBase t) {
-this.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.T, t);
-}
+  public virtual void SetT(global::DripSharp.PdfCarton.Cos.COSBase t) {
+    this.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.T, t);
+  }
 
-public virtual bool GetH() {
-return this.Action.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.H, true);
-}
+  public virtual bool GetH() {
+    return this.Action.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.H, true);
+  }
 
-public virtual void SetH(bool h) {
-this.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.H, global::DripSharp.PdfCarton.Cos.COSBoolean.GetBoolean(h));
-}
+  public virtual void SetH(bool h) {
+    this.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.H,
+      global::DripSharp.PdfCarton.Cos.COSBoolean.GetBoolean(h));
+  }
 }

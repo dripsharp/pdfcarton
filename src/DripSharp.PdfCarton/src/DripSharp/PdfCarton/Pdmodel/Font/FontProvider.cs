@@ -9,9 +9,9 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public abstract class FontProvider {
-public abstract string ToDebugString();
+  public abstract string ToDebugString();
 
-public abstract global::System.Collections.Generic.IReadOnlyList<global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo> GetFontInfo();
+  public abstract global::System.Collections.Generic.IReadOnlyList<global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo> GetFontInfo();
 
-public FontProvider() {}
+  public FontProvider() {}
 }

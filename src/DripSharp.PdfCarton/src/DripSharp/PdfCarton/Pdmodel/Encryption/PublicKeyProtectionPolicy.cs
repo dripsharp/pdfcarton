@@ -8,34 +8,37 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
-public sealed class PublicKeyProtectionPolicy : global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy {
-private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient> recipients = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient>();
+public sealed class PublicKeyProtectionPolicy
+: global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy {
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient> recipients
+    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient>();
 
-private global::System.Security.Cryptography.X509Certificates.X509Certificate2 decryptionCertificate = null!;
+  private global::System.Security.Cryptography.X509Certificates.X509Certificate2 decryptionCertificate
+    = null!;
 
-public PublicKeyProtectionPolicy() {}
+  public PublicKeyProtectionPolicy() {}
 
-public void AddRecipient(global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient recipient) {
-global::DripSharp.Runtime.JavaCompat.Add(this.recipients, recipient);
-}
+  public void AddRecipient(global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient recipient) {
+    global::DripSharp.Runtime.JavaCompat.Add(this.recipients, recipient);
+  }
 
-public bool RemoveRecipient(global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient recipient) {
-return global::DripSharp.Runtime.JavaCompat.CollectionRemove(this.recipients, recipient);
-}
+  public bool RemoveRecipient(global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient recipient) {
+    return global::DripSharp.Runtime.JavaCompat.CollectionRemove(this.recipients, recipient);
+  }
 
-public global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient> GetRecipientsIterator() {
-return global::DripSharp.Runtime.JavaCompat.Iterator(this.recipients);
-}
+  public global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient> GetRecipientsIterator() {
+    return global::DripSharp.Runtime.JavaCompat.Iterator(this.recipients);
+  }
 
-public global::System.Security.Cryptography.X509Certificates.X509Certificate2 GetDecryptionCertificate() {
-return this.decryptionCertificate;
-}
+  public global::System.Security.Cryptography.X509Certificates.X509Certificate2 GetDecryptionCertificate() {
+    return this.decryptionCertificate;
+  }
 
-public void SetDecryptionCertificate(global::System.Security.Cryptography.X509Certificates.X509Certificate2 decryptionCertificate) {
-this.decryptionCertificate = decryptionCertificate;
-}
+  public void SetDecryptionCertificate(global::System.Security.Cryptography.X509Certificates.X509Certificate2 decryptionCertificate) {
+    this.decryptionCertificate = decryptionCertificate;
+  }
 
-public int GetNumberOfRecipients() {
-return global::DripSharp.Runtime.JavaCompat.CollectionCount(this.recipients);
-}
+  public int GetNumberOfRecipients() {
+    return global::DripSharp.Runtime.JavaCompat.CollectionCount(this.recipients);
+  }
 }

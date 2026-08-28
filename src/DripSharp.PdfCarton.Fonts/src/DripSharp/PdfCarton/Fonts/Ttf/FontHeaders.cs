@@ -9,106 +9,106 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public sealed class FontHeaders {
-internal const int BYTES_GCID = 142;
+  internal const int BYTES_GCID = 142;
 
-private string error = null!;
+  private string error = null!;
 
-private string name = null!;
+  private string name = null!;
 
-private int? headerMacStyle = default;
+  private int? headerMacStyle = default;
 
-private global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable os2Windows = null!;
+  private global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable os2Windows = null!;
 
-private string fontFamily = null!;
+  private string fontFamily = null!;
 
-private string fontSubFamily = null!;
+  private string fontSubFamily = null!;
 
-private sbyte[] nonOtfGcid142 = null!;
+  private sbyte[] nonOtfGcid142 = null!;
 
-private bool isOTFAndPostScript = default;
+  private bool isOTFAndPostScript = default;
 
-private string otfRegistry = null!;
+  private string otfRegistry = null!;
 
-private string otfOrdering = null!;
+  private string otfOrdering = null!;
 
-private int otfSupplement = default;
+  private int otfSupplement = default;
 
-public string GetError() {
-return this.error;
-}
+  public string GetError() {
+    return this.error;
+  }
 
-public string GetName() {
-return this.name;
-}
+  public string GetName() {
+    return this.name;
+  }
 
-public int? GetHeaderMacStyle() {
-return this.headerMacStyle;
-}
+  public int? GetHeaderMacStyle() {
+    return this.headerMacStyle;
+  }
 
-public global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable GetOS2Windows() {
-return this.os2Windows;
-}
+  public global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable GetOS2Windows() {
+    return this.os2Windows;
+  }
 
-public string GetFontFamily() {
-return this.fontFamily;
-}
+  public string GetFontFamily() {
+    return this.fontFamily;
+  }
 
-public string GetFontSubFamily() {
-return this.fontSubFamily;
-}
+  public string GetFontSubFamily() {
+    return this.fontSubFamily;
+  }
 
-public bool IsOpenTypePostScript() {
-return this.isOTFAndPostScript;
-}
+  public bool IsOpenTypePostScript() {
+    return this.isOTFAndPostScript;
+  }
 
-public sbyte[] GetNonOtfTableGCID142() {
-return this.nonOtfGcid142;
-}
+  public sbyte[] GetNonOtfTableGCID142() {
+    return this.nonOtfGcid142;
+  }
 
-public string GetOtfRegistry() {
-return this.otfRegistry;
-}
+  public string GetOtfRegistry() {
+    return this.otfRegistry;
+  }
 
-public string GetOtfOrdering() {
-return this.otfOrdering;
-}
+  public string GetOtfOrdering() {
+    return this.otfOrdering;
+  }
 
-public int GetOtfSupplement() {
-return this.otfSupplement;
-}
+  public int GetOtfSupplement() {
+    return this.otfSupplement;
+  }
 
-public void SetError(string exception) {
-this.error = exception;
-}
+  public void SetError(string exception) {
+    this.error = exception;
+  }
 
-internal void setName(string name) {
-this.name = name;
-}
+  internal void setName(string name) {
+    this.name = name;
+  }
 
-internal void setHeaderMacStyle(int? headerMacStyle) {
-this.headerMacStyle = headerMacStyle;
-}
+  internal void setHeaderMacStyle(int? headerMacStyle) {
+    this.headerMacStyle = headerMacStyle;
+  }
 
-internal void setOs2Windows(global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable os2Windows) {
-this.os2Windows = os2Windows;
-}
+  internal void setOs2Windows(global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable os2Windows) {
+    this.os2Windows = os2Windows;
+  }
 
-internal void setFontFamily(string fontFamily, string fontSubFamily) {
-this.fontFamily = fontFamily;
-this.fontSubFamily = fontSubFamily;
-}
+  internal void setFontFamily(string fontFamily, string fontSubFamily) {
+    this.fontFamily = fontFamily;
+    this.fontSubFamily = fontSubFamily;
+  }
 
-internal void setNonOtfGcid142(sbyte[] nonOtfGcid142) {
-this.nonOtfGcid142 = nonOtfGcid142;
-}
+  internal void setNonOtfGcid142(sbyte[] nonOtfGcid142) {
+    this.nonOtfGcid142 = nonOtfGcid142;
+  }
 
-internal void setIsOTFAndPostScript(bool isOTFAndPostScript) {
-this.isOTFAndPostScript = isOTFAndPostScript;
-}
+  internal void setIsOTFAndPostScript(bool isOTFAndPostScript) {
+    this.isOTFAndPostScript = isOTFAndPostScript;
+  }
 
-public void SetOtfROS(string otfRegistry, string otfOrdering, int otfSupplement) {
-this.otfRegistry = otfRegistry;
-this.otfOrdering = otfOrdering;
-this.otfSupplement = otfSupplement;
-}
+  public void SetOtfROS(string otfRegistry, string otfOrdering, int otfSupplement) {
+    this.otfRegistry = otfRegistry;
+    this.otfOrdering = otfOrdering;
+    this.otfSupplement = otfSupplement;
+  }
 }

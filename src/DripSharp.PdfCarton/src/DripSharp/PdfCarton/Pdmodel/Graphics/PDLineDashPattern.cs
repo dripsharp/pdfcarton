@@ -9,50 +9,54 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics;
 
 public sealed class PDLineDashPattern : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly int phase = default;
+  private readonly int phase = default;
 
-private readonly float[] array = null!;
+  private readonly float[] array = null!;
 
-public PDLineDashPattern() {
-this.array = new float[] {  };
-this.phase = 0;
-}
+  public PDLineDashPattern() {
+    this.array = new float[] {  };
+    this.phase = 0;
+  }
 
-public PDLineDashPattern(global::DripSharp.PdfCarton.Cos.COSArray array, int phase) {
-this.array = array.ToFloatArray();
-if ((phase < 0)) {
-float sum2 = 0;
-foreach (float f in this.array) {
-sum2 += f;
-}
-sum2 *= 2;
-if ((sum2 > 0)) {
-global::DripSharp.Runtime.JavaCompat.AddAssign(ref phase, ((-phase < sum2) ? sum2 : ((global::System.Math.Floor((double)((-phase / (float)(sum2)))) + 1) * sum2)));
-} else {
-phase = 0;
-}
-}
-this.phase = phase;
-}
+  public PDLineDashPattern(global::DripSharp.PdfCarton.Cos.COSArray array, int phase) {
+    this.array = array.ToFloatArray();
+    if ((phase < 0)) {
+      float sum2 = 0;
+      foreach (float f in this.array) {
+        sum2 += f;
+      }
+      sum2 *= 2;
+      if ((sum2 > 0)) {
+        global::DripSharp.Runtime.JavaCompat.AddAssign(ref phase, ((-phase < sum2) ? sum2
+          : ((global::System.Math.Floor((double)((-phase / (float)sum2))) + 1) * sum2)));
+      } else {
+        phase = 0;
+      }
+    }
+    this.phase = phase;
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-global::DripSharp.PdfCarton.Cos.COSArray cos = new global::DripSharp.PdfCarton.Cos.COSArray();
-global::DripSharp.PdfCarton.Cos.COSArray patternArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-patternArray.SetFloatArray(this.array);
-cos.Add(patternArray);
-cos.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.phase)));
-return cos;
-}
+  public global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    global::DripSharp.PdfCarton.Cos.COSArray cos = new global::DripSharp.PdfCarton.Cos.COSArray();
+    global::DripSharp.PdfCarton.Cos.COSArray patternArray
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    patternArray.SetFloatArray(this.array);
+    cos.Add(patternArray);
+    cos.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.phase)));
+    return cos;
+  }
 
-public int GetPhase() {
-return this.phase;
-}
+  public int GetPhase() {
+    return this.phase;
+  }
 
-public float[] GetDashArray() {
-return global::DripSharp.Runtime.JavaCompat.Clone(this.array);
-}
+  public float[] GetDashArray() {
+    return global::DripSharp.Runtime.JavaCompat.Clone(this.array);
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("PDLineDashPattern{array=", global::DripSharp.Runtime.JavaCompat.ArrayToString(this.array)), ", phase="), this.phase), "}");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("PDLineDashPattern{array=",
+      global::DripSharp.Runtime.JavaCompat.ArrayToString(this.array)), ", phase="), this.phase),
+      "}");
+  }
 }

@@ -8,40 +8,57 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font.Descriptor;
 
-public class TrueTypeDescriptorHelper : global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.TrueTypeContainer> {
-private readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont pdTrueTypeFont = null!;
+public class TrueTypeDescriptorHelper
+: global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.TrueTypeContainer> {
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont pdTrueTypeFont = null!;
 
-public TrueTypeDescriptorHelper(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont font, global::DripSharp.PdfCarton.Preflight.Font.Container.TrueTypeContainer fontContainer) : base(context, font, fontContainer) {
-this.pdTrueTypeFont = font;
-}
+  public TrueTypeDescriptorHelper(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont font,
+    global::DripSharp.PdfCarton.Preflight.Font.Container.TrueTypeContainer fontContainer)
+  : base(context, font, fontContainer) {
+    this.pdTrueTypeFont = font;
+  }
 
-public override global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ExtractFontFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDStream fontFile = fontDescriptor.GetFontFile2();
-global::DripSharp.PdfCarton.Cos.COSStream stream = ((fontFile == default!) ? (global::DripSharp.PdfCarton.Cos.COSStream)(default!) : fontFile.GetCOSObject());
-if ((stream == default!)) {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsFontFilexInvalid, global::DripSharp.Runtime.JavaCompat.Concat(fontDescriptor.GetFontName(), ": The FontFile2 is missing")));
-this.FContainer.NotEmbedded();
-return default!;
-}
-if ((stream.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Length1) <= 0)) {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsFontFilexInvalid, global::DripSharp.Runtime.JavaCompat.Concat(fontDescriptor.GetFontName(), ": The FontFile entry /Length1 is invalid")));
-return default!;
-}
-return fontFile;
-}
+  public override global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ExtractFontFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDStream fontFile = fontDescriptor.GetFontFile2();
+    global::DripSharp.PdfCarton.Cos.COSStream stream = ((fontFile == default!)
+      ? (global::DripSharp.PdfCarton.Cos.COSStream)(default!) : fontFile.GetCOSObject());
+    if ((stream == default!)) {
+      this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsFontFilexInvalid,
+        global::DripSharp.Runtime.JavaCompat.Concat(fontDescriptor.GetFontName(),
+        ": The FontFile2 is missing")));
+      this.FContainer.NotEmbedded();
+      return default!;
+    }
+    if ((stream.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Length1) <= 0)) {
+      this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsFontFilexInvalid,
+        global::DripSharp.Runtime.JavaCompat.Concat(fontDescriptor.GetFontName(),
+        ": The FontFile entry /Length1 is invalid")));
+      return default!;
+    }
+    return fontFile;
+  }
 
-protected internal override void ProcessFontFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor, global::DripSharp.PdfCarton.Pdmodel.Common.PDStream fontFile) {
-if (base.Font.IsDamaged()) {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsTruetypeDamaged, global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(), ": The FontFile can't be read")));
-} else {
-global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = this.pdTrueTypeFont.GetTrueTypeFont();
-try {
-if ((this.pdTrueTypeFont.IsSymbolic() && (ttf.GetCmap().GetCmaps().Length != 1))) {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsEncoding, global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(), ": Symbolic TrueType font has more than one 'cmap' entry")));
-}
-} catch (global::System.IO.IOException) {
-this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsTruetypeDamaged, global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(), ": The TTF 'cmap' could not be read")));
-}
-}
-}
+  protected internal override void ProcessFontFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor,
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDStream fontFile) {
+    if (base.Font.IsDamaged()) {
+      this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsTruetypeDamaged,
+        global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
+        ": The FontFile can't be read")));
+    } else {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
+        = this.pdTrueTypeFont.GetTrueTypeFont();
+      try {
+        if ((this.pdTrueTypeFont.IsSymbolic() && (ttf.GetCmap().GetCmaps().Length != 1))) {
+          this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsEncoding,
+            global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
+            ": Symbolic TrueType font has more than one 'cmap' entry")));
+        }
+      } catch (global::System.IO.IOException) {
+        this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsTruetypeDamaged,
+          global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
+          ": The TTF 'cmap' could not be read")));
+      }
+    }
+  }
 }

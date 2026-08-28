@@ -9,815 +9,1130 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public class CharStringCommand {
-private readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord type1KeyWord = null!;
-
-private readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord type2KeyWord = null!;
-
-private static readonly global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand> CHAR_STRING_COMMANDS = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.createMap();
-
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandClosepath = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Closepath.hashValue);
-
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandRlineto = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlineto.hashValue);
-
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandHlineto = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hlineto.hashValue);
-
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandVlineto = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vlineto.hashValue);
-
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandRrcurveto = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rrcurveto.hashValue);
-
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandHsbw = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hsbw.hashValue);
-
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandCallothersubr = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callothersubr.hashValue);
-
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandDiv = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Div.hashValue);
-
-private const int KEY_UNKNOWN = 99;
-
-private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand COMMAND_UNKNOWN = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.KEY_UNKNOWN, 0);
-
-private static global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand> createMap() {
-global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand> charStringCommandMap = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand>();
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstem.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstem));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstem.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstem));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vmoveto.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vmoveto));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlineto.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlineto));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hlineto.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hlineto));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vlineto.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vlineto));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rrcurveto.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rrcurveto));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Closepath.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Closepath));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callsubr.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callsubr));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Ret.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Ret));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Escape.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Escape));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hsbw.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hsbw));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Endchar.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Endchar));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstemhm.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstemhm));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hintmask.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hintmask));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Cntrmask.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Cntrmask));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rmoveto.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rmoveto));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hmoveto.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hmoveto));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstemhm.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstemhm));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rcurveline.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rcurveline));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlinecurve.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlinecurve));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vvcurveto.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vvcurveto));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hhcurveto.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hhcurveto));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Shortint.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Shortint));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callgsubr.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callgsubr));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vhcurveto.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vhcurveto));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hvcurveto.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hvcurveto));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Dotsection.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 0));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstem3.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 1));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstem3.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 2));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.And.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 3));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Or.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 4));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Not.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 5));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Seac.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 6));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Sbw.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 7));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Abs.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 9));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Add.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 10));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Sub.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 11));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Div.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 12));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Neg.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 14));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Eq.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 15));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callothersubr.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 16));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Pop.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 17));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Drop.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 18));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Put.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 20));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Get.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 21));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Ifelse.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 22));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Random.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 23));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Mul.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 24));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Sqrt.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 26));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Dup.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 27));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Exch.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 28));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Index.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 29));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Roll.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 30));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Setcurrentpoint.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 33));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hflex.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 34));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Flex.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 35));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hflex1.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 36));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Flex1.hashValue, new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 37));
-return charStringCommandMap;
-}
-
-private CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key) {
-this.type1KeyWord = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.ValueOfKey(key.hashValue);
-this.type2KeyWord = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.ValueOfKey(key.hashValue);
-}
-
-private CharStringCommand(int b0, int b1) {
-this.type1KeyWord = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.ValueOfKey(b0, b1);
-this.type2KeyWord = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.ValueOfKey(b0, b1);
-}
-
-public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand GetInstance(int b0) {
-global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand command = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CHAR_STRING_COMMANDS, b0);
-return ((command != default!) ? command : global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.COMMAND_UNKNOWN);
-}
-
-public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand GetInstance(int b0, int b1) {
-global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand command = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CHAR_STRING_COMMANDS, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.getKeyHashValue(b0, b1));
-return ((command != default!) ? command : global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.COMMAND_UNKNOWN);
-}
-
-public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand GetInstance(int[] values) {
-if ((values.Length == 1)) {
-return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(values[0]);
-} else {
-if ((values.Length == 2)) {
-return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(values[0], values[1]);
-}
-}
-return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.COMMAND_UNKNOWN;
-}
-
-private static int getKeyHashValue(int b0, int b1) {
-global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord type1Key = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.ValueOfKey(b0, b1);
-if ((type1Key != default!)) {
-return type1Key.key.hashValue;
-}
-global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord type2Key = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.ValueOfKey(b0, b1);
-if ((type2Key != default!)) {
-return type2Key.key.hashValue;
-}
-return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.KEY_UNKNOWN;
-}
-
-public virtual global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord GetType1KeyWord() {
-return this.type1KeyWord;
-}
-
-public virtual global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord GetType2KeyWord() {
-return this.type2KeyWord;
-}
-
-public override string ToString() {
-string str;
-if ((this.type2KeyWord != default!)) {
-str = this.type2KeyWord.ToString();
-} else {
-if ((this.type1KeyWord != default!)) {
-str = this.type1KeyWord.ToString();
-} else {
-str = "unknown command";
-}
-}
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(str, '|');
-}
-
-public override int GetHashCode() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Hash(this.type1KeyWord, this.type2KeyWord);
-}
-
-public override bool Equals(object @object) {
-if (((@object == default!) || (((object)(@object)).GetType() != ((object)(this)).GetType()))) {
-return false;
-}
-global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand that = (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand)(@object!);
-return ((that.type1KeyWord == this.type1KeyWord) && (that.type2KeyWord == this.type2KeyWord));
-}
-
-public sealed class Type1KeyWord {
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEM")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Hstem = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstem);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEM")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Vstem = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstem);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VMOVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Vmoveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vmoveto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RLINETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Rlineto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlineto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HLINETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Hlineto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hlineto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VLINETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Vlineto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vlineto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RRCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(6)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Rrcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rrcurveto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CLOSEPATH")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(7)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Closepath = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Closepath);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLSUBR")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(8)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Callsubr = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callsubr);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RET")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(9)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Ret = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Ret);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ESCAPE")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(10)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Escape = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Escape);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DOTSECTION")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(11)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Dotsection = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Dotsection);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEM3")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(12)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Vstem3 = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstem3);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEM3")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(13)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Hstem3 = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstem3);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SEAC")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(14)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Seac = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Seac);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SBW")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(15)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Sbw = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Sbw);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DIV")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(16)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Div = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Div);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLOTHERSUBR")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(17)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Callothersubr = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callothersubr);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("POP")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(18)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Pop = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Pop);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SETCURRENTPOINT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(19)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Setcurrentpoint = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Setcurrentpoint);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSBW")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(20)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Hsbw = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hsbw);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ENDCHAR")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(21)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Endchar = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Endchar);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RMOVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(22)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Rmoveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rmoveto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HMOVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(23)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Hmoveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hmoveto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VHCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(24)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Vhcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vhcurveto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HVCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(25)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Hvcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hvcurveto);
-
-internal readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key = null!;
-
-internal Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key) {
-this.key = key;
-}
-
-internal static readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord> BY_KEY = new global::System.Collections.Generic.Dictionary<global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord>();
-
-static Type1KeyWord() {
-{
-foreach (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord e in global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.values()) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.BY_KEY, e.key, e);
-}
-}
-}
-
-public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord ValueOfKey(int b0) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.BY_KEY, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.ValueOfKey(b0));
-}
-
-public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord ValueOfKey(int b0, int b1) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.BY_KEY, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.ValueOfKey(b0, b1));
-}
-
-public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord ValueOfKey(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.BY_KEY, key);
-}
-
-public static Type1KeyWord[] values() => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValues<Type1KeyWord>();
-public static Type1KeyWord valueOf(string name) => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValueOf<Type1KeyWord>(name);
-
-public override string ToString() => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumName(this);
-}
-
-public sealed class Type2KeyWord {
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEM")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hstem = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstem);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEM")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Vstem = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstem);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VMOVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Vmoveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vmoveto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RLINETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Rlineto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlineto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HLINETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hlineto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hlineto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VLINETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Vlineto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vlineto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RRCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(6)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Rrcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rrcurveto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLSUBR")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(7)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Callsubr = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callsubr);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RET")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(8)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Ret = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Ret);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ESCAPE")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(9)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Escape = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Escape);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("AND")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(10)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord And = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.And);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("OR")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(11)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Or = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Or);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("NOT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(12)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Not = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Not);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ABS")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(13)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Abs = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Abs);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ADD")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(14)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Add = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Add);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SUB")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(15)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Sub = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Sub);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DIV")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(16)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Div = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Div);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("NEG")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(17)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Neg = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Neg);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("EQ")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(18)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Eq = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Eq);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DROP")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(19)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Drop = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Drop);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("PUT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(20)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Put = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Put);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("GET")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(21)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Get = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Get);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("IFELSE")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(22)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Ifelse = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Ifelse);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RANDOM")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(23)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Random = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Random);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("MUL")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(24)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Mul = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Mul);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SQRT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(25)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Sqrt = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Sqrt);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DUP")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(26)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Dup = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Dup);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("EXCH")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(27)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Exch = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Exch);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("INDEX")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(28)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Index = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Index);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ROLL")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(29)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Roll = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Roll);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HFLEX")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(30)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hflex = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hflex);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("FLEX")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(31)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Flex = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Flex);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HFLEX1")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(32)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hflex1 = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hflex1);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("FLEX1")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(33)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Flex1 = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Flex1);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ENDCHAR")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(34)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Endchar = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Endchar);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEMHM")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(35)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hstemhm = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstemhm);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HINTMASK")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(36)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hintmask = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hintmask);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CNTRMASK")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(37)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Cntrmask = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Cntrmask);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RMOVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(38)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Rmoveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rmoveto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HMOVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(39)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hmoveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hmoveto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEMHM")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(40)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Vstemhm = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstemhm);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RCURVELINE")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(41)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Rcurveline = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rcurveline);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RLINECURVE")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(42)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Rlinecurve = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlinecurve);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VVCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(43)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Vvcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vvcurveto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HHCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(44)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hhcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hhcurveto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SHORTINT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(45)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Shortint = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Shortint);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLGSUBR")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(46)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Callgsubr = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callgsubr);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VHCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(47)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Vhcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vhcurveto);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HVCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(48)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hvcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hvcurveto);
-
-internal readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key = null!;
-
-internal Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key) {
-this.key = key;
-}
-
-internal static readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord> BY_KEY = new global::System.Collections.Generic.Dictionary<global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord>();
-
-static Type2KeyWord() {
-{
-foreach (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord e in global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.values()) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.BY_KEY, e.key, e);
-}
-}
-}
-
-public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord ValueOfKey(int b0) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.BY_KEY, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.ValueOfKey(b0));
-}
-
-public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord ValueOfKey(int b0, int b1) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.BY_KEY, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.ValueOfKey(b0, b1));
-}
-
-public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord ValueOfKey(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.BY_KEY, key);
-}
-
-public static Type2KeyWord[] values() => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValues<Type2KeyWord>();
-public static Type2KeyWord valueOf(string name) => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValueOf<Type2KeyWord>(name);
-
-public override string ToString() => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumName(this);
-}
-
-public sealed class Key {
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEM")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hstem = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(1);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEM")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vstem = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(3);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VMOVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vmoveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(4);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RLINETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Rlineto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(5);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HLINETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hlineto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(6);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VLINETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(5)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vlineto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(7);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RRCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(6)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Rrcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(8);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CLOSEPATH")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(7)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Closepath = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(9);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLSUBR")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(8)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Callsubr = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(10);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RET")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(9)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Ret = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(11);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ESCAPE")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(10)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Escape = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DOTSECTION")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(11)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Dotsection = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 0);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEM3")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(12)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vstem3 = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 1);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEM3")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(13)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hstem3 = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 2);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("AND")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(14)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key And = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 3);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("OR")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(15)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Or = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 4);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("NOT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(16)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Not = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 5);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SEAC")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(17)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Seac = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 6);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SBW")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(18)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Sbw = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 7);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ABS")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(19)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Abs = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 9);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ADD")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(20)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Add = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 10);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SUB")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(21)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Sub = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 11);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DIV")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(22)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Div = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 12);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("NEG")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(23)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Neg = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 14);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("EQ")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(24)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Eq = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 15);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLOTHERSUBR")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(25)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Callothersubr = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 16);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("POP")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(26)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Pop = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 17);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DROP")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(27)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Drop = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 18);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("PUT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(28)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Put = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 20);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("GET")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(29)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Get = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 21);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("IFELSE")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(30)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Ifelse = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 22);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RANDOM")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(31)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Random = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 23);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("MUL")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(32)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Mul = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 24);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SQRT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(33)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Sqrt = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 26);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DUP")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(34)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Dup = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 27);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("EXCH")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(35)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Exch = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 28);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("INDEX")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(36)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Index = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 29);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ROLL")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(37)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Roll = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 30);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SETCURRENTPOINT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(38)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Setcurrentpoint = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 33);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HFLEX")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(39)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hflex = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 34);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("FLEX")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(40)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Flex = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 35);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HFLEX1")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(41)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hflex1 = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 36);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("FLEX1")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(42)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Flex1 = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 37);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSBW")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(43)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hsbw = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(13);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ENDCHAR")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(44)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Endchar = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(14);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEMHM")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(45)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hstemhm = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(18);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HINTMASK")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(46)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hintmask = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(19);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CNTRMASK")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(47)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Cntrmask = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(20);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RMOVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(48)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Rmoveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(21);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HMOVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(49)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hmoveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(22);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEMHM")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(50)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vstemhm = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(23);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RCURVELINE")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(51)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Rcurveline = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(24);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RLINECURVE")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(52)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Rlinecurve = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(25);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VVCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(53)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vvcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(26);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HHCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(54)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hhcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(27);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SHORTINT")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(55)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Shortint = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(28);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLGSUBR")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(56)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Callgsubr = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(29);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VHCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(57)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vhcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(30);
-
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HVCURVETO")]
-[global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(58)]
-public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hvcurveto = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(31);
-
-internal readonly int hashValue = default;
-
-internal Key(int b0) {
-this.hashValue = b0;
-}
-
-internal Key(int b0, int b1) {
-this.hashValue = ((b0 << unchecked((int)(4))) + b1);
-}
-
-internal static readonly global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key> BY_KEY = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key>();
-
-static Key() {
-{
-foreach (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key e in global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.values()) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.BY_KEY, e.hashValue, e);
-}
-}
-}
-
-public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key ValueOfKey(int b0) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.BY_KEY, b0);
-}
-
-public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key ValueOfKey(int b0, int b1) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.BY_KEY, ((b0 << unchecked((int)(4))) + b1));
-}
-
-internal int getHashValue() {
-return this.hashValue;
-}
-
-public static Key[] values() => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValues<Key>();
-public static Key valueOf(string name) => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValueOf<Key>(name);
-
-public override string ToString() => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumName(this);
-}
+  private readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord type1KeyWord
+    = null!;
+
+  private readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord type2KeyWord
+    = null!;
+
+  private static readonly global::System.Collections.Generic.IDictionary<int,
+    global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand> CHAR_STRING_COMMANDS
+    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.createMap();
+
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandClosepath
+    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Closepath.hashValue);
+
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandRlineto
+    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlineto.hashValue);
+
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandHlineto
+    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hlineto.hashValue);
+
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandVlineto
+    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vlineto.hashValue);
+
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandRrcurveto
+    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rrcurveto.hashValue);
+
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandHsbw
+    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hsbw.hashValue);
+
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandCallothersubr
+    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callothersubr.hashValue);
+
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandDiv
+    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Div.hashValue);
+
+  private const int KEY_UNKNOWN = 99;
+
+  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand COMMAND_UNKNOWN
+    = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.KEY_UNKNOWN,
+    0);
+
+  private static global::System.Collections.Generic.IDictionary<int,
+    global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand> createMap() {
+    global::System.Collections.Generic.IDictionary<int,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand> charStringCommandMap
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand>();
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstem.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstem));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstem.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstem));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vmoveto.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vmoveto));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlineto.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlineto));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hlineto.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hlineto));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vlineto.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vlineto));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rrcurveto.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rrcurveto));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Closepath.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Closepath));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callsubr.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callsubr));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Ret.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Ret));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Escape.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Escape));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hsbw.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hsbw));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Endchar.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Endchar));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstemhm.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstemhm));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hintmask.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hintmask));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Cntrmask.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Cntrmask));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rmoveto.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rmoveto));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hmoveto.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hmoveto));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstemhm.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstemhm));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rcurveline.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rcurveline));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlinecurve.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlinecurve));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vvcurveto.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vvcurveto));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hhcurveto.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hhcurveto));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Shortint.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Shortint));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callgsubr.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callgsubr));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vhcurveto.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vhcurveto));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hvcurveto.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hvcurveto));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Dotsection.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 0));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstem3.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 1));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstem3.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 2));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.And.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 3));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Or.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 4));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Not.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 5));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Seac.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 6));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Sbw.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 7));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Abs.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 9));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Add.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 10));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Sub.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 11));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Div.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 12));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Neg.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 14));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Eq.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 15));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callothersubr.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 16));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Pop.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 17));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Drop.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 18));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Put.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 20));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Get.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 21));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Ifelse.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 22));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Random.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 23));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Mul.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 24));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Sqrt.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 26));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Dup.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 27));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Exch.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 28));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Index.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 29));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Roll.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 30));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Setcurrentpoint.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 33));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hflex.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 34));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Flex.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 35));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hflex1.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 36));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(charStringCommandMap,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Flex1.hashValue,
+      new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(12, 37));
+    return charStringCommandMap;
+  }
+
+  private CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key) {
+    this.type1KeyWord
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.ValueOfKey(key.hashValue);
+    this.type2KeyWord
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.ValueOfKey(key.hashValue);
+  }
+
+  private CharStringCommand(int b0, int b1) {
+    this.type1KeyWord
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.ValueOfKey(b0, b1);
+    this.type2KeyWord
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.ValueOfKey(b0, b1);
+  }
+
+  public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand GetInstance(int b0) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand command
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CHAR_STRING_COMMANDS,
+      b0);
+    return ((command != default!) ? command
+      : global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.COMMAND_UNKNOWN);
+  }
+
+  public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand GetInstance(int b0,
+    int b1) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand command
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CHAR_STRING_COMMANDS,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.getKeyHashValue(b0, b1));
+    return ((command != default!) ? command
+      : global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.COMMAND_UNKNOWN);
+  }
+
+  public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand GetInstance(int[] values) {
+    if ((values.Length == 1)) {
+      return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(values[0]);
+    } else {
+      if ((values.Length == 2)) {
+        return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(values[0],
+          values[1]);
+      }
+    }
+    return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.COMMAND_UNKNOWN;
+  }
+
+  private static int getKeyHashValue(int b0, int b1) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord type1Key
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.ValueOfKey(b0, b1);
+    if ((type1Key != default!)) {
+      return type1Key.key.hashValue;
+    }
+    global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord type2Key
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.ValueOfKey(b0, b1);
+    if ((type2Key != default!)) {
+      return type2Key.key.hashValue;
+    }
+    return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.KEY_UNKNOWN;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord GetType1KeyWord() {
+    return this.type1KeyWord;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord GetType2KeyWord() {
+    return this.type2KeyWord;
+  }
+
+  public override string ToString() {
+    string str;
+    if ((this.type2KeyWord != default!)) {
+      str = this.type2KeyWord.ToString();
+    } else {
+      if ((this.type1KeyWord != default!)) {
+        str = this.type1KeyWord.ToString();
+      } else {
+        str = "unknown command";
+      }
+    }
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(str, '|');
+  }
+
+  public override int GetHashCode() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Hash(this.type1KeyWord,
+      this.type2KeyWord);
+  }
+
+  public override bool Equals(object @object) {
+    if (((@object == default!) || (((object)(@object)).GetType() != ((object)(this)).GetType()))) {
+      return false;
+    }
+    global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand that
+      = (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand)(@object!);
+    return ((that.type1KeyWord == this.type1KeyWord) && (that.type2KeyWord == this.type2KeyWord));
+  }
+
+  public sealed class Type1KeyWord {
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEM")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(0)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Hstem
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstem);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEM")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(1)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Vstem
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstem);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VMOVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(2)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Vmoveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vmoveto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RLINETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(3)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Rlineto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlineto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HLINETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(4)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Hlineto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hlineto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VLINETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(5)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Vlineto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vlineto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RRCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(6)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Rrcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rrcurveto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CLOSEPATH")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(7)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Closepath
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Closepath);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLSUBR")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(8)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Callsubr
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callsubr);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RET")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(9)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Ret
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Ret);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ESCAPE")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(10)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Escape
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Escape);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DOTSECTION")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(11)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Dotsection
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Dotsection);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEM3")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(12)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Vstem3
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstem3);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEM3")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(13)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Hstem3
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstem3);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SEAC")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(14)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Seac
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Seac);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SBW")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(15)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Sbw
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Sbw);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DIV")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(16)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Div
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Div);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLOTHERSUBR")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(17)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Callothersubr
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callothersubr);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("POP")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(18)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Pop
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Pop);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SETCURRENTPOINT")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(19)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Setcurrentpoint
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Setcurrentpoint);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSBW")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(20)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Hsbw
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hsbw);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ENDCHAR")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(21)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Endchar
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Endchar);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RMOVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(22)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Rmoveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rmoveto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HMOVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(23)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Hmoveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hmoveto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VHCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(24)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Vhcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vhcurveto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HVCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(25)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord Hvcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hvcurveto);
+
+    internal readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key = null!;
+
+    internal Type1KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key) {
+      this.key = key;
+    }
+
+    internal static readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord> BY_KEY
+      = new global::System.Collections.Generic.Dictionary<global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord>();
+
+    static Type1KeyWord() { {
+        foreach (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord e in global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.values()) {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.BY_KEY,
+            e.key, e);
+        }
+      }
+    }
+
+    public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord ValueOfKey(int b0) {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.BY_KEY,
+        global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.ValueOfKey(b0));
+    }
+
+    public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord ValueOfKey(int b0,
+      int b1) {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.BY_KEY,
+        global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.ValueOfKey(b0, b1));
+    }
+
+    public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord ValueOfKey(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key) {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type1KeyWord.BY_KEY,
+        key);
+    }
+
+    public static Type1KeyWord[] values()
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValues<Type1KeyWord>();
+    public static Type1KeyWord valueOf(string name)
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValueOf<Type1KeyWord>(name);
+
+    public override string ToString()
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumName(this);
+  }
+
+  public sealed class Type2KeyWord {
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEM")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(0)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hstem
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstem);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEM")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(1)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Vstem
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstem);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VMOVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(2)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Vmoveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vmoveto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RLINETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(3)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Rlineto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlineto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HLINETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(4)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hlineto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hlineto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VLINETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(5)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Vlineto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vlineto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RRCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(6)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Rrcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rrcurveto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLSUBR")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(7)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Callsubr
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callsubr);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RET")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(8)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Ret
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Ret);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ESCAPE")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(9)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Escape
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Escape);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("AND")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(10)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord And
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.And);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("OR")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(11)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Or
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Or);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("NOT")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(12)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Not
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Not);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ABS")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(13)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Abs
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Abs);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ADD")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(14)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Add
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Add);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SUB")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(15)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Sub
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Sub);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DIV")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(16)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Div
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Div);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("NEG")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(17)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Neg
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Neg);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("EQ")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(18)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Eq
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Eq);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DROP")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(19)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Drop
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Drop);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("PUT")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(20)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Put
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Put);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("GET")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(21)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Get
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Get);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("IFELSE")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(22)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Ifelse
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Ifelse);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RANDOM")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(23)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Random
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Random);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("MUL")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(24)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Mul
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Mul);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SQRT")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(25)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Sqrt
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Sqrt);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DUP")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(26)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Dup
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Dup);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("EXCH")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(27)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Exch
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Exch);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("INDEX")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(28)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Index
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Index);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ROLL")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(29)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Roll
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Roll);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HFLEX")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(30)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hflex
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hflex);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("FLEX")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(31)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Flex
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Flex);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HFLEX1")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(32)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hflex1
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hflex1);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("FLEX1")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(33)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Flex1
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Flex1);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ENDCHAR")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(34)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Endchar
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Endchar);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEMHM")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(35)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hstemhm
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hstemhm);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HINTMASK")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(36)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hintmask
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hintmask);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CNTRMASK")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(37)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Cntrmask
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Cntrmask);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RMOVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(38)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Rmoveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rmoveto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HMOVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(39)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hmoveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hmoveto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEMHM")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(40)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Vstemhm
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vstemhm);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RCURVELINE")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(41)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Rcurveline
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rcurveline);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RLINECURVE")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(42)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Rlinecurve
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlinecurve);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VVCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(43)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Vvcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vvcurveto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HHCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(44)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hhcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hhcurveto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SHORTINT")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(45)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Shortint
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Shortint);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLGSUBR")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(46)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Callgsubr
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callgsubr);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VHCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(47)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Vhcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vhcurveto);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HVCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(48)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord Hvcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hvcurveto);
+
+    internal readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key = null!;
+
+    internal Type2KeyWord(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key) {
+      this.key = key;
+    }
+
+    internal static readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord> BY_KEY
+      = new global::System.Collections.Generic.Dictionary<global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord>();
+
+    static Type2KeyWord() { {
+        foreach (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord e in global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.values()) {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.BY_KEY,
+            e.key, e);
+        }
+      }
+    }
+
+    public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord ValueOfKey(int b0) {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.BY_KEY,
+        global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.ValueOfKey(b0));
+    }
+
+    public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord ValueOfKey(int b0,
+      int b1) {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.BY_KEY,
+        global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.ValueOfKey(b0, b1));
+    }
+
+    public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord ValueOfKey(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key key) {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.BY_KEY,
+        key);
+    }
+
+    public static Type2KeyWord[] values()
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValues<Type2KeyWord>();
+    public static Type2KeyWord valueOf(string name)
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValueOf<Type2KeyWord>(name);
+
+    public override string ToString()
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumName(this);
+  }
+
+  public sealed class Key {
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEM")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(0)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hstem
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(1);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEM")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(1)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vstem
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(3);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VMOVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(2)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vmoveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(4);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RLINETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(3)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Rlineto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(5);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HLINETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(4)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hlineto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(6);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VLINETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(5)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vlineto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(7);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RRCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(6)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Rrcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(8);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CLOSEPATH")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(7)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Closepath
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(9);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLSUBR")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(8)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Callsubr
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(10);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RET")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(9)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Ret
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(11);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ESCAPE")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(10)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Escape
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DOTSECTION")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(11)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Dotsection
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 0);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEM3")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(12)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vstem3
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 1);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEM3")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(13)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hstem3
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 2);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("AND")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(14)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key And
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 3);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("OR")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(15)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Or
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 4);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("NOT")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(16)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Not
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 5);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SEAC")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(17)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Seac
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 6);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SBW")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(18)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Sbw
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 7);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ABS")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(19)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Abs
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 9);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ADD")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(20)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Add
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 10);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SUB")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(21)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Sub
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 11);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DIV")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(22)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Div
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 12);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("NEG")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(23)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Neg
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 14);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("EQ")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(24)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Eq
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 15);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLOTHERSUBR")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(25)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Callothersubr
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 16);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("POP")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(26)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Pop
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 17);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DROP")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(27)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Drop
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 18);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("PUT")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(28)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Put
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 20);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("GET")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(29)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Get
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 21);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("IFELSE")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(30)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Ifelse
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 22);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RANDOM")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(31)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Random
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 23);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("MUL")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(32)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Mul
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 24);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SQRT")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(33)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Sqrt
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 26);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("DUP")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(34)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Dup
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 27);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("EXCH")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(35)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Exch
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 28);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("INDEX")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(36)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Index
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 29);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ROLL")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(37)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Roll
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 30);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SETCURRENTPOINT")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(38)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Setcurrentpoint
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 33);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HFLEX")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(39)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hflex
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 34);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("FLEX")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(40)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Flex
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 35);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HFLEX1")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(41)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hflex1
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 36);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("FLEX1")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(42)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Flex1
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(12, 37);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSBW")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(43)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hsbw
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(13);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("ENDCHAR")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(44)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Endchar
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(14);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HSTEMHM")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(45)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hstemhm
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(18);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HINTMASK")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(46)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hintmask
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(19);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CNTRMASK")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(47)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Cntrmask
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(20);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RMOVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(48)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Rmoveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(21);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HMOVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(49)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hmoveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(22);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VSTEMHM")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(50)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vstemhm
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(23);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RCURVELINE")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(51)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Rcurveline
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(24);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("RLINECURVE")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(52)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Rlinecurve
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(25);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VVCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(53)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vvcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(26);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HHCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(54)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hhcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(27);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("SHORTINT")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(55)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Shortint
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(28);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("CALLGSUBR")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(56)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Callgsubr
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(29);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("VHCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(57)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Vhcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(30);
+
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumNameAttribute("HVCURVETO")]
+    [global::DripSharp.PdfCarton.Runtime.Fonts.JavaEnumOrdinalAttribute(58)]
+    public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key Hvcurveto
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key(31);
+
+    internal readonly int hashValue = default;
+
+    internal Key(int b0) {
+      this.hashValue = b0;
+    }
+
+    internal Key(int b0, int b1) {
+      this.hashValue = ((b0 << unchecked((int)(4))) + b1);
+    }
+
+    internal static readonly global::System.Collections.Generic.IDictionary<int,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key> BY_KEY
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int,
+      global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key>();
+
+    static Key() { {
+        foreach (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key e in global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.values()) {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.BY_KEY,
+            e.hashValue, e);
+        }
+      }
+    }
+
+    public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key ValueOfKey(int b0) {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.BY_KEY,
+        b0);
+    }
+
+    public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key ValueOfKey(int b0,
+      int b1) {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.BY_KEY,
+        ((b0 << unchecked((int)(4))) + b1));
+    }
+
+    internal int getHashValue() {
+      return this.hashValue;
+    }
+
+    public static Key[] values()
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValues<Key>();
+    public static Key valueOf(string name)
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumValueOf<Key>(name);
+
+    public override string ToString()
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumName(this);
+  }
 }

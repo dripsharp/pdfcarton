@@ -8,8 +8,10 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Util.Autodetect;
 
-public class MacFontDirFinder : global::DripSharp.PdfCarton.Fonts.Util.Autodetect.NativeFontDirFinder {
-protected internal override string[] GetSearchableDirectories() {
-return new string[] { global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetProperty("user.home"), "/Library/Fonts/"), "/Library/Fonts/", "/System/Library/Fonts/", "/Network/Library/Fonts/" };
-}
+public class MacFontDirFinder
+: global::DripSharp.PdfCarton.Fonts.Util.Autodetect.NativeFontDirFinder {
+  protected internal override string[] GetSearchableDirectories() {
+    return new string[] { global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetProperty("user.home"),
+        "/Library/Fonts/"), "/Library/Fonts/", "/System/Library/Fonts/", "/Network/Library/Fonts/" };
+  }
 }

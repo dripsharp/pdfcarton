@@ -9,122 +9,139 @@
 namespace DripSharp.PdfCarton.Pdfparser;
 
 public class PDFObjectStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser {
-private readonly int numberOfObjects = default;
+  private readonly int numberOfObjects = default;
 
-private readonly int firstObject = default;
+  private readonly int firstObject = default;
 
-public PDFObjectStreamParser(global::DripSharp.PdfCarton.Cos.COSStream stream, global::DripSharp.PdfCarton.Cos.COSDocument document) : base(stream.CreateView()) {
-this.Document = document;
-this.numberOfObjects = stream.GetInt(global::DripSharp.PdfCarton.Cos.COSName.N);
-if ((this.numberOfObjects == -1)) {
-throw new global::System.IO.IOException("/N entry missing in object stream");
-}
-if ((this.numberOfObjects < 0)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Illegal /N entry in object stream: ", this.numberOfObjects));
-}
-this.firstObject = stream.GetInt(global::DripSharp.PdfCarton.Cos.COSName.First);
-if ((this.firstObject == -1)) {
-throw new global::System.IO.IOException("/First entry missing in object stream");
-}
-if ((this.firstObject < 0)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Illegal /First entry in object stream: ", this.firstObject));
-}
-}
+  public PDFObjectStreamParser(global::DripSharp.PdfCarton.Cos.COSStream stream,
+    global::DripSharp.PdfCarton.Cos.COSDocument document) : base(stream.CreateView()) {
+    this.Document = document;
+    this.numberOfObjects = stream.GetInt(global::DripSharp.PdfCarton.Cos.COSName.N);
+    if ((this.numberOfObjects == -1)) {
+      throw new global::System.IO.IOException("/N entry missing in object stream");
+    }
+    if ((this.numberOfObjects < 0)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Illegal /N entry in object stream: ",
+        this.numberOfObjects));
+    }
+    this.firstObject = stream.GetInt(global::DripSharp.PdfCarton.Cos.COSName.First);
+    if ((this.firstObject == -1)) {
+      throw new global::System.IO.IOException("/First entry missing in object stream");
+    }
+    if ((this.firstObject < 0)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Illegal /First entry in object stream: ",
+        this.firstObject));
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase ParseObject(long objectNumber) {
-global::DripSharp.PdfCarton.Cos.COSBase streamObject = default!;
-try {
-int? objectOffset = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.privateReadObjectNumbers(), objectNumber);
-if ((objectOffset != default!)) {
-long currentPosition = base.Source.GetPosition();
-if (((this.firstObject > 0) && (currentPosition < this.firstObject))) {
-base.Source.Skip((this.firstObject - (int)(currentPosition)));
-}
-base.Source.Skip((int)(global::DripSharp.Runtime.JavaCompat.Unbox(objectOffset)));
-streamObject = this.ParseDirObject();
-if ((streamObject! != default!)) {
-streamObject!.SetDirect(false);
-}
-}
-} finally {
-base.Source.Dispose();
-base.Document = default!;
-}
-return streamObject!;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase ParseObject(long objectNumber) {
+    global::DripSharp.PdfCarton.Cos.COSBase streamObject = default!;
+    try {
+      int? objectOffset
+        = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.privateReadObjectNumbers(),
+        objectNumber);
+      if ((objectOffset != default!)) {
+        long currentPosition = base.Source.GetPosition();
+        if (((this.firstObject > 0) && (currentPosition < this.firstObject))) {
+          base.Source.Skip((this.firstObject - (int)currentPosition));
+        }
+        base.Source.Skip((int)(global::DripSharp.Runtime.JavaCompat.Unbox(objectOffset)));
+        streamObject = this.ParseDirObject();
+        if ((streamObject! != default!)) {
+          streamObject!.SetDirect(false);
+        }
+      }
+    } finally {
+      base.Source.Dispose();
+      base.Document = default!;
+    }
+    return streamObject!;
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, global::DripSharp.PdfCarton.Cos.COSBase> ParseAllObjects() {
-global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, global::DripSharp.PdfCarton.Cos.COSBase> allObjects = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey, global::DripSharp.PdfCarton.Cos.COSBase>();
-try {
-global::System.Collections.Generic.IDictionary<int, long> objectNumbers = this.privateReadObjectOffsets();
-long numberOfObjNumbers = global::System.Linq.Enumerable.LongCount(global::System.Linq.Enumerable.Distinct(global::DripSharp.Runtime.JavaCompat.Stream(objectNumbers.Values)));
-bool indexNeeded = (global::DripSharp.Runtime.JavaCompat.MapCount(objectNumbers) > numberOfObjNumbers);
-long currentPosition = base.Source.GetPosition();
-if (((this.firstObject > 0) && (currentPosition < this.firstObject))) {
-base.Source.Skip((this.firstObject - (int)(currentPosition)));
-}
-int index = 0;
-foreach (global::DripSharp.Runtime.JavaMapEntry<int, long> entry in global::DripSharp.Runtime.JavaCompat.MapEntrySet(objectNumbers)) {
-global::DripSharp.PdfCarton.Cos.COSObjectKey objectKey = this.GetObjectKey((long)(entry.Value), 0);
-if (((indexNeeded && (objectKey.GetStreamIndex() > -1)) && (objectKey.GetStreamIndex() != index))) {
-index++;
-continue;
-}
-int finalPosition = (this.firstObject + entry.Key);
-currentPosition = base.Source.GetPosition();
-if (((finalPosition > 0) && (currentPosition < finalPosition))) {
-base.Source.Skip((finalPosition - (int)(currentPosition)));
-}
-global::DripSharp.PdfCarton.Cos.COSBase streamObject = this.ParseDirObject();
-if ((streamObject != default!)) {
-streamObject.SetDirect(false);
-}
-global::DripSharp.Runtime.JavaCompat.MapPut(allObjects, objectKey, streamObject);
-index++;
-}
-} finally {
-base.Source.Dispose();
-base.Document = default!;
-}
-return allObjects;
-}
+  public virtual global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+    global::DripSharp.PdfCarton.Cos.COSBase> ParseAllObjects() {
+    global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+      global::DripSharp.PdfCarton.Cos.COSBase> allObjects
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+      global::DripSharp.PdfCarton.Cos.COSBase>();
+    try {
+      global::System.Collections.Generic.IDictionary<int, long> objectNumbers
+        = this.privateReadObjectOffsets();
+      long numberOfObjNumbers
+        = global::System.Linq.Enumerable.LongCount(global::System.Linq.Enumerable.Distinct(global::DripSharp.Runtime.JavaCompat.Stream(objectNumbers.Values)));
+      bool indexNeeded
+        = (global::DripSharp.Runtime.JavaCompat.MapCount(objectNumbers) > numberOfObjNumbers);
+      long currentPosition = base.Source.GetPosition();
+      if (((this.firstObject > 0) && (currentPosition < this.firstObject))) {
+        base.Source.Skip((this.firstObject - (int)currentPosition));
+      }
+      int index = 0;
+      foreach (global::DripSharp.Runtime.JavaMapEntry<int,
+        long> entry in global::DripSharp.Runtime.JavaCompat.MapEntrySet(objectNumbers)) {
+        global::DripSharp.PdfCarton.Cos.COSObjectKey objectKey
+          = this.GetObjectKey((long)(entry.Value), 0);
+        if (((indexNeeded && (objectKey.GetStreamIndex() > -1)) && (objectKey.GetStreamIndex()
+          != index))) {
+          index++;
+          continue;
+        }
+        int finalPosition = (this.firstObject + entry.Key);
+        currentPosition = base.Source.GetPosition();
+        if (((finalPosition > 0) && (currentPosition < finalPosition))) {
+          base.Source.Skip((finalPosition - (int)currentPosition));
+        }
+        global::DripSharp.PdfCarton.Cos.COSBase streamObject = this.ParseDirObject();
+        if ((streamObject != default!)) {
+          streamObject.SetDirect(false);
+        }
+        global::DripSharp.Runtime.JavaCompat.MapPut(allObjects, objectKey, streamObject);
+        index++;
+      }
+    } finally {
+      base.Source.Dispose();
+      base.Document = default!;
+    }
+    return allObjects;
+  }
 
-private global::System.Collections.Generic.IDictionary<long, int> privateReadObjectNumbers() {
-global::System.Collections.Generic.IDictionary<long, int> objectNumbers = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<long, int>();
-long firstObjectPosition = ((base.Source.GetPosition() + this.firstObject) - 1);
-for (int i = 0; (i < this.numberOfObjects); i++) {
-if ((base.Source.GetPosition() >= firstObjectPosition)) {
-break;
-}
-long objectNumber = this.ReadObjectNumber();
-int offset = (int)(this.ReadLong());
-global::DripSharp.Runtime.JavaCompat.MapPut(objectNumbers, objectNumber, offset);
-}
-return objectNumbers;
-}
+  private global::System.Collections.Generic.IDictionary<long, int> privateReadObjectNumbers() {
+    global::System.Collections.Generic.IDictionary<long, int> objectNumbers
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<long, int>();
+    long firstObjectPosition = ((base.Source.GetPosition() + this.firstObject) - 1);
+    for (int i = 0; (i < this.numberOfObjects); i++) {
+      if ((base.Source.GetPosition() >= firstObjectPosition)) {
+        break;
+      }
+      long objectNumber = this.ReadObjectNumber();
+      int offset = (int)(this.ReadLong());
+      global::DripSharp.Runtime.JavaCompat.MapPut(objectNumbers, objectNumber, offset);
+    }
+    return objectNumbers;
+  }
 
-private global::System.Collections.Generic.IDictionary<int, long> privateReadObjectOffsets() {
-global::System.Collections.Generic.IDictionary<int, long> objectOffsets = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int, long>();
-long firstObjectPosition = ((base.Source.GetPosition() + this.firstObject) - 1);
-for (int i = 0; (i < this.numberOfObjects); i++) {
-if ((base.Source.GetPosition() >= firstObjectPosition)) {
-break;
-}
-long objectNumber = this.ReadObjectNumber();
-int offset = (int)(this.ReadLong());
-global::DripSharp.Runtime.JavaCompat.MapPut(objectOffsets, offset, objectNumber);
-}
-return objectOffsets;
-}
+  private global::System.Collections.Generic.IDictionary<int, long> privateReadObjectOffsets() {
+    global::System.Collections.Generic.IDictionary<int, long> objectOffsets
+      = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int, long>();
+    long firstObjectPosition = ((base.Source.GetPosition() + this.firstObject) - 1);
+    for (int i = 0; (i < this.numberOfObjects); i++) {
+      if ((base.Source.GetPosition() >= firstObjectPosition)) {
+        break;
+      }
+      long objectNumber = this.ReadObjectNumber();
+      int offset = (int)(this.ReadLong());
+      global::DripSharp.Runtime.JavaCompat.MapPut(objectOffsets, offset, objectNumber);
+    }
+    return objectOffsets;
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<long, int> ReadObjectNumbers() {
-global::System.Collections.Generic.IDictionary<long, int> objectNumbers = default!;
-try {
-objectNumbers = this.privateReadObjectNumbers();
-} finally {
-base.Source.Dispose();
-base.Document = default!;
-}
-return objectNumbers!;
-}
+  public virtual global::System.Collections.Generic.IDictionary<long, int> ReadObjectNumbers() {
+    global::System.Collections.Generic.IDictionary<long, int> objectNumbers = default!;
+    try {
+      objectNumbers = this.privateReadObjectNumbers();
+    } finally {
+      base.Source.Dispose();
+      base.Document = default!;
+    }
+    return objectNumbers!;
+  }
 }

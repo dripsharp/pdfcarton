@@ -8,97 +8,109 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf;
 
-public class PDExportFormatAttributeObject : global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject {
-public const string OwnerXml100 = "XML-1.00";
+public class PDExportFormatAttributeObject
+: global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject {
+  public const string OwnerXml100 = "XML-1.00";
 
-public const string OwnerHtml320 = "HTML-3.2";
+  public const string OwnerHtml320 = "HTML-3.2";
 
-public const string OwnerHtml401 = "HTML-4.01";
+  public const string OwnerHtml401 = "HTML-4.01";
 
-public const string OwnerOeb100 = "OEB-1.00";
+  public const string OwnerOeb100 = "OEB-1.00";
 
-public const string OwnerRtf105 = "RTF-1.05";
+  public const string OwnerRtf105 = "RTF-1.05";
 
-public const string OwnerCss100 = "CSS-1.00";
+  public const string OwnerCss100 = "CSS-1.00";
 
-public const string OwnerCss200 = "CSS-2.00";
+  public const string OwnerCss200 = "CSS-2.00";
 
-public PDExportFormatAttributeObject(string owner) {
-this.SetOwner(owner);
-}
+  public PDExportFormatAttributeObject(string owner) {
+    this.SetOwner(owner);
+  }
 
-public PDExportFormatAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : base(dictionary) {
+  public PDExportFormatAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary)
+  : base(dictionary) {
 
-}
+  }
 
-public virtual string GetListNumbering() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumbering, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumberingNone);
-}
+  public virtual string GetListNumbering() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumbering,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumberingNone);
+  }
 
-public virtual void SetListNumbering(string listNumbering) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumbering, listNumbering);
-}
+  public virtual void SetListNumbering(string listNumbering) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumbering,
+      listNumbering);
+  }
 
-public virtual int GetRowSpan() {
-return this.GetInteger(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.RowSpan, 1);
-}
+  public virtual int GetRowSpan() {
+    return this.GetInteger(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.RowSpan,
+      1);
+  }
 
-public virtual void SetRowSpan(int rowSpan) {
-this.SetInteger(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.RowSpan, rowSpan);
-}
+  public virtual void SetRowSpan(int rowSpan) {
+    this.SetInteger(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.RowSpan,
+      rowSpan);
+  }
 
-public virtual int GetColSpan() {
-return this.GetInteger(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.ColSpan, 1);
-}
+  public virtual int GetColSpan() {
+    return this.GetInteger(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.ColSpan,
+      1);
+  }
 
-public virtual void SetColSpan(int colSpan) {
-this.SetInteger(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.ColSpan, colSpan);
-}
+  public virtual void SetColSpan(int colSpan) {
+    this.SetInteger(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.ColSpan,
+      colSpan);
+  }
 
-public virtual string[] GetHeaders() {
-return this.GetArrayOfString(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Headers);
-}
+  public virtual string[] GetHeaders() {
+    return this.GetArrayOfString(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Headers);
+  }
 
-public virtual void SetHeaders(string[] headers) {
-this.SetArrayOfString(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Headers, headers);
-}
+  public virtual void SetHeaders(string[] headers) {
+    this.SetArrayOfString(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Headers,
+      headers);
+  }
 
-public virtual string GetScope() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Scope);
-}
+  public virtual string GetScope() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Scope);
+  }
 
-public virtual void SetScope(string scope) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Scope, scope);
-}
+  public virtual void SetScope(string scope) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Scope,
+      scope);
+  }
 
-public virtual string GetSummary() {
-return this.GetString(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Summary);
-}
+  public virtual string GetSummary() {
+    return this.GetString(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Summary);
+  }
 
-public virtual void SetSummary(string summary) {
-this.SetString(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Summary, summary);
-}
+  public virtual void SetSummary(string summary) {
+    this.SetString(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Summary,
+      summary);
+  }
 
-public override string ToString() {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder().Append(base.ToString());
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumbering)) {
-sb.Append(", ListNumbering=").Append(this.GetListNumbering());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.RowSpan)) {
-sb.Append(", RowSpan=").Append(this.GetRowSpan());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.ColSpan)) {
-sb.Append(", ColSpan=").Append(this.GetColSpan());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Headers)) {
-sb.Append(", Headers=").Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString(this.GetHeaders()));
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Scope)) {
-sb.Append(", Scope=").Append(this.GetScope());
-}
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Summary)) {
-sb.Append(", Summary=").Append(this.GetSummary());
-}
-return sb.ToString();
-}
+  public override string ToString() {
+    global::System.Text.StringBuilder sb
+      = new global::System.Text.StringBuilder().Append(base.ToString());
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumbering)) {
+      sb.Append(", ListNumbering=").Append(this.GetListNumbering());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.RowSpan)) {
+      sb.Append(", RowSpan=").Append(this.GetRowSpan());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.ColSpan)) {
+      sb.Append(", ColSpan=").Append(this.GetColSpan());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Headers)) {
+      sb.Append(", Headers=").Append(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject.ArrayToString(this.GetHeaders()));
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Scope)) {
+      sb.Append(", Scope=").Append(this.GetScope());
+    }
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDTableAttributeObject.Summary)) {
+      sb.Append(", Summary=").Append(this.GetSummary());
+    }
+    return sb.ToString();
+  }
 }

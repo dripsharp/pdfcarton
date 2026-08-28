@@ -9,132 +9,135 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class NameRecord {
-public const int PlatformUnicode = 0;
+  public const int PlatformUnicode = 0;
 
-public const int PlatformMacintosh = 1;
+  public const int PlatformMacintosh = 1;
 
-public const int PlatformIso = 2;
+  public const int PlatformIso = 2;
 
-public const int PlatformWindows = 3;
+  public const int PlatformWindows = 3;
 
-public const int EncodingUnicode10 = 0;
+  public const int EncodingUnicode10 = 0;
 
-public const int EncodingUnicode11 = 1;
+  public const int EncodingUnicode11 = 1;
 
-public const int EncodingUnicode20Bmp = 3;
+  public const int EncodingUnicode20Bmp = 3;
 
-public const int EncodingUnicode20Full = 4;
+  public const int EncodingUnicode20Full = 4;
 
-public const int LanguageUnicode = 0;
+  public const int LanguageUnicode = 0;
 
-public const int EncodingWindowsSymbol = 0;
+  public const int EncodingWindowsSymbol = 0;
 
-public const int EncodingWindowsUnicodeBmp = 1;
+  public const int EncodingWindowsUnicodeBmp = 1;
 
-public const int EncodingWindowsUnicodeUcs4 = 10;
+  public const int EncodingWindowsUnicodeUcs4 = 10;
 
-public const int LanguageWindowsEnUs = 1033;
+  public const int LanguageWindowsEnUs = 1033;
 
-public const int EncodingMacintoshRoman = 0;
+  public const int EncodingMacintoshRoman = 0;
 
-public const int LanguageMacintoshEnglish = 0;
+  public const int LanguageMacintoshEnglish = 0;
 
-public const int NameCopyright = 0;
+  public const int NameCopyright = 0;
 
-public const int NameFontFamilyName = 1;
+  public const int NameFontFamilyName = 1;
 
-public const int NameFontSubFamilyName = 2;
+  public const int NameFontSubFamilyName = 2;
 
-public const int NameUniqueFontId = 3;
+  public const int NameUniqueFontId = 3;
 
-public const int NameFullFontName = 4;
+  public const int NameFullFontName = 4;
 
-public const int NameVersion = 5;
+  public const int NameVersion = 5;
 
-public const int NamePostscriptName = 6;
+  public const int NamePostscriptName = 6;
 
-public const int NameTrademark = 7;
+  public const int NameTrademark = 7;
 
-private int platformId = default;
+  private int platformId = default;
 
-private int platformEncodingId = default;
+  private int platformEncodingId = default;
 
-private int languageId = default;
+  private int languageId = default;
 
-private int nameId = default;
+  private int nameId = default;
 
-private int stringLength = default;
+  private int stringLength = default;
 
-private int stringOffset = default;
+  private int stringOffset = default;
 
-private string @string = null!;
+  private string @string = null!;
 
-public virtual int GetStringLength() {
-return this.stringLength;
-}
+  public virtual int GetStringLength() {
+    return this.stringLength;
+  }
 
-public virtual void SetStringLength(int stringLengthValue) {
-this.stringLength = stringLengthValue;
-}
+  public virtual void SetStringLength(int stringLengthValue) {
+    this.stringLength = stringLengthValue;
+  }
 
-public virtual int GetStringOffset() {
-return this.stringOffset;
-}
+  public virtual int GetStringOffset() {
+    return this.stringOffset;
+  }
 
-public virtual void SetStringOffset(int stringOffsetValue) {
-this.stringOffset = stringOffsetValue;
-}
+  public virtual void SetStringOffset(int stringOffsetValue) {
+    this.stringOffset = stringOffsetValue;
+  }
 
-public virtual int GetLanguageId() {
-return this.languageId;
-}
+  public virtual int GetLanguageId() {
+    return this.languageId;
+  }
 
-public virtual void SetLanguageId(int languageIdValue) {
-this.languageId = languageIdValue;
-}
+  public virtual void SetLanguageId(int languageIdValue) {
+    this.languageId = languageIdValue;
+  }
 
-public virtual int GetNameId() {
-return this.nameId;
-}
+  public virtual int GetNameId() {
+    return this.nameId;
+  }
 
-public virtual void SetNameId(int nameIdValue) {
-this.nameId = nameIdValue;
-}
+  public virtual void SetNameId(int nameIdValue) {
+    this.nameId = nameIdValue;
+  }
 
-public virtual int GetPlatformEncodingId() {
-return this.platformEncodingId;
-}
+  public virtual int GetPlatformEncodingId() {
+    return this.platformEncodingId;
+  }
 
-public virtual void SetPlatformEncodingId(int platformEncodingIdValue) {
-this.platformEncodingId = platformEncodingIdValue;
-}
+  public virtual void SetPlatformEncodingId(int platformEncodingIdValue) {
+    this.platformEncodingId = platformEncodingIdValue;
+  }
 
-public virtual int GetPlatformId() {
-return this.platformId;
-}
+  public virtual int GetPlatformId() {
+    return this.platformId;
+  }
 
-public virtual void SetPlatformId(int platformIdValue) {
-this.platformId = platformIdValue;
-}
+  public virtual void SetPlatformId(int platformIdValue) {
+    this.platformId = platformIdValue;
+  }
 
-internal virtual void initData(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-this.platformId = data.ReadUnsignedShort();
-this.platformEncodingId = data.ReadUnsignedShort();
-this.languageId = data.ReadUnsignedShort();
-this.nameId = data.ReadUnsignedShort();
-this.stringLength = data.ReadUnsignedShort();
-this.stringOffset = data.ReadUnsignedShort();
-}
+  internal virtual void initData(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    this.platformId = data.ReadUnsignedShort();
+    this.platformEncodingId = data.ReadUnsignedShort();
+    this.languageId = data.ReadUnsignedShort();
+    this.nameId = data.ReadUnsignedShort();
+    this.stringLength = data.ReadUnsignedShort();
+    this.stringOffset = data.ReadUnsignedShort();
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("platform=", this.platformId), " pEncoding="), this.platformEncodingId), " language="), this.languageId), " name="), this.nameId), " "), this.@string);
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("platform=",
+      this.platformId), " pEncoding="), this.platformEncodingId), " language="), this.languageId),
+      " name="), this.nameId), " "), this.@string);
+  }
 
-public virtual string GetString() {
-return this.@string;
-}
+  public virtual string GetString() {
+    return this.@string;
+  }
 
-public virtual void SetString(string stringValue) {
-this.@string = stringValue;
-}
+  public virtual void SetString(string stringValue) {
+    this.@string = stringValue;
+  }
 }

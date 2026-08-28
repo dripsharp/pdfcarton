@@ -9,7 +9,10 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator;
 
 public sealed class MissingOperandException : global::System.IO.IOException {
-public MissingOperandException(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) : base(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Operator ", @operator.GetName()), " has too few operands: "), operands)) {
+  public MissingOperandException(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands)
+  : base(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Operator ",
+    @operator.GetName()), " has too few operands: "), operands)) {
 
-}
+  }
 }

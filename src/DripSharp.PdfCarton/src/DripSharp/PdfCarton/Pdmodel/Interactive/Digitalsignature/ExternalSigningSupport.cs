@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 
 public interface ExternalSigningSupport {
-public global::System.IO.Stream GetContent();
+  public global::System.IO.Stream GetContent();
 
-public void SetSignature(sbyte[] signature);
+  public void SetSignature(sbyte[] signature);
 }

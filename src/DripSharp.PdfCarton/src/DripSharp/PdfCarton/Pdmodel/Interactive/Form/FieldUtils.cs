@@ -9,77 +9,96 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public sealed class FieldUtils {
-internal static readonly global::System.Collections.Generic.IComparer<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> BY_VALUE_COMPARATOR = global::DripSharp.Runtime.JavaCompat.ComparatorComparing<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue, string>((value0) => value0.GetValue());
+  internal static readonly global::System.Collections.Generic.IComparer<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> BY_VALUE_COMPARATOR
+    = global::DripSharp.Runtime.JavaCompat.ComparatorComparing<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue,
+    string>((value0) => value0.GetValue());
 
-internal static readonly global::System.Collections.Generic.IComparer<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> BY_KEY_COMPARATOR = global::DripSharp.Runtime.JavaCompat.ComparatorComparing<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue, string>((value0) => value0.GetKey());
+  internal static readonly global::System.Collections.Generic.IComparer<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> BY_KEY_COMPARATOR
+    = global::DripSharp.Runtime.JavaCompat.ComparatorComparing<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue,
+    string>((value0) => value0.GetKey());
 
-internal class KeyValue {
-internal readonly string key = null!;
+  internal class KeyValue {
+    internal readonly string key = null!;
 
-internal readonly string value = null!;
+    internal readonly string value = null!;
 
-internal KeyValue(string theKey, string theValue) {
-this.key = theKey;
-this.value = theValue;
-}
+    internal KeyValue(string theKey, string theValue) {
+      this.key = theKey;
+      this.value = theValue;
+    }
 
-public virtual string GetKey() {
-return this.key;
-}
+    public virtual string GetKey() {
+      return this.key;
+    }
 
-public virtual string GetValue() {
-return this.value;
-}
+    public virtual string GetValue() {
+      return this.value;
+    }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("(", this.key), ", "), this.value), ")");
-}
-}
+    public override string ToString() {
+      return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("(",
+        this.key), ", "), this.value), ")");
+    }
+  }
 
-private FieldUtils() {}
+  private FieldUtils() {}
 
-internal static global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> toKeyValueList(global::System.Collections.Generic.IList<string> key, global::System.Collections.Generic.IList<string> value) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> list = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue>(global::DripSharp.Runtime.JavaCompat.CollectionCount(key));
-for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(key)); i++) {
-global::DripSharp.Runtime.JavaCompat.Add(list, new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue(global::DripSharp.Runtime.JavaCompat.ListGet(key, i), global::DripSharp.Runtime.JavaCompat.ListGet(value, i)));
-}
-return list;
-}
+  internal static global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> toKeyValueList(global::System.Collections.Generic.IList<string> key,
+    global::System.Collections.Generic.IList<string> value) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> list
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue>(global::DripSharp.Runtime.JavaCompat.CollectionCount(key));
+    for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(key)); i++) {
+      global::DripSharp.Runtime.JavaCompat.Add(list,
+        new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue(global::DripSharp.Runtime.JavaCompat.ListGet(key,
+        i), global::DripSharp.Runtime.JavaCompat.ListGet(value, i)));
+    }
+    return list;
+  }
 
-internal static void sortByValue(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> pairs) {
-global::DripSharp.Runtime.JavaCompat.SortList(pairs, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.BY_VALUE_COMPARATOR);
-}
+  internal static void sortByValue(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> pairs) {
+    global::DripSharp.Runtime.JavaCompat.SortList(pairs,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.BY_VALUE_COMPARATOR);
+  }
 
-internal static void sortByKey(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> pairs) {
-global::DripSharp.Runtime.JavaCompat.SortList(pairs, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.BY_KEY_COMPARATOR);
-}
+  internal static void sortByKey(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> pairs) {
+    global::DripSharp.Runtime.JavaCompat.SortList(pairs,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.BY_KEY_COMPARATOR);
+  }
 
-internal static global::System.Collections.Generic.IList<string> getPairableItems(global::DripSharp.PdfCarton.Cos.COSBase items, int pairIdx) {
-if (((pairIdx < 0) || (pairIdx > 1))) {
-throw new global::System.ArgumentException("Only 0 and 1 are allowed as an index into two-element arrays");
-}
-if ((items is global::DripSharp.PdfCarton.Cos.COSString)) {
-global::System.Collections.Generic.IList<string> array = new global::System.Collections.Generic.List<string>(1);
-global::DripSharp.Runtime.JavaCompat.Add(array, ((global::DripSharp.PdfCarton.Cos.COSString)(items!)).GetString());
-return array;
-} else {
-if ((items is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::System.Collections.Generic.IList<string> entryList = new global::System.Collections.Generic.List<string>();
-foreach (global::DripSharp.PdfCarton.Cos.COSBase entry in (global::DripSharp.PdfCarton.Cos.COSArray)(items!)) {
-if ((entry is global::DripSharp.PdfCarton.Cos.COSString)) {
-global::DripSharp.Runtime.JavaCompat.Add(entryList, ((global::DripSharp.PdfCarton.Cos.COSString)(entry!)).GetString());
-} else {
-if ((entry is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray cosArray = (global::DripSharp.PdfCarton.Cos.COSArray)(entry!);
-if (((cosArray.Size() >= (pairIdx + 1)) && (cosArray.Get(pairIdx) is global::DripSharp.PdfCarton.Cos.COSString))) {
-global::DripSharp.Runtime.JavaCompat.Add(entryList, ((global::DripSharp.PdfCarton.Cos.COSString)(cosArray.Get(pairIdx)!)).GetString());
-}
-}
-}
-}
-return entryList;
-}
-}
-return global::System.Array.Empty<string>();
-}
+  internal static global::System.Collections.Generic.IList<string> getPairableItems(global::DripSharp.PdfCarton.Cos.COSBase items,
+    int pairIdx) {
+    if (((pairIdx < 0) || (pairIdx > 1))) {
+      throw new global::System.ArgumentException("Only 0 and 1 are allowed as an index into two-element arrays");
+    }
+    if ((items is global::DripSharp.PdfCarton.Cos.COSString)) {
+      global::System.Collections.Generic.IList<string> array
+        = new global::System.Collections.Generic.List<string>(1);
+      global::DripSharp.Runtime.JavaCompat.Add(array,
+        ((global::DripSharp.PdfCarton.Cos.COSString)(items!)).GetString());
+      return array;
+    } else {
+      if ((items is global::DripSharp.PdfCarton.Cos.COSArray)) {
+        global::System.Collections.Generic.IList<string> entryList
+          = new global::System.Collections.Generic.List<string>();
+        foreach (global::DripSharp.PdfCarton.Cos.COSBase entry in (global::DripSharp.PdfCarton.Cos.COSArray)(items!)) {
+          if ((entry is global::DripSharp.PdfCarton.Cos.COSString)) {
+            global::DripSharp.Runtime.JavaCompat.Add(entryList,
+              ((global::DripSharp.PdfCarton.Cos.COSString)(entry!)).GetString());
+          } else {
+            if ((entry is global::DripSharp.PdfCarton.Cos.COSArray)) {
+              global::DripSharp.PdfCarton.Cos.COSArray cosArray
+                = (global::DripSharp.PdfCarton.Cos.COSArray)(entry!);
+              if (((cosArray.Size() >= (pairIdx + 1))
+                && (cosArray.Get(pairIdx) is global::DripSharp.PdfCarton.Cos.COSString))) {
+                global::DripSharp.Runtime.JavaCompat.Add(entryList,
+                  ((global::DripSharp.PdfCarton.Cos.COSString)(cosArray.Get(pairIdx)!)).GetString());
+              }
+            }
+          }
+        }
+        return entryList;
+      }
+    }
+    return global::System.Array.Empty<string>();
+  }
 }

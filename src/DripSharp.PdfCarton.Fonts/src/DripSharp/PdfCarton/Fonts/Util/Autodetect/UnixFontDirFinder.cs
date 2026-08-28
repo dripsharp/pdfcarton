@@ -8,8 +8,11 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Util.Autodetect;
 
-public class UnixFontDirFinder : global::DripSharp.PdfCarton.Fonts.Util.Autodetect.NativeFontDirFinder {
-protected internal override string[] GetSearchableDirectories() {
-return new string[] { global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetProperty("user.home"), "/.fonts"), "/usr/local/fonts", "/usr/local/share/fonts", "/usr/share/fonts", "/usr/X11R6/lib/X11/fonts", "/usr/share/X11/fonts" };
-}
+public class UnixFontDirFinder
+: global::DripSharp.PdfCarton.Fonts.Util.Autodetect.NativeFontDirFinder {
+  protected internal override string[] GetSearchableDirectories() {
+    return new string[] { global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetProperty("user.home"),
+        "/.fonts"), "/usr/local/fonts", "/usr/local/share/fonts", "/usr/share/fonts",
+      "/usr/X11R6/lib/X11/fonts", "/usr/share/X11/fonts" };
+  }
 }

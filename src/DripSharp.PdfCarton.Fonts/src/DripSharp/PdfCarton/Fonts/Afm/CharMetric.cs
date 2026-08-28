@@ -9,143 +9,144 @@
 namespace DripSharp.PdfCarton.Fonts.Afm;
 
 public class CharMetric {
-private int characterCode = default;
+  private int characterCode = default;
 
-private float wx = default;
+  private float wx = default;
 
-private float w0x = default;
+  private float w0x = default;
 
-private float w1x = default;
+  private float w1x = default;
 
-private float wy = default;
+  private float wy = default;
 
-private float w0y = default;
+  private float w0y = default;
 
-private float w1y = default;
+  private float w1y = default;
 
-private float[] w = null!;
+  private float[] w = null!;
 
-private float[] w0 = null!;
+  private float[] w0 = null!;
 
-private float[] w1 = null!;
+  private float[] w1 = null!;
 
-private float[] vv = null!;
+  private float[] vv = null!;
 
-private string name = null!;
+  private string name = null!;
 
-private global::DripSharp.PdfCarton.Fonts.Util.BoundingBox boundingBox = null!;
+  private global::DripSharp.PdfCarton.Fonts.Util.BoundingBox boundingBox = null!;
 
-private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Afm.Ligature> ligatures = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Afm.Ligature>();
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Afm.Ligature> ligatures
+    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Afm.Ligature>();
 
-public virtual global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetBoundingBox() {
-return this.boundingBox;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetBoundingBox() {
+    return this.boundingBox;
+  }
 
-public virtual void SetBoundingBox(global::DripSharp.PdfCarton.Fonts.Util.BoundingBox bBox) {
-this.boundingBox = bBox;
-}
+  public virtual void SetBoundingBox(global::DripSharp.PdfCarton.Fonts.Util.BoundingBox bBox) {
+    this.boundingBox = bBox;
+  }
 
-public virtual int GetCharacterCode() {
-return this.characterCode;
-}
+  public virtual int GetCharacterCode() {
+    return this.characterCode;
+  }
 
-public virtual void SetCharacterCode(int cCode) {
-this.characterCode = cCode;
-}
+  public virtual void SetCharacterCode(int cCode) {
+    this.characterCode = cCode;
+  }
 
-public virtual void AddLigature(global::DripSharp.PdfCarton.Fonts.Afm.Ligature ligature) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.ligatures, ligature);
-}
+  public virtual void AddLigature(global::DripSharp.PdfCarton.Fonts.Afm.Ligature ligature) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.ligatures, ligature);
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Afm.Ligature> GetLigatures() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(this.ligatures);
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Afm.Ligature> GetLigatures() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(this.ligatures);
+  }
 
-public virtual string GetName() {
-return this.name;
-}
+  public virtual string GetName() {
+    return this.name;
+  }
 
-public virtual void SetName(string n) {
-this.name = n;
-}
+  public virtual void SetName(string n) {
+    this.name = n;
+  }
 
-public virtual float[] GetVv() {
-return this.vv;
-}
+  public virtual float[] GetVv() {
+    return this.vv;
+  }
 
-public virtual void SetVv(float[] vvValue) {
-this.vv = vvValue;
-}
+  public virtual void SetVv(float[] vvValue) {
+    this.vv = vvValue;
+  }
 
-public virtual float[] GetW() {
-return this.w;
-}
+  public virtual float[] GetW() {
+    return this.w;
+  }
 
-public virtual void SetW(float[] wValue) {
-this.w = wValue;
-}
+  public virtual void SetW(float[] wValue) {
+    this.w = wValue;
+  }
 
-public virtual float[] GetW0() {
-return this.w0;
-}
+  public virtual float[] GetW0() {
+    return this.w0;
+  }
 
-public virtual void SetW0(float[] w0Value) {
-this.w0 = w0Value;
-}
+  public virtual void SetW0(float[] w0Value) {
+    this.w0 = w0Value;
+  }
 
-public virtual float GetW0x() {
-return this.w0x;
-}
+  public virtual float GetW0x() {
+    return this.w0x;
+  }
 
-public virtual void SetW0x(float w0xValue) {
-this.w0x = w0xValue;
-}
+  public virtual void SetW0x(float w0xValue) {
+    this.w0x = w0xValue;
+  }
 
-public virtual float GetW0y() {
-return this.w0y;
-}
+  public virtual float GetW0y() {
+    return this.w0y;
+  }
 
-public virtual void SetW0y(float w0yValue) {
-this.w0y = w0yValue;
-}
+  public virtual void SetW0y(float w0yValue) {
+    this.w0y = w0yValue;
+  }
 
-public virtual float[] GetW1() {
-return this.w1;
-}
+  public virtual float[] GetW1() {
+    return this.w1;
+  }
 
-public virtual void SetW1(float[] w1Value) {
-this.w1 = w1Value;
-}
+  public virtual void SetW1(float[] w1Value) {
+    this.w1 = w1Value;
+  }
 
-public virtual float GetW1x() {
-return this.w1x;
-}
+  public virtual float GetW1x() {
+    return this.w1x;
+  }
 
-public virtual void SetW1x(float w1xValue) {
-this.w1x = w1xValue;
-}
+  public virtual void SetW1x(float w1xValue) {
+    this.w1x = w1xValue;
+  }
 
-public virtual float GetW1y() {
-return this.w1y;
-}
+  public virtual float GetW1y() {
+    return this.w1y;
+  }
 
-public virtual void SetW1y(float w1yValue) {
-this.w1y = w1yValue;
-}
+  public virtual void SetW1y(float w1yValue) {
+    this.w1y = w1yValue;
+  }
 
-public virtual float GetWx() {
-return this.wx;
-}
+  public virtual float GetWx() {
+    return this.wx;
+  }
 
-public virtual void SetWx(float wxValue) {
-this.wx = wxValue;
-}
+  public virtual void SetWx(float wxValue) {
+    this.wx = wxValue;
+  }
 
-public virtual float GetWy() {
-return this.wy;
-}
+  public virtual float GetWy() {
+    return this.wy;
+  }
 
-public virtual void SetWy(float wyValue) {
-this.wy = wyValue;
-}
+  public virtual void SetWy(float wyValue) {
+    this.wy = wyValue;
+  }
 }

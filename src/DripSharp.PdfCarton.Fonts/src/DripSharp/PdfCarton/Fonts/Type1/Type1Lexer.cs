@@ -9,324 +9,356 @@
 namespace DripSharp.PdfCarton.Fonts.Type1;
 
 internal class Type1Lexer {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly global::DripSharp.PdfCarton.Runtime.Fonts.JavaByteBuffer buffer = null!;
+  private readonly global::DripSharp.PdfCarton.Runtime.Fonts.JavaByteBuffer buffer = null!;
 
-private global::DripSharp.PdfCarton.Fonts.Type1.Token aheadToken = null!;
+  private global::DripSharp.PdfCarton.Fonts.Type1.Token aheadToken = null!;
 
-private int openParens = 0;
+  private int openParens = 0;
 
-internal Type1Lexer(sbyte[] bytes) {
-this.buffer = global::DripSharp.PdfCarton.Runtime.Fonts.JavaByteBuffer.wrap(bytes);
-this.aheadToken = this.readToken((global::DripSharp.PdfCarton.Fonts.Type1.Token)default!);
-}
+  internal Type1Lexer(sbyte[] bytes) {
+    this.buffer = global::DripSharp.PdfCarton.Runtime.Fonts.JavaByteBuffer.wrap(bytes);
+    this.aheadToken = this.readToken((global::DripSharp.PdfCarton.Fonts.Type1.Token)default!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Type1.Token NextToken() {
-global::DripSharp.PdfCarton.Fonts.Type1.Token curToken = this.aheadToken;
-this.aheadToken = this.readToken(curToken);
-return curToken;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Type1.Token NextToken() {
+    global::DripSharp.PdfCarton.Fonts.Type1.Token curToken = this.aheadToken;
+    this.aheadToken = this.readToken(curToken);
+    return curToken;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Type1.Token PeekToken() {
-return this.aheadToken;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Type1.Token PeekToken() {
+    return this.aheadToken;
+  }
 
-public virtual bool PeekKind(global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind kind) {
-return ((this.aheadToken != default!) && (this.aheadToken.GetKind() == kind));
-}
+  public virtual bool PeekKind(global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind kind) {
+    return ((this.aheadToken != default!) && (this.aheadToken.GetKind() == kind));
+  }
 
-private char getChar() {
-try {
-return unchecked((char)(unchecked((char)(this.buffer.get()))));
-} catch (global::System.IO.EndOfStreamException) {
-throw new global::System.IO.IOException("Premature end of buffer reached");
-}
-}
+  private char getChar() {
+    try {
+      return unchecked((char)(unchecked((char)(this.buffer.get()))));
+    } catch (global::System.IO.EndOfStreamException) {
+      throw new global::System.IO.IOException("Premature end of buffer reached");
+    }
+  }
 
-private global::DripSharp.PdfCarton.Fonts.Type1.Token readToken(global::DripSharp.PdfCarton.Fonts.Type1.Token prevToken) {
-bool skip;
-do {
-skip = false;
-while ((this.buffer.Remaining > 0)) {
-char c = this.getChar();
-if (((int)(c) == (int)('%'))) {
-this.readComment();
-} else {
-if (((int)(c) == (int)('('))) {
-return this.readString();
-} else {
-if (((int)(c) == (int)(')'))) {
-throw new global::System.IO.IOException("unexpected closing parenthesis");
-} else {
-if (((int)(c) == (int)('['))) {
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c, global::DripSharp.PdfCarton.Fonts.Type1.Token.START_ARRAY);
-} else {
-if (((int)(c) == (int)('{'))) {
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c, global::DripSharp.PdfCarton.Fonts.Type1.Token.START_PROC);
-} else {
-if (((int)(c) == (int)(']'))) {
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c, global::DripSharp.PdfCarton.Fonts.Type1.Token.END_ARRAY);
-} else {
-if (((int)(c) == (int)('}'))) {
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c, global::DripSharp.PdfCarton.Fonts.Type1.Token.END_PROC);
-} else {
-if (((int)(c) == (int)('/'))) {
-string regular = this.readRegular();
-if ((regular == default!)) {
-throw new global::DripSharp.PdfCarton.Fonts.Type1.DamagedFontException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Could not read token at position ", this.buffer.position()));
-}
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(regular, global::DripSharp.PdfCarton.Fonts.Type1.Token.LITERAL);
-} else {
-if (((int)(c) == (int)('<'))) {
-char c2__172_26 = this.getChar();
-if (((int)(c2__172_26) == (int)(c))) {
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token("<<", global::DripSharp.PdfCarton.Fonts.Type1.Token.START_DICT);
-} else {
-this.buffer.position((this.buffer.position() - 1));
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c, global::DripSharp.PdfCarton.Fonts.Type1.Token.NAME);
-}
-} else {
-if (((int)(c) == (int)('>'))) {
-char c2__186_26 = this.getChar();
-if (((int)(c2__186_26) == (int)(c))) {
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(">>", global::DripSharp.PdfCarton.Fonts.Type1.Token.END_DICT);
-} else {
-this.buffer.position((this.buffer.position() - 1));
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c, global::DripSharp.PdfCarton.Fonts.Type1.Token.NAME);
-}
-} else {
-if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsWhitespace(c)) {
-skip = true;
-} else {
-if (((int)(c) == 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Type1.Type1Lexer.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("NULL byte in font, skipped"));
-skip = true;
-} else {
-this.buffer.position((this.buffer.position() - 1));
-global::DripSharp.PdfCarton.Fonts.Type1.Token number = this.tryReadNumber();
-if ((number != default!)) {
-return number;
-} else {
-string name = this.readRegular();
-if ((name == default!)) {
-throw new global::DripSharp.PdfCarton.Fonts.Type1.DamagedFontException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Could not read token at position ", this.buffer.position()));
-}
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(name, "RD") || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(name, "-|"))) {
-if (((prevToken != default!) && (prevToken.GetKind() == global::DripSharp.PdfCarton.Fonts.Type1.Token.INTEGER))) {
-return this.readCharString(prevToken.IntValue());
-} else {
-throw new global::System.IO.IOException("expected INTEGER before -| or RD");
-}
-} else {
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(name, global::DripSharp.PdfCarton.Fonts.Type1.Token.NAME);
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-} while (skip);
-return default!;
-}
+  private global::DripSharp.PdfCarton.Fonts.Type1.Token readToken(global::DripSharp.PdfCarton.Fonts.Type1.Token prevToken) {
+    bool skip;
+    do {
+      skip = false;
+      while ((this.buffer.Remaining > 0)) {
+        char c = this.getChar();
+        if (((int)c == (int)'%')) {
+          this.readComment();
+        } else {
+          if (((int)c == (int)'(')) {
+            return this.readString();
+          } else {
+            if (((int)c == (int)')')) {
+              throw new global::System.IO.IOException("unexpected closing parenthesis");
+            } else {
+              if (((int)c == (int)'[')) {
+                return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c,
+                  global::DripSharp.PdfCarton.Fonts.Type1.Token.START_ARRAY);
+              } else {
+                if (((int)c == (int)'{')) {
+                  return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c,
+                    global::DripSharp.PdfCarton.Fonts.Type1.Token.START_PROC);
+                } else {
+                  if (((int)c == (int)']')) {
+                    return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c,
+                      global::DripSharp.PdfCarton.Fonts.Type1.Token.END_ARRAY);
+                  } else {
+                    if (((int)c == (int)'}')) {
+                      return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c,
+                        global::DripSharp.PdfCarton.Fonts.Type1.Token.END_PROC);
+                    } else {
+                      if (((int)c == (int)'/')) {
+                        string regular = this.readRegular();
+                        if ((regular == default!)) {
+                          throw new global::DripSharp.PdfCarton.Fonts.Type1.DamagedFontException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Could not read token at position ",
+                            this.buffer.position()));
+                        }
+                        return new global::DripSharp.PdfCarton.Fonts.Type1.Token(regular,
+                          global::DripSharp.PdfCarton.Fonts.Type1.Token.LITERAL);
+                      } else {
+                        if (((int)c == (int)'<')) {
+                          char c2__172_26 = this.getChar();
+                          if (((int)c2__172_26 == (int)c)) {
+                            return new global::DripSharp.PdfCarton.Fonts.Type1.Token("<<",
+                              global::DripSharp.PdfCarton.Fonts.Type1.Token.START_DICT);
+                          } else {
+                            this.buffer.position((this.buffer.position() - 1));
+                            return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c,
+                              global::DripSharp.PdfCarton.Fonts.Type1.Token.NAME);
+                          }
+                        } else {
+                          if (((int)c == (int)'>')) {
+                            char c2__186_26 = this.getChar();
+                            if (((int)c2__186_26 == (int)c)) {
+                              return new global::DripSharp.PdfCarton.Fonts.Type1.Token(">>",
+                                global::DripSharp.PdfCarton.Fonts.Type1.Token.END_DICT);
+                            } else {
+                              this.buffer.position((this.buffer.position() - 1));
+                              return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c,
+                                global::DripSharp.PdfCarton.Fonts.Type1.Token.NAME);
+                            }
+                          } else {
+                            if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsWhitespace(c)) {
+                              skip = true;
+                            } else {
+                              if (((int)c == 0)) {
+                                global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Type1.Type1Lexer.LOG,
+                                  global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("NULL byte in font, skipped"));
+                                skip = true;
+                              } else {
+                                this.buffer.position((this.buffer.position() - 1));
+                                global::DripSharp.PdfCarton.Fonts.Type1.Token number
+                                  = this.tryReadNumber();
+                                if ((number != default!)) {
+                                  return number;
+                                } else {
+                                  string name = this.readRegular();
+                                  if ((name == default!)) {
+                                    throw new global::DripSharp.PdfCarton.Fonts.Type1.DamagedFontException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Could not read token at position ",
+                                      this.buffer.position()));
+                                  }
+                                  if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(name,
+                                    "RD")
+                                    || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(name,
+                                    "-|"))) {
+                                    if (((prevToken != default!) && (prevToken.GetKind()
+                                      == global::DripSharp.PdfCarton.Fonts.Type1.Token.INTEGER))) {
+                                      return this.readCharString(prevToken.IntValue());
+                                    } else {
+                                      throw new global::System.IO.IOException("expected INTEGER before -| or RD");
+                                    }
+                                  } else {
+                                    return new global::DripSharp.PdfCarton.Fonts.Type1.Token(name,
+                                      global::DripSharp.PdfCarton.Fonts.Type1.Token.NAME);
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    } while (skip);
+    return default!;
+  }
 
-private global::DripSharp.PdfCarton.Fonts.Type1.Token tryReadNumber() {
-this.buffer.mark();
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
-global::System.Text.StringBuilder radix = default!;
-char c = this.getChar();
-bool hasDigit = false;
-if ((((int)(c) == (int)('+')) || ((int)(c) == (int)('-')))) {
-sb.Append(c);
-c = this.getChar();
-}
-while (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c)) {
-sb.Append(c);
-c = this.getChar();
-hasDigit = true;
-}
-if (((int)(c) == (int)('.'))) {
-sb.Append(c);
-c = this.getChar();
-} else {
-if (((int)(c) == (int)('#'))) {
-radix = sb;
-sb = new global::System.Text.StringBuilder();
-c = this.getChar();
-} else {
-if (((sb.Length == 0) || !hasDigit)) {
-this.buffer.reset();
-return default!;
-} else {
-if ((((int)(c) != (int)('e')) && ((int)(c) != (int)('E')))) {
-this.buffer.position((this.buffer.position() - 1));
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(sb.ToString(), global::DripSharp.PdfCarton.Fonts.Type1.Token.INTEGER);
-}
-}
-}
-}
-if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c)) {
-sb.Append(c);
-c = this.getChar();
-} else {
-if ((((int)(c) != (int)('e')) && ((int)(c) != (int)('E')))) {
-this.buffer.reset();
-return default!;
-}
-}
-while (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c)) {
-sb.Append(c);
-c = this.getChar();
-}
-if ((((int)(c) == (int)('E')) || ((int)(c) == (int)('e')))) {
-sb.Append(c);
-c = this.getChar();
-if (((int)(c) == (int)('-'))) {
-sb.Append(c);
-c = this.getChar();
-}
-if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c)) {
-sb.Append(c);
-c = this.getChar();
-} else {
-this.buffer.reset();
-return default!;
-}
-while (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c)) {
-sb.Append(c);
-c = this.getChar();
-}
-}
-this.buffer.position((this.buffer.position() - 1));
-if ((radix! != default!)) {
-int val;
-try {
-val = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(sb.ToString(), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(radix!.ToString(), 10));
-} catch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaNumberFormatException ex) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid number '", sb), "'"), ex);
-}
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(val), global::DripSharp.PdfCarton.Fonts.Type1.Token.INTEGER);
-}
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(sb.ToString(), global::DripSharp.PdfCarton.Fonts.Type1.Token.REAL);
-}
+  private global::DripSharp.PdfCarton.Fonts.Type1.Token tryReadNumber() {
+    this.buffer.mark();
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
+    global::System.Text.StringBuilder radix = default!;
+    char c = this.getChar();
+    bool hasDigit = false;
+    if ((((int)c == (int)'+') || ((int)c == (int)'-'))) {
+      sb.Append(c);
+      c = this.getChar();
+    }
+    while (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c)) {
+      sb.Append(c);
+      c = this.getChar();
+      hasDigit = true;
+    }
+    if (((int)c == (int)'.')) {
+      sb.Append(c);
+      c = this.getChar();
+    } else {
+      if (((int)c == (int)'#')) {
+        radix = sb;
+        sb = new global::System.Text.StringBuilder();
+        c = this.getChar();
+      } else {
+        if (((sb.Length == 0) || !hasDigit)) {
+          this.buffer.reset();
+          return default!;
+        } else {
+          if ((((int)c != (int)'e') && ((int)c != (int)'E'))) {
+            this.buffer.position((this.buffer.position() - 1));
+            return new global::DripSharp.PdfCarton.Fonts.Type1.Token(sb.ToString(),
+              global::DripSharp.PdfCarton.Fonts.Type1.Token.INTEGER);
+          }
+        }
+      }
+    }
+    if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c)) {
+      sb.Append(c);
+      c = this.getChar();
+    } else {
+      if ((((int)c != (int)'e') && ((int)c != (int)'E'))) {
+        this.buffer.reset();
+        return default!;
+      }
+    }
+    while (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c)) {
+      sb.Append(c);
+      c = this.getChar();
+    }
+    if ((((int)c == (int)'E') || ((int)c == (int)'e'))) {
+      sb.Append(c);
+      c = this.getChar();
+      if (((int)c == (int)'-')) {
+        sb.Append(c);
+        c = this.getChar();
+      }
+      if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c)) {
+        sb.Append(c);
+        c = this.getChar();
+      } else {
+        this.buffer.reset();
+        return default!;
+      }
+      while (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c)) {
+        sb.Append(c);
+        c = this.getChar();
+      }
+    }
+    this.buffer.position((this.buffer.position() - 1));
+    if ((radix! != default!)) {
+      int val;
+      try {
+        val = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(sb.ToString(),
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(radix!.ToString(), 10));
+      } catch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaNumberFormatException ex) {
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid number '",
+          sb), "'"), ex);
+      }
+      return new global::DripSharp.PdfCarton.Fonts.Type1.Token(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(val),
+        global::DripSharp.PdfCarton.Fonts.Type1.Token.INTEGER);
+    }
+    return new global::DripSharp.PdfCarton.Fonts.Type1.Token(sb.ToString(),
+      global::DripSharp.PdfCarton.Fonts.Type1.Token.REAL);
+  }
 
-private string readRegular() {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
-while ((this.buffer.Remaining > 0)) {
-this.buffer.mark();
-char c = this.getChar();
-if (((((((((((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsWhitespace(c) || ((int)(c) == (int)('('))) || ((int)(c) == (int)(')'))) || ((int)(c) == (int)('<'))) || ((int)(c) == (int)('>'))) || ((int)(c) == (int)('['))) || ((int)(c) == (int)(']'))) || ((int)(c) == (int)('{'))) || ((int)(c) == (int)('}'))) || ((int)(c) == (int)('/'))) || ((int)(c) == (int)('%')))) {
-this.buffer.reset();
-break;
-} else {
-sb.Append(c);
-}
-}
-if ((sb.Length == 0)) {
-return default!;
-}
-return sb.ToString();
-}
+  private string readRegular() {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
+    while ((this.buffer.Remaining > 0)) {
+      this.buffer.mark();
+      char c = this.getChar();
+      if (((((((((((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsWhitespace(c) || ((int)c
+        == (int)'(')) || ((int)c == (int)')')) || ((int)c == (int)'<')) || ((int)c == (int)'>'))
+        || ((int)c == (int)'[')) || ((int)c == (int)']')) || ((int)c == (int)'{')) || ((int)c
+        == (int)'}')) || ((int)c == (int)'/')) || ((int)c == (int)'%'))) {
+        this.buffer.reset();
+        break;
+      } else {
+        sb.Append(c);
+      }
+    }
+    if ((sb.Length == 0)) {
+      return default!;
+    }
+    return sb.ToString();
+  }
 
-private string readComment() {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
-while ((this.buffer.Remaining > 0)) {
-char c = this.getChar();
-if ((((int)(c) == (int)('\r')) || ((int)(c) == (int)('\n')))) {
-break;
-} else {
-sb.Append(c);
-}
-}
-return sb.ToString();
-}
+  private string readComment() {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
+    while ((this.buffer.Remaining > 0)) {
+      char c = this.getChar();
+      if ((((int)c == (int)'\r') || ((int)c == (int)'\n'))) {
+        break;
+      } else {
+        sb.Append(c);
+      }
+    }
+    return sb.ToString();
+  }
 
-private global::DripSharp.PdfCarton.Fonts.Type1.Token readString() {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
-while ((this.buffer.Remaining > 0)) {
-char c = this.getChar();
-switch (c) {
-case var __case_444_22_0 when __case_444_22_0 == '(':
-this.openParens++;
-sb.Append('(');
-break;
-case var __case_448_22_0 when __case_448_22_0 == ')':
-if ((this.openParens == 0)) {
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(sb.ToString(), global::DripSharp.PdfCarton.Fonts.Type1.Token.STRING);
-}
-sb.Append(')');
-this.openParens--;
-break;
-case var __case_457_22_0 when __case_457_22_0 == '\\':
-char c1 = this.getChar();
-switch (c1) {
-case var __case_462_30_0 when __case_462_30_0 == 'n':
-case var __case_463_30_0 when __case_463_30_0 == 'r':
-sb.Append("\n");
-break;
-case var __case_464_30_0 when __case_464_30_0 == 't':
-sb.Append('\t');
-break;
-case var __case_465_30_0 when __case_465_30_0 == 'b':
-sb.Append('\b');
-break;
-case var __case_466_30_0 when __case_466_30_0 == 'f':
-sb.Append('\f');
-break;
-case var __case_467_30_0 when __case_467_30_0 == '\\':
-sb.Append('\\');
-break;
-case var __case_468_30_0 when __case_468_30_0 == '(':
-sb.Append('(');
-break;
-case var __case_469_30_0 when __case_469_30_0 == ')':
-sb.Append(')');
-break;
-default:
-break;
-}
-if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c1)) {
-string num = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(new char[] { c1, this.getChar(), this.getChar() });
-try {
-int code = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(num, 8);
-sb.Append(unchecked((char)(unchecked((char)(code)))));
-} catch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaNumberFormatException ex) {
-throw new global::System.IO.IOException(null, ex);
-}
-}
-break;
-case var __case_488_22_0 when __case_488_22_0 == '\r':
-case var __case_489_22_0 when __case_489_22_0 == '\n':
-sb.Append("\n");
-break;
-default:
-sb.Append(c);
-break;
-}
-}
-return default!;
-}
+  private global::DripSharp.PdfCarton.Fonts.Type1.Token readString() {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
+    while ((this.buffer.Remaining > 0)) {
+      char c = this.getChar();
+      switch (c) {
+        case var __case_444_22_0 when __case_444_22_0 == '(':
+          this.openParens++;
+          sb.Append('(');
+          break;
+        case var __case_448_22_0 when __case_448_22_0 == ')':
+          if ((this.openParens == 0)) {
+            return new global::DripSharp.PdfCarton.Fonts.Type1.Token(sb.ToString(),
+              global::DripSharp.PdfCarton.Fonts.Type1.Token.STRING);
+          }
+          sb.Append(')');
+          this.openParens--;
+          break;
+        case var __case_457_22_0 when __case_457_22_0 == '\\':
+          char c1 = this.getChar();
+          switch (c1) {
+            case var __case_462_30_0 when __case_462_30_0 == 'n':
+            case var __case_463_30_0 when __case_463_30_0 == 'r':
+              sb.Append("\n");
+              break;
+            case var __case_464_30_0 when __case_464_30_0 == 't':
+              sb.Append('\t');
+              break;
+            case var __case_465_30_0 when __case_465_30_0 == 'b':
+              sb.Append('\b');
+              break;
+            case var __case_466_30_0 when __case_466_30_0 == 'f':
+              sb.Append('\f');
+              break;
+            case var __case_467_30_0 when __case_467_30_0 == '\\':
+              sb.Append('\\');
+              break;
+            case var __case_468_30_0 when __case_468_30_0 == '(':
+              sb.Append('(');
+              break;
+            case var __case_469_30_0 when __case_469_30_0 == ')':
+              sb.Append(')');
+              break;
+            default:
+              break;
+          }
+          if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(c1)) {
+            string num
+              = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(new char[] { c1,
+                this.getChar(), this.getChar() });
+            try {
+              int code = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(num, 8);
+              sb.Append(unchecked((char)(unchecked((char)(code)))));
+            } catch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaNumberFormatException ex) {
+              throw new global::System.IO.IOException(null, ex);
+            }
+          }
+          break;
+        case var __case_488_22_0 when __case_488_22_0 == '\r':
+        case var __case_489_22_0 when __case_489_22_0 == '\n':
+          sb.Append("\n");
+          break;
+        default:
+          sb.Append(c);
+          break;
+      }
+    }
+    return default!;
+  }
 
-private global::DripSharp.PdfCarton.Fonts.Type1.Token readCharString(int length) {
-if ((length > this.buffer.array().Length)) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("String length ", length), " is larger than input"));
-}
-try {
-this.buffer.get();
-sbyte[] data = new sbyte[length];
-this.buffer.get(data);
-return new global::DripSharp.PdfCarton.Fonts.Type1.Token(data, global::DripSharp.PdfCarton.Fonts.Type1.Token.CHARSTRING);
-} catch (global::System.IO.EndOfStreamException) {
-throw new global::System.IO.IOException("Premature end of buffer reached");
-}
-}
+  private global::DripSharp.PdfCarton.Fonts.Type1.Token readCharString(int length) {
+    if ((length > this.buffer.array().Length)) {
+      throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("String length ",
+        length), " is larger than input"));
+    }
+    try {
+      this.buffer.get();
+      sbyte[] data = new sbyte[length];
+      this.buffer.get(data);
+      return new global::DripSharp.PdfCarton.Fonts.Type1.Token(data,
+        global::DripSharp.PdfCarton.Fonts.Type1.Token.CHARSTRING);
+    } catch (global::System.IO.EndOfStreamException) {
+      throw new global::System.IO.IOException("Premature end of buffer reached");
+    }
+  }
 }

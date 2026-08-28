@@ -9,57 +9,58 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public class PDShadingType2 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading {
-private global::DripSharp.PdfCarton.Cos.COSArray coords = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray coords = default!;
 
-private global::DripSharp.PdfCarton.Cos.COSArray domain = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray domain = default!;
 
-private global::DripSharp.PdfCarton.Cos.COSArray extend = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray extend = default!;
 
-public PDShadingType2(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary) : base(shadingDictionary) {
+  public PDShadingType2(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary)
+  : base(shadingDictionary) {
 
-}
+  }
 
-public override int GetShadingType() {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType2;
-}
+  public override int GetShadingType() {
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType2;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSArray GetExtend() {
-if ((this.extend == default!)) {
-this.extend = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Extend);
-}
-return this.extend;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSArray GetExtend() {
+    if ((this.extend == default!)) {
+      this.extend = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Extend);
+    }
+    return this.extend;
+  }
 
-public virtual void SetExtend(global::DripSharp.PdfCarton.Cos.COSArray newExtend) {
-this.extend = newExtend;
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Extend, newExtend);
-}
+  public virtual void SetExtend(global::DripSharp.PdfCarton.Cos.COSArray newExtend) {
+    this.extend = newExtend;
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Extend, newExtend);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSArray GetDomain() {
-if ((this.domain == default!)) {
-this.domain = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Domain);
-}
-return this.domain;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSArray GetDomain() {
+    if ((this.domain == default!)) {
+      this.domain = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Domain);
+    }
+    return this.domain;
+  }
 
-public virtual void SetDomain(global::DripSharp.PdfCarton.Cos.COSArray newDomain) {
-this.domain = newDomain;
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Domain, newDomain);
-}
+  public virtual void SetDomain(global::DripSharp.PdfCarton.Cos.COSArray newDomain) {
+    this.domain = newDomain;
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Domain, newDomain);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSArray GetCoords() {
-if ((this.coords == default!)) {
-this.coords = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Coords);
-}
-return this.coords;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSArray GetCoords() {
+    if ((this.coords == default!)) {
+      this.coords = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Coords);
+    }
+    return this.coords;
+  }
 
-public virtual void SetCoords(global::DripSharp.PdfCarton.Cos.COSArray newCoords) {
-this.coords = newCoords;
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Coords, newCoords);
-}
+  public virtual void SetCoords(global::DripSharp.PdfCarton.Cos.COSArray newCoords) {
+    this.coords = newCoords;
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Coords, newCoords);
+  }
 
-public override global::DripSharp.Runtime.JavaPaint ToPaint(global::DripSharp.PdfCarton.Util.Matrix matrix) {
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.AxialShadingPaint(this, matrix);
-}
+  public override global::DripSharp.Runtime.JavaPaint ToPaint(global::DripSharp.PdfCarton.Util.Matrix matrix) {
+    return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.AxialShadingPaint(this, matrix);
+  }
 }

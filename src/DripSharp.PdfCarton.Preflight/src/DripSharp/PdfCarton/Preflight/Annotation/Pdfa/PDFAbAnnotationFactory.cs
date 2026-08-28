@@ -8,23 +8,56 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation.Pdfa;
 
-public class PDFAbAnnotationFactory : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory {
-protected internal override void InitializeClasses() {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.TextAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.LinkAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationFreeText.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.FreeTextAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.LineAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquare.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.SquareAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationCircle.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.CircleAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationHighlight.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.HighlightAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnderline.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.UnderlineAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationStrikeout.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.StrikeoutAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquiggly.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.SquigglyAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationRubberStamp.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.RubberStampAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationInk.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.InkAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.PopupAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget.SubType, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.WidgetAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Preflight.PreflightConstants.AnnotDictionaryValueSubtypePrintermark, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.PrintMarkAnnotationValidator));
-global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses, global::DripSharp.PdfCarton.Preflight.PreflightConstants.AnnotDictionaryValueSubtypeTrapnet, typeof(global::DripSharp.PdfCarton.Preflight.Annotation.TrapNetAnnotationValidator));
-}
+public class PDFAbAnnotationFactory
+: global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory {
+  protected internal override void InitializeClasses() {
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.TextAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.LinkAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationFreeText.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.FreeTextAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.LineAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquare.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.SquareAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationCircle.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.CircleAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationHighlight.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.HighlightAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnderline.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.UnderlineAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationStrikeout.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.StrikeoutAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquiggly.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.SquigglyAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationRubberStamp.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.RubberStampAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationInk.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.InkAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.PopupAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget.SubType,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.WidgetAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Preflight.PreflightConstants.AnnotDictionaryValueSubtypePrintermark,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.PrintMarkAnnotationValidator));
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.ValidatorClasses,
+      global::DripSharp.PdfCarton.Preflight.PreflightConstants.AnnotDictionaryValueSubtypeTrapnet,
+      typeof(global::DripSharp.PdfCarton.Preflight.Annotation.TrapNetAnnotationValidator));
+  }
 }

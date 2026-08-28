@@ -9,120 +9,180 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 internal class TilingPaint : global::DripSharp.Runtime.JavaPaint {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly global::DripSharp.Runtime.JavaPaint paint = null!;
+  private readonly global::DripSharp.Runtime.JavaPaint paint = null!;
 
-private readonly global::DripSharp.PdfCarton.Util.Matrix patternMatrix = null!;
+  private readonly global::DripSharp.PdfCarton.Util.Matrix patternMatrix = null!;
 
-private static readonly int MAXEDGE = default;
+  private static readonly int MAXEDGE = default;
 
-private const string DEFAULTMAXEDGE = "3000";
+  private const string DEFAULTMAXEDGE = "3000";
 
-static TilingPaint() {
-{
-string s = global::DripSharp.Runtime.JavaCompat.GetProperty("pdfbox.rendering.tilingpaint.maxedge", global::DripSharp.PdfCarton.Rendering.TilingPaint.DEFAULTMAXEDGE);
-int val;
-try {
-val = global::DripSharp.Runtime.JavaCompat.ParseInt(s, 10);
-} catch (global::DripSharp.Runtime.JavaNumberFormatException ex) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG, (global::System.Exception)ex, global::DripSharp.Runtime.JavaCompat.StringValueOf("Default will be used"));
-val = global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Rendering.TilingPaint.DEFAULTMAXEDGE, 10);
-}
-global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE = val;
-}
-}
+  static TilingPaint() { {
+      string s
+        = global::DripSharp.Runtime.JavaCompat.GetProperty("pdfbox.rendering.tilingpaint.maxedge",
+        global::DripSharp.PdfCarton.Rendering.TilingPaint.DEFAULTMAXEDGE);
+      int val;
+      try {
+        val = global::DripSharp.Runtime.JavaCompat.ParseInt(s, 10);
+      } catch (global::DripSharp.Runtime.JavaNumberFormatException ex) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG,
+          (global::System.Exception)ex,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf("Default will be used"));
+        val
+          = global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Rendering.TilingPaint.DEFAULTMAXEDGE,
+          10);
+      }
+      global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE = val;
+    }
+  }
 
-internal TilingPaint(global::DripSharp.PdfCarton.Rendering.PageDrawer drawer, global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern, global::SkiaSharp.SKMatrix xform) : this(drawer, pattern, (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace)default!, (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor)default!, xform) {
+  internal TilingPaint(global::DripSharp.PdfCarton.Rendering.PageDrawer drawer,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern,
+    global::SkiaSharp.SKMatrix xform) : this(drawer, pattern,
+    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace)default!,
+    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor)default!, xform) {
 
-}
+  }
 
-internal TilingPaint(global::DripSharp.PdfCarton.Rendering.PageDrawer drawer, global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color, global::SkiaSharp.SKMatrix xform) {
-this.patternMatrix = global::DripSharp.PdfCarton.Util.Matrix.Concatenate(drawer.GetInitialMatrix(), pattern.GetMatrix());
-global::SkiaSharp.SKRect anchorRect = this.getAnchorRect(pattern);
-this.paint = new global::DripSharp.Runtime.JavaTexturePaint(this.getImage(drawer, pattern, colorSpace, color, xform, anchorRect), anchorRect);
-}
+  internal TilingPaint(global::DripSharp.PdfCarton.Rendering.PageDrawer drawer,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color,
+    global::SkiaSharp.SKMatrix xform) {
+    this.patternMatrix
+      = global::DripSharp.PdfCarton.Util.Matrix.Concatenate(drawer.GetInitialMatrix(),
+      pattern.GetMatrix());
+    global::SkiaSharp.SKRect anchorRect = this.getAnchorRect(pattern);
+    this.paint = new global::DripSharp.Runtime.JavaTexturePaint(this.getImage(drawer, pattern,
+      colorSpace, color, xform, anchorRect), anchorRect);
+  }
 
-public virtual global::DripSharp.Runtime.JavaPaintContext CreateContext(global::DripSharp.Runtime.JavaColorModel cm, global::SkiaSharp.SKRectI deviceBounds, global::SkiaSharp.SKRect userBounds, global::SkiaSharp.SKMatrix xform, global::DripSharp.Runtime.PdfCartonRenderingHints hints) {
-global::SkiaSharp.SKMatrix xformPattern = (global::SkiaSharp.SKMatrix)(xform!);
-global::SkiaSharp.SKMatrix patternNoScale = this.patternMatrix.CreateAffineTransform();
-global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref patternNoScale, (double)((1 / (float)(this.patternMatrix.GetScalingFactorX()))), (double)((1 / (float)(this.patternMatrix.GetScalingFactorY()))));
-global::DripSharp.Runtime.PdfCartonFontCompat.ConcatenateInPlace(ref xformPattern, patternNoScale);
-return this.paint.CreateContext(cm, deviceBounds, userBounds, xformPattern, hints);
-}
+  public virtual global::DripSharp.Runtime.JavaPaintContext CreateContext(global::DripSharp.Runtime.JavaColorModel cm,
+    global::SkiaSharp.SKRectI deviceBounds, global::SkiaSharp.SKRect userBounds,
+    global::SkiaSharp.SKMatrix xform, global::DripSharp.Runtime.PdfCartonRenderingHints hints) {
+    global::SkiaSharp.SKMatrix xformPattern = (global::SkiaSharp.SKMatrix)(xform!);
+    global::SkiaSharp.SKMatrix patternNoScale = this.patternMatrix.CreateAffineTransform();
+    global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref patternNoScale, (double)((1
+      / (float)(this.patternMatrix.GetScalingFactorX()))), (double)((1
+      / (float)(this.patternMatrix.GetScalingFactorY()))));
+    global::DripSharp.Runtime.PdfCartonFontCompat.ConcatenateInPlace(ref xformPattern,
+      patternNoScale);
+    return this.paint.CreateContext(cm, deviceBounds, userBounds, xformPattern, hints);
+  }
 
-private global::SkiaSharp.SKBitmap getImage(global::DripSharp.PdfCarton.Rendering.PageDrawer drawer, global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color, global::SkiaSharp.SKMatrix xform, global::SkiaSharp.SKRect anchorRect) {
-float width = (float)(global::System.Math.Abs(anchorRect.Width));
-float height = (float)(global::System.Math.Abs(anchorRect.Height));
-global::DripSharp.PdfCarton.Util.Matrix xformMatrix = new global::DripSharp.PdfCarton.Util.Matrix(xform);
-float xScale = global::System.Math.Abs(xformMatrix.GetScalingFactorX());
-float yScale = global::System.Math.Abs(xformMatrix.GetScalingFactorY());
-width *= xScale;
-height *= yScale;
-int rasterWidth = global::System.Math.Max(1, global::DripSharp.PdfCarton.Rendering.TilingPaint.ceiling((double)(width)));
-int rasterHeight = global::System.Math.Max(1, global::DripSharp.PdfCarton.Rendering.TilingPaint.ceiling((double)(height)));
-global::SkiaSharp.SKBitmap image = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(rasterWidth, rasterHeight, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
-global::DripSharp.Runtime.PdfCartonGraphics2D graphics = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(image);
-if ((pattern.GetYStep() < 0)) {
-graphics.Translate(0, rasterHeight);
-graphics.Scale((double)(1), (double)(-1));
-}
-if ((pattern.GetXStep() < 0)) {
-graphics.Translate(rasterWidth, 0);
-graphics.Scale((double)(-1), (double)(1));
-}
-graphics.Scale((double)(xScale), (double)(yScale));
-global::DripSharp.PdfCarton.Util.Matrix newPatternMatrix = global::DripSharp.PdfCarton.Util.Matrix.GetScaleInstance(global::System.Math.Abs(this.patternMatrix.GetScalingFactorX()), global::System.Math.Abs(this.patternMatrix.GetScalingFactorY()));
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bBox = pattern.GetBBox();
-newPatternMatrix.Translate(-(bBox.GetLowerLeftX()), -(bBox.GetLowerLeftY()));
-try {
-drawer.drawTilingPattern(graphics, pattern, colorSpace, color, newPatternMatrix);
-} finally {
-graphics.Dispose();
-}
-return image;
-}
+  private global::SkiaSharp.SKBitmap getImage(global::DripSharp.PdfCarton.Rendering.PageDrawer drawer,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color,
+    global::SkiaSharp.SKMatrix xform, global::SkiaSharp.SKRect anchorRect) {
+    float width = (float)(global::System.Math.Abs(anchorRect.Width));
+    float height = (float)(global::System.Math.Abs(anchorRect.Height));
+    global::DripSharp.PdfCarton.Util.Matrix xformMatrix
+      = new global::DripSharp.PdfCarton.Util.Matrix(xform);
+    float xScale = global::System.Math.Abs(xformMatrix.GetScalingFactorX());
+    float yScale = global::System.Math.Abs(xformMatrix.GetScalingFactorY());
+    width *= xScale;
+    height *= yScale;
+    int rasterWidth = global::System.Math.Max(1,
+      global::DripSharp.PdfCarton.Rendering.TilingPaint.ceiling((double)(width)));
+    int rasterHeight = global::System.Math.Max(1,
+      global::DripSharp.PdfCarton.Rendering.TilingPaint.ceiling((double)(height)));
+    global::SkiaSharp.SKBitmap image
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(rasterWidth, rasterHeight,
+      global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
+    global::DripSharp.Runtime.PdfCartonGraphics2D graphics
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(image);
+    if ((pattern.GetYStep() < 0)) {
+      graphics.Translate(0, rasterHeight);
+      graphics.Scale((double)(1), (double)(-1));
+    }
+    if ((pattern.GetXStep() < 0)) {
+      graphics.Translate(rasterWidth, 0);
+      graphics.Scale((double)(-1), (double)(1));
+    }
+    graphics.Scale((double)(xScale), (double)(yScale));
+    global::DripSharp.PdfCarton.Util.Matrix newPatternMatrix
+      = global::DripSharp.PdfCarton.Util.Matrix.GetScaleInstance(global::System.Math.Abs(this.patternMatrix.GetScalingFactorX()),
+      global::System.Math.Abs(this.patternMatrix.GetScalingFactorY()));
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bBox = pattern.GetBBox();
+    newPatternMatrix.Translate(-(bBox.GetLowerLeftX()), -(bBox.GetLowerLeftY()));
+    try {
+      drawer.drawTilingPattern(graphics, pattern, colorSpace, color, newPatternMatrix);
+    } finally {
+      graphics.Dispose();
+    }
+    return image;
+  }
 
-private static int ceiling(double num) {
-global::DripSharp.Runtime.JavaCompat.JavaBigDecimal @decimal = global::DripSharp.Runtime.JavaCompat.JavaBigDecimalValueOf(num);
-@decimal = global::DripSharp.Runtime.JavaCompat.JavaBigDecimalSetScale(@decimal, 5, global::DripSharp.Runtime.JavaRoundingMode.Ceiling);
-return global::DripSharp.Runtime.JavaCompat.JavaBigDecimalIntValue(@decimal);
-}
+  private static int ceiling(double num) {
+    global::DripSharp.Runtime.JavaCompat.JavaBigDecimal @decimal
+      = global::DripSharp.Runtime.JavaCompat.JavaBigDecimalValueOf(num);
+    @decimal = global::DripSharp.Runtime.JavaCompat.JavaBigDecimalSetScale(@decimal, 5,
+      global::DripSharp.Runtime.JavaRoundingMode.Ceiling);
+    return global::DripSharp.Runtime.JavaCompat.JavaBigDecimalIntValue(@decimal);
+  }
 
-public virtual int GetTransparency() {
-return global::DripSharp.Runtime.PdfCartonTransparency.TRANSLUCENT;
-}
+  public virtual int GetTransparency() {
+    return global::DripSharp.Runtime.PdfCartonTransparency.TRANSLUCENT;
+  }
 
-private global::SkiaSharp.SKRect getAnchorRect(global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox = pattern.GetBBox();
-if ((bbox == default!)) {
-throw new global::System.IO.IOException("Pattern /BBox is missing");
-}
-float xStep = pattern.GetXStep();
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(xStep, (float)(0)) == 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("/XStep is 0, using pattern /BBox width"));
-xStep = bbox.GetWidth();
-}
-float yStep = pattern.GetYStep();
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(yStep, (float)(0)) == 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("/YStep is 0, using pattern /BBox height"));
-yStep = bbox.GetHeight();
-}
-float xScale = this.patternMatrix.GetScalingFactorX();
-float yScale = this.patternMatrix.GetScalingFactorY();
-float width = (xStep * xScale);
-float height = (yStep * yScale);
-if ((global::System.Math.Abs((width * height)) > (global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE * global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Pattern surface larger than ", global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE), " x "), global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE), ", will be clipped")));
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("width: ", width), ", height: "), height)));
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("XStep: ", xStep), ", YStep: "), yStep)));
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("bbox: ", bbox)));
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("pattern matrix: ", pattern.GetMatrix())));
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("concatenated matrix: ", this.patternMatrix)));
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("increase the property 'pdfbox.rendering.tilingpaint.maxedge'"));
-width = (global::System.Math.Min((float)(global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE), global::System.Math.Abs(width)) * global::DripSharp.Runtime.JavaCompat.SignumFloat(width));
-height = (global::System.Math.Min((float)(global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE), global::System.Math.Abs(height)) * global::DripSharp.Runtime.JavaCompat.SignumFloat(height));
-}
-return global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((bbox.GetLowerLeftX() * xScale), (bbox.GetLowerLeftY() * yScale), width, height);
-}
+  private global::SkiaSharp.SKRect getAnchorRect(global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox = pattern.GetBBox();
+    if ((bbox == default!)) {
+      throw new global::System.IO.IOException("Pattern /BBox is missing");
+    }
+    float xStep = pattern.GetXStep();
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(xStep, (float)(0)) == 0)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("/XStep is 0, using pattern /BBox width"));
+      xStep = bbox.GetWidth();
+    }
+    float yStep = pattern.GetYStep();
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(yStep, (float)(0)) == 0)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("/YStep is 0, using pattern /BBox height"));
+      yStep = bbox.GetHeight();
+    }
+    float xScale = this.patternMatrix.GetScalingFactorX();
+    float yScale = this.patternMatrix.GetScalingFactorY();
+    float width = (xStep * xScale);
+    float height = (yStep * yScale);
+    if ((global::System.Math.Abs((width
+      * height)) > (global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE
+      * global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE))) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Pattern surface larger than ",
+        global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE), " x "),
+        global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE), ", will be clipped")));
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("width: ",
+        width), ", height: "), height)));
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("XStep: ",
+        xStep), ", YStep: "), yStep)));
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("bbox: ",
+        bbox)));
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("pattern matrix: ",
+        pattern.GetMatrix())));
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("concatenated matrix: ",
+        this.patternMatrix)));
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("increase the property 'pdfbox.rendering.tilingpaint.maxedge'"));
+      width
+        = (global::System.Math.Min((float)(global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE),
+        global::System.Math.Abs(width)) * global::DripSharp.Runtime.JavaCompat.SignumFloat(width));
+      height
+        = (global::System.Math.Min((float)(global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE),
+        global::System.Math.Abs(height))
+        * global::DripSharp.Runtime.JavaCompat.SignumFloat(height));
+    }
+    return global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((bbox.GetLowerLeftX() * xScale),
+      (bbox.GetLowerLeftY() * yScale), width, height);
+  }
 }

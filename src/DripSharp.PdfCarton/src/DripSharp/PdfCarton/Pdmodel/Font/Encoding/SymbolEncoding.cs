@@ -9,21 +9,93 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font.Encoding;
 
 public class SymbolEncoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding {
-private static readonly object[][] SYMBOL_ENCODING_TABLE = new object[][] { new object[] { 65, "Alpha" }, new object[] { 66, "Beta" }, new object[] { 67, "Chi" }, new object[] { 68, "Delta" }, new object[] { 69, "Epsilon" }, new object[] { 72, "Eta" }, new object[] { 160, "Euro" }, new object[] { 71, "Gamma" }, new object[] { 193, "Ifraktur" }, new object[] { 73, "Iota" }, new object[] { 75, "Kappa" }, new object[] { 76, "Lambda" }, new object[] { 77, "Mu" }, new object[] { 78, "Nu" }, new object[] { 87, "Omega" }, new object[] { 79, "Omicron" }, new object[] { 70, "Phi" }, new object[] { 80, "Pi" }, new object[] { 89, "Psi" }, new object[] { 194, "Rfraktur" }, new object[] { 82, "Rho" }, new object[] { 83, "Sigma" }, new object[] { 84, "Tau" }, new object[] { 81, "Theta" }, new object[] { 85, "Upsilon" }, new object[] { 161, "Upsilon1" }, new object[] { 88, "Xi" }, new object[] { 90, "Zeta" }, new object[] { 192, "aleph" }, new object[] { 97, "alpha" }, new object[] { 38, "ampersand" }, new object[] { 208, "angle" }, new object[] { 225, "angleleft" }, new object[] { 241, "angleright" }, new object[] { 187, "approxequal" }, new object[] { 171, "arrowboth" }, new object[] { 219, "arrowdblboth" }, new object[] { 223, "arrowdbldown" }, new object[] { 220, "arrowdblleft" }, new object[] { 222, "arrowdblright" }, new object[] { 221, "arrowdblup" }, new object[] { 175, "arrowdown" }, new object[] { 190, "arrowhorizex" }, new object[] { 172, "arrowleft" }, new object[] { 174, "arrowright" }, new object[] { 173, "arrowup" }, new object[] { 189, "arrowvertex" }, new object[] { 42, "asteriskmath" }, new object[] { 124, "bar" }, new object[] { 98, "beta" }, new object[] { 123, "braceleft" }, new object[] { 125, "braceright" }, new object[] { 236, "bracelefttp" }, new object[] { 237, "braceleftmid" }, new object[] { 238, "braceleftbt" }, new object[] { 252, "bracerighttp" }, new object[] { 253, "bracerightmid" }, new object[] { 254, "bracerightbt" }, new object[] { 239, "braceex" }, new object[] { 91, "bracketleft" }, new object[] { 93, "bracketright" }, new object[] { 233, "bracketlefttp" }, new object[] { 234, "bracketleftex" }, new object[] { 235, "bracketleftbt" }, new object[] { 249, "bracketrighttp" }, new object[] { 250, "bracketrightex" }, new object[] { 251, "bracketrightbt" }, new object[] { 183, "bullet" }, new object[] { 191, "carriagereturn" }, new object[] { 99, "chi" }, new object[] { 196, "circlemultiply" }, new object[] { 197, "circleplus" }, new object[] { 167, "club" }, new object[] { 58, "colon" }, new object[] { 44, "comma" }, new object[] { 64, "congruent" }, new object[] { 227, "copyrightsans" }, new object[] { 211, "copyrightserif" }, new object[] { 176, "degree" }, new object[] { 100, "delta" }, new object[] { 168, "diamond" }, new object[] { 184, "divide" }, new object[] { 215, "dotmath" }, new object[] { 56, "eight" }, new object[] { 206, "element" }, new object[] { 188, "ellipsis" }, new object[] { 198, "emptyset" }, new object[] { 101, "epsilon" }, new object[] { 61, "equal" }, new object[] { 186, "equivalence" }, new object[] { 104, "eta" }, new object[] { 33, "exclam" }, new object[] { 36, "existential" }, new object[] { 53, "five" }, new object[] { 166, "florin" }, new object[] { 52, "four" }, new object[] { 164, "fraction" }, new object[] { 103, "gamma" }, new object[] { 209, "gradient" }, new object[] { 62, "greater" }, new object[] { 179, "greaterequal" }, new object[] { 169, "heart" }, new object[] { 165, "infinity" }, new object[] { 242, "integral" }, new object[] { 243, "integraltp" }, new object[] { 244, "integralex" }, new object[] { 245, "integralbt" }, new object[] { 199, "intersection" }, new object[] { 105, "iota" }, new object[] { 107, "kappa" }, new object[] { 108, "lambda" }, new object[] { 60, "less" }, new object[] { 163, "lessequal" }, new object[] { 217, "logicaland" }, new object[] { 216, "logicalnot" }, new object[] { 218, "logicalor" }, new object[] { 224, "lozenge" }, new object[] { 45, "minus" }, new object[] { 162, "minute" }, new object[] { 109, "mu" }, new object[] { 180, "multiply" }, new object[] { 57, "nine" }, new object[] { 207, "notelement" }, new object[] { 185, "notequal" }, new object[] { 203, "notsubset" }, new object[] { 110, "nu" }, new object[] { 35, "numbersign" }, new object[] { 119, "omega" }, new object[] { 118, "omega1" }, new object[] { 111, "omicron" }, new object[] { 49, "one" }, new object[] { 40, "parenleft" }, new object[] { 41, "parenright" }, new object[] { 230, "parenlefttp" }, new object[] { 231, "parenleftex" }, new object[] { 232, "parenleftbt" }, new object[] { 246, "parenrighttp" }, new object[] { 247, "parenrightex" }, new object[] { 248, "parenrightbt" }, new object[] { 182, "partialdiff" }, new object[] { 37, "percent" }, new object[] { 46, "period" }, new object[] { 94, "perpendicular" }, new object[] { 102, "phi" }, new object[] { 106, "phi1" }, new object[] { 112, "pi" }, new object[] { 43, "plus" }, new object[] { 177, "plusminus" }, new object[] { 213, "product" }, new object[] { 204, "propersubset" }, new object[] { 201, "propersuperset" }, new object[] { 181, "proportional" }, new object[] { 121, "psi" }, new object[] { 63, "question" }, new object[] { 214, "radical" }, new object[] { 96, "radicalex" }, new object[] { 205, "reflexsubset" }, new object[] { 202, "reflexsuperset" }, new object[] { 226, "registersans" }, new object[] { 210, "registerserif" }, new object[] { 114, "rho" }, new object[] { 178, "second" }, new object[] { 59, "semicolon" }, new object[] { 55, "seven" }, new object[] { 115, "sigma" }, new object[] { 86, "sigma1" }, new object[] { 126, "similar" }, new object[] { 54, "six" }, new object[] { 47, "slash" }, new object[] { 32, "space" }, new object[] { 170, "spade" }, new object[] { 39, "suchthat" }, new object[] { 229, "summation" }, new object[] { 116, "tau" }, new object[] { 92, "therefore" }, new object[] { 113, "theta" }, new object[] { 74, "theta1" }, new object[] { 51, "three" }, new object[] { 228, "trademarksans" }, new object[] { 212, "trademarkserif" }, new object[] { 50, "two" }, new object[] { 95, "underscore" }, new object[] { 200, "union" }, new object[] { 34, "universal" }, new object[] { 117, "upsilon" }, new object[] { 195, "weierstrass" }, new object[] { 120, "xi" }, new object[] { 48, "zero" }, new object[] { 122, "zeta" } };
+  private static readonly object[][] SYMBOL_ENCODING_TABLE = new object[][] { new object[] { 65,
+    "Alpha" }, new object[] { 66, "Beta" }, new object[] { 67, "Chi" }, new object[] { 68,
+    "Delta" }, new object[] { 69, "Epsilon" }, new object[] { 72, "Eta" }, new object[] { 160,
+    "Euro" }, new object[] { 71, "Gamma" }, new object[] { 193, "Ifraktur" }, new object[] { 73,
+    "Iota" }, new object[] { 75, "Kappa" }, new object[] { 76, "Lambda" }, new object[] { 77,
+    "Mu" }, new object[] { 78, "Nu" }, new object[] { 87, "Omega" }, new object[] { 79, "Omicron" },
+    new object[] { 70, "Phi" }, new object[] { 80, "Pi" }, new object[] { 89, "Psi" },
+    new object[] { 194, "Rfraktur" }, new object[] { 82, "Rho" }, new object[] { 83, "Sigma" },
+    new object[] { 84, "Tau" }, new object[] { 81, "Theta" }, new object[] { 85, "Upsilon" },
+    new object[] { 161, "Upsilon1" }, new object[] { 88, "Xi" }, new object[] { 90, "Zeta" },
+    new object[] { 192, "aleph" }, new object[] { 97, "alpha" }, new object[] { 38, "ampersand" },
+    new object[] { 208, "angle" }, new object[] { 225, "angleleft" }, new object[] { 241,
+    "angleright" }, new object[] { 187, "approxequal" }, new object[] { 171, "arrowboth" },
+    new object[] { 219, "arrowdblboth" }, new object[] { 223, "arrowdbldown" }, new object[] { 220,
+    "arrowdblleft" }, new object[] { 222, "arrowdblright" }, new object[] { 221, "arrowdblup" },
+    new object[] { 175, "arrowdown" }, new object[] { 190, "arrowhorizex" }, new object[] { 172,
+    "arrowleft" }, new object[] { 174, "arrowright" }, new object[] { 173, "arrowup" },
+    new object[] { 189, "arrowvertex" }, new object[] { 42, "asteriskmath" }, new object[] { 124,
+    "bar" }, new object[] { 98, "beta" }, new object[] { 123, "braceleft" }, new object[] { 125,
+    "braceright" }, new object[] { 236, "bracelefttp" }, new object[] { 237, "braceleftmid" },
+    new object[] { 238, "braceleftbt" }, new object[] { 252, "bracerighttp" }, new object[] { 253,
+    "bracerightmid" }, new object[] { 254, "bracerightbt" }, new object[] { 239, "braceex" },
+    new object[] { 91, "bracketleft" }, new object[] { 93, "bracketright" }, new object[] { 233,
+    "bracketlefttp" }, new object[] { 234, "bracketleftex" }, new object[] { 235, "bracketleftbt" },
+    new object[] { 249, "bracketrighttp" }, new object[] { 250, "bracketrightex" },
+    new object[] { 251, "bracketrightbt" }, new object[] { 183, "bullet" }, new object[] { 191,
+    "carriagereturn" }, new object[] { 99, "chi" }, new object[] { 196, "circlemultiply" },
+    new object[] { 197, "circleplus" }, new object[] { 167, "club" }, new object[] { 58, "colon" },
+    new object[] { 44, "comma" }, new object[] { 64, "congruent" }, new object[] { 227,
+    "copyrightsans" }, new object[] { 211, "copyrightserif" }, new object[] { 176, "degree" },
+    new object[] { 100, "delta" }, new object[] { 168, "diamond" }, new object[] { 184, "divide" },
+    new object[] { 215, "dotmath" }, new object[] { 56, "eight" }, new object[] { 206, "element" },
+    new object[] { 188, "ellipsis" }, new object[] { 198, "emptyset" }, new object[] { 101,
+    "epsilon" }, new object[] { 61, "equal" }, new object[] { 186, "equivalence" },
+    new object[] { 104, "eta" }, new object[] { 33, "exclam" }, new object[] { 36, "existential" },
+    new object[] { 53, "five" }, new object[] { 166, "florin" }, new object[] { 52, "four" },
+    new object[] { 164, "fraction" }, new object[] { 103, "gamma" }, new object[] { 209,
+    "gradient" }, new object[] { 62, "greater" }, new object[] { 179, "greaterequal" },
+    new object[] { 169, "heart" }, new object[] { 165, "infinity" }, new object[] { 242,
+    "integral" }, new object[] { 243, "integraltp" }, new object[] { 244, "integralex" },
+    new object[] { 245, "integralbt" }, new object[] { 199, "intersection" }, new object[] { 105,
+    "iota" }, new object[] { 107, "kappa" }, new object[] { 108, "lambda" }, new object[] { 60,
+    "less" }, new object[] { 163, "lessequal" }, new object[] { 217, "logicaland" },
+    new object[] { 216, "logicalnot" }, new object[] { 218, "logicalor" }, new object[] { 224,
+    "lozenge" }, new object[] { 45, "minus" }, new object[] { 162, "minute" }, new object[] { 109,
+    "mu" }, new object[] { 180, "multiply" }, new object[] { 57, "nine" }, new object[] { 207,
+    "notelement" }, new object[] { 185, "notequal" }, new object[] { 203, "notsubset" },
+    new object[] { 110, "nu" }, new object[] { 35, "numbersign" }, new object[] { 119, "omega" },
+    new object[] { 118, "omega1" }, new object[] { 111, "omicron" }, new object[] { 49, "one" },
+    new object[] { 40, "parenleft" }, new object[] { 41, "parenright" }, new object[] { 230,
+    "parenlefttp" }, new object[] { 231, "parenleftex" }, new object[] { 232, "parenleftbt" },
+    new object[] { 246, "parenrighttp" }, new object[] { 247, "parenrightex" }, new object[] { 248,
+    "parenrightbt" }, new object[] { 182, "partialdiff" }, new object[] { 37, "percent" },
+    new object[] { 46, "period" }, new object[] { 94, "perpendicular" }, new object[] { 102,
+    "phi" }, new object[] { 106, "phi1" }, new object[] { 112, "pi" }, new object[] { 43, "plus" },
+    new object[] { 177, "plusminus" }, new object[] { 213, "product" }, new object[] { 204,
+    "propersubset" }, new object[] { 201, "propersuperset" }, new object[] { 181, "proportional" },
+    new object[] { 121, "psi" }, new object[] { 63, "question" }, new object[] { 214, "radical" },
+    new object[] { 96, "radicalex" }, new object[] { 205, "reflexsubset" }, new object[] { 202,
+    "reflexsuperset" }, new object[] { 226, "registersans" }, new object[] { 210, "registerserif" },
+    new object[] { 114, "rho" }, new object[] { 178, "second" }, new object[] { 59, "semicolon" },
+    new object[] { 55, "seven" }, new object[] { 115, "sigma" }, new object[] { 86, "sigma1" },
+    new object[] { 126, "similar" }, new object[] { 54, "six" }, new object[] { 47, "slash" },
+    new object[] { 32, "space" }, new object[] { 170, "spade" }, new object[] { 39, "suchthat" },
+    new object[] { 229, "summation" }, new object[] { 116, "tau" }, new object[] { 92,
+    "therefore" }, new object[] { 113, "theta" }, new object[] { 74, "theta1" }, new object[] { 51,
+    "three" }, new object[] { 228, "trademarksans" }, new object[] { 212, "trademarkserif" },
+    new object[] { 50, "two" }, new object[] { 95, "underscore" }, new object[] { 200, "union" },
+    new object[] { 34, "universal" }, new object[] { 117, "upsilon" }, new object[] { 195,
+    "weierstrass" }, new object[] { 120, "xi" }, new object[] { 48, "zero" }, new object[] { 122,
+    "zeta" } };
 
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.SymbolEncoding Instance = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.SymbolEncoding();
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.SymbolEncoding Instance
+    = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.SymbolEncoding();
 
-private SymbolEncoding() {
-foreach (object[] encodingEntry in global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.SymbolEncoding.SYMBOL_ENCODING_TABLE) {
-this.Add((int)(global::DripSharp.Runtime.JavaCompat.Unbox((int?)(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharCode]))), global::DripSharp.Runtime.JavaCompat.StringValueOf(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharName]));
-}
-}
+  private SymbolEncoding() {
+    foreach (object[] encodingEntry in global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.SymbolEncoding.SYMBOL_ENCODING_TABLE) {
+      this.Add((int)(global::DripSharp.Runtime.JavaCompat.Unbox((int?)(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharCode]))),
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(encodingEntry[global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.CharName]));
+    }
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("SymbolEncoding");
-}
+  public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("SymbolEncoding");
+  }
 
-public override string GetEncodingName() {
-return "SymbolEncoding";
-}
+  public override string GetEncodingName() {
+    return "SymbolEncoding";
+  }
 }

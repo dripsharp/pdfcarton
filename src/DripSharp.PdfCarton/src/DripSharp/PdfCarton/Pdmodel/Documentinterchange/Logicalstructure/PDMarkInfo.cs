@@ -9,43 +9,44 @@
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
 public class PDMarkInfo : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public PDMarkInfo() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public PDMarkInfo() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public PDMarkInfo(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
-this.dictionary = dic;
-}
+  public PDMarkInfo(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
+    this.dictionary = dic;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public virtual bool IsMarked() {
-return this.dictionary.GetBoolean("Marked", false);
-}
+  public virtual bool IsMarked() {
+    return this.dictionary.GetBoolean("Marked", false);
+  }
 
-public virtual void SetMarked(bool value) {
-this.dictionary.SetBoolean("Marked", value);
-}
+  public virtual void SetMarked(bool value) {
+    this.dictionary.SetBoolean("Marked", value);
+  }
 
-public virtual bool UsesUserProperties() {
-return this.dictionary.GetBoolean("UserProperties", false);
-}
+  public virtual bool UsesUserProperties() {
+    return this.dictionary.GetBoolean("UserProperties", false);
+  }
 
-public virtual void SetUserProperties(bool userProps) {
-this.dictionary.SetBoolean("UserProperties", userProps);
-}
+  public virtual void SetUserProperties(bool userProps) {
+    this.dictionary.SetBoolean("UserProperties", userProps);
+  }
 
-public virtual bool IsSuspect() {
-return this.dictionary.GetBoolean("Suspects", false);
-}
+  public virtual bool IsSuspect() {
+    return this.dictionary.GetBoolean("Suspects", false);
+  }
 
-public virtual void SetSuspect(bool suspect) {
-this.dictionary.SetBoolean("Suspects", false);
-}
+  public virtual void SetSuspect(bool suspect) {
+    this.dictionary.SetBoolean("Suspects", false);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

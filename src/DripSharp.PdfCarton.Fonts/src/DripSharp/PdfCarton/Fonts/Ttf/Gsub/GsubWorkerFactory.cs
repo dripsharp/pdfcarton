@@ -9,25 +9,32 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Gsub;
 
 public class GsubWorkerFactory {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker GetGsubWorker(global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmapLookup, global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData) {
-if (global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerFactory.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerFactory.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Language: ", gsubData.GetLanguage())));
-}
-switch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumOrdinal(gsubData.GetLanguage())) {
-case 0:
-return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali(cmapLookup, gsubData);
-case 1:
-return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDevanagari(cmapLookup, gsubData);
-case 2:
-return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForGujarati(cmapLookup, gsubData);
-case 3:
-return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForLatin(gsubData);
-case 4:
-return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDflt(gsubData);
-default:
-return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.DefaultGsubWorker();
-}
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker GetGsubWorker(global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmapLookup,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData) {
+    if (global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerFactory.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerFactory.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Language: ",
+        gsubData.GetLanguage())));
+    }
+    switch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumOrdinal(gsubData.GetLanguage())) {
+      case 0:
+        return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali(cmapLookup,
+          gsubData);
+      case 1:
+        return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDevanagari(cmapLookup,
+          gsubData);
+      case 2:
+        return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForGujarati(cmapLookup,
+          gsubData);
+      case 3:
+        return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForLatin(gsubData);
+      case 4:
+        return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDflt(gsubData);
+      default:
+        return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.DefaultGsubWorker();
+    }
+  }
 }

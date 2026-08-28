@@ -9,180 +9,207 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
 public class PDSeparation : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSpecialColorSpace {
-private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor initialColor;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor initialColor;
 
-private const int COLORANT_NAMES = 1;
+  private const int COLORANT_NAMES = 1;
 
-private const int ALTERNATE_CS = 2;
+  private const int ALTERNATE_CS = 2;
 
-private const int TINT_TRANSFORM = 3;
+  private const int TINT_TRANSFORM = 3;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace alternateColorSpace = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace alternateColorSpace
+    = default!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction __field_tintTransform = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction __field_tintTransform
+    = default!;
 
-private global::System.Collections.Generic.IDictionary<int, float[]> toRGBMap = default!;
+  private global::System.Collections.Generic.IDictionary<int, float[]> toRGBMap = default!;
 
-public PDSeparation() {
-this.initialColor = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 1 }, this);
+  public PDSeparation() {
+    this.initialColor
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 1 }, this);
 
-base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
-base.Array.Add(global::DripSharp.PdfCarton.Cos.COSName.Separation);
-base.Array.Add(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(""));
-base.Array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
-base.Array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
-}
+    base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    base.Array.Add(global::DripSharp.PdfCarton.Cos.COSName.Separation);
+    base.Array.Add(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(""));
+    base.Array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
+    base.Array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
+  }
 
-public PDSeparation(global::DripSharp.PdfCarton.Cos.COSArray separation, global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
-this.initialColor = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 1 }, this);
+  public PDSeparation(global::DripSharp.PdfCarton.Cos.COSArray separation,
+    global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
+    this.initialColor
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 1 }, this);
 
-base.Array = separation;
-this.alternateColorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(base.Array.GetObject(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation.ALTERNATE_CS), resources);
-this.__field_tintTransform = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(base.Array.GetObject(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation.TINT_TRANSFORM));
-int numberOfOutputParameters = this.__field_tintTransform.GetNumberOfOutputParameters();
-if (((numberOfOutputParameters > 0) && (numberOfOutputParameters < this.alternateColorSpace.GetNumberOfComponents()))) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The tint transform function has less output parameters (", this.__field_tintTransform.GetNumberOfOutputParameters()), ") than the alternate colorspace "), this.alternateColorSpace), " ("), this.alternateColorSpace.GetNumberOfComponents()), ")"));
-}
-}
+    base.Array = separation;
+    this.alternateColorSpace
+      = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(base.Array.GetObject(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation.ALTERNATE_CS),
+      resources);
+    this.__field_tintTransform
+      = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(base.Array.GetObject(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation.TINT_TRANSFORM));
+    int numberOfOutputParameters = this.__field_tintTransform.GetNumberOfOutputParameters();
+    if (((numberOfOutputParameters > 0)
+      && (numberOfOutputParameters < this.alternateColorSpace.GetNumberOfComponents()))) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The tint transform function has less output parameters (",
+        this.__field_tintTransform.GetNumberOfOutputParameters()),
+        ") than the alternate colorspace "), this.alternateColorSpace), " ("),
+        this.alternateColorSpace.GetNumberOfComponents()), ")"));
+    }
+  }
 
-public PDSeparation(global::DripSharp.PdfCarton.Cos.COSArray separation) : this(separation, (global::DripSharp.PdfCarton.Pdmodel.PDResources)default!) {
+  public PDSeparation(global::DripSharp.PdfCarton.Cos.COSArray separation) : this(separation,
+    (global::DripSharp.PdfCarton.Pdmodel.PDResources)default!) {
 
-}
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Cos.COSName.Separation.GetName();
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Cos.COSName.Separation.GetName();
+  }
 
-public override int GetNumberOfComponents() {
-return 1;
-}
+  public override int GetNumberOfComponents() {
+    return 1;
+  }
 
-public override float[] GetDefaultDecode(int bitsPerComponent) {
-return new float[] { 0, 1 };
-}
+  public override float[] GetDefaultDecode(int bitsPerComponent) {
+    return new float[] { 0, 1 };
+  }
 
-public override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetInitialColor() {
-return this.initialColor;
-}
+  public override global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetInitialColor() {
+    return this.initialColor;
+  }
 
-public override float[] ToRGB(float[] value) {
-if ((this.toRGBMap == default!)) {
-this.toRGBMap = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, float[]>();
-}
-int key = (int)((value[0] * 255));
-float[] retval = global::DripSharp.Runtime.JavaCompat.MapGet(this.toRGBMap, key);
-if ((retval != default!)) {
-return retval;
-}
-float[] altColor = this.__field_tintTransform.Eval(value);
-retval = this.alternateColorSpace.ToRGB(altColor);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.toRGBMap, key, retval);
-return retval;
-}
+  public override float[] ToRGB(float[] value) {
+    if ((this.toRGBMap == default!)) {
+      this.toRGBMap = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, float[]>();
+    }
+    int key = (int)((value[0] * 255));
+    float[] retval = global::DripSharp.Runtime.JavaCompat.MapGet(this.toRGBMap, key);
+    if ((retval != default!)) {
+      return retval;
+    }
+    float[] altColor = this.__field_tintTransform.Eval(value);
+    retval = this.alternateColorSpace.ToRGB(altColor);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.toRGBMap, key, retval);
+    return retval;
+  }
 
-public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
-if ((this.alternateColorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDLab)) {
-return this.toRGBImage2(raster);
-} else {
-if ((this.alternateColorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace iccAlternateColorSpace = ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(this.alternateColorSpace!)).GetAlternateColorSpace();
-if ((iccAlternateColorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDLab)) {
-return this.toRGBImage2(raster);
-}
-}
-}
-int numAltComponents = this.alternateColorSpace.GetNumberOfComponents();
-global::DripSharp.Runtime.JavaRaster altRaster = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBandedRaster(global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE, raster.Width, raster.Height, numAltComponents, new global::DripSharp.Runtime.JavaPoint(0, 0));
-int width = raster.Width;
-int height = raster.Height;
-float[] samples = new float[1];
-global::System.Collections.Generic.IDictionary<int, int[]> calculatedValues = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, int[]>();
-int hash;
-for (int y = 0; (y < height); y++) {
-for (int x = 0; (x < width); x++) {
-raster.GetPixel(x, y, samples);
-hash = global::DripSharp.Runtime.JavaCompat.FloatToIntBits(samples[0]);
-int[] alt = global::DripSharp.Runtime.JavaCompat.MapGet(calculatedValues, hash);
-if ((alt == default!)) {
-alt = new int[numAltComponents];
-this.TintTransform(samples, alt);
-global::DripSharp.Runtime.JavaCompat.MapPut(calculatedValues, hash, alt);
-}
-altRaster.SetPixel(x, y, alt);
-}
-}
-return this.alternateColorSpace.ToRGBImage(altRaster);
-}
+  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+    if ((this.alternateColorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDLab)) {
+      return this.toRGBImage2(raster);
+    } else {
+      if ((this.alternateColorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)) {
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace iccAlternateColorSpace
+          = ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(this.alternateColorSpace!)).GetAlternateColorSpace();
+        if ((iccAlternateColorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDLab)) {
+          return this.toRGBImage2(raster);
+        }
+      }
+    }
+    int numAltComponents = this.alternateColorSpace.GetNumberOfComponents();
+    global::DripSharp.Runtime.JavaRaster altRaster
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBandedRaster(global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE,
+      raster.Width, raster.Height, numAltComponents, new global::DripSharp.Runtime.JavaPoint(0, 0));
+    int width = raster.Width;
+    int height = raster.Height;
+    float[] samples = new float[1];
+    global::System.Collections.Generic.IDictionary<int, int[]> calculatedValues
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, int[]>();
+    int hash;
+    for (int y = 0; (y < height); y++) {
+      for (int x = 0; (x < width); x++) {
+        raster.GetPixel(x, y, samples);
+        hash = global::DripSharp.Runtime.JavaCompat.FloatToIntBits(samples[0]);
+        int[] alt = global::DripSharp.Runtime.JavaCompat.MapGet(calculatedValues, hash);
+        if ((alt == default!)) {
+          alt = new int[numAltComponents];
+          this.TintTransform(samples, alt);
+          global::DripSharp.Runtime.JavaCompat.MapPut(calculatedValues, hash, alt);
+        }
+        altRaster.SetPixel(x, y, alt);
+      }
+    }
+    return this.alternateColorSpace.ToRGBImage(altRaster);
+  }
 
-private global::SkiaSharp.SKBitmap toRGBImage2(global::DripSharp.Runtime.JavaRaster raster) {
-int width = raster.Width;
-int height = raster.Height;
-global::SkiaSharp.SKBitmap rgbImage = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
-global::DripSharp.Runtime.JavaRaster rgbRaster = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(rgbImage);
-float[] samples = new float[1];
-global::System.Collections.Generic.IDictionary<int, int[]> calculatedValues = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, int[]>();
-int hash;
-for (int y = 0; (y < height); y++) {
-for (int x = 0; (x < width); x++) {
-raster.GetPixel(x, y, samples);
-hash = global::DripSharp.Runtime.JavaCompat.FloatToIntBits(samples[0]);
-int[] rgb = global::DripSharp.Runtime.JavaCompat.MapGet(calculatedValues, hash);
-if ((rgb == default!)) {
-samples[0] /= 255;
-float[] altColor = this.__field_tintTransform.Eval(samples);
-float[] fltab = this.alternateColorSpace.ToRGB(altColor);
-rgb = new int[3];
-rgb[0] = (int)((fltab[0] * 255));
-rgb[1] = (int)((fltab[1] * 255));
-rgb[2] = (int)((fltab[2] * 255));
-global::DripSharp.Runtime.JavaCompat.MapPut(calculatedValues, hash, rgb);
-}
-rgbRaster.SetPixel(x, y, rgb);
-}
-}
-return rgbImage;
-}
+  private global::SkiaSharp.SKBitmap toRGBImage2(global::DripSharp.Runtime.JavaRaster raster) {
+    int width = raster.Width;
+    int height = raster.Height;
+    global::SkiaSharp.SKBitmap rgbImage
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
+    global::DripSharp.Runtime.JavaRaster rgbRaster
+      = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(rgbImage);
+    float[] samples = new float[1];
+    global::System.Collections.Generic.IDictionary<int, int[]> calculatedValues
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, int[]>();
+    int hash;
+    for (int y = 0; (y < height); y++) {
+      for (int x = 0; (x < width); x++) {
+        raster.GetPixel(x, y, samples);
+        hash = global::DripSharp.Runtime.JavaCompat.FloatToIntBits(samples[0]);
+        int[] rgb = global::DripSharp.Runtime.JavaCompat.MapGet(calculatedValues, hash);
+        if ((rgb == default!)) {
+          samples[0] /= 255;
+          float[] altColor = this.__field_tintTransform.Eval(samples);
+          float[] fltab = this.alternateColorSpace.ToRGB(altColor);
+          rgb = new int[3];
+          rgb[0] = (int)((fltab[0] * 255));
+          rgb[1] = (int)((fltab[1] * 255));
+          rgb[2] = (int)((fltab[2] * 255));
+          global::DripSharp.Runtime.JavaCompat.MapPut(calculatedValues, hash, rgb);
+        }
+        rgbRaster.SetPixel(x, y, rgb);
+      }
+    }
+    return rgbImage;
+  }
 
-protected internal virtual void TintTransform(float[] samples, int[] alt) {
-samples[0] /= 255;
-float[] result = this.__field_tintTransform.Eval(samples);
-for (int s = 0; (s < alt.Length); s++) {
-alt[s] = (int)((result[s] * 255));
-}
-}
+  protected internal virtual void TintTransform(float[] samples, int[] alt) {
+    samples[0] /= 255;
+    float[] result = this.__field_tintTransform.Eval(samples);
+    for (int s = 0; (s < alt.Length); s++) {
+      alt[s] = (int)((result[s] * 255));
+    }
+  }
 
-public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
-return this.ToRawImage(raster, global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_GRAY));
-}
+  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+    return this.ToRawImage(raster,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_GRAY));
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetAlternateColorSpace() {
-return this.alternateColorSpace;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetAlternateColorSpace() {
+    return this.alternateColorSpace;
+  }
 
-public virtual string GetColorantName() {
-global::DripSharp.PdfCarton.Cos.COSName name = (global::DripSharp.PdfCarton.Cos.COSName)(base.Array.GetObject(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation.COLORANT_NAMES)!);
-return name.GetName();
-}
+  public virtual string GetColorantName() {
+    global::DripSharp.PdfCarton.Cos.COSName name
+      = (global::DripSharp.PdfCarton.Cos.COSName)(base.Array.GetObject(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation.COLORANT_NAMES)!);
+    return name.GetName();
+  }
 
-public virtual void SetColorantName(string name) {
-base.Array.Set(1, global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(name));
-}
+  public virtual void SetColorantName(string name) {
+    base.Array.Set(1, global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(name));
+  }
 
-public virtual void SetAlternateColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-this.alternateColorSpace = colorSpace;
-global::DripSharp.PdfCarton.Cos.COSBase space = default!;
-if ((colorSpace != default!)) {
-space = colorSpace.GetCOSObject();
-}
-base.Array.Set(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation.ALTERNATE_CS, space!);
-}
+  public virtual void SetAlternateColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    this.alternateColorSpace = colorSpace;
+    global::DripSharp.PdfCarton.Cos.COSBase space = default!;
+    if ((colorSpace != default!)) {
+      space = colorSpace.GetCOSObject();
+    }
+    base.Array.Set(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation.ALTERNATE_CS,
+      space!);
+  }
 
-public virtual void SetTintTransform(global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction tint) {
-this.__field_tintTransform = tint;
-base.Array.Set(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation.TINT_TRANSFORM, tint);
-}
+  public virtual void SetTintTransform(global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction tint) {
+    this.__field_tintTransform = tint;
+    base.Array.Set(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation.TINT_TRANSFORM,
+      tint);
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.GetName(), "{"), "\""), this.GetColorantName()), "\""), " "), this.alternateColorSpace.GetName()), " "), this.__field_tintTransform), "}");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.GetName(),
+      "{"), "\""), this.GetColorantName()), "\""), " "), this.alternateColorSpace.GetName()), " "),
+      this.__field_tintTransform), "}");
+  }
 }

@@ -9,17 +9,18 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function.Type4;
 
 public interface Operator {
-public void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context);
+  public void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context);
 }
 
-public sealed class __OperatorFunctionalAdapter : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
-private readonly global::System.Action<global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext> implementation;
+public sealed class __OperatorFunctionalAdapter
+: global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
+  private readonly global::System.Action<global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext> implementation;
 
-public __OperatorFunctionalAdapter(global::System.Action<global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext> implementation) {
-this.implementation = implementation;
-}
+  public __OperatorFunctionalAdapter(global::System.Action<global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext> implementation) {
+    this.implementation = implementation;
+  }
 
-public void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
-this.implementation(context);
-}
+  public void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
+    this.implementation(context);
+  }
 }

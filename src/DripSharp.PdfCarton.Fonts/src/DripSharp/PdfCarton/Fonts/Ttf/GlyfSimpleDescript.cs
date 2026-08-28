@@ -9,113 +9,123 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class GlyfSimpleDescript : global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private int[] endPtsOfContours = null!;
+  private int[] endPtsOfContours = null!;
 
-private sbyte[] flags = null!;
+  private sbyte[] flags = null!;
 
-private short[] xCoordinates = null!;
+  private short[] xCoordinates = null!;
 
-private short[] yCoordinates = null!;
+  private short[] yCoordinates = null!;
 
-private readonly int pointCount = default;
+  private readonly int pointCount = default;
 
-internal GlyfSimpleDescript() : base(unchecked((short)(0))) {
-this.pointCount = 0;
-}
+  internal GlyfSimpleDescript() : base(unchecked((short)(0))) {
+    this.pointCount = 0;
+  }
 
-internal GlyfSimpleDescript(short numberOfContours, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais, short x0) : base(numberOfContours) {
-if (((int)(numberOfContours) == 0)) {
-this.pointCount = 0;
-return;
-}
-this.endPtsOfContours = bais.ReadUnsignedShortArray((int)(numberOfContours));
-int lastEndPt = this.endPtsOfContours[(numberOfContours - 1)];
-if ((((int)(numberOfContours) == 1) && (lastEndPt == 65535))) {
-this.pointCount = 0;
-return;
-}
-this.pointCount = (lastEndPt + 1);
-this.flags = new sbyte[this.pointCount];
-this.xCoordinates = new short[this.pointCount];
-this.yCoordinates = new short[this.pointCount];
-int instructionCount = bais.ReadUnsignedShort();
-this.readInstructions(bais, instructionCount);
-this.readFlags(this.pointCount, bais);
-this.readCoords(this.pointCount, bais, x0);
-}
+  internal GlyfSimpleDescript(short numberOfContours,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais, short x0) : base(numberOfContours) {
+    if (((int)numberOfContours == 0)) {
+      this.pointCount = 0;
+      return;
+    }
+    this.endPtsOfContours = bais.ReadUnsignedShortArray((int)(numberOfContours));
+    int lastEndPt = this.endPtsOfContours[(numberOfContours - 1)];
+    if ((((int)numberOfContours == 1) && (lastEndPt == 65535))) {
+      this.pointCount = 0;
+      return;
+    }
+    this.pointCount = (lastEndPt + 1);
+    this.flags = new sbyte[this.pointCount];
+    this.xCoordinates = new short[this.pointCount];
+    this.yCoordinates = new short[this.pointCount];
+    int instructionCount = bais.ReadUnsignedShort();
+    this.readInstructions(bais, instructionCount);
+    this.readFlags(this.pointCount, bais);
+    this.readCoords(this.pointCount, bais, x0);
+  }
 
-public override int GetEndPtOfContours(int i) {
-return this.endPtsOfContours[i];
-}
+  public override int GetEndPtOfContours(int i) {
+    return this.endPtsOfContours[i];
+  }
 
-public override sbyte GetFlags(int i) {
-return this.flags[i];
-}
+  public override sbyte GetFlags(int i) {
+    return this.flags[i];
+  }
 
-public override short GetXCoordinate(int i) {
-return this.xCoordinates[i];
-}
+  public override short GetXCoordinate(int i) {
+    return this.xCoordinates[i];
+  }
 
-public override short GetYCoordinate(int i) {
-return this.yCoordinates[i];
-}
+  public override short GetYCoordinate(int i) {
+    return this.yCoordinates[i];
+  }
 
-public override bool IsComposite() {
-return false;
-}
+  public override bool IsComposite() {
+    return false;
+  }
 
-public override int GetPointCount() {
-return this.pointCount;
-}
+  public override int GetPointCount() {
+    return this.pointCount;
+  }
 
-private void readCoords(int count, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais, short x0) {
-short x = x0;
-short y = unchecked((short)(0));
-for (int i__157_18 = 0; (i__157_18 < count); i__157_18++) {
-if (((this.flags[i__157_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.XDual) != 0)) {
-if (((this.flags[i__157_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.XShortVector) != 0)) {
-x += unchecked((short)(bais.ReadUnsignedByte()));
-}
-} else {
-if (((this.flags[i__157_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.XShortVector) != 0)) {
-x -= unchecked((short)(bais.ReadUnsignedByte()));
-} else {
-x += bais.ReadSignedShort();
-}
-}
-this.xCoordinates[i__157_18] = x;
-}
-for (int i__180_18 = 0; (i__180_18 < count); i__180_18++) {
-if (((this.flags[i__180_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.YDual) != 0)) {
-if (((this.flags[i__180_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.YShortVector) != 0)) {
-y += unchecked((short)(bais.ReadUnsignedByte()));
-}
-} else {
-if (((this.flags[i__180_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.YShortVector) != 0)) {
-y -= unchecked((short)(bais.ReadUnsignedByte()));
-} else {
-y += bais.ReadSignedShort();
-}
-}
-this.yCoordinates[i__180_18] = y;
-}
-}
+  private void readCoords(int count, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais,
+    short x0) {
+    short x = x0;
+    short y = unchecked((short)(0));
+    for (int i__157_18 = 0; (i__157_18 < count); i__157_18++) {
+      if (((this.flags[i__157_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.XDual)
+        != 0)) {
+        if (((this.flags[i__157_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.XShortVector)
+          != 0)) {
+          x += unchecked((short)(bais.ReadUnsignedByte()));
+        }
+      } else {
+        if (((this.flags[i__157_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.XShortVector)
+          != 0)) {
+          x -= unchecked((short)(bais.ReadUnsignedByte()));
+        } else {
+          x += bais.ReadSignedShort();
+        }
+      }
+      this.xCoordinates[i__157_18] = x;
+    }
+    for (int i__180_18 = 0; (i__180_18 < count); i__180_18++) {
+      if (((this.flags[i__180_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.YDual)
+        != 0)) {
+        if (((this.flags[i__180_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.YShortVector)
+          != 0)) {
+          y += unchecked((short)(bais.ReadUnsignedByte()));
+        }
+      } else {
+        if (((this.flags[i__180_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.YShortVector)
+          != 0)) {
+          y -= unchecked((short)(bais.ReadUnsignedByte()));
+        } else {
+          y += bais.ReadSignedShort();
+        }
+      }
+      this.yCoordinates[i__180_18] = y;
+    }
+  }
 
-private void readFlags(int flagCount, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais) {
-for (int index = 0; (index < flagCount); index++) {
-this.flags[index] = unchecked((sbyte)(unchecked((sbyte)(bais.ReadUnsignedByte()))));
-if (((this.flags[index] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.Repeat) != 0)) {
-int repeats = bais.ReadUnsignedByte();
-for (int i = 1; (i <= repeats); i++) {
-if (((index + i) >= this.flags.Length)) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("repeat count (", repeats), ") higher than remaining space"));
-}
-this.flags[(index + i)] = unchecked((sbyte)(this.flags[index]));
-}
-index += repeats;
-}
-}
-}
+  private void readFlags(int flagCount, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais) {
+    for (int index = 0; (index < flagCount); index++) {
+      this.flags[index] = unchecked((sbyte)(unchecked((sbyte)(bais.ReadUnsignedByte()))));
+      if (((this.flags[index] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.Repeat) != 0)) {
+        int repeats = bais.ReadUnsignedByte();
+        for (int i = 1; (i <= repeats); i++) {
+          if (((index + i) >= this.flags.Length)) {
+            throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("repeat count (",
+              repeats), ") higher than remaining space"));
+          }
+          this.flags[(index + i)] = unchecked((sbyte)(this.flags[index]));
+        }
+        index += repeats;
+      }
+    }
+  }
 }

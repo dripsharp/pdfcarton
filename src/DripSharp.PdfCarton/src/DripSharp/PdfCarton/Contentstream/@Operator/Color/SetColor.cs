@@ -8,30 +8,38 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Color;
 
-public abstract class SetColor : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-protected internal SetColor(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public abstract class SetColor
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  protected internal SetColor(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace = this.GetColorSpace();
-if (!((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern))) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) < colorSpace.GetNumberOfComponents())) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-if (!(this.CheckArrayTypesClass(arguments, typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
-this.setColor(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[0], (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace)default!));
-return;
-}
-}
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-array.AddAll(arguments);
-this.setColor(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(array, colorSpace));
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace
+      = this.GetColorSpace();
+    if (!((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern))) {
+      if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) < colorSpace.GetNumberOfComponents())) {
+        throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+          arguments);
+      }
+      if (!(this.CheckArrayTypesClass(arguments,
+        typeof(global::DripSharp.PdfCarton.Cos.COSNumber)))) {
+        this.setColor(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[0],
+          (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace)default!));
+        return;
+      }
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    array.AddAll(arguments);
+    this.setColor(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(array,
+      colorSpace));
+  }
 
-protected internal abstract global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetColor();
+  protected internal abstract global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetColor();
 
-protected internal abstract void setColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color);
+  protected internal abstract void setColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color);
 
-protected internal abstract global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace();
+  protected internal abstract global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace();
 }

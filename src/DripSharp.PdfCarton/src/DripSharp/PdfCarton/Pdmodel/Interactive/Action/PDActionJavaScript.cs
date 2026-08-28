@@ -9,34 +9,35 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDActionJavaScript : global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction {
-public const string SubType = "JavaScript";
+  public const string SubType = "JavaScript";
 
-public PDActionJavaScript() {
-this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript.SubType);
-}
+  public PDActionJavaScript() {
+    this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript.SubType);
+  }
 
-public PDActionJavaScript(string js) : this() {
-this.SetAction(js);
-}
+  public PDActionJavaScript(string js) : this() {
+    this.SetAction(js);
+  }
 
-public PDActionJavaScript(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public PDActionJavaScript(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public void SetAction(string sAction) {
-base.Action.SetString(global::DripSharp.PdfCarton.Cos.COSName.Js, sAction);
-}
+  public void SetAction(string sAction) {
+    base.Action.SetString(global::DripSharp.PdfCarton.Cos.COSName.Js, sAction);
+  }
 
-public virtual string GetAction() {
-global::DripSharp.PdfCarton.Cos.COSBase @base = base.Action.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Js);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
-return ((global::DripSharp.PdfCarton.Cos.COSString)(@base!)).GetString();
-} else {
-if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
-return ((global::DripSharp.PdfCarton.Cos.COSStream)(@base!)).ToTextString();
-} else {
-return default!;
-}
-}
-}
+  public virtual string GetAction() {
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = base.Action.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Js);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
+      return ((global::DripSharp.PdfCarton.Cos.COSString)(@base!)).GetString();
+    } else {
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
+        return ((global::DripSharp.PdfCarton.Cos.COSStream)(@base!)).ToTextString();
+      } else {
+        return default!;
+      }
+    }
+  }
 }

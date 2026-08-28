@@ -9,15 +9,16 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator.State;
 
 public class Save : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public Save(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+  public Save(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-this.GetContext().SaveGraphicsState();
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    this.GetContext().SaveGraphicsState();
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Save;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Save;
+  }
 }

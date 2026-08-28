@@ -9,17 +9,18 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public interface ResourceCacheCreateFunction {
-public global::DripSharp.PdfCarton.Pdmodel.ResourceCache Create();
+  public global::DripSharp.PdfCarton.Pdmodel.ResourceCache Create();
 }
 
-public sealed class __ResourceCacheCreateFunctionFunctionalAdapter : global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction {
-private readonly global::System.Func<global::DripSharp.PdfCarton.Pdmodel.ResourceCache> implementation;
+public sealed class __ResourceCacheCreateFunctionFunctionalAdapter
+: global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction {
+  private readonly global::System.Func<global::DripSharp.PdfCarton.Pdmodel.ResourceCache> implementation;
 
-public __ResourceCacheCreateFunctionFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.Pdmodel.ResourceCache> implementation) {
-this.implementation = implementation;
-}
+  public __ResourceCacheCreateFunctionFunctionalAdapter(global::System.Func<global::DripSharp.PdfCarton.Pdmodel.ResourceCache> implementation) {
+    this.implementation = implementation;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.ResourceCache Create() {
-return this.implementation();
-}
+  public global::DripSharp.PdfCarton.Pdmodel.ResourceCache Create() {
+    return this.implementation();
+  }
 }

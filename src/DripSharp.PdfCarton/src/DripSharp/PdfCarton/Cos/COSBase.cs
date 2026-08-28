@@ -9,31 +9,31 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public abstract class COSBase : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private bool direct = default;
+  private bool direct = default;
 
-private global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
+  private global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
 
-public COSBase() {}
+  public COSBase() {}
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this;
+  }
 
-public abstract void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor);
+  public abstract void Accept(global::DripSharp.PdfCarton.Cos.ICOSVisitor visitor);
 
-public virtual bool IsDirect() {
-return this.direct;
-}
+  public virtual bool IsDirect() {
+    return this.direct;
+  }
 
-public virtual void SetDirect(bool direct) {
-this.direct = direct;
-}
+  public virtual void SetDirect(bool direct) {
+    this.direct = direct;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSObjectKey GetKey() {
-return this.key;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSObjectKey GetKey() {
+    return this.key;
+  }
 
-public virtual void SetKey(global::DripSharp.PdfCarton.Cos.COSObjectKey key) {
-this.key = key;
-}
+  public virtual void SetKey(global::DripSharp.PdfCarton.Cos.COSObjectKey key) {
+    this.key = key;
+  }
 }

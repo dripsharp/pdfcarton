@@ -9,62 +9,85 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics;
 
 public class PDXObject : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream = null!;
 
-public static global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject CreateXObject(global::DripSharp.PdfCarton.Cos.COSBase @base, global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
-if ((@base == default!)) {
-return default!;
-}
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSStream))) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected object type: ", global::DripSharp.Runtime.JavaCompat.ClassName(((object)(@base)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox")));
-}
-global::DripSharp.PdfCarton.Cos.COSStream stream = (global::DripSharp.PdfCarton.Cos.COSStream)(@base!);
-string subtype = stream.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
-if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Cos.COSName.Image.GetName(), subtype)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject(new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(stream), resources);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Cos.COSName.Form.GetName(), subtype)) {
-global::DripSharp.PdfCarton.Pdmodel.ResourceCache cache = ((resources != default!) ? resources.GetResourceCache() : (global::DripSharp.PdfCarton.Pdmodel.ResourceCache)(default!));
-global::DripSharp.PdfCarton.Cos.COSDictionary group = stream.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Group);
-if (((group != default!) && global::DripSharp.PdfCarton.Cos.COSName.Transparency.Equals(group.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.S)))) {
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup(stream, cache);
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(stream, cache);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Cos.COSName.Ps.GetName(), subtype)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.PDPostScriptXObject(stream);
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid XObject Subtype: ", subtype));
-}
-}
-}
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject CreateXObject(global::DripSharp.PdfCarton.Cos.COSBase @base,
+    global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
+    if ((@base == default!)) {
+      return default!;
+    }
+    if (!((@base is global::DripSharp.PdfCarton.Cos.COSStream))) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected object type: ",
+        global::DripSharp.Runtime.JavaCompat.ClassName(((object)(@base)).GetType(),
+        "DripSharp.PdfCarton", "org.apache.pdfbox")));
+    }
+    global::DripSharp.PdfCarton.Cos.COSStream stream
+      = (global::DripSharp.PdfCarton.Cos.COSStream)(@base!);
+    string subtype = stream.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
+    if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Cos.COSName.Image.GetName(),
+      subtype)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject(new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(stream),
+        resources);
+    } else {
+      if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Cos.COSName.Form.GetName(),
+        subtype)) {
+        global::DripSharp.PdfCarton.Pdmodel.ResourceCache cache = ((resources != default!)
+          ? resources.GetResourceCache()
+          : (global::DripSharp.PdfCarton.Pdmodel.ResourceCache)(default!));
+        global::DripSharp.PdfCarton.Cos.COSDictionary group
+          = stream.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Group);
+        if (((group != default!)
+          && global::DripSharp.PdfCarton.Cos.COSName.Transparency.Equals(group.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.S)))) {
+          return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup(stream,
+            cache);
+        }
+        return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(stream, cache);
+      } else {
+        if (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Cos.COSName.Ps.GetName(),
+          subtype)) {
+          return new global::DripSharp.PdfCarton.Pdmodel.Graphics.PDPostScriptXObject(stream);
+        } else {
+          throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid XObject Subtype: ",
+            subtype));
+        }
+      }
+    }
+  }
 
-protected internal PDXObject(global::DripSharp.PdfCarton.Cos.COSStream stream, global::DripSharp.PdfCarton.Cos.COSName subtype) {
-this.stream = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(stream);
-stream.SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Xobject.GetName());
-stream.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, subtype.GetName());
-}
+  protected internal PDXObject(global::DripSharp.PdfCarton.Cos.COSStream stream,
+    global::DripSharp.PdfCarton.Cos.COSName subtype) {
+    this.stream = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(stream);
+    stream.SetName(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Xobject.GetName());
+    stream.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, subtype.GetName());
+  }
 
-protected internal PDXObject(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream, global::DripSharp.PdfCarton.Cos.COSName subtype) {
-this.stream = stream;
-stream.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Xobject.GetName());
-stream.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, subtype.GetName());
-}
+  protected internal PDXObject(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream,
+    global::DripSharp.PdfCarton.Cos.COSName subtype) {
+    this.stream = stream;
+    stream.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Xobject.GetName());
+    stream.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      subtype.GetName());
+  }
 
-protected internal PDXObject(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, global::DripSharp.PdfCarton.Cos.COSName subtype) {
-this.stream = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(document);
-this.stream.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Xobject.GetName());
-this.stream.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, subtype.GetName());
-}
+  protected internal PDXObject(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.PdfCarton.Cos.COSName subtype) {
+    this.stream = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(document);
+    this.stream.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Xobject.GetName());
+    this.stream.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      subtype.GetName());
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSStream GetCOSObject() {
-return this.stream.GetCOSObject();
-}
+  public global::DripSharp.PdfCarton.Cos.COSStream GetCOSObject() {
+    return this.stream.GetCOSObject();
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetStream() {
-return this.stream;
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetStream() {
+    return this.stream;
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

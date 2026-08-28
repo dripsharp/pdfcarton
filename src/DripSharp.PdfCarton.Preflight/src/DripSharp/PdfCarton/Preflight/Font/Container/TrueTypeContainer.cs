@@ -8,16 +8,18 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font.Container;
 
-public class TrueTypeContainer : global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont> {
-public TrueTypeContainer(global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont font) : base(font) {
+public class TrueTypeContainer
+: global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont> {
+  public TrueTypeContainer(global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont font)
+  : base(font) {
 
-}
+  }
 
-public override bool HasGlyph(int code) {
-if (base.Font.IsEmbedded()) {
-int gid = base.Font.CodeToGID(code);
-return (gid != 0);
-}
-return false;
-}
+  public override bool HasGlyph(int code) {
+    if (base.Font.IsEmbedded()) {
+      int gid = base.Font.CodeToGID(code);
+      return (gid != 0);
+    }
+    return false;
+  }
 }

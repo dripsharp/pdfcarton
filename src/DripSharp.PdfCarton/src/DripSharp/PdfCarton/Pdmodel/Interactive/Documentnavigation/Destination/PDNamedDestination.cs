@@ -8,44 +8,45 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination;
 
-public class PDNamedDestination : global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination {
-private global::DripSharp.PdfCarton.Cos.COSBase namedDestination = null!;
+public class PDNamedDestination
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination {
+  private global::DripSharp.PdfCarton.Cos.COSBase namedDestination = null!;
 
-public PDNamedDestination(global::DripSharp.PdfCarton.Cos.COSString dest) {
-this.namedDestination = dest;
-}
+  public PDNamedDestination(global::DripSharp.PdfCarton.Cos.COSString dest) {
+    this.namedDestination = dest;
+  }
 
-public PDNamedDestination(global::DripSharp.PdfCarton.Cos.COSName dest) {
-this.namedDestination = dest;
-}
+  public PDNamedDestination(global::DripSharp.PdfCarton.Cos.COSName dest) {
+    this.namedDestination = dest;
+  }
 
-public PDNamedDestination() {}
+  public PDNamedDestination() {}
 
-public PDNamedDestination(string dest) {
-this.namedDestination = new global::DripSharp.PdfCarton.Cos.COSString(dest);
-}
+  public PDNamedDestination(string dest) {
+    this.namedDestination = new global::DripSharp.PdfCarton.Cos.COSString(dest);
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.namedDestination;
-}
+  public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.namedDestination;
+  }
 
-public virtual string GetNamedDestination() {
-string retval = default!;
-if ((this.namedDestination is global::DripSharp.PdfCarton.Cos.COSString)) {
-retval = ((global::DripSharp.PdfCarton.Cos.COSString)(this.namedDestination!)).GetString();
-} else {
-if ((this.namedDestination is global::DripSharp.PdfCarton.Cos.COSName)) {
-retval = ((global::DripSharp.PdfCarton.Cos.COSName)(this.namedDestination!)).GetName();
-}
-}
-return retval!;
-}
+  public virtual string GetNamedDestination() {
+    string retval = default!;
+    if ((this.namedDestination is global::DripSharp.PdfCarton.Cos.COSString)) {
+      retval = ((global::DripSharp.PdfCarton.Cos.COSString)(this.namedDestination!)).GetString();
+    } else {
+      if ((this.namedDestination is global::DripSharp.PdfCarton.Cos.COSName)) {
+        retval = ((global::DripSharp.PdfCarton.Cos.COSName)(this.namedDestination!)).GetName();
+      }
+    }
+    return retval!;
+  }
 
-public virtual void SetNamedDestination(string dest) {
-if ((dest == default!)) {
-this.namedDestination = default!;
-} else {
-this.namedDestination = new global::DripSharp.PdfCarton.Cos.COSString(dest);
-}
-}
+  public virtual void SetNamedDestination(string dest) {
+    if ((dest == default!)) {
+      this.namedDestination = default!;
+    } else {
+      this.namedDestination = new global::DripSharp.PdfCarton.Cos.COSString(dest);
+    }
+  }
 }

@@ -8,29 +8,40 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process.Reflect;
 
-public class GraphicObjectPageValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
-global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
-global::DripSharp.PdfCarton.Preflight.Xobject.XObjectValidator validator = default!;
-if ((!(vPath.IsEmpty()) && vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)))) {
-validator = new global::DripSharp.PdfCarton.Preflight.Xobject.XObjImageValidator(context, (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(vPath.Peek()!));
-} else {
-if ((!(vPath.IsEmpty()) && vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)))) {
-validator = new global::DripSharp.PdfCarton.Preflight.Xobject.XObjFormValidator(context, (global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(vPath.Peek()!));
-} else {
-if ((!(vPath.IsEmpty()) && vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.PDPostScriptXObject)))) {
-validator = new global::DripSharp.PdfCarton.Preflight.Xobject.XObjPostscriptValidator(context, (global::DripSharp.PdfCarton.Pdmodel.Graphics.PDPostScriptXObject)(vPath.Peek()!));
-} else {
-if ((!(vPath.IsEmpty()) && vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Cos.COSStream)))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicXobjectInvalidType, "Invalid XObject subtype"));
-} else {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicMissingObject, "Graphic validation process needs at least one PDXObject"));
-}
-}
-}
-}
-if ((validator! != default!)) {
-validator!.Validate();
-}
-}
+public class GraphicObjectPageValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
+    global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
+    global::DripSharp.PdfCarton.Preflight.Xobject.XObjectValidator validator = default!;
+    if ((!(vPath.IsEmpty())
+      && vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)))) {
+      validator = new global::DripSharp.PdfCarton.Preflight.Xobject.XObjImageValidator(context,
+        (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(vPath.Peek()!));
+    } else {
+      if ((!(vPath.IsEmpty())
+        && vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)))) {
+        validator = new global::DripSharp.PdfCarton.Preflight.Xobject.XObjFormValidator(context,
+          (global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(vPath.Peek()!));
+      } else {
+        if ((!(vPath.IsEmpty())
+          && vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.PDPostScriptXObject)))) {
+          validator
+            = new global::DripSharp.PdfCarton.Preflight.Xobject.XObjPostscriptValidator(context,
+            (global::DripSharp.PdfCarton.Pdmodel.Graphics.PDPostScriptXObject)(vPath.Peek()!));
+        } else {
+          if ((!(vPath.IsEmpty())
+            && vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Cos.COSStream)))) {
+            context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicXobjectInvalidType,
+              "Invalid XObject subtype"));
+          } else {
+            context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicMissingObject,
+              "Graphic validation process needs at least one PDXObject"));
+          }
+        }
+      }
+    }
+    if ((validator! != default!)) {
+      validator!.Validate();
+    }
+  }
 }

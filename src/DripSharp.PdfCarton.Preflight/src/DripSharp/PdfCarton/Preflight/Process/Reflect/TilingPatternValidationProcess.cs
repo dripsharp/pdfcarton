@@ -8,46 +8,60 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process.Reflect;
 
-public class TilingPatternValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
-global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
-if (vPath.IsEmpty()) {
-return;
-} else {
-if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern)))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicMissingObject, "Tiling pattern validation required at least a PDPage"));
-} else {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern tilingPattern = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern)(vPath.Peek()!);
-global::DripSharp.PdfCarton.Pdmodel.PDPage page = vPath.GetClosestPathElement<global::DripSharp.PdfCarton.Pdmodel.PDPage>(typeof(global::DripSharp.PdfCarton.Pdmodel.PDPage));
-this.CheckMandatoryFields(context, page, tilingPattern);
-this.ParseResources(context, page, tilingPattern);
-this.ParsePatternContent(context, page, tilingPattern);
-}
-}
-}
+public class TilingPatternValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
+    global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
+    if (vPath.IsEmpty()) {
+      return;
+    } else {
+      if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern)))) {
+        context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicMissingObject,
+          "Tiling pattern validation required at least a PDPage"));
+      } else {
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern tilingPattern
+          = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern)(vPath.Peek()!);
+        global::DripSharp.PdfCarton.Pdmodel.PDPage page
+          = vPath.GetClosestPathElement<global::DripSharp.PdfCarton.Pdmodel.PDPage>(typeof(global::DripSharp.PdfCarton.Pdmodel.PDPage));
+        this.CheckMandatoryFields(context, page, tilingPattern);
+        this.ParseResources(context, page, tilingPattern);
+        this.ParsePatternContent(context, page, tilingPattern);
+      }
+    }
+  }
 
-protected internal virtual void ParseResources(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.PDPage page, global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern) {
-global::DripSharp.PdfCarton.Pdmodel.PDResources resources = pattern.GetResources();
-if ((resources != default!)) {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(context, resources, global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ResourcesProcess);
-}
-}
+  protected internal virtual void ParseResources(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern) {
+    global::DripSharp.PdfCarton.Pdmodel.PDResources resources = pattern.GetResources();
+    if ((resources != default!)) {
+      global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(context, resources,
+        global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ResourcesProcess);
+    }
+  }
 
-protected internal virtual void ParsePatternContent(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.PDPage page, global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern) {
-global::DripSharp.PdfCarton.Preflight.Content.PreflightContentStream csWrapper = new global::DripSharp.PdfCarton.Preflight.Content.PreflightContentStream(context, page);
-csWrapper.ValidatePatternContentStream(pattern);
-}
+  protected internal virtual void ParsePatternContent(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern) {
+    global::DripSharp.PdfCarton.Preflight.Content.PreflightContentStream csWrapper
+      = new global::DripSharp.PdfCarton.Preflight.Content.PreflightContentStream(context, page);
+    csWrapper.ValidatePatternContentStream(pattern);
+  }
 
-protected internal virtual void CheckMandatoryFields(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.PDPage page, global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = pattern.GetCOSObject();
-bool res = (dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Resources) != default!);
-res = (res && (dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox) != default!));
-res = (res && (dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.PaintType) != default!));
-res = (res && (dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.TilingType) != default!));
-res = (res && (dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.XStep) != default!));
-res = (res && (dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.YStep) != default!));
-if (!res) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidPatternDefinition));
-}
-}
+  protected internal virtual void CheckMandatoryFields(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern) {
+    global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = pattern.GetCOSObject();
+    bool res = (dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Resources) != default!);
+    res = (res && (dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Bbox) != default!));
+    res = (res && (dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.PaintType)
+      != default!));
+    res = (res && (dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.TilingType)
+      != default!));
+    res = (res && (dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.XStep) != default!));
+    res = (res && (dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.YStep) != default!));
+    if (!res) {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidPatternDefinition));
+    }
+  }
 }

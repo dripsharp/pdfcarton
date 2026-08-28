@@ -9,48 +9,49 @@
 namespace DripSharp.PdfCarton.Fonts.Cmap;
 
 public class CodespaceRange {
-private readonly int[] start = null!;
+  private readonly int[] start = null!;
 
-private readonly int[] end = null!;
+  private readonly int[] end = null!;
 
-private readonly int codeLength = default;
+  private readonly int codeLength = default;
 
-public CodespaceRange(sbyte[] startBytes, sbyte[] endBytes) {
-sbyte[] correctedStartBytes = startBytes;
-if ((((startBytes.Length != endBytes.Length) && (startBytes.Length == 1)) && ((int)(startBytes[0]) == 0))) {
-correctedStartBytes = new sbyte[endBytes.Length];
-} else {
-if ((startBytes.Length != endBytes.Length)) {
-throw new global::System.ArgumentException("The start and the end values must not have different lengths.");
-}
-}
-this.start = new int[correctedStartBytes.Length];
-this.end = new int[endBytes.Length];
-for (int i = 0; (i < correctedStartBytes.Length); i++) {
-this.start[i] = (correctedStartBytes[i] & 255);
-this.end[i] = (endBytes[i] & 255);
-}
-this.codeLength = endBytes.Length;
-}
+  public CodespaceRange(sbyte[] startBytes, sbyte[] endBytes) {
+    sbyte[] correctedStartBytes = startBytes;
+    if ((((startBytes.Length != endBytes.Length) && (startBytes.Length == 1))
+      && ((int)(startBytes[0]) == 0))) {
+      correctedStartBytes = new sbyte[endBytes.Length];
+    } else {
+      if ((startBytes.Length != endBytes.Length)) {
+        throw new global::System.ArgumentException("The start and the end values must not have different lengths.");
+      }
+    }
+    this.start = new int[correctedStartBytes.Length];
+    this.end = new int[endBytes.Length];
+    for (int i = 0; (i < correctedStartBytes.Length); i++) {
+      this.start[i] = (correctedStartBytes[i] & 255);
+      this.end[i] = (endBytes[i] & 255);
+    }
+    this.codeLength = endBytes.Length;
+  }
 
-public virtual int GetCodeLength() {
-return this.codeLength;
-}
+  public virtual int GetCodeLength() {
+    return this.codeLength;
+  }
 
-public virtual bool Matches(sbyte[] code) {
-return this.IsFullMatch(code, code.Length);
-}
+  public virtual bool Matches(sbyte[] code) {
+    return this.IsFullMatch(code, code.Length);
+  }
 
-public virtual bool IsFullMatch(sbyte[] code, int codeLen) {
-if ((this.codeLength != codeLen)) {
-return false;
-}
-for (int i = 0; (i < this.codeLength); i++) {
-int codeAsInt = (code[i] & 255);
-if (((codeAsInt < this.start[i]) || (codeAsInt > this.end[i]))) {
-return false;
-}
-}
-return true;
-}
+  public virtual bool IsFullMatch(sbyte[] code, int codeLen) {
+    if ((this.codeLength != codeLen)) {
+      return false;
+    }
+    for (int i = 0; (i < this.codeLength); i++) {
+      int codeAsInt = (code[i] & 255);
+      if (((codeAsInt < this.start[i]) || (codeAsInt > this.end[i]))) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

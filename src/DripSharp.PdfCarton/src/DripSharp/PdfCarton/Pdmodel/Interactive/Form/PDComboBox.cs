@@ -9,40 +9,51 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public sealed class PDComboBox : global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDChoice {
-private const int FLAG_EDIT = (1 << unchecked((int)(18)));
+  private const int FLAG_EDIT = (1 << unchecked((int)(18)));
 
-public PDComboBox(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) : base(acroForm) {
-this.SetCombo(true);
-}
+  public PDComboBox(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm)
+  : base(acroForm) {
+    this.SetCombo(true);
+  }
 
-internal PDComboBox(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm, global::DripSharp.PdfCarton.Cos.COSDictionary field, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm, field, parent) {
+  internal PDComboBox(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm,
+    global::DripSharp.PdfCarton.Cos.COSDictionary field,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm,
+    field, parent) {
 
-}
+  }
 
-public bool IsEdit() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDComboBox.FLAG_EDIT);
-}
+  public bool IsEdit() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDComboBox.FLAG_EDIT);
+  }
 
-public void SetEdit(bool edit) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDComboBox.FLAG_EDIT, edit);
-}
+  public void SetEdit(bool edit) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDComboBox.FLAG_EDIT, edit);
+  }
 
-internal override void constructAppearances() {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper apHelper;
-apHelper = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper(this);
-global::System.Collections.Generic.IList<string> values = this.GetValue();
-if (!(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(values))) {
-if (this.HasSeparateExportAndDisplayValues()) {
-global::System.Collections.Generic.IList<string> displayValues = this.GetOptionsDisplayValues();
-int index = global::DripSharp.Runtime.JavaCompat.ListIndexOf(this.GetOptions(), global::DripSharp.Runtime.JavaCompat.ListGet(values, 0));
-if (((index != -1) && (index < global::DripSharp.Runtime.JavaCompat.CollectionCount(displayValues)))) {
-apHelper.SetAppearanceValue(global::DripSharp.Runtime.JavaCompat.ListGet(displayValues, index));
-return;
-}
-}
-apHelper.SetAppearanceValue(global::DripSharp.Runtime.JavaCompat.ListGet(values, 0));
-} else {
-apHelper.SetAppearanceValue("");
-}
-}
+  internal override void constructAppearances() {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper apHelper;
+    apHelper
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper(this);
+    global::System.Collections.Generic.IList<string> values = this.GetValue();
+    if (!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(values)) {
+      if (this.HasSeparateExportAndDisplayValues()) {
+        global::System.Collections.Generic.IList<string> displayValues
+          = this.GetOptionsDisplayValues();
+        int index = global::DripSharp.Runtime.JavaCompat.ListIndexOf(this.GetOptions(),
+          global::DripSharp.Runtime.JavaCompat.ListGet(values, 0));
+        if (((index != -1)
+          && (index < global::DripSharp.Runtime.JavaCompat.CollectionCount(displayValues)))) {
+          apHelper.SetAppearanceValue(global::DripSharp.Runtime.JavaCompat.ListGet(displayValues,
+            index));
+          return;
+        }
+      }
+      apHelper.SetAppearanceValue(global::DripSharp.Runtime.JavaCompat.ListGet(values, 0));
+    } else {
+      apHelper.SetAppearanceValue("");
+    }
+  }
 }

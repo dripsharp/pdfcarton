@@ -9,49 +9,50 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public abstract class GlyfDescript : global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription {
-public const sbyte OnCurve = unchecked((sbyte)(1));
+  public const sbyte OnCurve = unchecked((sbyte)(1));
 
-public const sbyte XShortVector = unchecked((sbyte)(2));
+  public const sbyte XShortVector = unchecked((sbyte)(2));
 
-public const sbyte YShortVector = unchecked((sbyte)(4));
+  public const sbyte YShortVector = unchecked((sbyte)(4));
 
-public const sbyte Repeat = unchecked((sbyte)(8));
+  public const sbyte Repeat = unchecked((sbyte)(8));
 
-public const sbyte XDual = unchecked((sbyte)(16));
+  public const sbyte XDual = unchecked((sbyte)(16));
 
-public const sbyte YDual = unchecked((sbyte)(32));
+  public const sbyte YDual = unchecked((sbyte)(32));
 
-private int[] instructions = null!;
+  private int[] instructions = null!;
 
-private readonly int contourCount = default;
+  private readonly int contourCount = default;
 
-internal GlyfDescript(short numberOfContours) {
-this.contourCount = numberOfContours;
-}
+  internal GlyfDescript(short numberOfContours) {
+    this.contourCount = numberOfContours;
+  }
 
-public virtual void Resolve() {}
+  public virtual void Resolve() {}
 
-public virtual int GetContourCount() {
-return this.contourCount;
-}
+  public virtual int GetContourCount() {
+    return this.contourCount;
+  }
 
-public virtual int[] GetInstructions() {
-return this.instructions;
-}
+  public virtual int[] GetInstructions() {
+    return this.instructions;
+  }
 
-internal virtual void readInstructions(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais, int count) {
-this.instructions = bais.ReadUnsignedByteArray(count);
-}
+  internal virtual void readInstructions(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream bais,
+    int count) {
+    this.instructions = bais.ReadUnsignedByteArray(count);
+  }
 
-public abstract int GetEndPtOfContours(int i);
+  public abstract int GetEndPtOfContours(int i);
 
-public abstract sbyte GetFlags(int i);
+  public abstract sbyte GetFlags(int i);
 
-public abstract int GetPointCount();
+  public abstract int GetPointCount();
 
-public abstract short GetXCoordinate(int i);
+  public abstract short GetXCoordinate(int i);
 
-public abstract short GetYCoordinate(int i);
+  public abstract short GetYCoordinate(int i);
 
-public abstract bool IsComposite();
+  public abstract bool IsComposite();
 }

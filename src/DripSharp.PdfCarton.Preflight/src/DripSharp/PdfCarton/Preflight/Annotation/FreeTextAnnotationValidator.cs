@@ -8,15 +8,19 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public class FreeTextAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup PdFreeText = default!;
+public class FreeTextAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup PdFreeText
+    = default!;
 
-public FreeTextAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
-this.PdFreeText = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup(annotDictionary);
-this.PdAnnot = this.PdFreeText;
-}
+  public FreeTextAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdFreeText
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup(annotDictionary);
+    this.PdAnnot = this.PdFreeText;
+  }
 
-protected internal override bool CheckSpecificMandatoryFields() {
-return this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Da);
-}
+  protected internal override bool CheckSpecificMandatoryFields() {
+    return this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Da);
+  }
 }

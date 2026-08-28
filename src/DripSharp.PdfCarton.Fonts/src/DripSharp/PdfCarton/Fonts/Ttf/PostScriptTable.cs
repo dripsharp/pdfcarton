@@ -9,204 +9,229 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class PostScriptTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private float formatType = default;
+  private float formatType = default;
 
-private float italicAngle = default;
+  private float italicAngle = default;
 
-private short underlinePosition = default;
+  private short underlinePosition = default;
 
-private short underlineThickness = default;
+  private short underlineThickness = default;
 
-private long isFixedPitch = default;
+  private long isFixedPitch = default;
 
-private long minMemType42 = default;
+  private long minMemType42 = default;
 
-private long maxMemType42 = default;
+  private long maxMemType42 = default;
 
-private long mimMemType1 = default;
+  private long mimMemType1 = default;
 
-private long maxMemType1 = default;
+  private long maxMemType1 = default;
 
-private string[] glyphNames = default!;
+  private string[] glyphNames = default!;
 
-public const string Tag = "post";
+  public const string Tag = "post";
 
-internal PostScriptTable() : base() {
+  internal PostScriptTable() : base() {
 
-}
+  }
 
-internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-this.formatType = data.Read32Fixed();
-this.italicAngle = data.Read32Fixed();
-this.underlinePosition = data.ReadSignedShort();
-this.underlineThickness = data.ReadSignedShort();
-this.isFixedPitch = data.ReadUnsignedInt();
-this.minMemType42 = data.ReadUnsignedInt();
-this.maxMemType42 = data.ReadUnsignedInt();
-this.mimMemType1 = data.ReadUnsignedInt();
-this.maxMemType1 = data.ReadUnsignedInt();
-if ((data.GetCurrentPosition() == data.GetOriginalDataSize())) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("No PostScript name data is provided for the font ", ttf.GetName())));
-} else {
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareFloat(this.formatType, 1.0F) == 0)) {
-this.glyphNames = global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.GetAllNames();
-} else {
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareFloat(this.formatType, 2.0F) == 0)) {
-int numGlyphs = data.ReadUnsignedShort();
-int[] glyphNameIndex__84_19 = new int[numGlyphs];
-this.glyphNames = new string[numGlyphs];
-int maxIndex = int.MinValue;
-for (int i__87_22 = 0; (i__87_22 < numGlyphs); i__87_22++) {
-int index__89_21 = data.ReadUnsignedShort();
-glyphNameIndex__84_19[i__87_22] = index__89_21;
-if ((index__89_21 <= 32767)) {
-maxIndex = global::System.Math.Max(maxIndex, index__89_21);
-}
-}
-string[] nameArray = default!;
-if ((maxIndex >= global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs)) {
-nameArray = new string[((maxIndex - global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs) + 1)];
-for (int i__102_26 = 0; (i__102_26 < nameArray!.Length); i__102_26++) {
-int numberOfChars = data.ReadUnsignedByte();
-try {
-nameArray![i__102_26] = data.ReadString(numberOfChars);
-} catch (global::System.IO.IOException ex) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.LOG, (global::System.Exception)ex, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Error reading names in PostScript table at entry ", i__102_26), " of "), nameArray!.Length), ", setting remaining entries to .notdef")));
-for (int j = i__102_26; (j < nameArray!.Length); ++j) {
-nameArray![j] = ".notdef";
-}
-break;
-}
-}
-}
-for (int i__122_22 = 0; (i__122_22 < numGlyphs); i__122_22++) {
-int index__124_21 = glyphNameIndex__84_19[i__122_22];
-if (((index__124_21 >= 0) && (index__124_21 < global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs))) {
-this.glyphNames[i__122_22] = global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.GetGlyphName(index__124_21);
-} else {
-if ((((index__124_21 >= global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs) && (index__124_21 <= 32767)) && (nameArray! != default!))) {
-this.glyphNames[i__122_22] = nameArray![(index__124_21 - global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs)];
-} else {
-this.glyphNames[i__122_22] = ".undefined";
-}
-}
-}
-} else {
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareFloat(this.formatType, 2.5F) == 0)) {
-int[] glyphNameIndex__143_19 = new int[ttf.GetNumberOfGlyphs()];
-for (int i__144_22 = 0; (i__144_22 < glyphNameIndex__143_19.Length); i__144_22++) {
-int offset = data.ReadSignedByte();
-glyphNameIndex__143_19[i__144_22] = ((i__144_22 + 1) + offset);
-}
-this.glyphNames = new string[glyphNameIndex__143_19.Length];
-for (int i__150_22 = 0; (i__150_22 < this.glyphNames.Length); i__150_22++) {
-int index__152_21 = glyphNameIndex__143_19[i__150_22];
-if (((index__152_21 >= 0) && (index__152_21 < global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs))) {
-string name = global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.GetGlyphName(index__152_21);
-if ((name != default!)) {
-this.glyphNames[i__150_22] = name;
-}
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("incorrect glyph name index ", index__152_21), ", valid numbers 0.."), global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs)));
-}
-}
-} else {
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareFloat(this.formatType, 3.0F) == 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("No PostScript name information is provided for the font ", ttf.GetName())));
-}
-}
-}
-}
-}
-base.Initialized = true;
-}
+  internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    this.formatType = data.Read32Fixed();
+    this.italicAngle = data.Read32Fixed();
+    this.underlinePosition = data.ReadSignedShort();
+    this.underlineThickness = data.ReadSignedShort();
+    this.isFixedPitch = data.ReadUnsignedInt();
+    this.minMemType42 = data.ReadUnsignedInt();
+    this.maxMemType42 = data.ReadUnsignedInt();
+    this.mimMemType1 = data.ReadUnsignedInt();
+    this.maxMemType1 = data.ReadUnsignedInt();
+    if ((data.GetCurrentPosition() == data.GetOriginalDataSize())) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.LOG,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("No PostScript name data is provided for the font ",
+        ttf.GetName())));
+    } else {
+      if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareFloat(this.formatType, 1.0F)
+        == 0)) {
+        this.glyphNames = global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.GetAllNames();
+      } else {
+        if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareFloat(this.formatType,
+          2.0F) == 0)) {
+          int numGlyphs = data.ReadUnsignedShort();
+          int[] glyphNameIndex__84_19 = new int[numGlyphs];
+          this.glyphNames = new string[numGlyphs];
+          int maxIndex = int.MinValue;
+          for (int i__87_22 = 0; (i__87_22 < numGlyphs); i__87_22++) {
+            int index__89_21 = data.ReadUnsignedShort();
+            glyphNameIndex__84_19[i__87_22] = index__89_21;
+            if ((index__89_21 <= 32767)) {
+              maxIndex = global::System.Math.Max(maxIndex, index__89_21);
+            }
+          }
+          string[] nameArray = default!;
+          if ((maxIndex >= global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs)) {
+            nameArray = new string[((maxIndex
+              - global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs) + 1)];
+            for (int i__102_26 = 0; (i__102_26 < nameArray!.Length); i__102_26++) {
+              int numberOfChars = data.ReadUnsignedByte();
+              try {
+                nameArray![i__102_26] = data.ReadString(numberOfChars);
+              } catch (global::System.IO.IOException ex) {
+                global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.LOG,
+                  (global::System.Exception)ex,
+                  global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Error reading names in PostScript table at entry ",
+                  i__102_26), " of "), nameArray!.Length),
+                  ", setting remaining entries to .notdef")));
+                for (int j = i__102_26; (j < nameArray!.Length); ++j) {
+                  nameArray![j] = ".notdef";
+                }
+                break;
+              }
+            }
+          }
+          for (int i__122_22 = 0; (i__122_22 < numGlyphs); i__122_22++) {
+            int index__124_21 = glyphNameIndex__84_19[i__122_22];
+            if (((index__124_21 >= 0)
+              && (index__124_21 < global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs))) {
+              this.glyphNames[i__122_22]
+                = global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.GetGlyphName(index__124_21);
+            } else {
+              if ((((index__124_21
+                >= global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs)
+                && (index__124_21 <= 32767)) && (nameArray! != default!))) {
+                this.glyphNames[i__122_22] = nameArray![(index__124_21
+                  - global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs)];
+              } else {
+                this.glyphNames[i__122_22] = ".undefined";
+              }
+            }
+          }
+        } else {
+          if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareFloat(this.formatType,
+            2.5F) == 0)) {
+            int[] glyphNameIndex__143_19 = new int[ttf.GetNumberOfGlyphs()];
+            for (int i__144_22 = 0; (i__144_22 < glyphNameIndex__143_19.Length); i__144_22++) {
+              int offset = data.ReadSignedByte();
+              glyphNameIndex__143_19[i__144_22] = ((i__144_22 + 1) + offset);
+            }
+            this.glyphNames = new string[glyphNameIndex__143_19.Length];
+            for (int i__150_22 = 0; (i__150_22 < this.glyphNames.Length); i__150_22++) {
+              int index__152_21 = glyphNameIndex__143_19[i__150_22];
+              if (((index__152_21 >= 0)
+                && (index__152_21 < global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs))) {
+                string name
+                  = global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.GetGlyphName(index__152_21);
+                if ((name != default!)) {
+                  this.glyphNames[i__150_22] = name;
+                }
+              } else {
+                global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.LOG,
+                  global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("incorrect glyph name index ",
+                  index__152_21), ", valid numbers 0.."),
+                  global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs)));
+              }
+            }
+          } else {
+            if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareFloat(this.formatType,
+              3.0F) == 0)) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.LOG,
+                global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("No PostScript name information is provided for the font ",
+                ttf.GetName())));
+            }
+          }
+        }
+      }
+    }
+    base.Initialized = true;
+  }
 
-public virtual float GetFormatType() {
-return this.formatType;
-}
+  public virtual float GetFormatType() {
+    return this.formatType;
+  }
 
-public virtual void SetFormatType(float formatTypeValue) {
-this.formatType = formatTypeValue;
-}
+  public virtual void SetFormatType(float formatTypeValue) {
+    this.formatType = formatTypeValue;
+  }
 
-public virtual long GetIsFixedPitch() {
-return this.isFixedPitch;
-}
+  public virtual long GetIsFixedPitch() {
+    return this.isFixedPitch;
+  }
 
-public virtual void SetIsFixedPitch(long isFixedPitchValue) {
-this.isFixedPitch = isFixedPitchValue;
-}
+  public virtual void SetIsFixedPitch(long isFixedPitchValue) {
+    this.isFixedPitch = isFixedPitchValue;
+  }
 
-public virtual float GetItalicAngle() {
-return this.italicAngle;
-}
+  public virtual float GetItalicAngle() {
+    return this.italicAngle;
+  }
 
-public virtual void SetItalicAngle(float italicAngleValue) {
-this.italicAngle = italicAngleValue;
-}
+  public virtual void SetItalicAngle(float italicAngleValue) {
+    this.italicAngle = italicAngleValue;
+  }
 
-public virtual long GetMaxMemType1() {
-return this.maxMemType1;
-}
+  public virtual long GetMaxMemType1() {
+    return this.maxMemType1;
+  }
 
-public virtual void SetMaxMemType1(long maxMemType1Value) {
-this.maxMemType1 = maxMemType1Value;
-}
+  public virtual void SetMaxMemType1(long maxMemType1Value) {
+    this.maxMemType1 = maxMemType1Value;
+  }
 
-public virtual long GetMaxMemType42() {
-return this.maxMemType42;
-}
+  public virtual long GetMaxMemType42() {
+    return this.maxMemType42;
+  }
 
-public virtual void SetMaxMemType42(long maxMemType42Value) {
-this.maxMemType42 = maxMemType42Value;
-}
+  public virtual void SetMaxMemType42(long maxMemType42Value) {
+    this.maxMemType42 = maxMemType42Value;
+  }
 
-public virtual long GetMinMemType1() {
-return this.mimMemType1;
-}
+  public virtual long GetMinMemType1() {
+    return this.mimMemType1;
+  }
 
-public virtual void SetMimMemType1(long mimMemType1Value) {
-this.mimMemType1 = mimMemType1Value;
-}
+  public virtual void SetMimMemType1(long mimMemType1Value) {
+    this.mimMemType1 = mimMemType1Value;
+  }
 
-public virtual long GetMinMemType42() {
-return this.minMemType42;
-}
+  public virtual long GetMinMemType42() {
+    return this.minMemType42;
+  }
 
-public virtual void SetMinMemType42(long minMemType42Value) {
-this.minMemType42 = minMemType42Value;
-}
+  public virtual void SetMinMemType42(long minMemType42Value) {
+    this.minMemType42 = minMemType42Value;
+  }
 
-public virtual short GetUnderlinePosition() {
-return this.underlinePosition;
-}
+  public virtual short GetUnderlinePosition() {
+    return this.underlinePosition;
+  }
 
-public virtual void SetUnderlinePosition(short underlinePositionValue) {
-this.underlinePosition = underlinePositionValue;
-}
+  public virtual void SetUnderlinePosition(short underlinePositionValue) {
+    this.underlinePosition = underlinePositionValue;
+  }
 
-public virtual short GetUnderlineThickness() {
-return this.underlineThickness;
-}
+  public virtual short GetUnderlineThickness() {
+    return this.underlineThickness;
+  }
 
-public virtual void SetUnderlineThickness(short underlineThicknessValue) {
-this.underlineThickness = underlineThicknessValue;
-}
+  public virtual void SetUnderlineThickness(short underlineThicknessValue) {
+    this.underlineThickness = underlineThicknessValue;
+  }
 
-public virtual string[] GetGlyphNames() {
-return this.glyphNames;
-}
+  public virtual string[] GetGlyphNames() {
+    return this.glyphNames;
+  }
 
-public virtual void SetGlyphNames(string[] glyphNamesValue) {
-this.glyphNames = glyphNamesValue;
-}
+  public virtual void SetGlyphNames(string[] glyphNamesValue) {
+    this.glyphNames = glyphNamesValue;
+  }
 
-public virtual string GetName(int gid) {
-if ((((gid < 0) || (this.glyphNames == default!)) || (gid >= this.glyphNames.Length))) {
-return default!;
-}
-return this.glyphNames[gid];
-}
+  public virtual string GetName(int gid) {
+    if ((((gid < 0) || (this.glyphNames == default!)) || (gid >= this.glyphNames.Length))) {
+      return default!;
+    }
+    return this.glyphNames[gid];
+  }
 }

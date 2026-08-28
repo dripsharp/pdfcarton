@@ -9,155 +9,167 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class ASCII85InputStream : global::DripSharp.Runtime.JavaFilterInputStream {
-private int index = default;
+  private int index = default;
 
-private int n = default;
+  private int n = default;
 
-private bool eof = default;
+  private bool eof = default;
 
-private sbyte[] ascii = null!;
+  private sbyte[] ascii = null!;
 
-private sbyte[] b = null!;
+  private sbyte[] b = null!;
 
-private const char TERMINATOR = '~';
+  private const char TERMINATOR = '~';
 
-private const char OFFSET = '!';
+  private const char OFFSET = '!';
 
-private const char NEWLINE = '\n';
+  private const char NEWLINE = '\n';
 
-private const char RETURN = '\r';
+  private const char RETURN = '\r';
 
-private const char SPACE = ' ';
+  private const char SPACE = ' ';
 
-private const char PADDING_U = 'u';
+  private const char PADDING_U = 'u';
 
-private const char Z = 'z';
+  private const char Z = 'z';
 
-internal ASCII85InputStream(global::System.IO.Stream @is) : base(@is) {
-this.index = 0;
-this.n = 0;
-this.eof = false;
-this.ascii = new sbyte[5];
-this.b = new sbyte[4];
-}
+  internal ASCII85InputStream(global::System.IO.Stream @is) : base(@is) {
+    this.index = 0;
+    this.n = 0;
+    this.eof = false;
+    this.ascii = new sbyte[5];
+    this.b = new sbyte[4];
+  }
 
-public override int Read() {
-if ((this.index >= this.n)) {
-if (this.eof) {
-return -1;
-}
-this.index = 0;
-int k;
-sbyte z;
-do {
-int zz__82_21 = unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in)));
-if ((zz__82_21 == -1)) {
-this.eof = true;
-return -1;
-}
-z = unchecked((sbyte)(unchecked((sbyte)(zz__82_21))));
-} while (((((int)(z) == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.NEWLINE)) || ((int)(z) == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.RETURN))) || ((int)(z) == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.SPACE))));
-if (((int)(z) == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.TERMINATOR))) {
-this.eof = true;
-this.ascii = (this.b = default!);
-this.n = 0;
-return -1;
-} else {
-if (((int)(z) == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.Z))) {
-this.b[0] = unchecked((sbyte)((this.b[1] = unchecked((sbyte)((this.b[2] = unchecked((sbyte)((this.b[3] = unchecked((sbyte)(0)))))))))));
-this.n = 4;
-} else {
-this.ascii[0] = unchecked((sbyte)(z));
-for (k = 1; (k < 5); ++k) {
-do {
-int zz__110_29 = unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in)));
-if ((zz__110_29 == -1)) {
-this.eof = true;
-return -1;
-}
-z = unchecked((sbyte)(unchecked((sbyte)(zz__110_29))));
-} while (((((int)(z) == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.NEWLINE)) || ((int)(z) == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.RETURN))) || ((int)(z) == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.SPACE))));
-this.ascii[k] = unchecked((sbyte)(z));
-if (((int)(z) == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.TERMINATOR))) {
-this.ascii[k] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.PADDING_U))));
-break;
-}
-}
-this.n = (k - 1);
-if ((this.n == 0)) {
-this.eof = true;
-this.ascii = default!;
-this.b = default!;
-return -1;
-}
-if ((k < 5)) {
-for (++k; (k < 5); ++k) {
-this.ascii[k] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.PADDING_U))));
-}
-this.eof = true;
-}
-long t = 0;
-for (k = 0; (k < 5); ++k) {
-z = unchecked((sbyte)(unchecked((sbyte)((this.ascii[k] - global::DripSharp.PdfCarton.Filter.ASCII85InputStream.OFFSET)))));
-if ((((int)(z) < 0) || ((int)(z) > 93))) {
-this.n = 0;
-this.eof = true;
-this.ascii = default!;
-this.b = default!;
-throw new global::System.IO.IOException("Invalid data in Ascii85 stream");
-}
-t = ((t * 85L) + z);
-}
-for (k = 3; (k >= 0); --k) {
-this.b[k] = unchecked((sbyte)(unchecked((sbyte)((t & 255L)))));
-t >>>= 8;
-}
-}
-}
-}
-return (this.b[this.index++] & 255);
-}
+  public override int Read() {
+    if ((this.index >= this.n)) {
+      if (this.eof) {
+        return -1;
+      }
+      this.index = 0;
+      int k;
+      sbyte z;
+      do {
+        int zz__82_21
+          = unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in)));
+        if ((zz__82_21 == -1)) {
+          this.eof = true;
+          return -1;
+        }
+        z = unchecked((sbyte)(unchecked((sbyte)(zz__82_21))));
+      } while (((((int)z == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.NEWLINE))
+        || ((int)z == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.RETURN)))
+        || ((int)z == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.SPACE))));
+      if (((int)z == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.TERMINATOR))) {
+        this.eof = true;
+        this.ascii = (this.b = default!);
+        this.n = 0;
+        return -1;
+      } else {
+        if (((int)z == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.Z))) {
+          this.b[0] = unchecked((sbyte)((this.b[1] = unchecked((sbyte)((this.b[2]
+            = unchecked((sbyte)((this.b[3] = unchecked((sbyte)(0)))))))))));
+          this.n = 4;
+        } else {
+          this.ascii[0] = unchecked((sbyte)(z));
+          for (k = 1; (k < 5); ++k) {
+            do {
+              int zz__110_29
+                = unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in)));
+              if ((zz__110_29 == -1)) {
+                this.eof = true;
+                return -1;
+              }
+              z = unchecked((sbyte)(unchecked((sbyte)(zz__110_29))));
+            } while (((((int)z
+              == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.NEWLINE)) || ((int)z
+              == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.RETURN))) || ((int)z
+              == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.SPACE))));
+            this.ascii[k] = unchecked((sbyte)(z));
+            if (((int)z
+              == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.TERMINATOR))) {
+              this.ascii[k]
+                = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.PADDING_U))));
+              break;
+            }
+          }
+          this.n = (k - 1);
+          if ((this.n == 0)) {
+            this.eof = true;
+            this.ascii = default!;
+            this.b = default!;
+            return -1;
+          }
+          if ((k < 5)) {
+            for (++k; (k < 5); ++k) {
+              this.ascii[k]
+                = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.PADDING_U))));
+            }
+            this.eof = true;
+          }
+          long t = 0;
+          for (k = 0; (k < 5); ++k) {
+            z = unchecked((sbyte)(unchecked((sbyte)((this.ascii[k]
+              - global::DripSharp.PdfCarton.Filter.ASCII85InputStream.OFFSET)))));
+            if ((((int)z < 0) || ((int)z > 93))) {
+              this.n = 0;
+              this.eof = true;
+              this.ascii = default!;
+              this.b = default!;
+              throw new global::System.IO.IOException("Invalid data in Ascii85 stream");
+            }
+            t = ((t * 85L) + z);
+          }
+          for (k = 3; (k >= 0); --k) {
+            this.b[k] = unchecked((sbyte)(unchecked((sbyte)((t & 255L)))));
+            t >>>= 8;
+          }
+        }
+      }
+    }
+    return (this.b[this.index++] & 255);
+  }
 
-public override int Read(sbyte[] data, int offset, int len) {
-if ((this.eof && (this.index >= this.n))) {
-return -1;
-}
-for (int i = 0; (i < len); i++) {
-if ((this.index < this.n)) {
-data[(i + offset)] = unchecked((sbyte)(this.b[this.index++]));
-} else {
-int t = this.Read();
-if ((t == -1)) {
-return i;
-}
-data[(i + offset)] = unchecked((sbyte)(unchecked((sbyte)(t))));
-}
-}
-return len;
-}
+  public override int Read(sbyte[] data, int offset, int len) {
+    if ((this.eof && (this.index >= this.n))) {
+      return -1;
+    }
+    for (int i = 0; (i < len); i++) {
+      if ((this.index < this.n)) {
+        data[(i + offset)] = unchecked((sbyte)(this.b[this.index++]));
+      } else {
+        int t = this.Read();
+        if ((t == -1)) {
+          return i;
+        }
+        data[(i + offset)] = unchecked((sbyte)(unchecked((sbyte)(t))));
+      }
+    }
+    return len;
+  }
 
-public override void Dispose() {
-this.ascii = default!;
-this.eof = true;
-this.b = default!;
-base.Dispose();
-}
+  public override void Dispose() {
+    this.ascii = default!;
+    this.eof = true;
+    this.b = default!;
+    base.Dispose();
+  }
 
-public override bool MarkSupported() {
-return false;
-}
+  public override bool MarkSupported() {
+    return false;
+  }
 
-public override long Skip(long nValue) {
-return 0;
-}
+  public override long Skip(long nValue) {
+    return 0;
+  }
 
-public override int Available() {
-return 0;
-}
+  public override int Available() {
+    return 0;
+  }
 
-public override void Mark(int readlimit) {}
+  public override void Mark(int readlimit) {}
 
-public override void Reset() {
-throw new global::System.IO.IOException("Reset is not supported");
-}
+  public override void Reset() {
+    throw new global::System.IO.IOException("Reset is not supported");
+  }
 }

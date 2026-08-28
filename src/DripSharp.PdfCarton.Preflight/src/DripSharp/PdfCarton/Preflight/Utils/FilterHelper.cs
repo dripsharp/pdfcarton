@@ -9,49 +9,61 @@
 namespace DripSharp.PdfCarton.Preflight.Utils;
 
 public sealed class FilterHelper {
-private static readonly global::System.Collections.Generic.ISet<string> ALLOWED_FILTERS = new global::System.Collections.Generic.HashSet<string>();
+  private static readonly global::System.Collections.Generic.ISet<string> ALLOWED_FILTERS
+    = new global::System.Collections.Generic.HashSet<string>();
 
-static FilterHelper() {
-{
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterFlateDecode);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterAsciiHex);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterAscii85);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterCcittff);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterDct);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterJbig);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterRun);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterFlateDecode);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterAsciiHex);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterAscii85);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterCcittff);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterDct);
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterRun);
-}
-}
+  static FilterHelper() { {
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterFlateDecode);
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterAsciiHex);
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterAscii85);
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterCcittff);
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterDct);
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterJbig);
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterRun);
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterFlateDecode);
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterAsciiHex);
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterAscii85);
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterCcittff);
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterDct);
+      global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterRun);
+    }
+  }
 
-private FilterHelper() {}
+  private FilterHelper() {}
 
-public static void IsAuthorizedFilter(global::DripSharp.PdfCarton.Preflight.PreflightContext context, string filter) {
-global::DripSharp.PdfCarton.Preflight.PreflightDocument preflightDocument = context.GetDocument();
-switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(preflightDocument.GetSpecification())) {
-case 1:
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.IsAuthorizedFilterInPDFA(context, filter);
-break;
-default:
-global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.IsAuthorizedFilterInPDFA(context, filter);
-break;
-}
-}
+  public static void IsAuthorizedFilter(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    string filter) {
+    global::DripSharp.PdfCarton.Preflight.PreflightDocument preflightDocument
+      = context.GetDocument();
+    switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(preflightDocument.GetSpecification())) {
+      case 1:
+        global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.IsAuthorizedFilterInPDFA(context,
+          filter);
+        break;
+      default:
+        global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.IsAuthorizedFilterInPDFA(context,
+          filter);
+        break;
+    }
+  }
 
-public static void IsAuthorizedFilterInPDFA(global::DripSharp.PdfCarton.Preflight.PreflightContext context, string filter) {
-if ((filter != default!)) {
-if ((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterLzw, filter) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterLzw, filter))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamInvalidFilter, "LZWDecode is forbidden"));
-return;
-}
-if (!(global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS, filter))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamUndefinedFilter, global::DripSharp.Runtime.JavaCompat.Concat("This filter isn't defined in the PDF Reference Third Edition : ", filter)));
-}
-}
-}
+  public static void IsAuthorizedFilterInPDFA(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    string filter) {
+    if ((filter != default!)) {
+      if ((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterLzw,
+        filter)
+        || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConstants.InlineDictionaryValueFilterLzw,
+        filter))) {
+        context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamInvalidFilter,
+          "LZWDecode is forbidden"));
+        return;
+      }
+      if (!global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS,
+        filter)) {
+        context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamUndefinedFilter,
+          global::DripSharp.Runtime.JavaCompat.Concat("This filter isn't defined in the PDF Reference Third Edition : ",
+          filter)));
+      }
+    }
+  }
 }

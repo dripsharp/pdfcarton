@@ -9,140 +9,155 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class ASCII85OutputStream : global::DripSharp.Runtime.JavaFilterOutputStream {
-private int lineBreak = default;
+  private int lineBreak = default;
 
-private int count = default;
+  private int count = default;
 
-private sbyte[] indata = null!;
+  private sbyte[] indata = null!;
 
-private sbyte[] outdata = null!;
+  private sbyte[] outdata = null!;
 
-private int maxline = default;
+  private int maxline = default;
 
-private bool flushed = default;
+  private bool flushed = default;
 
-private char terminator = default;
+  private char terminator = default;
 
-private const char OFFSET = '!';
+  private const char OFFSET = '!';
 
-private const char NEWLINE = '\n';
+  private const char NEWLINE = '\n';
 
-private const char Z = 'z';
+  private const char Z = 'z';
 
-internal ASCII85OutputStream(global::System.IO.Stream @out) : base(@out) {
-this.lineBreak = (36 * 2);
-this.maxline = (36 * 2);
-this.count = 0;
-this.indata = new sbyte[4];
-this.outdata = new sbyte[5];
-this.flushed = true;
-this.terminator = '~';
-}
+  internal ASCII85OutputStream(global::System.IO.Stream @out) : base(@out) {
+    this.lineBreak = (36 * 2);
+    this.maxline = (36 * 2);
+    this.count = 0;
+    this.indata = new sbyte[4];
+    this.outdata = new sbyte[5];
+    this.flushed = true;
+    this.terminator = '~';
+  }
 
-public void SetTerminator(char term) {
-if (((((int)(term) < 118) || ((int)(term) > 126)) || ((int)(term) == (int)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.Z)))) {
-throw new global::System.ArgumentException("Terminator must be 118-126 excluding z");
-}
-this.terminator = term;
-}
+  public void SetTerminator(char term) {
+    if (((((int)term < 118) || ((int)term > 126)) || ((int)term
+      == (int)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.Z)))) {
+      throw new global::System.ArgumentException("Terminator must be 118-126 excluding z");
+    }
+    this.terminator = term;
+  }
 
-public char GetTerminator() {
-return this.terminator;
-}
+  public char GetTerminator() {
+    return this.terminator;
+  }
 
-public void SetLineLength(int l) {
-if ((this.lineBreak > l)) {
-this.lineBreak = l;
-}
-this.maxline = l;
-}
+  public void SetLineLength(int l) {
+    if ((this.lineBreak > l)) {
+      this.lineBreak = l;
+    }
+    this.maxline = l;
+  }
 
-public int GetLineLength() {
-return this.maxline;
-}
+  public int GetLineLength() {
+    return this.maxline;
+  }
 
-private void transformASCII85() {
-long word = ((((((this.indata[0] << unchecked((int)(8))) | (this.indata[1] & 255)) << unchecked((int)(16))) | ((this.indata[2] & 255) << unchecked((int)(8)))) | (this.indata[3] & 255)) & 4294967295L);
-if ((word == 0)) {
-this.outdata[0] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.Z))));
-this.outdata[1] = unchecked((sbyte)(0));
-return;
-}
-long x;
-x = (word / (((85L * 85L) * 85L) * 85L));
-this.outdata[0] = unchecked((sbyte)(unchecked((sbyte)((x + global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.OFFSET)))));
-word -= ((((x * 85L) * 85L) * 85L) * 85L);
-x = (word / ((85L * 85L) * 85L));
-this.outdata[1] = unchecked((sbyte)(unchecked((sbyte)((x + global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.OFFSET)))));
-word -= (((x * 85L) * 85L) * 85L);
-x = (word / (85L * 85L));
-this.outdata[2] = unchecked((sbyte)(unchecked((sbyte)((x + global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.OFFSET)))));
-word -= ((x * 85L) * 85L);
-x = (word / 85L);
-this.outdata[3] = unchecked((sbyte)(unchecked((sbyte)((x + global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.OFFSET)))));
-this.outdata[4] = unchecked((sbyte)(unchecked((sbyte)(((word % 85L) + global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.OFFSET)))));
-}
+  private void transformASCII85() {
+    long word
+      = ((((((this.indata[0] << unchecked((int)(8))) | (this.indata[1] & 255)) << unchecked((int)(16))) | ((this.indata[2] & 255) << unchecked((int)(8)))) | (this.indata[3] & 255)) & 4294967295L);
+    if ((word == 0)) {
+      this.outdata[0]
+        = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.Z))));
+      this.outdata[1] = unchecked((sbyte)(0));
+      return;
+    }
+    long x;
+    x = (word / (((85L * 85L) * 85L) * 85L));
+    this.outdata[0] = unchecked((sbyte)(unchecked((sbyte)((x
+      + global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.OFFSET)))));
+    word -= ((((x * 85L) * 85L) * 85L) * 85L);
+    x = (word / ((85L * 85L) * 85L));
+    this.outdata[1] = unchecked((sbyte)(unchecked((sbyte)((x
+      + global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.OFFSET)))));
+    word -= (((x * 85L) * 85L) * 85L);
+    x = (word / (85L * 85L));
+    this.outdata[2] = unchecked((sbyte)(unchecked((sbyte)((x
+      + global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.OFFSET)))));
+    word -= ((x * 85L) * 85L);
+    x = (word / 85L);
+    this.outdata[3] = unchecked((sbyte)(unchecked((sbyte)((x
+      + global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.OFFSET)))));
+    this.outdata[4] = unchecked((sbyte)(unchecked((sbyte)(((word % 85L)
+      + global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.OFFSET)))));
+  }
 
-public override void Write(int b) {
-this.flushed = false;
-this.indata[this.count++] = unchecked((sbyte)(unchecked((sbyte)(b))));
-if ((this.count < 4)) {
-return;
-}
-this.transformASCII85();
-for (int i = 0; (i < 5); i++) {
-if (((int)(this.outdata[i]) == 0)) {
-break;
-}
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)(this.outdata[i]));
-if ((--(this.lineBreak) == 0)) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.NEWLINE));
-this.lineBreak = this.maxline;
-}
-}
-this.count = 0;
-}
+  public override void Write(int b) {
+    this.flushed = false;
+    this.indata[this.count++] = unchecked((sbyte)(unchecked((sbyte)(b))));
+    if ((this.count < 4)) {
+      return;
+    }
+    this.transformASCII85();
+    for (int i = 0; (i < 5); i++) {
+      if (((int)(this.outdata[i]) == 0)) {
+        break;
+      }
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)(this.outdata[i]));
+      if ((--(this.lineBreak) == 0)) {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out,
+          (int)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.NEWLINE));
+        this.lineBreak = this.maxline;
+      }
+    }
+    this.count = 0;
+  }
 
-public override void Flush() {
-if (this.flushed) {
-return;
-}
-if ((this.count > 0)) {
-for (int i__193_22 = this.count; (i__193_22 < 4); i__193_22++) {
-this.indata[i__193_22] = unchecked((sbyte)(0));
-}
-this.transformASCII85();
-if (((int)(this.outdata[0]) == (int)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.Z))) {
-for (int i__200_26 = 0; (i__200_26 < 5); i__200_26++) {
-this.outdata[i__200_26] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.OFFSET))));
-}
-}
-for (int i__205_22 = 0; (i__205_22 < (this.count + 1)); i__205_22++) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)(this.outdata[i__205_22]));
-if ((--(this.lineBreak) == 0)) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.NEWLINE));
-this.lineBreak = this.maxline;
-}
-}
-}
-if ((--(this.lineBreak) == 0)) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.NEWLINE));
-}
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)(this.terminator));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)('>'));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.NEWLINE));
-this.count = 0;
-this.lineBreak = this.maxline;
-this.flushed = true;
-base.Flush();
-}
+  public override void Flush() {
+    if (this.flushed) {
+      return;
+    }
+    if ((this.count > 0)) {
+      for (int i__193_22 = this.count; (i__193_22 < 4); i__193_22++) {
+        this.indata[i__193_22] = unchecked((sbyte)(0));
+      }
+      this.transformASCII85();
+      if (((int)(this.outdata[0])
+        == (int)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.Z))) {
+        for (int i__200_26 = 0; (i__200_26 < 5); i__200_26++) {
+          this.outdata[i__200_26]
+            = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.OFFSET))));
+        }
+      }
+      for (int i__205_22 = 0; (i__205_22 < (this.count + 1)); i__205_22++) {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out,
+          (int)(this.outdata[i__205_22]));
+        if ((--(this.lineBreak) == 0)) {
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out,
+            (int)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.NEWLINE));
+          this.lineBreak = this.maxline;
+        }
+      }
+    }
+    if ((--(this.lineBreak) == 0)) {
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out,
+        (int)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.NEWLINE));
+    }
+    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)(this.terminator));
+    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, (int)('>'));
+    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out,
+      (int)(global::DripSharp.PdfCarton.Filter.ASCII85OutputStream.NEWLINE));
+    this.count = 0;
+    this.lineBreak = this.maxline;
+    this.flushed = true;
+    base.Flush();
+  }
 
-public override void Dispose() {
-try {
-this.Flush();
-base.Dispose();
-} finally {
-this.indata = (this.outdata = default!);
-}
-}
+  public override void Dispose() {
+    try {
+      this.Flush();
+      base.Dispose();
+    } finally {
+      this.indata = (this.outdata = default!);
+    }
+  }
 }

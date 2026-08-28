@@ -9,35 +9,36 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFNamedPageReference : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary @ref = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary @ref = null!;
 
-public FDFNamedPageReference() {
-this.@ref = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public FDFNamedPageReference() {
+    this.@ref = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public FDFNamedPageReference(global::DripSharp.PdfCarton.Cos.COSDictionary r) {
-this.@ref = r;
-}
+  public FDFNamedPageReference(global::DripSharp.PdfCarton.Cos.COSDictionary r) {
+    this.@ref = r;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.@ref;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.@ref;
+  }
 
-public virtual string GetName() {
-return this.@ref.GetString(global::DripSharp.PdfCarton.Cos.COSName.Name);
-}
+  public virtual string GetName() {
+    return this.@ref.GetString(global::DripSharp.PdfCarton.Cos.COSName.Name);
+  }
 
-public virtual void SetName(string name) {
-this.@ref.SetString(global::DripSharp.PdfCarton.Cos.COSName.Name, name);
-}
+  public virtual void SetName(string name) {
+    this.@ref.SetString(global::DripSharp.PdfCarton.Cos.COSName.Name, name);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification GetFileSpecification() {
-return global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification.CreateFS(this.@ref.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.F));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification GetFileSpecification() {
+    return global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification.CreateFS(this.@ref.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.F));
+  }
 
-public virtual void SetFileSpecification(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification fs) {
-this.@ref.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, fs);
-}
+  public virtual void SetFileSpecification(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification fs) {
+    this.@ref.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, fs);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

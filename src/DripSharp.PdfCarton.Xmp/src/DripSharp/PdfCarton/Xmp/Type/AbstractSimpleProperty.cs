@@ -9,42 +9,46 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public abstract class AbstractSimpleProperty : global::DripSharp.PdfCarton.Xmp.Type.AbstractField {
-private readonly string @namespace = null!;
+  private readonly string @namespace = null!;
 
-private readonly string prefix = null!;
+  private readonly string prefix = null!;
 
-private readonly object rawValue = null!;
+  private readonly object rawValue = null!;
 
-public AbstractSimpleProperty(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string prefix, string propertyName, object value) : base(metadata, propertyName) {
-this.SetValue(value);
-this.@namespace = namespaceURI;
-this.prefix = prefix;
-this.rawValue = value;
-}
+  public AbstractSimpleProperty(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata,
+    string namespaceURI, string prefix, string propertyName, object value) : base(metadata,
+    propertyName) {
+    this.SetValue(value);
+    this.@namespace = namespaceURI;
+    this.prefix = prefix;
+    this.rawValue = value;
+  }
 
-public abstract void SetValue(object value);
+  public abstract void SetValue(object value);
 
-public abstract string GetStringValue();
+  public abstract string GetStringValue();
 
-public virtual object GetValue() {
-return ((object)(this.__DripSharpCovariantBridgeGetValue()));
-}
+  public virtual object GetValue() {
+    return ((object)(this.__DripSharpCovariantBridgeGetValue()));
+  }
 
-public virtual object GetRawValue() {
-return this.rawValue;
-}
+  public virtual object GetRawValue() {
+    return this.rawValue;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("[", this.GetPropertyName()), "="), ((object)(this)).GetType().Name), ":"), this.GetStringValue()), "]");
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("[",
+      this.GetPropertyName()), "="), ((object)(this)).GetType().Name), ":"), this.GetStringValue()),
+      "]");
+  }
 
-public override string GetNamespace() {
-return this.@namespace;
-}
+  public override string GetNamespace() {
+    return this.@namespace;
+  }
 
-public override string GetPrefix() {
-return this.prefix;
-}
+  public override string GetPrefix() {
+    return this.prefix;
+  }
 
-protected abstract object __DripSharpCovariantBridgeGetValue();
+  protected abstract object __DripSharpCovariantBridgeGetValue();
 }

@@ -9,33 +9,34 @@
 namespace DripSharp.PdfCarton.IO;
 
 public interface RandomAccessRead : global::System.IDisposable {
-public int Read();
+  public int Read();
 
-public int Read(sbyte[] b);
+  public int Read(sbyte[] b);
 
-public int Read(sbyte[] b, int offset, int length);
+  public int Read(sbyte[] b, int offset, int length);
 
-public long GetPosition();
+  public long GetPosition();
 
-public void Seek(long position);
+  public void Seek(long position);
 
-public long Length();
+  public long Length();
 
-public bool IsClosed();
+  public bool IsClosed();
 
-public int Peek();
+  public int Peek();
 
-public void Rewind(int bytes);
+  public void Rewind(int bytes);
 
-public bool IsEOF();
+  public bool IsEOF();
 
-public int Available();
+  public int Available();
 
-public void Skip(int length);
+  public void Skip(int length);
 
-public global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition, long streamLength);
+  public global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition,
+    long streamLength);
 
-public void ReadFully(sbyte[] b);
+  public void ReadFully(sbyte[] b);
 
-public void ReadFully(sbyte[] b, int offset, int length);
+  public void ReadFully(sbyte[] b, int offset, int length);
 }

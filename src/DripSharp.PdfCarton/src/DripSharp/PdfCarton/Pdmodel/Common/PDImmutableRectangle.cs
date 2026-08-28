@@ -9,23 +9,23 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common;
 
 public sealed class PDImmutableRectangle : global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle {
-public PDImmutableRectangle(float width, float height) : base(width, height) {
+  public PDImmutableRectangle(float width, float height) : base(width, height) {
 
-}
+  }
 
-public override void SetUpperRightY(float value) {
-throw new global::System.NotSupportedException("Immutable class");
-}
+  public override void SetUpperRightY(float value) {
+    throw new global::System.NotSupportedException("Immutable class");
+  }
 
-public override void SetUpperRightX(float value) {
-throw new global::System.NotSupportedException("Immutable class");
-}
+  public override void SetUpperRightX(float value) {
+    throw new global::System.NotSupportedException("Immutable class");
+  }
 
-public override void SetLowerLeftY(float value) {
-throw new global::System.NotSupportedException("Immutable class");
-}
+  public override void SetLowerLeftY(float value) {
+    throw new global::System.NotSupportedException("Immutable class");
+  }
 
-public override void SetLowerLeftX(float value) {
-throw new global::System.NotSupportedException("Immutable class");
-}
+  public override void SetLowerLeftX(float value) {
+    throw new global::System.NotSupportedException("Immutable class");
+  }
 }

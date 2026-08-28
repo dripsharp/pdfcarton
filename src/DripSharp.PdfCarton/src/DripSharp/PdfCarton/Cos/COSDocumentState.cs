@@ -9,13 +9,13 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public class COSDocumentState {
-private bool parsing = true;
+  private bool parsing = true;
 
-public virtual void SetParsing(bool parsing) {
-this.parsing = parsing;
-}
+  public virtual void SetParsing(bool parsing) {
+    this.parsing = parsing;
+  }
 
-public virtual bool IsAcceptingUpdates() {
-return !(this.parsing);
-}
+  public virtual bool IsAcceptingUpdates() {
+    return !(this.parsing);
+  }
 }

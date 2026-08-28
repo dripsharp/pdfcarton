@@ -8,697 +8,953 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
-public sealed class StandardSecurityHandler : global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandler<global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy> {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public sealed class StandardSecurityHandler
+: global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandler<global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy> {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private const int REVISION_2 = 2;
+  private const int REVISION_2 = 2;
 
-private const int REVISION_3 = 3;
+  private const int REVISION_3 = 3;
 
-private const int REVISION_4 = 4;
+  private const int REVISION_4 = 4;
 
-private const int REVISION_5 = 5;
+  private const int REVISION_5 = 5;
 
-private const int REVISION_6 = 6;
+  private const int REVISION_6 = 6;
 
-public const string Filter = "Standard";
+  public const string Filter = "Standard";
 
-public static readonly global::System.Type ProtectionPolicyClass = typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy);
+  public static readonly global::System.Type ProtectionPolicyClass
+    = typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy);
 
-private static readonly sbyte[] ENCRYPT_PADDING = new sbyte[] { unchecked((sbyte)(40)), unchecked((sbyte)(191)), unchecked((sbyte)(78)), unchecked((sbyte)(94)), unchecked((sbyte)(78)), unchecked((sbyte)(117)), unchecked((sbyte)(138)), unchecked((sbyte)(65)), unchecked((sbyte)(100)), unchecked((sbyte)(0)), unchecked((sbyte)(78)), unchecked((sbyte)(86)), unchecked((sbyte)(255)), unchecked((sbyte)(250)), unchecked((sbyte)(1)), unchecked((sbyte)(8)), unchecked((sbyte)(46)), unchecked((sbyte)(46)), unchecked((sbyte)(0)), unchecked((sbyte)(182)), unchecked((sbyte)(208)), unchecked((sbyte)(104)), unchecked((sbyte)(62)), unchecked((sbyte)(128)), unchecked((sbyte)(47)), unchecked((sbyte)(12)), unchecked((sbyte)(169)), unchecked((sbyte)(254)), unchecked((sbyte)(100)), unchecked((sbyte)(83)), unchecked((sbyte)(105)), unchecked((sbyte)(122)) };
+  private static readonly sbyte[] ENCRYPT_PADDING = new sbyte[] { unchecked((sbyte)(40)),
+    unchecked((sbyte)(191)), unchecked((sbyte)(78)), unchecked((sbyte)(94)), unchecked((sbyte)(78)),
+    unchecked((sbyte)(117)), unchecked((sbyte)(138)), unchecked((sbyte)(65)),
+    unchecked((sbyte)(100)), unchecked((sbyte)(0)), unchecked((sbyte)(78)), unchecked((sbyte)(86)),
+    unchecked((sbyte)(255)), unchecked((sbyte)(250)), unchecked((sbyte)(1)), unchecked((sbyte)(8)),
+    unchecked((sbyte)(46)), unchecked((sbyte)(46)), unchecked((sbyte)(0)), unchecked((sbyte)(182)),
+    unchecked((sbyte)(208)), unchecked((sbyte)(104)), unchecked((sbyte)(62)),
+    unchecked((sbyte)(128)), unchecked((sbyte)(47)), unchecked((sbyte)(12)),
+    unchecked((sbyte)(169)), unchecked((sbyte)(254)), unchecked((sbyte)(100)),
+    unchecked((sbyte)(83)), unchecked((sbyte)(105)), unchecked((sbyte)(122)) };
 
-private static readonly string[] HASHES_2B = new string[] { "SHA-256", "SHA-384", "SHA-512" };
+  private static readonly string[] HASHES_2B = new string[] { "SHA-256", "SHA-384", "SHA-512" };
 
-private static readonly global::DripSharp.Runtime.JavaRandom RANDOM = new global::DripSharp.Runtime.JavaRandom();
+  private static readonly global::DripSharp.Runtime.JavaRandom RANDOM
+    = new global::DripSharp.Runtime.JavaRandom();
 
-public StandardSecurityHandler() {}
+  public StandardSecurityHandler() {}
 
-public StandardSecurityHandler(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy standardProtectionPolicy) : base(standardProtectionPolicy) {
+  public StandardSecurityHandler(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy standardProtectionPolicy)
+  : base(standardProtectionPolicy) {
 
-}
+  }
 
-private int computeRevisionNumber(int version) {
-global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy protectionPolicy = this.GetProtectionPolicy();
-global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permissions = protectionPolicy.GetPermissions();
-if (((version < global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2) && !(permissions.HasAnyRevision3PermissionSet()))) {
-return global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2;
-}
-if ((version == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)) {
-return global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6;
-}
-if ((version == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4)) {
-return global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4;
-}
-if ((((version == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2) || (version == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3)) || permissions.HasAnyRevision3PermissionSet())) {
-return global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3;
-}
-return global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4;
-}
+  private int computeRevisionNumber(int version) {
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy protectionPolicy
+      = this.GetProtectionPolicy();
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permissions
+      = protectionPolicy.GetPermissions();
+    if (((version < global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2)
+      && !(permissions.HasAnyRevision3PermissionSet()))) {
+      return global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2;
+    }
+    if ((version
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)) {
+      return global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6;
+    }
+    if ((version
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4)) {
+      return global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4;
+    }
+    if ((((version
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2)
+      || (version
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3))
+      || permissions.HasAnyRevision3PermissionSet())) {
+      return global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3;
+    }
+    return global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4;
+  }
 
-public override void PrepareForDecryption(global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryption, global::DripSharp.PdfCarton.Cos.COSArray documentIDArray, global::DripSharp.PdfCarton.Pdmodel.Encryption.DecryptionMaterial decryptionMaterial) {
-if (!((decryptionMaterial is global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardDecryptionMaterial))) {
-throw new global::System.IO.IOException("Decryption material is not compatible with the document");
-}
-int encryptionVersion = encryption.GetVersion();
-if ((encryptionVersion >= global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4)) {
-this.SetStreamFilterName(encryption.GetStreamFilterName());
-this.SetStringFilterName(encryption.GetStringFilterName());
-}
-this.SetDecryptMetadata(encryption.IsEncryptMetaData());
-global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardDecryptionMaterial material = (global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardDecryptionMaterial)(decryptionMaterial!);
-string password = material.GetPassword();
-if ((password == default!)) {
-password = "";
-}
-int dicPermissions = encryption.GetPermissions();
-int dicRevision = encryption.GetRevision();
-int dicLength = ((encryptionVersion == 1) ? 5 : (encryption.GetLength() / 8));
-if (((encryptionVersion == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4) || (encryptionVersion == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5))) {
-global::DripSharp.PdfCarton.Pdmodel.Encryption.PDCryptFilterDictionary stdCryptFilterDictionary = encryption.GetStdCryptFilterDictionary();
-if ((stdCryptFilterDictionary != default!)) {
-global::DripSharp.PdfCarton.Cos.COSName cryptFilterMethod = stdCryptFilterDictionary.GetCryptFilterMethod();
-if (global::DripSharp.PdfCarton.Cos.COSName.Aesv2.Equals(cryptFilterMethod)) {
-dicLength = (128 / 8);
-this.SetAES(true);
-if (encryption.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Length)) {
-int newLength__195_29 = (encryption.GetLength() / 8);
-if ((newLength__195_29 < dicLength)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Using ", newLength__195_29), " bytes key length instead of "), dicLength), " in AESV2 encryption?!")));
-dicLength = newLength__195_29;
-}
-}
-}
-if (global::DripSharp.PdfCarton.Cos.COSName.Aesv3.Equals(cryptFilterMethod)) {
-dicLength = (256 / 8);
-this.SetAES(true);
-if (encryption.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Length)) {
-int newLength__211_29 = (encryption.GetLength() / 8);
-if ((newLength__211_29 < dicLength)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Using ", newLength__211_29), " bytes key length instead of "), dicLength), " in AESV3 encryption?!")));
-dicLength = newLength__211_29;
-}
-}
-}
-}
-}
-sbyte[] documentIDBytes = this.getDocumentIDBytes(documentIDArray);
-bool encryptMetadata = encryption.IsEncryptMetaData();
-sbyte[] userKey = encryption.GetUserKey();
-sbyte[] ownerKey = encryption.GetOwnerKey();
-sbyte[] ue = default!;
-sbyte[] oe = default!;
-global::System.Text.Encoding passwordCharset = global::DripSharp.Runtime.JavaStandardCharsets.ISO88591;
-if (((dicRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5) || (dicRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
-passwordCharset = global::DripSharp.Runtime.JavaStandardCharsets.UTF8;
-ue = encryption.GetUserEncryptionKey();
-oe = encryption.GetOwnerEncryptionKey();
-}
-if ((dicRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6)) {
-password = global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.saslPrepQuery(password);
-}
-global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission currentAccessPermission;
-sbyte[] encryptedKey;
-sbyte[] passwordBytes = global::DripSharp.Runtime.JavaCompat.StringGetBytes(password, passwordCharset);
-bool isOwnerPassword;
-if (this.IsOwnerPassword(passwordBytes, userKey, ownerKey, dicPermissions, documentIDBytes, dicRevision, dicLength, encryptMetadata)) {
-currentAccessPermission = global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission.GetOwnerAccessPermission();
-this.SetCurrentAccessPermission(currentAccessPermission);
-if (((dicRevision != global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5) && (dicRevision != global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
-passwordBytes = this.getUserPassword234(passwordBytes, ownerKey, dicRevision, dicLength);
-}
-isOwnerPassword = true;
-} else {
-if (this.IsUserPassword(passwordBytes, userKey, ownerKey, dicPermissions, documentIDBytes, dicRevision, dicLength, encryptMetadata)) {
-currentAccessPermission = new global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission(dicPermissions);
-currentAccessPermission.SetReadOnly();
-this.SetCurrentAccessPermission(currentAccessPermission);
-isOwnerPassword = false;
-} else {
-throw new global::DripSharp.PdfCarton.Pdmodel.Encryption.InvalidPasswordException("Cannot decrypt PDF, the password is incorrect");
-}
-}
-encryptedKey = this.ComputeEncryptedKey(passwordBytes, ownerKey, userKey, oe!, ue!, dicPermissions, documentIDBytes, dicRevision, dicLength, encryptMetadata, isOwnerPassword);
-if (((dicRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4) && (encryptedKey.Length < 16))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("PDFBOX-5955: padding RC4 key to length 16"));
-encryptedKey = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(encryptedKey, 16);
-}
-this.SetEncryptionKey(encryptedKey);
-if (((dicRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5) || (dicRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
-this.validatePerms(encryption, dicPermissions, encryptMetadata);
-}
-}
+  public override void PrepareForDecryption(global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryption,
+    global::DripSharp.PdfCarton.Cos.COSArray documentIDArray,
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.DecryptionMaterial decryptionMaterial) {
+    if (!((decryptionMaterial is global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardDecryptionMaterial))) {
+      throw new global::System.IO.IOException("Decryption material is not compatible with the document");
+    }
+    int encryptionVersion = encryption.GetVersion();
+    if ((encryptionVersion
+      >= global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4)) {
+      this.SetStreamFilterName(encryption.GetStreamFilterName());
+      this.SetStringFilterName(encryption.GetStringFilterName());
+    }
+    this.SetDecryptMetadata(encryption.IsEncryptMetaData());
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardDecryptionMaterial material
+      = (global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardDecryptionMaterial)(decryptionMaterial!);
+    string password = material.GetPassword();
+    if ((password == default!)) {
+      password = "";
+    }
+    int dicPermissions = encryption.GetPermissions();
+    int dicRevision = encryption.GetRevision();
+    int dicLength = ((encryptionVersion == 1) ? 5 : (encryption.GetLength() / 8));
+    if (((encryptionVersion
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4)
+      || (encryptionVersion
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5))) {
+      global::DripSharp.PdfCarton.Pdmodel.Encryption.PDCryptFilterDictionary stdCryptFilterDictionary
+        = encryption.GetStdCryptFilterDictionary();
+      if ((stdCryptFilterDictionary != default!)) {
+        global::DripSharp.PdfCarton.Cos.COSName cryptFilterMethod
+          = stdCryptFilterDictionary.GetCryptFilterMethod();
+        if (global::DripSharp.PdfCarton.Cos.COSName.Aesv2.Equals(cryptFilterMethod)) {
+          dicLength = (128 / 8);
+          this.SetAES(true);
+          if (encryption.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Length)) {
+            int newLength__195_29 = (encryption.GetLength() / 8);
+            if ((newLength__195_29 < dicLength)) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG,
+                global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Using ",
+                newLength__195_29), " bytes key length instead of "), dicLength),
+                " in AESV2 encryption?!")));
+              dicLength = newLength__195_29;
+            }
+          }
+        }
+        if (global::DripSharp.PdfCarton.Cos.COSName.Aesv3.Equals(cryptFilterMethod)) {
+          dicLength = (256 / 8);
+          this.SetAES(true);
+          if (encryption.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Length)) {
+            int newLength__211_29 = (encryption.GetLength() / 8);
+            if ((newLength__211_29 < dicLength)) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG,
+                global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Using ",
+                newLength__211_29), " bytes key length instead of "), dicLength),
+                " in AESV3 encryption?!")));
+              dicLength = newLength__211_29;
+            }
+          }
+        }
+      }
+    }
+    sbyte[] documentIDBytes = this.getDocumentIDBytes(documentIDArray);
+    bool encryptMetadata = encryption.IsEncryptMetaData();
+    sbyte[] userKey = encryption.GetUserKey();
+    sbyte[] ownerKey = encryption.GetOwnerKey();
+    sbyte[] ue = default!;
+    sbyte[] oe = default!;
+    global::System.Text.Encoding passwordCharset
+      = global::DripSharp.Runtime.JavaStandardCharsets.ISO88591;
+    if (((dicRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)
+      || (dicRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
+      passwordCharset = global::DripSharp.Runtime.JavaStandardCharsets.UTF8;
+      ue = encryption.GetUserEncryptionKey();
+      oe = encryption.GetOwnerEncryptionKey();
+    }
+    if ((dicRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6)) {
+      password = global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.saslPrepQuery(password);
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission currentAccessPermission;
+    sbyte[] encryptedKey;
+    sbyte[] passwordBytes = global::DripSharp.Runtime.JavaCompat.StringGetBytes(password,
+      passwordCharset);
+    bool isOwnerPassword;
+    if (this.IsOwnerPassword(passwordBytes, userKey, ownerKey, dicPermissions, documentIDBytes,
+      dicRevision, dicLength, encryptMetadata)) {
+      currentAccessPermission
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission.GetOwnerAccessPermission();
+      this.SetCurrentAccessPermission(currentAccessPermission);
+      if (((dicRevision
+        != global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)
+        && (dicRevision
+        != global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
+        passwordBytes = this.getUserPassword234(passwordBytes, ownerKey, dicRevision, dicLength);
+      }
+      isOwnerPassword = true;
+    } else {
+      if (this.IsUserPassword(passwordBytes, userKey, ownerKey, dicPermissions, documentIDBytes,
+        dicRevision, dicLength, encryptMetadata)) {
+        currentAccessPermission
+          = new global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission(dicPermissions);
+        currentAccessPermission.SetReadOnly();
+        this.SetCurrentAccessPermission(currentAccessPermission);
+        isOwnerPassword = false;
+      } else {
+        throw new global::DripSharp.PdfCarton.Pdmodel.Encryption.InvalidPasswordException("Cannot decrypt PDF, the password is incorrect");
+      }
+    }
+    encryptedKey = this.ComputeEncryptedKey(passwordBytes, ownerKey, userKey, oe!, ue!,
+      dicPermissions, documentIDBytes, dicRevision, dicLength, encryptMetadata, isOwnerPassword);
+    if (((dicRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4)
+      && (encryptedKey.Length < 16))) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("PDFBOX-5955: padding RC4 key to length 16"));
+      encryptedKey = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(encryptedKey, 16);
+    }
+    this.SetEncryptionKey(encryptedKey);
+    if (((dicRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)
+      || (dicRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
+      this.validatePerms(encryption, dicPermissions, encryptMetadata);
+    }
+  }
 
-private sbyte[] getDocumentIDBytes(global::DripSharp.PdfCarton.Cos.COSArray documentIDArray) {
-sbyte[] documentIDBytes;
-if (((documentIDArray != default!) && (documentIDArray.Size() >= 1))) {
-global::DripSharp.PdfCarton.Cos.COSString id = (global::DripSharp.PdfCarton.Cos.COSString)(documentIDArray.GetObject(0)!);
-documentIDBytes = id.GetBytes();
-} else {
-documentIDBytes = new sbyte[0];
-}
-return documentIDBytes;
-}
+  private sbyte[] getDocumentIDBytes(global::DripSharp.PdfCarton.Cos.COSArray documentIDArray) {
+    sbyte[] documentIDBytes;
+    if (((documentIDArray != default!) && (documentIDArray.Size() >= 1))) {
+      global::DripSharp.PdfCarton.Cos.COSString id
+        = (global::DripSharp.PdfCarton.Cos.COSString)(documentIDArray.GetObject(0)!);
+      documentIDBytes = id.GetBytes();
+    } else {
+      documentIDBytes = new sbyte[0];
+    }
+    return documentIDBytes;
+  }
 
-private void validatePerms(global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryption, int dicPermissions, bool encryptMetadata) {
-try {
-global::DripSharp.Runtime.JavaCipher cipher = global::DripSharp.Runtime.JavaCipher.GetInstance("AES/ECB/NoPadding");
-cipher.Init(global::DripSharp.Runtime.JavaCipher.DECRYPT_MODE, new global::DripSharp.Runtime.JavaSecretKeySpec(this.GetEncryptionKey(), "AES"));
-sbyte[] perms = cipher.DoFinal(encryption.GetPerms());
-if (((((int)(perms[9]) != (int)('a')) || ((int)(perms[10]) != (int)('d'))) || ((int)(perms[11]) != (int)('b')))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("Verification of permissions failed (constant)"));
-}
-int permsP = ((((perms[0] & 255) | ((perms[1] & 255) << unchecked((int)(8)))) | ((perms[2] & 255) << unchecked((int)(16)))) | ((perms[3] & 255) << unchecked((int)(24))));
-if ((permsP != dicPermissions)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Verification of permissions failed (", global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%08X", permsP)), " != "), global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%08X", dicPermissions)), ")")));
-}
-if (((encryptMetadata && ((int)(perms[8]) != (int)('T'))) || (!encryptMetadata && ((int)(perms[8]) != (int)('F'))))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("Verification of permissions failed (EncryptMetadata)"));
-}
-} catch (global::System.Security.Cryptography.CryptographicException e) {
-global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.logIfStrongEncryptionMissing();
-throw new global::System.IO.IOException(null, e);
-}
-}
+  private void validatePerms(global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryption,
+    int dicPermissions, bool encryptMetadata) {
+    try {
+      global::DripSharp.Runtime.JavaCipher cipher
+        = global::DripSharp.Runtime.JavaCipher.GetInstance("AES/ECB/NoPadding");
+      cipher.Init(global::DripSharp.Runtime.JavaCipher.DECRYPT_MODE,
+        new global::DripSharp.Runtime.JavaSecretKeySpec(this.GetEncryptionKey(), "AES"));
+      sbyte[] perms = cipher.DoFinal(encryption.GetPerms());
+      if (((((int)(perms[9]) != (int)'a') || ((int)(perms[10]) != (int)'d')) || ((int)(perms[11])
+        != (int)'b'))) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf("Verification of permissions failed (constant)"));
+      }
+      int permsP
+        = ((((perms[0] & 255) | ((perms[1] & 255) << unchecked((int)(8)))) | ((perms[2] & 255) << unchecked((int)(16)))) | ((perms[3] & 255) << unchecked((int)(24))));
+      if ((permsP != dicPermissions)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Verification of permissions failed (",
+          global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%08X", permsP)), " != "),
+          global::DripSharp.Runtime.JavaCompat.JavaStringFormat("%08X", dicPermissions)), ")")));
+      }
+      if (((encryptMetadata && ((int)(perms[8]) != (int)'T')) || (!encryptMetadata
+        && ((int)(perms[8]) != (int)'F')))) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf("Verification of permissions failed (EncryptMetadata)"));
+      }
+    } catch (global::System.Security.Cryptography.CryptographicException e) {
+      global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.logIfStrongEncryptionMissing();
+      throw new global::System.IO.IOException(null, e);
+    }
+  }
 
-public override void PrepareDocumentForEncryption(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryptionDictionary = document.GetEncryption();
-if ((encryptionDictionary == default!)) {
-encryptionDictionary = new global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption();
-}
-int version = this.ComputeVersionNumber();
-int revision = this.computeRevisionNumber(version);
-encryptionDictionary.SetFilter(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.Filter);
-encryptionDictionary.SetVersion(version);
-if (((version != global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4) && (version != global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5))) {
-encryptionDictionary.RemoveV45filters();
-}
-encryptionDictionary.SetRevision(revision);
-encryptionDictionary.SetLength(this.GetKeyLength());
-global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy protectionPolicy = this.GetProtectionPolicy();
-string ownerPassword = protectionPolicy.GetOwnerPassword();
-string userPassword = protectionPolicy.GetUserPassword();
-if ((ownerPassword == default!)) {
-ownerPassword = "";
-}
-if ((userPassword == default!)) {
-userPassword = "";
-}
-if ((ownerPassword.Length == 0)) {
-ownerPassword = userPassword;
-}
-int permissionInt = protectionPolicy.GetPermissions().GetPermissionBytes();
-encryptionDictionary.SetPermissions(permissionInt);
-int length = (this.GetKeyLength() / 8);
-if ((revision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6)) {
-ownerPassword = global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.saslPrepStored(ownerPassword);
-userPassword = global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.saslPrepStored(userPassword);
-this.prepareEncryptionDictRev6(ownerPassword, userPassword, encryptionDictionary, permissionInt);
-} else {
-this.prepareEncryptionDictRev234(ownerPassword, userPassword, encryptionDictionary, permissionInt, document, revision, length);
-}
-document.SetEncryptionDictionary(encryptionDictionary);
-document.GetDocument().SetEncryptionDictionary(encryptionDictionary.GetCOSObject());
-}
+  public override void PrepareDocumentForEncryption(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryptionDictionary
+      = document.GetEncryption();
+    if ((encryptionDictionary == default!)) {
+      encryptionDictionary = new global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption();
+    }
+    int version = this.ComputeVersionNumber();
+    int revision = this.computeRevisionNumber(version);
+    encryptionDictionary.SetFilter(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.Filter);
+    encryptionDictionary.SetVersion(version);
+    if (((version
+      != global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4)
+      && (version
+      != global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5))) {
+      encryptionDictionary.RemoveV45filters();
+    }
+    encryptionDictionary.SetRevision(revision);
+    encryptionDictionary.SetLength(this.GetKeyLength());
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy protectionPolicy
+      = this.GetProtectionPolicy();
+    string ownerPassword = protectionPolicy.GetOwnerPassword();
+    string userPassword = protectionPolicy.GetUserPassword();
+    if ((ownerPassword == default!)) {
+      ownerPassword = "";
+    }
+    if ((userPassword == default!)) {
+      userPassword = "";
+    }
+    if ((ownerPassword.Length == 0)) {
+      ownerPassword = userPassword;
+    }
+    int permissionInt = protectionPolicy.GetPermissions().GetPermissionBytes();
+    encryptionDictionary.SetPermissions(permissionInt);
+    int length = (this.GetKeyLength() / 8);
+    if ((revision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6)) {
+      ownerPassword
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.saslPrepStored(ownerPassword);
+      userPassword
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.SaslPrep.saslPrepStored(userPassword);
+      this.prepareEncryptionDictRev6(ownerPassword, userPassword, encryptionDictionary,
+        permissionInt);
+    } else {
+      this.prepareEncryptionDictRev234(ownerPassword, userPassword, encryptionDictionary,
+        permissionInt, document, revision, length);
+    }
+    document.SetEncryptionDictionary(encryptionDictionary);
+    document.GetDocument().SetEncryptionDictionary(encryptionDictionary.GetCOSObject());
+  }
 
-private void prepareEncryptionDictRev6(string ownerPassword, string userPassword, global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryptionDictionary, int permissionInt) {
-try {
-global::DripSharp.Runtime.JavaCipher cipher = global::DripSharp.Runtime.JavaCipher.GetInstance("AES/CBC/NoPadding");
-this.SetEncryptionKey(new sbyte[32]);
-global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextBytes(this.GetEncryptionKey());
-sbyte[] userPasswordBytes = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.truncate127(global::DripSharp.Runtime.JavaCompat.StringGetBytes(userPassword, global::DripSharp.Runtime.JavaStandardCharsets.UTF8));
-sbyte[] userValidationSalt = new sbyte[8];
-sbyte[] userKeySalt = new sbyte[8];
-global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextBytes(userValidationSalt);
-global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextBytes(userKeySalt);
-sbyte[] hashU = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeHash2B(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(userPasswordBytes, userValidationSalt), userPasswordBytes, (sbyte[])default!);
-sbyte[] u = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(hashU, userValidationSalt, userKeySalt);
-sbyte[] hashUE = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeHash2B(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(userPasswordBytes, userKeySalt), userPasswordBytes, (sbyte[])default!);
-cipher.Init(global::DripSharp.Runtime.JavaCipher.ENCRYPT_MODE, new global::DripSharp.Runtime.JavaSecretKeySpec(hashUE, "AES"), new global::DripSharp.Runtime.JavaIvParameterSpec(new sbyte[16]));
-sbyte[] ue = cipher.DoFinal(this.GetEncryptionKey());
-sbyte[] ownerPasswordBytes = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.truncate127(global::DripSharp.Runtime.JavaCompat.StringGetBytes(ownerPassword, global::DripSharp.Runtime.JavaStandardCharsets.UTF8));
-sbyte[] ownerValidationSalt = new sbyte[8];
-sbyte[] ownerKeySalt = new sbyte[8];
-global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextBytes(ownerValidationSalt);
-global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextBytes(ownerKeySalt);
-sbyte[] hashO = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeHash2B(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(ownerPasswordBytes, ownerValidationSalt, u), ownerPasswordBytes, u);
-sbyte[] o = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(hashO, ownerValidationSalt, ownerKeySalt);
-sbyte[] hashOE = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeHash2B(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(ownerPasswordBytes, ownerKeySalt, u), ownerPasswordBytes, u);
-cipher.Init(global::DripSharp.Runtime.JavaCipher.ENCRYPT_MODE, new global::DripSharp.Runtime.JavaSecretKeySpec(hashOE, "AES"), new global::DripSharp.Runtime.JavaIvParameterSpec(new sbyte[16]));
-sbyte[] oe = cipher.DoFinal(this.GetEncryptionKey());
-encryptionDictionary.SetUserKey(u);
-encryptionDictionary.SetUserEncryptionKey(ue);
-encryptionDictionary.SetOwnerKey(o);
-encryptionDictionary.SetOwnerEncryptionKey(oe);
-this.prepareEncryptionDictAES(encryptionDictionary, global::DripSharp.PdfCarton.Cos.COSName.Aesv3);
-sbyte[] perms = new sbyte[16];
-perms[0] = unchecked((sbyte)(unchecked((sbyte)(permissionInt))));
-perms[1] = unchecked((sbyte)(unchecked((sbyte)((permissionInt >>> unchecked((int)(8)))))));
-perms[2] = unchecked((sbyte)(unchecked((sbyte)((permissionInt >>> unchecked((int)(16)))))));
-perms[3] = unchecked((sbyte)(unchecked((sbyte)((permissionInt >>> unchecked((int)(24)))))));
-perms[4] = unchecked((sbyte)(255));
-perms[5] = unchecked((sbyte)(255));
-perms[6] = unchecked((sbyte)(255));
-perms[7] = unchecked((sbyte)(255));
-perms[8] = unchecked((sbyte)('T'));
-perms[9] = unchecked((sbyte)('a'));
-perms[10] = unchecked((sbyte)('d'));
-perms[11] = unchecked((sbyte)('b'));
-for (int i = 12; (i <= 15); i++) {
-perms[i] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextInt()))));
-}
-cipher.Init(global::DripSharp.Runtime.JavaCipher.ENCRYPT_MODE, new global::DripSharp.Runtime.JavaSecretKeySpec(this.GetEncryptionKey(), "AES"), new global::DripSharp.Runtime.JavaIvParameterSpec(new sbyte[16]));
-sbyte[] permsEnc = cipher.DoFinal(perms);
-encryptionDictionary.SetPerms(permsEnc);
-} catch (global::System.Security.Cryptography.CryptographicException e) {
-global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.logIfStrongEncryptionMissing();
-throw new global::System.IO.IOException(null, e);
-}
-}
+  private void prepareEncryptionDictRev6(string ownerPassword, string userPassword,
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryptionDictionary,
+    int permissionInt) {
+    try {
+      global::DripSharp.Runtime.JavaCipher cipher
+        = global::DripSharp.Runtime.JavaCipher.GetInstance("AES/CBC/NoPadding");
+      this.SetEncryptionKey(new sbyte[32]);
+      global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextBytes(this.GetEncryptionKey());
+      sbyte[] userPasswordBytes
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.truncate127(global::DripSharp.Runtime.JavaCompat.StringGetBytes(userPassword,
+        global::DripSharp.Runtime.JavaStandardCharsets.UTF8));
+      sbyte[] userValidationSalt = new sbyte[8];
+      sbyte[] userKeySalt = new sbyte[8];
+      global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextBytes(userValidationSalt);
+      global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextBytes(userKeySalt);
+      sbyte[] hashU
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeHash2B(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(userPasswordBytes,
+        userValidationSalt), userPasswordBytes, (sbyte[])default!);
+      sbyte[] u
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(hashU,
+        userValidationSalt, userKeySalt);
+      sbyte[] hashUE
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeHash2B(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(userPasswordBytes,
+        userKeySalt), userPasswordBytes, (sbyte[])default!);
+      cipher.Init(global::DripSharp.Runtime.JavaCipher.ENCRYPT_MODE,
+        new global::DripSharp.Runtime.JavaSecretKeySpec(hashUE, "AES"),
+        new global::DripSharp.Runtime.JavaIvParameterSpec(new sbyte[16]));
+      sbyte[] ue = cipher.DoFinal(this.GetEncryptionKey());
+      sbyte[] ownerPasswordBytes
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.truncate127(global::DripSharp.Runtime.JavaCompat.StringGetBytes(ownerPassword,
+        global::DripSharp.Runtime.JavaStandardCharsets.UTF8));
+      sbyte[] ownerValidationSalt = new sbyte[8];
+      sbyte[] ownerKeySalt = new sbyte[8];
+      global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextBytes(ownerValidationSalt);
+      global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextBytes(ownerKeySalt);
+      sbyte[] hashO
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeHash2B(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(ownerPasswordBytes,
+        ownerValidationSalt, u), ownerPasswordBytes, u);
+      sbyte[] o
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(hashO,
+        ownerValidationSalt, ownerKeySalt);
+      sbyte[] hashOE
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeHash2B(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(ownerPasswordBytes,
+        ownerKeySalt, u), ownerPasswordBytes, u);
+      cipher.Init(global::DripSharp.Runtime.JavaCipher.ENCRYPT_MODE,
+        new global::DripSharp.Runtime.JavaSecretKeySpec(hashOE, "AES"),
+        new global::DripSharp.Runtime.JavaIvParameterSpec(new sbyte[16]));
+      sbyte[] oe = cipher.DoFinal(this.GetEncryptionKey());
+      encryptionDictionary.SetUserKey(u);
+      encryptionDictionary.SetUserEncryptionKey(ue);
+      encryptionDictionary.SetOwnerKey(o);
+      encryptionDictionary.SetOwnerEncryptionKey(oe);
+      this.prepareEncryptionDictAES(encryptionDictionary,
+        global::DripSharp.PdfCarton.Cos.COSName.Aesv3);
+      sbyte[] perms = new sbyte[16];
+      perms[0] = unchecked((sbyte)(unchecked((sbyte)(permissionInt))));
+      perms[1] = unchecked((sbyte)(unchecked((sbyte)((permissionInt >>> unchecked((int)(8)))))));
+      perms[2] = unchecked((sbyte)(unchecked((sbyte)((permissionInt >>> unchecked((int)(16)))))));
+      perms[3] = unchecked((sbyte)(unchecked((sbyte)((permissionInt >>> unchecked((int)(24)))))));
+      perms[4] = unchecked((sbyte)(255));
+      perms[5] = unchecked((sbyte)(255));
+      perms[6] = unchecked((sbyte)(255));
+      perms[7] = unchecked((sbyte)(255));
+      perms[8] = unchecked((sbyte)('T'));
+      perms[9] = unchecked((sbyte)('a'));
+      perms[10] = unchecked((sbyte)('d'));
+      perms[11] = unchecked((sbyte)('b'));
+      for (int i = 12; (i <= 15); i++) {
+        perms[i]
+          = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.RANDOM.NextInt()))));
+      }
+      cipher.Init(global::DripSharp.Runtime.JavaCipher.ENCRYPT_MODE,
+        new global::DripSharp.Runtime.JavaSecretKeySpec(this.GetEncryptionKey(), "AES"),
+        new global::DripSharp.Runtime.JavaIvParameterSpec(new sbyte[16]));
+      sbyte[] permsEnc = cipher.DoFinal(perms);
+      encryptionDictionary.SetPerms(permsEnc);
+    } catch (global::System.Security.Cryptography.CryptographicException e) {
+      global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.logIfStrongEncryptionMissing();
+      throw new global::System.IO.IOException(null, e);
+    }
+  }
 
-private void prepareEncryptionDictRev234(string ownerPassword, string userPassword, global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryptionDictionary, int permissionInt, global::DripSharp.PdfCarton.Pdmodel.PDDocument document, int revision, int length) {
-global::DripSharp.PdfCarton.Cos.COSArray idArray = document.GetDocument().GetDocumentID();
-sbyte[] userPasswordBytes = global::DripSharp.Runtime.JavaCompat.StringGetBytes(userPassword, global::DripSharp.Runtime.JavaStandardCharsets.ISO88591);
-sbyte[] ownerPasswordBytes = global::DripSharp.Runtime.JavaCompat.StringGetBytes(ownerPassword, global::DripSharp.Runtime.JavaStandardCharsets.ISO88591);
-if (((idArray == default!) || (idArray.Size() < 2))) {
-global::DripSharp.Runtime.JavaMessageDigest md = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getMD5();
-global::System.Numerics.BigInteger time = new global::System.Numerics.BigInteger(global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
-md.Update(global::DripSharp.Runtime.JavaCompat.BigIntegerToByteArray(time));
-md.Update(ownerPasswordBytes);
-md.Update(userPasswordBytes);
-md.Update(global::DripSharp.Runtime.JavaCompat.StringGetBytes(global::DripSharp.Runtime.JavaCompat.StringValueOf(document.GetDocument()), global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
-sbyte[] id__534_20 = md.Digest(global::DripSharp.Runtime.JavaCompat.StringGetBytes(global::DripSharp.Runtime.JavaCompat.StringValueOf(this), global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
-global::DripSharp.PdfCarton.Cos.COSString idString = new global::DripSharp.PdfCarton.Cos.COSString(id__534_20);
-idArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-idArray.Add(idString);
-idArray.Add(idString);
-document.GetDocument().SetDocumentID(idArray);
-}
-global::DripSharp.PdfCarton.Cos.COSString id__543_19 = (global::DripSharp.PdfCarton.Cos.COSString)(idArray.GetObject(0)!);
-sbyte[] ownerBytes = this.ComputeOwnerPassword(ownerPasswordBytes, userPasswordBytes, revision, length);
-sbyte[] idBytes = id__543_19.GetBytes();
-sbyte[] userBytes = this.ComputeUserPassword(userPasswordBytes, ownerBytes, permissionInt, idBytes, revision, length, true);
-this.SetEncryptionKey(this.computeEncryptedKeyRev234(userPasswordBytes, ownerBytes, permissionInt, idBytes, true, length, revision));
-encryptionDictionary.SetOwnerKey(ownerBytes);
-encryptionDictionary.SetUserKey(userBytes);
-if ((revision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4)) {
-this.prepareEncryptionDictAES(encryptionDictionary, global::DripSharp.PdfCarton.Cos.COSName.Aesv2);
-}
-}
+  private void prepareEncryptionDictRev234(string ownerPassword, string userPassword,
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryptionDictionary,
+    int permissionInt, global::DripSharp.PdfCarton.Pdmodel.PDDocument document, int revision,
+    int length) {
+    global::DripSharp.PdfCarton.Cos.COSArray idArray = document.GetDocument().GetDocumentID();
+    sbyte[] userPasswordBytes = global::DripSharp.Runtime.JavaCompat.StringGetBytes(userPassword,
+      global::DripSharp.Runtime.JavaStandardCharsets.ISO88591);
+    sbyte[] ownerPasswordBytes = global::DripSharp.Runtime.JavaCompat.StringGetBytes(ownerPassword,
+      global::DripSharp.Runtime.JavaStandardCharsets.ISO88591);
+    if (((idArray == default!) || (idArray.Size() < 2))) {
+      global::DripSharp.Runtime.JavaMessageDigest md
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getMD5();
+      global::System.Numerics.BigInteger time
+        = new global::System.Numerics.BigInteger(global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+      md.Update(global::DripSharp.Runtime.JavaCompat.BigIntegerToByteArray(time));
+      md.Update(ownerPasswordBytes);
+      md.Update(userPasswordBytes);
+      md.Update(global::DripSharp.Runtime.JavaCompat.StringGetBytes(global::DripSharp.Runtime.JavaCompat.StringValueOf(document.GetDocument()),
+        global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+      sbyte[] id__534_20
+        = md.Digest(global::DripSharp.Runtime.JavaCompat.StringGetBytes(global::DripSharp.Runtime.JavaCompat.StringValueOf(this),
+        global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+      global::DripSharp.PdfCarton.Cos.COSString idString
+        = new global::DripSharp.PdfCarton.Cos.COSString(id__534_20);
+      idArray = new global::DripSharp.PdfCarton.Cos.COSArray();
+      idArray.Add(idString);
+      idArray.Add(idString);
+      document.GetDocument().SetDocumentID(idArray);
+    }
+    global::DripSharp.PdfCarton.Cos.COSString id__543_19
+      = (global::DripSharp.PdfCarton.Cos.COSString)(idArray.GetObject(0)!);
+    sbyte[] ownerBytes = this.ComputeOwnerPassword(ownerPasswordBytes, userPasswordBytes, revision,
+      length);
+    sbyte[] idBytes = id__543_19.GetBytes();
+    sbyte[] userBytes = this.ComputeUserPassword(userPasswordBytes, ownerBytes, permissionInt,
+      idBytes, revision, length, true);
+    this.SetEncryptionKey(this.computeEncryptedKeyRev234(userPasswordBytes, ownerBytes,
+      permissionInt, idBytes, true, length, revision));
+    encryptionDictionary.SetOwnerKey(ownerBytes);
+    encryptionDictionary.SetUserKey(userBytes);
+    if ((revision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4)) {
+      this.prepareEncryptionDictAES(encryptionDictionary,
+        global::DripSharp.PdfCarton.Cos.COSName.Aesv2);
+    }
+  }
 
-private void prepareEncryptionDictAES(global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryptionDictionary, global::DripSharp.PdfCarton.Cos.COSName aesVName) {
-global::DripSharp.PdfCarton.Pdmodel.Encryption.PDCryptFilterDictionary cryptFilterDictionary = new global::DripSharp.PdfCarton.Pdmodel.Encryption.PDCryptFilterDictionary();
-cryptFilterDictionary.SetCryptFilterMethod(aesVName);
-cryptFilterDictionary.SetLength(this.GetKeyLength());
-encryptionDictionary.SetStdCryptFilterDictionary(cryptFilterDictionary);
-encryptionDictionary.SetStreamFilterName(global::DripSharp.PdfCarton.Cos.COSName.StdCf);
-encryptionDictionary.SetStringFilterName(global::DripSharp.PdfCarton.Cos.COSName.StdCf);
-this.SetAES(true);
-}
+  private void prepareEncryptionDictAES(global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryptionDictionary,
+    global::DripSharp.PdfCarton.Cos.COSName aesVName) {
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.PDCryptFilterDictionary cryptFilterDictionary
+      = new global::DripSharp.PdfCarton.Pdmodel.Encryption.PDCryptFilterDictionary();
+    cryptFilterDictionary.SetCryptFilterMethod(aesVName);
+    cryptFilterDictionary.SetLength(this.GetKeyLength());
+    encryptionDictionary.SetStdCryptFilterDictionary(cryptFilterDictionary);
+    encryptionDictionary.SetStreamFilterName(global::DripSharp.PdfCarton.Cos.COSName.StdCf);
+    encryptionDictionary.SetStringFilterName(global::DripSharp.PdfCarton.Cos.COSName.StdCf);
+    this.SetAES(true);
+  }
 
-public bool IsOwnerPassword(sbyte[] ownerPassword, sbyte[] user, sbyte[] owner, int permissions, sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata) {
-switch (encRevision) {
-case var __case_598_14_0 when __case_598_14_0 == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2:
-case var __case_599_14_0 when __case_599_14_0 == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3:
-case var __case_600_14_0 when __case_600_14_0 == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4:
-return this.isOwnerPassword234(ownerPassword, user, owner, permissions, id, encRevision, keyLengthInBytes, encryptMetadata);
-case var __case_603_14_0 when __case_603_14_0 == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5:
-case var __case_604_14_0 when __case_604_14_0 == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6:
-return this.isOwnerPassword56(ownerPassword, user, owner, encRevision);
-default:
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unknown Encryption Revision ", encRevision));
-}
-}
+  public bool IsOwnerPassword(sbyte[] ownerPassword, sbyte[] user, sbyte[] owner, int permissions,
+    sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata) {
+    switch (encRevision) {
+      case var __case_598_14_0 when __case_598_14_0
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2:
+      case var __case_599_14_0 when __case_599_14_0
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3:
+      case var __case_600_14_0 when __case_600_14_0
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4:
+      return this.isOwnerPassword234(ownerPassword, user, owner, permissions, id, encRevision,
+        keyLengthInBytes, encryptMetadata);
+      case var __case_603_14_0 when __case_603_14_0
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5:
+      case var __case_604_14_0 when __case_604_14_0
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6:
+      return this.isOwnerPassword56(ownerPassword, user, owner, encRevision);
+      default:
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unknown Encryption Revision ",
+          encRevision));
+    }
+  }
 
-private bool isOwnerPassword234(sbyte[] ownerPassword, sbyte[] user, sbyte[] owner, int permissions, sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata) {
-sbyte[] userPassword = this.getUserPassword234(ownerPassword, owner, encRevision, keyLengthInBytes);
-return this.isUserPassword234(userPassword, user, owner, permissions, id, encRevision, keyLengthInBytes, encryptMetadata);
-}
+  private bool isOwnerPassword234(sbyte[] ownerPassword, sbyte[] user, sbyte[] owner,
+    int permissions, sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata) {
+    sbyte[] userPassword = this.getUserPassword234(ownerPassword, owner, encRevision,
+      keyLengthInBytes);
+    return this.isUserPassword234(userPassword, user, owner, permissions, id, encRevision,
+      keyLengthInBytes, encryptMetadata);
+  }
 
-private bool isOwnerPassword56(sbyte[] ownerPassword, sbyte[] user, sbyte[] owner, int encRevision) {
-if ((owner.Length < 40)) {
-throw new global::System.IO.IOException("Owner password is too short");
-}
-sbyte[] truncatedOwnerPassword = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.truncate127(ownerPassword);
-sbyte[] oHash = new sbyte[32];
-sbyte[] oValidationSalt = new sbyte[8];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(owner, 0, oHash, 0, 32);
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(owner, 32, oValidationSalt, 0, 8);
-if ((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)) {
-return global::DripSharp.Runtime.JavaMessageDigest.IsEqual(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeSHA256(truncatedOwnerPassword, oValidationSalt, user), oHash);
-} else {
-return global::DripSharp.Runtime.JavaMessageDigest.IsEqual(this.computeHash2A(truncatedOwnerPassword, oValidationSalt, user), oHash);
-}
-}
+  private bool isOwnerPassword56(sbyte[] ownerPassword, sbyte[] user, sbyte[] owner,
+    int encRevision) {
+    if ((owner.Length < 40)) {
+      throw new global::System.IO.IOException("Owner password is too short");
+    }
+    sbyte[] truncatedOwnerPassword
+      = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.truncate127(ownerPassword);
+    sbyte[] oHash = new sbyte[32];
+    sbyte[] oValidationSalt = new sbyte[8];
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(owner, 0, oHash, 0, 32);
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(owner, 32, oValidationSalt, 0, 8);
+    if ((encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)) {
+      return global::DripSharp.Runtime.JavaMessageDigest.IsEqual(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeSHA256(truncatedOwnerPassword,
+        oValidationSalt, user), oHash);
+    } else {
+      return global::DripSharp.Runtime.JavaMessageDigest.IsEqual(this.computeHash2A(truncatedOwnerPassword,
+        oValidationSalt, user), oHash);
+    }
+  }
 
-public sbyte[] GetUserPassword(sbyte[] ownerPassword, sbyte[] owner, int encRevision, int length) {
-if (((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5) || (encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
-return new sbyte[0];
-} else {
-return this.getUserPassword234(ownerPassword, owner, encRevision, length);
-}
-}
+  public sbyte[] GetUserPassword(sbyte[] ownerPassword, sbyte[] owner, int encRevision,
+    int length) {
+    if (((encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)
+      || (encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
+      return new sbyte[0];
+    } else {
+      return this.getUserPassword234(ownerPassword, owner, encRevision, length);
+    }
+  }
 
-private sbyte[] getUserPassword234(sbyte[] ownerPassword, sbyte[] owner, int encRevision, int length) {
-global::DripSharp.Runtime.JavaByteArrayOutputStream result = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-sbyte[] rc4Key = this.computeRC4key(ownerPassword, encRevision, length);
-if ((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2)) {
-this.EncryptDataRC4(rc4Key, owner, result);
-} else {
-if (((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3) || (encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4))) {
-sbyte[] iterationKey = new sbyte[rc4Key.Length];
-sbyte[] otemp = new sbyte[owner.Length];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(owner, 0, otemp, 0, owner.Length);
-for (int i = 19; (i >= 0); i--) {
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(rc4Key, 0, iterationKey, 0, rc4Key.Length);
-for (int j = 0; (j < iterationKey.Length); j++) {
-iterationKey[j] = unchecked((sbyte)(unchecked((sbyte)((iterationKey[j] ^ unchecked((sbyte)(i)))))));
-}
-global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(result);
-this.EncryptDataRC4(iterationKey, otemp, result);
-otemp = global::DripSharp.Runtime.JavaCompat.ToSignedBytes(result);
-}
-}
-}
-return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(result);
-}
+  private sbyte[] getUserPassword234(sbyte[] ownerPassword, sbyte[] owner, int encRevision,
+    int length) {
+    global::DripSharp.Runtime.JavaByteArrayOutputStream result
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
+    sbyte[] rc4Key = this.computeRC4key(ownerPassword, encRevision, length);
+    if ((encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2)) {
+      this.EncryptDataRC4(rc4Key, owner, result);
+    } else {
+      if (((encRevision
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3)
+        || (encRevision
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4))) {
+        sbyte[] iterationKey = new sbyte[rc4Key.Length];
+        sbyte[] otemp = new sbyte[owner.Length];
+        global::DripSharp.Runtime.JavaCompat.ArrayCopy(owner, 0, otemp, 0, owner.Length);
+        for (int i = 19; (i >= 0); i--) {
+          global::DripSharp.Runtime.JavaCompat.ArrayCopy(rc4Key, 0, iterationKey, 0, rc4Key.Length);
+          for (int j = 0; (j < iterationKey.Length); j++) {
+            iterationKey[j]
+              = unchecked((sbyte)(unchecked((sbyte)((iterationKey[j] ^ unchecked((sbyte)(i)))))));
+          }
+          global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(result);
+          this.EncryptDataRC4(iterationKey, otemp, result);
+          otemp = global::DripSharp.Runtime.JavaCompat.ToSignedBytes(result);
+        }
+      }
+    }
+    return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(result);
+  }
 
-public sbyte[] ComputeEncryptedKey(sbyte[] password, sbyte[] o, sbyte[] u, sbyte[] oe, sbyte[] ue, int permissions, sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata, bool isOwnerPassword) {
-if (((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5) || (encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
-return this.computeEncryptedKeyRev56(password, isOwnerPassword, o, u, oe, ue, encRevision);
-} else {
-return this.computeEncryptedKeyRev234(password, o, permissions, id, encryptMetadata, keyLengthInBytes, encRevision);
-}
-}
+  public sbyte[] ComputeEncryptedKey(sbyte[] password, sbyte[] o, sbyte[] u, sbyte[] oe, sbyte[] ue,
+    int permissions, sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata,
+    bool isOwnerPassword) {
+    if (((encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)
+      || (encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
+      return this.computeEncryptedKeyRev56(password, isOwnerPassword, o, u, oe, ue, encRevision);
+    } else {
+      return this.computeEncryptedKeyRev234(password, o, permissions, id, encryptMetadata,
+        keyLengthInBytes, encRevision);
+    }
+  }
 
-private sbyte[] computeEncryptedKeyRev234(sbyte[] password, sbyte[] o, int permissions, sbyte[] id, bool encryptMetadata, int length, int encRevision) {
-sbyte[] padded = this.truncateOrPad(password);
-global::DripSharp.Runtime.JavaMessageDigest md = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getMD5();
-md.Update(padded);
-md.Update(o);
-md.Update(unchecked((sbyte)(unchecked((sbyte)(permissions)))));
-md.Update(unchecked((sbyte)(unchecked((sbyte)((permissions >>> unchecked((int)(8))))))));
-md.Update(unchecked((sbyte)(unchecked((sbyte)((permissions >>> unchecked((int)(16))))))));
-md.Update(unchecked((sbyte)(unchecked((sbyte)((permissions >>> unchecked((int)(24))))))));
-md.Update(id);
-if (((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4) && !encryptMetadata)) {
-md.Update(new sbyte[] { unchecked((sbyte)(255)), unchecked((sbyte)(255)), unchecked((sbyte)(255)), unchecked((sbyte)(255)) });
-}
-sbyte[] digest = md.Digest();
-if (((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3) || (encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4))) {
-for (int i = 0; (i < 50); i++) {
-md.Update(digest, 0, length);
-digest = md.Digest();
-}
-}
-sbyte[] result = new sbyte[length];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(digest, 0, result, 0, length);
-return result;
-}
+  private sbyte[] computeEncryptedKeyRev234(sbyte[] password, sbyte[] o, int permissions,
+    sbyte[] id, bool encryptMetadata, int length, int encRevision) {
+    sbyte[] padded = this.truncateOrPad(password);
+    global::DripSharp.Runtime.JavaMessageDigest md
+      = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getMD5();
+    md.Update(padded);
+    md.Update(o);
+    md.Update(unchecked((sbyte)(unchecked((sbyte)(permissions)))));
+    md.Update(unchecked((sbyte)(unchecked((sbyte)((permissions >>> unchecked((int)(8))))))));
+    md.Update(unchecked((sbyte)(unchecked((sbyte)((permissions >>> unchecked((int)(16))))))));
+    md.Update(unchecked((sbyte)(unchecked((sbyte)((permissions >>> unchecked((int)(24))))))));
+    md.Update(id);
+    if (((encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4)
+      && !encryptMetadata)) {
+      md.Update(new sbyte[] { unchecked((sbyte)(255)), unchecked((sbyte)(255)),
+          unchecked((sbyte)(255)), unchecked((sbyte)(255)) });
+    }
+    sbyte[] digest = md.Digest();
+    if (((encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3)
+      || (encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4))) {
+      for (int i = 0; (i < 50); i++) {
+        md.Update(digest, 0, length);
+        digest = md.Digest();
+      }
+    }
+    sbyte[] result = new sbyte[length];
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(digest, 0, result, 0, length);
+    return result;
+  }
 
-private sbyte[] computeEncryptedKeyRev56(sbyte[] password, bool isOwnerPassword, sbyte[] o, sbyte[] u, sbyte[] oe, sbyte[] ue, int encRevision) {
-sbyte[] hash;
-sbyte[] fileKeyEnc;
-if (isOwnerPassword) {
-if ((oe == default!)) {
-throw new global::System.IO.IOException("/Encrypt/OE entry is missing");
-}
-sbyte[] oKeySalt = new sbyte[8];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(o, 40, oKeySalt, 0, 8);
-if ((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)) {
-hash = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeSHA256(password, oKeySalt, u);
-} else {
-hash = this.computeHash2A(password, oKeySalt, u);
-}
-fileKeyEnc = oe;
-} else {
-if ((ue == default!)) {
-throw new global::System.IO.IOException("/Encrypt/UE entry is missing");
-}
-sbyte[] uKeySalt = new sbyte[8];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(u, 40, uKeySalt, 0, 8);
-if ((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)) {
-hash = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeSHA256(password, uKeySalt, (sbyte[])default!);
-} else {
-hash = this.computeHash2A(password, uKeySalt, (sbyte[])default!);
-}
-fileKeyEnc = ue;
-}
-try {
-global::DripSharp.Runtime.JavaCipher cipher = global::DripSharp.Runtime.JavaCipher.GetInstance("AES/CBC/NoPadding");
-cipher.Init(global::DripSharp.Runtime.JavaCipher.DECRYPT_MODE, new global::DripSharp.Runtime.JavaSecretKeySpec(hash, "AES"), new global::DripSharp.Runtime.JavaIvParameterSpec(new sbyte[16]));
-return cipher.DoFinal(fileKeyEnc);
-} catch (global::System.Security.Cryptography.CryptographicException e) {
-global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.logIfStrongEncryptionMissing();
-throw new global::System.IO.IOException(null, e);
-}
-}
+  private sbyte[] computeEncryptedKeyRev56(sbyte[] password, bool isOwnerPassword, sbyte[] o,
+    sbyte[] u, sbyte[] oe, sbyte[] ue, int encRevision) {
+    sbyte[] hash;
+    sbyte[] fileKeyEnc;
+    if (isOwnerPassword) {
+      if ((oe == default!)) {
+        throw new global::System.IO.IOException("/Encrypt/OE entry is missing");
+      }
+      sbyte[] oKeySalt = new sbyte[8];
+      global::DripSharp.Runtime.JavaCompat.ArrayCopy(o, 40, oKeySalt, 0, 8);
+      if ((encRevision
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)) {
+        hash
+          = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeSHA256(password,
+          oKeySalt, u);
+      } else {
+        hash = this.computeHash2A(password, oKeySalt, u);
+      }
+      fileKeyEnc = oe;
+    } else {
+      if ((ue == default!)) {
+        throw new global::System.IO.IOException("/Encrypt/UE entry is missing");
+      }
+      sbyte[] uKeySalt = new sbyte[8];
+      global::DripSharp.Runtime.JavaCompat.ArrayCopy(u, 40, uKeySalt, 0, 8);
+      if ((encRevision
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)) {
+        hash
+          = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeSHA256(password,
+          uKeySalt, (sbyte[])default!);
+      } else {
+        hash = this.computeHash2A(password, uKeySalt, (sbyte[])default!);
+      }
+      fileKeyEnc = ue;
+    }
+    try {
+      global::DripSharp.Runtime.JavaCipher cipher
+        = global::DripSharp.Runtime.JavaCipher.GetInstance("AES/CBC/NoPadding");
+      cipher.Init(global::DripSharp.Runtime.JavaCipher.DECRYPT_MODE,
+        new global::DripSharp.Runtime.JavaSecretKeySpec(hash, "AES"),
+        new global::DripSharp.Runtime.JavaIvParameterSpec(new sbyte[16]));
+      return cipher.DoFinal(fileKeyEnc);
+    } catch (global::System.Security.Cryptography.CryptographicException e) {
+      global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.logIfStrongEncryptionMissing();
+      throw new global::System.IO.IOException(null, e);
+    }
+  }
 
-public sbyte[] ComputeUserPassword(sbyte[] password, sbyte[] owner, int permissions, sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata) {
-if (((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5) || (encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
-return new sbyte[0];
-}
-global::DripSharp.Runtime.JavaByteArrayOutputStream result = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-sbyte[] encKey = this.computeEncryptedKeyRev234(password, owner, permissions, id, encryptMetadata, keyLengthInBytes, encRevision);
-if ((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2)) {
-this.EncryptDataRC4(encKey, global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.ENCRYPT_PADDING, result);
-} else {
-if (((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3) || (encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4))) {
-global::DripSharp.Runtime.JavaMessageDigest md = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getMD5();
-md.Update(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.ENCRYPT_PADDING);
-md.Update(id);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(result, md.Digest());
-sbyte[] iterationKey = new sbyte[encKey.Length];
-for (int i = 0; (i < 20); i++) {
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(encKey, 0, iterationKey, 0, iterationKey.Length);
-for (int j = 0; (j < iterationKey.Length); j++) {
-iterationKey[j] = unchecked((sbyte)(unchecked((sbyte)((iterationKey[j] ^ i)))));
-}
-global::System.IO.MemoryStream input = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(result));
-global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(result);
-this.EncryptDataRC4(iterationKey, input, result);
-}
-sbyte[] finalResult = new sbyte[32];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(result), 0, finalResult, 0, 16);
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.ENCRYPT_PADDING, 0, finalResult, 16, 16);
-global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(result);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(result, finalResult);
-}
-}
-return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(result);
-}
+  public sbyte[] ComputeUserPassword(sbyte[] password, sbyte[] owner, int permissions, sbyte[] id,
+    int encRevision, int keyLengthInBytes, bool encryptMetadata) {
+    if (((encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)
+      || (encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
+      return new sbyte[0];
+    }
+    global::DripSharp.Runtime.JavaByteArrayOutputStream result
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
+    sbyte[] encKey = this.computeEncryptedKeyRev234(password, owner, permissions, id,
+      encryptMetadata, keyLengthInBytes, encRevision);
+    if ((encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2)) {
+      this.EncryptDataRC4(encKey,
+        global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.ENCRYPT_PADDING,
+        result);
+    } else {
+      if (((encRevision
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3)
+        || (encRevision
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4))) {
+        global::DripSharp.Runtime.JavaMessageDigest md
+          = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getMD5();
+        md.Update(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.ENCRYPT_PADDING);
+        md.Update(id);
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(result, md.Digest());
+        sbyte[] iterationKey = new sbyte[encKey.Length];
+        for (int i = 0; (i < 20); i++) {
+          global::DripSharp.Runtime.JavaCompat.ArrayCopy(encKey, 0, iterationKey, 0,
+            iterationKey.Length);
+          for (int j = 0; (j < iterationKey.Length); j++) {
+            iterationKey[j] = unchecked((sbyte)(unchecked((sbyte)((iterationKey[j] ^ i)))));
+          }
+          global::System.IO.MemoryStream input
+            = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(result));
+          global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(result);
+          this.EncryptDataRC4(iterationKey, input, result);
+        }
+        sbyte[] finalResult = new sbyte[32];
+        global::DripSharp.Runtime.JavaCompat.ArrayCopy(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(result),
+          0, finalResult, 0, 16);
+        global::DripSharp.Runtime.JavaCompat.ArrayCopy(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.ENCRYPT_PADDING,
+          0, finalResult, 16, 16);
+        global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(result);
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(result, finalResult);
+      }
+    }
+    return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(result);
+  }
 
-public sbyte[] ComputeOwnerPassword(sbyte[] ownerPassword, sbyte[] userPassword, int encRevision, int length) {
-if (((global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2 == encRevision) && (length != 5))) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Expected length=5 actual=", length));
-}
-sbyte[] rc4Key = this.computeRC4key(ownerPassword, encRevision, length);
-sbyte[] paddedUser = this.truncateOrPad(userPassword);
-global::DripSharp.Runtime.JavaByteArrayOutputStream encrypted = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-this.EncryptDataRC4(rc4Key, global::DripSharp.Runtime.JavaCompat.NewMemoryStream(paddedUser), encrypted);
-if (((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3) || (encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4))) {
-sbyte[] iterationKey = new sbyte[rc4Key.Length];
-for (int i = 1; (i < 20); i++) {
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(rc4Key, 0, iterationKey, 0, rc4Key.Length);
-for (int j = 0; (j < iterationKey.Length); j++) {
-iterationKey[j] = unchecked((sbyte)(unchecked((sbyte)((iterationKey[j] ^ unchecked((sbyte)(i)))))));
-}
-global::System.IO.MemoryStream input = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(encrypted));
-global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(encrypted);
-this.EncryptDataRC4(iterationKey, input, encrypted);
-}
-}
-return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(encrypted);
-}
+  public sbyte[] ComputeOwnerPassword(sbyte[] ownerPassword, sbyte[] userPassword, int encRevision,
+    int length) {
+    if (((global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2
+      == encRevision) && (length != 5))) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Expected length=5 actual=",
+        length));
+    }
+    sbyte[] rc4Key = this.computeRC4key(ownerPassword, encRevision, length);
+    sbyte[] paddedUser = this.truncateOrPad(userPassword);
+    global::DripSharp.Runtime.JavaByteArrayOutputStream encrypted
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
+    this.EncryptDataRC4(rc4Key, global::DripSharp.Runtime.JavaCompat.NewMemoryStream(paddedUser),
+      encrypted);
+    if (((encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3)
+      || (encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4))) {
+      sbyte[] iterationKey = new sbyte[rc4Key.Length];
+      for (int i = 1; (i < 20); i++) {
+        global::DripSharp.Runtime.JavaCompat.ArrayCopy(rc4Key, 0, iterationKey, 0, rc4Key.Length);
+        for (int j = 0; (j < iterationKey.Length); j++) {
+          iterationKey[j]
+            = unchecked((sbyte)(unchecked((sbyte)((iterationKey[j] ^ unchecked((sbyte)(i)))))));
+        }
+        global::System.IO.MemoryStream input
+          = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(encrypted));
+        global::DripSharp.Runtime.JavaCompat.ResetMemoryStream(encrypted);
+        this.EncryptDataRC4(iterationKey, input, encrypted);
+      }
+    }
+    return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(encrypted);
+  }
 
-private sbyte[] computeRC4key(sbyte[] ownerPassword, int encRevision, int length) {
-try {
-global::DripSharp.Runtime.JavaMessageDigest md = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getMD5();
-sbyte[] digest = md.Digest(this.truncateOrPad(ownerPassword));
-if (((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3) || (encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4))) {
-for (int i = 0; (i < 50); i++) {
-md.Update(digest, 0, length);
-digest = md.Digest();
-}
-}
-sbyte[] rc4Key = new sbyte[length];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(digest, 0, rc4Key, 0, length);
-return rc4Key;
-} catch (global::System.ArgumentException ex) {
-throw new global::System.IO.IOException(null, ex);
-}
-}
+  private sbyte[] computeRC4key(sbyte[] ownerPassword, int encRevision, int length) {
+    try {
+      global::DripSharp.Runtime.JavaMessageDigest md
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getMD5();
+      sbyte[] digest = md.Digest(this.truncateOrPad(ownerPassword));
+      if (((encRevision
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3)
+        || (encRevision
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4))) {
+        for (int i = 0; (i < 50); i++) {
+          md.Update(digest, 0, length);
+          digest = md.Digest();
+        }
+      }
+      sbyte[] rc4Key = new sbyte[length];
+      global::DripSharp.Runtime.JavaCompat.ArrayCopy(digest, 0, rc4Key, 0, length);
+      return rc4Key;
+    } catch (global::System.ArgumentException ex) {
+      throw new global::System.IO.IOException(null, ex);
+    }
+  }
 
-private sbyte[] truncateOrPad(sbyte[] password) {
-sbyte[] padded = new sbyte[global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.ENCRYPT_PADDING.Length];
-int bytesBeforePad = global::System.Math.Min(password.Length, padded.Length);
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(password, 0, padded, 0, bytesBeforePad);
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.ENCRYPT_PADDING, 0, padded, bytesBeforePad, (global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.ENCRYPT_PADDING.Length - bytesBeforePad));
-return padded;
-}
+  private sbyte[] truncateOrPad(sbyte[] password) {
+    sbyte[] padded
+      = new sbyte[global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.ENCRYPT_PADDING.Length];
+    int bytesBeforePad = global::System.Math.Min(password.Length, padded.Length);
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(password, 0, padded, 0, bytesBeforePad);
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.ENCRYPT_PADDING,
+      0, padded, bytesBeforePad,
+      (global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.ENCRYPT_PADDING.Length
+      - bytesBeforePad));
+    return padded;
+  }
 
-public bool IsUserPassword(sbyte[] password, sbyte[] user, sbyte[] owner, int permissions, sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata) {
-switch (encRevision) {
-case var __case_1019_14_0 when __case_1019_14_0 == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2:
-case var __case_1020_14_0 when __case_1020_14_0 == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3:
-case var __case_1021_14_0 when __case_1021_14_0 == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4:
-return this.isUserPassword234(password, user, owner, permissions, id, encRevision, keyLengthInBytes, encryptMetadata);
-case var __case_1024_14_0 when __case_1024_14_0 == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5:
-case var __case_1025_14_0 when __case_1025_14_0 == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6:
-return this.isUserPassword56(password, user, encRevision);
-default:
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unknown Encryption Revision ", encRevision));
-}
-}
+  public bool IsUserPassword(sbyte[] password, sbyte[] user, sbyte[] owner, int permissions,
+    sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata) {
+    switch (encRevision) {
+      case var __case_1019_14_0 when __case_1019_14_0
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2:
+      case var __case_1020_14_0 when __case_1020_14_0
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_3:
+      case var __case_1021_14_0 when __case_1021_14_0
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_4:
+      return this.isUserPassword234(password, user, owner, permissions, id, encRevision,
+        keyLengthInBytes, encryptMetadata);
+      case var __case_1024_14_0 when __case_1024_14_0
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5:
+      case var __case_1025_14_0 when __case_1025_14_0
+        == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6:
+      return this.isUserPassword56(password, user, encRevision);
+      default:
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Unknown Encryption Revision ",
+          encRevision));
+    }
+  }
 
-private bool isUserPassword234(sbyte[] password, sbyte[] user, sbyte[] owner, int permissions, sbyte[] id, int encRevision, int length, bool encryptMetadata) {
-sbyte[] passwordBytes = this.ComputeUserPassword(password, owner, permissions, id, encRevision, length, encryptMetadata);
-if ((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2)) {
-return global::DripSharp.Runtime.JavaMessageDigest.IsEqual(user, passwordBytes);
-} else {
-return global::DripSharp.Runtime.JavaMessageDigest.IsEqual(global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(user, 16), global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(passwordBytes, 16));
-}
-}
+  private bool isUserPassword234(sbyte[] password, sbyte[] user, sbyte[] owner, int permissions,
+    sbyte[] id, int encRevision, int length, bool encryptMetadata) {
+    sbyte[] passwordBytes = this.ComputeUserPassword(password, owner, permissions, id, encRevision,
+      length, encryptMetadata);
+    if ((encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_2)) {
+      return global::DripSharp.Runtime.JavaMessageDigest.IsEqual(user, passwordBytes);
+    } else {
+      return global::DripSharp.Runtime.JavaMessageDigest.IsEqual(global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(user,
+        16), global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(passwordBytes, 16));
+    }
+  }
 
-private bool isUserPassword56(sbyte[] password, sbyte[] user, int encRevision) {
-sbyte[] truncatedPassword = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.truncate127(password);
-sbyte[] uHash = new sbyte[32];
-sbyte[] uValidationSalt = new sbyte[8];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(user, 0, uHash, 0, 32);
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(user, 32, uValidationSalt, 0, 8);
-sbyte[] hash;
-if ((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)) {
-hash = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeSHA256(truncatedPassword, uValidationSalt, (sbyte[])default!);
-} else {
-hash = this.computeHash2A(truncatedPassword, uValidationSalt, (sbyte[])default!);
-}
-return global::DripSharp.Runtime.JavaMessageDigest.IsEqual(hash, uHash);
-}
+  private bool isUserPassword56(sbyte[] password, sbyte[] user, int encRevision) {
+    sbyte[] truncatedPassword
+      = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.truncate127(password);
+    sbyte[] uHash = new sbyte[32];
+    sbyte[] uValidationSalt = new sbyte[8];
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(user, 0, uHash, 0, 32);
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(user, 32, uValidationSalt, 0, 8);
+    sbyte[] hash;
+    if ((encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)) {
+      hash
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeSHA256(truncatedPassword,
+        uValidationSalt, (sbyte[])default!);
+    } else {
+      hash = this.computeHash2A(truncatedPassword, uValidationSalt, (sbyte[])default!);
+    }
+    return global::DripSharp.Runtime.JavaMessageDigest.IsEqual(hash, uHash);
+  }
 
-public bool IsUserPassword(string password, sbyte[] user, sbyte[] owner, int permissions, sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata) {
-if (((encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5) || (encRevision == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
-return this.IsUserPassword(global::DripSharp.Runtime.JavaCompat.StringGetBytes(password, global::DripSharp.Runtime.JavaStandardCharsets.UTF8), user, owner, permissions, id, encRevision, keyLengthInBytes, encryptMetadata);
-} else {
-return this.IsUserPassword(global::DripSharp.Runtime.JavaCompat.StringGetBytes(password, global::DripSharp.Runtime.JavaStandardCharsets.ISO88591), user, owner, permissions, id, encRevision, keyLengthInBytes, encryptMetadata);
-}
-}
+  public bool IsUserPassword(string password, sbyte[] user, sbyte[] owner, int permissions,
+    sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata) {
+    if (((encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_5)
+      || (encRevision
+      == global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.REVISION_6))) {
+      return this.IsUserPassword(global::DripSharp.Runtime.JavaCompat.StringGetBytes(password,
+        global::DripSharp.Runtime.JavaStandardCharsets.UTF8), user, owner, permissions, id,
+        encRevision, keyLengthInBytes, encryptMetadata);
+    } else {
+      return this.IsUserPassword(global::DripSharp.Runtime.JavaCompat.StringGetBytes(password,
+        global::DripSharp.Runtime.JavaStandardCharsets.ISO88591), user, owner, permissions, id,
+        encRevision, keyLengthInBytes, encryptMetadata);
+    }
+  }
 
-public bool IsOwnerPassword(string password, sbyte[] user, sbyte[] owner, int permissions, sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata) {
-return this.IsOwnerPassword(global::DripSharp.Runtime.JavaCompat.StringGetBytes(password, global::DripSharp.Runtime.JavaStandardCharsets.ISO88591), user, owner, permissions, id, encRevision, keyLengthInBytes, encryptMetadata);
-}
+  public bool IsOwnerPassword(string password, sbyte[] user, sbyte[] owner, int permissions,
+    sbyte[] id, int encRevision, int keyLengthInBytes, bool encryptMetadata) {
+    return this.IsOwnerPassword(global::DripSharp.Runtime.JavaCompat.StringGetBytes(password,
+      global::DripSharp.Runtime.JavaStandardCharsets.ISO88591), user, owner, permissions, id,
+      encRevision, keyLengthInBytes, encryptMetadata);
+  }
 
-private sbyte[] computeHash2A(sbyte[] password, sbyte[] salt, sbyte[] u) {
-sbyte[] userKey = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.adjustUserKey(u);
-sbyte[] truncatedPassword = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.truncate127(password);
-sbyte[] input = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(truncatedPassword, salt, userKey);
-return global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeHash2B(input, truncatedPassword, userKey);
-}
+  private sbyte[] computeHash2A(sbyte[] password, sbyte[] salt, sbyte[] u) {
+    sbyte[] userKey
+      = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.adjustUserKey(u);
+    sbyte[] truncatedPassword
+      = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.truncate127(password);
+    sbyte[] input
+      = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.concat(truncatedPassword,
+      salt, userKey);
+    return global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.computeHash2B(input,
+      truncatedPassword, userKey);
+  }
 
-private static sbyte[] computeHash2B(sbyte[] input, sbyte[] password, sbyte[] userKey) {
-try {
-global::DripSharp.Runtime.JavaMessageDigest md = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getSHA256();
-sbyte[] k = md.Digest(input);
-sbyte[] e = default!;
-for (int round = 0; ((round < 64) || ((e![(e!.Length - 1)] & 255) > (round - 32))); round++) {
-sbyte[] k1;
-if (((userKey != default!) && (userKey.Length >= 48))) {
-k1 = new sbyte[(64 * ((password.Length + k.Length) + 48))];
-} else {
-k1 = new sbyte[(64 * (password.Length + k.Length))];
-}
-int pos = 0;
-for (int i = 0; (i < 64); i++) {
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(password, 0, k1, pos, password.Length);
-pos += password.Length;
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(k, 0, k1, pos, k.Length);
-pos += k.Length;
-if (((userKey != default!) && (userKey.Length >= 48))) {
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(userKey, 0, k1, pos, 48);
-pos += 48;
-}
-}
-sbyte[] kFirst = new sbyte[16];
-sbyte[] kSecond = new sbyte[16];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(k, 0, kFirst, 0, 16);
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(k, 16, kSecond, 0, 16);
-global::DripSharp.Runtime.JavaCipher cipher = global::DripSharp.Runtime.JavaCipher.GetInstance("AES/CBC/NoPadding");
-global::DripSharp.Runtime.JavaSecretKeySpec keySpec = new global::DripSharp.Runtime.JavaSecretKeySpec(kFirst, "AES");
-global::DripSharp.Runtime.JavaIvParameterSpec ivSpec = new global::DripSharp.Runtime.JavaIvParameterSpec(kSecond);
-cipher.Init(global::DripSharp.Runtime.JavaCipher.ENCRYPT_MODE, keySpec, ivSpec);
-e = cipher.DoFinal(k1);
-sbyte[] eFirst = new sbyte[16];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(e!, 0, eFirst, 0, 16);
-global::System.Numerics.BigInteger bi = global::DripSharp.Runtime.JavaCompat.NewBigInteger(1, eFirst);
-global::System.Numerics.BigInteger remainder = global::DripSharp.Runtime.JavaCompat.BigIntegerMod(bi, new global::System.Numerics.BigInteger((long)(3)));
-string nextHash = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.HASHES_2B[global::DripSharp.Runtime.JavaCompat.BigIntegerIntValue(remainder)];
-md = global::DripSharp.Runtime.JavaMessageDigest.GetInstance(nextHash);
-k = md.Digest(e!);
-}
-if ((k.Length > 32)) {
-sbyte[] kTrunc = new sbyte[32];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(k, 0, kTrunc, 0, 32);
-return kTrunc;
-} else {
-return k;
-}
-} catch (global::System.Security.Cryptography.CryptographicException e) {
-global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.logIfStrongEncryptionMissing();
-throw new global::System.IO.IOException(null, e);
-}
-}
+  private static sbyte[] computeHash2B(sbyte[] input, sbyte[] password, sbyte[] userKey) {
+    try {
+      global::DripSharp.Runtime.JavaMessageDigest md
+        = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getSHA256();
+      sbyte[] k = md.Digest(input);
+      sbyte[] e = default!;
+      for (int round = 0; ((round < 64) || ((e![(e!.Length - 1)] & 255) > (round - 32))); round++) {
+        sbyte[] k1;
+        if (((userKey != default!) && (userKey.Length >= 48))) {
+          k1 = new sbyte[(64 * ((password.Length + k.Length) + 48))];
+        } else {
+          k1 = new sbyte[(64 * (password.Length + k.Length))];
+        }
+        int pos = 0;
+        for (int i = 0; (i < 64); i++) {
+          global::DripSharp.Runtime.JavaCompat.ArrayCopy(password, 0, k1, pos, password.Length);
+          pos += password.Length;
+          global::DripSharp.Runtime.JavaCompat.ArrayCopy(k, 0, k1, pos, k.Length);
+          pos += k.Length;
+          if (((userKey != default!) && (userKey.Length >= 48))) {
+            global::DripSharp.Runtime.JavaCompat.ArrayCopy(userKey, 0, k1, pos, 48);
+            pos += 48;
+          }
+        }
+        sbyte[] kFirst = new sbyte[16];
+        sbyte[] kSecond = new sbyte[16];
+        global::DripSharp.Runtime.JavaCompat.ArrayCopy(k, 0, kFirst, 0, 16);
+        global::DripSharp.Runtime.JavaCompat.ArrayCopy(k, 16, kSecond, 0, 16);
+        global::DripSharp.Runtime.JavaCipher cipher
+          = global::DripSharp.Runtime.JavaCipher.GetInstance("AES/CBC/NoPadding");
+        global::DripSharp.Runtime.JavaSecretKeySpec keySpec
+          = new global::DripSharp.Runtime.JavaSecretKeySpec(kFirst, "AES");
+        global::DripSharp.Runtime.JavaIvParameterSpec ivSpec
+          = new global::DripSharp.Runtime.JavaIvParameterSpec(kSecond);
+        cipher.Init(global::DripSharp.Runtime.JavaCipher.ENCRYPT_MODE, keySpec, ivSpec);
+        e = cipher.DoFinal(k1);
+        sbyte[] eFirst = new sbyte[16];
+        global::DripSharp.Runtime.JavaCompat.ArrayCopy(e!, 0, eFirst, 0, 16);
+        global::System.Numerics.BigInteger bi
+          = global::DripSharp.Runtime.JavaCompat.NewBigInteger(1, eFirst);
+        global::System.Numerics.BigInteger remainder
+          = global::DripSharp.Runtime.JavaCompat.BigIntegerMod(bi,
+          new global::System.Numerics.BigInteger((long)(3)));
+        string nextHash
+          = global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.HASHES_2B[global::DripSharp.Runtime.JavaCompat.BigIntegerIntValue(remainder)];
+        md = global::DripSharp.Runtime.JavaMessageDigest.GetInstance(nextHash);
+        k = md.Digest(e!);
+      }
+      if ((k.Length > 32)) {
+        sbyte[] kTrunc = new sbyte[32];
+        global::DripSharp.Runtime.JavaCompat.ArrayCopy(k, 0, kTrunc, 0, 32);
+        return kTrunc;
+      } else {
+        return k;
+      }
+    } catch (global::System.Security.Cryptography.CryptographicException e) {
+      global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.logIfStrongEncryptionMissing();
+      throw new global::System.IO.IOException(null, e);
+    }
+  }
 
-private static sbyte[] computeSHA256(sbyte[] input, sbyte[] password, sbyte[] userKey) {
-global::DripSharp.Runtime.JavaMessageDigest md = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getSHA256();
-md.Update(input);
-md.Update(password);
-return md.Digest(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.adjustUserKey(userKey));
-}
+  private static sbyte[] computeSHA256(sbyte[] input, sbyte[] password, sbyte[] userKey) {
+    global::DripSharp.Runtime.JavaMessageDigest md
+      = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getSHA256();
+    md.Update(input);
+    md.Update(password);
+    return md.Digest(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.adjustUserKey(userKey));
+  }
 
-private static sbyte[] adjustUserKey(sbyte[] u) {
-if ((u == default!)) {
-return new sbyte[0];
-}
-if ((u.Length < 48)) {
-throw new global::System.IO.IOException("Bad U length");
-}
-if ((u.Length > 48)) {
-sbyte[] userKey = new sbyte[48];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(u, 0, userKey, 0, 48);
-return userKey;
-}
-return u;
-}
+  private static sbyte[] adjustUserKey(sbyte[] u) {
+    if ((u == default!)) {
+      return new sbyte[0];
+    }
+    if ((u.Length < 48)) {
+      throw new global::System.IO.IOException("Bad U length");
+    }
+    if ((u.Length > 48)) {
+      sbyte[] userKey = new sbyte[48];
+      global::DripSharp.Runtime.JavaCompat.ArrayCopy(u, 0, userKey, 0, 48);
+      return userKey;
+    }
+    return u;
+  }
 
-private static sbyte[] concat(sbyte[] a, sbyte[] b) {
-sbyte[] o = new sbyte[(a.Length + b.Length)];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(a, 0, o, 0, a.Length);
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(b, 0, o, a.Length, b.Length);
-return o;
-}
+  private static sbyte[] concat(sbyte[] a, sbyte[] b) {
+    sbyte[] o = new sbyte[(a.Length + b.Length)];
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(a, 0, o, 0, a.Length);
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(b, 0, o, a.Length, b.Length);
+    return o;
+  }
 
-private static sbyte[] concat(sbyte[] a, sbyte[] b, sbyte[] c) {
-sbyte[] o = new sbyte[((a.Length + b.Length) + c.Length)];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(a, 0, o, 0, a.Length);
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(b, 0, o, a.Length, b.Length);
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(c, 0, o, (a.Length + b.Length), c.Length);
-return o;
-}
+  private static sbyte[] concat(sbyte[] a, sbyte[] b, sbyte[] c) {
+    sbyte[] o = new sbyte[((a.Length + b.Length) + c.Length)];
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(a, 0, o, 0, a.Length);
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(b, 0, o, a.Length, b.Length);
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(c, 0, o, (a.Length + b.Length), c.Length);
+    return o;
+  }
 
-private static sbyte[] truncate127(sbyte[] @in) {
-if ((@in.Length <= 127)) {
-return @in;
-}
-sbyte[] trunc = new sbyte[127];
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(@in, 0, trunc, 0, 127);
-return trunc;
-}
+  private static sbyte[] truncate127(sbyte[] @in) {
+    if ((@in.Length <= 127)) {
+      return @in;
+    }
+    sbyte[] trunc = new sbyte[127];
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(@in, 0, trunc, 0, 127);
+    return trunc;
+  }
 
-private static void logIfStrongEncryptionMissing() {
-try {
-if ((global::DripSharp.Runtime.JavaCipher.GetMaxAllowedKeyLength("AES") != int.MaxValue)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("JCE unlimited strength jurisdiction policy files are not installed"));
-}
-} catch (global::DripSharp.Runtime.JavaNoSuchAlgorithmException ex) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG, (global::System.Exception)ex, global::DripSharp.Runtime.JavaCompat.StringValueOf("AES Algorithm not available"));
-}
-}
+  private static void logIfStrongEncryptionMissing() {
+    try {
+      if ((global::DripSharp.Runtime.JavaCipher.GetMaxAllowedKeyLength("AES") != int.MaxValue)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf("JCE unlimited strength jurisdiction policy files are not installed"));
+      }
+    } catch (global::DripSharp.Runtime.JavaNoSuchAlgorithmException ex) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardSecurityHandler.LOG,
+        (global::System.Exception)ex,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("AES Algorithm not available"));
+    }
+  }
 }

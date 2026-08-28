@@ -9,69 +9,70 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 
 public class SignatureOptions : global::System.IDisposable {
-private global::DripSharp.PdfCarton.Cos.COSDocument visualSignature = null!;
+  private global::DripSharp.PdfCarton.Cos.COSDocument visualSignature = null!;
 
-private int preferredSignatureSize = default;
+  private int preferredSignatureSize = default;
 
-private int pageNo = default;
+  private int pageNo = default;
 
-private global::DripSharp.PdfCarton.IO.RandomAccessRead pdfSource = default!;
+  private global::DripSharp.PdfCarton.IO.RandomAccessRead pdfSource = default!;
 
-public const int DefaultSignatureSize = 9472;
+  public const int DefaultSignatureSize = 9472;
 
-public SignatureOptions() {
-this.pageNo = 0;
-}
+  public SignatureOptions() {
+    this.pageNo = 0;
+  }
 
-public virtual void SetPage(int pageNo) {
-this.pageNo = pageNo;
-}
+  public virtual void SetPage(int pageNo) {
+    this.pageNo = pageNo;
+  }
 
-public virtual int GetPage() {
-return this.pageNo;
-}
+  public virtual int GetPage() {
+    return this.pageNo;
+  }
 
-public virtual void SetVisualSignature(global::System.IO.FileInfo file) {
-this.initFromRandomAccessRead(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file));
-}
+  public virtual void SetVisualSignature(global::System.IO.FileInfo file) {
+    this.initFromRandomAccessRead(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file));
+  }
 
-public virtual void SetVisualSignature(global::System.IO.Stream @is) {
-this.initFromRandomAccessRead(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(@is));
-}
+  public virtual void SetVisualSignature(global::System.IO.Stream @is) {
+    this.initFromRandomAccessRead(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(@is));
+  }
 
-private void initFromRandomAccessRead(global::DripSharp.PdfCarton.IO.RandomAccessRead rar) {
-this.pdfSource = rar;
-global::DripSharp.PdfCarton.Pdfparser.PDFParser parser = new global::DripSharp.PdfCarton.Pdfparser.PDFParser(this.pdfSource);
-this.visualSignature = parser.Parse().GetDocument();
-}
+  private void initFromRandomAccessRead(global::DripSharp.PdfCarton.IO.RandomAccessRead rar) {
+    this.pdfSource = rar;
+    global::DripSharp.PdfCarton.Pdfparser.PDFParser parser
+      = new global::DripSharp.PdfCarton.Pdfparser.PDFParser(this.pdfSource);
+    this.visualSignature = parser.Parse().GetDocument();
+  }
 
-public virtual void SetVisualSignature(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties visSignatureProperties) {
-this.SetVisualSignature(visSignatureProperties.GetVisibleSignature());
-}
+  public virtual void SetVisualSignature(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigProperties visSignatureProperties) {
+    this.SetVisualSignature(visSignatureProperties.GetVisibleSignature());
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDocument GetVisualSignature() {
-return this.visualSignature;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDocument GetVisualSignature() {
+    return this.visualSignature;
+  }
 
-public virtual int GetPreferredSignatureSize() {
-return this.preferredSignatureSize;
-}
+  public virtual int GetPreferredSignatureSize() {
+    return this.preferredSignatureSize;
+  }
 
-public virtual void SetPreferredSignatureSize(int size) {
-if ((size > 0)) {
-this.preferredSignatureSize = size;
-}
-}
+  public virtual void SetPreferredSignatureSize(int size) {
+    if ((size > 0)) {
+      this.preferredSignatureSize = size;
+    }
+  }
 
-public virtual void Dispose() {
-try {
-if ((this.visualSignature != default!)) {
-this.visualSignature.Dispose();
-}
-} finally {
-if ((this.pdfSource != default!)) {
-this.pdfSource.Dispose();
-}
-}
-}
+  public virtual void Dispose() {
+    try {
+      if ((this.visualSignature != default!)) {
+        this.visualSignature.Dispose();
+      }
+    } finally {
+      if ((this.pdfSource != default!)) {
+        this.pdfSource.Dispose();
+      }
+    }
+  }
 }

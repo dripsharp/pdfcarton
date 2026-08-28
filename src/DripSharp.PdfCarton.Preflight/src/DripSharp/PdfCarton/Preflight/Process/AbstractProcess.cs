@@ -8,57 +8,93 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process;
 
-public abstract class AbstractProcess : global::DripSharp.PdfCarton.Preflight.Process.ValidationProcess {
-protected internal virtual void AddValidationError(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error) {
-ctx.AddValidationError(error);
-}
+public abstract class AbstractProcess
+: global::DripSharp.PdfCarton.Preflight.Process.ValidationProcess {
+  protected internal virtual void AddValidationError(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error) {
+    ctx.AddValidationError(error);
+  }
 
-protected internal virtual void AddValidationErrors(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> errors) {
-global::DripSharp.Runtime.JavaCompat.ForEach(errors, (error) => this.AddValidationError(ctx, error));
-}
+  protected internal virtual void AddValidationErrors(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> errors) {
+    global::DripSharp.Runtime.JavaCompat.ForEach(errors, (error) => this.AddValidationError(ctx,
+      error));
+  }
 
-protected internal virtual void AddFontError(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary, global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::System.IO.IOException e) {
-global::DripSharp.PdfCarton.Cos.COSName type = dictionary.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Font);
-if (!(global::DripSharp.PdfCarton.Cos.COSName.Font.Equals(type))) {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontType, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Expected 'Font' dictionary but found '", type.GetName()), "'")));
-}
-string fontName = "Unknown";
-if (dictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.BaseFont)) {
-fontName = dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.BaseFont);
-}
-global::DripSharp.PdfCarton.Cos.COSName subType = dictionary.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
-if (global::DripSharp.PdfCarton.Cos.COSName.Type1.Equals(subType)) {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsType1Damaged, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The FontFile can't be read for ", fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSName.MmType1.Equals(subType)) {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsType1Damaged, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The FontFile can't be read for ", fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSName.TrueType.Equals(subType)) {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsTruetypeDamaged, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The FontFile can't be read for ", fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSName.Type3.Equals(subType)) {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsType3Damaged, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The FontFile can't be read for ", fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSName.Type0.Equals(subType)) {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidDamaged, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The FontFile can't be read for ", fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSName.CidFontType0.Equals(subType)) {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontType, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected CIDFontType0 descendant font for ", fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSName.CidFontType2.Equals(subType)) {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontType, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected CIDFontType2 descendant font for ", fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
-} else {
-this.AddValidationError(context, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontType, global::DripSharp.Runtime.JavaCompat.Concat("Unknown font type for ", fontName)));
-}
-}
-}
-}
-}
-}
-}
-}
+  protected internal virtual void AddFontError(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary,
+    global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::System.IO.IOException e) {
+    global::DripSharp.PdfCarton.Cos.COSName type
+      = dictionary.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Font);
+    if (!(global::DripSharp.PdfCarton.Cos.COSName.Font.Equals(type))) {
+      this.AddValidationError(context,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontType,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Expected 'Font' dictionary but found '",
+        type.GetName()), "'")));
+    }
+    string fontName = "Unknown";
+    if (dictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.BaseFont)) {
+      fontName = dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.BaseFont);
+    }
+    global::DripSharp.PdfCarton.Cos.COSName subType
+      = dictionary.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
+    if (global::DripSharp.PdfCarton.Cos.COSName.Type1.Equals(subType)) {
+      this.AddValidationError(context,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsType1Damaged,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The FontFile can't be read for ",
+        fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
+    } else {
+      if (global::DripSharp.PdfCarton.Cos.COSName.MmType1.Equals(subType)) {
+        this.AddValidationError(context,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsType1Damaged,
+          global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The FontFile can't be read for ",
+          fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
+      } else {
+        if (global::DripSharp.PdfCarton.Cos.COSName.TrueType.Equals(subType)) {
+          this.AddValidationError(context,
+            new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsTruetypeDamaged,
+            global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The FontFile can't be read for ",
+            fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
+        } else {
+          if (global::DripSharp.PdfCarton.Cos.COSName.Type3.Equals(subType)) {
+            this.AddValidationError(context,
+              new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsType3Damaged,
+              global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The FontFile can't be read for ",
+              fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
+          } else {
+            if (global::DripSharp.PdfCarton.Cos.COSName.Type0.Equals(subType)) {
+              this.AddValidationError(context,
+                new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidDamaged,
+                global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The FontFile can't be read for ",
+                fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
+            } else {
+              if (global::DripSharp.PdfCarton.Cos.COSName.CidFontType0.Equals(subType)) {
+                this.AddValidationError(context,
+                  new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontType,
+                  global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected CIDFontType0 descendant font for ",
+                  fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
+              } else {
+                if (global::DripSharp.PdfCarton.Cos.COSName.CidFontType2.Equals(subType)) {
+                  this.AddValidationError(context,
+                    new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontType,
+                    global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unexpected CIDFontType2 descendant font for ",
+                    fontName), ": "), global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e))));
+                } else {
+                  this.AddValidationError(context,
+                    new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsUnknownFontType,
+                    global::DripSharp.Runtime.JavaCompat.Concat("Unknown font type for ",
+                    fontName)));
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
-public abstract void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx);
+  public abstract void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx);
 
-public AbstractProcess() {}
+  public AbstractProcess() {}
 }

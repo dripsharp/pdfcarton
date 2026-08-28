@@ -9,347 +9,382 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.State;
 
 public class PDGraphicsState : global::DripSharp.Runtime.JavaCloneable {
-private bool isClippingPathDirty = default;
+  private bool isClippingPathDirty = default;
 
-private global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> clippingPaths = new global::System.Collections.Generic.List<global::SkiaSharp.SKPath>(1);
+  private global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> clippingPaths
+    = new global::System.Collections.Generic.List<global::SkiaSharp.SKPath>(1);
 
-private global::DripSharp.Runtime.JavaArea clippingPathCache = default!;
+  private global::DripSharp.Runtime.JavaArea clippingPathCache = default!;
 
-private global::DripSharp.PdfCarton.Util.Matrix currentTransformationMatrix = new global::DripSharp.PdfCarton.Util.Matrix();
+  private global::DripSharp.PdfCarton.Util.Matrix currentTransformationMatrix
+    = new global::DripSharp.PdfCarton.Util.Matrix();
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor strokingColor = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetInitialColor();
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor strokingColor
+    = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetInitialColor();
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor nonStrokingColor = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetInitialColor();
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor nonStrokingColor
+    = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetInitialColor();
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace strokingColorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace strokingColorSpace
+    = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace nonStrokingColorSpace = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace nonStrokingColorSpace
+    = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState textState = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState();
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState textState
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState();
 
-private float lineWidth = 1;
+  private float lineWidth = 1;
 
-private int lineCap = global::DripSharp.Runtime.JavaBasicStroke.CAP_BUTT;
+  private int lineCap = global::DripSharp.Runtime.JavaBasicStroke.CAP_BUTT;
 
-private int lineJoin = global::DripSharp.Runtime.JavaBasicStroke.JOIN_MITER;
+  private int lineJoin = global::DripSharp.Runtime.JavaBasicStroke.JOIN_MITER;
 
-private float miterLimit = 10;
+  private float miterLimit = 10;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern lineDashPattern = new global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern();
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern lineDashPattern
+    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern();
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent renderingIntent = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent renderingIntent
+    = null!;
 
-private bool strokeAdjustment = false;
+  private bool strokeAdjustment = false;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode blendMode = global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.Normal;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode blendMode
+    = global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.Normal;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask softMask = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask softMask = null!;
 
-private double alphaConstant = 1.0D;
+  private double alphaConstant = 1.0D;
 
-private double nonStrokingAlphaConstant = 1.0D;
+  private double nonStrokingAlphaConstant = 1.0D;
 
-private bool alphaSource = false;
+  private bool alphaSource = false;
 
-private global::DripSharp.PdfCarton.Util.Matrix textMatrix = default!;
+  private global::DripSharp.PdfCarton.Util.Matrix textMatrix = default!;
 
-private global::DripSharp.PdfCarton.Util.Matrix textLineMatrix = default!;
+  private global::DripSharp.PdfCarton.Util.Matrix textLineMatrix = default!;
 
-private bool overprint = false;
+  private bool overprint = false;
 
-private bool nonStrokingOverprint = false;
+  private bool nonStrokingOverprint = false;
 
-private int overprintMode = 0;
+  private int overprintMode = 0;
 
-private global::DripSharp.PdfCarton.Cos.COSBase transfer = default!;
+  private global::DripSharp.PdfCarton.Cos.COSBase transfer = default!;
 
-private double flatness = 1.0D;
+  private double flatness = 1.0D;
 
-private double smoothness = 0;
+  private double smoothness = 0;
 
-public PDGraphicsState(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle page) {
-global::DripSharp.Runtime.JavaCompat.Add(this.clippingPaths, global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(page.ToGeneralPath()));
-}
+  public PDGraphicsState(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle page) {
+    global::DripSharp.Runtime.JavaCompat.Add(this.clippingPaths,
+      global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(page.ToGeneralPath()));
+  }
 
-public virtual global::DripSharp.PdfCarton.Util.Matrix GetCurrentTransformationMatrix() {
-return this.currentTransformationMatrix;
-}
+  public virtual global::DripSharp.PdfCarton.Util.Matrix GetCurrentTransformationMatrix() {
+    return this.currentTransformationMatrix;
+  }
 
-public virtual void SetCurrentTransformationMatrix(global::DripSharp.PdfCarton.Util.Matrix value) {
-this.currentTransformationMatrix = value;
-}
+  public virtual void SetCurrentTransformationMatrix(global::DripSharp.PdfCarton.Util.Matrix value) {
+    this.currentTransformationMatrix = value;
+  }
 
-public virtual float GetLineWidth() {
-return this.lineWidth;
-}
+  public virtual float GetLineWidth() {
+    return this.lineWidth;
+  }
 
-public virtual void SetLineWidth(float value) {
-this.lineWidth = value;
-}
+  public virtual void SetLineWidth(float value) {
+    this.lineWidth = value;
+  }
 
-public virtual int GetLineCap() {
-return this.lineCap;
-}
+  public virtual int GetLineCap() {
+    return this.lineCap;
+  }
 
-public virtual void SetLineCap(int value) {
-this.lineCap = value;
-}
+  public virtual void SetLineCap(int value) {
+    this.lineCap = value;
+  }
 
-public virtual int GetLineJoin() {
-return this.lineJoin;
-}
+  public virtual int GetLineJoin() {
+    return this.lineJoin;
+  }
 
-public virtual void SetLineJoin(int value) {
-this.lineJoin = value;
-}
+  public virtual void SetLineJoin(int value) {
+    this.lineJoin = value;
+  }
 
-public virtual float GetMiterLimit() {
-return this.miterLimit;
-}
+  public virtual float GetMiterLimit() {
+    return this.miterLimit;
+  }
 
-public virtual void SetMiterLimit(float value) {
-this.miterLimit = value;
-}
-
-public virtual bool IsStrokeAdjustment() {
-return this.strokeAdjustment;
-}
-
-public virtual void SetStrokeAdjustment(bool value) {
-this.strokeAdjustment = value;
-}
-
-public virtual double GetAlphaConstant() {
-return this.alphaConstant;
-}
-
-public virtual void SetAlphaConstant(double value) {
-this.alphaConstant = value;
-}
-
-public virtual double GetNonStrokeAlphaConstant() {
-return this.nonStrokingAlphaConstant;
-}
-
-public virtual void SetNonStrokeAlphaConstant(double value) {
-this.nonStrokingAlphaConstant = value;
-}
-
-public virtual bool IsAlphaSource() {
-return this.alphaSource;
-}
-
-public virtual void SetAlphaSource(bool value) {
-this.alphaSource = value;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask GetSoftMask() {
-return this.softMask;
-}
-
-public virtual void SetSoftMask(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask softMask) {
-this.softMask = softMask;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode GetBlendMode() {
-return this.blendMode;
-}
-
-public virtual void SetBlendMode(global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode blendMode) {
-if ((blendMode == default!)) {
-throw new global::System.ArgumentException("blendMode parameter cannot be null");
-}
-this.blendMode = blendMode;
-}
-
-public virtual bool IsOverprint() {
-return this.overprint;
-}
-
-public virtual void SetOverprint(bool value) {
-this.overprint = value;
-}
-
-public virtual bool IsNonStrokingOverprint() {
-return this.nonStrokingOverprint;
-}
-
-public virtual void SetNonStrokingOverprint(bool value) {
-this.nonStrokingOverprint = value;
-}
-
-public virtual int GetOverprintMode() {
-return this.overprintMode;
-}
-
-public virtual void SetOverprintMode(int value) {
-this.overprintMode = value;
-}
-
-public virtual double GetFlatness() {
-return this.flatness;
-}
-
-public virtual void SetFlatness(double value) {
-this.flatness = value;
-}
-
-public virtual double GetSmoothness() {
-return this.smoothness;
-}
-
-public virtual void SetSmoothness(double value) {
-this.smoothness = value;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState GetTextState() {
-return this.textState;
-}
-
-public virtual void SetTextState(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState value) {
-this.textState = value;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern GetLineDashPattern() {
-return this.lineDashPattern;
-}
-
-public virtual void SetLineDashPattern(global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern value) {
-this.lineDashPattern = value;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent GetRenderingIntent() {
-return this.renderingIntent;
-}
-
-public virtual void SetRenderingIntent(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent value) {
-this.renderingIntent = value;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState Clone() {
-try {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState clone = (global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState)(this.MemberwiseClone()!);
-clone.textState = this.textState.Clone();
-clone.currentTransformationMatrix = this.currentTransformationMatrix.Clone();
-clone.strokingColor = this.strokingColor;
-clone.nonStrokingColor = this.nonStrokingColor;
-clone.lineDashPattern = this.lineDashPattern;
-clone.clippingPaths = this.clippingPaths;
-clone.clippingPathCache = this.clippingPathCache;
-clone.isClippingPathDirty = false;
-clone.textLineMatrix = ((this.textLineMatrix == default!) ? (global::DripSharp.PdfCarton.Util.Matrix)(default!) : this.textLineMatrix.Clone());
-clone.textMatrix = ((this.textMatrix == default!) ? (global::DripSharp.PdfCarton.Util.Matrix)(default!) : this.textMatrix.Clone());
-return clone;
-} catch (global::System.NotSupportedException e) {
-throw new global::System.Exception(null, e);
-}
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetStrokingColor() {
-return this.strokingColor;
-}
-
-public virtual void SetStrokingColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
-this.strokingColor = color;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetNonStrokingColor() {
-return this.nonStrokingColor;
-}
-
-public virtual void SetNonStrokingColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
-this.nonStrokingColor = color;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetStrokingColorSpace() {
-return this.strokingColorSpace;
-}
-
-public virtual void SetStrokingColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-this.strokingColorSpace = colorSpace;
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetNonStrokingColorSpace() {
-return this.nonStrokingColorSpace;
-}
-
-public virtual void SetNonStrokingColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-this.nonStrokingColorSpace = colorSpace;
-}
-
-public virtual void IntersectClippingPath(global::SkiaSharp.SKPath path) {
-this.intersectClippingPath(global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(path), true);
-}
-
-private void intersectClippingPath(global::SkiaSharp.SKPath path, bool clonePath) {
-if (!(this.isClippingPathDirty)) {
-this.clippingPaths = new global::System.Collections.Generic.List<global::SkiaSharp.SKPath>(this.clippingPaths);
-this.isClippingPathDirty = true;
-}
-global::DripSharp.Runtime.JavaCompat.Add(this.clippingPaths, (clonePath ? (global::SkiaSharp.SKPath)((global::SkiaSharp.SKPath)(new global::SkiaSharp.SKPath(path)!)) : path));
-this.clippingPathCache = default!;
-}
-
-public virtual void IntersectClippingPath(global::DripSharp.Runtime.JavaArea area) {
-this.intersectClippingPath(global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(area), false);
-}
-
-public virtual global::DripSharp.Runtime.JavaArea GetCurrentClippingPath() {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(this.clippingPaths) == 1)) {
-if ((this.clippingPathCache == default!)) {
-this.clippingPathCache = new global::DripSharp.Runtime.JavaArea(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths, 0));
-}
-return this.clippingPathCache;
-}
-global::SkiaSharp.SKRect boundingBox = global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths, 0));
-for (int i__633_18 = 1; (i__633_18 < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.clippingPaths)); i__633_18++) {
-global::DripSharp.Runtime.PdfCartonFontCompat.IntersectRectangles(boundingBox, global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths, i__633_18)), ref boundingBox);
-}
-global::DripSharp.Runtime.JavaArea clippingArea = new global::DripSharp.Runtime.JavaArea(boundingBox);
-for (int i__640_18 = 0; (i__640_18 < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.clippingPaths)); i__640_18++) {
-global::DripSharp.Runtime.JavaArea nextArea = new global::DripSharp.Runtime.JavaArea(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths, i__640_18));
-clippingArea.Intersect(nextArea);
-nextArea.Reset();
-}
-this.clippingPathCache = clippingArea;
-this.clippingPaths = new global::System.Collections.Generic.List<global::SkiaSharp.SKPath>(1);
-global::DripSharp.Runtime.JavaCompat.Add(this.clippingPaths, global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(clippingArea));
-return clippingArea;
-}
-
-public virtual global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> GetCurrentClippingPaths() {
-return this.clippingPaths;
-}
-
-public virtual global::DripSharp.Runtime.JavaComposite GetStrokingJavaComposite() {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendComposite.GetInstance(this.blendMode, (float)((float)(this.alphaConstant)));
-}
-
-public virtual global::DripSharp.Runtime.JavaComposite GetNonStrokingJavaComposite() {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendComposite.GetInstance(this.blendMode, (float)((float)(this.nonStrokingAlphaConstant)));
-}
-
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetTransfer() {
-return this.transfer;
-}
-
-public virtual void SetTransfer(global::DripSharp.PdfCarton.Cos.COSBase transfer) {
-this.transfer = transfer;
-}
-
-public virtual global::DripSharp.PdfCarton.Util.Matrix GetTextLineMatrix() {
-return this.textLineMatrix;
-}
-
-public virtual void SetTextLineMatrix(global::DripSharp.PdfCarton.Util.Matrix value) {
-this.textLineMatrix = value;
-}
-
-public virtual global::DripSharp.PdfCarton.Util.Matrix GetTextMatrix() {
-return this.textMatrix;
-}
-
-public virtual void SetTextMatrix(global::DripSharp.PdfCarton.Util.Matrix value) {
-this.textMatrix = value;
-}
+  public virtual void SetMiterLimit(float value) {
+    this.miterLimit = value;
+  }
+
+  public virtual bool IsStrokeAdjustment() {
+    return this.strokeAdjustment;
+  }
+
+  public virtual void SetStrokeAdjustment(bool value) {
+    this.strokeAdjustment = value;
+  }
+
+  public virtual double GetAlphaConstant() {
+    return this.alphaConstant;
+  }
+
+  public virtual void SetAlphaConstant(double value) {
+    this.alphaConstant = value;
+  }
+
+  public virtual double GetNonStrokeAlphaConstant() {
+    return this.nonStrokingAlphaConstant;
+  }
+
+  public virtual void SetNonStrokeAlphaConstant(double value) {
+    this.nonStrokingAlphaConstant = value;
+  }
+
+  public virtual bool IsAlphaSource() {
+    return this.alphaSource;
+  }
+
+  public virtual void SetAlphaSource(bool value) {
+    this.alphaSource = value;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask GetSoftMask() {
+    return this.softMask;
+  }
+
+  public virtual void SetSoftMask(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask softMask) {
+    this.softMask = softMask;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode GetBlendMode() {
+    return this.blendMode;
+  }
+
+  public virtual void SetBlendMode(global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode blendMode) {
+    if ((blendMode == default!)) {
+      throw new global::System.ArgumentException("blendMode parameter cannot be null");
+    }
+    this.blendMode = blendMode;
+  }
+
+  public virtual bool IsOverprint() {
+    return this.overprint;
+  }
+
+  public virtual void SetOverprint(bool value) {
+    this.overprint = value;
+  }
+
+  public virtual bool IsNonStrokingOverprint() {
+    return this.nonStrokingOverprint;
+  }
+
+  public virtual void SetNonStrokingOverprint(bool value) {
+    this.nonStrokingOverprint = value;
+  }
+
+  public virtual int GetOverprintMode() {
+    return this.overprintMode;
+  }
+
+  public virtual void SetOverprintMode(int value) {
+    this.overprintMode = value;
+  }
+
+  public virtual double GetFlatness() {
+    return this.flatness;
+  }
+
+  public virtual void SetFlatness(double value) {
+    this.flatness = value;
+  }
+
+  public virtual double GetSmoothness() {
+    return this.smoothness;
+  }
+
+  public virtual void SetSmoothness(double value) {
+    this.smoothness = value;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState GetTextState() {
+    return this.textState;
+  }
+
+  public virtual void SetTextState(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState value) {
+    this.textState = value;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern GetLineDashPattern() {
+    return this.lineDashPattern;
+  }
+
+  public virtual void SetLineDashPattern(global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern value) {
+    this.lineDashPattern = value;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent GetRenderingIntent() {
+    return this.renderingIntent;
+  }
+
+  public virtual void SetRenderingIntent(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingIntent value) {
+    this.renderingIntent = value;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState Clone() {
+    try {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState clone
+        = (global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState)(this.MemberwiseClone()!);
+      clone.textState = this.textState.Clone();
+      clone.currentTransformationMatrix = this.currentTransformationMatrix.Clone();
+      clone.strokingColor = this.strokingColor;
+      clone.nonStrokingColor = this.nonStrokingColor;
+      clone.lineDashPattern = this.lineDashPattern;
+      clone.clippingPaths = this.clippingPaths;
+      clone.clippingPathCache = this.clippingPathCache;
+      clone.isClippingPathDirty = false;
+      clone.textLineMatrix = ((this.textLineMatrix == default!)
+        ? (global::DripSharp.PdfCarton.Util.Matrix)(default!) : this.textLineMatrix.Clone());
+      clone.textMatrix = ((this.textMatrix == default!)
+        ? (global::DripSharp.PdfCarton.Util.Matrix)(default!) : this.textMatrix.Clone());
+      return clone;
+    } catch (global::System.NotSupportedException e) {
+      throw new global::System.Exception(null, e);
+    }
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetStrokingColor() {
+    return this.strokingColor;
+  }
+
+  public virtual void SetStrokingColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
+    this.strokingColor = color;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor GetNonStrokingColor() {
+    return this.nonStrokingColor;
+  }
+
+  public virtual void SetNonStrokingColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
+    this.nonStrokingColor = color;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetStrokingColorSpace() {
+    return this.strokingColorSpace;
+  }
+
+  public virtual void SetStrokingColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    this.strokingColorSpace = colorSpace;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetNonStrokingColorSpace() {
+    return this.nonStrokingColorSpace;
+  }
+
+  public virtual void SetNonStrokingColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    this.nonStrokingColorSpace = colorSpace;
+  }
+
+  public virtual void IntersectClippingPath(global::SkiaSharp.SKPath path) {
+    this.intersectClippingPath(global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(path),
+      true);
+  }
+
+  private void intersectClippingPath(global::SkiaSharp.SKPath path, bool clonePath) {
+    if (!(this.isClippingPathDirty)) {
+      this.clippingPaths
+        = new global::System.Collections.Generic.List<global::SkiaSharp.SKPath>(this.clippingPaths);
+      this.isClippingPathDirty = true;
+    }
+    global::DripSharp.Runtime.JavaCompat.Add(this.clippingPaths, (clonePath
+      ? (global::SkiaSharp.SKPath)((global::SkiaSharp.SKPath)(new global::SkiaSharp.SKPath(path)!))
+      : path));
+    this.clippingPathCache = default!;
+  }
+
+  public virtual void IntersectClippingPath(global::DripSharp.Runtime.JavaArea area) {
+    this.intersectClippingPath(global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(area),
+      false);
+  }
+
+  public virtual global::DripSharp.Runtime.JavaArea GetCurrentClippingPath() {
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(this.clippingPaths) == 1)) {
+      if ((this.clippingPathCache == default!)) {
+        this.clippingPathCache
+          = new global::DripSharp.Runtime.JavaArea(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths,
+          0));
+      }
+      return this.clippingPathCache;
+    }
+    global::SkiaSharp.SKRect boundingBox
+      = global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths,
+      0));
+    for (int i__633_18 = 1;
+      (i__633_18 < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.clippingPaths));
+      i__633_18++) {
+      global::DripSharp.Runtime.PdfCartonFontCompat.IntersectRectangles(boundingBox,
+        global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths,
+        i__633_18)), ref boundingBox);
+    }
+    global::DripSharp.Runtime.JavaArea clippingArea
+      = new global::DripSharp.Runtime.JavaArea(boundingBox);
+    for (int i__640_18 = 0;
+      (i__640_18 < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.clippingPaths));
+      i__640_18++) {
+      global::DripSharp.Runtime.JavaArea nextArea
+        = new global::DripSharp.Runtime.JavaArea(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths,
+        i__640_18));
+      clippingArea.Intersect(nextArea);
+      nextArea.Reset();
+    }
+    this.clippingPathCache = clippingArea;
+    this.clippingPaths = new global::System.Collections.Generic.List<global::SkiaSharp.SKPath>(1);
+    global::DripSharp.Runtime.JavaCompat.Add(this.clippingPaths,
+      global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(clippingArea));
+    return clippingArea;
+  }
+
+  public virtual global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> GetCurrentClippingPaths() {
+    return this.clippingPaths;
+  }
+
+  public virtual global::DripSharp.Runtime.JavaComposite GetStrokingJavaComposite() {
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendComposite.GetInstance(this.blendMode,
+      (float)((float)(this.alphaConstant)));
+  }
+
+  public virtual global::DripSharp.Runtime.JavaComposite GetNonStrokingJavaComposite() {
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendComposite.GetInstance(this.blendMode,
+      (float)((float)(this.nonStrokingAlphaConstant)));
+  }
+
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetTransfer() {
+    return this.transfer;
+  }
+
+  public virtual void SetTransfer(global::DripSharp.PdfCarton.Cos.COSBase transfer) {
+    this.transfer = transfer;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Util.Matrix GetTextLineMatrix() {
+    return this.textLineMatrix;
+  }
+
+  public virtual void SetTextLineMatrix(global::DripSharp.PdfCarton.Util.Matrix value) {
+    this.textLineMatrix = value;
+  }
+
+  public virtual global::DripSharp.PdfCarton.Util.Matrix GetTextMatrix() {
+    return this.textMatrix;
+  }
+
+  public virtual void SetTextMatrix(global::DripSharp.PdfCarton.Util.Matrix value) {
+    this.textMatrix = value;
+  }
 }

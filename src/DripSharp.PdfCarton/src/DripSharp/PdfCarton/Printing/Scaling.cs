@@ -9,27 +9,31 @@
 namespace DripSharp.PdfCarton.Printing;
 
 public sealed class Scaling {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("ACTUAL_SIZE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Printing.Scaling ActualSize = new global::DripSharp.PdfCarton.Printing.Scaling();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("ACTUAL_SIZE")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Printing.Scaling ActualSize
+    = new global::DripSharp.PdfCarton.Printing.Scaling();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("SHRINK_TO_FIT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Printing.Scaling ShrinkToFit = new global::DripSharp.PdfCarton.Printing.Scaling();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("SHRINK_TO_FIT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Printing.Scaling ShrinkToFit
+    = new global::DripSharp.PdfCarton.Printing.Scaling();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("STRETCH_TO_FIT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Printing.Scaling StretchToFit = new global::DripSharp.PdfCarton.Printing.Scaling();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("STRETCH_TO_FIT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Printing.Scaling StretchToFit
+    = new global::DripSharp.PdfCarton.Printing.Scaling();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("SCALE_TO_FIT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Printing.Scaling ScaleToFit = new global::DripSharp.PdfCarton.Printing.Scaling();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("SCALE_TO_FIT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Printing.Scaling ScaleToFit
+    = new global::DripSharp.PdfCarton.Printing.Scaling();
 
-private Scaling() {}
+  private Scaling() {}
 
+  public static Scaling[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<Scaling>();
+  public static Scaling valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<Scaling>(name);
 
-public static Scaling[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<Scaling>();
-public static Scaling valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<Scaling>(name);
-
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

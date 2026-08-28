@@ -8,23 +8,32 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
-public class RadialShadingPaint : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingPaint<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType3> {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class RadialShadingPaint
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingPaint<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType3> {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-internal RadialShadingPaint(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType3 shading, global::DripSharp.PdfCarton.Util.Matrix matrix) : base(shading, matrix) {
+  internal RadialShadingPaint(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType3 shading,
+    global::DripSharp.PdfCarton.Util.Matrix matrix) : base(shading, matrix) {
 
-}
+  }
 
-public override int GetTransparency() {
-return 0;
-}
+  public override int GetTransparency() {
+    return 0;
+  }
 
-public override global::DripSharp.Runtime.JavaPaintContext CreateContext(global::DripSharp.Runtime.JavaColorModel cm, global::SkiaSharp.SKRectI deviceBounds, global::SkiaSharp.SKRect userBounds, global::SkiaSharp.SKMatrix xform, global::DripSharp.Runtime.PdfCartonRenderingHints hints) {
-try {
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.RadialShadingContext(base.Shading, cm, xform, base.Matrix, deviceBounds);
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.RadialShadingPaint.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf("An error occurred while painting"));
-return global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0, 0).CreateContext(cm, deviceBounds, userBounds, xform, hints);
-}
-}
+  public override global::DripSharp.Runtime.JavaPaintContext CreateContext(global::DripSharp.Runtime.JavaColorModel cm,
+    global::SkiaSharp.SKRectI deviceBounds, global::SkiaSharp.SKRect userBounds,
+    global::SkiaSharp.SKMatrix xform, global::DripSharp.Runtime.PdfCartonRenderingHints hints) {
+    try {
+      return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.RadialShadingContext(base.Shading,
+        cm, xform, base.Matrix, deviceBounds);
+    } catch (global::System.IO.IOException e) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.RadialShadingPaint.LOG,
+        (global::System.Exception)e,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("An error occurred while painting"));
+      return global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0,
+        0).CreateContext(cm, deviceBounds, userBounds, xform, hints);
+    }
+  }
 }

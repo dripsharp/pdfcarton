@@ -8,22 +8,29 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
-public class LookupTypeLigatureSubstitutionSubstFormat1 : global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable {
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureSetTable[] ligatureSetTables = null!;
+public class LookupTypeLigatureSubstitutionSubstFormat1
+: global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable {
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureSetTable[] ligatureSetTables
+    = null!;
 
-public LookupTypeLigatureSubstitutionSubstFormat1(int substFormat, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureSetTable[] ligatureSetTables) : base(substFormat, coverageTable) {
-this.ligatureSetTables = ligatureSetTables;
-}
+  public LookupTypeLigatureSubstitutionSubstFormat1(int substFormat,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureSetTable[] ligatureSetTables)
+  : base(substFormat, coverageTable) {
+    this.ligatureSetTables = ligatureSetTables;
+  }
 
-public override int DoSubstitution(int gid, int coverageIndex) {
-throw new global::System.NotSupportedException("not applicable");
-}
+  public override int DoSubstitution(int gid, int coverageIndex) {
+    throw new global::System.NotSupportedException("not applicable");
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureSetTable[] GetLigatureSetTables() {
-return this.ligatureSetTables;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureSetTable[] GetLigatureSetTables() {
+    return this.ligatureSetTables;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("%s[substFormat=%d]", typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LookupTypeLigatureSubstitutionSubstFormat1).Name, this.GetSubstFormat());
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("%s[substFormat=%d]",
+      typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LookupTypeLigatureSubstitutionSubstFormat1).Name,
+      this.GetSubstFormat());
+  }
 }

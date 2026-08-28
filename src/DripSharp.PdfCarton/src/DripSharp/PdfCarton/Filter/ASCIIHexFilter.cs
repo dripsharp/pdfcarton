@@ -9,63 +9,85 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class ASCIIHexFilter : global::DripSharp.PdfCarton.Filter.Filter {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private static readonly int[] REVERSE_HEX = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1, -1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+  private static readonly int[] REVERSE_HEX = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1,
+      -1, -1, -1, -1, -1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1,
+      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+      -1, -1, -1, -1 };
 
-public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded, global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters, int index) {
-int value;
-int firstByte;
-int secondByte;
-while (((firstByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded)) != -1)) {
-while (global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.isWhitespace(firstByte)) {
-firstByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded);
-}
-if (((firstByte == -1) || global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.isEOD(firstByte))) {
-break;
-}
-if ((global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[firstByte] == -1)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex, int: ", firstByte), " char: "), unchecked((char)(firstByte)))));
-}
-value = (global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[firstByte] * 16);
-secondByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded);
-if (((secondByte == -1) || global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.isEOD(secondByte))) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, value);
-break;
-}
-if ((global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[secondByte] == -1)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex, int: ", secondByte), " char: "), unchecked((char)(secondByte)))));
-}
-value += global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[secondByte];
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, value);
-}
-decoded.Flush();
-return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
-}
+  public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded,
+    global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters,
+    int index) {
+    int value;
+    int firstByte;
+    int secondByte;
+    while (((firstByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded)) != -1)) {
+      while (global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.isWhitespace(firstByte)) {
+        firstByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded);
+      }
+      if (((firstByte == -1)
+        || global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.isEOD(firstByte))) {
+        break;
+      }
+      if ((global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[firstByte] == -1)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex, int: ",
+          firstByte), " char: "), unchecked((char)(firstByte)))));
+      }
+      value = (global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[firstByte] * 16);
+      secondByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded);
+      if (((secondByte == -1)
+        || global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.isEOD(secondByte))) {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, value);
+        break;
+      }
+      if ((global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[secondByte] == -1)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex, int: ",
+          secondByte), " char: "), unchecked((char)(secondByte)))));
+      }
+      value += global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[secondByte];
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, value);
+    }
+    decoded.Flush();
+    return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
+  }
 
-private static bool isWhitespace(int c) {
-switch (c) {
-case var __case_118_14_0 when __case_118_14_0 == 0:
-case var __case_119_14_0 when __case_119_14_0 == 9:
-case var __case_120_14_0 when __case_120_14_0 == 10:
-case var __case_121_14_0 when __case_121_14_0 == 12:
-case var __case_122_14_0 when __case_122_14_0 == 13:
-case var __case_123_14_0 when __case_123_14_0 == 32:
-return true;
-default:
-return false;
-}
-}
+  private static bool isWhitespace(int c) {
+    switch (c) {
+      case var __case_118_14_0 when __case_118_14_0 == 0:
+      case var __case_119_14_0 when __case_119_14_0 == 9:
+      case var __case_120_14_0 when __case_120_14_0 == 10:
+      case var __case_121_14_0 when __case_121_14_0 == 12:
+      case var __case_122_14_0 when __case_122_14_0 == 13:
+      case var __case_123_14_0 when __case_123_14_0 == 32:
+        return true;
+      default:
+        return false;
+    }
+  }
 
-private static bool isEOD(int c) {
-return (c == (int)('>'));
-}
+  private static bool isEOD(int c) {
+    return (c == (int)'>');
+  }
 
-public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
-int byteRead;
-while (((byteRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(input)) != -1)) {
-global::DripSharp.PdfCarton.Util.Hex.WriteHexByte(unchecked((sbyte)(unchecked((sbyte)(byteRead)))), encoded);
-}
-encoded.Flush();
-}
+  public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded,
+    global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
+    int byteRead;
+    while (((byteRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(input)) != -1)) {
+      global::DripSharp.PdfCarton.Util.Hex.WriteHexByte(unchecked((sbyte)(unchecked((sbyte)(byteRead)))),
+        encoded);
+    }
+    encoded.Flush();
+  }
 }

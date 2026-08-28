@@ -8,57 +8,73 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font;
 
-public abstract class DescendantFontValidator<T> : global::DripSharp.PdfCarton.Preflight.Font.SimpleFontValidator<T> where T : global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer {
-public DescendantFontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont font, T fContainer) : base(context, font, font.GetCOSObject(), fContainer) {
+public abstract class DescendantFontValidator<T>
+: global::DripSharp.PdfCarton.Preflight.Font.SimpleFontValidator<T> where T
+: global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer {
+  public DescendantFontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont font, T fContainer) : base(context, font,
+    font.GetCOSObject(), fContainer) {
 
-}
+  }
 
-protected internal override void CheckMandatoryField() {
-bool arePresent = base.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Type);
-arePresent &= base.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
-arePresent &= base.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.BaseFont);
-arePresent &= base.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Cidsysteminfo);
-arePresent &= base.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.FontDesc);
-if (!arePresent) {
-this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDictionaryInvalid, global::DripSharp.Runtime.JavaCompat.Concat(base.Font.GetName(), ": Required keys are missing")));
-}
-this.CheckCIDSystemInfo(base.FontDictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Cidsysteminfo));
-this.CheckCIDToGIDMap(base.FontDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.CidToGidMap));
-}
+  protected internal override void CheckMandatoryField() {
+    bool arePresent = base.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Type);
+    arePresent &= base.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
+    arePresent &= base.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.BaseFont);
+    arePresent &= base.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Cidsysteminfo);
+    arePresent &= base.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.FontDesc);
+    if (!arePresent) {
+      this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDictionaryInvalid,
+        global::DripSharp.Runtime.JavaCompat.Concat(base.Font.GetName(),
+        ": Required keys are missing")));
+    }
+    this.CheckCIDSystemInfo(base.FontDictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Cidsysteminfo));
+    this.CheckCIDToGIDMap(base.FontDictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.CidToGidMap));
+  }
 
-protected internal virtual void CheckCIDSystemInfo(global::DripSharp.PdfCarton.Cos.COSDictionary sysinfo) {
-if ((sysinfo != default!)) {
-string reg = sysinfo.GetString(global::DripSharp.PdfCarton.Cos.COSName.Registry);
-string ord = sysinfo.GetString(global::DripSharp.PdfCarton.Cos.COSName.Ordering);
-global::DripSharp.PdfCarton.Cos.COSBase sup = sysinfo.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Supplement);
-if (!((((reg != default!) && (ord != default!)) && (sup is global::DripSharp.PdfCarton.Cos.COSInteger)))) {
-this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedSysinfo));
-}
-} else {
-this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedSysinfo));
-}
-}
+  protected internal virtual void CheckCIDSystemInfo(global::DripSharp.PdfCarton.Cos.COSDictionary sysinfo) {
+    if ((sysinfo != default!)) {
+      string reg = sysinfo.GetString(global::DripSharp.PdfCarton.Cos.COSName.Registry);
+      string ord = sysinfo.GetString(global::DripSharp.PdfCarton.Cos.COSName.Ordering);
+      global::DripSharp.PdfCarton.Cos.COSBase sup
+        = sysinfo.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Supplement);
+      if (!((((reg != default!) && (ord != default!))
+        && (sup is global::DripSharp.PdfCarton.Cos.COSInteger)))) {
+        this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedSysinfo));
+      }
+    } else {
+      this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedSysinfo));
+    }
+  }
 
-protected internal abstract void CheckCIDToGIDMap(global::DripSharp.PdfCarton.Cos.COSBase ctog);
+  protected internal abstract void CheckCIDToGIDMap(global::DripSharp.PdfCarton.Cos.COSBase ctog);
 
-protected internal virtual void CheckCIDToGIDMap(global::DripSharp.PdfCarton.Cos.COSBase ctog, bool mandatory) {
-if ((ctog is global::DripSharp.PdfCarton.Cos.COSName)) {
-if (!(global::DripSharp.PdfCarton.Cos.COSName.Identity.Equals(ctog))) {
-this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedCidtogid, global::DripSharp.Runtime.JavaCompat.Concat(base.Font.GetName(), ": The CIDToGID entry is invalid")));
-}
-} else {
-if ((ctog is global::DripSharp.PdfCarton.Cos.COSStream)) {
-try {
-global::System.IO.Stream @is = ((global::DripSharp.PdfCarton.Cos.COSStream)(ctog!)).CreateInputStream();
-@is.Dispose();
-} catch (global::System.IO.IOException e) {
-this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedCidtogid, global::DripSharp.Runtime.JavaCompat.Concat(base.Font.GetName(), ": error getting CIDToGIDMap"), e));
-}
-} else {
-if (mandatory) {
-this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedCidtogid, global::DripSharp.Runtime.JavaCompat.Concat(base.Font.GetName(), ": mandatory CIDToGIDMap missing")));
-}
-}
-}
-}
+  protected internal virtual void CheckCIDToGIDMap(global::DripSharp.PdfCarton.Cos.COSBase ctog,
+    bool mandatory) {
+    if ((ctog is global::DripSharp.PdfCarton.Cos.COSName)) {
+      if (!(global::DripSharp.PdfCarton.Cos.COSName.Identity.Equals(ctog))) {
+        this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedCidtogid,
+          global::DripSharp.Runtime.JavaCompat.Concat(base.Font.GetName(),
+          ": The CIDToGID entry is invalid")));
+      }
+    } else {
+      if ((ctog is global::DripSharp.PdfCarton.Cos.COSStream)) {
+        try {
+          global::System.IO.Stream @is
+            = ((global::DripSharp.PdfCarton.Cos.COSStream)(ctog!)).CreateInputStream();
+          @is.Dispose();
+        } catch (global::System.IO.IOException e) {
+          this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedCidtogid,
+            global::DripSharp.Runtime.JavaCompat.Concat(base.Font.GetName(),
+            ": error getting CIDToGIDMap"), e));
+        }
+      } else {
+        if (mandatory) {
+          this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedCidtogid,
+            global::DripSharp.Runtime.JavaCompat.Concat(base.Font.GetName(),
+            ": mandatory CIDToGIDMap missing")));
+        }
+      }
+    }
+  }
 }

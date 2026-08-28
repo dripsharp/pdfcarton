@@ -9,1184 +9,1453 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public class CFFParser {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
-
-private const string TAG_OTTO = "OTTO";
-
-private const string TAG_TTCF = "ttcf";
-
-private const string TAG_TTFONLY = "\u0000\u0001\u0000\u0000";
-
-private string[] stringIndex = default!;
-
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource source = null!;
-
-private string debugFontName = null!;
-
-public interface ByteSource {
-public sbyte[] GetBytes();
-}
-
-public sealed class __ByteSourceFunctionalAdapter : global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource {
-private readonly global::System.Func<sbyte[]> implementation;
-
-public __ByteSourceFunctionalAdapter(global::System.Func<sbyte[]> implementation) {
-this.implementation = implementation;
-}
-
-public sbyte[] GetBytes() {
-return this.implementation();
-}
-}
-
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Cff.CFFFont> Parse(sbyte[] bytes, global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource source) {
-this.source = source;
-return this.parse(new global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray(bytes));
-}
-
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Cff.CFFFont> Parse(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
-sbyte[] bytes = new sbyte[(int)(randomAccessRead.Length())];
-randomAccessRead.Seek((long)(0));
-int remainingBytes = bytes.Length;
-int amountRead;
-while (((amountRead = randomAccessRead.Read(bytes, (bytes.Length - remainingBytes), remainingBytes)) > 0)) {
-remainingBytes -= amountRead;
-}
-randomAccessRead.Seek((long)(0));
-this.source = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBytesource(bytes);
-return this.parse(new global::DripSharp.PdfCarton.Fonts.Cff.DataInputRandomAccessRead(randomAccessRead));
-}
-
-public virtual void ParseFirstSubFontROS(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) {
-randomAccessRead.Seek((long)(0));
-global::DripSharp.PdfCarton.Fonts.Cff.DataInput input = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputRandomAccessRead(randomAccessRead);
-input = this.skipHeader(input);
-string[] nameIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readStringIndexData(input);
-if ((nameIndex.Length == 0)) {
-outHeaders.SetError("Name index missing in CFF font");
-return;
-}
-sbyte[][] topDictIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input);
-if ((topDictIndex.Length == 0)) {
-outHeaders.SetError("Top DICT INDEX missing in CFF font");
-return;
-}
-this.stringIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readStringIndexData(input);
-global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray topDictInput = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray(topDictIndex[0]);
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData topDict = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readDictData(topDictInput);
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry syntheticBaseEntry = topDict.GetEntry("SyntheticBase");
-if ((syntheticBaseEntry != default!)) {
-outHeaders.SetError("Synthetic Fonts are not supported");
-return;
-}
-global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont cffCIDFont = this.parseROS(topDict);
-if ((cffCIDFont != default!)) {
-outHeaders.SetOtfROS(cffCIDFont.GetRegistry(), cffCIDFont.GetOrdering(), cffCIDFont.GetSupplement());
-}
-}
-
-private global::DripSharp.PdfCarton.Fonts.Cff.DataInput skipHeader(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-string firstTag = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readTagName(input);
-switch (firstTag) {
-case var __case_170_18_0 when global::System.Object.Equals(__case_170_18_0, global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.TAG_OTTO):
-input = this.createTaggedCFFDataInput(input);
-break;
-case var __case_173_18_0 when global::System.Object.Equals(__case_173_18_0, global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.TAG_TTCF):
-throw new global::System.IO.IOException("True Type Collection fonts are not supported.");
-case var __case_175_18_0 when global::System.Object.Equals(__case_175_18_0, global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.TAG_TTFONLY):
-throw new global::System.IO.IOException("OpenType fonts containing a true type font are not supported.");
-default:
-input.SetPosition(0);
-break;
-}
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Header header = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readHeader(input);
-return input;
-}
-
-private global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Cff.CFFFont> parse(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-input = this.skipHeader(input);
-string[] nameIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readStringIndexData(input);
-if ((nameIndex.Length == 0)) {
-throw new global::System.IO.IOException("Name index missing in CFF font");
-}
-sbyte[][] topDictIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input);
-if ((topDictIndex.Length == 0)) {
-throw new global::System.IO.IOException("Top DICT INDEX missing in CFF font");
-}
-this.stringIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readStringIndexData(input);
-sbyte[][] globalSubrIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input);
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Cff.CFFFont> fonts = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Cff.CFFFont>(nameIndex.Length);
-for (int i = 0; (i < nameIndex.Length); i++) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFFont font = this.parseFont(input, nameIndex[i], topDictIndex[i]);
-font.setGlobalSubrIndex(globalSubrIndex);
-font.setData(this.source);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fonts, font);
-}
-return fonts;
-}
-
-private global::DripSharp.PdfCarton.Fonts.Cff.DataInput createTaggedCFFDataInput(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-short numTables = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort();
-short searchRange = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort();
-short entrySelector = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort();
-short rangeShift = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort();
-for (int q = 0; (q < (int)(numTables)); q++) {
-string tagName = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readTagName(input);
-long checksum = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readLong(input);
-long offset = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readLong(input);
-long length = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readLong(input);
-if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals("CFF ", tagName)) {
-input.SetPosition((int)((int)(offset)));
-sbyte[] bytes2 = input.ReadBytes((int)((int)(length)));
-return new global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray(bytes2);
-}
-}
-throw new global::System.IO.IOException("CFF tag not found in this OpenType font.");
-}
-
-private static string readTagName(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-sbyte[] b = input.ReadBytes(4);
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(b, global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.ISO88591);
-}
-
-private static long readLong(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-return ((((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadUnsignedShort() << unchecked((int)(16))) | ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadUnsignedShort());
-}
-
-private static int readOffSize(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-int offSize = input.ReadUnsignedByte();
-if (((offSize < 1) || (offSize > 4))) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Illegal (< 1 or > 4) offSize value ", offSize), " in CFF font at position "), (input.GetPosition() - 1)));
-}
-return offSize;
-}
-
-private static global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Header readHeader(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-int major = input.ReadUnsignedByte();
-int minor = input.ReadUnsignedByte();
-int hdrSize = input.ReadUnsignedByte();
-int offSize = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readOffSize(input);
-return new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Header(major, minor, hdrSize, offSize);
-}
-
-private static int[] readIndexDataOffsets(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-int count = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadUnsignedShort();
-if ((count == 0)) {
-return new int[0];
-}
-int offSize = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readOffSize(input);
-int[] offsets = new int[(count + 1)];
-for (int i = 0; (i <= count); i++) {
-int offset = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadOffset(offSize);
-if ((offset > input.Length())) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("illegal offset value ", offset), " in CFF font"));
-}
-offsets[i] = offset;
-}
-return offsets;
-}
-
-private static sbyte[][] readIndexData(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-int[] offsets = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexDataOffsets(input);
-if ((offsets.Length == 0)) {
-return new sbyte[0][];
-}
-int count = (offsets.Length - 1);
-sbyte[][] indexDataValues = new sbyte[count][];
-for (int i = 0; (i < count); i++) {
-int length = (offsets[(i + 1)] - offsets[i]);
-indexDataValues[i] = input.ReadBytes(length);
-}
-return indexDataValues;
-}
-
-private static string[] readStringIndexData(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-int[] offsets = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexDataOffsets(input);
-if ((offsets.Length == 0)) {
-return new string[0];
-}
-int count = (offsets.Length - 1);
-string[] indexDataValues = new string[count];
-for (int i = 0; (i < count); i++) {
-int length = (offsets[(i + 1)] - offsets[i]);
-if ((length < 0)) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Negative index data length + ", length), " at "), i), ": offsets["), (i + 1)), "]="), offsets[(i + 1)]), ", offsets["), i), "]="), offsets[i]));
-}
-indexDataValues[i] = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(input.ReadBytes(length), global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.ISO88591);
-}
-return indexDataValues;
-}
-
-private static global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData readDictData(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData dict = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData();
-while (input.HasRemaining()) {
-dict.Add(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readEntry(input));
-}
-return dict;
-}
-
-private static global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData readDictData(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input, int offset, int dictSize) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData dict = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData();
-if ((dictSize > 0)) {
-input.SetPosition(offset);
-int endPosition = (offset + dictSize);
-while ((input.GetPosition() < endPosition)) {
-dict.Add(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readEntry(input));
-}
-}
-return dict;
-}
-
-private static global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry readEntry(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry();
-while (true) {
-int b0 = input.ReadUnsignedByte();
-if (((b0 >= 0) && (b0 <= 21))) {
-entry.operatorName = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readOperator(input, b0);
-break;
-} else {
-if (((b0 == 28) || (b0 == 29))) {
-entry.AddOperand(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIntegerNumber(input, b0));
-} else {
-if ((b0 == 30)) {
-entry.AddOperand(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readRealNumber(input));
-} else {
-if (((b0 >= 32) && (b0 <= 254))) {
-entry.AddOperand(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIntegerNumber(input, b0));
-} else {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("invalid DICT data b0 byte: ", b0));
-}
-}
-}
-}
-}
-return entry;
-}
-
-private static string readOperator(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input, int b0) {
-if ((b0 == 12)) {
-int b1 = input.ReadUnsignedByte();
-return global::DripSharp.PdfCarton.Fonts.Cff.CFFOperator.GetOperator(b0, b1);
-}
-return global::DripSharp.PdfCarton.Fonts.Cff.CFFOperator.GetOperator(b0);
-}
-
-private static int? readIntegerNumber(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input, int b0) {
-if ((b0 == 28)) {
-return (int)(((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort());
-} else {
-if ((b0 == 29)) {
-return ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadInt();
-} else {
-if (((b0 >= 32) && (b0 <= 246))) {
-return (b0 - 139);
-} else {
-if (((b0 >= 247) && (b0 <= 250))) {
-int b1__427_17 = input.ReadUnsignedByte();
-return ((((b0 - 247) * 256) + b1__427_17) + 108);
-} else {
-if (((b0 >= 251) && (b0 <= 254))) {
-int b1__432_17 = input.ReadUnsignedByte();
-return (((-((b0 - 251)) * 256) - b1__432_17) - 108);
-} else {
-throw new global::System.ArgumentException();
-}
-}
-}
-}
-}
-}
-
-private static double? readRealNumber(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
-bool done = false;
-bool exponentMissing = false;
-bool hasExponent = false;
-int[] nibbles = new int[2];
-while (!done) {
-int b = input.ReadUnsignedByte();
-nibbles[0] = (b / 16);
-nibbles[1] = (b % 16);
-foreach (int nibble in nibbles) {
-switch (nibble) {
-case var __case_457_22_0 when __case_457_22_0 == 0:
-case var __case_458_22_0 when __case_458_22_0 == 1:
-case var __case_459_22_0 when __case_459_22_0 == 2:
-case var __case_460_22_0 when __case_460_22_0 == 3:
-case var __case_461_22_0 when __case_461_22_0 == 4:
-case var __case_462_22_0 when __case_462_22_0 == 5:
-case var __case_463_22_0 when __case_463_22_0 == 6:
-case var __case_464_22_0 when __case_464_22_0 == 7:
-case var __case_465_22_0 when __case_465_22_0 == 8:
-case var __case_466_22_0 when __case_466_22_0 == 9:
-sb.Append(nibble);
-exponentMissing = false;
-break;
-case var __case_470_22_0 when __case_470_22_0 == 10:
-sb.Append('.');
-break;
-case var __case_473_22_0 when __case_473_22_0 == 11:
-if (hasExponent) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("duplicate 'E' ignored after ", sb)));
-break;
-}
-sb.Append('E');
-exponentMissing = true;
-hasExponent = true;
-break;
-case var __case_483_22_0 when __case_483_22_0 == 12:
-if (hasExponent) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("duplicate 'E-' ignored after ", sb)));
-break;
-}
-sb.Append("E-");
-exponentMissing = true;
-hasExponent = true;
-break;
-case var __case_493_22_0 when __case_493_22_0 == 13:
-break;
-case var __case_495_22_0 when __case_495_22_0 == 14:
-sb.Append('-');
-break;
-case var __case_498_22_0 when __case_498_22_0 == 15:
-done = true;
-break;
-default:
-throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("illegal nibble ", nibble));
-}
-}
-}
-if (exponentMissing) {
-sb.Append('0');
-}
-if ((sb.Length == 0)) {
-return 0.0D;
-}
-try {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseDouble(sb.ToString());
-} catch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaNumberFormatException ex) {
-throw new global::System.IO.IOException(null, ex);
-}
-}
-
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont parseROS(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData topDict) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry rosEntry = topDict.GetEntry("ROS");
-if ((rosEntry != default!)) {
-if ((rosEntry.Size() < 3)) {
-throw new global::System.IO.IOException("ROS entry must have 3 elements");
-}
-global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont cffCIDFont = new global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont();
-cffCIDFont.setRegistry(this.readString(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(rosEntry.GetNumber(0))));
-cffCIDFont.setOrdering(this.readString(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(rosEntry.GetNumber(1))));
-cffCIDFont.setSupplement(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(rosEntry.GetNumber(2)));
-return cffCIDFont;
-}
-return default!;
-}
-
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFFont parseFont(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input, string name, sbyte[] topDictIndex) {
-global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray topDictInput = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray(topDictIndex);
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData topDict = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readDictData(topDictInput);
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry syntheticBaseEntry = topDict.GetEntry("SyntheticBase");
-if ((syntheticBaseEntry != default!)) {
-throw new global::System.IO.IOException("Synthetic Fonts are not supported");
-}
-global::DripSharp.PdfCarton.Fonts.Cff.CFFFont font;
-global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont cffCIDFont = this.parseROS(topDict);
-bool isCIDFont = (cffCIDFont != default!);
-if ((cffCIDFont != default!)) {
-font = cffCIDFont;
-} else {
-font = new global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font();
-}
-this.debugFontName = name;
-font.setName(name);
-font.AddValueToTopDict("version", this.getString(topDict, "version"));
-font.AddValueToTopDict("Notice", this.getString(topDict, "Notice"));
-font.AddValueToTopDict("Copyright", this.getString(topDict, "Copyright"));
-font.AddValueToTopDict("FullName", this.getString(topDict, "FullName"));
-font.AddValueToTopDict("FamilyName", this.getString(topDict, "FamilyName"));
-font.AddValueToTopDict("Weight", this.getString(topDict, "Weight"));
-font.AddValueToTopDict("isFixedPitch", topDict.GetBoolean("isFixedPitch", false));
-font.AddValueToTopDict("ItalicAngle", topDict.GetNumber("ItalicAngle", 0));
-font.AddValueToTopDict("UnderlinePosition", topDict.GetNumber("UnderlinePosition", -100));
-font.AddValueToTopDict("UnderlineThickness", topDict.GetNumber("UnderlineThickness", 50));
-font.AddValueToTopDict("PaintType", topDict.GetNumber("PaintType", 0));
-font.AddValueToTopDict("CharstringType", topDict.GetNumber("CharstringType", 2));
-font.AddValueToTopDict("FontMatrix", topDict.GetArray("FontMatrix", global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<global::System.IConvertible>(0.001D, 0, 0, 0.001D, 0, 0)));
-font.AddValueToTopDict("UniqueID", topDict.GetNumber("UniqueID", (global::System.IConvertible)default!));
-font.AddValueToTopDict("FontBBox", topDict.GetArray("FontBBox", global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<global::System.IConvertible>(0, 0, 0, 0)));
-font.AddValueToTopDict("StrokeWidth", topDict.GetNumber("StrokeWidth", 0));
-font.AddValueToTopDict("XUID", topDict.GetArray("XUID", (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry charStringsEntry = topDict.GetEntry("CharStrings");
-if (((charStringsEntry == default!) || !(charStringsEntry.HasOperands()))) {
-throw new global::System.IO.IOException("CharStrings is missing or empty");
-}
-int charStringsOffset = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(charStringsEntry.GetNumber(0));
-input.SetPosition(charStringsOffset);
-sbyte[][] charStringsIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input);
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry charsetEntry = topDict.GetEntry("charset");
-global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset;
-if (((charsetEntry != default!) && charsetEntry.HasOperands())) {
-int charsetId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(charsetEntry.GetNumber(0));
-if ((!isCIDFont && (charsetId == 0))) {
-charset = global::DripSharp.PdfCarton.Fonts.Cff.CFFISOAdobeCharset.GetInstance();
-} else {
-if ((!isCIDFont && (charsetId == 1))) {
-charset = global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertCharset.GetInstance();
-} else {
-if ((!isCIDFont && (charsetId == 2))) {
-charset = global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertSubsetCharset.GetInstance();
-} else {
-if ((charStringsIndex.Length > 0)) {
-input.SetPosition(charsetId);
-charset = this.readCharset(input, charStringsIndex.Length, isCIDFont);
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't read CharStrings index - returning empty charset instead"));
-charset = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.EmptyCharsetType1();
-}
-}
-}
-}
-} else {
-if (isCIDFont) {
-charset = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.EmptyCharsetCID(charStringsIndex.Length);
-} else {
-charset = global::DripSharp.PdfCarton.Fonts.Cff.CFFISOAdobeCharset.GetInstance();
-}
-}
-font.setCharset(charset);
-font.CharStrings = charStringsIndex;
-if (isCIDFont) {
-int numEntries = 0;
-if ((charStringsIndex.Length == 0)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't read CharStrings index - parsing CIDFontDicts with number of char strings set to 0"));
-} else {
-numEntries = charStringsIndex.Length;
-}
-this.parseCIDFontDicts(input, topDict, (global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont)(font!), numEntries);
-global::System.Collections.Generic.IList<global::System.Collections.Generic.IDictionary<string, object>> fontDicts = ((global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont)(font!)).GetFontDicts();
-global::System.Collections.Generic.IList<global::System.IConvertible> privMatrix = default!;
-if (!(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListIsEmpty(fontDicts))) {
-privMatrix = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastList<global::System.IConvertible>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetOrDefault(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(fontDicts, 0), "FontMatrix", (object)default!));
-}
-global::System.Collections.Generic.IList<global::System.IConvertible> matrix = topDict.GetArray("FontMatrix", (global::System.Collections.Generic.IList<global::System.IConvertible>)default!);
-if ((matrix == default!)) {
-if ((privMatrix! != default!)) {
-font.AddValueToTopDict("FontMatrix", privMatrix!);
-} else {
-font.AddValueToTopDict("FontMatrix", topDict.GetArray("FontMatrix", global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<global::System.IConvertible>(0.001D, 0.0D, 0.0D, 0.001D, 0.0D, 0.0D)));
-}
-} else {
-if ((privMatrix! != default!)) {
-this.concatenateMatrix(matrix, privMatrix!);
-}
-}
-} else {
-this.parseType1Dicts(input, topDict, (global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font)(font!), charset);
-}
-return font;
-}
-
-private void concatenateMatrix(global::System.Collections.Generic.IList<global::System.IConvertible> matrixDest, global::System.Collections.Generic.IList<global::System.IConvertible> matrixConcat) {
-double a1 = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixDest, 0), global::System.Globalization.CultureInfo.InvariantCulture);
-double b1 = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixDest, 1), global::System.Globalization.CultureInfo.InvariantCulture);
-double c1 = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixDest, 2), global::System.Globalization.CultureInfo.InvariantCulture);
-double d1 = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixDest, 3), global::System.Globalization.CultureInfo.InvariantCulture);
-double x1 = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixDest, 4), global::System.Globalization.CultureInfo.InvariantCulture);
-double y1 = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixDest, 5), global::System.Globalization.CultureInfo.InvariantCulture);
-double a2 = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixConcat, 0), global::System.Globalization.CultureInfo.InvariantCulture);
-double b2 = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixConcat, 1), global::System.Globalization.CultureInfo.InvariantCulture);
-double c2 = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixConcat, 2), global::System.Globalization.CultureInfo.InvariantCulture);
-double d2 = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixConcat, 3), global::System.Globalization.CultureInfo.InvariantCulture);
-double x2 = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixConcat, 4), global::System.Globalization.CultureInfo.InvariantCulture);
-double y2 = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixConcat, 5), global::System.Globalization.CultureInfo.InvariantCulture);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(matrixDest, 0, ((a1 * a2) + (b1 * c2)));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(matrixDest, 1, ((a1 * b2) + (b1 * d1)));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(matrixDest, 2, ((c1 * a2) + (d1 * c2)));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(matrixDest, 3, ((c1 * b2) + (d1 * d2)));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(matrixDest, 4, (((x1 * a2) + (y1 * c2)) + x2));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(matrixDest, 5, (((x1 * b2) + (y1 * d2)) + y2));
-}
-
-private void parseCIDFontDicts(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input, global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData topDict, global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont font, int nrOfcharStrings) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry fdArrayEntry = topDict.GetEntry("FDArray");
-if (((fdArrayEntry == default!) || !(fdArrayEntry.HasOperands()))) {
-throw new global::System.IO.IOException("FDArray is missing for a CIDKeyed Font.");
-}
-int fontDictOffset = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(fdArrayEntry.GetNumber(0));
-input.SetPosition(fontDictOffset);
-sbyte[][] fdIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input);
-if ((fdIndex.Length == 0)) {
-throw new global::System.IO.IOException("Font dict index is missing for a CIDKeyed Font");
-}
-global::System.Collections.Generic.IList<global::System.Collections.Generic.IDictionary<string, object>> privateDictionaries = new global::System.Collections.Generic.List<global::System.Collections.Generic.IDictionary<string, object>>();
-global::System.Collections.Generic.IList<global::System.Collections.Generic.IDictionary<string, object>> fontDictionaries = new global::System.Collections.Generic.List<global::System.Collections.Generic.IDictionary<string, object>>();
-bool privateDictPopulated = false;
-foreach (sbyte[] bytes in fdIndex) {
-global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray fontDictInput = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray(bytes);
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData fontDict = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readDictData(fontDictInput);
-global::System.Collections.Generic.IDictionary<string, object> fontDictMap = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<string, object>(4);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(fontDictMap, "FontName", this.getString(fontDict, "FontName"));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(fontDictMap, "FontType", fontDict.GetNumber("FontType", 0));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(fontDictMap, "FontBBox", fontDict.GetArray("FontBBox", (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(fontDictMap, "FontMatrix", fontDict.GetArray("FontMatrix", (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDictionaries, fontDictMap);
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry privateEntry = fontDict.GetEntry("Private");
-if (((privateEntry == default!) || (privateEntry.Size() < 2))) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(privateDictionaries, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string, object>());
-continue;
-}
-int privateOffset = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(privateEntry.GetNumber(1));
-int privateSize = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(privateEntry.GetNumber(0));
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData privateDict = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readDictData(input, privateOffset, privateSize);
-privateDictPopulated = true;
-global::System.Collections.Generic.IDictionary<string, object> privDict = this.readPrivateDict(privateDict);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(privateDictionaries, privDict);
-global::System.IConvertible localSubrOffset = privateDict.GetNumber("Subrs", 0);
-if (((localSubrOffset is int) && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)(localSubrOffset)) > 0))) {
-input.SetPosition((privateOffset + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)(localSubrOffset))));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "Subrs", global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input));
-}
-}
-if (!privateDictPopulated) {
-throw new global::System.IO.IOException("Font DICT invalid without \"Private\" entry");
-}
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry fdSelectEntry = topDict.GetEntry("FDSelect");
-if (((fdSelectEntry == default!) || !(fdSelectEntry.HasOperands()))) {
-throw new global::System.IO.IOException("FDSelect is missing or empty");
-}
-int fdSelectPos = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(fdSelectEntry.GetNumber(0));
-input.SetPosition(fdSelectPos);
-global::DripSharp.PdfCarton.Fonts.Cff.FDSelect fdSelect = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readFDSelect(input, nrOfcharStrings);
-font.setFontDict(fontDictionaries);
-font.setPrivDict(privateDictionaries);
-font.setFdSelect(fdSelect);
-}
-
-private global::System.Collections.Generic.IDictionary<string, object> readPrivateDict(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData privateDict) {
-global::System.Collections.Generic.IDictionary<string, object> privDict = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<string, object>(17);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "BlueValues", privateDict.GetDelta("BlueValues", (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "OtherBlues", privateDict.GetDelta("OtherBlues", (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "FamilyBlues", privateDict.GetDelta("FamilyBlues", (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "FamilyOtherBlues", privateDict.GetDelta("FamilyOtherBlues", (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "BlueScale", privateDict.GetNumber("BlueScale", 0.039625D));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "BlueShift", privateDict.GetNumber("BlueShift", 7));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "BlueFuzz", privateDict.GetNumber("BlueFuzz", 1));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "StdHW", privateDict.GetNumber("StdHW", (global::System.IConvertible)default!));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "StdVW", privateDict.GetNumber("StdVW", (global::System.IConvertible)default!));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "StemSnapH", privateDict.GetDelta("StemSnapH", (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "StemSnapV", privateDict.GetDelta("StemSnapV", (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "ForceBold", global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(privateDict.GetBoolean("ForceBold", false)));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "LanguageGroup", privateDict.GetNumber("LanguageGroup", 0));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "ExpansionFactor", privateDict.GetNumber("ExpansionFactor", 0.06D));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "initialRandomSeed", privateDict.GetNumber("initialRandomSeed", 0));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "defaultWidthX", privateDict.GetNumber("defaultWidthX", 0));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "nominalWidthX", privateDict.GetNumber("nominalWidthX", 0));
-return privDict;
-}
-
-private void parseType1Dicts(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input, global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData topDict, global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font font, global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry encodingEntry = topDict.GetEntry("Encoding");
-global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding encoding;
-int encodingId = (((encodingEntry != default!) && encodingEntry.HasOperands()) ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(encodingEntry.GetNumber(0)) : 0);
-switch (encodingId) {
-case var __case_873_18_0 when __case_873_18_0 == 0:
-encoding = global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardEncoding.GetInstance();
-break;
-case var __case_876_18_0 when __case_876_18_0 == 1:
-encoding = global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertEncoding.GetInstance();
-break;
-default:
-input.SetPosition(encodingId);
-encoding = this.readEncoding(input, charset);
-break;
-}
-font.setEncoding(encoding);
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry privateEntry = topDict.GetEntry("Private");
-if (((privateEntry == default!) || (privateEntry.Size() < 2))) {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Private dictionary entry missing for font ", font.GetName()));
-}
-int privateOffset = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(privateEntry.GetNumber(1));
-int privateSize = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(privateEntry.GetNumber(0));
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData privateDict = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readDictData(input, privateOffset, privateSize);
-global::System.Collections.Generic.IDictionary<string, object> privDict = this.readPrivateDict(privateDict);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(privDict, font.addToPrivateDict);
-global::System.IConvertible localSubrOffset = privateDict.GetNumber("Subrs", 0);
-if (((localSubrOffset is int) && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)(localSubrOffset)) > 0))) {
-input.SetPosition((privateOffset + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)(localSubrOffset))));
-font.addToPrivateDict("Subrs", global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input));
-}
-}
-
-private string readString(int index) {
-if ((index < 0)) {
-throw new global::System.IO.IOException("Invalid negative index when reading a string");
-}
-if ((index <= 390)) {
-return global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardString.GetName(index);
-}
-if (((this.stringIndex != default!) && ((index - 391) < this.stringIndex.Length))) {
-return this.stringIndex[(index - 391)];
-}
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("SID", index);
-}
-
-private string getString(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData dict, string name) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry = dict.GetEntry(name);
-return (((entry != default!) && entry.HasOperands()) ? this.readString(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(entry.GetNumber(0))) : (string)(default!));
-}
-
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding readEncoding(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput, global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset) {
-int format = dataInput.ReadUnsignedByte();
-int baseFormat = (format & 127);
-switch (baseFormat) {
-case var __case_940_18_0 when __case_940_18_0 == 0:
-return this.readFormat0Encoding(dataInput, charset, format);
-case var __case_942_18_0 when __case_942_18_0 == 1:
-return this.readFormat1Encoding(dataInput, charset, format);
-default:
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid encoding base format ", baseFormat));
-}
-}
-
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0Encoding readFormat0Encoding(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput, global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset, int format) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0Encoding encoding = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0Encoding(dataInput.ReadUnsignedByte());
-encoding.Add(0, 0, ".notdef");
-for (int gid = 1; (gid <= encoding.nCodes); gid++) {
-int code = dataInput.ReadUnsignedByte();
-int sid = charset.GetSIDForGID(gid);
-encoding.Add(code, sid, this.readString(sid));
-}
-if (((format & 128) != 0)) {
-this.readSupplement(dataInput, encoding);
-}
-return encoding;
-}
-
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format1Encoding readFormat1Encoding(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput, global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset, int format) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format1Encoding encoding = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format1Encoding(dataInput.ReadUnsignedByte());
-encoding.Add(0, 0, ".notdef");
-int gid = 1;
-for (int i = 0; (i < encoding.nRanges); i++) {
-int rangeFirst = dataInput.ReadUnsignedByte();
-int rangeLeft = dataInput.ReadUnsignedByte();
-for (int j = 0; (j <= rangeLeft); j++) {
-int sid = charset.GetSIDForGID(gid);
-encoding.Add((rangeFirst + j), sid, this.readString(sid));
-gid++;
-}
-}
-if (((format & 128) != 0)) {
-this.readSupplement(dataInput, encoding);
-}
-return encoding;
-}
-
-private void readSupplement(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput, global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding encoding) {
-int nSups = dataInput.ReadUnsignedByte();
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding.Supplement[] supplement = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding.Supplement[nSups];
-encoding.supplement = supplement;
-for (int i = 0; (i < nSups); i++) {
-int code = dataInput.ReadUnsignedByte();
-int sid = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
-supplement[i] = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding.Supplement(code, sid, this.readString(sid));
-encoding.Add(supplement[i]);
-}
-}
-
-private static global::DripSharp.PdfCarton.Fonts.Cff.FDSelect readFDSelect(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput, int nGlyphs) {
-int format = dataInput.ReadUnsignedByte();
-switch (format) {
-case var __case_1019_18_0 when __case_1019_18_0 == 0:
-return global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readFormat0FDSelect(dataInput, nGlyphs);
-case var __case_1021_18_0 when __case_1021_18_0 == 3:
-return global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readFormat3FDSelect(dataInput);
-default:
-throw new global::System.ArgumentException();
-}
-}
-
-private static global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0FDSelect readFormat0FDSelect(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput, int nGlyphs) {
-int[] fds = new int[nGlyphs];
-for (int i = 0; (i < nGlyphs); i++) {
-fds[i] = dataInput.ReadUnsignedByte();
-}
-return new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0FDSelect(fds);
-}
-
-private static global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format3FDSelect readFormat3FDSelect(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput) {
-int nbRanges = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Range3[] range3 = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Range3[nbRanges];
-for (int i = 0; (i < nbRanges); i++) {
-range3[i] = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Range3(((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort(), dataInput.ReadUnsignedByte());
-}
-return new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format3FDSelect(range3, ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort());
-}
-
-internal sealed class Format3FDSelect : global::DripSharp.PdfCarton.Fonts.Cff.FDSelect {
-internal readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Range3[] range3 = null!;
-
-internal readonly int sentinel = default;
-
-internal Format3FDSelect(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Range3[] range3, int sentinel) {
-this.range3 = range3;
-this.sentinel = sentinel;
-}
-
-public int GetFDIndex(int gid) {
-for (int i = 0; (i < this.range3.Length); ++i) {
-if ((this.range3[i].first <= gid)) {
-if (((i + 1) < this.range3.Length)) {
-if ((this.range3[(i + 1)].first > gid)) {
-return this.range3[i].fd;
-}
-} else {
-if ((this.sentinel > gid)) {
-return this.range3[i].fd;
-}
-return -1;
-}
-}
-}
-return 0;
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[nbRanges="), this.range3.Length), ", range3="), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(this.range3)), " sentinel="), this.sentinel), "]");
-}
-}
-
-internal sealed class Range3 {
-internal readonly int first = default;
-
-internal readonly int fd = default;
-
-internal Range3(int first, int fd) {
-this.first = first;
-this.fd = fd;
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[first="), this.first), ", fd="), this.fd), "]");
-}
-}
-
-internal class Format0FDSelect : global::DripSharp.PdfCarton.Fonts.Cff.FDSelect {
-internal readonly int[] fds = null!;
-
-internal Format0FDSelect(int[] fds) {
-this.fds = fds;
-}
-
-public virtual int GetFDIndex(int gid) {
-if ((gid < this.fds.Length)) {
-return this.fds[gid];
-}
-return 0;
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[fds="), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(this.fds)), "]");
-}
-}
-
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset readCharset(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput, int nGlyphs, bool isCIDFont) {
-int format = dataInput.ReadUnsignedByte();
-switch (format) {
-case var __case_1173_18_0 when __case_1173_18_0 == 0:
-return this.readFormat0Charset(dataInput, nGlyphs, isCIDFont);
-case var __case_1175_18_0 when __case_1175_18_0 == 1:
-return this.readFormat1Charset(dataInput, nGlyphs, isCIDFont);
-case var __case_1177_18_0 when __case_1177_18_0 == 2:
-return this.readFormat2Charset(dataInput, nGlyphs, isCIDFont);
-default:
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Incorrect charset format ", format));
-}
-}
-
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0Charset readFormat0Charset(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput, int nGlyphs, bool isCIDFont) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0Charset charset = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0Charset(isCIDFont);
-if (isCIDFont) {
-charset.AddCID(0, 0);
-for (int gid__1192_22 = 1; (gid__1192_22 < nGlyphs); gid__1192_22++) {
-charset.AddCID(gid__1192_22, ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort());
-}
-} else {
-charset.AddSID(0, 0, ".notdef");
-for (int gid__1200_22 = 1; (gid__1200_22 < nGlyphs); gid__1200_22++) {
-int sid = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
-charset.AddSID(gid__1200_22, sid, this.readString(sid));
-}
-}
-return charset;
-}
-
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format1Charset readFormat1Charset(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput, int nGlyphs, bool isCIDFont) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format1Charset charset = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format1Charset(isCIDFont);
-if (isCIDFont) {
-charset.AddCID(0, 0);
-int gid__1216_17 = 1;
-while ((gid__1216_17 < nGlyphs)) {
-int rangeFirst__1219_21 = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
-int rangeLeft__1220_21 = dataInput.ReadUnsignedByte();
-charset.AddRangeMapping(new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping(gid__1216_17, rangeFirst__1219_21, rangeLeft__1220_21));
-gid__1216_17 += (rangeLeft__1220_21 + 1);
-}
-} else {
-charset.AddSID(0, 0, ".notdef");
-int gid__1228_17 = 1;
-while ((gid__1228_17 < nGlyphs)) {
-int rangeFirst__1231_21 = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
-int rangeLeft__1232_21 = (dataInput.ReadUnsignedByte() + 1);
-for (int j = 0; (j < rangeLeft__1232_21); j++) {
-int sid = (rangeFirst__1231_21 + j);
-charset.AddSID((gid__1228_17 + j), sid, this.readString(sid));
-}
-gid__1228_17 += rangeLeft__1232_21;
-}
-}
-return charset;
-}
-
-private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format2Charset readFormat2Charset(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput, int nGlyphs, bool isCIDFont) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format2Charset charset = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format2Charset(isCIDFont);
-if (isCIDFont) {
-charset.AddCID(0, 0);
-int gid__1251_17 = 1;
-while ((gid__1251_17 < nGlyphs)) {
-int first__1254_21 = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
-int nLeft__1255_21 = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
-charset.AddRangeMapping(new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping(gid__1251_17, first__1254_21, nLeft__1255_21));
-gid__1251_17 += (nLeft__1255_21 + 1);
-}
-} else {
-charset.AddSID(0, 0, ".notdef");
-int gid__1263_17 = 1;
-while ((gid__1263_17 < nGlyphs)) {
-int first__1266_21 = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
-int nLeft__1267_21 = (((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort() + 1);
-for (int j = 0; (j < nLeft__1267_21); j++) {
-int sid = (first__1266_21 + j);
-charset.AddSID((gid__1263_17 + j), sid, this.readString(sid));
-}
-gid__1263_17 += nLeft__1267_21;
-}
-}
-return charset;
-}
-
-internal class Header {
-internal readonly int major = default;
-
-internal readonly int minor = default;
-
-internal readonly int hdrSize = default;
-
-internal readonly int offSize = default;
-
-internal Header(int major, int minor, int hdrSize, int offSize) {
-this.major = major;
-this.minor = minor;
-this.hdrSize = hdrSize;
-this.offSize = offSize;
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[major="), this.major), ", minor="), this.minor), ", hdrSize="), this.hdrSize), ", offSize="), this.offSize), "]");
-}
-}
-
-internal class DictData {
-internal readonly global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry> entries = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string, global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry>();
-
-public virtual void Add(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry) {
-if ((entry.operatorName != default!)) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.entries, entry.operatorName, entry);
-}
-}
-
-public virtual global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry GetEntry(string name) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.entries, name);
-}
-
-public virtual bool? GetBoolean(string name, bool defaultValue) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry = this.GetEntry(name);
-return (((entry != default!) && entry.HasOperands()) ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(entry.GetBoolean(0, defaultValue)) : defaultValue);
-}
-
-public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetArray(string name, global::System.Collections.Generic.IList<global::System.IConvertible> defaultValue) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry = this.GetEntry(name);
-return (((entry != default!) && entry.HasOperands()) ? entry.GetOperands() : defaultValue);
-}
-
-public virtual global::System.IConvertible GetNumber(string name, global::System.IConvertible defaultValue) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry = this.GetEntry(name);
-return (((entry != default!) && entry.HasOperands()) ? entry.GetNumber(0) : defaultValue);
-}
-
-public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetDelta(string name, global::System.Collections.Generic.IList<global::System.IConvertible> defaultValue) {
-global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry = this.GetEntry(name);
-return (((entry != default!) && entry.HasOperands()) ? entry.GetDelta() : defaultValue);
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[entries="), this.entries), "]");
-}
-
-internal class Entry {
-internal readonly global::System.Collections.Generic.IList<global::System.IConvertible> operands = new global::System.Collections.Generic.List<global::System.IConvertible>();
-
-internal string operatorName = default!;
-
-public virtual global::System.IConvertible GetNumber(int index) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.operands, index);
-}
-
-public virtual int Size() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(this.operands);
-}
-
-public virtual bool? GetBoolean(int index, bool? defaultValue) {
-global::System.IConvertible operand = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.operands, index);
-if ((operand is int)) {
-switch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(operand)) {
-case var __case_1383_30_0 when __case_1383_30_0 == 0:
-return false;
-case var __case_1385_30_0 when __case_1385_30_0 == 1:
-return true;
-default:
-break;
-}
-}
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Expected boolean, got ", operand), ", returning default "), defaultValue)));
-return defaultValue;
-}
-
-public virtual void AddOperand(global::System.IConvertible operand) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.operands, operand);
-}
-
-public virtual bool HasOperands() {
-return !(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListIsEmpty(this.operands));
-}
-
-public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetOperands() {
-return this.operands;
-}
-
-public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetDelta() {
-global::System.Collections.Generic.IList<global::System.IConvertible> result = new global::System.Collections.Generic.List<global::System.IConvertible>(this.operands);
-for (int i = 1; (i < global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(result)); i++) {
-global::System.IConvertible previous = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(result, (i - 1));
-global::System.IConvertible current = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(result, i);
-int sum = (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(previous) + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(current));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(result, i, sum);
-}
-return result;
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[operands="), this.operands), ", operator="), this.operatorName), "]");
-}
-}
-}
-
-internal abstract class CFFBuiltInEncoding : global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding {
-internal global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding.Supplement[] supplement = null!;
-
-internal class Supplement {
-internal readonly int code = default;
-
-internal readonly int sid = default;
-
-internal readonly string name = null!;
-
-internal Supplement(int code, int sid, string name) {
-this.code = code;
-this.sid = sid;
-this.name = name;
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[code="), this.code), ", sid="), this.sid), "]");
-}
-}
-
-public virtual void Add(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding.Supplement supplement) {
-this.Add(supplement.code, supplement.sid, supplement.name);
-}
-
-internal CFFBuiltInEncoding() {}
-}
-
-internal class Format0Encoding : global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding {
-internal readonly int nCodes = default;
-
-internal Format0Encoding(int nCodes) {
-this.nCodes = nCodes;
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[nCodes="), this.nCodes), ", supplement="), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(base.supplement)), "]");
-}
-}
-
-internal class Format1Encoding : global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding {
-internal readonly int nRanges = default;
-
-internal Format1Encoding(int nRanges) {
-this.nRanges = nRanges;
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[nRanges="), this.nRanges), ", supplement="), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(base.supplement)), "]");
-}
-}
-
-internal class EmptyCharsetCID : global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID {
-internal EmptyCharsetCID(int numCharStrings) {
-this.AddCID(0, 0);
-for (int i = 1; (i <= numCharStrings); i++) {
-this.AddCID(i, i);
-}
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox");
-}
-}
-
-internal class EmptyCharsetType1 : global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetType1 {
-internal EmptyCharsetType1() {
-this.AddSID(0, 0, ".notdef");
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox");
-}
-}
-
-internal class Format0Charset : global::DripSharp.PdfCarton.Fonts.Cff.EmbeddedCharset {
-internal Format0Charset(bool isCIDFont) : base(isCIDFont) {
-
-}
-}
-
-internal class Format1Charset : global::DripSharp.PdfCarton.Fonts.Cff.EmbeddedCharset {
-internal readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping> rangesCID2GID = null!;
-
-internal Format1Charset(bool isCIDFont) : base(isCIDFont) {
-this.rangesCID2GID = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping>();
-}
-
-public virtual void AddRangeMapping(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping rangeMapping) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.rangesCID2GID, rangeMapping);
-}
-
-public override int GetCIDForGID(int gid) {
-if (this.IsCIDFont()) {
-foreach (global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping mapping in this.rangesCID2GID) {
-if (mapping.isInRange(gid)) {
-return mapping.mapValue(gid);
-}
-}
-}
-return base.GetCIDForGID(gid);
-}
-
-public override int GetGIDForCID(int cid) {
-if (this.IsCIDFont()) {
-foreach (global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping mapping in this.rangesCID2GID) {
-if (mapping.isInReverseRange(cid)) {
-return mapping.mapReverseValue(cid);
-}
-}
-}
-return base.GetGIDForCID(cid);
-}
-}
-
-internal class Format2Charset : global::DripSharp.PdfCarton.Fonts.Cff.EmbeddedCharset {
-internal readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping> rangesCID2GID = null!;
-
-internal Format2Charset(bool isCIDFont) : base(isCIDFont) {
-this.rangesCID2GID = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping>();
-}
-
-public virtual void AddRangeMapping(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping rangeMapping) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.rangesCID2GID, rangeMapping);
-}
-
-public override int GetCIDForGID(int gid) {
-foreach (global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping mapping in this.rangesCID2GID) {
-if (mapping.isInRange(gid)) {
-return mapping.mapValue(gid);
-}
-}
-return base.GetCIDForGID(gid);
-}
-
-public override int GetGIDForCID(int cid) {
-foreach (global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping mapping in this.rangesCID2GID) {
-if (mapping.isInReverseRange(cid)) {
-return mapping.mapReverseValue(cid);
-}
-}
-return base.GetGIDForCID(cid);
-}
-}
-
-internal sealed class RangeMapping {
-internal readonly int startValue = default;
-
-internal readonly int endValue = default;
-
-internal readonly int startMappedValue = default;
-
-internal readonly int endMappedValue = default;
-
-internal RangeMapping(int startGID, int first, int nLeft) {
-this.startValue = startGID;
-this.endValue = (this.startValue + nLeft);
-this.startMappedValue = first;
-this.endMappedValue = (this.startMappedValue + nLeft);
-}
-
-internal bool isInRange(int value) {
-return ((value >= this.startValue) && (value <= this.endValue));
-}
-
-internal bool isInReverseRange(int value) {
-return ((value >= this.startMappedValue) && (value <= this.endMappedValue));
-}
-
-internal int mapValue(int value) {
-return (this.isInRange(value) ? (this.startMappedValue + (value - this.startValue)) : 0);
-}
-
-internal int mapReverseValue(int value) {
-return (this.isInReverseRange(value) ? (this.startValue + (value - this.startMappedValue)) : 0);
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(), "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[start value="), this.startValue), ", end value="), this.endValue), ", start mapped-value="), this.startMappedValue), ", end mapped-value="), this.endMappedValue), "]");
-}
-}
-
-internal class CFFBytesource : global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource {
-internal readonly sbyte[] bytes = null!;
-
-internal CFFBytesource(sbyte[] bytes) {
-this.bytes = bytes;
-}
-
-public virtual sbyte[] GetBytes() {
-return this.bytes;
-}
-}
-
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(((object)(this)).GetType().Name, "["), this.debugFontName), "]");
-}
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+
+  private const string TAG_OTTO = "OTTO";
+
+  private const string TAG_TTCF = "ttcf";
+
+  private const string TAG_TTFONLY = "\u0000\u0001\u0000\u0000";
+
+  private string[] stringIndex = default!;
+
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource source = null!;
+
+  private string debugFontName = null!;
+
+  public interface ByteSource {
+    public sbyte[] GetBytes();
+  }
+
+  public sealed class __ByteSourceFunctionalAdapter
+  : global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource {
+    private readonly global::System.Func<sbyte[]> implementation;
+
+    public __ByteSourceFunctionalAdapter(global::System.Func<sbyte[]> implementation) {
+      this.implementation = implementation;
+    }
+
+    public sbyte[] GetBytes() {
+      return this.implementation();
+    }
+  }
+
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Cff.CFFFont> Parse(sbyte[] bytes,
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource source) {
+    this.source = source;
+    return this.parse(new global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray(bytes));
+  }
+
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Cff.CFFFont> Parse(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
+    sbyte[] bytes = new sbyte[(int)(randomAccessRead.Length())];
+    randomAccessRead.Seek((long)(0));
+    int remainingBytes = bytes.Length;
+    int amountRead;
+    while (((amountRead = randomAccessRead.Read(bytes, (bytes.Length - remainingBytes),
+      remainingBytes)) > 0)) {
+      remainingBytes -= amountRead;
+    }
+    randomAccessRead.Seek((long)(0));
+    this.source = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBytesource(bytes);
+    return this.parse(new global::DripSharp.PdfCarton.Fonts.Cff.DataInputRandomAccessRead(randomAccessRead));
+  }
+
+  public virtual void ParseFirstSubFontROS(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead,
+    global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) {
+    randomAccessRead.Seek((long)(0));
+    global::DripSharp.PdfCarton.Fonts.Cff.DataInput input
+      = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputRandomAccessRead(randomAccessRead);
+    input = this.skipHeader(input);
+    string[] nameIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readStringIndexData(input);
+    if ((nameIndex.Length == 0)) {
+      outHeaders.SetError("Name index missing in CFF font");
+      return;
+    }
+    sbyte[][] topDictIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input);
+    if ((topDictIndex.Length == 0)) {
+      outHeaders.SetError("Top DICT INDEX missing in CFF font");
+      return;
+    }
+    this.stringIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readStringIndexData(input);
+    global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray topDictInput
+      = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray(topDictIndex[0]);
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData topDict
+      = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readDictData(topDictInput);
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry syntheticBaseEntry
+      = topDict.GetEntry("SyntheticBase");
+    if ((syntheticBaseEntry != default!)) {
+      outHeaders.SetError("Synthetic Fonts are not supported");
+      return;
+    }
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont cffCIDFont = this.parseROS(topDict);
+    if ((cffCIDFont != default!)) {
+      outHeaders.SetOtfROS(cffCIDFont.GetRegistry(), cffCIDFont.GetOrdering(),
+        cffCIDFont.GetSupplement());
+    }
+  }
+
+  private global::DripSharp.PdfCarton.Fonts.Cff.DataInput skipHeader(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    string firstTag = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readTagName(input);
+    switch (firstTag) {
+      case var __case_170_18_0 when global::System.Object.Equals(__case_170_18_0,
+          global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.TAG_OTTO):
+        input = this.createTaggedCFFDataInput(input);
+        break;
+      case var __case_173_18_0 when global::System.Object.Equals(__case_173_18_0,
+          global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.TAG_TTCF):
+        throw new global::System.IO.IOException("True Type Collection fonts are not supported.");
+      case var __case_175_18_0 when global::System.Object.Equals(__case_175_18_0,
+          global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.TAG_TTFONLY):
+        throw new global::System.IO.IOException("OpenType fonts containing a true type font are not supported.");
+      default:
+        input.SetPosition(0);
+        break;
+    }
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Header header
+      = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readHeader(input);
+    return input;
+  }
+
+  private global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Cff.CFFFont> parse(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    input = this.skipHeader(input);
+    string[] nameIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readStringIndexData(input);
+    if ((nameIndex.Length == 0)) {
+      throw new global::System.IO.IOException("Name index missing in CFF font");
+    }
+    sbyte[][] topDictIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input);
+    if ((topDictIndex.Length == 0)) {
+      throw new global::System.IO.IOException("Top DICT INDEX missing in CFF font");
+    }
+    this.stringIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readStringIndexData(input);
+    sbyte[][] globalSubrIndex
+      = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input);
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Cff.CFFFont> fonts
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Cff.CFFFont>(nameIndex.Length);
+    for (int i = 0; (i < nameIndex.Length); i++) {
+      global::DripSharp.PdfCarton.Fonts.Cff.CFFFont font = this.parseFont(input, nameIndex[i],
+        topDictIndex[i]);
+      font.setGlobalSubrIndex(globalSubrIndex);
+      font.setData(this.source);
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fonts, font);
+    }
+    return fonts;
+  }
+
+  private global::DripSharp.PdfCarton.Fonts.Cff.DataInput createTaggedCFFDataInput(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    short numTables = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort();
+    short searchRange = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort();
+    short entrySelector = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort();
+    short rangeShift = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort();
+    for (int q = 0; (q < (int)numTables); q++) {
+      string tagName = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readTagName(input);
+      long checksum = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readLong(input);
+      long offset = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readLong(input);
+      long length = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readLong(input);
+      if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals("CFF ", tagName)) {
+        input.SetPosition((int)((int)offset));
+        sbyte[] bytes2 = input.ReadBytes((int)((int)length));
+        return new global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray(bytes2);
+      }
+    }
+    throw new global::System.IO.IOException("CFF tag not found in this OpenType font.");
+  }
+
+  private static string readTagName(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    sbyte[] b = input.ReadBytes(4);
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(b,
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.ISO88591);
+  }
+
+  private static long readLong(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    return ((((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadUnsignedShort() << unchecked((int)(16))) | ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadUnsignedShort());
+  }
+
+  private static int readOffSize(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    int offSize = input.ReadUnsignedByte();
+    if (((offSize < 1) || (offSize > 4))) {
+      throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Illegal (< 1 or > 4) offSize value ",
+        offSize), " in CFF font at position "), (input.GetPosition() - 1)));
+    }
+    return offSize;
+  }
+
+  private static global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Header readHeader(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    int major = input.ReadUnsignedByte();
+    int minor = input.ReadUnsignedByte();
+    int hdrSize = input.ReadUnsignedByte();
+    int offSize = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readOffSize(input);
+    return new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Header(major, minor, hdrSize,
+      offSize);
+  }
+
+  private static int[] readIndexDataOffsets(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    int count = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadUnsignedShort();
+    if ((count == 0)) {
+      return new int[0];
+    }
+    int offSize = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readOffSize(input);
+    int[] offsets = new int[(count + 1)];
+    for (int i = 0; (i <= count); i++) {
+      int offset = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadOffset(offSize);
+      if ((offset > input.Length())) {
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("illegal offset value ",
+          offset), " in CFF font"));
+      }
+      offsets[i] = offset;
+    }
+    return offsets;
+  }
+
+  private static sbyte[][] readIndexData(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    int[] offsets = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexDataOffsets(input);
+    if ((offsets.Length == 0)) {
+      return new sbyte[0][];
+    }
+    int count = (offsets.Length - 1);
+    sbyte[][] indexDataValues = new sbyte[count][];
+    for (int i = 0; (i < count); i++) {
+      int length = (offsets[(i + 1)] - offsets[i]);
+      indexDataValues[i] = input.ReadBytes(length);
+    }
+    return indexDataValues;
+  }
+
+  private static string[] readStringIndexData(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    int[] offsets = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexDataOffsets(input);
+    if ((offsets.Length == 0)) {
+      return new string[0];
+    }
+    int count = (offsets.Length - 1);
+    string[] indexDataValues = new string[count];
+    for (int i = 0; (i < count); i++) {
+      int length = (offsets[(i + 1)] - offsets[i]);
+      if ((length < 0)) {
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Negative index data length + ",
+          length), " at "), i), ": offsets["), (i + 1)), "]="), offsets[(i + 1)]), ", offsets["),
+          i), "]="), offsets[i]));
+      }
+      indexDataValues[i]
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(input.ReadBytes(length),
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.ISO88591);
+    }
+    return indexDataValues;
+  }
+
+  private static global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData readDictData(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData dict
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData();
+    while (input.HasRemaining()) {
+      dict.Add(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readEntry(input));
+    }
+    return dict;
+  }
+
+  private static global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData readDictData(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input,
+    int offset, int dictSize) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData dict
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData();
+    if ((dictSize > 0)) {
+      input.SetPosition(offset);
+      int endPosition = (offset + dictSize);
+      while ((input.GetPosition() < endPosition)) {
+        dict.Add(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readEntry(input));
+      }
+    }
+    return dict;
+  }
+
+  private static global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry readEntry(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry();
+    while (true) {
+      int b0 = input.ReadUnsignedByte();
+      if (((b0 >= 0) && (b0 <= 21))) {
+        entry.operatorName = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readOperator(input,
+          b0);
+        break;
+      } else {
+        if (((b0 == 28) || (b0 == 29))) {
+          entry.AddOperand(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIntegerNumber(input,
+            b0));
+        } else {
+          if ((b0 == 30)) {
+            entry.AddOperand(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readRealNumber(input));
+          } else {
+            if (((b0 >= 32) && (b0 <= 254))) {
+              entry.AddOperand(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIntegerNumber(input,
+                b0));
+            } else {
+              throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("invalid DICT data b0 byte: ",
+                b0));
+            }
+          }
+        }
+      }
+    }
+    return entry;
+  }
+
+  private static string readOperator(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input,
+    int b0) {
+    if ((b0 == 12)) {
+      int b1 = input.ReadUnsignedByte();
+      return global::DripSharp.PdfCarton.Fonts.Cff.CFFOperator.GetOperator(b0, b1);
+    }
+    return global::DripSharp.PdfCarton.Fonts.Cff.CFFOperator.GetOperator(b0);
+  }
+
+  private static int? readIntegerNumber(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input,
+    int b0) {
+    if ((b0 == 28)) {
+      return (int)(((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort());
+    } else {
+      if ((b0 == 29)) {
+        return ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadInt();
+      } else {
+        if (((b0 >= 32) && (b0 <= 246))) {
+          return (b0 - 139);
+        } else {
+          if (((b0 >= 247) && (b0 <= 250))) {
+            int b1__427_17 = input.ReadUnsignedByte();
+            return ((((b0 - 247) * 256) + b1__427_17) + 108);
+          } else {
+            if (((b0 >= 251) && (b0 <= 254))) {
+              int b1__432_17 = input.ReadUnsignedByte();
+              return (((-((b0 - 251)) * 256) - b1__432_17) - 108);
+            } else {
+              throw new global::System.ArgumentException();
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private static double? readRealNumber(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input) {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
+    bool done = false;
+    bool exponentMissing = false;
+    bool hasExponent = false;
+    int[] nibbles = new int[2];
+    while (!done) {
+      int b = input.ReadUnsignedByte();
+      nibbles[0] = (b / 16);
+      nibbles[1] = (b % 16);
+      foreach (int nibble in nibbles) {
+        switch (nibble) {
+          case var __case_457_22_0 when __case_457_22_0 == 0:
+          case var __case_458_22_0 when __case_458_22_0 == 1:
+          case var __case_459_22_0 when __case_459_22_0 == 2:
+          case var __case_460_22_0 when __case_460_22_0 == 3:
+          case var __case_461_22_0 when __case_461_22_0 == 4:
+          case var __case_462_22_0 when __case_462_22_0 == 5:
+          case var __case_463_22_0 when __case_463_22_0 == 6:
+          case var __case_464_22_0 when __case_464_22_0 == 7:
+          case var __case_465_22_0 when __case_465_22_0 == 8:
+          case var __case_466_22_0 when __case_466_22_0 == 9:
+            sb.Append(nibble);
+            exponentMissing = false;
+            break;
+          case var __case_470_22_0 when __case_470_22_0 == 10:
+            sb.Append('.');
+            break;
+          case var __case_473_22_0 when __case_473_22_0 == 11:
+            if (hasExponent) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.LOG,
+                global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("duplicate 'E' ignored after ",
+                sb)));
+              break;
+            }
+            sb.Append('E');
+            exponentMissing = true;
+            hasExponent = true;
+            break;
+          case var __case_483_22_0 when __case_483_22_0 == 12:
+            if (hasExponent) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.LOG,
+                global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("duplicate 'E-' ignored after ",
+                sb)));
+              break;
+            }
+            sb.Append("E-");
+            exponentMissing = true;
+            hasExponent = true;
+            break;
+          case var __case_493_22_0 when __case_493_22_0 == 13:
+            break;
+          case var __case_495_22_0 when __case_495_22_0 == 14:
+            sb.Append('-');
+            break;
+          case var __case_498_22_0 when __case_498_22_0 == 15:
+            done = true;
+            break;
+          default:
+            throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("illegal nibble ",
+              nibble));
+        }
+      }
+    }
+    if (exponentMissing) {
+      sb.Append('0');
+    }
+    if ((sb.Length == 0)) {
+      return 0.0D;
+    }
+    try {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseDouble(sb.ToString());
+    } catch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaNumberFormatException ex) {
+      throw new global::System.IO.IOException(null, ex);
+    }
+  }
+
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont parseROS(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData topDict) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry rosEntry
+      = topDict.GetEntry("ROS");
+    if ((rosEntry != default!)) {
+      if ((rosEntry.Size() < 3)) {
+        throw new global::System.IO.IOException("ROS entry must have 3 elements");
+      }
+      global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont cffCIDFont
+        = new global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont();
+      cffCIDFont.setRegistry(this.readString(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(rosEntry.GetNumber(0))));
+      cffCIDFont.setOrdering(this.readString(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(rosEntry.GetNumber(1))));
+      cffCIDFont.setSupplement(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(rosEntry.GetNumber(2)));
+      return cffCIDFont;
+    }
+    return default!;
+  }
+
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFFont parseFont(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input,
+    string name, sbyte[] topDictIndex) {
+    global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray topDictInput
+      = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray(topDictIndex);
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData topDict
+      = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readDictData(topDictInput);
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry syntheticBaseEntry
+      = topDict.GetEntry("SyntheticBase");
+    if ((syntheticBaseEntry != default!)) {
+      throw new global::System.IO.IOException("Synthetic Fonts are not supported");
+    }
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFFont font;
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont cffCIDFont = this.parseROS(topDict);
+    bool isCIDFont = (cffCIDFont != default!);
+    if ((cffCIDFont != default!)) {
+      font = cffCIDFont;
+    } else {
+      font = new global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font();
+    }
+    this.debugFontName = name;
+    font.setName(name);
+    font.AddValueToTopDict("version", this.getString(topDict, "version"));
+    font.AddValueToTopDict("Notice", this.getString(topDict, "Notice"));
+    font.AddValueToTopDict("Copyright", this.getString(topDict, "Copyright"));
+    font.AddValueToTopDict("FullName", this.getString(topDict, "FullName"));
+    font.AddValueToTopDict("FamilyName", this.getString(topDict, "FamilyName"));
+    font.AddValueToTopDict("Weight", this.getString(topDict, "Weight"));
+    font.AddValueToTopDict("isFixedPitch", topDict.GetBoolean("isFixedPitch", false));
+    font.AddValueToTopDict("ItalicAngle", topDict.GetNumber("ItalicAngle", 0));
+    font.AddValueToTopDict("UnderlinePosition", topDict.GetNumber("UnderlinePosition", -100));
+    font.AddValueToTopDict("UnderlineThickness", topDict.GetNumber("UnderlineThickness", 50));
+    font.AddValueToTopDict("PaintType", topDict.GetNumber("PaintType", 0));
+    font.AddValueToTopDict("CharstringType", topDict.GetNumber("CharstringType", 2));
+    font.AddValueToTopDict("FontMatrix", topDict.GetArray("FontMatrix",
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<global::System.IConvertible>(0.001D,
+      0, 0, 0.001D, 0, 0)));
+    font.AddValueToTopDict("UniqueID", topDict.GetNumber("UniqueID",
+      (global::System.IConvertible)default!));
+    font.AddValueToTopDict("FontBBox", topDict.GetArray("FontBBox",
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<global::System.IConvertible>(0, 0,
+      0, 0)));
+    font.AddValueToTopDict("StrokeWidth", topDict.GetNumber("StrokeWidth", 0));
+    font.AddValueToTopDict("XUID", topDict.GetArray("XUID",
+      (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry charStringsEntry
+      = topDict.GetEntry("CharStrings");
+    if (((charStringsEntry == default!) || !(charStringsEntry.HasOperands()))) {
+      throw new global::System.IO.IOException("CharStrings is missing or empty");
+    }
+    int charStringsOffset
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(charStringsEntry.GetNumber(0));
+    input.SetPosition(charStringsOffset);
+    sbyte[][] charStringsIndex
+      = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input);
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry charsetEntry
+      = topDict.GetEntry("charset");
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset;
+    if (((charsetEntry != default!) && charsetEntry.HasOperands())) {
+      int charsetId
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(charsetEntry.GetNumber(0));
+      if ((!isCIDFont && (charsetId == 0))) {
+        charset = global::DripSharp.PdfCarton.Fonts.Cff.CFFISOAdobeCharset.GetInstance();
+      } else {
+        if ((!isCIDFont && (charsetId == 1))) {
+          charset = global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertCharset.GetInstance();
+        } else {
+          if ((!isCIDFont && (charsetId == 2))) {
+            charset = global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertSubsetCharset.GetInstance();
+          } else {
+            if ((charStringsIndex.Length > 0)) {
+              input.SetPosition(charsetId);
+              charset = this.readCharset(input, charStringsIndex.Length, isCIDFont);
+            } else {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.LOG,
+                global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't read CharStrings index - returning empty charset instead"));
+              charset = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.EmptyCharsetType1();
+            }
+          }
+        }
+      }
+    } else {
+      if (isCIDFont) {
+        charset
+          = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.EmptyCharsetCID(charStringsIndex.Length);
+      } else {
+        charset = global::DripSharp.PdfCarton.Fonts.Cff.CFFISOAdobeCharset.GetInstance();
+      }
+    }
+    font.setCharset(charset);
+    font.CharStrings = charStringsIndex;
+    if (isCIDFont) {
+      int numEntries = 0;
+      if ((charStringsIndex.Length == 0)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.LOG,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't read CharStrings index - parsing CIDFontDicts with number of char strings set to 0"));
+      } else {
+        numEntries = charStringsIndex.Length;
+      }
+      this.parseCIDFontDicts(input, topDict,
+        (global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont)(font!), numEntries);
+      global::System.Collections.Generic.IList<global::System.Collections.Generic.IDictionary<string,
+        object>> fontDicts
+        = ((global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont)(font!)).GetFontDicts();
+      global::System.Collections.Generic.IList<global::System.IConvertible> privMatrix = default!;
+      if (!global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListIsEmpty(fontDicts)) {
+        privMatrix
+          = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastList<global::System.IConvertible>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetOrDefault(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(fontDicts,
+          0), "FontMatrix", (object)default!));
+      }
+      global::System.Collections.Generic.IList<global::System.IConvertible> matrix
+        = topDict.GetArray("FontMatrix",
+        (global::System.Collections.Generic.IList<global::System.IConvertible>)default!);
+      if ((matrix == default!)) {
+        if ((privMatrix! != default!)) {
+          font.AddValueToTopDict("FontMatrix", privMatrix!);
+        } else {
+          font.AddValueToTopDict("FontMatrix", topDict.GetArray("FontMatrix",
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<global::System.IConvertible>(0.001D,
+            0.0D, 0.0D, 0.001D, 0.0D, 0.0D)));
+        }
+      } else {
+        if ((privMatrix! != default!)) {
+          this.concatenateMatrix(matrix, privMatrix!);
+        }
+      }
+    } else {
+      this.parseType1Dicts(input, topDict,
+        (global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font)(font!), charset);
+    }
+    return font;
+  }
+
+  private void concatenateMatrix(global::System.Collections.Generic.IList<global::System.IConvertible> matrixDest,
+    global::System.Collections.Generic.IList<global::System.IConvertible> matrixConcat) {
+    double a1
+      = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixDest,
+      0), global::System.Globalization.CultureInfo.InvariantCulture);
+    double b1
+      = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixDest,
+      1), global::System.Globalization.CultureInfo.InvariantCulture);
+    double c1
+      = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixDest,
+      2), global::System.Globalization.CultureInfo.InvariantCulture);
+    double d1
+      = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixDest,
+      3), global::System.Globalization.CultureInfo.InvariantCulture);
+    double x1
+      = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixDest,
+      4), global::System.Globalization.CultureInfo.InvariantCulture);
+    double y1
+      = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixDest,
+      5), global::System.Globalization.CultureInfo.InvariantCulture);
+    double a2
+      = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixConcat,
+      0), global::System.Globalization.CultureInfo.InvariantCulture);
+    double b2
+      = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixConcat,
+      1), global::System.Globalization.CultureInfo.InvariantCulture);
+    double c2
+      = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixConcat,
+      2), global::System.Globalization.CultureInfo.InvariantCulture);
+    double d2
+      = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixConcat,
+      3), global::System.Globalization.CultureInfo.InvariantCulture);
+    double x2
+      = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixConcat,
+      4), global::System.Globalization.CultureInfo.InvariantCulture);
+    double y2
+      = global::System.Convert.ToDouble(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(matrixConcat,
+      5), global::System.Globalization.CultureInfo.InvariantCulture);
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(matrixDest, 0, ((a1 * a2) + (b1
+      * c2)));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(matrixDest, 1, ((a1 * b2) + (b1
+      * d1)));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(matrixDest, 2, ((c1 * a2) + (d1
+      * c2)));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(matrixDest, 3, ((c1 * b2) + (d1
+      * d2)));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(matrixDest, 4, (((x1 * a2) + (y1
+      * c2)) + x2));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(matrixDest, 5, (((x1 * b2) + (y1
+      * d2)) + y2));
+  }
+
+  private void parseCIDFontDicts(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input,
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData topDict,
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont font, int nrOfcharStrings) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry fdArrayEntry
+      = topDict.GetEntry("FDArray");
+    if (((fdArrayEntry == default!) || !(fdArrayEntry.HasOperands()))) {
+      throw new global::System.IO.IOException("FDArray is missing for a CIDKeyed Font.");
+    }
+    int fontDictOffset
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(fdArrayEntry.GetNumber(0));
+    input.SetPosition(fontDictOffset);
+    sbyte[][] fdIndex = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input);
+    if ((fdIndex.Length == 0)) {
+      throw new global::System.IO.IOException("Font dict index is missing for a CIDKeyed Font");
+    }
+    global::System.Collections.Generic.IList<global::System.Collections.Generic.IDictionary<string,
+      object>> privateDictionaries
+      = new global::System.Collections.Generic.List<global::System.Collections.Generic.IDictionary<string,
+      object>>();
+    global::System.Collections.Generic.IList<global::System.Collections.Generic.IDictionary<string,
+      object>> fontDictionaries
+      = new global::System.Collections.Generic.List<global::System.Collections.Generic.IDictionary<string,
+      object>>();
+    bool privateDictPopulated = false;
+    foreach (sbyte[] bytes in fdIndex) {
+      global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray fontDictInput
+        = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputByteArray(bytes);
+      global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData fontDict
+        = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readDictData(fontDictInput);
+      global::System.Collections.Generic.IDictionary<string, object> fontDictMap
+        = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<string, object>(4);
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(fontDictMap, "FontName",
+        this.getString(fontDict, "FontName"));
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(fontDictMap, "FontType",
+        fontDict.GetNumber("FontType", 0));
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(fontDictMap, "FontBBox",
+        fontDict.GetArray("FontBBox",
+        (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(fontDictMap, "FontMatrix",
+        fontDict.GetArray("FontMatrix",
+        (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDictionaries, fontDictMap);
+      global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry privateEntry
+        = fontDict.GetEntry("Private");
+      if (((privateEntry == default!) || (privateEntry.Size() < 2))) {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(privateDictionaries,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string, object>());
+        continue;
+      }
+      int privateOffset
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(privateEntry.GetNumber(1));
+      int privateSize
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(privateEntry.GetNumber(0));
+      global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData privateDict
+        = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readDictData(input, privateOffset,
+        privateSize);
+      privateDictPopulated = true;
+      global::System.Collections.Generic.IDictionary<string, object> privDict
+        = this.readPrivateDict(privateDict);
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(privateDictionaries, privDict);
+      global::System.IConvertible localSubrOffset = privateDict.GetNumber("Subrs", 0);
+      if (((localSubrOffset is int)
+        && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)localSubrOffset) > 0))) {
+        input.SetPosition((privateOffset
+          + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)localSubrOffset)));
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "Subrs",
+          global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input));
+      }
+    }
+    if (!privateDictPopulated) {
+      throw new global::System.IO.IOException("Font DICT invalid without \"Private\" entry");
+    }
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry fdSelectEntry
+      = topDict.GetEntry("FDSelect");
+    if (((fdSelectEntry == default!) || !(fdSelectEntry.HasOperands()))) {
+      throw new global::System.IO.IOException("FDSelect is missing or empty");
+    }
+    int fdSelectPos
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(fdSelectEntry.GetNumber(0));
+    input.SetPosition(fdSelectPos);
+    global::DripSharp.PdfCarton.Fonts.Cff.FDSelect fdSelect
+      = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readFDSelect(input, nrOfcharStrings);
+    font.setFontDict(fontDictionaries);
+    font.setPrivDict(privateDictionaries);
+    font.setFdSelect(fdSelect);
+  }
+
+  private global::System.Collections.Generic.IDictionary<string,
+    object> readPrivateDict(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData privateDict) {
+    global::System.Collections.Generic.IDictionary<string, object> privDict
+      = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<string, object>(17);
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "BlueValues",
+      privateDict.GetDelta("BlueValues",
+      (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "OtherBlues",
+      privateDict.GetDelta("OtherBlues",
+      (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "FamilyBlues",
+      privateDict.GetDelta("FamilyBlues",
+      (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "FamilyOtherBlues",
+      privateDict.GetDelta("FamilyOtherBlues",
+      (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "BlueScale",
+      privateDict.GetNumber("BlueScale", 0.039625D));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "BlueShift",
+      privateDict.GetNumber("BlueShift", 7));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "BlueFuzz",
+      privateDict.GetNumber("BlueFuzz", 1));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "StdHW",
+      privateDict.GetNumber("StdHW", (global::System.IConvertible)default!));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "StdVW",
+      privateDict.GetNumber("StdVW", (global::System.IConvertible)default!));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "StemSnapH",
+      privateDict.GetDelta("StemSnapH",
+      (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "StemSnapV",
+      privateDict.GetDelta("StemSnapV",
+      (global::System.Collections.Generic.IList<global::System.IConvertible>)default!));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "ForceBold",
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(privateDict.GetBoolean("ForceBold",
+      false)));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "LanguageGroup",
+      privateDict.GetNumber("LanguageGroup", 0));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "ExpansionFactor",
+      privateDict.GetNumber("ExpansionFactor", 0.06D));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "initialRandomSeed",
+      privateDict.GetNumber("initialRandomSeed", 0));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "defaultWidthX",
+      privateDict.GetNumber("defaultWidthX", 0));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "nominalWidthX",
+      privateDict.GetNumber("nominalWidthX", 0));
+    return privDict;
+  }
+
+  private void parseType1Dicts(global::DripSharp.PdfCarton.Fonts.Cff.DataInput input,
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData topDict,
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFType1Font font,
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry encodingEntry
+      = topDict.GetEntry("Encoding");
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding encoding;
+    int encodingId = (((encodingEntry != default!) && encodingEntry.HasOperands())
+      ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(encodingEntry.GetNumber(0))
+      : 0);
+    switch (encodingId) {
+      case var __case_873_18_0 when __case_873_18_0 == 0:
+        encoding = global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardEncoding.GetInstance();
+        break;
+      case var __case_876_18_0 when __case_876_18_0 == 1:
+        encoding = global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertEncoding.GetInstance();
+        break;
+      default:
+        input.SetPosition(encodingId);
+        encoding = this.readEncoding(input, charset);
+        break;
+    }
+    font.setEncoding(encoding);
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry privateEntry
+      = topDict.GetEntry("Private");
+    if (((privateEntry == default!) || (privateEntry.Size() < 2))) {
+      throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Private dictionary entry missing for font ",
+        font.GetName()));
+    }
+    int privateOffset
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(privateEntry.GetNumber(1));
+    int privateSize
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(privateEntry.GetNumber(0));
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData privateDict
+      = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readDictData(input, privateOffset,
+      privateSize);
+    global::System.Collections.Generic.IDictionary<string, object> privDict
+      = this.readPrivateDict(privateDict);
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(privDict, font.addToPrivateDict);
+    global::System.IConvertible localSubrOffset = privateDict.GetNumber("Subrs", 0);
+    if (((localSubrOffset is int)
+      && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)localSubrOffset) > 0))) {
+      input.SetPosition((privateOffset
+        + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)localSubrOffset)));
+      font.addToPrivateDict("Subrs",
+        global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input));
+    }
+  }
+
+  private string readString(int index) {
+    if ((index < 0)) {
+      throw new global::System.IO.IOException("Invalid negative index when reading a string");
+    }
+    if ((index <= 390)) {
+      return global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardString.GetName(index);
+    }
+    if (((this.stringIndex != default!) && ((index - 391) < this.stringIndex.Length))) {
+      return this.stringIndex[(index - 391)];
+    }
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("SID", index);
+  }
+
+  private string getString(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData dict,
+    string name) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry = dict.GetEntry(name);
+    return (((entry != default!) && entry.HasOperands())
+      ? this.readString(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(entry.GetNumber(0)))
+      : (string)(default!));
+  }
+
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding readEncoding(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput,
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset) {
+    int format = dataInput.ReadUnsignedByte();
+    int baseFormat = (format & 127);
+    switch (baseFormat) {
+      case var __case_940_18_0 when __case_940_18_0 == 0:
+        return this.readFormat0Encoding(dataInput, charset, format);
+      case var __case_942_18_0 when __case_942_18_0 == 1:
+        return this.readFormat1Encoding(dataInput, charset, format);
+      default:
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Invalid encoding base format ",
+          baseFormat));
+    }
+  }
+
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0Encoding readFormat0Encoding(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput,
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset, int format) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0Encoding encoding
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0Encoding(dataInput.ReadUnsignedByte());
+    encoding.Add(0, 0, ".notdef");
+    for (int gid = 1; (gid <= encoding.nCodes); gid++) {
+      int code = dataInput.ReadUnsignedByte();
+      int sid = charset.GetSIDForGID(gid);
+      encoding.Add(code, sid, this.readString(sid));
+    }
+    if (((format & 128) != 0)) {
+      this.readSupplement(dataInput, encoding);
+    }
+    return encoding;
+  }
+
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format1Encoding readFormat1Encoding(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput,
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset charset, int format) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format1Encoding encoding
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format1Encoding(dataInput.ReadUnsignedByte());
+    encoding.Add(0, 0, ".notdef");
+    int gid = 1;
+    for (int i = 0; (i < encoding.nRanges); i++) {
+      int rangeFirst = dataInput.ReadUnsignedByte();
+      int rangeLeft = dataInput.ReadUnsignedByte();
+      for (int j = 0; (j <= rangeLeft); j++) {
+        int sid = charset.GetSIDForGID(gid);
+        encoding.Add((rangeFirst + j), sid, this.readString(sid));
+        gid++;
+      }
+    }
+    if (((format & 128) != 0)) {
+      this.readSupplement(dataInput, encoding);
+    }
+    return encoding;
+  }
+
+  private void readSupplement(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput,
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding encoding) {
+    int nSups = dataInput.ReadUnsignedByte();
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding.Supplement[] supplement
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding.Supplement[nSups];
+    encoding.supplement = supplement;
+    for (int i = 0; (i < nSups); i++) {
+      int code = dataInput.ReadUnsignedByte();
+      int sid = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
+      supplement[i]
+        = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding.Supplement(code,
+        sid, this.readString(sid));
+      encoding.Add(supplement[i]);
+    }
+  }
+
+  private static global::DripSharp.PdfCarton.Fonts.Cff.FDSelect readFDSelect(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput,
+    int nGlyphs) {
+    int format = dataInput.ReadUnsignedByte();
+    switch (format) {
+      case var __case_1019_18_0 when __case_1019_18_0 == 0:
+        return global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readFormat0FDSelect(dataInput,
+          nGlyphs);
+      case var __case_1021_18_0 when __case_1021_18_0 == 3:
+        return global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readFormat3FDSelect(dataInput);
+      default:
+        throw new global::System.ArgumentException();
+    }
+  }
+
+  private static global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0FDSelect readFormat0FDSelect(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput,
+    int nGlyphs) {
+    int[] fds = new int[nGlyphs];
+    for (int i = 0; (i < nGlyphs); i++) {
+      fds[i] = dataInput.ReadUnsignedByte();
+    }
+    return new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0FDSelect(fds);
+  }
+
+  private static global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format3FDSelect readFormat3FDSelect(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput) {
+    int nbRanges
+      = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Range3[] range3
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Range3[nbRanges];
+    for (int i = 0; (i < nbRanges); i++) {
+      range3[i]
+        = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Range3(((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort(),
+        dataInput.ReadUnsignedByte());
+    }
+    return new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format3FDSelect(range3,
+      ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort());
+  }
+
+  internal sealed class Format3FDSelect : global::DripSharp.PdfCarton.Fonts.Cff.FDSelect {
+    internal readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Range3[] range3 = null!;
+
+    internal readonly int sentinel = default;
+
+    internal Format3FDSelect(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Range3[] range3,
+      int sentinel) {
+      this.range3 = range3;
+      this.sentinel = sentinel;
+    }
+
+    public int GetFDIndex(int gid) {
+      for (int i = 0; (i < this.range3.Length); ++i) {
+        if ((this.range3[i].first <= gid)) {
+          if (((i + 1) < this.range3.Length)) {
+            if ((this.range3[(i + 1)].first > gid)) {
+              return this.range3[i].fd;
+            }
+          } else {
+            if ((this.sentinel > gid)) {
+              return this.range3[i].fd;
+            }
+            return -1;
+          }
+        }
+      }
+      return 0;
+    }
+
+    public override string ToString() {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
+        "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[nbRanges="), this.range3.Length),
+        ", range3="),
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(this.range3)),
+        " sentinel="), this.sentinel), "]");
+    }
+  }
+
+  internal sealed class Range3 {
+    internal readonly int first = default;
+
+    internal readonly int fd = default;
+
+    internal Range3(int first, int fd) {
+      this.first = first;
+      this.fd = fd;
+    }
+
+    public override string ToString() {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
+        "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[first="), this.first), ", fd="),
+        this.fd), "]");
+    }
+  }
+
+  internal class Format0FDSelect : global::DripSharp.PdfCarton.Fonts.Cff.FDSelect {
+    internal readonly int[] fds = null!;
+
+    internal Format0FDSelect(int[] fds) {
+      this.fds = fds;
+    }
+
+    public virtual int GetFDIndex(int gid) {
+      if ((gid < this.fds.Length)) {
+        return this.fds[gid];
+      }
+      return 0;
+    }
+
+    public override string ToString() {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
+        "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[fds="),
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(this.fds)), "]");
+    }
+  }
+
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFCharset readCharset(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput,
+    int nGlyphs, bool isCIDFont) {
+    int format = dataInput.ReadUnsignedByte();
+    switch (format) {
+      case var __case_1173_18_0 when __case_1173_18_0 == 0:
+        return this.readFormat0Charset(dataInput, nGlyphs, isCIDFont);
+      case var __case_1175_18_0 when __case_1175_18_0 == 1:
+        return this.readFormat1Charset(dataInput, nGlyphs, isCIDFont);
+      case var __case_1177_18_0 when __case_1177_18_0 == 2:
+        return this.readFormat2Charset(dataInput, nGlyphs, isCIDFont);
+      default:
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Incorrect charset format ",
+          format));
+    }
+  }
+
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0Charset readFormat0Charset(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput,
+    int nGlyphs, bool isCIDFont) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0Charset charset
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format0Charset(isCIDFont);
+    if (isCIDFont) {
+      charset.AddCID(0, 0);
+      for (int gid__1192_22 = 1; (gid__1192_22 < nGlyphs); gid__1192_22++) {
+        charset.AddCID(gid__1192_22,
+          ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort());
+      }
+    } else {
+      charset.AddSID(0, 0, ".notdef");
+      for (int gid__1200_22 = 1; (gid__1200_22 < nGlyphs); gid__1200_22++) {
+        int sid
+          = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
+        charset.AddSID(gid__1200_22, sid, this.readString(sid));
+      }
+    }
+    return charset;
+  }
+
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format1Charset readFormat1Charset(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput,
+    int nGlyphs, bool isCIDFont) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format1Charset charset
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format1Charset(isCIDFont);
+    if (isCIDFont) {
+      charset.AddCID(0, 0);
+      int gid__1216_17 = 1;
+      while ((gid__1216_17 < nGlyphs)) {
+        int rangeFirst__1219_21
+          = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
+        int rangeLeft__1220_21 = dataInput.ReadUnsignedByte();
+        charset.AddRangeMapping(new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping(gid__1216_17,
+          rangeFirst__1219_21, rangeLeft__1220_21));
+        gid__1216_17 += (rangeLeft__1220_21 + 1);
+      }
+    } else {
+      charset.AddSID(0, 0, ".notdef");
+      int gid__1228_17 = 1;
+      while ((gid__1228_17 < nGlyphs)) {
+        int rangeFirst__1231_21
+          = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
+        int rangeLeft__1232_21 = (dataInput.ReadUnsignedByte() + 1);
+        for (int j = 0; (j < rangeLeft__1232_21); j++) {
+          int sid = (rangeFirst__1231_21 + j);
+          charset.AddSID((gid__1228_17 + j), sid, this.readString(sid));
+        }
+        gid__1228_17 += rangeLeft__1232_21;
+      }
+    }
+    return charset;
+  }
+
+  private global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format2Charset readFormat2Charset(global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput,
+    int nGlyphs, bool isCIDFont) {
+    global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format2Charset charset
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.Format2Charset(isCIDFont);
+    if (isCIDFont) {
+      charset.AddCID(0, 0);
+      int gid__1251_17 = 1;
+      while ((gid__1251_17 < nGlyphs)) {
+        int first__1254_21
+          = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
+        int nLeft__1255_21
+          = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
+        charset.AddRangeMapping(new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping(gid__1251_17,
+          first__1254_21, nLeft__1255_21));
+        gid__1251_17 += (nLeft__1255_21 + 1);
+      }
+    } else {
+      charset.AddSID(0, 0, ".notdef");
+      int gid__1263_17 = 1;
+      while ((gid__1263_17 < nGlyphs)) {
+        int first__1266_21
+          = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
+        int nLeft__1267_21
+          = (((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort()
+          + 1);
+        for (int j = 0; (j < nLeft__1267_21); j++) {
+          int sid = (first__1266_21 + j);
+          charset.AddSID((gid__1263_17 + j), sid, this.readString(sid));
+        }
+        gid__1263_17 += nLeft__1267_21;
+      }
+    }
+    return charset;
+  }
+
+  internal class Header {
+    internal readonly int major = default;
+
+    internal readonly int minor = default;
+
+    internal readonly int hdrSize = default;
+
+    internal readonly int offSize = default;
+
+    internal Header(int major, int minor, int hdrSize, int offSize) {
+      this.major = major;
+      this.minor = minor;
+      this.hdrSize = hdrSize;
+      this.offSize = offSize;
+    }
+
+    public override string ToString() {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
+        "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[major="), this.major), ", minor="),
+        this.minor), ", hdrSize="), this.hdrSize), ", offSize="), this.offSize), "]");
+    }
+  }
+
+  internal class DictData {
+    internal readonly global::System.Collections.Generic.IDictionary<string,
+      global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry> entries
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string,
+      global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry>();
+
+    public virtual void Add(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry) {
+      if ((entry.operatorName != default!)) {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.entries,
+          entry.operatorName, entry);
+      }
+    }
+
+    public virtual global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry GetEntry(string name) {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.entries, name);
+    }
+
+    public virtual bool? GetBoolean(string name, bool defaultValue) {
+      global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry = this.GetEntry(name);
+      return (((entry != default!) && entry.HasOperands())
+        ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(entry.GetBoolean(0,
+        defaultValue)) : defaultValue);
+    }
+
+    public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetArray(string name,
+      global::System.Collections.Generic.IList<global::System.IConvertible> defaultValue) {
+      global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry = this.GetEntry(name);
+      return (((entry != default!) && entry.HasOperands()) ? entry.GetOperands() : defaultValue);
+    }
+
+    public virtual global::System.IConvertible GetNumber(string name,
+      global::System.IConvertible defaultValue) {
+      global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry = this.GetEntry(name);
+      return (((entry != default!) && entry.HasOperands()) ? entry.GetNumber(0) : defaultValue);
+    }
+
+    public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetDelta(string name,
+      global::System.Collections.Generic.IList<global::System.IConvertible> defaultValue) {
+      global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry = this.GetEntry(name);
+      return (((entry != default!) && entry.HasOperands()) ? entry.GetDelta() : defaultValue);
+    }
+
+    public override string ToString() {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
+        "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[entries="), this.entries), "]");
+    }
+
+    internal class Entry {
+      internal readonly global::System.Collections.Generic.IList<global::System.IConvertible> operands
+        = new global::System.Collections.Generic.List<global::System.IConvertible>();
+
+      internal string operatorName = default!;
+
+      public virtual global::System.IConvertible GetNumber(int index) {
+        return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.operands, index);
+      }
+
+      public virtual int Size() {
+        return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(this.operands);
+      }
+
+      public virtual bool? GetBoolean(int index, bool? defaultValue) {
+        global::System.IConvertible operand
+          = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.operands, index);
+        if ((operand is int)) {
+          switch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(operand)) {
+            case var __case_1383_30_0 when __case_1383_30_0 == 0:
+              return false;
+            case var __case_1385_30_0 when __case_1385_30_0 == 1:
+              return true;
+            default:
+              break;
+          }
+        }
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.LOG,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Expected boolean, got ",
+          operand), ", returning default "), defaultValue)));
+        return defaultValue;
+      }
+
+      public virtual void AddOperand(global::System.IConvertible operand) {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.operands, operand);
+      }
+
+      public virtual bool HasOperands() {
+        return !global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListIsEmpty(this.operands);
+      }
+
+      public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetOperands() {
+        return this.operands;
+      }
+
+      public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetDelta() {
+        global::System.Collections.Generic.IList<global::System.IConvertible> result
+          = new global::System.Collections.Generic.List<global::System.IConvertible>(this.operands);
+        for (int i = 1;
+          (i < global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(result)); i++) {
+          global::System.IConvertible previous
+            = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(result, (i - 1));
+          global::System.IConvertible current
+            = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(result, i);
+          int sum = (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(previous)
+            + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(current));
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(result, i, sum);
+        }
+        return result;
+      }
+
+      public override string ToString() {
+        return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
+          "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[operands="), this.operands),
+          ", operator="), this.operatorName), "]");
+      }
+    }
+  }
+
+  internal abstract class CFFBuiltInEncoding : global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding {
+    internal global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding.Supplement[] supplement
+      = null!;
+
+    internal class Supplement {
+      internal readonly int code = default;
+
+      internal readonly int sid = default;
+
+      internal readonly string name = null!;
+
+      internal Supplement(int code, int sid, string name) {
+        this.code = code;
+        this.sid = sid;
+        this.name = name;
+      }
+
+      public override string ToString() {
+        return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
+          "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[code="), this.code), ", sid="),
+          this.sid), "]");
+      }
+    }
+
+    public virtual void Add(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding.Supplement supplement) {
+      this.Add(supplement.code, supplement.sid, supplement.name);
+    }
+
+    internal CFFBuiltInEncoding() {}
+  }
+
+  internal class Format0Encoding
+  : global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding {
+    internal readonly int nCodes = default;
+
+    internal Format0Encoding(int nCodes) {
+      this.nCodes = nCodes;
+    }
+
+    public override string ToString() {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
+        "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[nCodes="), this.nCodes),
+        ", supplement="),
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(base.supplement)), "]");
+    }
+  }
+
+  internal class Format1Encoding
+  : global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding {
+    internal readonly int nRanges = default;
+
+    internal Format1Encoding(int nRanges) {
+      this.nRanges = nRanges;
+    }
+
+    public override string ToString() {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
+        "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[nRanges="), this.nRanges),
+        ", supplement="),
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(base.supplement)), "]");
+    }
+  }
+
+  internal class EmptyCharsetCID : global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID {
+    internal EmptyCharsetCID(int numCharStrings) {
+      this.AddCID(0, 0);
+      for (int i = 1; (i <= numCharStrings); i++) {
+        this.AddCID(i, i);
+      }
+    }
+
+    public override string ToString() {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
+        "DripSharp.PdfCarton.Fonts", "org.apache.fontbox");
+    }
+  }
+
+  internal class EmptyCharsetType1 : global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetType1 {
+    internal EmptyCharsetType1() {
+      this.AddSID(0, 0, ".notdef");
+    }
+
+    public override string ToString() {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
+        "DripSharp.PdfCarton.Fonts", "org.apache.fontbox");
+    }
+  }
+
+  internal class Format0Charset : global::DripSharp.PdfCarton.Fonts.Cff.EmbeddedCharset {
+    internal Format0Charset(bool isCIDFont) : base(isCIDFont) {
+
+    }
+  }
+
+  internal class Format1Charset : global::DripSharp.PdfCarton.Fonts.Cff.EmbeddedCharset {
+    internal readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping> rangesCID2GID
+      = null!;
+
+    internal Format1Charset(bool isCIDFont) : base(isCIDFont) {
+      this.rangesCID2GID
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping>();
+    }
+
+    public virtual void AddRangeMapping(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping rangeMapping) {
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.rangesCID2GID, rangeMapping);
+    }
+
+    public override int GetCIDForGID(int gid) {
+      if (this.IsCIDFont()) {
+        foreach (global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping mapping in this.rangesCID2GID) {
+          if (mapping.isInRange(gid)) {
+            return mapping.mapValue(gid);
+          }
+        }
+      }
+      return base.GetCIDForGID(gid);
+    }
+
+    public override int GetGIDForCID(int cid) {
+      if (this.IsCIDFont()) {
+        foreach (global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping mapping in this.rangesCID2GID) {
+          if (mapping.isInReverseRange(cid)) {
+            return mapping.mapReverseValue(cid);
+          }
+        }
+      }
+      return base.GetGIDForCID(cid);
+    }
+  }
+
+  internal class Format2Charset : global::DripSharp.PdfCarton.Fonts.Cff.EmbeddedCharset {
+    internal readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping> rangesCID2GID
+      = null!;
+
+    internal Format2Charset(bool isCIDFont) : base(isCIDFont) {
+      this.rangesCID2GID
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping>();
+    }
+
+    public virtual void AddRangeMapping(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping rangeMapping) {
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(this.rangesCID2GID, rangeMapping);
+    }
+
+    public override int GetCIDForGID(int gid) {
+      foreach (global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping mapping in this.rangesCID2GID) {
+        if (mapping.isInRange(gid)) {
+          return mapping.mapValue(gid);
+        }
+      }
+      return base.GetCIDForGID(gid);
+    }
+
+    public override int GetGIDForCID(int cid) {
+      foreach (global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping mapping in this.rangesCID2GID) {
+        if (mapping.isInReverseRange(cid)) {
+          return mapping.mapReverseValue(cid);
+        }
+      }
+      return base.GetGIDForCID(cid);
+    }
+  }
+
+  internal sealed class RangeMapping {
+    internal readonly int startValue = default;
+
+    internal readonly int endValue = default;
+
+    internal readonly int startMappedValue = default;
+
+    internal readonly int endMappedValue = default;
+
+    internal RangeMapping(int startGID, int first, int nLeft) {
+      this.startValue = startGID;
+      this.endValue = (this.startValue + nLeft);
+      this.startMappedValue = first;
+      this.endMappedValue = (this.startMappedValue + nLeft);
+    }
+
+    internal bool isInRange(int value) {
+      return ((value >= this.startValue) && (value <= this.endValue));
+    }
+
+    internal bool isInReverseRange(int value) {
+      return ((value >= this.startMappedValue) && (value <= this.endMappedValue));
+    }
+
+    internal int mapValue(int value) {
+      return (this.isInRange(value) ? (this.startMappedValue + (value - this.startValue)) : 0);
+    }
+
+    internal int mapReverseValue(int value) {
+      return (this.isInReverseRange(value) ? (this.startValue + (value - this.startMappedValue))
+        : 0);
+    }
+
+    public override string ToString() {
+      return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
+        "DripSharp.PdfCarton.Fonts", "org.apache.fontbox"), "[start value="), this.startValue),
+        ", end value="), this.endValue), ", start mapped-value="), this.startMappedValue),
+        ", end mapped-value="), this.endMappedValue), "]");
+    }
+  }
+
+  internal class CFFBytesource : global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.ByteSource {
+    internal readonly sbyte[] bytes = null!;
+
+    internal CFFBytesource(sbyte[] bytes) {
+      this.bytes = bytes;
+    }
+
+    public virtual sbyte[] GetBytes() {
+      return this.bytes;
+    }
+  }
+
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(((object)(this)).GetType().Name,
+      "["), this.debugFontName), "]");
+  }
 }

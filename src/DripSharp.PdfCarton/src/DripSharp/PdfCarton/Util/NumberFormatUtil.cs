@@ -9,77 +9,99 @@
 namespace DripSharp.PdfCarton.Util;
 
 public class NumberFormatUtil {
-private const int MAX_FRACTION_DIGITS = 5;
+  private const int MAX_FRACTION_DIGITS = 5;
 
-private static readonly long[] POWER_OF_TENS = null!;
+  private static readonly long[] POWER_OF_TENS = null!;
 
-private static readonly int[] POWER_OF_TENS_INT = null!;
+  private static readonly int[] POWER_OF_TENS_INT = null!;
 
-static NumberFormatUtil() {
-{
-global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS = new long[19];
-global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[0] = 1;
-for (int exp__41_18 = 1; (exp__41_18 < global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS.Length); exp__41_18++) {
-global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp__41_18] = (global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[(exp__41_18 - 1)] * 10);
-}
-global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT = new int[10];
-global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[0] = 1;
-for (int exp__49_18 = 1; (exp__49_18 < global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT.Length); exp__49_18++) {
-global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp__49_18] = (global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[(exp__49_18 - 1)] * 10);
-}
-}
-}
+  static NumberFormatUtil() { {
+      global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS = new long[19];
+      global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[0] = 1;
+      for (int exp__41_18 = 1;
+        (exp__41_18 < global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS.Length);
+        exp__41_18++) {
+        global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp__41_18]
+          = (global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[(exp__41_18 - 1)]
+          * 10);
+      }
+      global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT = new int[10];
+      global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[0] = 1;
+      for (int exp__49_18 = 1;
+        (exp__49_18 < global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT.Length);
+        exp__49_18++) {
+        global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp__49_18]
+          = (global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[(exp__49_18 - 1)]
+          * 10);
+      }
+    }
+  }
 
-private NumberFormatUtil() {}
+  private NumberFormatUtil() {}
 
-public static int FormatFloatFast(float value, int maxFractionDigits, sbyte[] asciiBuffer) {
-if (((((float.IsNaN(value) || float.IsInfinity(value)) || (value > long.MaxValue)) || (value <= long.MinValue)) || (maxFractionDigits > global::DripSharp.PdfCarton.Util.NumberFormatUtil.MAX_FRACTION_DIGITS))) {
-return -1;
-}
-int offset = 0;
-long integerPart = (long)(value);
-if ((value < 0)) {
-asciiBuffer[offset++] = unchecked((sbyte)('-'));
-integerPart = -integerPart;
-}
-long fractionPart = (long)((((global::System.Math.Abs((double)((double)(value))) - integerPart) * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[maxFractionDigits]) + 0.5D));
-if ((fractionPart >= global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[maxFractionDigits])) {
-integerPart++;
-fractionPart -= global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[maxFractionDigits];
-}
-offset = global::DripSharp.PdfCarton.Util.NumberFormatUtil.formatPositiveNumber(integerPart, global::DripSharp.PdfCarton.Util.NumberFormatUtil.getExponent(integerPart), false, asciiBuffer, offset);
-if (((fractionPart > 0) && (maxFractionDigits > 0))) {
-asciiBuffer[offset++] = unchecked((sbyte)('.'));
-offset = global::DripSharp.PdfCarton.Util.NumberFormatUtil.formatPositiveNumber(fractionPart, (maxFractionDigits - 1), true, asciiBuffer, offset);
-}
-return offset;
-}
+  public static int FormatFloatFast(float value, int maxFractionDigits, sbyte[] asciiBuffer) {
+    if (((((float.IsNaN(value) || float.IsInfinity(value)) || (value > long.MaxValue)) || (value
+      <= long.MinValue))
+      || (maxFractionDigits > global::DripSharp.PdfCarton.Util.NumberFormatUtil.MAX_FRACTION_DIGITS))) {
+      return -1;
+    }
+    int offset = 0;
+    long integerPart = (long)value;
+    if ((value < 0)) {
+      asciiBuffer[offset++] = unchecked((sbyte)('-'));
+      integerPart = -integerPart;
+    }
+    long fractionPart = (long)((((global::System.Math.Abs((double)((double)value)) - integerPart)
+      * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[maxFractionDigits])
+      + 0.5D));
+    if ((fractionPart
+      >= global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[maxFractionDigits])) {
+      integerPart++;
+      fractionPart
+        -= global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[maxFractionDigits];
+    }
+    offset = global::DripSharp.PdfCarton.Util.NumberFormatUtil.formatPositiveNumber(integerPart,
+      global::DripSharp.PdfCarton.Util.NumberFormatUtil.getExponent(integerPart), false,
+      asciiBuffer, offset);
+    if (((fractionPart > 0) && (maxFractionDigits > 0))) {
+      asciiBuffer[offset++] = unchecked((sbyte)('.'));
+      offset = global::DripSharp.PdfCarton.Util.NumberFormatUtil.formatPositiveNumber(fractionPart,
+        (maxFractionDigits - 1), true, asciiBuffer, offset);
+    }
+    return offset;
+  }
 
-private static int formatPositiveNumber(long number, int exp, bool omitTrailingZeros, sbyte[] asciiBuffer, int startOffset) {
-int offset = startOffset;
-long remaining = number;
-while ((remaining > int.MaxValue)) {
-long digit__137_18 = (remaining / global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp]);
-remaining -= (digit__137_18 * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp]);
-asciiBuffer[offset++] = unchecked((sbyte)(unchecked((sbyte)(('0' + digit__137_18)))));
-exp--;
-}
-int remainingInt = (int)(remaining);
-while (((exp >= 0) && (!omitTrailingZeros || (remainingInt > 0)))) {
-int digit__148_17 = (remainingInt / global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp]);
-remainingInt -= (digit__148_17 * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp]);
-asciiBuffer[offset++] = unchecked((sbyte)(unchecked((sbyte)(('0' + digit__148_17)))));
-exp--;
-}
-return offset;
-}
+  private static int formatPositiveNumber(long number, int exp, bool omitTrailingZeros,
+    sbyte[] asciiBuffer, int startOffset) {
+    int offset = startOffset;
+    long remaining = number;
+    while ((remaining > int.MaxValue)) {
+      long digit__137_18 = (remaining
+        / global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp]);
+      remaining -= (digit__137_18
+        * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp]);
+      asciiBuffer[offset++] = unchecked((sbyte)(unchecked((sbyte)(('0' + digit__137_18)))));
+      exp--;
+    }
+    int remainingInt = (int)remaining;
+    while (((exp >= 0) && (!omitTrailingZeros || (remainingInt > 0)))) {
+      int digit__148_17 = (remainingInt
+        / global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp]);
+      remainingInt -= (digit__148_17
+        * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp]);
+      asciiBuffer[offset++] = unchecked((sbyte)(unchecked((sbyte)(('0' + digit__148_17)))));
+      exp--;
+    }
+    return offset;
+  }
 
-private static int getExponent(long number) {
-for (int exp = 0; (exp < (global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS.Length - 1)); exp++) {
-if ((number < global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[(exp + 1)])) {
-return exp;
-}
-}
-return (global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS.Length - 1);
-}
+  private static int getExponent(long number) {
+    for (int exp = 0; (exp < (global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS.Length
+      - 1)); exp++) {
+      if ((number < global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[(exp + 1)])) {
+        return exp;
+      }
+    }
+    return (global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS.Length - 1);
+  }
 }

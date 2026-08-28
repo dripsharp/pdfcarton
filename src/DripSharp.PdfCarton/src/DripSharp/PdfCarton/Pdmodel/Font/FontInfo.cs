@@ -9,65 +9,69 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public abstract class FontInfo {
-public abstract string GetPostScriptName();
+  public abstract string GetPostScriptName();
 
-public abstract global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat GetFormat();
+  public abstract global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat GetFormat();
 
-public abstract global::DripSharp.PdfCarton.Pdmodel.Font.CIDSystemInfo GetCIDSystemInfo();
+  public abstract global::DripSharp.PdfCarton.Pdmodel.Font.CIDSystemInfo GetCIDSystemInfo();
 
-public abstract global::DripSharp.PdfCarton.Fonts.FontBoxFont GetFont();
+  public abstract global::DripSharp.PdfCarton.Fonts.FontBoxFont GetFont();
 
-public abstract int GetFamilyClass();
+  public abstract int GetFamilyClass();
 
-public abstract int GetWeightClass();
+  public abstract int GetWeightClass();
 
-internal int getWeightClassAsPanose() {
-int usWeightClass = this.GetWeightClass();
-switch (usWeightClass) {
-case var __case_82_18_0 when __case_82_18_0 == -1:
-return 0;
-case var __case_83_18_0 when __case_83_18_0 == 0:
-return 0;
-case var __case_84_18_0 when __case_84_18_0 == 100:
-return 2;
-case var __case_85_18_0 when __case_85_18_0 == 200:
-return 3;
-case var __case_86_18_0 when __case_86_18_0 == 300:
-return 4;
-case var __case_87_18_0 when __case_87_18_0 == 400:
-return 5;
-case var __case_88_18_0 when __case_88_18_0 == 500:
-return 6;
-case var __case_89_18_0 when __case_89_18_0 == 600:
-return 7;
-case var __case_90_18_0 when __case_90_18_0 == 700:
-return 8;
-case var __case_91_18_0 when __case_91_18_0 == 800:
-return 9;
-case var __case_92_18_0 when __case_92_18_0 == 900:
-return 10;
-default:
-return 0;
-}
-}
+  internal int getWeightClassAsPanose() {
+    int usWeightClass = this.GetWeightClass();
+    switch (usWeightClass) {
+      case var __case_82_18_0 when __case_82_18_0 == -1:
+        return 0;
+      case var __case_83_18_0 when __case_83_18_0 == 0:
+        return 0;
+      case var __case_84_18_0 when __case_84_18_0 == 100:
+        return 2;
+      case var __case_85_18_0 when __case_85_18_0 == 200:
+        return 3;
+      case var __case_86_18_0 when __case_86_18_0 == 300:
+        return 4;
+      case var __case_87_18_0 when __case_87_18_0 == 400:
+        return 5;
+      case var __case_88_18_0 when __case_88_18_0 == 500:
+        return 6;
+      case var __case_89_18_0 when __case_89_18_0 == 600:
+        return 7;
+      case var __case_90_18_0 when __case_90_18_0 == 700:
+        return 8;
+      case var __case_91_18_0 when __case_91_18_0 == 800:
+        return 9;
+      case var __case_92_18_0 when __case_92_18_0 == 900:
+        return 10;
+      default:
+        return 0;
+    }
+  }
 
-public abstract int GetCodePageRange1();
+  public abstract int GetCodePageRange1();
 
-public abstract int GetCodePageRange2();
+  public abstract int GetCodePageRange2();
 
-internal long getCodePageRange() {
-long range1 = (this.GetCodePageRange1() & 4294967295L);
-long range2 = (this.GetCodePageRange2() & 4294967295L);
-return ((range2 << unchecked((int)(32))) | range1);
-}
+  internal long getCodePageRange() {
+    long range1 = (this.GetCodePageRange1() & 4294967295L);
+    long range2 = (this.GetCodePageRange2() & 4294967295L);
+    return ((range2 << unchecked((int)(32))) | range1);
+  }
 
-public abstract int GetMacStyle();
+  public abstract int GetMacStyle();
 
-public abstract global::DripSharp.PdfCarton.Pdmodel.Font.PDPanoseClassification GetPanose();
+  public abstract global::DripSharp.PdfCarton.Pdmodel.Font.PDPanoseClassification GetPanose();
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.GetPostScriptName(), " ("), this.GetFormat()), ", mac: 0x"), global::DripSharp.Runtime.JavaCompat.ToHexString(this.GetMacStyle())), ", os/2: 0x"), global::DripSharp.Runtime.JavaCompat.ToHexString(this.GetFamilyClass())), ", cid: "), this.GetCIDSystemInfo()), ")");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.GetPostScriptName(),
+      " ("), this.GetFormat()), ", mac: 0x"),
+      global::DripSharp.Runtime.JavaCompat.ToHexString(this.GetMacStyle())), ", os/2: 0x"),
+      global::DripSharp.Runtime.JavaCompat.ToHexString(this.GetFamilyClass())), ", cid: "),
+      this.GetCIDSystemInfo()), ")");
+  }
 
-public FontInfo() {}
+  public FontInfo() {}
 }

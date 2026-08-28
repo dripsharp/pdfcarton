@@ -9,12 +9,12 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public class CoordinateColorPair {
-internal readonly global::DripSharp.Runtime.JavaPoint2D coordinate = null!;
+  internal readonly global::DripSharp.Runtime.JavaPoint2D coordinate = null!;
 
-internal readonly float[] color = null!;
+  internal readonly float[] color = null!;
 
-internal CoordinateColorPair(global::DripSharp.Runtime.JavaPoint2D p, float[] c) {
-this.coordinate = p;
-this.color = global::DripSharp.Runtime.JavaCompat.Clone(c);
-}
+  internal CoordinateColorPair(global::DripSharp.Runtime.JavaPoint2D p, float[] c) {
+    this.coordinate = p;
+    this.color = global::DripSharp.Runtime.JavaCompat.Clone(c);
+  }
 }

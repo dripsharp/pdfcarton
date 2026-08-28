@@ -9,29 +9,29 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDActionResetForm : global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction {
-public const string SubType = "ResetForm";
+  public const string SubType = "ResetForm";
 
-public PDActionResetForm() {
-this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionResetForm.SubType);
-}
+  public PDActionResetForm() {
+    this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionResetForm.SubType);
+  }
 
-public PDActionResetForm(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public PDActionResetForm(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSArray GetFields() {
-return base.Action.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Fields);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSArray GetFields() {
+    return base.Action.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Fields);
+  }
 
-public virtual void SetFields(global::DripSharp.PdfCarton.Cos.COSArray array) {
-this.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fields, array);
-}
+  public virtual void SetFields(global::DripSharp.PdfCarton.Cos.COSArray array) {
+    this.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fields, array);
+  }
 
-public virtual int GetFlags() {
-return this.Action.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, 0);
-}
+  public virtual int GetFlags() {
+    return this.Action.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, 0);
+  }
 
-public virtual void SetFlags(int flags) {
-this.Action.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, flags);
-}
+  public virtual void SetFlags(int flags) {
+    this.Action.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, flags);
+  }
 }

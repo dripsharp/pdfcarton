@@ -9,24 +9,28 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
 public class LigatureSetTable {
-private readonly int ligatureCount = default;
+  private readonly int ligatureCount = default;
 
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureTable[] ligatureTables = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureTable[] ligatureTables
+    = null!;
 
-public LigatureSetTable(int ligatureCount, global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureTable[] ligatureTables) {
-this.ligatureCount = ligatureCount;
-this.ligatureTables = ligatureTables;
-}
+  public LigatureSetTable(int ligatureCount,
+    global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureTable[] ligatureTables) {
+    this.ligatureCount = ligatureCount;
+    this.ligatureTables = ligatureTables;
+  }
 
-public virtual int GetLigatureCount() {
-return this.ligatureCount;
-}
+  public virtual int GetLigatureCount() {
+    return this.ligatureCount;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureTable[] GetLigatureTables() {
-return this.ligatureTables;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureTable[] GetLigatureTables() {
+    return this.ligatureTables;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("%s[ligatureCount=%d]", typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureSetTable).Name, this.ligatureCount);
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("%s[ligatureCount=%d]",
+      typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureSetTable).Name,
+      this.ligatureCount);
+  }
 }

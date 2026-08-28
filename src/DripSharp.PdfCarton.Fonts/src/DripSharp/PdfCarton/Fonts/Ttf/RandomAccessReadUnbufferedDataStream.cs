@@ -8,89 +8,94 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
-internal class RandomAccessReadUnbufferedDataStream : global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream {
-private readonly long length = default;
+internal class RandomAccessReadUnbufferedDataStream
+: global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream {
+  private readonly long length = default;
 
-private readonly global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead = null!;
+  private readonly global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead = null!;
 
-internal RandomAccessReadUnbufferedDataStream(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
-this.length = randomAccessRead.Length();
-this.randomAccessRead = randomAccessRead;
-}
+  internal RandomAccessReadUnbufferedDataStream(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
+    this.length = randomAccessRead.Length();
+    this.randomAccessRead = randomAccessRead;
+  }
 
-public override long GetCurrentPosition() {
-return this.randomAccessRead.GetPosition();
-}
+  public override long GetCurrentPosition() {
+    return this.randomAccessRead.GetPosition();
+  }
 
-public override void Dispose() {
-this.randomAccessRead.Dispose();
-}
+  public override void Dispose() {
+    this.randomAccessRead.Dispose();
+  }
 
-public override int Read() {
-return this.randomAccessRead.Read();
-}
+  public override int Read() {
+    return this.randomAccessRead.Read();
+  }
 
-public override long ReadLong() {
-return (((long)(this.readInt()) << unchecked((int)(32))) | (this.readInt() & 4294967295L));
-}
+  public override long ReadLong() {
+    return (((long)(this.readInt()) << unchecked((int)(32))) | (this.readInt() & 4294967295L));
+  }
 
-private int readInt() {
-int b1 = this.Read();
-int b2 = this.Read();
-int b3 = this.Read();
-int b4 = this.Read();
-return ((((b1 << unchecked((int)(24))) | (b2 << unchecked((int)(16)))) | (b3 << unchecked((int)(8)))) | b4);
-}
+  private int readInt() {
+    int b1 = this.Read();
+    int b2 = this.Read();
+    int b3 = this.Read();
+    int b4 = this.Read();
+    return ((((b1 << unchecked((int)(24))) | (b2 << unchecked((int)(16)))) | (b3 << unchecked((int)(8)))) | b4);
+  }
 
-public override void Seek(long pos) {
-this.randomAccessRead.Seek(pos);
-}
+  public override void Seek(long pos) {
+    this.randomAccessRead.Seek(pos);
+  }
 
-public override int Read(sbyte[] b, int off, int len) {
-return this.randomAccessRead.Read(b, off, len);
-}
+  public override int Read(sbyte[] b, int off, int len) {
+    return this.randomAccessRead.Read(b, off, len);
+  }
 
-public override global::System.IO.Stream GetOriginalData() {
-return new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadUnbufferedDataStream.RandomAccessReadNonClosingInputStream(this.randomAccessRead.CreateView((long)(0), this.length));
-}
+  public override global::System.IO.Stream GetOriginalData() {
+    return new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadUnbufferedDataStream.RandomAccessReadNonClosingInputStream(this.randomAccessRead.CreateView((long)(0),
+      this.length));
+  }
 
-public override long GetOriginalDataSize() {
-return this.length;
-}
+  public override long GetOriginalDataSize() {
+    return this.length;
+  }
 
-public override global::DripSharp.PdfCarton.IO.RandomAccessRead CreateSubView(long length) {
-try {
-return this.randomAccessRead.CreateView(this.randomAccessRead.GetPosition(), length);
-} catch (global::System.IO.IOException) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Assert(() => false, () => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Please implement ", ((object)(this.randomAccessRead)).GetType()), ".createView()"));
-return default!;
-}
-}
+  public override global::DripSharp.PdfCarton.IO.RandomAccessRead CreateSubView(long length) {
+    try {
+      return this.randomAccessRead.CreateView(this.randomAccessRead.GetPosition(), length);
+    } catch (global::System.IO.IOException) {
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Assert(() => false, ()
+        => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Please implement ",
+        ((object)(this.randomAccessRead)).GetType()), ".createView()"));
+      return default!;
+    }
+  }
 
-internal sealed class RandomAccessReadNonClosingInputStream : global::DripSharp.PdfCarton.Runtime.Fonts.JavaInputStream {
-internal readonly global::DripSharp.PdfCarton.IO.RandomAccessReadView randomAccessRead = null!;
+  internal sealed class RandomAccessReadNonClosingInputStream
+  : global::DripSharp.PdfCarton.Runtime.Fonts.JavaInputStream {
+    internal readonly global::DripSharp.PdfCarton.IO.RandomAccessReadView randomAccessRead = null!;
 
-internal RandomAccessReadNonClosingInputStream(global::DripSharp.PdfCarton.IO.RandomAccessReadView randomAccessRead) {
-this.randomAccessRead = randomAccessRead;
-}
+    internal RandomAccessReadNonClosingInputStream(global::DripSharp.PdfCarton.IO.RandomAccessReadView randomAccessRead) {
+      this.randomAccessRead = randomAccessRead;
+    }
 
-public override int Read() {
-return this.randomAccessRead.Read();
-}
+    public override int Read() {
+      return this.randomAccessRead.Read();
+    }
 
-public override int Read(sbyte[] b) {
-return ((global::DripSharp.PdfCarton.IO.RandomAccessRead)this.randomAccessRead).Read(b);
-}
+    public override int Read(sbyte[] b) {
+      return ((global::DripSharp.PdfCarton.IO.RandomAccessRead)this.randomAccessRead).Read(b);
+    }
 
-public override int Read(sbyte[] b, int off, int len) {
-return this.randomAccessRead.Read(b, off, len);
-}
+    public override int Read(sbyte[] b, int off, int len) {
+      return this.randomAccessRead.Read(b, off, len);
+    }
 
-public override long Skip(long n) {
-this.randomAccessRead.Seek((this.randomAccessRead.GetPosition() + n));
-return n;
-}
+    public override long Skip(long n) {
+      this.randomAccessRead.Seek((this.randomAccessRead.GetPosition() + n));
+      return n;
+    }
 
-public override void Dispose() {}
-}
+    public override void Dispose() {}
+  }
 }

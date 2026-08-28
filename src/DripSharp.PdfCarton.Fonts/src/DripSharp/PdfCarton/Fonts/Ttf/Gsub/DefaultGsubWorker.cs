@@ -9,10 +9,14 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Gsub;
 
 internal class DefaultGsubWorker : global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public virtual global::System.Collections.Generic.IList<int> ApplyTransforms(global::System.Collections.Generic.IList<int> originalGlyphIds) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.DefaultGsubWorker.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(((object)(this)).GetType().Name, " class does not perform actual GSUB substitutions. "), "Perhaps the selected language is not yet supported by the FontBox library.")));
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(originalGlyphIds);
-}
+  public virtual global::System.Collections.Generic.IList<int> ApplyTransforms(global::System.Collections.Generic.IList<int> originalGlyphIds) {
+    global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.DefaultGsubWorker.LOG,
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(((object)(this)).GetType().Name,
+      " class does not perform actual GSUB substitutions. "),
+      "Perhaps the selected language is not yet supported by the FontBox library.")));
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableList(originalGlyphIds);
+  }
 }

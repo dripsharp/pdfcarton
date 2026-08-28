@@ -8,8 +8,11 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public class SquareAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.SquareCircleAnnotationValidator {
-public SquareAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquare(annotDictionary)) {
+public class SquareAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.SquareCircleAnnotationValidator {
+  public SquareAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx,
+    new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquare(annotDictionary)) {
 
-}
+  }
 }

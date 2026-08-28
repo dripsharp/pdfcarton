@@ -8,27 +8,30 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Text;
 
-public class TextPositionComparator : global::System.Collections.Generic.IComparer<global::DripSharp.PdfCarton.Text.TextPosition> {
-public virtual int Compare(global::DripSharp.PdfCarton.Text.TextPosition pos1, global::DripSharp.PdfCarton.Text.TextPosition pos2) {
-int cmp1 = global::DripSharp.Runtime.JavaCompat.CompareFloat(pos1.GetDir(), pos2.GetDir());
-if ((cmp1 != 0)) {
-return cmp1;
-}
-float x1 = pos1.GetXDirAdj();
-float x2 = pos2.GetXDirAdj();
-float pos1YBottom = pos1.GetYDirAdj();
-float pos2YBottom = pos2.GetYDirAdj();
-float pos1YTop = (pos1YBottom - pos1.GetHeightDir());
-float pos2YTop = (pos2YBottom - pos2.GetHeightDir());
-float yDifference = global::System.Math.Abs((pos1YBottom - pos2YBottom));
-if ((((yDifference < 0.1D) || ((pos2YBottom >= pos1YTop) && (pos2YBottom <= pos1YBottom))) || ((pos1YBottom >= pos2YTop) && (pos1YBottom <= pos2YBottom)))) {
-return global::DripSharp.Runtime.JavaCompat.CompareFloat(x1, x2);
-} else {
-if ((pos1YBottom < pos2YBottom)) {
-return -1;
-} else {
-return 1;
-}
-}
-}
+public class TextPositionComparator
+: global::System.Collections.Generic.IComparer<global::DripSharp.PdfCarton.Text.TextPosition> {
+  public virtual int Compare(global::DripSharp.PdfCarton.Text.TextPosition pos1,
+    global::DripSharp.PdfCarton.Text.TextPosition pos2) {
+    int cmp1 = global::DripSharp.Runtime.JavaCompat.CompareFloat(pos1.GetDir(), pos2.GetDir());
+    if ((cmp1 != 0)) {
+      return cmp1;
+    }
+    float x1 = pos1.GetXDirAdj();
+    float x2 = pos2.GetXDirAdj();
+    float pos1YBottom = pos1.GetYDirAdj();
+    float pos2YBottom = pos2.GetYDirAdj();
+    float pos1YTop = (pos1YBottom - pos1.GetHeightDir());
+    float pos2YTop = (pos2YBottom - pos2.GetHeightDir());
+    float yDifference = global::System.Math.Abs((pos1YBottom - pos2YBottom));
+    if ((((yDifference < 0.1D) || ((pos2YBottom >= pos1YTop) && (pos2YBottom <= pos1YBottom)))
+      || ((pos1YBottom >= pos2YTop) && (pos1YBottom <= pos2YBottom)))) {
+      return global::DripSharp.Runtime.JavaCompat.CompareFloat(x1, x2);
+    } else {
+      if ((pos1YBottom < pos2YBottom)) {
+        return -1;
+      } else {
+        return 1;
+      }
+    }
+  }
 }

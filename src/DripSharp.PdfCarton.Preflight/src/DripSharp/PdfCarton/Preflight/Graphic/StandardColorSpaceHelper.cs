@@ -8,281 +8,357 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Graphic;
 
-public class StandardColorSpaceHelper : global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper {
-protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Context = default!;
+public class StandardColorSpaceHelper
+: global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelper {
+  protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Context = default!;
 
-protected internal global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper Iccpw = default!;
+  protected internal global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper Iccpw
+    = default!;
 
-protected internal global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace Pdcs = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace Pdcs
+    = default!;
 
-protected internal StandardColorSpaceHelper(global::DripSharp.PdfCarton.Preflight.PreflightContext _context, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace _cs) {
-this.Context = _context;
-this.Pdcs = _cs;
-}
+  protected internal StandardColorSpaceHelper(global::DripSharp.PdfCarton.Preflight.PreflightContext _context,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace _cs) {
+    this.Context = _context;
+    this.Pdcs = _cs;
+  }
 
-public void Validate() {
-if ((this.Pdcs == default!)) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("Unable to create a PDColorSpace with the value null");
-}
-this.Iccpw = global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper.GetOrSearchICCProfile(this.Context);
-this.ProcessAllColorSpace(this.Pdcs);
-}
+  public void Validate() {
+    if ((this.Pdcs == default!)) {
+      throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("Unable to create a PDColorSpace with the value null");
+    }
+    this.Iccpw
+      = global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper.GetOrSearchICCProfile(this.Context);
+    this.ProcessAllColorSpace(this.Pdcs);
+  }
 
-protected internal void ProcessAllColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces cs = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(colorSpace.GetName());
-switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(cs)) {
-case 8:
-case 9:
-this.ProcessRGBColorSpace(colorSpace);
-break;
-case 12:
-case 13:
-this.ProcessCYMKColorSpace(colorSpace);
-break;
-case 1:
-case 2:
-case 0:
-this.ProcessCalibratedColorSpace(colorSpace);
-break;
-case 10:
-case 11:
-this.ProcessGrayColorSpace(colorSpace);
-break;
-case 7:
-this.ProcessICCBasedColorSpace(colorSpace);
-break;
-case 3:
-this.ProcessDeviceNColorSpace(colorSpace);
-break;
-case 4:
-case 5:
-this.ProcessIndexedColorSpace(colorSpace);
-break;
-case 14:
-this.ProcessSeparationColorSpace(colorSpace);
-break;
-case 6:
-this.ProcessPatternColorSpace(colorSpace);
-break;
-default:
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidUnknownColorSpace, global::DripSharp.Runtime.JavaCompat.Concat(cs.GetLabel(), " is unknown as ColorSpace")));
-break;
-}
-}
+  protected internal void ProcessAllColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces cs
+      = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(colorSpace.GetName());
+    switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(cs)) {
+      case 8:
+      case 9:
+        this.ProcessRGBColorSpace(colorSpace);
+        break;
+      case 12:
+      case 13:
+        this.ProcessCYMKColorSpace(colorSpace);
+        break;
+      case 1:
+      case 2:
+      case 0:
+        this.ProcessCalibratedColorSpace(colorSpace);
+        break;
+      case 10:
+      case 11:
+        this.ProcessGrayColorSpace(colorSpace);
+        break;
+      case 7:
+        this.ProcessICCBasedColorSpace(colorSpace);
+        break;
+      case 3:
+        this.ProcessDeviceNColorSpace(colorSpace);
+        break;
+      case 4:
+      case 5:
+        this.ProcessIndexedColorSpace(colorSpace);
+        break;
+      case 14:
+        this.ProcessSeparationColorSpace(colorSpace);
+        break;
+      case 6:
+        this.ProcessPatternColorSpace(colorSpace);
+        break;
+      default:
+        this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidUnknownColorSpace,
+          global::DripSharp.Runtime.JavaCompat.Concat(cs.GetLabel(), " is unknown as ColorSpace")));
+        break;
+    }
+  }
 
-protected internal virtual void ProcessRGBColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-if (!(this.ProcessDefaultColorSpace(colorSpace))) {
-if ((this.Iccpw == default!)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing, "DestOutputProfile is missing"));
-} else {
-if (!(this.Iccpw.IsRGBColorSpace())) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceRgb, "DestOutputProfile isn't RGB ColorSpace"));
-}
-}
-}
-}
+  protected internal virtual void ProcessRGBColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    if (!(this.ProcessDefaultColorSpace(colorSpace))) {
+      if ((this.Iccpw == default!)) {
+        this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing,
+          "DestOutputProfile is missing"));
+      } else {
+        if (!(this.Iccpw.IsRGBColorSpace())) {
+          this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceRgb,
+            "DestOutputProfile isn't RGB ColorSpace"));
+        }
+      }
+    }
+  }
 
-protected internal virtual void ProcessCYMKColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-if (!(this.ProcessDefaultColorSpace(colorSpace))) {
-if ((this.Iccpw == default!)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing, "DestOutputProfile is missing"));
-} else {
-if (!(this.Iccpw.IsCMYKColorSpace())) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceCmyk, "DestOutputProfile isn't CMYK ColorSpace"));
-}
-}
-}
-}
+  protected internal virtual void ProcessCYMKColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    if (!(this.ProcessDefaultColorSpace(colorSpace))) {
+      if ((this.Iccpw == default!)) {
+        this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing,
+          "DestOutputProfile is missing"));
+      } else {
+        if (!(this.Iccpw.IsCMYKColorSpace())) {
+          this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceCmyk,
+            "DestOutputProfile isn't CMYK ColorSpace"));
+        }
+      }
+    }
+  }
 
-protected internal virtual void ProcessPatternColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-if ((this.Iccpw == default!)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing, "DestOutputProfile is missing"));
-}
-}
+  protected internal virtual void ProcessPatternColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    if ((this.Iccpw == default!)) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing,
+        "DestOutputProfile is missing"));
+    }
+  }
 
-protected internal virtual void ProcessGrayColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-if ((!(this.ProcessDefaultColorSpace(colorSpace)) && (this.Iccpw == default!))) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing, "DestOutputProfile is missing"));
-}
-}
+  protected internal virtual void ProcessGrayColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    if ((!(this.ProcessDefaultColorSpace(colorSpace)) && (this.Iccpw == default!))) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing,
+        "DestOutputProfile is missing"));
+    }
+  }
 
-protected internal virtual void ProcessCalibratedColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {}
+  protected internal virtual void ProcessCalibratedColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {}
 
-protected internal virtual void ProcessICCBasedColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased iccBased = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(colorSpace!);
-try {
-global::DripSharp.Runtime.JavaIccProfile iccp;
-using (global::System.IO.Stream @is = iccBased.GetPDStream().CreateInputStream()) {
-iccp = global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is);
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace alternateColorSpace = iccBased.GetAlternateColorSpace();
-if ((alternateColorSpace != default!)) {
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces altCsId = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(alternateColorSpace.GetName());
-if ((altCsId == global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.Pattern)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidPatternColorSpaceForbidden, "Pattern is forbidden as AlternateColorSpace of a ICCBased"));
-}
-if (!(this.validateICCProfileNEntry(iccBased.GetPDStream().GetCOSObject(), iccp))) {
-return;
-}
-if (!(this.validateICCProfileVersion(iccp))) {
-return;
-}
-this.validateICCProfileAlternateEntry(iccBased, alternateColorSpace);
-}
-} catch (global::System.Exception e) when (e is global::System.ArgumentException or global::System.IndexOutOfRangeException) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceIccbased, global::DripSharp.Runtime.JavaCompat.Concat("ICCBased color space is invalid: ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
-} catch (global::System.IO.IOException e) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpace, global::DripSharp.Runtime.JavaCompat.Concat("Unable to read ICCBase color space: ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
-}
-}
+  protected internal virtual void ProcessICCBasedColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased iccBased
+      = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(colorSpace!);
+    try {
+      global::DripSharp.Runtime.JavaIccProfile iccp;
+      using (global::System.IO.Stream @is = iccBased.GetPDStream().CreateInputStream()) {
+        iccp = global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is);
+      }
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace alternateColorSpace
+        = iccBased.GetAlternateColorSpace();
+      if ((alternateColorSpace != default!)) {
+        global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces altCsId
+          = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(alternateColorSpace.GetName());
+        if ((altCsId == global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.Pattern)) {
+          this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidPatternColorSpaceForbidden,
+            "Pattern is forbidden as AlternateColorSpace of a ICCBased"));
+        }
+        if (!(this.validateICCProfileNEntry(iccBased.GetPDStream().GetCOSObject(), iccp))) {
+          return;
+        }
+        if (!(this.validateICCProfileVersion(iccp))) {
+          return;
+        }
+        this.validateICCProfileAlternateEntry(iccBased, alternateColorSpace);
+      }
+    } catch (global::System.Exception e) when (e is global::System.ArgumentException or global::System.IndexOutOfRangeException) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceIccbased,
+        global::DripSharp.Runtime.JavaCompat.Concat("ICCBased color space is invalid: ",
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
+    } catch (global::System.IO.IOException e) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpace,
+        global::DripSharp.Runtime.JavaCompat.Concat("Unable to read ICCBase color space: ",
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
+    }
+  }
 
-protected internal virtual void ProcessDeviceNColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceN deviceN = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceN)(colorSpace!);
-try {
-if ((this.Iccpw == default!)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing, "DestOutputProfile is missing"));
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSBase cosAlt = ((global::DripSharp.PdfCarton.Cos.COSArray)(colorSpace.GetCOSObject()!)).GetObject(2);
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace altColor = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(cosAlt);
-if ((altColor != default!)) {
-this.ProcessAllColorSpace(altColor);
-}
-int numberOfColorants = 0;
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceNAttributes attr = deviceN.GetAttributes();
-if ((attr != default!)) {
-global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation> colorants = attr.GetColorants((global::DripSharp.PdfCarton.Pdmodel.PDResources)default!);
-numberOfColorants = global::DripSharp.Runtime.JavaCompat.MapCount(colorants);
-global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(colorants.Values), (value0) => value0 is not null), this.ProcessAllColorSpace);
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceNProcess process = attr.GetProcess();
-if ((process != default!)) {
-this.ProcessAllColorSpace(process.GetColorSpace());
-}
-}
-int numberOfComponents = deviceN.GetNumberOfComponents();
-if (((numberOfColorants > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxDeviceNLimit) || (numberOfComponents > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxDeviceNLimit))) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceTooManyComponentsDevicen, "DeviceN has too many tint components or colorants"));
-}
-} catch (global::System.IO.IOException e) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpace, global::DripSharp.Runtime.JavaCompat.Concat("Unable to read DeviceN color space : ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
-}
-}
+  protected internal virtual void ProcessDeviceNColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceN deviceN
+      = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceN)(colorSpace!);
+    try {
+      if ((this.Iccpw == default!)) {
+        this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceMissing,
+          "DestOutputProfile is missing"));
+        return;
+      }
+      global::DripSharp.PdfCarton.Cos.COSBase cosAlt
+        = ((global::DripSharp.PdfCarton.Cos.COSArray)(colorSpace.GetCOSObject()!)).GetObject(2);
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace altColor
+        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(cosAlt);
+      if ((altColor != default!)) {
+        this.ProcessAllColorSpace(altColor);
+      }
+      int numberOfColorants = 0;
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceNAttributes attr
+        = deviceN.GetAttributes();
+      if ((attr != default!)) {
+        global::System.Collections.Generic.IDictionary<string,
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation> colorants
+          = attr.GetColorants((global::DripSharp.PdfCarton.Pdmodel.PDResources)default!);
+        numberOfColorants = global::DripSharp.Runtime.JavaCompat.MapCount(colorants);
+        global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.StreamFilter(global::DripSharp.Runtime.JavaCompat.Stream(colorants.Values),
+          (value0) => value0 is not null), this.ProcessAllColorSpace);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceNProcess process
+          = attr.GetProcess();
+        if ((process != default!)) {
+          this.ProcessAllColorSpace(process.GetColorSpace());
+        }
+      }
+      int numberOfComponents = deviceN.GetNumberOfComponents();
+      if (((numberOfColorants > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxDeviceNLimit)
+        || (numberOfComponents > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxDeviceNLimit))) {
+        this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceTooManyComponentsDevicen,
+          "DeviceN has too many tint components or colorants"));
+      }
+    } catch (global::System.IO.IOException e) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpace,
+        global::DripSharp.Runtime.JavaCompat.Concat("Unable to read DeviceN color space : ",
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
+    }
+  }
 
-protected internal virtual void ProcessIndexedColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed indexed = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed)(colorSpace!);
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace based = indexed.GetBaseColorSpace();
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces cs = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(based.GetName());
-if (((cs == global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.Indexed) || (cs == global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.I))) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceIndexed, "Indexed color space can't be used as Base color space"));
-return;
-}
-if ((cs == global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.Pattern)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceIndexed, "Pattern color space can't be used as Base color space"));
-return;
-}
-this.ProcessAllColorSpace(based);
-}
+  protected internal virtual void ProcessIndexedColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed indexed
+      = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed)(colorSpace!);
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace based
+      = indexed.GetBaseColorSpace();
+    global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces cs
+      = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(based.GetName());
+    if (((cs == global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.Indexed) || (cs
+      == global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.I))) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceIndexed,
+        "Indexed color space can't be used as Base color space"));
+      return;
+    }
+    if ((cs == global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.Pattern)) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceIndexed,
+        "Pattern color space can't be used as Base color space"));
+      return;
+    }
+    this.ProcessAllColorSpace(based);
+  }
 
-protected internal virtual void ProcessSeparationColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-try {
-global::DripSharp.PdfCarton.Cos.COSBase cosAlt = ((global::DripSharp.PdfCarton.Cos.COSArray)(colorSpace.GetCOSObject()!)).GetObject(2);
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace altCol = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(cosAlt);
-if ((altCol != default!)) {
-global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces acs = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(altCol.GetName());
-switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(acs)) {
-case 14:
-case 3:
-case 6:
-case 4:
-case 5:
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceAlternate, global::DripSharp.Runtime.JavaCompat.Concat(acs.GetLabel(), " color space can't be used as alternate color space")));
-break;
-default:
-this.ProcessAllColorSpace(altCol);
-break;
-}
-}
-} catch (global::System.IO.IOException e) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpace, global::DripSharp.Runtime.JavaCompat.Concat("Unable to read Separation color space : ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
-}
-}
+  protected internal virtual void ProcessSeparationColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    try {
+      global::DripSharp.PdfCarton.Cos.COSBase cosAlt
+        = ((global::DripSharp.PdfCarton.Cos.COSArray)(colorSpace.GetCOSObject()!)).GetObject(2);
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace altCol
+        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(cosAlt);
+      if ((altCol != default!)) {
+        global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces acs
+          = global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.valueOf(altCol.GetName());
+        switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(acs)) {
+          case 14:
+          case 3:
+          case 6:
+          case 4:
+          case 5:
+            this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpaceAlternate,
+              global::DripSharp.Runtime.JavaCompat.Concat(acs.GetLabel(),
+              " color space can't be used as alternate color space")));
+            break;
+          default:
+            this.ProcessAllColorSpace(altCol);
+            break;
+        }
+      }
+    } catch (global::System.IO.IOException e) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpace,
+        global::DripSharp.Runtime.JavaCompat.Concat("Unable to read Separation color space : ",
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
+    }
+  }
 
-protected internal virtual bool ProcessDefaultColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-bool result = false;
-global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = this.Context.GetValidationPath();
-global::DripSharp.PdfCarton.Pdmodel.PDResources resources = vPath.GetClosestPathElement<global::DripSharp.PdfCarton.Pdmodel.PDResources>(typeof(global::DripSharp.PdfCarton.Pdmodel.PDResources));
-if ((resources != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace defaultCS = default!;
-try {
-if ((global::DripSharp.Runtime.JavaCompat.Equals(colorSpace.GetName(), global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.DeviceCMYK.GetLabel()) && resources.HasColorSpace(global::DripSharp.PdfCarton.Cos.COSName.DefaultCmyk))) {
-defaultCS = resources.GetColorSpace(global::DripSharp.PdfCarton.Cos.COSName.DefaultCmyk);
-} else {
-if ((global::DripSharp.Runtime.JavaCompat.Equals(colorSpace.GetName(), global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.DeviceRGB.GetLabel()) && resources.HasColorSpace(global::DripSharp.PdfCarton.Cos.COSName.DefaultRgb))) {
-defaultCS = resources.GetColorSpace(global::DripSharp.PdfCarton.Cos.COSName.DefaultRgb);
-} else {
-if ((global::DripSharp.Runtime.JavaCompat.Equals(colorSpace.GetName(), global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.DeviceGray.GetLabel()) && resources.HasColorSpace(global::DripSharp.PdfCarton.Cos.COSName.DefaultGray))) {
-defaultCS = resources.GetColorSpace(global::DripSharp.PdfCarton.Cos.COSName.DefaultGray);
-}
-}
-}
-} catch (global::System.IO.IOException e) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpace, global::DripSharp.Runtime.JavaCompat.Concat("Unable to read default color space : ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
-}
-if ((defaultCS! != default!)) {
-int nbOfErrors = global::DripSharp.Runtime.JavaCompat.CollectionCount(this.Context.GetDocument().GetValidationErrors());
-this.ProcessAllColorSpace(defaultCS!);
-int newNbOfErrors = global::DripSharp.Runtime.JavaCompat.CollectionCount(this.Context.GetDocument().GetValidationErrors());
-result = (nbOfErrors == newNbOfErrors);
-}
-}
-return result;
-}
+  protected internal virtual bool ProcessDefaultColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    bool result = false;
+    global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = this.Context.GetValidationPath();
+    global::DripSharp.PdfCarton.Pdmodel.PDResources resources
+      = vPath.GetClosestPathElement<global::DripSharp.PdfCarton.Pdmodel.PDResources>(typeof(global::DripSharp.PdfCarton.Pdmodel.PDResources));
+    if ((resources != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace defaultCS = default!;
+      try {
+        if ((global::DripSharp.Runtime.JavaCompat.Equals(colorSpace.GetName(),
+          global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.DeviceCMYK.GetLabel())
+          && resources.HasColorSpace(global::DripSharp.PdfCarton.Cos.COSName.DefaultCmyk))) {
+          defaultCS = resources.GetColorSpace(global::DripSharp.PdfCarton.Cos.COSName.DefaultCmyk);
+        } else {
+          if ((global::DripSharp.Runtime.JavaCompat.Equals(colorSpace.GetName(),
+            global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.DeviceRGB.GetLabel())
+            && resources.HasColorSpace(global::DripSharp.PdfCarton.Cos.COSName.DefaultRgb))) {
+            defaultCS = resources.GetColorSpace(global::DripSharp.PdfCarton.Cos.COSName.DefaultRgb);
+          } else {
+            if ((global::DripSharp.Runtime.JavaCompat.Equals(colorSpace.GetName(),
+              global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaces.DeviceGray.GetLabel())
+              && resources.HasColorSpace(global::DripSharp.PdfCarton.Cos.COSName.DefaultGray))) {
+              defaultCS
+                = resources.GetColorSpace(global::DripSharp.PdfCarton.Cos.COSName.DefaultGray);
+            }
+          }
+        }
+      } catch (global::System.IO.IOException e) {
+        this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidColorSpace,
+          global::DripSharp.Runtime.JavaCompat.Concat("Unable to read default color space : ",
+          global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
+      }
+      if ((defaultCS! != default!)) {
+        int nbOfErrors
+          = global::DripSharp.Runtime.JavaCompat.CollectionCount(this.Context.GetDocument().GetValidationErrors());
+        this.ProcessAllColorSpace(defaultCS!);
+        int newNbOfErrors
+          = global::DripSharp.Runtime.JavaCompat.CollectionCount(this.Context.GetDocument().GetValidationErrors());
+        result = (nbOfErrors == newNbOfErrors);
+      }
+    }
+    return result;
+  }
 
-private bool validateICCProfileVersion(global::DripSharp.Runtime.JavaIccProfile iccp) {
-global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = this.Context.GetConfig();
-if ((iccp.GetMajorVersion() == 2)) {
-if ((iccp.GetMinorVersion() > 64)) {
-global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error__491_33 = new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileTooRecent, "Invalid version of the ICCProfile");
-error__491_33.SetWarning(config.IsLazyValidation());
-this.Context.AddValidationError(error__491_33);
-return false;
-}
-} else {
-if ((iccp.GetMajorVersion() > 2)) {
-global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error__504_29 = new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileTooRecent, "Invalid version of the ICCProfile");
-error__504_29.SetWarning(config.IsLazyValidation());
-this.Context.AddValidationError(error__504_29);
-return false;
-}
-}
-return true;
-}
+  private bool validateICCProfileVersion(global::DripSharp.Runtime.JavaIccProfile iccp) {
+    global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = this.Context.GetConfig();
+    if ((iccp.GetMajorVersion() == 2)) {
+      if ((iccp.GetMinorVersion() > 64)) {
+        global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error__491_33
+          = new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileTooRecent,
+          "Invalid version of the ICCProfile");
+        error__491_33.SetWarning(config.IsLazyValidation());
+        this.Context.AddValidationError(error__491_33);
+        return false;
+      }
+    } else {
+      if ((iccp.GetMajorVersion() > 2)) {
+        global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error__504_29
+          = new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileTooRecent,
+          "Invalid version of the ICCProfile");
+        error__504_29.SetWarning(config.IsLazyValidation());
+        this.Context.AddValidationError(error__504_29);
+        return false;
+      }
+    }
+    return true;
+  }
 
-private bool validateICCProfileNEntry(global::DripSharp.PdfCarton.Cos.COSStream stream, global::DripSharp.Runtime.JavaIccProfile iccp) {
-global::DripSharp.PdfCarton.Cos.COSBase nValue = stream.GetItem(global::DripSharp.PdfCarton.Cos.COSName.N);
-if ((nValue == default!)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry, "/N entry of ICC profile is mandatory"));
-return false;
-}
-if (!((nValue is global::DripSharp.PdfCarton.Cos.COSInteger))) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry, global::DripSharp.Runtime.JavaCompat.Concat("/N entry of ICC profile must be a number, but is ", nValue)));
-return false;
-}
-int nNumberValue = ((global::DripSharp.PdfCarton.Cos.COSNumber)(nValue!)).IntValue();
-if ((((nNumberValue != 1) && (nNumberValue != 3)) && (nNumberValue != 4))) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry, global::DripSharp.Runtime.JavaCompat.Concat("/N entry of ICC profile must be 1, 3 or 4, but is ", nNumberValue)));
-return false;
-}
-if ((iccp.NumberOfComponents != nNumberValue)) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("/N entry of ICC profile is ", nNumberValue), " but the ICC profile has "), iccp.NumberOfComponents), " components")));
-return false;
-}
-return true;
-}
+  private bool validateICCProfileNEntry(global::DripSharp.PdfCarton.Cos.COSStream stream,
+    global::DripSharp.Runtime.JavaIccProfile iccp) {
+    global::DripSharp.PdfCarton.Cos.COSBase nValue
+      = stream.GetItem(global::DripSharp.PdfCarton.Cos.COSName.N);
+    if ((nValue == default!)) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry,
+        "/N entry of ICC profile is mandatory"));
+      return false;
+    }
+    if (!((nValue is global::DripSharp.PdfCarton.Cos.COSInteger))) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry,
+        global::DripSharp.Runtime.JavaCompat.Concat("/N entry of ICC profile must be a number, but is ",
+        nValue)));
+      return false;
+    }
+    int nNumberValue = ((global::DripSharp.PdfCarton.Cos.COSNumber)(nValue!)).IntValue();
+    if ((((nNumberValue != 1) && (nNumberValue != 3)) && (nNumberValue != 4))) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry,
+        global::DripSharp.Runtime.JavaCompat.Concat("/N entry of ICC profile must be 1, 3 or 4, but is ",
+        nNumberValue)));
+      return false;
+    }
+    if ((iccp.NumberOfComponents != nNumberValue)) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("/N entry of ICC profile is ",
+        nNumberValue), " but the ICC profile has "), iccp.NumberOfComponents), " components")));
+      return false;
+    }
+    return true;
+  }
 
-private void validateICCProfileAlternateEntry(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased iccBased, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace alternateColorSpace) {
-if ((alternateColorSpace.GetNumberOfComponents() != iccBased.GetNumberOfComponents())) {
-this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("/N entry of ICC profile is different (", iccBased.GetNumberOfComponents()), ") than alternate entry colorspace component count ("), alternateColorSpace.GetNumberOfComponents()), ")")));
-}
-}
+  private void validateICCProfileAlternateEntry(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased iccBased,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace alternateColorSpace) {
+    if ((alternateColorSpace.GetNumberOfComponents() != iccBased.GetNumberOfComponents())) {
+      this.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentInvalidEntry,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("/N entry of ICC profile is different (",
+        iccBased.GetNumberOfComponents()), ") than alternate entry colorspace component count ("),
+        alternateColorSpace.GetNumberOfComponents()), ")")));
+    }
+  }
 }

@@ -8,28 +8,33 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Text;
 
-public class ShowTextAdjusted : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public ShowTextAdjusted(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class ShowTextAdjusted
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public ShowTextAdjusted(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSBase @base = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSArray))) {
-return;
-}
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-if ((context.GetTextMatrix() == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSArray array = (global::DripSharp.PdfCarton.Cos.COSArray)(@base!);
-context.ShowTextStrings(array);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+    if (!((@base is global::DripSharp.PdfCarton.Cos.COSArray))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    if ((context.GetTextMatrix() == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray array
+      = (global::DripSharp.PdfCarton.Cos.COSArray)(@base!);
+    context.ShowTextStrings(array);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted;
+  }
 }

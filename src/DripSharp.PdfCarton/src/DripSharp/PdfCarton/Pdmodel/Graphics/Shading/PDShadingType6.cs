@@ -8,24 +8,28 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
-public class PDShadingType6 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDMeshBasedShadingType {
-public PDShadingType6(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary) : base(shadingDictionary) {
+public class PDShadingType6
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDMeshBasedShadingType {
+  public PDShadingType6(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary)
+  : base(shadingDictionary) {
 
-}
+  }
 
-public override int GetShadingType() {
-return global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType6;
-}
+  public override int GetShadingType() {
+    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading.ShadingType6;
+  }
 
-public override global::DripSharp.Runtime.JavaPaint ToPaint(global::DripSharp.PdfCarton.Util.Matrix matrix) {
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type6ShadingPaint(this, matrix);
-}
+  public override global::DripSharp.Runtime.JavaPaint ToPaint(global::DripSharp.PdfCarton.Util.Matrix matrix) {
+    return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type6ShadingPaint(this, matrix);
+  }
 
-protected internal override global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Patch generatePatch(global::DripSharp.Runtime.JavaPoint2D[] points, float[][] color) {
-return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.CoonsPatch(points, color);
-}
+  protected internal override global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Patch generatePatch(global::DripSharp.Runtime.JavaPoint2D[] points,
+    float[][] color) {
+    return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.CoonsPatch(points, color);
+  }
 
-public override global::SkiaSharp.SKRect GetBounds(global::SkiaSharp.SKMatrix xform, global::DripSharp.PdfCarton.Util.Matrix matrix) {
-return this.getBounds(xform, matrix, 12);
-}
+  public override global::SkiaSharp.SKRect GetBounds(global::SkiaSharp.SKMatrix xform,
+    global::DripSharp.PdfCarton.Util.Matrix matrix) {
+    return this.getBounds(xform, matrix, 12);
+  }
 }

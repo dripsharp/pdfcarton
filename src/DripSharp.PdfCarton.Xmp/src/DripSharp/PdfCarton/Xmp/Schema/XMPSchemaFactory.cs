@@ -9,52 +9,61 @@
 namespace DripSharp.PdfCarton.Xmp.Schema;
 
 public class XMPSchemaFactory {
-private readonly string @namespace = null!;
+  private readonly string @namespace = null!;
 
-private readonly global::System.Type schemaClass = null!;
+  private readonly global::System.Type schemaClass = null!;
 
-private readonly global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription propDef = null!;
+  private readonly global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription propDef = null!;
 
-public XMPSchemaFactory(string @namespace, global::System.Type schemaClass, global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription propDef) {
-this.@namespace = @namespace;
-this.schemaClass = schemaClass;
-this.propDef = propDef;
-}
+  public XMPSchemaFactory(string @namespace, global::System.Type schemaClass,
+    global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription propDef) {
+    this.@namespace = @namespace;
+    this.schemaClass = schemaClass;
+    this.propDef = propDef;
+  }
 
-public virtual string GetNamespace() {
-return this.@namespace;
-}
+  public virtual string GetNamespace() {
+    return this.@namespace;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.PropertyType GetPropertyType(string name) {
-return this.propDef.GetPropertyType(name);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.PropertyType GetPropertyType(string name) {
+    return this.propDef.GetPropertyType(name);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema CreateXMPSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string prefix) {
-global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema schema;
-global::System.Type[] argsClass;
-object[] schemaArgs;
-if ((this.schemaClass == typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema))) {
-argsClass = new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Xmp.XMPMetadata), typeof(string), typeof(string) };
-schemaArgs = new object[] { metadata, this.@namespace, prefix };
-} else {
-if (((prefix != default!) && !(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("", prefix)))) {
-argsClass = new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Xmp.XMPMetadata), typeof(string) };
-schemaArgs = new object[] { metadata, prefix };
-} else {
-argsClass = new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Xmp.XMPMetadata) };
-schemaArgs = new object[] { metadata };
-}
-}
-try {
-schema = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ConstructorInvoke<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema>(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassGetDeclaredConstructor(this.schemaClass, argsClass), schemaArgs);
-metadata.AddSchema(schema);
-return schema;
-} catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
-throw new global::DripSharp.PdfCarton.Xmp.Schema.XmpSchemaException("Cannot instantiate specified object schema", e);
-}
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema CreateXMPSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata,
+    string prefix) {
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema schema;
+    global::System.Type[] argsClass;
+    object[] schemaArgs;
+    if ((this.schemaClass == typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema))) {
+      argsClass = new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Xmp.XMPMetadata),
+        typeof(string), typeof(string) };
+      schemaArgs = new object[] { metadata, this.@namespace, prefix };
+    } else {
+      if (((prefix != default!) && !global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("",
+        prefix))) {
+        argsClass = new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Xmp.XMPMetadata),
+          typeof(string) };
+        schemaArgs = new object[] { metadata, prefix };
+      } else {
+        argsClass
+          = new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Xmp.XMPMetadata) };
+        schemaArgs = new object[] { metadata };
+      }
+    }
+    try {
+      schema
+        = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ConstructorInvoke<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema>(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassGetDeclaredConstructor(this.schemaClass,
+        argsClass), schemaArgs);
+      metadata.AddSchema(schema);
+      return schema;
+    } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
+      throw new global::DripSharp.PdfCarton.Xmp.Schema.XmpSchemaException("Cannot instantiate specified object schema",
+        e);
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription GetPropertyDefinition() {
-return this.propDef;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription GetPropertyDefinition() {
+    return this.propDef;
+  }
 }

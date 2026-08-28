@@ -9,34 +9,73 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public sealed class WGL4Names {
-public const int NumberOfMacGlyphs = 258;
+  public const int NumberOfMacGlyphs = 258;
 
-private static readonly string[] MAC_GLYPH_NAMES = new string[] { ".notdef", ".null", "nonmarkingreturn", "space", "exclam", "quotedbl", "numbersign", "dollar", "percent", "ampersand", "quotesingle", "parenleft", "parenright", "asterisk", "plus", "comma", "hyphen", "period", "slash", "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "colon", "semicolon", "less", "equal", "greater", "question", "at", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "bracketleft", "backslash", "bracketright", "asciicircum", "underscore", "grave", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "braceleft", "bar", "braceright", "asciitilde", "Adieresis", "Aring", "Ccedilla", "Eacute", "Ntilde", "Odieresis", "Udieresis", "aacute", "agrave", "acircumflex", "adieresis", "atilde", "aring", "ccedilla", "eacute", "egrave", "ecircumflex", "edieresis", "iacute", "igrave", "icircumflex", "idieresis", "ntilde", "oacute", "ograve", "ocircumflex", "odieresis", "otilde", "uacute", "ugrave", "ucircumflex", "udieresis", "dagger", "degree", "cent", "sterling", "section", "bullet", "paragraph", "germandbls", "registered", "copyright", "trademark", "acute", "dieresis", "notequal", "AE", "Oslash", "infinity", "plusminus", "lessequal", "greaterequal", "yen", "mu", "partialdiff", "summation", "product", "pi", "integral", "ordfeminine", "ordmasculine", "Omega", "ae", "oslash", "questiondown", "exclamdown", "logicalnot", "radical", "florin", "approxequal", "Delta", "guillemotleft", "guillemotright", "ellipsis", "nonbreakingspace", "Agrave", "Atilde", "Otilde", "OE", "oe", "endash", "emdash", "quotedblleft", "quotedblright", "quoteleft", "quoteright", "divide", "lozenge", "ydieresis", "Ydieresis", "fraction", "currency", "guilsinglleft", "guilsinglright", "fi", "fl", "daggerdbl", "periodcentered", "quotesinglbase", "quotedblbase", "perthousand", "Acircumflex", "Ecircumflex", "Aacute", "Edieresis", "Egrave", "Iacute", "Icircumflex", "Idieresis", "Igrave", "Oacute", "Ocircumflex", "apple", "Ograve", "Uacute", "Ucircumflex", "Ugrave", "dotlessi", "circumflex", "tilde", "macron", "breve", "dotaccent", "ring", "cedilla", "hungarumlaut", "ogonek", "caron", "Lslash", "lslash", "Scaron", "scaron", "Zcaron", "zcaron", "brokenbar", "Eth", "eth", "Yacute", "yacute", "Thorn", "thorn", "minus", "multiply", "onesuperior", "twosuperior", "threesuperior", "onehalf", "onequarter", "threequarters", "franc", "Gbreve", "gbreve", "Idotaccent", "Scedilla", "scedilla", "Cacute", "cacute", "Ccaron", "ccaron", "dcroat" };
+  private static readonly string[] MAC_GLYPH_NAMES = new string[] { ".notdef", ".null",
+    "nonmarkingreturn", "space", "exclam", "quotedbl", "numbersign", "dollar", "percent",
+    "ampersand", "quotesingle", "parenleft", "parenright", "asterisk", "plus", "comma", "hyphen",
+    "period", "slash", "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+    "nine", "colon", "semicolon", "less", "equal", "greater", "question", "at", "A", "B", "C", "D",
+    "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W",
+    "X", "Y", "Z", "bracketleft", "backslash", "bracketright", "asciicircum", "underscore", "grave",
+    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+    "t", "u", "v", "w", "x", "y", "z", "braceleft", "bar", "braceright", "asciitilde", "Adieresis",
+    "Aring", "Ccedilla", "Eacute", "Ntilde", "Odieresis", "Udieresis", "aacute", "agrave",
+    "acircumflex", "adieresis", "atilde", "aring", "ccedilla", "eacute", "egrave", "ecircumflex",
+    "edieresis", "iacute", "igrave", "icircumflex", "idieresis", "ntilde", "oacute", "ograve",
+    "ocircumflex", "odieresis", "otilde", "uacute", "ugrave", "ucircumflex", "udieresis", "dagger",
+    "degree", "cent", "sterling", "section", "bullet", "paragraph", "germandbls", "registered",
+    "copyright", "trademark", "acute", "dieresis", "notequal", "AE", "Oslash", "infinity",
+    "plusminus", "lessequal", "greaterequal", "yen", "mu", "partialdiff", "summation", "product",
+    "pi", "integral", "ordfeminine", "ordmasculine", "Omega", "ae", "oslash", "questiondown",
+    "exclamdown", "logicalnot", "radical", "florin", "approxequal", "Delta", "guillemotleft",
+    "guillemotright", "ellipsis", "nonbreakingspace", "Agrave", "Atilde", "Otilde", "OE", "oe",
+    "endash", "emdash", "quotedblleft", "quotedblright", "quoteleft", "quoteright", "divide",
+    "lozenge", "ydieresis", "Ydieresis", "fraction", "currency", "guilsinglleft", "guilsinglright",
+    "fi", "fl", "daggerdbl", "periodcentered", "quotesinglbase", "quotedblbase", "perthousand",
+    "Acircumflex", "Ecircumflex", "Aacute", "Edieresis", "Egrave", "Iacute", "Icircumflex",
+    "Idieresis", "Igrave", "Oacute", "Ocircumflex", "apple", "Ograve", "Uacute", "Ucircumflex",
+    "Ugrave", "dotlessi", "circumflex", "tilde", "macron", "breve", "dotaccent", "ring", "cedilla",
+    "hungarumlaut", "ogonek", "caron", "Lslash", "lslash", "Scaron", "scaron", "Zcaron", "zcaron",
+    "brokenbar", "Eth", "eth", "Yacute", "yacute", "Thorn", "thorn", "minus", "multiply",
+    "onesuperior", "twosuperior", "threesuperior", "onehalf", "onequarter", "threequarters",
+    "franc", "Gbreve", "gbreve", "Idotaccent", "Scedilla", "scedilla", "Cacute", "cacute", "Ccaron",
+    "ccaron", "dcroat" };
 
-private static readonly global::System.Collections.Generic.IDictionary<string, int> MAC_GLYPH_NAMES_INDICES = null!;
+  private static readonly global::System.Collections.Generic.IDictionary<string,
+    int> MAC_GLYPH_NAMES_INDICES = null!;
 
-static WGL4Names() {
-{
-global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.MAC_GLYPH_NAMES_INDICES = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string, int>(global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs);
-for (int i = 0; (i < global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs); ++i) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.MAC_GLYPH_NAMES_INDICES, global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.MAC_GLYPH_NAMES[i], i);
-}
-}
-}
+  static WGL4Names() { {
+      global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.MAC_GLYPH_NAMES_INDICES
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string,
+        int>(global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs);
+      for (int i = 0; (i < global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs);
+        ++i) {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.MAC_GLYPH_NAMES_INDICES,
+          global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.MAC_GLYPH_NAMES[i], i);
+      }
+    }
+  }
 
-private WGL4Names() {}
+  private WGL4Names() {}
 
-public static int? GetGlyphIndex(string name) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.MAC_GLYPH_NAMES_INDICES, name);
-}
+  public static int? GetGlyphIndex(string name) {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.MAC_GLYPH_NAMES_INDICES,
+      name);
+  }
 
-public static string GetGlyphName(int index) {
-return (((index >= 0) && (index < global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs)) ? global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.MAC_GLYPH_NAMES[index] : (string)(default!));
-}
+  public static string GetGlyphName(int index) {
+    return (((index >= 0)
+      && (index < global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs))
+      ? global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.MAC_GLYPH_NAMES[index]
+      : (string)(default!));
+  }
 
-public static string[] GetAllNames() {
-string[] glyphNames = new string[global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs];
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayCopy(global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.MAC_GLYPH_NAMES, 0, glyphNames, 0, global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs);
-return glyphNames;
-}
+  public static string[] GetAllNames() {
+    string[] glyphNames
+      = new string[global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs];
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayCopy(global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.MAC_GLYPH_NAMES,
+      0, glyphNames, 0, global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs);
+    return glyphNames;
+  }
 }

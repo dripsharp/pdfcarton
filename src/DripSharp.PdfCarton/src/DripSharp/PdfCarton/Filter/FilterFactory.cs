@@ -9,53 +9,86 @@
 namespace DripSharp.PdfCarton.Filter;
 
 public sealed class FilterFactory {
-public static readonly global::DripSharp.PdfCarton.Filter.FilterFactory Instance = new global::DripSharp.PdfCarton.Filter.FilterFactory();
+  public static readonly global::DripSharp.PdfCarton.Filter.FilterFactory Instance
+    = new global::DripSharp.PdfCarton.Filter.FilterFactory();
 
-private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Filter.Filter> filters = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSName, global::DripSharp.PdfCarton.Filter.Filter>();
+  private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSName,
+    global::DripSharp.PdfCarton.Filter.Filter> filters
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSName,
+    global::DripSharp.PdfCarton.Filter.Filter>();
 
-private FilterFactory() {
-global::DripSharp.PdfCarton.Filter.Filter flate = new global::DripSharp.PdfCarton.Filter.FlateFilter();
-global::DripSharp.PdfCarton.Filter.Filter dct = new global::DripSharp.PdfCarton.Filter.DCTFilter();
-global::DripSharp.PdfCarton.Filter.Filter ccittFax = new global::DripSharp.PdfCarton.Filter.CCITTFaxFilter();
-global::DripSharp.PdfCarton.Filter.Filter lzw = new global::DripSharp.PdfCarton.Filter.LZWFilter();
-global::DripSharp.PdfCarton.Filter.Filter asciiHex = new global::DripSharp.PdfCarton.Filter.ASCIIHexFilter();
-global::DripSharp.PdfCarton.Filter.Filter ascii85 = new global::DripSharp.PdfCarton.Filter.ASCII85Filter();
-global::DripSharp.PdfCarton.Filter.Filter runLength = new global::DripSharp.PdfCarton.Filter.RunLengthDecodeFilter();
-global::DripSharp.PdfCarton.Filter.Filter crypt = new global::DripSharp.PdfCarton.Filter.CryptFilter();
-global::DripSharp.PdfCarton.Filter.Filter jpx = new global::DripSharp.PdfCarton.Filter.JPXFilter();
-global::DripSharp.PdfCarton.Filter.Filter jbig2 = new global::DripSharp.PdfCarton.Filter.JBIG2Filter();
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.FlateDecode, flate);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.FlateDecodeAbbreviation, flate);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.DctDecode, dct);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.DctDecodeAbbreviation, dct);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.CcittfaxDecode, ccittFax);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.CcittfaxDecodeAbbreviation, ccittFax);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.LzwDecode, lzw);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.LzwDecodeAbbreviation, lzw);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.AsciiHexDecode, asciiHex);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.AsciiHexDecodeAbbreviation, asciiHex);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.Ascii85Decode, ascii85);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.Ascii85DecodeAbbreviation, ascii85);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.RunLengthDecode, runLength);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.RunLengthDecodeAbbreviation, runLength);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.Crypt, crypt);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.JpxDecode, jpx);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.filters, global::DripSharp.PdfCarton.Cos.COSName.Jbig2Decode, jbig2);
-}
+  private FilterFactory() {
+    global::DripSharp.PdfCarton.Filter.Filter flate
+      = new global::DripSharp.PdfCarton.Filter.FlateFilter();
+    global::DripSharp.PdfCarton.Filter.Filter dct
+      = new global::DripSharp.PdfCarton.Filter.DCTFilter();
+    global::DripSharp.PdfCarton.Filter.Filter ccittFax
+      = new global::DripSharp.PdfCarton.Filter.CCITTFaxFilter();
+    global::DripSharp.PdfCarton.Filter.Filter lzw
+      = new global::DripSharp.PdfCarton.Filter.LZWFilter();
+    global::DripSharp.PdfCarton.Filter.Filter asciiHex
+      = new global::DripSharp.PdfCarton.Filter.ASCIIHexFilter();
+    global::DripSharp.PdfCarton.Filter.Filter ascii85
+      = new global::DripSharp.PdfCarton.Filter.ASCII85Filter();
+    global::DripSharp.PdfCarton.Filter.Filter runLength
+      = new global::DripSharp.PdfCarton.Filter.RunLengthDecodeFilter();
+    global::DripSharp.PdfCarton.Filter.Filter crypt
+      = new global::DripSharp.PdfCarton.Filter.CryptFilter();
+    global::DripSharp.PdfCarton.Filter.Filter jpx
+      = new global::DripSharp.PdfCarton.Filter.JPXFilter();
+    global::DripSharp.PdfCarton.Filter.Filter jbig2
+      = new global::DripSharp.PdfCarton.Filter.JBIG2Filter();
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.FlateDecode, flate);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.FlateDecodeAbbreviation, flate);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.DctDecode, dct);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.DctDecodeAbbreviation, dct);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.CcittfaxDecode, ccittFax);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.CcittfaxDecodeAbbreviation, ccittFax);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.LzwDecode, lzw);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.LzwDecodeAbbreviation, lzw);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.AsciiHexDecode, asciiHex);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.AsciiHexDecodeAbbreviation, asciiHex);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.Ascii85Decode, ascii85);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.Ascii85DecodeAbbreviation, ascii85);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.RunLengthDecode, runLength);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.RunLengthDecodeAbbreviation, runLength);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.Crypt, crypt);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.JpxDecode, jpx);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.filters,
+      global::DripSharp.PdfCarton.Cos.COSName.Jbig2Decode, jbig2);
+  }
 
-public global::DripSharp.PdfCarton.Filter.Filter GetFilter(string filterName) {
-return this.GetFilter(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(filterName));
-}
+  public global::DripSharp.PdfCarton.Filter.Filter GetFilter(string filterName) {
+    return this.GetFilter(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(filterName));
+  }
 
-public global::DripSharp.PdfCarton.Filter.Filter GetFilter(global::DripSharp.PdfCarton.Cos.COSName filterName) {
-global::DripSharp.PdfCarton.Filter.Filter filter = global::DripSharp.Runtime.JavaCompat.MapGet(this.filters, filterName);
-if ((filter == default!)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid filter: ", filterName));
-}
-return filter;
-}
+  public global::DripSharp.PdfCarton.Filter.Filter GetFilter(global::DripSharp.PdfCarton.Cos.COSName filterName) {
+    global::DripSharp.PdfCarton.Filter.Filter filter
+      = global::DripSharp.Runtime.JavaCompat.MapGet(this.filters, filterName);
+    if ((filter == default!)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid filter: ",
+        filterName));
+    }
+    return filter;
+  }
 
-internal global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Filter.Filter> getAllFilters() {
-return this.filters.Values;
-}
+  internal global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Filter.Filter> getAllFilters() {
+    return this.filters.Values;
+  }
 }

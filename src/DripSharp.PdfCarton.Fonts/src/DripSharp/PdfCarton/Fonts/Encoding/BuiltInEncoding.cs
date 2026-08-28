@@ -9,7 +9,8 @@
 namespace DripSharp.PdfCarton.Fonts.Encoding;
 
 public class BuiltInEncoding : global::DripSharp.PdfCarton.Fonts.Encoding.Encoding {
-public BuiltInEncoding(global::System.Collections.Generic.IDictionary<int, string> codeToName) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(codeToName, this.AddCharacterEncoding);
-}
+  public BuiltInEncoding(global::System.Collections.Generic.IDictionary<int, string> codeToName) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(codeToName,
+      this.AddCharacterEncoding);
+  }
 }

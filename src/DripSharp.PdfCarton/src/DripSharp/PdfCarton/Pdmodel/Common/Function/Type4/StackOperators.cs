@@ -9,90 +9,99 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function.Type4;
 
 internal class StackOperators {
-private StackOperators() {}
+  private StackOperators() {}
 
-internal class Copy : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
-public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
-global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-int n = global::DripSharp.Runtime.JavaCompat.NumberIntValue(((global::System.IConvertible)(stack.Pop()!)));
-if ((n > 0)) {
-int size = stack.Count;
-global::System.Collections.Generic.IList<object> copy = new global::System.Collections.Generic.List<object>(stack.SubList((size - n), size));
-stack.AddAll(copy);
-}
-}
-}
+  internal class Copy : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
+    public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
+      global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
+      int n
+        = global::DripSharp.Runtime.JavaCompat.NumberIntValue(((global::System.IConvertible)(stack.Pop()!)));
+      if ((n > 0)) {
+        int size = stack.Count;
+        global::System.Collections.Generic.IList<object> copy
+          = new global::System.Collections.Generic.List<object>(stack.SubList((size - n), size));
+        stack.AddAll(copy);
+      }
+    }
+  }
 
-internal class Dup : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
-public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
-global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-stack.Push(stack.Peek());
-}
-}
+  internal class Dup : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
+    public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
+      global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
+      stack.Push(stack.Peek());
+    }
+  }
 
-internal class Exch : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
-public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
-global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-object any2 = stack.Pop();
-object any1 = stack.Pop();
-stack.Push(any2);
-stack.Push(any1);
-}
-}
+  internal class Exch : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
+    public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
+      global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
+      object any2 = stack.Pop();
+      object any1 = stack.Pop();
+      stack.Push(any2);
+      stack.Push(any1);
+    }
+  }
 
-internal class Index : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
-public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
-global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-int n = global::DripSharp.Runtime.JavaCompat.NumberIntValue(((global::System.IConvertible)(stack.Pop()!)));
-if ((n < 0)) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("rangecheck: ", n));
-}
-int size = stack.Count;
-stack.Push(stack.Get(((size - n) - 1)));
-}
-}
+  internal class Index : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
+    public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
+      global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
+      int n
+        = global::DripSharp.Runtime.JavaCompat.NumberIntValue(((global::System.IConvertible)(stack.Pop()!)));
+      if ((n < 0)) {
+        throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("rangecheck: ",
+          n));
+      }
+      int size = stack.Count;
+      stack.Push(stack.Get(((size - n) - 1)));
+    }
+  }
 
-internal class Pop : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
-public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
-global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-stack.Pop();
-}
-}
+  internal class Pop : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
+    public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
+      global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
+      stack.Pop();
+    }
+  }
 
-internal class Roll : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
-public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
-global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
-int j = global::DripSharp.Runtime.JavaCompat.NumberIntValue(((global::System.IConvertible)(stack.Pop()!)));
-int n = global::DripSharp.Runtime.JavaCompat.NumberIntValue(((global::System.IConvertible)(stack.Pop()!)));
-if ((j == 0)) {
-return;
-}
-if ((n < 0)) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("rangecheck: ", n));
-}
-global::System.Collections.Generic.List<object> rolled = new global::System.Collections.Generic.List<object>();
-global::System.Collections.Generic.List<object> moved = new global::System.Collections.Generic.List<object>();
-if ((j < 0)) {
-int n1__135_21 = (n + j);
-for (int i__136_26 = 0; (i__136_26 < n1__135_21); i__136_26++) {
-global::DripSharp.Runtime.JavaCompat.ListAddFirst(moved, stack.Pop());
-}
-for (int i__140_26 = j; (i__140_26 < 0); i__140_26++) {
-global::DripSharp.Runtime.JavaCompat.ListAddFirst(rolled, stack.Pop());
-}
-stack.AddAll(moved);
-stack.AddAll(rolled);
-} else {
-int n1__150_21 = (n - j);
-for (int i__151_26 = j; (i__151_26 > 0); i__151_26--) {
-global::DripSharp.Runtime.JavaCompat.ListAddFirst(rolled, stack.Pop());
-}
-for (int i__155_26 = 0; (i__155_26 < n1__150_21); i__155_26++) {
-global::DripSharp.Runtime.JavaCompat.ListAddFirst(moved, stack.Pop());
-}
-stack.AddAll(rolled);
-stack.AddAll(moved);
-}
-}
-}
+  internal class Roll : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
+    public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
+      global::DripSharp.Runtime.JavaStack<object> stack = context.GetStack();
+      int j
+        = global::DripSharp.Runtime.JavaCompat.NumberIntValue(((global::System.IConvertible)(stack.Pop()!)));
+      int n
+        = global::DripSharp.Runtime.JavaCompat.NumberIntValue(((global::System.IConvertible)(stack.Pop()!)));
+      if ((j == 0)) {
+        return;
+      }
+      if ((n < 0)) {
+        throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("rangecheck: ",
+          n));
+      }
+      global::System.Collections.Generic.List<object> rolled
+        = new global::System.Collections.Generic.List<object>();
+      global::System.Collections.Generic.List<object> moved
+        = new global::System.Collections.Generic.List<object>();
+      if ((j < 0)) {
+        int n1__135_21 = (n + j);
+        for (int i__136_26 = 0; (i__136_26 < n1__135_21); i__136_26++) {
+          global::DripSharp.Runtime.JavaCompat.ListAddFirst(moved, stack.Pop());
+        }
+        for (int i__140_26 = j; (i__140_26 < 0); i__140_26++) {
+          global::DripSharp.Runtime.JavaCompat.ListAddFirst(rolled, stack.Pop());
+        }
+        stack.AddAll(moved);
+        stack.AddAll(rolled);
+      } else {
+        int n1__150_21 = (n - j);
+        for (int i__151_26 = j; (i__151_26 > 0); i__151_26--) {
+          global::DripSharp.Runtime.JavaCompat.ListAddFirst(rolled, stack.Pop());
+        }
+        for (int i__155_26 = 0; (i__155_26 < n1__150_21); i__155_26++) {
+          global::DripSharp.Runtime.JavaCompat.ListAddFirst(moved, stack.Pop());
+        }
+        stack.AddAll(rolled);
+        stack.AddAll(moved);
+      }
+    }
+  }
 }

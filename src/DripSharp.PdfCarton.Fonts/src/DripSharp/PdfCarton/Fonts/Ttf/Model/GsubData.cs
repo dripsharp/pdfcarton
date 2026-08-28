@@ -9,41 +9,42 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Model;
 
 public interface GsubData {
-public global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language GetLanguage();
+  public global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language GetLanguage();
 
-public string GetActiveScriptName();
+  public string GetActiveScriptName();
 
-public bool IsFeatureSupported(string featureName);
+  public bool IsFeatureSupported(string featureName);
 
-public global::DripSharp.PdfCarton.Fonts.Ttf.Model.ScriptFeature GetFeature(string featureName);
+  public global::DripSharp.PdfCarton.Fonts.Ttf.Model.ScriptFeature GetFeature(string featureName);
 
-public global::System.Collections.Generic.ISet<string> GetSupportedFeatures();
+  public global::System.Collections.Generic.ISet<string> GetSupportedFeatures();
 }
 
 public static class GsubDataStatics {
-public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData NoDataFound = new Anonymous_33_30();
+  public static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData NoDataFound
+    = new Anonymous_33_30();
 
-private sealed class Anonymous_33_30 : global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData {
-public Anonymous_33_30() {}
+  private sealed class Anonymous_33_30 : global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData {
+    public Anonymous_33_30() {}
 
-public bool IsFeatureSupported(string featureName) {
-throw new global::System.NotSupportedException();
-}
+    public bool IsFeatureSupported(string featureName) {
+      throw new global::System.NotSupportedException();
+    }
 
-public global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language GetLanguage() {
-throw new global::System.NotSupportedException();
-}
+    public global::DripSharp.PdfCarton.Fonts.Ttf.Model.Language GetLanguage() {
+      throw new global::System.NotSupportedException();
+    }
 
-public global::DripSharp.PdfCarton.Fonts.Ttf.Model.ScriptFeature GetFeature(string featureName) {
-throw new global::System.NotSupportedException();
-}
+    public global::DripSharp.PdfCarton.Fonts.Ttf.Model.ScriptFeature GetFeature(string featureName) {
+      throw new global::System.NotSupportedException();
+    }
 
-public string GetActiveScriptName() {
-throw new global::System.NotSupportedException();
-}
+    public string GetActiveScriptName() {
+      throw new global::System.NotSupportedException();
+    }
 
-public global::System.Collections.Generic.ISet<string> GetSupportedFeatures() {
-throw new global::System.NotSupportedException();
-}
-}
+    public global::System.Collections.Generic.ISet<string> GetSupportedFeatures() {
+      throw new global::System.NotSupportedException();
+    }
+  }
 }

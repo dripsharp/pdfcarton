@@ -9,132 +9,133 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class VerticalHeaderTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-public const string Tag = "vhea";
+  public const string Tag = "vhea";
 
-private float version = default;
+  private float version = default;
 
-private short ascender = default;
+  private short ascender = default;
 
-private short descender = default;
+  private short descender = default;
 
-private short lineGap = default;
+  private short lineGap = default;
 
-private int advanceHeightMax = default;
+  private int advanceHeightMax = default;
 
-private short minTopSideBearing = default;
+  private short minTopSideBearing = default;
 
-private short minBottomSideBearing = default;
+  private short minBottomSideBearing = default;
 
-private short yMaxExtent = default;
+  private short yMaxExtent = default;
 
-private short caretSlopeRise = default;
+  private short caretSlopeRise = default;
 
-private short caretSlopeRun = default;
+  private short caretSlopeRun = default;
 
-private short caretOffset = default;
+  private short caretOffset = default;
 
-private short reserved1 = default;
+  private short reserved1 = default;
 
-private short reserved2 = default;
+  private short reserved2 = default;
 
-private short reserved3 = default;
+  private short reserved3 = default;
 
-private short reserved4 = default;
+  private short reserved4 = default;
 
-private short metricDataFormat = default;
+  private short metricDataFormat = default;
 
-private int numberOfVMetrics = default;
+  private int numberOfVMetrics = default;
 
-internal VerticalHeaderTable() : base() {
+  internal VerticalHeaderTable() : base() {
 
-}
+  }
 
-internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-this.version = data.Read32Fixed();
-this.ascender = data.ReadSignedShort();
-this.descender = data.ReadSignedShort();
-this.lineGap = data.ReadSignedShort();
-this.advanceHeightMax = data.ReadUnsignedShort();
-this.minTopSideBearing = data.ReadSignedShort();
-this.minBottomSideBearing = data.ReadSignedShort();
-this.yMaxExtent = data.ReadSignedShort();
-this.caretSlopeRise = data.ReadSignedShort();
-this.caretSlopeRun = data.ReadSignedShort();
-this.caretOffset = data.ReadSignedShort();
-this.reserved1 = data.ReadSignedShort();
-this.reserved2 = data.ReadSignedShort();
-this.reserved3 = data.ReadSignedShort();
-this.reserved4 = data.ReadSignedShort();
-this.metricDataFormat = data.ReadSignedShort();
-this.numberOfVMetrics = data.ReadUnsignedShort();
-base.Initialized = true;
-}
+  internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    this.version = data.Read32Fixed();
+    this.ascender = data.ReadSignedShort();
+    this.descender = data.ReadSignedShort();
+    this.lineGap = data.ReadSignedShort();
+    this.advanceHeightMax = data.ReadUnsignedShort();
+    this.minTopSideBearing = data.ReadSignedShort();
+    this.minBottomSideBearing = data.ReadSignedShort();
+    this.yMaxExtent = data.ReadSignedShort();
+    this.caretSlopeRise = data.ReadSignedShort();
+    this.caretSlopeRun = data.ReadSignedShort();
+    this.caretOffset = data.ReadSignedShort();
+    this.reserved1 = data.ReadSignedShort();
+    this.reserved2 = data.ReadSignedShort();
+    this.reserved3 = data.ReadSignedShort();
+    this.reserved4 = data.ReadSignedShort();
+    this.metricDataFormat = data.ReadSignedShort();
+    this.numberOfVMetrics = data.ReadUnsignedShort();
+    base.Initialized = true;
+  }
 
-public virtual int GetAdvanceHeightMax() {
-return this.advanceHeightMax;
-}
+  public virtual int GetAdvanceHeightMax() {
+    return this.advanceHeightMax;
+  }
 
-public virtual short GetAscender() {
-return this.ascender;
-}
+  public virtual short GetAscender() {
+    return this.ascender;
+  }
 
-public virtual short GetCaretSlopeRise() {
-return this.caretSlopeRise;
-}
+  public virtual short GetCaretSlopeRise() {
+    return this.caretSlopeRise;
+  }
 
-public virtual short GetCaretSlopeRun() {
-return this.caretSlopeRun;
-}
+  public virtual short GetCaretSlopeRun() {
+    return this.caretSlopeRun;
+  }
 
-public virtual short GetCaretOffset() {
-return this.caretOffset;
-}
+  public virtual short GetCaretOffset() {
+    return this.caretOffset;
+  }
 
-public virtual short GetDescender() {
-return this.descender;
-}
+  public virtual short GetDescender() {
+    return this.descender;
+  }
 
-public virtual short GetLineGap() {
-return this.lineGap;
-}
+  public virtual short GetLineGap() {
+    return this.lineGap;
+  }
 
-public virtual short GetMetricDataFormat() {
-return this.metricDataFormat;
-}
+  public virtual short GetMetricDataFormat() {
+    return this.metricDataFormat;
+  }
 
-public virtual short GetMinTopSideBearing() {
-return this.minTopSideBearing;
-}
+  public virtual short GetMinTopSideBearing() {
+    return this.minTopSideBearing;
+  }
 
-public virtual short GetMinBottomSideBearing() {
-return this.minBottomSideBearing;
-}
+  public virtual short GetMinBottomSideBearing() {
+    return this.minBottomSideBearing;
+  }
 
-public virtual int GetNumberOfVMetrics() {
-return this.numberOfVMetrics;
-}
+  public virtual int GetNumberOfVMetrics() {
+    return this.numberOfVMetrics;
+  }
 
-public virtual short GetReserved1() {
-return this.reserved1;
-}
+  public virtual short GetReserved1() {
+    return this.reserved1;
+  }
 
-public virtual short GetReserved2() {
-return this.reserved2;
-}
+  public virtual short GetReserved2() {
+    return this.reserved2;
+  }
 
-public virtual short GetReserved3() {
-return this.reserved3;
-}
+  public virtual short GetReserved3() {
+    return this.reserved3;
+  }
 
-public virtual short GetReserved4() {
-return this.reserved4;
-}
+  public virtual short GetReserved4() {
+    return this.reserved4;
+  }
 
-public virtual float GetVersion() {
-return this.version;
-}
+  public virtual float GetVersion() {
+    return this.version;
+  }
 
-public virtual short GetYMaxExtent() {
-return this.yMaxExtent;
-}
+  public virtual short GetYMaxExtent() {
+    return this.yMaxExtent;
+  }
 }

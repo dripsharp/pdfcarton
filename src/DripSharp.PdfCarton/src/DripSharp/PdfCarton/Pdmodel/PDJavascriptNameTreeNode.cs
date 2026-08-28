@@ -8,21 +8,23 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel;
 
-public class PDJavascriptNameTreeNode : global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript> {
-public PDJavascriptNameTreeNode() {}
+public class PDJavascriptNameTreeNode
+: global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript> {
+  public PDJavascriptNameTreeNode() {}
 
-public PDJavascriptNameTreeNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
+  public PDJavascriptNameTreeNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
 
-}
+  }
 
-protected internal override global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript ConvertCOSToPD(global::DripSharp.PdfCarton.Cos.COSBase @base) {
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error creating Javascript object, expected a COSDictionary and not ", @base));
-}
-return (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript)(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!))!);
-}
+  protected internal override global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript ConvertCOSToPD(global::DripSharp.PdfCarton.Cos.COSBase @base) {
+    if (!((@base is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error creating Javascript object, expected a COSDictionary and not ",
+        @base));
+    }
+    return (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript)(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!))!);
+  }
 
-protected internal override global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript> CreateChildNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
-return new global::DripSharp.PdfCarton.Pdmodel.PDJavascriptNameTreeNode(dic);
-}
+  protected internal override global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript> CreateChildNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
+    return new global::DripSharp.PdfCarton.Pdmodel.PDJavascriptNameTreeNode(dic);
+  }
 }

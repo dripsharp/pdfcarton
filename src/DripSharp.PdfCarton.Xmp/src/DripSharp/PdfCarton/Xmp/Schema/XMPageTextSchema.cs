@@ -8,28 +8,30 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Schema;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/t/pg/", "xmpTPg")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/t/pg/",
+  "xmpTPg")]
 public class XMPageTextSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Dimensions", "Simple")]
-public const string MaxPageSize = "MaxPageSize";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Dimensions", "Simple")]
+  public const string MaxPageSize = "MaxPageSize";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string NPages = "NPages";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string NPages = "NPages";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Seq")]
-public const string Platenames = "PlateNames";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Seq")]
+  public const string Platenames = "PlateNames";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Colorant", "Seq")]
-public const string Colorants = "Colorants";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Colorant", "Seq")]
+  public const string Colorants = "Colorants";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Font", "Bag")]
-public const string Fonts = "Fonts";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Font", "Bag")]
+  public const string Fonts = "Fonts";
 
-public XMPageTextSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+  public XMPageTextSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
-}
+  }
 
-public XMPageTextSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string prefix) : base(metadata, prefix) {
+  public XMPageTextSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string prefix)
+  : base(metadata, prefix) {
 
-}
+  }
 }

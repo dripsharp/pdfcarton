@@ -9,5 +9,5 @@
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 public abstract class DecryptionMaterial {
-public DecryptionMaterial() {}
+  public DecryptionMaterial() {}
 }

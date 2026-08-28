@@ -8,135 +8,187 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process.Reflect;
 
-public class ExtGStateValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
-global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
-if (vPath.IsEmpty()) {
-return;
-}
-if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Cos.COSDictionary)))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicXobjectInvalidType, "ExtGState validation required at least a Resource dictionary"));
-} else {
-global::DripSharp.PdfCarton.Cos.COSDictionary extGStatesDict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(vPath.Peek()!);
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSDictionary> listOfExtGState = this.ExtractExtGStateDictionaries(extGStatesDict);
-this.ValidateTransparencyRules(context, listOfExtGState);
-this.ValidateFonts(context, listOfExtGState);
-}
-}
+public class ExtGStateValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
+    global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
+    if (vPath.IsEmpty()) {
+      return;
+    }
+    if (!(vPath.IsExpectedType(typeof(global::DripSharp.PdfCarton.Cos.COSDictionary)))) {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicXobjectInvalidType,
+        "ExtGState validation required at least a Resource dictionary"));
+    } else {
+      global::DripSharp.PdfCarton.Cos.COSDictionary extGStatesDict
+        = (global::DripSharp.PdfCarton.Cos.COSDictionary)(vPath.Peek()!);
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSDictionary> listOfExtGState
+        = this.ExtractExtGStateDictionaries(extGStatesDict);
+      this.ValidateTransparencyRules(context, listOfExtGState);
+      this.ValidateFonts(context, listOfExtGState);
+    }
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSDictionary> ExtractExtGStateDictionaries(global::DripSharp.PdfCarton.Cos.COSDictionary extGStates) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSDictionary> listOfExtGState = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSDictionary>(0);
-if ((extGStates != default!)) {
-foreach (global::DripSharp.PdfCarton.Cos.COSName key in extGStates.KeySet()) {
-global::DripSharp.PdfCarton.Cos.COSDictionary gsDict = extGStates.GetCOSDictionary(key);
-if ((gsDict == default!)) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("The Extended Graphics State dictionary is invalid");
-}
-global::DripSharp.Runtime.JavaCompat.Add(listOfExtGState, gsDict);
-}
-}
-return listOfExtGState;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSDictionary> ExtractExtGStateDictionaries(global::DripSharp.PdfCarton.Cos.COSDictionary extGStates) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSDictionary> listOfExtGState
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSDictionary>(0);
+    if ((extGStates != default!)) {
+      foreach (global::DripSharp.PdfCarton.Cos.COSName key in extGStates.KeySet()) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary gsDict = extGStates.GetCOSDictionary(key);
+        if ((gsDict == default!)) {
+          throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("The Extended Graphics State dictionary is invalid");
+        }
+        global::DripSharp.Runtime.JavaCompat.Add(listOfExtGState, gsDict);
+      }
+    }
+    return listOfExtGState;
+  }
 
-protected internal virtual void ValidateTransparencyRules(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSDictionary> listOfExtGState) {
-foreach (global::DripSharp.PdfCarton.Cos.COSDictionary egs in listOfExtGState) {
-this.checkSoftMask(context, egs);
-this.checkUpperCA(context, egs);
-this.checkLowerCA(context, egs);
-this.checkBlendMode(context, egs);
-this.CheckTRKey(context, egs);
-this.CheckTR2Key(context, egs);
-}
-}
+  protected internal virtual void ValidateTransparencyRules(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSDictionary> listOfExtGState) {
+    foreach (global::DripSharp.PdfCarton.Cos.COSDictionary egs in listOfExtGState) {
+      this.checkSoftMask(context, egs);
+      this.checkUpperCA(context, egs);
+      this.checkLowerCA(context, egs);
+      this.checkBlendMode(context, egs);
+      this.CheckTRKey(context, egs);
+      this.CheckTR2Key(context, egs);
+    }
+  }
 
-protected internal virtual void ValidateFonts(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSDictionary> listOfExtGState) {
-foreach (global::DripSharp.PdfCarton.Cos.COSDictionary egs in listOfExtGState) {
-this.checkFont(context, egs);
-}
-}
+  protected internal virtual void ValidateFonts(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSDictionary> listOfExtGState) {
+    foreach (global::DripSharp.PdfCarton.Cos.COSDictionary egs in listOfExtGState) {
+      this.checkFont(context, egs);
+    }
+  }
 
-private void checkFont(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = egs.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Font);
-if ((@base == default!)) {
-return;
-}
-if ((!((@base is global::DripSharp.PdfCarton.Cos.COSArray)) || (((global::DripSharp.PdfCarton.Cos.COSArray)(@base!)).Size() != 2))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxCommon, "/Font entry in /ExtGState must be an array with 2 elements"));
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSArray ar = (global::DripSharp.PdfCarton.Cos.COSArray)(@base!);
-global::DripSharp.PdfCarton.Cos.COSBase base0 = ar.Get(0);
-if (!((base0 is global::DripSharp.PdfCarton.Cos.COSObject))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxCommon, "1st element in /Font entry in /ExtGState must be an indirect object"));
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSBase base1 = ar.GetObject(1);
-if (!((base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxCommon, "2nd element in /Font entry in /ExtGState must be a number"));
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber fontSize = (global::DripSharp.PdfCarton.Cos.COSNumber)(ar.GetObject(1)!);
-if (((fontSize.FloatValue() > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxPositiveFloat) || (fontSize.FloatValue() < global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxNegativeFloat))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNumericRange, "invalid float range in 2nd element in /Font entry in /ExtGState"));
-}
-if ((ar.GetObject(0) is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary fontDict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(ar.GetObject(0)!);
-try {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDFont newFont = global::DripSharp.PdfCarton.Pdmodel.Font.PDFontFactory.CreateFont(fontDict);
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(context, newFont, global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.FontProcess);
-} catch (global::System.IO.IOException e) {
-this.AddFontError(fontDict, context, e);
-}
-}
-}
+  private void checkFont(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = egs.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Font);
+    if ((@base == default!)) {
+      return;
+    }
+    if ((!((@base is global::DripSharp.PdfCarton.Cos.COSArray))
+      || (((global::DripSharp.PdfCarton.Cos.COSArray)(@base!)).Size() != 2))) {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxCommon,
+        "/Font entry in /ExtGState must be an array with 2 elements"));
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSArray ar
+      = (global::DripSharp.PdfCarton.Cos.COSArray)(@base!);
+    global::DripSharp.PdfCarton.Cos.COSBase base0 = ar.Get(0);
+    if (!((base0 is global::DripSharp.PdfCarton.Cos.COSObject))) {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxCommon,
+        "1st element in /Font entry in /ExtGState must be an indirect object"));
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base1 = ar.GetObject(1);
+    if (!((base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxCommon,
+        "2nd element in /Font entry in /ExtGState must be a number"));
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSNumber fontSize
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(ar.GetObject(1)!);
+    if (((fontSize.FloatValue() > global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxPositiveFloat)
+      || (fontSize.FloatValue() < global::DripSharp.PdfCarton.Preflight.PreflightConstants.MaxNegativeFloat))) {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNumericRange,
+        "invalid float range in 2nd element in /Font entry in /ExtGState"));
+    }
+    if ((ar.GetObject(0) is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+      global::DripSharp.PdfCarton.Cos.COSDictionary fontDict
+        = (global::DripSharp.PdfCarton.Cos.COSDictionary)(ar.GetObject(0)!);
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Font.PDFont newFont
+          = global::DripSharp.PdfCarton.Pdmodel.Font.PDFontFactory.CreateFont(fontDict);
+        global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(context, newFont,
+          global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.FontProcess);
+      } catch (global::System.IO.IOException e) {
+        this.AddFontError(fontDict, context, e);
+      }
+    }
+  }
 
-private void checkSoftMask(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
-if ((egs.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Smask) && !(global::DripSharp.PdfCarton.Cos.COSName.None.Equals(egs.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Smask))))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorTransparencyExtGsSoftMask, "SoftMask must be null or None"));
-}
-}
+  private void checkSoftMask(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
+    if ((egs.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Smask)
+      && !(global::DripSharp.PdfCarton.Cos.COSName.None.Equals(egs.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Smask))))) {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorTransparencyExtGsSoftMask,
+        "SoftMask must be null or None"));
+    }
+  }
 
-private void checkBlendMode(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
-global::DripSharp.PdfCarton.Cos.COSName bmVal = egs.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Bm);
-if (((bmVal != default!) && !((global::DripSharp.PdfCarton.Cos.COSName.Normal.Equals(bmVal) || global::DripSharp.PdfCarton.Cos.COSName.Compatible.Equals(bmVal))))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorTransparencyExtGsBlendMode, "BlendMode value isn't valid (only Normal and Compatible are authorized)"));
-}
-}
+  private void checkBlendMode(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
+    global::DripSharp.PdfCarton.Cos.COSName bmVal
+      = egs.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Bm);
+    if (((bmVal != default!) && !((global::DripSharp.PdfCarton.Cos.COSName.Normal.Equals(bmVal)
+      || global::DripSharp.PdfCarton.Cos.COSName.Compatible.Equals(bmVal))))) {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorTransparencyExtGsBlendMode,
+        "BlendMode value isn't valid (only Normal and Compatible are authorized)"));
+    }
+  }
 
-private void checkUpperCA(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
-global::DripSharp.PdfCarton.Cos.COSBase uCA = egs.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ca);
-if ((uCA != default!)) {
-float? fca = ((uCA is global::DripSharp.PdfCarton.Cos.COSFloat) ? (float?)(((global::DripSharp.PdfCarton.Cos.COSFloat)(uCA!)).FloatValue()) : (float?)(default!));
-int? ica = ((uCA is global::DripSharp.PdfCarton.Cos.COSInteger) ? (int?)(((global::DripSharp.PdfCarton.Cos.COSInteger)(uCA!)).IntValue()) : (int?)(default!));
-if ((!(((fca != default!) && (global::DripSharp.Runtime.JavaCompat.CompareFloat((float)(global::DripSharp.Runtime.JavaCompat.Unbox(fca)), 1.0F) == 0))) && !(((ica != default!) && (global::DripSharp.Runtime.JavaCompat.Unbox(ica) == 1))))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorTransparencyExtGsCa, "CA entry in a ExtGState is invalid"));
-}
-}
-}
+  private void checkUpperCA(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
+    global::DripSharp.PdfCarton.Cos.COSBase uCA
+      = egs.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ca);
+    if ((uCA != default!)) {
+      float? fca = ((uCA is global::DripSharp.PdfCarton.Cos.COSFloat)
+        ? (float?)(((global::DripSharp.PdfCarton.Cos.COSFloat)(uCA!)).FloatValue())
+        : (float?)(default!));
+      int? ica = ((uCA is global::DripSharp.PdfCarton.Cos.COSInteger)
+        ? (int?)(((global::DripSharp.PdfCarton.Cos.COSInteger)(uCA!)).IntValue())
+        : (int?)(default!));
+      if ((!(((fca != default!)
+        && (global::DripSharp.Runtime.JavaCompat.CompareFloat((float)(global::DripSharp.Runtime.JavaCompat.Unbox(fca)),
+        1.0F) == 0))) && !(((ica != default!) && (global::DripSharp.Runtime.JavaCompat.Unbox(ica)
+        == 1))))) {
+        context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorTransparencyExtGsCa,
+          "CA entry in a ExtGState is invalid"));
+      }
+    }
+  }
 
-private void checkLowerCA(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
-global::DripSharp.PdfCarton.Cos.COSBase lCA = egs.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.CaNs);
-if ((lCA != default!)) {
-float? fca = ((lCA is global::DripSharp.PdfCarton.Cos.COSFloat) ? (float?)(((global::DripSharp.PdfCarton.Cos.COSFloat)(lCA!)).FloatValue()) : (float?)(default!));
-int? ica = ((lCA is global::DripSharp.PdfCarton.Cos.COSInteger) ? (int?)(((global::DripSharp.PdfCarton.Cos.COSInteger)(lCA!)).IntValue()) : (int?)(default!));
-if ((!(((fca != default!) && (global::DripSharp.Runtime.JavaCompat.CompareFloat((float)(global::DripSharp.Runtime.JavaCompat.Unbox(fca)), 1.0F) == 0))) && !(((ica != default!) && (global::DripSharp.Runtime.JavaCompat.Unbox(ica) == 1))))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorTransparencyExtGsCa, "ca entry in a ExtGState is invalid"));
-}
-}
-}
+  private void checkLowerCA(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
+    global::DripSharp.PdfCarton.Cos.COSBase lCA
+      = egs.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.CaNs);
+    if ((lCA != default!)) {
+      float? fca = ((lCA is global::DripSharp.PdfCarton.Cos.COSFloat)
+        ? (float?)(((global::DripSharp.PdfCarton.Cos.COSFloat)(lCA!)).FloatValue())
+        : (float?)(default!));
+      int? ica = ((lCA is global::DripSharp.PdfCarton.Cos.COSInteger)
+        ? (int?)(((global::DripSharp.PdfCarton.Cos.COSInteger)(lCA!)).IntValue())
+        : (int?)(default!));
+      if ((!(((fca != default!)
+        && (global::DripSharp.Runtime.JavaCompat.CompareFloat((float)(global::DripSharp.Runtime.JavaCompat.Unbox(fca)),
+        1.0F) == 0))) && !(((ica != default!) && (global::DripSharp.Runtime.JavaCompat.Unbox(ica)
+        == 1))))) {
+        context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorTransparencyExtGsCa,
+          "ca entry in a ExtGState is invalid"));
+      }
+    }
+  }
 
-protected internal virtual void CheckTRKey(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
-if (egs.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Tr)) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedKey, "No TR key expected in Extended graphics state"));
-}
-}
+  protected internal virtual void CheckTRKey(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
+    if (egs.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Tr)) {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedKey,
+        "No TR key expected in Extended graphics state"));
+    }
+  }
 
-protected internal virtual void CheckTR2Key(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
-if (egs.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Tr2)) {
-string s = egs.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Tr2);
-if (!(global::DripSharp.Runtime.JavaCompat.Equals("Default", s))) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("TR2 key only expect 'Default' value, not '", s), "'")));
-}
-}
-}
+  protected internal virtual void CheckTR2Key(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Cos.COSDictionary egs) {
+    if (egs.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Tr2)) {
+      string s = egs.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Tr2);
+      if (!global::DripSharp.Runtime.JavaCompat.Equals("Default", s)) {
+        context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicUnexpectedValueForKey,
+          global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("TR2 key only expect 'Default' value, not '",
+          s), "'")));
+      }
+    }
+  }
 }

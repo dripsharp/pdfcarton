@@ -8,222 +8,258 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
-public abstract class PDButton : global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTerminalField {
-internal const int FLAG_RADIO = (1 << unchecked((int)(15)));
+public abstract class PDButton
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTerminalField {
+  internal const int FLAG_RADIO = (1 << unchecked((int)(15)));
 
-internal const int FLAG_PUSHBUTTON = (1 << unchecked((int)(16)));
+  internal const int FLAG_PUSHBUTTON = (1 << unchecked((int)(16)));
 
-internal const int FLAG_RADIOS_IN_UNISON = (1 << unchecked((int)(25)));
+  internal const int FLAG_RADIOS_IN_UNISON = (1 << unchecked((int)(25)));
 
-internal PDButton(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) : base(acroForm) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ft, global::DripSharp.PdfCarton.Cos.COSName.Btn);
-}
+  internal PDButton(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm)
+  : base(acroForm) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ft,
+      global::DripSharp.PdfCarton.Cos.COSName.Btn);
+  }
 
-internal PDButton(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm, global::DripSharp.PdfCarton.Cos.COSDictionary field, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm, field, parent) {
+  internal PDButton(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm,
+    global::DripSharp.PdfCarton.Cos.COSDictionary field,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm,
+    field, parent) {
 
-}
+  }
 
-public virtual bool IsPushButton() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton.FLAG_PUSHBUTTON);
-}
+  public virtual bool IsPushButton() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton.FLAG_PUSHBUTTON);
+  }
 
-public virtual bool IsRadioButton() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton.FLAG_RADIO);
-}
+  public virtual bool IsRadioButton() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton.FLAG_RADIO);
+  }
 
-public virtual string GetValue() {
-global::DripSharp.PdfCarton.Cos.COSBase value = this.GetInheritableAttribute(global::DripSharp.PdfCarton.Cos.COSName.V);
-if ((value is global::DripSharp.PdfCarton.Cos.COSName)) {
-string stringValue = ((global::DripSharp.PdfCarton.Cos.COSName)(value!)).GetName();
-global::System.Collections.Generic.IList<string> exportValues = this.GetExportValues();
-if (!(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(exportValues))) {
-try {
-int idx = global::DripSharp.Runtime.JavaCompat.ParseInt(stringValue, 10);
-if (((idx >= 0) && (idx < global::DripSharp.Runtime.JavaCompat.CollectionCount(exportValues)))) {
-return global::DripSharp.Runtime.JavaCompat.ListGet(exportValues, idx);
-}
-} catch (global::DripSharp.Runtime.JavaNumberFormatException) {
-return stringValue;
-}
-}
-return stringValue;
-} else {
-return "Off";
-}
-}
+  public virtual string GetValue() {
+    global::DripSharp.PdfCarton.Cos.COSBase value
+      = this.GetInheritableAttribute(global::DripSharp.PdfCarton.Cos.COSName.V);
+    if ((value is global::DripSharp.PdfCarton.Cos.COSName)) {
+      string stringValue = ((global::DripSharp.PdfCarton.Cos.COSName)(value!)).GetName();
+      global::System.Collections.Generic.IList<string> exportValues = this.GetExportValues();
+      if (!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(exportValues)) {
+        try {
+          int idx = global::DripSharp.Runtime.JavaCompat.ParseInt(stringValue, 10);
+          if (((idx >= 0)
+            && (idx < global::DripSharp.Runtime.JavaCompat.CollectionCount(exportValues)))) {
+            return global::DripSharp.Runtime.JavaCompat.ListGet(exportValues, idx);
+          }
+        } catch (global::DripSharp.Runtime.JavaNumberFormatException) {
+          return stringValue;
+        }
+      }
+      return stringValue;
+    } else {
+      return "Off";
+    }
+  }
 
-public override void SetValue(string value) {
-this.checkValue(value);
-if (!(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.GetExportValues()))) {
-this.updateByOption(value);
-} else {
-this.updateByValue(value);
-}
-this.ApplyChange();
-}
+  public override void SetValue(string value) {
+    this.checkValue(value);
+    if (!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.GetExportValues())) {
+      this.updateByOption(value);
+    } else {
+      this.updateByValue(value);
+    }
+    this.ApplyChange();
+  }
 
-public virtual void SetValue(int index) {
-global::System.Collections.Generic.IList<string> exportValues = this.GetExportValues();
-if (((global::DripSharp.Runtime.JavaCompat.ListIsEmpty(exportValues) || (index < 0)) || (index >= global::DripSharp.Runtime.JavaCompat.CollectionCount(exportValues)))) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("index '", index), "' is not a valid index for the field "), this.GetFullyQualifiedName()), ", valid indices are from 0 to "), (global::DripSharp.Runtime.JavaCompat.CollectionCount(exportValues) - 1)));
-}
-this.updateByValue(global::DripSharp.Runtime.JavaCompat.StringValueOf(index));
-this.ApplyChange();
-}
+  public virtual void SetValue(int index) {
+    global::System.Collections.Generic.IList<string> exportValues = this.GetExportValues();
+    if (((global::DripSharp.Runtime.JavaCompat.ListIsEmpty(exportValues) || (index < 0)) || (index
+      >= global::DripSharp.Runtime.JavaCompat.CollectionCount(exportValues)))) {
+      throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("index '",
+        index), "' is not a valid index for the field "), this.GetFullyQualifiedName()),
+        ", valid indices are from 0 to "),
+        (global::DripSharp.Runtime.JavaCompat.CollectionCount(exportValues) - 1)));
+    }
+    this.updateByValue(global::DripSharp.Runtime.JavaCompat.StringValueOf(index));
+    this.ApplyChange();
+  }
 
-public virtual string GetDefaultValue() {
-global::DripSharp.PdfCarton.Cos.COSBase value = this.GetInheritableAttribute(global::DripSharp.PdfCarton.Cos.COSName.Dv);
-if ((value is global::DripSharp.PdfCarton.Cos.COSName)) {
-return ((global::DripSharp.PdfCarton.Cos.COSName)(value!)).GetName();
-} else {
-return "";
-}
-}
+  public virtual string GetDefaultValue() {
+    global::DripSharp.PdfCarton.Cos.COSBase value
+      = this.GetInheritableAttribute(global::DripSharp.PdfCarton.Cos.COSName.Dv);
+    if ((value is global::DripSharp.PdfCarton.Cos.COSName)) {
+      return ((global::DripSharp.PdfCarton.Cos.COSName)(value!)).GetName();
+    } else {
+      return "";
+    }
+  }
 
-public virtual void SetDefaultValue(string value) {
-this.checkValue(value);
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Dv, value);
-}
+  public virtual void SetDefaultValue(string value) {
+    this.checkValue(value);
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Dv, value);
+  }
 
-public override string GetValueAsString() {
-return this.GetValue();
-}
+  public override string GetValueAsString() {
+    return this.GetValue();
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetExportValues() {
-global::DripSharp.PdfCarton.Cos.COSBase value = this.GetInheritableAttribute(global::DripSharp.PdfCarton.Cos.COSName.Opt);
-if ((value is global::DripSharp.PdfCarton.Cos.COSString)) {
-string stringValue = ((global::DripSharp.PdfCarton.Cos.COSString)(value!)).GetString();
-if ((stringValue.Length == 0)) {
-return global::System.Array.Empty<string>();
-}
-return global::DripSharp.Runtime.JavaCompat.ListOf<string>(stringValue);
-} else {
-if ((value is global::DripSharp.PdfCarton.Cos.COSArray)) {
-return ((global::DripSharp.PdfCarton.Cos.COSArray)(value!)).ToCOSStringStringList();
-}
-}
-return global::System.Array.Empty<string>();
-}
+  public virtual global::System.Collections.Generic.IList<string> GetExportValues() {
+    global::DripSharp.PdfCarton.Cos.COSBase value
+      = this.GetInheritableAttribute(global::DripSharp.PdfCarton.Cos.COSName.Opt);
+    if ((value is global::DripSharp.PdfCarton.Cos.COSString)) {
+      string stringValue = ((global::DripSharp.PdfCarton.Cos.COSString)(value!)).GetString();
+      if ((stringValue.Length == 0)) {
+        return global::System.Array.Empty<string>();
+      }
+      return global::DripSharp.Runtime.JavaCompat.ListOf<string>(stringValue);
+    } else {
+      if ((value is global::DripSharp.PdfCarton.Cos.COSArray)) {
+        return ((global::DripSharp.PdfCarton.Cos.COSArray)(value!)).ToCOSStringStringList();
+      }
+    }
+    return global::System.Array.Empty<string>();
+  }
 
-public virtual void SetExportValues(global::System.Collections.Generic.IList<string> values) {
-global::DripSharp.PdfCarton.Cos.COSArray cosValues;
-if (((values != default!) && !(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(values)))) {
-cosValues = global::DripSharp.PdfCarton.Cos.COSArray.OfCOSStrings(values);
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Opt, cosValues);
-} else {
-this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Opt);
-}
-}
+  public virtual void SetExportValues(global::System.Collections.Generic.IList<string> values) {
+    global::DripSharp.PdfCarton.Cos.COSArray cosValues;
+    if (((values != default!) && !global::DripSharp.Runtime.JavaCompat.ListIsEmpty(values))) {
+      cosValues = global::DripSharp.PdfCarton.Cos.COSArray.OfCOSStrings(values);
+      this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Opt, cosValues);
+    } else {
+      this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Opt);
+    }
+  }
 
-internal override void constructAppearances() {
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in this.GetWidgets()) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceDictionary appearance = widget.GetAppearance();
-if ((appearance == default!)) {
-continue;
-}
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry appearanceEntry = appearance.GetNormalAppearance();
-global::DripSharp.PdfCarton.Cos.COSName value = this.GetCOSObject().GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.V);
-if (appearanceEntry.GetCOSObject().ContainsKey(value)) {
-widget.SetAppearanceState(value);
-} else {
-widget.SetAppearanceState(global::DripSharp.PdfCarton.Cos.COSName.Off);
-}
-}
-}
+  internal override void constructAppearances() {
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in this.GetWidgets()) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceDictionary appearance
+        = widget.GetAppearance();
+      if ((appearance == default!)) {
+        continue;
+      }
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry appearanceEntry
+        = appearance.GetNormalAppearance();
+      global::DripSharp.PdfCarton.Cos.COSName value
+        = this.GetCOSObject().GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.V);
+      if (appearanceEntry.GetCOSObject().ContainsKey(value)) {
+        widget.SetAppearanceState(value);
+      } else {
+        widget.SetAppearanceState(global::DripSharp.PdfCarton.Cos.COSName.Off);
+      }
+    }
+  }
 
-public virtual global::System.Collections.Generic.ISet<string> GetOnValues() {
-global::System.Collections.Generic.ISet<string> onValues = new global::System.Collections.Generic.HashSet<string>();
-global::System.Collections.Generic.IList<string> exportValues = this.GetExportValues();
-if (!(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(exportValues))) {
-global::DripSharp.Runtime.JavaCompat.AddAll(onValues, exportValues);
-return onValues;
-}
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> widgets = this.GetWidgets();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in widgets) {
-onValues.Add(this.getOnValueForWidget(widget));
-}
-return onValues;
-}
+  public virtual global::System.Collections.Generic.ISet<string> GetOnValues() {
+    global::System.Collections.Generic.ISet<string> onValues
+      = new global::System.Collections.Generic.HashSet<string>();
+    global::System.Collections.Generic.IList<string> exportValues = this.GetExportValues();
+    if (!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(exportValues)) {
+      global::DripSharp.Runtime.JavaCompat.AddAll(onValues, exportValues);
+      return onValues;
+    }
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> widgets
+      = this.GetWidgets();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in widgets) {
+      onValues.Add(this.getOnValueForWidget(widget));
+    }
+    return onValues;
+  }
 
-private string getOnValue(int index) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> widgets = this.GetWidgets();
-if ((index < global::DripSharp.Runtime.JavaCompat.CollectionCount(widgets))) {
-return this.getOnValueForWidget(global::DripSharp.Runtime.JavaCompat.ListGet(widgets, index));
-}
-return "";
-}
+  private string getOnValue(int index) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> widgets
+      = this.GetWidgets();
+    if ((index < global::DripSharp.Runtime.JavaCompat.CollectionCount(widgets))) {
+      return this.getOnValueForWidget(global::DripSharp.Runtime.JavaCompat.ListGet(widgets, index));
+    }
+    return "";
+  }
 
-private string getOnValueForWidget(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceDictionary apDictionary = widget.GetAppearance();
-if ((apDictionary != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry normalAppearance = apDictionary.GetNormalAppearance();
-if ((normalAppearance != default!)) {
-global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSName> entries = global::DripSharp.Runtime.JavaCompat.MapKeySet(normalAppearance.GetSubDictionary());
-foreach (global::DripSharp.PdfCarton.Cos.COSName entry in entries) {
-if ((global::DripSharp.PdfCarton.Cos.COSName.Off.CompareTo(entry) != 0)) {
-return entry.GetName();
-}
-}
-}
-}
-return "";
-}
+  private string getOnValueForWidget(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget) {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceDictionary apDictionary
+      = widget.GetAppearance();
+    if ((apDictionary != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry normalAppearance
+        = apDictionary.GetNormalAppearance();
+      if ((normalAppearance != default!)) {
+        global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSName> entries
+          = global::DripSharp.Runtime.JavaCompat.MapKeySet(normalAppearance.GetSubDictionary());
+        foreach (global::DripSharp.PdfCarton.Cos.COSName entry in entries) {
+          if ((global::DripSharp.PdfCarton.Cos.COSName.Off.CompareTo(entry) != 0)) {
+            return entry.GetName();
+          }
+        }
+      }
+    }
+    return "";
+  }
 
-internal virtual void checkValue(string value) {
-global::System.Collections.Generic.ISet<string> onValues = this.GetOnValues();
-if (((global::DripSharp.Runtime.JavaCompat.StringCompareTo(global::DripSharp.PdfCarton.Cos.COSName.Off.GetName(), value) != 0) && !(global::DripSharp.Runtime.JavaCompat.CollectionContains(onValues, value)))) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("value '", value), "' is not a valid option for the field "), this.GetFullyQualifiedName()), ", valid values are: "), onValues), " and "), global::DripSharp.PdfCarton.Cos.COSName.Off.GetName()));
-}
-}
+  internal virtual void checkValue(string value) {
+    global::System.Collections.Generic.ISet<string> onValues = this.GetOnValues();
+    if (((global::DripSharp.Runtime.JavaCompat.StringCompareTo(global::DripSharp.PdfCarton.Cos.COSName.Off.GetName(),
+      value) != 0) && !global::DripSharp.Runtime.JavaCompat.CollectionContains(onValues, value))) {
+      throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("value '",
+        value), "' is not a valid option for the field "), this.GetFullyQualifiedName()),
+        ", valid values are: "), onValues), " and "),
+        global::DripSharp.PdfCarton.Cos.COSName.Off.GetName()));
+    }
+  }
 
-private void updateByValue(string value) {
-global::DripSharp.PdfCarton.Cos.COSName matchingKey = default!;
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in this.GetWidgets()) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceDictionary appearance = widget.GetAppearance();
-if ((appearance == default!)) {
-continue;
-}
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry appearanceEntry = appearance.GetNormalAppearance();
-global::DripSharp.PdfCarton.Cos.COSDictionary appearanceDict = appearanceEntry.GetCOSObject();
-global::DripSharp.PdfCarton.Cos.COSName widgetMatchingKey = this.findMatchingAppearanceKey(appearanceDict, value);
-if (((widgetMatchingKey != default!) && (matchingKey! == default!))) {
-matchingKey = widgetMatchingKey;
-}
-if ((widgetMatchingKey != default!)) {
-widget.SetAppearanceState(widgetMatchingKey);
-} else {
-widget.SetAppearanceState(global::DripSharp.PdfCarton.Cos.COSName.Off);
-}
-}
-if ((matchingKey! != default!)) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.V, matchingKey!);
-} else {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.V, value);
-}
-}
+  private void updateByValue(string value) {
+    global::DripSharp.PdfCarton.Cos.COSName matchingKey = default!;
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in this.GetWidgets()) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceDictionary appearance
+        = widget.GetAppearance();
+      if ((appearance == default!)) {
+        continue;
+      }
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry appearanceEntry
+        = appearance.GetNormalAppearance();
+      global::DripSharp.PdfCarton.Cos.COSDictionary appearanceDict = appearanceEntry.GetCOSObject();
+      global::DripSharp.PdfCarton.Cos.COSName widgetMatchingKey
+        = this.findMatchingAppearanceKey(appearanceDict, value);
+      if (((widgetMatchingKey != default!) && (matchingKey! == default!))) {
+        matchingKey = widgetMatchingKey;
+      }
+      if ((widgetMatchingKey != default!)) {
+        widget.SetAppearanceState(widgetMatchingKey);
+      } else {
+        widget.SetAppearanceState(global::DripSharp.PdfCarton.Cos.COSName.Off);
+      }
+    }
+    if ((matchingKey! != default!)) {
+      this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.V, matchingKey!);
+    } else {
+      this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.V, value);
+    }
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSName findMatchingAppearanceKey(global::DripSharp.PdfCarton.Cos.COSDictionary appearanceDict, string value) {
-foreach (global::DripSharp.PdfCarton.Cos.COSName key in appearanceDict.KeySet()) {
-if (global::DripSharp.Runtime.JavaCompat.Equals(value, key.GetName())) {
-return key;
-}
-}
-return default!;
-}
+  private global::DripSharp.PdfCarton.Cos.COSName findMatchingAppearanceKey(global::DripSharp.PdfCarton.Cos.COSDictionary appearanceDict,
+    string value) {
+    foreach (global::DripSharp.PdfCarton.Cos.COSName key in appearanceDict.KeySet()) {
+      if (global::DripSharp.Runtime.JavaCompat.Equals(value, key.GetName())) {
+        return key;
+      }
+    }
+    return default!;
+  }
 
-private void updateByOption(string value) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> widgets = this.GetWidgets();
-global::System.Collections.Generic.IList<string> options = this.GetExportValues();
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(widgets) != global::DripSharp.Runtime.JavaCompat.CollectionCount(options))) {
-throw new global::System.ArgumentException("The number of options doesn't match the number of widgets");
-}
-if (global::DripSharp.Runtime.JavaCompat.Equals(value, global::DripSharp.PdfCarton.Cos.COSName.Off.GetName())) {
-this.updateByValue(value);
-} else {
-int optionsIndex = global::DripSharp.Runtime.JavaCompat.ListIndexOf(options, value);
-if ((optionsIndex != -1)) {
-this.updateByValue(this.getOnValue(optionsIndex));
-}
-}
-}
+  private void updateByOption(string value) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> widgets
+      = this.GetWidgets();
+    global::System.Collections.Generic.IList<string> options = this.GetExportValues();
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(widgets)
+      != global::DripSharp.Runtime.JavaCompat.CollectionCount(options))) {
+      throw new global::System.ArgumentException("The number of options doesn't match the number of widgets");
+    }
+    if (global::DripSharp.Runtime.JavaCompat.Equals(value,
+      global::DripSharp.PdfCarton.Cos.COSName.Off.GetName())) {
+      this.updateByValue(value);
+    } else {
+      int optionsIndex = global::DripSharp.Runtime.JavaCompat.ListIndexOf(options, value);
+      if ((optionsIndex != -1)) {
+        this.updateByValue(this.getOnValue(optionsIndex));
+      }
+    }
+  }
 }

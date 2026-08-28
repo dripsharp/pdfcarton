@@ -9,27 +9,27 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public interface PDFontLike {
-public string GetName();
+  public string GetName();
 
-public global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor GetFontDescriptor();
+  public global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor GetFontDescriptor();
 
-public global::DripSharp.PdfCarton.Util.Matrix GetFontMatrix();
+  public global::DripSharp.PdfCarton.Util.Matrix GetFontMatrix();
 
-public global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetBoundingBox();
+  public global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetBoundingBox();
 
-public global::DripSharp.PdfCarton.Util.Vector GetPositionVector(int code);
+  public global::DripSharp.PdfCarton.Util.Vector GetPositionVector(int code);
 
-public float GetHeight(int code);
+  public float GetHeight(int code);
 
-public float GetWidth(int code);
+  public float GetWidth(int code);
 
-public bool HasExplicitWidth(int code);
+  public bool HasExplicitWidth(int code);
 
-public float GetWidthFromFont(int code);
+  public float GetWidthFromFont(int code);
 
-public bool IsEmbedded();
+  public bool IsEmbedded();
 
-public bool IsDamaged();
+  public bool IsDamaged();
 
-public float GetAverageFontWidth();
+  public float GetAverageFontWidth();
 }

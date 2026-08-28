@@ -9,25 +9,32 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 internal sealed class CMapManager {
-private static readonly global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Fonts.Cmap.CMap> CMAP_CACHE = new global::System.Collections.Concurrent.ConcurrentDictionary<string, global::DripSharp.PdfCarton.Fonts.Cmap.CMap>();
+  private static readonly global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Fonts.Cmap.CMap> CMAP_CACHE
+    = new global::System.Collections.Concurrent.ConcurrentDictionary<string,
+    global::DripSharp.PdfCarton.Fonts.Cmap.CMap>();
 
-private CMapManager() {}
+  private CMapManager() {}
 
-public static global::DripSharp.PdfCarton.Fonts.Cmap.CMap GetPredefinedCMap(string cMapName) {
-global::DripSharp.PdfCarton.Fonts.Cmap.CMap cmap = global::DripSharp.Runtime.JavaCompat.MapGet(global::DripSharp.PdfCarton.Pdmodel.Font.CMapManager.CMAP_CACHE, cMapName);
-if ((cmap != default!)) {
-return cmap;
-}
-global::DripSharp.PdfCarton.Fonts.Cmap.CMap targetCmap = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().ParsePredefined(cMapName);
-global::DripSharp.Runtime.JavaCompat.MapPut(global::DripSharp.PdfCarton.Pdmodel.Font.CMapManager.CMAP_CACHE, targetCmap.GetName(), targetCmap);
-return targetCmap;
-}
+  public static global::DripSharp.PdfCarton.Fonts.Cmap.CMap GetPredefinedCMap(string cMapName) {
+    global::DripSharp.PdfCarton.Fonts.Cmap.CMap cmap
+      = global::DripSharp.Runtime.JavaCompat.MapGet(global::DripSharp.PdfCarton.Pdmodel.Font.CMapManager.CMAP_CACHE,
+      cMapName);
+    if ((cmap != default!)) {
+      return cmap;
+    }
+    global::DripSharp.PdfCarton.Fonts.Cmap.CMap targetCmap
+      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().ParsePredefined(cMapName);
+    global::DripSharp.Runtime.JavaCompat.MapPut(global::DripSharp.PdfCarton.Pdmodel.Font.CMapManager.CMAP_CACHE,
+      targetCmap.GetName(), targetCmap);
+    return targetCmap;
+  }
 
-public static global::DripSharp.PdfCarton.Fonts.Cmap.CMap ParseCMap(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
-global::DripSharp.PdfCarton.Fonts.Cmap.CMap targetCmap = default!;
-if ((randomAccessRead != default!)) {
-targetCmap = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().Parse(randomAccessRead);
-}
-return targetCmap!;
-}
+  public static global::DripSharp.PdfCarton.Fonts.Cmap.CMap ParseCMap(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
+    global::DripSharp.PdfCarton.Fonts.Cmap.CMap targetCmap = default!;
+    if ((randomAccessRead != default!)) {
+      targetCmap = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().Parse(randomAccessRead);
+    }
+    return targetCmap!;
+  }
 }

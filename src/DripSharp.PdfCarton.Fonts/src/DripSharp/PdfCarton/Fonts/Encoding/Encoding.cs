@@ -9,30 +9,35 @@
 namespace DripSharp.PdfCarton.Fonts.Encoding;
 
 public abstract class Encoding {
-private readonly global::System.Collections.Generic.IDictionary<int, string> codeToName = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, string>(250);
+  private readonly global::System.Collections.Generic.IDictionary<int, string> codeToName
+    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, string>(250);
 
-private readonly global::System.Collections.Generic.IDictionary<string, int> nameToCode = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string, int>(250);
+  private readonly global::System.Collections.Generic.IDictionary<string, int> nameToCode
+    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<string, int>(250);
 
-protected internal virtual void AddCharacterEncoding(int code, string name) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.codeToName, code, name);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.nameToCode, name, code);
-}
+  protected internal virtual void AddCharacterEncoding(int code, string name) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.codeToName, code, name);
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(this.nameToCode, name, code);
+  }
 
-public virtual int? GetCode(string name) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.nameToCode, name);
-}
+  public virtual int? GetCode(string name) {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.nameToCode,
+      name);
+  }
 
-public virtual string GetName(int code) {
-string name = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.codeToName, code);
-if ((name != default!)) {
-return name;
-}
-return ".notdef";
-}
+  public virtual string GetName(int code) {
+    string name = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.codeToName,
+      code);
+    if ((name != default!)) {
+      return name;
+    }
+    return ".notdef";
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<int, string> GetCodeToNameMap() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<int, string>(this.codeToName));
-}
+  public virtual global::System.Collections.Generic.IDictionary<int, string> GetCodeToNameMap() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<int,
+      string>(this.codeToName));
+  }
 
-public Encoding() {}
+  public Encoding() {}
 }

@@ -9,25 +9,28 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class SubstitutingCmapLookup : global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup {
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmap = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmap = null!;
 
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable gsub = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable gsub = null!;
 
-private readonly global::System.Collections.Generic.IList<string> enabledFeatures = null!;
+  private readonly global::System.Collections.Generic.IList<string> enabledFeatures = null!;
 
-public SubstitutingCmapLookup(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmap, global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable gsub, global::System.Collections.Generic.IList<string> enabledFeatures) {
-this.cmap = cmap;
-this.gsub = gsub;
-this.enabledFeatures = enabledFeatures;
-}
+  public SubstitutingCmapLookup(global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmap,
+    global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable gsub,
+    global::System.Collections.Generic.IList<string> enabledFeatures) {
+    this.cmap = cmap;
+    this.gsub = gsub;
+    this.enabledFeatures = enabledFeatures;
+  }
 
-public virtual int GetGlyphId(int characterCode) {
-int gid = this.cmap.GetGlyphId(characterCode);
-string[] scriptTags = global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeScript.GetScriptTags(characterCode);
-return this.gsub.GetSubstitution(gid, scriptTags, this.enabledFeatures);
-}
+  public virtual int GetGlyphId(int characterCode) {
+    int gid = this.cmap.GetGlyphId(characterCode);
+    string[] scriptTags
+      = global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeScript.GetScriptTags(characterCode);
+    return this.gsub.GetSubstitution(gid, scriptTags, this.enabledFeatures);
+  }
 
-public virtual global::System.Collections.Generic.IList<int> GetCharCodes(int gid) {
-return this.cmap.GetCharCodes(this.gsub.GetUnsubstitution(gid));
-}
+  public virtual global::System.Collections.Generic.IList<int> GetCharCodes(int gid) {
+    return this.cmap.GetCharCodes(this.gsub.GetUnsubstitution(gid));
+  }
 }

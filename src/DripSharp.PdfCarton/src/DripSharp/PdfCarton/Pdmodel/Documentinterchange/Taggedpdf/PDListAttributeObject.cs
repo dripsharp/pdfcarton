@@ -8,50 +8,55 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf;
 
-public class PDListAttributeObject : global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject {
-public const string OwnerList = "List";
+public class PDListAttributeObject
+: global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject {
+  public const string OwnerList = "List";
 
-protected internal const string ListNumbering = "ListNumbering";
+  protected internal const string ListNumbering = "ListNumbering";
 
-public const string ListNumberingCircle = "Circle";
+  public const string ListNumberingCircle = "Circle";
 
-public const string ListNumberingDecimal = "Decimal";
+  public const string ListNumberingDecimal = "Decimal";
 
-public const string ListNumberingDisc = "Disc";
+  public const string ListNumberingDisc = "Disc";
 
-public const string ListNumberingLowerAlpha = "LowerAlpha";
+  public const string ListNumberingLowerAlpha = "LowerAlpha";
 
-public const string ListNumberingLowerRoman = "LowerRoman";
+  public const string ListNumberingLowerRoman = "LowerRoman";
 
-public const string ListNumberingNone = "None";
+  public const string ListNumberingNone = "None";
 
-public const string ListNumberingSquare = "Square";
+  public const string ListNumberingSquare = "Square";
 
-public const string ListNumberingUpperAlpha = "UpperAlpha";
+  public const string ListNumberingUpperAlpha = "UpperAlpha";
 
-public const string ListNumberingUpperRoman = "UpperRoman";
+  public const string ListNumberingUpperRoman = "UpperRoman";
 
-public PDListAttributeObject() {
-this.SetOwner(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.OwnerList);
-}
+  public PDListAttributeObject() {
+    this.SetOwner(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.OwnerList);
+  }
 
-public PDListAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) : base(dictionary) {
+  public PDListAttributeObject(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary)
+  : base(dictionary) {
 
-}
+  }
 
-public virtual string GetListNumbering() {
-return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumbering, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumberingNone);
-}
+  public virtual string GetListNumbering() {
+    return this.GetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumbering,
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumberingNone);
+  }
 
-public virtual void SetListNumbering(string listNumbering) {
-this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumbering, listNumbering);
-}
+  public virtual void SetListNumbering(string listNumbering) {
+    this.SetName(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumbering,
+      listNumbering);
+  }
 
-public override string ToString() {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder().Append(base.ToString());
-if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumbering)) {
-sb.Append(", ListNumbering=").Append(this.GetListNumbering());
-}
-return sb.ToString();
-}
+  public override string ToString() {
+    global::System.Text.StringBuilder sb
+      = new global::System.Text.StringBuilder().Append(base.ToString());
+    if (this.IsSpecified(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDListAttributeObject.ListNumbering)) {
+      sb.Append(", ListNumbering=").Append(this.GetListNumbering());
+    }
+    return sb.ToString();
+  }
 }

@@ -9,218 +9,254 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common;
 
 public class PDPageLabels : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange> labels = null!;
+  private readonly global::System.Collections.Generic.IDictionary<int,
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange> labels = null!;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument doc = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument doc = null!;
 
-public PDPageLabels(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-this.labels = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange>();
-this.doc = document;
-global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange defaultRange = new global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange();
-defaultRange.SetStyle(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.StyleDecimal);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.labels, 0, defaultRange);
-}
+  public PDPageLabels(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    this.labels = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int,
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange>();
+    this.doc = document;
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange defaultRange
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange();
+    defaultRange.SetStyle(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.StyleDecimal);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.labels, 0, defaultRange);
+  }
 
-public PDPageLabels(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, global::DripSharp.PdfCarton.Cos.COSDictionary dict) : this(document) {
-if ((dict == default!)) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode root = new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(dict, typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange));
-this.findLabels(root);
-}
+  public PDPageLabels(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.PdfCarton.Cos.COSDictionary dict) : this(document) {
+    if ((dict == default!)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode root
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(dict,
+      typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange));
+    this.findLabels(root);
+  }
 
-private void findLabels(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode node) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> kids = node.GetKids();
-if ((kids != default!)) {
-foreach (global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode kid in kids) {
-this.findLabels(kid);
-}
-} else {
-global::System.Collections.Generic.IDictionary<int, global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> numbers = node.GetNumbers();
-if ((numbers != default!)) {
-global::DripSharp.Runtime.JavaCompat.ForEach(numbers, (key, pageLabelRange) => {
-if ((key >= 0)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.labels, key, (global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange)(pageLabelRange!));
-}
-});
-}
-}
-}
+  private void findLabels(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode node) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode> kids
+      = node.GetKids();
+    if ((kids != default!)) {
+      foreach (global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode kid in kids) {
+        this.findLabels(kid);
+      }
+    } else {
+      global::System.Collections.Generic.IDictionary<int,
+        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> numbers = node.GetNumbers();
+      if ((numbers != default!)) {
+        global::DripSharp.Runtime.JavaCompat.ForEach(numbers, (key, pageLabelRange) => {
+            if ((key >= 0)) {
+              global::DripSharp.Runtime.JavaCompat.MapPut(this.labels, key,
+              (global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange)(pageLabelRange!));
+            }
+          });
+      }
+    }
+  }
 
-public virtual int GetPageRangeCount() {
-return global::DripSharp.Runtime.JavaCompat.MapCount(this.labels);
-}
+  public virtual int GetPageRangeCount() {
+    return global::DripSharp.Runtime.JavaCompat.MapCount(this.labels);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange GetPageLabelRange(int startPage) {
-return global::DripSharp.Runtime.JavaCompat.MapGet(this.labels, startPage);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange GetPageLabelRange(int startPage) {
+    return global::DripSharp.Runtime.JavaCompat.MapGet(this.labels, startPage);
+  }
 
-public virtual void SetLabelItem(int startPage, global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange item) {
-if ((startPage < 0)) {
-throw new global::System.ArgumentException("startPage parameter of setLabelItem may not be < 0");
-}
-global::DripSharp.Runtime.JavaCompat.MapPut(this.labels, startPage, item);
-}
+  public virtual void SetLabelItem(int startPage,
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange item) {
+    if ((startPage < 0)) {
+      throw new global::System.ArgumentException("startPage parameter of setLabelItem may not be < 0");
+    }
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.labels, startPage, item);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-global::DripSharp.PdfCarton.Cos.COSArray arr = new global::DripSharp.PdfCarton.Cos.COSArray();
-global::DripSharp.Runtime.JavaCompat.ForEach(this.labels, (key, value) => {
-arr.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(key)));
-arr.Add(value);
-});
-global::DripSharp.PdfCarton.Cos.COSDictionary dict = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Nums, arr);
-return dict;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    global::DripSharp.PdfCarton.Cos.COSArray arr = new global::DripSharp.PdfCarton.Cos.COSArray();
+    global::DripSharp.Runtime.JavaCompat.ForEach(this.labels, (key, value) => {
+        arr.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(key)));
+        arr.Add(value);
+      });
+    global::DripSharp.PdfCarton.Cos.COSDictionary dict
+      = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Nums, arr);
+    return dict;
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<string, int> GetPageIndicesByLabels() {
-int numberOfPages = this.doc.GetNumberOfPages();
-global::System.Collections.Generic.IDictionary<string, int> labelMap = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, int>();
-this.computeLabels(new global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.__LabelHandlerFunctionalAdapter((pageIndex, label) => global::DripSharp.Runtime.JavaCompat.MapPut(labelMap, label, pageIndex)), numberOfPages);
-return labelMap;
-}
+  public virtual global::System.Collections.Generic.IDictionary<string,
+    int> GetPageIndicesByLabels() {
+    int numberOfPages = this.doc.GetNumberOfPages();
+    global::System.Collections.Generic.IDictionary<string, int> labelMap
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, int>();
+    this.computeLabels(new global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.__LabelHandlerFunctionalAdapter((pageIndex,
+      label) => global::DripSharp.Runtime.JavaCompat.MapPut(labelMap, label, pageIndex)),
+      numberOfPages);
+    return labelMap;
+  }
 
-public virtual string[] GetLabelsByPageIndices() {
-int numberOfPages = this.doc.GetNumberOfPages();
-string[] map = new string[numberOfPages];
-this.computeLabels(new global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.__LabelHandlerFunctionalAdapter((pageIndex, label) => {
-if ((pageIndex < numberOfPages)) {
-map[pageIndex] = label;
-}
-}), numberOfPages);
-return map;
-}
+  public virtual string[] GetLabelsByPageIndices() {
+    int numberOfPages = this.doc.GetNumberOfPages();
+    string[] map = new string[numberOfPages];
+    this.computeLabels(new global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.__LabelHandlerFunctionalAdapter((pageIndex,
+      label) => {
+        if ((pageIndex < numberOfPages)) {
+          map[pageIndex] = label;
+        }
+      }), numberOfPages);
+    return map;
+  }
 
-public virtual global::System.Collections.Generic.SortedSet<int> GetPageIndices() {
-return new global::System.Collections.Generic.SortedSet<int>(global::DripSharp.Runtime.JavaCompat.MapKeySet(this.labels));
-}
+  public virtual global::System.Collections.Generic.SortedSet<int> GetPageIndices() {
+    return new global::System.Collections.Generic.SortedSet<int>(global::DripSharp.Runtime.JavaCompat.MapKeySet(this.labels));
+  }
 
-internal interface LabelHandler {
-public void NewLabel(int pageIndex, string label);
-}
+  internal interface LabelHandler {
+    public void NewLabel(int pageIndex, string label);
+  }
 
-internal sealed class __LabelHandlerFunctionalAdapter : global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelHandler {
-private readonly global::System.Action<int, string> implementation;
+  internal sealed class __LabelHandlerFunctionalAdapter
+  : global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelHandler {
+    private readonly global::System.Action<int, string> implementation;
 
-internal __LabelHandlerFunctionalAdapter(global::System.Action<int, string> implementation) {
-this.implementation = implementation;
-}
+    internal __LabelHandlerFunctionalAdapter(global::System.Action<int, string> implementation) {
+      this.implementation = implementation;
+    }
 
-public void NewLabel(int pageIndex, string label) {
-this.implementation(pageIndex, label);
-}
-}
+    public void NewLabel(int pageIndex, string label) {
+      this.implementation(pageIndex, label);
+    }
+  }
 
-private void computeLabels(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelHandler handler, int numberOfPages) {
-global::DripSharp.Runtime.JavaIterator<global::DripSharp.Runtime.JavaMapEntry<int, global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange>> iterator = global::DripSharp.Runtime.JavaCompat.Iterator(global::DripSharp.Runtime.JavaCompat.MapEntrySet(this.labels));
-if (!iterator.HasNext()) {
-return;
-}
-int pageIndex = 0;
-global::DripSharp.Runtime.JavaMapEntry<int, global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange> lastEntry = iterator.Next()!;
-while (iterator.HasNext()) {
-global::DripSharp.Runtime.JavaMapEntry<int, global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange> entry = iterator.Next()!;
-int numPages = (entry.Key - lastEntry.Key);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator gen__271_28 = new global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator(lastEntry.Value, numPages);
-while (gen__271_28.HasNext()) {
-handler.NewLabel(pageIndex, gen__271_28.Next());
-pageIndex++;
-}
-lastEntry = entry;
-}
-global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator gen__280_24 = new global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator(lastEntry.Value, (numberOfPages - lastEntry.Key));
-while (gen__280_24.HasNext()) {
-handler.NewLabel(pageIndex, gen__280_24.Next());
-pageIndex++;
-}
-}
+  private void computeLabels(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelHandler handler,
+    int numberOfPages) {
+    global::DripSharp.Runtime.JavaIterator<global::DripSharp.Runtime.JavaMapEntry<int,
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange>> iterator
+      = global::DripSharp.Runtime.JavaCompat.Iterator(global::DripSharp.Runtime.JavaCompat.MapEntrySet(this.labels));
+    if (!iterator.HasNext()) {
+      return;
+    }
+    int pageIndex = 0;
+    global::DripSharp.Runtime.JavaMapEntry<int,
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange> lastEntry = iterator.Next()!;
+    while (iterator.HasNext()) {
+      global::DripSharp.Runtime.JavaMapEntry<int,
+        global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange> entry = iterator.Next()!;
+      int numPages = (entry.Key - lastEntry.Key);
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator gen__271_28
+        = new global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator(lastEntry.Value,
+        numPages);
+      while (gen__271_28.HasNext()) {
+        handler.NewLabel(pageIndex, gen__271_28.Next());
+        pageIndex++;
+      }
+      lastEntry = entry;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator gen__280_24
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator(lastEntry.Value,
+      (numberOfPages - lastEntry.Key));
+    while (gen__280_24.HasNext()) {
+      handler.NewLabel(pageIndex, gen__280_24.Next());
+      pageIndex++;
+    }
+  }
 
-internal class LabelGenerator : global::DripSharp.Runtime.JavaIterator<string> {
-internal readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange labelInfo = null!;
+  internal class LabelGenerator : global::DripSharp.Runtime.JavaIterator<string> {
+    internal readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange labelInfo = null!;
 
-internal readonly int numPages = default;
+    internal readonly int numPages = default;
 
-internal int currentPage = default;
+    internal int currentPage = default;
 
-internal LabelGenerator(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange label, int pages) {
-this.labelInfo = label;
-this.numPages = pages;
-this.currentPage = 0;
-}
+    internal LabelGenerator(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange label,
+      int pages) {
+      this.labelInfo = label;
+      this.numPages = pages;
+      this.currentPage = 0;
+    }
 
-public virtual bool HasNext() {
-return (this.currentPage < this.numPages);
-}
+    public virtual bool HasNext() {
+      return (this.currentPage < this.numPages);
+    }
 
-public virtual string Next() {
-if (!(this.HasNext())) {
-throw new global::System.InvalidOperationException();
-}
-global::System.Text.StringBuilder buf = new global::System.Text.StringBuilder();
-string label = this.labelInfo.GetPrefix();
-if ((label != default!)) {
-int index = global::DripSharp.Runtime.JavaCompat.StringIndexOf(label, 0);
-if ((index > -1)) {
-label = global::DripSharp.Runtime.JavaCompat.StringSubstring(label, 0, index);
-}
-buf.Append(label);
-}
-string style = this.labelInfo.GetStyle();
-if ((style != default!)) {
-buf.Append(this.getNumber((this.labelInfo.GetStart() + this.currentPage), style));
-}
-this.currentPage++;
-return buf.ToString();
-}
+    public virtual string Next() {
+      if (!(this.HasNext())) {
+        throw new global::System.InvalidOperationException();
+      }
+      global::System.Text.StringBuilder buf = new global::System.Text.StringBuilder();
+      string label = this.labelInfo.GetPrefix();
+      if ((label != default!)) {
+        int index = global::DripSharp.Runtime.JavaCompat.StringIndexOf(label, 0);
+        if ((index > -1)) {
+          label = global::DripSharp.Runtime.JavaCompat.StringSubstring(label, 0, index);
+        }
+        buf.Append(label);
+      }
+      string style = this.labelInfo.GetStyle();
+      if ((style != default!)) {
+        buf.Append(this.getNumber((this.labelInfo.GetStart() + this.currentPage), style));
+      }
+      this.currentPage++;
+      return buf.ToString();
+    }
 
-internal string getNumber(int pageIndex, string style) {
-if ((style != default!)) {
-switch (style) {
-case var __case_349_26_0 when global::System.Object.Equals(__case_349_26_0, global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.StyleDecimal):
-return global::DripSharp.Runtime.JavaCompat.StringValueOf(pageIndex);
-case var __case_351_26_0 when global::System.Object.Equals(__case_351_26_0, global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.StyleLettersLower):
-return global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator.makeLetterLabel(pageIndex);
-case var __case_353_26_0 when global::System.Object.Equals(__case_353_26_0, global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.StyleLettersUpper):
-return global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator.makeLetterLabel(pageIndex).ToUpper();
-case var __case_355_26_0 when global::System.Object.Equals(__case_355_26_0, global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.StyleRomanLower):
-return global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator.makeRomanLabel(pageIndex);
-case var __case_357_26_0 when global::System.Object.Equals(__case_357_26_0, global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.StyleRomanUpper):
-return global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator.makeRomanLabel(pageIndex).ToUpper();
-default:
-break;
-}
-}
-return global::DripSharp.Runtime.JavaCompat.StringValueOf(pageIndex);
-}
+    internal string getNumber(int pageIndex, string style) {
+      if ((style != default!)) {
+        switch (style) {
+          case var __case_349_26_0 when global::System.Object.Equals(__case_349_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.StyleDecimal):
+            return global::DripSharp.Runtime.JavaCompat.StringValueOf(pageIndex);
+          case var __case_351_26_0 when global::System.Object.Equals(__case_351_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.StyleLettersLower):
+            return global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator.makeLetterLabel(pageIndex);
+          case var __case_353_26_0 when global::System.Object.Equals(__case_353_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.StyleLettersUpper):
+            return global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator.makeLetterLabel(pageIndex).ToUpper();
+          case var __case_355_26_0 when global::System.Object.Equals(__case_355_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.StyleRomanLower):
+            return global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator.makeRomanLabel(pageIndex);
+          case var __case_357_26_0 when global::System.Object.Equals(__case_357_26_0,
+              global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.StyleRomanUpper):
+            return global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator.makeRomanLabel(pageIndex).ToUpper();
+          default:
+            break;
+        }
+      }
+      return global::DripSharp.Runtime.JavaCompat.StringValueOf(pageIndex);
+    }
 
-internal static readonly string[][] ROMANS = new string[][] { new string[] { "", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix" }, new string[] { "", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc" }, new string[] { "", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm" } };
+    internal static readonly string[][] ROMANS = new string[][] { new string[] { "", "i", "ii",
+        "iii", "iv", "v", "vi", "vii", "viii", "ix" }, new string[] { "", "x", "xx", "xxx", "xl", "l",
+        "lx", "lxx", "lxxx", "xc" }, new string[] { "", "c", "cc", "ccc", "cd", "d", "dc", "dcc",
+        "dccc", "cm" } };
 
-internal static string makeRomanLabel(int pageIndex) {
-global::System.Text.StringBuilder buf = new global::System.Text.StringBuilder();
-int power = 0;
-while (((power < 3) && (pageIndex > 0))) {
-buf.Insert(0, global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator.ROMANS[power][(pageIndex % 10)]);
-pageIndex /= 10;
-power++;
-}
-for (int i = 0; (i < pageIndex); i++) {
-buf.Insert(0, 'm');
-}
-return buf.ToString();
-}
+    internal static string makeRomanLabel(int pageIndex) {
+      global::System.Text.StringBuilder buf = new global::System.Text.StringBuilder();
+      int power = 0;
+      while (((power < 3) && (pageIndex > 0))) {
+        buf.Insert(0,
+          global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator.ROMANS[power][(pageIndex % 10)]);
+        pageIndex /= 10;
+        power++;
+      }
+      for (int i = 0; (i < pageIndex); i++) {
+        buf.Insert(0, 'm');
+      }
+      return buf.ToString();
+    }
 
-internal static string makeLetterLabel(int num) {
-global::System.Text.StringBuilder buf = new global::System.Text.StringBuilder();
-int numLetters = ((num / 26) + global::System.Math.Sign((num % 26)));
-int letter = ((((num % 26) + (26 * (1 - global::System.Math.Sign((num % 26))))) + 'a') - 1);
-for (int i = 0; (i < numLetters); i++) {
-global::DripSharp.Runtime.JavaCompat.AppendCodePoint(buf, letter);
-}
-return buf.ToString();
-}
+    internal static string makeLetterLabel(int num) {
+      global::System.Text.StringBuilder buf = new global::System.Text.StringBuilder();
+      int numLetters = ((num / 26) + global::System.Math.Sign((num % 26)));
+      int letter = ((((num % 26) + (26 * (1 - global::System.Math.Sign((num % 26))))) + 'a') - 1);
+      for (int i = 0; (i < numLetters); i++) {
+        global::DripSharp.Runtime.JavaCompat.AppendCodePoint(buf, letter);
+      }
+      return buf.ToString();
+    }
 
-public virtual void Remove() {
-throw new global::System.NotSupportedException();
-}
-}
+    public virtual void Remove() {
+      throw new global::System.NotSupportedException();
+    }
+  }
 }

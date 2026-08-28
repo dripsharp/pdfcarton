@@ -9,53 +9,60 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common;
 
 public class PDRange : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSArray rangeArray = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSArray rangeArray = null!;
 
-private int startingIndex = default;
+  private int startingIndex = default;
 
-public PDRange() {
-this.rangeArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-this.rangeArray.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(0.0F));
-this.rangeArray.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(1.0F));
-this.startingIndex = 0;
-}
+  public PDRange() {
+    this.rangeArray = new global::DripSharp.PdfCarton.Cos.COSArray();
+    this.rangeArray.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(0.0F));
+    this.rangeArray.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(1.0F));
+    this.startingIndex = 0;
+  }
 
-public PDRange(global::DripSharp.PdfCarton.Cos.COSArray range) {
-this.rangeArray = range;
-}
+  public PDRange(global::DripSharp.PdfCarton.Cos.COSArray range) {
+    this.rangeArray = range;
+  }
 
-public PDRange(global::DripSharp.PdfCarton.Cos.COSArray range, int index) {
-this.rangeArray = range;
-this.startingIndex = index;
-}
+  public PDRange(global::DripSharp.PdfCarton.Cos.COSArray range, int index) {
+    this.rangeArray = range;
+    this.startingIndex = index;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.rangeArray;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.rangeArray;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSArray GetCOSArray() {
-return this.rangeArray;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSArray GetCOSArray() {
+    return this.rangeArray;
+  }
 
-public virtual float GetMin() {
-global::DripSharp.PdfCarton.Cos.COSNumber min = (global::DripSharp.PdfCarton.Cos.COSNumber)(this.rangeArray.GetObject((this.startingIndex * 2))!);
-return min.FloatValue();
-}
+  public virtual float GetMin() {
+    global::DripSharp.PdfCarton.Cos.COSNumber min
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(this.rangeArray.GetObject((this.startingIndex
+      * 2))!);
+    return min.FloatValue();
+  }
 
-public virtual void SetMin(float min) {
-this.rangeArray.Set((this.startingIndex * 2), new global::DripSharp.PdfCarton.Cos.COSFloat(min));
-}
+  public virtual void SetMin(float min) {
+    this.rangeArray.Set((this.startingIndex * 2),
+      new global::DripSharp.PdfCarton.Cos.COSFloat(min));
+  }
 
-public virtual float GetMax() {
-global::DripSharp.PdfCarton.Cos.COSNumber max = (global::DripSharp.PdfCarton.Cos.COSNumber)(this.rangeArray.GetObject(((this.startingIndex * 2) + 1))!);
-return max.FloatValue();
-}
+  public virtual float GetMax() {
+    global::DripSharp.PdfCarton.Cos.COSNumber max
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(this.rangeArray.GetObject(((this.startingIndex
+      * 2) + 1))!);
+    return max.FloatValue();
+  }
 
-public virtual void SetMax(float max) {
-this.rangeArray.Set(((this.startingIndex * 2) + 1), new global::DripSharp.PdfCarton.Cos.COSFloat(max));
-}
+  public virtual void SetMax(float max) {
+    this.rangeArray.Set(((this.startingIndex * 2) + 1),
+      new global::DripSharp.PdfCarton.Cos.COSFloat(max));
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("PDRange{", this.GetMin()), ", "), this.GetMax()), '}');
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("PDRange{",
+      this.GetMin()), ", "), this.GetMax()), '}');
+  }
 }

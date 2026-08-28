@@ -8,18 +8,21 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
-public class FDFAnnotationStrikeOut : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTextMarkup {
-public const string Subtype = "StrikeOut";
+public class FDFAnnotationStrikeOut
+: global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTextMarkup {
+  public const string Subtype = "StrikeOut";
 
-public FDFAnnotationStrikeOut() : base() {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStrikeOut.Subtype);
-}
+  public FDFAnnotationStrikeOut() : base() {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStrikeOut.Subtype);
+  }
 
-public FDFAnnotationStrikeOut(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public FDFAnnotationStrikeOut(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public FDFAnnotationStrikeOut(global::System.Xml.XmlElement element) : base(element) {
-base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype, global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStrikeOut.Subtype);
-}
+  public FDFAnnotationStrikeOut(global::System.Xml.XmlElement element) : base(element) {
+    base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStrikeOut.Subtype);
+  }
 }

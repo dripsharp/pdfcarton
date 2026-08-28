@@ -9,27 +9,32 @@
 namespace DripSharp.PdfCarton.Printing;
 
 public sealed class Orientation {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("AUTO")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Printing.Orientation Auto = new global::DripSharp.PdfCarton.Printing.Orientation();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("AUTO")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Printing.Orientation Auto
+    = new global::DripSharp.PdfCarton.Printing.Orientation();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("LANDSCAPE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Printing.Orientation Landscape = new global::DripSharp.PdfCarton.Printing.Orientation();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("LANDSCAPE")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Printing.Orientation Landscape
+    = new global::DripSharp.PdfCarton.Printing.Orientation();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("PORTRAIT")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Printing.Orientation Portrait = new global::DripSharp.PdfCarton.Printing.Orientation();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("PORTRAIT")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Printing.Orientation Portrait
+    = new global::DripSharp.PdfCarton.Printing.Orientation();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("REVERSE_LANDSCAPE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Printing.Orientation ReverseLandscape = new global::DripSharp.PdfCarton.Printing.Orientation();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("REVERSE_LANDSCAPE")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Printing.Orientation ReverseLandscape
+    = new global::DripSharp.PdfCarton.Printing.Orientation();
 
-private Orientation() {}
+  private Orientation() {}
 
+  public static Orientation[] values()
+    => global::DripSharp.Runtime.JavaCompat.EnumValues<Orientation>();
+  public static Orientation valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<Orientation>(name);
 
-public static Orientation[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<Orientation>();
-public static Orientation valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<Orientation>(name);
-
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

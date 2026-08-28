@@ -9,43 +9,48 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common;
 
 public class PDObjectStream : global::DripSharp.PdfCarton.Pdmodel.Common.PDStream {
-public PDObjectStream(global::DripSharp.PdfCarton.Cos.COSStream str) : base(str) {
+  public PDObjectStream(global::DripSharp.PdfCarton.Cos.COSStream str) : base(str) {
 
-}
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream CreateStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-global::DripSharp.PdfCarton.Cos.COSStream cosStream = document.GetDocument().CreateCOSStream();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream strm = new global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream(cosStream);
-strm.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.ObjStm);
-return strm;
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream CreateStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    global::DripSharp.PdfCarton.Cos.COSStream cosStream = document.GetDocument().CreateCOSStream();
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream strm
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream(cosStream);
+    strm.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.ObjStm);
+    return strm;
+  }
 
-public new virtual string GetType() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type);
-}
+  public new virtual string GetType() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type);
+  }
 
-public virtual int GetNumberOfObjects() {
-return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.N, 0);
-}
+  public virtual int GetNumberOfObjects() {
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.N, 0);
+  }
 
-public virtual void SetNumberOfObjects(int n) {
-this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.N, n);
-}
+  public virtual void SetNumberOfObjects(int n) {
+    this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.N, n);
+  }
 
-public virtual int GetFirstByteOffset() {
-return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.First, 0);
-}
+  public virtual int GetFirstByteOffset() {
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.First, 0);
+  }
 
-public virtual void SetFirstByteOffset(int n) {
-this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.First, n);
-}
+  public virtual void SetFirstByteOffset(int n) {
+    this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.First, n);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream GetExtends() {
-global::DripSharp.PdfCarton.Cos.COSStream stream = this.GetCOSObject().GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Extends);
-return ((stream != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream(stream) : (global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream GetExtends() {
+    global::DripSharp.PdfCarton.Cos.COSStream stream
+      = this.GetCOSObject().GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Extends);
+    return ((stream != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream(stream)
+      : (global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream)(default!));
+  }
 
-public virtual void SetExtends(global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream stream) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Extends, stream);
-}
+  public virtual void SetExtends(global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream stream) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Extends, stream);
+  }
 }

@@ -9,26 +9,29 @@
 namespace DripSharp.PdfCarton.Preflight;
 
 public sealed class Format {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("PDF_A1B")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Format PdfA1b = new global::DripSharp.PdfCarton.Preflight.Format("PDF/A1-b");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("PDF_A1B")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Format PdfA1b
+    = new global::DripSharp.PdfCarton.Preflight.Format("PDF/A1-b");
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("PDF_A1A")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Preflight.Format PdfA1a = new global::DripSharp.PdfCarton.Preflight.Format("PDF/A1-a");
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("PDF_A1A")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Preflight.Format PdfA1a
+    = new global::DripSharp.PdfCarton.Preflight.Format("PDF/A1-a");
 
-private readonly string fname = null!;
+  private readonly string fname = null!;
 
-private Format(string name) {
-this.fname = name;
-}
+  private Format(string name) {
+    this.fname = name;
+  }
 
-public string GetFname() {
-return this.fname;
-}
+  public string GetFname() {
+    return this.fname;
+  }
 
-public static Format[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<Format>();
-public static Format valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<Format>(name);
+  public static Format[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<Format>();
+  public static Format valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<Format>(name);
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

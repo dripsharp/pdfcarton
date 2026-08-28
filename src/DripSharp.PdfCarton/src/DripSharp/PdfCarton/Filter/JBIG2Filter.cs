@@ -9,73 +9,98 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class JBIG2Filter : global::DripSharp.PdfCarton.Filter.Filter {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private static bool levigoLogged = false;
+  private static bool levigoLogged = false;
 
-private static void logLevigoDonated() {
-if (!(global::DripSharp.PdfCarton.Filter.JBIG2Filter.levigoLogged)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Filter.JBIG2Filter.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("The Levigo JBIG2 plugin has been donated to the Apache Foundation"));
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Filter.JBIG2Filter.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("and an improved version is available for download at ", "https://pdfbox.apache.org/download.cgi")));
-global::DripSharp.PdfCarton.Filter.JBIG2Filter.levigoLogged = true;
-}
-}
+  private static void logLevigoDonated() {
+    if (!(global::DripSharp.PdfCarton.Filter.JBIG2Filter.levigoLogged)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Filter.JBIG2Filter.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("The Levigo JBIG2 plugin has been donated to the Apache Foundation"));
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Filter.JBIG2Filter.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("and an improved version is available for download at ",
+        "https://pdfbox.apache.org/download.cgi")));
+      global::DripSharp.PdfCarton.Filter.JBIG2Filter.levigoLogged = true;
+    }
+  }
 
-public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded, global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters, int index, global::DripSharp.PdfCarton.Filter.DecodeOptions options) {
-global::DripSharp.Runtime.JavaImageReader reader = global::DripSharp.PdfCarton.Filter.Filter.FindImageReader("JBIG2", "jbig2-imageio is not installed");
-if (global::DripSharp.Runtime.JavaCompat.StringContains(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(reader)).GetType(), "DripSharp.PdfCarton", "org.apache.pdfbox"), "levigo")) {
-global::DripSharp.PdfCarton.Filter.JBIG2Filter.logLevigoDonated();
-}
-int bits = parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent, 1);
-global::DripSharp.PdfCarton.Cos.COSDictionary @params = this.GetDecodeParams(parameters, index);
-global::DripSharp.Runtime.JavaImageReadParam irp = reader.GetDefaultReadParam();
-irp.SetSourceSubsampling(options.GetSubsamplingX(), options.GetSubsamplingY(), options.GetSubsamplingOffsetX(), options.GetSubsamplingOffsetY());
-irp.SetSourceRegion(options.GetSourceRegion());
-options.setFilterSubsampled(true);
-global::System.IO.Stream source = encoded;
-if ((@params != default!)) {
-global::DripSharp.PdfCarton.Cos.COSStream globals = @params.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Jbig2Globals);
-if ((globals != default!)) {
-source = new global::DripSharp.Runtime.JavaSequenceInputStream(globals.CreateInputStream(), encoded);
-}
-}
-try {
-using (global::DripSharp.Runtime.JavaImageInputStream iis = global::DripSharp.Runtime.PdfCartonImageIO.CreateImageInputStream(source)) {
-reader.SetInput(iis);
-global::SkiaSharp.SKBitmap image;
-try {
-image = reader.Read(0, irp);
-} catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
-throw new global::System.IO.IOException("Could not read JBIG2 image", e);
-}
-if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).PixelSize != bits)) {
-if ((bits != 1)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Filter.JBIG2Filter.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("Attempting to handle a JBIG2 with more than 1-bit depth"));
-}
-global::SkiaSharp.SKBitmap packedImage = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_BINARY);
-global::DripSharp.Runtime.PdfCartonGraphics2D graphics = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(packedImage);
-graphics.DrawImage(image, 0, 0, (object)default!);
-graphics.Dispose();
-image = packedImage;
-}
-global::DripSharp.Runtime.JavaDataBuffer dBuf = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageData(image).GetDataBuffer();
-if ((dBuf.DataType == global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE)) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, ((global::DripSharp.Runtime.JavaDataBufferByte)(dBuf!)).GetData());
-} else {
-throw new global::System.IO.IOException("Unexpected image buffer type");
-}
-}
-} finally {
-reader.Dispose();
-}
-return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
-}
+  public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded,
+    global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters,
+    int index, global::DripSharp.PdfCarton.Filter.DecodeOptions options) {
+    global::DripSharp.Runtime.JavaImageReader reader
+      = global::DripSharp.PdfCarton.Filter.Filter.FindImageReader("JBIG2",
+      "jbig2-imageio is not installed");
+    if (global::DripSharp.Runtime.JavaCompat.StringContains(global::DripSharp.Runtime.JavaCompat.ClassName(((object)(reader)).GetType(),
+      "DripSharp.PdfCarton", "org.apache.pdfbox"), "levigo")) {
+      global::DripSharp.PdfCarton.Filter.JBIG2Filter.logLevigoDonated();
+    }
+    int bits = parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent, 1);
+    global::DripSharp.PdfCarton.Cos.COSDictionary @params = this.GetDecodeParams(parameters, index);
+    global::DripSharp.Runtime.JavaImageReadParam irp = reader.GetDefaultReadParam();
+    irp.SetSourceSubsampling(options.GetSubsamplingX(), options.GetSubsamplingY(),
+      options.GetSubsamplingOffsetX(), options.GetSubsamplingOffsetY());
+    irp.SetSourceRegion(options.GetSourceRegion());
+    options.setFilterSubsampled(true);
+    global::System.IO.Stream source = encoded;
+    if ((@params != default!)) {
+      global::DripSharp.PdfCarton.Cos.COSStream globals
+        = @params.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.Jbig2Globals);
+      if ((globals != default!)) {
+        source = new global::DripSharp.Runtime.JavaSequenceInputStream(globals.CreateInputStream(),
+          encoded);
+      }
+    }
+    try {
+      using (global::DripSharp.Runtime.JavaImageInputStream iis
+        = global::DripSharp.Runtime.PdfCartonImageIO.CreateImageInputStream(source)) {
+        reader.SetInput(iis);
+        global::SkiaSharp.SKBitmap image;
+        try {
+          image = reader.Read(0, irp);
+        } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
+          throw new global::System.IO.IOException("Could not read JBIG2 image", e);
+        }
+        if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).PixelSize
+          != bits)) {
+          if ((bits != 1)) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Filter.JBIG2Filter.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf("Attempting to handle a JBIG2 with more than 1-bit depth"));
+          }
+          global::SkiaSharp.SKBitmap packedImage
+            = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height,
+            global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_BINARY);
+          global::DripSharp.Runtime.PdfCartonGraphics2D graphics
+            = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(packedImage);
+          graphics.DrawImage(image, 0, 0, (object)default!);
+          graphics.Dispose();
+          image = packedImage;
+        }
+        global::DripSharp.Runtime.JavaDataBuffer dBuf
+          = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageData(image).GetDataBuffer();
+        if ((dBuf.DataType
+          == global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE)) {
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded,
+            ((global::DripSharp.Runtime.JavaDataBufferByte)(dBuf!)).GetData());
+        } else {
+          throw new global::System.IO.IOException("Unexpected image buffer type");
+        }
+      }
+    } finally {
+      reader.Dispose();
+    }
+    return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
+  }
 
-public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded, global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters, int index) {
-return this.Decode(encoded, decoded, parameters, index, global::DripSharp.PdfCarton.Filter.DecodeOptions.Default);
-}
+  public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded,
+    global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters,
+    int index) {
+    return this.Decode(encoded, decoded, parameters, index,
+      global::DripSharp.PdfCarton.Filter.DecodeOptions.Default);
+  }
 
-public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
-throw new global::System.NotSupportedException("JBIG2 encoding not implemented");
-}
+  public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded,
+    global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
+    throw new global::System.NotSupportedException("JBIG2 encoding not implemented");
+  }
 }

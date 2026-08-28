@@ -9,45 +9,49 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class IndexToLocationTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-private const short SHORT_OFFSETS = unchecked((short)(0));
+  private const short SHORT_OFFSETS = unchecked((short)(0));
 
-private const short LONG_OFFSETS = unchecked((short)(1));
+  private const short LONG_OFFSETS = unchecked((short)(1));
 
-public const string Tag = "loca";
+  public const string Tag = "loca";
 
-private long[] offsets = null!;
+  private long[] offsets = null!;
 
-internal IndexToLocationTable() {}
+  internal IndexToLocationTable() {}
 
-internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable head = ttf.GetHeader();
-if ((head == default!)) {
-throw new global::System.IO.IOException("Could not get head table");
-}
-int numGlyphs = ttf.GetNumberOfGlyphs();
-this.offsets = new long[(numGlyphs + 1)];
-for (int i = 0; (i < (numGlyphs + 1)); i++) {
-if (((int)(head.GetIndexToLocFormat()) == (int)(global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable.SHORT_OFFSETS))) {
-this.offsets[i] = (data.ReadUnsignedShort() * 2L);
-} else {
-if (((int)(head.GetIndexToLocFormat()) == (int)(global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable.LONG_OFFSETS))) {
-this.offsets[i] = data.ReadUnsignedInt();
-} else {
-throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Error:TTF.loca unknown offset format: ", head.GetIndexToLocFormat()));
-}
-}
-}
-if ((((numGlyphs == 1) && (this.offsets[0] == 0)) && (this.offsets[1] == 0))) {
-throw new global::System.IO.IOException("The font has no glyphs");
-}
-base.Initialized = true;
-}
+  internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable head = ttf.GetHeader();
+    if ((head == default!)) {
+      throw new global::System.IO.IOException("Could not get head table");
+    }
+    int numGlyphs = ttf.GetNumberOfGlyphs();
+    this.offsets = new long[(numGlyphs + 1)];
+    for (int i = 0; (i < (numGlyphs + 1)); i++) {
+      if (((int)(head.GetIndexToLocFormat())
+        == (int)(global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable.SHORT_OFFSETS))) {
+        this.offsets[i] = (data.ReadUnsignedShort() * 2L);
+      } else {
+        if (((int)(head.GetIndexToLocFormat())
+          == (int)(global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable.LONG_OFFSETS))) {
+          this.offsets[i] = data.ReadUnsignedInt();
+        } else {
+          throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Error:TTF.loca unknown offset format: ",
+            head.GetIndexToLocFormat()));
+        }
+      }
+    }
+    if ((((numGlyphs == 1) && (this.offsets[0] == 0)) && (this.offsets[1] == 0))) {
+      throw new global::System.IO.IOException("The font has no glyphs");
+    }
+    base.Initialized = true;
+  }
 
-public virtual long[] GetOffsets() {
-return this.offsets;
-}
+  public virtual long[] GetOffsets() {
+    return this.offsets;
+  }
 
-public virtual void SetOffsets(long[] offsetsValue) {
-this.offsets = offsetsValue;
-}
+  public virtual void SetOffsets(long[] offsetsValue) {
+    this.offsets = offsetsValue;
+  }
 }

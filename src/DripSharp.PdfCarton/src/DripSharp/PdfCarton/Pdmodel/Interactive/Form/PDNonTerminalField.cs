@@ -9,108 +9,128 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class PDNonTerminalField : global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public PDNonTerminalField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) : base(acroForm) {
+  public PDNonTerminalField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm)
+  : base(acroForm) {
 
-}
+  }
 
-internal PDNonTerminalField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm, global::DripSharp.PdfCarton.Cos.COSDictionary field, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm, field, parent) {
+  internal PDNonTerminalField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm,
+    global::DripSharp.PdfCarton.Cos.COSDictionary field,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm,
+    field, parent) {
 
-}
+  }
 
-public override int GetFieldFlags() {
-return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.Ff, 0);
-}
+  public override int GetFieldFlags() {
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.Ff, 0);
+  }
 
-public override void importFDF(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField fdfField) {
-base.importFDF(fdfField);
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fdfKids = fdfField.GetKids();
-if ((fdfKids == default!)) {
-return;
-}
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> children = this.GetChildren();
-for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(fdfKids)); i++) {
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField pdChild in children) {
-global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField fdfChild = global::DripSharp.Runtime.JavaCompat.ListGet(fdfKids, i);
-string fdfName = fdfChild.GetPartialFieldName();
-if (((fdfName != default!) && global::DripSharp.Runtime.JavaCompat.Equals(fdfName, pdChild.GetPartialName()))) {
-pdChild.importFDF(fdfChild);
-}
-}
-}
-}
+  public override void importFDF(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField fdfField) {
+    base.importFDF(fdfField);
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fdfKids
+      = fdfField.GetKids();
+    if ((fdfKids == default!)) {
+      return;
+    }
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> children
+      = this.GetChildren();
+    for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(fdfKids)); i++) {
+      foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField pdChild in children) {
+        global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField fdfChild
+          = global::DripSharp.Runtime.JavaCompat.ListGet(fdfKids, i);
+        string fdfName = fdfChild.GetPartialFieldName();
+        if (((fdfName != default!) && global::DripSharp.Runtime.JavaCompat.Equals(fdfName,
+          pdChild.GetPartialName()))) {
+          pdChild.importFDF(fdfChild);
+        }
+      }
+    }
+  }
 
-internal override global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField exportFDF() {
-global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField fdfField = new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField();
-fdfField.SetPartialFieldName(this.GetPartialName());
-fdfField.SetValue(this.GetValue());
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> children = this.GetChildren();
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fdfChildren = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField>(global::DripSharp.Runtime.JavaCompat.CollectionCount(children));
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField child in children) {
-global::DripSharp.Runtime.JavaCompat.Add(fdfChildren, child.exportFDF());
-}
-fdfField.SetKids(fdfChildren);
-return fdfField;
-}
+  internal override global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField exportFDF() {
+    global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField fdfField
+      = new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField();
+    fdfField.SetPartialFieldName(this.GetPartialName());
+    fdfField.SetValue(this.GetValue());
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> children
+      = this.GetChildren();
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fdfChildren
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField>(global::DripSharp.Runtime.JavaCompat.CollectionCount(children));
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField child in children) {
+      global::DripSharp.Runtime.JavaCompat.Add(fdfChildren, child.exportFDF());
+    }
+    fdfField.SetKids(fdfChildren);
+    return fdfField;
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> GetChildren() {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> children = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField>();
-global::DripSharp.PdfCarton.Cos.COSArray kids = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Kids);
-if ((kids == default!)) {
-return children;
-}
-for (int i = 0; (i < kids.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase kid = kids.GetObject(i);
-if ((kid is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-if ((kid.GetCOSObject() == this.GetCOSObject())) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("Child field is same object as parent"));
-continue;
-}
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field = global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField.fromDictionary(this.GetAcroForm(), (global::DripSharp.PdfCarton.Cos.COSDictionary)(kid!), this);
-if ((field != default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(children, field);
-}
-}
-}
-return children;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> GetChildren() {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> children
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField>();
+    global::DripSharp.PdfCarton.Cos.COSArray kids
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Kids);
+    if ((kids == default!)) {
+      return children;
+    }
+    for (int i = 0; (i < kids.Size()); i++) {
+      global::DripSharp.PdfCarton.Cos.COSBase kid = kids.GetObject(i);
+      if ((kid is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        if ((kid.GetCOSObject() == this.GetCOSObject())) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf("Child field is same object as parent"));
+          continue;
+        }
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field
+          = global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField.fromDictionary(this.GetAcroForm(),
+          (global::DripSharp.PdfCarton.Cos.COSDictionary)(kid!), this);
+        if ((field != default!)) {
+          global::DripSharp.Runtime.JavaCompat.Add(children, field);
+        }
+      }
+    }
+    return children;
+  }
 
-public virtual void SetChildren(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> children) {
-global::DripSharp.PdfCarton.Cos.COSArray kidsArray = new global::DripSharp.PdfCarton.Cos.COSArray(children);
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids, kidsArray);
-}
+  public virtual void SetChildren(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> children) {
+    global::DripSharp.PdfCarton.Cos.COSArray kidsArray
+      = new global::DripSharp.PdfCarton.Cos.COSArray(children);
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids, kidsArray);
+  }
 
-public override string GetFieldType() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Ft);
-}
+  public override string GetFieldType() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Ft);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetValue() {
-return this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetValue() {
+    return this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V);
+  }
 
-public override string GetValueAsString() {
-global::DripSharp.PdfCarton.Cos.COSBase fieldValue = this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V);
-return ((fieldValue != default!) ? global::DripSharp.Runtime.JavaCompat.StringValueOf(fieldValue) : "");
-}
+  public override string GetValueAsString() {
+    global::DripSharp.PdfCarton.Cos.COSBase fieldValue
+      = this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V);
+    return ((fieldValue != default!)
+      ? global::DripSharp.Runtime.JavaCompat.StringValueOf(fieldValue) : "");
+  }
 
-public virtual void SetValue(global::DripSharp.PdfCarton.Cos.COSBase @object) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.V, @object);
-}
+  public virtual void SetValue(global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.V, @object);
+  }
 
-public override void SetValue(string value) {
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.V, value);
-}
+  public override void SetValue(string value) {
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.V, value);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetDefaultValue() {
-return this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Dv);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetDefaultValue() {
+    return this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Dv);
+  }
 
-public virtual void SetDefaultValue(global::DripSharp.PdfCarton.Cos.COSBase value) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Dv, value);
-}
+  public virtual void SetDefaultValue(global::DripSharp.PdfCarton.Cos.COSBase value) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Dv, value);
+  }
 
-public override global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> GetWidgets() {
-return global::System.Array.Empty<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget>();
-}
+  public override global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> GetWidgets() {
+    return global::System.Array.Empty<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget>();
+  }
 }

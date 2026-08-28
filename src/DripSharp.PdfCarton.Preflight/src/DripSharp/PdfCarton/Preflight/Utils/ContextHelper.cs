@@ -9,54 +9,74 @@
 namespace DripSharp.PdfCarton.Preflight.Utils;
 
 public sealed class ContextHelper {
-private ContextHelper() {}
+  private ContextHelper() {}
 
-public static void ValidateElement(global::DripSharp.PdfCarton.Preflight.PreflightContext context, object element, string processName) {
-if ((element == default!)) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorPdfProcessingMissing, "Unable to process an element if it is null."));
-} else {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.callValidation(context, element, processName);
-}
-}
+  public static void ValidateElement(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    object element, string processName) {
+    if ((element == default!)) {
+      context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorPdfProcessingMissing,
+        "Unable to process an element if it is null."));
+    } else {
+      global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.callValidation(context, element,
+        processName);
+    }
+  }
 
-private static void callValidation(global::DripSharp.PdfCarton.Preflight.PreflightContext context, object element, string processName) {
-global::DripSharp.PdfCarton.Preflight.PreflightPath validationPath = context.GetValidationPath();
-if (global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.hasRecursion(context, element, validationPath)) {
-return;
-}
-if (((element is global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable) && (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.GraphicProcess, processName) || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.FontProcess, processName)))) {
-global::DripSharp.PdfCarton.Cos.COSBase cos = ((global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)(element!)).GetCOSObject();
-if (context.IsInProcessedSet(cos)) {
-return;
-}
-context.AddToProcessedSet(cos);
-}
-bool needPop = validationPath.PushObject(element);
-global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = context.GetConfig();
-global::DripSharp.PdfCarton.Preflight.Process.ValidationProcess process = config.GetInstanceOfProcess(processName);
-process.Validate(context);
-if (needPop) {
-validationPath.Pop();
-}
-}
+  private static void callValidation(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    object element, string processName) {
+    global::DripSharp.PdfCarton.Preflight.PreflightPath validationPath
+      = context.GetValidationPath();
+    if (global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.hasRecursion(context, element,
+      validationPath)) {
+      return;
+    }
+    if (((element is global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)
+      && (global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.GraphicProcess,
+      processName)
+      || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.FontProcess,
+      processName)))) {
+      global::DripSharp.PdfCarton.Cos.COSBase cos
+        = ((global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)(element!)).GetCOSObject();
+      if (context.IsInProcessedSet(cos)) {
+        return;
+      }
+      context.AddToProcessedSet(cos);
+    }
+    bool needPop = validationPath.PushObject(element);
+    global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = context.GetConfig();
+    global::DripSharp.PdfCarton.Preflight.Process.ValidationProcess process
+      = config.GetInstanceOfProcess(processName);
+    process.Validate(context);
+    if (needPop) {
+      validationPath.Pop();
+    }
+  }
 
-private static bool hasRecursion(global::DripSharp.PdfCarton.Preflight.PreflightContext context, object element, global::DripSharp.PdfCarton.Preflight.PreflightPath validationPath) {
-if (((element is global::DripSharp.PdfCarton.Pdmodel.PDResources) || (element is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject))) {
-for (int i = 0; (i < validationPath.Size()); ++i) {
-object obj = validationPath.GetPathElement<object>(i, typeof(object));
-if ((obj is global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)) {
-global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable cos = (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)(obj!);
-if ((cos.GetCOSObject() == ((global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)(element!)).GetCOSObject())) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorPdfProcessing, global::DripSharp.Runtime.JavaCompat.Concat(((object)(element)).GetType().Name, " recursion")));
-return true;
-}
-}
-}
-}
-return false;
-}
+  private static bool hasRecursion(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    object element, global::DripSharp.PdfCarton.Preflight.PreflightPath validationPath) {
+    if (((element is global::DripSharp.PdfCarton.Pdmodel.PDResources)
+      || (element is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject))) {
+      for (int i = 0; (i < validationPath.Size()); ++i) {
+        object obj = validationPath.GetPathElement<object>(i, typeof(object));
+        if ((obj is global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)) {
+          global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable cos
+            = (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)(obj!);
+          if ((cos.GetCOSObject()
+            == ((global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)(element!)).GetCOSObject())) {
+            context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorPdfProcessing,
+              global::DripSharp.Runtime.JavaCompat.Concat(((object)(element)).GetType().Name,
+              " recursion")));
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
 
-public static void ValidateElement(global::DripSharp.PdfCarton.Preflight.PreflightContext context, string processName) {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.callValidation(context, (object)default!, processName);
-}
+  public static void ValidateElement(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    string processName) {
+    global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.callValidation(context,
+      (object)default!, processName);
+  }
 }

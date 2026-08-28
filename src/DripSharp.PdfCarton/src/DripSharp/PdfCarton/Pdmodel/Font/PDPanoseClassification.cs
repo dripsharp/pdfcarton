@@ -9,59 +9,64 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public class PDPanoseClassification {
-public const int Length = 10;
+  public const int Length = 10;
 
-private readonly sbyte[] bytes = null!;
+  private readonly sbyte[] bytes = null!;
 
-public PDPanoseClassification(sbyte[] bytes) {
-this.bytes = bytes;
-}
+  public PDPanoseClassification(sbyte[] bytes) {
+    this.bytes = bytes;
+  }
 
-public virtual int GetFamilyKind() {
-return this.bytes[0];
-}
+  public virtual int GetFamilyKind() {
+    return this.bytes[0];
+  }
 
-public virtual int GetSerifStyle() {
-return this.bytes[1];
-}
+  public virtual int GetSerifStyle() {
+    return this.bytes[1];
+  }
 
-public virtual int GetWeight() {
-return this.bytes[2];
-}
+  public virtual int GetWeight() {
+    return this.bytes[2];
+  }
 
-public virtual int GetProportion() {
-return this.bytes[3];
-}
+  public virtual int GetProportion() {
+    return this.bytes[3];
+  }
 
-public virtual int GetContrast() {
-return this.bytes[4];
-}
+  public virtual int GetContrast() {
+    return this.bytes[4];
+  }
 
-public virtual int GetStrokeVariation() {
-return this.bytes[5];
-}
+  public virtual int GetStrokeVariation() {
+    return this.bytes[5];
+  }
 
-public virtual int GetArmStyle() {
-return this.bytes[6];
-}
+  public virtual int GetArmStyle() {
+    return this.bytes[6];
+  }
 
-public virtual int GetLetterform() {
-return this.bytes[7];
-}
+  public virtual int GetLetterform() {
+    return this.bytes[7];
+  }
 
-public virtual int GetMidline() {
-return this.bytes[8];
-}
+  public virtual int GetMidline() {
+    return this.bytes[8];
+  }
 
-public virtual int GetXHeight() {
-return this.bytes[9];
-}
+  public virtual int GetXHeight() {
+    return this.bytes[9];
+  }
 
-public virtual sbyte[] GetBytes() {
-return this.bytes;
-}
+  public virtual sbyte[] GetBytes() {
+    return this.bytes;
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("{ FamilyKind = ", this.GetFamilyKind()), ", "), "SerifStyle = "), this.GetSerifStyle()), ", "), "Weight = "), this.GetWeight()), ", "), "Proportion = "), this.GetProportion()), ", "), "Contrast = "), this.GetContrast()), ", "), "StrokeVariation = "), this.GetStrokeVariation()), ", "), "ArmStyle = "), this.GetArmStyle()), ", "), "Letterform = "), this.GetLetterform()), ", "), "Midline = "), this.GetMidline()), ", "), "XHeight = "), this.GetXHeight()), "}");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("{ FamilyKind = ",
+      this.GetFamilyKind()), ", "), "SerifStyle = "), this.GetSerifStyle()), ", "), "Weight = "),
+      this.GetWeight()), ", "), "Proportion = "), this.GetProportion()), ", "), "Contrast = "),
+      this.GetContrast()), ", "), "StrokeVariation = "), this.GetStrokeVariation()), ", "),
+      "ArmStyle = "), this.GetArmStyle()), ", "), "Letterform = "), this.GetLetterform()), ", "),
+      "Midline = "), this.GetMidline()), ", "), "XHeight = "), this.GetXHeight()), "}");
+  }
 }

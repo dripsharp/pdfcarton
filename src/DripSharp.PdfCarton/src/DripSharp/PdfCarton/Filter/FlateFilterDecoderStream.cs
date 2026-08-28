@@ -9,114 +9,120 @@
 namespace DripSharp.PdfCarton.Filter;
 
 public sealed class FlateFilterDecoderStream : global::DripSharp.Runtime.JavaFilterInputStream {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private bool isEOF = false;
+  private bool isEOF = false;
 
-private int currentDataIndex = 0;
+  private int currentDataIndex = 0;
 
-private int bytesDecoded = 0;
+  private int bytesDecoded = 0;
 
-private readonly sbyte[] buffer = new sbyte[2048];
+  private readonly sbyte[] buffer = new sbyte[2048];
 
-private readonly sbyte[] decodedData = new sbyte[4096];
+  private readonly sbyte[] decodedData = new sbyte[4096];
 
-private readonly global::DripSharp.Runtime.JavaInflater inflater = new global::DripSharp.Runtime.JavaInflater(true);
+  private readonly global::DripSharp.Runtime.JavaInflater inflater
+    = new global::DripSharp.Runtime.JavaInflater(true);
 
-public FlateFilterDecoderStream(global::System.IO.Stream inputStream) : base(inputStream) {
-global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in);
-global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in);
-}
+  public FlateFilterDecoderStream(global::System.IO.Stream inputStream) : base(inputStream) {
+    global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in);
+    global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in);
+  }
 
-private bool fetch() {
-this.currentDataIndex = 0;
-if ((this.isEOF || this.inflater.Finished())) {
-this.isEOF = true;
-this.bytesDecoded = 0;
-return false;
-}
-if (this.inflater.NeedsInput()) {
-int bytesRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in, this.buffer);
-if ((bytesRead > -1)) {
-this.inflater.SetInput(this.buffer, 0, bytesRead);
-} else {
-this.isEOF = true;
-return false;
-}
-}
-try {
-if ((this.bytesDecoded > 0)) {
-global::DripSharp.Runtime.JavaCompat.Fill(this.decodedData, 0, this.bytesDecoded, unchecked((sbyte)(0)));
-}
-this.bytesDecoded = this.inflater.Inflate(this.decodedData);
-} catch (global::System.IO.InvalidDataException exception) {
-this.isEOF = true;
-int countZeros = 0;
-for (int i = 0; (i < this.decodedData.Length); i++) {
-if (((int)(this.decodedData[i]) == 0)) {
-countZeros++;
-} else {
-countZeros = 0;
-}
-}
-this.bytesDecoded = (this.decodedData.Length - countZeros);
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Filter.FlateFilterDecoderStream.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("FlateFilter: premature end of stream due to a DataFormatException = ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(exception))));
-return (this.bytesDecoded > 0);
-}
-return true;
-}
+  private bool fetch() {
+    this.currentDataIndex = 0;
+    if ((this.isEOF || this.inflater.Finished())) {
+      this.isEOF = true;
+      this.bytesDecoded = 0;
+      return false;
+    }
+    if (this.inflater.NeedsInput()) {
+      int bytesRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in, this.buffer);
+      if ((bytesRead > -1)) {
+        this.inflater.SetInput(this.buffer, 0, bytesRead);
+      } else {
+        this.isEOF = true;
+        return false;
+      }
+    }
+    try {
+      if ((this.bytesDecoded > 0)) {
+        global::DripSharp.Runtime.JavaCompat.Fill(this.decodedData, 0, this.bytesDecoded,
+          unchecked((sbyte)(0)));
+      }
+      this.bytesDecoded = this.inflater.Inflate(this.decodedData);
+    } catch (global::System.IO.InvalidDataException exception) {
+      this.isEOF = true;
+      int countZeros = 0;
+      for (int i = 0; (i < this.decodedData.Length); i++) {
+        if (((int)(this.decodedData[i]) == 0)) {
+          countZeros++;
+        } else {
+          countZeros = 0;
+        }
+      }
+      this.bytesDecoded = (this.decodedData.Length - countZeros);
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Filter.FlateFilterDecoderStream.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("FlateFilter: premature end of stream due to a DataFormatException = ",
+        global::DripSharp.Runtime.JavaCompat.ExceptionMessage(exception))));
+      return (this.bytesDecoded > 0);
+    }
+    return true;
+  }
 
-public override int Read() {
-if (this.isEOF) {
-return -1;
-}
-if (((this.currentDataIndex == this.bytesDecoded) && !(this.fetch()))) {
-return -1;
-}
-return (this.decodedData[this.currentDataIndex++] & 255);
-}
+  public override int Read() {
+    if (this.isEOF) {
+      return -1;
+    }
+    if (((this.currentDataIndex == this.bytesDecoded) && !(this.fetch()))) {
+      return -1;
+    }
+    return (this.decodedData[this.currentDataIndex++] & 255);
+  }
 
-public override int Read(sbyte[] data, int offset, int length) {
-if (this.isEOF) {
-return -1;
-}
-int numberOfBytesRead = 0;
-while ((numberOfBytesRead < length)) {
-int available = (this.bytesDecoded - this.currentDataIndex);
-if ((available > 0)) {
-int bytes2Copy = global::System.Math.Min((length - numberOfBytesRead), available);
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.decodedData, this.currentDataIndex, data, (numberOfBytesRead + offset), bytes2Copy);
-this.currentDataIndex += bytes2Copy;
-numberOfBytesRead += bytes2Copy;
-} else {
-if (!(this.fetch())) {
-break;
-}
-}
-}
-return numberOfBytesRead;
-}
+  public override int Read(sbyte[] data, int offset, int length) {
+    if (this.isEOF) {
+      return -1;
+    }
+    int numberOfBytesRead = 0;
+    while ((numberOfBytesRead < length)) {
+      int available = (this.bytesDecoded - this.currentDataIndex);
+      if ((available > 0)) {
+        int bytes2Copy = global::System.Math.Min((length - numberOfBytesRead), available);
+        global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.decodedData, this.currentDataIndex,
+          data, (numberOfBytesRead + offset), bytes2Copy);
+        this.currentDataIndex += bytes2Copy;
+        numberOfBytesRead += bytes2Copy;
+      } else {
+        if (!(this.fetch())) {
+          break;
+        }
+      }
+    }
+    return numberOfBytesRead;
+  }
 
-public override void Dispose() {
-this.inflater.End();
-base.Dispose();
-}
+  public override void Dispose() {
+    this.inflater.End();
+    base.Dispose();
+  }
 
-public override bool MarkSupported() {
-return false;
-}
+  public override bool MarkSupported() {
+    return false;
+  }
 
-public override long Skip(long n) {
-return 0;
-}
+  public override long Skip(long n) {
+    return 0;
+  }
 
-public override int Available() {
-return 0;
-}
+  public override int Available() {
+    return 0;
+  }
 
-public override void Mark(int readlimit) {}
+  public override void Mark(int readlimit) {}
 
-public override void Reset() {
-throw new global::System.IO.IOException("reset is not supported");
-}
+  public override void Reset() {
+    throw new global::System.IO.IOException("reset is not supported");
+  }
 }

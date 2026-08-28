@@ -8,27 +8,33 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Graphics;
 
-public sealed class BeginInlineImage : global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
-public BeginInlineImage(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context) : base(context) {
+public sealed class BeginInlineImage
+: global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
+  public BeginInlineImage(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-if (((@operator.GetImageData() == default!) || (@operator.GetImageData().Length == 0))) {
-return;
-}
-global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context = this.GetGraphicsContext();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage image = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImage(@operator.GetImageParameters(), @operator.GetImageData(), context.GetResources());
-if (image.IsEmpty()) {
-return;
-}
-if ((!(image.IsStencil()) && !(context.IsShouldProcessColorOperators()))) {
-return;
-}
-context.DrawImage(image);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    if (((@operator.GetImageData() == default!) || (@operator.GetImageData().Length == 0))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context
+      = this.GetGraphicsContext();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage image
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImage(@operator.GetImageParameters(),
+      @operator.GetImageData(), context.GetResources());
+    if (image.IsEmpty()) {
+      return;
+    }
+    if ((!(image.IsStencil()) && !(context.IsShouldProcessColorOperators()))) {
+      return;
+    }
+    context.DrawImage(image);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginInlineImage;
+  }
 }

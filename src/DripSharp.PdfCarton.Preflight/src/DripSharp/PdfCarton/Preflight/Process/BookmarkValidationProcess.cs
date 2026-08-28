@@ -8,154 +8,220 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process;
 
-public class BookmarkValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = ctx.GetDocument().GetDocumentCatalog();
-if ((catalog != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDDocumentOutline outlineHierarchy = catalog.GetDocumentOutline();
-if ((outlineHierarchy != default!)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary dict = outlineHierarchy.GetCOSObject();
-if (!(this.checkIndirectObjects(ctx, dict))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSObject firstObj = this.toCOSObject(dict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.First));
-global::DripSharp.PdfCarton.Cos.COSObject lastObj = this.toCOSObject(dict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Last));
-if ((!(this.isCountEntryPresent(dict)) && ((outlineHierarchy.GetFirstChild() != default!) || (outlineHierarchy.GetLastChild() != default!)))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid, "Outline Hierarchy doesn't have Count entry"));
-} else {
-if ((this.isCountEntryPositive(dict) && ((outlineHierarchy.GetFirstChild() == default!) || (outlineHierarchy.GetLastChild() == default!)))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid, "Outline Hierarchy doesn't have First and/or Last entry(ies)"));
-} else {
-this.ExploreOutlineLevel(ctx, outlineHierarchy.GetFirstChild(), firstObj, lastObj);
-}
-}
-}
-} else {
-ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNocatalog, "There is no /Catalog entry in the Document"));
-}
-}
+public class BookmarkValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog
+      = ctx.GetDocument().GetDocumentCatalog();
+    if ((catalog != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDDocumentOutline outlineHierarchy
+        = catalog.GetDocumentOutline();
+      if ((outlineHierarchy != default!)) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary dict = outlineHierarchy.GetCOSObject();
+        if (!(this.checkIndirectObjects(ctx, dict))) {
+          return;
+        }
+        global::DripSharp.PdfCarton.Cos.COSObject firstObj
+          = this.toCOSObject(dict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.First));
+        global::DripSharp.PdfCarton.Cos.COSObject lastObj
+          = this.toCOSObject(dict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Last));
+        if ((!(this.isCountEntryPresent(dict)) && ((outlineHierarchy.GetFirstChild() != default!)
+          || (outlineHierarchy.GetLastChild() != default!)))) {
+          this.AddValidationError(ctx,
+            new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid,
+            "Outline Hierarchy doesn't have Count entry"));
+        } else {
+          if ((this.isCountEntryPositive(dict) && ((outlineHierarchy.GetFirstChild() == default!)
+            || (outlineHierarchy.GetLastChild() == default!)))) {
+            this.AddValidationError(ctx,
+              new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid,
+              "Outline Hierarchy doesn't have First and/or Last entry(ies)"));
+          } else {
+            this.ExploreOutlineLevel(ctx, outlineHierarchy.GetFirstChild(), firstObj, lastObj);
+          }
+        }
+      }
+    } else {
+      ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNocatalog,
+        "There is no /Catalog entry in the Document"));
+    }
+  }
 
-private bool isCountEntryPresent(global::DripSharp.PdfCarton.Cos.COSDictionary outline) {
-return (outline.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Count) != default!);
-}
+  private bool isCountEntryPresent(global::DripSharp.PdfCarton.Cos.COSDictionary outline) {
+    return (outline.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Count) != default!);
+  }
 
-private bool isCountEntryPositive(global::DripSharp.PdfCarton.Cos.COSDictionary outline) {
-global::DripSharp.PdfCarton.Cos.COSBase countBase = outline.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Count);
-return ((countBase is global::DripSharp.PdfCarton.Cos.COSInteger) && (((global::DripSharp.PdfCarton.Cos.COSInteger)(countBase!)).IntValue() > 0));
-}
+  private bool isCountEntryPositive(global::DripSharp.PdfCarton.Cos.COSDictionary outline) {
+    global::DripSharp.PdfCarton.Cos.COSBase countBase
+      = outline.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Count);
+    return ((countBase is global::DripSharp.PdfCarton.Cos.COSInteger)
+      && (((global::DripSharp.PdfCarton.Cos.COSInteger)(countBase!)).IntValue() > 0));
+  }
 
-protected internal virtual bool ExploreOutlineLevel(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem inputItem, global::DripSharp.PdfCarton.Cos.COSObject firstObj, global::DripSharp.PdfCarton.Cos.COSObject lastObj) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem currentItem = inputItem;
-global::DripSharp.PdfCarton.Cos.COSObject currentObj = firstObj;
-global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSObject> levelObjects = new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSObject>();
-levelObjects.Add(firstObj);
-bool result = true;
-if (((currentItem != default!) && (inputItem.GetPreviousSibling() != default!))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The value of /Prev of first object ", firstObj), " on a level is "), inputItem.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.Prev)), ", but shouldn't exist")));
-result = false;
-}
-while ((currentItem != default!)) {
-global::DripSharp.PdfCarton.Cos.COSObject realPrevObject = currentObj;
-if (!(this.ValidateItem(ctx, currentItem))) {
-result = false;
-}
-currentObj = this.toCOSObject(currentItem.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.Next));
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(levelObjects, currentObj)) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Loop detected: /Next ", currentObj), " is already in the list")));
-return false;
-}
-if ((realPrevObject == default!)) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Outline object before ", currentObj), " is null")));
-return false;
-}
-levelObjects.Add(currentObj);
-currentItem = currentItem.GetNextSibling();
-if ((currentItem == default!)) {
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(realPrevObject, lastObj))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Last object on a level isn't the expected /Last: ", lastObj), ", but is "), currentObj)));
-result = false;
-}
-} else {
-global::DripSharp.PdfCarton.Cos.COSObject prevObject = this.toCOSObject(currentItem.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.Prev));
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(realPrevObject, prevObject))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The value of /Prev at ", currentObj), " doesn't point to previous object "), realPrevObject), ", but to "), prevObject)));
-result = false;
-}
-}
-}
-return result;
-}
+  protected internal virtual bool ExploreOutlineLevel(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem inputItem,
+    global::DripSharp.PdfCarton.Cos.COSObject firstObj,
+    global::DripSharp.PdfCarton.Cos.COSObject lastObj) {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem currentItem
+      = inputItem;
+    global::DripSharp.PdfCarton.Cos.COSObject currentObj = firstObj;
+    global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSObject> levelObjects
+      = new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSObject>();
+    levelObjects.Add(firstObj);
+    bool result = true;
+    if (((currentItem != default!) && (inputItem.GetPreviousSibling() != default!))) {
+      this.AddValidationError(ctx,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The value of /Prev of first object ",
+        firstObj), " on a level is "),
+        inputItem.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.Prev)),
+        ", but shouldn't exist")));
+      result = false;
+    }
+    while ((currentItem != default!)) {
+      global::DripSharp.PdfCarton.Cos.COSObject realPrevObject = currentObj;
+      if (!(this.ValidateItem(ctx, currentItem))) {
+        result = false;
+      }
+      currentObj
+        = this.toCOSObject(currentItem.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.Next));
+      if (global::DripSharp.Runtime.JavaCompat.CollectionContains(levelObjects, currentObj)) {
+        this.AddValidationError(ctx,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid,
+          global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Loop detected: /Next ",
+          currentObj), " is already in the list")));
+        return false;
+      }
+      if ((realPrevObject == default!)) {
+        this.AddValidationError(ctx,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid,
+          global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Outline object before ",
+          currentObj), " is null")));
+        return false;
+      }
+      levelObjects.Add(currentObj);
+      currentItem = currentItem.GetNextSibling();
+      if ((currentItem == default!)) {
+        if (!global::DripSharp.Runtime.JavaCompat.Equals(realPrevObject, lastObj)) {
+          this.AddValidationError(ctx,
+            new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid,
+            global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Last object on a level isn't the expected /Last: ",
+            lastObj), ", but is "), currentObj)));
+          result = false;
+        }
+      } else {
+        global::DripSharp.PdfCarton.Cos.COSObject prevObject
+          = this.toCOSObject(currentItem.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.Prev));
+        if (!global::DripSharp.Runtime.JavaCompat.Equals(realPrevObject, prevObject)) {
+          this.AddValidationError(ctx,
+            new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid,
+            global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The value of /Prev at ",
+            currentObj), " doesn't point to previous object "), realPrevObject), ", but to "),
+            prevObject)));
+          result = false;
+        }
+      }
+    }
+    return result;
+  }
 
-protected internal virtual bool ValidateItem(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem inputItem) {
-bool isValid = true;
-global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = inputItem.GetCOSObject();
-global::DripSharp.PdfCarton.Cos.COSBase dest = dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Dest);
-global::DripSharp.PdfCarton.Cos.COSBase action = dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.A);
-if (!(this.checkIndirectObjects(ctx, dictionary))) {
-return false;
-}
-if (((action != default!) && (dest != default!))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid, "Dest entry isn't permitted if the A entry is present"));
-return false;
-} else {
-if ((action != default!)) {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(ctx, dictionary, global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ActionsProcess);
-} else {
-if ((dest != default!)) {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(ctx, dest, global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.DestinationProcess);
-}
-}
-}
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem fChild = inputItem.GetFirstChild();
-if ((fChild != default!)) {
-if (!(this.isCountEntryPresent(inputItem.GetCOSObject()))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid, "Outline item doesn't have Count entry but has at least one descendant"));
-isValid = false;
-} else {
-global::DripSharp.PdfCarton.Cos.COSObject firstObj = this.toCOSObject(dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.First));
-global::DripSharp.PdfCarton.Cos.COSObject lastObj = this.toCOSObject(dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Last));
-if ((((firstObj == default!) && (lastObj != default!)) || ((firstObj != default!) && (lastObj == default!)))) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid, "/First and /Last are both required if there are outline entries"));
-isValid = false;
-}
-isValid = (isValid && this.ExploreOutlineLevel(ctx, fChild, firstObj, lastObj));
-}
-}
-return isValid;
-}
+  protected internal virtual bool ValidateItem(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem inputItem) {
+    bool isValid = true;
+    global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = inputItem.GetCOSObject();
+    global::DripSharp.PdfCarton.Cos.COSBase dest
+      = dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Dest);
+    global::DripSharp.PdfCarton.Cos.COSBase action
+      = dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.A);
+    if (!(this.checkIndirectObjects(ctx, dictionary))) {
+      return false;
+    }
+    if (((action != default!) && (dest != default!))) {
+      this.AddValidationError(ctx,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid,
+        "Dest entry isn't permitted if the A entry is present"));
+      return false;
+    } else {
+      if ((action != default!)) {
+        global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(ctx, dictionary,
+          global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ActionsProcess);
+      } else {
+        if ((dest != default!)) {
+          global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(ctx, dest,
+            global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.DestinationProcess);
+        }
+      }
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem fChild
+      = inputItem.GetFirstChild();
+    if ((fChild != default!)) {
+      if (!(this.isCountEntryPresent(inputItem.GetCOSObject()))) {
+        this.AddValidationError(ctx,
+          new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid,
+          "Outline item doesn't have Count entry but has at least one descendant"));
+        isValid = false;
+      } else {
+        global::DripSharp.PdfCarton.Cos.COSObject firstObj
+          = this.toCOSObject(dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.First));
+        global::DripSharp.PdfCarton.Cos.COSObject lastObj
+          = this.toCOSObject(dictionary.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Last));
+        if ((((firstObj == default!) && (lastObj != default!)) || ((firstObj != default!)
+          && (lastObj == default!)))) {
+          this.AddValidationError(ctx,
+            new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid,
+            "/First and /Last are both required if there are outline entries"));
+          isValid = false;
+        }
+        isValid = (isValid && this.ExploreOutlineLevel(ctx, fChild, firstObj, lastObj));
+      }
+    }
+    return isValid;
+  }
 
-private bool checkIndirectObjects(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
-if (!(this.checkIndirectObject(ctx, dictionary, global::DripSharp.PdfCarton.Cos.COSName.Parent))) {
-return false;
-}
-if (!(this.checkIndirectObject(ctx, dictionary, global::DripSharp.PdfCarton.Cos.COSName.Prev))) {
-return false;
-}
-if (!(this.checkIndirectObject(ctx, dictionary, global::DripSharp.PdfCarton.Cos.COSName.Next))) {
-return false;
-}
-if (!(this.checkIndirectObject(ctx, dictionary, global::DripSharp.PdfCarton.Cos.COSName.First))) {
-return false;
-}
-return this.checkIndirectObject(ctx, dictionary, global::DripSharp.PdfCarton.Cos.COSName.Last);
-}
+  private bool checkIndirectObjects(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary dictionary) {
+    if (!(this.checkIndirectObject(ctx, dictionary,
+      global::DripSharp.PdfCarton.Cos.COSName.Parent))) {
+      return false;
+    }
+    if (!(this.checkIndirectObject(ctx, dictionary,
+      global::DripSharp.PdfCarton.Cos.COSName.Prev))) {
+      return false;
+    }
+    if (!(this.checkIndirectObject(ctx, dictionary,
+      global::DripSharp.PdfCarton.Cos.COSName.Next))) {
+      return false;
+    }
+    if (!(this.checkIndirectObject(ctx, dictionary,
+      global::DripSharp.PdfCarton.Cos.COSName.First))) {
+      return false;
+    }
+    return this.checkIndirectObject(ctx, dictionary, global::DripSharp.PdfCarton.Cos.COSName.Last);
+  }
 
-private bool checkIndirectObject(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary dictionary, global::DripSharp.PdfCarton.Cos.COSName name) {
-global::DripSharp.PdfCarton.Cos.COSBase item = dictionary.GetItem(name);
-if ((((item == default!) || (item is global::DripSharp.PdfCarton.Cos.COSNull)) || (item is global::DripSharp.PdfCarton.Cos.COSObject))) {
-return true;
-}
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("/", name.GetName()), " entry must be an indirect object")));
-return false;
-}
+  private bool checkIndirectObject(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary dictionary,
+    global::DripSharp.PdfCarton.Cos.COSName name) {
+    global::DripSharp.PdfCarton.Cos.COSBase item = dictionary.GetItem(name);
+    if ((((item == default!) || (item is global::DripSharp.PdfCarton.Cos.COSNull))
+      || (item is global::DripSharp.PdfCarton.Cos.COSObject))) {
+      return true;
+    }
+    this.AddValidationError(ctx,
+      new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxTrailerOutlinesInvalid,
+      global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("/",
+      name.GetName()), " entry must be an indirect object")));
+    return false;
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSObject toCOSObject(global::DripSharp.PdfCarton.Cos.COSBase @base) {
-if (((@base == default!) || (@base is global::DripSharp.PdfCarton.Cos.COSNull))) {
-return default!;
-}
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSObject))) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Parameter ", @base), " should be null, COSNull or a COSObject"));
-}
-return (global::DripSharp.PdfCarton.Cos.COSObject)(@base!);
-}
+  private global::DripSharp.PdfCarton.Cos.COSObject toCOSObject(global::DripSharp.PdfCarton.Cos.COSBase @base) {
+    if (((@base == default!) || (@base is global::DripSharp.PdfCarton.Cos.COSNull))) {
+      return default!;
+    }
+    if (!((@base is global::DripSharp.PdfCarton.Cos.COSObject))) {
+      throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Parameter ",
+        @base), " should be null, COSNull or a COSObject"));
+    }
+    return (global::DripSharp.PdfCarton.Cos.COSObject)(@base!);
+  }
 }

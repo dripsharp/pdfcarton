@@ -9,30 +9,32 @@
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 public abstract class ProtectionPolicy {
-private const short DEFAULT_KEY_LENGTH = unchecked((short)(40));
+  private const short DEFAULT_KEY_LENGTH = unchecked((short)(40));
 
-private short encryptionKeyLength = global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy.DEFAULT_KEY_LENGTH;
+  private short encryptionKeyLength
+    = global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy.DEFAULT_KEY_LENGTH;
 
-private bool preferAES = false;
+  private bool preferAES = false;
 
-public virtual void SetEncryptionKeyLength(int l) {
-if ((((l != 40) && (l != 128)) && (l != 256))) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid key length '", l), "' value must be 40, 128 or 256!"));
-}
-this.encryptionKeyLength = unchecked((short)(unchecked((short)(l))));
-}
+  public virtual void SetEncryptionKeyLength(int l) {
+    if ((((l != 40) && (l != 128)) && (l != 256))) {
+      throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid key length '",
+        l), "' value must be 40, 128 or 256!"));
+    }
+    this.encryptionKeyLength = unchecked((short)(unchecked((short)(l))));
+  }
 
-public virtual int GetEncryptionKeyLength() {
-return this.encryptionKeyLength;
-}
+  public virtual int GetEncryptionKeyLength() {
+    return this.encryptionKeyLength;
+  }
 
-public virtual bool IsPreferAES() {
-return this.preferAES;
-}
+  public virtual bool IsPreferAES() {
+    return this.preferAES;
+  }
 
-public virtual void SetPreferAES(bool preferAES) {
-this.preferAES = preferAES;
-}
+  public virtual void SetPreferAES(bool preferAES) {
+    this.preferAES = preferAES;
+  }
 
-public ProtectionPolicy() {}
+  public ProtectionPolicy() {}
 }

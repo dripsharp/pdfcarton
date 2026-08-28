@@ -9,96 +9,103 @@
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
 public class PDUserProperty : global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper {
-private readonly global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserAttributeObject userAttributeObject = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserAttributeObject userAttributeObject
+    = null!;
 
-public PDUserProperty(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserAttributeObject userAttributeObject) {
-this.userAttributeObject = userAttributeObject;
-}
+  public PDUserProperty(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserAttributeObject userAttributeObject) {
+    this.userAttributeObject = userAttributeObject;
+  }
 
-public PDUserProperty(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserAttributeObject userAttributeObject) : base(dictionary) {
-this.userAttributeObject = userAttributeObject;
-}
+  public PDUserProperty(global::DripSharp.PdfCarton.Cos.COSDictionary dictionary,
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserAttributeObject userAttributeObject)
+  : base(dictionary) {
+    this.userAttributeObject = userAttributeObject;
+  }
 
-public virtual string GetName() {
-return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.N);
-}
+  public virtual string GetName() {
+    return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.N);
+  }
 
-public virtual void SetName(string name) {
-this.potentiallyNotifyChanged(this.GetName(), name);
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.N, name);
-}
+  public virtual void SetName(string name) {
+    this.potentiallyNotifyChanged(this.GetName(), name);
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.N, name);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetValue() {
-return this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetValue() {
+    return this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V);
+  }
 
-public virtual void SetValue(global::DripSharp.PdfCarton.Cos.COSBase value) {
-this.potentiallyNotifyChanged(this.GetValue(), value);
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.V, value);
-}
+  public virtual void SetValue(global::DripSharp.PdfCarton.Cos.COSBase value) {
+    this.potentiallyNotifyChanged(this.GetValue(), value);
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.V, value);
+  }
 
-public virtual string GetFormattedValue() {
-return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.F);
-}
+  public virtual string GetFormattedValue() {
+    return this.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.F);
+  }
 
-public virtual void SetFormattedValue(string formattedValue) {
-this.potentiallyNotifyChanged(this.GetFormattedValue(), formattedValue);
-this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.F, formattedValue);
-}
+  public virtual void SetFormattedValue(string formattedValue) {
+    this.potentiallyNotifyChanged(this.GetFormattedValue(), formattedValue);
+    this.GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.F, formattedValue);
+  }
 
-public virtual bool IsHidden() {
-return this.GetCOSObject().GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.H, false);
-}
+  public virtual bool IsHidden() {
+    return this.GetCOSObject().GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.H, false);
+  }
 
-public virtual void SetHidden(bool hidden) {
-this.potentiallyNotifyChanged(this.IsHidden(), hidden);
-this.GetCOSObject().SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.H, hidden);
-}
+  public virtual void SetHidden(bool hidden) {
+    this.potentiallyNotifyChanged(this.IsHidden(), hidden);
+    this.GetCOSObject().SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.H, hidden);
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Name=", this.GetName()), ", Value="), this.GetValue()), ", FormattedValue="), this.GetFormattedValue()), ", Hidden="), this.IsHidden());
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Name=",
+      this.GetName()), ", Value="), this.GetValue()), ", FormattedValue="),
+      this.GetFormattedValue()), ", Hidden="), this.IsHidden());
+  }
 
-private void potentiallyNotifyChanged(object oldEntry, object newEntry) {
-if (this.isEntryChanged(oldEntry, newEntry)) {
-this.userAttributeObject.UserPropertyChanged(this);
-}
-}
+  private void potentiallyNotifyChanged(object oldEntry, object newEntry) {
+    if (this.isEntryChanged(oldEntry, newEntry)) {
+      this.userAttributeObject.UserPropertyChanged(this);
+    }
+  }
 
-private bool isEntryChanged(object oldEntry, object newEntry) {
-if ((oldEntry == default!)) {
-return (newEntry != default!);
-}
-return !(global::DripSharp.Runtime.JavaCompat.Equals(oldEntry, newEntry));
-}
+  private bool isEntryChanged(object oldEntry, object newEntry) {
+    if ((oldEntry == default!)) {
+      return (newEntry != default!);
+    }
+    return !global::DripSharp.Runtime.JavaCompat.Equals(oldEntry, newEntry);
+  }
 
-public override int GetHashCode() {
-int prime = 31;
-int result = base.GetHashCode();
-result = ((prime * result) + ((this.userAttributeObject == default!) ? 0 : this.userAttributeObject.GetHashCode()));
-return result;
-}
+  public override int GetHashCode() {
+    int prime = 31;
+    int result = base.GetHashCode();
+    result = ((prime * result) + ((this.userAttributeObject == default!) ? 0
+      : this.userAttributeObject.GetHashCode()));
+    return result;
+  }
 
-public override bool Equals(object obj) {
-if ((this == obj)) {
-return true;
-}
-if (!(base.Equals(obj))) {
-return false;
-}
-if ((((object)(this)).GetType() != ((object)(obj)).GetType())) {
-return false;
-}
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty other = (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty)(obj!);
-if ((this.userAttributeObject == default!)) {
-if ((other.userAttributeObject != default!)) {
-return false;
-}
-} else {
-if (!(this.userAttributeObject.Equals(other.userAttributeObject))) {
-return false;
-}
-}
-return true;
-}
+  public override bool Equals(object obj) {
+    if ((this == obj)) {
+      return true;
+    }
+    if (!(base.Equals(obj))) {
+      return false;
+    }
+    if ((((object)(this)).GetType() != ((object)(obj)).GetType())) {
+      return false;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty other
+      = (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDUserProperty)(obj!);
+    if ((this.userAttributeObject == default!)) {
+      if ((other.userAttributeObject != default!)) {
+        return false;
+      }
+    } else {
+      if (!(this.userAttributeObject.Equals(other.userAttributeObject))) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

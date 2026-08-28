@@ -8,67 +8,78 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function.Type4;
 
-public sealed class InstructionSequenceBuilder : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Parser.AbstractSyntaxHandler {
-private static readonly global::System.Text.RegularExpressions.Regex INTEGER_PATTERN = global::DripSharp.Runtime.JavaCompat.CompileRegex("[\\+\\-]?\\d+");
+public sealed class InstructionSequenceBuilder
+: global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Parser.AbstractSyntaxHandler {
+  private static readonly global::System.Text.RegularExpressions.Regex INTEGER_PATTERN
+    = global::DripSharp.Runtime.JavaCompat.CompileRegex("[\\+\\-]?\\d+");
 
-private static readonly global::System.Text.RegularExpressions.Regex REAL_PATTERN = global::DripSharp.Runtime.JavaCompat.CompileRegex("\\-?\\d*\\.\\d*([Ee]\\-?\\d+)?");
+  private static readonly global::System.Text.RegularExpressions.Regex REAL_PATTERN
+    = global::DripSharp.Runtime.JavaCompat.CompileRegex("\\-?\\d*\\.\\d*([Ee]\\-?\\d+)?");
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence mainSequence = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence();
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence mainSequence
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence();
 
-private readonly global::DripSharp.Runtime.JavaStack<global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence> seqStack = new global::DripSharp.Runtime.JavaStack<global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence>();
+  private readonly global::DripSharp.Runtime.JavaStack<global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence> seqStack
+    = new global::DripSharp.Runtime.JavaStack<global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence>();
 
-private InstructionSequenceBuilder() {
-this.seqStack.Push(this.mainSequence);
-}
+  private InstructionSequenceBuilder() {
+    this.seqStack.Push(this.mainSequence);
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence GetInstructionSequence() {
-return this.mainSequence;
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence GetInstructionSequence() {
+    return this.mainSequence;
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence Parse(string text) {
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder builder = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder();
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Parser.Parse(text, builder);
-return builder.GetInstructionSequence();
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence Parse(string text) {
+    global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder builder
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder();
+    global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Parser.Parse(text, builder);
+    return builder.GetInstructionSequence();
+  }
 
-private global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence getCurrentSequence() {
-return this.seqStack.Peek();
-}
+  private global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence getCurrentSequence() {
+    return this.seqStack.Peek();
+  }
 
-public override void Token(string text) {
-string token = text;
-this.token(token);
-}
+  public override void Token(string text) {
+    string token = text;
+    this.token(token);
+  }
 
-private void token(string token) {
-if (global::DripSharp.Runtime.JavaCompat.Equals("{", token)) {
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence child = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence();
-this.getCurrentSequence().AddProc(child);
-this.seqStack.Push(child);
-} else {
-if (global::DripSharp.Runtime.JavaCompat.Equals("}", token)) {
-this.seqStack.Pop();
-} else {
-global::DripSharp.Runtime.JavaRegexMatcher m = global::DripSharp.Runtime.JavaCompat.RegexMatcher(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder.INTEGER_PATTERN, token);
-if (m.Matches()) {
-this.getCurrentSequence().AddInteger(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder.ParseInt(token));
-return;
-}
-m = global::DripSharp.Runtime.JavaCompat.RegexMatcher(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder.REAL_PATTERN, token);
-if (m.Matches()) {
-this.getCurrentSequence().AddReal(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder.ParseReal(token));
-return;
-}
-this.getCurrentSequence().AddName(token);
-}
-}
-}
+  private void token(string token) {
+    if (global::DripSharp.Runtime.JavaCompat.Equals("{", token)) {
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence child
+        = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence();
+      this.getCurrentSequence().AddProc(child);
+      this.seqStack.Push(child);
+    } else {
+      if (global::DripSharp.Runtime.JavaCompat.Equals("}", token)) {
+        this.seqStack.Pop();
+      } else {
+        global::DripSharp.Runtime.JavaRegexMatcher m
+          = global::DripSharp.Runtime.JavaCompat.RegexMatcher(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder.INTEGER_PATTERN,
+          token);
+        if (m.Matches()) {
+          this.getCurrentSequence().AddInteger(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder.ParseInt(token));
+          return;
+        }
+        m
+          = global::DripSharp.Runtime.JavaCompat.RegexMatcher(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder.REAL_PATTERN,
+          token);
+        if (m.Matches()) {
+          this.getCurrentSequence().AddReal(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder.ParseReal(token));
+          return;
+        }
+        this.getCurrentSequence().AddName(token);
+      }
+    }
+  }
 
-public static int ParseInt(string token) {
-return global::DripSharp.Runtime.JavaCompat.ParseInt(token, 10);
-}
+  public static int ParseInt(string token) {
+    return global::DripSharp.Runtime.JavaCompat.ParseInt(token, 10);
+  }
 
-public static float ParseReal(string token) {
-return global::DripSharp.Runtime.JavaCompat.ParseFloat(token);
-}
+  public static float ParseReal(string token) {
+    return global::DripSharp.Runtime.JavaCompat.ParseFloat(token);
+  }
 }

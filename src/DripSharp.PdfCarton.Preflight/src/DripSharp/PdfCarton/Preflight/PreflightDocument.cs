@@ -9,61 +9,74 @@
 namespace DripSharp.PdfCarton.Preflight;
 
 public class PreflightDocument : global::DripSharp.PdfCarton.Pdmodel.PDDocument {
-private readonly global::DripSharp.PdfCarton.Preflight.ValidationResult result = new global::DripSharp.PdfCarton.Preflight.ValidationResult(true);
+  private readonly global::DripSharp.PdfCarton.Preflight.ValidationResult result
+    = new global::DripSharp.PdfCarton.Preflight.ValidationResult(true);
 
-private readonly global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = null!;
+  private readonly global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = null!;
 
-private global::DripSharp.PdfCarton.Preflight.PreflightContext context = null!;
+  private global::DripSharp.PdfCarton.Preflight.PreflightContext context = null!;
 
-private readonly global::DripSharp.PdfCarton.Preflight.Format specification = null!;
+  private readonly global::DripSharp.PdfCarton.Preflight.Format specification = null!;
 
-public PreflightDocument(global::DripSharp.PdfCarton.Cos.COSDocument doc, global::DripSharp.PdfCarton.Preflight.Format format) : this(doc, format, (global::DripSharp.PdfCarton.Preflight.PreflightConfiguration)default!, (global::DripSharp.PdfCarton.IO.RandomAccessRead)default!) {
+  public PreflightDocument(global::DripSharp.PdfCarton.Cos.COSDocument doc,
+    global::DripSharp.PdfCarton.Preflight.Format format) : this(doc, format,
+    (global::DripSharp.PdfCarton.Preflight.PreflightConfiguration)default!,
+    (global::DripSharp.PdfCarton.IO.RandomAccessRead)default!) {
 
-}
+  }
 
-public PreflightDocument(global::DripSharp.PdfCarton.Cos.COSDocument doc, global::DripSharp.PdfCarton.Preflight.Format format, global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config) : this(doc, format, config, (global::DripSharp.PdfCarton.IO.RandomAccessRead)default!) {
+  public PreflightDocument(global::DripSharp.PdfCarton.Cos.COSDocument doc,
+    global::DripSharp.PdfCarton.Preflight.Format format,
+    global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config) : this(doc, format, config,
+    (global::DripSharp.PdfCarton.IO.RandomAccessRead)default!) {
 
-}
+  }
 
-public PreflightDocument(global::DripSharp.PdfCarton.Cos.COSDocument doc, global::DripSharp.PdfCarton.Preflight.Format format, global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config, global::DripSharp.PdfCarton.IO.RandomAccessRead source) : base(doc, source) {
-this.specification = format;
-this.config = ((config == default!) ? global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.CreatePdfA1BConfiguration() : config);
-}
+  public PreflightDocument(global::DripSharp.PdfCarton.Cos.COSDocument doc,
+    global::DripSharp.PdfCarton.Preflight.Format format,
+    global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config,
+    global::DripSharp.PdfCarton.IO.RandomAccessRead source) : base(doc, source) {
+    this.specification = format;
+    this.config = ((config == default!)
+      ? global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.CreatePdfA1BConfiguration()
+      : config);
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> GetValidationErrors() {
-return global::DripSharp.Runtime.JavaCompat.UnmodifiableList(this.result.GetErrorsList());
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> GetValidationErrors() {
+    return global::DripSharp.Runtime.JavaCompat.UnmodifiableList(this.result.GetErrorsList());
+  }
 
-public virtual void AddValidationError(global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error) {
-if ((error != default!)) {
-this.result.AddError(error);
-}
-}
+  public virtual void AddValidationError(global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error) {
+    if ((error != default!)) {
+      this.result.AddError(error);
+    }
+  }
 
-public virtual void AddValidationErrors(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> errorList) {
-if ((errorList != default!)) {
-this.result.AddErrors(errorList);
-}
-}
+  public virtual void AddValidationErrors(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> errorList) {
+    if ((errorList != default!)) {
+      this.result.AddErrors(errorList);
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.PreflightContext GetContext() {
-return this.context;
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.PreflightContext GetContext() {
+    return this.context;
+  }
 
-public virtual void SetContext(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
-this.context = context;
-}
+  public virtual void SetContext(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
+    this.context = context;
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.ValidationResult Validate() {
-this.context.SetConfig(this.config);
-global::System.Collections.Generic.ICollection<string> processes = this.config.GetProcessNames();
-foreach (string name in processes) {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(this.context, name);
-}
-return this.result;
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.ValidationResult Validate() {
+    this.context.SetConfig(this.config);
+    global::System.Collections.Generic.ICollection<string> processes
+      = this.config.GetProcessNames();
+    foreach (string name in processes) {
+      global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(this.context, name);
+    }
+    return this.result;
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.Format GetSpecification() {
-return this.specification;
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.Format GetSpecification() {
+    return this.specification;
+  }
 }

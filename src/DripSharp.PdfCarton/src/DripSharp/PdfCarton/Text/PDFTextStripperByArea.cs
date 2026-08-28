@@ -9,67 +9,84 @@
 namespace DripSharp.PdfCarton.Text;
 
 public class PDFTextStripperByArea : global::DripSharp.PdfCarton.Text.PDFTextStripper {
-private readonly global::System.Collections.Generic.IList<string> regions = new global::System.Collections.Generic.List<string>();
+  private readonly global::System.Collections.Generic.IList<string> regions
+    = new global::System.Collections.Generic.List<string>();
 
-private readonly global::System.Collections.Generic.IDictionary<string, global::SkiaSharp.SKRect> regionArea = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, global::SkiaSharp.SKRect>();
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::SkiaSharp.SKRect> regionArea
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, global::SkiaSharp.SKRect>();
 
-private readonly global::System.Collections.Generic.IDictionary<string, global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>> regionCharacterList = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>>();
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>> regionCharacterList
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+    global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>>();
 
-private readonly global::System.Collections.Generic.IDictionary<string, global::System.IO.StringWriter> regionText = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, global::System.IO.StringWriter>();
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::System.IO.StringWriter> regionText
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+    global::System.IO.StringWriter>();
 
-public PDFTextStripperByArea() {
-base.SetShouldSeparateByBeads(false);
-}
+  public PDFTextStripperByArea() {
+    base.SetShouldSeparateByBeads(false);
+  }
 
-public override void SetShouldSeparateByBeads(bool aShouldSeparateByBeads) {}
+  public override void SetShouldSeparateByBeads(bool aShouldSeparateByBeads) {}
 
-public virtual void AddRegion(string regionName, global::SkiaSharp.SKRect rect) {
-global::DripSharp.Runtime.JavaCompat.Add(this.regions, regionName);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.regionArea, regionName, rect);
-}
+  public virtual void AddRegion(string regionName, global::SkiaSharp.SKRect rect) {
+    global::DripSharp.Runtime.JavaCompat.Add(this.regions, regionName);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.regionArea, regionName, rect);
+  }
 
-public virtual void RemoveRegion(string regionName) {
-global::DripSharp.Runtime.JavaCompat.CollectionRemove(this.regions, regionName);
-global::DripSharp.Runtime.JavaCompat.MapRemove(this.regionArea, regionName);
-}
+  public virtual void RemoveRegion(string regionName) {
+    global::DripSharp.Runtime.JavaCompat.CollectionRemove(this.regions, regionName);
+    global::DripSharp.Runtime.JavaCompat.MapRemove(this.regionArea, regionName);
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetRegions() {
-return this.regions;
-}
+  public virtual global::System.Collections.Generic.IList<string> GetRegions() {
+    return this.regions;
+  }
 
-public virtual string GetTextForRegion(string regionName) {
-global::System.IO.StringWriter text = global::DripSharp.Runtime.JavaCompat.MapGet(this.regionText, regionName);
-return text.ToString();
-}
+  public virtual string GetTextForRegion(string regionName) {
+    global::System.IO.StringWriter text
+      = global::DripSharp.Runtime.JavaCompat.MapGet(this.regionText, regionName);
+    return text.ToString();
+  }
 
-public virtual void ExtractRegions(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-foreach (string regionName in this.regions) {
-this.SetStartPage(this.GetCurrentPageNo());
-this.SetEndPage(this.GetCurrentPageNo());
-global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>> regionCharactersByArticle = new global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>(1);
-global::DripSharp.Runtime.JavaCompat.Add(regionCharactersByArticle, new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Text.TextPosition>());
-global::DripSharp.Runtime.JavaCompat.MapPut(this.regionCharacterList, regionName, regionCharactersByArticle);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.regionText, regionName, new global::System.IO.StringWriter());
-}
-if (page.HasContents()) {
-this.ProcessPage(page);
-}
-}
+  public virtual void ExtractRegions(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    foreach (string regionName in this.regions) {
+      this.SetStartPage(this.GetCurrentPageNo());
+      this.SetEndPage(this.GetCurrentPageNo());
+      global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>> regionCharactersByArticle
+        = new global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>(1);
+      global::DripSharp.Runtime.JavaCompat.Add(regionCharactersByArticle,
+        new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Text.TextPosition>());
+      global::DripSharp.Runtime.JavaCompat.MapPut(this.regionCharacterList, regionName,
+        regionCharactersByArticle);
+      global::DripSharp.Runtime.JavaCompat.MapPut(this.regionText, regionName,
+        new global::System.IO.StringWriter());
+    }
+    if (page.HasContents()) {
+      this.ProcessPage(page);
+    }
+  }
 
-protected internal override void ProcessTextPosition(global::DripSharp.PdfCarton.Text.TextPosition text) {
-global::DripSharp.Runtime.JavaCompat.ForEach(this.regionArea, (key, rect) => {
-if (global::DripSharp.Runtime.PdfCartonFontCompat.RectangleContains(rect, (double)(text.GetX()), (double)(text.GetY()))) {
-base.CharactersByArticle = global::DripSharp.Runtime.JavaCompat.MapGet(this.regionCharacterList, key);
-base.ProcessTextPosition(text);
-}
-});
-}
+  protected internal override void ProcessTextPosition(global::DripSharp.PdfCarton.Text.TextPosition text) {
+    global::DripSharp.Runtime.JavaCompat.ForEach(this.regionArea, (key, rect) => {
+        if (global::DripSharp.Runtime.PdfCartonFontCompat.RectangleContains(rect,
+        (double)(text.GetX()), (double)(text.GetY()))) {
+          base.CharactersByArticle
+          = global::DripSharp.Runtime.JavaCompat.MapGet(this.regionCharacterList, key);
+          base.ProcessTextPosition(text);
+        }
+      });
+  }
 
-protected internal override void WritePage() {
-foreach (string region in global::DripSharp.Runtime.JavaCompat.MapKeySet(this.regionArea)) {
-base.CharactersByArticle = global::DripSharp.Runtime.JavaCompat.MapGet(this.regionCharacterList, region);
-base.Output = global::DripSharp.Runtime.JavaCompat.MapGet(this.regionText, region);
-base.WritePage();
-}
-}
+  protected internal override void WritePage() {
+    foreach (string region in global::DripSharp.Runtime.JavaCompat.MapKeySet(this.regionArea)) {
+      base.CharactersByArticle
+        = global::DripSharp.Runtime.JavaCompat.MapGet(this.regionCharacterList, region);
+      base.Output = global::DripSharp.Runtime.JavaCompat.MapGet(this.regionText, region);
+      base.WritePage();
+    }
+  }
 }

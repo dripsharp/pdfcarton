@@ -9,31 +9,33 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub;
 
 public class LigatureTable {
-private readonly int ligatureGlyph = default;
+  private readonly int ligatureGlyph = default;
 
-private readonly int componentCount = default;
+  private readonly int componentCount = default;
 
-private readonly int[] componentGlyphIDs = null!;
+  private readonly int[] componentGlyphIDs = null!;
 
-public LigatureTable(int ligatureGlyph, int componentCount, int[] componentGlyphIDs) {
-this.ligatureGlyph = ligatureGlyph;
-this.componentCount = componentCount;
-this.componentGlyphIDs = componentGlyphIDs;
-}
+  public LigatureTable(int ligatureGlyph, int componentCount, int[] componentGlyphIDs) {
+    this.ligatureGlyph = ligatureGlyph;
+    this.componentCount = componentCount;
+    this.componentGlyphIDs = componentGlyphIDs;
+  }
 
-public virtual int GetLigatureGlyph() {
-return this.ligatureGlyph;
-}
+  public virtual int GetLigatureGlyph() {
+    return this.ligatureGlyph;
+  }
 
-public virtual int GetComponentCount() {
-return this.componentCount;
-}
+  public virtual int GetComponentCount() {
+    return this.componentCount;
+  }
 
-public virtual int[] GetComponentGlyphIDs() {
-return this.componentGlyphIDs;
-}
+  public virtual int[] GetComponentGlyphIDs() {
+    return this.componentGlyphIDs;
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("%s[ligatureGlyph=%d, componentCount=%d]", typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureTable).Name, this.ligatureGlyph, this.componentCount);
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("%s[ligatureGlyph=%d, componentCount=%d]",
+      typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureTable).Name,
+      this.ligatureGlyph, this.componentCount);
+  }
 }

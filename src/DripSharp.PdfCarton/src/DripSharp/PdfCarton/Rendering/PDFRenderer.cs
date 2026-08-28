@@ -9,240 +9,289 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 public class PDFRenderer {
-protected internal readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument Document = null!;
+  protected internal readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument Document = null!;
 
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter annotationFilter = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.__AnnotationFilterFunctionalAdapter((annotation) => true);
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter annotationFilter
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.__AnnotationFilterFunctionalAdapter((annotation)
+    => true);
 
-private bool subsamplingAllowed = false;
+  private bool subsamplingAllowed = false;
 
-private global::DripSharp.PdfCarton.Rendering.RenderDestination defaultDestination = null!;
+  private global::DripSharp.PdfCarton.Rendering.RenderDestination defaultDestination = null!;
 
-private global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints = default!;
+  private global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints = default!;
 
-private global::SkiaSharp.SKBitmap pageImage = null!;
+  private global::SkiaSharp.SKBitmap pageImage = null!;
 
-private float imageDownscalingOptimizationThreshold = 0.5F;
+  private float imageDownscalingOptimizationThreshold = 0.5F;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.PDPageTree pageTree = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.PDPageTree pageTree = null!;
 
-public PDFRenderer(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-this.Document = document;
-this.pageTree = document.GetPages();
-}
+  public PDFRenderer(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
+    this.Document = document;
+    this.pageTree = document.GetPages();
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter GetAnnotationsFilter() {
-return this.annotationFilter;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter GetAnnotationsFilter() {
+    return this.annotationFilter;
+  }
 
-public virtual void SetAnnotationsFilter(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter annotationsFilter) {
-this.annotationFilter = annotationsFilter;
-}
+  public virtual void SetAnnotationsFilter(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter annotationsFilter) {
+    this.annotationFilter = annotationsFilter;
+  }
 
-public virtual bool IsSubsamplingAllowed() {
-return this.subsamplingAllowed;
-}
+  public virtual bool IsSubsamplingAllowed() {
+    return this.subsamplingAllowed;
+  }
 
-public virtual void SetSubsamplingAllowed(bool subsamplingAllowed) {
-this.subsamplingAllowed = subsamplingAllowed;
-}
+  public virtual void SetSubsamplingAllowed(bool subsamplingAllowed) {
+    this.subsamplingAllowed = subsamplingAllowed;
+  }
 
-public virtual global::DripSharp.PdfCarton.Rendering.RenderDestination GetDefaultDestination() {
-return this.defaultDestination;
-}
+  public virtual global::DripSharp.PdfCarton.Rendering.RenderDestination GetDefaultDestination() {
+    return this.defaultDestination;
+  }
 
-public virtual void SetDefaultDestination(global::DripSharp.PdfCarton.Rendering.RenderDestination defaultDestination) {
-this.defaultDestination = defaultDestination;
-}
+  public virtual void SetDefaultDestination(global::DripSharp.PdfCarton.Rendering.RenderDestination defaultDestination) {
+    this.defaultDestination = defaultDestination;
+  }
 
-public virtual global::DripSharp.Runtime.PdfCartonRenderingHints GetRenderingHints() {
-return this.renderingHints;
-}
+  public virtual global::DripSharp.Runtime.PdfCartonRenderingHints GetRenderingHints() {
+    return this.renderingHints;
+  }
 
-public virtual void SetRenderingHints(global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints) {
-this.renderingHints = renderingHints;
-}
+  public virtual void SetRenderingHints(global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints) {
+    this.renderingHints = renderingHints;
+  }
 
-public virtual float GetImageDownscalingOptimizationThreshold() {
-return this.imageDownscalingOptimizationThreshold;
-}
+  public virtual float GetImageDownscalingOptimizationThreshold() {
+    return this.imageDownscalingOptimizationThreshold;
+  }
 
-public virtual void SetImageDownscalingOptimizationThreshold(float imageDownscalingOptimizationThreshold) {
-this.imageDownscalingOptimizationThreshold = imageDownscalingOptimizationThreshold;
-}
+  public virtual void SetImageDownscalingOptimizationThreshold(float imageDownscalingOptimizationThreshold) {
+    this.imageDownscalingOptimizationThreshold = imageDownscalingOptimizationThreshold;
+  }
 
-public virtual global::SkiaSharp.SKBitmap RenderImage(int pageIndex) {
-return this.RenderImage(pageIndex, (float)(1));
-}
+  public virtual global::SkiaSharp.SKBitmap RenderImage(int pageIndex) {
+    return this.RenderImage(pageIndex, (float)(1));
+  }
 
-public virtual global::SkiaSharp.SKBitmap RenderImage(int pageIndex, float scale) {
-return this.RenderImage(pageIndex, scale, global::DripSharp.PdfCarton.Rendering.ImageType.Rgb);
-}
+  public virtual global::SkiaSharp.SKBitmap RenderImage(int pageIndex, float scale) {
+    return this.RenderImage(pageIndex, scale, global::DripSharp.PdfCarton.Rendering.ImageType.Rgb);
+  }
 
-public virtual global::SkiaSharp.SKBitmap RenderImageWithDPI(int pageIndex, float dpi) {
-return this.RenderImage(pageIndex, ((float)(dpi) / (float)(72.0F)), global::DripSharp.PdfCarton.Rendering.ImageType.Rgb);
-}
+  public virtual global::SkiaSharp.SKBitmap RenderImageWithDPI(int pageIndex, float dpi) {
+    return this.RenderImage(pageIndex, ((float)dpi / (float)72.0F),
+      global::DripSharp.PdfCarton.Rendering.ImageType.Rgb);
+  }
 
-public virtual global::SkiaSharp.SKBitmap RenderImageWithDPI(int pageIndex, float dpi, global::DripSharp.PdfCarton.Rendering.ImageType imageType) {
-return this.RenderImage(pageIndex, ((float)(dpi) / (float)(72.0F)), imageType);
-}
+  public virtual global::SkiaSharp.SKBitmap RenderImageWithDPI(int pageIndex, float dpi,
+    global::DripSharp.PdfCarton.Rendering.ImageType imageType) {
+    return this.RenderImage(pageIndex, ((float)dpi / (float)72.0F), imageType);
+  }
 
-public virtual global::SkiaSharp.SKBitmap RenderImage(int pageIndex, float scale, global::DripSharp.PdfCarton.Rendering.ImageType imageType) {
-return this.RenderImage(pageIndex, scale, imageType, ((this.defaultDestination == default!) ? global::DripSharp.PdfCarton.Rendering.RenderDestination.Export : this.defaultDestination));
-}
+  public virtual global::SkiaSharp.SKBitmap RenderImage(int pageIndex, float scale,
+    global::DripSharp.PdfCarton.Rendering.ImageType imageType) {
+    return this.RenderImage(pageIndex, scale, imageType, ((this.defaultDestination == default!)
+      ? global::DripSharp.PdfCarton.Rendering.RenderDestination.Export : this.defaultDestination));
+  }
 
-public virtual global::SkiaSharp.SKBitmap RenderImage(int pageIndex, float scale, global::DripSharp.PdfCarton.Rendering.ImageType imageType, global::DripSharp.PdfCarton.Rendering.RenderDestination destination) {
-global::DripSharp.PdfCarton.Pdmodel.PDPage page = this.pageTree.Get(pageIndex);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = page.GetCropBox();
-float widthPt = cropBox.GetWidth();
-float heightPt = cropBox.GetHeight();
-int widthPx = (int)(global::System.Math.Max(global::System.Math.Floor((double)((widthPt * scale))), (double)(1)));
-int heightPx = (int)(global::System.Math.Max(global::System.Math.Floor((double)((heightPt * scale))), (double)(1)));
-if ((((long)(widthPx) * (long)(heightPx)) > int.MaxValue)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Maximum size of image exceeded (w * h * scale ^ 2) = ", widthPt), " * "), heightPt), " * "), scale), " ^ 2 > "), int.MaxValue));
-}
-int rotationAngle = page.GetRotation();
-int bimType;
-if (((imageType != global::DripSharp.PdfCarton.Rendering.ImageType.Argb) && this.hasBlendMode(page))) {
-bimType = global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB;
-} else {
-bimType = imageType.toBufferedImageType();
-}
-global::SkiaSharp.SKBitmap image;
-if (((rotationAngle == 90) || (rotationAngle == 270))) {
-image = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(heightPx, widthPx, bimType);
-} else {
-image = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(widthPx, heightPx, bimType);
-}
-this.pageImage = image;
-global::DripSharp.Runtime.PdfCartonGraphics2D g = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(image);
-try {
-if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(image) == global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB)) {
-g.SetBackground(global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0, 0));
-} else {
-g.SetBackground(global::DripSharp.Runtime.JavaColor.White);
-}
-g.ClearRect(0, 0, image.Width, image.Height);
-this.transform(g, page.GetRotation(), cropBox, scale, scale);
-global::DripSharp.Runtime.PdfCartonRenderingHints actualRenderingHints = ((this.renderingHints == default!) ? this.createDefaultRenderingHints(g) : this.renderingHints);
-global::DripSharp.PdfCarton.Rendering.PageDrawerParameters parameters = new global::DripSharp.PdfCarton.Rendering.PageDrawerParameters(this, page, this.subsamplingAllowed, destination, actualRenderingHints, this.imageDownscalingOptimizationThreshold);
-global::DripSharp.PdfCarton.Rendering.PageDrawer drawer = this.CreatePageDrawer(parameters);
-drawer.DrawPage(g, cropBox);
-} finally {
-g.Dispose();
-}
-if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(image) != imageType.toBufferedImageType())) {
-global::SkiaSharp.SKBitmap newImage = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height, imageType.toBufferedImageType());
-global::DripSharp.Runtime.PdfCartonGraphics2D dstGraphics = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(newImage);
-dstGraphics.SetBackground(global::DripSharp.Runtime.JavaColor.White);
-dstGraphics.ClearRect(0, 0, image.Width, image.Height);
-dstGraphics.DrawImage(image, 0, 0, (object)default!);
-dstGraphics.Dispose();
-image = newImage;
-}
-return image;
-}
+  public virtual global::SkiaSharp.SKBitmap RenderImage(int pageIndex, float scale,
+    global::DripSharp.PdfCarton.Rendering.ImageType imageType,
+    global::DripSharp.PdfCarton.Rendering.RenderDestination destination) {
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page = this.pageTree.Get(pageIndex);
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = page.GetCropBox();
+    float widthPt = cropBox.GetWidth();
+    float heightPt = cropBox.GetHeight();
+    int widthPx = (int)(global::System.Math.Max(global::System.Math.Floor((double)((widthPt
+      * scale))), (double)(1)));
+    int heightPx = (int)(global::System.Math.Max(global::System.Math.Floor((double)((heightPt
+      * scale))), (double)(1)));
+    if ((((long)widthPx * (long)heightPx) > int.MaxValue)) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Maximum size of image exceeded (w * h * scale ^ 2) = ",
+        widthPt), " * "), heightPt), " * "), scale), " ^ 2 > "), int.MaxValue));
+    }
+    int rotationAngle = page.GetRotation();
+    int bimType;
+    if (((imageType != global::DripSharp.PdfCarton.Rendering.ImageType.Argb)
+      && this.hasBlendMode(page))) {
+      bimType = global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB;
+    } else {
+      bimType = imageType.toBufferedImageType();
+    }
+    global::SkiaSharp.SKBitmap image;
+    if (((rotationAngle == 90) || (rotationAngle == 270))) {
+      image = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(heightPx, widthPx,
+        bimType);
+    } else {
+      image = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(widthPx, heightPx,
+        bimType);
+    }
+    this.pageImage = image;
+    global::DripSharp.Runtime.PdfCartonGraphics2D g
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(image);
+    try {
+      if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(image)
+        == global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB)) {
+        g.SetBackground(global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0,
+          0));
+      } else {
+        g.SetBackground(global::DripSharp.Runtime.JavaColor.White);
+      }
+      g.ClearRect(0, 0, image.Width, image.Height);
+      this.transform(g, page.GetRotation(), cropBox, scale, scale);
+      global::DripSharp.Runtime.PdfCartonRenderingHints actualRenderingHints = ((this.renderingHints
+        == default!) ? this.createDefaultRenderingHints(g) : this.renderingHints);
+      global::DripSharp.PdfCarton.Rendering.PageDrawerParameters parameters
+        = new global::DripSharp.PdfCarton.Rendering.PageDrawerParameters(this, page,
+        this.subsamplingAllowed, destination, actualRenderingHints,
+        this.imageDownscalingOptimizationThreshold);
+      global::DripSharp.PdfCarton.Rendering.PageDrawer drawer = this.CreatePageDrawer(parameters);
+      drawer.DrawPage(g, cropBox);
+    } finally {
+      g.Dispose();
+    }
+    if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(image)
+      != imageType.toBufferedImageType())) {
+      global::SkiaSharp.SKBitmap newImage
+        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height,
+        imageType.toBufferedImageType());
+      global::DripSharp.Runtime.PdfCartonGraphics2D dstGraphics
+        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(newImage);
+      dstGraphics.SetBackground(global::DripSharp.Runtime.JavaColor.White);
+      dstGraphics.ClearRect(0, 0, image.Width, image.Height);
+      dstGraphics.DrawImage(image, 0, 0, (object)default!);
+      dstGraphics.Dispose();
+      image = newImage;
+    }
+    return image;
+  }
 
-public virtual void RenderPageToGraphics(int pageIndex, global::DripSharp.Runtime.PdfCartonGraphics2D graphics) {
-this.RenderPageToGraphics(pageIndex, graphics, (float)(1));
-}
+  public virtual void RenderPageToGraphics(int pageIndex,
+    global::DripSharp.Runtime.PdfCartonGraphics2D graphics) {
+    this.RenderPageToGraphics(pageIndex, graphics, (float)(1));
+  }
 
-public virtual void RenderPageToGraphics(int pageIndex, global::DripSharp.Runtime.PdfCartonGraphics2D graphics, float scale) {
-this.RenderPageToGraphics(pageIndex, graphics, scale, scale);
-}
+  public virtual void RenderPageToGraphics(int pageIndex,
+    global::DripSharp.Runtime.PdfCartonGraphics2D graphics, float scale) {
+    this.RenderPageToGraphics(pageIndex, graphics, scale, scale);
+  }
 
-public virtual void RenderPageToGraphics(int pageIndex, global::DripSharp.Runtime.PdfCartonGraphics2D graphics, float scaleX, float scaleY) {
-this.RenderPageToGraphics(pageIndex, graphics, scaleX, scaleY, ((this.defaultDestination == default!) ? global::DripSharp.PdfCarton.Rendering.RenderDestination.View : this.defaultDestination));
-}
+  public virtual void RenderPageToGraphics(int pageIndex,
+    global::DripSharp.Runtime.PdfCartonGraphics2D graphics, float scaleX, float scaleY) {
+    this.RenderPageToGraphics(pageIndex, graphics, scaleX, scaleY, ((this.defaultDestination
+      == default!) ? global::DripSharp.PdfCarton.Rendering.RenderDestination.View
+      : this.defaultDestination));
+  }
 
-public virtual void RenderPageToGraphics(int pageIndex, global::DripSharp.Runtime.PdfCartonGraphics2D graphics, float scaleX, float scaleY, global::DripSharp.PdfCarton.Rendering.RenderDestination destination) {
-global::DripSharp.PdfCarton.Pdmodel.PDPage page = this.pageTree.Get(pageIndex);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = page.GetCropBox();
-this.transform(graphics, page.GetRotation(), cropBox, scaleX, scaleY);
-graphics.ClearRect(0, 0, (int)((int)(cropBox.GetWidth())), (int)((int)(cropBox.GetHeight())));
-global::DripSharp.Runtime.PdfCartonRenderingHints actualRenderingHints = ((this.renderingHints == default!) ? this.createDefaultRenderingHints(graphics) : this.renderingHints);
-global::DripSharp.PdfCarton.Rendering.PageDrawerParameters parameters = new global::DripSharp.PdfCarton.Rendering.PageDrawerParameters(this, page, this.subsamplingAllowed, destination, actualRenderingHints, this.imageDownscalingOptimizationThreshold);
-global::DripSharp.PdfCarton.Rendering.PageDrawer drawer = this.CreatePageDrawer(parameters);
-drawer.DrawPage(graphics, cropBox);
-}
+  public virtual void RenderPageToGraphics(int pageIndex,
+    global::DripSharp.Runtime.PdfCartonGraphics2D graphics, float scaleX, float scaleY,
+    global::DripSharp.PdfCarton.Rendering.RenderDestination destination) {
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page = this.pageTree.Get(pageIndex);
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = page.GetCropBox();
+    this.transform(graphics, page.GetRotation(), cropBox, scaleX, scaleY);
+    graphics.ClearRect(0, 0, (int)((int)(cropBox.GetWidth())), (int)((int)(cropBox.GetHeight())));
+    global::DripSharp.Runtime.PdfCartonRenderingHints actualRenderingHints = ((this.renderingHints
+      == default!) ? this.createDefaultRenderingHints(graphics) : this.renderingHints);
+    global::DripSharp.PdfCarton.Rendering.PageDrawerParameters parameters
+      = new global::DripSharp.PdfCarton.Rendering.PageDrawerParameters(this, page,
+      this.subsamplingAllowed, destination, actualRenderingHints,
+      this.imageDownscalingOptimizationThreshold);
+    global::DripSharp.PdfCarton.Rendering.PageDrawer drawer = this.CreatePageDrawer(parameters);
+    drawer.DrawPage(graphics, cropBox);
+  }
 
-public virtual bool IsGroupEnabled(global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup group) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentProperties ocProperties = this.Document.GetDocumentCatalog().GetOCProperties();
-return ((ocProperties == default!) || ocProperties.IsGroupEnabled(group));
-}
+  public virtual bool IsGroupEnabled(global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup group) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentProperties ocProperties
+      = this.Document.GetDocumentCatalog().GetOCProperties();
+    return ((ocProperties == default!) || ocProperties.IsGroupEnabled(group));
+  }
 
-private void transform(global::DripSharp.Runtime.PdfCartonGraphics2D graphics, int rotationAngle, global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox, float scaleX, float scaleY) {
-graphics.Scale((double)(scaleX), (double)(scaleY));
-if ((rotationAngle != 0)) {
-float translateX = 0;
-float translateY = 0;
-switch (rotationAngle) {
-case var __case_492_22_0 when __case_492_22_0 == 90:
-translateX = cropBox.GetHeight();
-break;
-case var __case_495_22_0 when __case_495_22_0 == 270:
-translateY = cropBox.GetWidth();
-break;
-case var __case_498_22_0 when __case_498_22_0 == 180:
-translateX = cropBox.GetWidth();
-translateY = cropBox.GetHeight();
-break;
-default:
-break;
-}
-graphics.Translate((double)(translateX), (double)(translateY));
-graphics.Rotate(global::DripSharp.Runtime.JavaCompat.ToRadians((double)(rotationAngle)));
-}
-}
+  private void transform(global::DripSharp.Runtime.PdfCartonGraphics2D graphics, int rotationAngle,
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox, float scaleX, float scaleY) {
+    graphics.Scale((double)(scaleX), (double)(scaleY));
+    if ((rotationAngle != 0)) {
+      float translateX = 0;
+      float translateY = 0;
+      switch (rotationAngle) {
+        case var __case_492_22_0 when __case_492_22_0 == 90:
+          translateX = cropBox.GetHeight();
+          break;
+        case var __case_495_22_0 when __case_495_22_0 == 270:
+          translateY = cropBox.GetWidth();
+          break;
+        case var __case_498_22_0 when __case_498_22_0 == 180:
+          translateX = cropBox.GetWidth();
+          translateY = cropBox.GetHeight();
+          break;
+        default:
+          break;
+      }
+      graphics.Translate((double)(translateX), (double)(translateY));
+      graphics.Rotate(global::DripSharp.Runtime.JavaCompat.ToRadians((double)(rotationAngle)));
+    }
+  }
 
-private bool isBitonal(global::DripSharp.Runtime.PdfCartonGraphics2D graphics) {
-global::DripSharp.Runtime.JavaGraphicsConfiguration deviceConfiguration = graphics.GetDeviceConfiguration();
-if ((deviceConfiguration == default!)) {
-return false;
-}
-global::DripSharp.Runtime.JavaGraphicsDevice device = deviceConfiguration.GetDevice();
-if ((device == default!)) {
-return false;
-}
-global::DripSharp.Runtime.JavaDisplayMode displayMode = device.GetDisplayMode();
-if ((displayMode == default!)) {
-return false;
-}
-return (displayMode.GetBitDepth() == 1);
-}
+  private bool isBitonal(global::DripSharp.Runtime.PdfCartonGraphics2D graphics) {
+    global::DripSharp.Runtime.JavaGraphicsConfiguration deviceConfiguration
+      = graphics.GetDeviceConfiguration();
+    if ((deviceConfiguration == default!)) {
+      return false;
+    }
+    global::DripSharp.Runtime.JavaGraphicsDevice device = deviceConfiguration.GetDevice();
+    if ((device == default!)) {
+      return false;
+    }
+    global::DripSharp.Runtime.JavaDisplayMode displayMode = device.GetDisplayMode();
+    if ((displayMode == default!)) {
+      return false;
+    }
+    return (displayMode.GetBitDepth() == 1);
+  }
 
-private global::DripSharp.Runtime.PdfCartonRenderingHints createDefaultRenderingHints(global::DripSharp.Runtime.PdfCartonGraphics2D graphics) {
-bool isBitonal = this.isBitonal(graphics);
-global::DripSharp.Runtime.PdfCartonRenderingHints r = new global::DripSharp.Runtime.PdfCartonRenderingHints(global::DripSharp.Runtime.JavaCompat.CastDictionary<object, object>(default!));
-r.Put(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_INTERPOLATION, (isBitonal ? global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR : global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_INTERPOLATION_BICUBIC));
-r.Put(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_RENDERING, global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_RENDER_QUALITY);
-r.Put(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_ANTIALIASING, (isBitonal ? global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_ANTIALIAS_OFF : global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_ANTIALIAS_ON));
-return r;
-}
+  private global::DripSharp.Runtime.PdfCartonRenderingHints createDefaultRenderingHints(global::DripSharp.Runtime.PdfCartonGraphics2D graphics) {
+    bool isBitonal = this.isBitonal(graphics);
+    global::DripSharp.Runtime.PdfCartonRenderingHints r
+      = new global::DripSharp.Runtime.PdfCartonRenderingHints(global::DripSharp.Runtime.JavaCompat.CastDictionary<object,
+      object>(default!));
+    r.Put(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_INTERPOLATION, (isBitonal
+      ? global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
+      : global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_INTERPOLATION_BICUBIC));
+    r.Put(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_RENDERING,
+      global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_RENDER_QUALITY);
+    r.Put(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_ANTIALIASING, (isBitonal
+      ? global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_ANTIALIAS_OFF
+      : global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_ANTIALIAS_ON));
+    return r;
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Rendering.PageDrawer CreatePageDrawer(global::DripSharp.PdfCarton.Rendering.PageDrawerParameters parameters) {
-global::DripSharp.PdfCarton.Rendering.PageDrawer pageDrawer = new global::DripSharp.PdfCarton.Rendering.PageDrawer(parameters);
-pageDrawer.SetAnnotationFilter(this.annotationFilter);
-return pageDrawer;
-}
+  protected internal virtual global::DripSharp.PdfCarton.Rendering.PageDrawer CreatePageDrawer(global::DripSharp.PdfCarton.Rendering.PageDrawerParameters parameters) {
+    global::DripSharp.PdfCarton.Rendering.PageDrawer pageDrawer
+      = new global::DripSharp.PdfCarton.Rendering.PageDrawer(parameters);
+    pageDrawer.SetAnnotationFilter(this.annotationFilter);
+    return pageDrawer;
+  }
 
-private bool hasBlendMode(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
-global::DripSharp.PdfCarton.Pdmodel.PDResources resources = page.GetResources();
-if ((resources == default!)) {
-return false;
-}
-foreach (global::DripSharp.PdfCarton.Cos.COSName name in resources.GetExtGStateNames()) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState extGState = resources.GetExtGState(name);
-if ((extGState != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode blendMode = extGState.GetBlendMode();
-if ((blendMode != global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.Normal)) {
-return true;
-}
-}
-}
-return false;
-}
+  private bool hasBlendMode(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    global::DripSharp.PdfCarton.Pdmodel.PDResources resources = page.GetResources();
+    if ((resources == default!)) {
+      return false;
+    }
+    foreach (global::DripSharp.PdfCarton.Cos.COSName name in resources.GetExtGStateNames()) {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState extGState
+        = resources.GetExtGState(name);
+      if ((extGState != default!)) {
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode blendMode
+          = extGState.GetBlendMode();
+        if ((blendMode != global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.Normal)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
-internal virtual global::SkiaSharp.SKBitmap getPageImage() {
-return this.pageImage;
-}
+  internal virtual global::SkiaSharp.SKBitmap getPageImage() {
+    return this.pageImage;
+  }
 }

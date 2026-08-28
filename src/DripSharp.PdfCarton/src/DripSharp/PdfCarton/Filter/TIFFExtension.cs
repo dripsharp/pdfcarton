@@ -11,83 +11,83 @@ namespace DripSharp.PdfCarton.Filter;
 internal interface TIFFExtension {}
 
 internal static class TIFFExtensionStatics {
-public const int CompressionCcittT4 = 3;
+  public const int CompressionCcittT4 = 3;
 
-public const int CompressionCcittT6 = 4;
+  public const int CompressionCcittT6 = 4;
 
-public const int CompressionLzw = 5;
+  public const int CompressionLzw = 5;
 
-public const int CompressionOldJpeg = 6;
+  public const int CompressionOldJpeg = 6;
 
-public const int CompressionJpeg = 7;
+  public const int CompressionJpeg = 7;
 
-public const int CompressionDeflate = 32946;
+  public const int CompressionDeflate = 32946;
 
-public const int CompressionZlib = 8;
+  public const int CompressionZlib = 8;
 
-public const int PhotometricSeparated = 5;
+  public const int PhotometricSeparated = 5;
 
-public const int PhotometricYcbcr = 6;
+  public const int PhotometricYcbcr = 6;
 
-public const int PhotometricCielab = 8;
+  public const int PhotometricCielab = 8;
 
-public const int PhotometricIcclab = 9;
+  public const int PhotometricIcclab = 9;
 
-public const int PhotometricItulab = 10;
+  public const int PhotometricItulab = 10;
 
-public const int PlanarconfigPlanar = 2;
+  public const int PlanarconfigPlanar = 2;
 
-public const int PredictorHorizontalDifferencing = 2;
+  public const int PredictorHorizontalDifferencing = 2;
 
-public const int PredictorHorizontalFloatingpoint = 3;
+  public const int PredictorHorizontalFloatingpoint = 3;
 
-public const int FillRightToLeft = 2;
+  public const int FillRightToLeft = 2;
 
-public const int SampleformatInt = 2;
+  public const int SampleformatInt = 2;
 
-public const int SampleformatFp = 3;
+  public const int SampleformatFp = 3;
 
-public const int SampleformatUndefined = 4;
+  public const int SampleformatUndefined = 4;
 
-public const int YcbcrPositioningCentered = 1;
+  public const int YcbcrPositioningCentered = 1;
 
-public const int YcbcrPositioningCosited = 2;
+  public const int YcbcrPositioningCosited = 2;
 
-public const int JpegProcBaseline = 1;
+  public const int JpegProcBaseline = 1;
 
-public const int JpegProcLossless = 14;
+  public const int JpegProcLossless = 14;
 
-public const int InksetCmyk = 1;
+  public const int InksetCmyk = 1;
 
-public const int InksetNotCmyk = 2;
+  public const int InksetNotCmyk = 2;
 
-public const int OrientationTopright = 2;
+  public const int OrientationTopright = 2;
 
-public const int OrientationBotright = 3;
+  public const int OrientationBotright = 3;
 
-public const int OrientationBotleft = 4;
+  public const int OrientationBotleft = 4;
 
-public const int OrientationLefttop = 5;
+  public const int OrientationLefttop = 5;
 
-public const int OrientationRighttop = 6;
+  public const int OrientationRighttop = 6;
 
-public const int OrientationRightbot = 7;
+  public const int OrientationRightbot = 7;
 
-public const int OrientationLeftbot = 8;
+  public const int OrientationLeftbot = 8;
 
-public const int Group3opt2dencoding = 1;
+  public const int Group3opt2dencoding = 1;
 
-public const int Group3optUncompressed = 2;
+  public const int Group3optUncompressed = 2;
 
-public const int Group3optFillbits = 4;
+  public const int Group3optFillbits = 4;
 
-public const int Group3optBytealigned = 8;
+  public const int Group3optBytealigned = 8;
 
-public const int Group4optUncompressed = 2;
+  public const int Group4optUncompressed = 2;
 
-public const int Group4optBytealigned = 4;
+  public const int Group4optBytealigned = 4;
 
-public const int CompressionCcittModifiedHuffmanRle = 2;
+  public const int CompressionCcittModifiedHuffmanRle = 2;
 
-public const int FillLeftToRight = 1;
+  public const int FillLeftToRight = 1;
 }

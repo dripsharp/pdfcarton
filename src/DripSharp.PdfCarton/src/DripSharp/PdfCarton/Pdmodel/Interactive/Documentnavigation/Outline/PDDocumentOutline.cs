@@ -8,20 +8,23 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline;
 
-public sealed class PDDocumentOutline : global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode {
-public PDDocumentOutline() {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Outlines.GetName());
-}
+public sealed class PDDocumentOutline
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode {
+  public PDDocumentOutline() {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Outlines.GetName());
+  }
 
-public PDDocumentOutline(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
-this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Outlines.GetName());
-}
+  public PDDocumentOutline(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
+    this.GetCOSObject().SetName(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Outlines.GetName());
+  }
 
-public override bool IsNodeOpen() {
-return true;
-}
+  public override bool IsNodeOpen() {
+    return true;
+  }
 
-public override void OpenNode() {}
+  public override void OpenNode() {}
 
-public override void CloseNode() {}
+  public override void CloseNode() {}
 }

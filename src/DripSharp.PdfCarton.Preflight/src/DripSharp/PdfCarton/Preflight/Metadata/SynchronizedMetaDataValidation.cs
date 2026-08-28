@@ -9,282 +9,359 @@
 namespace DripSharp.PdfCarton.Preflight.Metadata;
 
 public class SynchronizedMetaDataValidation {
-protected internal virtual void AnalyzeTitleProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico, global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
-string title = dico.GetTitle();
-if ((title != default!)) {
-title = this.removeTrailingNul(title);
-if ((dc != default!)) {
-try {
-if ((dc.GetTitle() != default!)) {
-if ((dc.GetTitle("x-default") != default!)) {
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(dc.GetTitle("x-default"), title))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("Title"));
-}
-} else {
-global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> it = global::DripSharp.Runtime.JavaCompat.Iterator(dc.GetTitleProperty().GetContainer().GetAllProperties());
-if (it.HasNext()) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp = it.Next()!;
-if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(((global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!)).GetStringValue(), title))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("Title"));
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Title", "Property is badly defined"));
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Title", "Property is not defined"));
-}
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Title", "Property is not defined"));
-}
-} catch (global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException ex) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.BadFieldXMPPropertyError("Title", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex)));
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("Title", "Dublin Core"));
-}
-}
-}
+  protected internal virtual void AnalyzeTitleProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico,
+    global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
+    string title = dico.GetTitle();
+    if ((title != default!)) {
+      title = this.removeTrailingNul(title);
+      if ((dc != default!)) {
+        try {
+          if ((dc.GetTitle() != default!)) {
+            if ((dc.GetTitle("x-default") != default!)) {
+              if (!global::DripSharp.Runtime.JavaCompat.Equals(dc.GetTitle("x-default"), title)) {
+                global::DripSharp.Runtime.JavaCompat.Add(ve,
+                  this.UnsynchronizedMetaDataError("Title"));
+              }
+            } else {
+              global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> it
+                = global::DripSharp.Runtime.JavaCompat.Iterator(dc.GetTitleProperty().GetContainer().GetAllProperties());
+              if (it.HasNext()) {
+                global::DripSharp.PdfCarton.Xmp.Type.AbstractField tmp = it.Next()!;
+                if ((tmp is global::DripSharp.PdfCarton.Xmp.Type.TextType)) {
+                  if (!global::DripSharp.Runtime.JavaCompat.Equals(((global::DripSharp.PdfCarton.Xmp.Type.TextType)(tmp!)).GetStringValue(),
+                    title)) {
+                    global::DripSharp.Runtime.JavaCompat.Add(ve,
+                      this.UnsynchronizedMetaDataError("Title"));
+                  }
+                } else {
+                  global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Title",
+                    "Property is badly defined"));
+                }
+              } else {
+                global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Title",
+                  "Property is not defined"));
+              }
+            }
+          } else {
+            global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Title",
+              "Property is not defined"));
+          }
+        } catch (global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException ex) {
+          global::DripSharp.Runtime.JavaCompat.Add(ve, this.BadFieldXMPPropertyError("Title",
+            global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex)));
+        }
+      } else {
+        global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("Title",
+          "Dublin Core"));
+      }
+    }
+  }
 
-protected internal virtual void AnalyzeAuthorProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico, global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
-string author = dico.GetAuthor();
-if ((author != default!)) {
-author = this.removeTrailingNul(author);
-if ((dc != default!)) {
-if ((dc.GetCreatorsProperty() != default!)) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(dc.GetCreators()) != 1)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Author", "In XMP metadata, Author(s) must be represented by a single entry in a text array (dc:creator) "));
-} else {
-if ((global::DripSharp.Runtime.JavaCompat.ListGet(dc.GetCreators(), 0) == default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Author", "Property is defined as null"));
-} else {
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.Runtime.JavaCompat.ListGet(dc.GetCreators(), 0), author))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("Author"));
-}
-}
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Author", "Property is not defined in XMP Metadata"));
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("Author", "Dublin Core"));
-}
-}
-}
+  protected internal virtual void AnalyzeAuthorProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico,
+    global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
+    string author = dico.GetAuthor();
+    if ((author != default!)) {
+      author = this.removeTrailingNul(author);
+      if ((dc != default!)) {
+        if ((dc.GetCreatorsProperty() != default!)) {
+          if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(dc.GetCreators()) != 1)) {
+            global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Author",
+              "In XMP metadata, Author(s) must be represented by a single entry in a text array (dc:creator) "));
+          } else {
+            if ((global::DripSharp.Runtime.JavaCompat.ListGet(dc.GetCreators(), 0) == default!)) {
+              global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Author",
+                "Property is defined as null"));
+            } else {
+              if (!global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.Runtime.JavaCompat.ListGet(dc.GetCreators(),
+                0), author)) {
+                global::DripSharp.Runtime.JavaCompat.Add(ve,
+                  this.UnsynchronizedMetaDataError("Author"));
+              }
+            }
+          }
+        } else {
+          global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Author",
+            "Property is not defined in XMP Metadata"));
+        }
+      } else {
+        global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("Author",
+          "Dublin Core"));
+      }
+    }
+  }
 
-protected internal virtual void AnalyzeSubjectProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico, global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
-string subject = dico.GetSubject();
-if ((subject != default!)) {
-subject = this.removeTrailingNul(subject);
-if ((dc != default!)) {
-if ((dc.GetDescriptionProperty() != default!)) {
-try {
-if ((dc.GetDescription("x-default") == default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Subject", "Subject not found in XMP (dc:description[\"x-default\"] not found)"));
-} else {
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(dc.GetDescription("x-default"), subject))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("Subject"));
-}
-}
-} catch (global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException ex) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.BadFieldXMPPropertyError("Subject", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex)));
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Subject", "Property is defined as null"));
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("Subject", "Dublin Core"));
-}
-}
-}
+  protected internal virtual void AnalyzeSubjectProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico,
+    global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
+    string subject = dico.GetSubject();
+    if ((subject != default!)) {
+      subject = this.removeTrailingNul(subject);
+      if ((dc != default!)) {
+        if ((dc.GetDescriptionProperty() != default!)) {
+          try {
+            if ((dc.GetDescription("x-default") == default!)) {
+              global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Subject",
+                "Subject not found in XMP (dc:description[\"x-default\"] not found)"));
+            } else {
+              if (!global::DripSharp.Runtime.JavaCompat.Equals(dc.GetDescription("x-default"),
+                subject)) {
+                global::DripSharp.Runtime.JavaCompat.Add(ve,
+                  this.UnsynchronizedMetaDataError("Subject"));
+              }
+            }
+          } catch (global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException ex) {
+            global::DripSharp.Runtime.JavaCompat.Add(ve, this.BadFieldXMPPropertyError("Subject",
+              global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex)));
+          }
+        } else {
+          global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Subject",
+            "Property is defined as null"));
+        }
+      } else {
+        global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("Subject",
+          "Dublin Core"));
+      }
+    }
+  }
 
-protected internal virtual void AnalyzeKeywordsProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico, global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema pdf, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
-string keyword = dico.GetKeywords();
-if ((keyword != default!)) {
-keyword = this.removeTrailingNul(keyword);
-if ((pdf != default!)) {
-if ((pdf.GetKeywordsProperty() == default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Keywords", "Property is not defined"));
-} else {
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(pdf.GetKeywords(), keyword))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("Keywords"));
-}
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("Keywords", "PDF"));
-}
-}
-}
+  protected internal virtual void AnalyzeKeywordsProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico,
+    global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema pdf,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
+    string keyword = dico.GetKeywords();
+    if ((keyword != default!)) {
+      keyword = this.removeTrailingNul(keyword);
+      if ((pdf != default!)) {
+        if ((pdf.GetKeywordsProperty() == default!)) {
+          global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Keywords",
+            "Property is not defined"));
+        } else {
+          if (!global::DripSharp.Runtime.JavaCompat.Equals(pdf.GetKeywords(), keyword)) {
+            global::DripSharp.Runtime.JavaCompat.Add(ve,
+              this.UnsynchronizedMetaDataError("Keywords"));
+          }
+        }
+      } else {
+        global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("Keywords",
+          "PDF"));
+      }
+    }
+  }
 
-protected internal virtual void AnalyzeProducerProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico, global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema pdf, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
-string producer = dico.GetProducer();
-if ((producer != default!)) {
-producer = this.removeTrailingNul(producer);
-if ((pdf != default!)) {
-if ((pdf.GetProducerProperty() == default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Producer", "Property is not defined"));
-} else {
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(pdf.GetProducer(), producer))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("Producer"));
-}
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("Producer", "PDF"));
-}
-}
-}
+  protected internal virtual void AnalyzeProducerProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico,
+    global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema pdf,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
+    string producer = dico.GetProducer();
+    if ((producer != default!)) {
+      producer = this.removeTrailingNul(producer);
+      if ((pdf != default!)) {
+        if ((pdf.GetProducerProperty() == default!)) {
+          global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("Producer",
+            "Property is not defined"));
+        } else {
+          if (!global::DripSharp.Runtime.JavaCompat.Equals(pdf.GetProducer(), producer)) {
+            global::DripSharp.Runtime.JavaCompat.Add(ve,
+              this.UnsynchronizedMetaDataError("Producer"));
+          }
+        }
+      } else {
+        global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("Producer",
+          "PDF"));
+      }
+    }
+  }
 
-protected internal virtual void AnalyzeCreatorToolProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico, global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema xmp, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
-string creatorTool = dico.GetCreator();
-if ((creatorTool != default!)) {
-creatorTool = this.removeTrailingNul(creatorTool);
-if ((xmp != default!)) {
-if ((xmp.GetCreatorToolProperty() == default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("CreatorTool", "Property is not defined"));
-} else {
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(xmp.GetCreatorTool(), creatorTool))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("CreatorTool"));
-}
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("CreatorTool", "PDF"));
-}
-}
-}
+  protected internal virtual void AnalyzeCreatorToolProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico,
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema xmp,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
+    string creatorTool = dico.GetCreator();
+    if ((creatorTool != default!)) {
+      creatorTool = this.removeTrailingNul(creatorTool);
+      if ((xmp != default!)) {
+        if ((xmp.GetCreatorToolProperty() == default!)) {
+          global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("CreatorTool",
+            "Property is not defined"));
+        } else {
+          if (!global::DripSharp.Runtime.JavaCompat.Equals(xmp.GetCreatorTool(), creatorTool)) {
+            global::DripSharp.Runtime.JavaCompat.Add(ve,
+              this.UnsynchronizedMetaDataError("CreatorTool"));
+          }
+        }
+      } else {
+        global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("CreatorTool",
+          "PDF"));
+      }
+    }
+  }
 
-protected internal virtual void AnalyzeCreationDateProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico, global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema xmp, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
-global::System.DateTimeOffset? creationDate = dico.GetCreationDate();
-global::DripSharp.PdfCarton.Cos.COSBase item = dico.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.CreationDate);
-if (((creationDate != default!) && this.isValidPDFDateFormat(item))) {
-if ((xmp != default!)) {
-global::System.DateTimeOffset? xmpCreationDate = xmp.GetCreateDate();
-if ((xmpCreationDate == default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("CreationDate", "Property is not defined"));
-} else {
-if ((global::DripSharp.Runtime.JavaCompat.CalendarCompareTo(xmpCreationDate, creationDate) != 0)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("CreationDate"));
-} else {
-if ((this.hasTimeZone(xmp.GetCreateDateProperty().GetRawValue()) != this.hasTimeZone(dico.GetPropertyStringValue("CreationDate")))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("CreationDate"));
-}
-}
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("CreationDate", "Basic XMP"));
-}
-}
-}
+  protected internal virtual void AnalyzeCreationDateProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico,
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema xmp,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
+    global::System.DateTimeOffset? creationDate = dico.GetCreationDate();
+    global::DripSharp.PdfCarton.Cos.COSBase item
+      = dico.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.CreationDate);
+    if (((creationDate != default!) && this.isValidPDFDateFormat(item))) {
+      if ((xmp != default!)) {
+        global::System.DateTimeOffset? xmpCreationDate = xmp.GetCreateDate();
+        if ((xmpCreationDate == default!)) {
+          global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("CreationDate",
+            "Property is not defined"));
+        } else {
+          if ((global::DripSharp.Runtime.JavaCompat.CalendarCompareTo(xmpCreationDate, creationDate)
+            != 0)) {
+            global::DripSharp.Runtime.JavaCompat.Add(ve,
+              this.UnsynchronizedMetaDataError("CreationDate"));
+          } else {
+            if ((this.hasTimeZone(xmp.GetCreateDateProperty().GetRawValue())
+              != this.hasTimeZone(dico.GetPropertyStringValue("CreationDate")))) {
+              global::DripSharp.Runtime.JavaCompat.Add(ve,
+                this.UnsynchronizedMetaDataError("CreationDate"));
+            }
+          }
+        }
+      } else {
+        global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("CreationDate",
+          "Basic XMP"));
+      }
+    }
+  }
 
-protected internal virtual void AnalyzeModifyDateProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico, global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema xmp, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
-global::System.DateTimeOffset? modifyDate = dico.GetModificationDate();
-global::DripSharp.PdfCarton.Cos.COSBase item = dico.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.ModDate);
-if (((modifyDate != default!) && this.isValidPDFDateFormat(item))) {
-if ((xmp != default!)) {
-global::System.DateTimeOffset? xmpModifyDate = xmp.GetModifyDate();
-if ((xmpModifyDate == default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("ModifyDate", "Property is not defined"));
-} else {
-if ((global::DripSharp.Runtime.JavaCompat.CalendarCompareTo(xmpModifyDate, modifyDate) != 0)) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("ModificationDate"));
-} else {
-if ((this.hasTimeZone(xmp.GetModifyDateProperty().GetRawValue()) != this.hasTimeZone(dico.GetPropertyStringValue("ModDate")))) {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.UnsynchronizedMetaDataError("ModificationDate"));
-}
-}
-}
-} else {
-global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("ModifyDate", "Basic XMP"));
-}
-}
-}
+  protected internal virtual void AnalyzeModifyDateProperty(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico,
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema xmp,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve) {
+    global::System.DateTimeOffset? modifyDate = dico.GetModificationDate();
+    global::DripSharp.PdfCarton.Cos.COSBase item
+      = dico.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.ModDate);
+    if (((modifyDate != default!) && this.isValidPDFDateFormat(item))) {
+      if ((xmp != default!)) {
+        global::System.DateTimeOffset? xmpModifyDate = xmp.GetModifyDate();
+        if ((xmpModifyDate == default!)) {
+          global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentXMPPropertyError("ModifyDate",
+            "Property is not defined"));
+        } else {
+          if ((global::DripSharp.Runtime.JavaCompat.CalendarCompareTo(xmpModifyDate, modifyDate)
+            != 0)) {
+            global::DripSharp.Runtime.JavaCompat.Add(ve,
+              this.UnsynchronizedMetaDataError("ModificationDate"));
+          } else {
+            if ((this.hasTimeZone(xmp.GetModifyDateProperty().GetRawValue())
+              != this.hasTimeZone(dico.GetPropertyStringValue("ModDate")))) {
+              global::DripSharp.Runtime.JavaCompat.Add(ve,
+                this.UnsynchronizedMetaDataError("ModificationDate"));
+            }
+          }
+        }
+      } else {
+        global::DripSharp.Runtime.JavaCompat.Add(ve, this.AbsentSchemaMetaDataError("ModifyDate",
+          "Basic XMP"));
+      }
+    }
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ValidateMetadataSynchronization(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError>();
-if ((document == default!)) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("Document provided is null");
-} else {
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico = document.GetDocumentInformation();
-if ((metadata == default!)) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("Metadata provided are null");
-} else {
-global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = metadata.GetDublinCoreSchema();
-this.AnalyzeTitleProperty(dico, dc, ve);
-this.AnalyzeAuthorProperty(dico, dc, ve);
-this.AnalyzeSubjectProperty(dico, dc, ve);
-global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema pdf = metadata.GetAdobePDFSchema();
-this.AnalyzeKeywordsProperty(dico, pdf, ve);
-this.AnalyzeProducerProperty(dico, pdf, ve);
-global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema xmp = metadata.GetXMPBasicSchema();
-this.AnalyzeCreatorToolProperty(dico, xmp, ve);
-this.AnalyzeCreationDateProperty(dico, xmp, ve);
-this.AnalyzeModifyDateProperty(dico, xmp, ve);
-}
-}
-return ve;
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ValidateMetadataSynchronization(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> ve
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError>();
+    if ((document == default!)) {
+      throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("Document provided is null");
+    } else {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation dico
+        = document.GetDocumentInformation();
+      if ((metadata == default!)) {
+        throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("Metadata provided are null");
+      } else {
+        global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = metadata.GetDublinCoreSchema();
+        this.AnalyzeTitleProperty(dico, dc, ve);
+        this.AnalyzeAuthorProperty(dico, dc, ve);
+        this.AnalyzeSubjectProperty(dico, dc, ve);
+        global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema pdf = metadata.GetAdobePDFSchema();
+        this.AnalyzeKeywordsProperty(dico, pdf, ve);
+        this.AnalyzeProducerProperty(dico, pdf, ve);
+        global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema xmp = metadata.GetXMPBasicSchema();
+        this.AnalyzeCreatorToolProperty(dico, xmp, ve);
+        this.AnalyzeCreationDateProperty(dico, xmp, ve);
+        this.AnalyzeModifyDateProperty(dico, xmp, ve);
+      }
+    }
+    return ve;
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError UnexpectedPrefixFoundError(string prefFound, string prefExpected, string schema) {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(80);
-sb.Append(schema).Append(" found but prefix used is '").Append(prefFound).Append("', prefix '").Append(prefExpected).Append("' is expected.");
-return new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataWrongNsPrefix, sb.ToString());
-}
+  protected internal virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError UnexpectedPrefixFoundError(string prefFound,
+    string prefExpected, string schema) {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(80);
+    sb.Append(schema).Append(" found but prefix used is '").Append(prefFound).Append("', prefix '").Append(prefExpected).Append("' is expected.");
+    return new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataWrongNsPrefix,
+      sb.ToString());
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Preflight.Exception.ValidationException SchemaAccessException(string target, global::System.Exception cause) {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(80);
-sb.Append("Cannot access to the ").Append(target).Append(" schema");
-return new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(sb.ToString(), cause);
-}
+  protected internal virtual global::DripSharp.PdfCarton.Preflight.Exception.ValidationException SchemaAccessException(string target,
+    global::System.Exception cause) {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(80);
+    sb.Append("Cannot access to the ").Append(target).Append(" schema");
+    return new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(sb.ToString(),
+      cause);
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError UnsynchronizedMetaDataError(string target) {
-return new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataMismatch, global::DripSharp.Runtime.JavaCompat.Concat(target, " present in the document catalog dictionary doesn't match with XMP information"));
-}
+  protected internal virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError UnsynchronizedMetaDataError(string target) {
+    return new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataMismatch,
+      global::DripSharp.Runtime.JavaCompat.Concat(target,
+      " present in the document catalog dictionary doesn't match with XMP information"));
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError AbsentSchemaMetaDataError(string target, string schema) {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(80);
-sb.Append(target).Append(" present in the document catalog dictionary can't be found in XMP information (").Append(schema).Append(" schema not declared)");
-return new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataMismatch, sb.ToString());
-}
+  protected internal virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError AbsentSchemaMetaDataError(string target,
+    string schema) {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(80);
+    sb.Append(target).Append(" present in the document catalog dictionary can't be found in XMP information (").Append(schema).Append(" schema not declared)");
+    return new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataMismatch,
+      sb.ToString());
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError AbsentXMPPropertyError(string target, string details) {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(80);
-sb.Append(target).Append(" present in the document catalog dictionary can't be found in XMP information (").Append(details).Append(")");
-return new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataMismatch, sb.ToString());
-}
+  protected internal virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError AbsentXMPPropertyError(string target,
+    string details) {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(80);
+    sb.Append(target).Append(" present in the document catalog dictionary can't be found in XMP information (").Append(details).Append(")");
+    return new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataMismatch,
+      sb.ToString());
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError BadFieldXMPPropertyError(string target, string details) {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(80);
-sb.Append(target).Append(" property is not a multi-lingual property in XMP information(").Append(details).Append(")");
-return new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataMismatch, sb.ToString());
-}
+  protected internal virtual global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError BadFieldXMPPropertyError(string target,
+    string details) {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(80);
+    sb.Append(target).Append(" property is not a multi-lingual property in XMP information(").Append(details).Append(")");
+    return new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataMismatch,
+      sb.ToString());
+  }
 
-private string removeTrailingNul(string @string) {
-int length = @string.Length;
-while (((length > 0) && ((int)(@string[(length - 1)]) == 0))) {
-length--;
-}
-return global::DripSharp.Runtime.JavaCompat.StringSubstring(@string, 0, length);
-}
+  private string removeTrailingNul(string @string) {
+    int length = @string.Length;
+    while (((length > 0) && ((int)(@string[(length - 1)]) == 0))) {
+      length--;
+    }
+    return global::DripSharp.Runtime.JavaCompat.StringSubstring(@string, 0, length);
+  }
 
-private bool hasTimeZone(object date) {
-string datePattern = "^D:.*[Z]$|^D:.*[+-].*|^\\d{4}.*T.*Z(\\d{2}:\\d{2}){0,1}$|^\\d{4}.*T.*[+-]\\d{2}.*$";
-if ((date is global::System.DateTimeOffset?)) {
-return true;
-} else {
-if ((date is string)) {
-return global::DripSharp.Runtime.JavaCompat.StringMatches((string)(date!), datePattern);
-}
-}
-return false;
-}
+  private bool hasTimeZone(object date) {
+    string datePattern
+      = "^D:.*[Z]$|^D:.*[+-].*|^\\d{4}.*T.*Z(\\d{2}:\\d{2}){0,1}$|^\\d{4}.*T.*[+-]\\d{2}.*$";
+    if ((date is global::System.DateTimeOffset?)) {
+      return true;
+    } else {
+      if ((date is string)) {
+        return global::DripSharp.Runtime.JavaCompat.StringMatches((string)(date!), datePattern);
+      }
+    }
+    return false;
+  }
 
-private bool isValidPDFDateFormat(global::DripSharp.PdfCarton.Cos.COSBase item) {
-if ((item is global::DripSharp.PdfCarton.Cos.COSString)) {
-string date = ((global::DripSharp.PdfCarton.Cos.COSString)(item!)).GetString();
-if (global::DripSharp.Runtime.JavaCompat.StringMatches(date, "D:\\d{4}(\\d{2}(\\d{2}(\\d{2}(\\d{2}(\\d{2}([\\+\\-Z](\\d{2}'\\d{2}')?)?)?)?)?)?)?")) {
-return true;
-}
-}
-return false;
-}
+  private bool isValidPDFDateFormat(global::DripSharp.PdfCarton.Cos.COSBase item) {
+    if ((item is global::DripSharp.PdfCarton.Cos.COSString)) {
+      string date = ((global::DripSharp.PdfCarton.Cos.COSString)(item!)).GetString();
+      if (global::DripSharp.Runtime.JavaCompat.StringMatches(date,
+        "D:\\d{4}(\\d{2}(\\d{2}(\\d{2}(\\d{2}(\\d{2}([\\+\\-Z](\\d{2}'\\d{2}')?)?)?)?)?)?)?")) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

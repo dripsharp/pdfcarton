@@ -8,48 +8,49 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/g/", "xmpG")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/g/",
+  "xmpG")]
 public class ColorantType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string A = "A";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string A = "A";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string B = "B";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string B = "B";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
-public const string L = "L";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
+  public const string L = "L";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
-public const string Black = "black";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
+  public const string Black = "black";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
-public const string Cyan = "cyan";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
+  public const string Cyan = "cyan";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
-public const string Magenta = "magenta";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
+  public const string Magenta = "magenta";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
-public const string Yellow = "yellow";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
+  public const string Yellow = "yellow";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string Blue = "blue";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string Blue = "blue";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string Green = "green";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string Green = "green";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string Red = "red";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string Red = "red";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
-public const string Mode = "mode";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
+  public const string Mode = "mode";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string SwatchName = "swatchName";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string SwatchName = "swatchName";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
-public const string Type = "type";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
+  public const string Type = "type";
 
-public ColorantType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+  public ColorantType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
-}
+  }
 }

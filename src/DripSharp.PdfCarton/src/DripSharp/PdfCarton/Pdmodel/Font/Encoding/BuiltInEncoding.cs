@@ -9,15 +9,15 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font.Encoding;
 
 public class BuiltInEncoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding {
-public BuiltInEncoding(global::System.Collections.Generic.IDictionary<int, string> codeToName) {
-global::DripSharp.Runtime.JavaCompat.ForEach(codeToName, this.Add);
-}
+  public BuiltInEncoding(global::System.Collections.Generic.IDictionary<int, string> codeToName) {
+    global::DripSharp.Runtime.JavaCompat.ForEach(codeToName, this.Add);
+  }
 
-public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-throw new global::System.NotSupportedException("Built-in encodings cannot be serialized");
-}
+  public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    throw new global::System.NotSupportedException("Built-in encodings cannot be serialized");
+  }
 
-public override string GetEncodingName() {
-return "built-in (TTF)";
-}
+  public override string GetEncodingName() {
+    return "built-in (TTF)";
+  }
 }

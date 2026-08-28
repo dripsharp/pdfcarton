@@ -8,25 +8,30 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public abstract class SquareCircleAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquareCircle PdSquareCircle = default!;
+public abstract class SquareCircleAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquareCircle PdSquareCircle
+    = default!;
 
-public SquareCircleAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquareCircle annotation) : base(ctx, annotation.GetCOSObject()) {
-this.PdSquareCircle = annotation;
-this.PdAnnot = this.PdSquareCircle;
-}
+  public SquareCircleAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquareCircle annotation)
+  : base(ctx, annotation.GetCOSObject()) {
+    this.PdSquareCircle = annotation;
+    this.PdAnnot = this.PdSquareCircle;
+  }
 
-public override bool Validate() {
-bool isValid = base.Validate();
-isValid = (this.CheckIColors() && isValid);
-return isValid;
-}
+  public override bool Validate() {
+    bool isValid = base.Validate();
+    isValid = (this.CheckIColors() && isValid);
+    return isValid;
+  }
 
-protected internal virtual bool CheckIColors() {
-if (((this.PdSquareCircle.GetInteriorColor() != default!) && !(this.SearchRGBProfile()))) {
-base.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotForbiddenColor, "Annotation uses a Color profile which isn't the same than the profile contained by the OutputIntent"));
-return false;
-}
-return true;
-}
+  protected internal virtual bool CheckIColors() {
+    if (((this.PdSquareCircle.GetInteriorColor() != default!) && !(this.SearchRGBProfile()))) {
+      base.Ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorAnnotForbiddenColor,
+        "Annotation uses a Color profile which isn't the same than the profile contained by the OutputIntent"));
+      return false;
+    }
+    return true;
+  }
 }

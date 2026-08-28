@@ -9,72 +9,79 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 public abstract class ImageType {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("BINARY")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Rendering.ImageType Binary = new Anonymous_27__867();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("BINARY")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Rendering.ImageType Binary
+    = new Anonymous_27__867();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("GRAY")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Rendering.ImageType Gray = new Anonymous_37__695();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("GRAY")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Rendering.ImageType Gray
+    = new Anonymous_37__695();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("RGB")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Rendering.ImageType Rgb = new Anonymous_47__524();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("RGB")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Rendering.ImageType Rgb
+    = new Anonymous_47__524();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("ARGB")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
-public static readonly global::DripSharp.PdfCarton.Rendering.ImageType Argb = new Anonymous_57__347();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("ARGB")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(3)]
+  public static readonly global::DripSharp.PdfCarton.Rendering.ImageType Argb
+    = new Anonymous_57__347();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("BGR")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
-public static readonly global::DripSharp.PdfCarton.Rendering.ImageType Bgr = new Anonymous_67__177();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("BGR")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(4)]
+  public static readonly global::DripSharp.PdfCarton.Rendering.ImageType Bgr
+    = new Anonymous_67__177();
 
-internal abstract int toBufferedImageType();
+  internal abstract int toBufferedImageType();
 
-private ImageType() {}
+  private ImageType() {}
 
-private sealed class Anonymous_27__867 : global::DripSharp.PdfCarton.Rendering.ImageType {
-public Anonymous_27__867() {}
+  private sealed class Anonymous_27__867 : global::DripSharp.PdfCarton.Rendering.ImageType {
+    public Anonymous_27__867() {}
 
-internal override int toBufferedImageType() {
-return global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_BINARY;
-}
-}
+    internal override int toBufferedImageType() {
+      return global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_BINARY;
+    }
+  }
 
-private sealed class Anonymous_37__695 : global::DripSharp.PdfCarton.Rendering.ImageType {
-public Anonymous_37__695() {}
+  private sealed class Anonymous_37__695 : global::DripSharp.PdfCarton.Rendering.ImageType {
+    public Anonymous_37__695() {}
 
-internal override int toBufferedImageType() {
-return global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY;
-}
-}
+    internal override int toBufferedImageType() {
+      return global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY;
+    }
+  }
 
-private sealed class Anonymous_47__524 : global::DripSharp.PdfCarton.Rendering.ImageType {
-public Anonymous_47__524() {}
+  private sealed class Anonymous_47__524 : global::DripSharp.PdfCarton.Rendering.ImageType {
+    public Anonymous_47__524() {}
 
-internal override int toBufferedImageType() {
-return global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB;
-}
-}
+    internal override int toBufferedImageType() {
+      return global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB;
+    }
+  }
 
-private sealed class Anonymous_57__347 : global::DripSharp.PdfCarton.Rendering.ImageType {
-public Anonymous_57__347() {}
+  private sealed class Anonymous_57__347 : global::DripSharp.PdfCarton.Rendering.ImageType {
+    public Anonymous_57__347() {}
 
-internal override int toBufferedImageType() {
-return global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB;
-}
-}
+    internal override int toBufferedImageType() {
+      return global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB;
+    }
+  }
 
-private sealed class Anonymous_67__177 : global::DripSharp.PdfCarton.Rendering.ImageType {
-public Anonymous_67__177() {}
+  private sealed class Anonymous_67__177 : global::DripSharp.PdfCarton.Rendering.ImageType {
+    public Anonymous_67__177() {}
 
-internal override int toBufferedImageType() {
-return global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_3BYTE_BGR;
-}
-}
+    internal override int toBufferedImageType() {
+      return global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_3BYTE_BGR;
+    }
+  }
 
-public static ImageType[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<ImageType>();
-public static ImageType valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<ImageType>(name);
+  public static ImageType[] values()
+    => global::DripSharp.Runtime.JavaCompat.EnumValues<ImageType>();
+  public static ImageType valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<ImageType>(name);
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

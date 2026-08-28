@@ -9,58 +9,62 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDActionRemoteGoTo : global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction {
-public const string SubType = "GoToR";
+  public const string SubType = "GoToR";
 
-public PDActionRemoteGoTo() {
-this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionRemoteGoTo.SubType);
-}
+  public PDActionRemoteGoTo() {
+    this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionRemoteGoTo.SubType);
+  }
 
-public PDActionRemoteGoTo(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public PDActionRemoteGoTo(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification GetFile() {
-return global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification.CreateFS(base.Action.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.F));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification GetFile() {
+    return global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification.CreateFS(base.Action.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.F));
+  }
 
-public virtual void SetFile(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification fs) {
-base.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, fs);
-}
+  public virtual void SetFile(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification fs) {
+    base.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, fs);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetD() {
-return base.Action.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.D);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetD() {
+    return base.Action.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.D);
+  }
 
-public virtual void SetD(global::DripSharp.PdfCarton.Cos.COSBase d) {
-base.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, d);
-}
+  public virtual void SetD(global::DripSharp.PdfCarton.Cos.COSBase d) {
+    base.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, d);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode GetOpenInNewWindow() {
-global::DripSharp.PdfCarton.Cos.COSBase dictionaryObject = this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.NewWindow);
-if ((dictionaryObject is global::DripSharp.PdfCarton.Cos.COSBoolean)) {
-global::DripSharp.PdfCarton.Cos.COSBoolean b = (global::DripSharp.PdfCarton.Cos.COSBoolean)(dictionaryObject!);
-return (b.GetValue() ? global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode.NewWindow : global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode.SameWindow);
-}
-return global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode.UserPreference;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode GetOpenInNewWindow() {
+    global::DripSharp.PdfCarton.Cos.COSBase dictionaryObject
+      = this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.NewWindow);
+    if ((dictionaryObject is global::DripSharp.PdfCarton.Cos.COSBoolean)) {
+      global::DripSharp.PdfCarton.Cos.COSBoolean b
+        = (global::DripSharp.PdfCarton.Cos.COSBoolean)(dictionaryObject!);
+      return (b.GetValue()
+        ? global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode.NewWindow
+        : global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode.SameWindow);
+    }
+    return global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode.UserPreference;
+  }
 
-public virtual void SetOpenInNewWindow(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode value) {
-if ((default! == value)) {
-this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.NewWindow);
-return;
-}
-switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(value)) {
-case 0:
-this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.NewWindow);
-break;
-case 1:
-this.GetCOSObject().SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.NewWindow, false);
-break;
-case 2:
-this.GetCOSObject().SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.NewWindow, true);
-break;
-default:
-break;
-}
-}
+  public virtual void SetOpenInNewWindow(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode value) {
+    if ((default! == value)) {
+      this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.NewWindow);
+      return;
+    }
+    switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(value)) {
+      case 0:
+        this.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.NewWindow);
+        break;
+      case 1:
+        this.GetCOSObject().SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.NewWindow, false);
+        break;
+      case 2:
+        this.GetCOSObject().SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.NewWindow, true);
+        break;
+      default:
+        break;
+    }
+  }
 }

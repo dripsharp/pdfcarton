@@ -9,83 +9,96 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFJavaScript : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public FDFJavaScript() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-}
+  public FDFJavaScript() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+  }
 
-public FDFJavaScript(global::DripSharp.PdfCarton.Cos.COSDictionary javaScript) {
-this.dictionary = javaScript;
-}
+  public FDFJavaScript(global::DripSharp.PdfCarton.Cos.COSDictionary javaScript) {
+    this.dictionary = javaScript;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public virtual string GetBefore() {
-global::DripSharp.PdfCarton.Cos.COSBase @base = this.dictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Before);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
-return ((global::DripSharp.PdfCarton.Cos.COSString)(@base!)).GetString();
-} else {
-if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
-return ((global::DripSharp.PdfCarton.Cos.COSStream)(@base!)).ToTextString();
-} else {
-return default!;
-}
-}
-}
+  public virtual string GetBefore() {
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = this.dictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Before);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
+      return ((global::DripSharp.PdfCarton.Cos.COSString)(@base!)).GetString();
+    } else {
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
+        return ((global::DripSharp.PdfCarton.Cos.COSStream)(@base!)).ToTextString();
+      } else {
+        return default!;
+      }
+    }
+  }
 
-public virtual void SetBefore(string before) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Before, new global::DripSharp.PdfCarton.Cos.COSString(before));
-}
+  public virtual void SetBefore(string before) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Before,
+      new global::DripSharp.PdfCarton.Cos.COSString(before));
+  }
 
-public virtual string GetAfter() {
-global::DripSharp.PdfCarton.Cos.COSBase @base = this.dictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.After);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
-return ((global::DripSharp.PdfCarton.Cos.COSString)(@base!)).GetString();
-} else {
-if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
-return ((global::DripSharp.PdfCarton.Cos.COSStream)(@base!)).ToTextString();
-} else {
-return default!;
-}
-}
-}
+  public virtual string GetAfter() {
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = this.dictionary.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.After);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSString)) {
+      return ((global::DripSharp.PdfCarton.Cos.COSString)(@base!)).GetString();
+    } else {
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
+        return ((global::DripSharp.PdfCarton.Cos.COSStream)(@base!)).ToTextString();
+      } else {
+        return default!;
+      }
+    }
+  }
 
-public virtual void SetAfter(string after) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.After, new global::DripSharp.PdfCarton.Cos.COSString(after));
-}
+  public virtual void SetAfter(string after) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.After,
+      new global::DripSharp.PdfCarton.Cos.COSString(after));
+  }
 
-public virtual global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript> GetDoc() {
-global::DripSharp.PdfCarton.Cos.COSArray array = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Doc);
-if ((array == default!)) {
-return default!;
-}
-global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript> map = new global::DripSharp.Runtime.JavaLinkedHashMap<string, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript>();
-for (int i = 0; ((i + 1) < array.Size()); i += 2) {
-string name = array.GetName(i);
-if ((name != default!)) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = array.GetObject((i + 1));
-if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction action = global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
-if ((action is global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(map, name, (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript)(action!));
-}
-}
-}
-}
-return map;
-}
+  public virtual global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript> GetDoc() {
+    global::DripSharp.PdfCarton.Cos.COSArray array
+      = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Doc);
+    if ((array == default!)) {
+      return default!;
+    }
+    global::System.Collections.Generic.IDictionary<string,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript> map
+      = new global::DripSharp.Runtime.JavaLinkedHashMap<string,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript>();
+    for (int i = 0; ((i + 1) < array.Size()); i += 2) {
+      string name = array.GetName(i);
+      if ((name != default!)) {
+        global::DripSharp.PdfCarton.Cos.COSBase @base = array.GetObject((i + 1));
+        if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction action
+            = global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
+          if ((action is global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript)) {
+            global::DripSharp.Runtime.JavaCompat.MapPut(map, name,
+              (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript)(action!));
+          }
+        }
+      }
+    }
+    return map;
+  }
 
-public virtual void SetDoc(global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript> map) {
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-global::DripSharp.Runtime.JavaCompat.ForEach(map, (key, value) => {
-array.Add(new global::DripSharp.PdfCarton.Cos.COSString(key));
-array.Add(value);
-});
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Doc, array);
-}
+  public virtual void SetDoc(global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript> map) {
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    global::DripSharp.Runtime.JavaCompat.ForEach(map, (key, value) => {
+        array.Add(new global::DripSharp.PdfCarton.Cos.COSString(key));
+        array.Add(value);
+      });
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Doc, array);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

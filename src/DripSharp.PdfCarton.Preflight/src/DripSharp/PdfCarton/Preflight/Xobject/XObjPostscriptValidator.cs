@@ -8,10 +8,13 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Xobject;
 
-public class XObjPostscriptValidator : global::DripSharp.PdfCarton.Preflight.Xobject.AbstractXObjValidator {
-public XObjPostscriptValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.Graphics.PDPostScriptXObject xobj) : base(context, xobj.GetCOSObject()) {
+public class XObjPostscriptValidator
+: global::DripSharp.PdfCarton.Preflight.Xobject.AbstractXObjValidator {
+  public XObjPostscriptValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.PDPostScriptXObject xobj) : base(context,
+    xobj.GetCOSObject()) {
 
-}
+  }
 
-protected internal override void CheckMandatoryFields() {}
+  protected internal override void CheckMandatoryFields() {}
 }

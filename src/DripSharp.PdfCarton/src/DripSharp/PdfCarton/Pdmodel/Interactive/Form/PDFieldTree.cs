@@ -8,66 +8,80 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
-public class PDFieldTree : global::DripSharp.Runtime.JavaIterableContract<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class PDFieldTree
+: global::DripSharp.Runtime.JavaIterableContract<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm = null!;
 
-public PDFieldTree(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) {
-if ((acroForm == default!)) {
-throw new global::System.ArgumentException("root cannot be null");
-}
-this.acroForm = acroForm;
-}
+  public PDFieldTree(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) {
+    if ((acroForm == default!)) {
+      throw new global::System.ArgumentException("root cannot be null");
+    }
+    this.acroForm = acroForm;
+  }
 
-public virtual global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> Iterator() {
-return new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDFieldTree.FieldIterator(this.acroForm);
-}
+  public virtual global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> Iterator() {
+    return new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDFieldTree.FieldIterator(this.acroForm);
+  }
 
-internal sealed class FieldIterator : global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> {
-internal readonly global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> queue = new global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField>();
+  internal sealed class FieldIterator
+  : global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> {
+    internal readonly global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> queue
+      = new global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField>();
 
-internal readonly global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSDictionary> set = global::DripSharp.Runtime.JavaCompat.NewSetFromMap(new global::DripSharp.Runtime.JavaIdentityHashMap<global::DripSharp.PdfCarton.Cos.COSDictionary, bool>());
+    internal readonly global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSDictionary> set
+      = global::DripSharp.Runtime.JavaCompat.NewSetFromMap(new global::DripSharp.Runtime.JavaIdentityHashMap<global::DripSharp.PdfCarton.Cos.COSDictionary,
+      bool>());
 
-internal FieldIterator(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm form) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> fields = form.GetFields();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field in fields) {
-this.enqueueKids(field);
-}
-}
+    internal FieldIterator(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm form) {
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> fields
+        = form.GetFields();
+      foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field in fields) {
+        this.enqueueKids(field);
+      }
+    }
 
-public bool HasNext() {
-return !(global::DripSharp.Runtime.JavaCompat.CollectionIsEmpty(this.queue));
-}
+    public bool HasNext() {
+      return !global::DripSharp.Runtime.JavaCompat.CollectionIsEmpty(this.queue);
+    }
 
-public global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField Next() {
-if (!(this.HasNext())) {
-throw new global::System.InvalidOperationException();
-}
-return this.queue.Poll();
-}
+    public global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField Next() {
+      if (!(this.HasNext())) {
+        throw new global::System.InvalidOperationException();
+      }
+      return this.queue.Poll();
+    }
 
-public void Remove() {
-throw new global::System.NotSupportedException();
-}
+    public void Remove() {
+      throw new global::System.NotSupportedException();
+    }
 
-internal void enqueueKids(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField node) {
-this.queue.Add(node);
-this.set.Add(node.GetCOSObject());
-if ((node is global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField)) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> kids = ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField)(node!)).GetChildren();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField kid in kids) {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.set, kid.GetCOSObject())) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDFieldTree.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Child of field '", node.GetFullyQualifiedName()), "' already exists elsewhere, ignored to avoid recursion")));
-} else {
-this.enqueueKids(kid);
-}
-}
-}
-}
-}
+    internal void enqueueKids(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField node) {
+      this.queue.Add(node);
+      this.set.Add(node.GetCOSObject());
+      if ((node is global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField)) {
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> kids
+          = ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField)(node!)).GetChildren();
+        foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField kid in kids) {
+          if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.set,
+            kid.GetCOSObject())) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDFieldTree.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Child of field '",
+              node.GetFullyQualifiedName()),
+              "' already exists elsewhere, ignored to avoid recursion")));
+          } else {
+            this.enqueueKids(kid);
+          }
+        }
+      }
+    }
+  }
 
-global::System.Collections.Generic.IEnumerator<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField>.GetEnumerator() {return global::DripSharp.Runtime.JavaCompat.AsEnumerator(this.Iterator());}
+  global::System.Collections.Generic.IEnumerator<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField>.GetEnumerator() {return global::DripSharp.Runtime.JavaCompat.AsEnumerator(this.Iterator());
+  }
 
-global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() {return ((global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField>)this).GetEnumerator();}
+  global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() {return ((global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField>)this).GetEnumerator();
+  }
 }

@@ -8,39 +8,48 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent;
 
-public class BeginMarkedContentSequenceWithProperties : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public BeginMarkedContentSequenceWithProperties(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class BeginMarkedContentSequenceWithProperties
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public BeginMarkedContentSequenceWithProperties(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(operands) < 2)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, operands);
-}
-if (!((global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0) is global::DripSharp.PdfCarton.Cos.COSName))) {
-return;
-}
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-global::DripSharp.PdfCarton.Cos.COSName tag = (global::DripSharp.PdfCarton.Cos.COSName)(global::DripSharp.Runtime.JavaCompat.ListGet(operands, 0)!);
-global::DripSharp.PdfCarton.Cos.COSBase op1 = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 1);
-global::DripSharp.PdfCarton.Cos.COSDictionary propDict = default!;
-if ((op1 is global::DripSharp.PdfCarton.Cos.COSName)) {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList prop = context.GetResources().GetProperties((global::DripSharp.PdfCarton.Cos.COSName)(op1!));
-if ((prop != default!)) {
-propDict = prop.GetCOSObject();
-}
-} else {
-if ((op1 is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-propDict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(op1!);
-}
-}
-if ((propDict! == default!)) {
-return;
-}
-context.BeginMarkedContentSequence(tag, propDict!);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(operands) < 2)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        operands);
+    }
+    if (!((global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+      0) is global::DripSharp.PdfCarton.Cos.COSName))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    global::DripSharp.PdfCarton.Cos.COSName tag
+      = (global::DripSharp.PdfCarton.Cos.COSName)(global::DripSharp.Runtime.JavaCompat.ListGet(operands,
+      0)!);
+    global::DripSharp.PdfCarton.Cos.COSBase op1
+      = global::DripSharp.Runtime.JavaCompat.ListGet(operands, 1);
+    global::DripSharp.PdfCarton.Cos.COSDictionary propDict = default!;
+    if ((op1 is global::DripSharp.PdfCarton.Cos.COSName)) {
+      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList prop
+        = context.GetResources().GetProperties((global::DripSharp.PdfCarton.Cos.COSName)(op1!));
+      if ((prop != default!)) {
+        propDict = prop.GetCOSObject();
+      }
+    } else {
+      if ((op1 is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        propDict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(op1!);
+      }
+    }
+    if ((propDict! == default!)) {
+      return;
+    }
+    context.BeginMarkedContentSequence(tag, propDict!);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContentSeq;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContentSeq;
+  }
 }

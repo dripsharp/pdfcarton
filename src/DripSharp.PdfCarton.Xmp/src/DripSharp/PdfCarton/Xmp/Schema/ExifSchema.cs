@@ -8,266 +8,270 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Schema;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/exif/1.0/", "exif")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/exif/1.0/",
+  "exif")]
 public class ExifSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("LangAlt", "Simple")]
-public const string UserComment = "UserComment";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("LangAlt", "Simple")]
+  public const string UserComment = "UserComment";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string ExifVersion = "ExifVersion";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string ExifVersion = "ExifVersion";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string FlashPixVersion = "FlashpixVersion";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string FlashPixVersion = "FlashpixVersion";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string ColorSpace = "ColorSpace";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string ColorSpace = "ColorSpace";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Seq")]
-public const string ComponentsConfiguration = "ComponentsConfiguration";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Seq")]
+  public const string ComponentsConfiguration = "ComponentsConfiguration";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string CompressedBpp = "CompressedBitsPerPixel";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string CompressedBpp = "CompressedBitsPerPixel";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string PixelXDimension = "PixelXDimension";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string PixelXDimension = "PixelXDimension";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string PixelYDimension = "PixelYDimension";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string PixelYDimension = "PixelYDimension";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string RelatedSoundFile = "RelatedSoundFile";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string RelatedSoundFile = "RelatedSoundFile";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Date", "Simple")]
-public const string DateTimeOriginal = "DateTimeOriginal";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Date", "Simple")]
+  public const string DateTimeOriginal = "DateTimeOriginal";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Date", "Simple")]
-public const string DateTimeDigitized = "DateTimeDigitized";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Date", "Simple")]
+  public const string DateTimeDigitized = "DateTimeDigitized";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string ExposureTime = "ExposureTime";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string ExposureTime = "ExposureTime";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string FNumber = "FNumber";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string FNumber = "FNumber";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string ExposureProgram = "ExposureProgram";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string ExposureProgram = "ExposureProgram";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string SpectralSensitivity = "SpectralSensitivity";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string SpectralSensitivity = "SpectralSensitivity";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Seq")]
-public const string IsoSpeedRatings = "ISOSpeedRatings";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Seq")]
+  public const string IsoSpeedRatings = "ISOSpeedRatings";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string ShutterSpeedValue = "ShutterSpeedValue";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string ShutterSpeedValue = "ShutterSpeedValue";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string ApertureValue = "ApertureValue";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string ApertureValue = "ApertureValue";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string BrightnessValue = "BrightnessValue";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string BrightnessValue = "BrightnessValue";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string ExposureBiasValue = "ExposureBiasValue";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string ExposureBiasValue = "ExposureBiasValue";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string MaxApertureValue = "MaxApertureValue";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string MaxApertureValue = "MaxApertureValue";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string SubjectDistance = "SubjectDistance";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string SubjectDistance = "SubjectDistance";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string MeteringMode = "MeteringMode";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string MeteringMode = "MeteringMode";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string LightSource = "LightSource";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string LightSource = "LightSource";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string FlashEnergy = "FlashEnergy";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string FlashEnergy = "FlashEnergy";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string FocalLength = "FocalLength";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string FocalLength = "FocalLength";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string FocalPlaneXresolution = "FocalPlaneXResolution";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string FocalPlaneXresolution = "FocalPlaneXResolution";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string FocalPlaneYresolution = "FocalPlaneYResolution";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string FocalPlaneYresolution = "FocalPlaneYResolution";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Seq")]
-public const string SubjectArea = "SubjectArea";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Seq")]
+  public const string SubjectArea = "SubjectArea";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string FocalPlaneResolutionUnit = "FocalPlaneResolutionUnit";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string FocalPlaneResolutionUnit = "FocalPlaneResolutionUnit";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Seq")]
-public const string SubjectLocation = "SubjectLocation";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Seq")]
+  public const string SubjectLocation = "SubjectLocation";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string ExposureIndex = "ExposureIndex";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string ExposureIndex = "ExposureIndex";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string SensingMethod = "SensingMethod";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string SensingMethod = "SensingMethod";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string FileSource = "FileSource";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string FileSource = "FileSource";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string SceneType = "SceneType";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string SceneType = "SceneType";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string CustomRendered = "CustomRendered";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string CustomRendered = "CustomRendered";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string WhiteBalance = "WhiteBalance";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string WhiteBalance = "WhiteBalance";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string ExposureMode = "ExposureMode";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string ExposureMode = "ExposureMode";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string DigitalZoomRatio = "DigitalZoomRatio";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string DigitalZoomRatio = "DigitalZoomRatio";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string FocalLengthIn35mmFilm = "FocalLengthIn35mmFilm";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string FocalLengthIn35mmFilm = "FocalLengthIn35mmFilm";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string SceneCaptureType = "SceneCaptureType";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string SceneCaptureType = "SceneCaptureType";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string GainControl = "GainControl";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string GainControl = "GainControl";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string Contrast = "Contrast";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string Contrast = "Contrast";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string Saturation = "Saturation";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string Saturation = "Saturation";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string Sharpness = "Sharpness";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string Sharpness = "Sharpness";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string SubjectDistanceRange = "SubjectDistanceRange";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string SubjectDistanceRange = "SubjectDistanceRange";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string ImageUniqueId = "ImageUniqueID";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string ImageUniqueId = "ImageUniqueID";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string GpsversionId = "GPSVersionID";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string GpsversionId = "GPSVersionID";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string GpsSatellites = "GPSSatellites";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string GpsSatellites = "GPSSatellites";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string GpsStatus = "GPSStatus";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string GpsStatus = "GPSStatus";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string GpsMeasureMode = "GPSMeasureMode";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string GpsMeasureMode = "GPSMeasureMode";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string GpsMapDatum = "GPSMapDatum";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string GpsMapDatum = "GPSMapDatum";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string GpsSpeedRef = "GPSSpeedRef";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string GpsSpeedRef = "GPSSpeedRef";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string GpsTrackRef = "GPSTrackRef";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string GpsTrackRef = "GPSTrackRef";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string GpsImgDirectionRef = "GPSImgDirectionRef";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string GpsImgDirectionRef = "GPSImgDirectionRef";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string GpsDestBearingRef = "GPSDestBearingRef";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string GpsDestBearingRef = "GPSDestBearingRef";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string GpsDestDistanceRef = "GPSDestDistanceRef";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string GpsDestDistanceRef = "GPSDestDistanceRef";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string GpsProcessingMethod = "GPSProcessingMethod";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string GpsProcessingMethod = "GPSProcessingMethod";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string GpsAreaInformation = "GPSAreaInformation";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string GpsAreaInformation = "GPSAreaInformation";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string GpsAltitude = "GPSAltitude";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string GpsAltitude = "GPSAltitude";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string GpsDop = "GPSDOP";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string GpsDop = "GPSDOP";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string GpsSpeed = "GPSSpeed";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string GpsSpeed = "GPSSpeed";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string GpsTrack = "GPSTrack";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string GpsTrack = "GPSTrack";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string GpsImgDirection = "GPSImgDirection";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string GpsImgDirection = "GPSImgDirection";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string GpsDestBearing = "GPSDestBearing";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string GpsDestBearing = "GPSDestBearing";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
-public const string GpsDestDistance = "GPSDestDistance";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Rational", "Simple")]
+  public const string GpsDestDistance = "GPSDestDistance";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string GpsAltitudeRef = "GPSAltitudeRef";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string GpsAltitudeRef = "GPSAltitudeRef";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string GpsDifferential = "GPSDifferential";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string GpsDifferential = "GPSDifferential";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Date", "Simple")]
-public const string GpsTimeStamp = "GPSTimeStamp";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Date", "Simple")]
+  public const string GpsTimeStamp = "GPSTimeStamp";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("OECF", "Simple")]
-public const string Oecf = "OECF";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("OECF", "Simple")]
+  public const string Oecf = "OECF";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("OECF", "Simple")]
-public const string SpatialFrequencyResponse = "SpatialFrequencyResponse";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("OECF", "Simple")]
+  public const string SpatialFrequencyResponse = "SpatialFrequencyResponse";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("GPSCoordinate", "Simple")]
-public const string GpsLatitude = "GPSLatitude";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("GPSCoordinate", "Simple")]
+  public const string GpsLatitude = "GPSLatitude";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("GPSCoordinate", "Simple")]
-public const string GpsLongitude = "GPSLongitude";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("GPSCoordinate", "Simple")]
+  public const string GpsLongitude = "GPSLongitude";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("GPSCoordinate", "Simple")]
-public const string GpsDestLatitude = "GPSDestLatitude";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("GPSCoordinate", "Simple")]
+  public const string GpsDestLatitude = "GPSDestLatitude";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("GPSCoordinate", "Simple")]
-public const string GpsDestLongitude = "GPSDestLongitude";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("GPSCoordinate", "Simple")]
+  public const string GpsDestLongitude = "GPSDestLongitude";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("CFAPattern", "Simple")]
-public const string CfaPattern = "CFAPattern";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("CFAPattern", "Simple")]
+  public const string CfaPattern = "CFAPattern";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Flash", "Simple")]
-public const string Flash = "Flash";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Flash", "Simple")]
+  public const string Flash = "Flash";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("CFAPattern", "Simple")]
-public const string CfaPatternType = "CFAPatternType";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("CFAPattern", "Simple")]
+  public const string CfaPatternType = "CFAPatternType";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("DeviceSettings", "Simple")]
-public const string DeviceSettingDescription = "DeviceSettingDescription";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("DeviceSettings", "Simple")]
+  public const string DeviceSettingDescription = "DeviceSettingDescription";
 
-public ExifSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+  public ExifSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
-}
+  }
 
-public ExifSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string ownPrefix) : base(metadata, ownPrefix) {
+  public ExifSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string ownPrefix)
+  : base(metadata, ownPrefix) {
 
-}
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetUserCommentProperty() {
-return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty>(global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema.UserComment, typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty));
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetUserCommentProperty() {
+    return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty>(global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema.UserComment,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty));
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetUserCommentLanguages() {
-return this.GetUnqualifiedLanguagePropertyLanguagesValue(global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema.UserComment);
-}
+  public virtual global::System.Collections.Generic.IList<string> GetUserCommentLanguages() {
+    return this.GetUnqualifiedLanguagePropertyLanguagesValue(global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema.UserComment);
+  }
 
-public virtual string GetUserComment(string lang) {
-return this.GetUnqualifiedLanguagePropertyValue(global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema.UserComment, lang);
-}
+  public virtual string GetUserComment(string lang) {
+    return this.GetUnqualifiedLanguagePropertyValue(global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema.UserComment,
+      lang);
+  }
 
-public virtual string GetUserComment() {
-return this.GetUserComment((string)default!);
-}
+  public virtual string GetUserComment() {
+    return this.GetUserComment((string)default!);
+  }
 }

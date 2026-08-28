@@ -9,41 +9,48 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation;
 
 public class PDThread : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary thread = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary thread = null!;
 
-public PDThread(global::DripSharp.PdfCarton.Cos.COSDictionary t) {
-this.thread = t;
-}
+  public PDThread(global::DripSharp.PdfCarton.Cos.COSDictionary t) {
+    this.thread = t;
+  }
 
-public PDThread() {
-this.thread = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.thread.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Thread);
-}
+  public PDThread() {
+    this.thread = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.thread.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Thread);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.thread;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.thread;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation GetThreadInfo() {
-global::DripSharp.PdfCarton.Cos.COSDictionary info = this.thread.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.I);
-return ((info != default!) ? new global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation(info) : (global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation GetThreadInfo() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary info
+      = this.thread.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.I);
+    return ((info != default!) ? new global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation(info)
+      : (global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation)(default!));
+  }
 
-public virtual void SetThreadInfo(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation info) {
-this.thread.SetItem(global::DripSharp.PdfCarton.Cos.COSName.I, info);
-}
+  public virtual void SetThreadInfo(global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation info) {
+    this.thread.SetItem(global::DripSharp.PdfCarton.Cos.COSName.I, info);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThreadBead GetFirstBead() {
-global::DripSharp.PdfCarton.Cos.COSDictionary bead = this.thread.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.F);
-return ((bead != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThreadBead(bead) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThreadBead)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThreadBead GetFirstBead() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary bead
+      = this.thread.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.F);
+    return ((bead != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThreadBead(bead)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThreadBead)(default!));
+  }
 
-public virtual void SetFirstBead(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThreadBead bead) {
-if ((bead != default!)) {
-bead.SetThread(this);
-}
-this.thread.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, bead);
-}
+  public virtual void SetFirstBead(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThreadBead bead) {
+    if ((bead != default!)) {
+      bead.SetThread(this);
+    }
+    this.thread.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, bead);
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

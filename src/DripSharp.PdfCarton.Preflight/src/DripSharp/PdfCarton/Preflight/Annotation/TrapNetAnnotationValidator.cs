@@ -8,11 +8,15 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public class TrapNetAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnknown PdUnk = default!;
+public class TrapNetAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnknown PdUnk
+    = default!;
 
-public TrapNetAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
-this.PdUnk = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnknown(annotDictionary);
-this.PdAnnot = this.PdUnk;
-}
+  public TrapNetAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdUnk
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnknown(annotDictionary);
+    this.PdAnnot = this.PdUnk;
+  }
 }

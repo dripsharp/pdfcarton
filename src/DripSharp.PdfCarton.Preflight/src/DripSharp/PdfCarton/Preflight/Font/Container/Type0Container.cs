@@ -8,41 +8,45 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font.Container;
 
-public class Type0Container : global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDFont> {
-private global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer delegateFontContainer = null!;
+public class Type0Container
+: global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDFont> {
+  private global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer delegateFontContainer
+    = null!;
 
-public Type0Container(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) : base(font) {
+  public Type0Container(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) : base(font) {
 
-}
+  }
 
-public virtual void SetDelegateFontContainer(global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer delegateFontContainer) {
-this.delegateFontContainer = delegateFontContainer;
-}
+  public virtual void SetDelegateFontContainer(global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer delegateFontContainer) {
+    this.delegateFontContainer = delegateFontContainer;
+  }
 
-public override global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> GetAllErrors() {
-if ((this.delegateFontContainer != default!)) {
-global::DripSharp.Runtime.JavaCompat.AddAll(this.ErrorBuffer, this.delegateFontContainer.GetAllErrors());
-}
-return this.ErrorBuffer;
-}
+  public override global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> GetAllErrors() {
+    if ((this.delegateFontContainer != default!)) {
+      global::DripSharp.Runtime.JavaCompat.AddAll(this.ErrorBuffer,
+        this.delegateFontContainer.GetAllErrors());
+    }
+    return this.ErrorBuffer;
+  }
 
-public override bool IsValid() {
-bool result = (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.ErrorBuffer) && this.IsEmbeddedFont());
-if ((this.delegateFontContainer != default!)) {
-result &= this.delegateFontContainer.IsValid();
-}
-return result;
-}
+  public override bool IsValid() {
+    bool result = (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.ErrorBuffer)
+      && this.IsEmbeddedFont());
+    if ((this.delegateFontContainer != default!)) {
+      result &= this.delegateFontContainer.IsValid();
+    }
+    return result;
+  }
 
-public override bool IsEmbeddedFont() {
-bool result = base.EmbeddedFont;
-if ((this.delegateFontContainer != default!)) {
-result &= this.delegateFontContainer.IsEmbeddedFont();
-}
-return result;
-}
+  public override bool IsEmbeddedFont() {
+    bool result = base.EmbeddedFont;
+    if ((this.delegateFontContainer != default!)) {
+      result &= this.delegateFontContainer.IsEmbeddedFont();
+    }
+    return result;
+  }
 
-public override bool HasGlyph(int code) {
-return this.delegateFontContainer.HasGlyph(code);
-}
+  public override bool HasGlyph(int code) {
+    return this.delegateFontContainer.HasGlyph(code);
+  }
 }

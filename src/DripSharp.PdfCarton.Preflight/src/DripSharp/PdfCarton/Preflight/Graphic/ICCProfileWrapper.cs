@@ -9,66 +9,76 @@
 namespace DripSharp.PdfCarton.Preflight.Graphic;
 
 public class ICCProfileWrapper {
-private readonly global::DripSharp.Runtime.JavaIccProfile profile = null!;
+  private readonly global::DripSharp.Runtime.JavaIccProfile profile = null!;
 
-private readonly global::DripSharp.Runtime.JavaIccColorSpace colorSpace = null!;
+  private readonly global::DripSharp.Runtime.JavaIccColorSpace colorSpace = null!;
 
-public ICCProfileWrapper(global::DripSharp.Runtime.JavaIccProfile _profile) {
-this.profile = _profile;
-this.colorSpace = new global::DripSharp.Runtime.JavaIccColorSpace(_profile);
-}
+  public ICCProfileWrapper(global::DripSharp.Runtime.JavaIccProfile _profile) {
+    this.profile = _profile;
+    this.colorSpace = new global::DripSharp.Runtime.JavaIccColorSpace(_profile);
+  }
 
-public virtual int GetColorSpaceType() {
-return this.colorSpace.Type;
-}
+  public virtual int GetColorSpaceType() {
+    return this.colorSpace.Type;
+  }
 
-public virtual global::DripSharp.Runtime.JavaIccProfile GetProfile() {
-return this.profile;
-}
+  public virtual global::DripSharp.Runtime.JavaIccProfile GetProfile() {
+    return this.profile;
+  }
 
-public virtual bool IsRGBColorSpace() {
-return (global::DripSharp.Runtime.JavaColorSpace.TYPE_RGB == this.colorSpace.Type);
-}
+  public virtual bool IsRGBColorSpace() {
+    return (global::DripSharp.Runtime.JavaColorSpace.TYPE_RGB == this.colorSpace.Type);
+  }
 
-public virtual bool IsCMYKColorSpace() {
-return (global::DripSharp.Runtime.JavaColorSpace.TYPE_CMYK == this.colorSpace.Type);
-}
+  public virtual bool IsCMYKColorSpace() {
+    return (global::DripSharp.Runtime.JavaColorSpace.TYPE_CMYK == this.colorSpace.Type);
+  }
 
-public virtual bool IsGrayColorSpace() {
-return (global::DripSharp.Runtime.JavaColorSpace.TYPE_GRAY == this.colorSpace.Type);
-}
+  public virtual bool IsGrayColorSpace() {
+    return (global::DripSharp.Runtime.JavaColorSpace.TYPE_GRAY == this.colorSpace.Type);
+  }
 
-private static global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper searchFirstICCProfile(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
-global::DripSharp.PdfCarton.Preflight.PreflightDocument document = context.GetDocument();
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = document.GetDocumentCatalog();
-global::DripSharp.PdfCarton.Cos.COSArray outputIntents = catalog.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.OutputIntents);
-if ((outputIntents == default!)) {
-return default!;
-}
-for (int i = 0; (i < outputIntents.Size()); ++i) {
-global::DripSharp.PdfCarton.Cos.COSDictionary outputIntentDict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(outputIntents.GetObject(i)!);
-global::DripSharp.PdfCarton.Cos.COSBase destOutputProfile = outputIntentDict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.DestOutputProfile);
-if ((destOutputProfile is global::DripSharp.PdfCarton.Cos.COSStream)) {
-try {
-using (global::System.IO.Stream @is = ((global::DripSharp.PdfCarton.Cos.COSStream)(destOutputProfile!)).CreateInputStream()) {
-return new global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper(global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is));
-}
-} catch (global::System.Exception e) when (e is global::System.IndexOutOfRangeException or global::System.ArgumentException) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileInvalid, global::DripSharp.Runtime.JavaCompat.Concat("DestOutputProfile isn't a valid ICCProfile. Caused by : ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
-} catch (global::System.IO.IOException e) {
-context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileInvalid, global::DripSharp.Runtime.JavaCompat.Concat("Unable to parse the ICCProfile. Caused by : ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
-}
-}
-}
-return default!;
-}
+  private static global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper searchFirstICCProfile(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
+    global::DripSharp.PdfCarton.Preflight.PreflightDocument document = context.GetDocument();
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = document.GetDocumentCatalog();
+    global::DripSharp.PdfCarton.Cos.COSArray outputIntents
+      = catalog.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.OutputIntents);
+    if ((outputIntents == default!)) {
+      return default!;
+    }
+    for (int i = 0; (i < outputIntents.Size()); ++i) {
+      global::DripSharp.PdfCarton.Cos.COSDictionary outputIntentDict
+        = (global::DripSharp.PdfCarton.Cos.COSDictionary)(outputIntents.GetObject(i)!);
+      global::DripSharp.PdfCarton.Cos.COSBase destOutputProfile
+        = outputIntentDict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.DestOutputProfile);
+      if ((destOutputProfile is global::DripSharp.PdfCarton.Cos.COSStream)) {
+        try {
+          using (global::System.IO.Stream @is
+            = ((global::DripSharp.PdfCarton.Cos.COSStream)(destOutputProfile!)).CreateInputStream()) {
+            return new global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper(global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is));
+          }
+        } catch (global::System.Exception e) when (e is global::System.IndexOutOfRangeException or global::System.ArgumentException) {
+          context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileInvalid,
+            global::DripSharp.Runtime.JavaCompat.Concat("DestOutputProfile isn't a valid ICCProfile. Caused by : ",
+            global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
+        } catch (global::System.IO.IOException e) {
+          context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileInvalid,
+            global::DripSharp.Runtime.JavaCompat.Concat("Unable to parse the ICCProfile. Caused by : ",
+            global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e));
+        }
+      }
+    }
+    return default!;
+  }
 
-public static global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper GetOrSearchICCProfile(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
-global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper profileWrapper = context.GetIccProfileWrapper();
-if (((profileWrapper == default!) && !(context.IsIccProfileAlreadySearched()))) {
-profileWrapper = global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper.searchFirstICCProfile(context);
-context.SetIccProfileAlreadySearched(true);
-}
-return profileWrapper;
-}
+  public static global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper GetOrSearchICCProfile(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
+    global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper profileWrapper
+      = context.GetIccProfileWrapper();
+    if (((profileWrapper == default!) && !(context.IsIccProfileAlreadySearched()))) {
+      profileWrapper
+        = global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper.searchFirstICCProfile(context);
+      context.SetIccProfileAlreadySearched(true);
+    }
+    return profileWrapper;
+  }
 }

@@ -9,181 +9,182 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class MaximumProfileTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-public const string Tag = "maxp";
+  public const string Tag = "maxp";
 
-private float version = default;
+  private float version = default;
 
-private int numGlyphs = default;
+  private int numGlyphs = default;
 
-private int maxPoints = default;
+  private int maxPoints = default;
 
-private int maxContours = default;
+  private int maxContours = default;
 
-private int maxCompositePoints = default;
+  private int maxCompositePoints = default;
 
-private int maxCompositeContours = default;
+  private int maxCompositeContours = default;
 
-private int maxZones = default;
+  private int maxZones = default;
 
-private int maxTwilightPoints = default;
+  private int maxTwilightPoints = default;
 
-private int maxStorage = default;
+  private int maxStorage = default;
 
-private int maxFunctionDefs = default;
+  private int maxFunctionDefs = default;
 
-private int maxInstructionDefs = default;
+  private int maxInstructionDefs = default;
 
-private int maxStackElements = default;
+  private int maxStackElements = default;
 
-private int maxSizeOfInstructions = default;
+  private int maxSizeOfInstructions = default;
 
-private int maxComponentElements = default;
+  private int maxComponentElements = default;
 
-private int maxComponentDepth = default;
+  private int maxComponentDepth = default;
 
-internal MaximumProfileTable() {}
+  internal MaximumProfileTable() {}
 
-public virtual int GetMaxComponentDepth() {
-return this.maxComponentDepth;
-}
+  public virtual int GetMaxComponentDepth() {
+    return this.maxComponentDepth;
+  }
 
-public virtual void SetMaxComponentDepth(int maxComponentDepthValue) {
-this.maxComponentDepth = maxComponentDepthValue;
-}
+  public virtual void SetMaxComponentDepth(int maxComponentDepthValue) {
+    this.maxComponentDepth = maxComponentDepthValue;
+  }
 
-public virtual int GetMaxComponentElements() {
-return this.maxComponentElements;
-}
+  public virtual int GetMaxComponentElements() {
+    return this.maxComponentElements;
+  }
 
-public virtual void SetMaxComponentElements(int maxComponentElementsValue) {
-this.maxComponentElements = maxComponentElementsValue;
-}
+  public virtual void SetMaxComponentElements(int maxComponentElementsValue) {
+    this.maxComponentElements = maxComponentElementsValue;
+  }
 
-public virtual int GetMaxCompositeContours() {
-return this.maxCompositeContours;
-}
+  public virtual int GetMaxCompositeContours() {
+    return this.maxCompositeContours;
+  }
 
-public virtual void SetMaxCompositeContours(int maxCompositeContoursValue) {
-this.maxCompositeContours = maxCompositeContoursValue;
-}
+  public virtual void SetMaxCompositeContours(int maxCompositeContoursValue) {
+    this.maxCompositeContours = maxCompositeContoursValue;
+  }
 
-public virtual int GetMaxCompositePoints() {
-return this.maxCompositePoints;
-}
+  public virtual int GetMaxCompositePoints() {
+    return this.maxCompositePoints;
+  }
 
-public virtual void SetMaxCompositePoints(int maxCompositePointsValue) {
-this.maxCompositePoints = maxCompositePointsValue;
-}
+  public virtual void SetMaxCompositePoints(int maxCompositePointsValue) {
+    this.maxCompositePoints = maxCompositePointsValue;
+  }
 
-public virtual int GetMaxContours() {
-return this.maxContours;
-}
+  public virtual int GetMaxContours() {
+    return this.maxContours;
+  }
 
-public virtual void SetMaxContours(int maxContoursValue) {
-this.maxContours = maxContoursValue;
-}
+  public virtual void SetMaxContours(int maxContoursValue) {
+    this.maxContours = maxContoursValue;
+  }
 
-public virtual int GetMaxFunctionDefs() {
-return this.maxFunctionDefs;
-}
+  public virtual int GetMaxFunctionDefs() {
+    return this.maxFunctionDefs;
+  }
 
-public virtual void SetMaxFunctionDefs(int maxFunctionDefsValue) {
-this.maxFunctionDefs = maxFunctionDefsValue;
-}
+  public virtual void SetMaxFunctionDefs(int maxFunctionDefsValue) {
+    this.maxFunctionDefs = maxFunctionDefsValue;
+  }
 
-public virtual int GetMaxInstructionDefs() {
-return this.maxInstructionDefs;
-}
+  public virtual int GetMaxInstructionDefs() {
+    return this.maxInstructionDefs;
+  }
 
-public virtual void SetMaxInstructionDefs(int maxInstructionDefsValue) {
-this.maxInstructionDefs = maxInstructionDefsValue;
-}
+  public virtual void SetMaxInstructionDefs(int maxInstructionDefsValue) {
+    this.maxInstructionDefs = maxInstructionDefsValue;
+  }
 
-public virtual int GetMaxPoints() {
-return this.maxPoints;
-}
+  public virtual int GetMaxPoints() {
+    return this.maxPoints;
+  }
 
-public virtual void SetMaxPoints(int maxPointsValue) {
-this.maxPoints = maxPointsValue;
-}
+  public virtual void SetMaxPoints(int maxPointsValue) {
+    this.maxPoints = maxPointsValue;
+  }
 
-public virtual int GetMaxSizeOfInstructions() {
-return this.maxSizeOfInstructions;
-}
+  public virtual int GetMaxSizeOfInstructions() {
+    return this.maxSizeOfInstructions;
+  }
 
-public virtual void SetMaxSizeOfInstructions(int maxSizeOfInstructionsValue) {
-this.maxSizeOfInstructions = maxSizeOfInstructionsValue;
-}
+  public virtual void SetMaxSizeOfInstructions(int maxSizeOfInstructionsValue) {
+    this.maxSizeOfInstructions = maxSizeOfInstructionsValue;
+  }
 
-public virtual int GetMaxStackElements() {
-return this.maxStackElements;
-}
+  public virtual int GetMaxStackElements() {
+    return this.maxStackElements;
+  }
 
-public virtual void SetMaxStackElements(int maxStackElementsValue) {
-this.maxStackElements = maxStackElementsValue;
-}
+  public virtual void SetMaxStackElements(int maxStackElementsValue) {
+    this.maxStackElements = maxStackElementsValue;
+  }
 
-public virtual int GetMaxStorage() {
-return this.maxStorage;
-}
+  public virtual int GetMaxStorage() {
+    return this.maxStorage;
+  }
 
-public virtual void SetMaxStorage(int maxStorageValue) {
-this.maxStorage = maxStorageValue;
-}
+  public virtual void SetMaxStorage(int maxStorageValue) {
+    this.maxStorage = maxStorageValue;
+  }
 
-public virtual int GetMaxTwilightPoints() {
-return this.maxTwilightPoints;
-}
+  public virtual int GetMaxTwilightPoints() {
+    return this.maxTwilightPoints;
+  }
 
-public virtual void SetMaxTwilightPoints(int maxTwilightPointsValue) {
-this.maxTwilightPoints = maxTwilightPointsValue;
-}
+  public virtual void SetMaxTwilightPoints(int maxTwilightPointsValue) {
+    this.maxTwilightPoints = maxTwilightPointsValue;
+  }
 
-public virtual int GetMaxZones() {
-return this.maxZones;
-}
+  public virtual int GetMaxZones() {
+    return this.maxZones;
+  }
 
-public virtual void SetMaxZones(int maxZonesValue) {
-this.maxZones = maxZonesValue;
-}
+  public virtual void SetMaxZones(int maxZonesValue) {
+    this.maxZones = maxZonesValue;
+  }
 
-public virtual int GetNumGlyphs() {
-return this.numGlyphs;
-}
+  public virtual int GetNumGlyphs() {
+    return this.numGlyphs;
+  }
 
-public virtual void SetNumGlyphs(int numGlyphsValue) {
-this.numGlyphs = numGlyphsValue;
-}
+  public virtual void SetNumGlyphs(int numGlyphsValue) {
+    this.numGlyphs = numGlyphsValue;
+  }
 
-public virtual float GetVersion() {
-return this.version;
-}
+  public virtual float GetVersion() {
+    return this.version;
+  }
 
-public virtual void SetVersion(float versionValue) {
-this.version = versionValue;
-}
+  public virtual void SetVersion(float versionValue) {
+    this.version = versionValue;
+  }
 
-internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-this.version = data.Read32Fixed();
-this.numGlyphs = data.ReadUnsignedShort();
-if ((this.version >= 1.0F)) {
-this.maxPoints = data.ReadUnsignedShort();
-this.maxContours = data.ReadUnsignedShort();
-this.maxCompositePoints = data.ReadUnsignedShort();
-this.maxCompositeContours = data.ReadUnsignedShort();
-this.maxZones = data.ReadUnsignedShort();
-this.maxTwilightPoints = data.ReadUnsignedShort();
-this.maxStorage = data.ReadUnsignedShort();
-this.maxFunctionDefs = data.ReadUnsignedShort();
-this.maxInstructionDefs = data.ReadUnsignedShort();
-this.maxStackElements = data.ReadUnsignedShort();
-this.maxSizeOfInstructions = data.ReadUnsignedShort();
-this.maxComponentElements = data.ReadUnsignedShort();
-this.maxComponentDepth = data.ReadUnsignedShort();
-if ((this.maxComponentDepth == 0)) {
-this.maxComponentDepth = 1;
-}
-}
-base.Initialized = true;
-}
+  internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    this.version = data.Read32Fixed();
+    this.numGlyphs = data.ReadUnsignedShort();
+    if ((this.version >= 1.0F)) {
+      this.maxPoints = data.ReadUnsignedShort();
+      this.maxContours = data.ReadUnsignedShort();
+      this.maxCompositePoints = data.ReadUnsignedShort();
+      this.maxCompositeContours = data.ReadUnsignedShort();
+      this.maxZones = data.ReadUnsignedShort();
+      this.maxTwilightPoints = data.ReadUnsignedShort();
+      this.maxStorage = data.ReadUnsignedShort();
+      this.maxFunctionDefs = data.ReadUnsignedShort();
+      this.maxInstructionDefs = data.ReadUnsignedShort();
+      this.maxStackElements = data.ReadUnsignedShort();
+      this.maxSizeOfInstructions = data.ReadUnsignedShort();
+      this.maxComponentElements = data.ReadUnsignedShort();
+      this.maxComponentDepth = data.ReadUnsignedShort();
+      if ((this.maxComponentDepth == 0)) {
+        this.maxComponentDepth = 1;
+      }
+    }
+    base.Initialized = true;
+  }
 }

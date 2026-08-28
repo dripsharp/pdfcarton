@@ -9,234 +9,283 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public abstract class PDSimpleFont : global::DripSharp.PdfCarton.Pdmodel.Font.PDFont {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-protected internal global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding Encoding = null!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding Encoding = null!;
 
-protected internal global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList GlyphList = null!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList GlyphList = null!;
 
-private bool? __field_isSymbolic = default;
+  private bool? __field_isSymbolic = default;
 
-private readonly global::System.Collections.Generic.ISet<int> noUnicode = new global::System.Collections.Generic.HashSet<int>();
+  private readonly global::System.Collections.Generic.ISet<int> noUnicode
+    = new global::System.Collections.Generic.HashSet<int>();
 
-internal PDSimpleFont() {}
+  internal PDSimpleFont() {}
 
-internal PDSimpleFont(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName baseFont) : base(baseFont) {
-this.assignGlyphList(baseFont);
-}
+  internal PDSimpleFont(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName baseFont)
+  : base(baseFont) {
+    this.assignGlyphList(baseFont);
+  }
 
-internal PDSimpleFont(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary) : base(fontDictionary) {
+  internal PDSimpleFont(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary)
+  : base(fontDictionary) {
 
-}
+  }
 
-protected internal virtual void ReadEncoding() {
-global::DripSharp.PdfCarton.Cos.COSBase encodingBase = base.Dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Encoding);
-if ((encodingBase is global::DripSharp.PdfCarton.Cos.COSName)) {
-global::DripSharp.PdfCarton.Cos.COSName encodingName = (global::DripSharp.PdfCarton.Cos.COSName)(encodingBase!);
-if ((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.ZapfDingbats.GetName(), this.GetName()) && !(this.IsEmbedded()))) {
-this.Encoding = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.ZapfDingbatsEncoding.Instance;
-} else {
-this.Encoding = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.GetInstance(encodingName);
-if ((this.Encoding == default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Unknown encoding: ", encodingName.GetName())));
-this.Encoding = this.ReadEncodingFromFont();
-}
-}
-} else {
-if ((encodingBase is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.PdfCarton.Cos.COSDictionary encodingDict = (global::DripSharp.PdfCarton.Cos.COSDictionary)(encodingBase!);
-global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding builtIn = default!;
-bool? symbolic = this.GetSymbolicFlag();
-global::DripSharp.PdfCarton.Cos.COSName baseEncoding = encodingDict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.BaseEncoding);
-bool hasValidBaseEncoding = ((baseEncoding != default!) && (global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.GetInstance(baseEncoding) != default!));
-if ((!hasValidBaseEncoding && global::DripSharp.Runtime.JavaCompat.Equals(true, symbolic))) {
-builtIn = this.ReadEncodingFromFont();
-}
-if ((symbolic == default!)) {
-symbolic = false;
-}
-this.Encoding = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding(encodingDict, !(global::DripSharp.Runtime.JavaCompat.Unbox(symbolic)), builtIn!);
-} else {
-this.Encoding = this.ReadEncodingFromFont();
-}
-}
-global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName standard14Name = global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.GetMappedFontName(this.GetName());
-this.assignGlyphList(standard14Name);
-}
+  protected internal virtual void ReadEncoding() {
+    global::DripSharp.PdfCarton.Cos.COSBase encodingBase
+      = base.Dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Encoding);
+    if ((encodingBase is global::DripSharp.PdfCarton.Cos.COSName)) {
+      global::DripSharp.PdfCarton.Cos.COSName encodingName
+        = (global::DripSharp.PdfCarton.Cos.COSName)(encodingBase!);
+      if ((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.ZapfDingbats.GetName(),
+        this.GetName()) && !(this.IsEmbedded()))) {
+        this.Encoding
+          = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.ZapfDingbatsEncoding.Instance;
+      } else {
+        this.Encoding
+          = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.GetInstance(encodingName);
+        if ((this.Encoding == default!)) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Unknown encoding: ",
+            encodingName.GetName())));
+          this.Encoding = this.ReadEncodingFromFont();
+        }
+      }
+    } else {
+      if ((encodingBase is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        global::DripSharp.PdfCarton.Cos.COSDictionary encodingDict
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(encodingBase!);
+        global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding builtIn = default!;
+        bool? symbolic = this.GetSymbolicFlag();
+        global::DripSharp.PdfCarton.Cos.COSName baseEncoding
+          = encodingDict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.BaseEncoding);
+        bool hasValidBaseEncoding = ((baseEncoding != default!)
+          && (global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding.GetInstance(baseEncoding)
+          != default!));
+        if ((!hasValidBaseEncoding && global::DripSharp.Runtime.JavaCompat.Equals(true,
+          symbolic))) {
+          builtIn = this.ReadEncodingFromFont();
+        }
+        if ((symbolic == default!)) {
+          symbolic = false;
+        }
+        this.Encoding
+          = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding(encodingDict,
+          !global::DripSharp.Runtime.JavaCompat.Unbox(symbolic), builtIn!);
+      } else {
+        this.Encoding = this.ReadEncodingFromFont();
+      }
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName standard14Name
+      = global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.GetMappedFontName(this.GetName());
+    this.assignGlyphList(standard14Name);
+  }
 
-protected internal abstract global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding ReadEncodingFromFont();
+  protected internal abstract global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding ReadEncodingFromFont();
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding GetEncoding() {
-return this.Encoding;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding GetEncoding() {
+    return this.Encoding;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList GetGlyphList() {
-return this.GlyphList;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList GetGlyphList() {
+    return this.GlyphList;
+  }
 
-public bool IsSymbolic() {
-if ((this.__field_isSymbolic == default!)) {
-bool? result = this.IsFontSymbolic();
-if ((result != default!)) {
-this.__field_isSymbolic = result;
-} else {
-this.__field_isSymbolic = true;
-}
-}
-return global::DripSharp.Runtime.JavaCompat.UnboxObject<bool>(this.__field_isSymbolic);
-}
+  public bool IsSymbolic() {
+    if ((this.__field_isSymbolic == default!)) {
+      bool? result = this.IsFontSymbolic();
+      if ((result != default!)) {
+        this.__field_isSymbolic = result;
+      } else {
+        this.__field_isSymbolic = true;
+      }
+    }
+    return global::DripSharp.Runtime.JavaCompat.UnboxObject<bool>(this.__field_isSymbolic);
+  }
 
-protected internal virtual bool? IsFontSymbolic() {
-bool? result = this.GetSymbolicFlag();
-if ((result != default!)) {
-return result;
-} else {
-if (this.IsStandard14()) {
-global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName mappedName = global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.GetMappedFontName(this.GetName());
-return ((mappedName == global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.Symbol) || (mappedName == global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.ZapfDingbats));
-} else {
-if ((this.Encoding == default!)) {
-if (!((this is global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont))) {
-throw new global::System.InvalidOperationException("PDFBox bug: encoding should not be null!");
-}
-return true;
-} else {
-if ((((this.Encoding is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.WinAnsiEncoding) || (this.Encoding is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacRomanEncoding)) || (this.Encoding is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.StandardEncoding))) {
-return false;
-} else {
-if ((this.Encoding is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding)) {
-foreach (string name in ((global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding)(this.Encoding!)).GetDifferences().Values) {
-if (global::DripSharp.Runtime.JavaCompat.Equals(".notdef", name)) {} else {
-if (!(((global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.WinAnsiEncoding.Instance.Contains(name) && global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacRomanEncoding.Instance.Contains(name)) && global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.StandardEncoding.Instance.Contains(name)))) {
-return true;
-}
-}
-}
-return false;
-} else {
-return default!;
-}
-}
-}
-}
-}
-}
+  protected internal virtual bool? IsFontSymbolic() {
+    bool? result = this.GetSymbolicFlag();
+    if ((result != default!)) {
+      return result;
+    } else {
+      if (this.IsStandard14()) {
+        global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName mappedName
+          = global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.GetMappedFontName(this.GetName());
+        return ((mappedName
+          == global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.Symbol)
+          || (mappedName
+          == global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.ZapfDingbats));
+      } else {
+        if ((this.Encoding == default!)) {
+          if (!((this is global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont))) {
+            throw new global::System.InvalidOperationException("PDFBox bug: encoding should not be null!");
+          }
+          return true;
+        } else {
+          if ((((this.Encoding is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.WinAnsiEncoding)
+            || (this.Encoding is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacRomanEncoding))
+            || (this.Encoding is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.StandardEncoding))) {
+            return false;
+          } else {
+            if ((this.Encoding is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding)) {
+              foreach (string name in ((global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding)(this.Encoding!)).GetDifferences().Values) {
+                if (global::DripSharp.Runtime.JavaCompat.Equals(".notdef", name)) {} else {
+                  if (!(((global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.WinAnsiEncoding.Instance.Contains(name)
+                    && global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacRomanEncoding.Instance.Contains(name))
+                    && global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.StandardEncoding.Instance.Contains(name)))) {
+                    return true;
+                  }
+                }
+              }
+              return false;
+            } else {
+              return default!;
+            }
+          }
+        }
+      }
+    }
+  }
 
-protected internal bool? GetSymbolicFlag() {
-if ((this.GetFontDescriptor() != default!)) {
-return this.GetFontDescriptor().IsSymbolic();
-}
-return default!;
-}
+  protected internal bool? GetSymbolicFlag() {
+    if ((this.GetFontDescriptor() != default!)) {
+      return this.GetFontDescriptor().IsSymbolic();
+    }
+    return default!;
+  }
 
-public override string ToUnicode(int code) {
-return this.ToUnicode(code, global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetAdobeGlyphList());
-}
+  public override string ToUnicode(int code) {
+    return this.ToUnicode(code,
+      global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetAdobeGlyphList());
+  }
 
-public override string ToUnicode(int code, global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList customGlyphList) {
-global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList unicodeGlyphList;
-if ((this.GlyphList == global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetAdobeGlyphList())) {
-unicodeGlyphList = customGlyphList;
-} else {
-unicodeGlyphList = this.GlyphList;
-}
-string unicode = base.ToUnicode(code);
-if ((unicode != default!)) {
-return unicode;
-}
-string name = default!;
-if ((this.Encoding != default!)) {
-name = this.Encoding.GetName(code);
-unicode = unicodeGlyphList.ToUnicode(name!);
-if ((unicode != default!)) {
-return unicode;
-}
-}
-if ((global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Warning) && !(global::DripSharp.Runtime.JavaCompat.CollectionContains(this.noUnicode, code)))) {
-this.noUnicode.Add(code);
-if ((name! != default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("No Unicode mapping for ", name!), " ("), code), ") in font "), this.GetName())));
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("No Unicode mapping for character code ", code), " in font "), this.GetName())));
-}
-}
-return default!;
-}
+  public override string ToUnicode(int code,
+    global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList customGlyphList) {
+    global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList unicodeGlyphList;
+    if ((this.GlyphList
+      == global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetAdobeGlyphList())) {
+      unicodeGlyphList = customGlyphList;
+    } else {
+      unicodeGlyphList = this.GlyphList;
+    }
+    string unicode = base.ToUnicode(code);
+    if ((unicode != default!)) {
+      return unicode;
+    }
+    string name = default!;
+    if ((this.Encoding != default!)) {
+      name = this.Encoding.GetName(code);
+      unicode = unicodeGlyphList.ToUnicode(name!);
+      if ((unicode != default!)) {
+        return unicode;
+      }
+    }
+    if ((global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Warning)
+      && !global::DripSharp.Runtime.JavaCompat.CollectionContains(this.noUnicode, code))) {
+      this.noUnicode.Add(code);
+      if ((name! != default!)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("No Unicode mapping for ",
+          name!), " ("), code), ") in font "), this.GetName())));
+      } else {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("No Unicode mapping for character code ",
+          code), " in font "), this.GetName())));
+      }
+    }
+    return default!;
+  }
 
-public override bool IsVertical() {
-return false;
-}
+  public override bool IsVertical() {
+    return false;
+  }
 
-protected internal override float GetStandard14Width(int code) {
-if ((this.GetStandard14AFM() != default!)) {
-string nameInAFM = this.GetEncoding().GetName(code);
-if (global::DripSharp.Runtime.JavaCompat.Equals(".notdef", nameInAFM)) {
-return 250.0F;
-}
-if (global::DripSharp.Runtime.JavaCompat.Equals("nbspace", nameInAFM)) {
-nameInAFM = "space";
-} else {
-if (global::DripSharp.Runtime.JavaCompat.Equals("sfthyphen", nameInAFM)) {
-nameInAFM = "hyphen";
-}
-}
-return this.GetStandard14AFM().GetCharacterWidth(nameInAFM);
-}
-throw new global::System.InvalidOperationException("No AFM");
-}
+  protected internal override float GetStandard14Width(int code) {
+    if ((this.GetStandard14AFM() != default!)) {
+      string nameInAFM = this.GetEncoding().GetName(code);
+      if (global::DripSharp.Runtime.JavaCompat.Equals(".notdef", nameInAFM)) {
+        return 250.0F;
+      }
+      if (global::DripSharp.Runtime.JavaCompat.Equals("nbspace", nameInAFM)) {
+        nameInAFM = "space";
+      } else {
+        if (global::DripSharp.Runtime.JavaCompat.Equals("sfthyphen", nameInAFM)) {
+          nameInAFM = "hyphen";
+        }
+      }
+      return this.GetStandard14AFM().GetCharacterWidth(nameInAFM);
+    }
+    throw new global::System.InvalidOperationException("No AFM");
+  }
 
-public override bool IsStandard14() {
-if ((this.GetEncoding() is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding)) {
-global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding dictionary = (global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding)(this.GetEncoding()!);
-if ((global::DripSharp.Runtime.JavaCompat.MapCount(dictionary.GetDifferences()) > 0)) {
-global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding baseEncoding = dictionary.GetBaseEncoding();
-foreach (global::DripSharp.Runtime.JavaMapEntry<int, string> entry in global::DripSharp.Runtime.JavaCompat.MapEntrySet(dictionary.GetDifferences())) {
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(entry.Value, baseEncoding.GetName((int)(entry.Key))))) {
-return false;
-}
-}
-}
-}
-return base.IsStandard14();
-}
+  public override bool IsStandard14() {
+    if ((this.GetEncoding() is global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding)) {
+      global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding dictionary
+        = (global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.DictionaryEncoding)(this.GetEncoding()!);
+      if ((global::DripSharp.Runtime.JavaCompat.MapCount(dictionary.GetDifferences()) > 0)) {
+        global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding baseEncoding
+          = dictionary.GetBaseEncoding();
+        foreach (global::DripSharp.Runtime.JavaMapEntry<int,
+          string> entry in global::DripSharp.Runtime.JavaCompat.MapEntrySet(dictionary.GetDifferences())) {
+          if (!global::DripSharp.Runtime.JavaCompat.Equals(entry.Value,
+            baseEncoding.GetName((int)(entry.Key)))) {
+            return false;
+          }
+        }
+      }
+    }
+    return base.IsStandard14();
+  }
 
-protected internal virtual bool IsNonZeroBoundingBox(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox) {
-return ((bbox != default!) && ((((global::DripSharp.Runtime.JavaCompat.CompareFloat(bbox.GetLowerLeftX(), (float)(0)) != 0) || (global::DripSharp.Runtime.JavaCompat.CompareFloat(bbox.GetLowerLeftY(), (float)(0)) != 0)) || (global::DripSharp.Runtime.JavaCompat.CompareFloat(bbox.GetUpperRightX(), (float)(0)) != 0)) || (global::DripSharp.Runtime.JavaCompat.CompareFloat(bbox.GetUpperRightY(), (float)(0)) != 0)));
-}
+  protected internal virtual bool IsNonZeroBoundingBox(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox) {
+    return ((bbox != default!)
+      && ((((global::DripSharp.Runtime.JavaCompat.CompareFloat(bbox.GetLowerLeftX(), (float)(0))
+      != 0) || (global::DripSharp.Runtime.JavaCompat.CompareFloat(bbox.GetLowerLeftY(), (float)(0))
+      != 0)) || (global::DripSharp.Runtime.JavaCompat.CompareFloat(bbox.GetUpperRightX(),
+      (float)(0)) != 0))
+      || (global::DripSharp.Runtime.JavaCompat.CompareFloat(bbox.GetUpperRightY(), (float)(0))
+      != 0)));
+  }
 
-public abstract global::SkiaSharp.SKPath GetPath(string name);
+  public abstract global::SkiaSharp.SKPath GetPath(string name);
 
-public abstract bool HasGlyph(string name);
+  public abstract bool HasGlyph(string name);
 
-public abstract global::DripSharp.PdfCarton.Fonts.FontBoxFont GetFontBoxFont();
+  public abstract global::DripSharp.PdfCarton.Fonts.FontBoxFont GetFontBoxFont();
 
-public override void AddToSubset(int codePoint) {
-throw new global::System.NotSupportedException();
-}
+  public override void AddToSubset(int codePoint) {
+    throw new global::System.NotSupportedException();
+  }
 
-public override void Subset() {
-throw new global::System.NotSupportedException();
-}
+  public override void Subset() {
+    throw new global::System.NotSupportedException();
+  }
 
-public override bool WillBeSubset() {
-return false;
-}
+  public override bool WillBeSubset() {
+    return false;
+  }
 
-public override bool HasExplicitWidth(int code) {
-if (base.Dict.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Widths)) {
-int firstChar = base.Dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.FirstChar, -1);
-if (((code >= firstChar) && ((code - firstChar) < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.GetWidths())))) {
-return true;
-}
-}
-return false;
-}
+  public override bool HasExplicitWidth(int code) {
+    if (base.Dict.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Widths)) {
+      int firstChar = base.Dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.FirstChar, -1);
+      if (((code >= firstChar) && ((code
+        - firstChar) < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.GetWidths())))) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-private void assignGlyphList(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName fontName) {
-if ((global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.ZapfDingbats == fontName)) {
-this.GlyphList = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetZapfDingbats();
-} else {
-this.GlyphList = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetAdobeGlyphList();
-}
-}
+  private void assignGlyphList(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName fontName) {
+    if ((global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.ZapfDingbats
+      == fontName)) {
+      this.GlyphList
+        = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetZapfDingbats();
+    } else {
+      this.GlyphList
+        = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetAdobeGlyphList();
+    }
+  }
 }

@@ -8,100 +8,113 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
-public abstract class PDTerminalField : global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField {
-protected internal PDTerminalField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) : base(acroForm) {
+public abstract class PDTerminalField
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField {
+  protected internal PDTerminalField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm)
+  : base(acroForm) {
 
-}
+  }
 
-internal PDTerminalField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm, global::DripSharp.PdfCarton.Cos.COSDictionary field, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm, field, parent) {
+  internal PDTerminalField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm,
+    global::DripSharp.PdfCarton.Cos.COSDictionary field,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField parent) : base(acroForm,
+    field, parent) {
 
-}
+  }
 
-public virtual void SetActions(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDFormFieldAdditionalActions actions) {
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Aa, actions);
-}
+  public virtual void SetActions(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDFormFieldAdditionalActions actions) {
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Aa, actions);
+  }
 
-public override int GetFieldFlags() {
-int retval = 0;
-global::DripSharp.PdfCarton.Cos.COSInteger ff = (global::DripSharp.PdfCarton.Cos.COSInteger)(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ff)!);
-if ((ff != default!)) {
-retval = ff.IntValue();
-} else {
-if ((this.GetParent() != default!)) {
-retval = this.GetParent().GetFieldFlags();
-}
-}
-return retval;
-}
+  public override int GetFieldFlags() {
+    int retval = 0;
+    global::DripSharp.PdfCarton.Cos.COSInteger ff
+      = (global::DripSharp.PdfCarton.Cos.COSInteger)(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ff)!);
+    if ((ff != default!)) {
+      retval = ff.IntValue();
+    } else {
+      if ((this.GetParent() != default!)) {
+        retval = this.GetParent().GetFieldFlags();
+      }
+    }
+    return retval;
+  }
 
-public override string GetFieldType() {
-string fieldType = this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Ft);
-if (((fieldType == default!) && (this.GetParent() != default!))) {
-fieldType = this.GetParent().GetFieldType();
-}
-return fieldType;
-}
+  public override string GetFieldType() {
+    string fieldType
+      = this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Ft);
+    if (((fieldType == default!) && (this.GetParent() != default!))) {
+      fieldType = this.GetParent().GetFieldType();
+    }
+    return fieldType;
+  }
 
-public override void importFDF(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField fdfField) {
-base.importFDF(fdfField);
-int? f = fdfField.GetWidgetFieldFlags();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in this.GetWidgets()) {
-if ((f != default!)) {
-widget.SetAnnotationFlags((int)(global::DripSharp.Runtime.JavaCompat.Unbox(f)));
-} else {
-int? setF = fdfField.GetSetWidgetFieldFlags();
-int annotFlags = widget.GetAnnotationFlags();
-if ((setF != default!)) {
-annotFlags = (annotFlags | global::DripSharp.Runtime.JavaCompat.Unbox(setF));
-widget.SetAnnotationFlags(annotFlags);
-}
-int? clrF = fdfField.GetClearWidgetFieldFlags();
-if ((clrF != default!)) {
-int clrFValue = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(clrF);
-global::DripSharp.Runtime.JavaCompat.XorAssign(ref clrFValue, 4294967295L);
-annotFlags = (annotFlags & clrFValue);
-widget.SetAnnotationFlags(annotFlags);
-}
-}
-}
-}
+  public override void importFDF(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField fdfField) {
+    base.importFDF(fdfField);
+    int? f = fdfField.GetWidgetFieldFlags();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in this.GetWidgets()) {
+      if ((f != default!)) {
+        widget.SetAnnotationFlags((int)(global::DripSharp.Runtime.JavaCompat.Unbox(f)));
+      } else {
+        int? setF = fdfField.GetSetWidgetFieldFlags();
+        int annotFlags = widget.GetAnnotationFlags();
+        if ((setF != default!)) {
+          annotFlags = (annotFlags | global::DripSharp.Runtime.JavaCompat.Unbox(setF));
+          widget.SetAnnotationFlags(annotFlags);
+        }
+        int? clrF = fdfField.GetClearWidgetFieldFlags();
+        if ((clrF != default!)) {
+          int clrFValue = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(clrF);
+          global::DripSharp.Runtime.JavaCompat.XorAssign(ref clrFValue, 4294967295L);
+          annotFlags = (annotFlags & clrFValue);
+          widget.SetAnnotationFlags(annotFlags);
+        }
+      }
+    }
+  }
 
-internal override global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField exportFDF() {
-global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField fdfField = new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField();
-fdfField.SetPartialFieldName(this.GetPartialName());
-fdfField.SetValue(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V));
-return fdfField;
-}
+  internal override global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField exportFDF() {
+    global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField fdfField
+      = new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField();
+    fdfField.SetPartialFieldName(this.GetPartialName());
+    fdfField.SetValue(this.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V));
+    return fdfField;
+  }
 
-public override global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> GetWidgets() {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> widgets = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget>();
-global::DripSharp.PdfCarton.Cos.COSArray kids = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Kids);
-if ((kids == default!)) {
-global::DripSharp.Runtime.JavaCompat.Add(widgets, new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget(this.GetCOSObject()));
-} else {
-if ((kids.Size() > 0)) {
-for (int i = 0; (i < kids.Size()); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase kid = kids.GetObject(i);
-if ((kid is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.Runtime.JavaCompat.Add(widgets, new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget((global::DripSharp.PdfCarton.Cos.COSDictionary)(kid!)));
-}
-}
-}
-}
-return widgets;
-}
+  public override global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> GetWidgets() {
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> widgets
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget>();
+    global::DripSharp.PdfCarton.Cos.COSArray kids
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Kids);
+    if ((kids == default!)) {
+      global::DripSharp.Runtime.JavaCompat.Add(widgets,
+        new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget(this.GetCOSObject()));
+    } else {
+      if ((kids.Size() > 0)) {
+        for (int i = 0; (i < kids.Size()); i++) {
+          global::DripSharp.PdfCarton.Cos.COSBase kid = kids.GetObject(i);
+          if ((kid is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+            global::DripSharp.Runtime.JavaCompat.Add(widgets,
+              new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget((global::DripSharp.PdfCarton.Cos.COSDictionary)(kid!)));
+          }
+        }
+      }
+    }
+    return widgets;
+  }
 
-public virtual void SetWidgets(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> children) {
-global::DripSharp.PdfCarton.Cos.COSArray kidsArray = new global::DripSharp.PdfCarton.Cos.COSArray(children);
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids, kidsArray);
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in children) {
-widget.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Parent, this);
-}
-}
+  public virtual void SetWidgets(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> children) {
+    global::DripSharp.PdfCarton.Cos.COSArray kidsArray
+      = new global::DripSharp.PdfCarton.Cos.COSArray(children);
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids, kidsArray);
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in children) {
+      widget.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Parent, this);
+    }
+  }
 
-protected internal void ApplyChange() {
-this.constructAppearances();
-}
+  protected internal void ApplyChange() {
+    this.constructAppearances();
+  }
 
-internal abstract void constructAppearances();
+  internal abstract void constructAppearances();
 }

@@ -8,12 +8,15 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Graphic;
 
-public class NoPatternColorSpaceHelper : global::DripSharp.PdfCarton.Preflight.Graphic.StandardColorSpaceHelper {
-public NoPatternColorSpaceHelper(global::DripSharp.PdfCarton.Preflight.PreflightContext _context, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace _cs) : base(_context, _cs) {
+public class NoPatternColorSpaceHelper
+: global::DripSharp.PdfCarton.Preflight.Graphic.StandardColorSpaceHelper {
+  public NoPatternColorSpaceHelper(global::DripSharp.PdfCarton.Preflight.PreflightContext _context,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace _cs) : base(_context, _cs) {
 
-}
+  }
 
-protected internal override void ProcessPatternColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidPatternColorSpaceForbidden, "Pattern color space is forbidden"));
-}
+  protected internal override void ProcessPatternColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidPatternColorSpaceForbidden,
+      "Pattern color space is forbidden"));
+  }
 }

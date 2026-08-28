@@ -8,53 +8,67 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Ttf.Gsub;
 
-public class GlyphArraySplitterRegexImpl : global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitter {
-private const string GLYPH_ID_SEPARATOR = "_";
+public class GlyphArraySplitterRegexImpl
+: global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitter {
+  private const string GLYPH_ID_SEPARATOR = "_";
 
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.CompoundCharacterTokenizer compoundCharacterTokenizer = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.CompoundCharacterTokenizer compoundCharacterTokenizer
+    = null!;
 
-public GlyphArraySplitterRegexImpl(global::System.Collections.Generic.ISet<global::System.Collections.Generic.IList<int>> matchers) {
-this.compoundCharacterTokenizer = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.CompoundCharacterTokenizer(this.getMatchersAsStrings(matchers));
-}
+  public GlyphArraySplitterRegexImpl(global::System.Collections.Generic.ISet<global::System.Collections.Generic.IList<int>> matchers) {
+    this.compoundCharacterTokenizer
+      = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.CompoundCharacterTokenizer(this.getMatchersAsStrings(matchers));
+  }
 
-public virtual global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>> Split(global::System.Collections.Generic.IList<int> glyphIds) {
-string originalGlyphsAsText = this.convertGlyphIdsToString(glyphIds);
-global::System.Collections.Generic.IList<string> tokens = this.compoundCharacterTokenizer.Tokenize(originalGlyphsAsText);
-global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>> modifiedGlyphs = new global::System.Collections.Generic.List<global::System.Collections.Generic.IList<int>>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(tokens));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(tokens, (token) => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(modifiedGlyphs, this.convertGlyphIdsToList(token)));
-return modifiedGlyphs;
-}
+  public virtual global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>> Split(global::System.Collections.Generic.IList<int> glyphIds) {
+    string originalGlyphsAsText = this.convertGlyphIdsToString(glyphIds);
+    global::System.Collections.Generic.IList<string> tokens
+      = this.compoundCharacterTokenizer.Tokenize(originalGlyphsAsText);
+    global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<int>> modifiedGlyphs
+      = new global::System.Collections.Generic.List<global::System.Collections.Generic.IList<int>>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(tokens));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(tokens, (token)
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(modifiedGlyphs,
+      this.convertGlyphIdsToList(token)));
+    return modifiedGlyphs;
+  }
 
-private global::System.Collections.Generic.ISet<string> getMatchersAsStrings(global::System.Collections.Generic.ISet<global::System.Collections.Generic.IList<int>> matchers) {
-global::System.Collections.Generic.ISet<string> stringMatchers = new global::System.Collections.Generic.SortedSet<string>(global::System.Collections.Generic.Comparer<string>.Create((s1, s2) => {
-if ((s1.Length == s2.Length)) {
-return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringCompareTo(s2, s1);
-}
-return (s2.Length - s1.Length);
-}));
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(matchers, (glyphIds) => stringMatchers.Add(this.convertGlyphIdsToString(glyphIds)));
-return stringMatchers;
-}
+  private global::System.Collections.Generic.ISet<string> getMatchersAsStrings(global::System.Collections.Generic.ISet<global::System.Collections.Generic.IList<int>> matchers) {
+    global::System.Collections.Generic.ISet<string> stringMatchers
+      = new global::System.Collections.Generic.SortedSet<string>(global::System.Collections.Generic.Comparer<string>.Create((s1,
+      s2) => {
+        if ((s1.Length == s2.Length)) {
+          return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringCompareTo(s2, s1);
+        }
+        return (s2.Length - s1.Length);
+      }));
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(matchers, (glyphIds)
+      => stringMatchers.Add(this.convertGlyphIdsToString(glyphIds)));
+    return stringMatchers;
+  }
 
-private string convertGlyphIdsToString(global::System.Collections.Generic.IList<int> glyphIds) {
-global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(20);
-sb.Append(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitterRegexImpl.GLYPH_ID_SEPARATOR);
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(glyphIds, (glyphId) => sb.Append(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(glyphId)).Append(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitterRegexImpl.GLYPH_ID_SEPARATOR));
-return sb.ToString();
-}
+  private string convertGlyphIdsToString(global::System.Collections.Generic.IList<int> glyphIds) {
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(20);
+    sb.Append(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitterRegexImpl.GLYPH_ID_SEPARATOR);
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(glyphIds, (glyphId)
+      => sb.Append(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(glyphId)).Append(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitterRegexImpl.GLYPH_ID_SEPARATOR));
+    return sb.ToString();
+  }
 
-private global::System.Collections.Generic.IList<int> convertGlyphIdsToList(string glyphIdsAsString) {
-global::System.Collections.Generic.IList<int> gsubProcessedGlyphsIds = new global::System.Collections.Generic.List<int>();
-foreach (string __foreachValue_glyphId in global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSplit(glyphIdsAsString, global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitterRegexImpl.GLYPH_ID_SEPARATOR, 0)) {
-string glyphId = __foreachValue_glyphId;
-{
-glyphId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringTrim(glyphId);
-if ((glyphId.Length == 0)) {
-continue;
-}
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(gsubProcessedGlyphsIds, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(glyphId, 10));
-}
-}
-return gsubProcessedGlyphsIds;
-}
+  private global::System.Collections.Generic.IList<int> convertGlyphIdsToList(string glyphIdsAsString) {
+    global::System.Collections.Generic.IList<int> gsubProcessedGlyphsIds
+      = new global::System.Collections.Generic.List<int>();
+    foreach (string __foreachValue_glyphId in global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSplit(glyphIdsAsString,
+      global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GlyphArraySplitterRegexImpl.GLYPH_ID_SEPARATOR,
+      0)) {
+      string glyphId = __foreachValue_glyphId; {
+        glyphId = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringTrim(glyphId);
+        if ((glyphId.Length == 0)) {
+          continue;
+        }
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(gsubProcessedGlyphsIds,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(glyphId, 10));
+      }
+    }
+    return gsubProcessedGlyphsIds;
+  }
 }

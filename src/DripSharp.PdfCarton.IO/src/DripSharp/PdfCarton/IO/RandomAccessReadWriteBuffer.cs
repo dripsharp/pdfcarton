@@ -8,57 +8,60 @@
 #nullable disable
 namespace DripSharp.PdfCarton.IO;
 
-public class RandomAccessReadWriteBuffer : global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer, global::DripSharp.PdfCarton.IO.RandomAccess {
-public RandomAccessReadWriteBuffer() : base() {
+public class RandomAccessReadWriteBuffer : global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer,
+global::DripSharp.PdfCarton.IO.RandomAccess {
+  public RandomAccessReadWriteBuffer() : base() {
 
-}
+  }
 
-public RandomAccessReadWriteBuffer(int definedChunkSize) : base(definedChunkSize) {
+  public RandomAccessReadWriteBuffer(int definedChunkSize) : base(definedChunkSize) {
 
-}
+  }
 
-public virtual void Clear() {
-this.CheckClosed();
-this.ResetBuffers();
-}
+  public virtual void Clear() {
+    this.CheckClosed();
+    this.ResetBuffers();
+  }
 
-public virtual void Write(int b) {
-this.CheckClosed();
-if (((base.ChunkSize - base.CurrentBufferPointer) <= 0)) {
-this.ExpandBuffer();
-}
-base.CurrentBuffer.put(unchecked((sbyte)(unchecked((sbyte)(b)))));
-base.CurrentBufferPointer++;
-base.Pointer++;
-if ((base.Pointer > base.Size)) {
-base.Size = base.Pointer;
-}
-}
+  public virtual void Write(int b) {
+    this.CheckClosed();
+    if (((base.ChunkSize - base.CurrentBufferPointer) <= 0)) {
+      this.ExpandBuffer();
+    }
+    base.CurrentBuffer.put(unchecked((sbyte)(unchecked((sbyte)(b)))));
+    base.CurrentBufferPointer++;
+    base.Pointer++;
+    if ((base.Pointer > base.Size)) {
+      base.Size = base.Pointer;
+    }
+  }
 
-public virtual void Write(sbyte[] b) {
-this.Write(b, 0, b.Length);
-}
+  public virtual void Write(sbyte[] b) {
+    this.Write(b, 0, b.Length);
+  }
 
-public virtual void Write(sbyte[] b, int off, int len) {
-this.CheckClosed();
-int remain = len;
-int bOff = off;
-while ((remain > 0)) {
-int bytesToWrite = global::System.Math.Min(remain, (base.ChunkSize - base.CurrentBufferPointer));
-if ((bytesToWrite <= 0)) {
-this.ExpandBuffer();
-bytesToWrite = global::System.Math.Min(remain, (base.ChunkSize - base.CurrentBufferPointer));
-}
-if ((bytesToWrite > 0)) {
-base.CurrentBuffer.put(b, bOff, bytesToWrite);
-base.CurrentBufferPointer += bytesToWrite;
-base.Pointer += bytesToWrite;
-}
-bOff += bytesToWrite;
-remain -= bytesToWrite;
-}
-if ((base.Pointer > base.Size)) {
-base.Size = base.Pointer;
-}
-}
+  public virtual void Write(sbyte[] b, int off, int len) {
+    this.CheckClosed();
+    int remain = len;
+    int bOff = off;
+    while ((remain > 0)) {
+      int bytesToWrite = global::System.Math.Min(remain, (base.ChunkSize
+        - base.CurrentBufferPointer));
+      if ((bytesToWrite <= 0)) {
+        this.ExpandBuffer();
+        bytesToWrite = global::System.Math.Min(remain, (base.ChunkSize
+          - base.CurrentBufferPointer));
+      }
+      if ((bytesToWrite > 0)) {
+        base.CurrentBuffer.put(b, bOff, bytesToWrite);
+        base.CurrentBufferPointer += bytesToWrite;
+        base.Pointer += bytesToWrite;
+      }
+      bOff += bytesToWrite;
+      remain -= bytesToWrite;
+    }
+    if ((base.Pointer > base.Size)) {
+      base.Size = base.Pointer;
+    }
+  }
 }

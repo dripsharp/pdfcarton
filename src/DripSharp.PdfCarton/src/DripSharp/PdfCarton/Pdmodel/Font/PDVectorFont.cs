@@ -9,9 +9,9 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public interface PDVectorFont {
-public global::SkiaSharp.SKPath GetPath(int code);
+  public global::SkiaSharp.SKPath GetPath(int code);
 
-public global::SkiaSharp.SKPath GetNormalizedPath(int code);
+  public global::SkiaSharp.SKPath GetNormalizedPath(int code);
 
-public bool HasGlyph(int code);
+  public bool HasGlyph(int code);
 }

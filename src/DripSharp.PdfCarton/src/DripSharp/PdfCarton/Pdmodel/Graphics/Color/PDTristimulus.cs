@@ -9,51 +9,51 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
 public sealed class PDTristimulus : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSArray values = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSArray values = null!;
 
-public PDTristimulus() {
-this.values = new global::DripSharp.PdfCarton.Cos.COSArray();
-this.values.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
-this.values.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
-this.values.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
-}
+  public PDTristimulus() {
+    this.values = new global::DripSharp.PdfCarton.Cos.COSArray();
+    this.values.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
+    this.values.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
+    this.values.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
+  }
 
-public PDTristimulus(global::DripSharp.PdfCarton.Cos.COSArray array) {
-this.values = array;
-}
+  public PDTristimulus(global::DripSharp.PdfCarton.Cos.COSArray array) {
+    this.values = array;
+  }
 
-public PDTristimulus(float[] array) {
-this.values = new global::DripSharp.PdfCarton.Cos.COSArray();
-for (int i = 0; ((i < array.Length) && (i < 3)); i++) {
-this.values.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(array[i]));
-}
-}
+  public PDTristimulus(float[] array) {
+    this.values = new global::DripSharp.PdfCarton.Cos.COSArray();
+    for (int i = 0; ((i < array.Length) && (i < 3)); i++) {
+      this.values.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(array[i]));
+    }
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.values;
-}
+  public global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.values;
+  }
 
-public float GetX() {
-return ((global::DripSharp.PdfCarton.Cos.COSNumber)(this.values.Get(0)!)).FloatValue();
-}
+  public float GetX() {
+    return ((global::DripSharp.PdfCarton.Cos.COSNumber)(this.values.Get(0)!)).FloatValue();
+  }
 
-public void SetX(float x) {
-this.values.Set(0, new global::DripSharp.PdfCarton.Cos.COSFloat(x));
-}
+  public void SetX(float x) {
+    this.values.Set(0, new global::DripSharp.PdfCarton.Cos.COSFloat(x));
+  }
 
-public float GetY() {
-return ((global::DripSharp.PdfCarton.Cos.COSNumber)(this.values.Get(1)!)).FloatValue();
-}
+  public float GetY() {
+    return ((global::DripSharp.PdfCarton.Cos.COSNumber)(this.values.Get(1)!)).FloatValue();
+  }
 
-public void SetY(float y) {
-this.values.Set(1, new global::DripSharp.PdfCarton.Cos.COSFloat(y));
-}
+  public void SetY(float y) {
+    this.values.Set(1, new global::DripSharp.PdfCarton.Cos.COSFloat(y));
+  }
 
-public float GetZ() {
-return ((global::DripSharp.PdfCarton.Cos.COSNumber)(this.values.Get(2)!)).FloatValue();
-}
+  public float GetZ() {
+    return ((global::DripSharp.PdfCarton.Cos.COSNumber)(this.values.Get(2)!)).FloatValue();
+  }
 
-public void SetZ(float z) {
-this.values.Set(2, new global::DripSharp.PdfCarton.Cos.COSFloat(z));
-}
+  public void SetZ(float z) {
+    this.values.Set(2, new global::DripSharp.PdfCarton.Cos.COSFloat(z));
+  }
 }

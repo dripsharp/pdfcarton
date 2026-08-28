@@ -8,32 +8,42 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.State;
 
-public class SetGraphicsStateParameters : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class SetGraphicsStateParameters
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public SetGraphicsStateParameters(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+  public SetGraphicsStateParameters(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-global::DripSharp.PdfCarton.Cos.COSBase base0 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-if (!((base0 is global::DripSharp.PdfCarton.Cos.COSName))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSName graphicsName = (global::DripSharp.PdfCarton.Cos.COSName)(base0!);
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState gs = context.GetResources().GetExtGState(graphicsName);
-if ((gs == default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetGraphicsStateParameters.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("name for 'gs' operator not found in resources: /", graphicsName.GetName())));
-return;
-}
-gs.CopyIntoGraphicsState(context.GetGraphicsState());
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        arguments);
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base0
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+    if (!((base0 is global::DripSharp.PdfCarton.Cos.COSName))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSName graphicsName
+      = (global::DripSharp.PdfCarton.Cos.COSName)(base0!);
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState gs
+      = context.GetResources().GetExtGState(graphicsName);
+    if ((gs == default!)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetGraphicsStateParameters.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("name for 'gs' operator not found in resources: /",
+        graphicsName.GetName())));
+      return;
+    }
+    gs.CopyIntoGraphicsState(context.GetGraphicsState());
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetGraphicsStateParams;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetGraphicsStateParams;
+  }
 }

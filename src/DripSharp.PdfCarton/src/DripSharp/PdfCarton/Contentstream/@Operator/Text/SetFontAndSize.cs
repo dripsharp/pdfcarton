@@ -8,38 +8,49 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Text;
 
-public class SetFontAndSize : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class SetFontAndSize
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public SetFontAndSize(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+  public SetFontAndSize(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) < 2)) {
-throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator, arguments);
-}
-global::DripSharp.PdfCarton.Cos.COSBase base0 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-global::DripSharp.PdfCarton.Cos.COSBase base1 = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 1);
-if (!((base0 is global::DripSharp.PdfCarton.Cos.COSName))) {
-return;
-}
-if (!((base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSName fontName = (global::DripSharp.PdfCarton.Cos.COSName)(base0!);
-float fontSize = ((global::DripSharp.PdfCarton.Cos.COSNumber)(base1!)).FloatValue();
-global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState textState = context.GetGraphicsState().GetTextState();
-textState.SetFontSize(fontSize);
-global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = context.GetResources().GetFont(fontName);
-if ((font == default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetFontAndSize.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("font '", fontName.GetName()), "' not found in resources")));
-}
-textState.SetFont(font);
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) < 2)) {
+      throw new global::DripSharp.PdfCarton.Contentstream.@Operator.MissingOperandException(@operator,
+        arguments);
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase base0
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+    global::DripSharp.PdfCarton.Cos.COSBase base1
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 1);
+    if (!((base0 is global::DripSharp.PdfCarton.Cos.COSName))) {
+      return;
+    }
+    if (!((base1 is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSName fontName
+      = (global::DripSharp.PdfCarton.Cos.COSName)(base0!);
+    float fontSize = ((global::DripSharp.PdfCarton.Cos.COSNumber)(base1!)).FloatValue();
+    global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context = this.GetContext();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDTextState textState
+      = context.GetGraphicsState().GetTextState();
+    textState.SetFontSize(fontSize);
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = context.GetResources().GetFont(fontName);
+    if ((font == default!)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Contentstream.@Operator.Text.SetFontAndSize.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("font '",
+        fontName.GetName()), "' not found in resources")));
+    }
+    textState.SetFont(font);
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFontAndSize;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFontAndSize;
+  }
 }

@@ -9,138 +9,225 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function.Type4;
 
 public class Operators {
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ABS = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Abs();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ABS
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Abs();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ADD = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Add();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ADD
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Add();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ATAN = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Atan();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ATAN
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Atan();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator CEILING = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Ceiling();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator CEILING
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Ceiling();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator COS = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Cos();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator COS
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Cos();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator CVI = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Cvi();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator CVI
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Cvi();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator CVR = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Cvr();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator CVR
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Cvr();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator DIV = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Div();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator DIV
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Div();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator EXP = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Exp();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator EXP
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Exp();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator FLOOR = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Floor();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator FLOOR
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Floor();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator IDIV = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.IDiv();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator IDIV
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.IDiv();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LN = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Ln();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LN
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Ln();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LOG = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Log();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LOG
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Log();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator MOD = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Mod();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator MOD
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Mod();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator MUL = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Mul();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator MUL
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Mul();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator NEG = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Neg();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator NEG
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Neg();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ROUND = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Round();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ROUND
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Round();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator SIN = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Sin();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator SIN
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Sin();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator SQRT = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Sqrt();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator SQRT
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Sqrt();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator SUB = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Sub();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator SUB
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Sub();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator TRUNCATE = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Truncate();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator TRUNCATE
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Truncate();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator AND = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.And();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator AND
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.And();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator BITSHIFT = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Bitshift();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator BITSHIFT
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Bitshift();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator EQ = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Eq();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator EQ
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Eq();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator FALSE = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.False();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator FALSE
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.False();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator GE = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Ge();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator GE
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Ge();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator GT = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Gt();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator GT
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Gt();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LE = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Le();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LE
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Le();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LT = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Lt();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LT
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Lt();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator NE = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Ne();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator NE
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Ne();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator NOT = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Not();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator NOT
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Not();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator OR = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Or();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator OR
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Or();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator TRUE = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.True();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator TRUE
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.True();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator XOR = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Xor();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator XOR
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Xor();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator IF = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ConditionalOperators.If();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator IF
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ConditionalOperators.If();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator IFELSE = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ConditionalOperators.IfElse();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator IFELSE
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ConditionalOperators.IfElse();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator COPY = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Copy();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator COPY
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Copy();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator DUP = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Dup();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator DUP
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Dup();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator EXCH = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Exch();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator EXCH
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Exch();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator INDEX = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Index();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator INDEX
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Index();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator POP = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Pop();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator POP
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Pop();
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ROLL = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Roll();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ROLL
+    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Roll();
 
-private readonly global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator> operators = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator>(42);
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator> operators
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+    global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator>(42);
 
-public Operators() {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "add", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.ADD);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "abs", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.ABS);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "atan", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.ATAN);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "ceiling", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.CEILING);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "cos", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.COS);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "cvi", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.CVI);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "cvr", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.CVR);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "div", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.DIV);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "exp", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.EXP);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "floor", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.FLOOR);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "idiv", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.IDIV);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "ln", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.LN);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "log", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.LOG);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "mod", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.MOD);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "mul", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.MUL);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "neg", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.NEG);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "round", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.ROUND);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "sin", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.SIN);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "sqrt", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.SQRT);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "sub", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.SUB);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "truncate", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.TRUNCATE);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "and", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.AND);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "bitshift", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.BITSHIFT);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "eq", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.EQ);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "false", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.FALSE);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "ge", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.GE);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "gt", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.GT);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "le", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.LE);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "lt", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.LT);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "ne", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.NE);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "not", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.NOT);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "or", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.OR);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "true", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.TRUE);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "xor", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.XOR);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "if", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.IF);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "ifelse", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.IFELSE);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "copy", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.COPY);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "dup", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.DUP);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "exch", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.EXCH);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "index", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.INDEX);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "pop", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.POP);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "roll", global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.ROLL);
-}
+  public Operators() {
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "add",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.ADD);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "abs",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.ABS);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "atan",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.ATAN);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "ceiling",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.CEILING);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "cos",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.COS);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "cvi",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.CVI);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "cvr",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.CVR);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "div",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.DIV);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "exp",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.EXP);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "floor",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.FLOOR);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "idiv",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.IDIV);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "ln",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.LN);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "log",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.LOG);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "mod",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.MOD);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "mul",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.MUL);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "neg",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.NEG);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "round",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.ROUND);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "sin",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.SIN);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "sqrt",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.SQRT);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "sub",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.SUB);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "truncate",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.TRUNCATE);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "and",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.AND);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "bitshift",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.BITSHIFT);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "eq",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.EQ);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "false",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.FALSE);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "ge",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.GE);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "gt",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.GT);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "le",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.LE);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "lt",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.LT);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "ne",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.NE);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "not",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.NOT);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "or",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.OR);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "true",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.TRUE);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "xor",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.XOR);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "if",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.IF);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "ifelse",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.IFELSE);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "copy",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.COPY);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "dup",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.DUP);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "exch",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.EXCH);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "index",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.INDEX);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "pop",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.POP);
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.operators, "roll",
+      global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators.ROLL);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator GetOperator(string operatorName) {
-return global::DripSharp.Runtime.JavaCompat.MapGet(this.operators, operatorName);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator GetOperator(string operatorName) {
+    return global::DripSharp.Runtime.JavaCompat.MapGet(this.operators, operatorName);
+  }
 }

@@ -9,164 +9,173 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function;
 
 public abstract class PDFunction : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private global::DripSharp.PdfCarton.Pdmodel.Common.PDStream functionStream = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Common.PDStream functionStream = default!;
 
-private global::DripSharp.PdfCarton.Cos.COSDictionary functionDictionary = default!;
+  private global::DripSharp.PdfCarton.Cos.COSDictionary functionDictionary = default!;
 
-private global::DripSharp.PdfCarton.Cos.COSArray domain = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray domain = default!;
 
-private global::DripSharp.PdfCarton.Cos.COSArray range = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray range = default!;
 
-private int numberOfInputValues = -1;
+  private int numberOfInputValues = -1;
 
-private int numberOfOutputValues = -1;
+  private int numberOfOutputValues = -1;
 
-public PDFunction(global::DripSharp.PdfCarton.Cos.COSBase function) {
-if ((function is global::DripSharp.PdfCarton.Cos.COSStream)) {
-this.functionStream = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream((global::DripSharp.PdfCarton.Cos.COSStream)(function!));
-this.functionStream.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Function);
-} else {
-if ((function is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-this.functionDictionary = (global::DripSharp.PdfCarton.Cos.COSDictionary)(function!);
-}
-}
-}
+  public PDFunction(global::DripSharp.PdfCarton.Cos.COSBase function) {
+    if ((function is global::DripSharp.PdfCarton.Cos.COSStream)) {
+      this.functionStream
+        = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream((global::DripSharp.PdfCarton.Cos.COSStream)(function!));
+      this.functionStream.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+        global::DripSharp.PdfCarton.Cos.COSName.Function);
+    } else {
+      if ((function is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        this.functionDictionary = (global::DripSharp.PdfCarton.Cos.COSDictionary)(function!);
+      }
+    }
+  }
 
-public abstract int GetFunctionType();
+  public abstract int GetFunctionType();
 
-public global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-if ((this.functionStream != default!)) {
-return this.functionStream.GetCOSObject();
-} else {
-return this.functionDictionary;
-}
-}
+  public global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    if ((this.functionStream != default!)) {
+      return this.functionStream.GetCOSObject();
+    } else {
+      return this.functionDictionary;
+    }
+  }
 
-protected internal virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetPDStream() {
-return this.functionStream;
-}
+  protected internal virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDStream GetPDStream() {
+    return this.functionStream;
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction Create(global::DripSharp.PdfCarton.Cos.COSBase function) {
-if ((function == global::DripSharp.PdfCarton.Cos.COSName.Identity)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionTypeIdentity((global::DripSharp.PdfCarton.Cos.COSBase)default!);
-}
-global::DripSharp.PdfCarton.Cos.COSBase @base = function;
-if ((function is global::DripSharp.PdfCarton.Cos.COSObject)) {
-@base = ((global::DripSharp.PdfCarton.Cos.COSObject)(function!)).GetObject();
-}
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error: Function must be a Dictionary, but is ", ((@base == default!) ? "(null)" : ((object)(@base)).GetType().Name)));
-}
-global::DripSharp.PdfCarton.Cos.COSDictionary functionDictionary = (global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!);
-int functionType = functionDictionary.GetInt(global::DripSharp.PdfCarton.Cos.COSName.FunctionType);
-switch (functionType) {
-case var __case_136_18_0 when __case_136_18_0 == 0:
-return new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionType0(functionDictionary);
-case var __case_138_18_0 when __case_138_18_0 == 2:
-return new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionType2(functionDictionary);
-case var __case_140_18_0 when __case_140_18_0 == 3:
-return new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionType3(functionDictionary);
-case var __case_142_18_0 when __case_142_18_0 == 4:
-return new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionType4(functionDictionary);
-default:
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error: Unknown function type ", functionType));
-}
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction Create(global::DripSharp.PdfCarton.Cos.COSBase function) {
+    if ((function == global::DripSharp.PdfCarton.Cos.COSName.Identity)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionTypeIdentity((global::DripSharp.PdfCarton.Cos.COSBase)default!);
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase @base = function;
+    if ((function is global::DripSharp.PdfCarton.Cos.COSObject)) {
+      @base = ((global::DripSharp.PdfCarton.Cos.COSObject)(function!)).GetObject();
+    }
+    if (!((@base is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
+      throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error: Function must be a Dictionary, but is ",
+        ((@base == default!) ? "(null)" : ((object)(@base)).GetType().Name)));
+    }
+    global::DripSharp.PdfCarton.Cos.COSDictionary functionDictionary
+      = (global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!);
+    int functionType
+      = functionDictionary.GetInt(global::DripSharp.PdfCarton.Cos.COSName.FunctionType);
+    switch (functionType) {
+      case var __case_136_18_0 when __case_136_18_0 == 0:
+        return new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionType0(functionDictionary);
+      case var __case_138_18_0 when __case_138_18_0 == 2:
+        return new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionType2(functionDictionary);
+      case var __case_140_18_0 when __case_140_18_0 == 3:
+        return new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionType3(functionDictionary);
+      case var __case_142_18_0 when __case_142_18_0 == 4:
+        return new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionType4(functionDictionary);
+      default:
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error: Unknown function type ",
+          functionType));
+    }
+  }
 
-public virtual int GetNumberOfOutputParameters() {
-if ((this.numberOfOutputValues == -1)) {
-global::DripSharp.PdfCarton.Cos.COSArray rangeValues = this.GetRangeValues();
-if ((rangeValues == default!)) {
-this.numberOfOutputValues = 0;
-} else {
-this.numberOfOutputValues = (rangeValues.Size() / 2);
-}
-}
-return this.numberOfOutputValues;
-}
+  public virtual int GetNumberOfOutputParameters() {
+    if ((this.numberOfOutputValues == -1)) {
+      global::DripSharp.PdfCarton.Cos.COSArray rangeValues = this.GetRangeValues();
+      if ((rangeValues == default!)) {
+        this.numberOfOutputValues = 0;
+      } else {
+        this.numberOfOutputValues = (rangeValues.Size() / 2);
+      }
+    }
+    return this.numberOfOutputValues;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetRangeForOutput(int n) {
-global::DripSharp.PdfCarton.Cos.COSArray rangeValues = this.GetRangeValues();
-return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(rangeValues, n);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetRangeForOutput(int n) {
+    global::DripSharp.PdfCarton.Cos.COSArray rangeValues = this.GetRangeValues();
+    return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(rangeValues, n);
+  }
 
-public virtual void SetRangeValues(global::DripSharp.PdfCarton.Cos.COSArray rangeValues) {
-this.range = rangeValues;
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Range, rangeValues);
-}
+  public virtual void SetRangeValues(global::DripSharp.PdfCarton.Cos.COSArray rangeValues) {
+    this.range = rangeValues;
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Range, rangeValues);
+  }
 
-public virtual int GetNumberOfInputParameters() {
-if ((this.numberOfInputValues == -1)) {
-global::DripSharp.PdfCarton.Cos.COSArray array = this.getDomainValues();
-this.numberOfInputValues = (array.Size() / 2);
-}
-return this.numberOfInputValues;
-}
+  public virtual int GetNumberOfInputParameters() {
+    if ((this.numberOfInputValues == -1)) {
+      global::DripSharp.PdfCarton.Cos.COSArray array = this.getDomainValues();
+      this.numberOfInputValues = (array.Size() / 2);
+    }
+    return this.numberOfInputValues;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetDomainForInput(int n) {
-global::DripSharp.PdfCarton.Cos.COSArray domainValues = this.getDomainValues();
-return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(domainValues, n);
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetDomainForInput(int n) {
+    global::DripSharp.PdfCarton.Cos.COSArray domainValues = this.getDomainValues();
+    return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(domainValues, n);
+  }
 
-public virtual void SetDomainValues(global::DripSharp.PdfCarton.Cos.COSArray domainValues) {
-this.domain = domainValues;
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Domain, domainValues);
-}
+  public virtual void SetDomainValues(global::DripSharp.PdfCarton.Cos.COSArray domainValues) {
+    this.domain = domainValues;
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Domain, domainValues);
+  }
 
-public abstract float[] Eval(float[] input);
+  public abstract float[] Eval(float[] input);
 
-protected internal virtual global::DripSharp.PdfCarton.Cos.COSArray GetRangeValues() {
-if ((this.range == default!)) {
-this.range = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Range);
-}
-return this.range;
-}
+  protected internal virtual global::DripSharp.PdfCarton.Cos.COSArray GetRangeValues() {
+    if ((this.range == default!)) {
+      this.range = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Range);
+    }
+    return this.range;
+  }
 
-private global::DripSharp.PdfCarton.Cos.COSArray getDomainValues() {
-if ((this.domain == default!)) {
-this.domain = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Domain);
-}
-return this.domain;
-}
+  private global::DripSharp.PdfCarton.Cos.COSArray getDomainValues() {
+    if ((this.domain == default!)) {
+      this.domain = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Domain);
+    }
+    return this.domain;
+  }
 
-protected internal virtual float[] ClipToRange(float[] inputValues) {
-global::DripSharp.PdfCarton.Cos.COSArray rangesArray = this.GetRangeValues();
-float[] result;
-if (((rangesArray != default!) && (rangesArray.Size() > 0))) {
-float[] rangeValues = rangesArray.ToFloatArray();
-int numberOfRanges = (rangeValues.Length / 2);
-result = new float[numberOfRanges];
-for (int i = 0; (i < numberOfRanges); i++) {
-int index = (i << unchecked((int)(1)));
-result[i] = this.ClipToRange(inputValues[i], rangeValues[index], rangeValues[(index + 1)]);
-}
-} else {
-result = inputValues;
-}
-return result;
-}
+  protected internal virtual float[] ClipToRange(float[] inputValues) {
+    global::DripSharp.PdfCarton.Cos.COSArray rangesArray = this.GetRangeValues();
+    float[] result;
+    if (((rangesArray != default!) && (rangesArray.Size() > 0))) {
+      float[] rangeValues = rangesArray.ToFloatArray();
+      int numberOfRanges = (rangeValues.Length / 2);
+      result = new float[numberOfRanges];
+      for (int i = 0; (i < numberOfRanges); i++) {
+        int index = (i << unchecked((int)(1)));
+        result[i] = this.ClipToRange(inputValues[i], rangeValues[index], rangeValues[(index + 1)]);
+      }
+    } else {
+      result = inputValues;
+    }
+    return result;
+  }
 
-protected internal virtual float ClipToRange(float x, float rangeMin, float rangeMax) {
-if ((x < rangeMin)) {
-return rangeMin;
-} else {
-if ((x > rangeMax)) {
-return rangeMax;
-}
-}
-return x;
-}
+  protected internal virtual float ClipToRange(float x, float rangeMin, float rangeMax) {
+    if ((x < rangeMin)) {
+      return rangeMin;
+    } else {
+      if ((x > rangeMax)) {
+        return rangeMax;
+      }
+    }
+    return x;
+  }
 
-protected internal virtual float Interpolate(float x, float xRangeMin, float xRangeMax, float yRangeMin, float yRangeMax) {
-if ((xRangeMax == xRangeMin)) {
-return yRangeMin;
-}
-return (yRangeMin + ((float)(((x - xRangeMin) * (yRangeMax - yRangeMin))) / (float)((xRangeMax - xRangeMin))));
-}
+  protected internal virtual float Interpolate(float x, float xRangeMin, float xRangeMax,
+    float yRangeMin, float yRangeMax) {
+    if ((xRangeMax == xRangeMin)) {
+      return yRangeMin;
+    }
+    return (yRangeMin + ((float)(((x - xRangeMin) * (yRangeMax - yRangeMin))) / (float)((xRangeMax
+      - xRangeMin))));
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat("FunctionType", this.GetFunctionType());
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat("FunctionType", this.GetFunctionType());
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

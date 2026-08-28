@@ -9,26 +9,27 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public interface PropertyType {
-public global::DripSharp.PdfCarton.Xmp.Type.Types Type();
+  public global::DripSharp.PdfCarton.Xmp.Type.Types Type();
 
-public global::DripSharp.PdfCarton.Xmp.Type.Cardinality Card();
+  public global::DripSharp.PdfCarton.Xmp.Type.Cardinality Card();
 }
 
-[global::System.AttributeUsage(global::System.AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+[global::System.AttributeUsage(global::System.AttributeTargets.Field, AllowMultiple = false,
+  Inherited = false)]
 internal sealed class PropertyTypeAttribute : global::System.Attribute, PropertyType {
-private readonly string __type;
-private readonly string __card;
+  private readonly string __type;
+  private readonly string __card;
 
-public PropertyTypeAttribute(string type, string card) {
-this.__type = type;
-this.__card = card;
-}
+  public PropertyTypeAttribute(string type, string card) {
+    this.__type = type;
+    this.__card = card;
+  }
 
-public global::DripSharp.PdfCarton.Xmp.Type.Types Type() {
-return global::DripSharp.PdfCarton.Xmp.Type.Types.valueOf(this.__type);
-}
+  public global::DripSharp.PdfCarton.Xmp.Type.Types Type() {
+    return global::DripSharp.PdfCarton.Xmp.Type.Types.valueOf(this.__type);
+  }
 
-public global::DripSharp.PdfCarton.Xmp.Type.Cardinality Card() {
-return global::DripSharp.PdfCarton.Xmp.Type.Cardinality.valueOf(this.__card);
-}
+  public global::DripSharp.PdfCarton.Xmp.Type.Cardinality Card() {
+    return global::DripSharp.PdfCarton.Xmp.Type.Cardinality.valueOf(this.__card);
+  }
 }

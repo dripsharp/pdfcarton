@@ -8,69 +8,79 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/g/img/", "xmpGImg")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/g/img/",
+  "xmpGImg")]
 public class ThumbnailType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
-public const string Format = "format";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
+  public const string Format = "format";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string Height = "height";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string Height = "height";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
-public const string Width = "width";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
+  public const string Width = "width";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string Image = "image";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string Image = "image";
 
-public ThumbnailType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
-this.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace, "parseType", "Resource"));
-}
+  public ThumbnailType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+    this.SetAttribute(new global::DripSharp.PdfCarton.Xmp.Type.Attribute(global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace,
+      "parseType", "Resource"));
+  }
 
-public virtual int? GetHeight() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Height, typeof(global::DripSharp.PdfCarton.Xmp.Type.IntegerType));
-if ((absProp != default!)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(absProp!)).GetValue();
-}
-return default!;
-}
+  public virtual int? GetHeight() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp
+      = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Height,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.IntegerType));
+    if ((absProp != default!)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(absProp!)).GetValue();
+    }
+    return default!;
+  }
 
-public virtual void SetHeight(int? height) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Height, height);
-}
+  public virtual void SetHeight(int? height) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Height, height);
+  }
 
-public virtual int? GetWidth() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Width, typeof(global::DripSharp.PdfCarton.Xmp.Type.IntegerType));
-if ((absProp != default!)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(absProp!)).GetValue();
-}
-return default!;
-}
+  public virtual int? GetWidth() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp
+      = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Width,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.IntegerType));
+    if ((absProp != default!)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.IntegerType)(absProp!)).GetValue();
+    }
+    return default!;
+  }
 
-public virtual void SetWidth(int? width) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Width, width);
-}
+  public virtual void SetWidth(int? width) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Width, width);
+  }
 
-public virtual string GetImage() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Image, typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType));
-if ((absProp != default!)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(absProp!)).GetStringValue();
-}
-return default!;
-}
+  public virtual string GetImage() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp
+      = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Image,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType));
+    if ((absProp != default!)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(absProp!)).GetStringValue();
+    }
+    return default!;
+  }
 
-public virtual void SetImage(string image) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Image, image);
-}
+  public virtual void SetImage(string image) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Image, image);
+  }
 
-public virtual string GetFormat() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Format, typeof(global::DripSharp.PdfCarton.Xmp.Type.ChoiceType));
-if ((absProp != default!)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(absProp!)).GetStringValue();
-}
-return default!;
-}
+  public virtual string GetFormat() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField absProp
+      = this.GetFirstEquivalentProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Format,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.ChoiceType));
+    if ((absProp != default!)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.TextType)(absProp!)).GetStringValue();
+    }
+    return default!;
+  }
 
-public virtual void SetFormat(string format) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Format, format);
-}
+  public virtual void SetFormat(string format) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Format, format);
+  }
 }

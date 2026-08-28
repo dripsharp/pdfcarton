@@ -9,39 +9,39 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFOptionElement : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private readonly global::DripSharp.PdfCarton.Cos.COSArray option = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSArray option = null!;
 
-public FDFOptionElement() {
-this.option = new global::DripSharp.PdfCarton.Cos.COSArray();
-this.option.Add(new global::DripSharp.PdfCarton.Cos.COSString(""));
-this.option.Add(new global::DripSharp.PdfCarton.Cos.COSString(""));
-}
+  public FDFOptionElement() {
+    this.option = new global::DripSharp.PdfCarton.Cos.COSArray();
+    this.option.Add(new global::DripSharp.PdfCarton.Cos.COSString(""));
+    this.option.Add(new global::DripSharp.PdfCarton.Cos.COSString(""));
+  }
 
-public FDFOptionElement(global::DripSharp.PdfCarton.Cos.COSArray o) {
-this.option = o;
-}
+  public FDFOptionElement(global::DripSharp.PdfCarton.Cos.COSArray o) {
+    this.option = o;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.option;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.option;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSArray GetCOSArray() {
-return this.option;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSArray GetCOSArray() {
+    return this.option;
+  }
 
-public virtual string GetOption() {
-return ((global::DripSharp.PdfCarton.Cos.COSString)(this.option.GetObject(0)!)).GetString();
-}
+  public virtual string GetOption() {
+    return ((global::DripSharp.PdfCarton.Cos.COSString)(this.option.GetObject(0)!)).GetString();
+  }
 
-public virtual void SetOption(string opt) {
-this.option.Set(0, new global::DripSharp.PdfCarton.Cos.COSString(opt));
-}
+  public virtual void SetOption(string opt) {
+    this.option.Set(0, new global::DripSharp.PdfCarton.Cos.COSString(opt));
+  }
 
-public virtual string GetDefaultAppearanceString() {
-return ((global::DripSharp.PdfCarton.Cos.COSString)(this.option.GetObject(1)!)).GetString();
-}
+  public virtual string GetDefaultAppearanceString() {
+    return ((global::DripSharp.PdfCarton.Cos.COSString)(this.option.GetObject(1)!)).GetString();
+  }
 
-public virtual void SetDefaultAppearanceString(string da) {
-this.option.Set(1, new global::DripSharp.PdfCarton.Cos.COSString(da));
-}
+  public virtual void SetDefaultAppearanceString(string da) {
+    this.option.Set(1, new global::DripSharp.PdfCarton.Cos.COSString(da));
+  }
 }

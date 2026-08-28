@@ -9,182 +9,233 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 
 public class PDSeedValue : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private static readonly global::System.Collections.Generic.IList<string> allowedDigestNames = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Cos.COSName.DigestSha1.GetName(), global::DripSharp.PdfCarton.Cos.COSName.DigestSha256.GetName(), global::DripSharp.PdfCarton.Cos.COSName.DigestSha384.GetName(), global::DripSharp.PdfCarton.Cos.COSName.DigestSha512.GetName(), global::DripSharp.PdfCarton.Cos.COSName.DigestRipemd160.GetName());
+  private static readonly global::System.Collections.Generic.IList<string> allowedDigestNames
+    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Cos.COSName.DigestSha1.GetName(),
+    global::DripSharp.PdfCarton.Cos.COSName.DigestSha256.GetName(),
+    global::DripSharp.PdfCarton.Cos.COSName.DigestSha384.GetName(),
+    global::DripSharp.PdfCarton.Cos.COSName.DigestSha512.GetName(),
+    global::DripSharp.PdfCarton.Cos.COSName.DigestRipemd160.GetName());
 
-public const int FlagFilter = 1;
+  public const int FlagFilter = 1;
 
-public const int FlagSubfilter = (1 << unchecked((int)(1)));
+  public const int FlagSubfilter = (1 << unchecked((int)(1)));
 
-public const int FlagV = (1 << unchecked((int)(2)));
+  public const int FlagV = (1 << unchecked((int)(2)));
 
-public const int FlagReason = (1 << unchecked((int)(3)));
+  public const int FlagReason = (1 << unchecked((int)(3)));
 
-public const int FlagLegalAttestation = (1 << unchecked((int)(4)));
+  public const int FlagLegalAttestation = (1 << unchecked((int)(4)));
 
-public const int FlagAddRevInfo = (1 << unchecked((int)(5)));
+  public const int FlagAddRevInfo = (1 << unchecked((int)(5)));
 
-public const int FlagDigestMethod = (1 << unchecked((int)(6)));
+  public const int FlagDigestMethod = (1 << unchecked((int)(6)));
 
-private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-public PDSeedValue() {
-this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Sv);
-this.dictionary.SetDirect(true);
-}
+  public PDSeedValue() {
+    this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Sv);
+    this.dictionary.SetDirect(true);
+  }
 
-public PDSeedValue(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
-this.dictionary = dict;
-this.dictionary.SetDirect(true);
-}
+  public PDSeedValue(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
+    this.dictionary = dict;
+    this.dictionary.SetDirect(true);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
-return this.dictionary;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject() {
+    return this.dictionary;
+  }
 
-public virtual bool IsFilterRequired() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagFilter);
-}
+  public virtual bool IsFilterRequired() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagFilter);
+  }
 
-public virtual void SetFilterRequired(bool flag) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagFilter, flag);
-}
+  public virtual void SetFilterRequired(bool flag) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagFilter,
+      flag);
+  }
 
-public virtual bool IsSubFilterRequired() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagSubfilter);
-}
+  public virtual bool IsSubFilterRequired() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagSubfilter);
+  }
 
-public virtual void SetSubFilterRequired(bool flag) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagSubfilter, flag);
-}
+  public virtual void SetSubFilterRequired(bool flag) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagSubfilter,
+      flag);
+  }
 
-public virtual bool IsDigestMethodRequired() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagDigestMethod);
-}
+  public virtual bool IsDigestMethodRequired() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagDigestMethod);
+  }
 
-public virtual void SetDigestMethodRequired(bool flag) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagDigestMethod, flag);
-}
+  public virtual void SetDigestMethodRequired(bool flag) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagDigestMethod,
+      flag);
+  }
 
-public virtual bool IsVRequired() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagV);
-}
+  public virtual bool IsVRequired() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagV);
+  }
 
-public virtual void SetVRequired(bool flag) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagV, flag);
-}
+  public virtual void SetVRequired(bool flag) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagV, flag);
+  }
 
-public virtual bool IsReasonRequired() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagReason);
-}
+  public virtual bool IsReasonRequired() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagReason);
+  }
 
-public virtual void SetReasonRequired(bool flag) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagReason, flag);
-}
+  public virtual void SetReasonRequired(bool flag) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagReason,
+      flag);
+  }
 
-public virtual bool IsLegalAttestationRequired() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagLegalAttestation);
-}
+  public virtual bool IsLegalAttestationRequired() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagLegalAttestation);
+  }
 
-public virtual void SetLegalAttestationRequired(bool flag) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagLegalAttestation, flag);
-}
+  public virtual void SetLegalAttestationRequired(bool flag) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagLegalAttestation,
+      flag);
+  }
 
-public virtual bool IsAddRevInfoRequired() {
-return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagAddRevInfo);
-}
+  public virtual bool IsAddRevInfoRequired() {
+    return this.GetCOSObject().GetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagAddRevInfo);
+  }
 
-public virtual void SetAddRevInfoRequired(bool flag) {
-this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff, global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagAddRevInfo, flag);
-}
+  public virtual void SetAddRevInfoRequired(bool flag) {
+    this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.Ff,
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.FlagAddRevInfo,
+      flag);
+  }
 
-public virtual string GetFilter() {
-return this.dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Filter);
-}
+  public virtual string GetFilter() {
+    return this.dictionary.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Filter);
+  }
 
-public virtual void SetFilter(global::DripSharp.PdfCarton.Cos.COSName filter) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Filter, filter);
-}
+  public virtual void SetFilter(global::DripSharp.PdfCarton.Cos.COSName filter) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Filter, filter);
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetSubFilter() {
-global::DripSharp.PdfCarton.Cos.COSArray fields = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.SubFilter);
-return ((fields != default!) ? fields.ToCOSNameStringList() : global::System.Array.Empty<string>());
-}
+  public virtual global::System.Collections.Generic.IList<string> GetSubFilter() {
+    global::DripSharp.PdfCarton.Cos.COSArray fields
+      = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.SubFilter);
+    return ((fields != default!) ? fields.ToCOSNameStringList()
+      : global::System.Array.Empty<string>());
+  }
 
-public virtual void SetSubFilter(global::System.Collections.Generic.IList<string> subfilter) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.SubFilter, global::DripSharp.PdfCarton.Cos.COSArray.OfCOSNames(subfilter));
-}
+  public virtual void SetSubFilter(global::System.Collections.Generic.IList<string> subfilter) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.SubFilter,
+      global::DripSharp.PdfCarton.Cos.COSArray.OfCOSNames(subfilter));
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetDigestMethod() {
-global::DripSharp.PdfCarton.Cos.COSArray fields = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.DigestMethod);
-return ((fields != default!) ? fields.ToCOSNameStringList() : global::System.Array.Empty<string>());
-}
+  public virtual global::System.Collections.Generic.IList<string> GetDigestMethod() {
+    global::DripSharp.PdfCarton.Cos.COSArray fields
+      = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.DigestMethod);
+    return ((fields != default!) ? fields.ToCOSNameStringList()
+      : global::System.Array.Empty<string>());
+  }
 
-public virtual void SetDigestMethod(global::System.Collections.Generic.IList<string> digestMethod) {
-foreach (string digestName in digestMethod) {
-if (!global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.allowedDigestNames, digestName)) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Specified digest ", digestName), " isn't allowed."));
-}
-}
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.DigestMethod, global::DripSharp.PdfCarton.Cos.COSArray.OfCOSNames(digestMethod));
-}
+  public virtual void SetDigestMethod(global::System.Collections.Generic.IList<string> digestMethod) {
+    foreach (string digestName in digestMethod) {
+      if (!global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValue.allowedDigestNames,
+        digestName)) {
+        throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Specified digest ",
+          digestName), " isn't allowed."));
+      }
+    }
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.DigestMethod,
+      global::DripSharp.PdfCarton.Cos.COSArray.OfCOSNames(digestMethod));
+  }
 
-public virtual float GetV() {
-return this.dictionary.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.V);
-}
+  public virtual float GetV() {
+    return this.dictionary.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.V);
+  }
 
-public virtual void SetV(float minimumRequiredCapability) {
-this.dictionary.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.V, minimumRequiredCapability);
-}
+  public virtual void SetV(float minimumRequiredCapability) {
+    this.dictionary.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.V, minimumRequiredCapability);
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetReasons() {
-global::DripSharp.PdfCarton.Cos.COSArray fields = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Reasons);
-return ((fields != default!) ? fields.ToCOSNameStringList() : global::System.Array.Empty<string>());
-}
+  public virtual global::System.Collections.Generic.IList<string> GetReasons() {
+    global::DripSharp.PdfCarton.Cos.COSArray fields
+      = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Reasons);
+    return ((fields != default!) ? fields.ToCOSNameStringList()
+      : global::System.Array.Empty<string>());
+  }
 
-public virtual void SetReasons(global::System.Collections.Generic.IList<string> reasons) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Reasons, global::DripSharp.PdfCarton.Cos.COSArray.OfCOSStrings(reasons));
-}
+  public virtual void SetReasons(global::System.Collections.Generic.IList<string> reasons) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Reasons,
+      global::DripSharp.PdfCarton.Cos.COSArray.OfCOSStrings(reasons));
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueMDP GetMDP() {
-global::DripSharp.PdfCarton.Cos.COSDictionary dict = this.dictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Mdp);
-return ((dict != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueMDP(dict) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueMDP)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueMDP GetMDP() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary dict
+      = this.dictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Mdp);
+    return ((dict != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueMDP(dict)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueMDP)(default!));
+  }
 
-public virtual void SetMPD(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueMDP mdp) {
-if ((mdp != default!)) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Mdp, mdp.GetCOSObject());
-}
-}
+  public virtual void SetMPD(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueMDP mdp) {
+    if ((mdp != default!)) {
+      this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Mdp, mdp.GetCOSObject());
+    }
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueCertificate GetSeedValueCertificate() {
-global::DripSharp.PdfCarton.Cos.COSDictionary certificate = this.dictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Cert);
-return ((certificate != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueCertificate(certificate) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueCertificate)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueCertificate GetSeedValueCertificate() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary certificate
+      = this.dictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Cert);
+    return ((certificate != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueCertificate(certificate)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueCertificate)(default!));
+  }
 
-public virtual void SetSeedValueCertificate(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueCertificate certificate) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Cert, certificate);
-}
+  public virtual void SetSeedValueCertificate(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueCertificate certificate) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Cert, certificate);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueTimeStamp GetTimeStamp() {
-global::DripSharp.PdfCarton.Cos.COSDictionary dict = this.dictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.TimeStamp);
-return ((dict != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueTimeStamp(dict) : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueTimeStamp)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueTimeStamp GetTimeStamp() {
+    global::DripSharp.PdfCarton.Cos.COSDictionary dict
+      = this.dictionary.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.TimeStamp);
+    return ((dict != default!)
+      ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueTimeStamp(dict)
+      : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueTimeStamp)(default!));
+  }
 
-public virtual void SetTimeStamp(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueTimeStamp timestamp) {
-if ((timestamp != default!)) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.TimeStamp, timestamp.GetCOSObject());
-}
-}
+  public virtual void SetTimeStamp(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDSeedValueTimeStamp timestamp) {
+    if ((timestamp != default!)) {
+      this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.TimeStamp,
+        timestamp.GetCOSObject());
+    }
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetLegalAttestation() {
-global::DripSharp.PdfCarton.Cos.COSArray fields = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.LegalAttestation);
-return ((fields != default!) ? fields.ToCOSNameStringList() : global::System.Array.Empty<string>());
-}
+  public virtual global::System.Collections.Generic.IList<string> GetLegalAttestation() {
+    global::DripSharp.PdfCarton.Cos.COSArray fields
+      = this.dictionary.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.LegalAttestation);
+    return ((fields != default!) ? fields.ToCOSNameStringList()
+      : global::System.Array.Empty<string>());
+  }
 
-public virtual void SetLegalAttestation(global::System.Collections.Generic.IList<string> legalAttestation) {
-this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.LegalAttestation, global::DripSharp.PdfCarton.Cos.COSArray.OfCOSStrings(legalAttestation));
-}
+  public virtual void SetLegalAttestation(global::System.Collections.Generic.IList<string> legalAttestation) {
+    this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.LegalAttestation,
+      global::DripSharp.PdfCarton.Cos.COSArray.OfCOSStrings(legalAttestation));
+  }
 
-global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject() => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
+  global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
+    => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());
 }

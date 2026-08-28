@@ -8,49 +8,59 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent;
 
-public class PDOptionalContentMembershipDictionary : global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList {
-public PDOptionalContentMembershipDictionary() {
-this.Dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Ocmd);
-}
+public class PDOptionalContentMembershipDictionary
+: global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList {
+  public PDOptionalContentMembershipDictionary() {
+    this.Dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Ocmd);
+  }
 
-public PDOptionalContentMembershipDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dict) : base(dict) {
-if (!(global::DripSharp.Runtime.JavaCompat.Equals(dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Type), global::DripSharp.PdfCarton.Cos.COSName.Ocmd))) {
-throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Provided dictionary is not of type '", global::DripSharp.PdfCarton.Cos.COSName.Ocmd), "'"));
-}
-}
+  public PDOptionalContentMembershipDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dict)
+  : base(dict) {
+    if (!global::DripSharp.Runtime.JavaCompat.Equals(dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Type),
+      global::DripSharp.PdfCarton.Cos.COSName.Ocmd)) {
+      throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Provided dictionary is not of type '",
+        global::DripSharp.PdfCarton.Cos.COSName.Ocmd), "'"));
+    }
+  }
 
-public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList> GetOCGs() {
-global::DripSharp.PdfCarton.Cos.COSBase @base = base.Dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ocgs);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-return global::DripSharp.Runtime.JavaCompat.ListOf<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList>(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!)));
-}
-if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList> list = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList>();
-global::DripSharp.PdfCarton.Cos.COSArray ar = (global::DripSharp.PdfCarton.Cos.COSArray)(@base!);
-for (int i = 0; (i < ar.Size()); ++i) {
-global::DripSharp.PdfCarton.Cos.COSBase elem = ar.GetObject(i);
-if ((elem is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.Runtime.JavaCompat.Add(list, global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(elem!)));
-}
-}
-return list;
-}
-return global::System.Array.Empty<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList>();
-}
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList> GetOCGs() {
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = base.Dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ocgs);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+      return global::DripSharp.Runtime.JavaCompat.ListOf<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList>(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!)));
+    }
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList> list
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList>();
+      global::DripSharp.PdfCarton.Cos.COSArray ar
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(@base!);
+      for (int i = 0; (i < ar.Size()); ++i) {
+        global::DripSharp.PdfCarton.Cos.COSBase elem = ar.GetObject(i);
+        if ((elem is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+          global::DripSharp.Runtime.JavaCompat.Add(list,
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(elem!)));
+        }
+      }
+      return list;
+    }
+    return global::System.Array.Empty<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList>();
+  }
 
-public virtual void SetOCGs(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList> ocgs) {
-global::DripSharp.PdfCarton.Cos.COSArray ar = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList prop in ocgs) {
-ar.Add(prop);
-}
-base.Dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ocgs, ar);
-}
+  public virtual void SetOCGs(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList> ocgs) {
+    global::DripSharp.PdfCarton.Cos.COSArray ar = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList prop in ocgs) {
+      ar.Add(prop);
+    }
+    base.Dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Ocgs, ar);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSName GetVisibilityPolicy() {
-return base.Dict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.P, global::DripSharp.PdfCarton.Cos.COSName.AnyOn);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSName GetVisibilityPolicy() {
+    return base.Dict.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.P,
+      global::DripSharp.PdfCarton.Cos.COSName.AnyOn);
+  }
 
-public virtual void SetVisibilityPolicy(global::DripSharp.PdfCarton.Cos.COSName visibilityPolicy) {
-base.Dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, visibilityPolicy);
-}
+  public virtual void SetVisibilityPolicy(global::DripSharp.PdfCarton.Cos.COSName visibilityPolicy) {
+    base.Dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, visibilityPolicy);
+  }
 }

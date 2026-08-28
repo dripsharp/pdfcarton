@@ -9,111 +9,132 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
 public sealed class PDColor {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private readonly float[] components = null!;
+  private readonly float[] components = null!;
 
-private readonly global::DripSharp.PdfCarton.Cos.COSName patternName = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSName patternName = null!;
 
-private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace
+    = null!;
 
-public PDColor(global::DripSharp.PdfCarton.Cos.COSArray array, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-if (((array.Size() > 0) && (array.Get((array.Size() - 1)) is global::DripSharp.PdfCarton.Cos.COSName))) {
-this.components = new float[(array.Size() - 1)];
-this.initComponents(array);
-global::DripSharp.PdfCarton.Cos.COSBase @base = array.Get((array.Size() - 1));
-if ((@base is global::DripSharp.PdfCarton.Cos.COSName)) {
-this.patternName = (global::DripSharp.PdfCarton.Cos.COSName)(@base!);
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("pattern name in ", array), " isn't a name, ignored")));
-this.patternName = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("Unknown");
-}
-} else {
-this.components = new float[array.Size()];
-this.initComponents(array);
-this.patternName = default!;
-}
-this.colorSpace = colorSpace;
-}
+  public PDColor(global::DripSharp.PdfCarton.Cos.COSArray array,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    if (((array.Size() > 0) && (array.Get((array.Size()
+      - 1)) is global::DripSharp.PdfCarton.Cos.COSName))) {
+      this.components = new float[(array.Size() - 1)];
+      this.initComponents(array);
+      global::DripSharp.PdfCarton.Cos.COSBase @base = array.Get((array.Size() - 1));
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSName)) {
+        this.patternName = (global::DripSharp.PdfCarton.Cos.COSName)(@base!);
+      } else {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("pattern name in ",
+          array), " isn't a name, ignored")));
+        this.patternName = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("Unknown");
+      }
+    } else {
+      this.components = new float[array.Size()];
+      this.initComponents(array);
+      this.patternName = default!;
+    }
+    this.colorSpace = colorSpace;
+  }
 
-private void initComponents(global::DripSharp.PdfCarton.Cos.COSArray array) {
-for (int i = 0; (i < this.components.Length); i++) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = array.Get(i);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-this.components[i] = ((global::DripSharp.PdfCarton.Cos.COSNumber)(@base!)).FloatValue();
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("color component ", i), " in "), array), " isn't a number, ignored")));
-}
-}
-}
+  private void initComponents(global::DripSharp.PdfCarton.Cos.COSArray array) {
+    for (int i = 0; (i < this.components.Length); i++) {
+      global::DripSharp.PdfCarton.Cos.COSBase @base = array.Get(i);
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+        this.components[i] = ((global::DripSharp.PdfCarton.Cos.COSNumber)(@base!)).FloatValue();
+      } else {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("color component ",
+          i), " in "), array), " isn't a number, ignored")));
+      }
+    }
+  }
 
-public PDColor(float[] components, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-this.components = global::DripSharp.Runtime.JavaCompat.Clone(components);
-this.patternName = default!;
-this.colorSpace = colorSpace;
-if (((colorSpace != default!) && (colorSpace.GetNumberOfComponents() != components.Length))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Colorspace component count ", colorSpace.GetNumberOfComponents()), " doesn't match components length "), components.Length)));
-}
-}
+  public PDColor(float[] components,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    this.components = global::DripSharp.Runtime.JavaCompat.Clone(components);
+    this.patternName = default!;
+    this.colorSpace = colorSpace;
+    if (((colorSpace != default!) && (colorSpace.GetNumberOfComponents() != components.Length))) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Colorspace component count ",
+        colorSpace.GetNumberOfComponents()), " doesn't match components length "),
+        components.Length)));
+    }
+  }
 
-public PDColor(global::DripSharp.PdfCarton.Cos.COSName patternName, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-this.components = new float[0];
-this.patternName = patternName;
-this.colorSpace = colorSpace;
-}
+  public PDColor(global::DripSharp.PdfCarton.Cos.COSName patternName,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    this.components = new float[0];
+    this.patternName = patternName;
+    this.colorSpace = colorSpace;
+  }
 
-public PDColor(float[] components, global::DripSharp.PdfCarton.Cos.COSName patternName, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-this.components = global::DripSharp.Runtime.JavaCompat.Clone(components);
-this.patternName = patternName;
-this.colorSpace = colorSpace;
-if ((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace ucs = ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)(colorSpace!)).GetUnderlyingColorSpace();
-if (((ucs != default!) && (ucs.GetNumberOfComponents() != components.Length))) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Pattern colorspace component count ", ucs.GetNumberOfComponents()), " doesn't match components length "), components.Length)));
-}
-}
-}
+  public PDColor(float[] components, global::DripSharp.PdfCarton.Cos.COSName patternName,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+    this.components = global::DripSharp.Runtime.JavaCompat.Clone(components);
+    this.patternName = patternName;
+    this.colorSpace = colorSpace;
+    if ((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)) {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace ucs
+        = ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)(colorSpace!)).GetUnderlyingColorSpace();
+      if (((ucs != default!) && (ucs.GetNumberOfComponents() != components.Length))) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Pattern colorspace component count ",
+          ucs.GetNumberOfComponents()), " doesn't match components length "), components.Length)));
+      }
+    }
+  }
 
-public float[] GetComponents() {
-if (((this.colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern) || (this.colorSpace == default!))) {
-return global::DripSharp.Runtime.JavaCompat.Clone(this.components);
-}
-return global::DripSharp.Runtime.JavaCompat.CopyOf<float>(this.components, this.colorSpace.GetNumberOfComponents());
-}
+  public float[] GetComponents() {
+    if (((this.colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)
+      || (this.colorSpace == default!))) {
+      return global::DripSharp.Runtime.JavaCompat.Clone(this.components);
+    }
+    return global::DripSharp.Runtime.JavaCompat.CopyOf<float>(this.components,
+      this.colorSpace.GetNumberOfComponents());
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSName GetPatternName() {
-return this.patternName;
-}
+  public global::DripSharp.PdfCarton.Cos.COSName GetPatternName() {
+    return this.patternName;
+  }
 
-public bool IsPattern() {
-return (this.patternName != default!);
-}
+  public bool IsPattern() {
+    return (this.patternName != default!);
+  }
 
-public int ToRGB() {
-float[] floats = this.colorSpace.ToRGB(this.components);
-int r = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((floats[0] * 255));
-int g = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((floats[1] * 255));
-int b = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((floats[2] * 255));
-int rgb = r;
-rgb = ((rgb << unchecked((int)(8))) + g);
-rgb = ((rgb << unchecked((int)(8))) + b);
-return rgb;
-}
+  public int ToRGB() {
+    float[] floats = this.colorSpace.ToRGB(this.components);
+    int r = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((floats[0] * 255));
+    int g = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((floats[1] * 255));
+    int b = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((floats[2] * 255));
+    int rgb = r;
+    rgb = ((rgb << unchecked((int)(8))) + g);
+    rgb = ((rgb << unchecked((int)(8))) + b);
+    return rgb;
+  }
 
-public global::DripSharp.PdfCarton.Cos.COSArray ToCOSArray() {
-global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
-array.SetFloatArray(this.components);
-if ((this.patternName != default!)) {
-array.Add(this.patternName);
-}
-return array;
-}
+  public global::DripSharp.PdfCarton.Cos.COSArray ToCOSArray() {
+    global::DripSharp.PdfCarton.Cos.COSArray array = new global::DripSharp.PdfCarton.Cos.COSArray();
+    array.SetFloatArray(this.components);
+    if ((this.patternName != default!)) {
+      array.Add(this.patternName);
+    }
+    return array;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace() {
-return this.colorSpace;
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace() {
+    return this.colorSpace;
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("PDColor{components=", global::DripSharp.Runtime.JavaCompat.ArrayToString(this.components)), ", patternName="), this.patternName), ", colorSpace="), this.colorSpace), '}');
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("PDColor{components=",
+      global::DripSharp.Runtime.JavaCompat.ArrayToString(this.components)), ", patternName="),
+      this.patternName), ", colorSpace="), this.colorSpace), '}');
+  }
 }

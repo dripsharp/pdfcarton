@@ -9,23 +9,26 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public sealed class OpenMode {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("USER_PREFERENCE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode UserPreference = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("USER_PREFERENCE")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode UserPreference
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("SAME_WINDOW")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode SameWindow = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("SAME_WINDOW")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode SameWindow
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("NEW_WINDOW")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode NewWindow = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode();
+  [global::DripSharp.Runtime.JavaEnumNameAttribute("NEW_WINDOW")]
+  [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode NewWindow
+    = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.OpenMode();
 
-private OpenMode() {}
+  private OpenMode() {}
 
+  public static OpenMode[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<OpenMode>();
+  public static OpenMode valueOf(string name)
+    => global::DripSharp.Runtime.JavaCompat.EnumValueOf<OpenMode>(name);
 
-public static OpenMode[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<OpenMode>();
-public static OpenMode valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<OpenMode>(name);
-
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
 }

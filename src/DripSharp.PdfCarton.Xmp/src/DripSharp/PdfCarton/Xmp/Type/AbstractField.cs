@@ -9,51 +9,56 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public abstract class AbstractField {
-private readonly global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = null!;
+  private readonly global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = null!;
 
-private string propertyName = null!;
+  private string propertyName = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Xmp.Type.Attribute> attributes = null!;
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Xmp.Type.Attribute> attributes = null!;
 
-public AbstractField(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string propertyName) {
-this.metadata = metadata;
-this.propertyName = propertyName;
-this.attributes = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewJavaDictionary<string, global::DripSharp.PdfCarton.Xmp.Type.Attribute>();
-}
+  public AbstractField(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string propertyName) {
+    this.metadata = metadata;
+    this.propertyName = propertyName;
+    this.attributes = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewJavaDictionary<string,
+      global::DripSharp.PdfCarton.Xmp.Type.Attribute>();
+  }
 
-public string GetPropertyName() {
-return this.propertyName;
-}
+  public string GetPropertyName() {
+    return this.propertyName;
+  }
 
-public void SetPropertyName(string value) {
-this.propertyName = value;
-}
+  public void SetPropertyName(string value) {
+    this.propertyName = value;
+  }
 
-public void SetAttribute(global::DripSharp.PdfCarton.Xmp.Type.Attribute value) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapPut(this.attributes, value.GetName(), value);
-}
+  public void SetAttribute(global::DripSharp.PdfCarton.Xmp.Type.Attribute value) {
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapPut(this.attributes, value.GetName(),
+      value);
+  }
 
-public bool ContainsAttribute(string qualifiedName) {
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapContainsKey(this.attributes, qualifiedName);
-}
+  public bool ContainsAttribute(string qualifiedName) {
+    return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapContainsKey(this.attributes,
+      qualifiedName);
+  }
 
-public global::DripSharp.PdfCarton.Xmp.Type.Attribute GetAttribute(string qualifiedName) {
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapGet(this.attributes, qualifiedName);
-}
+  public global::DripSharp.PdfCarton.Xmp.Type.Attribute GetAttribute(string qualifiedName) {
+    return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapGet(this.attributes,
+      qualifiedName);
+  }
 
-public global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.Attribute> GetAllAttributes() {
-return new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.Attribute>(this.attributes.Values);
-}
+  public global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.Attribute> GetAllAttributes() {
+    return new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Xmp.Type.Attribute>(this.attributes.Values);
+  }
 
-public void RemoveAttribute(string qualifiedName) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapRemove(this.attributes, qualifiedName);
-}
+  public void RemoveAttribute(string qualifiedName) {
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapRemove(this.attributes, qualifiedName);
+  }
 
-public global::DripSharp.PdfCarton.Xmp.XMPMetadata GetMetadata() {
-return this.metadata;
-}
+  public global::DripSharp.PdfCarton.Xmp.XMPMetadata GetMetadata() {
+    return this.metadata;
+  }
 
-public abstract string GetNamespace();
+  public abstract string GetNamespace();
 
-public abstract string GetPrefix();
+  public abstract string GetPrefix();
 }

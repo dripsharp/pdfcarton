@@ -9,54 +9,59 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class KerningTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public const string Tag = "kern";
+  public const string Tag = "kern";
 
-private global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable[] subtables = null!;
+  private global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable[] subtables = null!;
 
-internal KerningTable() : base() {
+  internal KerningTable() : base() {
 
-}
+  }
 
-internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
-int version = data.ReadUnsignedShort();
-if ((version != 0)) {
-version = ((version << unchecked((int)(16))) | data.ReadUnsignedShort());
-}
-int numSubtables = 0;
-if ((version == 0)) {
-numSubtables = data.ReadUnsignedShort();
-} else {
-if ((version == 1)) {
-numSubtables = (int)(data.ReadUnsignedInt());
-} else {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.KerningTable.LOG, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Skipped kerning table due to an unsupported kerning table version: ", version)));
-}
-}
-if ((numSubtables > 0)) {
-this.subtables = new global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable[numSubtables];
-for (int i = 0; (i < numSubtables); ++i) {
-global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable subtable = new global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable();
-subtable.read(data, version);
-this.subtables[i] = subtable;
-}
-}
-base.Initialized = true;
-}
+  internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
+    int version = data.ReadUnsignedShort();
+    if ((version != 0)) {
+      version = ((version << unchecked((int)(16))) | data.ReadUnsignedShort());
+    }
+    int numSubtables = 0;
+    if ((version == 0)) {
+      numSubtables = data.ReadUnsignedShort();
+    } else {
+      if ((version == 1)) {
+        numSubtables = (int)(data.ReadUnsignedInt());
+      } else {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.KerningTable.LOG,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Skipped kerning table due to an unsupported kerning table version: ",
+          version)));
+      }
+    }
+    if ((numSubtables > 0)) {
+      this.subtables = new global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable[numSubtables];
+      for (int i = 0; (i < numSubtables); ++i) {
+        global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable subtable
+          = new global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable();
+        subtable.read(data, version);
+        this.subtables[i] = subtable;
+      }
+    }
+    base.Initialized = true;
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable GetHorizontalKerningSubtable() {
-return this.GetHorizontalKerningSubtable(false);
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable GetHorizontalKerningSubtable() {
+    return this.GetHorizontalKerningSubtable(false);
+  }
 
-public virtual global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable GetHorizontalKerningSubtable(bool cross) {
-if ((this.subtables != default!)) {
-foreach (global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable s in this.subtables) {
-if (s.IsHorizontalKerning(cross)) {
-return s;
-}
-}
-}
-return default!;
-}
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable GetHorizontalKerningSubtable(bool cross) {
+    if ((this.subtables != default!)) {
+      foreach (global::DripSharp.PdfCarton.Fonts.Ttf.KerningSubtable s in this.subtables) {
+        if (s.IsHorizontalKerning(cross)) {
+          return s;
+        }
+      }
+    }
+    return default!;
+  }
 }

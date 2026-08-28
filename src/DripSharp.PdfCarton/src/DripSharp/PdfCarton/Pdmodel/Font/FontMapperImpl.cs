@@ -9,412 +9,543 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 internal sealed class FontMapperImpl : global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontCache fontCache = new global::DripSharp.PdfCarton.Pdmodel.Font.FontCache();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontCache fontCache
+    = new global::DripSharp.PdfCarton.Pdmodel.Font.FontCache();
 
-private global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider fontProvider = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider fontProvider = null!;
 
-private global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo> fontInfoByName = null!;
+  private global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo> fontInfoByName = null!;
 
-private readonly global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont lastResortFont = null!;
+  private readonly global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont lastResortFont = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<string, global::System.Collections.Generic.IList<string>> substitutes = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, global::System.Collections.Generic.IList<string>>();
+  private readonly global::System.Collections.Generic.IDictionary<string,
+    global::System.Collections.Generic.IList<string>> substitutes
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+    global::System.Collections.Generic.IList<string>>();
 
-internal FontMapperImpl() {
-this.addSubstitutes("Courier", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("CourierNew", "CourierNewPSMT", "LiberationMono", "NimbusMonL-Regu")));
-this.addSubstitutes("Courier-Bold", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("CourierNewPS-BoldMT", "CourierNew-Bold", "LiberationMono-Bold", "NimbusMonL-Bold")));
-this.addSubstitutes("Courier-Oblique", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("CourierNewPS-ItalicMT", "CourierNew-Italic", "LiberationMono-Italic", "NimbusMonL-ReguObli")));
-this.addSubstitutes("Courier-BoldOblique", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("CourierNewPS-BoldItalicMT", "CourierNew-BoldItalic", "LiberationMono-BoldItalic", "NimbusMonL-BoldObli")));
-this.addSubstitutes("Helvetica", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("ArialMT", "Arial", "LiberationSans", "NimbusSanL-Regu")));
-this.addSubstitutes("Helvetica-Bold", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("Arial-BoldMT", "Arial-Bold", "LiberationSans-Bold", "NimbusSanL-Bold")));
-this.addSubstitutes("Helvetica-Oblique", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("Arial-ItalicMT", "Arial-Italic", "Helvetica-Italic", "LiberationSans-Italic", "NimbusSanL-ReguItal")));
-this.addSubstitutes("Helvetica-BoldOblique", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("Arial-BoldItalicMT", "Helvetica-BoldItalic", "LiberationSans-BoldItalic", "NimbusSanL-BoldItal")));
-this.addSubstitutes("Times-Roman", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("TimesNewRomanPSMT", "TimesNewRoman", "TimesNewRomanPS", "LiberationSerif", "NimbusRomNo9L-Regu")));
-this.addSubstitutes("Times-Bold", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("TimesNewRomanPS-BoldMT", "TimesNewRomanPS-Bold", "TimesNewRoman-Bold", "LiberationSerif-Bold", "NimbusRomNo9L-Medi")));
-this.addSubstitutes("Times-Italic", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("TimesNewRomanPS-ItalicMT", "TimesNewRomanPS-Italic", "TimesNewRoman-Italic", "LiberationSerif-Italic", "NimbusRomNo9L-ReguItal")));
-this.addSubstitutes("Times-BoldItalic", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("TimesNewRomanPS-BoldItalicMT", "TimesNewRomanPS-BoldItalic", "TimesNewRoman-BoldItalic", "LiberationSerif-BoldItalic", "NimbusRomNo9L-MediItal")));
-this.addSubstitutes("Symbol", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("Symbol", "SymbolMT", "StandardSymL")));
-this.addSubstitutes("ZapfDingbats", new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("ZapfDingbatsITCbyBT-Regular", "ZapfDingbatsITC", "Dingbats", "MS-Gothic", "DejaVuSans")));
-foreach (string baseName in global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.GetNames()) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.getSubstitutes(baseName))) {
-global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName mappedName = global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.GetMappedFontName(baseName);
-this.addSubstitutes(baseName, new global::System.Collections.Generic.List<string>(this.getSubstitutes(mappedName.GetName())));
-}
-}
-try {
-string resourceName = "/org/apache/pdfbox/resources/ttf/LiberationSans-Regular.ttf";
-global::System.IO.Stream resourceAsStream = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper), resourceName);
-if ((resourceAsStream == default!)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("resource '", resourceName), "' not found"));
-}
-global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer randomAccessReadBuffer = global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(resourceAsStream);
-global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser ttfParser = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser();
-this.lastResortFont = ttfParser.Parse(randomAccessReadBuffer);
-} catch (global::System.IO.IOException e) {
-throw new global::System.Exception(null, e);
-}
-}
+  internal FontMapperImpl() {
+    this.addSubstitutes("Courier",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("CourierNew",
+      "CourierNewPSMT", "LiberationMono", "NimbusMonL-Regu")));
+    this.addSubstitutes("Courier-Bold",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("CourierNewPS-BoldMT",
+      "CourierNew-Bold", "LiberationMono-Bold", "NimbusMonL-Bold")));
+    this.addSubstitutes("Courier-Oblique",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("CourierNewPS-ItalicMT",
+      "CourierNew-Italic", "LiberationMono-Italic", "NimbusMonL-ReguObli")));
+    this.addSubstitutes("Courier-BoldOblique",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("CourierNewPS-BoldItalicMT",
+      "CourierNew-BoldItalic", "LiberationMono-BoldItalic", "NimbusMonL-BoldObli")));
+    this.addSubstitutes("Helvetica",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("ArialMT",
+      "Arial", "LiberationSans", "NimbusSanL-Regu")));
+    this.addSubstitutes("Helvetica-Bold",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("Arial-BoldMT",
+      "Arial-Bold", "LiberationSans-Bold", "NimbusSanL-Bold")));
+    this.addSubstitutes("Helvetica-Oblique",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("Arial-ItalicMT",
+      "Arial-Italic", "Helvetica-Italic", "LiberationSans-Italic", "NimbusSanL-ReguItal")));
+    this.addSubstitutes("Helvetica-BoldOblique",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("Arial-BoldItalicMT",
+      "Helvetica-BoldItalic", "LiberationSans-BoldItalic", "NimbusSanL-BoldItal")));
+    this.addSubstitutes("Times-Roman",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("TimesNewRomanPSMT",
+      "TimesNewRoman", "TimesNewRomanPS", "LiberationSerif", "NimbusRomNo9L-Regu")));
+    this.addSubstitutes("Times-Bold",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("TimesNewRomanPS-BoldMT",
+      "TimesNewRomanPS-Bold", "TimesNewRoman-Bold", "LiberationSerif-Bold", "NimbusRomNo9L-Medi")));
+    this.addSubstitutes("Times-Italic",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("TimesNewRomanPS-ItalicMT",
+      "TimesNewRomanPS-Italic", "TimesNewRoman-Italic", "LiberationSerif-Italic",
+      "NimbusRomNo9L-ReguItal")));
+    this.addSubstitutes("Times-BoldItalic",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("TimesNewRomanPS-BoldItalicMT",
+      "TimesNewRomanPS-BoldItalic", "TimesNewRoman-BoldItalic", "LiberationSerif-BoldItalic",
+      "NimbusRomNo9L-MediItal")));
+    this.addSubstitutes("Symbol",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("Symbol",
+      "SymbolMT", "StandardSymL")));
+    this.addSubstitutes("ZapfDingbats",
+      new global::System.Collections.Generic.List<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("ZapfDingbatsITCbyBT-Regular",
+      "ZapfDingbatsITC", "Dingbats", "MS-Gothic", "DejaVuSans")));
+    foreach (string baseName in global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.GetNames()) {
+      if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.getSubstitutes(baseName))) {
+        global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName mappedName
+          = global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.GetMappedFontName(baseName);
+        this.addSubstitutes(baseName,
+          new global::System.Collections.Generic.List<string>(this.getSubstitutes(mappedName.GetName())));
+      }
+    }
+    try {
+      string resourceName = "/org/apache/pdfbox/resources/ttf/LiberationSans-Regular.ttf";
+      global::System.IO.Stream resourceAsStream
+        = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper),
+        resourceName);
+      if ((resourceAsStream == default!)) {
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("resource '",
+          resourceName), "' not found"));
+      }
+      global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer randomAccessReadBuffer
+        = global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(resourceAsStream);
+      global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser ttfParser
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser();
+      this.lastResortFont = ttfParser.Parse(randomAccessReadBuffer);
+    } catch (global::System.IO.IOException e) {
+      throw new global::System.Exception(null, e);
+    }
+  }
 
-internal class DefaultFontProvider {
-internal static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider INSTANCE = new global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.fontCache);
-}
+  internal class DefaultFontProvider {
+    internal static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider INSTANCE
+      = new global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.fontCache);
+  }
 
-public void SetProvider(global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider fontProvider) {
-this.fontInfoByName = this.createFontInfoByName(global::DripSharp.Runtime.JavaCompat.ToListValues<global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo>(fontProvider.GetFontInfo()));
-this.fontProvider = fontProvider;
-}
+  public void SetProvider(global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider fontProvider) {
+    this.fontInfoByName
+      = this.createFontInfoByName(global::DripSharp.Runtime.JavaCompat.ToListValues<global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo>(fontProvider.GetFontInfo()));
+    this.fontProvider = fontProvider;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider GetProvider() {
-if ((this.fontProvider == default!)) {
-this.SetProvider(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.DefaultFontProvider.INSTANCE);
-}
-return this.fontProvider;
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider GetProvider() {
+    if ((this.fontProvider == default!)) {
+      this.SetProvider(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.DefaultFontProvider.INSTANCE);
+    }
+    return this.fontProvider;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Font.FontCache GetFontCache() {
-return global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.fontCache;
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Font.FontCache GetFontCache() {
+    return global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.fontCache;
+  }
 
-private global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo> createFontInfoByName(global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo> fontInfoList) {
-global::System.Collections.Generic.IDictionary<string, global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo> map = new global::DripSharp.Runtime.JavaLinkedHashMap<string, global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo>();
-foreach (global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info in fontInfoList) {
-foreach (string name in this.getPostScriptNames(info.GetPostScriptName())) {
-global::DripSharp.Runtime.JavaCompat.MapPut(map, name.ToLowerInvariant(), info);
-}
-}
-return map;
-}
+  private global::System.Collections.Generic.IDictionary<string,
+    global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo> createFontInfoByName(global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo> fontInfoList) {
+    global::System.Collections.Generic.IDictionary<string,
+      global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo> map
+      = new global::DripSharp.Runtime.JavaLinkedHashMap<string,
+      global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo>();
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info in fontInfoList) {
+      foreach (string name in this.getPostScriptNames(info.GetPostScriptName())) {
+        global::DripSharp.Runtime.JavaCompat.MapPut(map, name.ToLowerInvariant(), info);
+      }
+    }
+    return map;
+  }
 
-private global::System.Collections.Generic.ISet<string> getPostScriptNames(string postScriptName) {
-global::System.Collections.Generic.ISet<string> names = new global::System.Collections.Generic.HashSet<string>();
-names.Add(postScriptName);
-names.Add(global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(postScriptName, "-", ""));
-return names;
-}
+  private global::System.Collections.Generic.ISet<string> getPostScriptNames(string postScriptName) {
+    global::System.Collections.Generic.ISet<string> names
+      = new global::System.Collections.Generic.HashSet<string>();
+    names.Add(postScriptName);
+    names.Add(global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(postScriptName, "-", ""));
+    return names;
+  }
 
-public void AddSubstitute(string match, string replace) {
-string lowerCaseMatch = match.ToLowerInvariant();
-global::DripSharp.Runtime.JavaCompat.Add(global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.substitutes, lowerCaseMatch, (key) => new global::System.Collections.Generic.List<string>()), replace);
-}
+  public void AddSubstitute(string match, string replace) {
+    string lowerCaseMatch = match.ToLowerInvariant();
+    global::DripSharp.Runtime.JavaCompat.Add(global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.substitutes,
+      lowerCaseMatch, (key) => new global::System.Collections.Generic.List<string>()), replace);
+  }
 
-private void addSubstitutes(string match, global::System.Collections.Generic.IList<string> replacements) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.substitutes, match.ToLowerInvariant(), replacements);
-}
+  private void addSubstitutes(string match,
+    global::System.Collections.Generic.IList<string> replacements) {
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.substitutes, match.ToLowerInvariant(),
+      replacements);
+  }
 
-private global::System.Collections.Generic.IList<string> getSubstitutes(string postScriptName) {
-return global::DripSharp.Runtime.JavaCompat.MapGetOrDefault(this.substitutes, global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(postScriptName, " ", "").ToLowerInvariant(), global::System.Array.Empty<string>());
-}
+  private global::System.Collections.Generic.IList<string> getSubstitutes(string postScriptName) {
+    return global::DripSharp.Runtime.JavaCompat.MapGetOrDefault(this.substitutes,
+      global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(postScriptName, " ",
+      "").ToLowerInvariant(), global::System.Array.Empty<string>());
+  }
 
-private string getFallbackFontName(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
-string fontName;
-if ((fontDescriptor != default!)) {
-bool isBold = false;
-string name = fontDescriptor.GetFontName();
-if ((name != default!)) {
-string lower = fontDescriptor.GetFontName().ToLowerInvariant();
-isBold = ((global::DripSharp.Runtime.JavaCompat.StringContains(lower, "bold") || global::DripSharp.Runtime.JavaCompat.StringContains(lower, "black")) || global::DripSharp.Runtime.JavaCompat.StringContains(lower, "heavy"));
-}
-if (fontDescriptor.IsFixedPitch()) {
-fontName = "Courier";
-if ((isBold && fontDescriptor.IsItalic())) {
-fontName += "-BoldOblique";
-} else {
-if (isBold) {
-fontName += "-Bold";
-} else {
-if (fontDescriptor.IsItalic()) {
-fontName += "-Oblique";
-}
-}
-}
-} else {
-if (fontDescriptor.IsSerif()) {
-fontName = "Times";
-if ((isBold && fontDescriptor.IsItalic())) {
-fontName += "-BoldItalic";
-} else {
-if (isBold) {
-fontName += "-Bold";
-} else {
-if (fontDescriptor.IsItalic()) {
-fontName += "-Italic";
-} else {
-fontName += "-Roman";
-}
-}
-}
-} else {
-fontName = "Helvetica";
-if ((isBold && fontDescriptor.IsItalic())) {
-fontName += "-BoldOblique";
-} else {
-if (isBold) {
-fontName += "-Bold";
-} else {
-if (fontDescriptor.IsItalic()) {
-fontName += "-Oblique";
-}
-}
-}
-}
-}
-} else {
-fontName = "Times-Roman";
-}
-return fontName;
-}
+  private string getFallbackFontName(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
+    string fontName;
+    if ((fontDescriptor != default!)) {
+      bool isBold = false;
+      string name = fontDescriptor.GetFontName();
+      if ((name != default!)) {
+        string lower = fontDescriptor.GetFontName().ToLowerInvariant();
+        isBold = ((global::DripSharp.Runtime.JavaCompat.StringContains(lower, "bold")
+          || global::DripSharp.Runtime.JavaCompat.StringContains(lower, "black"))
+          || global::DripSharp.Runtime.JavaCompat.StringContains(lower, "heavy"));
+      }
+      if (fontDescriptor.IsFixedPitch()) {
+        fontName = "Courier";
+        if ((isBold && fontDescriptor.IsItalic())) {
+          fontName += "-BoldOblique";
+        } else {
+          if (isBold) {
+            fontName += "-Bold";
+          } else {
+            if (fontDescriptor.IsItalic()) {
+              fontName += "-Oblique";
+            }
+          }
+        }
+      } else {
+        if (fontDescriptor.IsSerif()) {
+          fontName = "Times";
+          if ((isBold && fontDescriptor.IsItalic())) {
+            fontName += "-BoldItalic";
+          } else {
+            if (isBold) {
+              fontName += "-Bold";
+            } else {
+              if (fontDescriptor.IsItalic()) {
+                fontName += "-Italic";
+              } else {
+                fontName += "-Roman";
+              }
+            }
+          }
+        } else {
+          fontName = "Helvetica";
+          if ((isBold && fontDescriptor.IsItalic())) {
+            fontName += "-BoldOblique";
+          } else {
+            if (isBold) {
+              fontName += "-Bold";
+            } else {
+              if (fontDescriptor.IsItalic()) {
+                fontName += "-Oblique";
+              }
+            }
+          }
+        }
+      }
+    } else {
+      fontName = "Times-Roman";
+    }
+    return fontName;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont> GetTrueTypeFont(string baseFont, global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
-global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Ttf, baseFont)!);
-if ((ttf != default!)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont>(ttf, false);
-} else {
-string fontName = this.getFallbackFontName(fontDescriptor);
-ttf = (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Ttf, fontName)!);
-if ((ttf == default!)) {
-ttf = this.lastResortFont;
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont>(ttf, true);
-}
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont> GetTrueTypeFont(string baseFont,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
+      = (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Ttf,
+      baseFont)!);
+    if ((ttf != default!)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont>(ttf,
+        false);
+    } else {
+      string fontName = this.getFallbackFontName(fontDescriptor);
+      ttf
+        = (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Ttf,
+        fontName)!);
+      if ((ttf == default!)) {
+        ttf = this.lastResortFont;
+      }
+      return new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont>(ttf,
+        true);
+    }
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.FontBoxFont> GetFontBoxFont(string baseFont, global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
-global::DripSharp.PdfCarton.Fonts.FontBoxFont font = this.findFontBoxFont(baseFont);
-if ((font != default!)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.FontBoxFont>(font, false);
-} else {
-string fallbackName = this.getFallbackFontName(fontDescriptor);
-font = this.findFontBoxFont(fallbackName);
-if ((font == default!)) {
-font = this.lastResortFont;
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.FontBoxFont>(font, true);
-}
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.FontBoxFont> GetFontBoxFont(string baseFont,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
+    global::DripSharp.PdfCarton.Fonts.FontBoxFont font = this.findFontBoxFont(baseFont);
+    if ((font != default!)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.FontBoxFont>(font,
+        false);
+    } else {
+      string fallbackName = this.getFallbackFontName(fontDescriptor);
+      font = this.findFontBoxFont(fallbackName);
+      if ((font == default!)) {
+        font = this.lastResortFont;
+      }
+      return new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.FontBoxFont>(font,
+        true);
+    }
+  }
 
-private global::DripSharp.PdfCarton.Fonts.FontBoxFont findFontBoxFont(string postScriptName) {
-global::DripSharp.PdfCarton.Fonts.Type1.Type1Font t1 = (global::DripSharp.PdfCarton.Fonts.Type1.Type1Font)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Pfb, postScriptName)!);
-if ((t1 != default!)) {
-return t1;
-}
-global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Ttf, postScriptName)!);
-if ((ttf != default!)) {
-return ttf;
-}
-global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf = (global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Otf, postScriptName)!);
-if ((otf != default!)) {
-return otf;
-}
-return default!;
-}
+  private global::DripSharp.PdfCarton.Fonts.FontBoxFont findFontBoxFont(string postScriptName) {
+    global::DripSharp.PdfCarton.Fonts.Type1.Type1Font t1
+      = (global::DripSharp.PdfCarton.Fonts.Type1.Type1Font)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Pfb,
+      postScriptName)!);
+    if ((t1 != default!)) {
+      return t1;
+    }
+    global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
+      = (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Ttf,
+      postScriptName)!);
+    if ((ttf != default!)) {
+      return ttf;
+    }
+    global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf
+      = (global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Otf,
+      postScriptName)!);
+    if ((otf != default!)) {
+      return otf;
+    }
+    return default!;
+  }
 
-private global::DripSharp.PdfCarton.Fonts.FontBoxFont findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat format, string postScriptName) {
-if ((postScriptName == default!)) {
-return default!;
-}
-this.GetProvider();
-global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info = this.getFont(format, postScriptName);
-if ((info != default!)) {
-return info.GetFont();
-}
-info = this.getFont(format, global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(postScriptName, "-", ""));
-if ((info != default!)) {
-return info.GetFont();
-}
-foreach (string substituteName in this.getSubstitutes(postScriptName)) {
-info = this.getFont(format, substituteName);
-if ((info != default!)) {
-return info.GetFont();
-}
-}
-info = this.getFont(format, global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(postScriptName, ",", "-"));
-if ((info != default!)) {
-return info.GetFont();
-}
-if (global::DripSharp.Runtime.JavaCompat.StringContains(postScriptName, ",")) {
-postScriptName = global::DripSharp.Runtime.JavaCompat.StringSubstring(postScriptName, 0, postScriptName.IndexOf(",", global::System.StringComparison.Ordinal));
-info = this.getFont(format, postScriptName);
-if ((info != default!)) {
-return info.GetFont();
-}
-}
-info = this.getFont(format, global::DripSharp.Runtime.JavaCompat.Concat(postScriptName, "-Regular"));
-if ((info != default!)) {
-return info.GetFont();
-}
-return default!;
-}
+  private global::DripSharp.PdfCarton.Fonts.FontBoxFont findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat format,
+    string postScriptName) {
+    if ((postScriptName == default!)) {
+      return default!;
+    }
+    this.GetProvider();
+    global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info = this.getFont(format, postScriptName);
+    if ((info != default!)) {
+      return info.GetFont();
+    }
+    info = this.getFont(format, global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(postScriptName,
+      "-", ""));
+    if ((info != default!)) {
+      return info.GetFont();
+    }
+    foreach (string substituteName in this.getSubstitutes(postScriptName)) {
+      info = this.getFont(format, substituteName);
+      if ((info != default!)) {
+        return info.GetFont();
+      }
+    }
+    info = this.getFont(format, global::DripSharp.Runtime.JavaCompat.ReplaceOrdinal(postScriptName,
+      ",", "-"));
+    if ((info != default!)) {
+      return info.GetFont();
+    }
+    if (global::DripSharp.Runtime.JavaCompat.StringContains(postScriptName, ",")) {
+      postScriptName = global::DripSharp.Runtime.JavaCompat.StringSubstring(postScriptName, 0,
+        postScriptName.IndexOf(",", global::System.StringComparison.Ordinal));
+      info = this.getFont(format, postScriptName);
+      if ((info != default!)) {
+        return info.GetFont();
+      }
+    }
+    info = this.getFont(format, global::DripSharp.Runtime.JavaCompat.Concat(postScriptName,
+      "-Regular"));
+    if ((info != default!)) {
+      return info.GetFont();
+    }
+    return default!;
+  }
 
-private global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo getFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat format, string postScriptName) {
-int index = global::DripSharp.Runtime.JavaCompat.StringIndexOf(postScriptName, (int)('+'));
-if ((index > -1)) {
-postScriptName = postScriptName.Substring((index + 1));
-}
-global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info = global::DripSharp.Runtime.JavaCompat.MapGet(this.fontInfoByName, postScriptName.ToLowerInvariant());
-if (((info != default!) && (info.GetFormat() == format))) {
-if (global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.JavaStringFormat("getFont('%s','%s') returns %s", format, postScriptName, info)));
-}
-return info;
-}
-return default!;
-}
+  private global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo getFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat format,
+    string postScriptName) {
+    int index = global::DripSharp.Runtime.JavaCompat.StringIndexOf(postScriptName, (int)('+'));
+    if ((index > -1)) {
+      postScriptName = postScriptName.Substring((index + 1));
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info
+      = global::DripSharp.Runtime.JavaCompat.MapGet(this.fontInfoByName,
+      postScriptName.ToLowerInvariant());
+    if (((info != default!) && (info.GetFormat() == format))) {
+      if (global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.JavaStringFormat("getFont('%s','%s') returns %s",
+          format, postScriptName, info)));
+      }
+      return info;
+    }
+    return default!;
+  }
 
-public global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping GetCIDFont(string baseFont, global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor, global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo cidSystemInfo) {
-global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf1 = (global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Otf, baseFont)!);
-if ((otf1 != default!)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping(otf1, (global::DripSharp.PdfCarton.Fonts.FontBoxFont)default!, false);
-}
-global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Ttf, baseFont)!);
-if ((ttf != default!)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)default!, ttf, false);
-}
-if (((cidSystemInfo != default!) && (fontDescriptor != default!))) {
-string collection = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(cidSystemInfo.GetRegistry(), "-"), cidSystemInfo.GetOrdering());
-if ((((global::DripSharp.Runtime.JavaCompat.Equals(collection, "Adobe-GB1") || global::DripSharp.Runtime.JavaCompat.Equals(collection, "Adobe-CNS1")) || global::DripSharp.Runtime.JavaCompat.Equals(collection, "Adobe-Japan1")) || global::DripSharp.Runtime.JavaCompat.Equals(collection, "Adobe-Korea1"))) {
-global::DripSharp.Runtime.JavaPriorityQueue<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch> queue = this.getFontMatches(fontDescriptor, cidSystemInfo);
-global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch bestMatch = queue.Poll();
-if ((bestMatch != default!)) {
-if (global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Best match for '", baseFont), "': "), bestMatch.info)));
-}
-global::DripSharp.PdfCarton.Fonts.FontBoxFont font = bestMatch.info.GetFont();
-if ((font is global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(font!), (global::DripSharp.PdfCarton.Fonts.FontBoxFont)default!, true);
-} else {
-if ((font != default!)) {
-return new global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)default!, font, true);
-}
-}
-}
-}
-}
-return new global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)default!, this.lastResortFont, true);
-}
+  public global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping GetCIDFont(string baseFont,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo cidSystemInfo) {
+    global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont otf1
+      = (global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Otf,
+      baseFont)!);
+    if ((otf1 != default!)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping(otf1,
+        (global::DripSharp.PdfCarton.Fonts.FontBoxFont)default!, false);
+    }
+    global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
+      = (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont)(this.findFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Ttf,
+      baseFont)!);
+    if ((ttf != default!)) {
+      return new global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)default!,
+        ttf, false);
+    }
+    if (((cidSystemInfo != default!) && (fontDescriptor != default!))) {
+      string collection
+        = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(cidSystemInfo.GetRegistry(),
+        "-"), cidSystemInfo.GetOrdering());
+      if ((((global::DripSharp.Runtime.JavaCompat.Equals(collection, "Adobe-GB1")
+        || global::DripSharp.Runtime.JavaCompat.Equals(collection, "Adobe-CNS1"))
+        || global::DripSharp.Runtime.JavaCompat.Equals(collection, "Adobe-Japan1"))
+        || global::DripSharp.Runtime.JavaCompat.Equals(collection, "Adobe-Korea1"))) {
+        global::DripSharp.Runtime.JavaPriorityQueue<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch> queue
+          = this.getFontMatches(fontDescriptor, cidSystemInfo);
+        global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch bestMatch = queue.Poll();
+        if ((bestMatch != default!)) {
+          if (global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Best match for '",
+              baseFont), "': "), bestMatch.info)));
+          }
+          global::DripSharp.PdfCarton.Fonts.FontBoxFont font = bestMatch.info.GetFont();
+          if ((font is global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)) {
+            return new global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(font!),
+              (global::DripSharp.PdfCarton.Fonts.FontBoxFont)default!, true);
+          } else {
+            if ((font != default!)) {
+              return new global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)default!,
+                font, true);
+            }
+          }
+        }
+      }
+    }
+    return new global::DripSharp.PdfCarton.Pdmodel.Font.CIDFontMapping((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)default!,
+      this.lastResortFont, true);
+  }
 
-private global::DripSharp.Runtime.JavaPriorityQueue<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch> getFontMatches(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor, global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo cidSystemInfo) {
-this.GetProvider();
-global::DripSharp.Runtime.JavaPriorityQueue<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch> queue = new global::DripSharp.Runtime.JavaPriorityQueue<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch>(20);
-foreach (global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info in this.fontInfoByName.Values) {
-if (((cidSystemInfo != default!) && !(this.isCharSetMatch(cidSystemInfo, info)))) {
-continue;
-}
-global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch match = new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch(info);
-if (((fontDescriptor.GetPanose() != default!) && (info.GetPanose() != default!))) {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDPanoseClassification panose = fontDescriptor.GetPanose().GetPanose();
-if ((panose.GetFamilyKind() == info.GetPanose().GetFamilyKind())) {
-if ((((panose.GetFamilyKind() == 0) && (global::DripSharp.Runtime.JavaCompat.StringContains(info.GetPostScriptName().ToLowerInvariant(), "barcode") || global::DripSharp.Runtime.JavaCompat.StringStartsWith(info.GetPostScriptName(), "Code"))) && !(this.probablyBarcodeFont(fontDescriptor)))) {
-continue;
-}
-if ((panose.GetSerifStyle() == info.GetPanose().GetSerifStyle())) {
-match.score += 2;
-} else {
-if (((((panose.GetSerifStyle() >= 2) && (panose.GetSerifStyle() <= 5)) && (info.GetPanose().GetSerifStyle() >= 2)) && (info.GetPanose().GetSerifStyle() <= 5))) {
-match.score += 1;
-} else {
-if (((((panose.GetSerifStyle() >= 11) && (panose.GetSerifStyle() <= 13)) && (info.GetPanose().GetSerifStyle() >= 11)) && (info.GetPanose().GetSerifStyle() <= 13))) {
-match.score += 1;
-} else {
-if (((panose.GetSerifStyle() != 0) && (info.GetPanose().GetSerifStyle() != 0))) {
-match.score -= 1;
-}
-}
-}
-}
-int weight = info.GetPanose().GetWeight();
-int weightClass = info.getWeightClassAsPanose();
-if ((global::System.Math.Abs((weight - weightClass)) > 2)) {
-weight = weightClass;
-}
-if ((panose.GetWeight() == weight)) {
-match.score += 2;
-} else {
-if (((panose.GetWeight() > 1) && (weight > 1))) {
-float dist__631_31 = global::System.Math.Abs((panose.GetWeight() - weight));
-match.score += (1 - (dist__631_31 * 0.5D));
-}
-}
-}
-} else {
-if (((fontDescriptor.GetFontWeight() > 0) && (info.GetWeightClass() > 0))) {
-float dist__642_23 = global::System.Math.Abs((fontDescriptor.GetFontWeight() - info.GetWeightClass()));
-match.score += (1 - (((float)(dist__642_23) / 100) * 0.5D));
-}
-}
-queue.Add(match);
-}
-return queue;
-}
+  private global::DripSharp.Runtime.JavaPriorityQueue<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch> getFontMatches(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo cidSystemInfo) {
+    this.GetProvider();
+    global::DripSharp.Runtime.JavaPriorityQueue<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch> queue
+      = new global::DripSharp.Runtime.JavaPriorityQueue<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch>(20);
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info in this.fontInfoByName.Values) {
+      if (((cidSystemInfo != default!) && !(this.isCharSetMatch(cidSystemInfo, info)))) {
+        continue;
+      }
+      global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch match
+        = new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch(info);
+      if (((fontDescriptor.GetPanose() != default!) && (info.GetPanose() != default!))) {
+        global::DripSharp.PdfCarton.Pdmodel.Font.PDPanoseClassification panose
+          = fontDescriptor.GetPanose().GetPanose();
+        if ((panose.GetFamilyKind() == info.GetPanose().GetFamilyKind())) {
+          if ((((panose.GetFamilyKind() == 0)
+            && (global::DripSharp.Runtime.JavaCompat.StringContains(info.GetPostScriptName().ToLowerInvariant(),
+            "barcode")
+            || global::DripSharp.Runtime.JavaCompat.StringStartsWith(info.GetPostScriptName(),
+            "Code"))) && !(this.probablyBarcodeFont(fontDescriptor)))) {
+            continue;
+          }
+          if ((panose.GetSerifStyle() == info.GetPanose().GetSerifStyle())) {
+            match.score += 2;
+          } else {
+            if (((((panose.GetSerifStyle() >= 2) && (panose.GetSerifStyle() <= 5))
+              && (info.GetPanose().GetSerifStyle() >= 2)) && (info.GetPanose().GetSerifStyle()
+              <= 5))) {
+              match.score += 1;
+            } else {
+              if (((((panose.GetSerifStyle() >= 11) && (panose.GetSerifStyle() <= 13))
+                && (info.GetPanose().GetSerifStyle() >= 11)) && (info.GetPanose().GetSerifStyle()
+                <= 13))) {
+                match.score += 1;
+              } else {
+                if (((panose.GetSerifStyle() != 0) && (info.GetPanose().GetSerifStyle() != 0))) {
+                  match.score -= 1;
+                }
+              }
+            }
+          }
+          int weight = info.GetPanose().GetWeight();
+          int weightClass = info.getWeightClassAsPanose();
+          if ((global::System.Math.Abs((weight - weightClass)) > 2)) {
+            weight = weightClass;
+          }
+          if ((panose.GetWeight() == weight)) {
+            match.score += 2;
+          } else {
+            if (((panose.GetWeight() > 1) && (weight > 1))) {
+              float dist__631_31 = global::System.Math.Abs((panose.GetWeight() - weight));
+              match.score += (1 - (dist__631_31 * 0.5D));
+            }
+          }
+        }
+      } else {
+        if (((fontDescriptor.GetFontWeight() > 0) && (info.GetWeightClass() > 0))) {
+          float dist__642_23 = global::System.Math.Abs((fontDescriptor.GetFontWeight()
+            - info.GetWeightClass()));
+          match.score += (1 - (((float)dist__642_23 / 100) * 0.5D));
+        }
+      }
+      queue.Add(match);
+    }
+    return queue;
+  }
 
-private bool probablyBarcodeFont(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
-string ff = fontDescriptor.GetFontFamily();
-if ((ff == default!)) {
-ff = "";
-}
-string fn = fontDescriptor.GetFontName();
-if ((fn == default!)) {
-fn = "";
-}
-return (((global::DripSharp.Runtime.JavaCompat.StringStartsWith(ff, "Code") || global::DripSharp.Runtime.JavaCompat.StringContains(ff.ToLowerInvariant(), "barcode")) || global::DripSharp.Runtime.JavaCompat.StringStartsWith(fn, "Code")) || global::DripSharp.Runtime.JavaCompat.StringContains(fn.ToLowerInvariant(), "barcode"));
-}
+  private bool probablyBarcodeFont(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fontDescriptor) {
+    string ff = fontDescriptor.GetFontFamily();
+    if ((ff == default!)) {
+      ff = "";
+    }
+    string fn = fontDescriptor.GetFontName();
+    if ((fn == default!)) {
+      fn = "";
+    }
+    return (((global::DripSharp.Runtime.JavaCompat.StringStartsWith(ff, "Code")
+      || global::DripSharp.Runtime.JavaCompat.StringContains(ff.ToLowerInvariant(), "barcode"))
+      || global::DripSharp.Runtime.JavaCompat.StringStartsWith(fn, "Code"))
+      || global::DripSharp.Runtime.JavaCompat.StringContains(fn.ToLowerInvariant(), "barcode"));
+  }
 
-private bool isCharSetMatch(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo cidSystemInfo, global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info) {
-string ordering = cidSystemInfo.GetOrdering();
-if ((ordering == default!)) {
-return false;
-}
-if ((info.GetCIDSystemInfo() != default!)) {
-return (global::DripSharp.Runtime.JavaCompat.Equals(info.GetCIDSystemInfo().GetRegistry(), cidSystemInfo.GetRegistry()) && global::DripSharp.Runtime.JavaCompat.Equals(info.GetCIDSystemInfo().GetOrdering(), ordering));
-} else {
-long codePageRange = info.getCodePageRange();
-long JIS_JAPAN = (1 << unchecked((int)(17)));
-long CHINESE_SIMPLIFIED = (1 << unchecked((int)(18)));
-long KOREAN_WANSUNG = (1 << unchecked((int)(19)));
-long CHINESE_TRADITIONAL = (1 << unchecked((int)(20)));
-long KOREAN_JOHAB = (1 << unchecked((int)(21)));
-if (global::DripSharp.Runtime.JavaCompat.Equals("MalgunGothic-Semilight", info.GetPostScriptName())) {
-codePageRange &= ~(((JIS_JAPAN | CHINESE_SIMPLIFIED) | CHINESE_TRADITIONAL));
-}
-if ((global::DripSharp.Runtime.JavaCompat.Equals(ordering, "GB1") && ((codePageRange & CHINESE_SIMPLIFIED) == CHINESE_SIMPLIFIED))) {
-return true;
-} else {
-if ((global::DripSharp.Runtime.JavaCompat.Equals(ordering, "CNS1") && ((codePageRange & CHINESE_TRADITIONAL) == CHINESE_TRADITIONAL))) {
-return true;
-} else {
-if ((global::DripSharp.Runtime.JavaCompat.Equals(ordering, "Japan1") && ((codePageRange & JIS_JAPAN) == JIS_JAPAN))) {
-return true;
-} else {
-return (global::DripSharp.Runtime.JavaCompat.Equals(ordering, "Korea1") && (((codePageRange & KOREAN_WANSUNG) == KOREAN_WANSUNG) || ((codePageRange & KOREAN_JOHAB) == KOREAN_JOHAB)));
-}
-}
-}
-}
-}
+  private bool isCharSetMatch(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDSystemInfo cidSystemInfo,
+    global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info) {
+    string ordering = cidSystemInfo.GetOrdering();
+    if ((ordering == default!)) {
+      return false;
+    }
+    if ((info.GetCIDSystemInfo() != default!)) {
+      return (global::DripSharp.Runtime.JavaCompat.Equals(info.GetCIDSystemInfo().GetRegistry(),
+        cidSystemInfo.GetRegistry())
+        && global::DripSharp.Runtime.JavaCompat.Equals(info.GetCIDSystemInfo().GetOrdering(),
+        ordering));
+    } else {
+      long codePageRange = info.getCodePageRange();
+      long JIS_JAPAN = (1 << unchecked((int)(17)));
+      long CHINESE_SIMPLIFIED = (1 << unchecked((int)(18)));
+      long KOREAN_WANSUNG = (1 << unchecked((int)(19)));
+      long CHINESE_TRADITIONAL = (1 << unchecked((int)(20)));
+      long KOREAN_JOHAB = (1 << unchecked((int)(21)));
+      if (global::DripSharp.Runtime.JavaCompat.Equals("MalgunGothic-Semilight",
+        info.GetPostScriptName())) {
+        codePageRange &= ~(((JIS_JAPAN | CHINESE_SIMPLIFIED) | CHINESE_TRADITIONAL));
+      }
+      if ((global::DripSharp.Runtime.JavaCompat.Equals(ordering, "GB1")
+        && ((codePageRange & CHINESE_SIMPLIFIED) == CHINESE_SIMPLIFIED))) {
+        return true;
+      } else {
+        if ((global::DripSharp.Runtime.JavaCompat.Equals(ordering, "CNS1")
+          && ((codePageRange & CHINESE_TRADITIONAL) == CHINESE_TRADITIONAL))) {
+          return true;
+        } else {
+          if ((global::DripSharp.Runtime.JavaCompat.Equals(ordering, "Japan1")
+            && ((codePageRange & JIS_JAPAN) == JIS_JAPAN))) {
+            return true;
+          } else {
+            return (global::DripSharp.Runtime.JavaCompat.Equals(ordering, "Korea1")
+              && (((codePageRange & KOREAN_WANSUNG) == KOREAN_WANSUNG)
+              || ((codePageRange & KOREAN_JOHAB) == KOREAN_JOHAB)));
+          }
+        }
+      }
+    }
+  }
 
-internal class FontMatch : global::System.IComparable<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch> {
-internal double score = default;
+  internal class FontMatch
+  : global::System.IComparable<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch> {
+    internal double score = default;
 
-internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info = null!;
+    internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info = null!;
 
-internal FontMatch(global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info) {
-this.info = info;
-}
+    internal FontMatch(global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info) {
+      this.info = info;
+    }
 
-public virtual int CompareTo(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch match) {
-return global::DripSharp.Runtime.JavaCompat.CompareDouble(match.score, this.score);
-}
-}
+    public virtual int CompareTo(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch match) {
+      return global::DripSharp.Runtime.JavaCompat.CompareDouble(match.score, this.score);
+    }
+  }
 
-private global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch printMatches(global::DripSharp.Runtime.JavaPriorityQueue<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch> queue) {
-global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch bestMatch = queue.Peek();
-global::DripSharp.Runtime.JavaCompat.@out.WriteLine("-------");
-while (!((queue.Count == 0))) {
-global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch match = queue.Poll();
-global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info = match.info;
-global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(match.score, " | "), info.GetMacStyle()), " "), info.GetFamilyClass()), " "), info.GetPanose()), " "), info.GetCIDSystemInfo()), " "), info.GetPostScriptName()), " "), info.GetFormat()));
-}
-global::DripSharp.Runtime.JavaCompat.@out.WriteLine("-------");
-return bestMatch;
-}
+  private global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch printMatches(global::DripSharp.Runtime.JavaPriorityQueue<global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch> queue) {
+    global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch bestMatch = queue.Peek();
+    global::DripSharp.Runtime.JavaCompat.@out.WriteLine("-------");
+    while (!((queue.Count == 0))) {
+      global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.FontMatch match = queue.Poll();
+      global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info = match.info;
+      global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(match.score,
+        " | "), info.GetMacStyle()), " "), info.GetFamilyClass()), " "), info.GetPanose()), " "),
+        info.GetCIDSystemInfo()), " "), info.GetPostScriptName()), " "), info.GetFormat()));
+    }
+    global::DripSharp.Runtime.JavaCompat.@out.WriteLine("-------");
+    return bestMatch;
+  }
 }

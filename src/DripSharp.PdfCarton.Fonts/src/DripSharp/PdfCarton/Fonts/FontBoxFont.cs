@@ -9,15 +9,15 @@
 namespace DripSharp.PdfCarton.Fonts;
 
 public interface FontBoxFont {
-public string GetName();
+  public string GetName();
 
-public global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetFontBBox();
+  public global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetFontBBox();
 
-public global::System.Collections.Generic.IList<global::System.IConvertible> GetFontMatrix();
+  public global::System.Collections.Generic.IList<global::System.IConvertible> GetFontMatrix();
 
-public global::SkiaSharp.SKPath GetPath(string name);
+  public global::SkiaSharp.SKPath GetPath(string name);
 
-public float GetWidth(string name);
+  public float GetWidth(string name);
 
-public bool HasGlyph(string name);
+  public bool HasGlyph(string name);
 }

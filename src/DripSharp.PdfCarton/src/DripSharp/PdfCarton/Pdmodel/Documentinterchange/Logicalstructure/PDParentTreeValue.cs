@@ -9,21 +9,21 @@
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
 public class PDParentTreeValue : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-internal readonly global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable obj = null!;
+  internal readonly global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable obj = null!;
 
-public PDParentTreeValue(global::DripSharp.PdfCarton.Cos.COSArray obj) {
-this.obj = obj;
-}
+  public PDParentTreeValue(global::DripSharp.PdfCarton.Cos.COSArray obj) {
+    this.obj = obj;
+  }
 
-public PDParentTreeValue(global::DripSharp.PdfCarton.Cos.COSDictionary obj) {
-this.obj = obj;
-}
+  public PDParentTreeValue(global::DripSharp.PdfCarton.Cos.COSDictionary obj) {
+    this.obj = obj;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.obj.GetCOSObject();
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.obj.GetCOSObject();
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.StringValueOf(this.obj);
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.StringValueOf(this.obj);
+  }
 }

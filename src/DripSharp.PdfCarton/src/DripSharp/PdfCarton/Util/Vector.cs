@@ -9,28 +9,29 @@
 namespace DripSharp.PdfCarton.Util;
 
 public sealed class Vector {
-private readonly float x = default;
+  private readonly float x = default;
 
-private readonly float y = default;
+  private readonly float y = default;
 
-public Vector(float x, float y) {
-this.x = x;
-this.y = y;
-}
+  public Vector(float x, float y) {
+    this.x = x;
+    this.y = y;
+  }
 
-public float GetX() {
-return this.x;
-}
+  public float GetX() {
+    return this.x;
+  }
 
-public float GetY() {
-return this.y;
-}
+  public float GetY() {
+    return this.y;
+  }
 
-public global::DripSharp.PdfCarton.Util.Vector Scale(float sxy) {
-return new global::DripSharp.PdfCarton.Util.Vector((this.x * sxy), (this.y * sxy));
-}
+  public global::DripSharp.PdfCarton.Util.Vector Scale(float sxy) {
+    return new global::DripSharp.PdfCarton.Util.Vector((this.x * sxy), (this.y * sxy));
+  }
 
-public override string ToString() {
-return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("(", this.x), ", "), this.y), ")");
-}
+  public override string ToString() {
+    return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("(",
+      this.x), ", "), this.y), ")");
+  }
 }

@@ -9,753 +9,1064 @@
 namespace DripSharp.PdfCarton.Xmp.Xml;
 
 public class DomXmpParser {
-private global::System.Xml.XmlReaderSettings dBuilder = null!;
+  private global::System.Xml.XmlReaderSettings dBuilder = null!;
 
-private global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser.NamespaceFinder nsFinder = null!;
+  private global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser.NamespaceFinder nsFinder = null!;
 
-private bool strictParsing = true;
+  private bool strictParsing = true;
 
-public DomXmpParser() {
-try {
-global::System.Xml.XmlReaderSettings dbFactory = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewXmlReaderSettings();
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetFeature(dbFactory, "http://apache.org/xml/features/disallow-doctype-decl", true);
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetFeature(dbFactory, "http://xml.org/sax/features/external-general-entities", false);
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetFeature(dbFactory, "http://xml.org/sax/features/external-parameter-entities", false);
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetFeature(dbFactory, "http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetXIncludeAware(dbFactory, false);
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetExpandEntityReferences(dbFactory, false);
-dbFactory.IgnoreComments = true;
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetNamespaceAware(dbFactory, true);
-this.dBuilder = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSettingsClone(dbFactory);
-this.nsFinder = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser.NamespaceFinder();
-} catch (global::System.Xml.XmlException e) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Configuration, "Failed to initialize", e);
-}
-}
+  public DomXmpParser() {
+    try {
+      global::System.Xml.XmlReaderSettings dbFactory
+        = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewXmlReaderSettings();
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetFeature(dbFactory,
+        "http://apache.org/xml/features/disallow-doctype-decl", true);
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetFeature(dbFactory,
+        "http://xml.org/sax/features/external-general-entities", false);
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetFeature(dbFactory,
+        "http://xml.org/sax/features/external-parameter-entities", false);
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetFeature(dbFactory,
+        "http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetXIncludeAware(dbFactory,
+        false);
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetExpandEntityReferences(dbFactory,
+        false);
+      dbFactory.IgnoreComments = true;
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSetNamespaceAware(dbFactory,
+        true);
+      this.dBuilder
+        = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlReaderSettingsClone(dbFactory);
+      this.nsFinder = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser.NamespaceFinder();
+    } catch (global::System.Xml.XmlException e) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Configuration,
+        "Failed to initialize", e);
+    }
+  }
 
-public virtual bool IsStrictParsing() {
-return this.strictParsing;
-}
+  public virtual bool IsStrictParsing() {
+    return this.strictParsing;
+  }
 
-public virtual void SetStrictParsing(bool strictParsing) {
-this.strictParsing = strictParsing;
-}
+  public virtual void SetStrictParsing(bool strictParsing) {
+    this.strictParsing = strictParsing;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.XMPMetadata Parse(sbyte[] xmp) {
-global::System.IO.MemoryStream input = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewMemoryStream(xmp);
-return this.Parse(input);
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.XMPMetadata Parse(sbyte[] xmp) {
+    global::System.IO.MemoryStream input
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewMemoryStream(xmp);
+    return this.Parse(input);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.XMPMetadata Parse(global::System.IO.Stream input) {
-global::System.Xml.XmlDocument document = default!;
-try {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlSetErrorHandler(this.dBuilder, (object)default!);
-document = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlParse(this.dBuilder, input);
-} catch (global::System.Exception e) when (e is global::System.Xml.XmlException or global::System.IO.IOException) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Undefined, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Failed to parse: ", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ExceptionMessage(e)), e);
-}
-global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = default!;
-this.removeCommentsAndBlanks(document!);
-global::System.Xml.XmlNode node = document!.FirstChild;
-if (!((node is global::System.Xml.XmlProcessingInstruction))) {
-if (this.strictParsing) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart, "xmp should start with a processing instruction");
-}
-xmp = global::DripSharp.PdfCarton.Xmp.XMPMetadata.CreateXMPMetadata(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketBegin, global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketId, global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketBytes, global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketEncoding);
-} else {
-xmp = this.parseInitialXpacket((global::System.Xml.XmlProcessingInstruction)(node!));
-node = node.NextSibling;
-}
-while ((node is global::System.Xml.XmlProcessingInstruction)) {
-node = node.NextSibling;
-}
-global::System.Xml.XmlElement root = default!;
-if (!((node is global::System.Xml.XmlElement))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoRootElement, "xmp should contain a root element");
-} else {
-root = (global::System.Xml.XmlElement)(node!);
-node = node.NextSibling;
-}
-if (!((node is global::System.Xml.XmlProcessingInstruction))) {
-if (this.strictParsing) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadEnd, "xmp should end with a processing instruction");
-}
-xmp!.SetEndXPacket(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketEnd);
-} else {
-this.parseEndPacket(xmp!, (global::System.Xml.XmlProcessingInstruction)(node!));
-node = node.NextSibling;
-}
-if ((node != default!)) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadEnd, "xmp should end after xpacket end processing instruction");
-}
-this.nsFinder.Push(root!);
-global::System.Xml.XmlElement rdfRdf = this.findDescriptionsParent(root!);
-this.nsFinder.Push(rdfRdf);
-if (!(this.strictParsing)) {
-global::System.Xml.XmlAttributeCollection nnm = rdfRdf.Attributes!;
-for (int i = 0; (i < nnm.Count); i++) {
-global::System.Xml.XmlAttribute attr = (global::System.Xml.XmlAttribute)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlAttributeItem(nnm, i)!);
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("xmlns", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr))) {
-this.maybeAddNonStandardNamespace(xmp!, attr);
-}
-}
-}
-global::System.Collections.Generic.IList<global::System.Xml.XmlElement> descriptions = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(rdfRdf);
-foreach (global::System.Xml.XmlElement description__224_22 in descriptions) {
-this.parseSchemaExtensions(xmp!, description__224_22);
-}
-global::DripSharp.PdfCarton.Xmp.Xml.PdfaExtensionHelper.PopulateSchemaMapping(xmp!, this.strictParsing);
-foreach (global::System.Xml.XmlElement description__233_22 in descriptions) {
-this.parseDescriptionRoot(xmp!, description__233_22);
-}
-this.nsFinder.Pop();
-this.nsFinder.Pop();
-return xmp!;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.XMPMetadata Parse(global::System.IO.Stream input) {
+    global::System.Xml.XmlDocument document = default!;
+    try {
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlSetErrorHandler(this.dBuilder,
+        (object)default!);
+      document = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlParse(this.dBuilder, input);
+    } catch (global::System.Exception e) when (e is global::System.Xml.XmlException or global::System.IO.IOException) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Undefined,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Failed to parse: ",
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ExceptionMessage(e)), e);
+    }
+    global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = default!;
+    this.removeCommentsAndBlanks(document!);
+    global::System.Xml.XmlNode node = document!.FirstChild;
+    if (!((node is global::System.Xml.XmlProcessingInstruction))) {
+      if (this.strictParsing) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart,
+          "xmp should start with a processing instruction");
+      }
+      xmp
+        = global::DripSharp.PdfCarton.Xmp.XMPMetadata.CreateXMPMetadata(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketBegin,
+        global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketId,
+        global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketBytes,
+        global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketEncoding);
+    } else {
+      xmp = this.parseInitialXpacket((global::System.Xml.XmlProcessingInstruction)(node!));
+      node = node.NextSibling;
+    }
+    while ((node is global::System.Xml.XmlProcessingInstruction)) {
+      node = node.NextSibling;
+    }
+    global::System.Xml.XmlElement root = default!;
+    if (!((node is global::System.Xml.XmlElement))) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoRootElement,
+        "xmp should contain a root element");
+    } else {
+      root = (global::System.Xml.XmlElement)(node!);
+      node = node.NextSibling;
+    }
+    if (!((node is global::System.Xml.XmlProcessingInstruction))) {
+      if (this.strictParsing) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadEnd,
+          "xmp should end with a processing instruction");
+      }
+      xmp!.SetEndXPacket(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultXpacketEnd);
+    } else {
+      this.parseEndPacket(xmp!, (global::System.Xml.XmlProcessingInstruction)(node!));
+      node = node.NextSibling;
+    }
+    if ((node != default!)) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadEnd,
+        "xmp should end after xpacket end processing instruction");
+    }
+    this.nsFinder.Push(root!);
+    global::System.Xml.XmlElement rdfRdf = this.findDescriptionsParent(root!);
+    this.nsFinder.Push(rdfRdf);
+    if (!(this.strictParsing)) {
+      global::System.Xml.XmlAttributeCollection nnm = rdfRdf.Attributes!;
+      for (int i = 0; (i < nnm.Count); i++) {
+        global::System.Xml.XmlAttribute attr
+          = (global::System.Xml.XmlAttribute)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlAttributeItem(nnm,
+          i)!);
+        if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("xmlns",
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr))) {
+          this.maybeAddNonStandardNamespace(xmp!, attr);
+        }
+      }
+    }
+    global::System.Collections.Generic.IList<global::System.Xml.XmlElement> descriptions
+      = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(rdfRdf);
+    foreach (global::System.Xml.XmlElement description__224_22 in descriptions) {
+      this.parseSchemaExtensions(xmp!, description__224_22);
+    }
+    global::DripSharp.PdfCarton.Xmp.Xml.PdfaExtensionHelper.PopulateSchemaMapping(xmp!,
+      this.strictParsing);
+    foreach (global::System.Xml.XmlElement description__233_22 in descriptions) {
+      this.parseDescriptionRoot(xmp!, description__233_22);
+    }
+    this.nsFinder.Pop();
+    this.nsFinder.Pop();
+    return xmp!;
+  }
 
-private void maybeAddNonStandardNamespace(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlAttribute attr) {
-global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
-string @namespace = attr.Value;
-if ((((!(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace, @namespace)) && !(tm.IsStructuredTypeNamespace(@namespace))) && (xmp.GetSchema(@namespace) == default!)) && (tm.GetSchemaFactory(@namespace) == default!))) {
-tm.AddNewNameSpace(@namespace, attr.LocalName);
-}
-}
+  private void maybeAddNonStandardNamespace(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlAttribute attr) {
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
+    string @namespace = attr.Value;
+    if ((((!global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace,
+      @namespace) && !(tm.IsStructuredTypeNamespace(@namespace))) && (xmp.GetSchema(@namespace)
+      == default!)) && (tm.GetSchemaFactory(@namespace) == default!))) {
+      tm.AddNewNameSpace(@namespace, attr.LocalName);
+    }
+  }
 
-private bool isSchemaExtensionProperty(global::System.Xml.XmlElement element) {
-return ((element != default!) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("pdfaExtension", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(element)));
-}
+  private bool isSchemaExtensionProperty(global::System.Xml.XmlElement element) {
+    return ((element != default!)
+      && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("pdfaExtension",
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(element)));
+  }
 
-private void parseSchemaExtensions(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlElement description) {
-global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
-this.nsFinder.Push(description);
-try {
-global::System.Collections.Generic.IList<global::System.Xml.XmlElement> schemaExtensions = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ToListValues(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StreamFilter(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Stream(global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(description)), this.isSchemaExtensionProperty));
-if (!(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ListIsEmpty(schemaExtensions))) {
-global::DripSharp.PdfCarton.Xmp.Xml.PdfaExtensionHelper.ValidateNaming(xmp, description);
-}
-foreach (global::System.Xml.XmlElement schemaExtension in schemaExtensions) {
-string @namespace = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(schemaExtension);
-if (!(tm.IsDefinedSchema(@namespace))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoSchema, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("This namespace is not from a schema: ", @namespace));
-}
-global::DripSharp.PdfCarton.Xmp.Type.PropertyType type = this.checkPropertyDefinition(tm, global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(schemaExtension), (string)default!);
-global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema schema = tm.GetSchemaFactory(@namespace).CreateXMPSchema(xmp, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(schemaExtension));
-this.loadAttributes(schema, description);
-global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container = schema.GetContainer();
-this.createProperty(xmp, schemaExtension, type, container);
-}
-} catch (global::DripSharp.PdfCarton.Xmp.Schema.XmpSchemaException e) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Undefined, "Parsing failed", e);
-} finally {
-this.nsFinder.Pop();
-}
-}
+  private void parseSchemaExtensions(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlElement description) {
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
+    this.nsFinder.Push(description);
+    try {
+      global::System.Collections.Generic.IList<global::System.Xml.XmlElement> schemaExtensions
+        = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ToListValues(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StreamFilter(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Stream(global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(description)),
+        this.isSchemaExtensionProperty));
+      if (!global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ListIsEmpty(schemaExtensions)) {
+        global::DripSharp.PdfCarton.Xmp.Xml.PdfaExtensionHelper.ValidateNaming(xmp, description);
+      }
+      foreach (global::System.Xml.XmlElement schemaExtension in schemaExtensions) {
+        string @namespace
+          = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(schemaExtension);
+        if (!(tm.IsDefinedSchema(@namespace))) {
+          throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoSchema,
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("This namespace is not from a schema: ",
+            @namespace));
+        }
+        global::DripSharp.PdfCarton.Xmp.Type.PropertyType type = this.checkPropertyDefinition(tm,
+          global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(schemaExtension),
+          (string)default!);
+        global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema schema
+          = tm.GetSchemaFactory(@namespace).CreateXMPSchema(xmp,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(schemaExtension));
+        this.loadAttributes(schema, description);
+        global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container
+          = schema.GetContainer();
+        this.createProperty(xmp, schemaExtension, type, container);
+      }
+    } catch (global::DripSharp.PdfCarton.Xmp.Schema.XmpSchemaException e) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Undefined,
+        "Parsing failed", e);
+    } finally {
+      this.nsFinder.Pop();
+    }
+  }
 
-private void parseDescriptionRoot(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlElement description) {
-this.nsFinder.Push(description);
-global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
-try {
-global::System.Collections.Generic.IList<global::System.Xml.XmlElement> properties = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(description);
-global::System.Xml.XmlAttributeCollection nnm = description.Attributes!;
-for (int i = 0; (i < nnm.Count); i++) {
-global::System.Xml.XmlAttribute attr = (global::System.Xml.XmlAttribute)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlAttributeItem(nnm, i)!);
-if (((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName, attr.LocalName) && (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr) == default!)) || global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfPrefix, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)))) {} else {
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("xmlns", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr))) {
-if (!(this.strictParsing)) {
-this.maybeAddNonStandardNamespace(xmp, attr);
-}
-} else {
-this.parseDescriptionRootAttr(xmp, description, attr, tm);
-}
-}
-}
-this.parseChildrenAsProperties(xmp, properties, tm, description);
-} catch (global::DripSharp.PdfCarton.Xmp.Schema.XmpSchemaException e) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Undefined, "Parsing failed", e);
-} finally {
-this.nsFinder.Pop();
-}
-}
+  private void parseDescriptionRoot(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlElement description) {
+    this.nsFinder.Push(description);
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
+    try {
+      global::System.Collections.Generic.IList<global::System.Xml.XmlElement> properties
+        = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(description);
+      global::System.Xml.XmlAttributeCollection nnm = description.Attributes!;
+      for (int i = 0; (i < nnm.Count); i++) {
+        global::System.Xml.XmlAttribute attr
+          = (global::System.Xml.XmlAttribute)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlAttributeItem(nnm,
+          i)!);
+        if (((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName,
+          attr.LocalName) && (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)
+          == default!))
+          || global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfPrefix,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)))) {} else {
+          if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("xmlns",
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr))) {
+            if (!(this.strictParsing)) {
+              this.maybeAddNonStandardNamespace(xmp, attr);
+            }
+          } else {
+            this.parseDescriptionRootAttr(xmp, description, attr, tm);
+          }
+        }
+      }
+      this.parseChildrenAsProperties(xmp, properties, tm, description);
+    } catch (global::DripSharp.PdfCarton.Xmp.Schema.XmpSchemaException e) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Undefined,
+        "Parsing failed", e);
+    } finally {
+      this.nsFinder.Pop();
+    }
+  }
 
-private void parseDescriptionRootAttr(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlElement description, global::System.Xml.XmlAttribute attr, global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm) {
-string @namespace = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr);
-global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema schema = xmp.GetSchema(@namespace);
-if (((schema == default!) && (tm.GetSchemaFactory(@namespace) != default!))) {
-schema = tm.GetSchemaFactory(@namespace).CreateXMPSchema(xmp, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr));
-this.loadAttributes(schema, description);
-}
-if ((schema != default!)) {
-global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container = schema.GetContainer();
-global::DripSharp.PdfCarton.Xmp.Type.PropertyType type = this.checkPropertyDefinition(tm, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewXmlQualifiedName(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr), attr.LocalName, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)), (string)default!);
-if ((type == default!)) {
-if (this.strictParsing) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("No type defined for {", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr)), "}"), attr.LocalName));
-}
-type = global::DripSharp.PdfCarton.Xmp.Type.TypeMapping.CreatePropertyType(global::DripSharp.PdfCarton.Xmp.Type.Types.Text, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Simple);
-} else {
-if (((!(type.Type().IsSimple()) || type.Card().IsArray()) || (type.Type() == global::DripSharp.PdfCarton.Xmp.Type.Types.LangAlt))) {
-if (this.strictParsing) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("The type '", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumName(type.Type())), "' in '"), global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)), ":"), attr.LocalName), "="), attr.Value), "' is a structured or array type, but attributes are simple types"));
-}
-if ((attr.Value.Length == 0)) {
-schema.RemoveAttribute(attr.LocalName);
-return;
-}
-type = global::DripSharp.PdfCarton.Xmp.Type.TypeMapping.CreatePropertyType(global::DripSharp.PdfCarton.Xmp.Type.Types.Text, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Simple);
-}
-}
-try {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty sp = tm.InstanciateSimpleProperty(@namespace, schema.GetPrefix(), attr.LocalName, attr.Value, type.Type());
-container.AddProperty(sp);
-} catch (global::System.ArgumentException e) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ExceptionMessage(e), " in "), schema.GetPrefix()), ":"), attr.LocalName), e);
-}
-}
-}
+  private void parseDescriptionRootAttr(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlElement description, global::System.Xml.XmlAttribute attr,
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm) {
+    string @namespace
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr);
+    global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema schema = xmp.GetSchema(@namespace);
+    if (((schema == default!) && (tm.GetSchemaFactory(@namespace) != default!))) {
+      schema = tm.GetSchemaFactory(@namespace).CreateXMPSchema(xmp,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr));
+      this.loadAttributes(schema, description);
+    }
+    if ((schema != default!)) {
+      global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container
+        = schema.GetContainer();
+      global::DripSharp.PdfCarton.Xmp.Type.PropertyType type = this.checkPropertyDefinition(tm,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewXmlQualifiedName(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr),
+        attr.LocalName, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)),
+        (string)default!);
+      if ((type == default!)) {
+        if (this.strictParsing) {
+          throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType,
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("No type defined for {",
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr)), "}"),
+            attr.LocalName));
+        }
+        type
+          = global::DripSharp.PdfCarton.Xmp.Type.TypeMapping.CreatePropertyType(global::DripSharp.PdfCarton.Xmp.Type.Types.Text,
+          global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Simple);
+      } else {
+        if (((!(type.Type().IsSimple()) || type.Card().IsArray()) || (type.Type()
+          == global::DripSharp.PdfCarton.Xmp.Type.Types.LangAlt))) {
+          if (this.strictParsing) {
+            throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType,
+              global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("The type '",
+              global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumName(type.Type())), "' in '"),
+              global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)), ":"),
+              attr.LocalName), "="), attr.Value),
+              "' is a structured or array type, but attributes are simple types"));
+          }
+          if ((attr.Value.Length == 0)) {
+            schema.RemoveAttribute(attr.LocalName);
+            return;
+          }
+          type
+            = global::DripSharp.PdfCarton.Xmp.Type.TypeMapping.CreatePropertyType(global::DripSharp.PdfCarton.Xmp.Type.Types.Text,
+            global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Simple);
+        }
+      }
+      try {
+        global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty sp
+          = tm.InstanciateSimpleProperty(@namespace, schema.GetPrefix(), attr.LocalName, attr.Value,
+          type.Type());
+        container.AddProperty(sp);
+      } catch (global::System.ArgumentException e) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ExceptionMessage(e),
+          " in "), schema.GetPrefix()), ":"), attr.LocalName), e);
+      }
+    }
+  }
 
-private void parseChildrenAsProperties(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Collections.Generic.IList<global::System.Xml.XmlElement> properties, global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm, global::System.Xml.XmlElement description) {
-foreach (global::System.Xml.XmlElement property in properties) {
-this.nsFinder.Push(property);
-string @namespace = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(property);
-global::DripSharp.PdfCarton.Xmp.Type.PropertyType type = this.checkPropertyDefinition(tm, global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(property), (string)default!);
-if (!(tm.IsDefinedSchema(@namespace))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoSchema, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("This namespace is not from a schema: ", @namespace));
-}
-if (this.isSchemaExtensionProperty(property)) {
-continue;
-}
-global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema schema = xmp.GetSchema(@namespace);
-if ((schema == default!)) {
-schema = tm.GetSchemaFactory(@namespace).CreateXMPSchema(xmp, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(property));
-this.loadAttributes(schema, description);
-}
-global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container = schema.GetContainer();
-this.createProperty(xmp, property, type, container);
-this.nsFinder.Pop();
-}
-}
+  private void parseChildrenAsProperties(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Collections.Generic.IList<global::System.Xml.XmlElement> properties,
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm,
+    global::System.Xml.XmlElement description) {
+    foreach (global::System.Xml.XmlElement property in properties) {
+      this.nsFinder.Push(property);
+      string @namespace
+        = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(property);
+      global::DripSharp.PdfCarton.Xmp.Type.PropertyType type = this.checkPropertyDefinition(tm,
+        global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(property), (string)default!);
+      if (!(tm.IsDefinedSchema(@namespace))) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoSchema,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("This namespace is not from a schema: ",
+          @namespace));
+      }
+      if (this.isSchemaExtensionProperty(property)) {
+        continue;
+      }
+      global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema schema = xmp.GetSchema(@namespace);
+      if ((schema == default!)) {
+        schema = tm.GetSchemaFactory(@namespace).CreateXMPSchema(xmp,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(property));
+        this.loadAttributes(schema, description);
+      }
+      global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container
+        = schema.GetContainer();
+      this.createProperty(xmp, property, type, container);
+      this.nsFinder.Pop();
+    }
+  }
 
-private void createProperty(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlElement property, global::DripSharp.PdfCarton.Xmp.Type.PropertyType type, global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container) {
-string prefix = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(property);
-string name = property.LocalName;
-string @namespace = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(property);
-this.nsFinder.Push(property);
-try {
-if ((type == default!)) {
-if (this.strictParsing) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("No type defined for {", @namespace), "}"), name));
-}
-this.manageSimpleType(xmp, property, global::DripSharp.PdfCarton.Xmp.Type.Types.Text, container);
-} else {
-if ((type.Type() == global::DripSharp.PdfCarton.Xmp.Type.Types.LangAlt)) {
-this.manageLangAlt(xmp, property, container);
-} else {
-if (type.Card().IsArray()) {
-this.manageArray(xmp, property, type, container);
-} else {
-if (type.Type().IsSimple()) {
-this.manageSimpleType(xmp, property, type.Type(), container);
-} else {
-if (type.Type().IsStructured()) {
-this.manageStructuredType(xmp, property, prefix, container);
-} else {
-if ((type.Type() == global::DripSharp.PdfCarton.Xmp.Type.Types.DefinedType)) {
-this.manageDefinedType(xmp, property, prefix, container);
-}
-}
-}
-}
-}
-}
-} catch (global::System.ArgumentException e) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ExceptionMessage(e), " in "), prefix), ":"), name), e);
-} finally {
-this.nsFinder.Pop();
-}
-}
+  private void createProperty(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlElement property, global::DripSharp.PdfCarton.Xmp.Type.PropertyType type,
+    global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container) {
+    string prefix = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(property);
+    string name = property.LocalName;
+    string @namespace
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(property);
+    this.nsFinder.Push(property);
+    try {
+      if ((type == default!)) {
+        if (this.strictParsing) {
+          throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType,
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("No type defined for {",
+            @namespace), "}"), name));
+        }
+        this.manageSimpleType(xmp, property, global::DripSharp.PdfCarton.Xmp.Type.Types.Text,
+          container);
+      } else {
+        if ((type.Type() == global::DripSharp.PdfCarton.Xmp.Type.Types.LangAlt)) {
+          this.manageLangAlt(xmp, property, container);
+        } else {
+          if (type.Card().IsArray()) {
+            this.manageArray(xmp, property, type, container);
+          } else {
+            if (type.Type().IsSimple()) {
+              this.manageSimpleType(xmp, property, type.Type(), container);
+            } else {
+              if (type.Type().IsStructured()) {
+                this.manageStructuredType(xmp, property, prefix, container);
+              } else {
+                if ((type.Type() == global::DripSharp.PdfCarton.Xmp.Type.Types.DefinedType)) {
+                  this.manageDefinedType(xmp, property, prefix, container);
+                }
+              }
+            }
+          }
+        }
+      }
+    } catch (global::System.ArgumentException e) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ExceptionMessage(e),
+        " in "), prefix), ":"), name), e);
+    } finally {
+      this.nsFinder.Pop();
+    }
+  }
 
-private void manageDefinedType(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlElement property, string prefix, global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container) {
-if (global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.IsParseTypeResource(property)) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType ast__492_36 = this.parseLiDescription(xmp, global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(property), property);
-if ((ast__492_36 == default!)) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("property should contain child elements : ", property));
-}
-ast__492_36.SetPrefix(prefix);
-container.AddProperty(ast__492_36);
-} else {
-global::System.Xml.XmlElement inner = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetFirstChildElement(property);
-if ((inner == default!)) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("property should contain child element : ", property));
-}
-global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType ast__509_36 = this.parseLiDescription(xmp, global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(property), inner);
-if ((ast__509_36 == default!)) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("inner element should contain child elements : ", inner));
-}
-ast__509_36.SetPrefix(prefix);
-container.AddProperty(ast__509_36);
-}
-}
+  private void manageDefinedType(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlElement property, string prefix,
+    global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container) {
+    if (global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.IsParseTypeResource(property)) {
+      global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType ast__492_36
+        = this.parseLiDescription(xmp,
+        global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(property), property);
+      if ((ast__492_36 == default!)) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("property should contain child elements : ",
+          property));
+      }
+      ast__492_36.SetPrefix(prefix);
+      container.AddProperty(ast__492_36);
+    } else {
+      global::System.Xml.XmlElement inner
+        = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetFirstChildElement(property);
+      if ((inner == default!)) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("property should contain child element : ",
+          property));
+      }
+      global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType ast__509_36
+        = this.parseLiDescription(xmp,
+        global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(property), inner);
+      if ((ast__509_36 == default!)) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("inner element should contain child elements : ",
+          inner));
+      }
+      ast__509_36.SetPrefix(prefix);
+      container.AddProperty(ast__509_36);
+    }
+  }
 
-private void manageStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlElement property, string prefix, global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container) {
-if (global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.IsParseTypeResource(property)) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType ast__525_36 = this.parseLiDescription(xmp, global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(property), property);
-if ((ast__525_36 != default!)) {
-ast__525_36.SetPrefix(prefix);
-container.AddProperty(ast__525_36);
-}
-} else {
-global::System.Xml.XmlElement inner = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetFirstChildElement(property);
-if ((inner != default!)) {
-try {
-this.nsFinder.Push(inner);
-global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType ast__540_44 = this.parseLiDescription(xmp, global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(property), inner);
-if ((ast__540_44 == default!)) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("inner element should contain child elements : ", inner));
-}
-ast__540_44.SetPrefix(prefix);
-container.AddProperty(ast__540_44);
-} finally {
-this.nsFinder.Pop();
-}
-}
-}
-}
+  private void manageStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlElement property, string prefix,
+    global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container) {
+    if (global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.IsParseTypeResource(property)) {
+      global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType ast__525_36
+        = this.parseLiDescription(xmp,
+        global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(property), property);
+      if ((ast__525_36 != default!)) {
+        ast__525_36.SetPrefix(prefix);
+        container.AddProperty(ast__525_36);
+      }
+    } else {
+      global::System.Xml.XmlElement inner
+        = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetFirstChildElement(property);
+      if ((inner != default!)) {
+        try {
+          this.nsFinder.Push(inner);
+          global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType ast__540_44
+            = this.parseLiDescription(xmp,
+            global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(property), inner);
+          if ((ast__540_44 == default!)) {
+            throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+              global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("inner element should contain child elements : ",
+              inner));
+          }
+          ast__540_44.SetPrefix(prefix);
+          container.AddProperty(ast__540_44);
+        } finally {
+          this.nsFinder.Pop();
+        }
+      }
+    }
+  }
 
-private void manageSimpleType(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlElement property, global::DripSharp.PdfCarton.Xmp.Type.Types type, global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container) {
-global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
-string prefix = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(property);
-string name = property.LocalName;
-string @namespace = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(property);
-global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty sp = tm.InstanciateSimpleProperty(@namespace, prefix, name, property.InnerText, type);
-this.loadAttributes(sp, property);
-container.AddProperty(sp);
-}
+  private void manageSimpleType(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlElement property, global::DripSharp.PdfCarton.Xmp.Type.Types type,
+    global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container) {
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
+    string prefix = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(property);
+    string name = property.LocalName;
+    string @namespace
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(property);
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty sp
+      = tm.InstanciateSimpleProperty(@namespace, prefix, name, property.InnerText, type);
+    this.loadAttributes(sp, property);
+    container.AddProperty(sp);
+  }
 
-private void manageArray(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlElement property, global::DripSharp.PdfCarton.Xmp.Type.PropertyType type, global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container) {
-global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
-string prefix = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(property);
-string name = property.LocalName;
-string @namespace = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(property);
-global::System.Xml.XmlElement bagOrSeq = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetUniqueElementChild(property);
-if ((bagOrSeq == default!)) {
-global::System.Xml.XmlNode firstChild = property.FirstChild;
-if (!(this.strictParsing)) {
-if ((firstChild == default!)) {
-return;
-}
-if ((firstChild is global::System.Xml.XmlText)) {
-this.manageSimpleType(xmp, property, global::DripSharp.PdfCarton.Xmp.Type.Types.Text, container);
-return;
-}
-}
-string whatFound = "nothing";
-if ((firstChild != default!)) {
-whatFound = ((firstChild is global::System.Xml.XmlText) ? "Text" : global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassName(((object)(firstChild)).GetType(), "DripSharp.PdfCarton.Xmp", "org.apache.xmpbox"));
-}
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Invalid array definition, expecting ", type.Card()), " and found "), whatFound), " [prefix="), prefix), "; name="), name), "]"));
-}
-if ((this.strictParsing && !(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(bagOrSeq.LocalName, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumName(type.Card()))))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Invalid array type, expecting ", type.Card()), " and found "), bagOrSeq.LocalName), " [prefix="), prefix), "; name="), name), "]"));
-}
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty array = tm.CreateArrayProperty(@namespace, prefix, name, type.Card());
-container.AddProperty(array);
-global::System.Collections.Generic.IList<global::System.Xml.XmlElement> lis = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(bagOrSeq);
-foreach (global::System.Xml.XmlElement element in lis) {
-global::System.Xml.XmlQualifiedName propertyQName = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewXmlQualifiedName(element.LocalName);
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField ast = this.parseLiElement(xmp, propertyQName, element, type.Type());
-if ((ast != default!)) {
-array.AddProperty(ast);
-}
-}
-}
+  private void manageArray(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlElement property, global::DripSharp.PdfCarton.Xmp.Type.PropertyType type,
+    global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container) {
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
+    string prefix = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(property);
+    string name = property.LocalName;
+    string @namespace
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(property);
+    global::System.Xml.XmlElement bagOrSeq
+      = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetUniqueElementChild(property);
+    if ((bagOrSeq == default!)) {
+      global::System.Xml.XmlNode firstChild = property.FirstChild;
+      if (!(this.strictParsing)) {
+        if ((firstChild == default!)) {
+          return;
+        }
+        if ((firstChild is global::System.Xml.XmlText)) {
+          this.manageSimpleType(xmp, property, global::DripSharp.PdfCarton.Xmp.Type.Types.Text,
+            container);
+          return;
+        }
+      }
+      string whatFound = "nothing";
+      if ((firstChild != default!)) {
+        whatFound = ((firstChild is global::System.Xml.XmlText)
+          ? "Text" : global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassName(((object)(firstChild)).GetType(),
+          "DripSharp.PdfCarton.Xmp", "org.apache.xmpbox"));
+      }
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Invalid array definition, expecting ",
+        type.Card()), " and found "), whatFound), " [prefix="), prefix), "; name="), name), "]"));
+    }
+    if ((this.strictParsing
+      && !global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(bagOrSeq.LocalName,
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumName(type.Card())))) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Invalid array type, expecting ",
+        type.Card()), " and found "), bagOrSeq.LocalName), " [prefix="), prefix), "; name="), name),
+        "]"));
+    }
+    global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty array = tm.CreateArrayProperty(@namespace,
+      prefix, name, type.Card());
+    container.AddProperty(array);
+    global::System.Collections.Generic.IList<global::System.Xml.XmlElement> lis
+      = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(bagOrSeq);
+    foreach (global::System.Xml.XmlElement element in lis) {
+      global::System.Xml.XmlQualifiedName propertyQName
+        = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewXmlQualifiedName(element.LocalName);
+      global::DripSharp.PdfCarton.Xmp.Type.AbstractField ast = this.parseLiElement(xmp,
+        propertyQName, element, type.Type());
+      if ((ast != default!)) {
+        array.AddProperty(ast);
+      }
+    }
+  }
 
-private void manageLangAlt(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlElement property, global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container) {
-this.manageArray(xmp, property, global::DripSharp.PdfCarton.Xmp.Type.TypeMapping.CreatePropertyType(global::DripSharp.PdfCarton.Xmp.Type.Types.LangAlt, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Alt), container);
-}
+  private void manageLangAlt(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlElement property,
+    global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer container) {
+    this.manageArray(xmp, property,
+      global::DripSharp.PdfCarton.Xmp.Type.TypeMapping.CreatePropertyType(global::DripSharp.PdfCarton.Xmp.Type.Types.LangAlt,
+      global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Alt), container);
+  }
 
-private void parseDescriptionInner(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlElement description, global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer parentContainer) {
-this.nsFinder.Push(description);
-global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
-try {
-global::System.Collections.Generic.IList<global::System.Xml.XmlElement> properties = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(description);
-foreach (global::System.Xml.XmlElement property in properties) {
-string name = property.LocalName;
-global::DripSharp.PdfCarton.Xmp.Type.PropertyType dtype = this.checkPropertyDefinition(tm, global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(property), (string)default!);
-global::DripSharp.PdfCarton.Xmp.Type.PropertyType ptype = tm.GetStructuredPropMapping(dtype.Type()).GetPropertyType(name);
-this.createProperty(xmp, property, ptype, parentContainer);
-}
-} finally {
-this.nsFinder.Pop();
-}
-}
+  private void parseDescriptionInner(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlElement description,
+    global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer parentContainer) {
+    this.nsFinder.Push(description);
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
+    try {
+      global::System.Collections.Generic.IList<global::System.Xml.XmlElement> properties
+        = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(description);
+      foreach (global::System.Xml.XmlElement property in properties) {
+        string name = property.LocalName;
+        global::DripSharp.PdfCarton.Xmp.Type.PropertyType dtype = this.checkPropertyDefinition(tm,
+          global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(property), (string)default!);
+        global::DripSharp.PdfCarton.Xmp.Type.PropertyType ptype
+          = tm.GetStructuredPropMapping(dtype.Type()).GetPropertyType(name);
+        this.createProperty(xmp, property, ptype, parentContainer);
+      }
+    } finally {
+      this.nsFinder.Pop();
+    }
+  }
 
-private global::DripSharp.PdfCarton.Xmp.Type.AbstractField parseLiElement(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlQualifiedName descriptor, global::System.Xml.XmlElement liElement, global::DripSharp.PdfCarton.Xmp.Type.Types type) {
-if (global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.IsParseTypeResource(liElement)) {
-try {
-this.nsFinder.Push(liElement);
-return this.parseLiDescription(xmp, descriptor, liElement);
-} finally {
-this.nsFinder.Pop();
-}
-}
-global::System.Xml.XmlElement liChild = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetUniqueElementChild(liElement);
-if ((liChild != default!)) {
-try {
-this.nsFinder.Push(liElement);
-this.nsFinder.Push(liChild);
-return this.parseLiDescription(xmp, descriptor, liChild);
-} finally {
-this.nsFinder.Pop();
-this.nsFinder.Pop();
-}
-}
-string text = liElement.InnerText;
-global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
-if (type.IsSimple()) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField af__693_27 = tm.InstanciateSimpleProperty(descriptor.Namespace, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlQualifiedNamePrefix(descriptor), descriptor.Name, text, type);
-this.loadAttributes(af__693_27, liElement);
-return af__693_27;
-}
-global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType af__699_32;
-try {
-af__699_32 = tm.InstanciateStructuredType(type, descriptor.Name);
-} catch (global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException ex) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType, "Parsing of structured type failed", ex);
-}
-this.loadAttributes(af__699_32, liElement);
-global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription pm;
-if (type.IsStructured()) {
-pm = tm.GetStructuredPropMapping(type);
-} else {
-pm = tm.GetDefinedDescriptionByNamespace(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(liElement), liElement.LocalName);
-}
-return this.tryParseAttributesAsProperties(tm, liElement, af__699_32, pm, (global::System.Xml.XmlQualifiedName)default!);
-}
+  private global::DripSharp.PdfCarton.Xmp.Type.AbstractField parseLiElement(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlQualifiedName descriptor, global::System.Xml.XmlElement liElement,
+    global::DripSharp.PdfCarton.Xmp.Type.Types type) {
+    if (global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.IsParseTypeResource(liElement)) {
+      try {
+        this.nsFinder.Push(liElement);
+        return this.parseLiDescription(xmp, descriptor, liElement);
+      } finally {
+        this.nsFinder.Pop();
+      }
+    }
+    global::System.Xml.XmlElement liChild
+      = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetUniqueElementChild(liElement);
+    if ((liChild != default!)) {
+      try {
+        this.nsFinder.Push(liElement);
+        this.nsFinder.Push(liChild);
+        return this.parseLiDescription(xmp, descriptor, liChild);
+      } finally {
+        this.nsFinder.Pop();
+        this.nsFinder.Pop();
+      }
+    }
+    string text = liElement.InnerText;
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
+    if (type.IsSimple()) {
+      global::DripSharp.PdfCarton.Xmp.Type.AbstractField af__693_27
+        = tm.InstanciateSimpleProperty(descriptor.Namespace,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlQualifiedNamePrefix(descriptor),
+        descriptor.Name, text, type);
+      this.loadAttributes(af__693_27, liElement);
+      return af__693_27;
+    }
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType af__699_32;
+    try {
+      af__699_32 = tm.InstanciateStructuredType(type, descriptor.Name);
+    } catch (global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException ex) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType,
+        "Parsing of structured type failed", ex);
+    }
+    this.loadAttributes(af__699_32, liElement);
+    global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription pm;
+    if (type.IsStructured()) {
+      pm = tm.GetStructuredPropMapping(type);
+    } else {
+      pm
+        = tm.GetDefinedDescriptionByNamespace(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(liElement),
+        liElement.LocalName);
+    }
+    return this.tryParseAttributesAsProperties(tm, liElement, af__699_32, pm,
+      (global::System.Xml.XmlQualifiedName)default!);
+  }
 
-private void loadAttributes(global::DripSharp.PdfCarton.Xmp.Type.AbstractField sp, global::System.Xml.XmlElement element) {
-global::System.Xml.XmlAttributeCollection nnm = element.Attributes!;
-for (int i = 0; (i < nnm.Count); i++) {
-global::System.Xml.XmlAttribute attr = (global::System.Xml.XmlAttribute)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlAttributeItem(nnm, i)!);
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("xmlns", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr))) {} else {
-if ((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfPrefix, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName, attr.LocalName))) {
-if ((sp is global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema)) {
-((global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema)(sp!)).SetAboutAsSimple(attr.Value);
-}
-} else {
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("http://www.w3.org/XML/1998/namespace", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr))) {
-global::DripSharp.PdfCarton.Xmp.Type.Attribute attribute = new global::DripSharp.PdfCarton.Xmp.Type.Attribute("http://www.w3.org/XML/1998/namespace", attr.LocalName, attr.Value);
-sp.SetAttribute(attribute);
-}
-}
-}
-}
-}
+  private void loadAttributes(global::DripSharp.PdfCarton.Xmp.Type.AbstractField sp,
+    global::System.Xml.XmlElement element) {
+    global::System.Xml.XmlAttributeCollection nnm = element.Attributes!;
+    for (int i = 0; (i < nnm.Count); i++) {
+      global::System.Xml.XmlAttribute attr
+        = (global::System.Xml.XmlAttribute)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlAttributeItem(nnm,
+        i)!);
+      if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("xmlns",
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr))) {} else {
+        if ((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfPrefix,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr))
+          && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.AboutName,
+          attr.LocalName))) {
+          if ((sp is global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema)) {
+            ((global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema)(sp!)).SetAboutAsSimple(attr.Value);
+          }
+        } else {
+          if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("http://www.w3.org/XML/1998/namespace",
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr))) {
+            global::DripSharp.PdfCarton.Xmp.Type.Attribute attribute
+              = new global::DripSharp.PdfCarton.Xmp.Type.Attribute("http://www.w3.org/XML/1998/namespace",
+              attr.LocalName, attr.Value);
+            sp.SetAttribute(attribute);
+          }
+        }
+      }
+    }
+  }
 
-private global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType parseLiDescription(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp, global::System.Xml.XmlQualifiedName parentQName, global::System.Xml.XmlElement liDescriptionElement) {
-global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
-global::System.Collections.Generic.IList<global::System.Xml.XmlElement> liDescriptionElementChildren = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(liDescriptionElement);
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ListIsEmpty(liDescriptionElementChildren)) {
-return this.tryParseAttributesAsProperties(tm, liDescriptionElement, (global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType)default!, (global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription)default!, parentQName);
-}
-global::System.Xml.XmlElement firstLiDescriptionElementChild = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ListGet(liDescriptionElementChildren, 0);
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("rdf:Description", firstLiDescriptionElementChild.Name)) {
-return this.parseLiDescription(xmp, parentQName, firstLiDescriptionElementChild);
-}
-this.nsFinder.Push(firstLiDescriptionElementChild);
-global::System.Xml.XmlQualifiedName firstChildQName = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(firstLiDescriptionElementChild);
-global::DripSharp.PdfCarton.Xmp.Type.PropertyType ctype = this.checkPropertyDefinition(tm, firstChildQName, parentQName.Name);
-if ((ctype == default!)) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoType, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Property '", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlQualifiedNamePrefix(firstChildQName)), ":"), firstChildQName.Name), "' not defined in "), firstChildQName.Namespace));
-}
-global::DripSharp.PdfCarton.Xmp.Type.Types tt = ctype.Type();
-global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType ast = this.instanciateStructured(tm, tt, parentQName.Name, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(firstLiDescriptionElementChild));
-ast.SetNamespace(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(firstLiDescriptionElementChild));
-ast.SetPrefix(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(firstLiDescriptionElementChild));
-global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription pm;
-if (tt.IsStructured()) {
-pm = tm.GetStructuredPropMapping(tt);
-} else {
-pm = tm.GetDefinedDescriptionByNamespace(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(firstLiDescriptionElementChild), firstLiDescriptionElementChild.LocalName);
-}
-foreach (global::System.Xml.XmlElement liDescriptionElementChild in liDescriptionElementChildren) {
-string prefix = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(liDescriptionElementChild);
-string name = liDescriptionElementChild.LocalName;
-string @namespace = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(liDescriptionElementChild);
-global::DripSharp.PdfCarton.Xmp.Type.PropertyType type = pm.GetPropertyType(name);
-if ((type == default!)) {
-if (this.strictParsing) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoType, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Type '", prefix), ":"), name), "' not defined in "), global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(liDescriptionElementChild)));
-}
-type = global::DripSharp.PdfCarton.Xmp.Type.TypeMapping.CreatePropertyType(global::DripSharp.PdfCarton.Xmp.Type.Types.Text, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Simple);
-}
-if (type.Card().IsArray()) {
-global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty array = tm.CreateArrayProperty(@namespace, prefix, name, type.Card());
-ast.GetContainer().AddProperty(array);
-global::System.Xml.XmlElement bagOrSeq = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetUniqueElementChild(liDescriptionElementChild);
-global::System.Collections.Generic.IList<global::System.Xml.XmlElement> lis = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(bagOrSeq);
-foreach (global::System.Xml.XmlElement element2 in lis) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField ast2 = this.parseLiElement(xmp, parentQName, element2, type.Type());
-if ((ast2 != default!)) {
-array.AddProperty(ast2);
-}
-}
-} else {
-if (type.Type().IsSimple()) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty sp = tm.InstanciateSimpleProperty(@namespace, prefix, name, liDescriptionElementChild.InnerText, type.Type());
-this.loadAttributes(sp, liDescriptionElementChild);
-ast.GetContainer().AddProperty(sp);
-} else {
-if (type.Type().IsStructured()) {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType inner = this.instanciateStructured(tm, type.Type(), name, (string)default!);
-inner.SetNamespace(@namespace);
-inner.SetPrefix(prefix);
-ast.GetContainer().AddProperty(inner);
-global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer cpc = inner.GetContainer();
-if (global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.IsParseTypeResource(liDescriptionElementChild)) {
-this.parseDescriptionInner(xmp, liDescriptionElementChild, cpc);
-} else {
-global::System.Xml.XmlElement descElement = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetFirstChildElement(liDescriptionElementChild);
-if ((descElement != default!)) {
-this.parseDescriptionInner(xmp, descElement, cpc);
-}
-}
-} else {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoType, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Unidentified element to parse ", liDescriptionElementChild), " (type="), type), ")"));
-}
-}
-}
-}
-ast = this.tryParseAttributesAsProperties(tm, liDescriptionElement, ast, pm, parentQName);
-this.nsFinder.Pop();
-return ast;
-}
+  private global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType parseLiDescription(global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp,
+    global::System.Xml.XmlQualifiedName parentQName,
+    global::System.Xml.XmlElement liDescriptionElement) {
+    global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm = xmp.GetTypeMapping();
+    global::System.Collections.Generic.IList<global::System.Xml.XmlElement> liDescriptionElementChildren
+      = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(liDescriptionElement);
+    if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ListIsEmpty(liDescriptionElementChildren)) {
+      return this.tryParseAttributesAsProperties(tm, liDescriptionElement,
+        (global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType)default!,
+        (global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription)default!, parentQName);
+    }
+    global::System.Xml.XmlElement firstLiDescriptionElementChild
+      = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ListGet(liDescriptionElementChildren, 0);
+    if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("rdf:Description",
+      firstLiDescriptionElementChild.Name)) {
+      return this.parseLiDescription(xmp, parentQName, firstLiDescriptionElementChild);
+    }
+    this.nsFinder.Push(firstLiDescriptionElementChild);
+    global::System.Xml.XmlQualifiedName firstChildQName
+      = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetQName(firstLiDescriptionElementChild);
+    global::DripSharp.PdfCarton.Xmp.Type.PropertyType ctype = this.checkPropertyDefinition(tm,
+      firstChildQName, parentQName.Name);
+    if ((ctype == default!)) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoType,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Property '",
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlQualifiedNamePrefix(firstChildQName)),
+        ":"), firstChildQName.Name), "' not defined in "), firstChildQName.Namespace));
+    }
+    global::DripSharp.PdfCarton.Xmp.Type.Types tt = ctype.Type();
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType ast = this.instanciateStructured(tm,
+      tt, parentQName.Name,
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(firstLiDescriptionElementChild));
+    ast.SetNamespace(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(firstLiDescriptionElementChild));
+    ast.SetPrefix(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(firstLiDescriptionElementChild));
+    global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription pm;
+    if (tt.IsStructured()) {
+      pm = tm.GetStructuredPropMapping(tt);
+    } else {
+      pm
+        = tm.GetDefinedDescriptionByNamespace(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(firstLiDescriptionElementChild),
+        firstLiDescriptionElementChild.LocalName);
+    }
+    foreach (global::System.Xml.XmlElement liDescriptionElementChild in liDescriptionElementChildren) {
+      string prefix
+        = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(liDescriptionElementChild);
+      string name = liDescriptionElementChild.LocalName;
+      string @namespace
+        = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(liDescriptionElementChild);
+      global::DripSharp.PdfCarton.Xmp.Type.PropertyType type = pm.GetPropertyType(name);
+      if ((type == default!)) {
+        if (this.strictParsing) {
+          throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoType,
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Type '",
+            prefix), ":"), name), "' not defined in "),
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(liDescriptionElementChild)));
+        }
+        type
+          = global::DripSharp.PdfCarton.Xmp.Type.TypeMapping.CreatePropertyType(global::DripSharp.PdfCarton.Xmp.Type.Types.Text,
+          global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Simple);
+      }
+      if (type.Card().IsArray()) {
+        global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty array
+          = tm.CreateArrayProperty(@namespace, prefix, name, type.Card());
+        ast.GetContainer().AddProperty(array);
+        global::System.Xml.XmlElement bagOrSeq
+          = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetUniqueElementChild(liDescriptionElementChild);
+        global::System.Collections.Generic.IList<global::System.Xml.XmlElement> lis
+          = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetElementChildren(bagOrSeq);
+        foreach (global::System.Xml.XmlElement element2 in lis) {
+          global::DripSharp.PdfCarton.Xmp.Type.AbstractField ast2 = this.parseLiElement(xmp,
+            parentQName, element2, type.Type());
+          if ((ast2 != default!)) {
+            array.AddProperty(ast2);
+          }
+        }
+      } else {
+        if (type.Type().IsSimple()) {
+          global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty sp
+            = tm.InstanciateSimpleProperty(@namespace, prefix, name,
+            liDescriptionElementChild.InnerText, type.Type());
+          this.loadAttributes(sp, liDescriptionElementChild);
+          ast.GetContainer().AddProperty(sp);
+        } else {
+          if (type.Type().IsStructured()) {
+            global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType inner
+              = this.instanciateStructured(tm, type.Type(), name, (string)default!);
+            inner.SetNamespace(@namespace);
+            inner.SetPrefix(prefix);
+            ast.GetContainer().AddProperty(inner);
+            global::DripSharp.PdfCarton.Xmp.Type.ComplexPropertyContainer cpc
+              = inner.GetContainer();
+            if (global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.IsParseTypeResource(liDescriptionElementChild)) {
+              this.parseDescriptionInner(xmp, liDescriptionElementChild, cpc);
+            } else {
+              global::System.Xml.XmlElement descElement
+                = global::DripSharp.PdfCarton.Xmp.Xml.DomHelper.GetFirstChildElement(liDescriptionElementChild);
+              if ((descElement != default!)) {
+                this.parseDescriptionInner(xmp, descElement, cpc);
+              }
+            }
+          } else {
+            throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoType,
+              global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Unidentified element to parse ",
+              liDescriptionElementChild), " (type="), type), ")"));
+          }
+        }
+      }
+    }
+    ast = this.tryParseAttributesAsProperties(tm, liDescriptionElement, ast, pm, parentQName);
+    this.nsFinder.Pop();
+    return ast;
+  }
 
-private global::DripSharp.PdfCarton.Xmp.XMPMetadata parseInitialXpacket(global::System.Xml.XmlProcessingInstruction pi) {
-if (!(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("xpacket", pi.Name))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Bad processing instruction name : ", pi.Name));
-}
-string data = pi.Data;
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaStringTokenizer tokens = new global::DripSharp.PdfCarton.Runtime.Xmp.JavaStringTokenizer(data, " ");
-string id = default!;
-string begin = default!;
-string bytes = default!;
-string encoding = default!;
-while (tokens.hasMoreTokens()) {
-string token = tokens.nextToken();
-if ((!(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringEndsWith(token, "\"")) && !(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringEndsWith(token, "'")))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Cannot understand PI data part : '", token), "' in '"), data), "'"));
-}
-string quote = token.Substring((token.Length - 1));
-int pos = token.IndexOf(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("=", quote), global::System.StringComparison.Ordinal);
-if ((pos <= 0)) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Cannot understand PI data part : '", token), "' in '"), data), "'"));
-}
-string name = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(token, 0, pos);
-if (((token.Length - 1) < (pos + 2))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Cannot understand PI data part : '", token), "' in '"), data), "'"));
-}
-string value = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(token, (pos + 2), (token.Length - 1));
-switch (name) {
-case var __case_901_22_0 when global::System.Object.Equals(__case_901_22_0, "id"):
-id = value;
-break;
-case var __case_904_22_0 when global::System.Object.Equals(__case_904_22_0, "begin"):
-begin = value;
-break;
-case var __case_907_22_0 when global::System.Object.Equals(__case_907_22_0, "bytes"):
-bytes = value;
-break;
-case var __case_910_22_0 when global::System.Object.Equals(__case_910_22_0, "encoding"):
-encoding = value;
-break;
-default:
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Unknown attribute in xpacket PI : '", token), "'"));
-}
-}
-return global::DripSharp.PdfCarton.Xmp.XMPMetadata.CreateXMPMetadata(begin!, id!, bytes!, encoding!);
-}
+  private global::DripSharp.PdfCarton.Xmp.XMPMetadata parseInitialXpacket(global::System.Xml.XmlProcessingInstruction pi) {
+    if (!global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("xpacket", pi.Name)) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Bad processing instruction name : ",
+        pi.Name));
+    }
+    string data = pi.Data;
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaStringTokenizer tokens
+      = new global::DripSharp.PdfCarton.Runtime.Xmp.JavaStringTokenizer(data, " ");
+    string id = default!;
+    string begin = default!;
+    string bytes = default!;
+    string encoding = default!;
+    while (tokens.hasMoreTokens()) {
+      string token = tokens.nextToken();
+      if ((!global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringEndsWith(token, "\"")
+        && !global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringEndsWith(token, "'"))) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Cannot understand PI data part : '",
+          token), "' in '"), data), "'"));
+      }
+      string quote = token.Substring((token.Length - 1));
+      int pos = token.IndexOf(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("=", quote),
+        global::System.StringComparison.Ordinal);
+      if ((pos <= 0)) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Cannot understand PI data part : '",
+          token), "' in '"), data), "'"));
+      }
+      string name = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(token, 0,
+        pos);
+      if (((token.Length - 1) < (pos + 2))) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Cannot understand PI data part : '",
+          token), "' in '"), data), "'"));
+      }
+      string value = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(token, (pos
+        + 2), (token.Length - 1));
+      switch (name) {
+        case var __case_901_22_0 when global::System.Object.Equals(__case_901_22_0, "id"):
+          id = value;
+          break;
+        case var __case_904_22_0 when global::System.Object.Equals(__case_904_22_0, "begin"):
+          begin = value;
+          break;
+        case var __case_907_22_0 when global::System.Object.Equals(__case_907_22_0, "bytes"):
+          bytes = value;
+          break;
+        case var __case_910_22_0 when global::System.Object.Equals(__case_910_22_0, "encoding"):
+          encoding = value;
+          break;
+        default:
+          throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart,
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Unknown attribute in xpacket PI : '",
+            token), "'"));
+      }
+    }
+    return global::DripSharp.PdfCarton.Xmp.XMPMetadata.CreateXMPMetadata(begin!, id!, bytes!,
+      encoding!);
+  }
 
-private void parseEndPacket(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, global::System.Xml.XmlProcessingInstruction pi) {
-string xpackData = pi.Data;
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringStartsWith(xpackData, "end=")) {
-char end = xpackData[5];
-if ((((int)(end) != (int)('r')) && ((int)(end) != (int)('w')))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadEnd, "Expected xpacket 'end' attribute with value 'r' or 'w' ");
-} else {
-metadata.SetEndXPacket(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CodePointToString(end));
-}
-} else {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadEnd, "Expected xpacket 'end' attribute (must be present and placed in first)");
-}
-}
+  private void parseEndPacket(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata,
+    global::System.Xml.XmlProcessingInstruction pi) {
+    string xpackData = pi.Data;
+    if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringStartsWith(xpackData, "end=")) {
+      char end = xpackData[5];
+      if ((((int)end != (int)'r') && ((int)end != (int)'w'))) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadEnd,
+          "Expected xpacket 'end' attribute with value 'r' or 'w' ");
+      } else {
+        metadata.SetEndXPacket(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.CodePointToString(end));
+      }
+    } else {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadEnd,
+        "Expected xpacket 'end' attribute (must be present and placed in first)");
+    }
+  }
 
-private global::System.Xml.XmlElement findDescriptionsParent(global::System.Xml.XmlElement root) {
-global::System.Xml.XmlElement rdfRdf = default!;
-if (!(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(root)))) {
-if ((!(this.strictParsing) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("xapmeta", root.LocalName))) {
-this.expectNaming(root, "adobe:ns:meta/", "x", "xapmeta");
-} else {
-this.expectNaming(root, "adobe:ns:meta/", "x", "xmpmeta");
-}
-global::System.Xml.XmlNodeList nl = root.ChildNodes;
-if ((nl.Count == 0)) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, "No rdf description found in xmp");
-} else {
-if ((nl.Count > 1)) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, "More than one element found in x:xmpmeta");
-} else {
-if (!((root.FirstChild is global::System.Xml.XmlElement))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("x:xmpmeta does not contains rdf:RDF element but ", root.FirstChild));
-}
-}
-}
-rdfRdf = (global::System.Xml.XmlElement)(root.FirstChild!);
-} else {
-rdfRdf = root;
-}
-this.expectNaming(rdfRdf!, global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace, global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfPrefix, global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfLocalName);
-return rdfRdf!;
-}
+  private global::System.Xml.XmlElement findDescriptionsParent(global::System.Xml.XmlElement root) {
+    global::System.Xml.XmlElement rdfRdf = default!;
+    if (!global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace,
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(root))) {
+      if ((!(this.strictParsing)
+        && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("xapmeta", root.LocalName))) {
+        this.expectNaming(root, "adobe:ns:meta/", "x", "xapmeta");
+      } else {
+        this.expectNaming(root, "adobe:ns:meta/", "x", "xmpmeta");
+      }
+      global::System.Xml.XmlNodeList nl = root.ChildNodes;
+      if ((nl.Count == 0)) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+          "No rdf description found in xmp");
+      } else {
+        if ((nl.Count > 1)) {
+          throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+            "More than one element found in x:xmpmeta");
+        } else {
+          if (!((root.FirstChild is global::System.Xml.XmlElement))) {
+            throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+              global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("x:xmpmeta does not contains rdf:RDF element but ",
+              root.FirstChild));
+          }
+        }
+      }
+      rdfRdf = (global::System.Xml.XmlElement)(root.FirstChild!);
+    } else {
+      rdfRdf = root;
+    }
+    this.expectNaming(rdfRdf!, global::DripSharp.PdfCarton.Xmp.XmpConstants.RdfNamespace,
+      global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfPrefix,
+      global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfLocalName);
+    return rdfRdf!;
+  }
 
-private void expectNaming(global::System.Xml.XmlElement element, string ns, string prefix, string ln) {
-if (((ns != default!) && !(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(ns, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(element))))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Expecting namespace '", ns), "' and found '"), global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(element)), "'"));
-} else {
-if (((prefix != default!) && !(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(prefix, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(element))))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Expecting prefix '", prefix), "' and found '"), global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(element)), "'"));
-} else {
-if (((ln != default!) && !(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(ln, element.LocalName)))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Expecting local name '", ln), "' and found '"), element.LocalName), "'"));
-}
-}
-}
-}
+  private void expectNaming(global::System.Xml.XmlElement element, string ns, string prefix,
+    string ln) {
+    if (((ns != default!) && !global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(ns,
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(element)))) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Expecting namespace '",
+        ns), "' and found '"),
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(element)), "'"));
+    } else {
+      if (((prefix != default!)
+        && !global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(prefix,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(element)))) {
+        throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Expecting prefix '",
+          prefix), "' and found '"),
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(element)), "'"));
+      } else {
+        if (((ln != default!) && !global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(ln,
+          element.LocalName))) {
+          throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Expecting local name '",
+            ln), "' and found '"), element.LocalName), "'"));
+        }
+      }
+    }
+  }
 
-private void removeCommentsAndBlanks(global::System.Xml.XmlNode root) {
-global::System.Collections.Generic.IList<global::System.Xml.XmlNode> forDeletion = new global::System.Collections.Generic.List<global::System.Xml.XmlNode>();
-global::System.Xml.XmlNodeList nl = root.ChildNodes;
-if ((!((root is global::System.Xml.XmlDocument)) && (nl.Count <= 1))) {
-return;
-}
-for (int i = 0; (i < nl.Count); i++) {
-global::System.Xml.XmlNode node = nl.Item(i);
-if ((node is global::System.Xml.XmlComment)) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(forDeletion, node);
-} else {
-if ((node is global::System.Xml.XmlText)) {
-if ((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringTrim(node.InnerText).Length == 0)) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(forDeletion, node);
-}
-} else {
-if ((node is global::System.Xml.XmlElement)) {
-this.removeCommentsAndBlanks(node);
-}
-}
-}
-}
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(forDeletion, (value0) => { root.RemoveChild(value0); });
-}
+  private void removeCommentsAndBlanks(global::System.Xml.XmlNode root) {
+    global::System.Collections.Generic.IList<global::System.Xml.XmlNode> forDeletion
+      = new global::System.Collections.Generic.List<global::System.Xml.XmlNode>();
+    global::System.Xml.XmlNodeList nl = root.ChildNodes;
+    if ((!((root is global::System.Xml.XmlDocument)) && (nl.Count <= 1))) {
+      return;
+    }
+    for (int i = 0; (i < nl.Count); i++) {
+      global::System.Xml.XmlNode node = nl.Item(i);
+      if ((node is global::System.Xml.XmlComment)) {
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(forDeletion, node);
+      } else {
+        if ((node is global::System.Xml.XmlText)) {
+          if ((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringTrim(node.InnerText).Length
+            == 0)) {
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Add(forDeletion, node);
+          }
+        } else {
+          if ((node is global::System.Xml.XmlElement)) {
+            this.removeCommentsAndBlanks(node);
+          }
+        }
+      }
+    }
+    global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ForEach(forDeletion, (value0)
+      => { root.RemoveChild(value0); });
+  }
 
-private global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType instanciateStructured(global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm, global::DripSharp.PdfCarton.Xmp.Type.Types type, string name, string structuredNamespace) {
-try {
-if (type.IsStructured()) {
-return tm.InstanciateStructuredType(type, name);
-} else {
-if (type.IsDefined()) {
-return tm.InstanciateDefinedType(name, structuredNamespace);
-} else {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Type not structured : ", type));
-}
-}
-} catch (global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException e) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType, "Parsing failed", e);
-}
-}
+  private global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType instanciateStructured(global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm,
+    global::DripSharp.PdfCarton.Xmp.Type.Types type, string name, string structuredNamespace) {
+    try {
+      if (type.IsStructured()) {
+        return tm.InstanciateStructuredType(type, name);
+      } else {
+        if (type.IsDefined()) {
+          return tm.InstanciateDefinedType(name, structuredNamespace);
+        } else {
+          throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType,
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Type not structured : ",
+            type));
+        }
+      }
+    } catch (global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException e) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType,
+        "Parsing failed", e);
+    }
+  }
 
-private global::DripSharp.PdfCarton.Xmp.Type.PropertyType checkPropertyDefinition(global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm, global::System.Xml.XmlQualifiedName qName, string parentTypeName) {
-string nsuri = qName.Namespace;
-if (!(this.nsFinder.ContainsNamespace(nsuri))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoSchema, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Schema is not set in this document : ", nsuri), ", property: "), global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlQualifiedNamePrefix(qName)), ":"), qName.Name));
-}
-if (!(tm.IsDefinedNamespace(nsuri))) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoSchema, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Cannot find a definition for the namespace ", nsuri), ", property: "), global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlQualifiedNamePrefix(qName)), ":"), qName.Name));
-}
-try {
-return tm.GetSpecifiedPropertyType(qName, parentTypeName);
-} catch (global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException e) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Failed to retrieve property definition for ", qName), e);
-}
-}
+  private global::DripSharp.PdfCarton.Xmp.Type.PropertyType checkPropertyDefinition(global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm,
+    global::System.Xml.XmlQualifiedName qName, string parentTypeName) {
+    string nsuri = qName.Namespace;
+    if (!(this.nsFinder.ContainsNamespace(nsuri))) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoSchema,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Schema is not set in this document : ",
+        nsuri), ", property: "),
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlQualifiedNamePrefix(qName)), ":"),
+        qName.Name));
+    }
+    if (!(tm.IsDefinedNamespace(nsuri))) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoSchema,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Cannot find a definition for the namespace ",
+        nsuri), ", property: "),
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlQualifiedNamePrefix(qName)), ":"),
+        qName.Name));
+    }
+    try {
+      return tm.GetSpecifiedPropertyType(qName, parentTypeName);
+    } catch (global::DripSharp.PdfCarton.Xmp.Type.BadFieldValueException e) {
+      throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Failed to retrieve property definition for ",
+        qName), e);
+    }
+  }
 
-private global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType tryParseAttributesAsProperties(global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm, global::System.Xml.XmlElement liElement, global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType ast, global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription pm, global::System.Xml.XmlQualifiedName qName) {
-global::System.Xml.XmlAttributeCollection attributes = liElement.Attributes!;
-for (int i = 0; (i < attributes.Count); ++i) {
-global::System.Xml.XmlAttribute attr = (global::System.Xml.XmlAttribute)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlAttributeItem(attributes, i)!);
-if (((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("xmlns", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)) || global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("http://www.w3.org/XML/1998/namespace", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr))) || global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfPrefix, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)))) {
-continue;
-}
-if (((ast == default!) && (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr) != default!))) {
-global::System.Xml.XmlQualifiedName attrQName = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewXmlQualifiedName(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr), attr.LocalName, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr));
-global::DripSharp.PdfCarton.Xmp.Type.PropertyType ctype = this.checkPropertyDefinition(tm, attrQName, (string)default!);
-if ((ctype == default!)) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoType, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Property '", attrQName.Name), "' not defined in "), attrQName.Namespace));
-}
-global::DripSharp.PdfCarton.Xmp.Type.Types tt = ctype.Type();
-ast = this.instanciateStructured(tm, tt, qName.Name, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr));
-if (tt.IsStructured()) {
-pm = tm.GetStructuredPropMapping(tt);
-} else {
-pm = tm.GetDefinedDescriptionByNamespace(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr), attr.LocalName);
-}
-}
-if ((((ast != default!) && (pm != default!)) && (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr) != default!))) {
-global::DripSharp.PdfCarton.Xmp.Type.PropertyType type = pm.GetPropertyType(attr.LocalName);
-if ((type == default!)) {
-if (this.strictParsing) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("No type defined for {", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr)), "}"), attr.LocalName));
-}
-type = global::DripSharp.PdfCarton.Xmp.Type.TypeMapping.CreatePropertyType(global::DripSharp.PdfCarton.Xmp.Type.Types.Text, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Simple);
-} else {
-if (((!(type.Type().IsSimple()) || type.Card().IsArray()) || (type.Type() == global::DripSharp.PdfCarton.Xmp.Type.Types.LangAlt))) {
-if (this.strictParsing) {
-throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("The type '", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumName(type.Type())), "' in '"), global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)), ":"), attr.LocalName), "="), attr.Value), "' is a structured or array type, but attributes are simple types"));
-}
-if ((attr.Value.Length == 0)) {
-continue;
-}
-type = global::DripSharp.PdfCarton.Xmp.Type.TypeMapping.CreatePropertyType(global::DripSharp.PdfCarton.Xmp.Type.Types.Text, global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Simple);
-}
-}
-global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty asp = tm.InstanciateSimpleProperty(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr), global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr), attr.LocalName, attr.Value, type.Type());
-ast.GetContainer().AddProperty(asp);
-}
-}
-return ast;
-}
+  private global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType tryParseAttributesAsProperties(global::DripSharp.PdfCarton.Xmp.Type.TypeMapping tm,
+    global::System.Xml.XmlElement liElement,
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType ast,
+    global::DripSharp.PdfCarton.Xmp.Type.PropertiesDescription pm,
+    global::System.Xml.XmlQualifiedName qName) {
+    global::System.Xml.XmlAttributeCollection attributes = liElement.Attributes!;
+    for (int i = 0; (i < attributes.Count); ++i) {
+      global::System.Xml.XmlAttribute attr
+        = (global::System.Xml.XmlAttribute)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlAttributeItem(attributes,
+        i)!);
+      if (((global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("xmlns",
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr))
+        || global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("http://www.w3.org/XML/1998/namespace",
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr)))
+        || global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals(global::DripSharp.PdfCarton.Xmp.XmpConstants.DefaultRdfPrefix,
+        global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)))) {
+        continue;
+      }
+      if (((ast == default!)
+        && (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr)
+        != default!))) {
+        global::System.Xml.XmlQualifiedName attrQName
+          = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewXmlQualifiedName(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr),
+          attr.LocalName, global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr));
+        global::DripSharp.PdfCarton.Xmp.Type.PropertyType ctype = this.checkPropertyDefinition(tm,
+          attrQName, (string)default!);
+        if ((ctype == default!)) {
+          throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoType,
+            global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Property '",
+            attrQName.Name), "' not defined in "), attrQName.Namespace));
+        }
+        global::DripSharp.PdfCarton.Xmp.Type.Types tt = ctype.Type();
+        ast = this.instanciateStructured(tm, tt, qName.Name,
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr));
+        if (tt.IsStructured()) {
+          pm = tm.GetStructuredPropMapping(tt);
+        } else {
+          pm
+            = tm.GetDefinedDescriptionByNamespace(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr),
+            attr.LocalName);
+        }
+      }
+      if ((((ast != default!) && (pm != default!))
+        && (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr)
+        != default!))) {
+        global::DripSharp.PdfCarton.Xmp.Type.PropertyType type = pm.GetPropertyType(attr.LocalName);
+        if ((type == default!)) {
+          if (this.strictParsing) {
+            throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType,
+              global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("No type defined for {",
+              global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr)), "}"),
+              attr.LocalName));
+          }
+          type
+            = global::DripSharp.PdfCarton.Xmp.Type.TypeMapping.CreatePropertyType(global::DripSharp.PdfCarton.Xmp.Type.Types.Text,
+            global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Simple);
+        } else {
+          if (((!(type.Type().IsSimple()) || type.Card().IsArray()) || (type.Type()
+            == global::DripSharp.PdfCarton.Xmp.Type.Types.LangAlt))) {
+            if (this.strictParsing) {
+              throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.InvalidType,
+                global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("The type '",
+                global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.EnumName(type.Type())),
+                "' in '"), global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr)),
+                ":"), attr.LocalName), "="), attr.Value),
+                "' is a structured or array type, but attributes are simple types"));
+            }
+            if ((attr.Value.Length == 0)) {
+              continue;
+            }
+            type
+              = global::DripSharp.PdfCarton.Xmp.Type.TypeMapping.CreatePropertyType(global::DripSharp.PdfCarton.Xmp.Type.Types.Text,
+              global::DripSharp.PdfCarton.Xmp.Type.Cardinality.Simple);
+          }
+        }
+        global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty asp
+          = tm.InstanciateSimpleProperty(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(attr),
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodePrefix(attr), attr.LocalName,
+          attr.Value, type.Type());
+        ast.GetContainer().AddProperty(asp);
+      }
+    }
+    return ast;
+  }
 
-protected internal class NamespaceFinder {
-internal readonly global::DripSharp.PdfCarton.Runtime.Xmp.JavaDeque<global::System.Collections.Generic.IDictionary<string, string>> stack = new global::DripSharp.PdfCarton.Runtime.Xmp.JavaDeque<global::System.Collections.Generic.IDictionary<string, string>>();
+  protected internal class NamespaceFinder {
+    internal readonly global::DripSharp.PdfCarton.Runtime.Xmp.JavaDeque<global::System.Collections.Generic.IDictionary<string,
+      string>> stack
+      = new global::DripSharp.PdfCarton.Runtime.Xmp.JavaDeque<global::System.Collections.Generic.IDictionary<string,
+      string>>();
 
-protected internal virtual void Push(global::System.Xml.XmlElement description) {
-global::System.Xml.XmlAttributeCollection nnm = description.Attributes!;
-global::System.Collections.Generic.IDictionary<string, string> map = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewJavaDictionary<string, string>(nnm.Count);
-for (int j = 0; (j < nnm.Count); j++) {
-global::System.Xml.XmlAttribute no = (global::System.Xml.XmlAttribute)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlAttributeItem(nnm, j)!);
-if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("http://www.w3.org/2000/xmlns/", global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(no))) {
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapPut(map, no.LocalName, no.Value);
-}
-}
-global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.DequePush(this.stack, map);
-}
+    protected internal virtual void Push(global::System.Xml.XmlElement description) {
+      global::System.Xml.XmlAttributeCollection nnm = description.Attributes!;
+      global::System.Collections.Generic.IDictionary<string, string> map
+        = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewJavaDictionary<string,
+        string>(nnm.Count);
+      for (int j = 0; (j < nnm.Count); j++) {
+        global::System.Xml.XmlAttribute no
+          = (global::System.Xml.XmlAttribute)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlAttributeItem(nnm,
+          j)!);
+        if (global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Equals("http://www.w3.org/2000/xmlns/",
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.XmlNodeNamespaceUri(no))) {
+          global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapPut(map, no.LocalName, no.Value);
+        }
+      }
+      global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.DequePush(this.stack, map);
+    }
 
-protected internal virtual global::System.Collections.Generic.IDictionary<string, string> Pop() {
-return this.stack.Pop();
-}
+    protected internal virtual global::System.Collections.Generic.IDictionary<string,
+      string> Pop() {
+      return this.stack.Pop();
+    }
 
-protected internal virtual bool ContainsNamespace(string @namespace) {
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Any(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Stream(this.stack), (map) => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapContainsValue(map, @namespace));
-}
+    protected internal virtual bool ContainsNamespace(string @namespace) {
+      return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Any(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Stream(this.stack),
+        (map) => global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.MapContainsValue(map,
+        @namespace));
+    }
 
-protected internal NamespaceFinder() {}
-}
+    protected internal NamespaceFinder() {}
+  }
 }

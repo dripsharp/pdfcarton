@@ -9,37 +9,37 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Action;
 
 public class PDActionSubmitForm : global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction {
-public const string SubType = "SubmitForm";
+  public const string SubType = "SubmitForm";
 
-public PDActionSubmitForm() {
-this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionSubmitForm.SubType);
-}
+  public PDActionSubmitForm() {
+    this.SetSubType(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionSubmitForm.SubType);
+  }
 
-public PDActionSubmitForm(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public PDActionSubmitForm(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification GetFile() {
-return global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification.CreateFS(base.Action.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.F));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification GetFile() {
+    return global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification.CreateFS(base.Action.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.F));
+  }
 
-public virtual void SetFile(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification fs) {
-base.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, fs);
-}
+  public virtual void SetFile(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification fs) {
+    base.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, fs);
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSArray GetFields() {
-return base.Action.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Fields);
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSArray GetFields() {
+    return base.Action.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Fields);
+  }
 
-public virtual void SetFields(global::DripSharp.PdfCarton.Cos.COSArray array) {
-this.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fields, array);
-}
+  public virtual void SetFields(global::DripSharp.PdfCarton.Cos.COSArray array) {
+    this.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Fields, array);
+  }
 
-public virtual int GetFlags() {
-return this.Action.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, 0);
-}
+  public virtual int GetFlags() {
+    return this.Action.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, 0);
+  }
 
-public virtual void SetFlags(int flags) {
-this.Action.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, flags);
-}
+  public virtual void SetFlags(int flags) {
+    this.Action.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, flags);
+  }
 }

@@ -8,122 +8,142 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Schema;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/rights/", "xmpRights")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/rights/",
+  "xmpRights")]
 public class XMPRightsManagementSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URL", "Simple")]
-public const string Certificate = "Certificate";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URL", "Simple")]
+  public const string Certificate = "Certificate";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Boolean", "Simple")]
-public const string Marked = "Marked";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Boolean", "Simple")]
+  public const string Marked = "Marked";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("ProperName", "Bag")]
-public const string Owner = "Owner";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("ProperName", "Bag")]
+  public const string Owner = "Owner";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("LangAlt", "Simple")]
-public const string Usageterms = "UsageTerms";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("LangAlt", "Simple")]
+  public const string Usageterms = "UsageTerms";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URL", "Simple")]
-public const string Webstatement = "WebStatement";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("URL", "Simple")]
+  public const string Webstatement = "WebStatement";
 
-public XMPRightsManagementSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+  public XMPRightsManagementSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata)
+  : base(metadata) {
 
-}
+  }
 
-public XMPRightsManagementSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string ownPrefix) : base(metadata, ownPrefix) {
+  public XMPRightsManagementSchema(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata,
+    string ownPrefix) : base(metadata, ownPrefix) {
 
-}
+  }
 
-public virtual void AddOwner(string value) {
-this.AddQualifiedBagValue(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Owner, value);
-}
+  public virtual void AddOwner(string value) {
+    this.AddQualifiedBagValue(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Owner,
+      value);
+  }
 
-public virtual void RemoveOwner(string value) {
-this.RemoveUnqualifiedBagValue(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Owner, value);
-}
+  public virtual void RemoveOwner(string value) {
+    this.RemoveUnqualifiedBagValue(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Owner,
+      value);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetOwnersProperty() {
-return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty>(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Owner, typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty));
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetOwnersProperty() {
+    return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty>(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Owner,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty));
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetOwners() {
-return this.GetUnqualifiedBagValueList(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Owner);
-}
+  public virtual global::System.Collections.Generic.IList<string> GetOwners() {
+    return this.GetUnqualifiedBagValueList(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Owner);
+  }
 
-public virtual void SetMarked(bool? marked) {
-global::DripSharp.PdfCarton.Xmp.Type.BooleanType tt = (global::DripSharp.PdfCarton.Xmp.Type.BooleanType)(this.InstanciateSimple(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Marked, (((marked != default!) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Unbox(marked)) ? (object)(global::DripSharp.PdfCarton.Xmp.Type.BooleanType.True) : (object)(global::DripSharp.PdfCarton.Xmp.Type.BooleanType.False)))!);
-this.SetMarkedProperty(tt);
-}
+  public virtual void SetMarked(bool? marked) {
+    global::DripSharp.PdfCarton.Xmp.Type.BooleanType tt
+      = (global::DripSharp.PdfCarton.Xmp.Type.BooleanType)(this.InstanciateSimple(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Marked,
+      (((marked != default!) && global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Unbox(marked))
+      ? (object)(global::DripSharp.PdfCarton.Xmp.Type.BooleanType.True)
+      : (object)(global::DripSharp.PdfCarton.Xmp.Type.BooleanType.False)))!);
+    this.SetMarkedProperty(tt);
+  }
 
-public virtual void SetMarkedProperty(global::DripSharp.PdfCarton.Xmp.Type.BooleanType marked) {
-this.AddProperty(marked);
-}
+  public virtual void SetMarkedProperty(global::DripSharp.PdfCarton.Xmp.Type.BooleanType marked) {
+    this.AddProperty(marked);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.BooleanType GetMarkedProperty() {
-return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.BooleanType>(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Marked, typeof(global::DripSharp.PdfCarton.Xmp.Type.BooleanType));
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.BooleanType GetMarkedProperty() {
+    return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.BooleanType>(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Marked,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.BooleanType));
+  }
 
-public virtual bool? GetMarked() {
-global::DripSharp.PdfCarton.Xmp.Type.BooleanType bt = this.GetMarkedProperty();
-return ((bt == default!) ? (bool?)(default!) : (bool?)(bt.GetValue()));
-}
+  public virtual bool? GetMarked() {
+    global::DripSharp.PdfCarton.Xmp.Type.BooleanType bt = this.GetMarkedProperty();
+    return ((bt == default!) ? (bool?)(default!) : (bool?)(bt.GetValue()));
+  }
 
-public virtual void AddUsageTerms(string lang, string value) {
-this.SetUnqualifiedLanguagePropertyValue(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Usageterms, lang, value);
-}
+  public virtual void AddUsageTerms(string lang, string value) {
+    this.SetUnqualifiedLanguagePropertyValue(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Usageterms,
+      lang, value);
+  }
 
-public virtual void SetUsageTerms(string terms) {
-this.AddUsageTerms((string)default!, terms);
-}
+  public virtual void SetUsageTerms(string terms) {
+    this.AddUsageTerms((string)default!, terms);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetUsageTermsProperty() {
-return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty>(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Usageterms, typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty));
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetUsageTermsProperty() {
+    return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty>(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Usageterms,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty));
+  }
 
-public virtual global::System.Collections.Generic.IList<string> GetUsageTermsLanguages() {
-return this.GetUnqualifiedLanguagePropertyLanguagesValue(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Usageterms);
-}
+  public virtual global::System.Collections.Generic.IList<string> GetUsageTermsLanguages() {
+    return this.GetUnqualifiedLanguagePropertyLanguagesValue(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Usageterms);
+  }
 
-public virtual string GetUsageTerms(string lang) {
-return this.GetUnqualifiedLanguagePropertyValue(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Usageterms, lang);
-}
+  public virtual string GetUsageTerms(string lang) {
+    return this.GetUnqualifiedLanguagePropertyValue(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Usageterms,
+      lang);
+  }
 
-public virtual string GetUsageTerms() {
-return this.GetUsageTerms((string)default!);
-}
+  public virtual string GetUsageTerms() {
+    return this.GetUsageTerms((string)default!);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType GetWebStatementProperty() {
-return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.TextType>(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Webstatement, typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType));
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType GetWebStatementProperty() {
+    return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.TextType>(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Webstatement,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType));
+  }
 
-public virtual string GetWebStatement() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType tt = this.GetWebStatementProperty();
-return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
-}
+  public virtual string GetWebStatement() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType tt = this.GetWebStatementProperty();
+    return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
+  }
 
-public virtual void SetWebStatement(string url) {
-global::DripSharp.PdfCarton.Xmp.Type.URLType tt = (global::DripSharp.PdfCarton.Xmp.Type.URLType)(this.InstanciateSimple(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Webstatement, url)!);
-this.SetWebStatementProperty(tt);
-}
+  public virtual void SetWebStatement(string url) {
+    global::DripSharp.PdfCarton.Xmp.Type.URLType tt
+      = (global::DripSharp.PdfCarton.Xmp.Type.URLType)(this.InstanciateSimple(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Webstatement,
+      url)!);
+    this.SetWebStatementProperty(tt);
+  }
 
-public virtual void SetWebStatementProperty(global::DripSharp.PdfCarton.Xmp.Type.URLType url) {
-this.AddProperty(url);
-}
+  public virtual void SetWebStatementProperty(global::DripSharp.PdfCarton.Xmp.Type.URLType url) {
+    this.AddProperty(url);
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType GetCertificateProperty() {
-return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.TextType>(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Certificate, typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType));
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.Type.TextType GetCertificateProperty() {
+    return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.TextType>(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Certificate,
+      typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType));
+  }
 
-public virtual string GetCertificate() {
-global::DripSharp.PdfCarton.Xmp.Type.TextType tt = this.GetCertificateProperty();
-return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
-}
+  public virtual string GetCertificate() {
+    global::DripSharp.PdfCarton.Xmp.Type.TextType tt = this.GetCertificateProperty();
+    return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
+  }
 
-public virtual void SetCertificate(string url) {
-global::DripSharp.PdfCarton.Xmp.Type.URLType tt = (global::DripSharp.PdfCarton.Xmp.Type.URLType)(this.InstanciateSimple(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Certificate, url)!);
-this.SetCertificateProperty(tt);
-}
+  public virtual void SetCertificate(string url) {
+    global::DripSharp.PdfCarton.Xmp.Type.URLType tt
+      = (global::DripSharp.PdfCarton.Xmp.Type.URLType)(this.InstanciateSimple(global::DripSharp.PdfCarton.Xmp.Schema.XMPRightsManagementSchema.Certificate,
+      url)!);
+    this.SetCertificateProperty(tt);
+  }
 
-public virtual void SetCertificateProperty(global::DripSharp.PdfCarton.Xmp.Type.URLType url) {
-this.AddProperty(url);
-}
+  public virtual void SetCertificateProperty(global::DripSharp.PdfCarton.Xmp.Type.URLType url) {
+    this.AddProperty(url);
+  }
 }

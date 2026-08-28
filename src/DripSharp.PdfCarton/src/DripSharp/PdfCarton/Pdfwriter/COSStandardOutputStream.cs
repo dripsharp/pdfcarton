@@ -9,60 +9,61 @@
 namespace DripSharp.PdfCarton.Pdfwriter;
 
 public class COSStandardOutputStream : global::DripSharp.Runtime.JavaFilterOutputStream {
-public static readonly sbyte[] Crlf = new sbyte[] { unchecked((sbyte)('\r')), unchecked((sbyte)('\n')) };
+  public static readonly sbyte[] Crlf = new sbyte[] { unchecked((sbyte)('\r')),
+    unchecked((sbyte)('\n')) };
 
-public static readonly sbyte[] Lf = new sbyte[] { unchecked((sbyte)('\n')) };
+  public static readonly sbyte[] Lf = new sbyte[] { unchecked((sbyte)('\n')) };
 
-public static readonly sbyte[] Eol = new sbyte[] { unchecked((sbyte)('\n')) };
+  public static readonly sbyte[] Eol = new sbyte[] { unchecked((sbyte)('\n')) };
 
-private long position = 0;
+  private long position = 0;
 
-private bool onNewLine = false;
+  private bool onNewLine = false;
 
-public COSStandardOutputStream(global::System.IO.Stream @out) : base(@out) {
+  public COSStandardOutputStream(global::System.IO.Stream @out) : base(@out) {
 
-}
+  }
 
-public COSStandardOutputStream(global::System.IO.Stream @out, long position) : base(@out) {
-this.position = position;
-}
+  public COSStandardOutputStream(global::System.IO.Stream @out, long position) : base(@out) {
+    this.position = position;
+  }
 
-public virtual long GetPos() {
-return this.position;
-}
+  public virtual long GetPos() {
+    return this.position;
+  }
 
-public virtual bool IsOnNewLine() {
-return this.onNewLine;
-}
+  public virtual bool IsOnNewLine() {
+    return this.onNewLine;
+  }
 
-public virtual void SetOnNewLine(bool newOnNewLine) {
-this.onNewLine = newOnNewLine;
-}
+  public virtual void SetOnNewLine(bool newOnNewLine) {
+    this.onNewLine = newOnNewLine;
+  }
 
-public override void Write(sbyte[] b, int off, int len) {
-this.SetOnNewLine(false);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, b, off, len);
-this.position += len;
-}
+  public override void Write(sbyte[] b, int off, int len) {
+    this.SetOnNewLine(false);
+    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, b, off, len);
+    this.position += len;
+  }
 
-public override void Write(int b) {
-this.SetOnNewLine(false);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, b);
-this.position++;
-}
+  public override void Write(int b) {
+    this.SetOnNewLine(false);
+    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, b);
+    this.position++;
+  }
 
-public virtual void WriteCRLF() {
-this.Write(global::DripSharp.PdfCarton.Pdfwriter.COSStandardOutputStream.Crlf);
-}
+  public virtual void WriteCRLF() {
+    this.Write(global::DripSharp.PdfCarton.Pdfwriter.COSStandardOutputStream.Crlf);
+  }
 
-public virtual void WriteEOL() {
-if (!(this.IsOnNewLine())) {
-this.Write(global::DripSharp.PdfCarton.Pdfwriter.COSStandardOutputStream.Eol);
-this.SetOnNewLine(true);
-}
-}
+  public virtual void WriteEOL() {
+    if (!(this.IsOnNewLine())) {
+      this.Write(global::DripSharp.PdfCarton.Pdfwriter.COSStandardOutputStream.Eol);
+      this.SetOnNewLine(true);
+    }
+  }
 
-public virtual void WriteLF() {
-this.Write(global::DripSharp.PdfCarton.Pdfwriter.COSStandardOutputStream.Lf);
-}
+  public virtual void WriteLF() {
+    this.Write(global::DripSharp.PdfCarton.Pdfwriter.COSStandardOutputStream.Lf);
+  }
 }

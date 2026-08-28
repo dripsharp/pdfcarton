@@ -8,24 +8,28 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
-public class PDAnnotationTextMarkup : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
-protected internal PDAnnotationTextMarkup(string subType) {
-this.SetSubtype(subType);
-this.SetQuadPoints(new float[0]);
-}
+public class PDAnnotationTextMarkup
+: global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup {
+  protected internal PDAnnotationTextMarkup(string subType) {
+    this.SetSubtype(subType);
+    this.SetQuadPoints(new float[0]);
+  }
 
-protected internal PDAnnotationTextMarkup(global::DripSharp.PdfCarton.Cos.COSDictionary field) : base(field) {
+  protected internal PDAnnotationTextMarkup(global::DripSharp.PdfCarton.Cos.COSDictionary field)
+  : base(field) {
 
-}
+  }
 
-public void SetQuadPoints(float[] quadPoints) {
-global::DripSharp.PdfCarton.Cos.COSArray newQuadPoints = new global::DripSharp.PdfCarton.Cos.COSArray();
-newQuadPoints.SetFloatArray(quadPoints);
-this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Quadpoints, newQuadPoints);
-}
+  public void SetQuadPoints(float[] quadPoints) {
+    global::DripSharp.PdfCarton.Cos.COSArray newQuadPoints
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    newQuadPoints.SetFloatArray(quadPoints);
+    this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Quadpoints, newQuadPoints);
+  }
 
-public virtual float[] GetQuadPoints() {
-global::DripSharp.PdfCarton.Cos.COSArray array = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Quadpoints);
-return ((array != default!) ? array.ToFloatArray() : (float[])(default!));
-}
+  public virtual float[] GetQuadPoints() {
+    global::DripSharp.PdfCarton.Cos.COSArray array
+      = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Quadpoints);
+    return ((array != default!) ? array.ToFloatArray() : (float[])(default!));
+  }
 }

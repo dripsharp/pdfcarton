@@ -8,9 +8,12 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Annotation;
 
-public class HighlightAnnotationValidator : global::DripSharp.PdfCarton.Preflight.Annotation.MarkupAnnotationValidator {
-protected internal HighlightAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
-this.PdMarkup = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationHighlight(annotDictionary);
-this.PdAnnot = this.PdMarkup;
-}
+public class HighlightAnnotationValidator
+: global::DripSharp.PdfCarton.Preflight.Annotation.MarkupAnnotationValidator {
+  protected internal HighlightAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdMarkup
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationHighlight(annotDictionary);
+    this.PdAnnot = this.PdMarkup;
+  }
 }

@@ -8,117 +8,149 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel;
 
-public sealed class PDPageContentStream : global::DripSharp.PdfCarton.Pdmodel.PDAbstractContentStream, global::System.IDisposable {
-public sealed class AppendMode {
-[global::DripSharp.Runtime.JavaEnumNameAttribute("OVERWRITE")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode Overwrite = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode();
+public sealed class PDPageContentStream
+: global::DripSharp.PdfCarton.Pdmodel.PDAbstractContentStream, global::System.IDisposable {
+  public sealed class AppendMode {
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("OVERWRITE")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(0)]
+    public static readonly global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode Overwrite
+      = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("APPEND")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode Append = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode();
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("APPEND")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(1)]
+    public static readonly global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode Append
+      = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode();
 
-[global::DripSharp.Runtime.JavaEnumNameAttribute("PREPEND")]
-[global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
-public static readonly global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode Prepend = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode();
+    [global::DripSharp.Runtime.JavaEnumNameAttribute("PREPEND")]
+    [global::DripSharp.Runtime.JavaEnumOrdinalAttribute(2)]
+    public static readonly global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode Prepend
+      = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode();
 
-public bool IsOverwrite() {
-return (this == global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite);
-}
+    public bool IsOverwrite() {
+      return (this == global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite);
+    }
 
-public bool IsPrepend() {
-return (this == global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Prepend);
-}
+    public bool IsPrepend() {
+      return (this == global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Prepend);
+    }
 
-private AppendMode() {}
+    private AppendMode() {}
 
+    public static AppendMode[] values()
+      => global::DripSharp.Runtime.JavaCompat.EnumValues<AppendMode>();
+    public static AppendMode valueOf(string name)
+      => global::DripSharp.Runtime.JavaCompat.EnumValueOf<AppendMode>(name);
 
-public static AppendMode[] values() => global::DripSharp.Runtime.JavaCompat.EnumValues<AppendMode>();
-public static AppendMode valueOf(string name) => global::DripSharp.Runtime.JavaCompat.EnumValueOf<AppendMode>(name);
+    public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
+  }
 
-public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
-}
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private bool sourcePageHadContents = false;
 
-private bool sourcePageHadContents = false;
+  public PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage sourcePage) : this(document, sourcePage,
+    global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite, true, false) {
+    if (this.sourcePageHadContents) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("You are overwriting an existing content, you should use the append mode"));
+    }
+  }
 
-public PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, global::DripSharp.PdfCarton.Pdmodel.PDPage sourcePage) : this(document, sourcePage, global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite, true, false) {
-if (this.sourcePageHadContents) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("You are overwriting an existing content, you should use the append mode"));
-}
-}
+  public PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage sourcePage,
+    global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode appendContent, bool compress)
+  : this(document, sourcePage, appendContent, compress, false) {
 
-public PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, global::DripSharp.PdfCarton.Pdmodel.PDPage sourcePage, global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode appendContent, bool compress) : this(document, sourcePage, appendContent, compress, false) {
+  }
 
-}
+  public PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage sourcePage,
+    global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode appendContent, bool compress,
+    bool resetContext) : this(document, sourcePage, appendContent, compress, resetContext,
+    new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(document), ((sourcePage.GetResources()
+    != default!) ? sourcePage.GetResources()
+    : new global::DripSharp.PdfCarton.Pdmodel.PDResources())) {
 
-public PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, global::DripSharp.PdfCarton.Pdmodel.PDPage sourcePage, global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode appendContent, bool compress, bool resetContext) : this(document, sourcePage, appendContent, compress, resetContext, new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(document), ((sourcePage.GetResources() != default!) ? sourcePage.GetResources() : new global::DripSharp.PdfCarton.Pdmodel.PDResources())) {
+  }
 
-}
+  private PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.PdfCarton.Pdmodel.PDPage sourcePage,
+    global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode appendContent, bool compress,
+    bool resetContext, global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream,
+    global::DripSharp.PdfCarton.Pdmodel.PDResources resources) : base(document,
+    stream.CreateOutputStream((compress ? global::DripSharp.PdfCarton.Cos.COSName.FlateDecode
+    : (global::DripSharp.PdfCarton.Cos.COSName)(default!))), resources) {
+    if ((sourcePage.GetResources() == default!)) {
+      sourcePage.SetResources(resources);
+    }
+    if ((!(appendContent.IsOverwrite()) && sourcePage.HasContents())) {
+      global::DripSharp.PdfCarton.Cos.COSBase contents
+        = sourcePage.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Contents);
+      global::DripSharp.PdfCarton.Cos.COSArray array;
+      if ((contents is global::DripSharp.PdfCarton.Cos.COSArray)) {
+        array = (global::DripSharp.PdfCarton.Cos.COSArray)(contents!);
+      } else {
+        array = new global::DripSharp.PdfCarton.Cos.COSArray();
+        array.Add(contents);
+      }
+      if (appendContent.IsPrepend()) {
+        array.Add(0, stream.GetCOSObject());
+      } else {
+        array.Add(stream);
+      }
+      if (resetContext) {
+        global::DripSharp.PdfCarton.Pdmodel.Common.PDStream prefixStream
+          = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(document);
+        using (global::System.IO.Stream prefixOut = prefixStream.CreateOutputStream()) {
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(prefixOut,
+            global::DripSharp.Runtime.JavaCompat.StringGetBytes("q",
+            global::DripSharp.Runtime.JavaStandardCharsets.USASCII));
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(prefixOut, (int)('\n'));
+        }
+        array.Add(0, prefixStream.GetCOSObject());
+      }
+      sourcePage.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Contents, array);
+      if (resetContext) {
+        this.RestoreGraphicsState();
+      }
+    } else {
+      this.sourcePageHadContents = sourcePage.HasContents();
+      sourcePage.SetContents(stream);
+    }
+    this.SetMaximumFractionDigits(5);
+  }
 
-private PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, global::DripSharp.PdfCarton.Pdmodel.PDPage sourcePage, global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode appendContent, bool compress, bool resetContext, global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream, global::DripSharp.PdfCarton.Pdmodel.PDResources resources) : base(document, stream.CreateOutputStream((compress ? global::DripSharp.PdfCarton.Cos.COSName.FlateDecode : (global::DripSharp.PdfCarton.Cos.COSName)(default!))), resources) {
-if ((sourcePage.GetResources() == default!)) {
-sourcePage.SetResources(resources);
-}
-if ((!(appendContent.IsOverwrite()) && sourcePage.HasContents())) {
-global::DripSharp.PdfCarton.Cos.COSBase contents = sourcePage.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Contents);
-global::DripSharp.PdfCarton.Cos.COSArray array;
-if ((contents is global::DripSharp.PdfCarton.Cos.COSArray)) {
-array = (global::DripSharp.PdfCarton.Cos.COSArray)(contents!);
-} else {
-array = new global::DripSharp.PdfCarton.Cos.COSArray();
-array.Add(contents);
-}
-if (appendContent.IsPrepend()) {
-array.Add(0, stream.GetCOSObject());
-} else {
-array.Add(stream);
-}
-if (resetContext) {
-global::DripSharp.PdfCarton.Pdmodel.Common.PDStream prefixStream = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(document);
-using (global::System.IO.Stream prefixOut = prefixStream.CreateOutputStream()) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(prefixOut, global::DripSharp.Runtime.JavaCompat.StringGetBytes("q", global::DripSharp.Runtime.JavaStandardCharsets.USASCII));
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(prefixOut, (int)('\n'));
-}
-array.Add(0, prefixStream.GetCOSObject());
-}
-sourcePage.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Contents, array);
-if (resetContext) {
-this.RestoreGraphicsState();
-}
-} else {
-this.sourcePageHadContents = sourcePage.HasContents();
-sourcePage.SetContents(stream);
-}
-this.SetMaximumFractionDigits(5);
-}
+  public PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearance)
+  : this(doc, appearance, appearance.GetStream().CreateOutputStream()) {
 
-public PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearance) : this(doc, appearance, appearance.GetStream().CreateOutputStream()) {
+  }
 
-}
+  public PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearance,
+    global::System.IO.Stream outputStream) : base(doc, outputStream, appearance.GetResources()) {
 
-public PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearance, global::System.IO.Stream outputStream) : base(doc, outputStream, appearance.GetResources()) {
+  }
 
-}
+  public void AppendRawCommands(string commands) {
+    this.Write(commands);
+  }
 
-public void AppendRawCommands(string commands) {
-this.Write(commands);
-}
+  public void AppendRawCommands(sbyte[] commands) {
+    this.WriteBytes(commands);
+  }
 
-public void AppendRawCommands(sbyte[] commands) {
-this.WriteBytes(commands);
-}
+  public void AppendRawCommands(int data) {
+    this.WriteOperand(data);
+  }
 
-public void AppendRawCommands(int data) {
-this.WriteOperand(data);
-}
+  public void AppendRawCommands(double data) {
+    this.WriteOperand((float)((float)data));
+  }
 
-public void AppendRawCommands(double data) {
-this.WriteOperand((float)((float)(data)));
-}
-
-public void AppendRawCommands(float data) {
-this.WriteOperand(data);
-}
+  public void AppendRawCommands(float data) {
+    this.WriteOperand(data);
+  }
 }

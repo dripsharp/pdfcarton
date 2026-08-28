@@ -9,33 +9,37 @@
 namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class IntegerType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty {
-private int integerValue = default;
+  private int integerValue = default;
 
-public IntegerType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI, string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix, propertyName, value) {
+  public IntegerType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata, string namespaceURI,
+    string prefix, string propertyName, object value) : base(metadata, namespaceURI, prefix,
+    propertyName, value) {
 
-}
+  }
 
-public new virtual int? GetValue() {
-return this.integerValue;
-}
+  public new virtual int? GetValue() {
+    return this.integerValue;
+  }
 
-public override void SetValue(object value) {
-if ((value is int)) {
-this.integerValue = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Unbox((int?)(value));
-} else {
-if ((value is string)) {
-this.integerValue = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt((string)(value!), 10);
-} else {
-throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Value given is not allowed for the Integer type: ", value));
-}
-}
-}
+  public override void SetValue(object value) {
+    if ((value is int)) {
+      this.integerValue = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Unbox((int?)value);
+    } else {
+      if ((value is string)) {
+        this.integerValue
+          = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ParseInt((string)(value!), 10);
+      } else {
+        throw new global::System.ArgumentException(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Value given is not allowed for the Integer type: ",
+          value));
+      }
+    }
+  }
 
-public override string GetStringValue() {
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringValueOf(this.integerValue);
-}
+  public override string GetStringValue() {
+    return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringValueOf(this.integerValue);
+  }
 
-protected override object __DripSharpCovariantBridgeGetValue() {
-return this.GetValue();
-}
+  protected override object __DripSharpCovariantBridgeGetValue() {
+    return this.GetValue();
+  }
 }

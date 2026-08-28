@@ -9,1381 +9,1695 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private static readonly string OS_NAME = global::DripSharp.Runtime.JavaCompat.GetProperty("os.name").ToLowerInvariant();
+  private static readonly string OS_NAME
+    = global::DripSharp.Runtime.JavaCompat.GetProperty("os.name").ToLowerInvariant();
 
-private static readonly bool IS_WINDOWS = global::DripSharp.Runtime.JavaCompat.StringStartsWith(global::DripSharp.PdfCarton.Rendering.PageDrawer.OS_NAME, "windows");
+  private static readonly bool IS_WINDOWS
+    = global::DripSharp.Runtime.JavaCompat.StringStartsWith(global::DripSharp.PdfCarton.Rendering.PageDrawer.OS_NAME,
+    "windows");
 
-private static readonly bool IS_LINUX = global::DripSharp.Runtime.JavaCompat.StringStartsWith(global::DripSharp.PdfCarton.Rendering.PageDrawer.OS_NAME, "linux");
+  private static readonly bool IS_LINUX
+    = global::DripSharp.Runtime.JavaCompat.StringStartsWith(global::DripSharp.PdfCarton.Rendering.PageDrawer.OS_NAME,
+    "linux");
 
-private readonly global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer = null!;
+  private readonly global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer = null!;
 
-private readonly bool subsamplingAllowed = default;
+  private readonly bool subsamplingAllowed = default;
 
-private global::DripSharp.Runtime.PdfCartonGraphics2D graphics = null!;
+  private global::DripSharp.Runtime.PdfCartonGraphics2D graphics = null!;
 
-private global::SkiaSharp.SKMatrix xform = default;
+  private global::SkiaSharp.SKMatrix xform = default;
 
-private float xformScalingFactorX = default;
+  private float xformScalingFactorX = default;
 
-private float xformScalingFactorY = default;
+  private float xformScalingFactorY = default;
 
-private global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle pageSize = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle pageSize = null!;
 
-private bool flipTG;
+  private bool flipTG;
 
-private int clipWindingRule;
+  private int clipWindingRule;
 
-private global::SkiaSharp.SKPath linePath;
+  private global::SkiaSharp.SKPath linePath;
 
-private global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> lastClips = null!;
+  private global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> lastClips = null!;
 
-private object initialClip = null!;
+  private object initialClip = null!;
 
-private global::System.Collections.Generic.IList<object> textClippings = null!;
+  private global::System.Collections.Generic.IList<object> textClippings = null!;
 
-private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Pdmodel.Font.PDFont, global::DripSharp.PdfCarton.Rendering.GlyphCache> glyphCaches;
+  private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Pdmodel.Font.PDFont,
+    global::DripSharp.PdfCarton.Rendering.GlyphCache> glyphCaches;
 
-private readonly global::DripSharp.PdfCarton.Rendering.TilingPaintFactory tilingPaintFactory;
+  private readonly global::DripSharp.PdfCarton.Rendering.TilingPaintFactory tilingPaintFactory;
 
-private readonly global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup> transparencyGroupStack;
-
-private int nestedHiddenOCGCount = default;
-
-private readonly global::DripSharp.PdfCarton.Rendering.RenderDestination destination = null!;
-
-private readonly global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints = null!;
-
-private readonly float imageDownscalingOptimizationThreshold = default;
-
-private global::DripSharp.Runtime.JavaLookupTable invTable;
-
-private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSBase, bool> blendModeMap;
-
-private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter annotationFilter;
-
-public PageDrawer(global::DripSharp.PdfCarton.Rendering.PageDrawerParameters parameters) : base(parameters.GetPage()) {
-this.flipTG = false;
-this.clipWindingRule = -1;
-this.linePath = new global::SkiaSharp.SKPath();
-this.glyphCaches = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Pdmodel.Font.PDFont, global::DripSharp.PdfCarton.Rendering.GlyphCache>();
-this.tilingPaintFactory = new global::DripSharp.PdfCarton.Rendering.TilingPaintFactory(this);
-this.transparencyGroupStack = new global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup>();
-this.invTable = default!;
-this.blendModeMap = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSBase, bool>();
-this.annotationFilter = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.__AnnotationFilterFunctionalAdapter((annotation) => true);
-
-this.renderer = parameters.getRenderer();
-this.subsamplingAllowed = parameters.IsSubsamplingAllowed();
-this.destination = parameters.GetDestination();
-this.renderingHints = parameters.GetRenderingHints();
-this.imageDownscalingOptimizationThreshold = parameters.GetImageDownscalingOptimizationThreshold();
-}
-
-public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter GetAnnotationFilter() {
-return this.annotationFilter;
-}
-
-public virtual void SetAnnotationFilter(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter annotationFilter) {
-this.annotationFilter = annotationFilter;
-}
-
-public global::DripSharp.PdfCarton.Rendering.PDFRenderer GetRenderer() {
-return this.renderer;
-}
-
-protected internal global::DripSharp.Runtime.PdfCartonGraphics2D GetGraphics() {
-return this.graphics;
-}
-
-protected internal global::SkiaSharp.SKPath GetLinePath() {
-return this.linePath;
-}
-
-private void setRenderingHints() {
-this.graphics.AddRenderingHints(global::DripSharp.Runtime.JavaCompat.CastDictionary<object, object>(this.renderingHints));
-}
-
-public virtual void DrawPage(global::DripSharp.Runtime.PdfCartonGraphics2D g, global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle pageSize) {
-this.graphics = g;
-this.xform = this.graphics.GetTransform();
-global::DripSharp.PdfCarton.Util.Matrix m = new global::DripSharp.PdfCarton.Util.Matrix(this.xform);
-this.xformScalingFactorX = global::System.Math.Abs(m.GetScalingFactorX());
-this.xformScalingFactorY = global::System.Math.Abs(m.GetScalingFactorY());
-this.initialClip = this.graphics.GetClip();
-this.pageSize = pageSize;
-this.setRenderingHints();
-this.graphics.Translate((double)(0), (double)(pageSize.GetHeight()));
-this.graphics.Scale((double)(1), (double)(-1));
-this.graphics.Translate((double)(-(pageSize.GetLowerLeftX())), (double)(-(pageSize.GetLowerLeftY())));
-this.ProcessPage(this.GetPage());
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation in this.GetPage().GetAnnotations(this.annotationFilter)) {
-this.ShowAnnotation(annotation);
-}
-this.graphics = default!;
-}
-
-internal virtual void drawTilingPattern(global::DripSharp.Runtime.PdfCartonGraphics2D g, global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color, global::DripSharp.PdfCarton.Util.Matrix patternMatrix) {
-global::DripSharp.Runtime.PdfCartonGraphics2D savedGraphics = this.graphics;
-this.graphics = g;
-global::SkiaSharp.SKPath savedLinePath = this.linePath;
-this.linePath = new global::SkiaSharp.SKPath();
-int savedClipWindingRule = this.clipWindingRule;
-this.clipWindingRule = -1;
-global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> savedLastClips = this.lastClips;
-this.lastClips = default!;
-object savedInitialClip = this.initialClip;
-this.initialClip = default!;
-bool savedFlipTG = this.flipTG;
-this.flipTG = true;
-this.setRenderingHints();
-this.ProcessTilingPattern(pattern, color, colorSpace, patternMatrix);
-this.flipTG = savedFlipTG;
-this.graphics = savedGraphics;
-this.linePath = savedLinePath;
-this.lastClips = savedLastClips;
-this.initialClip = savedInitialClip;
-this.clipWindingRule = savedClipWindingRule;
-}
-
-private float clampColor(float color) {
-return ((color < 0) ? 0 : ((color > 1) ? 1 : color));
-}
-
-protected internal virtual global::DripSharp.Runtime.JavaPaint GetPaint(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace = color.GetColorSpace();
-if ((colorSpace == default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("colorSpace is null, will be rendered as transparency"));
-return global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0, 0);
-} else {
-if (((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation) && global::DripSharp.Runtime.JavaCompat.Equals("None", ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation)(colorSpace!)).GetColorantName()))) {
-return global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0, 0);
-} else {
-if (!((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern))) {
-float[] rgb = colorSpace.ToRGB(color.GetComponents());
-return global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromFractions(this.clampColor(rgb[0]), this.clampColor(rgb[1]), this.clampColor(rgb[2]));
-} else {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern patternSpace = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)(colorSpace!);
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern pattern = patternSpace.GetPattern(color);
-if ((pattern is global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern tilingPattern = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern)(pattern!);
-if ((tilingPattern.GetPaintType() == global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern.PaintColored)) {
-return this.tilingPaintFactory.create(tilingPattern, (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace)default!, (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor)default!, this.xform);
-} else {
-return this.tilingPaintFactory.create(tilingPattern, patternSpace.GetUnderlyingColorSpace(), color, this.xform);
-}
-} else {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDShadingPattern shadingPattern = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDShadingPattern)(pattern!);
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading = shadingPattern.GetShading();
-if ((shading == default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("shadingPattern is null, will be filled with transparency"));
-return global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0, 0);
-}
-return shading.ToPaint(global::DripSharp.PdfCarton.Util.Matrix.Concatenate(this.GetInitialMatrix(), shadingPattern.GetMatrix()));
-}
-}
-}
-}
-}
-
-protected internal void SetClip() {
-global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> clippingPaths = this.GetGraphicsState().GetCurrentClippingPaths();
-if ((clippingPaths != this.lastClips)) {
-this.TransferClip(this.graphics);
-if ((this.initialClip != default!)) {}
-this.lastClips = clippingPaths;
-}
-}
-
-protected internal virtual void TransferClip(global::DripSharp.Runtime.PdfCartonGraphics2D graphics) {
-global::DripSharp.Runtime.JavaArea clippingPath = this.GetGraphicsState().GetCurrentClippingPath();
-if (clippingPath.GetPathIterator((global::SkiaSharp.SKMatrix)default!).IsDone()) {
-graphics.SetClip(new global::SkiaSharp.SKRectI());
-} else {
-graphics.SetClip(clippingPath);
-}
-}
-
-public override void BeginText() {
-this.SetClip();
-this.beginTextClip();
-}
-
-public override void EndText() {
-this.endTextClip();
-}
-
-private void beginTextClip() {
-this.textClippings = new global::System.Collections.Generic.List<object>();
-}
-
-private void endTextClip() {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState state = this.GetGraphicsState();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode = state.GetTextState().GetRenderingMode();
-if ((renderingMode.IsClip() && !(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.textClippings)))) {
-global::SkiaSharp.SKPath path = global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(global::DripSharp.Runtime.JavaPathIterator.WIND_NON_ZERO, global::DripSharp.Runtime.JavaCompat.CollectionCount(this.textClippings));
-global::DripSharp.Runtime.JavaCompat.ForEach(this.textClippings, (shape) => global::DripSharp.Runtime.PdfCartonFontCompat.AppendPath(path, shape, false));
-state.IntersectClippingPath(path);
-this.textClippings = new global::System.Collections.Generic.List<object>();
-this.lastClips = default!;
-}
-}
-
-protected internal override void ShowFontGlyph(global::DripSharp.PdfCarton.Util.Matrix textRenderingMatrix, global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font, int code, global::DripSharp.PdfCarton.Util.Vector displacement) {
-global::SkiaSharp.SKMatrix at = textRenderingMatrix.CreateAffineTransform();
-global::DripSharp.Runtime.PdfCartonFontCompat.ConcatenateInPlace(ref at, font.GetFontMatrix().CreateAffineTransform());
-global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont vectorFont = (global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont)(font!);
-global::DripSharp.PdfCarton.Rendering.GlyphCache cache = global::DripSharp.Runtime.JavaCompat.MapGet(this.glyphCaches, font);
-if ((cache == default!)) {
-cache = new global::DripSharp.PdfCarton.Rendering.GlyphCache(vectorFont);
-global::DripSharp.Runtime.JavaCompat.MapPut(this.glyphCaches, font, cache);
-}
-global::SkiaSharp.SKPath path = cache.GetPathForCharacterCode(code);
-this.drawGlyph(path, font, code, displacement, at);
-}
-
-private void drawGlyph(global::SkiaSharp.SKPath path, global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font, int code, global::DripSharp.PdfCarton.Util.Vector displacement, global::SkiaSharp.SKMatrix at) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState state = this.GetGraphicsState();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode = state.GetTextState().GetRenderingMode();
-if ((path != default!)) {
-if ((((!(font.IsEmbedded()) && !(font.IsVertical())) && !(font.IsStandard14())) && font.HasExplicitWidth(code))) {
-float fontWidth = font.GetWidthFromFont(code);
-if ((((displacement.GetX() > 0) && (fontWidth > 0)) && (global::System.Math.Abs((fontWidth - (displacement.GetX() * 1000))) > 1.0E-4D))) {
-float pdfWidth = (displacement.GetX() * 1000);
-global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref at, (double)(((float)(pdfWidth) / (float)(fontWidth))), (double)(1));
-}
-}
-object glyph = global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(at, path);
-if (this.isContentRendered()) {
-if (renderingMode.IsFill()) {
-this.graphics.SetComposite(state.GetNonStrokingJavaComposite());
-this.graphics.SetPaint(this.GetNonStrokingPaint());
-this.SetClip();
-this.graphics.Fill(glyph);
-}
-if (renderingMode.IsStroke()) {
-this.graphics.SetComposite(state.GetStrokingJavaComposite());
-this.graphics.SetPaint(this.getStrokingPaint());
-this.graphics.SetStroke(this.getStroke());
-this.SetClip();
-this.graphics.Draw(glyph);
-}
-}
-if (renderingMode.IsClip()) {
-global::DripSharp.Runtime.JavaCompat.Add(this.textClippings, glyph);
-}
-}
-}
-
-protected internal override void ShowType3Glyph(global::DripSharp.PdfCarton.Util.Matrix textRenderingMatrix, global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font font, int code, global::DripSharp.PdfCarton.Util.Vector displacement) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState state = this.GetGraphicsState();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode = state.GetTextState().GetRenderingMode();
-if ((global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Neither != renderingMode)) {
-base.ShowType3Glyph(textRenderingMatrix, font, code, displacement);
-}
-}
-
-public override void AppendRectangle(global::DripSharp.Runtime.JavaPoint2D p0, global::DripSharp.Runtime.JavaPoint2D p1, global::DripSharp.Runtime.JavaPoint2D p2, global::DripSharp.Runtime.JavaPoint2D p3) {
-global::DripSharp.Runtime.PdfCartonFontCompat.MoveTo(this.linePath, (float)((float)(p0.X)), (float)((float)(p0.Y)));
-global::DripSharp.Runtime.PdfCartonFontCompat.LineTo(this.linePath, (float)((float)(p1.X)), (float)((float)(p1.Y)));
-global::DripSharp.Runtime.PdfCartonFontCompat.LineTo(this.linePath, (float)((float)(p2.X)), (float)((float)(p2.Y)));
-global::DripSharp.Runtime.PdfCartonFontCompat.LineTo(this.linePath, (float)((float)(p3.X)), (float)((float)(p3.Y)));
-global::DripSharp.Runtime.PdfCartonFontCompat.Close(this.linePath);
-}
-
-private global::DripSharp.Runtime.JavaPaint applySoftMaskToPaint(global::DripSharp.Runtime.JavaPaint parentPaint, global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask softMask) {
-if (((softMask == default!) || (softMask.GetGroup() == default!))) {
-return parentPaint;
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor backdropColor = default!;
-global::DripSharp.PdfCarton.Cos.COSName subType = softMask.GetSubType();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup form = softMask.GetGroup();
-if (global::DripSharp.PdfCarton.Cos.COSName.Luminosity.Equals(subType)) {
-global::DripSharp.PdfCarton.Cos.COSArray backdropColorArray = softMask.GetBackdropColor();
-if ((backdropColorArray != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace = form.GetGroup().GetColorSpace(form.GetResources());
-if (((colorSpace != default!) && (colorSpace.GetNumberOfComponents() == backdropColorArray.Size()))) {
-backdropColor = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(backdropColorArray, colorSpace);
-}
-}
-}
-global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup transparencyGroup = new global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup(form, true, softMask.GetInitialTransformationMatrix(), backdropColor!, this);
-global::SkiaSharp.SKBitmap image = transparencyGroup.getImage();
-if ((image == default!)) {
-return parentPaint;
-}
-global::SkiaSharp.SKBitmap gray = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
-if (global::DripSharp.PdfCarton.Cos.COSName.Alpha.Equals(subType)) {
-global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(gray, global::DripSharp.Runtime.PdfCartonFontCompat.GetAlphaRaster(image));
-} else {
-if (global::DripSharp.PdfCarton.Cos.COSName.Luminosity.Equals(subType)) {
-global::DripSharp.Runtime.PdfCartonGraphics2D g = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(gray);
-g.DrawImage(image, 0, 0, (object)default!);
-g.Dispose();
-} else {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid soft mask subtype: ", subType));
-}
-}
-gray = this.adjustImage(gray);
-global::SkiaSharp.SKRect tpgBounds = transparencyGroup.getBounds();
-return new global::DripSharp.PdfCarton.Rendering.SoftMask(parentPaint, gray, tpgBounds, backdropColor!, softMask.GetTransferFunction());
-}
-
-private global::SkiaSharp.SKBitmap adjustImage(global::SkiaSharp.SKBitmap gray) {
-global::SkiaSharp.SKMatrix at = this.xform;
-global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref at, ((double)(1.0D) / (float)(this.xformScalingFactorX)), ((double)(1.0D) / (float)(this.xformScalingFactorY)));
-global::SkiaSharp.SKRectI originalBounds = global::DripSharp.Runtime.PdfCartonFontCompat.RectangleI(gray.Width, gray.Height);
-global::SkiaSharp.SKRect transformedBounds = global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(at, originalBounds));
-global::DripSharp.Runtime.PdfCartonFontCompat.PreConcatenateInPlace(ref at, global::DripSharp.Runtime.PdfCartonFontCompat.Translation(-(transformedBounds.Left), -(transformedBounds.Top)));
-int width = (int)(global::System.Math.Ceiling((double)(transformedBounds.Width)));
-int height = (int)(global::System.Math.Ceiling((double)(transformedBounds.Height)));
-if ((((width == gray.Width) && (height == gray.Height)) && global::DripSharp.Runtime.PdfCartonFontCompat.IsIdentity(at))) {
-return gray;
-}
-global::SkiaSharp.SKBitmap transformedGray = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
-global::DripSharp.Runtime.PdfCartonGraphics2D g2 = (global::DripSharp.Runtime.PdfCartonGraphics2D)(global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(transformedGray)!);
-g2.DrawImage(gray, at, (object)default!);
-g2.Dispose();
-return transformedGray;
-}
-
-private global::DripSharp.Runtime.JavaPaint getStrokingPaint() {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState = this.GetGraphicsState();
-return this.applySoftMaskToPaint(this.GetPaint(graphicsState.GetStrokingColor()), graphicsState.GetSoftMask());
-}
-
-protected internal global::DripSharp.Runtime.JavaPaint GetNonStrokingPaint() {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState = this.GetGraphicsState();
-return this.applySoftMaskToPaint(this.GetPaint(graphicsState.GetNonStrokingColor()), graphicsState.GetSoftMask());
-}
-
-private global::DripSharp.Runtime.JavaStroke getStroke() {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState state = this.GetGraphicsState();
-float lineWidth = this.TransformWidth(state.GetLineWidth());
-if ((lineWidth < 0.25D)) {
-lineWidth = 0.25F;
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern dashPattern = state.GetLineDashPattern();
-float[] dashArray = dashPattern.GetDashArray();
-if (this.isAllZeroDash(dashArray)) {
-return new global::DripSharp.Runtime.JavaStrokeAdapter((p) => new global::DripSharp.Runtime.JavaArea());
-}
-float phaseStart = dashPattern.GetPhase();
-dashArray = this.getDashArray(dashPattern);
-phaseStart = this.TransformWidth(phaseStart);
-int lineCap = global::System.Math.Min(2, global::System.Math.Max(0, state.GetLineCap()));
-int lineJoin = global::System.Math.Min(2, global::System.Math.Max(0, state.GetLineJoin()));
-float miterLimit = state.GetMiterLimit();
-if ((miterLimit < 1)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Miter limit must be >= 1, value ", miterLimit), " is ignored")));
-miterLimit = 10;
-}
-phaseStart = global::System.Math.Min(phaseStart, (float)(short.MaxValue));
-return new global::DripSharp.Runtime.JavaBasicStroke(lineWidth, lineCap, lineJoin, miterLimit, dashArray, phaseStart);
-}
-
-private bool isAllZeroDash(float[] dashArray) {
-if ((dashArray.Length > 0)) {
-for (int i = 0; (i < dashArray.Length); ++i) {
-if ((dashArray[i] != 0)) {
-return false;
-}
-}
-return true;
-}
-return false;
-}
-
-private float[] getDashArray(global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern dashPattern) {
-float[] dashArray = dashPattern.GetDashArray();
-if ((dashArray.Length == 0)) {
-return default!;
-}
-for (int i__771_18 = 0; (i__771_18 < dashArray.Length); ++i__771_18) {
-if ((float.IsInfinity(dashArray[i__771_18]) || float.IsNaN(dashArray[i__771_18]))) {
-return default!;
-}
-}
-for (int i__778_18 = 0; (i__778_18 < dashArray.Length); ++i__778_18) {
-float w = this.TransformWidth(dashArray[i__778_18]);
-if ((this.xformScalingFactorX < 0.5F)) {
-dashArray[i__778_18] = global::System.Math.Max(w, 0.2F);
-} else {
-dashArray[i__778_18] = global::System.Math.Max(w, 0.062F);
-}
-}
-return dashArray;
-}
-
-public override void StrokePath() {
-if (this.isContentRendered()) {
-this.graphics.SetComposite(this.GetGraphicsState().GetStrokingJavaComposite());
-this.graphics.SetPaint(this.getStrokingPaint());
-this.graphics.SetStroke(this.getStroke());
-this.SetClip();
-this.graphics.Draw(this.linePath);
-}
-this.linePath.Reset();
-}
-
-public override void FillPath(int windingRule) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState = this.GetGraphicsState();
-this.graphics.SetComposite(graphicsState.GetNonStrokingJavaComposite());
-this.SetClip();
-global::DripSharp.Runtime.PdfCartonFontCompat.SetWindingRule(this.linePath, windingRule);
-global::SkiaSharp.SKRect bounds = this.linePath.Bounds;
-bool noAntiAlias = ((this.isRectangular(this.linePath) && (bounds.Width > 1)) && (bounds.Height > 1));
-if (noAntiAlias) {
-this.graphics.SetRenderingHint(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_ANTIALIASING, global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_ANTIALIAS_OFF);
-}
-object shape;
-if ((graphicsState.GetNonStrokingColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)) {
-global::DripSharp.Runtime.JavaArea area = new global::DripSharp.Runtime.JavaArea(this.linePath);
-object clip = this.graphics.GetClip();
-if ((clip != default!)) {
-area.Intersect(new global::DripSharp.Runtime.JavaArea(clip));
-}
-this.intersectShadingBBox(graphicsState.GetNonStrokingColor(), area);
-shape = area;
-} else {
-shape = this.linePath;
-}
-if ((this.isContentRendered() && !(global::DripSharp.Runtime.PdfCartonFontCompat.ShapePathIterator(shape, (global::SkiaSharp.SKMatrix)default!).IsDone()))) {
-this.graphics.SetPaint(this.GetNonStrokingPaint());
-this.graphics.Fill(shape);
-}
-this.linePath.Reset();
-if (noAntiAlias) {
-this.setRenderingHints();
-}
-}
-
-private void intersectShadingBBox(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color, global::DripSharp.Runtime.JavaArea area) {
-if ((color.GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace = color.GetColorSpace();
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern pat = ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)(colorSpace!)).GetPattern(color);
-if ((pat is global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDShadingPattern)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading = ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDShadingPattern)(pat!)).GetShading();
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox = shading.GetBBox();
-if ((bbox != default!)) {
-global::DripSharp.PdfCarton.Util.Matrix m = global::DripSharp.PdfCarton.Util.Matrix.Concatenate(this.GetInitialMatrix(), pat.GetMatrix());
-global::DripSharp.Runtime.JavaArea bboxArea = new global::DripSharp.Runtime.JavaArea(bbox.Transform(m));
-area.Intersect(bboxArea);
-}
-}
-}
-}
-
-private bool isRectangular(global::SkiaSharp.SKPath path) {
-global::DripSharp.Runtime.JavaPathIterator iter = global::DripSharp.Runtime.PdfCartonFontCompat.PathIterator(path, (global::SkiaSharp.SKMatrix)default!);
-double[] coords = new double[6];
-int count = 0;
-int[] xs = new int[4];
-int[] ys = new int[4];
-while (!(iter.IsDone())) {
-switch (iter.CurrentSegment(coords)) {
-case var __case_904_22_0 when __case_904_22_0 == global::DripSharp.Runtime.JavaPathIterator.SEG_MOVETO:
-if ((count == 0)) {
-xs[count] = (int)(global::System.Math.Floor(coords[0]));
-ys[count] = (int)(global::System.Math.Floor(coords[1]));
-} else {
-return false;
-}
-count++;
-break;
-case var __case_917_22_0 when __case_917_22_0 == global::DripSharp.Runtime.JavaPathIterator.SEG_LINETO:
-if ((count < 4)) {
-xs[count] = (int)(global::System.Math.Floor(coords[0]));
-ys[count] = (int)(global::System.Math.Floor(coords[1]));
-} else {
-return false;
-}
-count++;
-break;
-case var __case_930_22_0 when __case_930_22_0 == global::DripSharp.Runtime.JavaPathIterator.SEG_CUBICTO:
-return false;
-default:
-break;
-}
-iter.Next();
-}
-if ((count == 4)) {
-return ((((xs[0] == xs[1]) || (xs[0] == xs[2])) || (ys[0] == ys[1])) || (ys[0] == ys[3]));
-}
-return false;
-}
-
-public override void FillAndStrokePath(int windingRule) {
-global::SkiaSharp.SKPath path = (global::SkiaSharp.SKPath)(new global::SkiaSharp.SKPath(this.linePath)!);
-this.FillPath(windingRule);
-this.linePath = path;
-this.StrokePath();
-}
-
-public override void Clip(int windingRule) {
-this.clipWindingRule = windingRule;
-if ((this.clipWindingRule != -1)) {
-global::DripSharp.Runtime.PdfCartonFontCompat.SetWindingRule(this.linePath, this.clipWindingRule);
-if (!(global::DripSharp.Runtime.PdfCartonFontCompat.PathIterator(this.linePath, (global::SkiaSharp.SKMatrix)default!).IsDone())) {
-this.GetGraphicsState().IntersectClippingPath(this.adjustClip(this.linePath));
-}
-this.lastClips = default!;
-this.clipWindingRule = -1;
-}
-}
-
-public override void MoveTo(float x, float y) {
-global::DripSharp.Runtime.PdfCartonFontCompat.MoveTo(this.linePath, x, y);
-}
-
-public override void LineTo(float x, float y) {
-global::DripSharp.Runtime.PdfCartonFontCompat.LineTo(this.linePath, x, y);
-}
-
-public override void CurveTo(float x1, float y1, float x2, float y2, float x3, float y3) {
-global::DripSharp.Runtime.PdfCartonFontCompat.CurveTo(this.linePath, x1, y1, x2, y2, x3, y3);
-}
-
-public override global::DripSharp.Runtime.JavaPoint2D GetCurrentPoint() {
-return global::DripSharp.Runtime.PdfCartonFontCompat.CurrentPoint(this.linePath);
-}
-
-public override void ClosePath() {
-global::DripSharp.Runtime.PdfCartonFontCompat.Close(this.linePath);
-}
-
-public override void EndPath() {
-this.linePath.Reset();
-}
-
-private global::SkiaSharp.SKPath adjustClip(global::SkiaSharp.SKPath linePath) {
-global::SkiaSharp.SKMatrix tx = this.graphics.GetTransform();
-int type = global::DripSharp.Runtime.PdfCartonFontCompat.GetTransformType(tx);
-if (((type & ~((global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_TRANSLATION | global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_FLIP))) == 0)) {
-return linePath;
-} else {
-if (((type & ~(((global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_TRANSLATION | global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_FLIP) | global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_MASK_SCALE))) == 0)) {
-double sx = global::System.Math.Abs(tx.ScaleX);
-double sy = global::System.Math.Abs(tx.ScaleY);
-if (((sx > 1.0D) && (sy > 1.0D))) {
-return linePath;
-}
-global::SkiaSharp.SKRect bounds = global::DripSharp.Runtime.PdfCartonFontCompat.PathBounds(linePath);
-double w = bounds.Width;
-double h = bounds.Height;
-double sw = (sx * w);
-double sh = (sy * h);
-double minSize = 2.0D;
-if (((sw < minSize) || (sh < minSize))) {
-double x = bounds.Left;
-double y = bounds.Top;
-if ((sw < minSize)) {
-w = ((double)(minSize) / (double)(sx));
-x = (global::DripSharp.Runtime.PdfCartonFontCompat.ShapeCenterX(bounds) - ((double)(w) / 2));
-}
-if ((sh < minSize)) {
-h = ((double)(minSize) / (double)(sy));
-y = (global::DripSharp.Runtime.PdfCartonFontCompat.ShapeCenterY(bounds) - ((double)(h) / 2));
-}
-return global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle(x, y, w, h));
-}
-}
-}
-return linePath;
-}
-
-public override void DrawImage(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage) {
-if (((pdImage is global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject) && this.isHiddenOCG(((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(pdImage!)).GetOptionalContent()))) {
-return;
-}
-if (!(this.isContentRendered())) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState = this.GetGraphicsState();
-global::DripSharp.PdfCarton.Util.Matrix ctm = graphicsState.GetCurrentTransformationMatrix();
-global::SkiaSharp.SKMatrix at = ctm.CreateAffineTransform();
-if (!(pdImage.GetInterpolate())) {
-global::SkiaSharp.SKBitmap bim;
-if (this.subsamplingAllowed) {
-bim = pdImage.GetImage((global::SkiaSharp.SKRectI)default!, this.GetSubsampling(pdImage, at));
-} else {
-bim = pdImage.GetImage();
-}
-bool isScaledUp = ((bim.Width <= global::System.Math.Abs(global::DripSharp.Runtime.JavaCompat.MathRoundFloat((ctm.GetScalingFactorX() * this.xformScalingFactorX)))) || (bim.Height <= global::System.Math.Abs(global::DripSharp.Runtime.JavaCompat.MathRoundFloat((ctm.GetScalingFactorY() * this.xformScalingFactorY)))));
-if (isScaledUp) {
-this.graphics.SetRenderingHint(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_INTERPOLATION, global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-}
-}
-this.graphics.SetComposite(graphicsState.GetNonStrokingJavaComposite());
-this.SetClip();
-if (pdImage.IsStencil()) {
-if ((graphicsState.GetNonStrokingColor().GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)) {
-global::DripSharp.Runtime.JavaPaint paint = this.GetNonStrokingPaint();
-global::SkiaSharp.SKRect unitRect = global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((float)(0), (float)(0), (float)(1), (float)(1));
-global::SkiaSharp.SKRect bounds = global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(at, unitRect));
-int w = (int)(global::System.Math.Ceiling((double)(bounds.Width)));
-int h = (int)(global::System.Math.Ceiling((double)(bounds.Height)));
-global::SkiaSharp.SKBitmap renderedPaint = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(w, h, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
-global::DripSharp.Runtime.PdfCartonGraphics2D g = (global::DripSharp.Runtime.PdfCartonGraphics2D)(global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(renderedPaint)!);
-g.Translate(-(bounds.Left), -(bounds.Top));
-g.SetPaint(paint);
-g.SetRenderingHints(global::DripSharp.Runtime.JavaCompat.CastDictionary<object, object>(this.graphics.GetRenderingHints()));
-g.Fill(bounds);
-g.Dispose();
-global::SkiaSharp.SKBitmap mask = pdImage.GetImage();
-global::SkiaSharp.SKMatrix imageTransform = at;
-int maskWidth = mask.Width;
-int maskHeight = mask.Height;
-global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref imageTransform, ((double)(1.0D) / maskWidth), ((double)(-1.0D) / maskHeight));
-global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref imageTransform, (double)(0), (double)(-maskHeight));
-global::SkiaSharp.SKMatrix full = g.GetTransform();
-global::DripSharp.Runtime.PdfCartonFontCompat.ConcatenateInPlace(ref full, imageTransform);
-global::DripSharp.PdfCarton.Util.Matrix m = new global::DripSharp.PdfCarton.Util.Matrix(full);
-double scaleX = global::System.Math.Abs(m.GetScalingFactorX());
-double scaleY = global::System.Math.Abs(m.GetScalingFactorY());
-bool smallMask = ((maskWidth <= 8) && (maskHeight <= 8));
-if (((maskWidth == 1) && (maskHeight == 1))) {
-smallMask = false;
-}
-if (!smallMask) {
-global::SkiaSharp.SKBitmap tmp = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(maskWidth, maskHeight, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
-mask = new global::DripSharp.Runtime.JavaLookupOp(this.getInvLookupTable(), this.graphics.GetRenderingHints()).Filter(mask, tmp);
-}
-global::SkiaSharp.SKBitmap renderedMask = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(w, h, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
-g = (global::DripSharp.Runtime.PdfCartonGraphics2D)(global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(renderedMask)!);
-g.Translate(-(bounds.Left), -(bounds.Top));
-g.SetRenderingHints(global::DripSharp.Runtime.JavaCompat.CastDictionary<object, object>(this.graphics.GetRenderingHints()));
-if (smallMask) {
-g.DrawImage(mask, imageTransform, (object)default!);
-} else {
-if (((scaleX != 0) && (scaleY != 0))) {
-while (((scaleX < 0.25D) || (global::DripSharp.Runtime.JavaCompat.MathRound((maskWidth * scaleX)) < 1))) {
-scaleX *= 2.0D;
-}
-while (((scaleY < 0.25D) || (global::DripSharp.Runtime.JavaCompat.MathRound((maskHeight * scaleY)) < 1))) {
-scaleY *= 2.0D;
-}
-int w2 = (int)(global::DripSharp.Runtime.JavaCompat.MathRound((maskWidth * scaleX)));
-int h2 = (int)(global::DripSharp.Runtime.JavaCompat.MathRound((maskHeight * scaleY)));
-global::SkiaSharp.SKBitmap scaledMask = global::DripSharp.Runtime.PdfCartonFontCompat.ScaleImage(mask, w2, h2, global::DripSharp.Runtime.PdfCartonFontCompat.SCALE_SMOOTH);
-global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref imageTransform, ((float)(1.0F) / (double)(global::System.Math.Abs(scaleX))), ((float)(1.0F) / (double)(global::System.Math.Abs(scaleY))));
-g.DrawImage(scaledMask, imageTransform, (object)default!);
-}
-}
-g.Dispose();
-int[] alphaPixel = default!;
-int[] rasterPixel = default!;
-global::DripSharp.Runtime.JavaRaster raster = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(renderedPaint);
-global::DripSharp.Runtime.JavaRaster alpha = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(renderedMask);
-for (int y = 0; (y < h); y++) {
-for (int x = 0; (x < w); x++) {
-alphaPixel = alpha.GetPixel(x, y, alphaPixel!);
-rasterPixel = raster.GetPixel(x, y, rasterPixel!);
-rasterPixel![3] = alphaPixel![0];
-raster.SetPixel(x, y, rasterPixel!);
-}
-}
-this.graphics.DrawImage(renderedPaint, global::DripSharp.Runtime.PdfCartonFontCompat.Translation(bounds.Left, bounds.Top), (object)default!);
-} else {
-global::SkiaSharp.SKBitmap image = pdImage.GetStencilImage(this.GetNonStrokingPaint());
-this.drawBufferedImage(pdImage, image, at);
-}
-} else {
-if (this.subsamplingAllowed) {
-int subsampling = this.GetSubsampling(pdImage, at);
-this.drawBufferedImage(pdImage, pdImage.GetImage((global::SkiaSharp.SKRectI)default!, subsampling), at);
-} else {
-this.drawBufferedImage(pdImage, pdImage.GetImage(), at);
-}
-}
-if (!(pdImage.GetInterpolate())) {
-this.setRenderingHints();
-}
-}
-
-protected internal virtual int GetSubsampling(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage, global::SkiaSharp.SKMatrix at) {
-double scale = global::System.Math.Abs((global::DripSharp.Runtime.PdfCartonFontCompat.Determinant(at) * global::DripSharp.Runtime.PdfCartonFontCompat.Determinant(this.xform)));
-int imageWidth = pdImage.GetWidth();
-int imageHeight = pdImage.GetHeight();
-int subsampling = (int)(global::System.Math.Floor(global::System.Math.Sqrt(((imageWidth * imageHeight) / (double)(scale)))));
-if ((subsampling > 8)) {
-subsampling = 8;
-}
-if ((subsampling < 1)) {
-subsampling = 1;
-}
-if (((subsampling > imageWidth) || (subsampling > imageHeight))) {
-subsampling = global::System.Math.Min(imageWidth, imageHeight);
-}
-return subsampling;
-}
-
-private void drawBufferedImage(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage, global::SkiaSharp.SKBitmap image, global::SkiaSharp.SKMatrix at) {
-global::SkiaSharp.SKMatrix originalTransform = this.graphics.GetTransform();
-global::SkiaSharp.SKMatrix imageTransform = at;
-int width = image.Width;
-int height = image.Height;
-global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref imageTransform, ((double)(1.0D) / width), ((double)(-1.0D) / height));
-global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref imageTransform, (double)(0), (double)(-height));
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask softMask = this.GetGraphicsState().GetSoftMask();
-bool hasImageMask = (pdImage.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Mask) || pdImage.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Smask));
-if (((softMask != default!) && !hasImageMask)) {
-global::SkiaSharp.SKRect rectangle = global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((float)(0), (float)(0), (float)(width), (float)(height));
-global::DripSharp.Runtime.JavaPaint awtPaint = new global::DripSharp.Runtime.JavaTexturePaint(image, rectangle);
-awtPaint = this.applySoftMaskToPaint(awtPaint, softMask);
-this.graphics.SetPaint(awtPaint);
-this.graphics.Transform(imageTransform);
-this.graphics.Fill(rectangle);
-this.graphics.SetTransform(originalTransform);
-} else {
-global::DripSharp.PdfCarton.Cos.COSBase transfer = this.GetGraphicsState().GetTransfer();
-if (((transfer is global::DripSharp.PdfCarton.Cos.COSArray) || (transfer is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
-image = this.applyTransferFunction(image, transfer);
-}
-global::DripSharp.PdfCarton.Util.Matrix imageTransformMatrix = new global::DripSharp.PdfCarton.Util.Matrix(imageTransform);
-global::DripSharp.PdfCarton.Util.Matrix graphicsTransformMatrix = new global::DripSharp.PdfCarton.Util.Matrix(originalTransform);
-float scaleX = global::System.Math.Abs((imageTransformMatrix.GetScalingFactorX() * graphicsTransformMatrix.GetScalingFactorX()));
-float scaleY = global::System.Math.Abs((imageTransformMatrix.GetScalingFactorY() * graphicsTransformMatrix.GetScalingFactorY()));
-if (((((scaleX < this.imageDownscalingOptimizationThreshold) || (scaleY < this.imageDownscalingOptimizationThreshold)) && global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_RENDER_QUALITY, this.graphics.GetRenderingHint(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_RENDERING))) && global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_INTERPOLATION_BICUBIC, this.graphics.GetRenderingHint(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_INTERPOLATION)))) {
-int w = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((image.Width * scaleX));
-int h = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((image.Height * scaleY));
-if (((w < 1) || (h < 1))) {
-this.graphics.DrawImage(image, imageTransform, (object)default!);
-return;
-}
-global::SkiaSharp.SKBitmap imageToDraw = global::DripSharp.Runtime.PdfCartonFontCompat.ScaleImage(image, w, h, global::DripSharp.Runtime.PdfCartonFontCompat.SCALE_SMOOTH);
-global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref imageTransform, (double)((((float)(1.0F) / w) * image.Width)), (double)((((float)(1.0F) / h) * image.Height)));
-global::DripSharp.Runtime.PdfCartonFontCompat.PreConcatenateInPlace(ref imageTransform, originalTransform);
-this.graphics.SetTransform(global::DripSharp.Runtime.PdfCartonFontCompat.Identity());
-this.graphics.DrawImage(imageToDraw, imageTransform, (object)default!);
-this.graphics.SetTransform(originalTransform);
-} else {
-global::DripSharp.Runtime.JavaGraphicsConfiguration graphicsConfiguration = this.graphics.GetDeviceConfiguration();
-int deviceType = global::DripSharp.Runtime.JavaGraphicsDevice.TYPE_RASTER_SCREEN;
-if ((graphicsConfiguration != default!)) {
-global::DripSharp.Runtime.JavaGraphicsDevice graphicsDevice = graphicsConfiguration.GetDevice();
-if ((graphicsDevice != default!)) {
-deviceType = graphicsDevice.GetType();
-}
-}
-if ((((deviceType == global::DripSharp.Runtime.JavaGraphicsDevice.TYPE_PRINTER) && (global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(image) != global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_4BYTE_ABGR)) && (global::DripSharp.PdfCarton.Rendering.PageDrawer.IS_WINDOWS || global::DripSharp.PdfCarton.Rendering.PageDrawer.IS_LINUX))) {
-global::SkiaSharp.SKBitmap bim = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_4BYTE_ABGR);
-global::DripSharp.Runtime.PdfCartonGraphics2D g = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(bim);
-g.DrawImage(image, 0, 0, (object)default!);
-g.Dispose();
-image = bim;
-}
-this.graphics.DrawImage(image, imageTransform, (object)default!);
-}
-}
-}
-
-private global::SkiaSharp.SKBitmap applyTransferFunction(global::SkiaSharp.SKBitmap image, global::DripSharp.PdfCarton.Cos.COSBase transfer) {
-global::SkiaSharp.SKBitmap bim;
-int imageWidth = image.Width;
-int imageHeight = image.Height;
-if (global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).HasAlpha) {
-bim = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(imageWidth, imageHeight, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
-} else {
-bim = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(imageWidth, imageHeight, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
-}
-int[] rMap;
-int[] gMap;
-int[] bMap;
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction rf;
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction gf;
-global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction bf;
-if ((transfer is global::DripSharp.PdfCarton.Cos.COSArray)) {
-global::DripSharp.PdfCarton.Cos.COSArray ar = (global::DripSharp.PdfCarton.Cos.COSArray)(transfer!);
-rf = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(ar.GetObject(0));
-gf = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(ar.GetObject(1));
-bf = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(ar.GetObject(2));
-rMap = new int[256];
-gMap = new int[256];
-bMap = new int[256];
-} else {
-rf = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(transfer);
-gf = rf;
-bf = rf;
-rMap = new int[256];
-gMap = rMap;
-bMap = rMap;
-}
-float[] input = new float[1];
-for (int x = 0; (x < imageWidth); ++x) {
-for (int y = 0; (y < imageHeight); ++y) {
-int rgb = global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(image, x, y);
-int ri = ((rgb >> unchecked((int)(16))) & 255);
-int gi = ((rgb >> unchecked((int)(8))) & 255);
-int bi = (rgb & 255);
-int ro;
-int go;
-int bo;
-if ((rMap[ri] != default!)) {
-ro = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(rMap[ri]);
-} else {
-input[0] = ((ri & 255) / (float)(255.0F));
-ro = (int)((rf.Eval(input)[0] * 255));
-rMap[ri] = ro;
-}
-if ((gMap[gi] != default!)) {
-go = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(gMap[gi]);
-} else {
-input[0] = ((gi & 255) / (float)(255.0F));
-go = (int)((gf.Eval(input)[0] * 255));
-gMap[gi] = go;
-}
-if ((bMap[bi] != default!)) {
-bo = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(bMap[bi]);
-} else {
-input[0] = ((bi & 255) / (float)(255.0F));
-bo = (int)((bf.Eval(input)[0] * 255));
-bMap[bi] = bo;
-}
-global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(bim, x, y, ((((rgb & -16777216) | (ro << unchecked((int)(16)))) | (go << unchecked((int)(8)))) | bo));
-}
-}
-return bim;
-}
-
-public override void ShadingFill(global::DripSharp.PdfCarton.Cos.COSName shadingName) {
-if (!(this.isContentRendered())) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading = this.GetResources().GetShading(shadingName);
-if ((shading == default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("shading ", shadingName), " does not exist in resources dictionary")));
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState = this.GetGraphicsState();
-global::DripSharp.PdfCarton.Util.Matrix ctm = graphicsState.GetCurrentTransformationMatrix();
-this.graphics.SetComposite(graphicsState.GetNonStrokingJavaComposite());
-object savedClip = this.graphics.GetClip();
-this.graphics.SetClip((object)default!);
-this.lastClips = default!;
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox = shading.GetBBox();
-global::DripSharp.Runtime.JavaArea area;
-global::DripSharp.Runtime.JavaArea currentClippingPath = graphicsState.GetCurrentClippingPath();
-if ((bbox != default!)) {
-area = new global::DripSharp.Runtime.JavaArea(bbox.Transform(ctm));
-area.Intersect(currentClippingPath);
-} else {
-global::SkiaSharp.SKRect bounds = shading.GetBounds(global::DripSharp.Runtime.PdfCartonFontCompat.Identity(), ctm);
-if ((bounds != default!)) {
-global::DripSharp.Runtime.PdfCartonFontCompat.AddPoint(ref bounds, new global::DripSharp.Runtime.JavaPoint2D(global::System.Math.Floor((bounds.Left - 1)), global::System.Math.Floor((bounds.Top - 1))));
-global::DripSharp.Runtime.PdfCartonFontCompat.AddPoint(ref bounds, new global::DripSharp.Runtime.JavaPoint2D(global::System.Math.Ceiling((double)((bounds.Right + 1))), global::System.Math.Ceiling((double)((bounds.Bottom + 1)))));
-area = new global::DripSharp.Runtime.JavaArea(bounds);
-area.Intersect(currentClippingPath);
-} else {
-area = currentClippingPath;
-}
-}
-if (!(area.IsEmpty)) {
-global::DripSharp.Runtime.JavaPaint paint = shading.ToPaint(ctm);
-paint = this.applySoftMaskToPaint(paint, graphicsState.GetSoftMask());
-this.graphics.SetPaint(paint);
-this.graphics.Fill(area);
-}
-this.graphics.SetClip(savedClip);
-}
-
-public override void ShowAnnotation(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation) {
-this.lastClips = default!;
-if (this.shouldSkipAnnotation(annotation)) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceDictionary appearance = annotation.GetAppearance();
-if (((appearance == default!) || (appearance.GetNormalAppearance() == default!))) {
-annotation.ConstructAppearances(this.renderer.Document);
-}
-if ((annotation.IsNoRotate() && (this.GetCurrentPage().GetRotation() != 0))) {
-appearance = annotation.GetAppearance();
-if ((appearance != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry appearanceEntry = appearance.GetNormalAppearance();
-if ((((appearanceEntry != default!) && appearanceEntry.IsStream()) && this.hasTransparency(appearanceEntry.GetAppearanceStream()))) {
-annotation.ConstructAppearances();
-}
-}
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = annotation.GetRectangle();
-global::SkiaSharp.SKMatrix savedTransform = this.graphics.GetTransform();
-this.graphics.Rotate(global::DripSharp.Runtime.JavaCompat.ToRadians((double)(this.GetCurrentPage().GetRotation())), (double)(rect.GetLowerLeftX()), (double)(rect.GetUpperRightY()));
-base.ShowAnnotation(annotation);
-this.graphics.SetTransform(savedTransform);
-annotation.SetAppearance(appearance);
-} else {
-base.ShowAnnotation(annotation);
-}
-}
-
-private bool shouldSkipAnnotation(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation) {
-if (((this.destination == global::DripSharp.PdfCarton.Rendering.RenderDestination.Print) && !(annotation.IsPrinted()))) {
-return true;
-}
-if ((((this.destination == global::DripSharp.PdfCarton.Rendering.RenderDestination.View) || (this.destination == global::DripSharp.PdfCarton.Rendering.RenderDestination.Export)) && annotation.IsNoView())) {
-return true;
-}
-if (annotation.IsHidden()) {
-return true;
-}
-if ((annotation.IsInvisible() && (annotation is global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnknown))) {
-return true;
-}
-return this.isHiddenOCG(annotation.GetOptionalContent());
-}
-
-private bool hasTransparency(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject form) {
-if ((form == default!)) {
-return false;
-}
-global::DripSharp.PdfCarton.Pdmodel.PDResources resources = form.GetResources();
-if ((resources == default!)) {
-return false;
-}
-foreach (global::DripSharp.PdfCarton.Cos.COSName name in resources.GetXObjectNames()) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject xObject = resources.GetXObject(name);
-if ((xObject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)) {
-return true;
-}
-if (((xObject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject) && this.hasTransparency((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(xObject!)))) {
-return true;
-}
-}
-return false;
-}
-
-public override void ShowForm(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject form) {
-if (this.isHiddenOCG(form.GetOptionalContent())) {
-return;
-}
-if (this.isContentRendered()) {
-global::SkiaSharp.SKPath savedLinePath = this.linePath;
-this.linePath = new global::SkiaSharp.SKPath();
-base.ShowForm(form);
-this.linePath = savedLinePath;
-}
-}
-
-public override void ShowTransparencyGroup(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup form) {
-this.ShowTransparencyGroupOnGraphics(form, this.graphics);
-}
-
-protected internal virtual void ShowTransparencyGroupOnGraphics(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup form, global::DripSharp.Runtime.PdfCartonGraphics2D graphics) {
-if (this.isHiddenOCG(form.GetOptionalContent())) {
-return;
-}
-if (!(this.isContentRendered())) {
-return;
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState = this.GetGraphicsState();
-global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup group = new global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup(form, false, graphicsState.GetCurrentTransformationMatrix(), (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor)default!, this);
-global::SkiaSharp.SKBitmap image = group.getImage();
-if ((image == default!)) {
-return;
-}
-graphics.SetComposite(graphicsState.GetNonStrokingJavaComposite());
-this.SetClip();
-global::SkiaSharp.SKMatrix savedTransform = graphics.GetTransform();
-global::SkiaSharp.SKMatrix transform = this.xform;
-global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref transform, ((double)(1.0D) / (float)(this.xformScalingFactorX)), ((double)(1.0D) / (float)(this.xformScalingFactorY)));
-graphics.SetTransform(transform);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox = group.getBBox();
-float x = (bbox.GetLowerLeftX() - this.pageSize.GetLowerLeftX());
-float y = (this.pageSize.GetUpperRightY() - bbox.GetUpperRightY());
-if (this.flipTG) {
-graphics.Translate(0, image.Height);
-graphics.Scale((double)(1), (double)(-1));
-} else {
-graphics.Translate((double)((x * this.xformScalingFactorX)), (double)((y * this.xformScalingFactorY)));
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask softMask = graphicsState.GetSoftMask();
-if ((softMask != default!)) {
-global::DripSharp.Runtime.JavaPaint awtPaint = new global::DripSharp.Runtime.JavaTexturePaint(image, global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((float)(0), (float)(0), (float)(image.Width), (float)(image.Height)));
-awtPaint = this.applySoftMaskToPaint(awtPaint, softMask);
-graphics.SetPaint(awtPaint);
-graphics.Fill(global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((float)(0), (float)(0), (bbox.GetWidth() * this.xformScalingFactorX), (bbox.GetHeight() * this.xformScalingFactorY)));
-} else {
-try {
-graphics.DrawImage(image, (global::SkiaSharp.SKMatrix)default!, (object)default!);
-} catch (global::System.SystemException ie) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG, (global::System.Exception)ie, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Exception drawing image, see JDK-6689349, ", "try rendering into a BufferedImage instead")));
-}
-}
-graphics.SetTransform(savedTransform);
-}
-
-internal sealed class TransparencyGroup {
-internal readonly global::SkiaSharp.SKBitmap image = null!;
-
-internal readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox = null!;
-
-internal readonly int minX = default;
-
-internal readonly int minY = default;
-
-internal readonly int maxX = default;
-
-internal readonly int maxY = default;
-
-internal readonly int width = default;
-
-internal readonly int height = default;
-
-internal TransparencyGroup(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup form, bool isSoftMask, global::DripSharp.PdfCarton.Util.Matrix ctm, global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor backdropColor, global::DripSharp.PdfCarton.Rendering.PageDrawer __outer) {
-this.__outer = __outer;
-
-global::DripSharp.Runtime.PdfCartonGraphics2D savedGraphics = this.__outer.graphics;
-global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> savedLastClips = this.__outer.lastClips;
-object savedInitialClip = this.__outer.initialClip;
-global::DripSharp.PdfCarton.Util.Matrix transform = global::DripSharp.PdfCarton.Util.Matrix.Concatenate(ctm, form.GetMatrix());
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle formBBox = form.GetBBox();
-if ((formBBox == default!)) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG, global::DripSharp.Runtime.JavaCompat.StringValueOf("transparency group ignored because BBox is null"));
-formBBox = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle();
-}
-global::SkiaSharp.SKPath transformedBox = formBBox.Transform(transform);
-global::DripSharp.Runtime.JavaArea transformed = new global::DripSharp.Runtime.JavaArea(transformedBox);
-transformed.Intersect(this.__outer.GetGraphicsState().GetCurrentClippingPath());
-global::SkiaSharp.SKRect clipRect = transformed.Bounds;
-if (clipRect.IsEmpty) {
-this.image = default!;
-this.bbox = default!;
-this.minX = 0;
-this.minY = 0;
-this.maxX = 0;
-this.maxY = 0;
-this.width = 0;
-this.height = 0;
-return;
-}
-this.bbox = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle((float)((float)(clipRect.Left)), (float)((float)(clipRect.Top)), (float)((float)(clipRect.Width)), (float)((float)(clipRect.Height)));
-global::SkiaSharp.SKMatrix xformOriginal = this.__outer.xform;
-this.__outer.xform = global::DripSharp.Runtime.PdfCartonFontCompat.Scale((double)(this.__outer.xformScalingFactorX), (double)(this.__outer.xformScalingFactorY));
-global::SkiaSharp.SKRect bounds = global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(this.__outer.xform, clipRect));
-this.minX = (int)(global::System.Math.Floor(bounds.Left));
-this.minY = (int)(global::System.Math.Floor(bounds.Top));
-this.maxX = ((int)(global::System.Math.Floor(bounds.Right)) + 1);
-this.maxY = ((int)(global::System.Math.Floor(bounds.Bottom)) + 1);
-this.width = (this.maxX - this.minX);
-this.height = (this.maxY - this.minY);
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroupAttributes group = form.GetGroup();
-if (this.isGray(group.GetColorSpace(form.GetResources()))) {
-this.image = this.create2ByteGrayAlphaImage(this.width, this.height);
-} else {
-this.image = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(this.width, this.height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
-}
-bool needsBackdrop = ((!isSoftMask && !(group.IsIsolated())) && this.__outer.hasBlendMode(form, new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSBase>()));
-global::SkiaSharp.SKBitmap backdropImage = default!;
-int backdropX = 0;
-int backdropY = 0;
-if (needsBackdrop) {
-if (global::DripSharp.Runtime.JavaCompat.CollectionIsEmpty(this.__outer.transparencyGroupStack)) {
-backdropImage = this.__outer.renderer.getPageImage();
-if ((backdropImage! == default!)) {
-needsBackdrop = false;
-} else {
-backdropX = this.minX;
-backdropY = (backdropImage!.Height - this.maxY);
-}
-} else {
-global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup parentGroup = global::DripSharp.Runtime.JavaCompat.DequePeek(this.__outer.transparencyGroupStack);
-backdropImage = parentGroup.image;
-backdropX = (this.minX - parentGroup.minX);
-backdropY = (parentGroup.maxY - this.maxY);
-}
-}
-global::DripSharp.Runtime.PdfCartonGraphics2D g = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(this.image);
-if (needsBackdrop) {
-g.DrawImage(backdropImage!, 0, 0, this.width, this.height, backdropX, backdropY, (backdropX + this.width), (backdropY + this.height), (object)default!);
-g = new global::DripSharp.PdfCarton.Rendering.GroupGraphics(this.image, g);
-}
-if ((isSoftMask && (backdropColor != default!))) {
-g.SetBackground(global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromRgb(backdropColor.ToRGB()));
-g.ClearRect(0, 0, this.width, this.height);
-}
-g.Translate(0, this.image.Height);
-g.Scale((double)(1), (double)(-1));
-bool savedFlipTG = this.__outer.flipTG;
-this.__outer.flipTG = false;
-g.Transform(this.__outer.xform);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle pageSizeOriginal = this.__outer.pageSize;
-this.__outer.pageSize = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle((this.minX / (float)(this.__outer.xformScalingFactorX)), (this.minY / (float)(this.__outer.xformScalingFactorY)), (float)((float)(((double)(bounds.Width) / (float)(this.__outer.xformScalingFactorX)))), (float)((float)(((double)(bounds.Height) / (float)(this.__outer.xformScalingFactorY)))));
-int clipWindingRuleOriginal = this.__outer.clipWindingRule;
-this.__outer.clipWindingRule = -1;
-global::SkiaSharp.SKPath linePathOriginal = this.__outer.linePath;
-this.__outer.linePath = new global::SkiaSharp.SKPath();
-g.Translate(-(clipRect.Left), -(clipRect.Top));
-this.__outer.graphics = g;
-this.__outer.setRenderingHints();
-try {
-if (isSoftMask) {
-this.__outer.ProcessSoftMask(form);
-} else {
-global::DripSharp.Runtime.JavaCompat.DequePush(this.__outer.transparencyGroupStack, this);
-this.__outer.ProcessTransparencyGroup(form);
-if (!(global::DripSharp.Runtime.JavaCompat.CollectionIsEmpty(this.__outer.transparencyGroupStack))) {
-this.__outer.transparencyGroupStack.Pop();
-}
-}
-if (needsBackdrop) {
-((global::DripSharp.PdfCarton.Rendering.GroupGraphics)(this.__outer.graphics!)).removeBackdrop(backdropImage!, backdropX, backdropY);
-}
-} finally {
-this.__outer.flipTG = savedFlipTG;
-this.__outer.lastClips = savedLastClips;
-this.__outer.graphics.Dispose();
-this.__outer.graphics = savedGraphics;
-this.__outer.initialClip = savedInitialClip;
-this.__outer.clipWindingRule = clipWindingRuleOriginal;
-this.__outer.linePath = linePathOriginal;
-this.__outer.pageSize = pageSizeOriginal;
-this.__outer.xform = xformOriginal;
-}
-}
-
-internal global::SkiaSharp.SKBitmap create2ByteGrayAlphaImage(int width, int height) {
-int[] bandOffsets = new int[] { 1, 0 };
-int bands = bandOffsets.Length;
-global::DripSharp.Runtime.JavaColorModel CM_GRAY_ALPHA = global::DripSharp.Runtime.PdfCartonFontCompat.ComponentColorModel(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_GRAY), true, false, global::DripSharp.Runtime.PdfCartonTransparency.TRANSLUCENT, global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE);
-global::DripSharp.Runtime.JavaDataBuffer buffer = new global::DripSharp.Runtime.JavaDataBufferByte(((width * height) * bands));
-global::DripSharp.Runtime.JavaRaster raster = global::DripSharp.Runtime.PdfCartonFontCompat.CreateInterleavedRaster(buffer, width, height, (width * bands), bands, bandOffsets, new global::DripSharp.Runtime.JavaPoint(0, 0));
-return global::DripSharp.Runtime.PdfCartonFontCompat.CreateImage(CM_GRAY_ALPHA, raster, false, (global::DripSharp.Runtime.JavaHashtable<object, object>)default!);
-}
-
-internal bool isGray(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-if ((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray)) {
-return true;
-}
-if ((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)) {
-try {
-return (((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(colorSpace!)).GetAlternateColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray);
-} catch (global::System.IO.IOException ex) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG, (global::System.Exception)ex, global::DripSharp.Runtime.JavaCompat.StringValueOf("Couldn't get an alternate ColorSpace"));
-return false;
-}
-}
-return false;
-}
-
-internal global::SkiaSharp.SKBitmap getImage() {
-return this.image;
-}
-
-internal global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle getBBox() {
-return this.bbox;
-}
-
-internal global::SkiaSharp.SKRect getBounds() {
-global::SkiaSharp.SKRect r;
-if (this.__outer.flipTG) {
-r = global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((double)(this.minX), (double)(this.minY), (double)(this.width), (double)(this.height));
-} else {
-r = global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((double)((this.minX - (this.__outer.pageSize.GetLowerLeftX() * this.__outer.xformScalingFactorX))), (double)(((((this.__outer.pageSize.GetLowerLeftY() + this.__outer.pageSize.GetHeight()) * this.__outer.xformScalingFactorY) - this.minY) - this.height)), (double)(this.width), (double)(this.height));
-}
-global::SkiaSharp.SKMatrix adjustedTransform = this.__outer.xform;
-global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref adjustedTransform, ((double)(1.0D) / (float)(this.__outer.xformScalingFactorX)), ((double)(1.0D) / (float)(this.__outer.xformScalingFactorY)));
-return global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(adjustedTransform, r));
-}
-
-private readonly global::DripSharp.PdfCarton.Rendering.PageDrawer __outer;
-}
-
-private bool hasBlendMode(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup group, global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSBase> groupsDone) {
-global::DripSharp.PdfCarton.Cos.COSStream groupCOSStream = group.GetCOSObject();
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(groupsDone, groupCOSStream)) {
-return false;
-}
-groupsDone.Add(groupCOSStream);
-bool? val = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.blendModeMap, groupCOSStream);
-if ((val != default!)) {
-return global::DripSharp.Runtime.JavaCompat.UnboxObject<bool>(val);
-}
-global::DripSharp.PdfCarton.Pdmodel.PDResources resources = group.GetResources();
-if ((resources == default!)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.blendModeMap, groupCOSStream, false);
-return false;
-}
-foreach (global::DripSharp.PdfCarton.Cos.COSName name__2066_22 in resources.GetExtGStateNames()) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState extGState = resources.GetExtGState(name__2066_22);
-if ((extGState == default!)) {
-continue;
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode blendMode = extGState.GetBlendMode();
-if ((blendMode != global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.Normal)) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.blendModeMap, groupCOSStream, true);
-return true;
-}
-}
-foreach (global::DripSharp.PdfCarton.Cos.COSName name__2082_22 in resources.GetXObjectNames()) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject xObject;
-try {
-xObject = resources.GetXObject(name__2082_22);
-} catch (global::System.IO.IOException) {
-continue;
-}
-if (((xObject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup) && this.hasBlendMode((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)(xObject!), groupsDone))) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.blendModeMap, groupCOSStream, true);
-return true;
-}
-}
-global::DripSharp.Runtime.JavaCompat.MapPut(this.blendModeMap, groupCOSStream, false);
-return false;
-}
-
-public override void BeginMarkedContentSequence(global::DripSharp.PdfCarton.Cos.COSName tag, global::DripSharp.PdfCarton.Cos.COSDictionary properties) {
-if ((this.nestedHiddenOCGCount > 0)) {
-this.nestedHiddenOCGCount++;
-return;
-}
-if ((properties == default!)) {
-return;
-}
-if (this.isHiddenOCG(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList.Create(properties))) {
-this.nestedHiddenOCGCount = 1;
-}
-}
-
-public override void EndMarkedContentSequence() {
-if ((this.nestedHiddenOCGCount > 0)) {
-this.nestedHiddenOCGCount--;
-}
-}
-
-private bool isContentRendered() {
-return (this.nestedHiddenOCGCount <= 0);
-}
-
-private bool isHiddenOCG(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList propertyList) {
-if ((propertyList is global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup)) {
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup group = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup)(propertyList!);
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState printState = group.GetRenderState(this.destination);
-if ((printState == default!)) {
-if (!(this.GetRenderer().IsGroupEnabled(group))) {
-return true;
-}
-} else {
-if ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState.Off == printState)) {
-return true;
-}
-}
-} else {
-if ((propertyList is global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentMembershipDictionary)) {
-return this.isHiddenOCMD((global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentMembershipDictionary)(propertyList!));
-}
-}
-return false;
-}
-
-private bool isHiddenOCMD(global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentMembershipDictionary ocmd) {
-global::DripSharp.PdfCarton.Cos.COSArray veArray = ocmd.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Ve);
-if (((veArray != default!) && (veArray.Size() > 0))) {
-return this.isHiddenVisibilityExpression(veArray);
-}
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList> oCGs = ocmd.GetOCGs();
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(oCGs)) {
-return false;
-}
-global::System.Collections.Generic.IList<bool> visibles = new global::System.Collections.Generic.List<bool>(global::DripSharp.Runtime.JavaCompat.CollectionCount(oCGs));
-global::DripSharp.Runtime.JavaCompat.ForEach(oCGs, (prop) => global::DripSharp.Runtime.JavaCompat.Add(visibles, !(this.isHiddenOCG(prop))));
-global::DripSharp.PdfCarton.Cos.COSName visibilityPolicy = ocmd.GetVisibilityPolicy();
-if (global::DripSharp.PdfCarton.Cos.COSName.AnyOff.Equals(visibilityPolicy)) {
-return global::DripSharp.Runtime.JavaCompat.AllValues(global::DripSharp.Runtime.JavaCompat.Stream(visibles), (v) => v);
-}
-if (global::DripSharp.PdfCarton.Cos.COSName.AllOn.Equals(visibilityPolicy)) {
-return global::DripSharp.Runtime.JavaCompat.Any(global::DripSharp.Runtime.JavaCompat.Stream(visibles), (v) => !v);
-}
-if (global::DripSharp.PdfCarton.Cos.COSName.AllOff.Equals(visibilityPolicy)) {
-return global::DripSharp.Runtime.JavaCompat.Any(global::DripSharp.Runtime.JavaCompat.Stream(visibles), (v) => v);
-}
-return global::DripSharp.Runtime.JavaCompat.NoValues(global::DripSharp.Runtime.JavaCompat.Stream(visibles), (v) => v);
-}
-
-private bool isHiddenVisibilityExpression(global::DripSharp.PdfCarton.Cos.COSArray veArray) {
-if ((veArray.Size() == 0)) {
-return false;
-}
-string op = veArray.GetName(0);
-if ((op == default!)) {
-return false;
-}
-switch (op) {
-case var __case_2220_18_0 when global::System.Object.Equals(__case_2220_18_0, "And"):
-return this.isHiddenAndVisibilityExpression(veArray);
-case var __case_2222_18_0 when global::System.Object.Equals(__case_2222_18_0, "Or"):
-return this.isHiddenOrVisibilityExpression(veArray);
-case var __case_2224_18_0 when global::System.Object.Equals(__case_2224_18_0, "Not"):
-return this.isHiddenNotVisibilityExpression(veArray);
-default:
-return false;
-}
-}
-
-private bool isHiddenAndVisibilityExpression(global::DripSharp.PdfCarton.Cos.COSArray veArray) {
-for (int i = 1; (i < veArray.Size()); ++i) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = veArray.GetObject(i);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
-bool isHidden__2240_25 = this.isHiddenVisibilityExpression((global::DripSharp.PdfCarton.Cos.COSArray)(@base!));
-if (isHidden__2240_25) {
-return true;
-}
-} else {
-if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList prop = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
-bool isHidden__2250_25 = this.isHiddenOCG(prop);
-if (isHidden__2250_25) {
-return true;
-}
-}
-}
-}
-return false;
-}
-
-private bool isHiddenOrVisibilityExpression(global::DripSharp.PdfCarton.Cos.COSArray veArray) {
-for (int i = 1; (i < veArray.Size()); ++i) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = veArray.GetObject(i);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
-bool isHidden__2269_25 = this.isHiddenVisibilityExpression((global::DripSharp.PdfCarton.Cos.COSArray)(@base!));
-if (!isHidden__2269_25) {
-return false;
-}
-} else {
-if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList prop = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
-bool isHidden__2279_25 = this.isHiddenOCG(prop);
-if (!isHidden__2279_25) {
-return false;
-}
-}
-}
-}
-return true;
-}
-
-private bool isHiddenNotVisibilityExpression(global::DripSharp.PdfCarton.Cos.COSArray veArray) {
-if ((veArray.Size() != 2)) {
-return false;
-}
-global::DripSharp.PdfCarton.Cos.COSBase @base = veArray.GetObject(1);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
-return !(this.isHiddenVisibilityExpression((global::DripSharp.PdfCarton.Cos.COSArray)(@base!)));
-} else {
-if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList prop = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
-return !(this.isHiddenOCG(prop));
-}
-}
-return false;
-}
-
-private global::DripSharp.Runtime.JavaLookupTable getInvLookupTable() {
-if ((this.invTable == default!)) {
-sbyte[] inv = new sbyte[256];
-for (int i = 0; (i < inv.Length); i++) {
-inv[i] = unchecked((sbyte)(unchecked((sbyte)((255 - i)))));
-}
-this.invTable = new global::DripSharp.Runtime.JavaLookupTable(0, inv);
-}
-return this.invTable;
-}
+  private readonly global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup> transparencyGroupStack;
+
+  private int nestedHiddenOCGCount = default;
+
+  private readonly global::DripSharp.PdfCarton.Rendering.RenderDestination destination = null!;
+
+  private readonly global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints = null!;
+
+  private readonly float imageDownscalingOptimizationThreshold = default;
+
+  private global::DripSharp.Runtime.JavaLookupTable invTable;
+
+  private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSBase,
+    bool> blendModeMap;
+
+  private global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter annotationFilter;
+
+  public PageDrawer(global::DripSharp.PdfCarton.Rendering.PageDrawerParameters parameters)
+  : base(parameters.GetPage()) {
+    this.flipTG = false;
+    this.clipWindingRule = -1;
+    this.linePath = new global::SkiaSharp.SKPath();
+    this.glyphCaches
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Pdmodel.Font.PDFont,
+      global::DripSharp.PdfCarton.Rendering.GlyphCache>();
+    this.tilingPaintFactory = new global::DripSharp.PdfCarton.Rendering.TilingPaintFactory(this);
+    this.transparencyGroupStack
+      = new global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup>();
+    this.invTable = default!;
+    this.blendModeMap
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSBase,
+      bool>();
+    this.annotationFilter
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.__AnnotationFilterFunctionalAdapter((annotation)
+      => true);
+
+    this.renderer = parameters.getRenderer();
+    this.subsamplingAllowed = parameters.IsSubsamplingAllowed();
+    this.destination = parameters.GetDestination();
+    this.renderingHints = parameters.GetRenderingHints();
+    this.imageDownscalingOptimizationThreshold
+      = parameters.GetImageDownscalingOptimizationThreshold();
+  }
+
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter GetAnnotationFilter() {
+    return this.annotationFilter;
+  }
+
+  public virtual void SetAnnotationFilter(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AnnotationFilter annotationFilter) {
+    this.annotationFilter = annotationFilter;
+  }
+
+  public global::DripSharp.PdfCarton.Rendering.PDFRenderer GetRenderer() {
+    return this.renderer;
+  }
+
+  protected internal global::DripSharp.Runtime.PdfCartonGraphics2D GetGraphics() {
+    return this.graphics;
+  }
+
+  protected internal global::SkiaSharp.SKPath GetLinePath() {
+    return this.linePath;
+  }
+
+  private void setRenderingHints() {
+    this.graphics.AddRenderingHints(global::DripSharp.Runtime.JavaCompat.CastDictionary<object,
+      object>(this.renderingHints));
+  }
+
+  public virtual void DrawPage(global::DripSharp.Runtime.PdfCartonGraphics2D g,
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle pageSize) {
+    this.graphics = g;
+    this.xform = this.graphics.GetTransform();
+    global::DripSharp.PdfCarton.Util.Matrix m
+      = new global::DripSharp.PdfCarton.Util.Matrix(this.xform);
+    this.xformScalingFactorX = global::System.Math.Abs(m.GetScalingFactorX());
+    this.xformScalingFactorY = global::System.Math.Abs(m.GetScalingFactorY());
+    this.initialClip = this.graphics.GetClip();
+    this.pageSize = pageSize;
+    this.setRenderingHints();
+    this.graphics.Translate((double)(0), (double)(pageSize.GetHeight()));
+    this.graphics.Scale((double)(1), (double)(-1));
+    this.graphics.Translate((double)(-(pageSize.GetLowerLeftX())),
+      (double)(-(pageSize.GetLowerLeftY())));
+    this.ProcessPage(this.GetPage());
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation in this.GetPage().GetAnnotations(this.annotationFilter)) {
+      this.ShowAnnotation(annotation);
+    }
+    this.graphics = default!;
+  }
+
+  internal virtual void drawTilingPattern(global::DripSharp.Runtime.PdfCartonGraphics2D g,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color,
+    global::DripSharp.PdfCarton.Util.Matrix patternMatrix) {
+    global::DripSharp.Runtime.PdfCartonGraphics2D savedGraphics = this.graphics;
+    this.graphics = g;
+    global::SkiaSharp.SKPath savedLinePath = this.linePath;
+    this.linePath = new global::SkiaSharp.SKPath();
+    int savedClipWindingRule = this.clipWindingRule;
+    this.clipWindingRule = -1;
+    global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> savedLastClips
+      = this.lastClips;
+    this.lastClips = default!;
+    object savedInitialClip = this.initialClip;
+    this.initialClip = default!;
+    bool savedFlipTG = this.flipTG;
+    this.flipTG = true;
+    this.setRenderingHints();
+    this.ProcessTilingPattern(pattern, color, colorSpace, patternMatrix);
+    this.flipTG = savedFlipTG;
+    this.graphics = savedGraphics;
+    this.linePath = savedLinePath;
+    this.lastClips = savedLastClips;
+    this.initialClip = savedInitialClip;
+    this.clipWindingRule = savedClipWindingRule;
+  }
+
+  private float clampColor(float color) {
+    return ((color < 0) ? 0 : ((color > 1) ? 1 : color));
+  }
+
+  protected internal virtual global::DripSharp.Runtime.JavaPaint GetPaint(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace
+      = color.GetColorSpace();
+    if ((colorSpace == default!)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf("colorSpace is null, will be rendered as transparency"));
+      return global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0, 0);
+    } else {
+      if (((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation)
+        && global::DripSharp.Runtime.JavaCompat.Equals("None",
+        ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation)(colorSpace!)).GetColorantName()))) {
+        return global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0, 0);
+      } else {
+        if (!((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern))) {
+          float[] rgb = colorSpace.ToRGB(color.GetComponents());
+          return global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromFractions(this.clampColor(rgb[0]),
+            this.clampColor(rgb[1]), this.clampColor(rgb[2]));
+        } else {
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern patternSpace
+            = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)(colorSpace!);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern pattern
+            = patternSpace.GetPattern(color);
+          if ((pattern is global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern)) {
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern tilingPattern
+              = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern)(pattern!);
+            if ((tilingPattern.GetPaintType()
+              == global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern.PaintColored)) {
+              return this.tilingPaintFactory.create(tilingPattern,
+                (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace)default!,
+                (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor)default!, this.xform);
+            } else {
+              return this.tilingPaintFactory.create(tilingPattern,
+                patternSpace.GetUnderlyingColorSpace(), color, this.xform);
+            }
+          } else {
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDShadingPattern shadingPattern
+              = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDShadingPattern)(pattern!);
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading
+              = shadingPattern.GetShading();
+            if ((shading == default!)) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG,
+                global::DripSharp.Runtime.JavaCompat.StringValueOf("shadingPattern is null, will be filled with transparency"));
+              return global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0, 0);
+            }
+            return shading.ToPaint(global::DripSharp.PdfCarton.Util.Matrix.Concatenate(this.GetInitialMatrix(),
+              shadingPattern.GetMatrix()));
+          }
+        }
+      }
+    }
+  }
+
+  protected internal void SetClip() {
+    global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> clippingPaths
+      = this.GetGraphicsState().GetCurrentClippingPaths();
+    if ((clippingPaths != this.lastClips)) {
+      this.TransferClip(this.graphics);
+      if ((this.initialClip != default!)) {}
+      this.lastClips = clippingPaths;
+    }
+  }
+
+  protected internal virtual void TransferClip(global::DripSharp.Runtime.PdfCartonGraphics2D graphics) {
+    global::DripSharp.Runtime.JavaArea clippingPath
+      = this.GetGraphicsState().GetCurrentClippingPath();
+    if (clippingPath.GetPathIterator((global::SkiaSharp.SKMatrix)default!).IsDone()) {
+      graphics.SetClip(new global::SkiaSharp.SKRectI());
+    } else {
+      graphics.SetClip(clippingPath);
+    }
+  }
+
+  public override void BeginText() {
+    this.SetClip();
+    this.beginTextClip();
+  }
+
+  public override void EndText() {
+    this.endTextClip();
+  }
+
+  private void beginTextClip() {
+    this.textClippings = new global::System.Collections.Generic.List<object>();
+  }
+
+  private void endTextClip() {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState state
+      = this.GetGraphicsState();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode
+      = state.GetTextState().GetRenderingMode();
+    if ((renderingMode.IsClip()
+      && !global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.textClippings))) {
+      global::SkiaSharp.SKPath path
+        = global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(global::DripSharp.Runtime.JavaPathIterator.WIND_NON_ZERO,
+        global::DripSharp.Runtime.JavaCompat.CollectionCount(this.textClippings));
+      global::DripSharp.Runtime.JavaCompat.ForEach(this.textClippings, (shape)
+        => global::DripSharp.Runtime.PdfCartonFontCompat.AppendPath(path, shape, false));
+      state.IntersectClippingPath(path);
+      this.textClippings = new global::System.Collections.Generic.List<object>();
+      this.lastClips = default!;
+    }
+  }
+
+  protected internal override void ShowFontGlyph(global::DripSharp.PdfCarton.Util.Matrix textRenderingMatrix,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font, int code,
+    global::DripSharp.PdfCarton.Util.Vector displacement) {
+    global::SkiaSharp.SKMatrix at = textRenderingMatrix.CreateAffineTransform();
+    global::DripSharp.Runtime.PdfCartonFontCompat.ConcatenateInPlace(ref at,
+      font.GetFontMatrix().CreateAffineTransform());
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont vectorFont
+      = (global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont)(font!);
+    global::DripSharp.PdfCarton.Rendering.GlyphCache cache
+      = global::DripSharp.Runtime.JavaCompat.MapGet(this.glyphCaches, font);
+    if ((cache == default!)) {
+      cache = new global::DripSharp.PdfCarton.Rendering.GlyphCache(vectorFont);
+      global::DripSharp.Runtime.JavaCompat.MapPut(this.glyphCaches, font, cache);
+    }
+    global::SkiaSharp.SKPath path = cache.GetPathForCharacterCode(code);
+    this.drawGlyph(path, font, code, displacement, at);
+  }
+
+  private void drawGlyph(global::SkiaSharp.SKPath path,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font, int code,
+    global::DripSharp.PdfCarton.Util.Vector displacement, global::SkiaSharp.SKMatrix at) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState state
+      = this.GetGraphicsState();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode
+      = state.GetTextState().GetRenderingMode();
+    if ((path != default!)) {
+      if ((((!(font.IsEmbedded()) && !(font.IsVertical())) && !(font.IsStandard14()))
+        && font.HasExplicitWidth(code))) {
+        float fontWidth = font.GetWidthFromFont(code);
+        if ((((displacement.GetX() > 0) && (fontWidth > 0)) && (global::System.Math.Abs((fontWidth
+          - (displacement.GetX() * 1000))) > 1.0E-4D))) {
+          float pdfWidth = (displacement.GetX() * 1000);
+          global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref at,
+            (double)(((float)pdfWidth / (float)fontWidth)), (double)(1));
+        }
+      }
+      object glyph = global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(at, path);
+      if (this.isContentRendered()) {
+        if (renderingMode.IsFill()) {
+          this.graphics.SetComposite(state.GetNonStrokingJavaComposite());
+          this.graphics.SetPaint(this.GetNonStrokingPaint());
+          this.SetClip();
+          this.graphics.Fill(glyph);
+        }
+        if (renderingMode.IsStroke()) {
+          this.graphics.SetComposite(state.GetStrokingJavaComposite());
+          this.graphics.SetPaint(this.getStrokingPaint());
+          this.graphics.SetStroke(this.getStroke());
+          this.SetClip();
+          this.graphics.Draw(glyph);
+        }
+      }
+      if (renderingMode.IsClip()) {
+        global::DripSharp.Runtime.JavaCompat.Add(this.textClippings, glyph);
+      }
+    }
+  }
+
+  protected internal override void ShowType3Glyph(global::DripSharp.PdfCarton.Util.Matrix textRenderingMatrix,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font font, int code,
+    global::DripSharp.PdfCarton.Util.Vector displacement) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState state
+      = this.GetGraphicsState();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode renderingMode
+      = state.GetTextState().GetRenderingMode();
+    if ((global::DripSharp.PdfCarton.Pdmodel.Graphics.State.RenderingMode.Neither
+      != renderingMode)) {
+      base.ShowType3Glyph(textRenderingMatrix, font, code, displacement);
+    }
+  }
+
+  public override void AppendRectangle(global::DripSharp.Runtime.JavaPoint2D p0,
+    global::DripSharp.Runtime.JavaPoint2D p1, global::DripSharp.Runtime.JavaPoint2D p2,
+    global::DripSharp.Runtime.JavaPoint2D p3) {
+    global::DripSharp.Runtime.PdfCartonFontCompat.MoveTo(this.linePath, (float)((float)(p0.X)),
+      (float)((float)(p0.Y)));
+    global::DripSharp.Runtime.PdfCartonFontCompat.LineTo(this.linePath, (float)((float)(p1.X)),
+      (float)((float)(p1.Y)));
+    global::DripSharp.Runtime.PdfCartonFontCompat.LineTo(this.linePath, (float)((float)(p2.X)),
+      (float)((float)(p2.Y)));
+    global::DripSharp.Runtime.PdfCartonFontCompat.LineTo(this.linePath, (float)((float)(p3.X)),
+      (float)((float)(p3.Y)));
+    global::DripSharp.Runtime.PdfCartonFontCompat.Close(this.linePath);
+  }
+
+  private global::DripSharp.Runtime.JavaPaint applySoftMaskToPaint(global::DripSharp.Runtime.JavaPaint parentPaint,
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask softMask) {
+    if (((softMask == default!) || (softMask.GetGroup() == default!))) {
+      return parentPaint;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor backdropColor = default!;
+    global::DripSharp.PdfCarton.Cos.COSName subType = softMask.GetSubType();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup form
+      = softMask.GetGroup();
+    if (global::DripSharp.PdfCarton.Cos.COSName.Luminosity.Equals(subType)) {
+      global::DripSharp.PdfCarton.Cos.COSArray backdropColorArray = softMask.GetBackdropColor();
+      if ((backdropColorArray != default!)) {
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace
+          = form.GetGroup().GetColorSpace(form.GetResources());
+        if (((colorSpace != default!) && (colorSpace.GetNumberOfComponents()
+          == backdropColorArray.Size()))) {
+          backdropColor
+            = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(backdropColorArray,
+            colorSpace);
+        }
+      }
+    }
+    global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup transparencyGroup
+      = new global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup(form, true,
+      softMask.GetInitialTransformationMatrix(), backdropColor!, this);
+    global::SkiaSharp.SKBitmap image = transparencyGroup.getImage();
+    if ((image == default!)) {
+      return parentPaint;
+    }
+    global::SkiaSharp.SKBitmap gray
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
+    if (global::DripSharp.PdfCarton.Cos.COSName.Alpha.Equals(subType)) {
+      global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(gray,
+        global::DripSharp.Runtime.PdfCartonFontCompat.GetAlphaRaster(image));
+    } else {
+      if (global::DripSharp.PdfCarton.Cos.COSName.Luminosity.Equals(subType)) {
+        global::DripSharp.Runtime.PdfCartonGraphics2D g
+          = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(gray);
+        g.DrawImage(image, 0, 0, (object)default!);
+        g.Dispose();
+      } else {
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid soft mask subtype: ",
+          subType));
+      }
+    }
+    gray = this.adjustImage(gray);
+    global::SkiaSharp.SKRect tpgBounds = transparencyGroup.getBounds();
+    return new global::DripSharp.PdfCarton.Rendering.SoftMask(parentPaint, gray, tpgBounds,
+      backdropColor!, softMask.GetTransferFunction());
+  }
+
+  private global::SkiaSharp.SKBitmap adjustImage(global::SkiaSharp.SKBitmap gray) {
+    global::SkiaSharp.SKMatrix at = this.xform;
+    global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref at, ((double)1.0D
+      / (float)(this.xformScalingFactorX)), ((double)1.0D / (float)(this.xformScalingFactorY)));
+    global::SkiaSharp.SKRectI originalBounds
+      = global::DripSharp.Runtime.PdfCartonFontCompat.RectangleI(gray.Width, gray.Height);
+    global::SkiaSharp.SKRect transformedBounds
+      = global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(at,
+      originalBounds));
+    global::DripSharp.Runtime.PdfCartonFontCompat.PreConcatenateInPlace(ref at,
+      global::DripSharp.Runtime.PdfCartonFontCompat.Translation(-(transformedBounds.Left),
+      -(transformedBounds.Top)));
+    int width = (int)(global::System.Math.Ceiling((double)(transformedBounds.Width)));
+    int height = (int)(global::System.Math.Ceiling((double)(transformedBounds.Height)));
+    if ((((width == gray.Width) && (height == gray.Height))
+      && global::DripSharp.Runtime.PdfCartonFontCompat.IsIdentity(at))) {
+      return gray;
+    }
+    global::SkiaSharp.SKBitmap transformedGray
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
+    global::DripSharp.Runtime.PdfCartonGraphics2D g2
+      = (global::DripSharp.Runtime.PdfCartonGraphics2D)(global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(transformedGray)!);
+    g2.DrawImage(gray, at, (object)default!);
+    g2.Dispose();
+    return transformedGray;
+  }
+
+  private global::DripSharp.Runtime.JavaPaint getStrokingPaint() {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState
+      = this.GetGraphicsState();
+    return this.applySoftMaskToPaint(this.GetPaint(graphicsState.GetStrokingColor()),
+      graphicsState.GetSoftMask());
+  }
+
+  protected internal global::DripSharp.Runtime.JavaPaint GetNonStrokingPaint() {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState
+      = this.GetGraphicsState();
+    return this.applySoftMaskToPaint(this.GetPaint(graphicsState.GetNonStrokingColor()),
+      graphicsState.GetSoftMask());
+  }
+
+  private global::DripSharp.Runtime.JavaStroke getStroke() {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState state
+      = this.GetGraphicsState();
+    float lineWidth = this.TransformWidth(state.GetLineWidth());
+    if ((lineWidth < 0.25D)) {
+      lineWidth = 0.25F;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern dashPattern
+      = state.GetLineDashPattern();
+    float[] dashArray = dashPattern.GetDashArray();
+    if (this.isAllZeroDash(dashArray)) {
+      return new global::DripSharp.Runtime.JavaStrokeAdapter((p)
+        => new global::DripSharp.Runtime.JavaArea());
+    }
+    float phaseStart = dashPattern.GetPhase();
+    dashArray = this.getDashArray(dashPattern);
+    phaseStart = this.TransformWidth(phaseStart);
+    int lineCap = global::System.Math.Min(2, global::System.Math.Max(0, state.GetLineCap()));
+    int lineJoin = global::System.Math.Min(2, global::System.Math.Max(0, state.GetLineJoin()));
+    float miterLimit = state.GetMiterLimit();
+    if ((miterLimit < 1)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Miter limit must be >= 1, value ",
+        miterLimit), " is ignored")));
+      miterLimit = 10;
+    }
+    phaseStart = global::System.Math.Min(phaseStart, (float)(short.MaxValue));
+    return new global::DripSharp.Runtime.JavaBasicStroke(lineWidth, lineCap, lineJoin, miterLimit,
+      dashArray, phaseStart);
+  }
+
+  private bool isAllZeroDash(float[] dashArray) {
+    if ((dashArray.Length > 0)) {
+      for (int i = 0; (i < dashArray.Length); ++i) {
+        if ((dashArray[i] != 0)) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+
+  private float[] getDashArray(global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern dashPattern) {
+    float[] dashArray = dashPattern.GetDashArray();
+    if ((dashArray.Length == 0)) {
+      return default!;
+    }
+    for (int i__771_18 = 0; (i__771_18 < dashArray.Length); ++i__771_18) {
+      if ((float.IsInfinity(dashArray[i__771_18]) || float.IsNaN(dashArray[i__771_18]))) {
+        return default!;
+      }
+    }
+    for (int i__778_18 = 0; (i__778_18 < dashArray.Length); ++i__778_18) {
+      float w = this.TransformWidth(dashArray[i__778_18]);
+      if ((this.xformScalingFactorX < 0.5F)) {
+        dashArray[i__778_18] = global::System.Math.Max(w, 0.2F);
+      } else {
+        dashArray[i__778_18] = global::System.Math.Max(w, 0.062F);
+      }
+    }
+    return dashArray;
+  }
+
+  public override void StrokePath() {
+    if (this.isContentRendered()) {
+      this.graphics.SetComposite(this.GetGraphicsState().GetStrokingJavaComposite());
+      this.graphics.SetPaint(this.getStrokingPaint());
+      this.graphics.SetStroke(this.getStroke());
+      this.SetClip();
+      this.graphics.Draw(this.linePath);
+    }
+    this.linePath.Reset();
+  }
+
+  public override void FillPath(int windingRule) {
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState
+      = this.GetGraphicsState();
+    this.graphics.SetComposite(graphicsState.GetNonStrokingJavaComposite());
+    this.SetClip();
+    global::DripSharp.Runtime.PdfCartonFontCompat.SetWindingRule(this.linePath, windingRule);
+    global::SkiaSharp.SKRect bounds = this.linePath.Bounds;
+    bool noAntiAlias = ((this.isRectangular(this.linePath) && (bounds.Width > 1))
+      && (bounds.Height > 1));
+    if (noAntiAlias) {
+      this.graphics.SetRenderingHint(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_ANTIALIASING,
+        global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_ANTIALIAS_OFF);
+    }
+    object shape;
+    if ((graphicsState.GetNonStrokingColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)) {
+      global::DripSharp.Runtime.JavaArea area
+        = new global::DripSharp.Runtime.JavaArea(this.linePath);
+      object clip = this.graphics.GetClip();
+      if ((clip != default!)) {
+        area.Intersect(new global::DripSharp.Runtime.JavaArea(clip));
+      }
+      this.intersectShadingBBox(graphicsState.GetNonStrokingColor(), area);
+      shape = area;
+    } else {
+      shape = this.linePath;
+    }
+    if ((this.isContentRendered()
+      && !(global::DripSharp.Runtime.PdfCartonFontCompat.ShapePathIterator(shape,
+      (global::SkiaSharp.SKMatrix)default!).IsDone()))) {
+      this.graphics.SetPaint(this.GetNonStrokingPaint());
+      this.graphics.Fill(shape);
+    }
+    this.linePath.Reset();
+    if (noAntiAlias) {
+      this.setRenderingHints();
+    }
+  }
+
+  private void intersectShadingBBox(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color,
+    global::DripSharp.Runtime.JavaArea area) {
+    if ((color.GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)) {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace
+        = color.GetColorSpace();
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern pat
+        = ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)(colorSpace!)).GetPattern(color);
+      if ((pat is global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDShadingPattern)) {
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading
+          = ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDShadingPattern)(pat!)).GetShading();
+        global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox = shading.GetBBox();
+        if ((bbox != default!)) {
+          global::DripSharp.PdfCarton.Util.Matrix m
+            = global::DripSharp.PdfCarton.Util.Matrix.Concatenate(this.GetInitialMatrix(),
+            pat.GetMatrix());
+          global::DripSharp.Runtime.JavaArea bboxArea
+            = new global::DripSharp.Runtime.JavaArea(bbox.Transform(m));
+          area.Intersect(bboxArea);
+        }
+      }
+    }
+  }
+
+  private bool isRectangular(global::SkiaSharp.SKPath path) {
+    global::DripSharp.Runtime.JavaPathIterator iter
+      = global::DripSharp.Runtime.PdfCartonFontCompat.PathIterator(path,
+      (global::SkiaSharp.SKMatrix)default!);
+    double[] coords = new double[6];
+    int count = 0;
+    int[] xs = new int[4];
+    int[] ys = new int[4];
+    while (!(iter.IsDone())) {
+      switch (iter.CurrentSegment(coords)) {
+        case var __case_904_22_0 when __case_904_22_0
+          == global::DripSharp.Runtime.JavaPathIterator.SEG_MOVETO:
+        if ((count == 0)) {
+          xs[count] = (int)(global::System.Math.Floor(coords[0]));
+          ys[count] = (int)(global::System.Math.Floor(coords[1]));
+        } else {
+          return false;
+        }
+        count++;
+        break;
+        case var __case_917_22_0 when __case_917_22_0
+          == global::DripSharp.Runtime.JavaPathIterator.SEG_LINETO:
+        if ((count < 4)) {
+          xs[count] = (int)(global::System.Math.Floor(coords[0]));
+          ys[count] = (int)(global::System.Math.Floor(coords[1]));
+        } else {
+          return false;
+        }
+        count++;
+        break;
+        case var __case_930_22_0 when __case_930_22_0
+          == global::DripSharp.Runtime.JavaPathIterator.SEG_CUBICTO:
+        return false;
+        default:
+          break;
+      }
+      iter.Next();
+    }
+    if ((count == 4)) {
+      return ((((xs[0] == xs[1]) || (xs[0] == xs[2])) || (ys[0] == ys[1])) || (ys[0] == ys[3]));
+    }
+    return false;
+  }
+
+  public override void FillAndStrokePath(int windingRule) {
+    global::SkiaSharp.SKPath path
+      = (global::SkiaSharp.SKPath)(new global::SkiaSharp.SKPath(this.linePath)!);
+    this.FillPath(windingRule);
+    this.linePath = path;
+    this.StrokePath();
+  }
+
+  public override void Clip(int windingRule) {
+    this.clipWindingRule = windingRule;
+    if ((this.clipWindingRule != -1)) {
+      global::DripSharp.Runtime.PdfCartonFontCompat.SetWindingRule(this.linePath,
+        this.clipWindingRule);
+      if (!(global::DripSharp.Runtime.PdfCartonFontCompat.PathIterator(this.linePath,
+        (global::SkiaSharp.SKMatrix)default!).IsDone())) {
+        this.GetGraphicsState().IntersectClippingPath(this.adjustClip(this.linePath));
+      }
+      this.lastClips = default!;
+      this.clipWindingRule = -1;
+    }
+  }
+
+  public override void MoveTo(float x, float y) {
+    global::DripSharp.Runtime.PdfCartonFontCompat.MoveTo(this.linePath, x, y);
+  }
+
+  public override void LineTo(float x, float y) {
+    global::DripSharp.Runtime.PdfCartonFontCompat.LineTo(this.linePath, x, y);
+  }
+
+  public override void CurveTo(float x1, float y1, float x2, float y2, float x3, float y3) {
+    global::DripSharp.Runtime.PdfCartonFontCompat.CurveTo(this.linePath, x1, y1, x2, y2, x3, y3);
+  }
+
+  public override global::DripSharp.Runtime.JavaPoint2D GetCurrentPoint() {
+    return global::DripSharp.Runtime.PdfCartonFontCompat.CurrentPoint(this.linePath);
+  }
+
+  public override void ClosePath() {
+    global::DripSharp.Runtime.PdfCartonFontCompat.Close(this.linePath);
+  }
+
+  public override void EndPath() {
+    this.linePath.Reset();
+  }
+
+  private global::SkiaSharp.SKPath adjustClip(global::SkiaSharp.SKPath linePath) {
+    global::SkiaSharp.SKMatrix tx = this.graphics.GetTransform();
+    int type = global::DripSharp.Runtime.PdfCartonFontCompat.GetTransformType(tx);
+    if (((type & ~((global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_TRANSLATION | global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_FLIP)))
+      == 0)) {
+      return linePath;
+    } else {
+      if (((type & ~(((global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_TRANSLATION | global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_FLIP) | global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_MASK_SCALE)))
+        == 0)) {
+        double sx = global::System.Math.Abs(tx.ScaleX);
+        double sy = global::System.Math.Abs(tx.ScaleY);
+        if (((sx > 1.0D) && (sy > 1.0D))) {
+          return linePath;
+        }
+        global::SkiaSharp.SKRect bounds
+          = global::DripSharp.Runtime.PdfCartonFontCompat.PathBounds(linePath);
+        double w = bounds.Width;
+        double h = bounds.Height;
+        double sw = (sx * w);
+        double sh = (sy * h);
+        double minSize = 2.0D;
+        if (((sw < minSize) || (sh < minSize))) {
+          double x = bounds.Left;
+          double y = bounds.Top;
+          if ((sw < minSize)) {
+            w = ((double)minSize / (double)sx);
+            x = (global::DripSharp.Runtime.PdfCartonFontCompat.ShapeCenterX(bounds) - ((double)w
+              / 2));
+          }
+          if ((sh < minSize)) {
+            h = ((double)minSize / (double)sy);
+            y = (global::DripSharp.Runtime.PdfCartonFontCompat.ShapeCenterY(bounds) - ((double)h
+              / 2));
+          }
+          return global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle(x,
+            y, w, h));
+        }
+      }
+    }
+    return linePath;
+  }
+
+  public override void DrawImage(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage) {
+    if (((pdImage is global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)
+      && this.isHiddenOCG(((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(pdImage!)).GetOptionalContent()))) {
+      return;
+    }
+    if (!(this.isContentRendered())) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState
+      = this.GetGraphicsState();
+    global::DripSharp.PdfCarton.Util.Matrix ctm = graphicsState.GetCurrentTransformationMatrix();
+    global::SkiaSharp.SKMatrix at = ctm.CreateAffineTransform();
+    if (!(pdImage.GetInterpolate())) {
+      global::SkiaSharp.SKBitmap bim;
+      if (this.subsamplingAllowed) {
+        bim = pdImage.GetImage((global::SkiaSharp.SKRectI)default!, this.GetSubsampling(pdImage,
+          at));
+      } else {
+        bim = pdImage.GetImage();
+      }
+      bool isScaledUp = ((bim.Width
+        <= global::System.Math.Abs(global::DripSharp.Runtime.JavaCompat.MathRoundFloat((ctm.GetScalingFactorX()
+        * this.xformScalingFactorX)))) || (bim.Height
+        <= global::System.Math.Abs(global::DripSharp.Runtime.JavaCompat.MathRoundFloat((ctm.GetScalingFactorY()
+        * this.xformScalingFactorY)))));
+      if (isScaledUp) {
+        this.graphics.SetRenderingHint(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_INTERPOLATION,
+          global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+      }
+    }
+    this.graphics.SetComposite(graphicsState.GetNonStrokingJavaComposite());
+    this.SetClip();
+    if (pdImage.IsStencil()) {
+      if ((graphicsState.GetNonStrokingColor().GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDPattern)) {
+        global::DripSharp.Runtime.JavaPaint paint = this.GetNonStrokingPaint();
+        global::SkiaSharp.SKRect unitRect
+          = global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((float)(0), (float)(0),
+          (float)(1), (float)(1));
+        global::SkiaSharp.SKRect bounds
+          = global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(at,
+          unitRect));
+        int w = (int)(global::System.Math.Ceiling((double)(bounds.Width)));
+        int h = (int)(global::System.Math.Ceiling((double)(bounds.Height)));
+        global::SkiaSharp.SKBitmap renderedPaint
+          = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(w, h,
+          global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
+        global::DripSharp.Runtime.PdfCartonGraphics2D g
+          = (global::DripSharp.Runtime.PdfCartonGraphics2D)(global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(renderedPaint)!);
+        g.Translate(-(bounds.Left), -(bounds.Top));
+        g.SetPaint(paint);
+        g.SetRenderingHints(global::DripSharp.Runtime.JavaCompat.CastDictionary<object,
+          object>(this.graphics.GetRenderingHints()));
+        g.Fill(bounds);
+        g.Dispose();
+        global::SkiaSharp.SKBitmap mask = pdImage.GetImage();
+        global::SkiaSharp.SKMatrix imageTransform = at;
+        int maskWidth = mask.Width;
+        int maskHeight = mask.Height;
+        global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref imageTransform, ((double)1.0D
+          / maskWidth), ((double)-1.0D / maskHeight));
+        global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref imageTransform,
+          (double)(0), (double)(-maskHeight));
+        global::SkiaSharp.SKMatrix full = g.GetTransform();
+        global::DripSharp.Runtime.PdfCartonFontCompat.ConcatenateInPlace(ref full, imageTransform);
+        global::DripSharp.PdfCarton.Util.Matrix m
+          = new global::DripSharp.PdfCarton.Util.Matrix(full);
+        double scaleX = global::System.Math.Abs(m.GetScalingFactorX());
+        double scaleY = global::System.Math.Abs(m.GetScalingFactorY());
+        bool smallMask = ((maskWidth <= 8) && (maskHeight <= 8));
+        if (((maskWidth == 1) && (maskHeight == 1))) {
+          smallMask = false;
+        }
+        if (!smallMask) {
+          global::SkiaSharp.SKBitmap tmp
+            = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(maskWidth, maskHeight,
+            global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
+          mask = new global::DripSharp.Runtime.JavaLookupOp(this.getInvLookupTable(),
+            this.graphics.GetRenderingHints()).Filter(mask, tmp);
+        }
+        global::SkiaSharp.SKBitmap renderedMask
+          = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(w, h,
+          global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
+        g
+          = (global::DripSharp.Runtime.PdfCartonGraphics2D)(global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(renderedMask)!);
+        g.Translate(-(bounds.Left), -(bounds.Top));
+        g.SetRenderingHints(global::DripSharp.Runtime.JavaCompat.CastDictionary<object,
+          object>(this.graphics.GetRenderingHints()));
+        if (smallMask) {
+          g.DrawImage(mask, imageTransform, (object)default!);
+        } else {
+          if (((scaleX != 0) && (scaleY != 0))) {
+            while (((scaleX < 0.25D) || (global::DripSharp.Runtime.JavaCompat.MathRound((maskWidth
+              * scaleX)) < 1))) {
+              scaleX *= 2.0D;
+            }
+            while (((scaleY < 0.25D) || (global::DripSharp.Runtime.JavaCompat.MathRound((maskHeight
+              * scaleY)) < 1))) {
+              scaleY *= 2.0D;
+            }
+            int w2 = (int)global::DripSharp.Runtime.JavaCompat.MathRound((maskWidth * scaleX));
+            int h2 = (int)global::DripSharp.Runtime.JavaCompat.MathRound((maskHeight * scaleY));
+            global::SkiaSharp.SKBitmap scaledMask
+              = global::DripSharp.Runtime.PdfCartonFontCompat.ScaleImage(mask, w2, h2,
+              global::DripSharp.Runtime.PdfCartonFontCompat.SCALE_SMOOTH);
+            global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref imageTransform,
+              ((float)1.0F / (double)(global::System.Math.Abs(scaleX))), ((float)1.0F
+              / (double)(global::System.Math.Abs(scaleY))));
+            g.DrawImage(scaledMask, imageTransform, (object)default!);
+          }
+        }
+        g.Dispose();
+        int[] alphaPixel = default!;
+        int[] rasterPixel = default!;
+        global::DripSharp.Runtime.JavaRaster raster
+          = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(renderedPaint);
+        global::DripSharp.Runtime.JavaRaster alpha
+          = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(renderedMask);
+        for (int y = 0; (y < h); y++) {
+          for (int x = 0; (x < w); x++) {
+            alphaPixel = alpha.GetPixel(x, y, alphaPixel!);
+            rasterPixel = raster.GetPixel(x, y, rasterPixel!);
+            rasterPixel![3] = alphaPixel![0];
+            raster.SetPixel(x, y, rasterPixel!);
+          }
+        }
+        this.graphics.DrawImage(renderedPaint,
+          global::DripSharp.Runtime.PdfCartonFontCompat.Translation(bounds.Left, bounds.Top),
+          (object)default!);
+      } else {
+        global::SkiaSharp.SKBitmap image = pdImage.GetStencilImage(this.GetNonStrokingPaint());
+        this.drawBufferedImage(pdImage, image, at);
+      }
+    } else {
+      if (this.subsamplingAllowed) {
+        int subsampling = this.GetSubsampling(pdImage, at);
+        this.drawBufferedImage(pdImage, pdImage.GetImage((global::SkiaSharp.SKRectI)default!,
+          subsampling), at);
+      } else {
+        this.drawBufferedImage(pdImage, pdImage.GetImage(), at);
+      }
+    }
+    if (!(pdImage.GetInterpolate())) {
+      this.setRenderingHints();
+    }
+  }
+
+  protected internal virtual int GetSubsampling(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
+    global::SkiaSharp.SKMatrix at) {
+    double scale
+      = global::System.Math.Abs((global::DripSharp.Runtime.PdfCartonFontCompat.Determinant(at)
+      * global::DripSharp.Runtime.PdfCartonFontCompat.Determinant(this.xform)));
+    int imageWidth = pdImage.GetWidth();
+    int imageHeight = pdImage.GetHeight();
+    int subsampling = (int)(global::System.Math.Floor(global::System.Math.Sqrt(((imageWidth
+      * imageHeight) / (double)scale))));
+    if ((subsampling > 8)) {
+      subsampling = 8;
+    }
+    if ((subsampling < 1)) {
+      subsampling = 1;
+    }
+    if (((subsampling > imageWidth) || (subsampling > imageHeight))) {
+      subsampling = global::System.Math.Min(imageWidth, imageHeight);
+    }
+    return subsampling;
+  }
+
+  private void drawBufferedImage(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
+    global::SkiaSharp.SKBitmap image, global::SkiaSharp.SKMatrix at) {
+    global::SkiaSharp.SKMatrix originalTransform = this.graphics.GetTransform();
+    global::SkiaSharp.SKMatrix imageTransform = at;
+    int width = image.Width;
+    int height = image.Height;
+    global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref imageTransform, ((double)1.0D
+      / width), ((double)-1.0D / height));
+    global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref imageTransform, (double)(0),
+      (double)(-height));
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask softMask
+      = this.GetGraphicsState().GetSoftMask();
+    bool hasImageMask
+      = (pdImage.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Mask)
+      || pdImage.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Smask));
+    if (((softMask != default!) && !hasImageMask)) {
+      global::SkiaSharp.SKRect rectangle
+        = global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((float)(0), (float)(0),
+        (float)(width), (float)(height));
+      global::DripSharp.Runtime.JavaPaint awtPaint
+        = new global::DripSharp.Runtime.JavaTexturePaint(image, rectangle);
+      awtPaint = this.applySoftMaskToPaint(awtPaint, softMask);
+      this.graphics.SetPaint(awtPaint);
+      this.graphics.Transform(imageTransform);
+      this.graphics.Fill(rectangle);
+      this.graphics.SetTransform(originalTransform);
+    } else {
+      global::DripSharp.PdfCarton.Cos.COSBase transfer = this.GetGraphicsState().GetTransfer();
+      if (((transfer is global::DripSharp.PdfCarton.Cos.COSArray)
+        || (transfer is global::DripSharp.PdfCarton.Cos.COSDictionary))) {
+        image = this.applyTransferFunction(image, transfer);
+      }
+      global::DripSharp.PdfCarton.Util.Matrix imageTransformMatrix
+        = new global::DripSharp.PdfCarton.Util.Matrix(imageTransform);
+      global::DripSharp.PdfCarton.Util.Matrix graphicsTransformMatrix
+        = new global::DripSharp.PdfCarton.Util.Matrix(originalTransform);
+      float scaleX = global::System.Math.Abs((imageTransformMatrix.GetScalingFactorX()
+        * graphicsTransformMatrix.GetScalingFactorX()));
+      float scaleY = global::System.Math.Abs((imageTransformMatrix.GetScalingFactorY()
+        * graphicsTransformMatrix.GetScalingFactorY()));
+      if (((((scaleX < this.imageDownscalingOptimizationThreshold)
+        || (scaleY < this.imageDownscalingOptimizationThreshold))
+        && global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_RENDER_QUALITY,
+        this.graphics.GetRenderingHint(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_RENDERING)))
+        && global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.Runtime.PdfCartonRenderingHints.VALUE_INTERPOLATION_BICUBIC,
+        this.graphics.GetRenderingHint(global::DripSharp.Runtime.PdfCartonRenderingHints.KEY_INTERPOLATION)))) {
+        int w = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((image.Width * scaleX));
+        int h = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((image.Height * scaleY));
+        if (((w < 1) || (h < 1))) {
+          this.graphics.DrawImage(image, imageTransform, (object)default!);
+          return;
+        }
+        global::SkiaSharp.SKBitmap imageToDraw
+          = global::DripSharp.Runtime.PdfCartonFontCompat.ScaleImage(image, w, h,
+          global::DripSharp.Runtime.PdfCartonFontCompat.SCALE_SMOOTH);
+        global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref imageTransform,
+          (double)((((float)1.0F / w) * image.Width)), (double)((((float)1.0F / h)
+          * image.Height)));
+        global::DripSharp.Runtime.PdfCartonFontCompat.PreConcatenateInPlace(ref imageTransform,
+          originalTransform);
+        this.graphics.SetTransform(global::DripSharp.Runtime.PdfCartonFontCompat.Identity());
+        this.graphics.DrawImage(imageToDraw, imageTransform, (object)default!);
+        this.graphics.SetTransform(originalTransform);
+      } else {
+        global::DripSharp.Runtime.JavaGraphicsConfiguration graphicsConfiguration
+          = this.graphics.GetDeviceConfiguration();
+        int deviceType = global::DripSharp.Runtime.JavaGraphicsDevice.TYPE_RASTER_SCREEN;
+        if ((graphicsConfiguration != default!)) {
+          global::DripSharp.Runtime.JavaGraphicsDevice graphicsDevice
+            = graphicsConfiguration.GetDevice();
+          if ((graphicsDevice != default!)) {
+            deviceType = graphicsDevice.GetType();
+          }
+        }
+        if ((((deviceType == global::DripSharp.Runtime.JavaGraphicsDevice.TYPE_PRINTER)
+          && (global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(image)
+          != global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_4BYTE_ABGR))
+          && (global::DripSharp.PdfCarton.Rendering.PageDrawer.IS_WINDOWS
+          || global::DripSharp.PdfCarton.Rendering.PageDrawer.IS_LINUX))) {
+          global::SkiaSharp.SKBitmap bim
+            = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height,
+            global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_4BYTE_ABGR);
+          global::DripSharp.Runtime.PdfCartonGraphics2D g
+            = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(bim);
+          g.DrawImage(image, 0, 0, (object)default!);
+          g.Dispose();
+          image = bim;
+        }
+        this.graphics.DrawImage(image, imageTransform, (object)default!);
+      }
+    }
+  }
+
+  private global::SkiaSharp.SKBitmap applyTransferFunction(global::SkiaSharp.SKBitmap image,
+    global::DripSharp.PdfCarton.Cos.COSBase transfer) {
+    global::SkiaSharp.SKBitmap bim;
+    int imageWidth = image.Width;
+    int imageHeight = image.Height;
+    if (global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).HasAlpha) {
+      bim = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(imageWidth, imageHeight,
+        global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
+    } else {
+      bim = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(imageWidth, imageHeight,
+        global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
+    }
+    int[] rMap;
+    int[] gMap;
+    int[] bMap;
+    global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction rf;
+    global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction gf;
+    global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction bf;
+    if ((transfer is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      global::DripSharp.PdfCarton.Cos.COSArray ar
+        = (global::DripSharp.PdfCarton.Cos.COSArray)(transfer!);
+      rf = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(ar.GetObject(0));
+      gf = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(ar.GetObject(1));
+      bf = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(ar.GetObject(2));
+      rMap = new int[256];
+      gMap = new int[256];
+      bMap = new int[256];
+    } else {
+      rf = global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction.Create(transfer);
+      gf = rf;
+      bf = rf;
+      rMap = new int[256];
+      gMap = rMap;
+      bMap = rMap;
+    }
+    float[] input = new float[1];
+    for (int x = 0; (x < imageWidth); ++x) {
+      for (int y = 0; (y < imageHeight); ++y) {
+        int rgb = global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(image, x, y);
+        int ri = ((rgb >> unchecked((int)(16))) & 255);
+        int gi = ((rgb >> unchecked((int)(8))) & 255);
+        int bi = (rgb & 255);
+        int ro;
+        int go;
+        int bo;
+        if ((rMap[ri] != default!)) {
+          ro = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(rMap[ri]);
+        } else {
+          input[0] = ((ri & 255) / (float)255.0F);
+          ro = (int)((rf.Eval(input)[0] * 255));
+          rMap[ri] = ro;
+        }
+        if ((gMap[gi] != default!)) {
+          go = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(gMap[gi]);
+        } else {
+          input[0] = ((gi & 255) / (float)255.0F);
+          go = (int)((gf.Eval(input)[0] * 255));
+          gMap[gi] = go;
+        }
+        if ((bMap[bi] != default!)) {
+          bo = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(bMap[bi]);
+        } else {
+          input[0] = ((bi & 255) / (float)255.0F);
+          bo = (int)((bf.Eval(input)[0] * 255));
+          bMap[bi] = bo;
+        }
+        global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(bim, x, y, ((((rgb &
+          -16777216) | (ro << unchecked((int)(16)))) | (go << unchecked((int)(8)))) | bo));
+      }
+    }
+    return bim;
+  }
+
+  public override void ShadingFill(global::DripSharp.PdfCarton.Cos.COSName shadingName) {
+    if (!(this.isContentRendered())) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading
+      = this.GetResources().GetShading(shadingName);
+    if ((shading == default!)) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("shading ",
+        shadingName), " does not exist in resources dictionary")));
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState
+      = this.GetGraphicsState();
+    global::DripSharp.PdfCarton.Util.Matrix ctm = graphicsState.GetCurrentTransformationMatrix();
+    this.graphics.SetComposite(graphicsState.GetNonStrokingJavaComposite());
+    object savedClip = this.graphics.GetClip();
+    this.graphics.SetClip((object)default!);
+    this.lastClips = default!;
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox = shading.GetBBox();
+    global::DripSharp.Runtime.JavaArea area;
+    global::DripSharp.Runtime.JavaArea currentClippingPath = graphicsState.GetCurrentClippingPath();
+    if ((bbox != default!)) {
+      area = new global::DripSharp.Runtime.JavaArea(bbox.Transform(ctm));
+      area.Intersect(currentClippingPath);
+    } else {
+      global::SkiaSharp.SKRect bounds
+        = shading.GetBounds(global::DripSharp.Runtime.PdfCartonFontCompat.Identity(), ctm);
+      if ((bounds != default!)) {
+        global::DripSharp.Runtime.PdfCartonFontCompat.AddPoint(ref bounds,
+          new global::DripSharp.Runtime.JavaPoint2D(global::System.Math.Floor((bounds.Left - 1)),
+          global::System.Math.Floor((bounds.Top - 1))));
+        global::DripSharp.Runtime.PdfCartonFontCompat.AddPoint(ref bounds,
+          new global::DripSharp.Runtime.JavaPoint2D(global::System.Math.Ceiling((double)((bounds.Right
+          + 1))), global::System.Math.Ceiling((double)((bounds.Bottom + 1)))));
+        area = new global::DripSharp.Runtime.JavaArea(bounds);
+        area.Intersect(currentClippingPath);
+      } else {
+        area = currentClippingPath;
+      }
+    }
+    if (!(area.IsEmpty)) {
+      global::DripSharp.Runtime.JavaPaint paint = shading.ToPaint(ctm);
+      paint = this.applySoftMaskToPaint(paint, graphicsState.GetSoftMask());
+      this.graphics.SetPaint(paint);
+      this.graphics.Fill(area);
+    }
+    this.graphics.SetClip(savedClip);
+  }
+
+  public override void ShowAnnotation(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation) {
+    this.lastClips = default!;
+    if (this.shouldSkipAnnotation(annotation)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceDictionary appearance
+      = annotation.GetAppearance();
+    if (((appearance == default!) || (appearance.GetNormalAppearance() == default!))) {
+      annotation.ConstructAppearances(this.renderer.Document);
+    }
+    if ((annotation.IsNoRotate() && (this.GetCurrentPage().GetRotation() != 0))) {
+      appearance = annotation.GetAppearance();
+      if ((appearance != default!)) {
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceEntry appearanceEntry
+          = appearance.GetNormalAppearance();
+        if ((((appearanceEntry != default!) && appearanceEntry.IsStream())
+          && this.hasTransparency(appearanceEntry.GetAppearanceStream()))) {
+          annotation.ConstructAppearances();
+        }
+      }
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = annotation.GetRectangle();
+      global::SkiaSharp.SKMatrix savedTransform = this.graphics.GetTransform();
+      this.graphics.Rotate(global::DripSharp.Runtime.JavaCompat.ToRadians((double)(this.GetCurrentPage().GetRotation())),
+        (double)(rect.GetLowerLeftX()), (double)(rect.GetUpperRightY()));
+      base.ShowAnnotation(annotation);
+      this.graphics.SetTransform(savedTransform);
+      annotation.SetAppearance(appearance);
+    } else {
+      base.ShowAnnotation(annotation);
+    }
+  }
+
+  private bool shouldSkipAnnotation(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation) {
+    if (((this.destination == global::DripSharp.PdfCarton.Rendering.RenderDestination.Print)
+      && !(annotation.IsPrinted()))) {
+      return true;
+    }
+    if ((((this.destination == global::DripSharp.PdfCarton.Rendering.RenderDestination.View)
+      || (this.destination == global::DripSharp.PdfCarton.Rendering.RenderDestination.Export))
+      && annotation.IsNoView())) {
+      return true;
+    }
+    if (annotation.IsHidden()) {
+      return true;
+    }
+    if ((annotation.IsInvisible()
+      && (annotation is global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnknown))) {
+      return true;
+    }
+    return this.isHiddenOCG(annotation.GetOptionalContent());
+  }
+
+  private bool hasTransparency(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject form) {
+    if ((form == default!)) {
+      return false;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.PDResources resources = form.GetResources();
+    if ((resources == default!)) {
+      return false;
+    }
+    foreach (global::DripSharp.PdfCarton.Cos.COSName name in resources.GetXObjectNames()) {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject xObject = resources.GetXObject(name);
+      if ((xObject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)) {
+        return true;
+      }
+      if (((xObject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)
+        && this.hasTransparency((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(xObject!)))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public override void ShowForm(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject form) {
+    if (this.isHiddenOCG(form.GetOptionalContent())) {
+      return;
+    }
+    if (this.isContentRendered()) {
+      global::SkiaSharp.SKPath savedLinePath = this.linePath;
+      this.linePath = new global::SkiaSharp.SKPath();
+      base.ShowForm(form);
+      this.linePath = savedLinePath;
+    }
+  }
+
+  public override void ShowTransparencyGroup(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup form) {
+    this.ShowTransparencyGroupOnGraphics(form, this.graphics);
+  }
+
+  protected internal virtual void ShowTransparencyGroupOnGraphics(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup form,
+    global::DripSharp.Runtime.PdfCartonGraphics2D graphics) {
+    if (this.isHiddenOCG(form.GetOptionalContent())) {
+      return;
+    }
+    if (!(this.isContentRendered())) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState
+      = this.GetGraphicsState();
+    global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup group
+      = new global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup(form, false,
+      graphicsState.GetCurrentTransformationMatrix(),
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor)default!, this);
+    global::SkiaSharp.SKBitmap image = group.getImage();
+    if ((image == default!)) {
+      return;
+    }
+    graphics.SetComposite(graphicsState.GetNonStrokingJavaComposite());
+    this.SetClip();
+    global::SkiaSharp.SKMatrix savedTransform = graphics.GetTransform();
+    global::SkiaSharp.SKMatrix transform = this.xform;
+    global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref transform, ((double)1.0D
+      / (float)(this.xformScalingFactorX)), ((double)1.0D / (float)(this.xformScalingFactorY)));
+    graphics.SetTransform(transform);
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox = group.getBBox();
+    float x = (bbox.GetLowerLeftX() - this.pageSize.GetLowerLeftX());
+    float y = (this.pageSize.GetUpperRightY() - bbox.GetUpperRightY());
+    if (this.flipTG) {
+      graphics.Translate(0, image.Height);
+      graphics.Scale((double)(1), (double)(-1));
+    } else {
+      graphics.Translate((double)((x * this.xformScalingFactorX)), (double)((y
+        * this.xformScalingFactorY)));
+    }
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask softMask
+      = graphicsState.GetSoftMask();
+    if ((softMask != default!)) {
+      global::DripSharp.Runtime.JavaPaint awtPaint
+        = new global::DripSharp.Runtime.JavaTexturePaint(image,
+        global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((float)(0), (float)(0),
+        (float)(image.Width), (float)(image.Height)));
+      awtPaint = this.applySoftMaskToPaint(awtPaint, softMask);
+      graphics.SetPaint(awtPaint);
+      graphics.Fill(global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((float)(0), (float)(0),
+        (bbox.GetWidth() * this.xformScalingFactorX), (bbox.GetHeight()
+        * this.xformScalingFactorY)));
+    } else {
+      try {
+        graphics.DrawImage(image, (global::SkiaSharp.SKMatrix)default!, (object)default!);
+      } catch (global::System.SystemException ie) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG,
+          (global::System.Exception)ie,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Exception drawing image, see JDK-6689349, ",
+          "try rendering into a BufferedImage instead")));
+      }
+    }
+    graphics.SetTransform(savedTransform);
+  }
+
+  internal sealed class TransparencyGroup {
+    internal readonly global::SkiaSharp.SKBitmap image = null!;
+
+    internal readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox = null!;
+
+    internal readonly int minX = default;
+
+    internal readonly int minY = default;
+
+    internal readonly int maxX = default;
+
+    internal readonly int maxY = default;
+
+    internal readonly int width = default;
+
+    internal readonly int height = default;
+
+    internal TransparencyGroup(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup form,
+      bool isSoftMask, global::DripSharp.PdfCarton.Util.Matrix ctm,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor backdropColor,
+      global::DripSharp.PdfCarton.Rendering.PageDrawer __outer) {
+      this.__outer = __outer;
+
+      global::DripSharp.Runtime.PdfCartonGraphics2D savedGraphics = this.__outer.graphics;
+      global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> savedLastClips
+        = this.__outer.lastClips;
+      object savedInitialClip = this.__outer.initialClip;
+      global::DripSharp.PdfCarton.Util.Matrix transform
+        = global::DripSharp.PdfCarton.Util.Matrix.Concatenate(ctm, form.GetMatrix());
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle formBBox = form.GetBBox();
+      if ((formBBox == default!)) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG,
+          global::DripSharp.Runtime.JavaCompat.StringValueOf("transparency group ignored because BBox is null"));
+        formBBox = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle();
+      }
+      global::SkiaSharp.SKPath transformedBox = formBBox.Transform(transform);
+      global::DripSharp.Runtime.JavaArea transformed
+        = new global::DripSharp.Runtime.JavaArea(transformedBox);
+      transformed.Intersect(this.__outer.GetGraphicsState().GetCurrentClippingPath());
+      global::SkiaSharp.SKRect clipRect = transformed.Bounds;
+      if (clipRect.IsEmpty) {
+        this.image = default!;
+        this.bbox = default!;
+        this.minX = 0;
+        this.minY = 0;
+        this.maxX = 0;
+        this.maxY = 0;
+        this.width = 0;
+        this.height = 0;
+        return;
+      }
+      this.bbox
+        = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle((float)((float)(clipRect.Left)),
+        (float)((float)(clipRect.Top)), (float)((float)(clipRect.Width)),
+        (float)((float)(clipRect.Height)));
+      global::SkiaSharp.SKMatrix xformOriginal = this.__outer.xform;
+      this.__outer.xform
+        = global::DripSharp.Runtime.PdfCartonFontCompat.Scale((double)(this.__outer.xformScalingFactorX),
+        (double)(this.__outer.xformScalingFactorY));
+      global::SkiaSharp.SKRect bounds
+        = global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(this.__outer.xform,
+        clipRect));
+      this.minX = (int)(global::System.Math.Floor(bounds.Left));
+      this.minY = (int)(global::System.Math.Floor(bounds.Top));
+      this.maxX = ((int)(global::System.Math.Floor(bounds.Right)) + 1);
+      this.maxY = ((int)(global::System.Math.Floor(bounds.Bottom)) + 1);
+      this.width = (this.maxX - this.minX);
+      this.height = (this.maxY - this.minY);
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroupAttributes group
+        = form.GetGroup();
+      if (this.isGray(group.GetColorSpace(form.GetResources()))) {
+        this.image = this.create2ByteGrayAlphaImage(this.width, this.height);
+      } else {
+        this.image = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(this.width,
+          this.height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
+      }
+      bool needsBackdrop = ((!isSoftMask && !(group.IsIsolated()))
+        && this.__outer.hasBlendMode(form,
+        new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Cos.COSBase>()));
+      global::SkiaSharp.SKBitmap backdropImage = default!;
+      int backdropX = 0;
+      int backdropY = 0;
+      if (needsBackdrop) {
+        if (global::DripSharp.Runtime.JavaCompat.CollectionIsEmpty(this.__outer.transparencyGroupStack)) {
+          backdropImage = this.__outer.renderer.getPageImage();
+          if ((backdropImage! == default!)) {
+            needsBackdrop = false;
+          } else {
+            backdropX = this.minX;
+            backdropY = (backdropImage!.Height - this.maxY);
+          }
+        } else {
+          global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup parentGroup
+            = global::DripSharp.Runtime.JavaCompat.DequePeek(this.__outer.transparencyGroupStack);
+          backdropImage = parentGroup.image;
+          backdropX = (this.minX - parentGroup.minX);
+          backdropY = (parentGroup.maxY - this.maxY);
+        }
+      }
+      global::DripSharp.Runtime.PdfCartonGraphics2D g
+        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(this.image);
+      if (needsBackdrop) {
+        g.DrawImage(backdropImage!, 0, 0, this.width, this.height, backdropX, backdropY, (backdropX
+          + this.width), (backdropY + this.height), (object)default!);
+        g = new global::DripSharp.PdfCarton.Rendering.GroupGraphics(this.image, g);
+      }
+      if ((isSoftMask && (backdropColor != default!))) {
+        g.SetBackground(global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromRgb(backdropColor.ToRGB()));
+        g.ClearRect(0, 0, this.width, this.height);
+      }
+      g.Translate(0, this.image.Height);
+      g.Scale((double)(1), (double)(-1));
+      bool savedFlipTG = this.__outer.flipTG;
+      this.__outer.flipTG = false;
+      g.Transform(this.__outer.xform);
+      global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle pageSizeOriginal
+        = this.__outer.pageSize;
+      this.__outer.pageSize = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle((this.minX
+        / (float)(this.__outer.xformScalingFactorX)), (this.minY
+        / (float)(this.__outer.xformScalingFactorY)), (float)((float)(((double)(bounds.Width)
+        / (float)(this.__outer.xformScalingFactorX)))), (float)((float)(((double)(bounds.Height)
+        / (float)(this.__outer.xformScalingFactorY)))));
+      int clipWindingRuleOriginal = this.__outer.clipWindingRule;
+      this.__outer.clipWindingRule = -1;
+      global::SkiaSharp.SKPath linePathOriginal = this.__outer.linePath;
+      this.__outer.linePath = new global::SkiaSharp.SKPath();
+      g.Translate(-(clipRect.Left), -(clipRect.Top));
+      this.__outer.graphics = g;
+      this.__outer.setRenderingHints();
+      try {
+        if (isSoftMask) {
+          this.__outer.ProcessSoftMask(form);
+        } else {
+          global::DripSharp.Runtime.JavaCompat.DequePush(this.__outer.transparencyGroupStack, this);
+          this.__outer.ProcessTransparencyGroup(form);
+          if (!global::DripSharp.Runtime.JavaCompat.CollectionIsEmpty(this.__outer.transparencyGroupStack)) {
+            this.__outer.transparencyGroupStack.Pop();
+          }
+        }
+        if (needsBackdrop) {
+          ((global::DripSharp.PdfCarton.Rendering.GroupGraphics)(this.__outer.graphics!)).removeBackdrop(backdropImage!,
+            backdropX, backdropY);
+        }
+      } finally {
+        this.__outer.flipTG = savedFlipTG;
+        this.__outer.lastClips = savedLastClips;
+        this.__outer.graphics.Dispose();
+        this.__outer.graphics = savedGraphics;
+        this.__outer.initialClip = savedInitialClip;
+        this.__outer.clipWindingRule = clipWindingRuleOriginal;
+        this.__outer.linePath = linePathOriginal;
+        this.__outer.pageSize = pageSizeOriginal;
+        this.__outer.xform = xformOriginal;
+      }
+    }
+
+    internal global::SkiaSharp.SKBitmap create2ByteGrayAlphaImage(int width, int height) {
+      int[] bandOffsets = new int[] { 1, 0 };
+      int bands = bandOffsets.Length;
+      global::DripSharp.Runtime.JavaColorModel CM_GRAY_ALPHA
+        = global::DripSharp.Runtime.PdfCartonFontCompat.ComponentColorModel(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_GRAY),
+        true, false, global::DripSharp.Runtime.PdfCartonTransparency.TRANSLUCENT,
+        global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE);
+      global::DripSharp.Runtime.JavaDataBuffer buffer
+        = new global::DripSharp.Runtime.JavaDataBufferByte(((width * height) * bands));
+      global::DripSharp.Runtime.JavaRaster raster
+        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateInterleavedRaster(buffer, width,
+        height, (width * bands), bands, bandOffsets, new global::DripSharp.Runtime.JavaPoint(0, 0));
+      return global::DripSharp.Runtime.PdfCartonFontCompat.CreateImage(CM_GRAY_ALPHA, raster, false,
+        (global::DripSharp.Runtime.JavaHashtable<object, object>)default!);
+    }
+
+    internal bool isGray(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
+      if ((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray)) {
+        return true;
+      }
+      if ((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)) {
+        try {
+          return (((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(colorSpace!)).GetAlternateColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray);
+        } catch (global::System.IO.IOException ex) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Rendering.PageDrawer.LOG,
+            (global::System.Exception)ex,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf("Couldn't get an alternate ColorSpace"));
+          return false;
+        }
+      }
+      return false;
+    }
+
+    internal global::SkiaSharp.SKBitmap getImage() {
+      return this.image;
+    }
+
+    internal global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle getBBox() {
+      return this.bbox;
+    }
+
+    internal global::SkiaSharp.SKRect getBounds() {
+      global::SkiaSharp.SKRect r;
+      if (this.__outer.flipTG) {
+        r = global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((double)(this.minX),
+          (double)(this.minY), (double)(this.width), (double)(this.height));
+      } else {
+        r = global::DripSharp.Runtime.PdfCartonFontCompat.Rectangle((double)((this.minX
+          - (this.__outer.pageSize.GetLowerLeftX() * this.__outer.xformScalingFactorX))),
+          (double)(((((this.__outer.pageSize.GetLowerLeftY() + this.__outer.pageSize.GetHeight())
+          * this.__outer.xformScalingFactorY) - this.minY) - this.height)), (double)(this.width),
+          (double)(this.height));
+      }
+      global::SkiaSharp.SKMatrix adjustedTransform = this.__outer.xform;
+      global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref adjustedTransform,
+        ((double)1.0D / (float)(this.__outer.xformScalingFactorX)), ((double)1.0D
+        / (float)(this.__outer.xformScalingFactorY)));
+      return global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(adjustedTransform,
+        r));
+    }
+
+    private readonly global::DripSharp.PdfCarton.Rendering.PageDrawer __outer;
+  }
+
+  private bool hasBlendMode(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup group,
+    global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSBase> groupsDone) {
+    global::DripSharp.PdfCarton.Cos.COSStream groupCOSStream = group.GetCOSObject();
+    if (global::DripSharp.Runtime.JavaCompat.CollectionContains(groupsDone, groupCOSStream)) {
+      return false;
+    }
+    groupsDone.Add(groupCOSStream);
+    bool? val = global::DripSharp.Runtime.JavaCompat.MapGetNullable(this.blendModeMap,
+      groupCOSStream);
+    if ((val != default!)) {
+      return global::DripSharp.Runtime.JavaCompat.UnboxObject<bool>(val);
+    }
+    global::DripSharp.PdfCarton.Pdmodel.PDResources resources = group.GetResources();
+    if ((resources == default!)) {
+      global::DripSharp.Runtime.JavaCompat.MapPut(this.blendModeMap, groupCOSStream, false);
+      return false;
+    }
+    foreach (global::DripSharp.PdfCarton.Cos.COSName name__2066_22 in resources.GetExtGStateNames()) {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState extGState
+        = resources.GetExtGState(name__2066_22);
+      if ((extGState == default!)) {
+        continue;
+      }
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode blendMode
+        = extGState.GetBlendMode();
+      if ((blendMode != global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.Normal)) {
+        global::DripSharp.Runtime.JavaCompat.MapPut(this.blendModeMap, groupCOSStream, true);
+        return true;
+      }
+    }
+    foreach (global::DripSharp.PdfCarton.Cos.COSName name__2082_22 in resources.GetXObjectNames()) {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject xObject;
+      try {
+        xObject = resources.GetXObject(name__2082_22);
+      } catch (global::System.IO.IOException) {
+        continue;
+      }
+      if (((xObject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)
+        && this.hasBlendMode((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroup)(xObject!),
+        groupsDone))) {
+        global::DripSharp.Runtime.JavaCompat.MapPut(this.blendModeMap, groupCOSStream, true);
+        return true;
+      }
+    }
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.blendModeMap, groupCOSStream, false);
+    return false;
+  }
+
+  public override void BeginMarkedContentSequence(global::DripSharp.PdfCarton.Cos.COSName tag,
+    global::DripSharp.PdfCarton.Cos.COSDictionary properties) {
+    if ((this.nestedHiddenOCGCount > 0)) {
+      this.nestedHiddenOCGCount++;
+      return;
+    }
+    if ((properties == default!)) {
+      return;
+    }
+    if (this.isHiddenOCG(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList.Create(properties))) {
+      this.nestedHiddenOCGCount = 1;
+    }
+  }
+
+  public override void EndMarkedContentSequence() {
+    if ((this.nestedHiddenOCGCount > 0)) {
+      this.nestedHiddenOCGCount--;
+    }
+  }
+
+  private bool isContentRendered() {
+    return (this.nestedHiddenOCGCount <= 0);
+  }
+
+  private bool isHiddenOCG(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList propertyList) {
+    if ((propertyList is global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup)) {
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup group
+        = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup)(propertyList!);
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState printState
+        = group.GetRenderState(this.destination);
+      if ((printState == default!)) {
+        if (!(this.GetRenderer().IsGroupEnabled(group))) {
+          return true;
+        }
+      } else {
+        if ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup.RenderState.Off
+          == printState)) {
+          return true;
+        }
+      }
+    } else {
+      if ((propertyList is global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentMembershipDictionary)) {
+        return this.isHiddenOCMD((global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentMembershipDictionary)(propertyList!));
+      }
+    }
+    return false;
+  }
+
+  private bool isHiddenOCMD(global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentMembershipDictionary ocmd) {
+    global::DripSharp.PdfCarton.Cos.COSArray veArray
+      = ocmd.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Ve);
+    if (((veArray != default!) && (veArray.Size() > 0))) {
+      return this.isHiddenVisibilityExpression(veArray);
+    }
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList> oCGs
+      = ocmd.GetOCGs();
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(oCGs)) {
+      return false;
+    }
+    global::System.Collections.Generic.IList<bool> visibles
+      = new global::System.Collections.Generic.List<bool>(global::DripSharp.Runtime.JavaCompat.CollectionCount(oCGs));
+    global::DripSharp.Runtime.JavaCompat.ForEach(oCGs, (prop)
+      => global::DripSharp.Runtime.JavaCompat.Add(visibles, !(this.isHiddenOCG(prop))));
+    global::DripSharp.PdfCarton.Cos.COSName visibilityPolicy = ocmd.GetVisibilityPolicy();
+    if (global::DripSharp.PdfCarton.Cos.COSName.AnyOff.Equals(visibilityPolicy)) {
+      return global::DripSharp.Runtime.JavaCompat.AllValues(global::DripSharp.Runtime.JavaCompat.Stream(visibles),
+        (v) => v);
+    }
+    if (global::DripSharp.PdfCarton.Cos.COSName.AllOn.Equals(visibilityPolicy)) {
+      return global::DripSharp.Runtime.JavaCompat.Any(global::DripSharp.Runtime.JavaCompat.Stream(visibles),
+        (v) => !v);
+    }
+    if (global::DripSharp.PdfCarton.Cos.COSName.AllOff.Equals(visibilityPolicy)) {
+      return global::DripSharp.Runtime.JavaCompat.Any(global::DripSharp.Runtime.JavaCompat.Stream(visibles),
+        (v) => v);
+    }
+    return global::DripSharp.Runtime.JavaCompat.NoValues(global::DripSharp.Runtime.JavaCompat.Stream(visibles),
+      (v) => v);
+  }
+
+  private bool isHiddenVisibilityExpression(global::DripSharp.PdfCarton.Cos.COSArray veArray) {
+    if ((veArray.Size() == 0)) {
+      return false;
+    }
+    string op = veArray.GetName(0);
+    if ((op == default!)) {
+      return false;
+    }
+    switch (op) {
+      case var __case_2220_18_0 when global::System.Object.Equals(__case_2220_18_0, "And"):
+        return this.isHiddenAndVisibilityExpression(veArray);
+      case var __case_2222_18_0 when global::System.Object.Equals(__case_2222_18_0, "Or"):
+        return this.isHiddenOrVisibilityExpression(veArray);
+      case var __case_2224_18_0 when global::System.Object.Equals(__case_2224_18_0, "Not"):
+        return this.isHiddenNotVisibilityExpression(veArray);
+      default:
+        return false;
+    }
+  }
+
+  private bool isHiddenAndVisibilityExpression(global::DripSharp.PdfCarton.Cos.COSArray veArray) {
+    for (int i = 1; (i < veArray.Size()); ++i) {
+      global::DripSharp.PdfCarton.Cos.COSBase @base = veArray.GetObject(i);
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
+        bool isHidden__2240_25
+          = this.isHiddenVisibilityExpression((global::DripSharp.PdfCarton.Cos.COSArray)(@base!));
+        if (isHidden__2240_25) {
+          return true;
+        }
+      } else {
+        if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+          global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList prop
+            = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
+          bool isHidden__2250_25 = this.isHiddenOCG(prop);
+          if (isHidden__2250_25) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  private bool isHiddenOrVisibilityExpression(global::DripSharp.PdfCarton.Cos.COSArray veArray) {
+    for (int i = 1; (i < veArray.Size()); ++i) {
+      global::DripSharp.PdfCarton.Cos.COSBase @base = veArray.GetObject(i);
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
+        bool isHidden__2269_25
+          = this.isHiddenVisibilityExpression((global::DripSharp.PdfCarton.Cos.COSArray)(@base!));
+        if (!isHidden__2269_25) {
+          return false;
+        }
+      } else {
+        if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+          global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList prop
+            = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
+          bool isHidden__2279_25 = this.isHiddenOCG(prop);
+          if (!isHidden__2279_25) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  }
+
+  private bool isHiddenNotVisibilityExpression(global::DripSharp.PdfCarton.Cos.COSArray veArray) {
+    if ((veArray.Size() != 2)) {
+      return false;
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase @base = veArray.GetObject(1);
+    if ((@base is global::DripSharp.PdfCarton.Cos.COSArray)) {
+      return !(this.isHiddenVisibilityExpression((global::DripSharp.PdfCarton.Cos.COSArray)(@base!)));
+    } else {
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList prop
+          = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList.Create((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));
+        return !(this.isHiddenOCG(prop));
+      }
+    }
+    return false;
+  }
+
+  private global::DripSharp.Runtime.JavaLookupTable getInvLookupTable() {
+    if ((this.invTable == default!)) {
+      sbyte[] inv = new sbyte[256];
+      for (int i = 0; (i < inv.Length); i++) {
+        inv[i] = unchecked((sbyte)(unchecked((sbyte)((255 - i)))));
+      }
+      this.invTable = new global::DripSharp.Runtime.JavaLookupTable(0, inv);
+    }
+    return this.invTable;
+  }
 }

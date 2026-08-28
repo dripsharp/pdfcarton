@@ -8,75 +8,79 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/sType/ResourceEvent#", "stEvt")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/sType/ResourceEvent#",
+  "stEvt")]
 public class ResourceEventType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
-public const string Action = "action";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Choice", "Simple")]
+  public const string Action = "action";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string Changed = "changed";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string Changed = "changed";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("GUID", "Simple")]
-public const string InstanceId = "instanceID";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("GUID", "Simple")]
+  public const string InstanceId = "instanceID";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string Parameters = "parameters";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string Parameters = "parameters";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("AgentName", "Simple")]
-public const string SoftwareAgent = "softwareAgent";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("AgentName", "Simple")]
+  public const string SoftwareAgent = "softwareAgent";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Date", "Simple")]
-public const string When = "when";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Date", "Simple")]
+  public const string When = "when";
 
-public ResourceEventType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
-this.AddNamespace(this.GetNamespace(), this.GetPreferedPrefix());
-}
+  public ResourceEventType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+    this.AddNamespace(this.GetNamespace(), this.GetPreferedPrefix());
+  }
 
-public virtual string GetInstanceID() {
-return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.InstanceId);
-}
+  public virtual string GetInstanceID() {
+    return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.InstanceId);
+  }
 
-public virtual void SetInstanceID(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.InstanceId, value);
-}
+  public virtual void SetInstanceID(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.InstanceId,
+      value);
+  }
 
-public virtual string GetSoftwareAgent() {
-return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.SoftwareAgent);
-}
+  public virtual string GetSoftwareAgent() {
+    return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.SoftwareAgent);
+  }
 
-public virtual void SetSoftwareAgent(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.SoftwareAgent, value);
-}
+  public virtual void SetSoftwareAgent(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.SoftwareAgent,
+      value);
+  }
 
-public virtual global::System.DateTimeOffset? GetWhen() {
-return this.GetDatePropertyAsCalendar(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.When);
-}
+  public virtual global::System.DateTimeOffset? GetWhen() {
+    return this.GetDatePropertyAsCalendar(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.When);
+  }
 
-public virtual void SetWhen(global::System.DateTimeOffset? value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.When, value);
-}
+  public virtual void SetWhen(global::System.DateTimeOffset? value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.When, value);
+  }
 
-public virtual string GetAction() {
-return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Action);
-}
+  public virtual string GetAction() {
+    return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Action);
+  }
 
-public virtual void SetAction(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Action, value);
-}
+  public virtual void SetAction(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Action, value);
+  }
 
-public virtual string GetChanged() {
-return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Changed);
-}
+  public virtual string GetChanged() {
+    return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Changed);
+  }
 
-public virtual void SetChanged(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Changed, value);
-}
+  public virtual void SetChanged(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Changed, value);
+  }
 
-public virtual string GetParameters() {
-return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Parameters);
-}
+  public virtual string GetParameters() {
+    return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Parameters);
+  }
 
-public virtual void SetParameters(string value) {
-this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Parameters, value);
-}
+  public virtual void SetParameters(string value) {
+    this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Parameters,
+      value);
+  }
 }

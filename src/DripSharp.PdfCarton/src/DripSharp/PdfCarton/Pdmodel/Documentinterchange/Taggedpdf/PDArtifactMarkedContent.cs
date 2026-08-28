@@ -8,49 +8,54 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf;
 
-public class PDArtifactMarkedContent : global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent {
-public PDArtifactMarkedContent(global::DripSharp.PdfCarton.Cos.COSDictionary properties) : base(global::DripSharp.PdfCarton.Cos.COSName.Artifact, properties) {
+public class PDArtifactMarkedContent
+: global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent {
+  public PDArtifactMarkedContent(global::DripSharp.PdfCarton.Cos.COSDictionary properties)
+  : base(global::DripSharp.PdfCarton.Cos.COSName.Artifact, properties) {
 
-}
+  }
 
-public new virtual string GetType() {
-return this.GetProperties().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type);
-}
+  public new virtual string GetType() {
+    return this.GetProperties().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type);
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetBBox() {
-global::DripSharp.PdfCarton.Cos.COSArray a = this.GetProperties().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
-return ((a != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(a) : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle GetBBox() {
+    global::DripSharp.PdfCarton.Cos.COSArray a
+      = this.GetProperties().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Bbox);
+    return ((a != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(a)
+      : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
+  }
 
-public virtual bool IsTopAttached() {
-return this.isAttached("Top");
-}
+  public virtual bool IsTopAttached() {
+    return this.isAttached("Top");
+  }
 
-public virtual bool IsBottomAttached() {
-return this.isAttached("Bottom");
-}
+  public virtual bool IsBottomAttached() {
+    return this.isAttached("Bottom");
+  }
 
-public virtual bool IsLeftAttached() {
-return this.isAttached("Left");
-}
+  public virtual bool IsLeftAttached() {
+    return this.isAttached("Left");
+  }
 
-public virtual bool IsRightAttached() {
-return this.isAttached("Right");
-}
+  public virtual bool IsRightAttached() {
+    return this.isAttached("Right");
+  }
 
-public virtual string GetSubtype() {
-return this.GetProperties().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
-}
+  public virtual string GetSubtype() {
+    return this.GetProperties().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
+  }
 
-private bool isAttached(string edge) {
-global::DripSharp.PdfCarton.Cos.COSArray a = this.GetProperties().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Attached);
-if ((a != default!)) {
-for (int i = 0; (i < a.Size()); i++) {
-if (global::DripSharp.Runtime.JavaCompat.Equals(edge, a.GetName(i))) {
-return true;
-}
-}
-}
-return false;
-}
+  private bool isAttached(string edge) {
+    global::DripSharp.PdfCarton.Cos.COSArray a
+      = this.GetProperties().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Attached);
+    if ((a != default!)) {
+      for (int i = 0; (i < a.Size()); i++) {
+        if (global::DripSharp.Runtime.JavaCompat.Equals(edge, a.GetName(i))) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 }

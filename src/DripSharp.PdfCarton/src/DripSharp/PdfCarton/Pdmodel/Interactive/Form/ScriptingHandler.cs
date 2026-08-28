@@ -9,11 +9,15 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public interface ScriptingHandler {
-public string Keyboard(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript javaScriptAction, string value);
+  public string Keyboard(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript javaScriptAction,
+    string value);
 
-public string Format(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript javaScriptAction, string value);
+  public string Format(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript javaScriptAction,
+    string value);
 
-public bool Validate(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript javaScriptAction, string value);
+  public bool Validate(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript javaScriptAction,
+    string value);
 
-public string Calculate(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript javaScriptAction, string value);
+  public string Calculate(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript javaScriptAction,
+    string value);
 }

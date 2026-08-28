@@ -9,135 +9,142 @@
 namespace DripSharp.PdfCarton.Preflight;
 
 public class PreflightContext : global::System.IDisposable {
-private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSBase, global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer> fontContainers = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSBase, global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>();
+  private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSBase,
+    global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer> fontContainers
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSBase,
+    global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer>();
 
-private global::DripSharp.PdfCarton.Preflight.PreflightDocument document = default!;
+  private global::DripSharp.PdfCarton.Preflight.PreflightDocument document = default!;
 
-private global::DripSharp.PdfCarton.Pdfparser.XrefTrailerResolver xrefTrailerResolver = null!;
+  private global::DripSharp.PdfCarton.Pdfparser.XrefTrailerResolver xrefTrailerResolver = null!;
 
-private global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper iccProfileWrapper = default!;
+  private global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper iccProfileWrapper
+    = default!;
 
-private bool iccProfileAlreadySearched = false;
+  private bool iccProfileAlreadySearched = false;
 
-private global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = default!;
+  private global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = default!;
 
-private global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = null!;
+  private global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = null!;
 
-private global::DripSharp.PdfCarton.Preflight.PreflightPath validationPath = new global::DripSharp.PdfCarton.Preflight.PreflightPath();
+  private global::DripSharp.PdfCarton.Preflight.PreflightPath validationPath
+    = new global::DripSharp.PdfCarton.Preflight.PreflightPath();
 
-private readonly global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> processedSet = new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>();
+  private readonly global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> processedSet
+    = new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>();
 
-private int? currentPageNumber = default!;
+  private int? currentPageNumber = default!;
 
-private long fileLen = default;
+  private long fileLen = default;
 
-public PreflightContext() {
-this.config = default!;
-}
+  public PreflightContext() {
+    this.config = default!;
+  }
 
-public PreflightContext(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration configuration) {
-this.config = configuration;
-}
+  public PreflightContext(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration configuration) {
+    this.config = configuration;
+  }
 
-public virtual global::DripSharp.PdfCarton.Xmp.XMPMetadata GetMetadata() {
-return this.metadata;
-}
+  public virtual global::DripSharp.PdfCarton.Xmp.XMPMetadata GetMetadata() {
+    return this.metadata;
+  }
 
-public virtual void SetMetadata(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) {
-this.metadata = metadata;
-}
+  public virtual void SetMetadata(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) {
+    this.metadata = metadata;
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.PreflightDocument GetDocument() {
-return this.document;
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.PreflightDocument GetDocument() {
+    return this.document;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdfparser.XrefTrailerResolver GetXrefTrailerResolver() {
-return this.xrefTrailerResolver;
-}
+  public virtual global::DripSharp.PdfCarton.Pdfparser.XrefTrailerResolver GetXrefTrailerResolver() {
+    return this.xrefTrailerResolver;
+  }
 
-public virtual void SetXrefTrailerResolver(global::DripSharp.PdfCarton.Pdfparser.XrefTrailerResolver xrefTrailerResolver) {
-this.xrefTrailerResolver = xrefTrailerResolver;
-}
+  public virtual void SetXrefTrailerResolver(global::DripSharp.PdfCarton.Pdfparser.XrefTrailerResolver xrefTrailerResolver) {
+    this.xrefTrailerResolver = xrefTrailerResolver;
+  }
 
-public virtual void SetDocument(global::DripSharp.PdfCarton.Preflight.PreflightDocument document) {
-this.document = document;
-}
+  public virtual void SetDocument(global::DripSharp.PdfCarton.Preflight.PreflightDocument document) {
+    this.document = document;
+  }
 
-public virtual void AddFontContainer(global::DripSharp.PdfCarton.Cos.COSBase cBase, global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer fc) {
-global::DripSharp.Runtime.JavaCompat.MapPut(this.fontContainers, cBase, fc);
-}
+  public virtual void AddFontContainer(global::DripSharp.PdfCarton.Cos.COSBase cBase,
+    global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer fc) {
+    global::DripSharp.Runtime.JavaCompat.MapPut(this.fontContainers, cBase, fc);
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer GetFontContainer(global::DripSharp.PdfCarton.Cos.COSBase cBase) {
-return global::DripSharp.Runtime.JavaCompat.MapGet(this.fontContainers, cBase);
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer GetFontContainer(global::DripSharp.PdfCarton.Cos.COSBase cBase) {
+    return global::DripSharp.Runtime.JavaCompat.MapGet(this.fontContainers, cBase);
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper GetIccProfileWrapper() {
-return this.iccProfileWrapper;
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper GetIccProfileWrapper() {
+    return this.iccProfileWrapper;
+  }
 
-public virtual void SetIccProfileWrapper(global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper iccProfileWrapper) {
-this.iccProfileWrapper = iccProfileWrapper;
-}
+  public virtual void SetIccProfileWrapper(global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper iccProfileWrapper) {
+    this.iccProfileWrapper = iccProfileWrapper;
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.PreflightConfiguration GetConfig() {
-return this.config;
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.PreflightConfiguration GetConfig() {
+    return this.config;
+  }
 
-public virtual void SetConfig(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config) {
-this.config = config;
-}
+  public virtual void SetConfig(global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config) {
+    this.config = config;
+  }
 
-public virtual void Dispose() {
-global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(this.document);
-}
+  public virtual void Dispose() {
+    global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(this.document);
+  }
 
-public virtual void AddValidationError(global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error) {
-global::DripSharp.PdfCarton.Preflight.PreflightDocument pfDoc = this.document;
-error.SetPageNumber(this.currentPageNumber);
-pfDoc.AddValidationError(error);
-}
+  public virtual void AddValidationError(global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error) {
+    global::DripSharp.PdfCarton.Preflight.PreflightDocument pfDoc = this.document;
+    error.SetPageNumber(this.currentPageNumber);
+    pfDoc.AddValidationError(error);
+  }
 
-public virtual void AddValidationErrors(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> errors) {
-global::DripSharp.Runtime.JavaCompat.ForEach(errors, this.document.AddValidationError);
-}
+  public virtual void AddValidationErrors(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> errors) {
+    global::DripSharp.Runtime.JavaCompat.ForEach(errors, this.document.AddValidationError);
+  }
 
-public virtual global::DripSharp.PdfCarton.Preflight.PreflightPath GetValidationPath() {
-return this.validationPath;
-}
+  public virtual global::DripSharp.PdfCarton.Preflight.PreflightPath GetValidationPath() {
+    return this.validationPath;
+  }
 
-public virtual void SetValidationPath(global::DripSharp.PdfCarton.Preflight.PreflightPath validationPath) {
-this.validationPath = validationPath;
-}
+  public virtual void SetValidationPath(global::DripSharp.PdfCarton.Preflight.PreflightPath validationPath) {
+    this.validationPath = validationPath;
+  }
 
-public virtual bool IsIccProfileAlreadySearched() {
-return this.iccProfileAlreadySearched;
-}
+  public virtual bool IsIccProfileAlreadySearched() {
+    return this.iccProfileAlreadySearched;
+  }
 
-public virtual void SetIccProfileAlreadySearched(bool iccProfileAlreadySearched) {
-this.iccProfileAlreadySearched = iccProfileAlreadySearched;
-}
+  public virtual void SetIccProfileAlreadySearched(bool iccProfileAlreadySearched) {
+    this.iccProfileAlreadySearched = iccProfileAlreadySearched;
+  }
 
-public virtual void SetCurrentPageNumber(int? currentPageNumber) {
-this.currentPageNumber = currentPageNumber;
-}
+  public virtual void SetCurrentPageNumber(int? currentPageNumber) {
+    this.currentPageNumber = currentPageNumber;
+  }
 
-public virtual int? GetCurrentPageNumber() {
-return this.currentPageNumber;
-}
+  public virtual int? GetCurrentPageNumber() {
+    return this.currentPageNumber;
+  }
 
-public virtual void SetFileLen(long fileLen) {
-this.fileLen = fileLen;
-}
+  public virtual void SetFileLen(long fileLen) {
+    this.fileLen = fileLen;
+  }
 
-public virtual long GetFileLen() {
-return this.fileLen;
-}
+  public virtual long GetFileLen() {
+    return this.fileLen;
+  }
 
-public virtual void AddToProcessedSet(global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable cos) {
-this.processedSet.Add(cos);
-}
+  public virtual void AddToProcessedSet(global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable cos) {
+    this.processedSet.Add(cos);
+  }
 
-public virtual bool IsInProcessedSet(global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable cos) {
-return global::DripSharp.Runtime.JavaCompat.CollectionContains(this.processedSet, cos);
-}
+  public virtual bool IsInProcessedSet(global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable cos) {
+    return global::DripSharp.Runtime.JavaCompat.CollectionContains(this.processedSet, cos);
+  }
 }

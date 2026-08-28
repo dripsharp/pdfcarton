@@ -9,53 +9,53 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public interface PDImage : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-public global::SkiaSharp.SKBitmap GetImage();
+  public global::SkiaSharp.SKBitmap GetImage();
 
-public global::DripSharp.Runtime.JavaRaster GetRawRaster();
+  public global::DripSharp.Runtime.JavaRaster GetRawRaster();
 
-public global::SkiaSharp.SKBitmap GetRawImage();
+  public global::SkiaSharp.SKBitmap GetRawImage();
 
-public global::SkiaSharp.SKBitmap GetImage(global::SkiaSharp.SKRectI region, int subsampling);
+  public global::SkiaSharp.SKBitmap GetImage(global::SkiaSharp.SKRectI region, int subsampling);
 
-public global::SkiaSharp.SKBitmap GetStencilImage(global::DripSharp.Runtime.JavaPaint paint);
+  public global::SkiaSharp.SKBitmap GetStencilImage(global::DripSharp.Runtime.JavaPaint paint);
 
-public global::System.IO.Stream CreateInputStream();
+  public global::System.IO.Stream CreateInputStream();
 
-public global::System.IO.Stream CreateInputStream(global::System.Collections.Generic.IList<string> stopFilters);
+  public global::System.IO.Stream CreateInputStream(global::System.Collections.Generic.IList<string> stopFilters);
 
-public global::System.IO.Stream CreateInputStream(global::DripSharp.PdfCarton.Filter.DecodeOptions options);
+  public global::System.IO.Stream CreateInputStream(global::DripSharp.PdfCarton.Filter.DecodeOptions options);
 
-public bool IsEmpty();
+  public bool IsEmpty();
 
-public bool IsStencil();
+  public bool IsStencil();
 
-public void SetStencil(bool isStencil);
+  public void SetStencil(bool isStencil);
 
-public int GetBitsPerComponent();
+  public int GetBitsPerComponent();
 
-public void SetBitsPerComponent(int bitsPerComponent);
+  public void SetBitsPerComponent(int bitsPerComponent);
 
-public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace();
+  public global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace();
 
-public void SetColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace);
+  public void SetColorSpace(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace);
 
-public int GetHeight();
+  public int GetHeight();
 
-public void SetHeight(int height);
+  public void SetHeight(int height);
 
-public int GetWidth();
+  public int GetWidth();
 
-public void SetWidth(int width);
+  public void SetWidth(int width);
 
-public void SetDecode(global::DripSharp.PdfCarton.Cos.COSArray decode);
+  public void SetDecode(global::DripSharp.PdfCarton.Cos.COSArray decode);
 
-public global::DripSharp.PdfCarton.Cos.COSArray GetDecode();
+  public global::DripSharp.PdfCarton.Cos.COSArray GetDecode();
 
-public bool GetInterpolate();
+  public bool GetInterpolate();
 
-public void SetInterpolate(bool value);
+  public void SetInterpolate(bool value);
 
-public string GetSuffix();
+  public string GetSuffix();
 
-public new global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject();
+  public new global::DripSharp.PdfCarton.Cos.COSDictionary GetCOSObject();
 }

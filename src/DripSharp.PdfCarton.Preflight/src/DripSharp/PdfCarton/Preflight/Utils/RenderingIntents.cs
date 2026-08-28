@@ -9,22 +9,29 @@
 namespace DripSharp.PdfCarton.Preflight.Utils;
 
 public sealed class RenderingIntents {
-private static readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSName> RENDERING_INTENTS = null!;
+  private static readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSName> RENDERING_INTENTS
+    = null!;
 
-static RenderingIntents() {
-{
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSName> al = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSName>(4);
-global::DripSharp.Runtime.JavaCompat.Add(al, global::DripSharp.PdfCarton.Cos.COSName.RelativeColorimetric);
-global::DripSharp.Runtime.JavaCompat.Add(al, global::DripSharp.PdfCarton.Cos.COSName.AbsoluteColorimetric);
-global::DripSharp.Runtime.JavaCompat.Add(al, global::DripSharp.PdfCarton.Cos.COSName.Perceptual);
-global::DripSharp.Runtime.JavaCompat.Add(al, global::DripSharp.PdfCarton.Cos.COSName.Saturation);
-global::DripSharp.PdfCarton.Preflight.Utils.RenderingIntents.RENDERING_INTENTS = global::DripSharp.Runtime.JavaCompat.UnmodifiableList(al);
-}
-}
+  static RenderingIntents() { {
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSName> al
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSName>(4);
+      global::DripSharp.Runtime.JavaCompat.Add(al,
+        global::DripSharp.PdfCarton.Cos.COSName.RelativeColorimetric);
+      global::DripSharp.Runtime.JavaCompat.Add(al,
+        global::DripSharp.PdfCarton.Cos.COSName.AbsoluteColorimetric);
+      global::DripSharp.Runtime.JavaCompat.Add(al,
+        global::DripSharp.PdfCarton.Cos.COSName.Perceptual);
+      global::DripSharp.Runtime.JavaCompat.Add(al,
+        global::DripSharp.PdfCarton.Cos.COSName.Saturation);
+      global::DripSharp.PdfCarton.Preflight.Utils.RenderingIntents.RENDERING_INTENTS
+        = global::DripSharp.Runtime.JavaCompat.UnmodifiableList(al);
+    }
+  }
 
-private RenderingIntents() {}
+  private RenderingIntents() {}
 
-public static bool Contains(global::DripSharp.PdfCarton.Cos.COSName renderingIntent) {
-return global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Utils.RenderingIntents.RENDERING_INTENTS, renderingIntent);
-}
+  public static bool Contains(global::DripSharp.PdfCarton.Cos.COSName renderingIntent) {
+    return global::DripSharp.Runtime.JavaCompat.CollectionContains(global::DripSharp.PdfCarton.Preflight.Utils.RenderingIntents.RENDERING_INTENTS,
+      renderingIntent);
+  }
 }

@@ -8,40 +8,43 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
-public abstract class FDFAnnotationTextMarkup : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation {
-public FDFAnnotationTextMarkup() : base() {
+public abstract class FDFAnnotationTextMarkup
+: global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation {
+  public FDFAnnotationTextMarkup() : base() {
 
-}
+  }
 
-public FDFAnnotationTextMarkup(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
+  public FDFAnnotationTextMarkup(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
-}
+  }
 
-public FDFAnnotationTextMarkup(global::System.Xml.XmlElement element) : base(element) {
-string coords = element.GetAttribute("coords");
-if (((coords == default!) || (coords.Length == 0))) {
-throw new global::System.IO.IOException("Error: missing attribute 'coords'");
-}
-string[] coordsValues = global::DripSharp.Runtime.JavaCompat.StringSplit(coords, ",", 0);
-if ((coordsValues.Length < 8)) {
-throw new global::System.IO.IOException("Error: too little numbers in attribute 'coords'");
-}
-float[] values = this.parseFloats(coordsValues);
-this.SetCoords(values);
-}
+  public FDFAnnotationTextMarkup(global::System.Xml.XmlElement element) : base(element) {
+    string coords = element.GetAttribute("coords");
+    if (((coords == default!) || (coords.Length == 0))) {
+      throw new global::System.IO.IOException("Error: missing attribute 'coords'");
+    }
+    string[] coordsValues = global::DripSharp.Runtime.JavaCompat.StringSplit(coords, ",", 0);
+    if ((coordsValues.Length < 8)) {
+      throw new global::System.IO.IOException("Error: too little numbers in attribute 'coords'");
+    }
+    float[] values = this.parseFloats(coordsValues);
+    this.SetCoords(values);
+  }
 
-public virtual void SetCoords(float[] coords) {
-global::DripSharp.PdfCarton.Cos.COSArray newQuadPoints = new global::DripSharp.PdfCarton.Cos.COSArray();
-newQuadPoints.SetFloatArray(coords);
-base.Annot.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Quadpoints, newQuadPoints);
-}
+  public virtual void SetCoords(float[] coords) {
+    global::DripSharp.PdfCarton.Cos.COSArray newQuadPoints
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    newQuadPoints.SetFloatArray(coords);
+    base.Annot.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Quadpoints, newQuadPoints);
+  }
 
-public virtual float[] GetCoords() {
-global::DripSharp.PdfCarton.Cos.COSArray quadPoints = base.Annot.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Quadpoints);
-if ((quadPoints != default!)) {
-return quadPoints.ToFloatArray();
-} else {
-return default!;
-}
-}
+  public virtual float[] GetCoords() {
+    global::DripSharp.PdfCarton.Cos.COSArray quadPoints
+      = base.Annot.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Quadpoints);
+    if ((quadPoints != default!)) {
+      return quadPoints.ToFloatArray();
+    } else {
+      return default!;
+    }
+  }
 }

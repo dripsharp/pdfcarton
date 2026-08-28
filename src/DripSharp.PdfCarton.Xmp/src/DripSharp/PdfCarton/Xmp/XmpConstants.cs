@@ -9,35 +9,35 @@
 namespace DripSharp.PdfCarton.Xmp;
 
 public sealed class XmpConstants {
-public const string RdfNamespace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+  public const string RdfNamespace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
-public const string DefaultXpacketBegin = "\uFEFF";
+  public const string DefaultXpacketBegin = "\uFEFF";
 
-public const string DefaultXpacketId = "W5M0MpCehiHzreSzNTczkc9d";
+  public const string DefaultXpacketId = "W5M0MpCehiHzreSzNTczkc9d";
 
-public const string DefaultXpacketEncoding = "UTF-8";
+  public const string DefaultXpacketEncoding = "UTF-8";
 
-public const string DefaultXpacketBytes = "";
+  public const string DefaultXpacketBytes = "";
 
-public const string DefaultXpacketEnd = "w";
+  public const string DefaultXpacketEnd = "w";
 
-public const string DefaultRdfPrefix = "rdf";
+  public const string DefaultRdfPrefix = "rdf";
 
-public const string DefaultRdfLocalName = "RDF";
+  public const string DefaultRdfLocalName = "RDF";
 
-public const string ListName = "li";
+  public const string ListName = "li";
 
-public const string LangName = "lang";
+  public const string LangName = "lang";
 
-public const string AboutName = "about";
+  public const string AboutName = "about";
 
-public const string DescriptionName = "Description";
+  public const string DescriptionName = "Description";
 
-public const string ResourceName = "Resource";
+  public const string ResourceName = "Resource";
 
-public const string ParseType = "parseType";
+  public const string ParseType = "parseType";
 
-public const string XDefault = "x-default";
+  public const string XDefault = "x-default";
 
-private XmpConstants() {}
+  private XmpConstants() {}
 }

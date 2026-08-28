@@ -8,24 +8,29 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Text;
 
-public class SetWordSpacing : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-public SetWordSpacing(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context) : base(context) {
+public class SetWordSpacing
+: global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
+  public SetWordSpacing(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
+  : base(context) {
 
-}
+  }
 
-public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
-if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSBase @base = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
-if (!((@base is global::DripSharp.PdfCarton.Cos.COSNumber))) {
-return;
-}
-global::DripSharp.PdfCarton.Cos.COSNumber wordSpacing = (global::DripSharp.PdfCarton.Cos.COSNumber)(@base!);
-this.GetContext().GetGraphicsState().GetTextState().SetWordSpacing(wordSpacing.FloatValue());
-}
+  public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> arguments) {
+    if (global::DripSharp.Runtime.JavaCompat.ListIsEmpty(arguments)) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSBase @base
+      = global::DripSharp.Runtime.JavaCompat.ListGet(arguments, 0);
+    if (!((@base is global::DripSharp.PdfCarton.Cos.COSNumber))) {
+      return;
+    }
+    global::DripSharp.PdfCarton.Cos.COSNumber wordSpacing
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(@base!);
+    this.GetContext().GetGraphicsState().GetTextState().SetWordSpacing(wordSpacing.FloatValue());
+  }
 
-public override string GetName() {
-return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetWordSpacing;
-}
+  public override string GetName() {
+    return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetWordSpacing;
+  }
 }

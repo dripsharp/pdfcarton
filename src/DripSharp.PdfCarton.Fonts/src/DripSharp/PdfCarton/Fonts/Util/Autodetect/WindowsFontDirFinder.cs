@@ -8,75 +8,112 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Fonts.Util.Autodetect;
 
-public class WindowsFontDirFinder : global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontDirFinder {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+public class WindowsFontDirFinder
+: global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontDirFinder {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-public virtual global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find() {
-global::System.Collections.Generic.IList<global::System.IO.FileInfo> fontDirList = new global::System.Collections.Generic.List<global::System.IO.FileInfo>();
-string windir = default!;
-try {
-windir = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetProperty("env.windir");
-} catch (global::System.Security.SecurityException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.WindowsFontDirFinder.LOG, (global::System.Exception)e, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get Windows font directories - ignoring"));
-}
-if ((windir! == default!)) {
-try {
-windir = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Getenv("windir");
-} catch (global::System.Security.SecurityException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.WindowsFontDirFinder.LOG, (global::System.Exception)e, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get Windows font directories - ignoring"));
-}
-}
-global::System.IO.FileInfo osFontsDir;
-global::System.IO.FileInfo psFontsDir;
-if (((windir! != default!) && (windir!.Length > 2))) {
-if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringEndsWith(windir!, "/")) {
-windir = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(windir!, 0, (windir!.Length - 1));
-}
-osFontsDir = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(windir!, global::System.IO.Path.DirectorySeparatorChar.ToString()), "FONTS"));
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(osFontsDir) && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(osFontsDir))) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDirList, osFontsDir);
-}
-psFontsDir = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(windir!, 0, 2), global::System.IO.Path.DirectorySeparatorChar.ToString()), "PSFONTS"));
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(psFontsDir) && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(psFontsDir))) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDirList, psFontsDir);
-}
-} else {
-string osName = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetProperty("os.name");
-string windowsDirName = (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringEndsWith(osName, "NT") ? "WINNT" : "WINDOWS");
-for (char driveLetter__92_23 = 'C'; ((int)(driveLetter__92_23) <= (int)('E')); driveLetter__92_23++) {
-osFontsDir = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(driveLetter__92_23, ":"), global::System.IO.Path.DirectorySeparatorChar.ToString()), windowsDirName), global::System.IO.Path.DirectorySeparatorChar.ToString()), "FONTS"));
-try {
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(osFontsDir) && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(osFontsDir))) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDirList, osFontsDir);
-break;
-}
-} catch (global::System.Security.SecurityException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.WindowsFontDirFinder.LOG, (global::System.Exception)e, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get Windows font directories - ignoring"));
-}
-}
-for (char driveLetter__111_23 = 'C'; ((int)(driveLetter__111_23) <= (int)('E')); driveLetter__111_23++) {
-psFontsDir = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(driveLetter__111_23, ":"), global::System.IO.Path.DirectorySeparatorChar.ToString()), "PSFONTS"));
-try {
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(psFontsDir) && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(psFontsDir))) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDirList, psFontsDir);
-break;
-}
-} catch (global::System.Security.SecurityException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.WindowsFontDirFinder.LOG, (global::System.Exception)e, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get Windows font directories - ignoring"));
-}
-}
-}
-try {
-string localAppData = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Getenv("LOCALAPPDATA");
-if (((localAppData != default!) && !((localAppData.Length == 0)))) {
-global::System.IO.FileInfo localFontDir = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(localAppData, global::System.IO.Path.DirectorySeparatorChar.ToString()), "Microsoft"), global::System.IO.Path.DirectorySeparatorChar.ToString()), "Windows"), global::System.IO.Path.DirectorySeparatorChar.ToString()), "Fonts"));
-if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(localFontDir) && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(localFontDir))) {
-global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDirList, localFontDir);
-}
-}
-} catch (global::System.Security.SecurityException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.WindowsFontDirFinder.LOG, (global::System.Exception)e, global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get LOCALAPPDATA directory - ignoring"));
-}
-return fontDirList;
-}
+  public virtual global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find() {
+    global::System.Collections.Generic.IList<global::System.IO.FileInfo> fontDirList
+      = new global::System.Collections.Generic.List<global::System.IO.FileInfo>();
+    string windir = default!;
+    try {
+      windir = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetProperty("env.windir");
+    } catch (global::System.Security.SecurityException e) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.WindowsFontDirFinder.LOG,
+        (global::System.Exception)e,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get Windows font directories - ignoring"));
+    }
+    if ((windir! == default!)) {
+      try {
+        windir = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Getenv("windir");
+      } catch (global::System.Security.SecurityException e) {
+        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.WindowsFontDirFinder.LOG,
+          (global::System.Exception)e,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get Windows font directories - ignoring"));
+      }
+    }
+    global::System.IO.FileInfo osFontsDir;
+    global::System.IO.FileInfo psFontsDir;
+    if (((windir! != default!) && (windir!.Length > 2))) {
+      if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringEndsWith(windir!, "/")) {
+        windir = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(windir!, 0,
+          (windir!.Length - 1));
+      }
+      osFontsDir
+        = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(windir!,
+        global::System.IO.Path.DirectorySeparatorChar.ToString()), "FONTS"));
+      if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(osFontsDir)
+        && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(osFontsDir))) {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDirList, osFontsDir);
+      }
+      psFontsDir
+        = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(windir!,
+        0, 2), global::System.IO.Path.DirectorySeparatorChar.ToString()), "PSFONTS"));
+      if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(psFontsDir)
+        && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(psFontsDir))) {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDirList, psFontsDir);
+      }
+    } else {
+      string osName = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetProperty("os.name");
+      string windowsDirName
+        = (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringEndsWith(osName, "NT")
+        ? "WINNT" : "WINDOWS");
+      for (char driveLetter__92_23 = 'C'; ((int)driveLetter__92_23 <= (int)'E');
+        driveLetter__92_23++) {
+        osFontsDir
+          = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(driveLetter__92_23,
+          ":"), global::System.IO.Path.DirectorySeparatorChar.ToString()), windowsDirName),
+          global::System.IO.Path.DirectorySeparatorChar.ToString()), "FONTS"));
+        try {
+          if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(osFontsDir)
+            && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(osFontsDir))) {
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDirList, osFontsDir);
+            break;
+          }
+        } catch (global::System.Security.SecurityException e) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.WindowsFontDirFinder.LOG,
+            (global::System.Exception)e,
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get Windows font directories - ignoring"));
+        }
+      }
+      for (char driveLetter__111_23 = 'C'; ((int)driveLetter__111_23 <= (int)'E');
+        driveLetter__111_23++) {
+        psFontsDir
+          = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(driveLetter__111_23,
+          ":"), global::System.IO.Path.DirectorySeparatorChar.ToString()), "PSFONTS"));
+        try {
+          if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(psFontsDir)
+            && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(psFontsDir))) {
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDirList, psFontsDir);
+            break;
+          }
+        } catch (global::System.Security.SecurityException e) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.WindowsFontDirFinder.LOG,
+            (global::System.Exception)e,
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get Windows font directories - ignoring"));
+        }
+      }
+    }
+    try {
+      string localAppData
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Getenv("LOCALAPPDATA");
+      if (((localAppData != default!) && !((localAppData.Length == 0)))) {
+        global::System.IO.FileInfo localFontDir
+          = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(localAppData,
+          global::System.IO.Path.DirectorySeparatorChar.ToString()), "Microsoft"),
+          global::System.IO.Path.DirectorySeparatorChar.ToString()), "Windows"),
+          global::System.IO.Path.DirectorySeparatorChar.ToString()), "Fonts"));
+        if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(localFontDir)
+          && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(localFontDir))) {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(fontDirList, localFontDir);
+        }
+      }
+    } catch (global::System.Security.SecurityException e) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.WindowsFontDirFinder.LOG,
+        (global::System.Exception)e,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get LOCALAPPDATA directory - ignoring"));
+    }
+    return fontDirList;
+  }
 }

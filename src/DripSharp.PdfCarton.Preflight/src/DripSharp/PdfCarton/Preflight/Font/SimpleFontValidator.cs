@@ -8,64 +8,76 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Font;
 
-public abstract class SimpleFontValidator<T> : global::DripSharp.PdfCarton.Preflight.Font.FontValidator<T> where T : global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer {
-protected internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike Font = null!;
+public abstract class SimpleFontValidator<T>
+: global::DripSharp.PdfCarton.Preflight.Font.FontValidator<T> where T
+: global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer {
+  protected internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike Font = null!;
 
-protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary FontDictionary = null!;
+  protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary FontDictionary = null!;
 
-public SimpleFontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context, global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike font, global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary, T fContainer) : base(context, fontDictionary, fContainer) {
-this.FontDictionary = fontDictionary;
-this.Font = font;
-}
+  public SimpleFontValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike font,
+    global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary, T fContainer) : base(context,
+    fontDictionary, fContainer) {
+    this.FontDictionary = fontDictionary;
+    this.Font = font;
+  }
 
-public override void Validate() {
-this.CheckMandatoryField();
-this.CreateFontDescriptorHelper();
-this.ProcessFontDescriptorValidation();
-this.CheckEncoding();
-this.CheckToUnicode();
-}
+  public override void Validate() {
+    this.CheckMandatoryField();
+    this.CreateFontDescriptorHelper();
+    this.ProcessFontDescriptorValidation();
+    this.CheckEncoding();
+    this.CheckToUnicode();
+  }
 
-protected internal virtual void CheckMandatoryField() {
-string missingFields = "";
-bool areFieldsPresent = this.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Type);
-if (!areFieldsPresent) {
-missingFields = "type, ";
-}
-bool subType = this.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
-areFieldsPresent &= subType;
-if (!subType) {
-missingFields += "subType, ";
-}
-bool baseFont = this.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.BaseFont);
-areFieldsPresent &= baseFont;
-if (!baseFont) {
-missingFields += "baseFont, ";
-}
-bool firstChar = this.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.FirstChar);
-areFieldsPresent &= firstChar;
-if (!firstChar) {
-missingFields += "firstChar, ";
-}
-bool lastChar = this.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.LastChar);
-areFieldsPresent &= lastChar;
-if (!lastChar) {
-missingFields += "lastChar, ";
-}
-bool widths = this.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Widths);
-areFieldsPresent &= widths;
-if (!widths) {
-missingFields += "widths, ";
-}
-if (!areFieldsPresent) {
-missingFields = global::DripSharp.Runtime.JavaCompat.StringSubstring(missingFields, 0, (missingFields.Length - 2));
-this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDictionaryInvalid, global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(), ": some required fields are missing from the Font dictionary: "), missingFields), ".")));
-}
-}
+  protected internal virtual void CheckMandatoryField() {
+    string missingFields = "";
+    bool areFieldsPresent
+      = this.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Type);
+    if (!areFieldsPresent) {
+      missingFields = "type, ";
+    }
+    bool subType = this.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Subtype);
+    areFieldsPresent &= subType;
+    if (!subType) {
+      missingFields += "subType, ";
+    }
+    bool baseFont
+      = this.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.BaseFont);
+    areFieldsPresent &= baseFont;
+    if (!baseFont) {
+      missingFields += "baseFont, ";
+    }
+    bool firstChar
+      = this.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.FirstChar);
+    areFieldsPresent &= firstChar;
+    if (!firstChar) {
+      missingFields += "firstChar, ";
+    }
+    bool lastChar
+      = this.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.LastChar);
+    areFieldsPresent &= lastChar;
+    if (!lastChar) {
+      missingFields += "lastChar, ";
+    }
+    bool widths = this.FontDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Widths);
+    areFieldsPresent &= widths;
+    if (!widths) {
+      missingFields += "widths, ";
+    }
+    if (!areFieldsPresent) {
+      missingFields = global::DripSharp.Runtime.JavaCompat.StringSubstring(missingFields, 0,
+        (missingFields.Length - 2));
+      this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDictionaryInvalid,
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
+        ": some required fields are missing from the Font dictionary: "), missingFields), ".")));
+    }
+  }
 
-protected internal abstract void CreateFontDescriptorHelper();
+  protected internal abstract void CreateFontDescriptorHelper();
 
-protected internal virtual void ProcessFontDescriptorValidation() {
-this.DescriptorHelper.Validate();
-}
+  protected internal virtual void ProcessFontDescriptorValidation() {
+    this.DescriptorHelper.Validate();
+  }
 }

@@ -9,110 +9,129 @@
 namespace DripSharp.PdfCarton.Printing;
 
 public sealed class PDFPageable : global::DripSharp.Runtime.JavaBook {
-private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument document = null!;
+  private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument document = null!;
 
-private readonly int numberOfPages = default;
+  private readonly int numberOfPages = default;
 
-private readonly bool showPageBorder = default;
+  private readonly bool showPageBorder = default;
 
-private readonly float dpi = default;
+  private readonly float dpi = default;
 
-private readonly bool center = default;
+  private readonly bool center = default;
 
-private readonly global::DripSharp.PdfCarton.Printing.Orientation orientation = null!;
+  private readonly global::DripSharp.PdfCarton.Printing.Orientation orientation = null!;
 
-private bool subsamplingAllowed = false;
+  private bool subsamplingAllowed = false;
 
-private global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints = default!;
+  private global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints = default!;
 
-public PDFPageable(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : this(document, global::DripSharp.PdfCarton.Printing.Orientation.Auto, false, (float)(0), true) {
+  public PDFPageable(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : this(document,
+    global::DripSharp.PdfCarton.Printing.Orientation.Auto, false, (float)(0), true) {
 
-}
+  }
 
-public PDFPageable(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, global::DripSharp.PdfCarton.Printing.Orientation orientation) : this(document, orientation, false, (float)(0), true) {
+  public PDFPageable(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.PdfCarton.Printing.Orientation orientation) : this(document, orientation,
+    false, (float)(0), true) {
 
-}
+  }
 
-public PDFPageable(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, global::DripSharp.PdfCarton.Printing.Orientation orientation, bool showPageBorder) : this(document, orientation, showPageBorder, (float)(0), true) {
+  public PDFPageable(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.PdfCarton.Printing.Orientation orientation, bool showPageBorder)
+  : this(document, orientation, showPageBorder, (float)(0), true) {
 
-}
+  }
 
-public PDFPageable(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, global::DripSharp.PdfCarton.Printing.Orientation orientation, bool showPageBorder, float dpi) : this(document, orientation, showPageBorder, dpi, true) {
+  public PDFPageable(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.PdfCarton.Printing.Orientation orientation, bool showPageBorder, float dpi)
+  : this(document, orientation, showPageBorder, dpi, true) {
 
-}
+  }
 
-public PDFPageable(global::DripSharp.PdfCarton.Pdmodel.PDDocument document, global::DripSharp.PdfCarton.Printing.Orientation orientation, bool showPageBorder, float dpi, bool center) {
-this.document = document;
-this.orientation = orientation;
-this.showPageBorder = showPageBorder;
-this.dpi = dpi;
-this.center = center;
-this.numberOfPages = document.GetNumberOfPages();
-}
+  public PDFPageable(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.PdfCarton.Printing.Orientation orientation, bool showPageBorder, float dpi,
+    bool center) {
+    this.document = document;
+    this.orientation = orientation;
+    this.showPageBorder = showPageBorder;
+    this.dpi = dpi;
+    this.center = center;
+    this.numberOfPages = document.GetNumberOfPages();
+  }
 
-public global::DripSharp.Runtime.PdfCartonRenderingHints GetRenderingHints() {
-return this.renderingHints;
-}
+  public global::DripSharp.Runtime.PdfCartonRenderingHints GetRenderingHints() {
+    return this.renderingHints;
+  }
 
-public void SetRenderingHints(global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints) {
-this.renderingHints = renderingHints;
-}
+  public void SetRenderingHints(global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints) {
+    this.renderingHints = renderingHints;
+  }
 
-public bool IsSubsamplingAllowed() {
-return this.subsamplingAllowed;
-}
+  public bool IsSubsamplingAllowed() {
+    return this.subsamplingAllowed;
+  }
 
-public void SetSubsamplingAllowed(bool subsamplingAllowed) {
-this.subsamplingAllowed = subsamplingAllowed;
-}
+  public void SetSubsamplingAllowed(bool subsamplingAllowed) {
+    this.subsamplingAllowed = subsamplingAllowed;
+  }
 
-public override int GetNumberOfPages() {
-return this.numberOfPages;
-}
+  public override int GetNumberOfPages() {
+    return this.numberOfPages;
+  }
 
-public override global::DripSharp.Runtime.JavaPageFormat GetPageFormat(int pageIndex) {
-global::DripSharp.PdfCarton.Pdmodel.PDPage page = this.document.GetPage(pageIndex);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle mediaBox = global::DripSharp.PdfCarton.Printing.PDFPrintable.getRotatedMediaBox(page);
-global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = global::DripSharp.PdfCarton.Printing.PDFPrintable.getRotatedCropBox(page);
-global::DripSharp.Runtime.JavaPaper paper = new global::DripSharp.Runtime.JavaPaper();
-bool isLandscape;
-if ((mediaBox.GetWidth() > mediaBox.GetHeight())) {
-paper.SetSize((double)(mediaBox.GetHeight()), (double)(mediaBox.GetWidth()));
-paper.SetImageableArea((double)(cropBox.GetLowerLeftY()), (double)(cropBox.GetLowerLeftX()), (double)(cropBox.GetHeight()), (double)(cropBox.GetWidth()));
-isLandscape = true;
-} else {
-paper.SetSize((double)(mediaBox.GetWidth()), (double)(mediaBox.GetHeight()));
-paper.SetImageableArea((double)(cropBox.GetLowerLeftX()), (double)(cropBox.GetLowerLeftY()), (double)(cropBox.GetWidth()), (double)(cropBox.GetHeight()));
-isLandscape = false;
-}
-global::DripSharp.Runtime.JavaPageFormat format = new global::DripSharp.Runtime.JavaPageFormat();
-format.SetPaper(paper);
-switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(this.orientation)) {
-case 0:
-format.SetOrientation((isLandscape ? global::DripSharp.Runtime.JavaPageFormat.LANDSCAPE : global::DripSharp.Runtime.JavaPageFormat.PORTRAIT));
-break;
-case 1:
-format.SetOrientation(global::DripSharp.Runtime.JavaPageFormat.LANDSCAPE);
-break;
-case 3:
-format.SetOrientation(global::DripSharp.Runtime.JavaPageFormat.REVERSE_LANDSCAPE);
-break;
-case 2:
-format.SetOrientation(global::DripSharp.Runtime.JavaPageFormat.PORTRAIT);
-break;
-default:
-break;
-}
-return format;
-}
+  public override global::DripSharp.Runtime.JavaPageFormat GetPageFormat(int pageIndex) {
+    global::DripSharp.PdfCarton.Pdmodel.PDPage page = this.document.GetPage(pageIndex);
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle mediaBox
+      = global::DripSharp.PdfCarton.Printing.PDFPrintable.getRotatedMediaBox(page);
+    global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox
+      = global::DripSharp.PdfCarton.Printing.PDFPrintable.getRotatedCropBox(page);
+    global::DripSharp.Runtime.JavaPaper paper = new global::DripSharp.Runtime.JavaPaper();
+    bool isLandscape;
+    if ((mediaBox.GetWidth() > mediaBox.GetHeight())) {
+      paper.SetSize((double)(mediaBox.GetHeight()), (double)(mediaBox.GetWidth()));
+      paper.SetImageableArea((double)(cropBox.GetLowerLeftY()), (double)(cropBox.GetLowerLeftX()),
+        (double)(cropBox.GetHeight()), (double)(cropBox.GetWidth()));
+      isLandscape = true;
+    } else {
+      paper.SetSize((double)(mediaBox.GetWidth()), (double)(mediaBox.GetHeight()));
+      paper.SetImageableArea((double)(cropBox.GetLowerLeftX()), (double)(cropBox.GetLowerLeftY()),
+        (double)(cropBox.GetWidth()), (double)(cropBox.GetHeight()));
+      isLandscape = false;
+    }
+    global::DripSharp.Runtime.JavaPageFormat format
+      = new global::DripSharp.Runtime.JavaPageFormat();
+    format.SetPaper(paper);
+    switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(this.orientation)) {
+      case 0:
+        format.SetOrientation((isLandscape ? global::DripSharp.Runtime.JavaPageFormat.LANDSCAPE
+          : global::DripSharp.Runtime.JavaPageFormat.PORTRAIT));
+        break;
+      case 1:
+        format.SetOrientation(global::DripSharp.Runtime.JavaPageFormat.LANDSCAPE);
+        break;
+      case 3:
+        format.SetOrientation(global::DripSharp.Runtime.JavaPageFormat.REVERSE_LANDSCAPE);
+        break;
+      case 2:
+        format.SetOrientation(global::DripSharp.Runtime.JavaPageFormat.PORTRAIT);
+        break;
+      default:
+        break;
+    }
+    return format;
+  }
 
-public override global::DripSharp.Runtime.JavaPrintable GetPrintable(int i) {
-if ((i >= this.numberOfPages)) {
-throw new global::System.ArgumentOutOfRangeException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(i, " >= "), this.numberOfPages));
-}
-global::DripSharp.PdfCarton.Printing.PDFPrintable printable = new global::DripSharp.PdfCarton.Printing.PDFPrintable(this.document, global::DripSharp.PdfCarton.Printing.Scaling.ActualSize, this.showPageBorder, this.dpi, this.center);
-printable.SetSubsamplingAllowed(this.subsamplingAllowed);
-printable.SetRenderingHints(this.renderingHints);
-return printable;
-}
+  public override global::DripSharp.Runtime.JavaPrintable GetPrintable(int i) {
+    if ((i >= this.numberOfPages)) {
+      throw new global::System.ArgumentOutOfRangeException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(i,
+        " >= "), this.numberOfPages));
+    }
+    global::DripSharp.PdfCarton.Printing.PDFPrintable printable
+      = new global::DripSharp.PdfCarton.Printing.PDFPrintable(this.document,
+      global::DripSharp.PdfCarton.Printing.Scaling.ActualSize, this.showPageBorder, this.dpi,
+      this.center);
+    printable.SetSubsamplingAllowed(this.subsamplingAllowed);
+    printable.SetRenderingHints(this.renderingHints);
+    return printable;
+  }
 }

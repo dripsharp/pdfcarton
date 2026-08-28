@@ -9,122 +9,164 @@
 namespace DripSharp.PdfCarton;
 
 public class Loader {
-private Loader() {}
+  private Loader() {}
 
-public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadFDF(string filename) {
-return global::DripSharp.PdfCarton.Loader.LoadFDF(new global::System.IO.FileInfo(filename));
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadFDF(string filename) {
+    return global::DripSharp.PdfCarton.Loader.LoadFDF(new global::System.IO.FileInfo(filename));
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadFDF(global::System.IO.FileInfo file) {
-global::DripSharp.PdfCarton.IO.RandomAccessRead raFile = default!;
-try {
-raFile = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file);
-global::DripSharp.PdfCarton.Pdfparser.FDFParser parser = new global::DripSharp.PdfCarton.Pdfparser.FDFParser(raFile!);
-return parser.Parse();
-} catch (global::System.IO.IOException) {
-global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(raFile!);
-throw;
-}
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadFDF(global::System.IO.FileInfo file) {
+    global::DripSharp.PdfCarton.IO.RandomAccessRead raFile = default!;
+    try {
+      raFile = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file);
+      global::DripSharp.PdfCarton.Pdfparser.FDFParser parser
+        = new global::DripSharp.PdfCarton.Pdfparser.FDFParser(raFile!);
+      return parser.Parse();
+    } catch (global::System.IO.IOException) {
+      global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(raFile!);
+      throw;
+    }
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadFDF(global::System.IO.Stream input) {
-using (global::DripSharp.PdfCarton.IO.RandomAccessRead readBuffer = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(input)) {
-global::DripSharp.PdfCarton.Pdfparser.FDFParser parser = new global::DripSharp.PdfCarton.Pdfparser.FDFParser(readBuffer);
-return parser.Parse();
-}
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadFDF(global::System.IO.Stream input) {
+    using (global::DripSharp.PdfCarton.IO.RandomAccessRead readBuffer
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(input)) {
+      global::DripSharp.PdfCarton.Pdfparser.FDFParser parser
+        = new global::DripSharp.PdfCarton.Pdfparser.FDFParser(readBuffer);
+      return parser.Parse();
+    }
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadXFDF(string filename) {
-return global::DripSharp.PdfCarton.Loader.LoadXFDF(new global::System.IO.FileInfo(filename));
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadXFDF(string filename) {
+    return global::DripSharp.PdfCarton.Loader.LoadXFDF(new global::System.IO.FileInfo(filename));
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadXFDF(global::System.IO.FileInfo file) {
-using (global::System.IO.Stream @is = new global::System.IO.BufferedStream(global::DripSharp.Runtime.JavaCompat.OpenFileInput(file))) {
-return global::DripSharp.PdfCarton.Loader.LoadXFDF(@is);
-}
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadXFDF(global::System.IO.FileInfo file) {
+    using (global::System.IO.Stream @is
+      = new global::System.IO.BufferedStream(global::DripSharp.Runtime.JavaCompat.OpenFileInput(file))) {
+      return global::DripSharp.PdfCarton.Loader.LoadXFDF(@is);
+    }
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadXFDF(global::System.IO.Stream input) {
-return new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument(global::DripSharp.PdfCarton.Util.XMLUtil.Parse(input));
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadXFDF(global::System.IO.Stream input) {
+    return new global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument(global::DripSharp.PdfCarton.Util.XMLUtil.Parse(input));
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(sbyte[] input) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(input, "");
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(sbyte[] input) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(input, "");
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(sbyte[] input, string password) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(input, password, (global::System.IO.Stream)default!, (string)default!);
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(sbyte[] input,
+    string password) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(input, password,
+      (global::System.IO.Stream)default!, (string)default!);
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(sbyte[] input, string password, global::System.IO.Stream keyStore, string alias) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(input, password, keyStore, alias, global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(sbyte[] input,
+    string password, global::System.IO.Stream keyStore, string alias) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(input, password, keyStore, alias,
+      global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(sbyte[] input, string password, global::System.IO.Stream keyStore, string alias, global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
-global::DripSharp.PdfCarton.IO.RandomAccessRead source = default!;
-try {
-source = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(input);
-global::DripSharp.PdfCarton.Pdfparser.PDFParser parser = new global::DripSharp.PdfCarton.Pdfparser.PDFParser(source!, password, keyStore, alias, streamCacheCreateFunction);
-return parser.Parse();
-} catch (global::System.IO.IOException) {
-global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(source!);
-throw;
-}
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(sbyte[] input,
+    string password, global::System.IO.Stream keyStore, string alias,
+    global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
+    global::DripSharp.PdfCarton.IO.RandomAccessRead source = default!;
+    try {
+      source = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(input);
+      global::DripSharp.PdfCarton.Pdfparser.PDFParser parser
+        = new global::DripSharp.PdfCarton.Pdfparser.PDFParser(source!, password, keyStore, alias,
+        streamCacheCreateFunction);
+      return parser.Parse();
+    } catch (global::System.IO.IOException) {
+      global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(source!);
+      throw;
+    }
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::System.IO.FileInfo file) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(file, "", global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::System.IO.FileInfo file) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(file, "",
+      global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::System.IO.FileInfo file, global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(file, "", (global::System.IO.Stream)default!, (string)default!, streamCacheCreateFunction);
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::System.IO.FileInfo file,
+    global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(file, "", (global::System.IO.Stream)default!,
+      (string)default!, streamCacheCreateFunction);
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::System.IO.FileInfo file, string password) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(file, password, (global::System.IO.Stream)default!, (string)default!, global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::System.IO.FileInfo file,
+    string password) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(file, password,
+      (global::System.IO.Stream)default!, (string)default!,
+      global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::System.IO.FileInfo file, string password, global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(file, password, (global::System.IO.Stream)default!, (string)default!, streamCacheCreateFunction);
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::System.IO.FileInfo file,
+    string password,
+    global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(file, password,
+      (global::System.IO.Stream)default!, (string)default!, streamCacheCreateFunction);
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::System.IO.FileInfo file, string password, global::System.IO.Stream keyStore, string alias) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(file, password, keyStore, alias, global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::System.IO.FileInfo file,
+    string password, global::System.IO.Stream keyStore, string alias) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(file, password, keyStore, alias,
+      global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::System.IO.FileInfo file, string password, global::System.IO.Stream keyStore, string alias, global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
-global::DripSharp.PdfCarton.IO.RandomAccessRead raFile = default!;
-try {
-raFile = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file);
-return global::DripSharp.PdfCarton.Loader.LoadPDF(raFile!, password, keyStore, alias, streamCacheCreateFunction);
-} catch (global::System.IO.IOException) {
-global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(raFile!);
-throw;
-}
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::System.IO.FileInfo file,
+    string password, global::System.IO.Stream keyStore, string alias,
+    global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
+    global::DripSharp.PdfCarton.IO.RandomAccessRead raFile = default!;
+    try {
+      raFile = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file);
+      return global::DripSharp.PdfCarton.Loader.LoadPDF(raFile!, password, keyStore, alias,
+        streamCacheCreateFunction);
+    } catch (global::System.IO.IOException) {
+      global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(raFile!);
+      throw;
+    }
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(randomAccessRead, "", (global::System.IO.Stream)default!, (string)default!, global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(randomAccessRead, "",
+      (global::System.IO.Stream)default!, (string)default!,
+      global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(randomAccessRead, "", (global::System.IO.Stream)default!, (string)default!, streamCacheCreateFunction);
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead,
+    global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(randomAccessRead, "",
+      (global::System.IO.Stream)default!, (string)default!, streamCacheCreateFunction);
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, string password) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(randomAccessRead, password, (global::System.IO.Stream)default!, (string)default!, global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead,
+    string password) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(randomAccessRead, password,
+      (global::System.IO.Stream)default!, (string)default!,
+      global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, string password, global::System.IO.Stream keyStore, string alias) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(randomAccessRead, password, keyStore, alias, global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead,
+    string password, global::System.IO.Stream keyStore, string alias) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(randomAccessRead, password, keyStore, alias,
+      global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, string password, global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
-return global::DripSharp.PdfCarton.Loader.LoadPDF(randomAccessRead, password, (global::System.IO.Stream)default!, (string)default!, streamCacheCreateFunction);
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead,
+    string password,
+    global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
+    return global::DripSharp.PdfCarton.Loader.LoadPDF(randomAccessRead, password,
+      (global::System.IO.Stream)default!, (string)default!, streamCacheCreateFunction);
+  }
 
-public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead, string password, global::System.IO.Stream keyStore, string alias, global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
-global::DripSharp.PdfCarton.Pdfparser.PDFParser parser = new global::DripSharp.PdfCarton.Pdfparser.PDFParser(randomAccessRead, password, keyStore, alias, streamCacheCreateFunction);
-return parser.Parse();
-}
+  public static global::DripSharp.PdfCarton.Pdmodel.PDDocument LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead,
+    string password, global::System.IO.Stream keyStore, string alias,
+    global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction) {
+    global::DripSharp.PdfCarton.Pdfparser.PDFParser parser
+      = new global::DripSharp.PdfCarton.Pdfparser.PDFParser(randomAccessRead, password, keyStore,
+      alias, streamCacheCreateFunction);
+    return parser.Parse();
+  }
 }

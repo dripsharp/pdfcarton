@@ -9,50 +9,54 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
 internal class AnnotationBorder {
-internal float[] dashArray = default!;
+  internal float[] dashArray = default!;
 
-internal bool underline = false;
+  internal bool underline = false;
 
-internal float width = 0;
+  internal float width = 0;
 
-internal static global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.AnnotationBorder getAnnotationBorder(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary borderStyle) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.AnnotationBorder ab = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.AnnotationBorder();
-if ((borderStyle == default!)) {
-global::DripSharp.PdfCarton.Cos.COSArray border = annotation.GetBorder();
-if ((border.Size() >= 3)) {
-global::DripSharp.PdfCarton.Cos.COSBase @base = border.GetObject(2);
-if ((@base is global::DripSharp.PdfCarton.Cos.COSNumber)) {
-ab.width = ((global::DripSharp.PdfCarton.Cos.COSNumber)(@base!)).FloatValue();
-}
-}
-if ((border.Size() > 3)) {
-global::DripSharp.PdfCarton.Cos.COSBase base3 = border.GetObject(3);
-if ((base3 is global::DripSharp.PdfCarton.Cos.COSArray)) {
-ab.dashArray = ((global::DripSharp.PdfCarton.Cos.COSArray)(base3!)).ToFloatArray();
-}
-}
-} else {
-ab.width = borderStyle.GetWidth();
-string style = borderStyle.GetStyle();
-if (global::DripSharp.Runtime.JavaCompat.Equals(style, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary.StyleDashed)) {
-ab.dashArray = borderStyle.GetDashStyle().GetDashArray();
-}
-if (global::DripSharp.Runtime.JavaCompat.Equals(style, global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary.StyleUnderline)) {
-ab.underline = true;
-}
-}
-if ((ab.dashArray != default!)) {
-bool allZero = true;
-foreach (float f in ab.dashArray) {
-if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(f, (float)(0)) != 0)) {
-allZero = false;
-break;
-}
-}
-if (allZero) {
-ab.dashArray = default!;
-}
-}
-return ab;
-}
+  internal static global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.AnnotationBorder getAnnotationBorder(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary borderStyle) {
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.AnnotationBorder ab
+      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.AnnotationBorder();
+    if ((borderStyle == default!)) {
+      global::DripSharp.PdfCarton.Cos.COSArray border = annotation.GetBorder();
+      if ((border.Size() >= 3)) {
+        global::DripSharp.PdfCarton.Cos.COSBase @base = border.GetObject(2);
+        if ((@base is global::DripSharp.PdfCarton.Cos.COSNumber)) {
+          ab.width = ((global::DripSharp.PdfCarton.Cos.COSNumber)(@base!)).FloatValue();
+        }
+      }
+      if ((border.Size() > 3)) {
+        global::DripSharp.PdfCarton.Cos.COSBase base3 = border.GetObject(3);
+        if ((base3 is global::DripSharp.PdfCarton.Cos.COSArray)) {
+          ab.dashArray = ((global::DripSharp.PdfCarton.Cos.COSArray)(base3!)).ToFloatArray();
+        }
+      }
+    } else {
+      ab.width = borderStyle.GetWidth();
+      string style = borderStyle.GetStyle();
+      if (global::DripSharp.Runtime.JavaCompat.Equals(style,
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary.StyleDashed)) {
+        ab.dashArray = borderStyle.GetDashStyle().GetDashArray();
+      }
+      if (global::DripSharp.Runtime.JavaCompat.Equals(style,
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary.StyleUnderline)) {
+        ab.underline = true;
+      }
+    }
+    if ((ab.dashArray != default!)) {
+      bool allZero = true;
+      foreach (float f in ab.dashArray) {
+        if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(f, (float)(0)) != 0)) {
+          allZero = false;
+          break;
+        }
+      }
+      if (allZero) {
+        ab.dashArray = default!;
+      }
+    }
+    return ab;
+  }
 }

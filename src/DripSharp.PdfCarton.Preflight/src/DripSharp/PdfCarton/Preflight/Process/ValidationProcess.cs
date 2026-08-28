@@ -9,17 +9,18 @@
 namespace DripSharp.PdfCarton.Preflight.Process;
 
 public interface ValidationProcess {
-public void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx);
+  public void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx);
 }
 
-public sealed class __ValidationProcessFunctionalAdapter : global::DripSharp.PdfCarton.Preflight.Process.ValidationProcess {
-private readonly global::System.Action<global::DripSharp.PdfCarton.Preflight.PreflightContext> implementation;
+public sealed class __ValidationProcessFunctionalAdapter
+: global::DripSharp.PdfCarton.Preflight.Process.ValidationProcess {
+  private readonly global::System.Action<global::DripSharp.PdfCarton.Preflight.PreflightContext> implementation;
 
-public __ValidationProcessFunctionalAdapter(global::System.Action<global::DripSharp.PdfCarton.Preflight.PreflightContext> implementation) {
-this.implementation = implementation;
-}
+  public __ValidationProcessFunctionalAdapter(global::System.Action<global::DripSharp.PdfCarton.Preflight.PreflightContext> implementation) {
+    this.implementation = implementation;
+  }
 
-public void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-this.implementation(ctx);
-}
+  public void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    this.implementation(ctx);
+  }
 }

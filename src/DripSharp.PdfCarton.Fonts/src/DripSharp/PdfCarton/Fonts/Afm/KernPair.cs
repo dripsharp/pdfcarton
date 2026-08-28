@@ -9,34 +9,34 @@
 namespace DripSharp.PdfCarton.Fonts.Afm;
 
 public class KernPair {
-private readonly string firstKernCharacter = null!;
+  private readonly string firstKernCharacter = null!;
 
-private readonly string secondKernCharacter = null!;
+  private readonly string secondKernCharacter = null!;
 
-private readonly float x = default;
+  private readonly float x = default;
 
-private readonly float y = default;
+  private readonly float y = default;
 
-public KernPair(string firstKernCharacter, string secondKernCharacter, float x, float y) {
-this.firstKernCharacter = firstKernCharacter;
-this.secondKernCharacter = secondKernCharacter;
-this.x = x;
-this.y = y;
-}
+  public KernPair(string firstKernCharacter, string secondKernCharacter, float x, float y) {
+    this.firstKernCharacter = firstKernCharacter;
+    this.secondKernCharacter = secondKernCharacter;
+    this.x = x;
+    this.y = y;
+  }
 
-public virtual string GetFirstKernCharacter() {
-return this.firstKernCharacter;
-}
+  public virtual string GetFirstKernCharacter() {
+    return this.firstKernCharacter;
+  }
 
-public virtual string GetSecondKernCharacter() {
-return this.secondKernCharacter;
-}
+  public virtual string GetSecondKernCharacter() {
+    return this.secondKernCharacter;
+  }
 
-public virtual float GetX() {
-return this.x;
-}
+  public virtual float GetX() {
+    return this.x;
+  }
 
-public virtual float GetY() {
-return this.y;
-}
+  public virtual float GetY() {
+    return this.y;
+  }
 }

@@ -9,229 +9,259 @@
 namespace DripSharp.PdfCarton.Filter;
 
 public sealed class Predictor {
-private Predictor() {}
+  private Predictor() {}
 
-internal static void decodePredictorRow(int predictor, int colors, int bitsPerComponent, int columns, sbyte[] actline, sbyte[] lastline) {
-if ((predictor == 1)) {
-return;
-}
-int bitsPerPixel = (colors * bitsPerComponent);
-int bytesPerPixel = ((bitsPerPixel + 7) / 8);
-int rowlength = actline.Length;
-switch (predictor) {
-case var __case_61_18_0 when __case_61_18_0 == 2:
-if ((bitsPerComponent == 8)) {
-for (int p__66_30 = bytesPerPixel; (p__66_30 < rowlength); p__66_30++) {
-int sub__68_29 = (actline[p__66_30] & 255);
-int left__69_29 = (actline[(p__66_30 - bytesPerPixel)] & 255);
-actline[p__66_30] = unchecked((sbyte)(unchecked((sbyte)((sub__68_29 + left__69_29)))));
-}
-break;
-}
-if ((bitsPerComponent == 16)) {
-for (int p__76_30 = bytesPerPixel; (p__76_30 < (rowlength - 1)); p__76_30 += 2) {
-int sub__78_29 = (((actline[p__76_30] & 255) << unchecked((int)(8))) + (actline[(p__76_30 + 1)] & 255));
-int left__79_29 = (((actline[(p__76_30 - bytesPerPixel)] & 255) << unchecked((int)(8))) + (actline[((p__76_30 - bytesPerPixel) + 1)] & 255));
-actline[p__76_30] = unchecked((sbyte)(unchecked((sbyte)((((sub__78_29 + left__79_29) >> unchecked((int)(8))) & 255)))));
-actline[(p__76_30 + 1)] = unchecked((sbyte)(unchecked((sbyte)(((sub__78_29 + left__79_29) & 255)))));
-}
-break;
-}
-if (((bitsPerComponent == 1) && (colors == 1))) {
-for (int p__92_30 = 0; (p__92_30 < rowlength); p__92_30++) {
-for (int bit = 7; (bit >= 0); --bit) {
-int sub__96_33 = ((actline[p__92_30] >> unchecked((int)(bit))) & 1);
-if (((p__92_30 == 0) && (bit == 7))) {
-continue;
-}
-int left__101_33;
-if ((bit == 7)) {
-left__101_33 = (actline[(p__92_30 - 1)] & 1);
-} else {
-left__101_33 = ((actline[p__92_30] >> unchecked((int)((bit + 1)))) & 1);
-}
-if ((((sub__96_33 + left__101_33) & 1) == 0)) {
-global::DripSharp.Runtime.JavaCompat.AndAssign(ref actline[p__92_30], ~((1 << unchecked((int)(bit)))));
-} else {
-global::DripSharp.Runtime.JavaCompat.OrAssign(ref actline[p__92_30], (1 << unchecked((int)(bit))));
-}
-}
-}
-break;
-}
-int elements = (columns * colors);
-for (int p__128_26 = colors; (p__128_26 < elements); ++p__128_26) {
-int bytePosSub = ((p__128_26 * bitsPerComponent) / 8);
-int bitPosSub = ((8 - ((p__128_26 * bitsPerComponent) % 8)) - bitsPerComponent);
-int bytePosLeft = (((p__128_26 - colors) * bitsPerComponent) / 8);
-int bitPosLeft = ((8 - (((p__128_26 - colors) * bitsPerComponent) % 8)) - bitsPerComponent);
-int sub__135_25 = global::DripSharp.PdfCarton.Filter.Predictor.getBitSeq((int)(actline[bytePosSub]), bitPosSub, bitsPerComponent);
-int left__136_25 = global::DripSharp.PdfCarton.Filter.Predictor.getBitSeq((int)(actline[bytePosLeft]), bitPosLeft, bitsPerComponent);
-actline[bytePosSub] = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Filter.Predictor.calcSetBitSeq((int)(actline[bytePosSub]), bitPosSub, bitsPerComponent, (sub__135_25 + left__136_25))))));
-}
-break;
-case var __case_140_18_0 when __case_140_18_0 == 10:
-break;
-case var __case_144_18_0 when __case_144_18_0 == 11:
-for (int p__146_26 = bytesPerPixel; (p__146_26 < rowlength); p__146_26++) {
-int sub__148_25 = actline[p__146_26];
-int left__149_25 = actline[(p__146_26 - bytesPerPixel)];
-actline[p__146_26] = unchecked((sbyte)(unchecked((sbyte)((sub__148_25 + left__149_25)))));
-}
-break;
-case var __case_153_18_0 when __case_153_18_0 == 12:
-for (int p__155_26 = 0; (p__155_26 < rowlength); p__155_26++) {
-int up__157_25 = (actline[p__155_26] & 255);
-int prior = (lastline[p__155_26] & 255);
-actline[p__155_26] = unchecked((sbyte)(unchecked((sbyte)(((up__157_25 + prior) & 255)))));
-}
-break;
-case var __case_162_18_0 when __case_162_18_0 == 13:
-for (int p__164_26 = 0; (p__164_26 < rowlength); p__164_26++) {
-int avg = (actline[p__164_26] & 255);
-int left__167_25 = (((p__164_26 - bytesPerPixel) >= 0) ? (actline[(p__164_26 - bytesPerPixel)] & 255) : 0);
-int up__168_25 = (lastline[p__164_26] & 255);
-actline[p__164_26] = unchecked((sbyte)(unchecked((sbyte)(((avg + ((left__167_25 + up__168_25) / 2)) & 255)))));
-}
-break;
-case var __case_172_18_0 when __case_172_18_0 == 14:
-for (int p__174_26 = 0; (p__174_26 < rowlength); p__174_26++) {
-int paeth = (actline[p__174_26] & 255);
-int a = (((p__174_26 - bytesPerPixel) >= 0) ? (actline[(p__174_26 - bytesPerPixel)] & 255) : 0);
-int b = (lastline[p__174_26] & 255);
-int c = (((p__174_26 - bytesPerPixel) >= 0) ? (lastline[(p__174_26 - bytesPerPixel)] & 255) : 0);
-int value = ((a + b) - c);
-int absa = global::System.Math.Abs((value - a));
-int absb = global::System.Math.Abs((value - b));
-int absc = global::System.Math.Abs((value - c));
-if (((absa <= absb) && (absa <= absc))) {
-actline[p__174_26] = unchecked((sbyte)(unchecked((sbyte)(((paeth + a) & 255)))));
-} else {
-if ((absb <= absc)) {
-actline[p__174_26] = unchecked((sbyte)(unchecked((sbyte)(((paeth + b) & 255)))));
-} else {
-actline[p__174_26] = unchecked((sbyte)(unchecked((sbyte)(((paeth + c) & 255)))));
-}
-}
-}
-break;
-default:
-break;
-}
-}
+  internal static void decodePredictorRow(int predictor, int colors, int bitsPerComponent,
+    int columns, sbyte[] actline, sbyte[] lastline) {
+    if ((predictor == 1)) {
+      return;
+    }
+    int bitsPerPixel = (colors * bitsPerComponent);
+    int bytesPerPixel = ((bitsPerPixel + 7) / 8);
+    int rowlength = actline.Length;
+    switch (predictor) {
+      case var __case_61_18_0 when __case_61_18_0 == 2:
+        if ((bitsPerComponent == 8)) {
+          for (int p__66_30 = bytesPerPixel; (p__66_30 < rowlength); p__66_30++) {
+            int sub__68_29 = (actline[p__66_30] & 255);
+            int left__69_29 = (actline[(p__66_30 - bytesPerPixel)] & 255);
+            actline[p__66_30] = unchecked((sbyte)(unchecked((sbyte)((sub__68_29 + left__69_29)))));
+          }
+          break;
+        }
+        if ((bitsPerComponent == 16)) {
+          for (int p__76_30 = bytesPerPixel; (p__76_30 < (rowlength - 1)); p__76_30 += 2) {
+            int sub__78_29 = (((actline[p__76_30] & 255) << unchecked((int)(8)))
+              + (actline[(p__76_30 + 1)] & 255));
+            int left__79_29 = (((actline[(p__76_30 - bytesPerPixel)] & 255) << unchecked((int)(8)))
+              + (actline[((p__76_30 - bytesPerPixel) + 1)] & 255));
+            actline[p__76_30] = unchecked((sbyte)(unchecked((sbyte)((((sub__78_29
+              + left__79_29) >> unchecked((int)(8))) & 255)))));
+            actline[(p__76_30 + 1)] = unchecked((sbyte)(unchecked((sbyte)(((sub__78_29
+              + left__79_29) & 255)))));
+          }
+          break;
+        }
+        if (((bitsPerComponent == 1) && (colors == 1))) {
+          for (int p__92_30 = 0; (p__92_30 < rowlength); p__92_30++) {
+            for (int bit = 7; (bit >= 0); --bit) {
+              int sub__96_33 = ((actline[p__92_30] >> unchecked((int)(bit))) & 1);
+              if (((p__92_30 == 0) && (bit == 7))) {
+                continue;
+              }
+              int left__101_33;
+              if ((bit == 7)) {
+                left__101_33 = (actline[(p__92_30 - 1)] & 1);
+              } else {
+                left__101_33 = ((actline[p__92_30] >> unchecked((int)((bit + 1)))) & 1);
+              }
+              if ((((sub__96_33 + left__101_33) & 1) == 0)) {
+                global::DripSharp.Runtime.JavaCompat.AndAssign(ref actline[p__92_30],
+                  ~((1 << unchecked((int)(bit)))));
+              } else {
+                global::DripSharp.Runtime.JavaCompat.OrAssign(ref actline[p__92_30],
+                  (1 << unchecked((int)(bit))));
+              }
+            }
+          }
+          break;
+        }
+        int elements = (columns * colors);
+        for (int p__128_26 = colors; (p__128_26 < elements); ++p__128_26) {
+          int bytePosSub = ((p__128_26 * bitsPerComponent) / 8);
+          int bitPosSub = ((8 - ((p__128_26 * bitsPerComponent) % 8)) - bitsPerComponent);
+          int bytePosLeft = (((p__128_26 - colors) * bitsPerComponent) / 8);
+          int bitPosLeft = ((8 - (((p__128_26 - colors) * bitsPerComponent) % 8))
+            - bitsPerComponent);
+          int sub__135_25
+            = global::DripSharp.PdfCarton.Filter.Predictor.getBitSeq((int)(actline[bytePosSub]),
+            bitPosSub, bitsPerComponent);
+          int left__136_25
+            = global::DripSharp.PdfCarton.Filter.Predictor.getBitSeq((int)(actline[bytePosLeft]),
+            bitPosLeft, bitsPerComponent);
+          actline[bytePosSub]
+            = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Filter.Predictor.calcSetBitSeq((int)(actline[bytePosSub]),
+            bitPosSub, bitsPerComponent, (sub__135_25 + left__136_25))))));
+        }
+        break;
+      case var __case_140_18_0 when __case_140_18_0 == 10:
+        break;
+      case var __case_144_18_0 when __case_144_18_0 == 11:
+        for (int p__146_26 = bytesPerPixel; (p__146_26 < rowlength); p__146_26++) {
+          int sub__148_25 = actline[p__146_26];
+          int left__149_25 = actline[(p__146_26 - bytesPerPixel)];
+          actline[p__146_26] = unchecked((sbyte)(unchecked((sbyte)((sub__148_25 + left__149_25)))));
+        }
+        break;
+      case var __case_153_18_0 when __case_153_18_0 == 12:
+        for (int p__155_26 = 0; (p__155_26 < rowlength); p__155_26++) {
+          int up__157_25 = (actline[p__155_26] & 255);
+          int prior = (lastline[p__155_26] & 255);
+          actline[p__155_26] = unchecked((sbyte)(unchecked((sbyte)(((up__157_25 + prior) & 255)))));
+        }
+        break;
+      case var __case_162_18_0 when __case_162_18_0 == 13:
+        for (int p__164_26 = 0; (p__164_26 < rowlength); p__164_26++) {
+          int avg = (actline[p__164_26] & 255);
+          int left__167_25 = (((p__164_26 - bytesPerPixel) >= 0) ? (actline[(p__164_26
+            - bytesPerPixel)] & 255) : 0);
+          int up__168_25 = (lastline[p__164_26] & 255);
+          actline[p__164_26] = unchecked((sbyte)(unchecked((sbyte)(((avg + ((left__167_25
+            + up__168_25) / 2)) & 255)))));
+        }
+        break;
+      case var __case_172_18_0 when __case_172_18_0 == 14:
+        for (int p__174_26 = 0; (p__174_26 < rowlength); p__174_26++) {
+          int paeth = (actline[p__174_26] & 255);
+          int a = (((p__174_26 - bytesPerPixel) >= 0) ? (actline[(p__174_26 - bytesPerPixel)] & 255)
+            : 0);
+          int b = (lastline[p__174_26] & 255);
+          int c = (((p__174_26 - bytesPerPixel) >= 0) ? (lastline[(p__174_26
+            - bytesPerPixel)] & 255) : 0);
+          int value = ((a + b) - c);
+          int absa = global::System.Math.Abs((value - a));
+          int absb = global::System.Math.Abs((value - b));
+          int absc = global::System.Math.Abs((value - c));
+          if (((absa <= absb) && (absa <= absc))) {
+            actline[p__174_26] = unchecked((sbyte)(unchecked((sbyte)(((paeth + a) & 255)))));
+          } else {
+            if ((absb <= absc)) {
+              actline[p__174_26] = unchecked((sbyte)(unchecked((sbyte)(((paeth + b) & 255)))));
+            } else {
+              actline[p__174_26] = unchecked((sbyte)(unchecked((sbyte)(((paeth + c) & 255)))));
+            }
+          }
+        }
+        break;
+      default:
+        break;
+    }
+  }
 
-internal static int calculateRowLength(int colors, int bitsPerComponent, int columns) {
-int bitsPerPixel = (colors * bitsPerComponent);
-return (((columns * bitsPerPixel) + 7) / 8);
-}
+  internal static int calculateRowLength(int colors, int bitsPerComponent, int columns) {
+    int bitsPerPixel = (colors * bitsPerComponent);
+    return (((columns * bitsPerPixel) + 7) / 8);
+  }
 
-internal static int getBitSeq(int by, int startBit, int bitSize) {
-int mask = ((1 << unchecked((int)(bitSize))) - 1);
-return ((by >>> unchecked((int)(startBit))) & mask);
-}
+  internal static int getBitSeq(int by, int startBit, int bitSize) {
+    int mask = ((1 << unchecked((int)(bitSize))) - 1);
+    return ((by >>> unchecked((int)(startBit))) & mask);
+  }
 
-internal static int calcSetBitSeq(int by, int startBit, int bitSize, int val) {
-int mask = ((1 << unchecked((int)(bitSize))) - 1);
-int truncatedVal = (val & mask);
-mask = ~((mask << unchecked((int)(startBit))));
-return ((by & mask) | (truncatedVal << unchecked((int)(startBit))));
-}
+  internal static int calcSetBitSeq(int by, int startBit, int bitSize, int val) {
+    int mask = ((1 << unchecked((int)(bitSize))) - 1);
+    int truncatedVal = (val & mask);
+    mask = ~((mask << unchecked((int)(startBit))));
+    return ((by & mask) | (truncatedVal << unchecked((int)(startBit))));
+  }
 
-internal static global::System.IO.Stream wrapPredictor(global::System.IO.Stream @out, global::DripSharp.PdfCarton.Cos.COSDictionary decodeParams) {
-int predictor = decodeParams.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Predictor);
-if ((predictor > 1)) {
-int colors = global::System.Math.Min(decodeParams.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Colors, 1), 32);
-int bitsPerPixel = decodeParams.GetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent, 8);
-int columns = decodeParams.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Columns, 1);
-return new global::DripSharp.PdfCarton.Filter.Predictor.PredictorOutputStream(@out, predictor, colors, bitsPerPixel, columns);
-} else {
-return @out;
-}
-}
+  internal static global::System.IO.Stream wrapPredictor(global::System.IO.Stream @out,
+    global::DripSharp.PdfCarton.Cos.COSDictionary decodeParams) {
+    int predictor = decodeParams.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Predictor);
+    if ((predictor > 1)) {
+      int colors
+        = global::System.Math.Min(decodeParams.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Colors,
+        1), 32);
+      int bitsPerPixel
+        = decodeParams.GetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent, 8);
+      int columns = decodeParams.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Columns, 1);
+      return new global::DripSharp.PdfCarton.Filter.Predictor.PredictorOutputStream(@out, predictor,
+        colors, bitsPerPixel, columns);
+    } else {
+      return @out;
+    }
+  }
 
-internal sealed class PredictorOutputStream : global::DripSharp.Runtime.JavaFilterOutputStream {
-internal int predictor = default;
+  internal sealed class PredictorOutputStream : global::DripSharp.Runtime.JavaFilterOutputStream {
+    internal int predictor = default;
 
-internal readonly int colors = default;
+    internal readonly int colors = default;
 
-internal readonly int bitsPerComponent = default;
+    internal readonly int bitsPerComponent = default;
 
-internal readonly int columns = default;
+    internal readonly int columns = default;
 
-internal readonly int rowLength = default;
+    internal readonly int rowLength = default;
 
-internal readonly bool predictorPerRow = default;
+    internal readonly bool predictorPerRow = default;
 
-internal sbyte[] currentRow = null!;
+    internal sbyte[] currentRow = null!;
 
-internal sbyte[] lastRow = null!;
+    internal sbyte[] lastRow = null!;
 
-internal int currentRowData = 0;
+    internal int currentRowData = 0;
 
-internal bool predictorRead = false;
+    internal bool predictorRead = false;
 
-internal PredictorOutputStream(global::System.IO.Stream @out, int predictor, int colors, int bitsPerComponent, int columns) : base(@out) {
-this.predictor = predictor;
-this.colors = colors;
-this.bitsPerComponent = bitsPerComponent;
-this.columns = columns;
-this.rowLength = global::DripSharp.PdfCarton.Filter.Predictor.calculateRowLength(colors, bitsPerComponent, columns);
-if ((this.rowLength < 0)) {
-throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Calculated row length is negative: ", this.rowLength));
-}
-this.predictorPerRow = (predictor >= 10);
-this.currentRow = new sbyte[this.rowLength];
-this.lastRow = new sbyte[this.rowLength];
-}
+    internal PredictorOutputStream(global::System.IO.Stream @out, int predictor, int colors,
+      int bitsPerComponent, int columns) : base(@out) {
+      this.predictor = predictor;
+      this.colors = colors;
+      this.bitsPerComponent = bitsPerComponent;
+      this.columns = columns;
+      this.rowLength = global::DripSharp.PdfCarton.Filter.Predictor.calculateRowLength(colors,
+        bitsPerComponent, columns);
+      if ((this.rowLength < 0)) {
+        throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Calculated row length is negative: ",
+          this.rowLength));
+      }
+      this.predictorPerRow = (predictor >= 10);
+      this.currentRow = new sbyte[this.rowLength];
+      this.lastRow = new sbyte[this.rowLength];
+    }
 
-public override void Write(sbyte[] bytes) {
-this.Write(bytes, 0, bytes.Length);
-}
+    public override void Write(sbyte[] bytes) {
+      this.Write(bytes, 0, bytes.Length);
+    }
 
-public override void Write(sbyte[] bytes, int off, int len) {
-int currentOffset = off;
-int maxOffset = (currentOffset + len);
-while ((currentOffset < maxOffset)) {
-if (((this.predictorPerRow && (this.currentRowData == 0)) && !(this.predictorRead))) {
-this.predictor = (bytes[currentOffset] + 10);
-currentOffset++;
-this.predictorRead = true;
-} else {
-int toRead = global::System.Math.Min((this.rowLength - this.currentRowData), (maxOffset - currentOffset));
-global::DripSharp.Runtime.JavaCompat.ArrayCopy(bytes, currentOffset, this.currentRow, this.currentRowData, toRead);
-this.currentRowData += toRead;
-currentOffset += toRead;
-if ((this.currentRowData == this.currentRow.Length)) {
-this.decodeAndWriteRow();
-}
-}
-}
-}
+    public override void Write(sbyte[] bytes, int off, int len) {
+      int currentOffset = off;
+      int maxOffset = (currentOffset + len);
+      while ((currentOffset < maxOffset)) {
+        if (((this.predictorPerRow && (this.currentRowData == 0)) && !(this.predictorRead))) {
+          this.predictor = (bytes[currentOffset] + 10);
+          currentOffset++;
+          this.predictorRead = true;
+        } else {
+          int toRead = global::System.Math.Min((this.rowLength - this.currentRowData), (maxOffset
+            - currentOffset));
+          global::DripSharp.Runtime.JavaCompat.ArrayCopy(bytes, currentOffset, this.currentRow,
+            this.currentRowData, toRead);
+          this.currentRowData += toRead;
+          currentOffset += toRead;
+          if ((this.currentRowData == this.currentRow.Length)) {
+            this.decodeAndWriteRow();
+          }
+        }
+      }
+    }
 
-internal void decodeAndWriteRow() {
-global::DripSharp.PdfCarton.Filter.Predictor.decodePredictorRow(this.predictor, this.colors, this.bitsPerComponent, this.columns, this.currentRow, this.lastRow);
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, this.currentRow);
-this.flipRows();
-}
+    internal void decodeAndWriteRow() {
+      global::DripSharp.PdfCarton.Filter.Predictor.decodePredictorRow(this.predictor, this.colors,
+        this.bitsPerComponent, this.columns, this.currentRow, this.lastRow);
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, this.currentRow);
+      this.flipRows();
+    }
 
-internal void flipRows() {
-sbyte[] temp = this.lastRow;
-this.lastRow = this.currentRow;
-this.currentRow = temp;
-this.currentRowData = 0;
-this.predictorRead = false;
-}
+    internal void flipRows() {
+      sbyte[] temp = this.lastRow;
+      this.lastRow = this.currentRow;
+      this.currentRow = temp;
+      this.currentRowData = 0;
+      this.predictorRead = false;
+    }
 
-public override void Flush() {
-if ((this.currentRowData > 0)) {
-global::DripSharp.Runtime.JavaCompat.Fill(this.currentRow, this.currentRowData, this.rowLength, unchecked((sbyte)(0)));
-this.decodeAndWriteRow();
-}
-base.Flush();
-}
+    public override void Flush() {
+      if ((this.currentRowData > 0)) {
+        global::DripSharp.Runtime.JavaCompat.Fill(this.currentRow, this.currentRowData,
+          this.rowLength, unchecked((sbyte)(0)));
+        this.decodeAndWriteRow();
+      }
+      base.Flush();
+    }
 
-public override void Write(int i) {
-throw new global::System.NotSupportedException("Not supported");
-}
-}
+    public override void Write(int i) {
+      throw new global::System.NotSupportedException("Not supported");
+    }
+  }
 }

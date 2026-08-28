@@ -9,41 +9,43 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics;
 
 public class PDFontSetting : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-private global::DripSharp.PdfCarton.Cos.COSArray fontSetting = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray fontSetting = default!;
 
-public PDFontSetting() {
-this.fontSetting = new global::DripSharp.PdfCarton.Cos.COSArray();
-this.fontSetting.Add((global::DripSharp.PdfCarton.Cos.COSBase)default!);
-this.fontSetting.Add(new global::DripSharp.PdfCarton.Cos.COSFloat((float)(1)));
-}
+  public PDFontSetting() {
+    this.fontSetting = new global::DripSharp.PdfCarton.Cos.COSArray();
+    this.fontSetting.Add((global::DripSharp.PdfCarton.Cos.COSBase)default!);
+    this.fontSetting.Add(new global::DripSharp.PdfCarton.Cos.COSFloat((float)(1)));
+  }
 
-public PDFontSetting(global::DripSharp.PdfCarton.Cos.COSArray fs) {
-this.fontSetting = fs;
-}
+  public PDFontSetting(global::DripSharp.PdfCarton.Cos.COSArray fs) {
+    this.fontSetting = fs;
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
-return this.fontSetting;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
+    return this.fontSetting;
+  }
 
-public virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDFont GetFont() {
-global::DripSharp.PdfCarton.Pdmodel.Font.PDFont retval = default!;
-global::DripSharp.PdfCarton.Cos.COSBase font = this.fontSetting.GetObject(0);
-if ((font is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
-retval = global::DripSharp.PdfCarton.Pdmodel.Font.PDFontFactory.CreateFont((global::DripSharp.PdfCarton.Cos.COSDictionary)(font!));
-}
-return retval!;
-}
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Font.PDFont GetFont() {
+    global::DripSharp.PdfCarton.Pdmodel.Font.PDFont retval = default!;
+    global::DripSharp.PdfCarton.Cos.COSBase font = this.fontSetting.GetObject(0);
+    if ((font is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
+      retval
+        = global::DripSharp.PdfCarton.Pdmodel.Font.PDFontFactory.CreateFont((global::DripSharp.PdfCarton.Cos.COSDictionary)(font!));
+    }
+    return retval!;
+  }
 
-public virtual void SetFont(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) {
-this.fontSetting.Set(0, font);
-}
+  public virtual void SetFont(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) {
+    this.fontSetting.Set(0, font);
+  }
 
-public virtual float GetFontSize() {
-global::DripSharp.PdfCarton.Cos.COSNumber size = (global::DripSharp.PdfCarton.Cos.COSNumber)(this.fontSetting.Get(1)!);
-return size.FloatValue();
-}
+  public virtual float GetFontSize() {
+    global::DripSharp.PdfCarton.Cos.COSNumber size
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(this.fontSetting.Get(1)!);
+    return size.FloatValue();
+  }
 
-public virtual void SetFontSize(float size) {
-this.fontSetting.Set(1, new global::DripSharp.PdfCarton.Cos.COSFloat(size));
-}
+  public virtual void SetFontSize(float size) {
+    this.fontSetting.Set(1, new global::DripSharp.PdfCarton.Cos.COSFloat(size));
+  }
 }

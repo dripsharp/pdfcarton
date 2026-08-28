@@ -8,42 +8,46 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Xmp.Type;
 
-[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/sType/Dimensions#", "stDim")]
+[global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://ns.adobe.com/xap/1.0/sType/Dimensions#",
+  "stDim")]
 public class DimensionsType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
-public const string H = "h";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
+  public const string H = "h";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
-public const string W = "w";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Real", "Simple")]
+  public const string W = "w";
 
-[global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
-public const string Unit = "unit";
+  [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Text", "Simple")]
+  public const string Unit = "unit";
 
-public DimensionsType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
+  public DimensionsType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
-}
+  }
 
-public virtual float? GetH() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.DimensionsType.H);
-if ((prop is global::DripSharp.PdfCarton.Xmp.Type.RealType)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.RealType)(prop!)).GetValue();
-}
-return default!;
-}
+  public virtual float? GetH() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop
+      = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.DimensionsType.H);
+    if ((prop is global::DripSharp.PdfCarton.Xmp.Type.RealType)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.RealType)(prop!)).GetValue();
+    }
+    return default!;
+  }
 
-public virtual float? GetW() {
-global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.DimensionsType.W);
-if ((prop is global::DripSharp.PdfCarton.Xmp.Type.RealType)) {
-return ((global::DripSharp.PdfCarton.Xmp.Type.RealType)(prop!)).GetValue();
-}
-return default!;
-}
+  public virtual float? GetW() {
+    global::DripSharp.PdfCarton.Xmp.Type.AbstractField prop
+      = this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.DimensionsType.W);
+    if ((prop is global::DripSharp.PdfCarton.Xmp.Type.RealType)) {
+      return ((global::DripSharp.PdfCarton.Xmp.Type.RealType)(prop!)).GetValue();
+    }
+    return default!;
+  }
 
-public virtual string GetUnit() {
-return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.DimensionsType.Unit);
-}
+  public virtual string GetUnit() {
+    return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.DimensionsType.Unit);
+  }
 
-public override string ToString() {
-return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("DimensionsType{", this.GetW()), " x "), this.GetH()), " "), this.GetUnit()), '}');
-}
+  public override string ToString() {
+    return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("DimensionsType{",
+      this.GetW()), " x "), this.GetH()), " "), this.GetUnit()), '}');
+  }
 }

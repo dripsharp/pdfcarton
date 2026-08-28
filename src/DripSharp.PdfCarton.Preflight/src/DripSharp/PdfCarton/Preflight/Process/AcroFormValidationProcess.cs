@@ -8,68 +8,91 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Preflight.Process;
 
-public class AcroFormValidationProcess : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
-global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = ctx.GetDocument().GetDocumentCatalog();
-if ((catalog != default!)) {
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm = catalog.GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!);
-if ((acroForm != default!)) {
-this.CheckNeedAppearences(ctx, acroForm);
-try {
-this.ExploreFields(ctx, acroForm.GetFields());
-} catch (global::System.IO.IOException e) {
-throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(global::DripSharp.Runtime.JavaCompat.Concat("Unable to get the list of fields : ", global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e);
-}
-}
-} else {
-ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNocatalog, "There is no Catalog entry in the Document"));
-}
-}
+public class AcroFormValidationProcess
+: global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
+  public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {
+    global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog
+      = ctx.GetDocument().GetDocumentCatalog();
+    if ((catalog != default!)) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
+        = catalog.GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!);
+      if ((acroForm != default!)) {
+        this.CheckNeedAppearences(ctx, acroForm);
+        try {
+          this.ExploreFields(ctx, acroForm.GetFields());
+        } catch (global::System.IO.IOException e) {
+          throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException(global::DripSharp.Runtime.JavaCompat.Concat("Unable to get the list of fields : ",
+            global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e)), e);
+        }
+      }
+    } else {
+      ctx.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxNocatalog,
+        "There is no Catalog entry in the Document"));
+    }
+  }
 
-protected internal virtual void CheckNeedAppearences(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) {
-if (acroForm.GetNeedAppearances()) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxDictInvalid, "NeedAppearance is present with the value \"true\""));
-}
-}
+  protected internal virtual void CheckNeedAppearences(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm) {
+    if (acroForm.GetNeedAppearances()) {
+      this.AddValidationError(ctx,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxDictInvalid,
+        "NeedAppearance is present with the value \"true\""));
+    }
+  }
 
-protected internal virtual bool ExploreFields(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> fields) {
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field in fields) {
-if (!(this.ValidateField(ctx, field))) {
-return false;
-}
-}
-return true;
-}
+  protected internal virtual bool ExploreFields(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> fields) {
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field in fields) {
+      if (!(this.ValidateField(ctx, field))) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-protected internal virtual bool ExploreWidgets(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> widgets) {
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in widgets) {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(ctx, widget.GetCOSObject(), global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.AnnotationsProcess);
-}
-return true;
-}
+  protected internal virtual bool ExploreWidgets(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> widgets) {
+    foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in widgets) {
+      global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(ctx,
+        widget.GetCOSObject(),
+        global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.AnnotationsProcess);
+    }
+    return true;
+  }
 
-protected internal virtual bool ValidateField(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field) {
-bool res = true;
-global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDFormFieldAdditionalActions aa = field.GetActions();
-if ((aa != default!)) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenAdditionalActionsField, "\"AA\" must not be used in a Field dictionary"));
-res = false;
-}
-if ((field is global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTerminalField)) {
-global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> widgets = field.GetWidgets();
-if ((res && (widgets != default!))) {
-foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in widgets) {
-global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(ctx, widget.GetCOSObject(), global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.AnnotationsProcess);
-global::DripSharp.PdfCarton.Cos.COSBase act = widget.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.A);
-if ((act != default!)) {
-this.AddValidationError(ctx, new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenWidgetActionField, "\"A\" must not be used in a widget annotation"));
-return false;
-}
-}
-}
-return this.ExploreWidgets(ctx, field.GetWidgets());
-} else {
-return (res && this.ExploreFields(ctx, ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField)(field!)).GetChildren()));
-}
-}
+  protected internal virtual bool ValidateField(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field) {
+    bool res = true;
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDFormFieldAdditionalActions aa
+      = field.GetActions();
+    if ((aa != default!)) {
+      this.AddValidationError(ctx,
+        new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenAdditionalActionsField,
+        "\"AA\" must not be used in a Field dictionary"));
+      res = false;
+    }
+    if ((field is global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTerminalField)) {
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> widgets
+        = field.GetWidgets();
+      if ((res && (widgets != default!))) {
+        foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget in widgets) {
+          global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(ctx,
+            widget.GetCOSObject(),
+            global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.AnnotationsProcess);
+          global::DripSharp.PdfCarton.Cos.COSBase act
+            = widget.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.A);
+          if ((act != default!)) {
+            this.AddValidationError(ctx,
+              new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorActionForbiddenWidgetActionField,
+              "\"A\" must not be used in a widget annotation"));
+            return false;
+          }
+        }
+      }
+      return this.ExploreWidgets(ctx, field.GetWidgets());
+    } else {
+      return (res && this.ExploreFields(ctx,
+        ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField)(field!)).GetChildren()));
+    }
+  }
 }

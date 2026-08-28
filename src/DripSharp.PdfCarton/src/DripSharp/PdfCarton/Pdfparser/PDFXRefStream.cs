@@ -9,139 +9,164 @@
 namespace DripSharp.PdfCarton.Pdfparser;
 
 public class PDFXRefStream {
-private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry> streamData = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry>();
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry> streamData
+    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry>();
 
-private readonly global::System.Collections.Generic.ISet<long> objectNumbers = global::DripSharp.Runtime.JavaCompat.NewSortedSet<long>();
+  private readonly global::System.Collections.Generic.ISet<long> objectNumbers
+    = global::DripSharp.Runtime.JavaCompat.NewSortedSet<long>();
 
-private readonly global::DripSharp.PdfCarton.Cos.COSStream stream = null!;
+  private readonly global::DripSharp.PdfCarton.Cos.COSStream stream = null!;
 
-private long size = -1;
+  private long size = -1;
 
-public PDFXRefStream(global::DripSharp.PdfCarton.Cos.COSDocument cosDocument) {
-this.stream = cosDocument.CreateCOSStream();
-}
+  public PDFXRefStream(global::DripSharp.PdfCarton.Cos.COSDocument cosDocument) {
+    this.stream = cosDocument.CreateCOSStream();
+  }
 
-public virtual global::DripSharp.PdfCarton.Cos.COSStream GetStream() {
-this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type, global::DripSharp.PdfCarton.Cos.COSName.Xref);
-if ((this.size == -1)) {
-throw new global::System.ArgumentException("size is not set in xrefstream");
-}
-this.stream.SetLong(global::DripSharp.PdfCarton.Cos.COSName.Size, this.size);
-global::System.Collections.Generic.IList<long> indexEntry = this.getIndexEntry();
-global::DripSharp.PdfCarton.Cos.COSArray indexAsArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (long i in indexEntry) {
-indexAsArray.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(i)));
-}
-this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Index, indexAsArray);
-int[] wEntry = this.getWEntry();
-global::DripSharp.PdfCarton.Cos.COSArray wAsArray = new global::DripSharp.PdfCarton.Cos.COSArray();
-foreach (int j in wEntry) {
-wAsArray.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(j)));
-}
-this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.W, wAsArray);
-using (global::System.IO.Stream outputStream = this.stream.CreateOutputStream(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode)) {
-this.writeStreamData(outputStream, wEntry);
-outputStream.Flush();
-}
-global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSName> keySet = this.stream.KeySet();
-foreach (global::DripSharp.PdfCarton.Cos.COSName cosName in keySet) {
-if (((global::DripSharp.PdfCarton.Cos.COSName.Root.Equals(cosName) || global::DripSharp.PdfCarton.Cos.COSName.Info.Equals(cosName)) || global::DripSharp.PdfCarton.Cos.COSName.Prev.Equals(cosName))) {
-continue;
-}
-if (global::DripSharp.PdfCarton.Cos.COSName.Encrypt.Equals(cosName)) {
-continue;
-}
-global::DripSharp.PdfCarton.Cos.COSBase dictionaryObject = this.stream.GetDictionaryObject(cosName);
-dictionaryObject.SetDirect(true);
-}
-return this.stream;
-}
+  public virtual global::DripSharp.PdfCarton.Cos.COSStream GetStream() {
+    this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
+      global::DripSharp.PdfCarton.Cos.COSName.Xref);
+    if ((this.size == -1)) {
+      throw new global::System.ArgumentException("size is not set in xrefstream");
+    }
+    this.stream.SetLong(global::DripSharp.PdfCarton.Cos.COSName.Size, this.size);
+    global::System.Collections.Generic.IList<long> indexEntry = this.getIndexEntry();
+    global::DripSharp.PdfCarton.Cos.COSArray indexAsArray
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (long i in indexEntry) {
+      indexAsArray.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(i)));
+    }
+    this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Index, indexAsArray);
+    int[] wEntry = this.getWEntry();
+    global::DripSharp.PdfCarton.Cos.COSArray wAsArray
+      = new global::DripSharp.PdfCarton.Cos.COSArray();
+    foreach (int j in wEntry) {
+      wAsArray.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(j)));
+    }
+    this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.W, wAsArray);
+    using (global::System.IO.Stream outputStream
+      = this.stream.CreateOutputStream(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode)) {
+      this.writeStreamData(outputStream, wEntry);
+      outputStream.Flush();
+    }
+    global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSName> keySet
+      = this.stream.KeySet();
+    foreach (global::DripSharp.PdfCarton.Cos.COSName cosName in keySet) {
+      if (((global::DripSharp.PdfCarton.Cos.COSName.Root.Equals(cosName)
+        || global::DripSharp.PdfCarton.Cos.COSName.Info.Equals(cosName))
+        || global::DripSharp.PdfCarton.Cos.COSName.Prev.Equals(cosName))) {
+        continue;
+      }
+      if (global::DripSharp.PdfCarton.Cos.COSName.Encrypt.Equals(cosName)) {
+        continue;
+      }
+      global::DripSharp.PdfCarton.Cos.COSBase dictionaryObject
+        = this.stream.GetDictionaryObject(cosName);
+      dictionaryObject.SetDirect(true);
+    }
+    return this.stream;
+  }
 
-public virtual void AddTrailerInfo(global::DripSharp.PdfCarton.Cos.COSDictionary trailerDict) {
-trailerDict.ForEach((key, value) => {
-if (((((global::DripSharp.PdfCarton.Cos.COSName.Info.Equals(key) || global::DripSharp.PdfCarton.Cos.COSName.Root.Equals(key)) || global::DripSharp.PdfCarton.Cos.COSName.Encrypt.Equals(key)) || global::DripSharp.PdfCarton.Cos.COSName.Id.Equals(key)) || global::DripSharp.PdfCarton.Cos.COSName.Prev.Equals(key))) {
-this.stream.SetItem(key, value);
-}
-});
-}
+  public virtual void AddTrailerInfo(global::DripSharp.PdfCarton.Cos.COSDictionary trailerDict) {
+    trailerDict.ForEach((key, value) => {
+        if (((((global::DripSharp.PdfCarton.Cos.COSName.Info.Equals(key)
+        || global::DripSharp.PdfCarton.Cos.COSName.Root.Equals(key))
+        || global::DripSharp.PdfCarton.Cos.COSName.Encrypt.Equals(key))
+        || global::DripSharp.PdfCarton.Cos.COSName.Id.Equals(key))
+        || global::DripSharp.PdfCarton.Cos.COSName.Prev.Equals(key))) {
+          this.stream.SetItem(key, value);
+        }
+      });
+  }
 
-public virtual void AddEntry(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry entry) {
-if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.objectNumbers, entry.GetReferencedKey().GetNumber())) {
-return;
-}
-this.objectNumbers.Add(entry.GetReferencedKey().GetNumber());
-global::DripSharp.Runtime.JavaCompat.Add(this.streamData, entry);
-}
+  public virtual void AddEntry(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry entry) {
+    if (global::DripSharp.Runtime.JavaCompat.CollectionContains(this.objectNumbers,
+      entry.GetReferencedKey().GetNumber())) {
+      return;
+    }
+    this.objectNumbers.Add(entry.GetReferencedKey().GetNumber());
+    global::DripSharp.Runtime.JavaCompat.Add(this.streamData, entry);
+  }
 
-private int[] getWEntry() {
-long[] wMax = new long[3];
-foreach (global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry entry in this.streamData) {
-wMax[0] = global::System.Math.Max(wMax[0], entry.GetFirstColumnValue());
-wMax[1] = global::System.Math.Max(wMax[1], entry.GetSecondColumnValue());
-wMax[2] = global::System.Math.Max(wMax[2], entry.GetThirdColumnValue());
-}
-int[] w = new int[3];
-for (int i = 0; (i < w.Length); i++) {
-while ((wMax[i] > 0)) {
-w[i]++;
-wMax[i] >>= 8;
-}
-}
-return w;
-}
+  private int[] getWEntry() {
+    long[] wMax = new long[3];
+    foreach (global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry entry in this.streamData) {
+      wMax[0] = global::System.Math.Max(wMax[0], entry.GetFirstColumnValue());
+      wMax[1] = global::System.Math.Max(wMax[1], entry.GetSecondColumnValue());
+      wMax[2] = global::System.Math.Max(wMax[2], entry.GetThirdColumnValue());
+    }
+    int[] w = new int[3];
+    for (int i = 0; (i < w.Length); i++) {
+      while ((wMax[i] > 0)) {
+        w[i]++;
+        wMax[i] >>= 8;
+      }
+    }
+    return w;
+  }
 
-public virtual void SetSize(long streamSize) {
-this.size = streamSize;
-}
+  public virtual void SetSize(long streamSize) {
+    this.size = streamSize;
+  }
 
-private global::System.Collections.Generic.IList<long> getIndexEntry() {
-global::System.Collections.Generic.List<long> linkedList = new global::System.Collections.Generic.List<long>();
-long? first = default!;
-long? length = default!;
-global::System.Collections.Generic.ISet<long> objNumbers = global::DripSharp.Runtime.JavaCompat.NewSortedSet<long>();
-objNumbers.Add(0L);
-global::DripSharp.Runtime.JavaCompat.AddAll(objNumbers, this.objectNumbers);
-foreach (long objNumber in objNumbers) {
-if ((first! == default!)) {
-first = objNumber;
-length = 1L;
-}
-if (((global::DripSharp.Runtime.JavaCompat.Unbox(first!) + global::DripSharp.Runtime.JavaCompat.Unbox(length!)) == objNumber)) {
-length += 1;
-}
-if (((global::DripSharp.Runtime.JavaCompat.Unbox(first!) + global::DripSharp.Runtime.JavaCompat.Unbox(length!)) < objNumber)) {
-global::DripSharp.Runtime.JavaCompat.Add(linkedList, global::DripSharp.Runtime.JavaCompat.Unbox(first!));
-global::DripSharp.Runtime.JavaCompat.Add(linkedList, global::DripSharp.Runtime.JavaCompat.Unbox(length!));
-first = objNumber;
-length = 1L;
-}
-}
-global::DripSharp.Runtime.JavaCompat.Add(linkedList, global::DripSharp.Runtime.JavaCompat.Unbox(first!));
-global::DripSharp.Runtime.JavaCompat.Add(linkedList, global::DripSharp.Runtime.JavaCompat.Unbox(length!));
-return linkedList;
-}
+  private global::System.Collections.Generic.IList<long> getIndexEntry() {
+    global::System.Collections.Generic.List<long> linkedList
+      = new global::System.Collections.Generic.List<long>();
+    long? first = default!;
+    long? length = default!;
+    global::System.Collections.Generic.ISet<long> objNumbers
+      = global::DripSharp.Runtime.JavaCompat.NewSortedSet<long>();
+    objNumbers.Add(0L);
+    global::DripSharp.Runtime.JavaCompat.AddAll(objNumbers, this.objectNumbers);
+    foreach (long objNumber in objNumbers) {
+      if ((first! == default!)) {
+        first = objNumber;
+        length = 1L;
+      }
+      if (((global::DripSharp.Runtime.JavaCompat.Unbox(first!)
+        + global::DripSharp.Runtime.JavaCompat.Unbox(length!)) == objNumber)) {
+        length += 1;
+      }
+      if (((global::DripSharp.Runtime.JavaCompat.Unbox(first!)
+        + global::DripSharp.Runtime.JavaCompat.Unbox(length!)) < objNumber)) {
+        global::DripSharp.Runtime.JavaCompat.Add(linkedList,
+          global::DripSharp.Runtime.JavaCompat.Unbox(first!));
+        global::DripSharp.Runtime.JavaCompat.Add(linkedList,
+          global::DripSharp.Runtime.JavaCompat.Unbox(length!));
+        first = objNumber;
+        length = 1L;
+      }
+    }
+    global::DripSharp.Runtime.JavaCompat.Add(linkedList,
+      global::DripSharp.Runtime.JavaCompat.Unbox(first!));
+    global::DripSharp.Runtime.JavaCompat.Add(linkedList,
+      global::DripSharp.Runtime.JavaCompat.Unbox(length!));
+    return linkedList;
+  }
 
-private void writeNumber(global::System.IO.Stream os, long number, int bytes) {
-sbyte[] buffer = new sbyte[bytes];
-for (int i__224_19 = 0; (i__224_19 < bytes); i__224_19++) {
-buffer[i__224_19] = unchecked((sbyte)(unchecked((sbyte)((number & 255)))));
-number >>= 8;
-}
-for (int i__230_19 = 0; (i__230_19 < bytes); i__230_19++) {
-global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os, (int)(buffer[((bytes - i__230_19) - 1)]));
-}
-}
+  private void writeNumber(global::System.IO.Stream os, long number, int bytes) {
+    sbyte[] buffer = new sbyte[bytes];
+    for (int i__224_19 = 0; (i__224_19 < bytes); i__224_19++) {
+      buffer[i__224_19] = unchecked((sbyte)(unchecked((sbyte)((number & 255)))));
+      number >>= 8;
+    }
+    for (int i__230_19 = 0; (i__230_19 < bytes); i__230_19++) {
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os, (int)(buffer[((bytes - i__230_19)
+        - 1)]));
+    }
+  }
 
-private void writeStreamData(global::System.IO.Stream os, int[] w) {
-global::DripSharp.Runtime.JavaCompat.SortList(this.streamData);
-global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference nullEntry = global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference.NullEntry;
-this.writeNumber(os, nullEntry.GetFirstColumnValue(), w[0]);
-this.writeNumber(os, nullEntry.GetSecondColumnValue(), w[1]);
-this.writeNumber(os, nullEntry.GetThirdColumnValue(), w[2]);
-foreach (global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry entry in this.streamData) {
-this.writeNumber(os, entry.GetFirstColumnValue(), w[0]);
-this.writeNumber(os, entry.GetSecondColumnValue(), w[1]);
-this.writeNumber(os, entry.GetThirdColumnValue(), w[2]);
-}
-}
+  private void writeStreamData(global::System.IO.Stream os, int[] w) {
+    global::DripSharp.Runtime.JavaCompat.SortList(this.streamData);
+    global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference nullEntry
+      = global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference.NullEntry;
+    this.writeNumber(os, nullEntry.GetFirstColumnValue(), w[0]);
+    this.writeNumber(os, nullEntry.GetSecondColumnValue(), w[1]);
+    this.writeNumber(os, nullEntry.GetThirdColumnValue(), w[2]);
+    foreach (global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry entry in this.streamData) {
+      this.writeNumber(os, entry.GetFirstColumnValue(), w[0]);
+      this.writeNumber(os, entry.GetSecondColumnValue(), w[1]);
+      this.writeNumber(os, entry.GetThirdColumnValue(), w[2]);
+    }
+  }
 }

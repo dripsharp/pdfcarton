@@ -9,17 +9,18 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fixup;
 
 public interface PDDocumentFixup {
-public void Apply();
+  public void Apply();
 }
 
-public sealed class __PDDocumentFixupFunctionalAdapter : global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup {
-private readonly global::System.Action implementation;
+public sealed class __PDDocumentFixupFunctionalAdapter
+: global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup {
+  private readonly global::System.Action implementation;
 
-public __PDDocumentFixupFunctionalAdapter(global::System.Action implementation) {
-this.implementation = implementation;
-}
+  public __PDDocumentFixupFunctionalAdapter(global::System.Action implementation) {
+    this.implementation = implementation;
+  }
 
-public void Apply() {
-this.implementation();
-}
+  public void Apply() {
+    this.implementation();
+  }
 }

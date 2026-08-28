@@ -8,85 +8,104 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
-internal class Type1ShadingContext : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingContext {
-private static readonly global::Microsoft.Extensions.Logging.ILogger LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+internal class Type1ShadingContext
+: global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingContext {
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
+    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-private global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType1 type1ShadingType = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType1 type1ShadingType
+    = null!;
 
-private global::SkiaSharp.SKMatrix rat = default;
+  private global::SkiaSharp.SKMatrix rat = default;
 
-private readonly float[] domain = null!;
+  private readonly float[] domain = null!;
 
-internal Type1ShadingContext(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType1 shading, global::DripSharp.Runtime.JavaColorModel colorModel, global::SkiaSharp.SKMatrix xform, global::DripSharp.PdfCarton.Util.Matrix matrix) : base(shading, colorModel, xform, matrix) {
-this.type1ShadingType = shading;
-if ((shading.GetDomain() != default!)) {
-this.domain = shading.GetDomain().ToFloatArray();
-} else {
-this.domain = new float[] { 0, 1, 0, 1 };
-}
-try {
-this.rat = global::DripSharp.Runtime.PdfCartonFontCompat.CreateInverse(shading.GetMatrix().CreateAffineTransform());
-global::DripSharp.Runtime.PdfCartonFontCompat.ConcatenateInPlace(ref this.rat, global::DripSharp.Runtime.PdfCartonFontCompat.CreateInverse(matrix.CreateAffineTransform()));
-global::DripSharp.Runtime.PdfCartonFontCompat.ConcatenateInPlace(ref this.rat, global::DripSharp.Runtime.PdfCartonFontCompat.CreateInverse(xform));
-} catch (global::System.InvalidOperationException ex) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type1ShadingContext.LOG, (global::System.Exception)ex, global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex), ", matrix: "), matrix)));
-this.rat = global::DripSharp.Runtime.PdfCartonFontCompat.Identity();
-}
-}
+  internal Type1ShadingContext(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType1 shading,
+    global::DripSharp.Runtime.JavaColorModel colorModel, global::SkiaSharp.SKMatrix xform,
+    global::DripSharp.PdfCarton.Util.Matrix matrix) : base(shading, colorModel, xform, matrix) {
+    this.type1ShadingType = shading;
+    if ((shading.GetDomain() != default!)) {
+      this.domain = shading.GetDomain().ToFloatArray();
+    } else {
+      this.domain = new float[] { 0, 1, 0, 1 };
+    }
+    try {
+      this.rat
+        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateInverse(shading.GetMatrix().CreateAffineTransform());
+      global::DripSharp.Runtime.PdfCartonFontCompat.ConcatenateInPlace(ref this.rat,
+        global::DripSharp.Runtime.PdfCartonFontCompat.CreateInverse(matrix.CreateAffineTransform()));
+      global::DripSharp.Runtime.PdfCartonFontCompat.ConcatenateInPlace(ref this.rat,
+        global::DripSharp.Runtime.PdfCartonFontCompat.CreateInverse(xform));
+    } catch (global::System.InvalidOperationException ex) {
+      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type1ShadingContext.LOG,
+        (global::System.Exception)ex,
+        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex),
+        ", matrix: "), matrix)));
+      this.rat = global::DripSharp.Runtime.PdfCartonFontCompat.Identity();
+    }
+  }
 
-public override void Dispose() {
-base.Dispose();
-this.type1ShadingType = default!;
-}
+  public override void Dispose() {
+    base.Dispose();
+    this.type1ShadingType = default!;
+  }
 
-public override global::DripSharp.Runtime.JavaRaster GetRaster(int x, int y, int w, int h) {
-global::DripSharp.Runtime.JavaRaster raster = this.GetColorModel().CreateCompatibleWritableRaster(w, h);
-int[] data = new int[((w * h) * 4)];
-float[] values = new float[2];
-for (int j = 0; (j < h); j++) {
-for (int i = 0; (i < w); i++) {
-int index = (((j * w) + i) * 4);
-bool useBackground = false;
-values[0] = (x + i);
-values[1] = (y + j);
-global::DripSharp.Runtime.PdfCartonFontCompat.TransformPoints(this.rat, values, 0, values, 0, 1);
-if (((((values[0] < this.domain[0]) || (values[0] > this.domain[1])) || (values[1] < this.domain[2])) || (values[1] > this.domain[3]))) {
-if ((this.getBackground() == default!)) {
-continue;
-}
-useBackground = true;
-}
-float[] tmpValues;
-if (useBackground) {
-tmpValues = this.getBackground();
-} else {
-try {
-tmpValues = this.type1ShadingType.EvalFunction(values);
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type1ShadingContext.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf("error while processing a function"));
-continue;
-}
-}
-global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace shadingColorSpace = this.getShadingColorSpace();
-if ((shadingColorSpace != default!)) {
-try {
-tmpValues = shadingColorSpace.ToRGB(tmpValues);
-} catch (global::System.IO.IOException e) {
-global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type1ShadingContext.LOG, (global::System.Exception)e, global::DripSharp.Runtime.JavaCompat.StringValueOf("error processing color space"));
-continue;
-}
-}
-data[index] = (int)((tmpValues[0] * 255));
-data[(index + 1)] = (int)((tmpValues[1] * 255));
-data[(index + 2)] = (int)((tmpValues[2] * 255));
-data[(index + 3)] = 255;
-}
-}
-raster.SetPixels(0, 0, w, h, data);
-return raster;
-}
+  public override global::DripSharp.Runtime.JavaRaster GetRaster(int x, int y, int w, int h) {
+    global::DripSharp.Runtime.JavaRaster raster
+      = this.GetColorModel().CreateCompatibleWritableRaster(w, h);
+    int[] data = new int[((w * h) * 4)];
+    float[] values = new float[2];
+    for (int j = 0; (j < h); j++) {
+      for (int i = 0; (i < w); i++) {
+        int index = (((j * w) + i) * 4);
+        bool useBackground = false;
+        values[0] = (x + i);
+        values[1] = (y + j);
+        global::DripSharp.Runtime.PdfCartonFontCompat.TransformPoints(this.rat, values, 0, values,
+          0, 1);
+        if (((((values[0] < this.domain[0]) || (values[0] > this.domain[1]))
+          || (values[1] < this.domain[2])) || (values[1] > this.domain[3]))) {
+          if ((this.getBackground() == default!)) {
+            continue;
+          }
+          useBackground = true;
+        }
+        float[] tmpValues;
+        if (useBackground) {
+          tmpValues = this.getBackground();
+        } else {
+          try {
+            tmpValues = this.type1ShadingType.EvalFunction(values);
+          } catch (global::System.IO.IOException e) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type1ShadingContext.LOG,
+              (global::System.Exception)e,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf("error while processing a function"));
+            continue;
+          }
+        }
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace shadingColorSpace
+          = this.getShadingColorSpace();
+        if ((shadingColorSpace != default!)) {
+          try {
+            tmpValues = shadingColorSpace.ToRGB(tmpValues);
+          } catch (global::System.IO.IOException e) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type1ShadingContext.LOG,
+              (global::System.Exception)e,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf("error processing color space"));
+            continue;
+          }
+        }
+        data[index] = (int)((tmpValues[0] * 255));
+        data[(index + 1)] = (int)((tmpValues[1] * 255));
+        data[(index + 2)] = (int)((tmpValues[2] * 255));
+        data[(index + 3)] = 255;
+      }
+    }
+    raster.SetPixels(0, 0, w, h, data);
+    return raster;
+  }
 
-public virtual float[] GetDomain() {
-return this.domain;
-}
+  public virtual float[] GetDomain() {
+    return this.domain;
+  }
 }
