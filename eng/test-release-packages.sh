@@ -171,8 +171,8 @@ done
 grep -Fq -- '--configuration Release --no-build --no-restore --output' "$command_log" ||
   fail "Release packing did not reuse the verified build."
 
-expected_package="$packed_directory/DripSharp.PdfCarton.3.0.8-alpha.2.nupkg"
-expected_symbols="$packed_directory/DripSharp.PdfCarton.3.0.8-alpha.2.snupkg"
+expected_package="$packed_directory/DripSharp.PdfCarton.3.0.8-alpha.3.nupkg"
+expected_symbols="$packed_directory/DripSharp.PdfCarton.3.0.8-alpha.3.snupkg"
 [[ -f "$expected_package" && -f "$expected_symbols" ]] ||
   fail "The public PdfCarton package and symbol package were not produced."
 [[ "$(find "$packed_directory" -mindepth 1 -maxdepth 1 -type f | wc -l | tr -d ' ')" == 2 ]] ||
@@ -238,7 +238,7 @@ done
 invalid_inventory="$temporary_directory/invalid-inventory"
 mkdir -p "$invalid_inventory"
 cp "$packed_directory"/* "$invalid_inventory/"
-: > "$invalid_inventory/DripSharp.PdfCarton.IO.3.0.8-alpha.2.nupkg"
+: > "$invalid_inventory/DripSharp.PdfCarton.IO.3.0.8-alpha.3.nupkg"
 : > "$command_log"
 if run_with_fake_dotnet \
   "$script_directory/validate-release-packages.sh" "$invalid_inventory" >/dev/null 2>&1; then
@@ -249,7 +249,7 @@ fi
 invalid_symbols="$temporary_directory/invalid-symbols"
 mkdir -p "$invalid_symbols"
 cp "$packed_directory"/* "$invalid_symbols/"
-python3 - "$invalid_symbols/DripSharp.PdfCarton.3.0.8-alpha.2.snupkg" <<'PY'
+python3 - "$invalid_symbols/DripSharp.PdfCarton.3.0.8-alpha.3.snupkg" <<'PY'
 import sys
 import zipfile
 
@@ -266,7 +266,7 @@ fi
 invalid_metadata="$temporary_directory/invalid-metadata"
 mkdir -p "$invalid_metadata"
 cp "$packed_directory"/* "$invalid_metadata/"
-python3 - "$invalid_metadata/DripSharp.PdfCarton.3.0.8-alpha.2.nupkg" <<'PY'
+python3 - "$invalid_metadata/DripSharp.PdfCarton.3.0.8-alpha.3.nupkg" <<'PY'
 import sys
 import zipfile
 from pathlib import Path
