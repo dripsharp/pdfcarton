@@ -8,11 +8,11 @@ This is a generated publication repository. Durable source, translation, runtime
 
 ## Projects
 
-- [`DripSharp.PdfCarton`](src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj) — PdfCarton (`netstandard2.0`, version `3.0.8-alpha.3`)
-- [`DripSharp.PdfCarton.Fonts`](src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj) — PdfCarton Fonts (`netstandard2.0`, version `3.0.8-alpha.3`)
-- [`DripSharp.PdfCarton.IO`](src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj) — PdfCarton I/O (`netstandard2.0`, version `3.0.8-alpha.3`)
-- [`DripSharp.PdfCarton.Preflight`](src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj) — PdfCarton Preflight (`netstandard2.0`, version `3.0.8-alpha.3`)
-- [`DripSharp.PdfCarton.Xmp`](src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj) — PdfCarton XMP (`netstandard2.0`, version `3.0.8-alpha.3`)
+- [`DripSharp.PdfCarton`](src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj) — PdfCarton (`netstandard2.0`, version `3.0.8-alpha.4`)
+- [`DripSharp.PdfCarton.Fonts`](src/DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj) — PdfCarton Fonts (`netstandard2.0`, version `3.0.8-alpha.4`)
+- [`DripSharp.PdfCarton.IO`](src/DripSharp.PdfCarton.IO/DripSharp.PdfCarton.IO.csproj) — PdfCarton I/O (`netstandard2.0`, version `3.0.8-alpha.4`)
+- [`DripSharp.PdfCarton.Preflight`](src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj) — PdfCarton Preflight (`netstandard2.0`, version `3.0.8-alpha.4`)
+- [`DripSharp.PdfCarton.Xmp`](src/DripSharp.PdfCarton.Xmp/DripSharp.PdfCarton.Xmp.csproj) — PdfCarton XMP (`netstandard2.0`, version `3.0.8-alpha.4`)
 
 ## Framework compatibility
 
@@ -26,7 +26,7 @@ Every production library has one target framework: `netstandard2.0`. Repository 
 The first public release is a prerelease. Install from nuget.org:
 
 ```sh
-dotnet add package DripSharp.PdfCarton --version 3.0.8-alpha.3
+dotnet add package DripSharp.PdfCarton --version 3.0.8-alpha.4
 ```
 
 
