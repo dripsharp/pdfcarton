@@ -5,7 +5,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public class PNGConverterTest {
-  private static readonly global::System.IO.FileInfo PARENTDIR
+  private static readonly global::DripSharp.Runtime.JavaFile PARENTDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/graphics/graphics"));
 
@@ -131,9 +131,11 @@ public class PNGConverterTest {
         contentStream.DrawImage(pdImageXObject, (float)(0), (float)(0),
           (float)(pdImageXObject.GetWidth()), (float)(pdImageXObject.GetHeight()));
       }
-      doc.Save(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest.PARENTDIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.Runtime.JavaCompat.Concat(name, ".pdf")))));
+      global::DripSharp.Runtime.JavaFileBridge.Call(doc, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest.PARENTDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.Runtime.JavaCompat.Concat(name, ".pdf"))) });
       global::SkiaSharp.SKBitmap image = pdImageXObject.GetImage();
       global::DripSharp.Testing.JavaAssertions.NotNull(pdImageXObject.GetRawRaster(), null);
       global::SkiaSharp.SKBitmap expectedImage

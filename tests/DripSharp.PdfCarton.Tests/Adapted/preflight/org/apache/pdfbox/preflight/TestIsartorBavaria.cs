@@ -18,7 +18,7 @@ public class TestIsartorBavaria {
     string skipBavaria
       = global::DripSharp.Runtime.JavaCompat.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
       global::DripSharp.PdfCarton.Preflight.TestIsartorBavaria.SKIP_BAVARIA));
-    global::System.IO.FileInfo f
+    global::DripSharp.Runtime.JavaFile f
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
       "src/test/resources/expected_errors.txt"));
     global::System.IO.Stream expected = global::DripSharp.Runtime.JavaCompat.OpenFileInput(f);
@@ -27,7 +27,7 @@ public class TestIsartorBavaria {
     global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(expected);
     global::System.Collections.Generic.IList<object[]> data
       = new global::System.Collections.Generic.List<object[]>();
-    global::System.IO.FileInfo isartor
+    global::DripSharp.Runtime.JavaFile isartor
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
       "target/pdfs/Isartor testsuite/PDFA-1b"));
     if (global::DripSharp.Runtime.JavaCompat.FileIsDirectory(isartor)) {
@@ -35,7 +35,7 @@ public class TestIsartorBavaria {
         = global::DripSharp.PdfCarton.Tests.Support.ListFilesObjects(isartor, new string[] { "pdf",
         "PDF" }, true);
       foreach (object pdfFile__75_25 in pdfFiles__74_27) {
-        string fn__77_24 = (((global::System.IO.FileInfo)(pdfFile__75_25!))).Name;
+        string fn__77_24 = (((global::DripSharp.Runtime.JavaFile)(pdfFile__75_25!))).Name;
         if (((filter == default!) || global::DripSharp.Runtime.JavaCompat.StringContains(fn__77_24,
           filter))) {
           string path__80_28
@@ -57,7 +57,7 @@ public class TestIsartorBavaria {
       global::DripSharp.Testing.JavaAssertions.Fail("Assertion failed.");
     }
     if (global::DripSharp.Runtime.JavaCompat.Equals("false", skipBavaria)) {
-      global::System.IO.FileInfo bavaria
+      global::DripSharp.Runtime.JavaFile bavaria
         = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
         "target/pdfs/Bavaria testsuite"));
       if (global::DripSharp.Runtime.JavaCompat.FileIsDirectory(bavaria)) {
@@ -65,7 +65,7 @@ public class TestIsartorBavaria {
           = global::DripSharp.PdfCarton.Tests.Support.ListFilesObjects(bavaria,
           new string[] { "pdf", "PDF" }, true);
         foreach (object pdfFile__99_29 in pdfFiles__98_31) {
-          string fn__101_28 = (((global::System.IO.FileInfo)(pdfFile__99_29!))).Name;
+          string fn__101_28 = (((global::DripSharp.Runtime.JavaFile)(pdfFile__99_29!))).Name;
           if (((filter == default!)
             || global::DripSharp.Runtime.JavaCompat.StringContains(fn__101_28, filter))) {
             string path__104_32
@@ -103,7 +103,7 @@ public class TestIsartorBavaria {
       = global::DripSharp.Runtime.JavaCompat.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
       "isartor.results.path"));
     if ((irp != default!)) {
-      global::System.IO.FileInfo f
+      global::DripSharp.Runtime.JavaFile f
         = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
         irp));
       if ((global::System.IO.File.Exists(f.FullName)
@@ -129,10 +129,12 @@ public class TestIsartorBavaria {
     }
   }
 
-  internal virtual void validate(global::System.IO.FileInfo file,
+  internal virtual void validate(global::DripSharp.Runtime.JavaFile file,
     global::System.Collections.Generic.ISet<string> expectedErrorSet) {
     global::DripSharp.PdfCarton.Preflight.ValidationResult result
-      = global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser.Validate(file);
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Preflight.ValidationResult>(typeof(global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser),
+      "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { file });
     if ((result != default!)) {
       if (global::DripSharp.Runtime.JavaCompat.CollectionIsEmpty(expectedErrorSet)) {
         global::System.Collections.Generic.ISet<string> errorSet__169_29
@@ -221,18 +223,19 @@ public class TestIsartorBavaria {
     foreach (var value in InitializeParameters()) {
       object[] row = ((object?)value is object[] values)
         ? values : new object[] { value! };
-      yield return new object[] { global::DripSharp.PdfCarton.Tests.Support.TheoryArgument<global::System.IO.FileInfo>(row[0]),
+      yield return new object[] { global::DripSharp.PdfCarton.Tests.Support.TheoryArgument<object>(row[0]),
         global::DripSharp.PdfCarton.Tests.Support.TheoryArgument<global::System.Collections.Generic.ISet<string>>(row[1]) };
     }
   }
 
   [Xunit.Theory]
   [Xunit.MemberData(nameof(__Data_9c788505e29ff02f))]
-  public void __Upstream_0726210838_e963237d370e4404(global::System.IO.FileInfo file,
+  public void __Upstream_0726210838_e963237d370e4404(object file,
     global::System.Collections.Generic.ISet<string> expectedErrorSet) {
     beforeClass();
     try {
-      this.validate(file, expectedErrorSet);
+      this.validate(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file),
+        expectedErrorSet);
     } finally {
       afterClass();
     }

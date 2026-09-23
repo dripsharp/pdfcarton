@@ -95,7 +95,7 @@ def dependencies(parent, package_id):
     return result
 
 
-def rewrite_dependencies(entries, package_id, external_dependencies, archive_kind):
+def rewrite_dependencies(entries, package_id, external_dependencies, archive_kind, release_notes=None):
     nuspec_name, root, parent = metadata(entries, package_id, archive_kind)
     container = parent.find("{*}dependencies")
     require(container is not None, f"{package_id} {archive_kind} has no dependencies")
@@ -120,6 +120,11 @@ def rewrite_dependencies(entries, package_id, external_dependencies, archive_kin
                 "exclude": "Build,Analyzers",
             },
         )
+    if release_notes is not None:
+        notes = parent.find("{*}releaseNotes")
+        if notes is None:
+            notes = ET.SubElement(parent, f"{{{namespace}}}releaseNotes" if namespace else "releaseNotes")
+        notes.text = release_notes
     entries[nuspec_name] = ET.tostring(root, encoding="utf-8", xml_declaration=True)
 
 
@@ -197,6 +202,8 @@ def main():
     require(set(projects) == set(COMPONENT_PACKAGE_IDS), "Component project inventory differs")
     require(len(versions) == 1, f"Component versions differ: {sorted(versions)}")
     version = versions.pop()
+    notes_path = Path(__file__).resolve().parent / "release-notes" / f"{version}.md"
+    release_notes = notes_path.read_text(encoding="utf-8").strip() if notes_path.is_file() else None
     archives = component_archives(args.components, version)
 
     package_entries = archive_entries(archives[PUBLIC_PACKAGE_ID]["package"])
@@ -239,10 +246,10 @@ def main():
             add_entry(symbol_entries, pdb_entry, component_symbols[pdb_entry], package_id)
 
     rewrite_dependencies(
-        package_entries, PUBLIC_PACKAGE_ID, external_dependencies, "package"
+        package_entries, PUBLIC_PACKAGE_ID, external_dependencies, "package", release_notes
     )
     rewrite_dependencies(
-        symbol_entries, PUBLIC_PACKAGE_ID, external_dependencies, "symbol package"
+        symbol_entries, PUBLIC_PACKAGE_ID, external_dependencies, "symbol package", release_notes
     )
     package_path = args.artifacts / f"{PUBLIC_PACKAGE_ID}.{version}.nupkg"
     symbol_path = args.artifacts / f"{PUBLIC_PACKAGE_ID}.{version}.snupkg"

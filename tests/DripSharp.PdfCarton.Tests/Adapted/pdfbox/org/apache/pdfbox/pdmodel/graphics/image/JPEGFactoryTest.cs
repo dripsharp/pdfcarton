@@ -5,7 +5,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public class JPEGFactoryTest {
-  private static readonly global::System.IO.FileInfo TESTRESULTSDIR
+  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/graphics"));
 
@@ -310,11 +310,13 @@ public class JPEGFactoryTest {
       global::DripSharp.Runtime.JavaCompat.NewMemoryStream(ba));
   }
 
-  private void checkJpegStream(global::System.IO.FileInfo testResultsDir, string filename,
+  private void checkJpegStream(global::DripSharp.Runtime.JavaFile testResultsDir, string filename,
     global::System.IO.Stream expected) {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine(testResultsDir.FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(testResultsDir,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)) })) {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject img
         = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(doc.GetPage(0).GetResources().GetXObject(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "Im1")))!);

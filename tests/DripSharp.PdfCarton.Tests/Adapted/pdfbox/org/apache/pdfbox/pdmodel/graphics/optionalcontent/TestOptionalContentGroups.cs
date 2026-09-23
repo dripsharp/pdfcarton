@@ -5,7 +5,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent;
 
 public class TestOptionalContentGroups {
-  private static readonly global::System.IO.FileInfo testResultsDir
+  private static readonly global::DripSharp.Runtime.JavaFile testResultsDir
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output"));
 
@@ -93,22 +93,25 @@ public class TestOptionalContentGroups {
         contentStream.EndText();
         contentStream.EndMarkedContent();
       }
-      global::System.IO.FileInfo targetFile
-        = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "ocg-generation.pdf")));
-      doc.Save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFile.FullName));
+      global::DripSharp.Runtime.JavaFile targetFile
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "ocg-generation.pdf"));
+      doc.Save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(targetFile)));
     }
   }
 
   internal virtual void testOCGConsumption() {
-    global::System.IO.FileInfo pdfFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "ocg-generation.pdf")));
+    global::DripSharp.Runtime.JavaFile pdfFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "ocg-generation.pdf"));
     if (!global::System.IO.File.Exists(pdfFile.FullName)) {
       this.testOCGGeneration();
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { pdfFile })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1.6F, doc.GetVersion(), null);
       global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = doc.GetDocumentCatalog();
       global::DripSharp.PdfCarton.Pdmodel.PDPage page = doc.GetPage(0);
@@ -260,11 +263,12 @@ public class TestOptionalContentGroups {
         contentStream.EndText();
         contentStream.EndMarkedContent();
       }
-      global::System.IO.FileInfo targetFile
-        = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir).FullName,
+      global::DripSharp.Runtime.JavaFile targetFile
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "ocg-generation-same-name.pdf")));
-      doc.Save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFile.FullName));
+        "ocg-generation-same-name.pdf"));
+      doc.Save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(targetFile)));
     }
   }
 
@@ -359,12 +363,12 @@ public class TestOptionalContentGroups {
         contentStream__379_38.EndMarkedContent();
       }
       doc__339_25.GetDocumentCatalog().SetPageMode(global::DripSharp.PdfCarton.Pdmodel.PageMode.UseOptionalContent);
-      global::System.IO.FileInfo targetFile
-        = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir).FullName,
+      global::DripSharp.Runtime.JavaFile targetFile
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "ocg-generation-same-name-off.pdf")));
+        "ocg-generation-same-name-off.pdf"));
       doc__339_25.Save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        targetFile.FullName));
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(targetFile)));
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__430_25
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
@@ -402,14 +406,16 @@ public class TestOptionalContentGroups {
         (float)(2));
       global::DripSharp.PdfCarton.Tests.Support.WriteImage(expectedImage,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "png"),
-        new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir).FullName,
+        global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "ocg-generation-same-name-off-expected.png"))));
+        "ocg-generation-same-name-off-expected.png")));
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__465_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "ocg-generation-same-name-off.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "ocg-generation-same-name-off.pdf")) })) {
       doc__465_25.GetDocumentCatalog().GetOCProperties().SetGroupEnabled(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "background"), false);
       doc__465_25.GetDocumentCatalog().GetOCProperties().SetGroupEnabled(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -421,9 +427,9 @@ public class TestOptionalContentGroups {
         (float)(2));
       global::DripSharp.PdfCarton.Tests.Support.WriteImage(actualImage,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "png"),
-        new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir).FullName,
+        global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.TestOptionalContentGroups.testResultsDir,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "ocg-generation-same-name-off-actual.png"))));
+        "ocg-generation-same-name-off-actual.png")));
     }
     global::DripSharp.Runtime.JavaDataBufferInt expectedData
       = (global::DripSharp.Runtime.JavaDataBufferInt)(global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(expectedImage).GetDataBuffer()!);

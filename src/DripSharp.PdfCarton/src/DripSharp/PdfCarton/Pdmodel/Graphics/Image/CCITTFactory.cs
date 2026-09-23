@@ -80,14 +80,31 @@ public sealed class CCITTFactory {
     return image;
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromFile(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
     global::System.IO.FileInfo file) {
-    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(document,
-      file, 0);
+    return __JavaFile_CreateFromFile(document,
+      global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file));
   }
 
+  internal static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject __JavaFile_CreateFromFile(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.Runtime.JavaFile file) {
+    return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+      "CreateFromFile",
+      new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+        typeof(global::System.IO.FileInfo), typeof(int) }, new object[] { document, file, 0 });
+  }
+
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromFile(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
     global::System.IO.FileInfo file, int number) {
+    return __JavaFile_CreateFromFile(document,
+      global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file),
+      number);
+  }
+
+  internal static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject __JavaFile_CreateFromFile(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
+    global::DripSharp.Runtime.JavaFile file, int number) {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead raf
       = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file)) {
       return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.createFromRandomAccessImpl(document,

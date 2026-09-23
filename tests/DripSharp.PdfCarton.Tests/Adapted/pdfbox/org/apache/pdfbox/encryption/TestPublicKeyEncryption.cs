@@ -5,7 +5,7 @@
 namespace DripSharp.PdfCarton.Encryption;
 
 public class TestPublicKeyEncryption {
-  private static readonly global::System.IO.FileInfo TESTRESULTSDIR
+  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/crypto"));
 
@@ -75,8 +75,10 @@ public class TestPublicKeyEncryption {
     this.keyStore1 = "test1.pfx";
     this.keyStore2 = "test2.pfx";
     this.document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test.pdf"))));
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test.pdf"))) });
     this.text = new global::DripSharp.PdfCarton.Text.PDFTextStripper().GetText(this.document);
     this.producer = this.document.GetDocumentInformation().GetProducer();
     this.document.SetVersion(1.7F);
@@ -92,7 +94,7 @@ public class TestPublicKeyEncryption {
     policy.AddRecipient(this.recipient1);
     policy.SetEncryptionKeyLength(keyLength);
     this.document.Protect(policy);
-    global::System.IO.FileInfo file
+    global::DripSharp.Runtime.JavaFile file
       = this.save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "testProtectionError"));
     global::System.IO.IOException ex
@@ -113,7 +115,7 @@ public class TestPublicKeyEncryption {
     policy.AddRecipient(this.recipient1);
     policy.SetEncryptionKeyLength(keyLength);
     this.document.Protect(policy);
-    global::System.IO.FileInfo file
+    global::DripSharp.Runtime.JavaFile file
       = this.save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testProtection"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument encryptedDoc = this.reload(file,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", this.password1),
@@ -140,7 +142,7 @@ public class TestPublicKeyEncryption {
     policy.AddRecipient(this.recipient2);
     policy.SetEncryptionKeyLength(keyLength);
     this.document.Protect(policy);
-    global::System.IO.FileInfo file
+    global::DripSharp.Runtime.JavaFile file
       = this.save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "testMultipleRecipients"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument encryptedDoc1 = this.reload(file,
@@ -181,12 +183,16 @@ public class TestPublicKeyEncryption {
     }
   }
 
-  private global::DripSharp.PdfCarton.Pdmodel.PDDocument reload(global::System.IO.FileInfo file,
+  private global::DripSharp.PdfCarton.Pdmodel.PDDocument reload(global::DripSharp.Runtime.JavaFile file,
     string decryptionPassword, global::System.IO.Stream keyStore) {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument doc2
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", decryptionPassword), keyStore,
-      (string)default!, global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
+        typeof(global::System.IO.Stream), typeof(string),
+        typeof(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction) },
+      new object[] { file, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        decryptionPassword), keyStore, (string)default!,
+        global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache() });
     global::DripSharp.Testing.JavaAssertions.Equal(this.text,
       new global::DripSharp.PdfCarton.Text.PDFTextStripper().GetText(doc2),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Extracted text is different"));
@@ -217,13 +223,14 @@ public class TestPublicKeyEncryption {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", name));
   }
 
-  private global::System.IO.FileInfo save(string name) {
-    global::System.IO.FileInfo file
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption.TESTRESULTSDIR).FullName,
+  private global::DripSharp.Runtime.JavaFile save(string name) {
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption.TESTRESULTSDIR,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(name,
-      "-"), this.KeyLength), "bit.pdf"))));
-    this.document.Save(file);
+      "-"), this.KeyLength), "bit.pdf")));
+    global::DripSharp.Runtime.JavaFileBridge.Call(this.document, "Save",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
     return file;
   }
 

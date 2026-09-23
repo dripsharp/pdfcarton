@@ -59,9 +59,11 @@ public class TestFilters {
 
   internal virtual void testPDFBOX4517() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "target/pdfs/PDFBOX-4517-cryptfilter.pdf")),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "userpassword1234"))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "target/pdfs/PDFBOX-4517-cryptfilter.pdf")),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "userpassword1234") })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1, doc.GetNumberOfPages(), null);
     }
   }

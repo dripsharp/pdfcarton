@@ -5,11 +5,11 @@
 namespace DripSharp.PdfCarton.Multipdf;
 
 public class MergeAnnotationsTest {
-  private static readonly global::System.IO.FileInfo OUT_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/merge/"));
 
-  private static readonly global::System.IO.FileInfo TARGET_PDF_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile TARGET_PDF_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/pdfs"));
 
@@ -20,22 +20,26 @@ public class MergeAnnotationsTest {
   internal virtual void testLinkAnnotations() {
     global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility merger
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility();
-    global::System.IO.FileInfo file1
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.MergeAnnotationsTest.TARGET_PDF_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-1065-1.pdf")));
-    global::System.IO.FileInfo file2
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.MergeAnnotationsTest.TARGET_PDF_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-1065-2.pdf")));
-    global::System.IO.FileInfo pdfOutput
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.MergeAnnotationsTest.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-1065.pdf")));
+    global::DripSharp.Runtime.JavaFile file1
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.MergeAnnotationsTest.TARGET_PDF_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-1065-1.pdf"));
+    global::DripSharp.Runtime.JavaFile file2
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.MergeAnnotationsTest.TARGET_PDF_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-1065-2.pdf"));
+    global::DripSharp.Runtime.JavaFile pdfOutput
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.MergeAnnotationsTest.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-1065.pdf"));
     merger.SetDestinationFileName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      pdfOutput.FullName));
-    merger.AddSource(file1);
-    merger.AddSource(file2);
+      global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(pdfOutput)));
+    global::DripSharp.Runtime.JavaFileBridge.Call(merger, "AddSource",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file1 });
+    global::DripSharp.Runtime.JavaFileBridge.Call(merger, "AddSource",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file2 });
     merger.MergeDocuments((global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)default!);
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedPDF
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfOutput)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { pdfOutput })) {
       global::DripSharp.Testing.JavaAssertions.Equal(6, mergedPDF.GetNumberOfPages(),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "There shall be 6 pages"));
       global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDestinationDictionary destinations

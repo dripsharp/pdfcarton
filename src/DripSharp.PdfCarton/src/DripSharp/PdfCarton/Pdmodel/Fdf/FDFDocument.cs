@@ -80,7 +80,12 @@ public class FDFDocument : global::System.IDisposable {
     trailer.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Root, cat);
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public virtual void Save(global::System.IO.FileInfo fileName) {
+    __JavaFile_Save(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(fileName));
+  }
+
+  internal void __JavaFile_Save(global::DripSharp.Runtime.JavaFile fileName) {
     using (global::System.IO.Stream fos
       = global::DripSharp.Runtime.JavaCompat.OpenFileOutput(fileName)) {
       this.Save(fos);
@@ -88,7 +93,9 @@ public class FDFDocument : global::System.IDisposable {
   }
 
   public virtual void Save(string fileName) {
-    this.Save(new global::System.IO.FileInfo(fileName));
+    global::DripSharp.Runtime.JavaFileBridge.Call(this, "Save",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(fileName) });
   }
 
   public virtual void Save(global::System.IO.Stream output) {
@@ -97,7 +104,12 @@ public class FDFDocument : global::System.IDisposable {
     writer.Write(this);
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public virtual void SaveXFDF(global::System.IO.FileInfo fileName) {
+    __JavaFile_SaveXFDF(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(fileName));
+  }
+
+  internal void __JavaFile_SaveXFDF(global::DripSharp.Runtime.JavaFile fileName) {
     using (global::System.IO.TextWriter writer
       = new global::System.IO.StreamWriter(global::DripSharp.Runtime.JavaCompat.OpenFileOutput(fileName),
       global::DripSharp.Runtime.JavaStandardCharsets.UTF8)) {
@@ -106,7 +118,9 @@ public class FDFDocument : global::System.IDisposable {
   }
 
   public virtual void SaveXFDF(string fileName) {
-    this.SaveXFDF(new global::System.IO.FileInfo(fileName));
+    global::DripSharp.Runtime.JavaFileBridge.Call(this, "SaveXFDF",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(fileName) });
   }
 
   public virtual void SaveXFDF(global::System.IO.TextWriter output) {

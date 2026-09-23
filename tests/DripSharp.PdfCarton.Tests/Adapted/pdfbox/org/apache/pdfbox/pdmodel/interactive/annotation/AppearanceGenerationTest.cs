@@ -9,11 +9,11 @@ public class AppearanceGenerationTest {
 
   private global::DripSharp.PdfCarton.Pdmodel.PDDocument document = null!;
 
-  private static readonly global::System.IO.FileInfo IN_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "src/test/resources/org/apache/pdfbox/pdmodel/interactive/annotation"));
 
-  private static readonly global::System.IO.FileInfo OUT_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/pdmodel/interactive/annotation"));
 
@@ -21,9 +21,11 @@ public class AppearanceGenerationTest {
 
   internal virtual void setUp() {
     this.document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.IN_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.NAME_OF_PDF))));
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.IN_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.NAME_OF_PDF)) });
     global::DripSharp.PdfCarton.Tests.Support.Mkdirs(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.OUT_DIR);
   }
 
@@ -72,25 +74,29 @@ public class AppearanceGenerationTest {
       }
       actualToken++;
     }
-    global::System.IO.FileInfo file
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.OUT_DIR).FullName,
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.OUT_DIR,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.NAME_OF_PDF,
-      "-newAP.pdf"))));
-    this.document.Save(file);
+      "-newAP.pdf")));
+    global::DripSharp.Runtime.JavaFileBridge.Call(this.document, "Save",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
   }
 
   internal virtual void renderTest() {
-    global::System.IO.FileInfo file
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.OUT_DIR).FullName,
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.OUT_DIR,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.NAME_OF_PDF)));
-    this.document.Save(file);
-    if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.DoTestFile(file,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.IN_DIR.FullName),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.OUT_DIR.FullName)))) {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.NAME_OF_PDF));
+    global::DripSharp.Runtime.JavaFileBridge.Call(this.document, "Save",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
+    if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
+      "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
+        typeof(string) }, new object[] { file,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.IN_DIR)),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.AppearanceGenerationTest.OUT_DIR)) }))) {
       global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Rendering of ",
         file), " failed or is not identical to expected rendering in "),

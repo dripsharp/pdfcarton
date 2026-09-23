@@ -6,7 +6,7 @@ namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class TestTTFParser {
   internal virtual void testUTCDate() {
-    global::System.IO.FileInfo testFile
+    global::DripSharp.Runtime.JavaFile testFile
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "src/test/resources/ttf/LiberationSans-Regular.ttf"));
     global::System.TimeZoneInfo utc

@@ -20,9 +20,9 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
 
   private readonly object ioLock = new object();
 
-  private readonly global::System.IO.FileInfo scratchFileDirectory = null!;
+  private readonly global::DripSharp.Runtime.JavaFile scratchFileDirectory = null!;
 
-  private global::System.IO.FileInfo file = null!;
+  private global::DripSharp.Runtime.JavaFile file = null!;
 
   private global::DripSharp.Runtime.JavaRandomAccessFile raf = null!;
 
@@ -46,17 +46,24 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
 
   private volatile bool isClosed = false;
 
-  public ScratchFile(global::System.IO.FileInfo scratchFileDirectory)
-  : this(global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupTempFileOnly().SetTempDir(scratchFileDirectory)) {
+  internal ScratchFile(global::DripSharp.Runtime.JavaFile scratchFileDirectory)
+  : this(global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.IO.MemoryUsageSetting>(global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupTempFileOnly(),
+    "SetTempDir", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+    new object[] { scratchFileDirectory })) {
 
   }
+
+  public ScratchFile(global::System.IO.FileInfo scratchFileDirectory)
+  : this(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(scratchFileDirectory)) {}
 
   public ScratchFile(global::DripSharp.PdfCarton.IO.MemoryUsageSetting memUsageSetting) {
     this.maxMainMemoryIsRestricted = (!(memUsageSetting.UseMainMemory())
       || memUsageSetting.IsMainMemoryRestricted());
     this.useScratchFile = (this.maxMainMemoryIsRestricted && memUsageSetting.UseTempFile());
-    this.scratchFileDirectory = (this.useScratchFile ? memUsageSetting.GetTempDir()
-      : (global::System.IO.FileInfo)(default!));
+    this.scratchFileDirectory = (this.useScratchFile
+      ? global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.Runtime.JavaFile>(memUsageSetting,
+      "GetTempDir", new global::System.Type[] {  }, new object[] {  })
+      : (global::DripSharp.Runtime.JavaFile)(default!));
     if (((this.scratchFileDirectory != default!)
       && !global::DripSharp.Runtime.JavaCompat.FileIsDirectory(this.scratchFileDirectory))) {
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Scratch file directory does not exist: ",
@@ -132,11 +139,11 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
         if ((this.raf == default!)) {
           if ((this.scratchFileDirectory == default!)) {
             this.file
-              = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.IO.IOUtils.CreateProtectedTempFile((global::DripSharp.Runtime.JavaPath)default!,
+              = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.IO.IOUtils.CreateProtectedTempFile((global::DripSharp.Runtime.JavaPath)default!,
               "PDFBox", ".tmp"));
           } else {
             this.file
-              = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.IO.IOUtils.CreateProtectedTempFile(new global::DripSharp.Runtime.JavaPath(this.scratchFileDirectory.FullName),
+              = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.IO.IOUtils.CreateProtectedTempFile(global::DripSharp.Runtime.JavaCompat.FileToPath(this.scratchFileDirectory),
               "PDFBox", ".tmp"));
           }
           try {
@@ -145,7 +152,7 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
             if (!global::DripSharp.Runtime.JavaCompat.FileDelete(this.file)) {
               global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.IO.ScratchFile.LOG,
                 global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Error deleting scratch file: ",
-                this.file.FullName)));
+                global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(this.file))));
             }
             throw;
           }
@@ -302,7 +309,7 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
         && global::DripSharp.Runtime.JavaCompat.FileExists(this.file)) && (ioexc! == default!))) {
         ioexc
           = new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Error deleting scratch file: ",
-          this.file.FullName));
+          global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(this.file)));
       }
     }
     lock (this.freePages) {

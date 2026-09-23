@@ -167,8 +167,14 @@ finally
     File.Delete(file);
 }
 
+DripSharp.PdfCarton.ReleaseSmoke.FontCacheRegression.RunAll();
 Console.WriteLine("External single-package PdfCarton release consumer passed.");
 EOF
+
+{
+  printf '#define PDFCARTON_PACKAGE_PROBE\n'
+  cat "$repository_root/tests/DripSharp.PdfCarton.ReleaseSmoke/ReleaseSmokePdfTests.cs"
+} > "$consumer/FontCacheRegression.cs"
 
 cat > "$consumer/NuGet.Config" <<EOF
 <?xml version="1.0" encoding="utf-8"?>

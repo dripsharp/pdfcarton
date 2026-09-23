@@ -5,16 +5,18 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 public class TestQuality {
-  private static readonly global::System.IO.FileInfo TARGET_PDF_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile TARGET_PDF_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/pdfs"));
 
   internal virtual void testPDFBox4831() {
-    global::System.IO.FileInfo file
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Rendering.TestQuality.TARGET_PDF_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4831.pdf")));
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Rendering.TestQuality.TARGET_PDF_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4831.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { file })) {
       global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer
         = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc);
       global::SkiaSharp.SKBitmap renderedImage = renderer.RenderImageWithDPI(0, (float)(300));

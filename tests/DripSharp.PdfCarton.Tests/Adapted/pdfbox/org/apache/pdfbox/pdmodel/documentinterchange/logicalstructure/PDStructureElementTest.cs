@@ -5,7 +5,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
 public class PDStructureElementTest {
-  private static readonly global::System.IO.FileInfo TARGETPDFDIR
+  private static readonly global::DripSharp.Runtime.JavaFile TARGETPDFDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/pdfs"));
 
@@ -15,8 +15,10 @@ public class PDStructureElementTest {
     global::System.Collections.Generic.ISet<string> classSet
       = new global::System.Collections.Generic.HashSet<string>();
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElementTest.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4197.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElementTest.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4197.pdf")) })) {
       global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
         = doc.GetDocumentCatalog().GetStructureTreeRoot();
       this.checkElement(structureTreeRoot.GetK(), attributeSet, structureTreeRoot.GetClassMap(),

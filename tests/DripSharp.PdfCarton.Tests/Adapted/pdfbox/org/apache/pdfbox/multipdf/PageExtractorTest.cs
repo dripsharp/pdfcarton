@@ -18,8 +18,10 @@ public class PageExtractorTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument result = default!;
     try {
       sourcePdf
-        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "src/test/resources/input/cweb.pdf")));
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "src/test/resources/input/cweb.pdf")) });
       global::DripSharp.PdfCarton.Multipdf.PageExtractor instance
         = new global::DripSharp.PdfCarton.Multipdf.PageExtractor(sourcePdf!);
       result = instance.Extract();

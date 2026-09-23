@@ -5,7 +5,7 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public class TestPDDocument {
-  private static readonly global::System.IO.FileInfo TESTRESULTSDIR
+  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output"));
 
@@ -37,18 +37,21 @@ public class TestPDDocument {
   }
 
   internal virtual void testSaveLoadFile() {
-    global::System.IO.FileInfo targetFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.TestPDDocument.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "pddocument-saveloadfile.pdf")));
+    global::DripSharp.Runtime.JavaFile targetFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.TestPDDocument.TESTRESULTSDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "pddocument-saveloadfile.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       document.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
-      document.Save(targetFile,
-        global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.NoCompression);
+      global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo),
+          typeof(global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters) },
+        new object[] { targetFile,
+          global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.NoCompression });
     }
     global::DripSharp.Testing.JavaAssertions.True((targetFile.Length > 200), null);
     sbyte[] pdf
-      = global::DripSharp.Runtime.JavaCompat.ReadAllBytes(new global::DripSharp.Runtime.JavaPath(targetFile.FullName));
+      = global::DripSharp.Runtime.JavaCompat.ReadAllBytes(global::DripSharp.Runtime.JavaCompat.FileToPath(targetFile));
     global::DripSharp.Testing.JavaAssertions.True((pdf.Length > 200), null);
     global::DripSharp.Testing.JavaAssertions.Equal("%PDF-1.4",
       global::DripSharp.Runtime.JavaCompat.NewString(global::DripSharp.Runtime.JavaCompat.CopyOfRange<sbyte>(pdf,
@@ -57,7 +60,9 @@ public class TestPDDocument {
       global::DripSharp.Runtime.JavaCompat.NewString(global::DripSharp.Runtime.JavaCompat.CopyOfRange<sbyte>(pdf,
       (pdf.Length - 6), pdf.Length), global::DripSharp.Runtime.JavaStandardCharsets.UTF8), null);
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument loadDoc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(targetFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { targetFile })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1, loadDoc.GetNumberOfPages(), null);
     }
   }
@@ -118,9 +123,9 @@ public class TestPDDocument {
   }
 
   internal virtual void testDeleteBadFile() {
-    global::System.IO.FileInfo f
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.TestPDDocument.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testDeleteBadFile.pdf")));
+    global::DripSharp.Runtime.JavaFile f
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.TestPDDocument.TESTRESULTSDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testDeleteBadFile.pdf"));
     using (global::System.IO.TextWriter pw
       = new global::System.IO.StreamWriter(global::DripSharp.Runtime.JavaCompat.OpenFileOutput(f),
       global::System.Text.Encoding.UTF8, 1024, false)) {
@@ -128,26 +133,31 @@ public class TestPDDocument {
         "<script language='JavaScript'>"));
     }
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
-      => global::DripSharp.PdfCarton.Loader.LoadPDF(f),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "parsing should fail"));
+      => global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { f }), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "parsing should fail"));
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(()
-      => global::DripSharp.Runtime.JavaCompat.DeleteIfExists(new global::DripSharp.Runtime.JavaPath(f.FullName)),
+      => global::DripSharp.Runtime.JavaCompat.DeleteIfExists(global::DripSharp.Runtime.JavaCompat.FileToPath(f)),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "delete bad file failed after failed load"));
   }
 
   internal virtual void testDeleteGoodFile() {
-    global::System.IO.FileInfo f
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.TestPDDocument.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testDeleteGoodFile.pdf")));
+    global::DripSharp.Runtime.JavaFile f
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.TestPDDocument.TESTRESULTSDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testDeleteGoodFile.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       doc.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
-      doc.Save(f);
+      global::DripSharp.Runtime.JavaFileBridge.Call(doc, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { f });
     }
-    global::DripSharp.PdfCarton.Loader.LoadPDF(f).Dispose();
+    global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { f }).Dispose();
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(()
-      => global::DripSharp.Runtime.JavaCompat.DeleteIfExists(new global::DripSharp.Runtime.JavaPath(f.FullName)),
+      => global::DripSharp.Runtime.JavaCompat.DeleteIfExists(global::DripSharp.Runtime.JavaCompat.FileToPath(f)),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "delete good file failed after successful load() and close()"));
   }

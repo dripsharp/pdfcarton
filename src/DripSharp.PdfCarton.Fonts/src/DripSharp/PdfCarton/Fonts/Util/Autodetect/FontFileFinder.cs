@@ -38,8 +38,9 @@ public class FontFileFinder {
     if ((this.fontDirFinder == default!)) {
       this.fontDirFinder = this.determineDirFinder();
     }
-    global::System.Collections.Generic.IList<global::System.IO.FileInfo> fontDirs
-      = this.fontDirFinder.Find();
+    global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaFile> fontDirs
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaFile>>(this.fontDirFinder,
+      "Find", new global::System.Type[] {  }, new object[] {  });
     global::System.Collections.Generic.IList<global::System.Uri> results
       = new global::System.Collections.Generic.List<global::System.Uri>();
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(fontDirs, (dir) => this.walk(dir,
@@ -50,24 +51,25 @@ public class FontFileFinder {
   public virtual global::System.Collections.Generic.IList<global::System.Uri> Find(string dir) {
     global::System.Collections.Generic.IList<global::System.Uri> results
       = new global::System.Collections.Generic.List<global::System.Uri>();
-    global::System.IO.FileInfo directory = new global::System.IO.FileInfo(dir);
+    global::DripSharp.Runtime.JavaFile directory
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaFile(dir);
     if (global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileIsDirectory(directory)) {
       this.walk(directory, results);
     }
     return results;
   }
 
-  private void walk(global::System.IO.FileInfo directory,
+  private void walk(global::DripSharp.Runtime.JavaFile directory,
     global::System.Collections.Generic.IList<global::System.Uri> results) {
     if (!(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileIsDirectory(directory))) {
       return;
     }
-    global::System.IO.FileInfo[] filelist
+    global::DripSharp.Runtime.JavaFile[] filelist
       = global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileListFiles(directory);
     if ((filelist == default!)) {
       return;
     }
-    foreach (global::System.IO.FileInfo file in filelist) {
+    foreach (global::DripSharp.Runtime.JavaFile file in filelist) {
       if (global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileIsDirectory(file)) {
         if (global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileIsHidden(file)) {
           if (global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontFileFinder.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)) {
@@ -97,7 +99,7 @@ public class FontFileFinder {
     }
   }
 
-  private bool checkFontfile(global::System.IO.FileInfo file) {
+  private bool checkFontfile(global::DripSharp.Runtime.JavaFile file) {
     string name = file.Name.ToLowerInvariant();
     return ((((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringEndsWith(name, ".ttf")
       || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringEndsWith(name, ".otf"))

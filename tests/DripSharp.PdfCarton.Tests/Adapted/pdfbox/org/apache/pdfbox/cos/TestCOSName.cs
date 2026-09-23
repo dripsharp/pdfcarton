@@ -5,7 +5,7 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public class TestCOSName {
-  private static readonly global::System.IO.FileInfo TARGETPDFDIR
+  private static readonly global::DripSharp.Runtime.JavaFile TARGETPDFDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/pdfs"));
 
@@ -38,8 +38,10 @@ public class TestCOSName {
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Cos.TestCOSName.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6178.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Cos.TestCOSName.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6178.pdf")) })) {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field
         = document.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!).GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "Geschlecht"));
@@ -64,8 +66,10 @@ public class TestCOSName {
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Cos.TestCOSName.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6178-1.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Cos.TestCOSName.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6178-1.pdf")) })) {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field
         = document.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!).GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "Geschlecht"));

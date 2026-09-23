@@ -6,12 +6,14 @@ namespace DripSharp.PdfCarton.Text;
 
 public class PDFTextStripperByAreaTest {
   internal virtual void testSomeMethod() {
-    global::System.IO.FileInfo pdfFile
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile pdfFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "src/test/resources/input"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "eu-001.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { pdfFile })) {
       string regionName = "region";
       global::DripSharp.PdfCarton.Text.PDFTextStripperByArea textAreaStripper
         = new global::DripSharp.PdfCarton.Text.PDFTextStripperByArea();

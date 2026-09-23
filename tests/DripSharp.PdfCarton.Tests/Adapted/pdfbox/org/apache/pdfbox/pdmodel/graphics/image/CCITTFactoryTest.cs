@@ -5,7 +5,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public class CCITTFactoryTest {
-  private static readonly global::System.IO.FileInfo TESTRESULTSDIR
+  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/graphics"));
 
@@ -19,9 +19,12 @@ public class CCITTFactoryTest {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__81_25
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage3
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(document__81_25,
-        global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        tiffG3Path)));
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+        "CreateFromFile",
+        new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo) }, new object[] { document__81_25,
+          global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          tiffG3Path)) });
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage3, 1, 344,
         287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "tiff"),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -41,9 +44,12 @@ public class CCITTFactoryTest {
           (float)(ximage3.GetHeight()));
       }
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage4
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(document__81_25,
-        global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        tiffG4Path)));
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+        "CreateFromFile",
+        new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo) }, new object[] { document__81_25,
+          global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          tiffG4Path)) });
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage4, 1, 344,
         287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "tiff"),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -66,8 +72,10 @@ public class CCITTFactoryTest {
         "/singletiff.pdf")));
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__108_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "singletiff.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "singletiff.pdf")) })) {
       global::DripSharp.Testing.JavaAssertions.Equal(2, document__108_25.GetNumberOfPages(), null);
     }
   }
@@ -88,9 +96,12 @@ public class CCITTFactoryTest {
         int pdfPageNum = 0;
         while (true) {
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
-            = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(document__129_29,
-            global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            tiffPath)), pdfPageNum);
+            = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+            "CreateFromFile",
+            new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+              typeof(global::System.IO.FileInfo), typeof(int) }, new object[] { document__129_29,
+              global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              tiffPath)), pdfPageNum });
           if ((ximage == default!)) {
             break;
           }
@@ -121,9 +132,11 @@ public class CCITTFactoryTest {
           "/multitiff.pdf")));
       }
       using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__158_29
-        = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "multitiff.pdf"))),
-        (string)default!)) {
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "multitiff.pdf")),
+          (string)default! })) {
         global::DripSharp.Testing.JavaAssertions.Equal(countTiffImages,
           document__158_29.GetNumberOfPages(), null);
       }
@@ -161,8 +174,10 @@ public class CCITTFactoryTest {
         "/singletifffrombi.pdf")));
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__188_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "singletifffrombi.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "singletifffrombi.pdf")) })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1, document__188_25.GetNumberOfPages(), null);
     }
   }
@@ -204,25 +219,28 @@ public class CCITTFactoryTest {
         "/singletifffromchessbi.pdf")));
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__225_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "singletifffromchessbi.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "singletifffromchessbi.pdf")) })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1, document__225_25.GetNumberOfPages(), null);
     }
   }
 
   internal virtual void testCreateFromFileLock() {
     string tiffG3Path = "src/test/resources/org/apache/pdfbox/pdmodel/graphics/image/ccittg3.tif";
-    global::System.IO.FileInfo copiedTiffFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "ccittg3.tif")));
-    global::DripSharp.Runtime.JavaCompat.Copy(new global::DripSharp.Runtime.JavaPath(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      tiffG3Path)).FullName), new global::DripSharp.Runtime.JavaPath(copiedTiffFile.FullName),
-      new object());
+    global::DripSharp.Runtime.JavaFile copiedTiffFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "ccittg3.tif"));
+    global::DripSharp.Runtime.JavaCompat.Copy(global::DripSharp.Runtime.JavaCompat.FileToPath(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      tiffG3Path))), global::DripSharp.Runtime.JavaCompat.FileToPath(copiedTiffFile), new object());
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(document,
-        copiedTiffFile);
+      global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+        "CreateFromFile",
+        new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo) }, new object[] { document, copiedTiffFile });
       global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.FileDelete(copiedTiffFile),
         null);
     }
@@ -230,16 +248,18 @@ public class CCITTFactoryTest {
 
   internal virtual void testCreateFromFileNumberLock() {
     string tiffG3Path = "src/test/resources/org/apache/pdfbox/pdmodel/graphics/image/ccittg3.tif";
-    global::System.IO.FileInfo copiedTiffFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "ccittg3n.tif")));
-    global::DripSharp.Runtime.JavaCompat.Copy(new global::DripSharp.Runtime.JavaPath(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      tiffG3Path)).FullName), new global::DripSharp.Runtime.JavaPath(copiedTiffFile.FullName),
-      new object());
+    global::DripSharp.Runtime.JavaFile copiedTiffFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "ccittg3n.tif"));
+    global::DripSharp.Runtime.JavaCompat.Copy(global::DripSharp.Runtime.JavaCompat.FileToPath(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      tiffG3Path))), global::DripSharp.Runtime.JavaCompat.FileToPath(copiedTiffFile), new object());
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(document,
-        copiedTiffFile, 0);
+      global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+        "CreateFromFile",
+        new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo), typeof(int) }, new object[] { document, copiedTiffFile,
+          0 });
       global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.FileDelete(copiedTiffFile),
         null);
     }
@@ -254,9 +274,12 @@ public class CCITTFactoryTest {
         "-bigendian.tif")) {
         string tiffPath = global::DripSharp.Runtime.JavaCompat.Concat(basePath, ext);
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage3
-          = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(document,
-          global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          tiffPath)));
+          = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+          "CreateFromFile",
+          new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+            typeof(global::System.IO.FileInfo) }, new object[] { document,
+            global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            tiffPath)) });
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage3, 1, 344,
           287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "tiff"),
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -299,8 +322,10 @@ public class CCITTFactoryTest {
         "/Wing.pdf")));
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__316_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Wing.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactoryTest.TESTRESULTSDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Wing.pdf")) })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1, document__316_25.GetNumberOfPages(), null);
     }
   }

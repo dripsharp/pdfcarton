@@ -7,8 +7,11 @@ namespace DripSharp.PdfCarton.Preflight.Action.Pdfa1b;
 public abstract class AbstractTestAction {
   protected internal virtual global::DripSharp.PdfCarton.Preflight.PreflightContext CreateContext() {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
-      "src/test/resources/pdfa-with-annotations-square.pdf")));
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      nameof(global::DripSharp.PdfCarton.Loader.LoadPDF),
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
+        "src/test/resources/pdfa-with-annotations-square.pdf")) });
     global::DripSharp.PdfCarton.Preflight.PreflightDocument preflightDocument
       = new global::DripSharp.PdfCarton.Preflight.PreflightDocument(doc.GetDocument(),
       global::DripSharp.PdfCarton.Preflight.Format.PdfA1b);

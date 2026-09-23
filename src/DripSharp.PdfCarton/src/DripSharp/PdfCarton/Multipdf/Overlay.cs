@@ -211,7 +211,9 @@ public class Overlay : global::System.IDisposable {
   }
 
   private global::DripSharp.PdfCarton.Pdmodel.PDDocument loadPDF(string pdfName) {
-    return global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(pdfName));
+    return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(pdfName) });
   }
 
   internal sealed class LayoutPage {

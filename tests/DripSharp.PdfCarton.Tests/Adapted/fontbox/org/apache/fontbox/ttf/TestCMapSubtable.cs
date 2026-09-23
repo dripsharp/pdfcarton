@@ -9,8 +9,8 @@ public class TestCMapSubtable {
     global::System.Collections.Generic.IList<int> expectedCharCodes
       = global::DripSharp.Runtime.JavaCompat.AsList<int>(19981, 63847);
     int gid = 8712;
-    global::System.IO.FileInfo fontFile
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+    global::DripSharp.Runtime.JavaFile fontFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "target/fonts"), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "NotoSansSC-Regular.otf"));
     global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser otfParser
@@ -36,8 +36,8 @@ public class TestCMapSubtable {
   }
 
   internal virtual void testVerticalSubstitution() {
-    global::System.IO.FileInfo ipaFont
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+    global::DripSharp.Runtime.JavaFile ipaFont
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "target/fonts/ipag00303"), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "ipag.ttf"));
     global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf

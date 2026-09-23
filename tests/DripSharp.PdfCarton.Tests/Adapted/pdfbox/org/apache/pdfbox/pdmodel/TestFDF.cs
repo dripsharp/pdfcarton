@@ -14,8 +14,10 @@ public class TestFDF {
 
   internal virtual void testPDFBox5894() {
     using (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument fdf
-      = global::DripSharp.PdfCarton.Loader.LoadFDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "target/pdfs/PDFBOX-5894.fdf")))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadFDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "target/pdfs/PDFBOX-5894.fdf")) })) {
       global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSObject> objectsByType
         = fdf.GetDocument().GetObjectsByType(global::DripSharp.PdfCarton.Cos.COSName.Annot);
       global::DripSharp.Testing.JavaAssertions.Equal(4,
@@ -31,8 +33,10 @@ public class TestFDF {
 
   private void checkFields(string name) {
     using (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument fdf
-      = global::DripSharp.PdfCarton.Loader.LoadFDF(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.TestFDF),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", name))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadFDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.TestFDF),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", name))) })) {
       fdf.SaveXFDF(new global::System.IO.StreamWriter(new global::DripSharp.Runtime.JavaByteArrayOutputStream(),
         global::System.Text.Encoding.UTF8, 1024, false));
       global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFField> fields
@@ -48,9 +52,11 @@ public class TestFDF {
       global::DripSharp.Testing.JavaAssertions.Equal("Test2",
         global::DripSharp.Runtime.JavaCompat.ListGet(fields, 1).GetValue(), null);
       using (global::DripSharp.PdfCarton.Pdmodel.PDDocument pdf
-        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.TestFDF),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "/org/apache/pdfbox/pdfparser/SimpleForm2Fields.pdf"))))) {
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.TestFDF),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "/org/apache/pdfbox/pdfparser/SimpleForm2Fields.pdf"))) })) {
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
           = pdf.GetDocumentCatalog().GetAcroForm();
         acroForm.ImportFDF(fdf);

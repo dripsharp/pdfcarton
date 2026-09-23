@@ -46,14 +46,17 @@ public class RandomAccessReadBufferedFile : global::DripSharp.PdfCarton.IO.Rando
   private bool __field_isClosed = default;
 
   public RandomAccessReadBufferedFile(string filename)
-  : this(new global::System.IO.FileInfo(filename)) {
+  : this(global::DripSharp.Runtime.JavaCompat.NewJavaFile(filename)) {
+
+  }
+
+  internal RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaFile file)
+  : this(global::DripSharp.Runtime.JavaCompat.FileToPath(file)) {
 
   }
 
   public RandomAccessReadBufferedFile(global::System.IO.FileInfo file)
-  : this(new global::DripSharp.Runtime.JavaPath(file.FullName)) {
-
-  }
+  : this(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file)) {}
 
   public RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaPath path) {
     this.pageCache

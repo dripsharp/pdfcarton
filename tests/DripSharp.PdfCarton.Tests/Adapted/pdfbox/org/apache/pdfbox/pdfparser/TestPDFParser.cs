@@ -5,22 +5,26 @@
 namespace DripSharp.PdfCarton.Pdfparser;
 
 public class TestPDFParser {
-  private static readonly global::System.IO.FileInfo TARGETPDFDIR
+  private static readonly global::DripSharp.Runtime.JavaFile TARGETPDFDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/pdfs"));
 
   internal virtual void testPDFParserMissingCatalog() {
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(()
-      => global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "MissingCatalog.pdf")))).Dispose(), null);
+      => global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "MissingCatalog.pdf"))) }).Dispose(), null);
   }
 
   internal virtual void testPDFBox3208() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "PDFBOX-3208-L33MUTT2SVCWGCS6UIYL5TH3PNPXHIS6.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "PDFBOX-3208-L33MUTT2SVCWGCS6UIYL5TH3PNPXHIS6.pdf")) })) {
       global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation di = doc.GetDocumentInformation();
       global::DripSharp.Testing.JavaAssertions.Equal("Liquent Enterprise Services", di.GetAuthor(),
         null);
@@ -41,8 +45,10 @@ public class TestPDFParser {
 
   internal virtual void testPDFBox3940() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-3940-079977.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-3940-079977.pdf")) })) {
       global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation di = doc.GetDocumentInformation();
       global::DripSharp.Testing.JavaAssertions.Equal("Unknown", di.GetAuthor(), null);
       global::DripSharp.Testing.JavaAssertions.Equal("C:REGULA~1IREGSFR_EQ_EM.WP", di.GetCreator(),
@@ -60,49 +66,61 @@ public class TestPDFParser {
 
   internal virtual void testPDFBox3783() {
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => {
-        global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBOX-3783-72GLBIGUC6LB46ELZFBARRJTLN4RBSQM.pdf")))).Dispose();
+        global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "PDFBOX-3783-72GLBIGUC6LB46ELZFBARRJTLN4RBSQM.pdf")) }).Dispose();
       }, null);
   }
 
   internal virtual void testPDFBox3785() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-3785-202097.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-3785-202097.pdf")) })) {
       global::DripSharp.Testing.JavaAssertions.Equal(11, doc.GetNumberOfPages(), null);
     }
   }
 
   internal virtual void testPDFBox3947() {
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => {
-        global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBOX-3947-670064.pdf")))).Dispose();
+        global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "PDFBOX-3947-670064.pdf")) }).Dispose();
       }, null);
   }
 
   internal virtual void testPDFBox3948() {
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => {
-        global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBOX-3948-EUWO6SQS5TM4VGOMRD3FLXZHU35V2CP2.pdf")))).Dispose();
+        global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "PDFBOX-3948-EUWO6SQS5TM4VGOMRD3FLXZHU35V2CP2.pdf")) }).Dispose();
       }, null);
   }
 
   internal virtual void testPDFBox3949() {
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => {
-        global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBOX-3949-MKFYUGZWS3OPXLLVU2Z4LWCTVA5WNOGF.pdf")))).Dispose();
+        global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "PDFBOX-3949-MKFYUGZWS3OPXLLVU2Z4LWCTVA5WNOGF.pdf")) }).Dispose();
       }, null);
   }
 
   internal virtual void testPDFBox3950() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "PDFBOX-3950-23EGDHXSBBYQLKYOKGZUOVYVNE675PRD.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "PDFBOX-3950-23EGDHXSBBYQLKYOKGZUOVYVNE675PRD.pdf")) })) {
       global::DripSharp.Testing.JavaAssertions.Equal(4, doc.GetNumberOfPages(), null);
       global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer
         = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc);
@@ -123,27 +141,33 @@ public class TestPDFParser {
 
   internal virtual void testPDFBox3951() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "PDFBOX-3951-FIHUZWDDL2VGPOE34N6YHWSIGSH5LVGZ.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "PDFBOX-3951-FIHUZWDDL2VGPOE34N6YHWSIGSH5LVGZ.pdf")) })) {
       global::DripSharp.Testing.JavaAssertions.Equal(143, doc.GetNumberOfPages(), null);
     }
   }
 
   internal virtual void testPDFBox3964() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "PDFBOX-3964-c687766d68ac766be3f02aaec5e0d713_2.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "PDFBOX-3964-c687766d68ac766be3f02aaec5e0d713_2.pdf")) })) {
       global::DripSharp.Testing.JavaAssertions.Equal(10, doc.GetNumberOfPages(), null);
     }
   }
 
   internal virtual void testPDFBox3977() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "PDFBOX-3977-63NGFQRI44HQNPIPEJH5W2TBM6DJZWMI.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "PDFBOX-3977-63NGFQRI44HQNPIPEJH5W2TBM6DJZWMI.pdf")) })) {
       global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation di = doc.GetDocumentInformation();
       global::DripSharp.Testing.JavaAssertions.Equal("QuarkXPress(tm) 6.52", di.GetCreator(), null);
       global::DripSharp.Testing.JavaAssertions.Equal("Acrobat Distiller 7.0 pour Macintosh",
@@ -159,33 +183,41 @@ public class TestPDFParser {
 
   internal virtual void testParseGenko() {
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => {
-        global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "genko_oc_shiryo1.pdf")))).Dispose();
+        global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "genko_oc_shiryo1.pdf")) }).Dispose();
       }, null);
   }
 
   internal virtual void testPDFBox4338() {
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => {
-        global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBOX-4338.pdf")))).Dispose();
+        global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "PDFBOX-4338.pdf")) }).Dispose();
       }, null);
   }
 
   internal virtual void testPDFBox4339() {
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => {
-        global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBOX-4339.pdf")))).Dispose();
+        global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "PDFBOX-4339.pdf")) }).Dispose();
       }, null);
   }
 
   internal virtual void testPDFBox4153() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "PDFBOX-4153-WXMDXCYRWFDCMOSFQJ5OAJIAFXYRZ5OA.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "PDFBOX-4153-WXMDXCYRWFDCMOSFQJ5OAJIAFXYRZ5OA.pdf")) })) {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDDocumentOutline documentOutline
         = doc.GetDocumentCatalog().GetDocumentOutline();
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem firstChild
@@ -196,16 +228,20 @@ public class TestPDFParser {
 
   internal virtual void testPDFBox4490() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4490.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4490.pdf")) })) {
       global::DripSharp.Testing.JavaAssertions.Equal(3, doc.GetNumberOfPages(), null);
     }
   }
 
   internal virtual void testPDFBox5025() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5025.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfparser.TestPDFParser.TARGETPDFDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5025.pdf")) })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1, doc.GetNumberOfPages(), null);
       global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font
         = doc.GetPage(0).GetResources().GetFont(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",

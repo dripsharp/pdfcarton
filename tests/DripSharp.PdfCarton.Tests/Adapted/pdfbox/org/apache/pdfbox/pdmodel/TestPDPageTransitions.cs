@@ -7,9 +7,11 @@ namespace DripSharp.PdfCarton.Pdmodel;
 public class TestPDPageTransitions {
   internal virtual void readTransitions() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "/org/apache/pdfbox/pdmodel/interactive/pagenavigation/transitions_test.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "/org/apache/pdfbox/pdmodel/interactive/pagenavigation/transitions_test.pdf"))) })) {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransition firstTransition
         = doc.GetPages().Get(0).GetTransition();
       global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.EnumName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle.Glitter),

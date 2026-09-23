@@ -5,11 +5,11 @@
 namespace DripSharp.PdfCarton.Multipdf;
 
 public class OverlayTest {
-  private static readonly global::System.IO.FileInfo IN_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "src/test/resources/org/apache/pdfbox/multipdf"));
 
-  private static readonly global::System.IO.FileInfo OUT_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/overlay"));
 
@@ -26,87 +26,95 @@ public class OverlayTest {
 
   internal virtual void testRotatedOverlaysMap() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument baseDocument__73_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "OverlayTestBaseRot0.pdf"))))) using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "OverlayTestBaseRot0.pdf")) })) using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       for (int p = 0; (p < 4); ++p) {
         doc.ImportPage(baseDocument__73_25.GetPage(0));
       }
-      doc.Save(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "OverlayTestBaseRot0_4Pages.pdf"))));
+      global::DripSharp.Runtime.JavaFileBridge.Call(doc, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "OverlayTestBaseRot0_4Pages.pdf")) });
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument baseDocument__84_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "OverlayTestBaseRot0_4Pages.pdf"))))) using (global::DripSharp.PdfCarton.Multipdf.Overlay overlay
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "OverlayTestBaseRot0_4Pages.pdf")) })) using (global::DripSharp.PdfCarton.Multipdf.Overlay overlay
       = new global::DripSharp.PdfCarton.Multipdf.Overlay()) {
       global::System.Collections.Generic.IDictionary<int, string> specificPageOverlayMap
         = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, string>();
       global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
         => overlay.overlay(specificPageOverlayMap), null);
       global::DripSharp.Runtime.JavaCompat.MapPut(specificPageOverlayMap, 1,
-        new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "rot0.pdf"))).FullName);
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "rot0.pdf"))));
       global::DripSharp.Runtime.JavaCompat.MapPut(specificPageOverlayMap, 2,
-        new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "rot90.pdf"))).FullName);
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "rot90.pdf"))));
       global::DripSharp.Runtime.JavaCompat.MapPut(specificPageOverlayMap, 3,
-        new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "rot180.pdf"))).FullName);
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "rot180.pdf"))));
       global::DripSharp.Runtime.JavaCompat.MapPut(specificPageOverlayMap, 4,
-        new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "rot270.pdf"))).FullName);
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "rot270.pdf"))));
       overlay.SetInputPDF(baseDocument__84_25);
       using (global::DripSharp.PdfCarton.Pdmodel.PDDocument overlayedResultPDF
         = overlay.overlay(specificPageOverlayMap)) {
         global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> documentList
           = new global::DripSharp.PdfCarton.Multipdf.Splitter().Split(overlayedResultPDF);
-        global::DripSharp.Runtime.JavaCompat.ListGet(documentList,
-          0).Save(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
+        global::DripSharp.Runtime.JavaFileBridge.Call(global::DripSharp.Runtime.JavaCompat.ListGet(documentList,
+          0), "Save", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+          new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "Overlayed-with-rot0.pdf")) });
+        global::DripSharp.Runtime.JavaFileBridge.Call(global::DripSharp.Runtime.JavaCompat.ListGet(documentList,
+          1), "Save", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+          new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "Overlayed-with-rot90.pdf")) });
+        global::DripSharp.Runtime.JavaFileBridge.Call(global::DripSharp.Runtime.JavaCompat.ListGet(documentList,
+          2), "Save", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+          new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "Overlayed-with-rot180.pdf")) });
+        global::DripSharp.Runtime.JavaFileBridge.Call(global::DripSharp.Runtime.JavaCompat.ListGet(documentList,
+          3), "Save", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+          new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "Overlayed-with-rot270.pdf")) });
+        this.checkIdenticalRendering(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Overlayed-with-rot0.pdf")),
+          global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Overlayed-with-rot0.pdf")));
+        this.checkIdenticalRendering(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Overlayed-with-rot90.pdf")),
+          global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "Overlayed-with-rot0.pdf"))));
-        global::DripSharp.Runtime.JavaCompat.ListGet(documentList,
-          1).Save(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
+          "Overlayed-with-rot90.pdf")));
+        this.checkIdenticalRendering(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "Overlayed-with-rot90.pdf"))));
-        global::DripSharp.Runtime.JavaCompat.ListGet(documentList,
-          2).Save(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
+          "Overlayed-with-rot180.pdf")),
+          global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "Overlayed-with-rot180.pdf"))));
-        global::DripSharp.Runtime.JavaCompat.ListGet(documentList,
-          3).Save(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
+          "Overlayed-with-rot180.pdf")));
+        this.checkIdenticalRendering(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "Overlayed-with-rot270.pdf"))));
-        this.checkIdenticalRendering(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR).FullName,
-          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Overlayed-with-rot0.pdf"))),
-          new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
+          "Overlayed-with-rot270.pdf")),
+          global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "Overlayed-with-rot0.pdf"))));
-        this.checkIdenticalRendering(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR).FullName,
-          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "Overlayed-with-rot90.pdf"))),
-          new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
-          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "Overlayed-with-rot90.pdf"))));
-        this.checkIdenticalRendering(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR).FullName,
-          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "Overlayed-with-rot180.pdf"))),
-          new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
-          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "Overlayed-with-rot180.pdf"))));
-        this.checkIdenticalRendering(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR).FullName,
-          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "Overlayed-with-rot270.pdf"))),
-          new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
-          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "Overlayed-with-rot270.pdf"))));
+          "Overlayed-with-rot270.pdf")));
       }
     }
-    global::DripSharp.Runtime.JavaCompat.FileDelete(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
+    global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "OverlayTestBaseRot0_4Pages.pdf"))));
+      "OverlayTestBaseRot0_4Pages.pdf")));
   }
 
   internal virtual void testOverlayOnRotatedSourcePages() {
@@ -129,54 +137,64 @@ public class OverlayTest {
       this.checkIdenticalRendering(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
         "/PDFBOX-6049-ExpectedResult.pdf"))),
-        new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6049-Result.pdf"))));
-      global::DripSharp.Runtime.JavaCompat.FileDelete(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6049-Result.pdf"))));
+        global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6049-Result.pdf")));
+      global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6049-Result.pdf")));
     }
   }
 
   private void testRotatedOverlay(int rotation) {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument baseDocument
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "OverlayTestBaseRot0.pdf"))))) using (global::DripSharp.PdfCarton.Multipdf.Overlay overlay
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "OverlayTestBaseRot0.pdf")) })) using (global::DripSharp.PdfCarton.Multipdf.Overlay overlay
       = new global::DripSharp.PdfCarton.Multipdf.Overlay()) {
       overlay.SetInputPDF(baseDocument);
       using (global::DripSharp.PdfCarton.Pdmodel.PDDocument overlayDocument
-        = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("rot",
-        rotation), ".pdf")))))) {
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("rot",
+          rotation), ".pdf"))) })) {
         overlay.SetDefaultOverlayPDF(overlayDocument);
         using (global::DripSharp.PdfCarton.Pdmodel.PDDocument overlayedResultPDF
           = overlay.overlay(global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int,
           string>())) {
-          overlayedResultPDF.Save(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
-            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Overlayed-with-rot",
-            rotation), ".pdf")))));
+          global::DripSharp.Runtime.JavaFileBridge.Call(overlayedResultPDF, "Save",
+            new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+            new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
+              global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Overlayed-with-rot",
+              rotation), ".pdf"))) });
         }
       }
     }
-    global::System.IO.FileInfo modelFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR).FullName,
+    global::DripSharp.Runtime.JavaFile modelFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.IN_DIR,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Overlayed-with-rot",
-      rotation), ".pdf"))));
-    global::System.IO.FileInfo resultFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR).FullName,
+      rotation), ".pdf")));
+    global::DripSharp.Runtime.JavaFile resultFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.OverlayTest.OUT_DIR,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Overlayed-with-rot",
-      rotation), ".pdf"))));
+      rotation), ".pdf")));
     this.checkIdenticalRendering(modelFile, resultFile);
   }
 
-  private void checkIdenticalRendering(global::System.IO.FileInfo modelFile,
-    global::System.IO.FileInfo resultFile) {
+  private void checkIdenticalRendering(global::DripSharp.Runtime.JavaFile modelFile,
+    global::DripSharp.Runtime.JavaFile resultFile) {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument modelDocument
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(modelFile)) using (global::DripSharp.PdfCarton.Pdmodel.PDDocument resultDocument
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(resultFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { modelFile })) using (global::DripSharp.PdfCarton.Pdmodel.PDDocument resultDocument
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { resultFile })) {
       global::DripSharp.Testing.JavaAssertions.Equal(modelDocument.GetNumberOfPages(),
         resultDocument.GetNumberOfPages(), null);
       for (int page = 0; (page < modelDocument.GetNumberOfPages()); ++page) {

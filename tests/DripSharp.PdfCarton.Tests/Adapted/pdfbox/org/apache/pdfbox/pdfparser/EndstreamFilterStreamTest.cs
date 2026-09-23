@@ -97,9 +97,11 @@ public class EndstreamFilterStreamTest {
 
   internal virtual void testPDFBox2079EmbeddedFile() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "src/test/resources/org/apache/pdfbox/pdfparser"),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "embedded_zip.pdf")))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "src/test/resources/org/apache/pdfbox/pdfparser"),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "embedded_zip.pdf")) })) {
       global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = doc.GetDocumentCatalog();
       global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDictionary names = catalog.GetNames();
       global::DripSharp.PdfCarton.Pdmodel.PDEmbeddedFilesNameTreeNode node
@@ -114,13 +116,12 @@ public class EndstreamFilterStreamTest {
       global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile file
         = spec.GetEmbeddedFile();
       global::System.IO.Stream input = file.CreateInputStream();
-      global::System.IO.FileInfo d
+      global::DripSharp.Runtime.JavaFile d
         = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "target/test-output"));
       global::DripSharp.PdfCarton.Tests.Support.Mkdirs(d);
-      global::System.IO.FileInfo f
-        = new global::System.IO.FileInfo(global::System.IO.Path.Combine(d.FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", spec.GetFile())));
+      global::DripSharp.Runtime.JavaFile f = global::DripSharp.Runtime.JavaCompat.NewJavaFile(d,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", spec.GetFile()));
       using (global::System.IO.Stream os = global::DripSharp.Runtime.JavaCompat.OpenFileOutput(f)) {
         global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, os);
       }

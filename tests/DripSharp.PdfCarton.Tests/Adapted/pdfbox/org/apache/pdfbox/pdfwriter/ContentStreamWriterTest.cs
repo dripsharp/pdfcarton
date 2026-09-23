@@ -5,11 +5,11 @@
 namespace DripSharp.PdfCarton.Pdfwriter;
 
 public class ContentStreamWriterTest {
-  private static readonly global::System.IO.FileInfo TESTDIRIN
+  private static readonly global::DripSharp.Runtime.JavaFile TESTDIRIN
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/contentstream/in"));
 
-  private static readonly global::System.IO.FileInfo TESTDIROUT
+  private static readonly global::DripSharp.Runtime.JavaFile TESTDIROUT
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/contentstream/out"));
 
@@ -26,21 +26,23 @@ public class ContentStreamWriterTest {
 
   internal virtual void testPDFBox4750() {
     string filename = "PDFBOX-4750.pdf";
-    global::System.IO.FileInfo file
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/pdfs"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { file })) {
       global::DripSharp.PdfCarton.Rendering.PDFRenderer r
         = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc);
       for (int i = 0; (i < doc.GetNumberOfPages()); ++i) {
         global::SkiaSharp.SKBitmap bim1 = r.RenderImageWithDPI(i, (float)(96));
         global::DripSharp.PdfCarton.Tests.Support.WriteImage(bim1,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "png"),
-          new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriterTest.TESTDIRIN).FullName,
+          global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriterTest.TESTDIRIN,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(filename,
-          "-"), (i + 1)), ".png")))));
+          "-"), (i + 1)), ".png"))));
         global::DripSharp.PdfCarton.Pdmodel.PDPage page = doc.GetPage(i);
         global::DripSharp.PdfCarton.Pdmodel.Common.PDStream newContent
           = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(doc);
@@ -54,15 +56,20 @@ public class ContentStreamWriterTest {
         }
         page.SetContents(newContent);
       }
-      doc.Save(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriterTest.TESTDIRIN).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename))));
+      global::DripSharp.Runtime.JavaFileBridge.Call(doc, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriterTest.TESTDIRIN,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)) });
     }
-    if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.DoTestFile(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriterTest.TESTDIRIN).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename))),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriterTest.TESTDIRIN.FullName),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriterTest.TESTDIROUT.FullName)))) {
+    if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
+      "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
+        typeof(string) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriterTest.TESTDIRIN,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriterTest.TESTDIRIN)),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriterTest.TESTDIROUT)) }))) {
       global::DripSharp.Testing.JavaAssertions.Fail("Assertion failed.");
     }
   }

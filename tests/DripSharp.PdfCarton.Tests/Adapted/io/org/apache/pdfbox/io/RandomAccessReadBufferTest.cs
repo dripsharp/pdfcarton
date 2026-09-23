@@ -215,7 +215,7 @@ public class RandomAccessReadBufferTest {
       global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os, new sbyte[4096]);
     }
     global::DripSharp.Testing.JavaAssertions.Equal((long)(4096),
-      new global::System.IO.FileInfo(path).Length, null);
+      global::DripSharp.Runtime.JavaCompat.NewJavaFile(path).Length, null);
     using (global::System.IO.Stream @is
       = global::DripSharp.Runtime.JavaCompat.OpenInputStream(path)) using (global::DripSharp.PdfCarton.IO.RandomAccessRead rar
       = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(@is)) {

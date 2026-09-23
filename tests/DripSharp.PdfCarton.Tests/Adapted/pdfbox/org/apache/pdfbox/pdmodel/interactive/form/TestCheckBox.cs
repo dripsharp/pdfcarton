@@ -84,14 +84,16 @@ public class TestCheckBox {
   }
 
   internal virtual void testPDFBox6207() {
-    global::System.IO.FileInfo pdfFile
+    global::DripSharp.Runtime.JavaFile pdfFile
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/pdfs/PDFBOX-6207.pdf"));
     if (!global::System.IO.File.Exists(pdfFile.FullName)) {
       return;
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument testPdf
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { pdfFile })) {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
         = testPdf.GetDocumentCatalog().GetAcroForm();
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDCheckBox field

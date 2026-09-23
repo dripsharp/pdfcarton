@@ -28,7 +28,8 @@ Release, run `eng/pack-release.sh <empty-artifact-directory>`. It invokes
 `dotnet pack` exactly once for each of IO, Fonts, Xmp, PdfCarton, and Preflight
 as internal bundle components. It then deterministically emits exactly one
 public `DripSharp.PdfCarton` nupkg and one snupkg containing all five production
-DLL/PDB pairs. The bounded validator checks the exact two-file public inventory,
+DLL/PDB pairs. When `eng/release-notes/<version>.md` exists, its text is included
+in the package and symbol package release-note metadata. The bounded validator checks the exact two-file public inventory,
 package ID, version, `netstandard2.0` dependency metadata, five production
 assemblies, and five portable-PDB names. It does not inspect public surface,
 SourceLink contents, or byte reproducibility.

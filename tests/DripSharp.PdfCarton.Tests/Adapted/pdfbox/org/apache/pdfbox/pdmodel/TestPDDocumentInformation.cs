@@ -7,8 +7,10 @@ namespace DripSharp.PdfCarton.Pdmodel;
 public class TestPDDocumentInformation {
   internal virtual void testMetadataExtraction() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "src/test/resources/input/hello3.pdf")))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "src/test/resources/input/hello3.pdf")) })) {
       global::DripSharp.PdfCarton.Pdmodel.PDDocumentInformation info = doc.GetDocumentInformation();
       global::DripSharp.Testing.JavaAssertions.Equal("Brian Carrier", info.GetAuthor(),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Wrong author"));

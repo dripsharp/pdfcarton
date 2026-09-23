@@ -86,8 +86,15 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     }
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public static global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font Load(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
     global::System.IO.FileInfo file) {
+    return __JavaFile_Load(doc,
+      global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file));
+  }
+
+  internal static global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font __JavaFile_Load(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
+    global::DripSharp.Runtime.JavaFile file) {
     return global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font.Load(doc,
       new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file), true, false);
   }
@@ -118,8 +125,15 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
       false);
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public static global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font LoadVertical(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
     global::System.IO.FileInfo file) {
+    return __JavaFile_LoadVertical(doc,
+      global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file));
+  }
+
+  internal static global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font __JavaFile_LoadVertical(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
+    global::DripSharp.Runtime.JavaFile file) {
     return global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font.Load(doc,
       new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file), true, true);
   }

@@ -93,13 +93,13 @@ public class TTFSubsetterTest {
     global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontFileFinder fontFileFinder
       = new global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontFileFinder();
     global::System.Collections.Generic.IList<global::System.Uri> files = fontFileFinder.Find();
-    global::System.IO.FileInfo simhei = default!;
+    global::DripSharp.Runtime.JavaFile simhei = default!;
     foreach (global::System.Uri uri in files) {
       string path = global::DripSharp.Runtime.JavaCompat.UriPath(uri)!;
       if (((path != default!)
         && global::DripSharp.Runtime.JavaCompat.StringEndsWith(path.ToLowerInvariant(),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "simhei.ttf")))) {
-        simhei = global::DripSharp.Runtime.JavaCompat.NewFileInfo(uri);
+        simhei = global::DripSharp.Runtime.JavaCompat.NewJavaFile(uri);
         break;
       }
     }
@@ -188,7 +188,7 @@ public class TTFSubsetterTest {
   }
 
   internal virtual void testPDFBox3757() {
-    global::System.IO.FileInfo testFile
+    global::DripSharp.Runtime.JavaFile testFile
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "src/test/resources/ttf/LiberationSans-Regular.ttf"));
     global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
@@ -251,7 +251,7 @@ public class TTFSubsetterTest {
   }
 
   internal virtual void testPDFBox5230() {
-    global::System.IO.FileInfo testFile
+    global::DripSharp.Runtime.JavaFile testFile
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "src/test/resources/ttf/LiberationSans-Regular.ttf"));
     global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf

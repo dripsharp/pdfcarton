@@ -5,11 +5,11 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class CombAlignmentTest {
-  private static readonly global::System.IO.FileInfo OUT_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output"));
 
-  private static readonly global::System.IO.FileInfo IN_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "src/test/resources/org/apache/pdfbox/pdmodel/interactive/form"));
 
@@ -23,9 +23,11 @@ public class CombAlignmentTest {
 
   internal virtual void testCombFields() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.IN_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.NAME_OF_PDF))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.IN_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.NAME_OF_PDF)) })) {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
         = document.GetDocumentCatalog().GetAcroForm();
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field
@@ -44,16 +46,19 @@ public class CombAlignmentTest {
       field.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ""));
       field.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.TEST_VALUE));
-      global::System.IO.FileInfo file
-        = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.OUT_DIR).FullName,
+      global::DripSharp.Runtime.JavaFile file
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.OUT_DIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.NAME_OF_PDF)));
-      document.Save(file);
-      if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.DoTestFile(file,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.IN_DIR.FullName),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.OUT_DIR.FullName)))) {
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.NAME_OF_PDF));
+      global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
+      if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
+        "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo),
+          typeof(string), typeof(string) }, new object[] { file,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.IN_DIR)),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.OUT_DIR)) }))) {
         global::DripSharp.PdfCarton.Tests.Support.ErrorStream.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Rendering of ",
           file), " failed or is not identical to expected rendering in "),
@@ -66,8 +71,10 @@ public class CombAlignmentTest {
   internal virtual void testPDFBOX5784() {
     string NAME_OF_PDF = "PDFBOX-5784.pdf";
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.IN_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", NAME_OF_PDF))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.IN_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", NAME_OF_PDF)) })) {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
         = document.GetDocumentCatalog().GetAcroForm();
       foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field in acroForm.GetFieldTree()) {
@@ -76,15 +83,18 @@ public class CombAlignmentTest {
           field.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "WIaqg"));
         }
       }
-      global::System.IO.FileInfo file
-        = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.OUT_DIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", NAME_OF_PDF)));
-      document.Save(file);
-      if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.DoTestFile(file,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.IN_DIR.FullName),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.OUT_DIR.FullName)))) {
+      global::DripSharp.Runtime.JavaFile file
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.OUT_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", NAME_OF_PDF));
+      global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
+      if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
+        "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo),
+          typeof(string), typeof(string) }, new object[] { file,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.IN_DIR)),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.CombAlignmentTest.OUT_DIR)) }))) {
         global::DripSharp.PdfCarton.Tests.Support.ErrorStream.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Rendering of ",
           file), " failed or is not identical to expected rendering in "),

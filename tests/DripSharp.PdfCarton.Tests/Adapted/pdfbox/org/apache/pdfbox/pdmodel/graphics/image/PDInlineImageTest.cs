@@ -5,7 +5,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public class PDInlineImageTest {
-  private static readonly global::System.IO.FileInfo TESTRESULTSDIR
+  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/graphics"));
 
@@ -117,9 +117,9 @@ public class PDInlineImageTest {
         }
       }
     }
-    global::System.IO.FileInfo pdfFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImageTest.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "inline.pdf")));
+    global::DripSharp.Runtime.JavaFile pdfFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImageTest.TESTRESULTSDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "inline.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__173_25
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
@@ -139,10 +139,13 @@ public class PDInlineImageTest {
         contentStream.DrawImage(inlineImage2, (float)(350), (float)(600),
           (float)((inlineImage2.GetWidth() * 4)), (float)((inlineImage2.GetHeight() * 4)));
       }
-      document__173_25.Save(pdfFile);
+      global::DripSharp.Runtime.JavaFileBridge.Call(document__173_25, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdfFile });
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__189_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { pdfFile })) {
       new global::DripSharp.PdfCarton.Rendering.PDFRenderer(document__189_25).RenderImage(0);
     }
   }

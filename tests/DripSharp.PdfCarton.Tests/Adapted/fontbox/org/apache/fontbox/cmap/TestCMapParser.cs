@@ -7,12 +7,12 @@ namespace DripSharp.PdfCarton.Fonts.Cmap;
 public class TestCMapParser {
   internal virtual void testLookup() {
     string resourceDir = "src/test/resources/cmap";
-    global::System.IO.FileInfo inDir
+    global::DripSharp.Runtime.JavaFile inDir
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       resourceDir));
     global::DripSharp.PdfCarton.Fonts.Cmap.CMap cMap
-      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(new global::System.IO.FileInfo(global::System.IO.Path.Combine(inDir.FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "CMapTest")))));
+      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(inDir,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "CMapTest"))));
     sbyte[] bytes1 = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(1)) };
     global::DripSharp.Testing.JavaAssertions.Equal("A", cMap.ToUnicode(bytes1),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
@@ -130,7 +130,7 @@ public class TestCMapParser {
 
   internal virtual void testParserWithPoorWhitespace() {
     global::DripSharp.PdfCarton.Fonts.Cmap.CMap cMap
-      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "src/test/resources/cmap"), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "CMapNoWhitespace"))));
     global::DripSharp.Testing.JavaAssertions.NotNull(cMap,
@@ -140,7 +140,7 @@ public class TestCMapParser {
 
   internal virtual void testParserWithMalformedbfrange1() {
     global::DripSharp.PdfCarton.Fonts.Cmap.CMap cMap
-      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "src/test/resources/cmap"), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "CMapMalformedbfrange1"))));
     global::DripSharp.Testing.JavaAssertions.NotNull(cMap,
@@ -156,7 +156,7 @@ public class TestCMapParser {
 
   internal virtual void testParserWithMalformedbfrange2() {
     global::DripSharp.PdfCarton.Fonts.Cmap.CMap cMap
-      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "src/test/resources/cmap"), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "CMapMalformedbfrange2"))));
     global::DripSharp.Testing.JavaAssertions.NotNull(cMap,
@@ -175,7 +175,7 @@ public class TestCMapParser {
     global::DripSharp.Testing.JavaAssertions.NotNull(cMap.ToUnicode(new sbyte[] { unchecked((sbyte)(2)),
         unchecked((sbyte)(241)) }), null);
     cMap
-      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "src/test/resources/cmap"), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "CMapMalformedbfrange2"))));
     global::DripSharp.Testing.JavaAssertions.NotNull(cMap.ToUnicode(new sbyte[] { unchecked((sbyte)(2)),
@@ -207,7 +207,7 @@ public class TestCMapParser {
 
   internal virtual void testIdentitybfrange() {
     global::DripSharp.PdfCarton.Fonts.Cmap.CMap cMap
-      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+      = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "src/test/resources/cmap"), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "Identitybfrange"))));
     global::DripSharp.Testing.JavaAssertions.Equal("Adobe-Identity-UCS", cMap.GetName(),

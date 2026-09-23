@@ -6,12 +6,14 @@ namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFAnnotationTest {
   internal virtual void loadXFDFAnnotations() {
-    global::System.IO.FileInfo f
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTest),
+    global::DripSharp.Runtime.JavaFile f
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTest),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "xfdf-test-document-annotations.xml")));
     using (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument fdfDoc
-      = global::DripSharp.PdfCarton.Loader.LoadXFDF(f)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadXFDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { f })) {
       global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> fdfAnnots
         = fdfDoc.GetCatalog().GetFDF().GetAnnotations();
       global::DripSharp.Testing.JavaAssertions.Equal(18,

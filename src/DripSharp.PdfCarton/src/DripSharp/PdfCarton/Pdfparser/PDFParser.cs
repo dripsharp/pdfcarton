@@ -88,12 +88,28 @@ public class PDFParser : global::DripSharp.PdfCarton.Pdfparser.COSParser {
       this.GetAccessPermission());
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public static global::DripSharp.PdfCarton.Pdmodel.PDDocument Load(global::System.IO.FileInfo file) {
-    return global::DripSharp.PdfCarton.Loader.LoadPDF(file);
+    return __JavaFile_Load(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file));
   }
 
+  internal static global::DripSharp.PdfCarton.Pdmodel.PDDocument __JavaFile_Load(global::DripSharp.Runtime.JavaFile file) {
+    return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { file });
+  }
+
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public static global::DripSharp.PdfCarton.Pdmodel.PDDocument Load(global::System.IO.FileInfo file,
     string password) {
-    return global::DripSharp.PdfCarton.Loader.LoadPDF(file, password);
+    return __JavaFile_Load(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file),
+      password);
+  }
+
+  internal static global::DripSharp.PdfCarton.Pdmodel.PDDocument __JavaFile_Load(global::DripSharp.Runtime.JavaFile file,
+    string password) {
+    return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { file, password });
   }
 }

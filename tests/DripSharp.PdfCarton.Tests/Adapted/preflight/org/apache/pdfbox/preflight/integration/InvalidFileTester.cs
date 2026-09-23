@@ -10,20 +10,28 @@ public class InvalidFileTester {
 
   protected internal global::System.IO.Stream OutputResult = default!;
 
-  protected internal global::System.IO.FileInfo Path = null!;
+  internal global::DripSharp.Runtime.JavaFile path = null!;
 
   public InvalidFileTester(string resultKeyFile) {
     this.Before(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight", resultKeyFile));
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public void Validate(global::System.IO.FileInfo path, string expectedError) {
+    __JavaFile_Validate(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(path),
+      expectedError);
+  }
+
+  internal void __JavaFile_Validate(global::DripSharp.Runtime.JavaFile path, string expectedError) {
     if ((path == default!)) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Preflight.Integration.InvalidFileTester.LOG,
         global::DripSharp.Runtime.JavaCompat.StringValueOf("This is an empty test"));
       return;
     }
     global::DripSharp.PdfCarton.Preflight.ValidationResult result
-      = global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser.Validate(path);
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Preflight.ValidationResult>(typeof(global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser),
+      "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { path });
     global::DripSharp.Testing.JavaAssertions.False(result.IsValid(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(path,
@@ -56,7 +64,7 @@ public class InvalidFileTester {
       if ((expectedError == default!)) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Preflight.Integration.InvalidFileTester.LOG,
           global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("File invalid as expected (no expected code) :",
-          this.Path.FullName)));
+          global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(this.path))));
       } else {
         if (!found) {
           global::System.Text.StringBuilder message = new global::System.Text.StringBuilder(100);

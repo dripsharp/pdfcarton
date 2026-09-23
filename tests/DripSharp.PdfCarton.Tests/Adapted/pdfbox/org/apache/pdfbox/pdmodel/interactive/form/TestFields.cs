@@ -41,8 +41,10 @@ public class TestFields {
 
   internal virtual void testAcroFormsBasicFields() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.TestFields.PATH_OF_PDF)))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.TestFields.PATH_OF_PDF)) })) {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm form
         = doc.GetDocumentCatalog().GetAcroForm();
       global::DripSharp.Testing.JavaAssertions.NotNull(form, null);
@@ -101,8 +103,10 @@ public class TestFields {
 
   internal virtual void testWidgetMissingRect() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.TestFields.PATH_OF_PDF)))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.TestFields.PATH_OF_PDF)) })) {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm form
         = doc.GetDocumentCatalog().GetAcroForm();
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField textField

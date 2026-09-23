@@ -5,13 +5,13 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class PDButtonTest {
-  private static readonly global::System.IO.FileInfo IN_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "src/test/resources/org/apache/pdfbox/pdmodel/interactive/form"));
 
   private const string NAME_OF_PDF = "AcroFormsBasicFields.pdf";
 
-  private static readonly global::System.IO.FileInfo TARGET_PDF_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile TARGET_PDF_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/pdfs"));
 
@@ -28,9 +28,11 @@ public class PDButtonTest {
     this.acroForm
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm(this.document);
     this.acrobatDocument
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButtonTest.IN_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButtonTest.NAME_OF_PDF))));
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButtonTest.IN_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButtonTest.NAME_OF_PDF)) });
     this.acrobatAcroForm = this.acrobatDocument.GetDocumentCatalog().GetAcroForm();
   }
 
@@ -65,11 +67,13 @@ public class PDButtonTest {
   }
 
   internal virtual void testRadioButtonWithOptions() {
-    global::System.IO.FileInfo file
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButtonTest.TARGET_PDF_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-3656.pdf")));
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButtonTest.TARGET_PDF_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-3656.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument pdfDocument
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { file })) {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDRadioButton radioButton
         = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDRadioButton)(pdfDocument.GetDocumentCatalog().GetAcroForm().GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "Checking/Savings"))!);
@@ -83,11 +87,13 @@ public class PDButtonTest {
   }
 
   internal virtual void testOptionsAndNamesNotNumbers() {
-    global::System.IO.FileInfo file
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButtonTest.TARGET_PDF_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-3682.pdf")));
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButtonTest.TARGET_PDF_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-3682.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument pdfDocument
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { file })) {
       pdfDocument.GetDocumentCatalog().GetAcroForm().GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "RadioButton")).SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "c"));
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDRadioButton radioButton

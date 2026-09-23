@@ -436,7 +436,7 @@ public class NonSeekableRandomAccessReadInputStreamTest {
       global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os, new sbyte[4096]);
     }
     global::DripSharp.Testing.JavaAssertions.Equal((long)(4096),
-      new global::System.IO.FileInfo(path).Length, null);
+      global::DripSharp.Runtime.JavaCompat.NewJavaFile(path).Length, null);
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead rar
       = new global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream(global::DripSharp.Runtime.JavaCompat.OpenInputStream(path))) {
       global::DripSharp.Testing.JavaAssertions.Equal(0, rar.Read(), null);

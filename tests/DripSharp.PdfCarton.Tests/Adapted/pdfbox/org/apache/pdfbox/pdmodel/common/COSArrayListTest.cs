@@ -17,7 +17,7 @@ public class COSArrayListTest {
 
   internal static global::DripSharp.PdfCarton.Pdmodel.PDPage pdPage = null!;
 
-  private static readonly global::System.IO.FileInfo OUT_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/pdmodel/common"));
 
@@ -317,9 +317,11 @@ public class COSArrayListTest {
         "/removeSingleDirectObjectTest.pdf")));
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument pdf__335_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayListTest.OUT_DIR,
-      "/removeSingleDirectObjectTest.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayListTest.OUT_DIR,
+        "/removeSingleDirectObjectTest.pdf"))) })) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page__336_20 = pdf__335_25.GetPage(0);
       global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations
         = (global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation>)(page__336_20.GetAnnotations()!);
@@ -367,9 +369,11 @@ public class COSArrayListTest {
         "/removeSingleIndirectObjectTest.pdf")));
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument pdf__377_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayListTest.OUT_DIR,
-      "/removeSingleIndirectObjectTest.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayListTest.OUT_DIR,
+        "/removeSingleIndirectObjectTest.pdf"))) })) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page__378_20 = pdf__377_25.GetPage(0);
       global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations
         = (global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation>)(page__378_20.GetAnnotations()!);
@@ -417,9 +421,11 @@ public class COSArrayListTest {
         "/removeIndirectObjectTest.pdf")));
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument pdf__420_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayListTest.OUT_DIR,
-      "/removeIndirectObjectTest.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayListTest.OUT_DIR,
+        "/removeIndirectObjectTest.pdf"))) })) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page__421_20 = pdf__420_25.GetPage(0);
       global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations
         = (global::DripSharp.PdfCarton.Pdmodel.Common.COSArrayList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation>)(page__421_20.GetAnnotations()!);

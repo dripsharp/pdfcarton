@@ -88,8 +88,8 @@ public class TestTextStripper {
     return index;
   }
 
-  private void doTestFile(global::System.IO.FileInfo inFile, global::System.IO.FileInfo outDir,
-    bool bLogResult, bool bSort) {
+  private void doTestFile(global::DripSharp.Runtime.JavaFile inFile,
+    global::DripSharp.Runtime.JavaFile outDir, bool bLogResult, bool bSort) {
     if (bSort) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Text.TestTextStripper.log,
         global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Preparing to parse ",
@@ -99,34 +99,36 @@ public class TestTextStripper {
         global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Preparing to parse ",
         inFile.Name), " for standard test")));
     }
-    global::DripSharp.Runtime.JavaCompat.CreateDirectories(new global::DripSharp.Runtime.JavaPath(outDir.FullName));
+    global::DripSharp.Runtime.JavaCompat.CreateDirectories(global::DripSharp.Runtime.JavaCompat.FileToPath(outDir));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(inFile)) {
-      global::System.IO.FileInfo outFile;
-      global::System.IO.FileInfo diffFile;
-      global::System.IO.FileInfo expectedFile;
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { inFile })) {
+      global::DripSharp.Runtime.JavaFile outFile;
+      global::DripSharp.Runtime.JavaFile diffFile;
+      global::DripSharp.Runtime.JavaFile expectedFile;
       if (bSort) {
-        outFile = new global::System.IO.FileInfo(global::System.IO.Path.Combine(outDir.FullName,
+        outFile = global::DripSharp.Runtime.JavaCompat.NewJavaFile(outDir,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, "-sorted.txt"))));
-        diffFile = new global::System.IO.FileInfo(global::System.IO.Path.Combine(outDir.FullName,
+          global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, "-sorted.txt")));
+        diffFile = global::DripSharp.Runtime.JavaCompat.NewJavaFile(outDir,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, "-sorted-diff.txt"))));
+          global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, "-sorted-diff.txt")));
         expectedFile
-          = new global::System.IO.FileInfo(global::System.IO.Path.Combine(global::DripSharp.PdfCarton.Tests.Support.ParentFile(inFile).FullName,
+          = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ParentFile(inFile),
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, "-sorted.txt"))));
+          global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, "-sorted.txt")));
       } else {
-        outFile = new global::System.IO.FileInfo(global::System.IO.Path.Combine(outDir.FullName,
+        outFile = global::DripSharp.Runtime.JavaCompat.NewJavaFile(outDir,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, ".txt"))));
-        diffFile = new global::System.IO.FileInfo(global::System.IO.Path.Combine(outDir.FullName,
+          global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, ".txt")));
+        diffFile = global::DripSharp.Runtime.JavaCompat.NewJavaFile(outDir,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, "-diff.txt"))));
+          global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, "-diff.txt")));
         expectedFile
-          = new global::System.IO.FileInfo(global::System.IO.Path.Combine(global::DripSharp.PdfCarton.Tests.Support.ParentFile(inFile).FullName,
+          = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ParentFile(inFile),
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, ".txt"))));
+          global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, ".txt")));
       }
       global::DripSharp.Runtime.JavaCompat.FileDelete(diffFile);
       using (global::System.IO.Stream os
@@ -152,16 +154,17 @@ public class TestTextStripper {
         this.bFail = true;
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Text.TestTextStripper.log,
           global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("FAILURE: Input verification file: ",
-          expectedFile.FullName), " did not exist")));
+          global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(expectedFile)),
+          " did not exist")));
         return;
       }
       this.compareResult(expectedFile, outFile, inFile, bSort, diffFile);
     }
   }
 
-  private void compareResult(global::System.IO.FileInfo expectedFile,
-    global::System.IO.FileInfo outFile, global::System.IO.FileInfo inFile, bool bSort,
-    global::System.IO.FileInfo diffFile) {
+  private void compareResult(global::DripSharp.Runtime.JavaFile expectedFile,
+    global::DripSharp.Runtime.JavaFile outFile, global::DripSharp.Runtime.JavaFile inFile,
+    bool bSort, global::DripSharp.Runtime.JavaFile diffFile) {
     bool localFail = false;
     using (global::DripSharp.Runtime.JavaLineNumberReader expectedReader
       = new global::DripSharp.Runtime.JavaLineNumberReader(global::DripSharp.PdfCarton.Tests.Support.NewInputStreamReader(global::DripSharp.Runtime.JavaCompat.OpenFileInput(expectedFile),
@@ -247,7 +250,7 @@ public class TestTextStripper {
     }
   }
 
-  private static global::System.Collections.Generic.IList<string> fileToLines(global::System.IO.FileInfo file) {
+  private static global::System.Collections.Generic.IList<string> fileToLines(global::DripSharp.Runtime.JavaFile file) {
     global::System.Collections.Generic.IList<string> lines
       = new global::System.Collections.Generic.List<string>();
     string line;
@@ -274,9 +277,11 @@ public class TestTextStripper {
 
   internal virtual void testStripByOutlineItems() {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "../pdmodel/with_outline.pdf"))));
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "../pdmodel/with_outline.pdf"))) });
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDDocumentOutline outline
       = doc.GetDocumentCatalog().GetDocumentOutline();
     global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem> children
@@ -362,12 +367,13 @@ public class TestTextStripper {
     global::DripSharp.Testing.JavaAssertions.True((textOiOrphan.Length == 0), null);
   }
 
-  private void doTestDir(global::System.IO.FileInfo inDir, global::System.IO.FileInfo outDir) {
-    global::System.IO.FileInfo[] testFiles
+  private void doTestDir(global::DripSharp.Runtime.JavaFile inDir,
+    global::DripSharp.Runtime.JavaFile outDir) {
+    global::DripSharp.Runtime.JavaFile[] testFiles
       = global::DripSharp.PdfCarton.Tests.Support.ListFiles(inDir, (dir, name)
       => global::DripSharp.Runtime.JavaCompat.StringEndsWith(name,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ".pdf")));
-    foreach (global::System.IO.FileInfo testFile in testFiles) {
+    foreach (global::DripSharp.Runtime.JavaFile testFile in testFiles) {
       this.doTestFile(testFile, outDir, false, false);
       this.doTestFile(testFile, outDir, false, true);
     }
@@ -377,16 +383,16 @@ public class TestTextStripper {
     string filename
       = global::DripSharp.Runtime.JavaCompat.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "org.apache.pdfbox.util.TextStripper.file"));
-    global::System.IO.FileInfo inDir
+    global::DripSharp.Runtime.JavaFile inDir
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "src/test/resources/input"));
-    global::System.IO.FileInfo outDir
+    global::DripSharp.Runtime.JavaFile outDir
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/test-output"));
-    global::System.IO.FileInfo inDirExt
+    global::DripSharp.Runtime.JavaFile inDirExt
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/test-input-ext"));
-    global::System.IO.FileInfo outDirExt
+    global::DripSharp.Runtime.JavaFile outDirExt
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/test-output-ext"));
     if (((filename == default!) || (filename.Length == 0))) {
@@ -395,11 +401,11 @@ public class TestTextStripper {
         this.doTestDir(inDirExt, outDirExt);
       }
     } else {
-      this.doTestFile(new global::System.IO.FileInfo(global::System.IO.Path.Combine(inDir.FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename))), outDir, true,
+      this.doTestFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(inDir,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)), outDir, true,
         false);
-      this.doTestFile(new global::System.IO.FileInfo(global::System.IO.Path.Combine(inDir.FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename))), outDir, true,
+      this.doTestFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(inDir,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)), outDir, true,
         true);
     }
     if (this.bFail) {
@@ -408,24 +414,26 @@ public class TestTextStripper {
   }
 
   internal virtual void testTabula() {
-    global::System.IO.FileInfo pdfFile
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile pdfFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "src/test/resources/input"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "eu-001.pdf"));
-    global::System.IO.FileInfo outFile
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile outFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/test-output"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "eu-001.pdf-tabula.txt"));
-    global::System.IO.FileInfo expectedOutFile
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile expectedOutFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "src/test/resources/input"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "eu-001.pdf-tabula.txt"));
-    global::System.IO.FileInfo diffFile
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile diffFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/test-output"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "eu-001.pdf-tabula-diff.txt"));
     global::DripSharp.PdfCarton.Pdmodel.PDDocument tabulaDocument
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile);
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { pdfFile });
     global::DripSharp.PdfCarton.Text.PDFTextStripper tabulaStripper
       = new global::DripSharp.PdfCarton.Text.TestTextStripper.PDFTabulaTextStripper(this);
     using (global::System.IO.Stream os
@@ -491,12 +499,14 @@ public class TestTextStripper {
   }
 
   internal virtual void testStartEndPage() {
-    global::System.IO.FileInfo pdfFile
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile pdfFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "src/test/resources/input"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "eu-001.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { pdfFile })) {
       global::DripSharp.PdfCarton.Text.PDFTextStripper textStripper
         = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
       textStripper.SetStartPage(2);

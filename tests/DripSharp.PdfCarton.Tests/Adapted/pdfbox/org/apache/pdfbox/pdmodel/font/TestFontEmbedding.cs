@@ -5,11 +5,11 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public class TestFontEmbedding {
-  private static readonly global::System.IO.FileInfo OUT_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output"));
 
-  private static readonly global::System.IO.FileInfo IN_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "src/test/resources/org/apache/pdfbox/ttf"));
 
@@ -28,20 +28,23 @@ public class TestFontEmbedding {
   internal virtual void testCIDFontType2VerticalSubsetMonospace() {
     string text = "\u300CABC\u300D";
     string expectedExtractedtext = "\u300C\nA\nB\nC\n\u300D";
-    global::System.IO.FileInfo pdf
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "CIDFontType2VM.pdf")));
+    global::DripSharp.Runtime.JavaFile pdf
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "CIDFontType2VM.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
         = new global::DripSharp.PdfCarton.Pdmodel.PDPage(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.A4);
       document.AddPage(page);
-      global::System.IO.FileInfo ipafont
-        = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      global::DripSharp.Runtime.JavaFile ipafont
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "target/fonts/ipag00303"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "ipag.ttf"));
       global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font vfont
-        = global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font.LoadVertical(document, ipafont);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font>(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font),
+        "LoadVertical",
+        new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo) }, new object[] { document, ipafont });
       using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
         = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(document, page)) {
         contentStream.BeginText();
@@ -57,7 +60,8 @@ public class TestFontEmbedding {
       global::DripSharp.PdfCarton.Cos.COSDictionary fontDict = vfont.GetCOSObject();
       global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSName.IdentityV,
         fontDict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Encoding), null);
-      document.Save(pdf);
+      global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdf });
       global::DripSharp.PdfCarton.Cos.COSDictionary descFontDict
         = vfont.GetDescendantFont().GetCOSObject();
       global::DripSharp.PdfCarton.Cos.COSArray dw2
@@ -77,20 +81,23 @@ public class TestFontEmbedding {
   internal virtual void testCIDFontType2VerticalSubsetProportional() {
     string text = "\u300CABC\u300D";
     string expectedExtractedtext = "\u300C\nA\nB\nC\n\u300D";
-    global::System.IO.FileInfo pdf
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "CIDFontType2VP.pdf")));
+    global::DripSharp.Runtime.JavaFile pdf
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "CIDFontType2VP.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
         = new global::DripSharp.PdfCarton.Pdmodel.PDPage(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.A4);
       document.AddPage(page);
-      global::System.IO.FileInfo ipafont
-        = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      global::DripSharp.Runtime.JavaFile ipafont
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "target/fonts/ipagp00303"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "ipagp.ttf"));
       global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font vfont
-        = global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font.LoadVertical(document, ipafont);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font>(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font),
+        "LoadVertical",
+        new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo) }, new object[] { document, ipafont });
       using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
         = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(document, page)) {
         contentStream.BeginText();
@@ -106,7 +113,8 @@ public class TestFontEmbedding {
       global::DripSharp.PdfCarton.Cos.COSDictionary fontDict = vfont.GetCOSObject();
       global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSName.IdentityV,
         fontDict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Encoding), null);
-      document.Save(pdf);
+      global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdf });
       global::DripSharp.PdfCarton.Cos.COSDictionary descFontDict
         = vfont.GetDescendantFont().GetCOSObject();
       global::DripSharp.PdfCarton.Cos.COSArray dw2
@@ -140,9 +148,9 @@ public class TestFontEmbedding {
     string expectedExtractedtext
       = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(BANGLA_TEXT_1,
       "\n"), BANGLA_TEXT_2), "\n"), BANGLA_TEXT_3);
-    global::System.IO.FileInfo pdf
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Bengali.pdf")));
+    global::DripSharp.Runtime.JavaFile pdf
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Bengali.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
@@ -168,13 +176,16 @@ public class TestFontEmbedding {
           BANGLA_TEXT_3));
         contentStream.EndText();
       }
-      document.Save(pdf);
+      global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdf });
     }
-    if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.DoTestFile(pdf,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.IN_DIR.FullName),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR.FullName)))) {
+    if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
+      "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
+        typeof(string) }, new object[] { pdf,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.IN_DIR)),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR)) }))) {
       global::DripSharp.PdfCarton.Tests.Support.ErrorStream.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Rendering of ",
         pdf), " failed or is not identical to expected rendering in "),
@@ -195,9 +206,9 @@ public class TestFontEmbedding {
     string expectedExtractedtext
       = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(DEVANAGARI_TEXT_0,
       "\n"), DEVANAGARI_TEXT_1), "\n"), DEVANAGARI_TEXT_2), "\n"), DEVANAGARI_TEXT_3);
-    global::System.IO.FileInfo pdf
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Devanagari.pdf")));
+    global::DripSharp.Runtime.JavaFile pdf
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Devanagari.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
@@ -226,13 +237,16 @@ public class TestFontEmbedding {
           DEVANAGARI_TEXT_3));
         contentStream.EndText();
       }
-      document.Save(pdf);
+      global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdf });
     }
-    if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.DoTestFile(pdf,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.IN_DIR.FullName),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR.FullName)))) {
+    if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
+      "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
+        typeof(string) }, new object[] { pdf,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.IN_DIR)),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR)) }))) {
       global::DripSharp.PdfCarton.Tests.Support.ErrorStream.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Rendering of ",
         pdf), " failed or is not identical to expected rendering in "),
@@ -242,9 +256,9 @@ public class TestFontEmbedding {
   }
 
   internal virtual void testDevanagari2() {
-    global::System.IO.FileInfo pdf
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Devanagari2.pdf")));
+    global::DripSharp.Runtime.JavaFile pdf
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Devanagari2.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
@@ -276,13 +290,16 @@ public class TestFontEmbedding {
         cs.ShowText(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", s));
         cs.EndText();
       }
-      doc.Save(pdf);
+      global::DripSharp.Runtime.JavaFileBridge.Call(doc, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdf });
     }
-    if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.DoTestFile(pdf,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.IN_DIR.FullName),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR.FullName)))) {
+    if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
+      "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
+        typeof(string) }, new object[] { pdf,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.IN_DIR)),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR)) }))) {
       global::DripSharp.PdfCarton.Tests.Support.ErrorStream.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Rendering of ",
         pdf), " failed or is not identical to expected rendering in "),
@@ -302,9 +319,9 @@ public class TestFontEmbedding {
     string expectedExtractedtext
       = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(GUJARATI_TEXT_0,
       "\n"), GUJARATI_TEXT_1), "\n"), GUJARATI_TEXT_2), "\n"), GUJARATI_TEXT_3);
-    global::System.IO.FileInfo pdf
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Gujarati.pdf")));
+    global::DripSharp.Runtime.JavaFile pdf
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Gujarati.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
@@ -333,13 +350,16 @@ public class TestFontEmbedding {
           GUJARATI_TEXT_3));
         contentStream.EndText();
       }
-      document.Save(pdf);
+      global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdf });
     }
-    if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.DoTestFile(pdf,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.IN_DIR.FullName),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR.FullName)))) {
+    if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
+      "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
+        typeof(string) }, new object[] { pdf,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.IN_DIR)),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR)) }))) {
       global::DripSharp.PdfCarton.Tests.Support.ErrorStream.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Rendering of ",
         pdf), " failed or is not identical to expected rendering in "),
@@ -349,7 +369,7 @@ public class TestFontEmbedding {
   }
 
   internal virtual void testMaxEntries() {
-    global::System.IO.FileInfo file;
+    global::DripSharp.Runtime.JavaFile file;
     string text;
     text
       = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("\u3042\u3044\u3046\u3048\u304A\u304B\u304D\u304F\u3051\u3053\u3055\u3057\u3059\u305B\u305D\u305F\u3061\u3064\u3066\u3068\u306A\u306B\u306C\u306D\u306E\u306F\u3072\u3075\u3078\u307B\u307E\u307F\u3080\u3081\u3082\u3084\u3086\u3088\u3089\u308A\u308B\u308C\u308D\u308F\u3092\u3093",
@@ -367,12 +387,14 @@ public class TestFontEmbedding {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
         = new global::DripSharp.PdfCarton.Pdmodel.PDPage(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.A0);
       document.AddPage(page);
-      global::System.IO.FileInfo ipafont
-        = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      global::DripSharp.Runtime.JavaFile ipafont
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "target/fonts/ipag00303"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "ipag.ttf"));
       global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font font
-        = global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font.Load(document, ipafont);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font>(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font),
+        "Load", new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo) }, new object[] { document, ipafont });
       using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
         = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(document, page)) {
         contentStream.BeginText();
@@ -382,9 +404,10 @@ public class TestFontEmbedding {
         contentStream.EndText();
       }
       file
-        = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4302-test.pdf")));
-      document.Save(file);
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4302-test.pdf"));
+      global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
     }
     string extracted = this.getUnicodeText(file);
     global::DripSharp.Testing.JavaAssertions.Equal(text,
@@ -459,11 +482,11 @@ public class TestFontEmbedding {
   }
 
   private string renderAndExtract(int num, int codePoint) {
-    global::System.IO.FileInfo file
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR).FullName,
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("ToUnicode-",
-      num), "-U+"), global::DripSharp.Runtime.JavaCompat.ToHexString(codePoint)), ".pdf"))));
+      num), "-U+"), global::DripSharp.Runtime.JavaCompat.ToHexString(codePoint)), ".pdf")));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
@@ -481,14 +504,15 @@ public class TestFontEmbedding {
           new string(global::DripSharp.PdfCarton.Tests.Support.ToChars(codePoint))));
         stream.EndText();
       }
-      document.Save(file);
+      global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
     }
     return this.getUnicodeText(file);
   }
 
   private void validateCIDFontType2(bool useSubset) {
     string text;
-    global::System.IO.FileInfo file;
+    global::DripSharp.Runtime.JavaFile file;
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
@@ -511,20 +535,23 @@ public class TestFontEmbedding {
         stream.EndText();
       }
       file
-        = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR).FullName,
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("CIDFontType2",
-        (useSubset ? "-useSubset" : "")), ".pdf"))));
-      document.Save(file);
+        (useSubset ? "-useSubset" : "")), ".pdf")));
+      global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
     }
     string extracted = this.getUnicodeText(file);
     global::DripSharp.Testing.JavaAssertions.Equal(text,
       global::DripSharp.Runtime.JavaCompat.StringTrim(extracted), null);
   }
 
-  private string getUnicodeText(global::System.IO.FileInfo file) {
+  private string getUnicodeText(global::DripSharp.Runtime.JavaFile file) {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { file })) {
       global::DripSharp.PdfCarton.Text.PDFTextStripper stripper
         = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
       return stripper.GetText(document);
@@ -661,21 +688,23 @@ public class TestFontEmbedding {
 
   internal virtual void testSurrogatePairCharacter() {
     string message = "\uD867\uDE3D\uD867\uDE3D";
-    global::System.IO.FileInfo pdf
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5812.pdf")));
+    global::DripSharp.Runtime.JavaFile pdf
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5812.pdf"));
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos;
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__779_25
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
         = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
       doc__779_25.AddPage(page);
-      global::System.IO.FileInfo ipafont
-        = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      global::DripSharp.Runtime.JavaFile ipafont
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "target/fonts/ipag00303"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "ipag.ttf"));
       global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font
-        = global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font.Load(doc__779_25, ipafont);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font>(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font),
+        "Load", new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo) }, new object[] { doc__779_25, ipafont });
       using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contents
         = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc__779_25, page)) {
         contents.BeginText();
@@ -686,7 +715,8 @@ public class TestFontEmbedding {
       }
       baos = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
       doc__779_25.Save(baos);
-      doc__779_25.Save(pdf);
+      global::DripSharp.Runtime.JavaFileBridge.Call(doc__779_25, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdf });
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__798_25
       = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos))) {
@@ -695,11 +725,13 @@ public class TestFontEmbedding {
       string text = global::DripSharp.Runtime.JavaCompat.StringTrim(stripper.GetText(doc__798_25));
       global::DripSharp.Testing.JavaAssertions.Equal(message, text, null);
     }
-    if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.DoTestFile(pdf,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.IN_DIR.FullName),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR.FullName)))) {
+    if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
+      "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
+        typeof(string) }, new object[] { pdf,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.IN_DIR)),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Font.TestFontEmbedding.OUT_DIR)) }))) {
       global::DripSharp.PdfCarton.Tests.Support.ErrorStream.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Rendering of ",
         pdf), " failed or is not identical to expected rendering in "),

@@ -76,12 +76,16 @@ public class TestCOSIncrement {
         global::DripSharp.Testing.JavaAssertions.NotNull(imageResource,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           "Image resource not found."));
-        global::System.IO.FileInfo image = global::DripSharp.Testing.JavaAssertions.DoesNotThrow(()
-          => global::DripSharp.Runtime.JavaCompat.NewFileInfo(imageResource),
+        global::DripSharp.Runtime.JavaFile image
+          = global::DripSharp.Testing.JavaAssertions.DoesNotThrow(()
+          => global::DripSharp.Runtime.JavaCompat.NewJavaFile(imageResource),
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           "Image file could not be loaded"));
-        contentStream__124_38.DrawImage(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromFileByExtension(image,
-          document__115_24), (float)(15), (float)(20));
+        contentStream__124_38.DrawImage(global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject),
+          "CreateFromFileByExtension",
+          new global::System.Type[] { typeof(global::System.IO.FileInfo),
+            typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument) }, new object[] { image,
+            document__115_24 }), (float)(15), (float)(20));
       }
       document__115_24.SaveIncremental(documentOutput__114_35);
       documentData = global::DripSharp.Runtime.JavaCompat.ToSignedBytes(documentOutput__114_35);
@@ -263,8 +267,10 @@ public class TestCOSIncrement {
       document__274_25.SaveIncremental(os);
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__300_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "target/test-output/PDFBOX-5627.pdf")))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "target/test-output/PDFBOX-5627.pdf")) })) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page__302_20 = document__300_25.GetPage(0);
       global::DripSharp.PdfCarton.Cos.COSName fontName
         = global::DripSharp.Runtime.JavaCompat.Iterator(page__302_20.GetResources().GetFontNames()).Next()!;

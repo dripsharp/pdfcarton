@@ -20,16 +20,20 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
 
   private global::DripSharp.PdfCarton.Preflight.ValidationResult validationResult = null!;
 
-  public PreflightParser(global::System.IO.FileInfo file)
+  internal PreflightParser(global::DripSharp.Runtime.JavaFile file)
   : base(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file)) {
 
   }
+
+  public PreflightParser(global::System.IO.FileInfo file)
+  : this(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file)) {}
 
   public PreflightParser(global::DripSharp.PdfCarton.IO.RandomAccessRead rar) : base(rar) {
 
   }
 
-  public PreflightParser(string filename) : this(new global::System.IO.FileInfo(filename)) {
+  public PreflightParser(string filename)
+  : this(global::DripSharp.Runtime.JavaCompat.NewJavaFile(filename)) {
 
   }
 
@@ -551,7 +555,12 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
     return offset;
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public static global::DripSharp.PdfCarton.Preflight.ValidationResult Validate(global::System.IO.FileInfo file) {
+    return __JavaFile_Validate(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file));
+  }
+
+  internal static global::DripSharp.PdfCarton.Preflight.ValidationResult __JavaFile_Validate(global::DripSharp.Runtime.JavaFile file) {
     global::DripSharp.PdfCarton.Preflight.ValidationResult result;
     global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser parser
       = new global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser(file);

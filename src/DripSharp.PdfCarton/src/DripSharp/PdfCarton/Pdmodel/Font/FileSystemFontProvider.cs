@@ -43,7 +43,7 @@ internal sealed class FileSystemFontProvider
     internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDPanoseClassification panose
       = null!;
 
-    internal readonly global::System.IO.FileInfo file = null!;
+    internal readonly global::DripSharp.Runtime.JavaFile file = null!;
 
     internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider parent
       = null!;
@@ -52,7 +52,7 @@ internal sealed class FileSystemFontProvider
 
     internal readonly long lastModified = default;
 
-    internal FSFontInfo(global::System.IO.FileInfo file,
+    internal FSFontInfo(global::DripSharp.Runtime.JavaFile file,
       global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat format, string postScriptName,
       global::DripSharp.PdfCarton.Pdmodel.Font.CIDSystemInfo cidSystemInfo, int usWeightClass,
       int sFamilyClass, int ulCodePageRange1, int ulCodePageRange2, int macStyle, sbyte[] panose,
@@ -144,7 +144,7 @@ internal sealed class FileSystemFontProvider
     }
 
     internal global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont getTrueTypeFont(string postScriptName,
-      global::System.IO.FileInfo file) {
+      global::DripSharp.Runtime.JavaFile file) {
       try {
         global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
           = this.readTrueTypeFont(postScriptName, file);
@@ -164,7 +164,7 @@ internal sealed class FileSystemFontProvider
     }
 
     internal global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont readTrueTypeFont(string postScriptName,
-      global::System.IO.FileInfo file) {
+      global::DripSharp.Runtime.JavaFile file) {
       if (global::DripSharp.Runtime.JavaCompat.StringEndsWith(file.Name.ToLowerInvariant(),
         ".ttc")) {
         global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection ttc
@@ -190,7 +190,7 @@ internal sealed class FileSystemFontProvider
     }
 
     internal global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont getOTFFont(string postScriptName,
-      global::System.IO.FileInfo file) {
+      global::DripSharp.Runtime.JavaFile file) {
       try {
         if (global::DripSharp.Runtime.JavaCompat.StringEndsWith(file.Name.ToLowerInvariant(),
           ".ttc")) {
@@ -233,7 +233,7 @@ internal sealed class FileSystemFontProvider
     }
 
     internal global::DripSharp.PdfCarton.Fonts.Type1.Type1Font getType1Font(string postScriptName,
-      global::System.IO.FileInfo file) {
+      global::DripSharp.Runtime.JavaFile file) {
       try {
         using (global::System.IO.Stream input
           = global::DripSharp.Runtime.JavaCompat.OpenFileInput(file)) {
@@ -256,13 +256,13 @@ internal sealed class FileSystemFontProvider
     }
   }
 
-  private global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.FSFontInfo createFSIgnored(global::System.IO.FileInfo file,
+  private global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.FSFontInfo createFSIgnored(global::DripSharp.Runtime.JavaFile file,
     global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat format, string postScriptName) {
     string hash;
     try {
       hash = (global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.SKIP_CHECKSUMS
         ? global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.CHECKSUM_PLACEHOLDER
-        : global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.computeHash(global::DripSharp.Runtime.JavaCompat.OpenInputStream(new global::DripSharp.Runtime.JavaPath(file.FullName))));
+        : global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.computeHash(global::DripSharp.Runtime.JavaCompat.OpenInputStream(global::DripSharp.Runtime.JavaCompat.FileToPath(file))));
     } catch (global::System.IO.IOException) {
       hash = "";
     }
@@ -283,11 +283,11 @@ internal sealed class FileSystemFontProvider
       global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontFileFinder fontFileFinder
         = new global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontFileFinder();
       global::System.Collections.Generic.IList<global::System.Uri> fonts = fontFileFinder.Find();
-      global::System.Collections.Generic.IList<global::System.IO.FileInfo> files
-        = new global::System.Collections.Generic.List<global::System.IO.FileInfo>(global::DripSharp.Runtime.JavaCompat.CollectionCount(fonts));
+      global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaFile> files
+        = new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaFile>(global::DripSharp.Runtime.JavaCompat.CollectionCount(fonts));
       foreach (global::System.Uri font in fonts) {
         global::DripSharp.Runtime.JavaCompat.Add(files,
-          global::DripSharp.Runtime.JavaCompat.NewFileInfo(font));
+          global::DripSharp.Runtime.JavaCompat.NewJavaFile(font));
       }
       if (global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Trace)) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogTrace(global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.LOG,
@@ -318,8 +318,8 @@ internal sealed class FileSystemFontProvider
     }
   }
 
-  private void scanFonts(global::System.Collections.Generic.IList<global::System.IO.FileInfo> files) {
-    foreach (global::System.IO.FileInfo file in files) {
+  private void scanFonts(global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaFile> files) {
+    foreach (global::DripSharp.Runtime.JavaFile file in files) {
       string filePath = file.ToString().ToLowerInvariant();
       if ((global::DripSharp.Runtime.JavaCompat.StringEndsWith(filePath, ".ttf")
         || global::DripSharp.Runtime.JavaCompat.StringEndsWith(filePath, ".otf"))) {
@@ -337,7 +337,7 @@ internal sealed class FileSystemFontProvider
     }
   }
 
-  private global::System.IO.FileInfo getDiskCacheFile() {
+  private global::DripSharp.Runtime.JavaFile getDiskCacheFile() {
     string path = global::DripSharp.Runtime.JavaCompat.GetProperty("pdfbox.fontcache");
     if (global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.isBadPath(path)) {
       path = global::DripSharp.Runtime.JavaCompat.GetProperty("user.home");
@@ -345,18 +345,18 @@ internal sealed class FileSystemFontProvider
         path = global::DripSharp.Runtime.JavaCompat.GetProperty("java.io.tmpdir");
       }
     }
-    return global::DripSharp.Runtime.JavaCompat.NewFileInfo(path, ".pdfbox.cache");
+    return global::DripSharp.Runtime.JavaCompat.NewJavaFile(path, ".pdfbox.cache");
   }
 
   private static bool isBadPath(string path) {
     return (((path == default!)
-      || !global::DripSharp.Runtime.JavaCompat.FileIsDirectory(new global::System.IO.FileInfo(path)))
-      || !global::DripSharp.Runtime.JavaCompat.FileCanWrite(new global::System.IO.FileInfo(path)));
+      || !global::DripSharp.Runtime.JavaCompat.FileIsDirectory(global::DripSharp.Runtime.JavaCompat.NewJavaFile(path)))
+      || !global::DripSharp.Runtime.JavaCompat.FileCanWrite(global::DripSharp.Runtime.JavaCompat.NewJavaFile(path)));
   }
 
   private void saveDiskCache() {
     try {
-      global::System.IO.FileInfo file = this.getDiskCacheFile();
+      global::DripSharp.Runtime.JavaFile file = this.getDiskCacheFile();
       try {
         using (global::System.IO.TextWriter writer
           = new global::System.IO.StreamWriter(global::DripSharp.Runtime.JavaCompat.OpenFileOutput(file),
@@ -419,7 +419,7 @@ internal sealed class FileSystemFontProvider
       }
     }
     writer.Write("|");
-    writer.Write(fontInfo.file.FullName);
+    writer.Write(global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(fontInfo.file));
     writer.Write("|");
     writer.Write(fontInfo.hash);
     writer.Write("|");
@@ -427,15 +427,15 @@ internal sealed class FileSystemFontProvider
     writer.WriteLine();
   }
 
-  private global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.FSFontInfo> loadDiskCache(global::System.Collections.Generic.IList<global::System.IO.FileInfo> files) {
+  private global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.FSFontInfo> loadDiskCache(global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaFile> files) {
     global::System.Collections.Generic.ISet<string> pending
       = new global::System.Collections.Generic.HashSet<string>();
-    foreach (global::System.IO.FileInfo file in files) {
-      pending.Add(file.FullName);
+    foreach (global::DripSharp.Runtime.JavaFile file in files) {
+      pending.Add(global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(file));
     }
     global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.FSFontInfo> results
       = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.FSFontInfo>();
-    global::System.IO.FileInfo diskCacheFile = default!;
+    global::DripSharp.Runtime.JavaFile diskCacheFile = default!;
     bool fileExists = false;
     try {
       diskCacheFile = this.getDiskCacheFile();
@@ -450,7 +450,7 @@ internal sealed class FileSystemFontProvider
         using (global::System.IO.TextReader reader
           = new global::System.IO.StreamReader(global::DripSharp.Runtime.JavaCompat.OpenFileInput(diskCacheFile!),
           global::DripSharp.Runtime.JavaStandardCharsets.UTF8)) {
-          global::System.IO.FileInfo lastFile = default!;
+          global::DripSharp.Runtime.JavaFile lastFile = default!;
           string lastHash = default!;
           string line;
           while (((line = reader.ReadLine()) != default!)) {
@@ -470,7 +470,7 @@ internal sealed class FileSystemFontProvider
             int ulCodePageRange2;
             int macStyle = -1;
             sbyte[] panose = default!;
-            global::System.IO.FileInfo fontFile;
+            global::DripSharp.Runtime.JavaFile fontFile;
             string hash = "";
             long lastModified = 0;
             postScriptName = parts[0];
@@ -500,7 +500,7 @@ internal sealed class FileSystemFontProvider
                 panose![i] = unchecked((sbyte)(unchecked((sbyte)((b & 255)))));
               }
             }
-            fontFile = new global::System.IO.FileInfo(parts[9]);
+            fontFile = global::DripSharp.Runtime.JavaCompat.NewJavaFile(parts[9]);
             if ((((parts.Length >= 12) && !((parts[10].Length == 0))) && !((parts[11].Length
               == 0)))) {
               hash = parts[10];
@@ -518,14 +518,14 @@ internal sealed class FileSystemFontProvider
                 } else {
                   try {
                     newHash
-                      = global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.computeHash(global::DripSharp.Runtime.JavaCompat.OpenInputStream(new global::DripSharp.Runtime.JavaPath(fontFile.FullName)));
+                      = global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.computeHash(global::DripSharp.Runtime.JavaCompat.OpenInputStream(global::DripSharp.Runtime.JavaCompat.FileToPath(fontFile)));
                     lastFile = fontFile;
                     lastHash = newHash;
                   } catch (global::System.IO.IOException ex) {
                     global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.LOG,
                       (global::System.Exception)ex,
                       global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Error reading font file ",
-                      fontFile.FullName)));
+                      global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(fontFile))));
                     newHash = "<err>";
                   }
                 }
@@ -543,15 +543,17 @@ internal sealed class FileSystemFontProvider
               } else {
                 global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.LOG,
                   global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Font file ",
-                  fontFile.FullName), " is different")));
+                  global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(fontFile)),
+                  " is different")));
                 continue;
               }
             } else {
               global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.LOG,
                 global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Font file ",
-                fontFile.FullName), " not found, skipped")));
+                global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(fontFile)),
+                " not found, skipped")));
             }
-            pending.Remove(fontFile.FullName);
+            pending.Remove(global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(fontFile));
           }
         }
       } catch (global::System.IO.IOException e) {
@@ -570,14 +572,18 @@ internal sealed class FileSystemFontProvider
     return results;
   }
 
-  private void addTrueTypeCollection(global::System.IO.FileInfo ttcFile) {
+  private void addTrueTypeCollection(global::DripSharp.Runtime.JavaFile ttcFile) {
     try {
       string hash = (global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.SKIP_CHECKSUMS
         ? global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.CHECKSUM_PLACEHOLDER
-        : global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.computeHash(global::DripSharp.Runtime.JavaCompat.OpenInputStream(new global::DripSharp.Runtime.JavaPath(ttcFile.FullName))));
-      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.ProcessAllFontHeaders(ttcFile,
-        new global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.__TrueTypeFontHeadersProcessorFunctionalAdapter((fontHeaders)
-        => this.addTrueTypeFontImpl(fontHeaders, ttcFile, hash)));
+        : global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.computeHash(global::DripSharp.Runtime.JavaCompat.OpenInputStream(global::DripSharp.Runtime.JavaCompat.FileToPath(ttcFile))));
+      global::DripSharp.Runtime.JavaFileBridge.Call(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection),
+        nameof(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.ProcessAllFontHeaders),
+        new global::System.Type[] { typeof(global::System.IO.FileInfo),
+          typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontHeadersProcessor) },
+        new object[] { ttcFile,
+          new global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.__TrueTypeFontHeadersProcessorFunctionalAdapter((fontHeaders)
+          => this.addTrueTypeFontImpl(fontHeaders, ttcFile, hash)) });
     } catch (global::System.IO.IOException e) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.LOG,
         (global::System.Exception)e,
@@ -588,7 +594,7 @@ internal sealed class FileSystemFontProvider
     }
   }
 
-  private void addTrueTypeFont(global::System.IO.FileInfo ttfFile) {
+  private void addTrueTypeFont(global::DripSharp.Runtime.JavaFile ttfFile) {
     global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat fontFormat = default!;
     try {
       global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser parser;
@@ -605,7 +611,7 @@ internal sealed class FileSystemFontProvider
       this.addTrueTypeFontImpl(headers, ttfFile,
         (global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.SKIP_CHECKSUMS
         ? global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.CHECKSUM_PLACEHOLDER
-        : global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.computeHash(global::DripSharp.Runtime.JavaCompat.OpenInputStream(new global::DripSharp.Runtime.JavaPath(ttfFile.FullName)))));
+        : global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.computeHash(global::DripSharp.Runtime.JavaCompat.OpenInputStream(global::DripSharp.Runtime.JavaCompat.FileToPath(ttfFile)))));
     } catch (global::System.IO.IOException e) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.LOG,
         (global::System.Exception)e,
@@ -617,7 +623,7 @@ internal sealed class FileSystemFontProvider
   }
 
   private void addTrueTypeFontImpl(global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders fontHeaders,
-    global::System.IO.FileInfo file, string hash) {
+    global::DripSharp.Runtime.JavaFile file, string hash) {
     string error = fontHeaders.GetError();
     if ((error == default!)) {
       string name = fontHeaders.GetName();
@@ -704,7 +710,7 @@ internal sealed class FileSystemFontProvider
     }
   }
 
-  private void addType1Font(global::System.IO.FileInfo pfbFile) {
+  private void addType1Font(global::DripSharp.Runtime.JavaFile pfbFile) {
     try {
       using (global::System.IO.Stream input
         = global::DripSharp.Runtime.JavaCompat.OpenFileInput(pfbFile)) {
@@ -729,7 +735,7 @@ internal sealed class FileSystemFontProvider
         string hash
           = (global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.SKIP_CHECKSUMS
           ? global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.CHECKSUM_PLACEHOLDER
-          : global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.computeHash(global::DripSharp.Runtime.JavaCompat.OpenInputStream(new global::DripSharp.Runtime.JavaPath(pfbFile.FullName))));
+          : global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.computeHash(global::DripSharp.Runtime.JavaCompat.OpenInputStream(global::DripSharp.Runtime.JavaCompat.FileToPath(pfbFile))));
         global::DripSharp.Runtime.JavaCompat.Add(this.fontInfoList,
           new global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider.FSFontInfo(pfbFile,
           global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat.Pfb, type1.GetName(),

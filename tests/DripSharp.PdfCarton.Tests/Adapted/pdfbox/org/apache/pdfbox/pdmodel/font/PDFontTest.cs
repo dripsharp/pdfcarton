@@ -5,7 +5,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public class PDFontTest {
-  private static readonly global::System.IO.FileInfo OUT_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output"));
 
@@ -15,8 +15,10 @@ public class PDFontTest {
 
   internal virtual void testPDFBox988() {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "F001u_3_7j.pdf"))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontTest),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "F001u_3_7j.pdf"))) })) {
       global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer
         = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc);
       renderer.RenderImage(0);
@@ -39,8 +41,8 @@ public class PDFontTest {
   }
 
   internal virtual void testPDFBox3747() {
-    global::System.IO.FileInfo file
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "c:/windows/fonts"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "calibri.ttf"));
     global::DripSharp.Testing.JavaAssertions.AssumeTrue(global::System.IO.File.Exists(file.FullName),
@@ -53,7 +55,9 @@ public class PDFontTest {
         = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
       doc__125_25.AddPage(page);
       global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font
-        = global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font.Load(doc__125_25, file);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font>(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font),
+        "Load", new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo) }, new object[] { doc__125_25, file });
       using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream cs
         = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc__125_25, page)) {
         cs.BeginText();
@@ -78,7 +82,8 @@ public class PDFontTest {
       = global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "/org/apache/pdfbox/resources/ttf/LiberationSans-Regular.ttf"));
-    global::System.IO.FileInfo fontFile = global::DripSharp.Runtime.JavaCompat.NewFileInfo(url);
+    global::DripSharp.Runtime.JavaFile fontFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(url);
     using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf1
       = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(fontFile))) {
       this.testPDFBox3826checkFonts(this.testPDFBox3826createDoc(ttf1), fontFile);
@@ -90,13 +95,13 @@ public class PDFontTest {
   }
 
   internal virtual void testPDFBOX4115() {
-    global::System.IO.FileInfo fontFile
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile fontFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/fonts"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "n019003l.pfb"));
-    global::System.IO.FileInfo outputFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.PDFontTest.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "FontType1.pdf")));
+    global::DripSharp.Runtime.JavaFile outputFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontTest.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "FontType1.pdf"));
     string text = "\u00E4\u00F6\u00FC\u00C4\u00D6\u00DC";
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__187_25
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
@@ -116,10 +121,14 @@ public class PDFontTest {
         contentStream.EndText();
       }
       doc__187_25.AddPage(page);
-      doc__187_25.Save(outputFile);
+      global::DripSharp.Runtime.JavaFileBridge.Call(doc__187_25, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { outputFile });
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__206_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(outputFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { outputFile })) {
       global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font font__208_25
         = (global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font)(doc__206_25.GetPage(0).GetResources().GetFont(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "F1")))!);
@@ -159,7 +168,8 @@ public class PDFontTest {
     foreach (global::System.Uri uri in fff.Find()) {
       if (global::DripSharp.Runtime.JavaCompat.StringEndsWith(global::DripSharp.Runtime.JavaCompat.UriPath(uri)!,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ".ttc"))) {
-        global::System.IO.FileInfo file = global::DripSharp.Runtime.JavaCompat.NewFileInfo(uri);
+        global::DripSharp.Runtime.JavaFile file
+          = global::DripSharp.Runtime.JavaCompat.NewJavaFile(uri);
         global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           global::DripSharp.Runtime.JavaCompat.Concat("TrueType collection file: ", file)));
         ttc = new global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection(file);
@@ -208,7 +218,8 @@ public class PDFontTest {
     }
   }
 
-  private void testPDFBox3826checkFonts(sbyte[] byteArray, global::System.IO.FileInfo fontFile) {
+  private void testPDFBox3826checkFonts(sbyte[] byteArray,
+    global::DripSharp.Runtime.JavaFile fontFile) {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = global::DripSharp.PdfCarton.Loader.LoadPDF(byteArray)) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page2 = doc.GetPage(0);
@@ -283,19 +294,19 @@ public class PDFontTest {
   }
 
   internal virtual void testDeleteFont() {
-    global::System.IO.FileInfo tempFontFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.PDFontTest.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "LiberationSans-Regular.ttf")));
-    global::System.IO.FileInfo tempPdfFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Font.PDFontTest.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testDeleteFont.pdf")));
+    global::DripSharp.Runtime.JavaFile tempFontFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontTest.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "LiberationSans-Regular.ttf"));
+    global::DripSharp.Runtime.JavaFile tempPdfFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Font.PDFontTest.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testDeleteFont.pdf"));
     string text = "Test PDFBOX-4823";
     using (global::System.IO.Stream @is
       = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "/org/apache/pdfbox/resources/ttf/LiberationSans-Regular.ttf"))) {
       global::DripSharp.Runtime.JavaCompat.Copy(@is,
-        new global::DripSharp.Runtime.JavaPath(tempFontFile.FullName), new object());
+        global::DripSharp.Runtime.JavaCompat.FileToPath(tempFontFile), new object());
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__379_25
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
@@ -305,25 +316,32 @@ public class PDFontTest {
       using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream cs
         = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc__379_25, page)) {
         global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font
-          = global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font.Load(doc__379_25, tempFontFile);
+          = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font>(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font),
+          "Load",
+          new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+            typeof(global::System.IO.FileInfo) }, new object[] { doc__379_25, tempFontFile });
         cs.BeginText();
         cs.SetFont(font, (float)(50));
         cs.NewLineAtOffset((float)(50), (float)(700));
         cs.ShowText(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", text));
         cs.EndText();
       }
-      doc__379_25.Save(tempPdfFile);
+      global::DripSharp.Runtime.JavaFileBridge.Call(doc__379_25, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { tempPdfFile });
     }
-    global::DripSharp.Runtime.JavaCompat.DeleteIfExists(new global::DripSharp.Runtime.JavaPath(tempFontFile.FullName));
+    global::DripSharp.Runtime.JavaCompat.DeleteIfExists(global::DripSharp.Runtime.JavaCompat.FileToPath(tempFontFile));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__397_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(tempPdfFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { tempPdfFile })) {
       global::DripSharp.PdfCarton.Text.PDFTextStripper stripper
         = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
       string extractedText = stripper.GetText(doc__397_25);
       global::DripSharp.Testing.JavaAssertions.Equal(text,
         global::DripSharp.Runtime.JavaCompat.StringTrim(extractedText), null);
     }
-    global::DripSharp.Runtime.JavaCompat.DeleteIfExists(new global::DripSharp.Runtime.JavaPath(tempPdfFile.FullName));
+    global::DripSharp.Runtime.JavaCompat.DeleteIfExists(global::DripSharp.Runtime.JavaCompat.FileToPath(tempPdfFile));
   }
 
   internal virtual void testSoftHyphen() {
@@ -373,8 +391,8 @@ public class PDFontTest {
   }
 
   internal virtual void testPDFBox5484() {
-    global::System.IO.FileInfo fontFile
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile fontFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/fonts"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "PDFBOX-5484.ttf"));
     global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf

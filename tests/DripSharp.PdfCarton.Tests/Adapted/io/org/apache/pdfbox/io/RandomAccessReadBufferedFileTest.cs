@@ -7,7 +7,7 @@ namespace DripSharp.PdfCarton.IO;
 public class RandomAccessReadBufferedFileTest {
   internal virtual void testPositionSkip() {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "RandomAccessReadFile1.txt"))))) {
       global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessSource.GetPosition(),
         null);
@@ -20,7 +20,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testPositionRead() {
     global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "RandomAccessReadFile1.txt"))));
     global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessSource.GetPosition(),
       null);
@@ -36,7 +36,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testSeekEOF() {
     global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "RandomAccessReadFile1.txt"))));
     randomAccessSource.Seek((long)(3));
     global::DripSharp.Testing.JavaAssertions.Equal((long)(3), randomAccessSource.GetPosition(),
@@ -59,7 +59,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testPositionReadBytes() {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "RandomAccessReadFile1.txt"))))) {
       global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessSource.GetPosition(),
         null);
@@ -81,7 +81,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testPositionPeek() {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "RandomAccessReadFile1.txt"))))) {
       global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessSource.GetPosition(),
         null);
@@ -106,7 +106,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testPositionUnreadBytes() {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "RandomAccessReadFile1.txt"))))) {
       global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessSource.GetPosition(),
         null);
@@ -135,7 +135,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testEmptyBuffer() {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io",
       "RandomAccessReadEmptyFile.txt"))))) {
       global::DripSharp.Testing.JavaAssertions.Equal(-1, randomAccessSource.Read(), null);
@@ -161,7 +161,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testView() {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io",
       "RandomAccessReadFile1.txt"))))) using (global::DripSharp.PdfCarton.IO.RandomAccessReadView view
       = randomAccessSource.CreateView((long)(3), (long)(10))) {
@@ -175,7 +175,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testReadFully1() {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "RandomAccessReadFile1.txt"))))) {
       sbyte[] b = new sbyte[10];
       randomAccessSource.Seek((long)(1));
@@ -188,7 +188,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testReadFully2() {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "RandomAccessReadFile1.txt"))))) {
       sbyte[] b = new sbyte[10];
       ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource)).ReadFully(b, 2, 8);
@@ -202,7 +202,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testReadFully3() {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "RandomAccessReadFile1.txt"))))) {
       sbyte[] b = new sbyte[10];
       randomAccessSource.Seek((randomAccessSource.Length() - b.Length));
@@ -215,7 +215,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testReadFullyEOF() {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "RandomAccessReadFile1.txt"))))) {
       sbyte[] b = new sbyte[10];
       randomAccessSource.Seek(((randomAccessSource.Length() - b.Length) + 1));
@@ -241,7 +241,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testReadFullyAcrossBuffers() {
     int bufferLen;
-    global::System.IO.FileInfo file
+    global::DripSharp.Runtime.JavaFile file
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("io",
       "src/test/java/org/apache/pdfbox/io/NonSeekableRandomAccessReadInputStreamTest.java"));
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource__275_31
@@ -275,7 +275,7 @@ public class RandomAccessReadBufferedFileTest {
 
   internal virtual void testReadFullyNothing() {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessSource
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "RandomAccessReadFile1.txt"))))) {
       global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessSource.GetPosition(),
         null);

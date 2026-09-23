@@ -75,23 +75,31 @@ public class PDFCloneUtilityTest {
       }
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__123_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.Runtime.JavaCompat.Concat(TESTDIR, CLONESRC))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.Concat(TESTDIR, CLONESRC))) })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1, doc__123_25.GetNumberOfPages(), null);
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__127_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.Runtime.JavaCompat.Concat(TESTDIR, CLONESRC))), (string)default!)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.Concat(TESTDIR, CLONESRC))), (string)default! })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1, doc__127_25.GetNumberOfPages(), null);
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__131_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.Runtime.JavaCompat.Concat(TESTDIR, CLONEDST))))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.Concat(TESTDIR, CLONEDST))) })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1, doc__131_25.GetNumberOfPages(), null);
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__135_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.Runtime.JavaCompat.Concat(TESTDIR, CLONEDST))), (string)default!)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.Concat(TESTDIR, CLONEDST))), (string)default! })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1, doc__135_25.GetNumberOfPages(), null);
     }
   }

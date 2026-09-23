@@ -8,7 +8,7 @@ public class TestSymmetricKeyEncryption {
   private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
     = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
-  private static readonly global::System.IO.FileInfo TESTRESULTSDIR
+  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/crypto"));
 
@@ -160,16 +160,18 @@ public class TestSymmetricKeyEncryption {
   }
 
   internal virtual void testPDFBox5955() {
-    global::System.IO.FileInfo file40bit
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile file40bit
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/pdfs"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "PDFBOX-5955-40bit.pdf"));
-    global::System.IO.FileInfo file48bit
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile file48bit
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/pdfs"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "PDFBOX-5955-48bit.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__239_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file40bit)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { file40bit })) {
       global::DripSharp.PdfCarton.Text.PDFTextStripper stripper__241_29
         = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
       string text__242_20 = stripper__241_29.GetText(doc__239_25);
@@ -177,8 +179,10 @@ public class TestSymmetricKeyEncryption {
         "0x0446615747"), null);
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__245_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file40bit,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "ownerpass"))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { file40bit, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "ownerpass") })) {
       global::DripSharp.PdfCarton.Text.PDFTextStripper stripper__247_29
         = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
       string text__248_20 = stripper__247_29.GetText(doc__245_25);
@@ -186,7 +190,9 @@ public class TestSymmetricKeyEncryption {
         "0x0446615747"), null);
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__251_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file48bit)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { file48bit })) {
       global::DripSharp.PdfCarton.Text.PDFTextStripper stripper__253_29
         = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
       string text__254_20 = stripper__253_29.GetText(doc__251_25);
@@ -194,8 +200,10 @@ public class TestSymmetricKeyEncryption {
         "0x02988E82AFF8"), null);
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__257_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file48bit,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "ownerpass"))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { file48bit, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "ownerpass") })) {
       global::DripSharp.PdfCarton.Text.PDFTextStripper stripper__259_29
         = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
       string text__260_20 = stripper__259_29.GetText(doc__257_25);
@@ -210,7 +218,7 @@ public class TestSymmetricKeyEncryption {
       = this.getFileResourceAsByteArray(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       testFileName));
     int sizeOfFileWithEmbeddedFile = inputFileWithEmbeddedFileAsByteArray.Length;
-    global::System.IO.FileInfo extractedEmbeddedFile
+    global::DripSharp.Runtime.JavaFile extractedEmbeddedFile
       = this.extractEmbeddedFile(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(inputFileWithEmbeddedFileAsByteArray),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "innerFile.pdf"));
     this.testSymmEncrForKeySizeInner(40, false, sizeOfFileWithEmbeddedFile,
@@ -241,9 +249,9 @@ public class TestSymmetricKeyEncryption {
 
   internal virtual void testPDFBox4453() {
     int TESTCOUNT = 1000;
-    global::System.IO.FileInfo file
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Encryption.TestSymmetricKeyEncryption.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4453.pdf")));
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Encryption.TestSymmetricKeyEncryption.TESTRESULTSDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4453.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__307_25
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       doc__307_25.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
@@ -264,10 +272,13 @@ public class TestSymmetricKeyEncryption {
       spp.SetEncryptionKeyLength(40);
       spp.SetPreferAES(false);
       doc__307_25.Protect(spp);
-      doc__307_25.Save(file);
+      global::DripSharp.Runtime.JavaFileBridge.Call(doc__307_25, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__331_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { file })) {
       global::DripSharp.Testing.JavaAssertions.True(doc__331_25.IsEncrypted(), null);
       for (int i__334_22 = 0; (i__334_22 < TESTCOUNT); ++i__334_22) {
         global::DripSharp.PdfCarton.Cos.COSDictionary dict__336_31
@@ -284,13 +295,15 @@ public class TestSymmetricKeyEncryption {
   }
 
   internal virtual void testPDFBox5639() {
-    global::System.IO.FileInfo file
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/pdfs"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "PDFBOX-5639.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "JUL2023rfi"))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { file, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "JUL2023rfi") })) {
       global::DripSharp.Testing.JavaAssertions.Equal(2, document.GetNumberOfPages(), null);
     }
   }
@@ -338,13 +351,14 @@ public class TestSymmetricKeyEncryption {
             i__384_22), " not identical")));
         }
       }
-      global::System.IO.FileInfo pdfFile
-        = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Encryption.TestSymmetricKeyEncryption.TESTRESULTSDIR).FullName,
+      global::DripSharp.Runtime.JavaFile pdfFile
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Encryption.TestSymmetricKeyEncryption.TESTRESULTSDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(prefix,
-        keyLength), "-bit-"), (preferAES ? "AES" : "RC4")), "-decrypted.pdf"))));
+        keyLength), "-bit-"), (preferAES ? "AES" : "RC4")), "-decrypted.pdf")));
       encryptedDoc.SetAllSecurityToBeRemoved(true);
-      encryptedDoc.Save(pdfFile);
+      global::DripSharp.Runtime.JavaFileBridge.Call(encryptedDoc, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdfFile });
     }
   }
 
@@ -360,12 +374,13 @@ public class TestSymmetricKeyEncryption {
     spp.SetPreferAES(preferAES);
     doc.SetAllSecurityToBeRemoved(true);
     doc.Protect(spp);
-    global::System.IO.FileInfo pdfFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Encryption.TestSymmetricKeyEncryption.TESTRESULTSDIR).FullName,
+    global::DripSharp.Runtime.JavaFile pdfFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Encryption.TestSymmetricKeyEncryption.TESTRESULTSDIR,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(prefix,
-      keyLength), "-bit-"), (preferAES ? "AES" : "RC4")), "-encrypted.pdf"))));
-    doc.Save(pdfFile);
+      keyLength), "-bit-"), (preferAES ? "AES" : "RC4")), "-encrypted.pdf")));
+    global::DripSharp.Runtime.JavaFileBridge.Call(doc, "Save",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdfFile });
     doc.Dispose();
     long sizeEncrypted = pdfFile.Length;
     global::DripSharp.Testing.JavaAssertions.NotEqual(sizeEncrypted, (long)(sizePriorToEncr),
@@ -374,8 +389,10 @@ public class TestSymmetricKeyEncryption {
       "-bit "), (preferAES ? "AES" : "RC4")),
       " encrypted pdf should not have same size as plain one")));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument encryptedDoc__429_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ownerpassword))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { pdfFile, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        ownerpassword) })) {
       global::DripSharp.Testing.JavaAssertions.True(encryptedDoc__429_25.IsEncrypted(), null);
       global::DripSharp.Testing.JavaAssertions.True(encryptedDoc__429_25.GetCurrentAccessPermission().IsOwnerPermission(),
         null);
@@ -396,8 +413,10 @@ public class TestSymmetricKeyEncryption {
       }
     }
     global::DripSharp.PdfCarton.Pdmodel.PDDocument encryptedDoc__451_20
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", userpassword));
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { pdfFile, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        userpassword) });
     global::DripSharp.Testing.JavaAssertions.True(encryptedDoc__451_20.IsEncrypted(), null);
     global::DripSharp.Testing.JavaAssertions.False(encryptedDoc__451_20.GetCurrentAccessPermission().IsOwnerPermission(),
       null);
@@ -406,7 +425,7 @@ public class TestSymmetricKeyEncryption {
     return encryptedDoc__451_20;
   }
 
-  private global::System.IO.FileInfo extractEmbeddedFile(global::DripSharp.PdfCarton.IO.RandomAccessRead pdfSource,
+  private global::DripSharp.Runtime.JavaFile extractEmbeddedFile(global::DripSharp.PdfCarton.IO.RandomAccessRead pdfSource,
     string name) {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument docWithEmbeddedFile
       = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfSource);
@@ -430,9 +449,9 @@ public class TestSymmetricKeyEncryption {
       = entry.Value;
     global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile embeddedFile
       = complexFileSpec.GetEmbeddedFile();
-    global::System.IO.FileInfo resultFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Encryption.TestSymmetricKeyEncryption.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", name)));
+    global::DripSharp.Runtime.JavaFile resultFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Encryption.TestSymmetricKeyEncryption.TESTRESULTSDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", name));
     using (global::System.IO.Stream fos
       = global::DripSharp.Runtime.JavaCompat.OpenFileOutput(resultFile)) using (global::System.IO.Stream @is
       = embeddedFile.CreateInputStream()) {
@@ -448,7 +467,7 @@ public class TestSymmetricKeyEncryption {
 
   private void testSymmEncrForKeySizeInner(int keyLength, bool preferAES, int sizePriorToEncr,
     sbyte[] inputFileWithEmbeddedFileAsByteArray,
-    global::System.IO.FileInfo embeddedFilePriorToEncryption, string userpassword,
+    global::DripSharp.Runtime.JavaFile embeddedFilePriorToEncryption, string userpassword,
     string ownerpassword) {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = global::DripSharp.PdfCarton.Loader.LoadPDF(inputFileWithEmbeddedFileAsByteArray);
@@ -458,14 +477,16 @@ public class TestSymmetricKeyEncryption {
       global::DripSharp.PdfCarton.Encryption.TestSymmetricKeyEncryption.permission,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", userpassword),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ownerpassword))) {
-      global::System.IO.FileInfo decryptedFile
-        = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Encryption.TestSymmetricKeyEncryption.TESTRESULTSDIR).FullName,
+      global::DripSharp.Runtime.JavaFile decryptedFile
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Encryption.TestSymmetricKeyEncryption.TESTRESULTSDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("DecryptedContainsEmbedded-",
-        keyLength), "-bit-"), (preferAES ? "AES" : "RC4")), ".pdf"))));
+        keyLength), "-bit-"), (preferAES ? "AES" : "RC4")), ".pdf")));
       encryptedDoc.SetAllSecurityToBeRemoved(true);
-      encryptedDoc.Save(decryptedFile);
-      global::System.IO.FileInfo extractedEmbeddedFile
+      global::DripSharp.Runtime.JavaFileBridge.Call(encryptedDoc, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { decryptedFile });
+      global::DripSharp.Runtime.JavaFile extractedEmbeddedFile
         = this.extractEmbeddedFile(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(decryptedFile),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("decryptedInnerFile-",
@@ -488,8 +509,8 @@ public class TestSymmetricKeyEncryption {
     }
   }
 
-  private sbyte[] getFileAsByteArray(global::System.IO.FileInfo f) {
-    return global::DripSharp.Runtime.JavaCompat.ReadAllBytes(new global::DripSharp.Runtime.JavaPath(f.FullName));
+  private sbyte[] getFileAsByteArray(global::DripSharp.Runtime.JavaFile f) {
+    return global::DripSharp.Runtime.JavaCompat.ReadAllBytes(global::DripSharp.Runtime.JavaCompat.FileToPath(f));
   }
 
   [Xunit.Fact]

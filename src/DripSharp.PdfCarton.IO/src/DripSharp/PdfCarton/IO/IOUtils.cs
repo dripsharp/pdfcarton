@@ -249,7 +249,7 @@ public sealed class IOUtils {
         global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.StreamSorted(entries,
           global::DripSharp.Runtime.JavaCompat.ReverseComparer<global::DripSharp.Runtime.JavaPath>()),
           (p)
-          => global::DripSharp.Runtime.JavaCompat.FileDelete(new global::System.IO.FileInfo(p)));
+          => global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(p)));
       }
     } catch (global::System.IO.IOException) {}
   }
@@ -283,7 +283,8 @@ public sealed class IOUtils {
         = global::DripSharp.Runtime.JavaCompat.getFileAttributeView(path,
         typeof(global::DripSharp.Runtime.JavaAclFileAttributeView));
       if ((aclView == default!)) {
-        global::System.IO.FileInfo pathAsFile = new global::System.IO.FileInfo(path);
+        global::DripSharp.Runtime.JavaFile pathAsFile
+          = global::DripSharp.Runtime.JavaCompat.NewJavaFile(path);
         bool isReadable = global::DripSharp.Runtime.JavaCompat.SetFileReadable(pathAsFile, true,
           true);
         bool isWritable = global::DripSharp.Runtime.JavaCompat.SetFileWritable(pathAsFile, true,

@@ -18,7 +18,7 @@
     <EmbedUntrackedSources>false</EmbedUntrackedSources>
     <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
     <PackageId>DripSharp.PdfCarton.IO</PackageId>
-    <Version>3.0.8-alpha.4</Version>
+    <Version>3.0.8-alpha.5</Version>
     <Title>PdfCarton I/O</Title>
     <Description>Apache PDFBox random-access and stream I/O for .NET, mechanically translated by DripSharp. This package is an independent translation and is not affiliated with, endorsed by, or sponsored by the Apache Software Foundation.</Description>
     <Authors>Isak Sky</Authors>
@@ -41,6 +41,9 @@
     <SourceRoot Include="$(MSBuildProjectDirectory)/" RepositoryUrl="https://github.com/dripsharp/pdfcarton.git" SourceControl="git" RevisionId="$(RepositoryCommit)" SourceLinkUrl="https://raw.githubusercontent.com/dripsharp/pdfcarton/$(RepositoryCommit)/src/DripSharp.PdfCarton.IO/*" />
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>DripSharp.PdfCarton</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>DripSharp.PdfCarton.Fonts</_Parameter1>
     </AssemblyAttribute>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>DripSharp.PdfCarton.Preflight</_Parameter1>

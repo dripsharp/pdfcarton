@@ -5,11 +5,11 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class PDAcroFormFlattenTest {
-  private static readonly global::System.IO.FileInfo IN_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/flatten/in"));
 
-  private static readonly global::System.IO.FileInfo OUT_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/flatten/out"));
 
@@ -27,8 +27,10 @@ public class PDAcroFormFlattenTest {
     string filename
       = "src/test/resources/org/apache/pdfbox/pdmodel/interactive/form/MultilineFields.pdf";
     global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      filename)));
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        filename)) });
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
       = document.GetDocumentCatalog().GetAcroForm();
     int numFieldsBefore
@@ -55,28 +57,34 @@ public class PDAcroFormFlattenTest {
     string targetFileName = "PDFBOX-4889-5254.pdf";
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.generateSamples(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       sourceUrl), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName));
-    global::System.IO.FileInfo inputFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName)));
-    global::System.IO.FileInfo outputFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName)));
+    global::DripSharp.Runtime.JavaFile inputFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName));
+    global::DripSharp.Runtime.JavaFile outputFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument testPdf
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(inputFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { inputFile })) {
       testPdf.GetDocumentCatalog().GetAcroForm().Flatten();
       testPdf.SetAllSecurityToBeRemoved(true);
-      testPdf.Save(outputFile);
+      global::DripSharp.Runtime.JavaFileBridge.Call(testPdf, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { outputFile });
       global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(testPdf.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!).GetFields()),
         null);
       global::DripSharp.Testing.JavaAssertions.Equal(72,
         global::DripSharp.Runtime.JavaCompat.CollectionCount(testPdf.GetPage(0).GetAnnotations()),
         null);
     }
-    if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.DoTestFile(outputFile,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR.FullName),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.OUT_DIR.FullName)))) {
+    if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
+      "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
+        typeof(string) }, new object[] { outputFile,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR)),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.OUT_DIR)) }))) {
       global::DripSharp.Testing.JavaAssertions.Fail("Assertion failed.");
     } else {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.removeAllRenditions(inputFile);
@@ -91,14 +99,16 @@ public class PDAcroFormFlattenTest {
     string targetFileName = "PDFBOX-5225.pdf";
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.generateSamples(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       sourceUrl), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName));
-    global::System.IO.FileInfo inputFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName)));
-    global::System.IO.FileInfo outputFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName)));
+    global::DripSharp.Runtime.JavaFile inputFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName));
+    global::DripSharp.Runtime.JavaFile outputFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument testPdf
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(inputFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { inputFile })) {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
         = testPdf.GetDocumentCatalog().GetAcroForm();
       global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> list
@@ -107,7 +117,9 @@ public class PDAcroFormFlattenTest {
         acroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "VN_NAME")));
       acroForm.Flatten(list, false);
       testPdf.SetAllSecurityToBeRemoved(true);
-      testPdf.Save(outputFile);
+      global::DripSharp.Runtime.JavaFileBridge.Call(testPdf, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { outputFile });
       int count = 0;
       global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> iterator
         = acroForm.GetFieldTree().Iterator();
@@ -120,11 +132,13 @@ public class PDAcroFormFlattenTest {
         global::DripSharp.Runtime.JavaCompat.CollectionCount(testPdf.GetPage(0).GetAnnotations()),
         null);
     }
-    if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.DoTestFile(outputFile,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR.FullName),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.OUT_DIR.FullName)))) {
+    if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
+      "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
+        typeof(string) }, new object[] { outputFile,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR)),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.OUT_DIR)) }))) {
       global::DripSharp.PdfCarton.Tests.Support.ErrorStream.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Rendering of ",
         outputFile), " failed or is not identical to expected rendering in "),
@@ -140,25 +154,31 @@ public class PDAcroFormFlattenTest {
   private static void flattenAndCompare(string sourceUrl, string targetFileName) {
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.generateSamples(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       sourceUrl), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName));
-    global::System.IO.FileInfo inputFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName)));
-    global::System.IO.FileInfo outputFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.OUT_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName)));
+    global::DripSharp.Runtime.JavaFile inputFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName));
+    global::DripSharp.Runtime.JavaFile outputFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.OUT_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFileName));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument testPdf
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(inputFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { inputFile })) {
       testPdf.GetDocumentCatalog().GetAcroForm().Flatten();
       testPdf.SetAllSecurityToBeRemoved(true);
       global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(testPdf.GetDocumentCatalog().GetAcroForm().GetFields()),
         null);
-      testPdf.Save(outputFile);
+      global::DripSharp.Runtime.JavaFileBridge.Call(testPdf, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { outputFile });
     }
-    if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.DoTestFile(outputFile,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR.FullName),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.OUT_DIR.FullName)))) {
+    if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
+      "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
+        typeof(string) }, new object[] { outputFile,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR)),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.OUT_DIR)) }))) {
       global::DripSharp.Testing.JavaAssertions.Fail("Assertion failed.");
     } else {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.removeAllRenditions(inputFile);
@@ -170,13 +190,15 @@ public class PDAcroFormFlattenTest {
   private static void generateSamples(string sourceUrl, string targetFile) {
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.getFromUrl(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       sourceUrl), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFile));
-    global::System.IO.FileInfo file
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFile)));
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFile));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file, (string)default!)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { file, (string)default! })) {
       string outputPrefix
-        = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR.FullName,
+        = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR),
         '/'), file.Name), "-");
       int numPages = document.GetNumberOfPages();
       global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer
@@ -199,21 +221,20 @@ public class PDAcroFormFlattenTest {
       = global::DripSharp.Runtime.JavaCompat.OpenUrlStream(global::DripSharp.Runtime.JavaCompat.NewUri(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       sourceUrl)))) {
       global::DripSharp.Runtime.JavaCompat.Copy(@is,
-        new global::DripSharp.Runtime.JavaPath(new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFile))).FullName),
-        new object());
+        global::DripSharp.Runtime.JavaCompat.FileToPath(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroFormFlattenTest.IN_DIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFile))), new object());
     }
   }
 
-  private static void removeAllRenditions(global::System.IO.FileInfo inputFile) {
-    global::System.IO.FileInfo[] testFiles
+  private static void removeAllRenditions(global::DripSharp.Runtime.JavaFile inputFile) {
+    global::DripSharp.Runtime.JavaFile[] testFiles
       = global::DripSharp.PdfCarton.Tests.Support.ListFiles(global::DripSharp.PdfCarton.Tests.Support.ParentFile(inputFile),
       (dir, name) => (global::DripSharp.Runtime.JavaCompat.StringStartsWith(name,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", inputFile.Name))
       && global::DripSharp.Runtime.JavaCompat.StringEndsWith(name.ToLowerInvariant(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ".png"))));
     global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.StreamOf(testFiles),
-      (value0) => { value0.Delete(); });
+      (value0) => { global::DripSharp.Runtime.JavaCompat.FileDelete(value0); });
   }
 
   [Xunit.Fact]

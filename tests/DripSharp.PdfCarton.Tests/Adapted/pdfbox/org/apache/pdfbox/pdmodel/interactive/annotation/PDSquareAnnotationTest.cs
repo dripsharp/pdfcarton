@@ -9,7 +9,7 @@ public class PDSquareAnnotationTest {
 
   internal static global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rectangle = null!;
 
-  private static readonly global::System.IO.FileInfo IN_DIR
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "src/test/resources/org/apache/pdfbox/pdmodel/interactive/annotation"));
 
@@ -63,12 +63,14 @@ public class PDSquareAnnotationTest {
 
   internal virtual void validateAppearance() {
     int borderWidth = 1;
-    global::System.IO.FileInfo file
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDSquareAnnotationTest.IN_DIR).FullName,
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDSquareAnnotationTest.IN_DIR,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDSquareAnnotationTest.NAME_OF_PDF)));
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDSquareAnnotationTest.NAME_OF_PDF));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(file)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { file })) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page = document.GetPage(0);
       global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations
         = page.GetAnnotations();

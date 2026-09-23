@@ -13,13 +13,19 @@ public abstract class NativeFontDirFinder
   private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
     = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public virtual global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find() {
-    global::System.Collections.Generic.IList<global::System.IO.FileInfo> fontDirList
-      = new global::System.Collections.Generic.List<global::System.IO.FileInfo>();
+    return global::DripSharp.Runtime.JavaFileBridge.Export<global::System.Collections.Generic.IList<global::System.IO.FileInfo>>(__JavaFile_Find());
+  }
+
+  internal global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaFile> __JavaFile_Find() {
+    global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaFile> fontDirList
+      = new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaFile>();
     string[] searchableDirectories = this.GetSearchableDirectories();
     if ((searchableDirectories != default!)) {
       foreach (string searchableDirectorie in searchableDirectories) {
-        global::System.IO.FileInfo fontDir = new global::System.IO.FileInfo(searchableDirectorie);
+        global::DripSharp.Runtime.JavaFile fontDir
+          = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaFile(searchableDirectorie);
         try {
           if ((global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileExists(fontDir)
             && global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontDiscovery.FileCanRead(fontDir))) {

@@ -505,12 +505,22 @@ public class PDDocument : global::System.IDisposable {
   }
 
   public virtual void Save(string fileName) {
-    this.Save(new global::System.IO.FileInfo(fileName));
+    global::DripSharp.Runtime.JavaFileBridge.Call(this, "Save",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(fileName) });
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public virtual void Save(global::System.IO.FileInfo file) {
-    this.Save(file,
-      global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.DefaultCompression);
+    __JavaFile_Save(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file));
+  }
+
+  internal void __JavaFile_Save(global::DripSharp.Runtime.JavaFile file) {
+    global::DripSharp.Runtime.JavaFileBridge.Call(this, "Save",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo),
+        typeof(global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters) },
+      new object[] { file,
+        global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.DefaultCompression });
   }
 
   public virtual void Save(global::System.IO.Stream output) {
@@ -518,7 +528,14 @@ public class PDDocument : global::System.IDisposable {
       global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.DefaultCompression);
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public virtual void Save(global::System.IO.FileInfo file,
+    global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters compressParameters) {
+    __JavaFile_Save(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file),
+      compressParameters);
+  }
+
+  internal void __JavaFile_Save(global::DripSharp.Runtime.JavaFile file,
     global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters compressParameters) {
     if ((global::DripSharp.Runtime.JavaCompat.FileExists(file) && (file.Length > 0))) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.PDDocument.LOG,
@@ -533,7 +550,11 @@ public class PDDocument : global::System.IDisposable {
 
   public virtual void Save(string fileName,
     global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters compressParameters) {
-    this.Save(new global::System.IO.FileInfo(fileName), compressParameters);
+    global::DripSharp.Runtime.JavaFileBridge.Call(this, "Save",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo),
+        typeof(global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(fileName),
+        compressParameters });
   }
 
   public virtual void Save(global::System.IO.Stream output,

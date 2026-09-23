@@ -17,7 +17,7 @@ public sealed class MemoryUsageSetting {
 
   private readonly long maxStorageBytes = default;
 
-  private global::System.IO.FileInfo tempDir = null!;
+  private global::DripSharp.Runtime.JavaFile tempDir = null!;
 
   public readonly global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction StreamCache;
 
@@ -79,7 +79,12 @@ public sealed class MemoryUsageSetting {
       maxStorageBytes);
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetTempDir(global::System.IO.FileInfo tempDir) {
+    return __JavaFile_SetTempDir(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(tempDir));
+  }
+
+  internal global::DripSharp.PdfCarton.IO.MemoryUsageSetting __JavaFile_SetTempDir(global::DripSharp.Runtime.JavaFile tempDir) {
     this.tempDir = tempDir;
     return this;
   }
@@ -108,7 +113,12 @@ public sealed class MemoryUsageSetting {
     return this.maxStorageBytes;
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public global::System.IO.FileInfo GetTempDir() {
+    return global::DripSharp.Runtime.JavaFileBridge.Export<global::System.IO.FileInfo>(__JavaFile_GetTempDir());
+  }
+
+  internal global::DripSharp.Runtime.JavaFile __JavaFile_GetTempDir() {
     return this.tempDir;
   }
 

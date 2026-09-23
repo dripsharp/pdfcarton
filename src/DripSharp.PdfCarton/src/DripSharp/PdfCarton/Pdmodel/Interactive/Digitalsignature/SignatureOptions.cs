@@ -31,7 +31,12 @@ public class SignatureOptions : global::System.IDisposable {
     return this.pageNo;
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public virtual void SetVisualSignature(global::System.IO.FileInfo file) {
+    __JavaFile_SetVisualSignature(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file));
+  }
+
+  internal void __JavaFile_SetVisualSignature(global::DripSharp.Runtime.JavaFile file) {
     this.initFromRandomAccessRead(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file));
   }
 

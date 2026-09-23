@@ -126,10 +126,17 @@ public class PDFMergerUtility {
   }
 
   public virtual void AddSource(string source) {
-    this.AddSource(new global::System.IO.FileInfo(source));
+    global::DripSharp.Runtime.JavaFileBridge.Call(this, "AddSource",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(source) });
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public virtual void AddSource(global::System.IO.FileInfo source) {
+    __JavaFile_AddSource(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(source));
+  }
+
+  internal void __JavaFile_AddSource(global::DripSharp.Runtime.JavaFile source) {
     global::DripSharp.Runtime.JavaCompat.Add(this.sources, source);
   }
 
@@ -172,9 +179,11 @@ public class PDFMergerUtility {
       foreach (object sourceObject in this.sources) {
         global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDoc = default!;
         try {
-          if ((sourceObject is global::System.IO.FileInfo)) {
+          if ((sourceObject is global::DripSharp.Runtime.JavaFile)) {
             sourceDoc
-              = global::DripSharp.PdfCarton.Loader.LoadPDF((global::System.IO.FileInfo)(sourceObject!));
+              = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+              "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+              new object[] { (global::DripSharp.Runtime.JavaFile)(sourceObject!) });
           } else {
             sourceDoc
               = global::DripSharp.PdfCarton.Loader.LoadPDF((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sourceObject!));
@@ -215,9 +224,11 @@ public class PDFMergerUtility {
         = new global::DripSharp.PdfCarton.Pdmodel.PDDocument(strmCacheFunc)) {
         foreach (object sourceObject in this.sources) {
           global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDoc;
-          if ((sourceObject is global::System.IO.FileInfo)) {
+          if ((sourceObject is global::DripSharp.Runtime.JavaFile)) {
             sourceDoc
-              = global::DripSharp.PdfCarton.Loader.LoadPDF((global::System.IO.FileInfo)(sourceObject!));
+              = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+              "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+              new object[] { (global::DripSharp.Runtime.JavaFile)(sourceObject!) });
           } else {
             sourceDoc
               = global::DripSharp.PdfCarton.Loader.LoadPDF((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sourceObject!));

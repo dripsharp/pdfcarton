@@ -14,13 +14,16 @@ public interface FontDirFinder {
 
 public sealed class __FontDirFinderFunctionalAdapter
 : global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontDirFinder {
-  private readonly global::System.Func<global::System.Collections.Generic.IList<global::System.IO.FileInfo>> implementation;
-
-  public __FontDirFinderFunctionalAdapter(global::System.Func<global::System.Collections.Generic.IList<global::System.IO.FileInfo>> implementation) {
-    this.implementation = implementation;
+  private readonly global::System.Func<global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaFile>> implementation;
+  internal __FontDirFinderFunctionalAdapter(global::System.Func<global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaFile>> implementation,
+    bool internalPath) { this.implementation = implementation; }
+  public __FontDirFinderFunctionalAdapter(global::System.Func<global::System.Collections.Generic.IList<global::System.IO.FileInfo>> implementation) { this.implementation
+      = global::DripSharp.Runtime.JavaFileBridge.Import<global::System.Func<global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaFile>>>(implementation);
+  }
+  [global::DripSharp.Runtime.JavaFileBoundary]
+  public global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find() { return global::DripSharp.Runtime.JavaFileBridge.Export<global::System.Collections.Generic.IList<global::System.IO.FileInfo>>(__JavaFile_Find());
+  }
+  internal global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaFile> __JavaFile_Find() { return this.implementation();
   }
 
-  public global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find() {
-    return this.implementation();
-  }
 }

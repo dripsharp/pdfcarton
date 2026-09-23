@@ -9,16 +9,29 @@
 namespace DripSharp.PdfCarton.Preflight.Parser;
 
 public class XmlResultParser {
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public virtual global::System.Xml.XmlElement Validate(global::System.IO.FileInfo file) {
+    return __JavaFile_Validate(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file));
+  }
+
+  internal global::System.Xml.XmlElement __JavaFile_Validate(global::DripSharp.Runtime.JavaFile file) {
     return this.validate(file, file.Name);
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public virtual global::System.Xml.XmlElement Validate(global::System.Xml.XmlDocument rdocument,
     global::System.IO.FileInfo file) {
+    return __JavaFile_Validate(rdocument,
+      global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file));
+  }
+
+  internal global::System.Xml.XmlElement __JavaFile_Validate(global::System.Xml.XmlDocument rdocument,
+    global::DripSharp.Runtime.JavaFile file) {
     return this.validate(rdocument, file, file.Name);
   }
 
-  private global::System.Xml.XmlElement validate(global::System.IO.FileInfo file, string name) {
+  private global::System.Xml.XmlElement validate(global::DripSharp.Runtime.JavaFile file,
+    string name) {
     try {
       global::System.Xml.XmlDocument rdocument = new global::System.Xml.XmlDocument();
       return this.validate(rdocument, file, name);
@@ -28,12 +41,15 @@ public class XmlResultParser {
   }
 
   private global::System.Xml.XmlElement validate(global::System.Xml.XmlDocument rdocument,
-    global::System.IO.FileInfo file, string name) {
+    global::DripSharp.Runtime.JavaFile file, string name) {
     string pdfType = global::DripSharp.PdfCarton.Preflight.Format.PdfA1b.GetFname();
     global::DripSharp.PdfCarton.Preflight.ValidationResult result;
     long before = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     try {
-      result = global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser.Validate(file);
+      result
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Preflight.ValidationResult>(typeof(global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser),
+        "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { file });
     } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
       long after__96_18 = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
       return this.generateFailureResponse(rdocument, name, (after__96_18 - before), pdfType, e);

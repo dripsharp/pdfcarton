@@ -98,14 +98,16 @@ public class PDChoiceTest {
   }
 
   internal virtual void PDFBox6150() {
-    global::System.IO.FileInfo pdfFile
+    global::DripSharp.Runtime.JavaFile pdfFile
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/pdfs/PDFBOX-6150.pdf"));
     if (!global::System.IO.File.Exists(pdfFile.FullName)) {
       return;
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { pdfFile })) {
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
         = document.GetDocumentCatalog().GetAcroForm();
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDChoice field

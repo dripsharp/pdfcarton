@@ -5,7 +5,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public class LosslessFactoryTest {
-  private static readonly global::System.IO.FileInfo TESTRESULTSDIR
+  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/graphics"));
 
@@ -75,12 +75,16 @@ public class LosslessFactoryTest {
     contentStream.DrawImage(ximage3, (float)(200), (float)(600), (float)((ximage3.GetWidth() / 2)),
       (float)((ximage3.GetHeight() / 2)));
     contentStream.Dispose();
-    global::System.IO.FileInfo pdfFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactoryTest.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "misc.pdf")));
-    document.Save(pdfFile);
+    global::DripSharp.Runtime.JavaFile pdfFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactoryTest.TESTRESULTSDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "misc.pdf"));
+    global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdfFile });
     document.Dispose();
-    document = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile, (string)default!);
+    document
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { pdfFile, (string)default! });
     new global::DripSharp.PdfCarton.Rendering.PDFRenderer(document).RenderImage(0);
     document.Dispose();
   }
@@ -301,7 +305,7 @@ public class LosslessFactoryTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
     global::SkiaSharp.SKBitmap image
-      = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/imgs"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "PDFBOX-4184-032163.jpg")));
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
@@ -387,7 +391,7 @@ public class LosslessFactoryTest {
   }
 
   private void doBitmaskTransparencyTest(int imageType, string pdfFilename) {
-    global::System.IO.FileInfo pdfFile;
+    global::DripSharp.Runtime.JavaFile pdfFile;
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__452_25
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       int width = 257;
@@ -494,12 +498,15 @@ public class LosslessFactoryTest {
           (float)(ximage.GetHeight()));
       }
       pdfFile
-        = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactoryTest.TESTRESULTSDIR).FullName,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", pdfFilename)));
-      document__452_25.Save(pdfFile);
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactoryTest.TESTRESULTSDIR,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", pdfFilename));
+      global::DripSharp.Runtime.JavaFileBridge.Call(document__452_25, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdfFile });
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__545_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile, (string)default!)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { pdfFile, (string)default! })) {
       new global::DripSharp.PdfCarton.Rendering.PDFRenderer(document__545_25).RenderImage(0);
     }
   }
@@ -647,7 +654,7 @@ public class LosslessFactoryTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
     global::SkiaSharp.SKBitmap image
-      = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "target/imgs"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "PDFBOX-4184-16bit.png")));
     global::DripSharp.Testing.JavaAssertions.Equal(64,

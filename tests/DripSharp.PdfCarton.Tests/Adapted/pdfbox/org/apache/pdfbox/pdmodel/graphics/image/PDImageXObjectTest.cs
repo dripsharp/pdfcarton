@@ -95,12 +95,13 @@ public class PDImageXObjectTest {
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream @is
       = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename))) {
-      global::System.IO.FileInfo file
-        = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+      global::DripSharp.Runtime.JavaFile file
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromFileByExtension(file,
-        doc);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject),
+        "CreateFromFileByExtension", new global::System.Type[] { typeof(global::System.IO.FileInfo),
+          typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument) }, new object[] { file, doc });
       global::SkiaSharp.SKBitmap bim = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
         = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.CreateFromImage(doc,
@@ -114,14 +115,18 @@ public class PDImageXObjectTest {
   private void testCompareCreatedFileByExtensionWithCreatedByCCITTFactory(string filename) {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::System.IO.FileInfo file
-        = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+      global::DripSharp.Runtime.JavaFile file
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromFileByExtension(file,
-        doc);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject),
+        "CreateFromFileByExtension", new global::System.Type[] { typeof(global::System.IO.FileInfo),
+          typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument) }, new object[] { file, doc });
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(doc, file);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+        "CreateFromFile",
+        new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo) }, new object[] { doc, file });
       global::DripSharp.Testing.JavaAssertions.Equal(expectedImage.GetSuffix(), image.GetSuffix(),
         null);
       this.checkIdentARGB(image.GetImage(), expectedImage.GetImage());
@@ -129,15 +134,16 @@ public class PDImageXObjectTest {
   }
 
   private void testCompareCreatedFileByExtensionWithCreatedByJPEGFactory(string filename) {
-    global::System.IO.FileInfo file
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream @is
       = global::DripSharp.Runtime.JavaCompat.OpenFileInput(file)) {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromFileByExtension(file,
-        doc);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject),
+        "CreateFromFileByExtension", new global::System.Type[] { typeof(global::System.IO.FileInfo),
+          typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument) }, new object[] { file, doc });
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
         = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(doc, @is);
       global::DripSharp.Testing.JavaAssertions.Equal(expectedImage.GetSuffix(), image.GetSuffix(),
@@ -151,12 +157,12 @@ public class PDImageXObjectTest {
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream @is
       = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename))) {
-      global::System.IO.FileInfo file
-        = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+      global::DripSharp.Runtime.JavaFile file
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image
         = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        file.FullName), doc);
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(file)), doc);
       global::SkiaSharp.SKBitmap bim = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
         = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.CreateFromImage(doc,
@@ -170,14 +176,17 @@ public class PDImageXObjectTest {
   private void testCompareCreatedFileWithCreatedByCCITTFactory(string filename) {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::System.IO.FileInfo file
-        = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+      global::DripSharp.Runtime.JavaFile file
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image
         = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        file.FullName), doc);
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(file)), doc);
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(doc, file);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+        "CreateFromFile",
+        new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo) }, new object[] { doc, file });
       global::DripSharp.Testing.JavaAssertions.Equal(expectedImage.GetSuffix(), image.GetSuffix(),
         null);
       this.checkIdentARGB(image.GetImage(), expectedImage.GetImage());
@@ -185,15 +194,15 @@ public class PDImageXObjectTest {
   }
 
   private void testCompareCreatedFileWithCreatedByJPEGFactory(string filename) {
-    global::System.IO.FileInfo file
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream @is
       = global::DripSharp.Runtime.JavaCompat.OpenFileInput(file)) {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image
         = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        file.FullName), doc);
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(file)), doc);
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
         = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(doc, @is);
       global::DripSharp.Testing.JavaAssertions.Equal(expectedImage.GetSuffix(), image.GetSuffix(),
@@ -207,12 +216,13 @@ public class PDImageXObjectTest {
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream @is
       = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename))) {
-      global::System.IO.FileInfo file
-        = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+      global::DripSharp.Runtime.JavaFile file
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromFileByContent(file,
-        doc);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject),
+        "CreateFromFileByContent", new global::System.Type[] { typeof(global::System.IO.FileInfo),
+          typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument) }, new object[] { file, doc });
       global::SkiaSharp.SKBitmap bim = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
         = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.CreateFromImage(doc,
@@ -226,14 +236,18 @@ public class PDImageXObjectTest {
   private void testCompareCreateByContentWithCreatedByCCITTFactory(string filename) {
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::System.IO.FileInfo file
-        = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+      global::DripSharp.Runtime.JavaFile file
+        = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromFileByContent(file,
-        doc);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject),
+        "CreateFromFileByContent", new global::System.Type[] { typeof(global::System.IO.FileInfo),
+          typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument) }, new object[] { file, doc });
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(doc, file);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+        "CreateFromFile",
+        new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo) }, new object[] { doc, file });
       global::DripSharp.Testing.JavaAssertions.Equal(expectedImage.GetSuffix(), image.GetSuffix(),
         null);
       this.checkIdentARGB(image.GetImage(), expectedImage.GetImage());
@@ -241,15 +255,16 @@ public class PDImageXObjectTest {
   }
 
   private void testCompareCreatedByContentWithCreatedByJPEGFactory(string filename) {
-    global::System.IO.FileInfo file
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream @is
       = global::DripSharp.Runtime.JavaCompat.OpenFileInput(file)) {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromFileByContent(file,
-        doc);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject),
+        "CreateFromFileByContent", new global::System.Type[] { typeof(global::System.IO.FileInfo),
+          typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument) }, new object[] { file, doc });
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
         = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(doc, @is);
       global::DripSharp.Testing.JavaAssertions.Equal(expectedImage.GetSuffix(), image.GetSuffix(),
@@ -259,8 +274,8 @@ public class PDImageXObjectTest {
   }
 
   private void testCompareCreatedFromByteArrayWithCreatedByLosslessFactory(string filename) {
-    global::System.IO.FileInfo file
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream is1
@@ -283,8 +298,8 @@ public class PDImageXObjectTest {
   }
 
   private void testCompareCreatedFromByteArrayWithCreatedByCCITTFactory(string filename) {
-    global::System.IO.FileInfo file
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream @is
@@ -294,7 +309,10 @@ public class PDImageXObjectTest {
         = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromByteArray(doc,
         byteArray, (string)default!);
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(doc, file);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+        "CreateFromFile",
+        new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+          typeof(global::System.IO.FileInfo) }, new object[] { doc, file });
       global::DripSharp.Testing.JavaAssertions.Equal(expectedImage.GetSuffix(), image.GetSuffix(),
         null);
       this.checkIdentARGB(image.GetImage(), expectedImage.GetImage());
@@ -302,8 +320,8 @@ public class PDImageXObjectTest {
   }
 
   private void testCompareCreatedFromByteArrayWithCreatedByJPEGFactory(string filename) {
-    global::System.IO.FileInfo file
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream is1
@@ -322,8 +340,8 @@ public class PDImageXObjectTest {
   }
 
   private void testCompareCreatedFromByteArrayWithCreatedByCustomFactory(string filename) {
-    global::System.IO.FileInfo file
-      = global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
+    global::DripSharp.Runtime.JavaFile file
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObjectTest),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream @is

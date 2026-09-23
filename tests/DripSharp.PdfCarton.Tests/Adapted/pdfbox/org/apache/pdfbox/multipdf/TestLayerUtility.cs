@@ -5,7 +5,7 @@
 namespace DripSharp.PdfCarton.Multipdf;
 
 public class TestLayerUtility {
-  private static readonly global::System.IO.FileInfo TESTRESULTSDIR
+  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output"));
 
@@ -14,14 +14,18 @@ public class TestLayerUtility {
   }
 
   internal virtual void testLayerImport() {
-    global::System.IO.FileInfo mainPDF = this.createMainPDF();
-    global::System.IO.FileInfo overlay1 = this.createOverlay1();
-    global::System.IO.FileInfo targetFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.TestLayerUtility.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "text-with-form-overlay.pdf")));
+    global::DripSharp.Runtime.JavaFile mainPDF = this.createMainPDF();
+    global::DripSharp.Runtime.JavaFile overlay1 = this.createOverlay1();
+    global::DripSharp.Runtime.JavaFile targetFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.TestLayerUtility.TESTRESULTSDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "text-with-form-overlay.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument targetDoc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(mainPDF)) using (global::DripSharp.PdfCarton.Pdmodel.PDDocument overlay1Doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(overlay1)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { mainPDF })) using (global::DripSharp.PdfCarton.Pdmodel.PDDocument overlay1Doc
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { overlay1 })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1.4F, targetDoc.GetVersion(), null);
       global::DripSharp.PdfCarton.Multipdf.LayerUtility layerUtil
         = new global::DripSharp.PdfCarton.Multipdf.LayerUtility(targetDoc);
@@ -34,12 +38,14 @@ public class TestLayerUtility {
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "overlay"));
       global::DripSharp.Testing.JavaAssertions.Equal(1.5F, targetDoc.GetVersion(), null);
       targetDoc.Save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        targetFile.FullName),
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(targetFile)),
         global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.NoCompression);
       global::DripSharp.Testing.JavaAssertions.Equal(1.5F, targetDoc.GetVersion(), null);
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(targetFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { targetFile })) {
       global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = doc.GetDocumentCatalog();
       global::DripSharp.Testing.JavaAssertions.Equal(1.5F, doc.GetVersion(), null);
       global::DripSharp.PdfCarton.Pdmodel.PDPage page = doc.GetPage(0);
@@ -57,10 +63,10 @@ public class TestLayerUtility {
     }
   }
 
-  private global::System.IO.FileInfo createMainPDF() {
-    global::System.IO.FileInfo targetFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.TestLayerUtility.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "text-doc.pdf")));
+  private global::DripSharp.Runtime.JavaFile createMainPDF() {
+    global::DripSharp.Runtime.JavaFile targetFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.TestLayerUtility.TESTRESULTSDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "text-doc.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
@@ -102,16 +108,17 @@ public class TestLayerUtility {
         }
         contentStream.EndText();
       }
-      doc.Save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFile.FullName),
+      doc.Save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(targetFile)),
         global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.NoCompression);
     }
     return targetFile;
   }
 
-  private global::System.IO.FileInfo createOverlay1() {
-    global::System.IO.FileInfo targetFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Multipdf.TestLayerUtility.TESTRESULTSDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "overlay1.pdf")));
+  private global::DripSharp.Runtime.JavaFile createOverlay1() {
+    global::DripSharp.Runtime.JavaFile targetFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.TestLayerUtility.TESTRESULTSDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "overlay1.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page
@@ -144,7 +151,8 @@ public class TestLayerUtility {
         contentStream.ShowText(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", text));
         contentStream.EndText();
       }
-      doc.Save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", targetFile.FullName));
+      doc.Save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(targetFile)));
     }
     return targetFile;
   }

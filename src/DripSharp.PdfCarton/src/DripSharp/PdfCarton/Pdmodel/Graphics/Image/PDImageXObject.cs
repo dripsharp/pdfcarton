@@ -80,11 +80,20 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
 
   public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromFile(string imagePath,
     global::DripSharp.PdfCarton.Pdmodel.PDDocument doc) {
-    return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromFileByExtension(new global::System.IO.FileInfo(imagePath),
+    return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject),
+      "CreateFromFileByExtension", new global::System.Type[] { typeof(global::System.IO.FileInfo),
+        typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(imagePath), doc });
+  }
+
+  [global::DripSharp.Runtime.JavaFileBoundary]
+  public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromFileByExtension(global::System.IO.FileInfo file,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocument doc) {
+    return __JavaFile_CreateFromFileByExtension(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file),
       doc);
   }
 
-  public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromFileByExtension(global::System.IO.FileInfo file,
+  internal static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject __JavaFile_CreateFromFileByExtension(global::DripSharp.Runtime.JavaFile file,
     global::DripSharp.PdfCarton.Pdmodel.PDDocument doc) {
     string name = file.Name;
     int dot = global::DripSharp.Runtime.JavaCompat.StringLastIndexOf(name, (int)('.'));
@@ -104,8 +113,10 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
     if ((global::DripSharp.Runtime.JavaCompat.Equals("tif", ext)
       || global::DripSharp.Runtime.JavaCompat.Equals("tiff", ext))) {
       try {
-        return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(doc,
-          file);
+        return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+          "CreateFromFile",
+          new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+            typeof(global::System.IO.FileInfo) }, new object[] { doc, file });
       } catch (global::System.IO.IOException ex) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.LOG,
           (global::System.Exception)ex,
@@ -125,7 +136,14 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
       name));
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromFileByContent(global::System.IO.FileInfo file,
+    global::DripSharp.PdfCarton.Pdmodel.PDDocument doc) {
+    return __JavaFile_CreateFromFileByContent(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file),
+      doc);
+  }
+
+  internal static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject __JavaFile_CreateFromFileByContent(global::DripSharp.Runtime.JavaFile file,
     global::DripSharp.PdfCarton.Pdmodel.PDDocument doc) {
     global::DripSharp.PdfCarton.Util.Filetypedetector.FileType fileType = default!;
     try {
@@ -151,8 +169,10 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
     }
     if ((fileType! == global::DripSharp.PdfCarton.Util.Filetypedetector.FileType.Tiff)) {
       try {
-        return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.CreateFromFile(doc,
-          file);
+        return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
+          "CreateFromFile",
+          new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
+            typeof(global::System.IO.FileInfo) }, new object[] { doc, file });
       } catch (global::System.IO.IOException ex) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.LOG,
           (global::System.Exception)ex,

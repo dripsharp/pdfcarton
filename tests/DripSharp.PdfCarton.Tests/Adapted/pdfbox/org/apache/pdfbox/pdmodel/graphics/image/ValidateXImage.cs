@@ -79,10 +79,10 @@ public class ValidateXImage {
 
   internal static void doWritePDF(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage,
-    global::System.IO.FileInfo testResultsDir, string filename) {
-    global::System.IO.FileInfo pdfFile
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine(testResultsDir.FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)));
+    global::DripSharp.Runtime.JavaFile testResultsDir, string filename) {
+    global::DripSharp.Runtime.JavaFile pdfFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(testResultsDir,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename));
     global::DripSharp.PdfCarton.Pdmodel.PDPage page
       = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
     document.AddPage(page);
@@ -95,9 +95,13 @@ public class ValidateXImage {
     global::DripSharp.Testing.JavaAssertions.Equal(1,
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.count(document.GetPage(0).GetResources().GetXObjectNames()),
       null);
-    document.Save(pdfFile);
+    global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdfFile });
     document.Dispose();
-    document = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile);
+    document
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { pdfFile });
     global::DripSharp.Testing.JavaAssertions.Equal(1,
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.count(document.GetPage(0).GetResources().GetXObjectNames()),
       null);

@@ -17,14 +17,14 @@ public class Benchmark {
     global::System.IO.StreamWriter resFile
       = global::DripSharp.PdfCarton.Tests.Support.NewFileWriter(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
       args[1])));
-    global::System.Collections.Generic.IList<global::System.IO.FileInfo> lfd
-      = new global::System.Collections.Generic.List<global::System.IO.FileInfo>();
+    global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaFile> lfd
+      = new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaFile>();
     for (int i__55_18 = 2; (i__55_18 < args.Length); ++i__55_18) {
-      global::System.IO.FileInfo fi
+      global::DripSharp.Runtime.JavaFile fi
         = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
         args[i__55_18]));
       if (global::DripSharp.Runtime.JavaCompat.FileIsDirectory(fi)) {
-        global::System.Collections.Generic.ICollection<global::System.IO.FileInfo> cf
+        global::System.Collections.Generic.ICollection<global::DripSharp.Runtime.JavaFile> cf
           = global::DripSharp.PdfCarton.Tests.Support.ListFiles(fi, (string[])default!, true);
         global::DripSharp.Runtime.JavaCompat.AddAll(lfd, cf);
       } else {
@@ -37,14 +37,17 @@ public class Benchmark {
     long startGTime = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     int size = global::DripSharp.Runtime.JavaCompat.CollectionCount(lfd);
     for (int i__74_18 = 0; (i__74_18 < loop); i__74_18++) {
-      global::System.IO.FileInfo file = global::DripSharp.Runtime.JavaCompat.ListGet(lfd,
+      global::DripSharp.Runtime.JavaFile file = global::DripSharp.Runtime.JavaCompat.ListGet(lfd,
         (i__74_18 % size));
       long startLTime = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
       global::DripSharp.PdfCarton.Preflight.ValidationResult result
-        = global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser.Validate(file);
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Preflight.ValidationResult>(typeof(global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser),
+        "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { file });
       if (!(result.IsValid())) {
         resFile.Write(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
-          global::DripSharp.Runtime.JavaCompat.Concat(file.FullName, " isn't PDF/A\n")));
+          global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(file),
+          " isn't PDF/A\n")));
         foreach (global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error in result.GetErrorsList()) {
           resFile.Write(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
             global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(error.GetErrorCode(),

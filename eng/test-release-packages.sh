@@ -123,6 +123,7 @@ if [[ "$command" == restore ]]; then
   project="$2"
   cp "$project" "$PDFCARTON_TEST_CAPTURE_DIRECTORY/PdfCarton.ReleaseConsumer.csproj"
   cp "$(dirname -- "$project")/Program.cs" "$PDFCARTON_TEST_CAPTURE_DIRECTORY/Program.cs"
+  cp "$(dirname -- "$project")/FontCacheRegression.cs" "$PDFCARTON_TEST_CAPTURE_DIRECTORY/FontCacheRegression.cs"
   printf '%s\n' "$project" > "$PDFCARTON_TEST_CAPTURE_DIRECTORY/project-path.txt"
   previous=""
   for argument in "$@"; do
@@ -171,8 +172,14 @@ done
 grep -Fq -- '--configuration Release --no-build --no-restore --output' "$command_log" ||
   fail "Release packing did not reuse the verified build."
 
-expected_package="$packed_directory/DripSharp.PdfCarton.3.0.8-alpha.4.nupkg"
-expected_symbols="$packed_directory/DripSharp.PdfCarton.3.0.8-alpha.4.snupkg"
+package_version="$(python3 - "$repository_root/src/DripSharp.PdfCarton/DripSharp.PdfCarton.csproj" <<'PYVERSION'
+import sys
+import xml.etree.ElementTree as ET
+print(ET.parse(sys.argv[1]).findtext(".//Version"))
+PYVERSION
+)"
+expected_package="$packed_directory/DripSharp.PdfCarton.$package_version.nupkg"
+expected_symbols="$packed_directory/DripSharp.PdfCarton.$package_version.snupkg"
 [[ -f "$expected_package" && -f "$expected_symbols" ]] ||
   fail "The public PdfCarton package and symbol package were not produced."
 [[ "$(find "$packed_directory" -mindepth 1 -maxdepth 1 -type f | wc -l | tr -d ' ')" == 2 ]] ||
@@ -181,6 +188,25 @@ if find "$packed_directory" -mindepth 1 -maxdepth 1 -name 'DripSharp.PdfCarton.I
   grep -q .; then
   fail "An internal PdfCarton component escaped into the public artifact inventory."
 fi
+
+python3 - "$expected_package" "$expected_symbols" "$script_directory/release-notes/$package_version.md" <<'PYNOTES'
+import sys
+from pathlib import Path
+import xml.etree.ElementTree as ET
+import zipfile
+notes = Path(sys.argv[3])
+if notes.is_file():
+    for archive in sys.argv[1:3]:
+        with zipfile.ZipFile(archive) as package:
+            nuspec = next(name for name in package.namelist() if name.endswith(".nuspec"))
+            actual = ET.fromstring(package.read(nuspec)).findtext("{*}metadata/{*}releaseNotes")
+            assert actual == notes.read_text().strip(), "Release note missing or changed in package metadata"
+PYNOTES
+
+grep -Fq 'FontCacheRegression.RunAll();' "$capture_directory/Program.cs" ||
+  fail "The external consumer omitted the font-cache regression."
+grep -Fq '#define PDFCARTON_PACKAGE_PROBE' "$capture_directory/FontCacheRegression.cs" ||
+  fail "The external consumer did not reuse the shipped font-cache regression."
 
 consumer_project="$capture_directory/PdfCarton.ReleaseConsumer.csproj"
 [[ "$(grep -Fc '<PackageReference Include="DripSharp.PdfCarton"' "$consumer_project")" == 1 ]] ||
@@ -238,7 +264,7 @@ done
 invalid_inventory="$temporary_directory/invalid-inventory"
 mkdir -p "$invalid_inventory"
 cp "$packed_directory"/* "$invalid_inventory/"
-: > "$invalid_inventory/DripSharp.PdfCarton.IO.3.0.8-alpha.4.nupkg"
+: > "$invalid_inventory/DripSharp.PdfCarton.IO.$package_version.nupkg"
 : > "$command_log"
 if run_with_fake_dotnet \
   "$script_directory/validate-release-packages.sh" "$invalid_inventory" >/dev/null 2>&1; then
@@ -249,7 +275,7 @@ fi
 invalid_symbols="$temporary_directory/invalid-symbols"
 mkdir -p "$invalid_symbols"
 cp "$packed_directory"/* "$invalid_symbols/"
-python3 - "$invalid_symbols/DripSharp.PdfCarton.3.0.8-alpha.4.snupkg" <<'PY'
+python3 - "$invalid_symbols/DripSharp.PdfCarton.$package_version.snupkg" <<'PY'
 import sys
 import zipfile
 
@@ -266,7 +292,7 @@ fi
 invalid_metadata="$temporary_directory/invalid-metadata"
 mkdir -p "$invalid_metadata"
 cp "$packed_directory"/* "$invalid_metadata/"
-python3 - "$invalid_metadata/DripSharp.PdfCarton.3.0.8-alpha.4.nupkg" <<'PY'
+python3 - "$invalid_metadata/DripSharp.PdfCarton.$package_version.nupkg" <<'PY'
 import sys
 import zipfile
 from pathlib import Path

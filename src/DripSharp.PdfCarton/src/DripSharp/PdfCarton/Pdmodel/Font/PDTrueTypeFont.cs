@@ -116,8 +116,17 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     }
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public static global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont Load(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
     global::System.IO.FileInfo file,
+    global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding encoding) {
+    return __JavaFile_Load(doc,
+      global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file),
+      encoding);
+  }
+
+  internal static global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont __JavaFile_Load(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
+    global::DripSharp.Runtime.JavaFile file,
     global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding encoding) {
     return global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont.Load(doc,
       new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file), encoding);

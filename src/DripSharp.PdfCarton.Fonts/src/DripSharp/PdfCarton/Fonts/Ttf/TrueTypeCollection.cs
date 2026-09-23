@@ -15,11 +15,14 @@ public class TrueTypeCollection : global::System.IDisposable {
 
   private readonly long[] fontOffsets = null!;
 
-  public TrueTypeCollection(global::System.IO.FileInfo file)
+  internal TrueTypeCollection(global::DripSharp.Runtime.JavaFile file)
   : this(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.createBufferedDataStream(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file),
     true)) {
 
   }
+
+  public TrueTypeCollection(global::System.IO.FileInfo file)
+  : this(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file)) {}
 
   public TrueTypeCollection(global::System.IO.Stream stream)
   : this(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.createBufferedDataStream(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(stream),
@@ -68,7 +71,14 @@ public class TrueTypeCollection : global::System.IDisposable {
     }
   }
 
+  [global::DripSharp.Runtime.JavaFileBoundary]
   public static void ProcessAllFontHeaders(global::System.IO.FileInfo ttcFile,
+    global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontHeadersProcessor trueTypeFontProcessor) {
+    __JavaFile_ProcessAllFontHeaders(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(ttcFile),
+      trueTypeFontProcessor);
+  }
+
+  internal static void __JavaFile_ProcessAllFontHeaders(global::DripSharp.Runtime.JavaFile ttcFile,
     global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontHeadersProcessor trueTypeFontProcessor) {
     using (global::DripSharp.PdfCarton.IO.RandomAccessRead read
       = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(ttcFile)) using (global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream

@@ -27,12 +27,14 @@ public class COSWriterTest {
   }
 
   internal virtual void testPDFBox5485() {
-    global::System.IO.FileInfo pdfFile
-      = new global::System.IO.FileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.Runtime.JavaFile pdfFile
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.PathOf(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "src"), "test", "resources", "input", "PDFBOX-3110-poems-beads.pdf")));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument pdfDocument
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(pdfFile)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { pdfFile })) {
       global::DripSharp.PdfCarton.Multipdf.PageExtractor pageExtractor
         = new global::DripSharp.PdfCarton.Multipdf.PageExtractor(pdfDocument, 2, 2);
       using (global::DripSharp.PdfCarton.Pdmodel.PDDocument pdfPages = pageExtractor.Extract()) {

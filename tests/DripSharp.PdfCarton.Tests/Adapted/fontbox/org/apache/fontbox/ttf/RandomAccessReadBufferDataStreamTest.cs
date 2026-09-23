@@ -81,7 +81,7 @@ public class RandomAccessReadBufferDataStreamTest {
     }
     sbyte[] readBuffer = new sbyte[2];
     global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(new global::System.IO.FileInfo(path));
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(path));
     using (global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadDataStream randomAccessReadDataStream
       = new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadDataStream(randomAccessRead)) {
       int amountRead;
@@ -107,7 +107,7 @@ public class RandomAccessReadBufferDataStreamTest {
       outputStream.Flush();
     }
     global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(new global::System.IO.FileInfo(path));
+      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.Runtime.JavaCompat.NewJavaFile(path));
     sbyte[] readBuffer = new sbyte[40];
     using (global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadDataStream randomAccessReadDataStream
       = new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadDataStream(randomAccessRead)) {

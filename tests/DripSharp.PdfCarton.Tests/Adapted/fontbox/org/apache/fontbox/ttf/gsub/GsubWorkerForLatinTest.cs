@@ -6,7 +6,7 @@ namespace DripSharp.PdfCarton.Fonts.Ttf.Gsub;
 
 public class GsubWorkerForLatinTest {
   internal virtual void testApplyLigaturesCalibri() {
-    global::System.IO.FileInfo file
+    global::DripSharp.Runtime.JavaFile file
       = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "c:/windows/fonts/calibri.ttf"));
     global::DripSharp.Testing.JavaAssertions.AssumeTrue(global::DripSharp.Runtime.PdfCartonFontDiscovery.FileExists(file),

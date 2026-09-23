@@ -5,11 +5,11 @@
 namespace DripSharp.PdfCarton.Pdfwriter;
 
 public class COSDocumentCompressionTest {
-  private static readonly global::System.IO.FileInfo INDIR
+  private static readonly global::DripSharp.Runtime.JavaFile INDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "src/test/resources/input/compression/"));
 
-  private static readonly global::System.IO.FileInfo OUTDIR
+  private static readonly global::DripSharp.Runtime.JavaFile OUTDIR
     = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
     "target/test-output/compression/"));
 
@@ -18,18 +18,23 @@ public class COSDocumentCompressionTest {
   }
 
   internal virtual void testCompressAcroformDoc() {
-    global::System.IO.FileInfo source
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.INDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "acroform.pdf")));
-    global::System.IO.FileInfo target
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.OUTDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "acroform.pdf")));
+    global::DripSharp.Runtime.JavaFile source
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.INDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "acroform.pdf"));
+    global::DripSharp.Runtime.JavaFile target
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.OUTDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "acroform.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__75_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(source)) {
-      document__75_25.Save(target);
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { source })) {
+      global::DripSharp.Runtime.JavaFileBridge.Call(document__75_25, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { target });
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__80_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(target)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { target })) {
       global::DripSharp.Testing.JavaAssertions.Equal(1, document__80_25.GetNumberOfPages(),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "The number of pages should not have changed, during compression."));
@@ -117,18 +122,23 @@ public class COSDocumentCompressionTest {
   }
 
   internal virtual void testCompressAttachmentsDoc() {
-    global::System.IO.FileInfo source
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.INDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "attachment.pdf")));
-    global::System.IO.FileInfo target
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.OUTDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "attachment.pdf")));
+    global::DripSharp.Runtime.JavaFile source
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.INDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "attachment.pdf"));
+    global::DripSharp.Runtime.JavaFile target
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.OUTDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "attachment.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__140_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(source)) {
-      document__140_25.Save(target);
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { source })) {
+      global::DripSharp.Runtime.JavaFileBridge.Call(document__140_25, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { target });
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__145_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(target)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { target })) {
       global::DripSharp.Testing.JavaAssertions.Equal(2, document__145_25.GetNumberOfPages(),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "The number of pages should not have changed, during compression."));
@@ -152,36 +162,43 @@ public class COSDocumentCompressionTest {
   }
 
   internal virtual void testCompressEncryptedDoc() {
-    global::System.IO.FileInfo source
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.INDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "unencrypted.pdf")));
-    global::System.IO.FileInfo target
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.OUTDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "encrypted.pdf")));
+    global::DripSharp.Runtime.JavaFile source
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.INDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "unencrypted.pdf"));
+    global::DripSharp.Runtime.JavaFile target
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.OUTDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "encrypted.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__172_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(source,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "user"))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { source, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "user") })) {
       document__172_25.Protect(new global::DripSharp.PdfCarton.Pdmodel.Encryption.StandardProtectionPolicy(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "owner"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "user"),
         new global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission(0)));
-      document__172_25.Save(target);
+      global::DripSharp.Runtime.JavaFileBridge.Call(document__172_25, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { target });
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__179_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(target,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "user"))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+      new object[] { target, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "user") })) {
       global::DripSharp.Testing.JavaAssertions.Equal(2, document__179_25.GetNumberOfPages(), null);
     }
   }
 
   internal virtual void testAlteredDoc() {
-    global::System.IO.FileInfo source
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.INDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "unencrypted.pdf")));
-    global::System.IO.FileInfo target
-      = new global::System.IO.FileInfo(global::System.IO.Path.Combine((global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.OUTDIR).FullName,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "altered.pdf")));
+    global::DripSharp.Runtime.JavaFile source
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.INDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "unencrypted.pdf"));
+    global::DripSharp.Runtime.JavaFile target
+      = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfwriter.COSDocumentCompressionTest.OUTDIR,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "altered.pdf"));
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__197_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(source)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { source })) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page__199_20
         = new global::DripSharp.PdfCarton.Pdmodel.PDPage(new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle((float)(100),
         (float)(100)));
@@ -197,10 +214,13 @@ public class COSDocumentCompressionTest {
           "Test"));
         contentStream.EndText();
       }
-      document__197_25.Save(target);
+      global::DripSharp.Runtime.JavaFileBridge.Call(document__197_25, "Save",
+        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { target });
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__214_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(target)) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { target })) {
       global::DripSharp.Testing.JavaAssertions.Equal(3, document__214_25.GetNumberOfPages(),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "The number of pages should not have changed, during compression."));
@@ -216,9 +236,11 @@ public class COSDocumentCompressionTest {
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__234_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.NewFileInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "target/pdfs"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "PDFBOX-5927.pdf")))) {
+      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "target/pdfs"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "PDFBOX-5927.pdf")) })) {
       doc__234_25.Save(baos);
     }
     using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__238_25

@@ -18,14 +18,17 @@ public class RandomAccessReadMemoryMappedFile : global::DripSharp.PdfCarton.IO.R
   private readonly global::System.Action<global::DripSharp.Runtime.JavaByteBuffer> unmapper = null!;
 
   public RandomAccessReadMemoryMappedFile(string filename)
-  : this(new global::System.IO.FileInfo(filename)) {
+  : this(global::DripSharp.Runtime.JavaCompat.NewJavaFile(filename)) {
+
+  }
+
+  internal RandomAccessReadMemoryMappedFile(global::DripSharp.Runtime.JavaFile file)
+  : this(global::DripSharp.Runtime.JavaCompat.FileToPath(file)) {
 
   }
 
   public RandomAccessReadMemoryMappedFile(global::System.IO.FileInfo file)
-  : this(new global::DripSharp.Runtime.JavaPath(file.FullName)) {
-
-  }
+  : this(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file)) {}
 
   public RandomAccessReadMemoryMappedFile(global::DripSharp.Runtime.JavaPath path) {
     this.fileChannel = global::DripSharp.Runtime.JavaFileChannel.open(path,
