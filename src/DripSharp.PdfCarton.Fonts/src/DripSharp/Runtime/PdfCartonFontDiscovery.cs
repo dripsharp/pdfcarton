@@ -96,8 +96,10 @@ internal static class PdfCartonFontDiscovery
     internal static JavaFile[]? FileListFiles(JavaFile directory) =>
         FileListFiles(directory, Directory.EnumerateFileSystemEntries);
 
+    // JavaFile is shared from the IO assembly, so its URI text must be registered in
+    // that assembly's table; the local JavaCompat writes to a copy JavaFile never reads.
     internal static Uri FileToUri(JavaFile file) =>
-        JavaCompat.FileToUri(file);
+        global::DripSharp.Runtime.JavaCompat.FileToUri(file);
 
     // Kept internal so package-only verification can exercise the inaccessible
     // directory path without publishing a filesystem abstraction.
