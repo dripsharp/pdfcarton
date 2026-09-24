@@ -71,4 +71,8 @@ public class PDFunctionType2 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
     return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("FunctionType2{",
       "C0: "), this.GetC0()), " "), "C1: "), this.GetC1()), " "), "N: "), this.GetN()), "}");
   }
+
+  static PDFunctionType2() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction).TypeHandle);
+  }
 }

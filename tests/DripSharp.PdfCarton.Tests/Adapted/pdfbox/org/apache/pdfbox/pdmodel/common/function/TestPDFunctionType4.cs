@@ -19,11 +19,19 @@ public class TestPDFunctionType4 {
       = new global::DripSharp.PdfCarton.Cos.COSArray();
     rangeArray.SetFloatArray(range);
     stream.SetItem(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Range"),
-      rangeArray);
-    using (global::System.IO.Stream @out = stream.CreateOutputStream()) {
-      sbyte[] data = global::DripSharp.Runtime.JavaCompat.StringGetBytes(function,
-        global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, data, 0, data.Length);
+      rangeArray); {
+      global::System.IO.Stream @out = stream.CreateOutputStream();
+      global::System.Exception __dripsharpPrimary_46_27_0 = null!;
+      try {
+        sbyte[] data = global::DripSharp.Runtime.JavaCompat.StringGetBytes(function,
+          global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, data, 0, data.Length);
+      } catch (global::System.Exception __dripsharpCaught_46_27_0) {
+        __dripsharpPrimary_46_27_0 = __dripsharpCaught_46_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@out, __dripsharpPrimary_46_27_0);
+      }
     }
     return new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionType4(stream);
   }

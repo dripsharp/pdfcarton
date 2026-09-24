@@ -62,4 +62,8 @@ public class PDShadingPattern
     this.shading = shadingResources;
     this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Shading, shadingResources);
   }
+
+  static PDShadingPattern() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern).TypeHandle);
+  }
 }

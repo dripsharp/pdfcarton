@@ -31,4 +31,8 @@ public class PDSimpleFileSpecification
   public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
     return this.file;
   }
+
+  static PDSimpleFileSpecification() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification).TypeHandle);
+  }
 }

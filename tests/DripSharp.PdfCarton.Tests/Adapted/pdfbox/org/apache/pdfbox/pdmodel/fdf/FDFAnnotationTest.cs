@@ -9,36 +9,44 @@ public class FDFAnnotationTest {
     global::DripSharp.Runtime.JavaFile f
       = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTest),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "xfdf-test-document-annotations.xml")));
-    using (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument fdfDoc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadXFDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { f })) {
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> fdfAnnots
-        = fdfDoc.GetCatalog().GetFDF().GetAnnotations();
-      global::DripSharp.Testing.JavaAssertions.Equal(18,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(fdfAnnots), null);
-      bool testedPDFBox4345andPDFBox3646 = false;
-      foreach (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation ann in fdfAnnots) {
-        if ((ann is global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFreeText)) {
-          global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFreeText annotationFreeText
-            = (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFreeText)(ann!);
-          if (global::DripSharp.Runtime.JavaCompat.Equals("P&1 P&2 P&3",
-            annotationFreeText.GetContents())) {
-            testedPDFBox4345andPDFBox3646 = true;
-            global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("<body style=\"font:12pt Helvetica; ",
-              "color:#D66C00;\" xfa:APIVersion=\"Acrobat:7.0.8\" "),
-              "xfa:spec=\"2.0.2\" xmlns=\"http://www.w3.org/1999/xhtml\" "),
-              "xmlns:xfa=\"http://www.xfa.org/schema/xfa-data/1.0/\">\n"),
-              "          <p dir=\"ltr\">P&amp;1 <span style=\"text-"),
-              "decoration:word;font-family:Helvetica\">P&amp;2</span> "), "P&amp;3</p>\n"),
-              "        </body>"),
-              global::DripSharp.Runtime.JavaCompat.StringTrim(annotationFreeText.GetRichContents()),
-              null);
+      "xfdf-test-document-annotations.xml"))); {
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument fdfDoc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadXFDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)f });
+      global::System.Exception __dripsharpPrimary_46_26_0 = null!;
+      try {
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> fdfAnnots
+          = fdfDoc.GetCatalog().GetFDF().GetAnnotations();
+        global::DripSharp.Testing.JavaAssertions.Equal(18,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(fdfAnnots), null);
+        bool testedPDFBox4345andPDFBox3646 = false;
+        foreach (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation ann in fdfAnnots) {
+          if ((ann is global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFreeText)) {
+            global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFreeText annotationFreeText
+              = (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFreeText)(ann!);
+            if (global::DripSharp.Runtime.JavaCompat.Equals("P&1 P&2 P&3",
+              annotationFreeText.GetContents())) {
+              testedPDFBox4345andPDFBox3646 = true;
+              global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("<body style=\"font:12pt Helvetica; ",
+                "color:#D66C00;\" xfa:APIVersion=\"Acrobat:7.0.8\" "),
+                "xfa:spec=\"2.0.2\" xmlns=\"http://www.w3.org/1999/xhtml\" "),
+                "xmlns:xfa=\"http://www.xfa.org/schema/xfa-data/1.0/\">\n"),
+                "          <p dir=\"ltr\">P&amp;1 <span style=\"text-"),
+                "decoration:word;font-family:Helvetica\">P&amp;2</span> "), "P&amp;3</p>\n"),
+                "        </body>"),
+                global::DripSharp.Runtime.JavaCompat.StringTrim(annotationFreeText.GetRichContents()),
+                null);
+            }
           }
         }
+        global::DripSharp.Testing.JavaAssertions.True(testedPDFBox4345andPDFBox3646, null);
+      } catch (global::System.Exception __dripsharpCaught_46_26_0) {
+        __dripsharpPrimary_46_26_0 = __dripsharpCaught_46_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(fdfDoc, __dripsharpPrimary_46_26_0);
       }
-      global::DripSharp.Testing.JavaAssertions.True(testedPDFBox4345andPDFBox3646, null);
     }
   }
 
@@ -60,18 +68,26 @@ public class FDFAnnotationTest {
       "<f href=\".xfdf\"/>"), "</xfdf>");
     global::System.IO.MemoryStream inputStream
       = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(global::DripSharp.Runtime.JavaCompat.StringGetBytes(xfdf,
-      global::DripSharp.Runtime.JavaStandardCharsets.UTF8));
-    using (global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument fdfDoc
-      = global::DripSharp.PdfCarton.Loader.LoadXFDF(inputStream)) {
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> fdfAnnots
-        = fdfDoc.GetCatalog().GetFDF().GetAnnotations();
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(fdfAnnots), null);
-      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation annot
-        = global::DripSharp.Runtime.JavaCompat.ListGet(fdfAnnots, 0);
-      global::DripSharp.Testing.JavaAssertions.NotNull(annot.GetBorderStyle(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.0F, annot.GetBorderStyle().GetWidth(), null,
-        0.01F);
+      global::DripSharp.Runtime.JavaStandardCharsets.UTF8)); {
+      global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument fdfDoc
+        = global::DripSharp.PdfCarton.Loader.LoadXFDF(inputStream);
+      global::System.Exception __dripsharpPrimary_111_26_0 = null!;
+      try {
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation> fdfAnnots
+          = fdfDoc.GetCatalog().GetFDF().GetAnnotations();
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(fdfAnnots), null);
+        global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation annot
+          = global::DripSharp.Runtime.JavaCompat.ListGet(fdfAnnots, 0);
+        global::DripSharp.Testing.JavaAssertions.NotNull(annot.GetBorderStyle(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.0F, annot.GetBorderStyle().GetWidth(),
+          null, 0.01F);
+      } catch (global::System.Exception __dripsharpCaught_111_26_0) {
+        __dripsharpPrimary_111_26_0 = __dripsharpCaught_111_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(fdfDoc, __dripsharpPrimary_111_26_0);
+      }
     }
   }
 

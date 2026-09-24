@@ -50,4 +50,8 @@ public sealed class OTFParser : global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser 
   protected internal override bool AllowCFF() {
     return true;
   }
+
+  static OTFParser() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser).TypeHandle);
+  }
 }

@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Fonts.Util.Autodetect;
 
 public class WindowsFontDirFinder
 : global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontDirFinder {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   [global::DripSharp.Runtime.JavaFileBoundary]
   public virtual global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find() {
@@ -43,7 +42,7 @@ public class WindowsFontDirFinder
     if (((windir! != default!) && (windir!.Length > 2))) {
       if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringEndsWith(windir!, "/")) {
         windir = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(windir!, 0,
-          (windir!.Length - 1));
+          unchecked((windir!.Length - 1)));
       }
       osFontsDir
         = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(windir!,
@@ -120,5 +119,9 @@ public class WindowsFontDirFinder
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("Couldn't get LOCALAPPDATA directory - ignoring"));
     }
     return fontDirList;
+  }
+
+  static WindowsFontDirFinder() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

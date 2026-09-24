@@ -38,7 +38,7 @@ public class PreflightPath {
         return i;
       }
     }
-    return -1;
+    return unchecked(-1);
   }
 
   public virtual T GetClosestPathElement<T>(global::System.Type type) {

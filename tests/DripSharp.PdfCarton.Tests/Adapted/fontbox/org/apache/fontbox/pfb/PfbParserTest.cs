@@ -6,11 +6,19 @@ namespace DripSharp.PdfCarton.Fonts.Pfb;
 
 public class PfbParserTest {
   internal virtual void testPfb() {
-    global::DripSharp.PdfCarton.Fonts.Type1.Type1Font font;
-    using (global::System.IO.Stream @is
-      = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      "target/fonts/OpenSans-Regular.pfb"))) {
-      font = global::DripSharp.PdfCarton.Fonts.Type1.Type1Font.CreateWithPFB(@is);
+    global::DripSharp.PdfCarton.Fonts.Type1.Type1Font font; {
+      global::System.IO.Stream @is
+        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        "target/fonts/OpenSans-Regular.pfb"));
+      global::System.Exception __dripsharpPrimary_44_26_0 = null!;
+      try {
+        font = global::DripSharp.PdfCarton.Fonts.Type1.Type1Font.CreateWithPFB(@is);
+      } catch (global::System.Exception __dripsharpCaught_44_26_0) {
+        __dripsharpPrimary_44_26_0 = __dripsharpCaught_44_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_44_26_0);
+      }
     }
     global::DripSharp.Testing.JavaAssertions.Equal("1.10", font.GetVersion(), null);
     global::DripSharp.Testing.JavaAssertions.Equal("OpenSans-Regular", font.GetFontName(), null);
@@ -37,11 +45,19 @@ public class PfbParserTest {
   }
 
   internal virtual void testPfbPDFBox5713() {
-    global::DripSharp.PdfCarton.Fonts.Type1.Type1Font font;
-    using (global::System.IO.Stream @is
-      = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      "target/fonts/DejaVuSerifCondensed.pfb"))) {
-      font = global::DripSharp.PdfCarton.Fonts.Type1.Type1Font.CreateWithPFB(@is);
+    global::DripSharp.PdfCarton.Fonts.Type1.Type1Font font; {
+      global::System.IO.Stream @is
+        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        "target/fonts/DejaVuSerifCondensed.pfb"));
+      global::System.Exception __dripsharpPrimary_77_26_0 = null!;
+      try {
+        font = global::DripSharp.PdfCarton.Fonts.Type1.Type1Font.CreateWithPFB(@is);
+      } catch (global::System.Exception __dripsharpCaught_77_26_0) {
+        __dripsharpPrimary_77_26_0 = __dripsharpCaught_77_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_77_26_0);
+      }
     }
     global::DripSharp.Testing.JavaAssertions.Equal("Version 2.33", font.GetVersion(), null);
     global::DripSharp.Testing.JavaAssertions.Equal("DejaVuSerifCondensed", font.GetFontName(),

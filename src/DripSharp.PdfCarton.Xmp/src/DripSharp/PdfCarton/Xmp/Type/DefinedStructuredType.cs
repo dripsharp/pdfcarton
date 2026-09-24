@@ -10,11 +10,13 @@ namespace DripSharp.PdfCarton.Xmp.Type;
 
 public class DefinedStructuredType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType {
   private global::System.Collections.Generic.IDictionary<string,
-    global::DripSharp.PdfCarton.Xmp.Type.PropertyType> definedProperties = default!;
+    global::DripSharp.PdfCarton.Xmp.Type.PropertyType> definedProperties;
 
   public DefinedStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata,
     string namespaceURI, string fieldPrefix, string propertyName) : base(metadata, namespaceURI,
     fieldPrefix, propertyName) {
+    this.definedProperties = default!;
+
     this.definedProperties
       = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewJavaDictionary<string,
       global::DripSharp.PdfCarton.Xmp.Type.PropertyType>();
@@ -22,6 +24,8 @@ public class DefinedStructuredType : global::DripSharp.PdfCarton.Xmp.Type.Abstra
 
   public DefinedStructuredType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata)
   : base(metadata) {
+    this.definedProperties = default!;
+
     this.definedProperties
       = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.NewJavaDictionary<string,
       global::DripSharp.PdfCarton.Xmp.Type.PropertyType>();
@@ -35,5 +39,9 @@ public class DefinedStructuredType : global::DripSharp.PdfCarton.Xmp.Type.Abstra
   public virtual global::System.Collections.Generic.IDictionary<string,
     global::DripSharp.PdfCarton.Xmp.Type.PropertyType> GetDefinedProperties() {
     return this.definedProperties;
+  }
+
+  static DefinedStructuredType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
   }
 }

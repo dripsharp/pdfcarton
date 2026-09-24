@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Util;
 
 public sealed class Version {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const string PDFBOX_VERSION_PROPERTIES
     = "/org/apache/pdfbox/resources/version.properties";
@@ -18,15 +17,32 @@ public sealed class Version {
   private Version() {}
 
   public static string GetVersion() {
-    try {
-      using (global::System.IO.Stream resourceAsStream
-        = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Util.Version),
-        global::DripSharp.PdfCarton.Util.Version.PDFBOX_VERSION_PROPERTIES)) using (global::System.IO.Stream @is
-        = new global::System.IO.BufferedStream(resourceAsStream)) {
-        global::DripSharp.Runtime.JavaProperties properties
-          = new global::DripSharp.Runtime.JavaProperties();
-        properties.Load(@is);
-        return properties.GetProperty("pdfbox.version", (string)default!);
+    try { {
+        global::System.IO.Stream resourceAsStream
+          = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Util.Version),
+          global::DripSharp.PdfCarton.Util.Version.PDFBOX_VERSION_PROPERTIES);
+        global::System.Exception __dripsharpPrimary_50_26_0 = null!;
+        try {
+          global::System.IO.Stream @is = new global::System.IO.BufferedStream(resourceAsStream);
+          global::System.Exception __dripsharpPrimary_51_26_0 = null!;
+          try {
+            global::DripSharp.Runtime.JavaProperties properties
+              = new global::DripSharp.Runtime.JavaProperties();
+            properties.Load(@is);
+            return properties.GetProperty("pdfbox.version", (string)default!);
+          } catch (global::System.Exception __dripsharpCaught_51_26_0) {
+            __dripsharpPrimary_51_26_0 = __dripsharpCaught_51_26_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_51_26_0);
+          }
+        } catch (global::System.Exception __dripsharpCaught_50_26_0) {
+          __dripsharpPrimary_50_26_0 = __dripsharpCaught_50_26_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(resourceAsStream,
+            __dripsharpPrimary_50_26_0);
+        }
       }
     } catch (global::System.IO.IOException io) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Util.Version.LOG,
@@ -34,5 +50,9 @@ public sealed class Version {
         global::DripSharp.Runtime.JavaCompat.StringValueOf("Unable to read version from properties - returning null"));
       return default!;
     }
+  }
+
+  static Version() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

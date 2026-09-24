@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
 public sealed class PDColor {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly float[] components = null!;
 
@@ -21,11 +20,11 @@ public sealed class PDColor {
 
   public PDColor(global::DripSharp.PdfCarton.Cos.COSArray array,
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace) {
-    if (((array.Size() > 0) && (array.Get((array.Size()
-      - 1)) is global::DripSharp.PdfCarton.Cos.COSName))) {
-      this.components = new float[(array.Size() - 1)];
+    if (((array.Size() > 0) && (array.Get(unchecked((array.Size()
+      - 1))) is global::DripSharp.PdfCarton.Cos.COSName))) {
+      this.components = new float[unchecked((array.Size() - 1))];
       this.initComponents(array);
-      global::DripSharp.PdfCarton.Cos.COSBase @base = array.Get((array.Size() - 1));
+      global::DripSharp.PdfCarton.Cos.COSBase @base = array.Get(unchecked((array.Size() - 1)));
       if ((@base is global::DripSharp.PdfCarton.Cos.COSName)) {
         this.patternName = (global::DripSharp.PdfCarton.Cos.COSName)(@base!);
       } else {
@@ -114,8 +113,8 @@ public sealed class PDColor {
     int g = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((floats[1] * 255));
     int b = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((floats[2] * 255));
     int rgb = r;
-    rgb = ((rgb << unchecked((int)(8))) + g);
-    rgb = ((rgb << unchecked((int)(8))) + b);
+    rgb = unchecked(((rgb << unchecked((int)(8))) + g));
+    rgb = unchecked(((rgb << unchecked((int)(8))) + b));
     return rgb;
   }
 
@@ -136,5 +135,9 @@ public sealed class PDColor {
     return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("PDColor{components=",
       global::DripSharp.Runtime.JavaCompat.ArrayToString(this.components)), ", patternName="),
       this.patternName), ", colorSpace="), this.colorSpace), '}');
+  }
+
+  static PDColor() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
 public sealed class PDDeviceGray
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceColorSpace {
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray Instance
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray();
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray Instance;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor initialColor;
 
@@ -64,5 +63,10 @@ public sealed class PDDeviceGray
       }
     }
     return image;
+  }
+
+  static PDDeviceGray() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceColorSpace).TypeHandle);
+    Instance = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray();
   }
 }

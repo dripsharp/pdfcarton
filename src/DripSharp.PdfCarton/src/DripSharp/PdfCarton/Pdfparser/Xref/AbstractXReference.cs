@@ -26,7 +26,7 @@ public abstract class AbstractXReference
 
   public virtual int CompareTo(global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry xReferenceEntry) {
     if ((this.GetReferencedKey() == default!)) {
-      return -1;
+      return unchecked(-1);
     } else {
       if (((xReferenceEntry == default!) || (xReferenceEntry.GetReferencedKey() == default!))) {
         return 1;

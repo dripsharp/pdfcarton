@@ -176,8 +176,8 @@ internal sealed class Type1Parser {
     global::System.Collections.Generic.IList<global::System.IConvertible> numbers
       = new global::System.Collections.Generic.List<global::System.IConvertible>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(value));
     for (int i = 1, size
-      = (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(value) - 1);
-      (i < size); i++) {
+      = unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(value)
+      - 1)); (i < size); i++) {
       global::DripSharp.PdfCarton.Fonts.Type1.Token token
         = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(value, i);
       if ((token.GetKind() == global::DripSharp.PdfCarton.Fonts.Type1.Token.REAL)) {
@@ -692,7 +692,7 @@ internal sealed class Type1Parser {
   }
 
   private sbyte[] decrypt(sbyte[] cipherBytes, int r, int n) {
-    if ((n == -1)) {
+    if ((n == unchecked(-1))) {
       return cipherBytes;
     }
     if (((cipherBytes.Length == 0) || (n > cipherBytes.Length))) {
@@ -700,14 +700,14 @@ internal sealed class Type1Parser {
     }
     int c1 = 52845;
     int c2 = 22719;
-    sbyte[] plainBytes = new sbyte[(cipherBytes.Length - n)];
+    sbyte[] plainBytes = new sbyte[unchecked((cipherBytes.Length - n))];
     for (int i = 0; (i < cipherBytes.Length); i++) {
       int cipher = (cipherBytes[i] & 255);
       int plain = (cipher ^ (r >> unchecked((int)(8))));
       if ((i >= n)) {
-        plainBytes[(i - n)] = unchecked((sbyte)(unchecked((sbyte)(plain))));
+        plainBytes[unchecked((i - n))] = unchecked((sbyte)(unchecked((sbyte)(plain))));
       }
-      r = ((((cipher + r) * c1) + c2) & 65535);
+      r = (unchecked((unchecked((unchecked((cipher + r)) * c1)) + c2)) & 65535);
     }
     return plainBytes;
   }
@@ -720,7 +720,7 @@ internal sealed class Type1Parser {
       sbyte by = bytes[i];
       if (((((((int)by != 10) && ((int)by != 13)) && ((int)by != 32)) && ((int)by != (int)'\t'))
         && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CharacterDigit(unchecked((char)(unchecked((char)(by)))),
-        16) == -1))) {
+        16) == unchecked(-1)))) {
         return true;
       }
     }
@@ -731,23 +731,25 @@ internal sealed class Type1Parser {
     int len = 0;
     foreach (sbyte by__982_19 in bytes) {
       if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CharacterDigit(unchecked((char)(unchecked((char)(by__982_19)))),
-        16) != -1)) {
+        16) != unchecked(-1))) {
         ++len;
       }
     }
-    sbyte[] res = new sbyte[(len / 2)];
+    sbyte[] res = new sbyte[global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(len,
+      2)];
     int r = 0;
-    int prev = -1;
+    int prev = unchecked(-1);
     foreach (sbyte by__992_19 in bytes) {
       int digit
         = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CharacterDigit(unchecked((char)(unchecked((char)(by__992_19)))),
         16);
-      if ((digit != -1)) {
-        if ((prev == -1)) {
+      if ((digit != unchecked(-1))) {
+        if ((prev == unchecked(-1))) {
           prev = digit;
         } else {
-          res[r++] = unchecked((sbyte)(unchecked((sbyte)(((prev * 16) + digit)))));
-          prev = -1;
+          res[r++] = unchecked((sbyte)(unchecked((sbyte)(unchecked((unchecked((prev * 16))
+            + digit))))));
+          prev = unchecked(-1);
         }
       }
     }

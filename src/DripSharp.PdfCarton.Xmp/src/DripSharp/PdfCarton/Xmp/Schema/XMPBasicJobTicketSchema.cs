@@ -88,4 +88,8 @@ public class XMPBasicJobTicketSchema : global::DripSharp.PdfCarton.Xmp.Schema.XM
     }
     return default!;
   }
+
+  static XMPBasicJobTicketSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema).TypeHandle);
+  }
 }

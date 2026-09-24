@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public sealed class PDAcroForm : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const int FLAG_SIGNATURES_EXIST = 1;
 
@@ -139,22 +138,31 @@ public sealed class PDAcroForm : global::DripSharp.PdfCarton.Pdmodel.Common.COSO
           annotation.GetCOSObject()))) {
           global::DripSharp.Runtime.JavaCompat.Add(annotations, annotation);
         } else {
-          if (this.isVisibleAnnotation(annotation)) {
-            using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
-              = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(this.document, page,
-              global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Append, true,
-              !isContentStreamWrapped)) {
-              isContentStreamWrapped = true;
-              global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream
-                = annotation.GetNormalAppearanceStream();
-              global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject fieldObject
-                = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(appearanceStream.GetCOSObject());
-              contentStream.SaveGraphicsState();
-              global::DripSharp.PdfCarton.Util.Matrix transformationMatrix
-                = this.resolveTransformationMatrix(annotation, appearanceStream);
-              contentStream.Transform(transformationMatrix);
-              contentStream.DrawForm(fieldObject);
-              contentStream.RestoreGraphicsState();
+          if (this.isVisibleAnnotation(annotation)) { {
+              global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
+                = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(this.document, page,
+                global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Append, true,
+                !isContentStreamWrapped);
+              global::System.Exception __dripsharpPrimary_280_46_0 = null!;
+              try {
+                isContentStreamWrapped = true;
+                global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream
+                  = annotation.GetNormalAppearanceStream();
+                global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject fieldObject
+                  = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(appearanceStream.GetCOSObject());
+                contentStream.SaveGraphicsState();
+                global::DripSharp.PdfCarton.Util.Matrix transformationMatrix
+                  = this.resolveTransformationMatrix(annotation, appearanceStream);
+                contentStream.Transform(transformationMatrix);
+                contentStream.DrawForm(fieldObject);
+                contentStream.RestoreGraphicsState();
+              } catch (global::System.Exception __dripsharpCaught_280_46_0) {
+                __dripsharpPrimary_280_46_0 = __dripsharpCaught_280_46_0;
+                throw;
+              } finally {
+                global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream,
+                  __dripsharpPrimary_280_46_0);
+              }
             }
           }
         }
@@ -490,6 +498,10 @@ public sealed class PDAcroForm : global::DripSharp.PdfCarton.Pdmodel.Common.COSO
       }
       array.RemoveObject(field.GetCOSObject());
     }
+  }
+
+  static PDAcroForm() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

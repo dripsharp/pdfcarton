@@ -45,4 +45,8 @@ public sealed class MoveTo
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveTo;
   }
+
+  static MoveTo() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor).TypeHandle);
+  }
 }

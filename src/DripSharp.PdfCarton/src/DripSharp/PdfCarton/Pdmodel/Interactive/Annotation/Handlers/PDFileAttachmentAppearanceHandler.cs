@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
 public class PDFileAttachmentAppearanceHandler
 : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDFileAttachmentAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
   : base(annotation) {
@@ -30,30 +29,39 @@ public class PDFileAttachmentAppearanceHandler
     if ((rect == default!)) {
       return;
     }
-    try {
-      using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
-        = this.getNormalAppearanceAsContentStream()) {
-        this.setOpacity(contentStream, annotation.GetConstantOpacity());
-        int size = 18;
-        rect.SetUpperRightX((rect.GetLowerLeftX() + size));
-        rect.SetLowerLeftY((rect.GetUpperRightY() - size));
-        annotation.SetRectangle(rect);
-        annotation.GetNormalAppearanceStream().SetBBox(new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle((float)(size),
-          (float)(size)));
-        string attachmentName = annotation.GetAttachmentName();
-        switch (attachmentName) {
-          case var __case_72_22_0 when global::System.Object.Equals(__case_72_22_0, "Paperclip"):
-            this.drawPaperclip(contentStream);
-            break;
-          case var __case_75_22_0 when global::System.Object.Equals(__case_75_22_0, "Graph"):
-            this.drawGraph(contentStream);
-            break;
-          case var __case_78_22_0 when global::System.Object.Equals(__case_78_22_0, "Tag"):
-            this.drawTag(contentStream);
-            break;
-          default:
-            this.drawPushPin(contentStream);
-            break;
+    try { {
+        global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
+          = this.getNormalAppearanceAsContentStream();
+        global::System.Exception __dripsharpPrimary_57_40_0 = null!;
+        try {
+          this.setOpacity(contentStream, annotation.GetConstantOpacity());
+          int size = 18;
+          rect.SetUpperRightX((rect.GetLowerLeftX() + size));
+          rect.SetLowerLeftY((rect.GetUpperRightY() - size));
+          annotation.SetRectangle(rect);
+          annotation.GetNormalAppearanceStream().SetBBox(new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle((float)(size),
+            (float)(size)));
+          string attachmentName = annotation.GetAttachmentName();
+          switch (attachmentName) {
+            case var __case_72_22_0 when global::System.Object.Equals(__case_72_22_0, "Paperclip"):
+              this.drawPaperclip(contentStream);
+              break;
+            case var __case_75_22_0 when global::System.Object.Equals(__case_75_22_0, "Graph"):
+              this.drawGraph(contentStream);
+              break;
+            case var __case_78_22_0 when global::System.Object.Equals(__case_78_22_0, "Tag"):
+              this.drawTag(contentStream);
+              break;
+            default:
+              this.drawPushPin(contentStream);
+              break;
+          }
+        } catch (global::System.Exception __dripsharpCaught_57_40_0) {
+          __dripsharpPrimary_57_40_0 = __dripsharpCaught_57_40_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream,
+            __dripsharpPrimary_57_40_0);
         }
       }
     } catch (global::System.IO.IOException e) {
@@ -280,4 +288,9 @@ public class PDFileAttachmentAppearanceHandler
   public override void GenerateRolloverAppearance() {}
 
   public override void GenerateDownAppearance() {}
+
+  static PDFileAttachmentAppearanceHandler() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  }
 }

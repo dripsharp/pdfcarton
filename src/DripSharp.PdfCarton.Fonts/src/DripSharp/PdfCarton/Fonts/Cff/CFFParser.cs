@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public class CFFParser {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const string TAG_OTTO = "OTTO";
 
@@ -52,7 +51,7 @@ public class CFFParser {
     randomAccessRead.Seek((long)(0));
     int remainingBytes = bytes.Length;
     int amountRead;
-    while (((amountRead = randomAccessRead.Read(bytes, (bytes.Length - remainingBytes),
+    while (((amountRead = randomAccessRead.Read(bytes, unchecked((bytes.Length - remainingBytes)),
       remainingBytes)) > 0)) {
       remainingBytes -= amountRead;
     }
@@ -175,7 +174,7 @@ public class CFFParser {
     int offSize = input.ReadUnsignedByte();
     if (((offSize < 1) || (offSize > 4))) {
       throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Illegal (< 1 or > 4) offSize value ",
-        offSize), " in CFF font at position "), (input.GetPosition() - 1)));
+        offSize), " in CFF font at position "), unchecked((input.GetPosition() - 1))));
     }
     return offSize;
   }
@@ -195,7 +194,7 @@ public class CFFParser {
       return new int[0];
     }
     int offSize = global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readOffSize(input);
-    int[] offsets = new int[(count + 1)];
+    int[] offsets = new int[unchecked((count + 1))];
     for (int i = 0; (i <= count); i++) {
       int offset = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadOffset(offSize);
       if ((offset > input.Length())) {
@@ -212,10 +211,10 @@ public class CFFParser {
     if ((offsets.Length == 0)) {
       return new sbyte[0][];
     }
-    int count = (offsets.Length - 1);
+    int count = unchecked((offsets.Length - 1));
     sbyte[][] indexDataValues = new sbyte[count][];
     for (int i = 0; (i < count); i++) {
-      int length = (offsets[(i + 1)] - offsets[i]);
+      int length = unchecked((offsets[unchecked((i + 1))] - offsets[i]));
       indexDataValues[i] = input.ReadBytes(length);
     }
     return indexDataValues;
@@ -226,14 +225,14 @@ public class CFFParser {
     if ((offsets.Length == 0)) {
       return new string[0];
     }
-    int count = (offsets.Length - 1);
+    int count = unchecked((offsets.Length - 1));
     string[] indexDataValues = new string[count];
     for (int i = 0; (i < count); i++) {
-      int length = (offsets[(i + 1)] - offsets[i]);
+      int length = unchecked((offsets[unchecked((i + 1))] - offsets[i]));
       if ((length < 0)) {
         throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Negative index data length + ",
-          length), " at "), i), ": offsets["), (i + 1)), "]="), offsets[(i + 1)]), ", offsets["),
-          i), "]="), offsets[i]));
+          length), " at "), i), ": offsets["), unchecked((i + 1))), "]="), offsets[unchecked((i
+          + 1))]), ", offsets["), i), "]="), offsets[i]));
       }
       indexDataValues[i]
         = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(input.ReadBytes(length),
@@ -257,7 +256,7 @@ public class CFFParser {
       = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData();
     if ((dictSize > 0)) {
       input.SetPosition(offset);
-      int endPosition = (offset + dictSize);
+      int endPosition = unchecked((offset + dictSize));
       while ((input.GetPosition() < endPosition)) {
         dict.Add(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readEntry(input));
       }
@@ -314,15 +313,17 @@ public class CFFParser {
         return ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadInt();
       } else {
         if (((b0 >= 32) && (b0 <= 246))) {
-          return (b0 - 139);
+          return unchecked((b0 - 139));
         } else {
           if (((b0 >= 247) && (b0 <= 250))) {
             int b1__427_17 = input.ReadUnsignedByte();
-            return ((((b0 - 247) * 256) + b1__427_17) + 108);
+            return unchecked((unchecked((unchecked((unchecked((b0 - 247)) * 256)) + b1__427_17))
+              + 108));
           } else {
             if (((b0 >= 251) && (b0 <= 254))) {
               int b1__432_17 = input.ReadUnsignedByte();
-              return (((-((b0 - 251)) * 256) - b1__432_17) - 108);
+              return unchecked((unchecked((unchecked((unchecked(-(unchecked((b0 - 251)))) * 256))
+                - b1__432_17)) - 108));
             } else {
               throw new global::System.ArgumentException();
             }
@@ -340,8 +341,8 @@ public class CFFParser {
     int[] nibbles = new int[2];
     while (!done) {
       int b = input.ReadUnsignedByte();
-      nibbles[0] = (b / 16);
-      nibbles[1] = (b % 16);
+      nibbles[0] = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(b, 16);
+      nibbles[1] = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralRemainder(b, 16);
       foreach (int nibble in nibbles) {
         switch (nibble) {
           case var __case_457_22_0 when __case_457_22_0 == 0:
@@ -455,7 +456,8 @@ public class CFFParser {
     font.AddValueToTopDict("Weight", this.getString(topDict, "Weight"));
     font.AddValueToTopDict("isFixedPitch", topDict.GetBoolean("isFixedPitch", false));
     font.AddValueToTopDict("ItalicAngle", topDict.GetNumber("ItalicAngle", 0));
-    font.AddValueToTopDict("UnderlinePosition", topDict.GetNumber("UnderlinePosition", -100));
+    font.AddValueToTopDict("UnderlinePosition", topDict.GetNumber("UnderlinePosition",
+      unchecked(-100)));
     font.AddValueToTopDict("UnderlineThickness", topDict.GetNumber("UnderlineThickness", 50));
     font.AddValueToTopDict("PaintType", topDict.GetNumber("PaintType", 0));
     font.AddValueToTopDict("CharstringType", topDict.GetNumber("CharstringType", 2));
@@ -673,8 +675,8 @@ public class CFFParser {
       global::System.IConvertible localSubrOffset = privateDict.GetNumber("Subrs", 0);
       if (((localSubrOffset is int)
         && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)localSubrOffset) > 0))) {
-        input.SetPosition((privateOffset
-          + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)localSubrOffset)));
+        input.SetPosition(unchecked((privateOffset
+          + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)localSubrOffset))));
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(privDict, "Subrs",
           global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input));
       }
@@ -787,8 +789,8 @@ public class CFFParser {
     global::System.IConvertible localSubrOffset = privateDict.GetNumber("Subrs", 0);
     if (((localSubrOffset is int)
       && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)localSubrOffset) > 0))) {
-      input.SetPosition((privateOffset
-        + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)localSubrOffset)));
+      input.SetPosition(unchecked((privateOffset
+        + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>((int)localSubrOffset))));
       font.addToPrivateDict("Subrs",
         global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.readIndexData(input));
     }
@@ -801,8 +803,8 @@ public class CFFParser {
     if ((index <= 390)) {
       return global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardString.GetName(index);
     }
-    if (((this.stringIndex != default!) && ((index - 391) < this.stringIndex.Length))) {
-      return this.stringIndex[(index - 391)];
+    if (((this.stringIndex != default!) && (unchecked((index - 391)) < this.stringIndex.Length))) {
+      return this.stringIndex[unchecked((index - 391))];
     }
     return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("SID", index);
   }
@@ -857,7 +859,7 @@ public class CFFParser {
       int rangeLeft = dataInput.ReadUnsignedByte();
       for (int j = 0; (j <= rangeLeft); j++) {
         int sid = charset.GetSIDForGID(gid);
-        encoding.Add((rangeFirst + j), sid, this.readString(sid));
+        encoding.Add(unchecked((rangeFirst + j)), sid, this.readString(sid));
         gid++;
       }
     }
@@ -934,15 +936,15 @@ public class CFFParser {
     public int GetFDIndex(int gid) {
       for (int i = 0; (i < this.range3.Length); ++i) {
         if ((this.range3[i].first <= gid)) {
-          if (((i + 1) < this.range3.Length)) {
-            if ((this.range3[(i + 1)].first > gid)) {
+          if ((unchecked((i + 1)) < this.range3.Length)) {
+            if ((this.range3[unchecked((i + 1))].first > gid)) {
               return this.range3[i].fd;
             }
           } else {
             if ((this.sentinel > gid)) {
               return this.range3[i].fd;
             }
-            return -1;
+            return unchecked(-1);
           }
         }
       }
@@ -1046,7 +1048,7 @@ public class CFFParser {
         int rangeLeft__1220_21 = dataInput.ReadUnsignedByte();
         charset.AddRangeMapping(new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping(gid__1216_17,
           rangeFirst__1219_21, rangeLeft__1220_21));
-        gid__1216_17 += (rangeLeft__1220_21 + 1);
+        gid__1216_17 += unchecked((rangeLeft__1220_21 + 1));
       }
     } else {
       charset.AddSID(0, 0, ".notdef");
@@ -1054,10 +1056,10 @@ public class CFFParser {
       while ((gid__1228_17 < nGlyphs)) {
         int rangeFirst__1231_21
           = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
-        int rangeLeft__1232_21 = (dataInput.ReadUnsignedByte() + 1);
+        int rangeLeft__1232_21 = unchecked((dataInput.ReadUnsignedByte() + 1));
         for (int j = 0; (j < rangeLeft__1232_21); j++) {
-          int sid = (rangeFirst__1231_21 + j);
-          charset.AddSID((gid__1228_17 + j), sid, this.readString(sid));
+          int sid = unchecked((rangeFirst__1231_21 + j));
+          charset.AddSID(unchecked((gid__1228_17 + j)), sid, this.readString(sid));
         }
         gid__1228_17 += rangeLeft__1232_21;
       }
@@ -1079,7 +1081,7 @@ public class CFFParser {
           = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
         charset.AddRangeMapping(new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.RangeMapping(gid__1251_17,
           first__1254_21, nLeft__1255_21));
-        gid__1251_17 += (nLeft__1255_21 + 1);
+        gid__1251_17 += unchecked((nLeft__1255_21 + 1));
       }
     } else {
       charset.AddSID(0, 0, ".notdef");
@@ -1088,11 +1090,11 @@ public class CFFParser {
         int first__1266_21
           = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort();
         int nLeft__1267_21
-          = (((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort()
-          + 1);
+          = unchecked((((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(dataInput)).ReadUnsignedShort()
+          + 1));
         for (int j = 0; (j < nLeft__1267_21); j++) {
-          int sid = (first__1266_21 + j);
-          charset.AddSID((gid__1263_17 + j), sid, this.readString(sid));
+          int sid = unchecked((first__1266_21 + j));
+          charset.AddSID(unchecked((gid__1263_17 + j)), sid, this.readString(sid));
         }
         gid__1263_17 += nLeft__1267_21;
       }
@@ -1144,7 +1146,7 @@ public class CFFParser {
       global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.DictData.Entry entry = this.GetEntry(name);
       return (((entry != default!) && entry.HasOperands())
         ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(entry.GetBoolean(0,
-        defaultValue)) : defaultValue);
+        (bool?)(defaultValue))) : defaultValue);
     }
 
     public virtual global::System.Collections.Generic.IList<global::System.IConvertible> GetArray(string name,
@@ -1221,11 +1223,13 @@ public class CFFParser {
         for (int i = 1;
           (i < global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(result)); i++) {
           global::System.IConvertible previous
-            = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(result, (i - 1));
+            = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(result, unchecked((i
+            - 1)));
           global::System.IConvertible current
             = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(result, i);
-          int sum = (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(previous)
-            + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(current));
+          int sum
+            = unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(previous)
+            + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(current)));
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(result, i, sum);
         }
         return result;
@@ -1267,6 +1271,10 @@ public class CFFParser {
       this.Add(supplement.code, supplement.sid, supplement.name);
     }
 
+    static CFFBuiltInEncoding() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding).TypeHandle);
+    }
+
     internal CFFBuiltInEncoding() {}
   }
 
@@ -1284,6 +1292,10 @@ public class CFFParser {
         ", supplement="),
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(base.supplement)), "]");
     }
+
+    static Format0Encoding() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding).TypeHandle);
+    }
   }
 
   internal class Format1Encoding
@@ -1300,6 +1312,10 @@ public class CFFParser {
         ", supplement="),
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(base.supplement)), "]");
     }
+
+    static Format1Encoding() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.CFFParser.CFFBuiltInEncoding).TypeHandle);
+    }
   }
 
   internal class EmptyCharsetCID : global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID {
@@ -1314,6 +1330,10 @@ public class CFFParser {
       return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
         "DripSharp.PdfCarton.Fonts", "org.apache.fontbox");
     }
+
+    static EmptyCharsetCID() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetCID).TypeHandle);
+    }
   }
 
   internal class EmptyCharsetType1 : global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetType1 {
@@ -1325,11 +1345,19 @@ public class CFFParser {
       return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassName(((object)(this)).GetType(),
         "DripSharp.PdfCarton.Fonts", "org.apache.fontbox");
     }
+
+    static EmptyCharsetType1() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetType1).TypeHandle);
+    }
   }
 
   internal class Format0Charset : global::DripSharp.PdfCarton.Fonts.Cff.EmbeddedCharset {
     internal Format0Charset(bool isCIDFont) : base(isCIDFont) {
 
+    }
+
+    static Format0Charset() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.EmbeddedCharset).TypeHandle);
     }
   }
 
@@ -1367,6 +1395,10 @@ public class CFFParser {
       }
       return base.GetGIDForCID(cid);
     }
+
+    static Format1Charset() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.EmbeddedCharset).TypeHandle);
+    }
   }
 
   internal class Format2Charset : global::DripSharp.PdfCarton.Fonts.Cff.EmbeddedCharset {
@@ -1399,6 +1431,10 @@ public class CFFParser {
       }
       return base.GetGIDForCID(cid);
     }
+
+    static Format2Charset() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.EmbeddedCharset).TypeHandle);
+    }
   }
 
   internal sealed class RangeMapping {
@@ -1412,9 +1448,9 @@ public class CFFParser {
 
     internal RangeMapping(int startGID, int first, int nLeft) {
       this.startValue = startGID;
-      this.endValue = (this.startValue + nLeft);
+      this.endValue = unchecked((this.startValue + nLeft));
       this.startMappedValue = first;
-      this.endMappedValue = (this.startMappedValue + nLeft);
+      this.endMappedValue = unchecked((this.startMappedValue + nLeft));
     }
 
     internal bool isInRange(int value) {
@@ -1426,12 +1462,13 @@ public class CFFParser {
     }
 
     internal int mapValue(int value) {
-      return (this.isInRange(value) ? (this.startMappedValue + (value - this.startValue)) : 0);
+      return (this.isInRange(value) ? unchecked((this.startMappedValue + unchecked((value
+        - this.startValue)))) : 0);
     }
 
     internal int mapReverseValue(int value) {
-      return (this.isInReverseRange(value) ? (this.startValue + (value - this.startMappedValue))
-        : 0);
+      return (this.isInReverseRange(value) ? unchecked((this.startValue + unchecked((value
+        - this.startMappedValue)))) : 0);
     }
 
     public override string ToString() {
@@ -1457,5 +1494,9 @@ public class CFFParser {
   public override string ToString() {
     return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(((object)(this)).GetType().Name,
       "["), this.debugFontName), "]");
+  }
+
+  static CFFParser() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

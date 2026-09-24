@@ -33,4 +33,8 @@ public class SetWordSpacing
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetWordSpacing;
   }
+
+  static SetWordSpacing() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

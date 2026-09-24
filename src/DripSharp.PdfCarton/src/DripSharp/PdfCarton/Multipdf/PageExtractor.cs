@@ -28,7 +28,7 @@ public class PageExtractor {
   }
 
   public virtual global::DripSharp.PdfCarton.Pdmodel.PDDocument Extract() {
-    if ((((this.endPage - this.startPage) + 1) <= 0)) {
+    if ((unchecked((unchecked((this.endPage - this.startPage)) + 1)) <= 0)) {
       return new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
     }
     global::DripSharp.PdfCarton.Multipdf.Splitter splitter
@@ -36,7 +36,7 @@ public class PageExtractor {
     splitter.SetStartPage(global::System.Math.Max(this.startPage, 1));
     splitter.SetEndPage(global::System.Math.Min(this.endPage,
       this.sourceDocument.GetNumberOfPages()));
-    splitter.SetSplitAtPage(((this.GetEndPage() - this.GetStartPage()) + 1));
+    splitter.SetSplitAtPage(unchecked((unchecked((this.GetEndPage() - this.GetStartPage())) + 1)));
     global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitted
       = splitter.Split(this.sourceDocument);
     return global::DripSharp.Runtime.JavaCompat.ListGet(splitted, 0);

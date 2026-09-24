@@ -9,10 +9,10 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public class ResourceCacheFactory {
-  private static global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction resourceCacheCreateFunction
-    = default!;
+  private static global::DripSharp.PdfCarton.Pdmodel.ResourceCacheCreateFunction resourceCacheCreateFunction;
 
-  static ResourceCacheFactory() { {
+  static ResourceCacheFactory() {
+    resourceCacheCreateFunction = default!; {
       global::DripSharp.PdfCarton.Pdmodel.ResourceCacheFactory.SetResourceCacheCreateFunction(new global::DripSharp.PdfCarton.Pdmodel.DefaultResourceCacheCreateImpl());
     }
   }

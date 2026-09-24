@@ -27,7 +27,7 @@ public sealed class COSInputStream : global::DripSharp.Runtime.JavaFilterInputSt
     }
     return new global::DripSharp.PdfCarton.Cos.COSInputStream(new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(decoded),
       global::DripSharp.Runtime.JavaCompat.ListGet(results,
-      (global::DripSharp.Runtime.JavaCompat.CollectionCount(results) - 1)));
+      unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(results) - 1))));
   }
 
   private readonly global::DripSharp.PdfCarton.Filter.DecodeResult decodeResult = null!;

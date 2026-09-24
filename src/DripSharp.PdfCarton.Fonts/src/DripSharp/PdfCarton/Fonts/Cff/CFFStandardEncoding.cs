@@ -90,6 +90,10 @@ public sealed class CFFStandardEncoding : global::DripSharp.PdfCarton.Fonts.Cff.
     return global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardEncoding.INSTANCE;
   }
 
-  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardEncoding INSTANCE
-    = new global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardEncoding();
+  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardEncoding INSTANCE;
+
+  static CFFStandardEncoding() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding).TypeHandle);
+    INSTANCE = new global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardEncoding();
+  }
 }

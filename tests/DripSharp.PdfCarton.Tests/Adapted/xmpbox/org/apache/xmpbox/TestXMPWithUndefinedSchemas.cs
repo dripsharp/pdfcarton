@@ -15,11 +15,19 @@ public class TestXMPWithUndefinedSchemas {
     global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser builder
       = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
     builder.SetStrictParsing(false);
-    global::DripSharp.PdfCarton.Xmp.XMPMetadata rxmp;
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(((object)(this)).GetType(),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", path))) {
-      rxmp = builder.Parse(@is);
+    global::DripSharp.PdfCarton.Xmp.XMPMetadata rxmp; {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(((object)(this)).GetType(),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", path));
+      global::System.Exception __dripsharpPrimary_56_26_0 = null!;
+      try {
+        rxmp = builder.Parse(@is);
+      } catch (global::System.Exception __dripsharpCaught_56_26_0) {
+        __dripsharpPrimary_56_26_0 = __dripsharpCaught_56_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_56_26_0);
+      }
     }
     global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(rxmp.GetAllSchemas()),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",

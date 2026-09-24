@@ -10,12 +10,13 @@ namespace DripSharp.PdfCarton.Preflight.Annotation;
 
 public abstract class SquareCircleAnnotationValidator
 : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquareCircle PdSquareCircle
-    = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquareCircle PdSquareCircle;
 
   public SquareCircleAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquareCircle annotation)
   : base(ctx, annotation.GetCOSObject()) {
+    this.PdSquareCircle = default!;
+
     this.PdSquareCircle = annotation;
     this.PdAnnot = this.PdSquareCircle;
   }
@@ -33,5 +34,9 @@ public abstract class SquareCircleAnnotationValidator
       return false;
     }
     return true;
+  }
+
+  static SquareCircleAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator).TypeHandle);
   }
 }

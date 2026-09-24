@@ -19,7 +19,8 @@ internal class StackOperators {
       if ((n > 0)) {
         int size = stack.Count;
         global::System.Collections.Generic.IList<object> copy
-          = new global::System.Collections.Generic.List<object>(stack.SubList((size - n), size));
+          = new global::System.Collections.Generic.List<object>(stack.SubList(unchecked((size - n)),
+          size));
         stack.AddAll(copy);
       }
     }
@@ -52,7 +53,7 @@ internal class StackOperators {
           n));
       }
       int size = stack.Count;
-      stack.Push(stack.Get(((size - n) - 1)));
+      stack.Push(stack.Get(unchecked((unchecked((size - n)) - 1))));
     }
   }
 
@@ -82,7 +83,7 @@ internal class StackOperators {
       global::System.Collections.Generic.List<object> moved
         = new global::System.Collections.Generic.List<object>();
       if ((j < 0)) {
-        int n1__135_21 = (n + j);
+        int n1__135_21 = unchecked((n + j));
         for (int i__136_26 = 0; (i__136_26 < n1__135_21); i__136_26++) {
           global::DripSharp.Runtime.JavaCompat.ListAddFirst(moved, stack.Pop());
         }
@@ -92,7 +93,7 @@ internal class StackOperators {
         stack.AddAll(moved);
         stack.AddAll(rolled);
       } else {
-        int n1__150_21 = (n - j);
+        int n1__150_21 = unchecked((n - j));
         for (int i__151_26 = j; (i__151_26 > 0); i__151_26--) {
           global::DripSharp.Runtime.JavaCompat.ListAddFirst(rolled, stack.Pop());
         }

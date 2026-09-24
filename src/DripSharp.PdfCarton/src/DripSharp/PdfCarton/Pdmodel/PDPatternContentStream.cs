@@ -15,4 +15,8 @@ public sealed class PDPatternContentStream
     pattern.GetContentStream().CreateOutputStream(), pattern.GetResources()) {
 
   }
+
+  static PDPatternContentStream() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.PDAbstractContentStream).TypeHandle);
+  }
 }

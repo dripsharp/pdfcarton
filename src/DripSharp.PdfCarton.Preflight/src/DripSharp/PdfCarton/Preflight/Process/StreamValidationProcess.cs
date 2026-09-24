@@ -76,4 +76,8 @@ public class StreamValidationProcess
         "F, FFilter or FDecodeParms keys are present in the stream dictionary"));
     }
   }
+
+  static StreamValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+  }
 }

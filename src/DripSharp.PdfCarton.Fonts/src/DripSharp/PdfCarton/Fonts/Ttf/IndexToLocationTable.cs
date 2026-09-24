@@ -26,11 +26,11 @@ public class IndexToLocationTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTab
       throw new global::System.IO.IOException("Could not get head table");
     }
     int numGlyphs = ttf.GetNumberOfGlyphs();
-    this.offsets = new long[(numGlyphs + 1)];
-    for (int i = 0; (i < (numGlyphs + 1)); i++) {
+    this.offsets = new long[unchecked((numGlyphs + 1))];
+    for (int i = 0; (i < unchecked((numGlyphs + 1))); i++) {
       if (((int)(head.GetIndexToLocFormat())
         == (int)(global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable.SHORT_OFFSETS))) {
-        this.offsets[i] = (data.ReadUnsignedShort() * 2L);
+        this.offsets[i] = unchecked((data.ReadUnsignedShort() * 2L));
       } else {
         if (((int)(head.GetIndexToLocFormat())
           == (int)(global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable.LONG_OFFSETS))) {
@@ -53,5 +53,9 @@ public class IndexToLocationTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTab
 
   public virtual void SetOffsets(long[] offsetsValue) {
     this.offsets = offsetsValue;
+  }
+
+  static IndexToLocationTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
   }
 }

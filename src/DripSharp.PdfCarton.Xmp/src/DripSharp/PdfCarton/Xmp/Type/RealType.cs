@@ -39,6 +39,10 @@ public class RealType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimplePrope
     return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringValueOf(this.realValue);
   }
 
+  static RealType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty).TypeHandle);
+  }
+
   protected override object __DripSharpCovariantBridgeGetValue() {
     return this.GetValue();
   }

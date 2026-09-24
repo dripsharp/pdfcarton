@@ -45,184 +45,74 @@ public class BlendMode {
     }
   }
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fNormal
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
-    dest) => src);
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fNormal;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fMultiply
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
-    dest) => (src * dest));
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fMultiply;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fScreen
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
-    dest) => ((src + dest) - (src * dest)));
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fScreen;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fOverlay
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
-    dest) => ((dest <= 0.5D) ? ((2 * dest) * src) : ((2 * ((src + dest) - (src * dest))) - 1)));
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fOverlay;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fDarken
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter(global::System.Math.Min);
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fDarken;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fLighten
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter(global::System.Math.Max);
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fLighten;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fColorDodge
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
-    dest) => {
-      if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(dest, (float)(0)) == 0)) {
-        return 0.0F;
-      }
-      if ((dest >= (1 - src))) {
-        return 1.0F;
-      }
-      return ((float)dest / (float)((1 - src)));
-    });
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fColorDodge;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fColorBurn
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
-    dest) => {
-      if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(dest, (float)(1)) == 0)) {
-        return 1.0F;
-      }
-      if (((1 - dest) >= src)) {
-        return 0.0F;
-      }
-      return (1 - ((float)((1 - dest)) / (float)src));
-    });
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fColorBurn;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fHardLight
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
-    dest) => ((src <= 0.5D) ? ((2 * dest) * src) : ((2 * ((src + dest) - (src * dest))) - 1)));
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fHardLight;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fSoftLight
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
-    dest) => {
-      if ((src <= 0.5D)) {
-        return (dest - (((1 - (2 * src)) * dest) * (1 - dest)));
-      } else {
-        float d = ((dest <= 0.25D) ? (((((16 * dest) - 12) * dest) + 4) * dest)
-        : (float)(global::System.Math.Sqrt((double)(dest))));
-        return (dest + (((2 * src) - 1) * (d - dest)));
-      }
-    });
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fSoftLight;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fDifference
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
-    dest) => global::System.Math.Abs((dest - src)));
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fDifference;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fExclusion
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
-    dest) => ((dest + src) - ((2 * dest) * src)));
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction fExclusion;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction fHue
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendFunctionFunctionalAdapter((src,
-    dest, result) => {
-      float[] temp = new float[3];
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.getSaturationRGB(dest, src,
-      temp);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.getLuminosityRGB(dest, temp,
-      result);
-    });
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction fHue;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction fSaturation
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendFunctionFunctionalAdapter(global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.getSaturationRGB);
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction fSaturation;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction fColor
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendFunctionFunctionalAdapter((src,
-    dest, result)
-    => global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.getLuminosityRGB(dest, src,
-    result));
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction fColor;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction fLuminosity
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendFunctionFunctionalAdapter(global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.getLuminosityRGB);
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction fLuminosity;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Normal
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Normal,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fNormal,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Normal;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Compatible
-    = global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.Normal;
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Compatible;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Multiply
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Multiply,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fMultiply,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Multiply;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Screen
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Screen,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fScreen,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Screen;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Overlay
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Overlay,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fOverlay,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Overlay;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Darken
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Darken,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fDarken,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Darken;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Lighten
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Lighten,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fLighten,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Lighten;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode ColorDodge
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.ColorDodge,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fColorDodge,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode ColorDodge;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode ColorBurn
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.ColorBurn,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fColorBurn,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode ColorBurn;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode HardLight
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.HardLight,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fHardLight,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode HardLight;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode SoftLight
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.SoftLight,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fSoftLight,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode SoftLight;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Difference
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Difference,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fDifference,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Difference;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Exclusion
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Exclusion,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fExclusion,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Exclusion;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Hue
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Hue,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction)default!,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fHue);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Hue;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Saturation
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Saturation,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction)default!,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fSaturation);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Saturation;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Color
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Color,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction)default!,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fColor);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Color;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Luminosity
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Luminosity,
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction)default!,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fLuminosity);
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode Luminosity;
 
   private static readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSName,
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode> BLEND_MODES
-    = global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.createBlendModeMap();
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode> BLEND_MODES;
 
   private static global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSName,
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode> createBlendModeMap() {
@@ -342,7 +232,8 @@ public class BlendMode {
   }
 
   private static int get255Value(float val) {
-    return (int)(global::System.Math.Floor(((val >= 1.0D) ? 255 : (val * 255.0D))));
+    return unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Floor(((val
+      >= 1.0D) ? 255 : (val * 255.0D))))));
   }
 
   private static void getSaturationRGB(float[] srcValues, float[] dstValues, float[] result) {
@@ -362,30 +253,40 @@ public class BlendMode {
     int bs = global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.get255Value(srcValues[2]);
     int mins = global::System.Math.Min(rs, global::System.Math.Min(gs, bs));
     int maxs = global::System.Math.Max(rs, global::System.Math.Max(gs, bs));
-    int scale = (((maxs - mins) << unchecked((int)(16))) / (maxb - minb));
-    int y = (((((rd * 77) + (gd * 151)) + (bd * 28)) + 128) >> unchecked((int)(8)));
-    int r = (y + ((((rd - y) * scale) + 32768) >> unchecked((int)(16))));
-    int g = (y + ((((gd - y) * scale) + 32768) >> unchecked((int)(16))));
-    int b = (y + ((((bd - y) * scale) + 32768) >> unchecked((int)(16))));
+    int scale = global::DripSharp.Runtime.JavaCompat.IntegralDivide((unchecked((maxs
+      - mins)) << unchecked((int)(16))), unchecked((maxb - minb)));
+    int y = (unchecked((unchecked((unchecked((unchecked((rd * 77)) + unchecked((gd * 151))))
+      + unchecked((bd * 28)))) + 128)) >> unchecked((int)(8)));
+    int r = unchecked((y + (unchecked((unchecked((unchecked((rd - y)) * scale))
+      + 32768)) >> unchecked((int)(16)))));
+    int g = unchecked((y + (unchecked((unchecked((unchecked((gd - y)) * scale))
+      + 32768)) >> unchecked((int)(16)))));
+    int b = unchecked((y + (unchecked((unchecked((unchecked((bd - y)) * scale))
+      + 32768)) >> unchecked((int)(16)))));
     if (((((r | g) | b) & 256) == 256)) {
       int scalemin;
       int scalemax;
       int min = global::System.Math.Min(r, global::System.Math.Min(g, b));
       int max = global::System.Math.Max(r, global::System.Math.Max(g, b));
       if ((min < 0)) {
-        scalemin = ((y << unchecked((int)(16))) / (y - min));
+        scalemin = global::DripSharp.Runtime.JavaCompat.IntegralDivide((y << unchecked((int)(16))),
+          unchecked((y - min)));
       } else {
         scalemin = 65536;
       }
       if ((max > 255)) {
-        scalemax = (((255 - y) << unchecked((int)(16))) / (max - y));
+        scalemax = global::DripSharp.Runtime.JavaCompat.IntegralDivide((unchecked((255
+          - y)) << unchecked((int)(16))), unchecked((max - y)));
       } else {
         scalemax = 65536;
       }
       scale = global::System.Math.Min(scalemin, scalemax);
-      r = (y + ((((r - y) * scale) + 32768) >> unchecked((int)(16))));
-      g = (y + ((((g - y) * scale) + 32768) >> unchecked((int)(16))));
-      b = (y + ((((b - y) * scale) + 32768) >> unchecked((int)(16))));
+      r = unchecked((y + (unchecked((unchecked((unchecked((r - y)) * scale))
+        + 32768)) >> unchecked((int)(16)))));
+      g = unchecked((y + (unchecked((unchecked((unchecked((g - y)) * scale))
+        + 32768)) >> unchecked((int)(16)))));
+      b = unchecked((y + (unchecked((unchecked((unchecked((b - y)) * scale))
+        + 32768)) >> unchecked((int)(16)))));
     }
     result[0] = (r / (float)255.0F);
     result[1] = (g / (float)255.0F);
@@ -399,26 +300,35 @@ public class BlendMode {
     int rs = global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.get255Value(srcValues[0]);
     int gs = global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.get255Value(srcValues[1]);
     int bs = global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.get255Value(srcValues[2]);
-    int delta = ((((((rs - rd) * 77) + ((gs - gd) * 151)) + ((bs - bd) * 28))
-      + 128) >> unchecked((int)(8)));
-    int r = (rd + delta);
-    int g = (gd + delta);
-    int b = (bd + delta);
+    int delta = (unchecked((unchecked((unchecked((unchecked((unchecked((rs - rd)) * 77))
+      + unchecked((unchecked((gs - gd)) * 151)))) + unchecked((unchecked((bs - bd)) * 28))))
+      + 128)) >> unchecked((int)(8)));
+    int r = unchecked((rd + delta));
+    int g = unchecked((gd + delta));
+    int b = unchecked((bd + delta));
     if (((((r | g) | b) & 256) == 256)) {
       int scale;
-      int y = (((((rs * 77) + (gs * 151)) + (bs * 28)) + 128) >> unchecked((int)(8)));
+      int y = (unchecked((unchecked((unchecked((unchecked((rs * 77)) + unchecked((gs * 151))))
+        + unchecked((bs * 28)))) + 128)) >> unchecked((int)(8)));
       if ((delta > 0)) {
         int max;
         max = global::System.Math.Max(r, global::System.Math.Max(g, b));
-        scale = ((max == y) ? 0 : (((255 - y) << unchecked((int)(16))) / (max - y)));
+        scale = ((max == y) ? 0
+          : global::DripSharp.Runtime.JavaCompat.IntegralDivide((unchecked((255
+          - y)) << unchecked((int)(16))), unchecked((max - y))));
       } else {
         int min;
         min = global::System.Math.Min(r, global::System.Math.Min(g, b));
-        scale = ((y == min) ? 0 : ((y << unchecked((int)(16))) / (y - min)));
+        scale = ((y == min) ? 0
+          : global::DripSharp.Runtime.JavaCompat.IntegralDivide((y << unchecked((int)(16))),
+          unchecked((y - min))));
       }
-      r = (y + ((((r - y) * scale) + 32768) >> unchecked((int)(16))));
-      g = (y + ((((g - y) * scale) + 32768) >> unchecked((int)(16))));
-      b = (y + ((((b - y) * scale) + 32768) >> unchecked((int)(16))));
+      r = unchecked((y + (unchecked((unchecked((unchecked((r - y)) * scale))
+        + 32768)) >> unchecked((int)(16)))));
+      g = unchecked((y + (unchecked((unchecked((unchecked((g - y)) * scale))
+        + 32768)) >> unchecked((int)(16)))));
+      b = unchecked((y + (unchecked((unchecked((unchecked((b - y)) * scale))
+        + 32768)) >> unchecked((int)(16)))));
     }
     result[0] = (r / (float)255.0F);
     result[1] = (g / (float)255.0F);
@@ -428,5 +338,150 @@ public class BlendMode {
   public override string ToString() {
     return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("BlendMode{name=",
       this.name.GetName()), ", isSeparable="), this.isSeparable), '}');
+  }
+
+  static BlendMode() {
+    fNormal
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
+      dest) => src);
+    fMultiply
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
+      dest) => (src * dest));
+    fScreen
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
+      dest) => ((src + dest) - (src * dest)));
+    fOverlay
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
+      dest) => ((dest <= 0.5D) ? ((2 * dest) * src) : ((2 * ((src + dest) - (src * dest))) - 1)));
+    fDarken
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter(global::System.Math.Min);
+    fLighten
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter(global::System.Math.Max);
+    fColorDodge
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
+      dest) => {
+        if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(dest, (float)(0)) == 0)) {
+          return 0.0F;
+        }
+        if ((dest >= (1 - src))) {
+          return 1.0F;
+        }
+        return ((float)dest / (float)((1 - src)));
+      });
+    fColorBurn
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
+      dest) => {
+        if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(dest, (float)(1)) == 0)) {
+          return 1.0F;
+        }
+        if (((1 - dest) >= src)) {
+          return 0.0F;
+        }
+        return (1 - ((float)((1 - dest)) / (float)src));
+      });
+    fHardLight
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
+      dest) => ((src <= 0.5D) ? ((2 * dest) * src) : ((2 * ((src + dest) - (src * dest))) - 1)));
+    fSoftLight
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
+      dest) => {
+        if ((src <= 0.5D)) {
+          return (dest - (((1 - (2 * src)) * dest) * (1 - dest)));
+        } else {
+          float d = ((dest <= 0.25D) ? (((((16 * dest) - 12) * dest) + 4) * dest)
+          : (float)(global::System.Math.Sqrt((double)(dest))));
+          return (dest + (((2 * src) - 1) * (d - dest)));
+        }
+      });
+    fDifference
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
+      dest) => global::System.Math.Abs((dest - src)));
+    fExclusion
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendChannelFunctionFunctionalAdapter((src,
+      dest) => ((dest + src) - ((2 * dest) * src)));
+    fHue
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendFunctionFunctionalAdapter((src,
+      dest, result) => {
+        float[] temp = new float[3];
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.getSaturationRGB(dest, src,
+        temp);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.getLuminosityRGB(dest, temp,
+        result);
+      });
+    fSaturation
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendFunctionFunctionalAdapter(global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.getSaturationRGB);
+    fColor
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendFunctionFunctionalAdapter((src,
+      dest, result)
+      => global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.getLuminosityRGB(dest, src,
+      result));
+    fLuminosity
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.__BlendFunctionFunctionalAdapter(global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.getLuminosityRGB);
+    Normal
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Normal,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fNormal,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+    Compatible = global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.Normal;
+    Multiply
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Multiply,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fMultiply,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+    Screen
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Screen,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fScreen,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+    Overlay
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Overlay,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fOverlay,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+    Darken
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Darken,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fDarken,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+    Lighten
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Lighten,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fLighten,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+    ColorDodge
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.ColorDodge,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fColorDodge,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+    ColorBurn
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.ColorBurn,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fColorBurn,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+    HardLight
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.HardLight,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fHardLight,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+    SoftLight
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.SoftLight,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fSoftLight,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+    Difference
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Difference,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fDifference,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+    Exclusion
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Exclusion,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fExclusion,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendFunction)default!);
+    Hue
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Hue,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction)default!,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fHue);
+    Saturation
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Saturation,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction)default!,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fSaturation);
+    Color
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Color,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction)default!,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fColor);
+    Luminosity
+      = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode(global::DripSharp.PdfCarton.Cos.COSName.Luminosity,
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.BlendChannelFunction)default!,
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.fLuminosity);
+    BLEND_MODES = global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.createBlendModeMap();
   }
 }

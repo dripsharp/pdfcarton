@@ -73,4 +73,8 @@ public class GoToRemoteAction : global::DripSharp.PdfCarton.Preflight.Action.GoT
     }
     return true;
   }
+
+  static GoToRemoteAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.GoToAction).TypeHandle);
+  }
 }

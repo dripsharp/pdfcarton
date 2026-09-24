@@ -92,6 +92,10 @@ public sealed class CFFExpertEncoding : global::DripSharp.PdfCarton.Fonts.Cff.CF
     return global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertEncoding.INSTANCE;
   }
 
-  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertEncoding INSTANCE
-    = new global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertEncoding();
+  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertEncoding INSTANCE;
+
+  static CFFExpertEncoding() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.CFFEncoding).TypeHandle);
+    INSTANCE = new global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertEncoding();
+  }
 }

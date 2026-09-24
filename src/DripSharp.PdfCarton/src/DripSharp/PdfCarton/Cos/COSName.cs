@@ -11,1778 +11,1186 @@ namespace DripSharp.PdfCarton.Cos;
 public sealed class COSName : global::DripSharp.PdfCarton.Cos.COSBase,
 global::System.IComparable<global::DripSharp.PdfCarton.Cos.COSName> {
   private static readonly global::System.Collections.Generic.IDictionary<global::DripSharp.Runtime.JavaByteBuffer,
-    global::DripSharp.PdfCarton.Cos.COSName> nameMap
-    = new global::System.Collections.Concurrent.ConcurrentDictionary<global::DripSharp.Runtime.JavaByteBuffer,
-    global::DripSharp.PdfCarton.Cos.COSName>();
+    global::DripSharp.PdfCarton.Cos.COSName> nameMap;
 
   private static readonly global::System.Collections.Generic.IDictionary<global::DripSharp.Runtime.JavaByteBuffer,
-    global::DripSharp.PdfCarton.Cos.COSName> commonNameMap
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.Runtime.JavaByteBuffer,
-    global::DripSharp.PdfCarton.Cos.COSName>(768);
+    global::DripSharp.PdfCarton.Cos.COSName> commonNameMap;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName A
-    = new global::DripSharp.PdfCarton.Cos.COSName("A");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName A;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Aa
-    = new global::DripSharp.PdfCarton.Cos.COSName("AA");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Aa;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AbsoluteColorimetric
-    = new global::DripSharp.PdfCarton.Cos.COSName("AbsoluteColorimetric");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AbsoluteColorimetric;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ac
-    = new global::DripSharp.PdfCarton.Cos.COSName("AC");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ac;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AcroForm
-    = new global::DripSharp.PdfCarton.Cos.COSName("AcroForm");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AcroForm;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ActualText
-    = new global::DripSharp.PdfCarton.Cos.COSName("ActualText");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ActualText;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Adbe
-    = new global::DripSharp.PdfCarton.Cos.COSName("ADBE");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Adbe;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AdbePkcs7Detached
-    = new global::DripSharp.PdfCarton.Cos.COSName("adbe.pkcs7.detached");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AdbePkcs7Detached;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AdbePkcs7Sha1
-    = new global::DripSharp.PdfCarton.Cos.COSName("adbe.pkcs7.sha1");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AdbePkcs7Sha1;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AdbeX509RsaSha1
-    = new global::DripSharp.PdfCarton.Cos.COSName("adbe.x509.rsa_sha1");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AdbeX509RsaSha1;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AdobePpklite
-    = new global::DripSharp.PdfCarton.Cos.COSName("Adobe.PPKLite");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AdobePpklite;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Aesv2
-    = new global::DripSharp.PdfCarton.Cos.COSName("AESV2");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Aesv2;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Aesv3
-    = new global::DripSharp.PdfCarton.Cos.COSName("AESV3");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Aesv3;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Af
-    = new global::DripSharp.PdfCarton.Cos.COSName("AF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Af;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AfRelationship
-    = new global::DripSharp.PdfCarton.Cos.COSName("AFRelationship");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AfRelationship;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName After
-    = new global::DripSharp.PdfCarton.Cos.COSName("After");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName After;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AiMetaData
-    = new global::DripSharp.PdfCarton.Cos.COSName("AIMetaData");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AiMetaData;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ais
-    = new global::DripSharp.PdfCarton.Cos.COSName("AIS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ais;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AllOff
-    = new global::DripSharp.PdfCarton.Cos.COSName("AllOff");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AllOff;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AllOn
-    = new global::DripSharp.PdfCarton.Cos.COSName("AllOn");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AllOn;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Alt
-    = new global::DripSharp.PdfCarton.Cos.COSName("Alt");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Alt;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Alpha
-    = new global::DripSharp.PdfCarton.Cos.COSName("Alpha");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Alpha;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Alternate
-    = new global::DripSharp.PdfCarton.Cos.COSName("Alternate");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Alternate;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Annot
-    = new global::DripSharp.PdfCarton.Cos.COSName("Annot");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Annot;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Annots
-    = new global::DripSharp.PdfCarton.Cos.COSName("Annots");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Annots;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AntiAlias
-    = new global::DripSharp.PdfCarton.Cos.COSName("AntiAlias");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AntiAlias;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AnyOff
-    = new global::DripSharp.PdfCarton.Cos.COSName("AnyOff");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AnyOff;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AnyOn
-    = new global::DripSharp.PdfCarton.Cos.COSName("AnyOn");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AnyOn;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ap
-    = new global::DripSharp.PdfCarton.Cos.COSName("AP");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ap;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ApRef
-    = new global::DripSharp.PdfCarton.Cos.COSName("APRef");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ApRef;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName App
-    = new global::DripSharp.PdfCarton.Cos.COSName("App");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName App;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ArtBox
-    = new global::DripSharp.PdfCarton.Cos.COSName("ArtBox");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ArtBox;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Artifact
-    = new global::DripSharp.PdfCarton.Cos.COSName("Artifact");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Artifact;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName As
-    = new global::DripSharp.PdfCarton.Cos.COSName("AS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName As;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ascent
-    = new global::DripSharp.PdfCarton.Cos.COSName("Ascent");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ascent;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AsciiHexDecode
-    = new global::DripSharp.PdfCarton.Cos.COSName("ASCIIHexDecode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AsciiHexDecode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AsciiHexDecodeAbbreviation
-    = new global::DripSharp.PdfCarton.Cos.COSName("AHx");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AsciiHexDecodeAbbreviation;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ascii85Decode
-    = new global::DripSharp.PdfCarton.Cos.COSName("ASCII85Decode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ascii85Decode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ascii85DecodeAbbreviation
-    = new global::DripSharp.PdfCarton.Cos.COSName("A85");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ascii85DecodeAbbreviation;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Attached
-    = new global::DripSharp.PdfCarton.Cos.COSName("Attached");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Attached;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Author
-    = new global::DripSharp.PdfCarton.Cos.COSName("Author");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Author;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName AvgWidth
-    = new global::DripSharp.PdfCarton.Cos.COSName("AvgWidth");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName AvgWidth;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName B
-    = new global::DripSharp.PdfCarton.Cos.COSName("B");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName B;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Background
-    = new global::DripSharp.PdfCarton.Cos.COSName("Background");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Background;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName BaseEncoding
-    = new global::DripSharp.PdfCarton.Cos.COSName("BaseEncoding");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName BaseEncoding;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName BaseFont
-    = new global::DripSharp.PdfCarton.Cos.COSName("BaseFont");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName BaseFont;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName BaseState
-    = new global::DripSharp.PdfCarton.Cos.COSName("BaseState");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName BaseState;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName BaseVersion
-    = new global::DripSharp.PdfCarton.Cos.COSName("BaseVersion");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName BaseVersion;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bbox
-    = new global::DripSharp.PdfCarton.Cos.COSName("BBox");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bbox;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bc
-    = new global::DripSharp.PdfCarton.Cos.COSName("BC");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bc;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Be
-    = new global::DripSharp.PdfCarton.Cos.COSName("BE");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Be;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bead
-    = new global::DripSharp.PdfCarton.Cos.COSName("BEAD");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bead;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Before
-    = new global::DripSharp.PdfCarton.Cos.COSName("Before");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Before;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bg
-    = new global::DripSharp.PdfCarton.Cos.COSName("BG");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bg;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName BitsPerComponent
-    = new global::DripSharp.PdfCarton.Cos.COSName("BitsPerComponent");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName BitsPerComponent;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName BitsPerCoordinate
-    = new global::DripSharp.PdfCarton.Cos.COSName("BitsPerCoordinate");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName BitsPerCoordinate;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName BitsPerFlag
-    = new global::DripSharp.PdfCarton.Cos.COSName("BitsPerFlag");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName BitsPerFlag;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName BitsPerSample
-    = new global::DripSharp.PdfCarton.Cos.COSName("BitsPerSample");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName BitsPerSample;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bl
-    = new global::DripSharp.PdfCarton.Cos.COSName("Bl");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bl;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName BlackIs1
-    = new global::DripSharp.PdfCarton.Cos.COSName("BlackIs1");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName BlackIs1;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName BlackPoint
-    = new global::DripSharp.PdfCarton.Cos.COSName("BlackPoint");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName BlackPoint;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName BleedBox
-    = new global::DripSharp.PdfCarton.Cos.COSName("BleedBox");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName BleedBox;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bm
-    = new global::DripSharp.PdfCarton.Cos.COSName("BM");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bm;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Border
-    = new global::DripSharp.PdfCarton.Cos.COSName("Border");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Border;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bounds
-    = new global::DripSharp.PdfCarton.Cos.COSName("Bounds");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bounds;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bpc
-    = new global::DripSharp.PdfCarton.Cos.COSName("BPC");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bpc;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bs
-    = new global::DripSharp.PdfCarton.Cos.COSName("BS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Bs;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Btn
-    = new global::DripSharp.PdfCarton.Cos.COSName("Btn");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Btn;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Byterange
-    = new global::DripSharp.PdfCarton.Cos.COSName("ByteRange");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Byterange;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName C
-    = new global::DripSharp.PdfCarton.Cos.COSName("C");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName C;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName C0
-    = new global::DripSharp.PdfCarton.Cos.COSName("C0");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName C0;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName C1
-    = new global::DripSharp.PdfCarton.Cos.COSName("C1");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName C1;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ca
-    = new global::DripSharp.PdfCarton.Cos.COSName("CA");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ca;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CaNs
-    = new global::DripSharp.PdfCarton.Cos.COSName("ca");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CaNs;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Calgray
-    = new global::DripSharp.PdfCarton.Cos.COSName("CalGray");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Calgray;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Calrgb
-    = new global::DripSharp.PdfCarton.Cos.COSName("CalRGB");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Calrgb;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cap
-    = new global::DripSharp.PdfCarton.Cos.COSName("Cap");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cap;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CapHeight
-    = new global::DripSharp.PdfCarton.Cos.COSName("CapHeight");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CapHeight;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Catalog
-    = new global::DripSharp.PdfCarton.Cos.COSName("Catalog");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Catalog;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CcittfaxDecode
-    = new global::DripSharp.PdfCarton.Cos.COSName("CCITTFaxDecode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CcittfaxDecode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CcittfaxDecodeAbbreviation
-    = new global::DripSharp.PdfCarton.Cos.COSName("CCF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CcittfaxDecodeAbbreviation;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CenterWindow
-    = new global::DripSharp.PdfCarton.Cos.COSName("CenterWindow");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CenterWindow;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cert
-    = new global::DripSharp.PdfCarton.Cos.COSName("Cert");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cert;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Certs
-    = new global::DripSharp.PdfCarton.Cos.COSName("Certs");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Certs;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cf
-    = new global::DripSharp.PdfCarton.Cos.COSName("CF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cf;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cfm
-    = new global::DripSharp.PdfCarton.Cos.COSName("CFM");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cfm;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ch
-    = new global::DripSharp.PdfCarton.Cos.COSName("Ch");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ch;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CharProcs
-    = new global::DripSharp.PdfCarton.Cos.COSName("CharProcs");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CharProcs;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CharSet
-    = new global::DripSharp.PdfCarton.Cos.COSName("CharSet");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CharSet;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CheckSum
-    = new global::DripSharp.PdfCarton.Cos.COSName("CheckSum");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CheckSum;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ci
-    = new global::DripSharp.PdfCarton.Cos.COSName("CI");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ci;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CiciSignit
-    = new global::DripSharp.PdfCarton.Cos.COSName("CICI.SignIt");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CiciSignit;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CidFontType0
-    = new global::DripSharp.PdfCarton.Cos.COSName("CIDFontType0");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CidFontType0;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CidFontType2
-    = new global::DripSharp.PdfCarton.Cos.COSName("CIDFontType2");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CidFontType2;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CidToGidMap
-    = new global::DripSharp.PdfCarton.Cos.COSName("CIDToGIDMap");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CidToGidMap;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CidSet
-    = new global::DripSharp.PdfCarton.Cos.COSName("CIDSet");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CidSet;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cidsysteminfo
-    = new global::DripSharp.PdfCarton.Cos.COSName("CIDSystemInfo");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cidsysteminfo;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cl
-    = new global::DripSharp.PdfCarton.Cos.COSName("CL");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cl;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ClassMap
-    = new global::DripSharp.PdfCarton.Cos.COSName("ClassMap");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ClassMap;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ClrF
-    = new global::DripSharp.PdfCarton.Cos.COSName("ClrF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ClrF;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ClrFf
-    = new global::DripSharp.PdfCarton.Cos.COSName("ClrFf");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ClrFf;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cmap
-    = new global::DripSharp.PdfCarton.Cos.COSName("CMap");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cmap;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cmapname
-    = new global::DripSharp.PdfCarton.Cos.COSName("CMapName");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cmapname;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cmyk
-    = new global::DripSharp.PdfCarton.Cos.COSName("CMYK");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cmyk;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Co
-    = new global::DripSharp.PdfCarton.Cos.COSName("CO");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Co;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Color
-    = new global::DripSharp.PdfCarton.Cos.COSName("Color");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Color;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Collection
-    = new global::DripSharp.PdfCarton.Cos.COSName("Collection");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Collection;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CollectionItem
-    = new global::DripSharp.PdfCarton.Cos.COSName("CollectionItem");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CollectionItem;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CollectionField
-    = new global::DripSharp.PdfCarton.Cos.COSName("CollectionField");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CollectionField;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CollectionSchema
-    = new global::DripSharp.PdfCarton.Cos.COSName("CollectionSchema");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CollectionSchema;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CollectionSort
-    = new global::DripSharp.PdfCarton.Cos.COSName("CollectionSort");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CollectionSort;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CollectionSubitem
-    = new global::DripSharp.PdfCarton.Cos.COSName("CollectionSubitem");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CollectionSubitem;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ColorBurn
-    = new global::DripSharp.PdfCarton.Cos.COSName("ColorBurn");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ColorBurn;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ColorDodge
-    = new global::DripSharp.PdfCarton.Cos.COSName("ColorDodge");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ColorDodge;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Colorants
-    = new global::DripSharp.PdfCarton.Cos.COSName("Colorants");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Colorants;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Colors
-    = new global::DripSharp.PdfCarton.Cos.COSName("Colors");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Colors;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Colorspace
-    = new global::DripSharp.PdfCarton.Cos.COSName("ColorSpace");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Colorspace;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Columns
-    = new global::DripSharp.PdfCarton.Cos.COSName("Columns");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Columns;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Compatible
-    = new global::DripSharp.PdfCarton.Cos.COSName("Compatible");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Compatible;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Components
-    = new global::DripSharp.PdfCarton.Cos.COSName("Components");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Components;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ContactInfo
-    = new global::DripSharp.PdfCarton.Cos.COSName("ContactInfo");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ContactInfo;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Contents
-    = new global::DripSharp.PdfCarton.Cos.COSName("Contents");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Contents;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Coords
-    = new global::DripSharp.PdfCarton.Cos.COSName("Coords");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Coords;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Count
-    = new global::DripSharp.PdfCarton.Cos.COSName("Count");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Count;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cp
-    = new global::DripSharp.PdfCarton.Cos.COSName("CP");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cp;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CreationDate
-    = new global::DripSharp.PdfCarton.Cos.COSName("CreationDate");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CreationDate;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Creator
-    = new global::DripSharp.PdfCarton.Cos.COSName("Creator");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Creator;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Crl
-    = new global::DripSharp.PdfCarton.Cos.COSName("CRL");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Crl;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Crls
-    = new global::DripSharp.PdfCarton.Cos.COSName("CRLs");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Crls;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName CropBox
-    = new global::DripSharp.PdfCarton.Cos.COSName("CropBox");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName CropBox;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Crypt
-    = new global::DripSharp.PdfCarton.Cos.COSName("Crypt");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Crypt;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cs
-    = new global::DripSharp.PdfCarton.Cos.COSName("CS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cs;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cyx
-    = new global::DripSharp.PdfCarton.Cos.COSName("CYX");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Cyx;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName D
-    = new global::DripSharp.PdfCarton.Cos.COSName("D");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName D;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Da
-    = new global::DripSharp.PdfCarton.Cos.COSName("DA");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Da;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Darken
-    = new global::DripSharp.PdfCarton.Cos.COSName("Darken");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Darken;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Date
-    = new global::DripSharp.PdfCarton.Cos.COSName("Date");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Date;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DctDecode
-    = new global::DripSharp.PdfCarton.Cos.COSName("DCTDecode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DctDecode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DctDecodeAbbreviation
-    = new global::DripSharp.PdfCarton.Cos.COSName("DCT");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DctDecodeAbbreviation;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Decode
-    = new global::DripSharp.PdfCarton.Cos.COSName("Decode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Decode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DecodeParms
-    = new global::DripSharp.PdfCarton.Cos.COSName("DecodeParms");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DecodeParms;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Default
-    = new global::DripSharp.PdfCarton.Cos.COSName("default");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Default;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DefaultCmyk
-    = new global::DripSharp.PdfCarton.Cos.COSName("DefaultCMYK");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DefaultCmyk;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DefaultCryptFilter
-    = new global::DripSharp.PdfCarton.Cos.COSName("DefaultCryptFilter");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DefaultCryptFilter;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DefaultGray
-    = new global::DripSharp.PdfCarton.Cos.COSName("DefaultGray");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DefaultGray;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DefaultRgb
-    = new global::DripSharp.PdfCarton.Cos.COSName("DefaultRGB");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DefaultRgb;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Desc
-    = new global::DripSharp.PdfCarton.Cos.COSName("Desc");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Desc;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DescendantFonts
-    = new global::DripSharp.PdfCarton.Cos.COSName("DescendantFonts");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DescendantFonts;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Descent
-    = new global::DripSharp.PdfCarton.Cos.COSName("Descent");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Descent;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dest
-    = new global::DripSharp.PdfCarton.Cos.COSName("Dest");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dest;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DestOutputProfile
-    = new global::DripSharp.PdfCarton.Cos.COSName("DestOutputProfile");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DestOutputProfile;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dests
-    = new global::DripSharp.PdfCarton.Cos.COSName("Dests");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dests;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Devicecmyk
-    = new global::DripSharp.PdfCarton.Cos.COSName("DeviceCMYK");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Devicecmyk;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Devicegray
-    = new global::DripSharp.PdfCarton.Cos.COSName("DeviceGray");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Devicegray;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Devicen
-    = new global::DripSharp.PdfCarton.Cos.COSName("DeviceN");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Devicen;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Devicergb
-    = new global::DripSharp.PdfCarton.Cos.COSName("DeviceRGB");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Devicergb;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Di
-    = new global::DripSharp.PdfCarton.Cos.COSName("Di");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Di;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Difference
-    = new global::DripSharp.PdfCarton.Cos.COSName("Difference");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Difference;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Differences
-    = new global::DripSharp.PdfCarton.Cos.COSName("Differences");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Differences;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DigestMethod
-    = new global::DripSharp.PdfCarton.Cos.COSName("DigestMethod");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DigestMethod;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DigestRipemd160
-    = new global::DripSharp.PdfCarton.Cos.COSName("RIPEMD160");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DigestRipemd160;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DigestSha1
-    = new global::DripSharp.PdfCarton.Cos.COSName("SHA1");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DigestSha1;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DigestSha256
-    = new global::DripSharp.PdfCarton.Cos.COSName("SHA256");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DigestSha256;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DigestSha384
-    = new global::DripSharp.PdfCarton.Cos.COSName("SHA384");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DigestSha384;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DigestSha512
-    = new global::DripSharp.PdfCarton.Cos.COSName("SHA512");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DigestSha512;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Direction
-    = new global::DripSharp.PdfCarton.Cos.COSName("Direction");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Direction;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DisplayDocTitle
-    = new global::DripSharp.PdfCarton.Cos.COSName("DisplayDocTitle");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DisplayDocTitle;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dl
-    = new global::DripSharp.PdfCarton.Cos.COSName("DL");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dl;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dm
-    = new global::DripSharp.PdfCarton.Cos.COSName("Dm");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dm;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Doc
-    = new global::DripSharp.PdfCarton.Cos.COSName("Doc");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Doc;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DocChecksum
-    = new global::DripSharp.PdfCarton.Cos.COSName("DocChecksum");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DocChecksum;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName DocTimeStamp
-    = new global::DripSharp.PdfCarton.Cos.COSName("DocTimeStamp");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName DocTimeStamp;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Docmdp
-    = new global::DripSharp.PdfCarton.Cos.COSName("DocMDP");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Docmdp;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Document
-    = new global::DripSharp.PdfCarton.Cos.COSName("Document");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Document;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Domain
-    = new global::DripSharp.PdfCarton.Cos.COSName("Domain");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Domain;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dos
-    = new global::DripSharp.PdfCarton.Cos.COSName("DOS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dos;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dp
-    = new global::DripSharp.PdfCarton.Cos.COSName("DP");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dp;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dr
-    = new global::DripSharp.PdfCarton.Cos.COSName("DR");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dr;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ds
-    = new global::DripSharp.PdfCarton.Cos.COSName("DS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ds;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dss
-    = new global::DripSharp.PdfCarton.Cos.COSName("DSS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dss;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Duplex
-    = new global::DripSharp.PdfCarton.Cos.COSName("Duplex");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Duplex;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dur
-    = new global::DripSharp.PdfCarton.Cos.COSName("Dur");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dur;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dv
-    = new global::DripSharp.PdfCarton.Cos.COSName("DV");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dv;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dw
-    = new global::DripSharp.PdfCarton.Cos.COSName("DW");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dw;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dw2
-    = new global::DripSharp.PdfCarton.Cos.COSName("DW2");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Dw2;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName E
-    = new global::DripSharp.PdfCarton.Cos.COSName("E");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName E;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName EarlyChange
-    = new global::DripSharp.PdfCarton.Cos.COSName("EarlyChange");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName EarlyChange;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ef
-    = new global::DripSharp.PdfCarton.Cos.COSName("EF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ef;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName EmbeddedFdfs
-    = new global::DripSharp.PdfCarton.Cos.COSName("EmbeddedFDFs");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName EmbeddedFdfs;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName EmbeddedFile
-    = new global::DripSharp.PdfCarton.Cos.COSName("EmbeddedFile");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName EmbeddedFile;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName EmbeddedFiles
-    = new global::DripSharp.PdfCarton.Cos.COSName("EmbeddedFiles");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName EmbeddedFiles;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Empty
-    = new global::DripSharp.PdfCarton.Cos.COSName("");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Empty;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Encode
-    = new global::DripSharp.PdfCarton.Cos.COSName("Encode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Encode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName EncodedByteAlign
-    = new global::DripSharp.PdfCarton.Cos.COSName("EncodedByteAlign");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName EncodedByteAlign;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Encoding
-    = new global::DripSharp.PdfCarton.Cos.COSName("Encoding");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Encoding;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Encoding90msRksjH
-    = new global::DripSharp.PdfCarton.Cos.COSName("90ms-RKSJ-H");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Encoding90msRksjH;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Encoding90msRksjV
-    = new global::DripSharp.PdfCarton.Cos.COSName("90ms-RKSJ-V");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Encoding90msRksjV;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName EncodingEtenB5H
-    = new global::DripSharp.PdfCarton.Cos.COSName("ETen-B5-H");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName EncodingEtenB5H;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName EncodingEtenB5V
-    = new global::DripSharp.PdfCarton.Cos.COSName("ETen-B5-V");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName EncodingEtenB5V;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Encrypt
-    = new global::DripSharp.PdfCarton.Cos.COSName("Encrypt");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Encrypt;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName EncryptMetaData
-    = new global::DripSharp.PdfCarton.Cos.COSName("EncryptMetadata");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName EncryptMetaData;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName EncryptedPayload
-    = new global::DripSharp.PdfCarton.Cos.COSName("EncryptedPayload");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName EncryptedPayload;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName EndOfLine
-    = new global::DripSharp.PdfCarton.Cos.COSName("EndOfLine");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName EndOfLine;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName EntrustPpkef
-    = new global::DripSharp.PdfCarton.Cos.COSName("Entrust.PPKEF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName EntrustPpkef;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Exclusion
-    = new global::DripSharp.PdfCarton.Cos.COSName("Exclusion");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Exclusion;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Extensions
-    = new global::DripSharp.PdfCarton.Cos.COSName("Extensions");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Extensions;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ExtensionLevel
-    = new global::DripSharp.PdfCarton.Cos.COSName("ExtensionLevel");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ExtensionLevel;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ExData
-    = new global::DripSharp.PdfCarton.Cos.COSName("ExData");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ExData;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Export
-    = new global::DripSharp.PdfCarton.Cos.COSName("Export");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Export;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ExportState
-    = new global::DripSharp.PdfCarton.Cos.COSName("ExportState");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ExportState;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ExtGState
-    = new global::DripSharp.PdfCarton.Cos.COSName("ExtGState");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ExtGState;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Extend
-    = new global::DripSharp.PdfCarton.Cos.COSName("Extend");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Extend;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Extends
-    = new global::DripSharp.PdfCarton.Cos.COSName("Extends");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Extends;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName F
-    = new global::DripSharp.PdfCarton.Cos.COSName("F");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName F;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FDecodeParms
-    = new global::DripSharp.PdfCarton.Cos.COSName("FDecodeParms");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FDecodeParms;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FFilter
-    = new global::DripSharp.PdfCarton.Cos.COSName("FFilter");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FFilter;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Fb
-    = new global::DripSharp.PdfCarton.Cos.COSName("FB");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Fb;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Fdf
-    = new global::DripSharp.PdfCarton.Cos.COSName("FDF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Fdf;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ff
-    = new global::DripSharp.PdfCarton.Cos.COSName("Ff");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ff;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Fields
-    = new global::DripSharp.PdfCarton.Cos.COSName("Fields");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Fields;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Filespec
-    = new global::DripSharp.PdfCarton.Cos.COSName("Filespec");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Filespec;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Filter
-    = new global::DripSharp.PdfCarton.Cos.COSName("Filter");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Filter;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName First
-    = new global::DripSharp.PdfCarton.Cos.COSName("First");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName First;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FirstChar
-    = new global::DripSharp.PdfCarton.Cos.COSName("FirstChar");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FirstChar;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FitWindow
-    = new global::DripSharp.PdfCarton.Cos.COSName("FitWindow");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FitWindow;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Fl
-    = new global::DripSharp.PdfCarton.Cos.COSName("FL");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Fl;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Flags
-    = new global::DripSharp.PdfCarton.Cos.COSName("Flags");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Flags;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FlateDecode
-    = new global::DripSharp.PdfCarton.Cos.COSName("FlateDecode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FlateDecode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FlateDecodeAbbreviation
-    = new global::DripSharp.PdfCarton.Cos.COSName("Fl");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FlateDecodeAbbreviation;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Fo
-    = new global::DripSharp.PdfCarton.Cos.COSName("Fo");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Fo;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Folders
-    = new global::DripSharp.PdfCarton.Cos.COSName("Folders");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Folders;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Font
-    = new global::DripSharp.PdfCarton.Cos.COSName("Font");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Font;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontBbox
-    = new global::DripSharp.PdfCarton.Cos.COSName("FontBBox");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontBbox;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontDesc
-    = new global::DripSharp.PdfCarton.Cos.COSName("FontDescriptor");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontDesc;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontFamily
-    = new global::DripSharp.PdfCarton.Cos.COSName("FontFamily");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontFamily;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontFile
-    = new global::DripSharp.PdfCarton.Cos.COSName("FontFile");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontFile;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontFile2
-    = new global::DripSharp.PdfCarton.Cos.COSName("FontFile2");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontFile2;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontFile3
-    = new global::DripSharp.PdfCarton.Cos.COSName("FontFile3");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontFile3;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontMatrix
-    = new global::DripSharp.PdfCarton.Cos.COSName("FontMatrix");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontMatrix;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontName
-    = new global::DripSharp.PdfCarton.Cos.COSName("FontName");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontName;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontStretch
-    = new global::DripSharp.PdfCarton.Cos.COSName("FontStretch");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontStretch;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontWeight
-    = new global::DripSharp.PdfCarton.Cos.COSName("FontWeight");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FontWeight;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Form
-    = new global::DripSharp.PdfCarton.Cos.COSName("Form");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Form;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Formtype
-    = new global::DripSharp.PdfCarton.Cos.COSName("FormType");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Formtype;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Frm
-    = new global::DripSharp.PdfCarton.Cos.COSName("FRM");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Frm;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Fs
-    = new global::DripSharp.PdfCarton.Cos.COSName("FS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Fs;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ft
-    = new global::DripSharp.PdfCarton.Cos.COSName("FT");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ft;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Function
-    = new global::DripSharp.PdfCarton.Cos.COSName("Function");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Function;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FunctionType
-    = new global::DripSharp.PdfCarton.Cos.COSName("FunctionType");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FunctionType;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Functions
-    = new global::DripSharp.PdfCarton.Cos.COSName("Functions");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Functions;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName G
-    = new global::DripSharp.PdfCarton.Cos.COSName("G");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName G;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Gamma
-    = new global::DripSharp.PdfCarton.Cos.COSName("Gamma");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Gamma;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Group
-    = new global::DripSharp.PdfCarton.Cos.COSName("Group");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Group;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName GtsPdfa1
-    = new global::DripSharp.PdfCarton.Cos.COSName("GTS_PDFA1");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName GtsPdfa1;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName H
-    = new global::DripSharp.PdfCarton.Cos.COSName("H");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName H;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName HardLight
-    = new global::DripSharp.PdfCarton.Cos.COSName("HardLight");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName HardLight;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Height
-    = new global::DripSharp.PdfCarton.Cos.COSName("Height");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Height;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Helv
-    = new global::DripSharp.PdfCarton.Cos.COSName("Helv");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Helv;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName HideMenubar
-    = new global::DripSharp.PdfCarton.Cos.COSName("HideMenubar");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName HideMenubar;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName HideToolbar
-    = new global::DripSharp.PdfCarton.Cos.COSName("HideToolbar");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName HideToolbar;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName HideWindowui
-    = new global::DripSharp.PdfCarton.Cos.COSName("HideWindowUI");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName HideWindowui;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Hue
-    = new global::DripSharp.PdfCarton.Cos.COSName("Hue");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Hue;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName I
-    = new global::DripSharp.PdfCarton.Cos.COSName("I");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName I;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ic
-    = new global::DripSharp.PdfCarton.Cos.COSName("IC");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ic;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Iccbased
-    = new global::DripSharp.PdfCarton.Cos.COSName("ICCBased");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Iccbased;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Id
-    = new global::DripSharp.PdfCarton.Cos.COSName("ID");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Id;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName IdTree
-    = new global::DripSharp.PdfCarton.Cos.COSName("IDTree");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName IdTree;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Identity
-    = new global::DripSharp.PdfCarton.Cos.COSName("Identity");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Identity;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName IdentityH
-    = new global::DripSharp.PdfCarton.Cos.COSName("Identity-H");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName IdentityH;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName IdentityV
-    = new global::DripSharp.PdfCarton.Cos.COSName("Identity-V");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName IdentityV;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName If
-    = new global::DripSharp.PdfCarton.Cos.COSName("IF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName If;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Illustrator
-    = new global::DripSharp.PdfCarton.Cos.COSName("Illustrator");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Illustrator;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Im
-    = new global::DripSharp.PdfCarton.Cos.COSName("IM");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Im;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Image
-    = new global::DripSharp.PdfCarton.Cos.COSName("Image");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Image;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ImageMask
-    = new global::DripSharp.PdfCarton.Cos.COSName("ImageMask");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ImageMask;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Index
-    = new global::DripSharp.PdfCarton.Cos.COSName("Index");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Index;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Indexed
-    = new global::DripSharp.PdfCarton.Cos.COSName("Indexed");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Indexed;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Info
-    = new global::DripSharp.PdfCarton.Cos.COSName("Info");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Info;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Inklist
-    = new global::DripSharp.PdfCarton.Cos.COSName("InkList");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Inklist;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Intent
-    = new global::DripSharp.PdfCarton.Cos.COSName("Intent");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Intent;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Interpolate
-    = new global::DripSharp.PdfCarton.Cos.COSName("Interpolate");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Interpolate;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Irt
-    = new global::DripSharp.PdfCarton.Cos.COSName("IRT");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Irt;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName It
-    = new global::DripSharp.PdfCarton.Cos.COSName("IT");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName It;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ItalicAngle
-    = new global::DripSharp.PdfCarton.Cos.COSName("ItalicAngle");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ItalicAngle;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Issuer
-    = new global::DripSharp.PdfCarton.Cos.COSName("Issuer");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Issuer;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ix
-    = new global::DripSharp.PdfCarton.Cos.COSName("IX");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ix;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName JavaScript
-    = new global::DripSharp.PdfCarton.Cos.COSName("JavaScript");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName JavaScript;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Jbig2Decode
-    = new global::DripSharp.PdfCarton.Cos.COSName("JBIG2Decode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Jbig2Decode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Jbig2Globals
-    = new global::DripSharp.PdfCarton.Cos.COSName("JBIG2Globals");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Jbig2Globals;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName JpxDecode
-    = new global::DripSharp.PdfCarton.Cos.COSName("JPXDecode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName JpxDecode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Js
-    = new global::DripSharp.PdfCarton.Cos.COSName("JS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Js;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName K
-    = new global::DripSharp.PdfCarton.Cos.COSName("K");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName K;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Keywords
-    = new global::DripSharp.PdfCarton.Cos.COSName("Keywords");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Keywords;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName KeyUsage
-    = new global::DripSharp.PdfCarton.Cos.COSName("KeyUsage");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName KeyUsage;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Kids
-    = new global::DripSharp.PdfCarton.Cos.COSName("Kids");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Kids;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName L
-    = new global::DripSharp.PdfCarton.Cos.COSName("L");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName L;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lab
-    = new global::DripSharp.PdfCarton.Cos.COSName("Lab");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lab;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lang
-    = new global::DripSharp.PdfCarton.Cos.COSName("Lang");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lang;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Last
-    = new global::DripSharp.PdfCarton.Cos.COSName("Last");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Last;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName LastChar
-    = new global::DripSharp.PdfCarton.Cos.COSName("LastChar");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName LastChar;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName LastModified
-    = new global::DripSharp.PdfCarton.Cos.COSName("LastModified");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName LastModified;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lc
-    = new global::DripSharp.PdfCarton.Cos.COSName("LC");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lc;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Le
-    = new global::DripSharp.PdfCarton.Cos.COSName("LE");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Le;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Leading
-    = new global::DripSharp.PdfCarton.Cos.COSName("Leading");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Leading;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName LegalAttestation
-    = new global::DripSharp.PdfCarton.Cos.COSName("LegalAttestation");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName LegalAttestation;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Length
-    = new global::DripSharp.PdfCarton.Cos.COSName("Length");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Length;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Length1
-    = new global::DripSharp.PdfCarton.Cos.COSName("Length1");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Length1;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Length2
-    = new global::DripSharp.PdfCarton.Cos.COSName("Length2");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Length2;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Length3
-    = new global::DripSharp.PdfCarton.Cos.COSName("Length3");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Length3;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lighten
-    = new global::DripSharp.PdfCarton.Cos.COSName("Lighten");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lighten;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Limits
-    = new global::DripSharp.PdfCarton.Cos.COSName("Limits");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Limits;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Linearized
-    = new global::DripSharp.PdfCarton.Cos.COSName("Linearized");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Linearized;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Link
-    = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("Link");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Link;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lj
-    = new global::DripSharp.PdfCarton.Cos.COSName("LJ");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lj;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ll
-    = new global::DripSharp.PdfCarton.Cos.COSName("LL");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ll;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lle
-    = new global::DripSharp.PdfCarton.Cos.COSName("LLE");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lle;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Llo
-    = new global::DripSharp.PdfCarton.Cos.COSName("LLO");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Llo;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Location
-    = new global::DripSharp.PdfCarton.Cos.COSName("Location");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Location;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Luminosity
-    = new global::DripSharp.PdfCarton.Cos.COSName("Luminosity");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Luminosity;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lw
-    = new global::DripSharp.PdfCarton.Cos.COSName("LW");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Lw;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName LzwDecode
-    = new global::DripSharp.PdfCarton.Cos.COSName("LZWDecode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName LzwDecode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName LzwDecodeAbbreviation
-    = new global::DripSharp.PdfCarton.Cos.COSName("LZW");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName LzwDecodeAbbreviation;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName M
-    = new global::DripSharp.PdfCarton.Cos.COSName("M");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName M;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mac
-    = new global::DripSharp.PdfCarton.Cos.COSName("Mac");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mac;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName MacExpertEncoding
-    = new global::DripSharp.PdfCarton.Cos.COSName("MacExpertEncoding");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName MacExpertEncoding;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName MacRomanEncoding
-    = new global::DripSharp.PdfCarton.Cos.COSName("MacRomanEncoding");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName MacRomanEncoding;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName MarkInfo
-    = new global::DripSharp.PdfCarton.Cos.COSName("MarkInfo");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName MarkInfo;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mask
-    = new global::DripSharp.PdfCarton.Cos.COSName("Mask");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mask;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Matrix
-    = new global::DripSharp.PdfCarton.Cos.COSName("Matrix");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Matrix;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Matte
-    = new global::DripSharp.PdfCarton.Cos.COSName("Matte");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Matte;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName MaxLen
-    = new global::DripSharp.PdfCarton.Cos.COSName("MaxLen");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName MaxLen;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName MaxWidth
-    = new global::DripSharp.PdfCarton.Cos.COSName("MaxWidth");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName MaxWidth;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mcid
-    = new global::DripSharp.PdfCarton.Cos.COSName("MCID");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mcid;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mcr
-    = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("MCR");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mcr;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mdp
-    = new global::DripSharp.PdfCarton.Cos.COSName("MDP");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mdp;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName MediaBox
-    = new global::DripSharp.PdfCarton.Cos.COSName("MediaBox");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName MediaBox;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Measure
-    = new global::DripSharp.PdfCarton.Cos.COSName("Measure");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Measure;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Metadata
-    = new global::DripSharp.PdfCarton.Cos.COSName("Metadata");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Metadata;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName MissingWidth
-    = new global::DripSharp.PdfCarton.Cos.COSName("MissingWidth");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName MissingWidth;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mix
-    = new global::DripSharp.PdfCarton.Cos.COSName("Mix");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mix;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mk
-    = new global::DripSharp.PdfCarton.Cos.COSName("MK");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Mk;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ml
-    = new global::DripSharp.PdfCarton.Cos.COSName("ML");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ml;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName MmType1
-    = new global::DripSharp.PdfCarton.Cos.COSName("MMType1");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName MmType1;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ModDate
-    = new global::DripSharp.PdfCarton.Cos.COSName("ModDate");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ModDate;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Multiply
-    = new global::DripSharp.PdfCarton.Cos.COSName("Multiply");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Multiply;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName N
-    = new global::DripSharp.PdfCarton.Cos.COSName("N");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName N;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Name
-    = new global::DripSharp.PdfCarton.Cos.COSName("Name");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Name;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Names
-    = new global::DripSharp.PdfCarton.Cos.COSName("Names");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Names;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Navigator
-    = new global::DripSharp.PdfCarton.Cos.COSName("Navigator");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Navigator;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName NeedAppearances
-    = new global::DripSharp.PdfCarton.Cos.COSName("NeedAppearances");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName NeedAppearances;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName NewWindow
-    = new global::DripSharp.PdfCarton.Cos.COSName("NewWindow");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName NewWindow;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Next
-    = new global::DripSharp.PdfCarton.Cos.COSName("Next");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Next;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Nm
-    = new global::DripSharp.PdfCarton.Cos.COSName("NM");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Nm;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName NonEfontNoWarn
-    = new global::DripSharp.PdfCarton.Cos.COSName("NonEFontNoWarn");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName NonEfontNoWarn;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName NonFullScreenPageMode
-    = new global::DripSharp.PdfCarton.Cos.COSName("NonFullScreenPageMode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName NonFullScreenPageMode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName None
-    = new global::DripSharp.PdfCarton.Cos.COSName("None");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName None;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Normal
-    = new global::DripSharp.PdfCarton.Cos.COSName("Normal");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Normal;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Nums
-    = new global::DripSharp.PdfCarton.Cos.COSName("Nums");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Nums;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName O
-    = new global::DripSharp.PdfCarton.Cos.COSName("O");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName O;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Obj
-    = new global::DripSharp.PdfCarton.Cos.COSName("Obj");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Obj;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Objr
-    = new global::DripSharp.PdfCarton.Cos.COSName("OBJR");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Objr;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ObjStm
-    = new global::DripSharp.PdfCarton.Cos.COSName("ObjStm");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ObjStm;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Oc
-    = new global::DripSharp.PdfCarton.Cos.COSName("OC");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Oc;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ocg
-    = new global::DripSharp.PdfCarton.Cos.COSName("OCG");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ocg;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ocgs
-    = new global::DripSharp.PdfCarton.Cos.COSName("OCGs");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ocgs;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ocmd
-    = new global::DripSharp.PdfCarton.Cos.COSName("OCMD");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ocmd;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ocproperties
-    = new global::DripSharp.PdfCarton.Cos.COSName("OCProperties");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ocproperties;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ocsp
-    = new global::DripSharp.PdfCarton.Cos.COSName("OCSP");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ocsp;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ocsps
-    = new global::DripSharp.PdfCarton.Cos.COSName("OCSPs");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ocsps;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Oe
-    = new global::DripSharp.PdfCarton.Cos.COSName("OE");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Oe;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Oid
-    = new global::DripSharp.PdfCarton.Cos.COSName("OID");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Oid;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName OFF
-    = new global::DripSharp.PdfCarton.Cos.COSName("OFF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName OFF;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Off
-    = new global::DripSharp.PdfCarton.Cos.COSName("Off");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Off;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName On
-    = new global::DripSharp.PdfCarton.Cos.COSName("ON");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName On;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Op
-    = new global::DripSharp.PdfCarton.Cos.COSName("OP");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Op;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName OpNs
-    = new global::DripSharp.PdfCarton.Cos.COSName("op");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName OpNs;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName OpenAction
-    = new global::DripSharp.PdfCarton.Cos.COSName("OpenAction");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName OpenAction;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName OpenType
-    = new global::DripSharp.PdfCarton.Cos.COSName("OpenType");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName OpenType;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Opm
-    = new global::DripSharp.PdfCarton.Cos.COSName("OPM");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Opm;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Opt
-    = new global::DripSharp.PdfCarton.Cos.COSName("Opt");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Opt;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Order
-    = new global::DripSharp.PdfCarton.Cos.COSName("Order");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Order;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ordering
-    = new global::DripSharp.PdfCarton.Cos.COSName("Ordering");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ordering;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Os
-    = new global::DripSharp.PdfCarton.Cos.COSName("OS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Os;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Outlines
-    = new global::DripSharp.PdfCarton.Cos.COSName("Outlines");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Outlines;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName OutputCondition
-    = new global::DripSharp.PdfCarton.Cos.COSName("OutputCondition");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName OutputCondition;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName OutputConditionIdentifier
-    = new global::DripSharp.PdfCarton.Cos.COSName("OutputConditionIdentifier");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName OutputConditionIdentifier;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName OutputIntent
-    = new global::DripSharp.PdfCarton.Cos.COSName("OutputIntent");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName OutputIntent;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName OutputIntents
-    = new global::DripSharp.PdfCarton.Cos.COSName("OutputIntents");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName OutputIntents;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Overlay
-    = new global::DripSharp.PdfCarton.Cos.COSName("Overlay");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Overlay;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName P
-    = new global::DripSharp.PdfCarton.Cos.COSName("P");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName P;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pa
-    = new global::DripSharp.PdfCarton.Cos.COSName("PA");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pa;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Page
-    = new global::DripSharp.PdfCarton.Cos.COSName("Page");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Page;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PageLabels
-    = new global::DripSharp.PdfCarton.Cos.COSName("PageLabels");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PageLabels;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PageLayout
-    = new global::DripSharp.PdfCarton.Cos.COSName("PageLayout");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PageLayout;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PageMode
-    = new global::DripSharp.PdfCarton.Cos.COSName("PageMode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PageMode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pages
-    = new global::DripSharp.PdfCarton.Cos.COSName("Pages");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pages;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PaintType
-    = new global::DripSharp.PdfCarton.Cos.COSName("PaintType");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PaintType;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Panose
-    = new global::DripSharp.PdfCarton.Cos.COSName("Panose");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Panose;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Params
-    = new global::DripSharp.PdfCarton.Cos.COSName("Params");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Params;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Parent
-    = new global::DripSharp.PdfCarton.Cos.COSName("Parent");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Parent;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ParentTree
-    = new global::DripSharp.PdfCarton.Cos.COSName("ParentTree");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ParentTree;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ParentTreeNextKey
-    = new global::DripSharp.PdfCarton.Cos.COSName("ParentTreeNextKey");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ParentTreeNextKey;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Part
-    = new global::DripSharp.PdfCarton.Cos.COSName("Part");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Part;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Path
-    = new global::DripSharp.PdfCarton.Cos.COSName("Path");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Path;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pattern
-    = new global::DripSharp.PdfCarton.Cos.COSName("Pattern");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pattern;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PatternType
-    = new global::DripSharp.PdfCarton.Cos.COSName("PatternType");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PatternType;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pc
-    = new global::DripSharp.PdfCarton.Cos.COSName("PC");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pc;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PdfDocEncoding
-    = new global::DripSharp.PdfCarton.Cos.COSName("PDFDocEncoding");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PdfDocEncoding;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Perms
-    = new global::DripSharp.PdfCarton.Cos.COSName("Perms");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Perms;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Perceptual
-    = new global::DripSharp.PdfCarton.Cos.COSName("Perceptual");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Perceptual;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PieceInfo
-    = new global::DripSharp.PdfCarton.Cos.COSName("PieceInfo");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PieceInfo;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pg
-    = new global::DripSharp.PdfCarton.Cos.COSName("Pg");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pg;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pi
-    = new global::DripSharp.PdfCarton.Cos.COSName("PI");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pi;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Po
-    = new global::DripSharp.PdfCarton.Cos.COSName("PO");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Po;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Popup
-    = new global::DripSharp.PdfCarton.Cos.COSName("Popup");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Popup;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PreRelease
-    = new global::DripSharp.PdfCarton.Cos.COSName("PreRelease");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PreRelease;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Predictor
-    = new global::DripSharp.PdfCarton.Cos.COSName("Predictor");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Predictor;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Prev
-    = new global::DripSharp.PdfCarton.Cos.COSName("Prev");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Prev;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Print
-    = new global::DripSharp.PdfCarton.Cos.COSName("Print");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Print;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PrintArea
-    = new global::DripSharp.PdfCarton.Cos.COSName("PrintArea");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PrintArea;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PrintClip
-    = new global::DripSharp.PdfCarton.Cos.COSName("PrintClip");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PrintClip;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PrintScaling
-    = new global::DripSharp.PdfCarton.Cos.COSName("PrintScaling");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PrintScaling;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PrintState
-    = new global::DripSharp.PdfCarton.Cos.COSName("PrintState");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PrintState;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Private
-    = new global::DripSharp.PdfCarton.Cos.COSName("Private");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Private;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ProcSet
-    = new global::DripSharp.PdfCarton.Cos.COSName("ProcSet");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ProcSet;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Process
-    = new global::DripSharp.PdfCarton.Cos.COSName("Process");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Process;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Producer
-    = new global::DripSharp.PdfCarton.Cos.COSName("Producer");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Producer;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PropBuild
-    = new global::DripSharp.PdfCarton.Cos.COSName("Prop_Build");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PropBuild;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Properties
-    = new global::DripSharp.PdfCarton.Cos.COSName("Properties");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Properties;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ps
-    = new global::DripSharp.PdfCarton.Cos.COSName("PS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ps;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName PubSec
-    = new global::DripSharp.PdfCarton.Cos.COSName("PubSec");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName PubSec;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pv
-    = new global::DripSharp.PdfCarton.Cos.COSName("PV");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Pv;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Q
-    = new global::DripSharp.PdfCarton.Cos.COSName("Q");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Q;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Quadpoints
-    = new global::DripSharp.PdfCarton.Cos.COSName("QuadPoints");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Quadpoints;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName R
-    = new global::DripSharp.PdfCarton.Cos.COSName("R");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName R;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Range
-    = new global::DripSharp.PdfCarton.Cos.COSName("Range");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Range;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rc
-    = new global::DripSharp.PdfCarton.Cos.COSName("RC");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rc;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rd
-    = new global::DripSharp.PdfCarton.Cos.COSName("RD");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rd;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Reason
-    = new global::DripSharp.PdfCarton.Cos.COSName("Reason");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Reason;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Reasons
-    = new global::DripSharp.PdfCarton.Cos.COSName("Reasons");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Reasons;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Recipients
-    = new global::DripSharp.PdfCarton.Cos.COSName("Recipients");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Recipients;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rect
-    = new global::DripSharp.PdfCarton.Cos.COSName("Rect");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rect;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Reference
-    = new global::DripSharp.PdfCarton.Cos.COSName("Reference");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Reference;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Registry
-    = new global::DripSharp.PdfCarton.Cos.COSName("Registry");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Registry;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName RegistryName
-    = new global::DripSharp.PdfCarton.Cos.COSName("RegistryName");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName RegistryName;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName RelativeColorimetric
-    = new global::DripSharp.PdfCarton.Cos.COSName("RelativeColorimetric");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName RelativeColorimetric;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rename
-    = new global::DripSharp.PdfCarton.Cos.COSName("Rename");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rename;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Repeat
-    = new global::DripSharp.PdfCarton.Cos.COSName("Repeat");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Repeat;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ResFork
-    = new global::DripSharp.PdfCarton.Cos.COSName("ResFork");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ResFork;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Resources
-    = new global::DripSharp.PdfCarton.Cos.COSName("Resources");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Resources;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rgb
-    = new global::DripSharp.PdfCarton.Cos.COSName("RGB");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rgb;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ri
-    = new global::DripSharp.PdfCarton.Cos.COSName("RI");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ri;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName RoleMap
-    = new global::DripSharp.PdfCarton.Cos.COSName("RoleMap");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName RoleMap;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Root
-    = new global::DripSharp.PdfCarton.Cos.COSName("Root");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Root;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rotate
-    = new global::DripSharp.PdfCarton.Cos.COSName("Rotate");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rotate;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rows
-    = new global::DripSharp.PdfCarton.Cos.COSName("Rows");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rows;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rt
-    = new global::DripSharp.PdfCarton.Cos.COSName("RT");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rt;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName RunLengthDecode
-    = new global::DripSharp.PdfCarton.Cos.COSName("RunLengthDecode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName RunLengthDecode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName RunLengthDecodeAbbreviation
-    = new global::DripSharp.PdfCarton.Cos.COSName("RL");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName RunLengthDecodeAbbreviation;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rv
-    = new global::DripSharp.PdfCarton.Cos.COSName("RV");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Rv;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName S
-    = new global::DripSharp.PdfCarton.Cos.COSName("S");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName S;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sa
-    = new global::DripSharp.PdfCarton.Cos.COSName("SA");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sa;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Saturation
-    = new global::DripSharp.PdfCarton.Cos.COSName("Saturation");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Saturation;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Schema
-    = new global::DripSharp.PdfCarton.Cos.COSName("Schema");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Schema;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Screen
-    = new global::DripSharp.PdfCarton.Cos.COSName("Screen");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Screen;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Se
-    = new global::DripSharp.PdfCarton.Cos.COSName("SE");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Se;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Separation
-    = new global::DripSharp.PdfCarton.Cos.COSName("Separation");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Separation;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SetF
-    = new global::DripSharp.PdfCarton.Cos.COSName("SetF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SetF;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SetFf
-    = new global::DripSharp.PdfCarton.Cos.COSName("SetFf");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SetFf;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Shading
-    = new global::DripSharp.PdfCarton.Cos.COSName("Shading");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Shading;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ShadingType
-    = new global::DripSharp.PdfCarton.Cos.COSName("ShadingType");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ShadingType;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sig
-    = new global::DripSharp.PdfCarton.Cos.COSName("Sig");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sig;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SigFlags
-    = new global::DripSharp.PdfCarton.Cos.COSName("SigFlags");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SigFlags;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SigRef
-    = new global::DripSharp.PdfCarton.Cos.COSName("SigRef");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SigRef;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Size
-    = new global::DripSharp.PdfCarton.Cos.COSName("Size");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Size;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sm
-    = new global::DripSharp.PdfCarton.Cos.COSName("SM");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sm;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Smask
-    = new global::DripSharp.PdfCarton.Cos.COSName("SMask");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Smask;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SmaskInData
-    = new global::DripSharp.PdfCarton.Cos.COSName("SMaskInData");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SmaskInData;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SoftLight
-    = new global::DripSharp.PdfCarton.Cos.COSName("SoftLight");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SoftLight;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sort
-    = new global::DripSharp.PdfCarton.Cos.COSName("Sort");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sort;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sound
-    = new global::DripSharp.PdfCarton.Cos.COSName("Sound");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sound;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Split
-    = new global::DripSharp.PdfCarton.Cos.COSName("Split");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Split;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ss
-    = new global::DripSharp.PdfCarton.Cos.COSName("SS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ss;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName St
-    = new global::DripSharp.PdfCarton.Cos.COSName("St");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName St;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName StandardEncoding
-    = new global::DripSharp.PdfCarton.Cos.COSName("StandardEncoding");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName StandardEncoding;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName State
-    = new global::DripSharp.PdfCarton.Cos.COSName("State");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName State;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName StateModel
-    = new global::DripSharp.PdfCarton.Cos.COSName("StateModel");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName StateModel;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Status
-    = new global::DripSharp.PdfCarton.Cos.COSName("Status");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Status;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName StdCf
-    = new global::DripSharp.PdfCarton.Cos.COSName("StdCF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName StdCf;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName StemH
-    = new global::DripSharp.PdfCarton.Cos.COSName("StemH");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName StemH;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName StemV
-    = new global::DripSharp.PdfCarton.Cos.COSName("StemV");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName StemV;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName StmF
-    = new global::DripSharp.PdfCarton.Cos.COSName("StmF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName StmF;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName StrF
-    = new global::DripSharp.PdfCarton.Cos.COSName("StrF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName StrF;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName StructElem
-    = new global::DripSharp.PdfCarton.Cos.COSName("StructElem");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName StructElem;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName StructParent
-    = new global::DripSharp.PdfCarton.Cos.COSName("StructParent");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName StructParent;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName StructParents
-    = new global::DripSharp.PdfCarton.Cos.COSName("StructParents");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName StructParents;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName StructTreeRoot
-    = new global::DripSharp.PdfCarton.Cos.COSName("StructTreeRoot");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName StructTreeRoot;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Style
-    = new global::DripSharp.PdfCarton.Cos.COSName("Style");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Style;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SubFilter
-    = new global::DripSharp.PdfCarton.Cos.COSName("SubFilter");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SubFilter;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Subj
-    = new global::DripSharp.PdfCarton.Cos.COSName("Subj");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Subj;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Subject
-    = new global::DripSharp.PdfCarton.Cos.COSName("Subject");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Subject;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SubjectDn
-    = new global::DripSharp.PdfCarton.Cos.COSName("SubjectDN");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SubjectDn;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Subtype
-    = new global::DripSharp.PdfCarton.Cos.COSName("Subtype");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Subtype;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Supplement
-    = new global::DripSharp.PdfCarton.Cos.COSName("Supplement");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Supplement;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sv
-    = new global::DripSharp.PdfCarton.Cos.COSName("SV");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sv;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SvCert
-    = new global::DripSharp.PdfCarton.Cos.COSName("SVCert");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SvCert;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sw
-    = new global::DripSharp.PdfCarton.Cos.COSName("SW");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sw;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sy
-    = new global::DripSharp.PdfCarton.Cos.COSName("Sy");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Sy;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Synchronous
-    = new global::DripSharp.PdfCarton.Cos.COSName("Synchronous");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Synchronous;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName T
-    = new global::DripSharp.PdfCarton.Cos.COSName("T");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName T;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Target
-    = new global::DripSharp.PdfCarton.Cos.COSName("Target");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Target;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Templates
-    = new global::DripSharp.PdfCarton.Cos.COSName("Templates");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Templates;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Thread
-    = new global::DripSharp.PdfCarton.Cos.COSName("Thread");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Thread;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Threads
-    = new global::DripSharp.PdfCarton.Cos.COSName("Threads");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Threads;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ThreeDd
-    = new global::DripSharp.PdfCarton.Cos.COSName("3DD");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ThreeDd;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Thumb
-    = new global::DripSharp.PdfCarton.Cos.COSName("Thumb");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Thumb;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ti
-    = new global::DripSharp.PdfCarton.Cos.COSName("TI");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ti;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName TilingType
-    = new global::DripSharp.PdfCarton.Cos.COSName("TilingType");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName TilingType;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName TimeStamp
-    = new global::DripSharp.PdfCarton.Cos.COSName("TimeStamp");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName TimeStamp;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Title
-    = new global::DripSharp.PdfCarton.Cos.COSName("Title");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Title;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tk
-    = new global::DripSharp.PdfCarton.Cos.COSName("TK");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tk;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tm
-    = new global::DripSharp.PdfCarton.Cos.COSName("TM");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tm;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ToUnicode
-    = new global::DripSharp.PdfCarton.Cos.COSName("ToUnicode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ToUnicode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tr
-    = new global::DripSharp.PdfCarton.Cos.COSName("TR");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tr;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tr2
-    = new global::DripSharp.PdfCarton.Cos.COSName("TR2");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tr2;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Trapped
-    = new global::DripSharp.PdfCarton.Cos.COSName("Trapped");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Trapped;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Trans
-    = new global::DripSharp.PdfCarton.Cos.COSName("Trans");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Trans;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName TransformMethod
-    = new global::DripSharp.PdfCarton.Cos.COSName("TransformMethod");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName TransformMethod;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName TransformParams
-    = new global::DripSharp.PdfCarton.Cos.COSName("TransformParams");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName TransformParams;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Transparency
-    = new global::DripSharp.PdfCarton.Cos.COSName("Transparency");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Transparency;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tref
-    = new global::DripSharp.PdfCarton.Cos.COSName("TRef");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tref;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName TrimBox
-    = new global::DripSharp.PdfCarton.Cos.COSName("TrimBox");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName TrimBox;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName TrueType
-    = new global::DripSharp.PdfCarton.Cos.COSName("TrueType");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName TrueType;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName TrustedMode
-    = new global::DripSharp.PdfCarton.Cos.COSName("TrustedMode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName TrustedMode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tu
-    = new global::DripSharp.PdfCarton.Cos.COSName("TU");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tu;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tx
-    = new global::DripSharp.PdfCarton.Cos.COSName("Tx");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Tx;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Type
-    = new global::DripSharp.PdfCarton.Cos.COSName("Type");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Type;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Type0
-    = new global::DripSharp.PdfCarton.Cos.COSName("Type0");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Type0;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Type1
-    = new global::DripSharp.PdfCarton.Cos.COSName("Type1");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Type1;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Type3
-    = new global::DripSharp.PdfCarton.Cos.COSName("Type3");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Type3;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName U
-    = new global::DripSharp.PdfCarton.Cos.COSName("U");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName U;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ue
-    = new global::DripSharp.PdfCarton.Cos.COSName("UE");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ue;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Uf
-    = new global::DripSharp.PdfCarton.Cos.COSName("UF");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Uf;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Unchanged
-    = new global::DripSharp.PdfCarton.Cos.COSName("Unchanged");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Unchanged;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Unix
-    = new global::DripSharp.PdfCarton.Cos.COSName("Unix");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Unix;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Uri
-    = new global::DripSharp.PdfCarton.Cos.COSName("URI");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Uri;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Url
-    = new global::DripSharp.PdfCarton.Cos.COSName("URL");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Url;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName UrlType
-    = new global::DripSharp.PdfCarton.Cos.COSName("URLType");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName UrlType;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Usage
-    = new global::DripSharp.PdfCarton.Cos.COSName("Usage");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Usage;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName UseCmap
-    = new global::DripSharp.PdfCarton.Cos.COSName("UseCMap");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName UseCmap;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName UserUnit
-    = new global::DripSharp.PdfCarton.Cos.COSName("UserUnit");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName UserUnit;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName V
-    = new global::DripSharp.PdfCarton.Cos.COSName("V");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName V;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ve
-    = new global::DripSharp.PdfCarton.Cos.COSName("VE");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ve;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName VerisignPpkvs
-    = new global::DripSharp.PdfCarton.Cos.COSName("VeriSign.PPKVS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName VerisignPpkvs;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Version
-    = new global::DripSharp.PdfCarton.Cos.COSName("Version");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Version;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Vertices
-    = new global::DripSharp.PdfCarton.Cos.COSName("Vertices");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Vertices;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName VerticesPerRow
-    = new global::DripSharp.PdfCarton.Cos.COSName("VerticesPerRow");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName VerticesPerRow;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName View
-    = new global::DripSharp.PdfCarton.Cos.COSName("View");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName View;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ViewArea
-    = new global::DripSharp.PdfCarton.Cos.COSName("ViewArea");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ViewArea;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ViewClip
-    = new global::DripSharp.PdfCarton.Cos.COSName("ViewClip");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ViewClip;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ViewState
-    = new global::DripSharp.PdfCarton.Cos.COSName("ViewState");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ViewState;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ViewerPreferences
-    = new global::DripSharp.PdfCarton.Cos.COSName("ViewerPreferences");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ViewerPreferences;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Volume
-    = new global::DripSharp.PdfCarton.Cos.COSName("Volume");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Volume;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Vp
-    = new global::DripSharp.PdfCarton.Cos.COSName("VP");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Vp;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Vri
-    = new global::DripSharp.PdfCarton.Cos.COSName("VRI");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Vri;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName W
-    = new global::DripSharp.PdfCarton.Cos.COSName("W");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName W;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName W2
-    = new global::DripSharp.PdfCarton.Cos.COSName("W2");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName W2;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Wc
-    = new global::DripSharp.PdfCarton.Cos.COSName("WC");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Wc;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName WhitePoint
-    = new global::DripSharp.PdfCarton.Cos.COSName("WhitePoint");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName WhitePoint;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Widget
-    = new global::DripSharp.PdfCarton.Cos.COSName("Widget");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Widget;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Width
-    = new global::DripSharp.PdfCarton.Cos.COSName("Width");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Width;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Widths
-    = new global::DripSharp.PdfCarton.Cos.COSName("Widths");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Widths;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Win
-    = new global::DripSharp.PdfCarton.Cos.COSName("Win");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Win;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName WinAnsiEncoding
-    = new global::DripSharp.PdfCarton.Cos.COSName("WinAnsiEncoding");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName WinAnsiEncoding;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Wmode
-    = new global::DripSharp.PdfCarton.Cos.COSName("WMode");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Wmode;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Wp
-    = new global::DripSharp.PdfCarton.Cos.COSName("WP");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Wp;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ws
-    = new global::DripSharp.PdfCarton.Cos.COSName("WS");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Ws;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName X
-    = new global::DripSharp.PdfCarton.Cos.COSName("X");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName X;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Xfa
-    = new global::DripSharp.PdfCarton.Cos.COSName("XFA");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Xfa;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName XStep
-    = new global::DripSharp.PdfCarton.Cos.COSName("XStep");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName XStep;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Xheight
-    = new global::DripSharp.PdfCarton.Cos.COSName("XHeight");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Xheight;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Xobject
-    = new global::DripSharp.PdfCarton.Cos.COSName("XObject");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Xobject;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Xref
-    = new global::DripSharp.PdfCarton.Cos.COSName("XRef");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Xref;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName XrefStm
-    = new global::DripSharp.PdfCarton.Cos.COSName("XRefStm");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName XrefStm;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Y
-    = new global::DripSharp.PdfCarton.Cos.COSName("Y");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Y;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName YStep
-    = new global::DripSharp.PdfCarton.Cos.COSName("YStep");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName YStep;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName Yes
-    = new global::DripSharp.PdfCarton.Cos.COSName("Yes");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName Yes;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName ZaDb
-    = new global::DripSharp.PdfCarton.Cos.COSName("ZaDb");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName ZaDb;
 
   private readonly sbyte[] nameBytes = null!;
 
@@ -1872,17 +1280,17 @@ global::System.IComparable<global::DripSharp.PdfCarton.Cos.COSName> {
       return 0;
     }
     if (((this.nameBytes == default!) || (other.nameBytes == default!))) {
-      return ((this.nameBytes == default!) ? -1 : 1);
+      return ((this.nameBytes == default!) ? unchecked(-1) : 1);
     }
     int len = global::System.Math.Min(this.nameBytes.Length, other.nameBytes.Length);
     for (int i = 0; (i < len); i++) {
-      int diff = (global::DripSharp.Runtime.JavaCompat.ToUnsignedInt(this.nameBytes[i])
-        - global::DripSharp.Runtime.JavaCompat.ToUnsignedInt(other.nameBytes[i]));
+      int diff = unchecked((global::DripSharp.Runtime.JavaCompat.ToUnsignedInt(this.nameBytes[i])
+        - global::DripSharp.Runtime.JavaCompat.ToUnsignedInt(other.nameBytes[i])));
       if ((diff != 0)) {
         return diff;
       }
     }
-    return (this.nameBytes.Length - other.nameBytes.Length);
+    return unchecked((this.nameBytes.Length - other.nameBytes.Length));
   }
 
   public bool IsEmpty() {
@@ -1913,5 +1321,604 @@ global::System.IComparable<global::DripSharp.PdfCarton.Cos.COSName> {
 
   public static void ClearResources() {
     global::DripSharp.PdfCarton.Cos.COSName.nameMap.Clear();
+  }
+
+  static COSName() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.COSBase).TypeHandle);
+    nameMap
+      = new global::System.Collections.Concurrent.ConcurrentDictionary<global::DripSharp.Runtime.JavaByteBuffer,
+      global::DripSharp.PdfCarton.Cos.COSName>();
+    commonNameMap
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.Runtime.JavaByteBuffer,
+      global::DripSharp.PdfCarton.Cos.COSName>(768);
+    A = new global::DripSharp.PdfCarton.Cos.COSName("A");
+    Aa = new global::DripSharp.PdfCarton.Cos.COSName("AA");
+    AbsoluteColorimetric = new global::DripSharp.PdfCarton.Cos.COSName("AbsoluteColorimetric");
+    Ac = new global::DripSharp.PdfCarton.Cos.COSName("AC");
+    AcroForm = new global::DripSharp.PdfCarton.Cos.COSName("AcroForm");
+    ActualText = new global::DripSharp.PdfCarton.Cos.COSName("ActualText");
+    Adbe = new global::DripSharp.PdfCarton.Cos.COSName("ADBE");
+    AdbePkcs7Detached = new global::DripSharp.PdfCarton.Cos.COSName("adbe.pkcs7.detached");
+    AdbePkcs7Sha1 = new global::DripSharp.PdfCarton.Cos.COSName("adbe.pkcs7.sha1");
+    AdbeX509RsaSha1 = new global::DripSharp.PdfCarton.Cos.COSName("adbe.x509.rsa_sha1");
+    AdobePpklite = new global::DripSharp.PdfCarton.Cos.COSName("Adobe.PPKLite");
+    Aesv2 = new global::DripSharp.PdfCarton.Cos.COSName("AESV2");
+    Aesv3 = new global::DripSharp.PdfCarton.Cos.COSName("AESV3");
+    Af = new global::DripSharp.PdfCarton.Cos.COSName("AF");
+    AfRelationship = new global::DripSharp.PdfCarton.Cos.COSName("AFRelationship");
+    After = new global::DripSharp.PdfCarton.Cos.COSName("After");
+    AiMetaData = new global::DripSharp.PdfCarton.Cos.COSName("AIMetaData");
+    Ais = new global::DripSharp.PdfCarton.Cos.COSName("AIS");
+    AllOff = new global::DripSharp.PdfCarton.Cos.COSName("AllOff");
+    AllOn = new global::DripSharp.PdfCarton.Cos.COSName("AllOn");
+    Alt = new global::DripSharp.PdfCarton.Cos.COSName("Alt");
+    Alpha = new global::DripSharp.PdfCarton.Cos.COSName("Alpha");
+    Alternate = new global::DripSharp.PdfCarton.Cos.COSName("Alternate");
+    Annot = new global::DripSharp.PdfCarton.Cos.COSName("Annot");
+    Annots = new global::DripSharp.PdfCarton.Cos.COSName("Annots");
+    AntiAlias = new global::DripSharp.PdfCarton.Cos.COSName("AntiAlias");
+    AnyOff = new global::DripSharp.PdfCarton.Cos.COSName("AnyOff");
+    AnyOn = new global::DripSharp.PdfCarton.Cos.COSName("AnyOn");
+    Ap = new global::DripSharp.PdfCarton.Cos.COSName("AP");
+    ApRef = new global::DripSharp.PdfCarton.Cos.COSName("APRef");
+    App = new global::DripSharp.PdfCarton.Cos.COSName("App");
+    ArtBox = new global::DripSharp.PdfCarton.Cos.COSName("ArtBox");
+    Artifact = new global::DripSharp.PdfCarton.Cos.COSName("Artifact");
+    As = new global::DripSharp.PdfCarton.Cos.COSName("AS");
+    Ascent = new global::DripSharp.PdfCarton.Cos.COSName("Ascent");
+    AsciiHexDecode = new global::DripSharp.PdfCarton.Cos.COSName("ASCIIHexDecode");
+    AsciiHexDecodeAbbreviation = new global::DripSharp.PdfCarton.Cos.COSName("AHx");
+    Ascii85Decode = new global::DripSharp.PdfCarton.Cos.COSName("ASCII85Decode");
+    Ascii85DecodeAbbreviation = new global::DripSharp.PdfCarton.Cos.COSName("A85");
+    Attached = new global::DripSharp.PdfCarton.Cos.COSName("Attached");
+    Author = new global::DripSharp.PdfCarton.Cos.COSName("Author");
+    AvgWidth = new global::DripSharp.PdfCarton.Cos.COSName("AvgWidth");
+    B = new global::DripSharp.PdfCarton.Cos.COSName("B");
+    Background = new global::DripSharp.PdfCarton.Cos.COSName("Background");
+    BaseEncoding = new global::DripSharp.PdfCarton.Cos.COSName("BaseEncoding");
+    BaseFont = new global::DripSharp.PdfCarton.Cos.COSName("BaseFont");
+    BaseState = new global::DripSharp.PdfCarton.Cos.COSName("BaseState");
+    BaseVersion = new global::DripSharp.PdfCarton.Cos.COSName("BaseVersion");
+    Bbox = new global::DripSharp.PdfCarton.Cos.COSName("BBox");
+    Bc = new global::DripSharp.PdfCarton.Cos.COSName("BC");
+    Be = new global::DripSharp.PdfCarton.Cos.COSName("BE");
+    Bead = new global::DripSharp.PdfCarton.Cos.COSName("BEAD");
+    Before = new global::DripSharp.PdfCarton.Cos.COSName("Before");
+    Bg = new global::DripSharp.PdfCarton.Cos.COSName("BG");
+    BitsPerComponent = new global::DripSharp.PdfCarton.Cos.COSName("BitsPerComponent");
+    BitsPerCoordinate = new global::DripSharp.PdfCarton.Cos.COSName("BitsPerCoordinate");
+    BitsPerFlag = new global::DripSharp.PdfCarton.Cos.COSName("BitsPerFlag");
+    BitsPerSample = new global::DripSharp.PdfCarton.Cos.COSName("BitsPerSample");
+    Bl = new global::DripSharp.PdfCarton.Cos.COSName("Bl");
+    BlackIs1 = new global::DripSharp.PdfCarton.Cos.COSName("BlackIs1");
+    BlackPoint = new global::DripSharp.PdfCarton.Cos.COSName("BlackPoint");
+    BleedBox = new global::DripSharp.PdfCarton.Cos.COSName("BleedBox");
+    Bm = new global::DripSharp.PdfCarton.Cos.COSName("BM");
+    Border = new global::DripSharp.PdfCarton.Cos.COSName("Border");
+    Bounds = new global::DripSharp.PdfCarton.Cos.COSName("Bounds");
+    Bpc = new global::DripSharp.PdfCarton.Cos.COSName("BPC");
+    Bs = new global::DripSharp.PdfCarton.Cos.COSName("BS");
+    Btn = new global::DripSharp.PdfCarton.Cos.COSName("Btn");
+    Byterange = new global::DripSharp.PdfCarton.Cos.COSName("ByteRange");
+    C = new global::DripSharp.PdfCarton.Cos.COSName("C");
+    C0 = new global::DripSharp.PdfCarton.Cos.COSName("C0");
+    C1 = new global::DripSharp.PdfCarton.Cos.COSName("C1");
+    Ca = new global::DripSharp.PdfCarton.Cos.COSName("CA");
+    CaNs = new global::DripSharp.PdfCarton.Cos.COSName("ca");
+    Calgray = new global::DripSharp.PdfCarton.Cos.COSName("CalGray");
+    Calrgb = new global::DripSharp.PdfCarton.Cos.COSName("CalRGB");
+    Cap = new global::DripSharp.PdfCarton.Cos.COSName("Cap");
+    CapHeight = new global::DripSharp.PdfCarton.Cos.COSName("CapHeight");
+    Catalog = new global::DripSharp.PdfCarton.Cos.COSName("Catalog");
+    CcittfaxDecode = new global::DripSharp.PdfCarton.Cos.COSName("CCITTFaxDecode");
+    CcittfaxDecodeAbbreviation = new global::DripSharp.PdfCarton.Cos.COSName("CCF");
+    CenterWindow = new global::DripSharp.PdfCarton.Cos.COSName("CenterWindow");
+    Cert = new global::DripSharp.PdfCarton.Cos.COSName("Cert");
+    Certs = new global::DripSharp.PdfCarton.Cos.COSName("Certs");
+    Cf = new global::DripSharp.PdfCarton.Cos.COSName("CF");
+    Cfm = new global::DripSharp.PdfCarton.Cos.COSName("CFM");
+    Ch = new global::DripSharp.PdfCarton.Cos.COSName("Ch");
+    CharProcs = new global::DripSharp.PdfCarton.Cos.COSName("CharProcs");
+    CharSet = new global::DripSharp.PdfCarton.Cos.COSName("CharSet");
+    CheckSum = new global::DripSharp.PdfCarton.Cos.COSName("CheckSum");
+    Ci = new global::DripSharp.PdfCarton.Cos.COSName("CI");
+    CiciSignit = new global::DripSharp.PdfCarton.Cos.COSName("CICI.SignIt");
+    CidFontType0 = new global::DripSharp.PdfCarton.Cos.COSName("CIDFontType0");
+    CidFontType2 = new global::DripSharp.PdfCarton.Cos.COSName("CIDFontType2");
+    CidToGidMap = new global::DripSharp.PdfCarton.Cos.COSName("CIDToGIDMap");
+    CidSet = new global::DripSharp.PdfCarton.Cos.COSName("CIDSet");
+    Cidsysteminfo = new global::DripSharp.PdfCarton.Cos.COSName("CIDSystemInfo");
+    Cl = new global::DripSharp.PdfCarton.Cos.COSName("CL");
+    ClassMap = new global::DripSharp.PdfCarton.Cos.COSName("ClassMap");
+    ClrF = new global::DripSharp.PdfCarton.Cos.COSName("ClrF");
+    ClrFf = new global::DripSharp.PdfCarton.Cos.COSName("ClrFf");
+    Cmap = new global::DripSharp.PdfCarton.Cos.COSName("CMap");
+    Cmapname = new global::DripSharp.PdfCarton.Cos.COSName("CMapName");
+    Cmyk = new global::DripSharp.PdfCarton.Cos.COSName("CMYK");
+    Co = new global::DripSharp.PdfCarton.Cos.COSName("CO");
+    Color = new global::DripSharp.PdfCarton.Cos.COSName("Color");
+    Collection = new global::DripSharp.PdfCarton.Cos.COSName("Collection");
+    CollectionItem = new global::DripSharp.PdfCarton.Cos.COSName("CollectionItem");
+    CollectionField = new global::DripSharp.PdfCarton.Cos.COSName("CollectionField");
+    CollectionSchema = new global::DripSharp.PdfCarton.Cos.COSName("CollectionSchema");
+    CollectionSort = new global::DripSharp.PdfCarton.Cos.COSName("CollectionSort");
+    CollectionSubitem = new global::DripSharp.PdfCarton.Cos.COSName("CollectionSubitem");
+    ColorBurn = new global::DripSharp.PdfCarton.Cos.COSName("ColorBurn");
+    ColorDodge = new global::DripSharp.PdfCarton.Cos.COSName("ColorDodge");
+    Colorants = new global::DripSharp.PdfCarton.Cos.COSName("Colorants");
+    Colors = new global::DripSharp.PdfCarton.Cos.COSName("Colors");
+    Colorspace = new global::DripSharp.PdfCarton.Cos.COSName("ColorSpace");
+    Columns = new global::DripSharp.PdfCarton.Cos.COSName("Columns");
+    Compatible = new global::DripSharp.PdfCarton.Cos.COSName("Compatible");
+    Components = new global::DripSharp.PdfCarton.Cos.COSName("Components");
+    ContactInfo = new global::DripSharp.PdfCarton.Cos.COSName("ContactInfo");
+    Contents = new global::DripSharp.PdfCarton.Cos.COSName("Contents");
+    Coords = new global::DripSharp.PdfCarton.Cos.COSName("Coords");
+    Count = new global::DripSharp.PdfCarton.Cos.COSName("Count");
+    Cp = new global::DripSharp.PdfCarton.Cos.COSName("CP");
+    CreationDate = new global::DripSharp.PdfCarton.Cos.COSName("CreationDate");
+    Creator = new global::DripSharp.PdfCarton.Cos.COSName("Creator");
+    Crl = new global::DripSharp.PdfCarton.Cos.COSName("CRL");
+    Crls = new global::DripSharp.PdfCarton.Cos.COSName("CRLs");
+    CropBox = new global::DripSharp.PdfCarton.Cos.COSName("CropBox");
+    Crypt = new global::DripSharp.PdfCarton.Cos.COSName("Crypt");
+    Cs = new global::DripSharp.PdfCarton.Cos.COSName("CS");
+    Cyx = new global::DripSharp.PdfCarton.Cos.COSName("CYX");
+    D = new global::DripSharp.PdfCarton.Cos.COSName("D");
+    Da = new global::DripSharp.PdfCarton.Cos.COSName("DA");
+    Darken = new global::DripSharp.PdfCarton.Cos.COSName("Darken");
+    Date = new global::DripSharp.PdfCarton.Cos.COSName("Date");
+    DctDecode = new global::DripSharp.PdfCarton.Cos.COSName("DCTDecode");
+    DctDecodeAbbreviation = new global::DripSharp.PdfCarton.Cos.COSName("DCT");
+    Decode = new global::DripSharp.PdfCarton.Cos.COSName("Decode");
+    DecodeParms = new global::DripSharp.PdfCarton.Cos.COSName("DecodeParms");
+    Default = new global::DripSharp.PdfCarton.Cos.COSName("default");
+    DefaultCmyk = new global::DripSharp.PdfCarton.Cos.COSName("DefaultCMYK");
+    DefaultCryptFilter = new global::DripSharp.PdfCarton.Cos.COSName("DefaultCryptFilter");
+    DefaultGray = new global::DripSharp.PdfCarton.Cos.COSName("DefaultGray");
+    DefaultRgb = new global::DripSharp.PdfCarton.Cos.COSName("DefaultRGB");
+    Desc = new global::DripSharp.PdfCarton.Cos.COSName("Desc");
+    DescendantFonts = new global::DripSharp.PdfCarton.Cos.COSName("DescendantFonts");
+    Descent = new global::DripSharp.PdfCarton.Cos.COSName("Descent");
+    Dest = new global::DripSharp.PdfCarton.Cos.COSName("Dest");
+    DestOutputProfile = new global::DripSharp.PdfCarton.Cos.COSName("DestOutputProfile");
+    Dests = new global::DripSharp.PdfCarton.Cos.COSName("Dests");
+    Devicecmyk = new global::DripSharp.PdfCarton.Cos.COSName("DeviceCMYK");
+    Devicegray = new global::DripSharp.PdfCarton.Cos.COSName("DeviceGray");
+    Devicen = new global::DripSharp.PdfCarton.Cos.COSName("DeviceN");
+    Devicergb = new global::DripSharp.PdfCarton.Cos.COSName("DeviceRGB");
+    Di = new global::DripSharp.PdfCarton.Cos.COSName("Di");
+    Difference = new global::DripSharp.PdfCarton.Cos.COSName("Difference");
+    Differences = new global::DripSharp.PdfCarton.Cos.COSName("Differences");
+    DigestMethod = new global::DripSharp.PdfCarton.Cos.COSName("DigestMethod");
+    DigestRipemd160 = new global::DripSharp.PdfCarton.Cos.COSName("RIPEMD160");
+    DigestSha1 = new global::DripSharp.PdfCarton.Cos.COSName("SHA1");
+    DigestSha256 = new global::DripSharp.PdfCarton.Cos.COSName("SHA256");
+    DigestSha384 = new global::DripSharp.PdfCarton.Cos.COSName("SHA384");
+    DigestSha512 = new global::DripSharp.PdfCarton.Cos.COSName("SHA512");
+    Direction = new global::DripSharp.PdfCarton.Cos.COSName("Direction");
+    DisplayDocTitle = new global::DripSharp.PdfCarton.Cos.COSName("DisplayDocTitle");
+    Dl = new global::DripSharp.PdfCarton.Cos.COSName("DL");
+    Dm = new global::DripSharp.PdfCarton.Cos.COSName("Dm");
+    Doc = new global::DripSharp.PdfCarton.Cos.COSName("Doc");
+    DocChecksum = new global::DripSharp.PdfCarton.Cos.COSName("DocChecksum");
+    DocTimeStamp = new global::DripSharp.PdfCarton.Cos.COSName("DocTimeStamp");
+    Docmdp = new global::DripSharp.PdfCarton.Cos.COSName("DocMDP");
+    Document = new global::DripSharp.PdfCarton.Cos.COSName("Document");
+    Domain = new global::DripSharp.PdfCarton.Cos.COSName("Domain");
+    Dos = new global::DripSharp.PdfCarton.Cos.COSName("DOS");
+    Dp = new global::DripSharp.PdfCarton.Cos.COSName("DP");
+    Dr = new global::DripSharp.PdfCarton.Cos.COSName("DR");
+    Ds = new global::DripSharp.PdfCarton.Cos.COSName("DS");
+    Dss = new global::DripSharp.PdfCarton.Cos.COSName("DSS");
+    Duplex = new global::DripSharp.PdfCarton.Cos.COSName("Duplex");
+    Dur = new global::DripSharp.PdfCarton.Cos.COSName("Dur");
+    Dv = new global::DripSharp.PdfCarton.Cos.COSName("DV");
+    Dw = new global::DripSharp.PdfCarton.Cos.COSName("DW");
+    Dw2 = new global::DripSharp.PdfCarton.Cos.COSName("DW2");
+    E = new global::DripSharp.PdfCarton.Cos.COSName("E");
+    EarlyChange = new global::DripSharp.PdfCarton.Cos.COSName("EarlyChange");
+    Ef = new global::DripSharp.PdfCarton.Cos.COSName("EF");
+    EmbeddedFdfs = new global::DripSharp.PdfCarton.Cos.COSName("EmbeddedFDFs");
+    EmbeddedFile = new global::DripSharp.PdfCarton.Cos.COSName("EmbeddedFile");
+    EmbeddedFiles = new global::DripSharp.PdfCarton.Cos.COSName("EmbeddedFiles");
+    Empty = new global::DripSharp.PdfCarton.Cos.COSName("");
+    Encode = new global::DripSharp.PdfCarton.Cos.COSName("Encode");
+    EncodedByteAlign = new global::DripSharp.PdfCarton.Cos.COSName("EncodedByteAlign");
+    Encoding = new global::DripSharp.PdfCarton.Cos.COSName("Encoding");
+    Encoding90msRksjH = new global::DripSharp.PdfCarton.Cos.COSName("90ms-RKSJ-H");
+    Encoding90msRksjV = new global::DripSharp.PdfCarton.Cos.COSName("90ms-RKSJ-V");
+    EncodingEtenB5H = new global::DripSharp.PdfCarton.Cos.COSName("ETen-B5-H");
+    EncodingEtenB5V = new global::DripSharp.PdfCarton.Cos.COSName("ETen-B5-V");
+    Encrypt = new global::DripSharp.PdfCarton.Cos.COSName("Encrypt");
+    EncryptMetaData = new global::DripSharp.PdfCarton.Cos.COSName("EncryptMetadata");
+    EncryptedPayload = new global::DripSharp.PdfCarton.Cos.COSName("EncryptedPayload");
+    EndOfLine = new global::DripSharp.PdfCarton.Cos.COSName("EndOfLine");
+    EntrustPpkef = new global::DripSharp.PdfCarton.Cos.COSName("Entrust.PPKEF");
+    Exclusion = new global::DripSharp.PdfCarton.Cos.COSName("Exclusion");
+    Extensions = new global::DripSharp.PdfCarton.Cos.COSName("Extensions");
+    ExtensionLevel = new global::DripSharp.PdfCarton.Cos.COSName("ExtensionLevel");
+    ExData = new global::DripSharp.PdfCarton.Cos.COSName("ExData");
+    Export = new global::DripSharp.PdfCarton.Cos.COSName("Export");
+    ExportState = new global::DripSharp.PdfCarton.Cos.COSName("ExportState");
+    ExtGState = new global::DripSharp.PdfCarton.Cos.COSName("ExtGState");
+    Extend = new global::DripSharp.PdfCarton.Cos.COSName("Extend");
+    Extends = new global::DripSharp.PdfCarton.Cos.COSName("Extends");
+    F = new global::DripSharp.PdfCarton.Cos.COSName("F");
+    FDecodeParms = new global::DripSharp.PdfCarton.Cos.COSName("FDecodeParms");
+    FFilter = new global::DripSharp.PdfCarton.Cos.COSName("FFilter");
+    Fb = new global::DripSharp.PdfCarton.Cos.COSName("FB");
+    Fdf = new global::DripSharp.PdfCarton.Cos.COSName("FDF");
+    Ff = new global::DripSharp.PdfCarton.Cos.COSName("Ff");
+    Fields = new global::DripSharp.PdfCarton.Cos.COSName("Fields");
+    Filespec = new global::DripSharp.PdfCarton.Cos.COSName("Filespec");
+    Filter = new global::DripSharp.PdfCarton.Cos.COSName("Filter");
+    First = new global::DripSharp.PdfCarton.Cos.COSName("First");
+    FirstChar = new global::DripSharp.PdfCarton.Cos.COSName("FirstChar");
+    FitWindow = new global::DripSharp.PdfCarton.Cos.COSName("FitWindow");
+    Fl = new global::DripSharp.PdfCarton.Cos.COSName("FL");
+    Flags = new global::DripSharp.PdfCarton.Cos.COSName("Flags");
+    FlateDecode = new global::DripSharp.PdfCarton.Cos.COSName("FlateDecode");
+    FlateDecodeAbbreviation = new global::DripSharp.PdfCarton.Cos.COSName("Fl");
+    Fo = new global::DripSharp.PdfCarton.Cos.COSName("Fo");
+    Folders = new global::DripSharp.PdfCarton.Cos.COSName("Folders");
+    Font = new global::DripSharp.PdfCarton.Cos.COSName("Font");
+    FontBbox = new global::DripSharp.PdfCarton.Cos.COSName("FontBBox");
+    FontDesc = new global::DripSharp.PdfCarton.Cos.COSName("FontDescriptor");
+    FontFamily = new global::DripSharp.PdfCarton.Cos.COSName("FontFamily");
+    FontFile = new global::DripSharp.PdfCarton.Cos.COSName("FontFile");
+    FontFile2 = new global::DripSharp.PdfCarton.Cos.COSName("FontFile2");
+    FontFile3 = new global::DripSharp.PdfCarton.Cos.COSName("FontFile3");
+    FontMatrix = new global::DripSharp.PdfCarton.Cos.COSName("FontMatrix");
+    FontName = new global::DripSharp.PdfCarton.Cos.COSName("FontName");
+    FontStretch = new global::DripSharp.PdfCarton.Cos.COSName("FontStretch");
+    FontWeight = new global::DripSharp.PdfCarton.Cos.COSName("FontWeight");
+    Form = new global::DripSharp.PdfCarton.Cos.COSName("Form");
+    Formtype = new global::DripSharp.PdfCarton.Cos.COSName("FormType");
+    Frm = new global::DripSharp.PdfCarton.Cos.COSName("FRM");
+    Fs = new global::DripSharp.PdfCarton.Cos.COSName("FS");
+    Ft = new global::DripSharp.PdfCarton.Cos.COSName("FT");
+    Function = new global::DripSharp.PdfCarton.Cos.COSName("Function");
+    FunctionType = new global::DripSharp.PdfCarton.Cos.COSName("FunctionType");
+    Functions = new global::DripSharp.PdfCarton.Cos.COSName("Functions");
+    G = new global::DripSharp.PdfCarton.Cos.COSName("G");
+    Gamma = new global::DripSharp.PdfCarton.Cos.COSName("Gamma");
+    Group = new global::DripSharp.PdfCarton.Cos.COSName("Group");
+    GtsPdfa1 = new global::DripSharp.PdfCarton.Cos.COSName("GTS_PDFA1");
+    H = new global::DripSharp.PdfCarton.Cos.COSName("H");
+    HardLight = new global::DripSharp.PdfCarton.Cos.COSName("HardLight");
+    Height = new global::DripSharp.PdfCarton.Cos.COSName("Height");
+    Helv = new global::DripSharp.PdfCarton.Cos.COSName("Helv");
+    HideMenubar = new global::DripSharp.PdfCarton.Cos.COSName("HideMenubar");
+    HideToolbar = new global::DripSharp.PdfCarton.Cos.COSName("HideToolbar");
+    HideWindowui = new global::DripSharp.PdfCarton.Cos.COSName("HideWindowUI");
+    Hue = new global::DripSharp.PdfCarton.Cos.COSName("Hue");
+    I = new global::DripSharp.PdfCarton.Cos.COSName("I");
+    Ic = new global::DripSharp.PdfCarton.Cos.COSName("IC");
+    Iccbased = new global::DripSharp.PdfCarton.Cos.COSName("ICCBased");
+    Id = new global::DripSharp.PdfCarton.Cos.COSName("ID");
+    IdTree = new global::DripSharp.PdfCarton.Cos.COSName("IDTree");
+    Identity = new global::DripSharp.PdfCarton.Cos.COSName("Identity");
+    IdentityH = new global::DripSharp.PdfCarton.Cos.COSName("Identity-H");
+    IdentityV = new global::DripSharp.PdfCarton.Cos.COSName("Identity-V");
+    If = new global::DripSharp.PdfCarton.Cos.COSName("IF");
+    Illustrator = new global::DripSharp.PdfCarton.Cos.COSName("Illustrator");
+    Im = new global::DripSharp.PdfCarton.Cos.COSName("IM");
+    Image = new global::DripSharp.PdfCarton.Cos.COSName("Image");
+    ImageMask = new global::DripSharp.PdfCarton.Cos.COSName("ImageMask");
+    Index = new global::DripSharp.PdfCarton.Cos.COSName("Index");
+    Indexed = new global::DripSharp.PdfCarton.Cos.COSName("Indexed");
+    Info = new global::DripSharp.PdfCarton.Cos.COSName("Info");
+    Inklist = new global::DripSharp.PdfCarton.Cos.COSName("InkList");
+    Intent = new global::DripSharp.PdfCarton.Cos.COSName("Intent");
+    Interpolate = new global::DripSharp.PdfCarton.Cos.COSName("Interpolate");
+    Irt = new global::DripSharp.PdfCarton.Cos.COSName("IRT");
+    It = new global::DripSharp.PdfCarton.Cos.COSName("IT");
+    ItalicAngle = new global::DripSharp.PdfCarton.Cos.COSName("ItalicAngle");
+    Issuer = new global::DripSharp.PdfCarton.Cos.COSName("Issuer");
+    Ix = new global::DripSharp.PdfCarton.Cos.COSName("IX");
+    JavaScript = new global::DripSharp.PdfCarton.Cos.COSName("JavaScript");
+    Jbig2Decode = new global::DripSharp.PdfCarton.Cos.COSName("JBIG2Decode");
+    Jbig2Globals = new global::DripSharp.PdfCarton.Cos.COSName("JBIG2Globals");
+    JpxDecode = new global::DripSharp.PdfCarton.Cos.COSName("JPXDecode");
+    Js = new global::DripSharp.PdfCarton.Cos.COSName("JS");
+    K = new global::DripSharp.PdfCarton.Cos.COSName("K");
+    Keywords = new global::DripSharp.PdfCarton.Cos.COSName("Keywords");
+    KeyUsage = new global::DripSharp.PdfCarton.Cos.COSName("KeyUsage");
+    Kids = new global::DripSharp.PdfCarton.Cos.COSName("Kids");
+    L = new global::DripSharp.PdfCarton.Cos.COSName("L");
+    Lab = new global::DripSharp.PdfCarton.Cos.COSName("Lab");
+    Lang = new global::DripSharp.PdfCarton.Cos.COSName("Lang");
+    Last = new global::DripSharp.PdfCarton.Cos.COSName("Last");
+    LastChar = new global::DripSharp.PdfCarton.Cos.COSName("LastChar");
+    LastModified = new global::DripSharp.PdfCarton.Cos.COSName("LastModified");
+    Lc = new global::DripSharp.PdfCarton.Cos.COSName("LC");
+    Le = new global::DripSharp.PdfCarton.Cos.COSName("LE");
+    Leading = new global::DripSharp.PdfCarton.Cos.COSName("Leading");
+    LegalAttestation = new global::DripSharp.PdfCarton.Cos.COSName("LegalAttestation");
+    Length = new global::DripSharp.PdfCarton.Cos.COSName("Length");
+    Length1 = new global::DripSharp.PdfCarton.Cos.COSName("Length1");
+    Length2 = new global::DripSharp.PdfCarton.Cos.COSName("Length2");
+    Length3 = new global::DripSharp.PdfCarton.Cos.COSName("Length3");
+    Lighten = new global::DripSharp.PdfCarton.Cos.COSName("Lighten");
+    Limits = new global::DripSharp.PdfCarton.Cos.COSName("Limits");
+    Linearized = new global::DripSharp.PdfCarton.Cos.COSName("Linearized");
+    Link = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("Link");
+    Lj = new global::DripSharp.PdfCarton.Cos.COSName("LJ");
+    Ll = new global::DripSharp.PdfCarton.Cos.COSName("LL");
+    Lle = new global::DripSharp.PdfCarton.Cos.COSName("LLE");
+    Llo = new global::DripSharp.PdfCarton.Cos.COSName("LLO");
+    Location = new global::DripSharp.PdfCarton.Cos.COSName("Location");
+    Luminosity = new global::DripSharp.PdfCarton.Cos.COSName("Luminosity");
+    Lw = new global::DripSharp.PdfCarton.Cos.COSName("LW");
+    LzwDecode = new global::DripSharp.PdfCarton.Cos.COSName("LZWDecode");
+    LzwDecodeAbbreviation = new global::DripSharp.PdfCarton.Cos.COSName("LZW");
+    M = new global::DripSharp.PdfCarton.Cos.COSName("M");
+    Mac = new global::DripSharp.PdfCarton.Cos.COSName("Mac");
+    MacExpertEncoding = new global::DripSharp.PdfCarton.Cos.COSName("MacExpertEncoding");
+    MacRomanEncoding = new global::DripSharp.PdfCarton.Cos.COSName("MacRomanEncoding");
+    MarkInfo = new global::DripSharp.PdfCarton.Cos.COSName("MarkInfo");
+    Mask = new global::DripSharp.PdfCarton.Cos.COSName("Mask");
+    Matrix = new global::DripSharp.PdfCarton.Cos.COSName("Matrix");
+    Matte = new global::DripSharp.PdfCarton.Cos.COSName("Matte");
+    MaxLen = new global::DripSharp.PdfCarton.Cos.COSName("MaxLen");
+    MaxWidth = new global::DripSharp.PdfCarton.Cos.COSName("MaxWidth");
+    Mcid = new global::DripSharp.PdfCarton.Cos.COSName("MCID");
+    Mcr = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("MCR");
+    Mdp = new global::DripSharp.PdfCarton.Cos.COSName("MDP");
+    MediaBox = new global::DripSharp.PdfCarton.Cos.COSName("MediaBox");
+    Measure = new global::DripSharp.PdfCarton.Cos.COSName("Measure");
+    Metadata = new global::DripSharp.PdfCarton.Cos.COSName("Metadata");
+    MissingWidth = new global::DripSharp.PdfCarton.Cos.COSName("MissingWidth");
+    Mix = new global::DripSharp.PdfCarton.Cos.COSName("Mix");
+    Mk = new global::DripSharp.PdfCarton.Cos.COSName("MK");
+    Ml = new global::DripSharp.PdfCarton.Cos.COSName("ML");
+    MmType1 = new global::DripSharp.PdfCarton.Cos.COSName("MMType1");
+    ModDate = new global::DripSharp.PdfCarton.Cos.COSName("ModDate");
+    Multiply = new global::DripSharp.PdfCarton.Cos.COSName("Multiply");
+    N = new global::DripSharp.PdfCarton.Cos.COSName("N");
+    Name = new global::DripSharp.PdfCarton.Cos.COSName("Name");
+    Names = new global::DripSharp.PdfCarton.Cos.COSName("Names");
+    Navigator = new global::DripSharp.PdfCarton.Cos.COSName("Navigator");
+    NeedAppearances = new global::DripSharp.PdfCarton.Cos.COSName("NeedAppearances");
+    NewWindow = new global::DripSharp.PdfCarton.Cos.COSName("NewWindow");
+    Next = new global::DripSharp.PdfCarton.Cos.COSName("Next");
+    Nm = new global::DripSharp.PdfCarton.Cos.COSName("NM");
+    NonEfontNoWarn = new global::DripSharp.PdfCarton.Cos.COSName("NonEFontNoWarn");
+    NonFullScreenPageMode = new global::DripSharp.PdfCarton.Cos.COSName("NonFullScreenPageMode");
+    None = new global::DripSharp.PdfCarton.Cos.COSName("None");
+    Normal = new global::DripSharp.PdfCarton.Cos.COSName("Normal");
+    Nums = new global::DripSharp.PdfCarton.Cos.COSName("Nums");
+    O = new global::DripSharp.PdfCarton.Cos.COSName("O");
+    Obj = new global::DripSharp.PdfCarton.Cos.COSName("Obj");
+    Objr = new global::DripSharp.PdfCarton.Cos.COSName("OBJR");
+    ObjStm = new global::DripSharp.PdfCarton.Cos.COSName("ObjStm");
+    Oc = new global::DripSharp.PdfCarton.Cos.COSName("OC");
+    Ocg = new global::DripSharp.PdfCarton.Cos.COSName("OCG");
+    Ocgs = new global::DripSharp.PdfCarton.Cos.COSName("OCGs");
+    Ocmd = new global::DripSharp.PdfCarton.Cos.COSName("OCMD");
+    Ocproperties = new global::DripSharp.PdfCarton.Cos.COSName("OCProperties");
+    Ocsp = new global::DripSharp.PdfCarton.Cos.COSName("OCSP");
+    Ocsps = new global::DripSharp.PdfCarton.Cos.COSName("OCSPs");
+    Oe = new global::DripSharp.PdfCarton.Cos.COSName("OE");
+    Oid = new global::DripSharp.PdfCarton.Cos.COSName("OID");
+    OFF = new global::DripSharp.PdfCarton.Cos.COSName("OFF");
+    Off = new global::DripSharp.PdfCarton.Cos.COSName("Off");
+    On = new global::DripSharp.PdfCarton.Cos.COSName("ON");
+    Op = new global::DripSharp.PdfCarton.Cos.COSName("OP");
+    OpNs = new global::DripSharp.PdfCarton.Cos.COSName("op");
+    OpenAction = new global::DripSharp.PdfCarton.Cos.COSName("OpenAction");
+    OpenType = new global::DripSharp.PdfCarton.Cos.COSName("OpenType");
+    Opm = new global::DripSharp.PdfCarton.Cos.COSName("OPM");
+    Opt = new global::DripSharp.PdfCarton.Cos.COSName("Opt");
+    Order = new global::DripSharp.PdfCarton.Cos.COSName("Order");
+    Ordering = new global::DripSharp.PdfCarton.Cos.COSName("Ordering");
+    Os = new global::DripSharp.PdfCarton.Cos.COSName("OS");
+    Outlines = new global::DripSharp.PdfCarton.Cos.COSName("Outlines");
+    OutputCondition = new global::DripSharp.PdfCarton.Cos.COSName("OutputCondition");
+    OutputConditionIdentifier
+      = new global::DripSharp.PdfCarton.Cos.COSName("OutputConditionIdentifier");
+    OutputIntent = new global::DripSharp.PdfCarton.Cos.COSName("OutputIntent");
+    OutputIntents = new global::DripSharp.PdfCarton.Cos.COSName("OutputIntents");
+    Overlay = new global::DripSharp.PdfCarton.Cos.COSName("Overlay");
+    P = new global::DripSharp.PdfCarton.Cos.COSName("P");
+    Pa = new global::DripSharp.PdfCarton.Cos.COSName("PA");
+    Page = new global::DripSharp.PdfCarton.Cos.COSName("Page");
+    PageLabels = new global::DripSharp.PdfCarton.Cos.COSName("PageLabels");
+    PageLayout = new global::DripSharp.PdfCarton.Cos.COSName("PageLayout");
+    PageMode = new global::DripSharp.PdfCarton.Cos.COSName("PageMode");
+    Pages = new global::DripSharp.PdfCarton.Cos.COSName("Pages");
+    PaintType = new global::DripSharp.PdfCarton.Cos.COSName("PaintType");
+    Panose = new global::DripSharp.PdfCarton.Cos.COSName("Panose");
+    Params = new global::DripSharp.PdfCarton.Cos.COSName("Params");
+    Parent = new global::DripSharp.PdfCarton.Cos.COSName("Parent");
+    ParentTree = new global::DripSharp.PdfCarton.Cos.COSName("ParentTree");
+    ParentTreeNextKey = new global::DripSharp.PdfCarton.Cos.COSName("ParentTreeNextKey");
+    Part = new global::DripSharp.PdfCarton.Cos.COSName("Part");
+    Path = new global::DripSharp.PdfCarton.Cos.COSName("Path");
+    Pattern = new global::DripSharp.PdfCarton.Cos.COSName("Pattern");
+    PatternType = new global::DripSharp.PdfCarton.Cos.COSName("PatternType");
+    Pc = new global::DripSharp.PdfCarton.Cos.COSName("PC");
+    PdfDocEncoding = new global::DripSharp.PdfCarton.Cos.COSName("PDFDocEncoding");
+    Perms = new global::DripSharp.PdfCarton.Cos.COSName("Perms");
+    Perceptual = new global::DripSharp.PdfCarton.Cos.COSName("Perceptual");
+    PieceInfo = new global::DripSharp.PdfCarton.Cos.COSName("PieceInfo");
+    Pg = new global::DripSharp.PdfCarton.Cos.COSName("Pg");
+    Pi = new global::DripSharp.PdfCarton.Cos.COSName("PI");
+    Po = new global::DripSharp.PdfCarton.Cos.COSName("PO");
+    Popup = new global::DripSharp.PdfCarton.Cos.COSName("Popup");
+    PreRelease = new global::DripSharp.PdfCarton.Cos.COSName("PreRelease");
+    Predictor = new global::DripSharp.PdfCarton.Cos.COSName("Predictor");
+    Prev = new global::DripSharp.PdfCarton.Cos.COSName("Prev");
+    Print = new global::DripSharp.PdfCarton.Cos.COSName("Print");
+    PrintArea = new global::DripSharp.PdfCarton.Cos.COSName("PrintArea");
+    PrintClip = new global::DripSharp.PdfCarton.Cos.COSName("PrintClip");
+    PrintScaling = new global::DripSharp.PdfCarton.Cos.COSName("PrintScaling");
+    PrintState = new global::DripSharp.PdfCarton.Cos.COSName("PrintState");
+    Private = new global::DripSharp.PdfCarton.Cos.COSName("Private");
+    ProcSet = new global::DripSharp.PdfCarton.Cos.COSName("ProcSet");
+    Process = new global::DripSharp.PdfCarton.Cos.COSName("Process");
+    Producer = new global::DripSharp.PdfCarton.Cos.COSName("Producer");
+    PropBuild = new global::DripSharp.PdfCarton.Cos.COSName("Prop_Build");
+    Properties = new global::DripSharp.PdfCarton.Cos.COSName("Properties");
+    Ps = new global::DripSharp.PdfCarton.Cos.COSName("PS");
+    PubSec = new global::DripSharp.PdfCarton.Cos.COSName("PubSec");
+    Pv = new global::DripSharp.PdfCarton.Cos.COSName("PV");
+    Q = new global::DripSharp.PdfCarton.Cos.COSName("Q");
+    Quadpoints = new global::DripSharp.PdfCarton.Cos.COSName("QuadPoints");
+    R = new global::DripSharp.PdfCarton.Cos.COSName("R");
+    Range = new global::DripSharp.PdfCarton.Cos.COSName("Range");
+    Rc = new global::DripSharp.PdfCarton.Cos.COSName("RC");
+    Rd = new global::DripSharp.PdfCarton.Cos.COSName("RD");
+    Reason = new global::DripSharp.PdfCarton.Cos.COSName("Reason");
+    Reasons = new global::DripSharp.PdfCarton.Cos.COSName("Reasons");
+    Recipients = new global::DripSharp.PdfCarton.Cos.COSName("Recipients");
+    Rect = new global::DripSharp.PdfCarton.Cos.COSName("Rect");
+    Reference = new global::DripSharp.PdfCarton.Cos.COSName("Reference");
+    Registry = new global::DripSharp.PdfCarton.Cos.COSName("Registry");
+    RegistryName = new global::DripSharp.PdfCarton.Cos.COSName("RegistryName");
+    RelativeColorimetric = new global::DripSharp.PdfCarton.Cos.COSName("RelativeColorimetric");
+    Rename = new global::DripSharp.PdfCarton.Cos.COSName("Rename");
+    Repeat = new global::DripSharp.PdfCarton.Cos.COSName("Repeat");
+    ResFork = new global::DripSharp.PdfCarton.Cos.COSName("ResFork");
+    Resources = new global::DripSharp.PdfCarton.Cos.COSName("Resources");
+    Rgb = new global::DripSharp.PdfCarton.Cos.COSName("RGB");
+    Ri = new global::DripSharp.PdfCarton.Cos.COSName("RI");
+    RoleMap = new global::DripSharp.PdfCarton.Cos.COSName("RoleMap");
+    Root = new global::DripSharp.PdfCarton.Cos.COSName("Root");
+    Rotate = new global::DripSharp.PdfCarton.Cos.COSName("Rotate");
+    Rows = new global::DripSharp.PdfCarton.Cos.COSName("Rows");
+    Rt = new global::DripSharp.PdfCarton.Cos.COSName("RT");
+    RunLengthDecode = new global::DripSharp.PdfCarton.Cos.COSName("RunLengthDecode");
+    RunLengthDecodeAbbreviation = new global::DripSharp.PdfCarton.Cos.COSName("RL");
+    Rv = new global::DripSharp.PdfCarton.Cos.COSName("RV");
+    S = new global::DripSharp.PdfCarton.Cos.COSName("S");
+    Sa = new global::DripSharp.PdfCarton.Cos.COSName("SA");
+    Saturation = new global::DripSharp.PdfCarton.Cos.COSName("Saturation");
+    Schema = new global::DripSharp.PdfCarton.Cos.COSName("Schema");
+    Screen = new global::DripSharp.PdfCarton.Cos.COSName("Screen");
+    Se = new global::DripSharp.PdfCarton.Cos.COSName("SE");
+    Separation = new global::DripSharp.PdfCarton.Cos.COSName("Separation");
+    SetF = new global::DripSharp.PdfCarton.Cos.COSName("SetF");
+    SetFf = new global::DripSharp.PdfCarton.Cos.COSName("SetFf");
+    Shading = new global::DripSharp.PdfCarton.Cos.COSName("Shading");
+    ShadingType = new global::DripSharp.PdfCarton.Cos.COSName("ShadingType");
+    Sig = new global::DripSharp.PdfCarton.Cos.COSName("Sig");
+    SigFlags = new global::DripSharp.PdfCarton.Cos.COSName("SigFlags");
+    SigRef = new global::DripSharp.PdfCarton.Cos.COSName("SigRef");
+    Size = new global::DripSharp.PdfCarton.Cos.COSName("Size");
+    Sm = new global::DripSharp.PdfCarton.Cos.COSName("SM");
+    Smask = new global::DripSharp.PdfCarton.Cos.COSName("SMask");
+    SmaskInData = new global::DripSharp.PdfCarton.Cos.COSName("SMaskInData");
+    SoftLight = new global::DripSharp.PdfCarton.Cos.COSName("SoftLight");
+    Sort = new global::DripSharp.PdfCarton.Cos.COSName("Sort");
+    Sound = new global::DripSharp.PdfCarton.Cos.COSName("Sound");
+    Split = new global::DripSharp.PdfCarton.Cos.COSName("Split");
+    Ss = new global::DripSharp.PdfCarton.Cos.COSName("SS");
+    St = new global::DripSharp.PdfCarton.Cos.COSName("St");
+    StandardEncoding = new global::DripSharp.PdfCarton.Cos.COSName("StandardEncoding");
+    State = new global::DripSharp.PdfCarton.Cos.COSName("State");
+    StateModel = new global::DripSharp.PdfCarton.Cos.COSName("StateModel");
+    Status = new global::DripSharp.PdfCarton.Cos.COSName("Status");
+    StdCf = new global::DripSharp.PdfCarton.Cos.COSName("StdCF");
+    StemH = new global::DripSharp.PdfCarton.Cos.COSName("StemH");
+    StemV = new global::DripSharp.PdfCarton.Cos.COSName("StemV");
+    StmF = new global::DripSharp.PdfCarton.Cos.COSName("StmF");
+    StrF = new global::DripSharp.PdfCarton.Cos.COSName("StrF");
+    StructElem = new global::DripSharp.PdfCarton.Cos.COSName("StructElem");
+    StructParent = new global::DripSharp.PdfCarton.Cos.COSName("StructParent");
+    StructParents = new global::DripSharp.PdfCarton.Cos.COSName("StructParents");
+    StructTreeRoot = new global::DripSharp.PdfCarton.Cos.COSName("StructTreeRoot");
+    Style = new global::DripSharp.PdfCarton.Cos.COSName("Style");
+    SubFilter = new global::DripSharp.PdfCarton.Cos.COSName("SubFilter");
+    Subj = new global::DripSharp.PdfCarton.Cos.COSName("Subj");
+    Subject = new global::DripSharp.PdfCarton.Cos.COSName("Subject");
+    SubjectDn = new global::DripSharp.PdfCarton.Cos.COSName("SubjectDN");
+    Subtype = new global::DripSharp.PdfCarton.Cos.COSName("Subtype");
+    Supplement = new global::DripSharp.PdfCarton.Cos.COSName("Supplement");
+    Sv = new global::DripSharp.PdfCarton.Cos.COSName("SV");
+    SvCert = new global::DripSharp.PdfCarton.Cos.COSName("SVCert");
+    Sw = new global::DripSharp.PdfCarton.Cos.COSName("SW");
+    Sy = new global::DripSharp.PdfCarton.Cos.COSName("Sy");
+    Synchronous = new global::DripSharp.PdfCarton.Cos.COSName("Synchronous");
+    T = new global::DripSharp.PdfCarton.Cos.COSName("T");
+    Target = new global::DripSharp.PdfCarton.Cos.COSName("Target");
+    Templates = new global::DripSharp.PdfCarton.Cos.COSName("Templates");
+    Thread = new global::DripSharp.PdfCarton.Cos.COSName("Thread");
+    Threads = new global::DripSharp.PdfCarton.Cos.COSName("Threads");
+    ThreeDd = new global::DripSharp.PdfCarton.Cos.COSName("3DD");
+    Thumb = new global::DripSharp.PdfCarton.Cos.COSName("Thumb");
+    Ti = new global::DripSharp.PdfCarton.Cos.COSName("TI");
+    TilingType = new global::DripSharp.PdfCarton.Cos.COSName("TilingType");
+    TimeStamp = new global::DripSharp.PdfCarton.Cos.COSName("TimeStamp");
+    Title = new global::DripSharp.PdfCarton.Cos.COSName("Title");
+    Tk = new global::DripSharp.PdfCarton.Cos.COSName("TK");
+    Tm = new global::DripSharp.PdfCarton.Cos.COSName("TM");
+    ToUnicode = new global::DripSharp.PdfCarton.Cos.COSName("ToUnicode");
+    Tr = new global::DripSharp.PdfCarton.Cos.COSName("TR");
+    Tr2 = new global::DripSharp.PdfCarton.Cos.COSName("TR2");
+    Trapped = new global::DripSharp.PdfCarton.Cos.COSName("Trapped");
+    Trans = new global::DripSharp.PdfCarton.Cos.COSName("Trans");
+    TransformMethod = new global::DripSharp.PdfCarton.Cos.COSName("TransformMethod");
+    TransformParams = new global::DripSharp.PdfCarton.Cos.COSName("TransformParams");
+    Transparency = new global::DripSharp.PdfCarton.Cos.COSName("Transparency");
+    Tref = new global::DripSharp.PdfCarton.Cos.COSName("TRef");
+    TrimBox = new global::DripSharp.PdfCarton.Cos.COSName("TrimBox");
+    TrueType = new global::DripSharp.PdfCarton.Cos.COSName("TrueType");
+    TrustedMode = new global::DripSharp.PdfCarton.Cos.COSName("TrustedMode");
+    Tu = new global::DripSharp.PdfCarton.Cos.COSName("TU");
+    Tx = new global::DripSharp.PdfCarton.Cos.COSName("Tx");
+    Type = new global::DripSharp.PdfCarton.Cos.COSName("Type");
+    Type0 = new global::DripSharp.PdfCarton.Cos.COSName("Type0");
+    Type1 = new global::DripSharp.PdfCarton.Cos.COSName("Type1");
+    Type3 = new global::DripSharp.PdfCarton.Cos.COSName("Type3");
+    U = new global::DripSharp.PdfCarton.Cos.COSName("U");
+    Ue = new global::DripSharp.PdfCarton.Cos.COSName("UE");
+    Uf = new global::DripSharp.PdfCarton.Cos.COSName("UF");
+    Unchanged = new global::DripSharp.PdfCarton.Cos.COSName("Unchanged");
+    Unix = new global::DripSharp.PdfCarton.Cos.COSName("Unix");
+    Uri = new global::DripSharp.PdfCarton.Cos.COSName("URI");
+    Url = new global::DripSharp.PdfCarton.Cos.COSName("URL");
+    UrlType = new global::DripSharp.PdfCarton.Cos.COSName("URLType");
+    Usage = new global::DripSharp.PdfCarton.Cos.COSName("Usage");
+    UseCmap = new global::DripSharp.PdfCarton.Cos.COSName("UseCMap");
+    UserUnit = new global::DripSharp.PdfCarton.Cos.COSName("UserUnit");
+    V = new global::DripSharp.PdfCarton.Cos.COSName("V");
+    Ve = new global::DripSharp.PdfCarton.Cos.COSName("VE");
+    VerisignPpkvs = new global::DripSharp.PdfCarton.Cos.COSName("VeriSign.PPKVS");
+    Version = new global::DripSharp.PdfCarton.Cos.COSName("Version");
+    Vertices = new global::DripSharp.PdfCarton.Cos.COSName("Vertices");
+    VerticesPerRow = new global::DripSharp.PdfCarton.Cos.COSName("VerticesPerRow");
+    View = new global::DripSharp.PdfCarton.Cos.COSName("View");
+    ViewArea = new global::DripSharp.PdfCarton.Cos.COSName("ViewArea");
+    ViewClip = new global::DripSharp.PdfCarton.Cos.COSName("ViewClip");
+    ViewState = new global::DripSharp.PdfCarton.Cos.COSName("ViewState");
+    ViewerPreferences = new global::DripSharp.PdfCarton.Cos.COSName("ViewerPreferences");
+    Volume = new global::DripSharp.PdfCarton.Cos.COSName("Volume");
+    Vp = new global::DripSharp.PdfCarton.Cos.COSName("VP");
+    Vri = new global::DripSharp.PdfCarton.Cos.COSName("VRI");
+    W = new global::DripSharp.PdfCarton.Cos.COSName("W");
+    W2 = new global::DripSharp.PdfCarton.Cos.COSName("W2");
+    Wc = new global::DripSharp.PdfCarton.Cos.COSName("WC");
+    WhitePoint = new global::DripSharp.PdfCarton.Cos.COSName("WhitePoint");
+    Widget = new global::DripSharp.PdfCarton.Cos.COSName("Widget");
+    Width = new global::DripSharp.PdfCarton.Cos.COSName("Width");
+    Widths = new global::DripSharp.PdfCarton.Cos.COSName("Widths");
+    Win = new global::DripSharp.PdfCarton.Cos.COSName("Win");
+    WinAnsiEncoding = new global::DripSharp.PdfCarton.Cos.COSName("WinAnsiEncoding");
+    Wmode = new global::DripSharp.PdfCarton.Cos.COSName("WMode");
+    Wp = new global::DripSharp.PdfCarton.Cos.COSName("WP");
+    Ws = new global::DripSharp.PdfCarton.Cos.COSName("WS");
+    X = new global::DripSharp.PdfCarton.Cos.COSName("X");
+    Xfa = new global::DripSharp.PdfCarton.Cos.COSName("XFA");
+    XStep = new global::DripSharp.PdfCarton.Cos.COSName("XStep");
+    Xheight = new global::DripSharp.PdfCarton.Cos.COSName("XHeight");
+    Xobject = new global::DripSharp.PdfCarton.Cos.COSName("XObject");
+    Xref = new global::DripSharp.PdfCarton.Cos.COSName("XRef");
+    XrefStm = new global::DripSharp.PdfCarton.Cos.COSName("XRefStm");
+    Y = new global::DripSharp.PdfCarton.Cos.COSName("Y");
+    YStep = new global::DripSharp.PdfCarton.Cos.COSName("YStep");
+    Yes = new global::DripSharp.PdfCarton.Cos.COSName("Yes");
+    ZaDb = new global::DripSharp.PdfCarton.Cos.COSName("ZaDb");
   }
 }

@@ -335,7 +335,7 @@ public class SynchronizedMetaDataValidation {
 
   private string removeTrailingNul(string @string) {
     int length = @string.Length;
-    while (((length > 0) && ((int)(@string[(length - 1)]) == 0))) {
+    while (((length > 0) && ((int)(@string[unchecked((length - 1))]) == 0))) {
       length--;
     }
     return global::DripSharp.Runtime.JavaCompat.StringSubstring(@string, 0, length);

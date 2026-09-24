@@ -15,9 +15,17 @@ public class MetadataValidationProcess
       global::DripSharp.PdfCarton.Pdmodel.PDDocument document = ctx.GetDocument();
       global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata;
       global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser builder
-        = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
-      using (global::System.IO.Stream @is = this.getXpacket(document, ctx)) {
-        metadata = builder.Parse(@is);
+        = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser(); {
+        global::System.IO.Stream @is = this.getXpacket(document, ctx);
+        global::System.Exception __dripsharpPrimary_69_30_0 = null!;
+        try {
+          metadata = builder.Parse(@is);
+        } catch (global::System.Exception __dripsharpCaught_69_30_0) {
+          __dripsharpPrimary_69_30_0 = __dripsharpCaught_69_30_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_69_30_0);
+        }
       }
       ctx.SetMetadata(metadata);
       if ((metadata.GetXpacketBytes() != default!)) {
@@ -182,8 +190,8 @@ public class MetadataValidationProcess
       return false;
     }
     return (((((int)(binImage[0]) == 255) && ((int)(binImage[1]) == 216))
-      && ((int)(binImage[(binImage.Length - 2)]) == 255)) && ((int)(binImage[(binImage.Length - 1)])
-      == 217));
+      && ((int)(binImage[unchecked((binImage.Length - 2))]) == 255))
+      && ((int)(binImage[unchecked((binImage.Length - 1))]) == 217));
   }
 
   private global::System.IO.Stream getXpacket(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
@@ -240,5 +248,9 @@ public class MetadataValidationProcess
         "Using stream filter on metadata dictionary is forbidden"));
     }
     return ve;
+  }
+
+  static MetadataValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
   }
 }

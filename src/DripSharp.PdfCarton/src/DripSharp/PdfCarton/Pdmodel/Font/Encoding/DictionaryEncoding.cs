@@ -9,18 +9,18 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font.Encoding;
 
 public class DictionaryEncoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSDictionary encoding = null!;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding baseEncoding = null!;
 
-  private readonly global::System.Collections.Generic.IDictionary<int, string> differences
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, string>();
+  private readonly global::System.Collections.Generic.IDictionary<int, string> differences;
 
   public DictionaryEncoding(global::DripSharp.PdfCarton.Cos.COSName baseEncoding,
     global::DripSharp.PdfCarton.Cos.COSArray differences) {
+    this.differences = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, string>();
+
     this.encoding = new global::DripSharp.PdfCarton.Cos.COSDictionary();
     this.encoding.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Name,
       global::DripSharp.PdfCarton.Cos.COSName.Encoding);
@@ -46,6 +46,8 @@ public class DictionaryEncoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encod
   }
 
   public DictionaryEncoding(global::DripSharp.PdfCarton.Cos.COSDictionary fontEncoding) {
+    this.differences = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, string>();
+
     this.encoding = fontEncoding;
     global::DripSharp.PdfCarton.Cos.COSName name
       = this.encoding.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.BaseEncoding);
@@ -70,6 +72,8 @@ public class DictionaryEncoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encod
 
   public DictionaryEncoding(global::DripSharp.PdfCarton.Cos.COSDictionary fontEncoding,
     bool isNonSymbolic, global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding builtIn) {
+    this.differences = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, string>();
+
     this.encoding = fontEncoding;
     global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding @base = default!;
     bool hasBaseEncoding
@@ -106,7 +110,7 @@ public class DictionaryEncoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encod
     if ((diffArray == default!)) {
       return;
     }
-    int currentIndex = -1;
+    int currentIndex = unchecked(-1);
     for (int i = 0; (i < diffArray.Size()); i++) {
       global::DripSharp.PdfCarton.Cos.COSBase next = diffArray.GetObject(i);
       if ((next is global::DripSharp.PdfCarton.Cos.COSNumber)) {
@@ -142,5 +146,10 @@ public class DictionaryEncoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encod
     }
     return global::DripSharp.Runtime.JavaCompat.Concat(this.baseEncoding.GetEncodingName(),
       " with differences");
+  }
+
+  static DictionaryEncoding() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

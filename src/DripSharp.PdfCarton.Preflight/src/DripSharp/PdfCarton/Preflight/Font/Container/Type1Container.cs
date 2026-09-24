@@ -21,4 +21,8 @@ public class Type1Container
     }
     return false;
   }
+
+  static Type1Container() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont>).TypeHandle);
+  }
 }

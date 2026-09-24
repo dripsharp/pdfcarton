@@ -57,4 +57,8 @@ public class PDFATypeType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructu
   public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetFields() {
     return this.GetArrayProperty(global::DripSharp.PdfCarton.Xmp.Type.PDFATypeType.Field);
   }
+
+  static PDFATypeType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

@@ -17,9 +17,9 @@ public abstract class PDFunction : global::DripSharp.PdfCarton.Pdmodel.Common.CO
 
   private global::DripSharp.PdfCarton.Cos.COSArray range = default!;
 
-  private int numberOfInputValues = -1;
+  private int numberOfInputValues = unchecked(-1);
 
-  private int numberOfOutputValues = -1;
+  private int numberOfOutputValues = unchecked(-1);
 
   public PDFunction(global::DripSharp.PdfCarton.Cos.COSBase function) {
     if ((function is global::DripSharp.PdfCarton.Cos.COSStream)) {
@@ -80,12 +80,13 @@ public abstract class PDFunction : global::DripSharp.PdfCarton.Pdmodel.Common.CO
   }
 
   public virtual int GetNumberOfOutputParameters() {
-    if ((this.numberOfOutputValues == -1)) {
+    if ((this.numberOfOutputValues == unchecked(-1))) {
       global::DripSharp.PdfCarton.Cos.COSArray rangeValues = this.GetRangeValues();
       if ((rangeValues == default!)) {
         this.numberOfOutputValues = 0;
       } else {
-        this.numberOfOutputValues = (rangeValues.Size() / 2);
+        this.numberOfOutputValues
+          = global::DripSharp.Runtime.JavaCompat.IntegralDivide(rangeValues.Size(), 2);
       }
     }
     return this.numberOfOutputValues;
@@ -102,9 +103,10 @@ public abstract class PDFunction : global::DripSharp.PdfCarton.Pdmodel.Common.CO
   }
 
   public virtual int GetNumberOfInputParameters() {
-    if ((this.numberOfInputValues == -1)) {
+    if ((this.numberOfInputValues == unchecked(-1))) {
       global::DripSharp.PdfCarton.Cos.COSArray array = this.getDomainValues();
-      this.numberOfInputValues = (array.Size() / 2);
+      this.numberOfInputValues = global::DripSharp.Runtime.JavaCompat.IntegralDivide(array.Size(),
+        2);
     }
     return this.numberOfInputValues;
   }
@@ -140,11 +142,13 @@ public abstract class PDFunction : global::DripSharp.PdfCarton.Pdmodel.Common.CO
     float[] result;
     if (((rangesArray != default!) && (rangesArray.Size() > 0))) {
       float[] rangeValues = rangesArray.ToFloatArray();
-      int numberOfRanges = (rangeValues.Length / 2);
+      int numberOfRanges = global::DripSharp.Runtime.JavaCompat.IntegralDivide(rangeValues.Length,
+        2);
       result = new float[numberOfRanges];
       for (int i = 0; (i < numberOfRanges); i++) {
         int index = (i << unchecked((int)(1)));
-        result[i] = this.ClipToRange(inputValues[i], rangeValues[index], rangeValues[(index + 1)]);
+        result[i] = this.ClipToRange(inputValues[i], rangeValues[index],
+          rangeValues[unchecked((index + 1))]);
       }
     } else {
       result = inputValues;

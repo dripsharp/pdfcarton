@@ -49,4 +49,8 @@ public class PDPushButton : global::DripSharp.PdfCarton.Pdmodel.Interactive.Form
   }
 
   internal override void constructAppearances() {}
+
+  static PDPushButton() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton).TypeHandle);
+  }
 }

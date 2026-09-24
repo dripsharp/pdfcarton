@@ -40,4 +40,8 @@ public class PDActionJavaScript : global::DripSharp.PdfCarton.Pdmodel.Interactiv
       }
     }
   }
+
+  static PDActionJavaScript() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
+  }
 }

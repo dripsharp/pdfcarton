@@ -5,14 +5,23 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class PDAcroFormGenerateAppearancesTest {
-  internal virtual void testGetAcroForm(string sourceUrl) {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument testPdf
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.Runtime.JavaCompat.OpenUrlStream(global::DripSharp.Runtime.JavaCompat.NewUri(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      sourceUrl)))))) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = testPdf.GetDocumentCatalog();
-      global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => catalog.GetAcroForm(),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Getting the AcroForm shall not throw an exception"));
+  internal virtual void testGetAcroForm(string sourceUrl) { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument testPdf
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.Runtime.JavaCompat.OpenUrlStream(global::DripSharp.Runtime.JavaCompat.NewUri(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        sourceUrl)))));
+      global::System.Exception __dripsharpPrimary_53_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog
+          = testPdf.GetDocumentCatalog();
+        global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => catalog.GetAcroForm(),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Getting the AcroForm shall not throw an exception"));
+      } catch (global::System.Exception __dripsharpCaught_53_25_0) {
+        __dripsharpPrimary_53_25_0 = __dripsharpCaught_53_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(testPdf, __dripsharpPrimary_53_25_0);
+      }
     }
   }
 

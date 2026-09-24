@@ -17,163 +17,254 @@ public class RandomAccessReadWriteBufferTest {
     global::DripSharp.Testing.JavaAssertions.True(randomAccessReadWrite.IsClosed(), null);
   }
 
-  internal virtual void testClear() {
-    using (global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer(4)) {
-      randomAccessReadWrite.Write(new sbyte[] { unchecked((sbyte)(1)), unchecked((sbyte)(2)),
-          unchecked((sbyte)(3)), unchecked((sbyte)(4)), unchecked((sbyte)(5)), unchecked((sbyte)(6)),
-          unchecked((sbyte)(7)), unchecked((sbyte)(8)), unchecked((sbyte)(9)),
-          unchecked((sbyte)(10)) });
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(10), randomAccessReadWrite.Length(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(10),
-        randomAccessReadWrite.GetPosition(), null);
-      randomAccessReadWrite.Clear();
-      global::DripSharp.Testing.JavaAssertions.False(randomAccessReadWrite.IsClosed(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessReadWrite.Length(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessReadWrite.GetPosition(),
-        null);
-    }
-  }
-
-  internal virtual void testLengthWriteByte() {
-    using (global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer()) {
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessReadWrite.Length(),
-        null);
-      randomAccessReadWrite.Write(1);
-      randomAccessReadWrite.Write(2);
-      randomAccessReadWrite.Write(3);
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(3), randomAccessReadWrite.Length(),
-        null);
-    }
-  }
-
-  internal virtual void testLengthWriteBytes() {
-    using (global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer()) {
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessReadWrite.Length(),
-        null);
-      randomAccessReadWrite.Write(new sbyte[] { unchecked((sbyte)(1)), unchecked((sbyte)(2)),
-          unchecked((sbyte)(3)), unchecked((sbyte)(4)), unchecked((sbyte)(5)), unchecked((sbyte)(6)),
-          unchecked((sbyte)(7)) });
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(7), randomAccessReadWrite.Length(),
-        null);
-      randomAccessReadWrite.Write(new sbyte[] { unchecked((sbyte)(8)), unchecked((sbyte)(9)),
-          unchecked((sbyte)(10)), unchecked((sbyte)(11)) });
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(11), randomAccessReadWrite.Length(),
-        null);
-    }
-  }
-
-  internal virtual void testPaging() {
-    using (global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer(5)) {
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessReadWrite.Length(),
-        null);
-      randomAccessReadWrite.Write(new sbyte[] { unchecked((sbyte)(1)), unchecked((sbyte)(2)),
-          unchecked((sbyte)(3)), unchecked((sbyte)(4)), unchecked((sbyte)(5)), unchecked((sbyte)(6)),
-          unchecked((sbyte)(7)) });
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(7), randomAccessReadWrite.Length(),
-        null);
-      randomAccessReadWrite.Write(new sbyte[] { unchecked((sbyte)(8)), unchecked((sbyte)(9)),
-          unchecked((sbyte)(10)), unchecked((sbyte)(11)) });
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(11), randomAccessReadWrite.Length(),
-        null);
-    }
-  }
-
-  internal virtual void testRandomAccessRead() {
-    using (global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer()) {
-      randomAccessReadWrite.Write(new sbyte[] { unchecked((sbyte)(1)), unchecked((sbyte)(2)),
-          unchecked((sbyte)(3)), unchecked((sbyte)(4)), unchecked((sbyte)(5)), unchecked((sbyte)(6)),
-          unchecked((sbyte)(7)), unchecked((sbyte)(8)), unchecked((sbyte)(9)), unchecked((sbyte)(10)),
-          unchecked((sbyte)(11)) });
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(11), randomAccessReadWrite.Length(),
-        null);
-      randomAccessReadWrite.Seek((long)(0));
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(11), randomAccessReadWrite.Length(),
-        null);
-      sbyte[] bytesRead = new sbyte[11];
-      global::DripSharp.Testing.JavaAssertions.Equal(11,
-        ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessReadWrite))).Read(bytesRead),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(1, (int)(bytesRead[0]), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(7, (int)(bytesRead[6]), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(8, (int)(bytesRead[7]), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(11, (int)(bytesRead[10]), null);
-    }
-  }
-
-  internal virtual void testEOFBugInSeek() {
-    using (global::DripSharp.PdfCarton.IO.RandomAccess randomAccessRwedWrite
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer()) {
-      sbyte[] bytes
-        = new sbyte[global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb];
-      for (int i = 0;
-        (i < global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBufferTest.NUM_ITERATIONS); i++) {
-        long p0 = randomAccessRwedWrite.GetPosition();
-        randomAccessRwedWrite.Write(bytes);
-        long p1 = randomAccessRwedWrite.GetPosition();
-        global::DripSharp.Testing.JavaAssertions.Equal((long)(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb),
-          (p1 - p0), null);
-        randomAccessRwedWrite.Write(bytes);
-        long p2 = randomAccessRwedWrite.GetPosition();
-        global::DripSharp.Testing.JavaAssertions.Equal((long)(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb),
-          (p2 - p1), null);
-        randomAccessRwedWrite.Seek((long)(0));
-        randomAccessRwedWrite.Seek((long)(((i * 2)
-          * global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb)));
+  internal virtual void testClear() { {
+      global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer(4);
+      global::System.Exception __dripsharpPrimary_49_27_0 = null!;
+      try {
+        randomAccessReadWrite.Write(new sbyte[] { unchecked((sbyte)(1)), unchecked((sbyte)(2)),
+            unchecked((sbyte)(3)), unchecked((sbyte)(4)), unchecked((sbyte)(5)),
+            unchecked((sbyte)(6)), unchecked((sbyte)(7)), unchecked((sbyte)(8)),
+            unchecked((sbyte)(9)), unchecked((sbyte)(10)) });
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(10), randomAccessReadWrite.Length(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(10),
+          randomAccessReadWrite.GetPosition(), null);
+        randomAccessReadWrite.Clear();
+        global::DripSharp.Testing.JavaAssertions.False(randomAccessReadWrite.IsClosed(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessReadWrite.Length(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(0),
+          randomAccessReadWrite.GetPosition(), null);
+      } catch (global::System.Exception __dripsharpCaught_49_27_0) {
+        __dripsharpPrimary_49_27_0 = __dripsharpCaught_49_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(randomAccessReadWrite,
+          __dripsharpPrimary_49_27_0);
       }
     }
   }
 
-  internal virtual void testBufferLength() {
-    using (global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer()) {
-      sbyte[] bytes
-        = new sbyte[global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb];
-      randomAccessReadWrite.Write(bytes);
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb),
-        randomAccessReadWrite.Length(), null);
+  internal virtual void testLengthWriteByte() { {
+      global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer();
+      global::System.Exception __dripsharpPrimary_64_27_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessReadWrite.Length(),
+          null);
+        randomAccessReadWrite.Write(1);
+        randomAccessReadWrite.Write(2);
+        randomAccessReadWrite.Write(3);
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(3), randomAccessReadWrite.Length(),
+          null);
+      } catch (global::System.Exception __dripsharpCaught_64_27_0) {
+        __dripsharpPrimary_64_27_0 = __dripsharpCaught_64_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(randomAccessReadWrite,
+          __dripsharpPrimary_64_27_0);
+      }
     }
   }
 
-  internal virtual void testBufferSeek() {
-    using (global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer()) {
-      sbyte[] bytes
-        = new sbyte[global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb];
-      randomAccessReadWrite.Write(bytes);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
-        => randomAccessReadWrite.Seek((long)(-1)), null);
+  internal virtual void testLengthWriteBytes() { {
+      global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer();
+      global::System.Exception __dripsharpPrimary_77_27_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessReadWrite.Length(),
+          null);
+        randomAccessReadWrite.Write(new sbyte[] { unchecked((sbyte)(1)), unchecked((sbyte)(2)),
+            unchecked((sbyte)(3)), unchecked((sbyte)(4)), unchecked((sbyte)(5)),
+            unchecked((sbyte)(6)), unchecked((sbyte)(7)) });
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(7), randomAccessReadWrite.Length(),
+          null);
+        randomAccessReadWrite.Write(new sbyte[] { unchecked((sbyte)(8)), unchecked((sbyte)(9)),
+            unchecked((sbyte)(10)), unchecked((sbyte)(11)) });
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(11), randomAccessReadWrite.Length(),
+          null);
+      } catch (global::System.Exception __dripsharpCaught_77_27_0) {
+        __dripsharpPrimary_77_27_0 = __dripsharpCaught_77_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(randomAccessReadWrite,
+          __dripsharpPrimary_77_27_0);
+      }
     }
   }
 
-  internal virtual void testBufferEOF() {
-    using (global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer()) {
-      sbyte[] bytes
-        = new sbyte[global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb];
-      randomAccessReadWrite.Write(bytes);
-      randomAccessReadWrite.Seek((long)(0));
-      global::DripSharp.Testing.JavaAssertions.False(randomAccessReadWrite.IsEOF(), null);
-      randomAccessReadWrite.Seek((long)(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb));
-      global::DripSharp.Testing.JavaAssertions.True(randomAccessReadWrite.IsEOF(), null);
+  internal virtual void testPaging() { {
+      global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer(5);
+      global::System.Exception __dripsharpPrimary_90_27_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessReadWrite.Length(),
+          null);
+        randomAccessReadWrite.Write(new sbyte[] { unchecked((sbyte)(1)), unchecked((sbyte)(2)),
+            unchecked((sbyte)(3)), unchecked((sbyte)(4)), unchecked((sbyte)(5)),
+            unchecked((sbyte)(6)), unchecked((sbyte)(7)) });
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(7), randomAccessReadWrite.Length(),
+          null);
+        randomAccessReadWrite.Write(new sbyte[] { unchecked((sbyte)(8)), unchecked((sbyte)(9)),
+            unchecked((sbyte)(10)), unchecked((sbyte)(11)) });
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(11), randomAccessReadWrite.Length(),
+          null);
+      } catch (global::System.Exception __dripsharpCaught_90_27_0) {
+        __dripsharpPrimary_90_27_0 = __dripsharpCaught_90_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(randomAccessReadWrite,
+          __dripsharpPrimary_90_27_0);
+      }
     }
   }
 
-  internal virtual void testAlreadyClose() {
-    using (global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer()) {
-      sbyte[] bytes
-        = new sbyte[global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb];
-      randomAccessReadWrite.Write(bytes);
-      randomAccessReadWrite.Dispose();
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
-        => randomAccessReadWrite.Seek((long)(0)), null);
+  internal virtual void testRandomAccessRead() { {
+      global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer();
+      global::System.Exception __dripsharpPrimary_103_27_0 = null!;
+      try {
+        randomAccessReadWrite.Write(new sbyte[] { unchecked((sbyte)(1)), unchecked((sbyte)(2)),
+            unchecked((sbyte)(3)), unchecked((sbyte)(4)), unchecked((sbyte)(5)),
+            unchecked((sbyte)(6)), unchecked((sbyte)(7)), unchecked((sbyte)(8)),
+            unchecked((sbyte)(9)), unchecked((sbyte)(10)), unchecked((sbyte)(11)) });
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(11), randomAccessReadWrite.Length(),
+          null);
+        randomAccessReadWrite.Seek((long)(0));
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(11), randomAccessReadWrite.Length(),
+          null);
+        sbyte[] bytesRead = new sbyte[11];
+        global::DripSharp.Testing.JavaAssertions.Equal(11,
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessReadWrite))).Read(bytesRead),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(1, (int)(bytesRead[0]), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(7, (int)(bytesRead[6]), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(8, (int)(bytesRead[7]), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(11, (int)(bytesRead[10]), null);
+      } catch (global::System.Exception __dripsharpCaught_103_27_0) {
+        __dripsharpPrimary_103_27_0 = __dripsharpCaught_103_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(randomAccessReadWrite,
+          __dripsharpPrimary_103_27_0);
+      }
+    }
+  }
+
+  internal virtual void testEOFBugInSeek() { {
+      global::DripSharp.PdfCarton.IO.RandomAccess randomAccessRwedWrite
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer();
+      global::System.Exception __dripsharpPrimary_127_27_0 = null!;
+      try {
+        sbyte[] bytes
+          = new sbyte[global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb];
+        for (int i = 0;
+          (i < global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBufferTest.NUM_ITERATIONS);
+          i++) {
+          long p0 = randomAccessRwedWrite.GetPosition();
+          randomAccessRwedWrite.Write(bytes);
+          long p1 = randomAccessRwedWrite.GetPosition();
+          global::DripSharp.Testing.JavaAssertions.Equal((long)(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb),
+            unchecked((p1 - p0)), null);
+          randomAccessRwedWrite.Write(bytes);
+          long p2 = randomAccessRwedWrite.GetPosition();
+          global::DripSharp.Testing.JavaAssertions.Equal((long)(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb),
+            unchecked((p2 - p1)), null);
+          randomAccessRwedWrite.Seek((long)(0));
+          randomAccessRwedWrite.Seek((long)(unchecked((unchecked((i * 2))
+            * global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb))));
+        }
+      } catch (global::System.Exception __dripsharpCaught_127_27_0) {
+        __dripsharpPrimary_127_27_0 = __dripsharpCaught_127_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(randomAccessRwedWrite,
+          __dripsharpPrimary_127_27_0);
+      }
+    }
+  }
+
+  internal virtual void testBufferLength() { {
+      global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer();
+      global::System.Exception __dripsharpPrimary_149_27_0 = null!;
+      try {
+        sbyte[] bytes
+          = new sbyte[global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb];
+        randomAccessReadWrite.Write(bytes);
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb),
+          randomAccessReadWrite.Length(), null);
+      } catch (global::System.Exception __dripsharpCaught_149_27_0) {
+        __dripsharpPrimary_149_27_0 = __dripsharpCaught_149_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(randomAccessReadWrite,
+          __dripsharpPrimary_149_27_0);
+      }
+    }
+  }
+
+  internal virtual void testBufferSeek() { {
+      global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer();
+      global::System.Exception __dripsharpPrimary_160_27_0 = null!;
+      try {
+        sbyte[] bytes
+          = new sbyte[global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb];
+        randomAccessReadWrite.Write(bytes);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
+          => randomAccessReadWrite.Seek((long)(unchecked(-1))), null);
+      } catch (global::System.Exception __dripsharpCaught_160_27_0) {
+        __dripsharpPrimary_160_27_0 = __dripsharpCaught_160_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(randomAccessReadWrite,
+          __dripsharpPrimary_160_27_0);
+      }
+    }
+  }
+
+  internal virtual void testBufferEOF() { {
+      global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer();
+      global::System.Exception __dripsharpPrimary_171_27_0 = null!;
+      try {
+        sbyte[] bytes
+          = new sbyte[global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb];
+        randomAccessReadWrite.Write(bytes);
+        randomAccessReadWrite.Seek((long)(0));
+        global::DripSharp.Testing.JavaAssertions.False(randomAccessReadWrite.IsEOF(), null);
+        randomAccessReadWrite.Seek((long)(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb));
+        global::DripSharp.Testing.JavaAssertions.True(randomAccessReadWrite.IsEOF(), null);
+      } catch (global::System.Exception __dripsharpCaught_171_27_0) {
+        __dripsharpPrimary_171_27_0 = __dripsharpCaught_171_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(randomAccessReadWrite,
+          __dripsharpPrimary_171_27_0);
+      }
+    }
+  }
+
+  internal virtual void testAlreadyClose() { {
+      global::DripSharp.PdfCarton.IO.RandomAccess randomAccessReadWrite
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer();
+      global::System.Exception __dripsharpPrimary_185_27_0 = null!;
+      try {
+        sbyte[] bytes
+          = new sbyte[global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb];
+        randomAccessReadWrite.Write(bytes);
+        randomAccessReadWrite.Dispose();
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
+          => randomAccessReadWrite.Seek((long)(0)), null);
+      } catch (global::System.Exception __dripsharpCaught_185_27_0) {
+        __dripsharpPrimary_185_27_0 = __dripsharpCaught_185_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(randomAccessReadWrite,
+          __dripsharpPrimary_185_27_0);
+      }
     }
   }
 

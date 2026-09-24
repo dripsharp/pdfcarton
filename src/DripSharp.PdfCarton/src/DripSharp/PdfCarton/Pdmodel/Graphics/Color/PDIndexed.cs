@@ -12,7 +12,7 @@ public sealed class PDIndexed
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSpecialColorSpace {
   private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor initialColor;
 
-  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace baseColorSpace = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace baseColorSpace;
 
   private sbyte[] lookupData = null!;
 
@@ -25,6 +25,7 @@ public sealed class PDIndexed
   public PDIndexed() {
     this.initialColor
       = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 0 }, this);
+    this.baseColorSpace = default!;
 
     base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
     base.Array.Add(global::DripSharp.PdfCarton.Cos.COSName.Indexed);
@@ -42,6 +43,7 @@ public sealed class PDIndexed
     global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
     this.initialColor
       = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 0 }, this);
+    this.baseColorSpace = default!;
 
     base.Array = indexedArray;
     this.baseColorSpace
@@ -62,7 +64,7 @@ public sealed class PDIndexed
     if (((hival < 0) || (hival > 255))) {
       throw new global::System.ArgumentException(" hival has to be a positive value <= 255");
     }
-    int expected = ((hival + 1) * @base.GetNumberOfComponents());
+    int expected = unchecked((unchecked((hival + 1)) * @base.GetNumberOfComponents()));
     if ((lookupData.Length < expected)) {
       throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("lookupData too short: expected at least ",
         expected), " bytes ((hival+1) * components), got "), lookupData.Length));
@@ -105,8 +107,8 @@ public sealed class PDIndexed
     try {
       baseRaster
         = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBandedRaster(global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE,
-        (this.actualMaxIndex + 1), 1, numBaseComponents, new global::DripSharp.Runtime.JavaPoint(0,
-        0));
+        unchecked((this.actualMaxIndex + 1)), 1, numBaseComponents,
+        new global::DripSharp.Runtime.JavaPoint(0, 0));
     } catch (global::System.ArgumentException ex) {
       throw new global::System.IO.IOException(null, ex);
     }
@@ -114,7 +116,9 @@ public sealed class PDIndexed
     for (int i__192_18 = 0, n__192_25 = this.actualMaxIndex; (i__192_18 <= n__192_25);
       i__192_18++) {
       for (int c = 0; (c < numBaseComponents); c++) {
-        @base[c] = (int)((this.colorTable[i__192_18][c] * 255.0F));
+        @base[c]
+          = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((this.colorTable[i__192_18][c]
+          * 255.0F))));
       }
       baseRaster.SetPixel(i__192_18, 0, @base);
     }
@@ -122,7 +126,8 @@ public sealed class PDIndexed
     global::DripSharp.Runtime.JavaRaster rgbRaster
       = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(rgbImage);
     this.rgbColorTable
-      = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<int>((this.actualMaxIndex + 1), 3);
+      = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<int>(unchecked((this.actualMaxIndex
+      + 1)), 3);
     int[] nil = default!;
     for (int i__209_18 = 0, n__209_25 = this.actualMaxIndex; (i__209_18 <= n__209_25);
       i__209_18++) {
@@ -168,9 +173,15 @@ public sealed class PDIndexed
       sbyte[] g = new sbyte[this.colorTable.Length];
       sbyte[] b = new sbyte[this.colorTable.Length];
       for (int i = 0; (i < this.colorTable.Length); i++) {
-        r[i] = unchecked((sbyte)(unchecked((sbyte)(((int)((this.colorTable[i][0] * 255)) & 255)))));
-        g[i] = unchecked((sbyte)(unchecked((sbyte)(((int)((this.colorTable[i][1] * 255)) & 255)))));
-        b[i] = unchecked((sbyte)(unchecked((sbyte)(((int)((this.colorTable[i][2] * 255)) & 255)))));
+        r[i]
+          = unchecked((sbyte)(unchecked((sbyte)((unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((this.colorTable[i][0]
+          * 255)))) & 255)))));
+        g[i]
+          = unchecked((sbyte)(unchecked((sbyte)((unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((this.colorTable[i][1]
+          * 255)))) & 255)))));
+        b[i]
+          = unchecked((sbyte)(unchecked((sbyte)((unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((this.colorTable[i][2]
+          * 255)))) & 255)))));
       }
       global::DripSharp.Runtime.JavaColorModel colorModel
         = global::DripSharp.Runtime.PdfCartonFontCompat.IndexColorModel(8, this.colorTable.Length,
@@ -214,12 +225,15 @@ public sealed class PDIndexed
     this.readLookupData();
     int maxIndex = global::System.Math.Min(this.getHival(), 255);
     int numComponents = this.baseColorSpace.GetNumberOfComponents();
-    if (((this.lookupData.Length / numComponents) < (maxIndex + 1))) {
-      maxIndex = ((this.lookupData.Length / numComponents) - 1);
+    if ((global::DripSharp.Runtime.JavaCompat.IntegralDivide(this.lookupData.Length,
+      numComponents) < unchecked((maxIndex + 1)))) {
+      maxIndex
+        = unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(this.lookupData.Length,
+        numComponents) - 1));
     }
     this.actualMaxIndex = maxIndex;
-    this.colorTable = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<float>((maxIndex + 1),
-      numComponents);
+    this.colorTable = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<float>(unchecked((maxIndex
+      + 1)), numComponents);
     for (int i = 0, offset = 0; (i <= maxIndex); i++) {
       for (int c = 0; (c < numComponents); c++) {
         this.colorTable[i][c] = ((this.lookupData[offset] & 255) / (float)255.0F);
@@ -241,5 +255,9 @@ public sealed class PDIndexed
     return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Indexed{base:",
       this.baseColorSpace), " "), "hival:"), this.getHival()), " "), "lookup:("),
       this.colorTable.Length), " entries)}");
+  }
+
+  static PDIndexed() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSpecialColorSpace).TypeHandle);
   }
 }

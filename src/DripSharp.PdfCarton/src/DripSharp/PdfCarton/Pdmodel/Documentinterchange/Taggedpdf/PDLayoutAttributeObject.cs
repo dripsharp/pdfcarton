@@ -803,4 +803,8 @@ public class PDLayoutAttributeObject
     }
     return sb.ToString();
   }
+
+  static PDLayoutAttributeObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject).TypeHandle);
+  }
 }

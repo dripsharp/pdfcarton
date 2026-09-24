@@ -9,19 +9,13 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly string OS_NAME
-    = global::DripSharp.Runtime.JavaCompat.GetProperty("os.name").ToLowerInvariant();
+  private static readonly string OS_NAME;
 
-  private static readonly bool IS_WINDOWS
-    = global::DripSharp.Runtime.JavaCompat.StringStartsWith(global::DripSharp.PdfCarton.Rendering.PageDrawer.OS_NAME,
-    "windows");
+  private static readonly bool IS_WINDOWS;
 
-  private static readonly bool IS_LINUX
-    = global::DripSharp.Runtime.JavaCompat.StringStartsWith(global::DripSharp.PdfCarton.Rendering.PageDrawer.OS_NAME,
-    "linux");
+  private static readonly bool IS_LINUX;
 
   private readonly global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer = null!;
 
@@ -74,7 +68,7 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
   public PageDrawer(global::DripSharp.PdfCarton.Rendering.PageDrawerParameters parameters)
   : base(parameters.GetPage()) {
     this.flipTG = false;
-    this.clipWindingRule = -1;
+    this.clipWindingRule = unchecked(-1);
     this.linePath = new global::SkiaSharp.SKPath();
     this.glyphCaches
       = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Pdmodel.Font.PDFont,
@@ -135,7 +129,7 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
     this.pageSize = pageSize;
     this.setRenderingHints();
     this.graphics.Translate((double)(0), (double)(pageSize.GetHeight()));
-    this.graphics.Scale((double)(1), (double)(-1));
+    this.graphics.Scale((double)(1), (double)(unchecked(-1)));
     this.graphics.Translate((double)(-(pageSize.GetLowerLeftX())),
       (double)(-(pageSize.GetLowerLeftY())));
     this.ProcessPage(this.GetPage());
@@ -155,7 +149,7 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
     global::SkiaSharp.SKPath savedLinePath = this.linePath;
     this.linePath = new global::SkiaSharp.SKPath();
     int savedClipWindingRule = this.clipWindingRule;
-    this.clipWindingRule = -1;
+    this.clipWindingRule = unchecked(-1);
     global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> savedLastClips
       = this.lastClips;
     this.lastClips = default!;
@@ -429,8 +423,10 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
     global::DripSharp.Runtime.PdfCartonFontCompat.PreConcatenateInPlace(ref at,
       global::DripSharp.Runtime.PdfCartonFontCompat.Translation(-(transformedBounds.Left),
       -(transformedBounds.Top)));
-    int width = (int)(global::System.Math.Ceiling((double)(transformedBounds.Width)));
-    int height = (int)(global::System.Math.Ceiling((double)(transformedBounds.Height)));
+    int width
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Ceiling((double)(transformedBounds.Width)))));
+    int height
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Ceiling((double)(transformedBounds.Height)))));
     if ((((width == gray.Width) && (height == gray.Height))
       && global::DripSharp.Runtime.PdfCartonFontCompat.IsIdentity(at))) {
       return gray;
@@ -608,8 +604,10 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
         case var __case_904_22_0 when __case_904_22_0
           == global::DripSharp.Runtime.JavaPathIterator.SEG_MOVETO:
         if ((count == 0)) {
-          xs[count] = (int)(global::System.Math.Floor(coords[0]));
-          ys[count] = (int)(global::System.Math.Floor(coords[1]));
+          xs[count]
+            = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Floor(coords[0]))));
+          ys[count]
+            = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Floor(coords[1]))));
         } else {
           return false;
         }
@@ -618,8 +616,10 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
         case var __case_917_22_0 when __case_917_22_0
           == global::DripSharp.Runtime.JavaPathIterator.SEG_LINETO:
         if ((count < 4)) {
-          xs[count] = (int)(global::System.Math.Floor(coords[0]));
-          ys[count] = (int)(global::System.Math.Floor(coords[1]));
+          xs[count]
+            = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Floor(coords[0]))));
+          ys[count]
+            = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Floor(coords[1]))));
         } else {
           return false;
         }
@@ -649,7 +649,7 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
 
   public override void Clip(int windingRule) {
     this.clipWindingRule = windingRule;
-    if ((this.clipWindingRule != -1)) {
+    if ((this.clipWindingRule != unchecked(-1))) {
       global::DripSharp.Runtime.PdfCartonFontCompat.SetWindingRule(this.linePath,
         this.clipWindingRule);
       if (!(global::DripSharp.Runtime.PdfCartonFontCompat.PathIterator(this.linePath,
@@ -657,7 +657,7 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
         this.GetGraphicsState().IntersectClippingPath(this.adjustClip(this.linePath));
       }
       this.lastClips = default!;
-      this.clipWindingRule = -1;
+      this.clipWindingRule = unchecked(-1);
     }
   }
 
@@ -768,8 +768,10 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
         global::SkiaSharp.SKRect bounds
           = global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(at,
           unitRect));
-        int w = (int)(global::System.Math.Ceiling((double)(bounds.Width)));
-        int h = (int)(global::System.Math.Ceiling((double)(bounds.Height)));
+        int w
+          = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Ceiling((double)(bounds.Width)))));
+        int h
+          = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Ceiling((double)(bounds.Height)))));
         global::SkiaSharp.SKBitmap renderedPaint
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(w, h,
           global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
@@ -788,7 +790,7 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
         global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref imageTransform, ((double)1.0D
           / maskWidth), ((double)-1.0D / maskHeight));
         global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref imageTransform,
-          (double)(0), (double)(-maskHeight));
+          (double)(0), (double)(unchecked(-maskHeight)));
         global::SkiaSharp.SKMatrix full = g.GetTransform();
         global::DripSharp.Runtime.PdfCartonFontCompat.ConcatenateInPlace(ref full, imageTransform);
         global::DripSharp.PdfCarton.Util.Matrix m
@@ -880,8 +882,9 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
       * global::DripSharp.Runtime.PdfCartonFontCompat.Determinant(this.xform)));
     int imageWidth = pdImage.GetWidth();
     int imageHeight = pdImage.GetHeight();
-    int subsampling = (int)(global::System.Math.Floor(global::System.Math.Sqrt(((imageWidth
-      * imageHeight) / (double)scale))));
+    int subsampling
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Floor(global::System.Math.Sqrt((unchecked((imageWidth
+      * imageHeight)) / (double)scale))))));
     if ((subsampling > 8)) {
       subsampling = 8;
     }
@@ -903,7 +906,7 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
     global::DripSharp.Runtime.PdfCartonFontCompat.ScaleInPlace(ref imageTransform, ((double)1.0D
       / width), ((double)-1.0D / height));
     global::DripSharp.Runtime.PdfCartonFontCompat.TranslateInPlace(ref imageTransform, (double)(0),
-      (double)(-height));
+      (double)(unchecked(-height)));
     global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDSoftMask softMask
       = this.GetGraphicsState().GetSoftMask();
     bool hasImageMask
@@ -1036,21 +1039,27 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
           ro = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(rMap[ri]);
         } else {
           input[0] = ((ri & 255) / (float)255.0F);
-          ro = (int)((rf.Eval(input)[0] * 255));
+          ro
+            = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((rf.Eval(input)[0]
+            * 255))));
           rMap[ri] = ro;
         }
         if ((gMap[gi] != default!)) {
           go = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(gMap[gi]);
         } else {
           input[0] = ((gi & 255) / (float)255.0F);
-          go = (int)((gf.Eval(input)[0] * 255));
+          go
+            = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((gf.Eval(input)[0]
+            * 255))));
           gMap[gi] = go;
         }
         if ((bMap[bi] != default!)) {
           bo = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(bMap[bi]);
         } else {
           input[0] = ((bi & 255) / (float)255.0F);
-          bo = (int)((bf.Eval(input)[0] * 255));
+          bo
+            = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((bf.Eval(input)[0]
+            * 255))));
           bMap[bi] = bo;
         }
         global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(bim, x, y, ((((rgb &
@@ -1229,7 +1238,7 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
     float y = (this.pageSize.GetUpperRightY() - bbox.GetUpperRightY());
     if (this.flipTG) {
       graphics.Translate(0, image.Height);
-      graphics.Scale((double)(1), (double)(-1));
+      graphics.Scale((double)(1), (double)(unchecked(-1)));
     } else {
       graphics.Translate((double)((x * this.xformScalingFactorX)), (double)((y
         * this.xformScalingFactorY)));
@@ -1321,12 +1330,18 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
       global::SkiaSharp.SKRect bounds
         = global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(this.__outer.xform,
         clipRect));
-      this.minX = (int)(global::System.Math.Floor(bounds.Left));
-      this.minY = (int)(global::System.Math.Floor(bounds.Top));
-      this.maxX = ((int)(global::System.Math.Floor(bounds.Right)) + 1);
-      this.maxY = ((int)(global::System.Math.Floor(bounds.Bottom)) + 1);
-      this.width = (this.maxX - this.minX);
-      this.height = (this.maxY - this.minY);
+      this.minX
+        = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Floor(bounds.Left))));
+      this.minY
+        = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Floor(bounds.Top))));
+      this.maxX
+        = unchecked((unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Floor(bounds.Right))))
+        + 1));
+      this.maxY
+        = unchecked((unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Floor(bounds.Bottom))))
+        + 1));
+      this.width = unchecked((this.maxX - this.minX));
+      this.height = unchecked((this.maxY - this.minY));
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroupAttributes group
         = form.GetGroup();
       if (this.isGray(group.GetColorSpace(form.GetResources()))) {
@@ -1348,21 +1363,22 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
             needsBackdrop = false;
           } else {
             backdropX = this.minX;
-            backdropY = (backdropImage!.Height - this.maxY);
+            backdropY = unchecked((backdropImage!.Height - this.maxY));
           }
         } else {
           global::DripSharp.PdfCarton.Rendering.PageDrawer.TransparencyGroup parentGroup
             = global::DripSharp.Runtime.JavaCompat.DequePeek(this.__outer.transparencyGroupStack);
           backdropImage = parentGroup.image;
-          backdropX = (this.minX - parentGroup.minX);
-          backdropY = (parentGroup.maxY - this.maxY);
+          backdropX = unchecked((this.minX - parentGroup.minX));
+          backdropY = unchecked((parentGroup.maxY - this.maxY));
         }
       }
       global::DripSharp.Runtime.PdfCartonGraphics2D g
         = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(this.image);
       if (needsBackdrop) {
-        g.DrawImage(backdropImage!, 0, 0, this.width, this.height, backdropX, backdropY, (backdropX
-          + this.width), (backdropY + this.height), (object)default!);
+        g.DrawImage(backdropImage!, 0, 0, this.width, this.height, backdropX, backdropY,
+          unchecked((backdropX + this.width)), unchecked((backdropY + this.height)),
+          (object)default!);
         g = new global::DripSharp.PdfCarton.Rendering.GroupGraphics(this.image, g);
       }
       if ((isSoftMask && (backdropColor != default!))) {
@@ -1370,7 +1386,7 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
         g.ClearRect(0, 0, this.width, this.height);
       }
       g.Translate(0, this.image.Height);
-      g.Scale((double)(1), (double)(-1));
+      g.Scale((double)(1), (double)(unchecked(-1)));
       bool savedFlipTG = this.__outer.flipTG;
       this.__outer.flipTG = false;
       g.Transform(this.__outer.xform);
@@ -1382,7 +1398,7 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
         / (float)(this.__outer.xformScalingFactorX)))), (float)((float)(((double)(bounds.Height)
         / (float)(this.__outer.xformScalingFactorY)))));
       int clipWindingRuleOriginal = this.__outer.clipWindingRule;
-      this.__outer.clipWindingRule = -1;
+      this.__outer.clipWindingRule = unchecked(-1);
       global::SkiaSharp.SKPath linePathOriginal = this.__outer.linePath;
       this.__outer.linePath = new global::SkiaSharp.SKPath();
       g.Translate(-(clipRect.Left), -(clipRect.Top));
@@ -1423,10 +1439,12 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
         true, false, global::DripSharp.Runtime.PdfCartonTransparency.TRANSLUCENT,
         global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE);
       global::DripSharp.Runtime.JavaDataBuffer buffer
-        = new global::DripSharp.Runtime.JavaDataBufferByte(((width * height) * bands));
+        = new global::DripSharp.Runtime.JavaDataBufferByte(unchecked((unchecked((width * height))
+        * bands)));
       global::DripSharp.Runtime.JavaRaster raster
         = global::DripSharp.Runtime.PdfCartonFontCompat.CreateInterleavedRaster(buffer, width,
-        height, (width * bands), bands, bandOffsets, new global::DripSharp.Runtime.JavaPoint(0, 0));
+        height, unchecked((width * bands)), bands, bandOffsets,
+        new global::DripSharp.Runtime.JavaPoint(0, 0));
       return global::DripSharp.Runtime.PdfCartonFontCompat.CreateImage(CM_GRAY_ALPHA, raster, false,
         (global::DripSharp.Runtime.JavaHashtable<object, object>)default!);
     }
@@ -1694,10 +1712,22 @@ public class PageDrawer : global::DripSharp.PdfCarton.Contentstream.PDFGraphicsS
     if ((this.invTable == default!)) {
       sbyte[] inv = new sbyte[256];
       for (int i = 0; (i < inv.Length); i++) {
-        inv[i] = unchecked((sbyte)(unchecked((sbyte)((255 - i)))));
+        inv[i] = unchecked((sbyte)(unchecked((sbyte)(unchecked((255 - i))))));
       }
       this.invTable = new global::DripSharp.Runtime.JavaLookupTable(0, inv);
     }
     return this.invTable;
+  }
+
+  static PageDrawer() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    OS_NAME = global::DripSharp.Runtime.JavaCompat.GetProperty("os.name").ToLowerInvariant();
+    IS_WINDOWS
+      = global::DripSharp.Runtime.JavaCompat.StringStartsWith(global::DripSharp.PdfCarton.Rendering.PageDrawer.OS_NAME,
+      "windows");
+    IS_LINUX
+      = global::DripSharp.Runtime.JavaCompat.StringStartsWith(global::DripSharp.PdfCarton.Rendering.PageDrawer.OS_NAME,
+      "linux");
   }
 }

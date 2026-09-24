@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class PostScriptTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private float formatType = default;
 
@@ -30,12 +29,12 @@ public class PostScriptTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
 
   private long maxMemType1 = default;
 
-  private string[] glyphNames = default!;
+  private string[] glyphNames;
 
   public const string Tag = "post";
 
   internal PostScriptTable() : base() {
-
+    this.glyphNames = default!;
   }
 
   internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
@@ -73,8 +72,8 @@ public class PostScriptTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
           }
           string[] nameArray = default!;
           if ((maxIndex >= global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs)) {
-            nameArray = new string[((maxIndex
-              - global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs) + 1)];
+            nameArray = new string[unchecked((unchecked((maxIndex
+              - global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs)) + 1))];
             for (int i__102_26 = 0; (i__102_26 < nameArray!.Length); i__102_26++) {
               int numberOfChars = data.ReadUnsignedByte();
               try {
@@ -102,8 +101,8 @@ public class PostScriptTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
               if ((((index__124_21
                 >= global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs)
                 && (index__124_21 <= 32767)) && (nameArray! != default!))) {
-                this.glyphNames[i__122_22] = nameArray![(index__124_21
-                  - global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs)];
+                this.glyphNames[i__122_22] = nameArray![unchecked((index__124_21
+                  - global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs))];
               } else {
                 this.glyphNames[i__122_22] = ".undefined";
               }
@@ -115,7 +114,7 @@ public class PostScriptTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
             int[] glyphNameIndex__143_19 = new int[ttf.GetNumberOfGlyphs()];
             for (int i__144_22 = 0; (i__144_22 < glyphNameIndex__143_19.Length); i__144_22++) {
               int offset = data.ReadSignedByte();
-              glyphNameIndex__143_19[i__144_22] = ((i__144_22 + 1) + offset);
+              glyphNameIndex__143_19[i__144_22] = unchecked((unchecked((i__144_22 + 1)) + offset));
             }
             this.glyphNames = new string[glyphNameIndex__143_19.Length];
             for (int i__150_22 = 0; (i__150_22 < this.glyphNames.Length); i__150_22++) {
@@ -233,5 +232,10 @@ public class PostScriptTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
       return default!;
     }
     return this.glyphNames[gid];
+  }
+
+  static PostScriptTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

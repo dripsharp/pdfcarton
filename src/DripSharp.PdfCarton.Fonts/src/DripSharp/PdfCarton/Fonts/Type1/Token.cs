@@ -86,41 +86,29 @@ internal class Token {
       => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumName(this);
   }
 
-  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind STRING
-    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.String;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind STRING;
 
-  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind NAME
-    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Name;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind NAME;
 
-  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind LITERAL
-    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Literal;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind LITERAL;
 
-  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind REAL
-    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Real;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind REAL;
 
-  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind INTEGER
-    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Integer;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind INTEGER;
 
-  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind START_ARRAY
-    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.StartArray;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind START_ARRAY;
 
-  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind END_ARRAY
-    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.EndArray;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind END_ARRAY;
 
-  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind START_PROC
-    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.StartProc;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind START_PROC;
 
-  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind END_PROC
-    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.EndProc;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind END_PROC;
 
-  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind CHARSTRING
-    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Charstring;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind CHARSTRING;
 
-  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind START_DICT
-    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.StartDict;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind START_DICT;
 
-  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind END_DICT
-    = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.EndDict;
+  internal static readonly global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind END_DICT;
 
   private string text = null!;
 
@@ -152,7 +140,7 @@ internal class Token {
   }
 
   public virtual int IntValue() {
-    return (int)global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseFloat(this.text);
+    return unchecked((int)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseFloat(this.text))));
   }
 
   public virtual float FloatValue() {
@@ -175,5 +163,20 @@ internal class Token {
       return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Token[kind=",
         this.kind), ", text="), this.text), "]");
     }
+  }
+
+  static Token() {
+    STRING = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.String;
+    NAME = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Name;
+    LITERAL = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Literal;
+    REAL = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Real;
+    INTEGER = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Integer;
+    START_ARRAY = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.StartArray;
+    END_ARRAY = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.EndArray;
+    START_PROC = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.StartProc;
+    END_PROC = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.EndProc;
+    CHARSTRING = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.Charstring;
+    START_DICT = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.StartDict;
+    END_DICT = global::DripSharp.PdfCarton.Fonts.Type1.Token.Kind.EndDict;
   }
 }

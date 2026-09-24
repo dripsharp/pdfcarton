@@ -23,8 +23,7 @@ public class PDEncryption : global::DripSharp.PdfCarton.Pdmodel.Common.COSObject
 
   public const int DefaultLength = 40;
 
-  public static readonly int DefaultVersion
-    = global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption.Version0UndocumentedUnsupported;
+  public static readonly int DefaultVersion;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
@@ -301,6 +300,11 @@ public class PDEncryption : global::DripSharp.PdfCarton.Pdmodel.Common.COSObject
       (global::DripSharp.PdfCarton.Cos.COSBase)default!);
     this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.StrF,
       (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+  }
+
+  static PDEncryption() {
+    DefaultVersion
+      = global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption.Version0UndocumentedUnsupported;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

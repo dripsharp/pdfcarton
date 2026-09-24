@@ -9,24 +9,26 @@
 namespace DripSharp.PdfCarton.Text;
 
 public class PDFTextStripperByArea : global::DripSharp.PdfCarton.Text.PDFTextStripper {
-  private readonly global::System.Collections.Generic.IList<string> regions
-    = new global::System.Collections.Generic.List<string>();
+  private readonly global::System.Collections.Generic.IList<string> regions;
 
   private readonly global::System.Collections.Generic.IDictionary<string,
-    global::SkiaSharp.SKRect> regionArea
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, global::SkiaSharp.SKRect>();
+    global::SkiaSharp.SKRect> regionArea;
 
   private readonly global::System.Collections.Generic.IDictionary<string,
-    global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>> regionCharacterList
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
-    global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>>();
+    global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>> regionCharacterList;
 
   private readonly global::System.Collections.Generic.IDictionary<string,
-    global::System.IO.StringWriter> regionText
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
-    global::System.IO.StringWriter>();
+    global::System.IO.StringWriter> regionText;
 
   public PDFTextStripperByArea() {
+    this.regions = new global::System.Collections.Generic.List<string>();
+    this.regionArea = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+      global::SkiaSharp.SKRect>();
+    this.regionCharacterList = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+      global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>>();
+    this.regionText = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+      global::System.IO.StringWriter>();
+
     base.SetShouldSeparateByBeads(false);
   }
 
@@ -88,5 +90,9 @@ public class PDFTextStripperByArea : global::DripSharp.PdfCarton.Text.PDFTextStr
       base.Output = global::DripSharp.Runtime.JavaCompat.MapGet(this.regionText, region);
       base.WritePage();
     }
+  }
+
+  static PDFTextStripperByArea() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Text.PDFTextStripper).TypeHandle);
   }
 }

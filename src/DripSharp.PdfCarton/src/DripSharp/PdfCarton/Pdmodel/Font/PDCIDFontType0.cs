@@ -9,15 +9,13 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public class PDCIDFontType0 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont cidFont = null!;
 
   private readonly global::DripSharp.PdfCarton.Fonts.FontBoxFont t1Font = null!;
 
-  private readonly global::System.Collections.Generic.IDictionary<int, float> glyphHeights
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, float>();
+  private readonly global::System.Collections.Generic.IDictionary<int, float> glyphHeights;
 
   private readonly bool __field_isEmbedded = default;
 
@@ -25,36 +23,49 @@ public class PDCIDFontType0 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont
 
   private readonly global::SkiaSharp.SKMatrix fontMatrixTransform = default;
 
-  private float? avgWidth = default!;
+  private float? avgWidth;
 
   private global::DripSharp.PdfCarton.Util.Matrix fontMatrix = null!;
 
   private global::DripSharp.PdfCarton.Fonts.Util.BoundingBox fontBBox = null!;
 
-  private int[] cid2gid = default!;
+  private int[] cid2gid;
 
   public PDCIDFontType0(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary,
     global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font parent) : base(fontDictionary, parent) {
+    this.glyphHeights = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, float>();
+    this.avgWidth = default!;
+    this.cid2gid = default!;
+
     bool fontIsDamaged = false;
     global::DripSharp.PdfCarton.Fonts.Cff.CFFFont cffFont = default!;
     global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fd = this.GetFontDescriptor();
     if ((fd != default!)) {
       global::DripSharp.PdfCarton.Pdmodel.Common.PDStream ff3Stream = fd.GetFontFile3();
       if ((ff3Stream != default!)) {
-        try {
-          using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead
-            = ff3Stream.GetCOSObject().CreateView()) {
-            if (((randomAccessRead.Length() > 0) && (randomAccessRead.Peek() == (int)'%'))) {
-              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType0.LOG,
-                global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Found PFB but expected embedded CFF font ",
-                fd.GetFontName())));
-              fontIsDamaged = true;
-            } else {
-              global::DripSharp.PdfCarton.Fonts.Cff.CFFParser cffParser
-                = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser();
-              cffFont
-                = global::DripSharp.Runtime.JavaCompat.ListGet(cffParser.Parse(randomAccessRead),
-                0);
+        try { {
+            global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead
+              = ff3Stream.GetCOSObject().CreateView();
+            global::System.Exception __dripsharpPrimary_86_39_0 = null!;
+            try {
+              if (((randomAccessRead.Length() > 0) && (randomAccessRead.Peek() == (int)'%'))) {
+                global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType0.LOG,
+                  global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Found PFB but expected embedded CFF font ",
+                  fd.GetFontName())));
+                fontIsDamaged = true;
+              } else {
+                global::DripSharp.PdfCarton.Fonts.Cff.CFFParser cffParser
+                  = new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser();
+                cffFont
+                  = global::DripSharp.Runtime.JavaCompat.ListGet(cffParser.Parse(randomAccessRead),
+                  0);
+              }
+            } catch (global::System.Exception __dripsharpCaught_86_39_0) {
+              __dripsharpPrimary_86_39_0 = __dripsharpCaught_86_39_0;
+              throw;
+            } finally {
+              global::DripSharp.Runtime.JavaCompat.CloseResource(randomAccessRead,
+                __dripsharpPrimary_86_39_0);
             }
           }
         } catch (global::System.IO.IOException e) {
@@ -335,5 +346,10 @@ public class PDCIDFontType0 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont
 
   private float getAverageCharacterWidth() {
     return 500;
+  }
+
+  static PDCIDFontType0() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

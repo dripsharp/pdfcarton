@@ -17,10 +17,9 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
 
   private const int DEVICEN_ATTRIBUTES = 4;
 
-  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace alternateColorSpace
-    = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace alternateColorSpace;
 
-  private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction tintTransform = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction tintTransform;
 
   private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceNAttributes attributes = null!;
 
@@ -35,6 +34,9 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
   private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSeparation[] spotColorSpaces = null!;
 
   public PDDeviceN() {
+    this.alternateColorSpace = default!;
+    this.tintTransform = default!;
+
     base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
     base.Array.Add(global::DripSharp.PdfCarton.Cos.COSName.Devicen);
     base.Array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
@@ -44,6 +46,9 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
 
   public PDDeviceN(global::DripSharp.PdfCarton.Cos.COSArray deviceN,
     global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
+    this.alternateColorSpace = default!;
+    this.tintTransform = default!;
+
     base.Array = deviceN;
     this.alternateColorSpace
       = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace.Create(base.Array.GetObject(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceN.ALTERNATE_CS),
@@ -86,7 +91,7 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
       this.processColorSpace = process.GetColorSpace();
     } else {
       for (int c__156_22 = 0; (c__156_22 < this.numColorants); c__156_22++) {
-        this.colorantToComponent[c__156_22] = -1;
+        this.colorantToComponent[c__156_22] = unchecked(-1);
       }
     }
     this.spotColorSpaces
@@ -101,7 +106,7 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
       if ((spot != default!)) {
         this.spotColorSpaces[c__169_18] = spot;
         if (!(this.IsNChannel())) {
-          this.colorantToComponent[c__169_18] = -1;
+          this.colorantToComponent[c__169_18] = unchecked(-1);
         }
       } else {
         this.spotColorSpaces[c__169_18] = default!;
@@ -170,9 +175,9 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
         for (int x__281_26 = 0; (x__281_26 < width); x__281_26++) {
           rgbComponentRaster.GetPixel(x__281_26, y__279_22, rgbChannel);
           rgbRaster.GetPixel(x__281_26, y__279_22, rgbComposite);
-          rgbChannel[0] = ((rgbChannel[0] * rgbComposite[0]) >> unchecked((int)(8)));
-          rgbChannel[1] = ((rgbChannel[1] * rgbComposite[1]) >> unchecked((int)(8)));
-          rgbChannel[2] = ((rgbChannel[2] * rgbComposite[2]) >> unchecked((int)(8)));
+          rgbChannel[0] = (unchecked((rgbChannel[0] * rgbComposite[0])) >> unchecked((int)(8)));
+          rgbChannel[1] = (unchecked((rgbChannel[1] * rgbComposite[1])) >> unchecked((int)(8)));
+          rgbChannel[2] = (unchecked((rgbChannel[2] * rgbComposite[2])) >> unchecked((int)(8)));
           rgbRaster.SetPixel(x__281_26, y__279_22, rgbChannel);
         }
       }
@@ -216,9 +221,12 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
         }
         float[] result = this.tintTransform.Eval(src);
         float[] rgbFloat = this.alternateColorSpace.ToRGB(result);
-        rgb[0] = (int)((rgbFloat[0] * 255.0F));
-        rgb[1] = (int)((rgbFloat[1] * 255.0F));
-        rgb[2] = (int)((rgbFloat[2] * 255.0F));
+        rgb[0] = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((rgbFloat[0]
+          * 255.0F))));
+        rgb[1] = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((rgbFloat[1]
+          * 255.0F))));
+        rgb[2] = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((rgbFloat[2]
+          * 255.0F))));
         global::DripSharp.Runtime.JavaCompat.MapPut(map1, key,
           global::DripSharp.Runtime.JavaCompat.Clone(rgb));
         rgbRaster.SetPixel(x, y, rgb);
@@ -287,9 +295,9 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
 
   public override float[] GetDefaultDecode(int bitsPerComponent) {
     int n = this.GetNumberOfComponents();
-    float[] decode = new float[(n * 2)];
+    float[] decode = new float[unchecked((n * 2))];
     for (int i = 0; (i < n); i++) {
-      decode[((i * 2) + 1)] = 1;
+      decode[unchecked((unchecked((i * 2)) + 1))] = 1;
     }
     return decode;
   }
@@ -376,5 +384,9 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
     }
     sb.Append('}');
     return sb.ToString();
+  }
+
+  static PDDeviceN() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSpecialColorSpace).TypeHandle);
   }
 }

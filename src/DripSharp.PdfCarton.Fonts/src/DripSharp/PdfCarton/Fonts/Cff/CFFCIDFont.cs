@@ -84,7 +84,7 @@ public class CFFCIDFont : global::DripSharp.PdfCarton.Fonts.Cff.CFFFont {
 
   private int getDefaultWidthX(int gid) {
     int fdArrayIndex = this.fdSelect.GetFDIndex(gid);
-    if (((fdArrayIndex == -1) || (fdArrayIndex
+    if (((fdArrayIndex == unchecked(-1)) || (fdArrayIndex
       >= global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(this.privateDictionaries)))) {
       return 1000;
     }
@@ -98,7 +98,7 @@ public class CFFCIDFont : global::DripSharp.PdfCarton.Fonts.Cff.CFFFont {
 
   private int getNominalWidthX(int gid) {
     int fdArrayIndex = this.fdSelect.GetFDIndex(gid);
-    if (((fdArrayIndex == -1) || (fdArrayIndex
+    if (((fdArrayIndex == unchecked(-1)) || (fdArrayIndex
       >= global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(this.privateDictionaries)))) {
       return 0;
     }
@@ -112,7 +112,7 @@ public class CFFCIDFont : global::DripSharp.PdfCarton.Fonts.Cff.CFFFont {
 
   private sbyte[][] getLocalSubrIndex(int gid) {
     int fdArrayIndex = this.fdSelect.GetFDIndex(gid);
-    if (((fdArrayIndex == -1) || (fdArrayIndex
+    if (((fdArrayIndex == unchecked(-1)) || (fdArrayIndex
       >= global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(this.privateDictionaries)))) {
       return default!;
     }
@@ -184,6 +184,10 @@ public class CFFCIDFont : global::DripSharp.PdfCarton.Fonts.Cff.CFFFont {
     internal PrivateType1CharStringReader(global::DripSharp.PdfCarton.Fonts.Cff.CFFCIDFont __outer) {
       this.__outer = __outer;
     }
+  }
+
+  static CFFCIDFont() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.CFFFont).TypeHandle);
   }
 
   protected override global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString __DripSharpCovariantBridgeGetType2CharString(int cid) {

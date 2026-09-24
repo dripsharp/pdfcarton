@@ -83,16 +83,16 @@ public class RandomAccessReadMemoryMappedFile : global::DripSharp.PdfCarton.IO.R
 
   public virtual int Read() {
     if (this.IsEOF()) {
-      return -1;
+      return unchecked(-1);
     }
     return (this.mappedByteBuffer.get() & 255);
   }
 
   public virtual int Read(sbyte[] b, int offset, int length) {
     if (this.IsEOF()) {
-      return -1;
+      return unchecked(-1);
     }
-    int remainingBytes = ((int)(this.size) - this.mappedByteBuffer.position());
+    int remainingBytes = unchecked(((int)(this.size) - this.mappedByteBuffer.position()));
     remainingBytes = global::System.Math.Min(remainingBytes, length);
     this.mappedByteBuffer.get(b, offset, remainingBytes);
     return remainingBytes;
@@ -126,13 +126,13 @@ public class RandomAccessReadMemoryMappedFile : global::DripSharp.PdfCarton.IO.R
   }
 
   public virtual int Available() {
-    return (int)(global::System.Math.Min((this.Length() - this.GetPosition()),
+    return (int)(global::System.Math.Min(unchecked((this.Length() - this.GetPosition())),
       (long)(int.MaxValue)));
   }
 
   public virtual int Peek() {
     int result = this.Read();
-    if ((result != -1)) {
+    if ((result != unchecked(-1))) {
       ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
     }
     return result;
@@ -147,12 +147,13 @@ public class RandomAccessReadMemoryMappedFile : global::DripSharp.PdfCarton.IO.R
   }
 
   public virtual void ReadFully(sbyte[] b, int offset, int length) {
-    if (((this.Length() - this.GetPosition()) < length)) {
+    if ((unchecked((this.Length() - this.GetPosition())) < length)) {
       throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
     }
     int bytesReadTotal = 0;
     while ((bytesReadTotal < length)) {
-      int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
+      int bytesReadNow = this.Read(b, unchecked((offset + bytesReadTotal)), unchecked((length
+        - bytesReadTotal)));
       if ((bytesReadNow <= 0)) {
         throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
       }
@@ -161,10 +162,10 @@ public class RandomAccessReadMemoryMappedFile : global::DripSharp.PdfCarton.IO.R
   }
 
   public virtual void Rewind(int bytes) {
-    this.Seek((this.GetPosition() - bytes));
+    this.Seek(unchecked((this.GetPosition() - bytes)));
   }
 
   public virtual void Skip(int length) {
-    this.Seek((this.GetPosition() + length));
+    this.Seek(unchecked((this.GetPosition() + length)));
   }
 }

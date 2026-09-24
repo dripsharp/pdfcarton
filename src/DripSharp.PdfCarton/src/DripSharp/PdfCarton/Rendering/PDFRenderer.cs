@@ -103,11 +103,13 @@ public class PDFRenderer {
     global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = page.GetCropBox();
     float widthPt = cropBox.GetWidth();
     float heightPt = cropBox.GetHeight();
-    int widthPx = (int)(global::System.Math.Max(global::System.Math.Floor((double)((widthPt
-      * scale))), (double)(1)));
-    int heightPx = (int)(global::System.Math.Max(global::System.Math.Floor((double)((heightPt
-      * scale))), (double)(1)));
-    if ((((long)widthPx * (long)heightPx) > int.MaxValue)) {
+    int widthPx
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Max(global::System.Math.Floor((double)((widthPt
+      * scale))), (double)(1)))));
+    int heightPx
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Max(global::System.Math.Floor((double)((heightPt
+      * scale))), (double)(1)))));
+    if ((unchecked(((long)widthPx * (long)heightPx)) > int.MaxValue)) {
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Maximum size of image exceeded (w * h * scale ^ 2) = ",
         widthPt), " * "), heightPt), " * "), scale), " ^ 2 > "), int.MaxValue));
     }
@@ -190,7 +192,9 @@ public class PDFRenderer {
     global::DripSharp.PdfCarton.Pdmodel.PDPage page = this.pageTree.Get(pageIndex);
     global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = page.GetCropBox();
     this.transform(graphics, page.GetRotation(), cropBox, scaleX, scaleY);
-    graphics.ClearRect(0, 0, (int)((int)(cropBox.GetWidth())), (int)((int)(cropBox.GetHeight())));
+    graphics.ClearRect(0, 0,
+      (int)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(cropBox.GetWidth())))),
+      (int)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(cropBox.GetHeight())))));
     global::DripSharp.Runtime.PdfCartonRenderingHints actualRenderingHints = ((this.renderingHints
       == default!) ? this.createDefaultRenderingHints(graphics) : this.renderingHints);
     global::DripSharp.PdfCarton.Rendering.PageDrawerParameters parameters

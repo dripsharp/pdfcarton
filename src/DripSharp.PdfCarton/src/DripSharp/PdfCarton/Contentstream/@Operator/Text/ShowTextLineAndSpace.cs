@@ -33,4 +33,8 @@ public class ShowTextLineAndSpace
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLineAndSpace;
   }
+
+  static ShowTextLineAndSpace() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

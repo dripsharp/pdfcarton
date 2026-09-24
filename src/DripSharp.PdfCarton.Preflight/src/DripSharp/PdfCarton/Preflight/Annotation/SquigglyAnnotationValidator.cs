@@ -16,4 +16,8 @@ public class SquigglyAnnotationValidator
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquiggly(annotDictionary);
     this.PdAnnot = this.PdMarkup;
   }
+
+  static SquigglyAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.MarkupAnnotationValidator).TypeHandle);
+  }
 }

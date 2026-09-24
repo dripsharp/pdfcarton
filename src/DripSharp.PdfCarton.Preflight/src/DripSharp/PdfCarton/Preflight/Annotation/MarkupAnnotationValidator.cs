@@ -10,15 +10,18 @@ namespace DripSharp.PdfCarton.Preflight.Annotation;
 
 public abstract class MarkupAnnotationValidator
 : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationTextMarkup PdMarkup
-    = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationTextMarkup PdMarkup;
 
   protected internal MarkupAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
     global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
-
+    this.PdMarkup = default!;
   }
 
   protected internal override bool CheckSpecificMandatoryFields() {
     return this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Quadpoints);
+  }
+
+  static MarkupAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator).TypeHandle);
   }
 }

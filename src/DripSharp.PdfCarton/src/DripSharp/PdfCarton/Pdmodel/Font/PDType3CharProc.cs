@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public sealed class PDType3CharProc : global::DripSharp.PdfCarton.Contentstream.PDContentStream,
 global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font font = null!;
 
@@ -135,6 +134,10 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
     } else {
       throw new global::System.IO.IOException("First operator must be d0 or d1");
     }
+  }
+
+  static PDType3CharProc() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

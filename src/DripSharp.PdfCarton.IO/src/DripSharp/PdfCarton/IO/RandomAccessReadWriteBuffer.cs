@@ -25,7 +25,7 @@ global::DripSharp.PdfCarton.IO.RandomAccess {
 
   public virtual void Write(int b) {
     this.CheckClosed();
-    if (((base.ChunkSize - base.CurrentBufferPointer) <= 0)) {
+    if ((unchecked((base.ChunkSize - base.CurrentBufferPointer)) <= 0)) {
       this.ExpandBuffer();
     }
     base.CurrentBuffer.put(unchecked((sbyte)(unchecked((sbyte)(b)))));
@@ -45,12 +45,12 @@ global::DripSharp.PdfCarton.IO.RandomAccess {
     int remain = len;
     int bOff = off;
     while ((remain > 0)) {
-      int bytesToWrite = global::System.Math.Min(remain, (base.ChunkSize
-        - base.CurrentBufferPointer));
+      int bytesToWrite = global::System.Math.Min(remain, unchecked((base.ChunkSize
+        - base.CurrentBufferPointer)));
       if ((bytesToWrite <= 0)) {
         this.ExpandBuffer();
-        bytesToWrite = global::System.Math.Min(remain, (base.ChunkSize
-          - base.CurrentBufferPointer));
+        bytesToWrite = global::System.Math.Min(remain, unchecked((base.ChunkSize
+          - base.CurrentBufferPointer)));
       }
       if ((bytesToWrite > 0)) {
         base.CurrentBuffer.put(b, bOff, bytesToWrite);
@@ -63,5 +63,9 @@ global::DripSharp.PdfCarton.IO.RandomAccess {
     if ((base.Pointer > base.Size)) {
       base.Size = base.Pointer;
     }
+  }
+
+  static RandomAccessReadWriteBuffer() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer).TypeHandle);
   }
 }

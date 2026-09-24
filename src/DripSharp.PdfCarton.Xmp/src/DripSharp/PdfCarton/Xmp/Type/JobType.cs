@@ -53,4 +53,8 @@ public class JobType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredTy
   public virtual string GetUrl() {
     return this.GetPropertyValueAsString(global::DripSharp.PdfCarton.Xmp.Type.JobType.Url);
   }
+
+  static JobType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

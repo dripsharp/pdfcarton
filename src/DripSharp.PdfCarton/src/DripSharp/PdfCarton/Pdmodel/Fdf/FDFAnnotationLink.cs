@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFAnnotationLink : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const string Subtype = "Link";
 
@@ -46,5 +45,10 @@ public class FDFAnnotationLink : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnno
         (global::System.Exception)e,
         global::DripSharp.Runtime.JavaCompat.StringValueOf("Error while evaluating XPath expression"));
     }
+  }
+
+  static FDFAnnotationLink() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

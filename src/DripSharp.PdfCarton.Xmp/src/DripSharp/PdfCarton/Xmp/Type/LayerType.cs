@@ -51,4 +51,8 @@ public class LayerType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructured
     this.AddProperty(this.CreateTextType(global::DripSharp.PdfCarton.Xmp.Type.LayerType.LayerText,
       image));
   }
+
+  static LayerType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

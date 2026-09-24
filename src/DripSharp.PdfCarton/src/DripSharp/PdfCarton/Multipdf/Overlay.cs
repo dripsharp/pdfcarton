@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Multipdf;
 
 public class Overlay : global::System.IDisposable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public sealed class Position {
     [global::DripSharp.Runtime.JavaEnumNameAttribute("FOREGROUND")]
@@ -213,7 +212,7 @@ public class Overlay : global::System.IDisposable {
   private global::DripSharp.PdfCarton.Pdmodel.PDDocument loadPDF(string pdfName) {
     return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(pdfName) });
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(pdfName) });
   }
 
   internal sealed class LayoutPage {
@@ -270,14 +269,30 @@ public class Overlay : global::System.IDisposable {
     global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSStream> contentStreams
       = this.createContentStreamList(contents);
     global::DripSharp.PdfCarton.Cos.COSStream concatStream
-      = this.inputPDFDocument.GetDocument().CreateCOSStream();
-    using (global::System.IO.Stream @out
-      = concatStream.CreateOutputStream(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode)) {
-      foreach (global::DripSharp.PdfCarton.Cos.COSStream contentStream in contentStreams) {
-        using (global::System.IO.Stream @in = contentStream.CreateInputStream()) {
-          global::DripSharp.PdfCarton.IO.IOUtils.Copy(@in, @out);
-          @out.Flush();
+      = this.inputPDFDocument.GetDocument().CreateCOSStream(); {
+      global::System.IO.Stream @out
+        = concatStream.CreateOutputStream(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode);
+      global::System.Exception __dripsharpPrimary_354_27_0 = null!;
+      try {
+        foreach (global::DripSharp.PdfCarton.Cos.COSStream contentStream in contentStreams) { {
+            global::System.IO.Stream @in = contentStream.CreateInputStream();
+            global::System.Exception __dripsharpPrimary_358_34_0 = null!;
+            try {
+              global::DripSharp.PdfCarton.IO.IOUtils.Copy(@in, @out);
+              @out.Flush();
+            } catch (global::System.Exception __dripsharpCaught_358_34_0) {
+              __dripsharpPrimary_358_34_0 = __dripsharpCaught_358_34_0;
+              throw;
+            } finally {
+              global::DripSharp.Runtime.JavaCompat.CloseResource(@in, __dripsharpPrimary_358_34_0);
+            }
+          }
         }
+      } catch (global::System.Exception __dripsharpCaught_354_27_0) {
+        __dripsharpPrimary_354_27_0 = __dripsharpCaught_354_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@out, __dripsharpPrimary_354_27_0);
       }
     }
     return concatStream;
@@ -396,17 +411,19 @@ public class Overlay : global::System.IDisposable {
         if (((pageNumber == numberOfPages) && (this.lastPageOverlayPage != default!))) {
           layoutPage = this.lastPageOverlayPage;
         } else {
-          if ((((pageNumber % 2) == 1) && (this.oddPageOverlayPage != default!))) {
+          if (((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(pageNumber, 2) == 1)
+            && (this.oddPageOverlayPage != default!))) {
             layoutPage = this.oddPageOverlayPage;
           } else {
-            if ((((pageNumber % 2) == 0) && (this.evenPageOverlayPage != default!))) {
+            if (((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(pageNumber, 2) == 0)
+              && (this.evenPageOverlayPage != default!))) {
               layoutPage = this.evenPageOverlayPage;
             } else {
               if ((this.defaultOverlayPage != default!)) {
                 layoutPage = this.defaultOverlayPage;
                 if (this.adjustRotation) {
                   global::DripSharp.PdfCarton.Pdmodel.PDPage page
-                    = this.inputPDFDocument.GetPage((pageNumber - 1));
+                    = this.inputPDFDocument.GetPage(unchecked((pageNumber - 1)));
                   int rotation = page.GetRotation();
                   if ((rotation != 0)) {
                     return this.createAdjustedLayoutPage(rotation);
@@ -414,7 +431,9 @@ public class Overlay : global::System.IDisposable {
                 }
               } else {
                 if (this.useAllOverlayPages) {
-                  int usePageNum = ((pageNumber - 1) % this.numberOfOverlayPages);
+                  int usePageNum
+                    = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((pageNumber
+                    - 1)), this.numberOfOverlayPages);
                   layoutPage
                     = global::DripSharp.Runtime.JavaCompat.MapGet(this.specificPageOverlayLayoutPageMap,
                     usePageNum);
@@ -433,7 +452,9 @@ public class Overlay : global::System.IDisposable {
       = global::DripSharp.Runtime.JavaCompat.MapGet(this.rotatedDefaultOverlayPagesMap, rotation);
     if ((rotatedLayoutPage == default!)) {
       rotatedLayoutPage = this.createLayoutPage(this.defaultOverlayDocument.GetPage(0));
-      int newRotation = (((rotatedLayoutPage.overlayRotation - rotation) + 360) % 360);
+      int newRotation
+        = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((unchecked((rotatedLayoutPage.overlayRotation
+        - rotation)) + 360)), 360);
       rotatedLayoutPage.overlayRotation = newRotation;
       global::DripSharp.Runtime.JavaCompat.MapPut(this.rotatedDefaultOverlayPagesMap, rotation,
         rotatedLayoutPage);
@@ -521,12 +542,13 @@ public class Overlay : global::System.IDisposable {
     global::DripSharp.Runtime.JavaCompat.JavaBigDecimal value
       = global::DripSharp.Runtime.JavaCompat.JavaBigDecimalParse(global::DripSharp.Runtime.JavaCompat.StringValueOf(floatValue));
     string stringValue = global::DripSharp.Runtime.JavaCompat.JavaBigDecimalToPlainString(value);
-    if (((global::DripSharp.Runtime.JavaCompat.StringIndexOf(stringValue, (int)('.')) > -1)
+    if (((global::DripSharp.Runtime.JavaCompat.StringIndexOf(stringValue,
+      (int)('.')) > unchecked(-1))
       && !global::DripSharp.Runtime.JavaCompat.StringEndsWith(stringValue, ".0"))) {
       while ((global::DripSharp.Runtime.JavaCompat.StringEndsWith(stringValue, "0")
         && !global::DripSharp.Runtime.JavaCompat.StringEndsWith(stringValue, ".0"))) {
         stringValue = global::DripSharp.Runtime.JavaCompat.StringSubstring(stringValue, 0,
-          (stringValue.Length - 1));
+          unchecked((stringValue.Length - 1)));
       }
     }
     return stringValue;
@@ -534,13 +556,21 @@ public class Overlay : global::System.IDisposable {
 
   private global::DripSharp.PdfCarton.Cos.COSStream createStream(string content) {
     global::DripSharp.PdfCarton.Cos.COSStream stream
-      = this.inputPDFDocument.GetDocument().CreateCOSStream();
-    using (global::System.IO.Stream @out = stream.CreateOutputStream(((content.Length > 20)
-      ? (global::DripSharp.PdfCarton.Cos.COSBase)(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode)
-      : (global::DripSharp.PdfCarton.Cos.COSBase)(default!)))) {
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out,
-        global::DripSharp.Runtime.JavaCompat.StringGetBytes(content,
-        global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+      = this.inputPDFDocument.GetDocument().CreateCOSStream(); {
+      global::System.IO.Stream @out = stream.CreateOutputStream(((content.Length > 20)
+        ? (global::DripSharp.PdfCarton.Cos.COSBase)(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode)
+        : (global::DripSharp.PdfCarton.Cos.COSBase)(default!)));
+      global::System.Exception __dripsharpPrimary_646_27_0 = null!;
+      try {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out,
+          global::DripSharp.Runtime.JavaCompat.StringGetBytes(content,
+          global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+      } catch (global::System.Exception __dripsharpCaught_646_27_0) {
+        __dripsharpPrimary_646_27_0 = __dripsharpCaught_646_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@out, __dripsharpPrimary_646_27_0);
+      }
     }
     return stream;
   }
@@ -615,5 +645,9 @@ public class Overlay : global::System.IDisposable {
 
   public virtual void SetAdjustRotation(bool adjustRotation) {
     this.adjustRotation = adjustRotation;
+  }
+
+  static Overlay() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

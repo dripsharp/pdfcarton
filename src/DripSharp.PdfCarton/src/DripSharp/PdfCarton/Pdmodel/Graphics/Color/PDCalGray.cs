@@ -12,17 +12,18 @@ public sealed class PDCalGray
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEDictionaryBasedColorSpace {
   private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor initialColor;
 
-  private readonly global::System.Collections.Generic.IDictionary<float, float[]> map1
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<float, float[]>();
+  private readonly global::System.Collections.Generic.IDictionary<float, float[]> map1;
 
   public PDCalGray() : base(global::DripSharp.PdfCarton.Cos.COSName.Calgray) {
     this.initialColor
       = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 0 }, this);
+    this.map1 = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<float, float[]>();
   }
 
   public PDCalGray(global::DripSharp.PdfCarton.Cos.COSArray array) : base(array) {
     this.initialColor
       = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 0 }, this);
+    this.map1 = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<float, float[]>();
   }
 
   public override string GetName() {
@@ -66,5 +67,9 @@ public sealed class PDCalGray
   public void SetGamma(float value) {
     base.Dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Gamma,
       new global::DripSharp.PdfCarton.Cos.COSFloat(value));
+  }
+
+  static PDCalGray() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEDictionaryBasedColorSpace).TypeHandle);
   }
 }

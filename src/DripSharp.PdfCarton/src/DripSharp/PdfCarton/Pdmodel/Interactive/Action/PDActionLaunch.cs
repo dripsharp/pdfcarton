@@ -103,4 +103,8 @@ public class PDActionLaunch : global::DripSharp.PdfCarton.Pdmodel.Interactive.Ac
         break;
     }
   }
+
+  static PDActionLaunch() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
+  }
 }

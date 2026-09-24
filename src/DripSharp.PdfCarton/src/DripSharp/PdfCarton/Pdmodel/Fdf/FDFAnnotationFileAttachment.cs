@@ -24,4 +24,8 @@ public class FDFAnnotationFileAttachment : global::DripSharp.PdfCarton.Pdmodel.F
     base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
       global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationFileAttachment.Subtype);
   }
+
+  static FDFAnnotationFileAttachment() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation).TypeHandle);
+  }
 }

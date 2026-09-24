@@ -14,4 +14,8 @@ public class AgentNameType : global::DripSharp.PdfCarton.Xmp.Type.TextType {
     propertyName, value) {
 
   }
+
+  static AgentNameType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType).TypeHandle);
+  }
 }

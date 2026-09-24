@@ -43,8 +43,9 @@ internal sealed class PDTrueTypeFontEmbedder
     int lastChar
       = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(global::DripSharp.Runtime.JavaCompat.CollectionMax(codes));
     global::System.Collections.Generic.IList<int> widths
-      = new global::System.Collections.Generic.List<int>(((lastChar - firstChar) + 1));
-    for (int i = 0; (i < ((lastChar - firstChar) + 1)); i++) {
+      = new global::System.Collections.Generic.List<int>(unchecked((unchecked((lastChar
+      - firstChar)) + 1)));
+    for (int i = 0; (i < unchecked((unchecked((lastChar - firstChar)) + 1))); i++) {
       global::DripSharp.Runtime.JavaCompat.Add(widths, 0);
     }
     foreach (global::DripSharp.Runtime.JavaMapEntry<int,
@@ -58,7 +59,7 @@ internal sealed class PDTrueTypeFontEmbedder
           int charCode = global::DripSharp.Runtime.JavaCompat.CodePointAt(uni, 0);
           gid = base.CmapLookup.GetGlyphId(charCode);
         }
-        global::DripSharp.Runtime.JavaCompat.ListSet(widths, (entry.Key - firstChar),
+        global::DripSharp.Runtime.JavaCompat.ListSet(widths, unchecked((entry.Key - firstChar)),
           global::DripSharp.Runtime.JavaCompat.MathRoundFloat((hmtx.GetAdvanceWidth(gid)
           * scaling)));
       }
@@ -76,5 +77,9 @@ internal sealed class PDTrueTypeFontEmbedder
   protected internal override void BuildSubset(global::System.IO.Stream ttfSubset, string tag,
     global::System.Collections.Generic.IDictionary<int, int> gidToCid) {
     throw new global::System.NotSupportedException();
+  }
+
+  static PDTrueTypeFontEmbedder() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.TrueTypeEmbedder).TypeHandle);
   }
 }

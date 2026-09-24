@@ -60,4 +60,8 @@ public class PDFAbAnnotationFactory
       global::DripSharp.PdfCarton.Preflight.PreflightConstants.AnnotDictionaryValueSubtypeTrapnet,
       typeof(global::DripSharp.PdfCarton.Preflight.Annotation.TrapNetAnnotationValidator));
   }
+
+  static PDFAbAnnotationFactory() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidatorFactory).TypeHandle);
+  }
 }

@@ -80,8 +80,8 @@ public class PDUserProperty : global::DripSharp.PdfCarton.Pdmodel.Common.PDDicti
   public override int GetHashCode() {
     int prime = 31;
     int result = base.GetHashCode();
-    result = ((prime * result) + ((this.userAttributeObject == default!) ? 0
-      : this.userAttributeObject.GetHashCode()));
+    result = unchecked((unchecked((prime * result)) + ((this.userAttributeObject == default!) ? 0
+      : this.userAttributeObject.GetHashCode())));
     return result;
   }
 
@@ -107,5 +107,9 @@ public class PDUserProperty : global::DripSharp.PdfCarton.Pdmodel.Common.PDDicti
       }
     }
     return true;
+  }
+
+  static PDUserProperty() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper).TypeHandle);
   }
 }

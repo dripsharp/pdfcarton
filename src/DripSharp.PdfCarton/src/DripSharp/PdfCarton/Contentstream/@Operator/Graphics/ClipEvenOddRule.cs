@@ -23,4 +23,8 @@ public sealed class ClipEvenOddRule
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipEvenOdd;
   }
+
+  static ClipEvenOddRule() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor).TypeHandle);
+  }
 }

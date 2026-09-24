@@ -52,10 +52,18 @@ public class ICCProfileWrapper {
       global::DripSharp.PdfCarton.Cos.COSBase destOutputProfile
         = outputIntentDict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.DestOutputProfile);
       if ((destOutputProfile is global::DripSharp.PdfCarton.Cos.COSStream)) {
-        try {
-          using (global::System.IO.Stream @is
-            = ((global::DripSharp.PdfCarton.Cos.COSStream)(destOutputProfile!)).CreateInputStream()) {
-            return new global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper(global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is));
+        try { {
+            global::System.IO.Stream @is
+              = ((global::DripSharp.PdfCarton.Cos.COSStream)(destOutputProfile!)).CreateInputStream();
+            global::System.Exception __dripsharpPrimary_137_34_0 = null!;
+            try {
+              return new global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper(global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is));
+            } catch (global::System.Exception __dripsharpCaught_137_34_0) {
+              __dripsharpPrimary_137_34_0 = __dripsharpCaught_137_34_0;
+              throw;
+            } finally {
+              global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_137_34_0);
+            }
           }
         } catch (global::System.Exception e) when (e is global::System.IndexOutOfRangeException or global::System.ArgumentException) {
           context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicOutputIntentIccProfileInvalid,

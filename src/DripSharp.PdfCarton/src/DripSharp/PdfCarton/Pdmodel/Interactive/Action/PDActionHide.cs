@@ -35,4 +35,8 @@ public class PDActionHide : global::DripSharp.PdfCarton.Pdmodel.Interactive.Acti
     this.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.H,
       global::DripSharp.PdfCarton.Cos.COSBoolean.GetBoolean(h));
   }
+
+  static PDActionHide() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
+  }
 }

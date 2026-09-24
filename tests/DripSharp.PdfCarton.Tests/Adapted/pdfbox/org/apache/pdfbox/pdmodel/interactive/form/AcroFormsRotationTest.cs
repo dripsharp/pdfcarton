@@ -5,13 +5,9 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class AcroFormsRotationTest {
-  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/test-output"));
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR;
 
-  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "src/test/resources/org/apache/pdfbox/pdmodel/interactive/form"));
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR;
 
   private const string NAME_OF_PDF = "AcroFormsRotation.pdf";
 
@@ -26,7 +22,7 @@ public class AcroFormsRotationTest {
     this.document
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AcroFormsRotationTest.IN_DIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AcroFormsRotationTest.IN_DIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AcroFormsRotationTest.NAME_OF_PDF)) });
     this.acroForm = this.document.GetDocumentCatalog().GetAcroForm();
@@ -120,13 +116,14 @@ public class AcroFormsRotationTest {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AcroFormsRotationTest.NAME_OF_PDF));
     global::DripSharp.Runtime.JavaFileBridge.Call(this.document, "Save",
-      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { (global::DripSharp.Runtime.JavaFile)file });
     if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
       "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
-        typeof(string) }, new object[] { file,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        typeof(string) }, new object[] { (global::DripSharp.Runtime.JavaFile)file,
+        (string)global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AcroFormsRotationTest.IN_DIR)),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        (string)global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AcroFormsRotationTest.OUT_DIR)) }))) {
       global::DripSharp.PdfCarton.Tests.Support.ErrorStream.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Rendering of ",
@@ -148,5 +145,14 @@ public class AcroFormsRotationTest {
     } finally {
       this.tearDown();
     }
+  }
+
+  static AcroFormsRotationTest() {
+    OUT_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/test-output"));
+    IN_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "src/test/resources/org/apache/pdfbox/pdmodel/interactive/form"));
   }
 }

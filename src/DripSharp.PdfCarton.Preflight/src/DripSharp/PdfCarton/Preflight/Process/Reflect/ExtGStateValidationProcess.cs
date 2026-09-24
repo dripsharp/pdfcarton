@@ -191,4 +191,8 @@ public class ExtGStateValidationProcess
       }
     }
   }
+
+  static ExtGStateValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+  }
 }

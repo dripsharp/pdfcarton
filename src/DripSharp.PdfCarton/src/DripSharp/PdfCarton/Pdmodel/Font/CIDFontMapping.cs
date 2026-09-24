@@ -25,4 +25,8 @@ public sealed class CIDFontMapping
   public bool IsCIDFont() {
     return (this.GetFont() is not null);
   }
+
+  static CIDFontMapping() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapping<global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont>).TypeHandle);
+  }
 }

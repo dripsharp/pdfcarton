@@ -72,6 +72,10 @@ public class DateType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimplePrope
     }
   }
 
+  static DateType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty).TypeHandle);
+  }
+
   protected override object __DripSharpCovariantBridgeGetValue() {
     return this.GetValue();
   }

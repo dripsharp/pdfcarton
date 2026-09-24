@@ -21,8 +21,9 @@ public class ActionsValidationProcess
       } else {
         global::DripSharp.PdfCarton.Cos.COSDictionary actionsDict
           = (global::DripSharp.PdfCarton.Cos.COSDictionary)(vPath.Peek()!);
-        bool aaEntryAuth = ((vPath.Size()
-          - vPath.GetClosestTypePosition(typeof(global::DripSharp.PdfCarton.Pdmodel.PDPage))) == 2);
+        bool aaEntryAuth = (unchecked((vPath.Size()
+          - vPath.GetClosestTypePosition(typeof(global::DripSharp.PdfCarton.Pdmodel.PDPage))))
+          == 2);
         global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = context.GetConfig();
         global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory factory
           = config.GetActionFact();
@@ -33,5 +34,9 @@ public class ActionsValidationProcess
         }
       }
     }
+  }
+
+  static ActionsValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
   }
 }

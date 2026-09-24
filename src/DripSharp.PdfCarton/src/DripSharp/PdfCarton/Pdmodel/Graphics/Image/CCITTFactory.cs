@@ -21,21 +21,29 @@ public sealed class CCITTFactory {
     int height = image.Height;
     int width = image.Width;
     global::DripSharp.Runtime.JavaByteArrayOutputStream bos
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(global::System.Math.Max(32, ((width
-      + 1) * height)));
-    using (global::DripSharp.Runtime.JavaImageOutputStream mcios
-      = new global::DripSharp.Runtime.JavaImageOutputStream(bos)) {
-      for (int y = 0; (y < height); ++y) {
-        for (int x = 0; (x < width); ++x) {
-          mcios.WriteBits((long)(~((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(image, x,
-            y) & 1))), 1);
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(global::System.Math.Max(32,
+      unchecked((unchecked((width + 1)) * height)))); {
+      global::DripSharp.Runtime.JavaImageOutputStream mcios
+        = new global::DripSharp.Runtime.JavaImageOutputStream(bos);
+      global::System.Exception __dripsharpPrimary_72_43_0 = null!;
+      try {
+        for (int y = 0; (y < height); ++y) {
+          for (int x = 0; (x < width); ++x) {
+            mcios.WriteBits((long)(~((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(image, x,
+              y) & 1))), 1);
+          }
+          int bitOffset = mcios.BitOffset;
+          if ((bitOffset != 0)) {
+            mcios.WriteBits((long)(0), unchecked((8 - bitOffset)));
+          }
         }
-        int bitOffset = mcios.BitOffset;
-        if ((bitOffset != 0)) {
-          mcios.WriteBits((long)(0), (8 - bitOffset));
-        }
+        mcios.Flush();
+      } catch (global::System.Exception __dripsharpCaught_72_43_0) {
+        __dripsharpPrimary_72_43_0 = __dripsharpCaught_72_43_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(mcios, __dripsharpPrimary_72_43_0);
       }
-      mcios.Flush();
     }
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.prepareImageXObject(document,
       global::DripSharp.Runtime.JavaCompat.ToSignedBytes(bos), width, height,
@@ -49,11 +57,19 @@ public sealed class CCITTFactory {
   }
 
   public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromByteArray(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
-    sbyte[] byteArray, int number) {
-    using (global::DripSharp.PdfCarton.IO.RandomAccessRead raf
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(byteArray)) {
-      return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.createFromRandomAccessImpl(document,
-        raf, number);
+    sbyte[] byteArray, int number) { {
+      global::DripSharp.PdfCarton.IO.RandomAccessRead raf
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(byteArray);
+      global::System.Exception __dripsharpPrimary_131_31_0 = null!;
+      try {
+        return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.createFromRandomAccessImpl(document,
+          raf, number);
+      } catch (global::System.Exception __dripsharpCaught_131_31_0) {
+        __dripsharpPrimary_131_31_0 = __dripsharpCaught_131_31_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(raf, __dripsharpPrimary_131_31_0);
+      }
     }
   }
 
@@ -75,7 +91,7 @@ public sealed class CCITTFactory {
       = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject(document,
       encodedByteStream, global::DripSharp.PdfCarton.Cos.COSName.CcittfaxDecode, width, height, 1,
       initColorSpace);
-    dict.SetInt(global::DripSharp.PdfCarton.Cos.COSName.K, -1);
+    dict.SetInt(global::DripSharp.PdfCarton.Cos.COSName.K, unchecked(-1));
     image.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.DecodeParms, dict);
     return image;
   }
@@ -92,7 +108,9 @@ public sealed class CCITTFactory {
     return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
       "CreateFromFile",
       new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
-        typeof(global::System.IO.FileInfo), typeof(int) }, new object[] { document, file, 0 });
+        typeof(global::System.IO.FileInfo), typeof(int) },
+      new object[] { (global::DripSharp.PdfCarton.Pdmodel.PDDocument)document,
+        (global::DripSharp.Runtime.JavaFile)file, (int)0 });
   }
 
   [global::DripSharp.Runtime.JavaFileBoundary]
@@ -104,11 +122,19 @@ public sealed class CCITTFactory {
   }
 
   internal static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject __JavaFile_CreateFromFile(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
-    global::DripSharp.Runtime.JavaFile file, int number) {
-    using (global::DripSharp.PdfCarton.IO.RandomAccessRead raf
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file)) {
-      return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.createFromRandomAccessImpl(document,
-        raf, number);
+    global::DripSharp.Runtime.JavaFile file, int number) { {
+      global::DripSharp.PdfCarton.IO.RandomAccessRead raf
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file);
+      global::System.Exception __dripsharpPrimary_193_31_0 = null!;
+      try {
+        return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.createFromRandomAccessImpl(document,
+          raf, number);
+      } catch (global::System.Exception __dripsharpCaught_193_31_0) {
+        __dripsharpPrimary_193_31_0 = __dripsharpCaught_193_31_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(raf, __dripsharpPrimary_193_31_0);
+      }
     }
   }
 
@@ -165,7 +191,7 @@ public sealed class CCITTFactory {
         if ((numtags__267_21 > 50)) {
           throw new global::System.IO.IOException("Not a valid tiff file");
         }
-        reader.Seek(((address + 2) + (numtags__267_21 * 12L)));
+        reader.Seek(unchecked((unchecked((address + 2)) + unchecked((numtags__267_21 * 12L)))));
         address
           = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory.readlong(endianess,
           reader);
@@ -180,7 +206,7 @@ public sealed class CCITTFactory {
       if ((numtags__281_17 > 50)) {
         throw new global::System.IO.IOException("Not a valid tiff file");
       }
-      int k = -1000;
+      int k = unchecked(-1000);
       int dataoffset = 0;
       int datalength = 0;
       int fillorder = 1;
@@ -226,7 +252,7 @@ public sealed class CCITTFactory {
             }
           case var __case_340_26_0 when __case_340_26_0 == 259: {
               if ((val == 4)) {
-                k = -1;
+                k = unchecked(-1);
               }
               if ((val == 3)) {
                 k = 0;
@@ -295,7 +321,7 @@ public sealed class CCITTFactory {
             break;
         }
       }
-      if ((k == -1000)) {
+      if ((k == unchecked(-1000))) {
         throw new global::System.IO.IOException("First image in tiff is not CCITT T4 or T6 compressed");
       }
       if ((dataoffset == 0)) {
@@ -335,88 +361,94 @@ public sealed class CCITTFactory {
     return ((((raf.Read() << unchecked((int)(24))) | (raf.Read() << unchecked((int)(16)))) | (raf.Read() << unchecked((int)(8)))) | raf.Read());
   }
 
-  private static readonly sbyte[] fliptable = new sbyte[] { unchecked((sbyte)(0)),
-    unchecked((sbyte)(128)), unchecked((sbyte)(64)), unchecked((sbyte)(192)),
-    unchecked((sbyte)(32)), unchecked((sbyte)(160)), unchecked((sbyte)(96)),
-    unchecked((sbyte)(224)), unchecked((sbyte)(16)), unchecked((sbyte)(144)),
-    unchecked((sbyte)(80)), unchecked((sbyte)(208)), unchecked((sbyte)(48)),
-    unchecked((sbyte)(176)), unchecked((sbyte)(112)), unchecked((sbyte)(240)),
-    unchecked((sbyte)(8)), unchecked((sbyte)(136)), unchecked((sbyte)(72)), unchecked((sbyte)(200)),
-    unchecked((sbyte)(40)), unchecked((sbyte)(168)), unchecked((sbyte)(104)),
-    unchecked((sbyte)(232)), unchecked((sbyte)(24)), unchecked((sbyte)(152)),
-    unchecked((sbyte)(88)), unchecked((sbyte)(216)), unchecked((sbyte)(56)),
-    unchecked((sbyte)(184)), unchecked((sbyte)(120)), unchecked((sbyte)(248)),
-    unchecked((sbyte)(4)), unchecked((sbyte)(132)), unchecked((sbyte)(68)), unchecked((sbyte)(196)),
-    unchecked((sbyte)(36)), unchecked((sbyte)(164)), unchecked((sbyte)(100)),
-    unchecked((sbyte)(228)), unchecked((sbyte)(20)), unchecked((sbyte)(148)),
-    unchecked((sbyte)(84)), unchecked((sbyte)(212)), unchecked((sbyte)(52)),
-    unchecked((sbyte)(180)), unchecked((sbyte)(116)), unchecked((sbyte)(244)),
-    unchecked((sbyte)(12)), unchecked((sbyte)(140)), unchecked((sbyte)(76)),
-    unchecked((sbyte)(204)), unchecked((sbyte)(44)), unchecked((sbyte)(172)),
-    unchecked((sbyte)(108)), unchecked((sbyte)(236)), unchecked((sbyte)(28)),
-    unchecked((sbyte)(156)), unchecked((sbyte)(92)), unchecked((sbyte)(220)),
-    unchecked((sbyte)(60)), unchecked((sbyte)(188)), unchecked((sbyte)(124)),
-    unchecked((sbyte)(252)), unchecked((sbyte)(2)), unchecked((sbyte)(130)), unchecked((sbyte)(66)),
-    unchecked((sbyte)(194)), unchecked((sbyte)(34)), unchecked((sbyte)(162)),
-    unchecked((sbyte)(98)), unchecked((sbyte)(226)), unchecked((sbyte)(18)),
-    unchecked((sbyte)(146)), unchecked((sbyte)(82)), unchecked((sbyte)(210)),
-    unchecked((sbyte)(50)), unchecked((sbyte)(178)), unchecked((sbyte)(114)),
-    unchecked((sbyte)(242)), unchecked((sbyte)(10)), unchecked((sbyte)(138)),
-    unchecked((sbyte)(74)), unchecked((sbyte)(202)), unchecked((sbyte)(42)),
-    unchecked((sbyte)(170)), unchecked((sbyte)(106)), unchecked((sbyte)(234)),
-    unchecked((sbyte)(26)), unchecked((sbyte)(154)), unchecked((sbyte)(90)),
-    unchecked((sbyte)(218)), unchecked((sbyte)(58)), unchecked((sbyte)(186)),
-    unchecked((sbyte)(122)), unchecked((sbyte)(250)), unchecked((sbyte)(6)),
-    unchecked((sbyte)(134)), unchecked((sbyte)(70)), unchecked((sbyte)(198)),
-    unchecked((sbyte)(38)), unchecked((sbyte)(166)), unchecked((sbyte)(102)),
-    unchecked((sbyte)(230)), unchecked((sbyte)(22)), unchecked((sbyte)(150)),
-    unchecked((sbyte)(86)), unchecked((sbyte)(214)), unchecked((sbyte)(54)),
-    unchecked((sbyte)(182)), unchecked((sbyte)(118)), unchecked((sbyte)(246)),
-    unchecked((sbyte)(14)), unchecked((sbyte)(142)), unchecked((sbyte)(78)),
-    unchecked((sbyte)(206)), unchecked((sbyte)(46)), unchecked((sbyte)(174)),
-    unchecked((sbyte)(110)), unchecked((sbyte)(238)), unchecked((sbyte)(30)),
-    unchecked((sbyte)(158)), unchecked((sbyte)(94)), unchecked((sbyte)(222)),
-    unchecked((sbyte)(62)), unchecked((sbyte)(190)), unchecked((sbyte)(126)),
-    unchecked((sbyte)(254)), unchecked((sbyte)(1)), unchecked((sbyte)(129)), unchecked((sbyte)(65)),
-    unchecked((sbyte)(193)), unchecked((sbyte)(33)), unchecked((sbyte)(161)),
-    unchecked((sbyte)(97)), unchecked((sbyte)(225)), unchecked((sbyte)(17)),
-    unchecked((sbyte)(145)), unchecked((sbyte)(81)), unchecked((sbyte)(209)),
-    unchecked((sbyte)(49)), unchecked((sbyte)(177)), unchecked((sbyte)(113)),
-    unchecked((sbyte)(241)), unchecked((sbyte)(9)), unchecked((sbyte)(137)), unchecked((sbyte)(73)),
-    unchecked((sbyte)(201)), unchecked((sbyte)(41)), unchecked((sbyte)(169)),
-    unchecked((sbyte)(105)), unchecked((sbyte)(233)), unchecked((sbyte)(25)),
-    unchecked((sbyte)(153)), unchecked((sbyte)(89)), unchecked((sbyte)(217)),
-    unchecked((sbyte)(57)), unchecked((sbyte)(185)), unchecked((sbyte)(121)),
-    unchecked((sbyte)(249)), unchecked((sbyte)(5)), unchecked((sbyte)(133)), unchecked((sbyte)(69)),
-    unchecked((sbyte)(197)), unchecked((sbyte)(37)), unchecked((sbyte)(165)),
-    unchecked((sbyte)(101)), unchecked((sbyte)(229)), unchecked((sbyte)(21)),
-    unchecked((sbyte)(149)), unchecked((sbyte)(85)), unchecked((sbyte)(213)),
-    unchecked((sbyte)(53)), unchecked((sbyte)(181)), unchecked((sbyte)(117)),
-    unchecked((sbyte)(245)), unchecked((sbyte)(13)), unchecked((sbyte)(141)),
-    unchecked((sbyte)(77)), unchecked((sbyte)(205)), unchecked((sbyte)(45)),
-    unchecked((sbyte)(173)), unchecked((sbyte)(109)), unchecked((sbyte)(237)),
-    unchecked((sbyte)(29)), unchecked((sbyte)(157)), unchecked((sbyte)(93)),
-    unchecked((sbyte)(221)), unchecked((sbyte)(61)), unchecked((sbyte)(189)),
-    unchecked((sbyte)(125)), unchecked((sbyte)(253)), unchecked((sbyte)(3)),
-    unchecked((sbyte)(131)), unchecked((sbyte)(67)), unchecked((sbyte)(195)),
-    unchecked((sbyte)(35)), unchecked((sbyte)(163)), unchecked((sbyte)(99)),
-    unchecked((sbyte)(227)), unchecked((sbyte)(19)), unchecked((sbyte)(147)),
-    unchecked((sbyte)(83)), unchecked((sbyte)(211)), unchecked((sbyte)(51)),
-    unchecked((sbyte)(179)), unchecked((sbyte)(115)), unchecked((sbyte)(243)),
-    unchecked((sbyte)(11)), unchecked((sbyte)(139)), unchecked((sbyte)(75)),
-    unchecked((sbyte)(203)), unchecked((sbyte)(43)), unchecked((sbyte)(171)),
-    unchecked((sbyte)(107)), unchecked((sbyte)(235)), unchecked((sbyte)(27)),
-    unchecked((sbyte)(155)), unchecked((sbyte)(91)), unchecked((sbyte)(219)),
-    unchecked((sbyte)(59)), unchecked((sbyte)(187)), unchecked((sbyte)(123)),
-    unchecked((sbyte)(251)), unchecked((sbyte)(7)), unchecked((sbyte)(135)), unchecked((sbyte)(71)),
-    unchecked((sbyte)(199)), unchecked((sbyte)(39)), unchecked((sbyte)(167)),
-    unchecked((sbyte)(103)), unchecked((sbyte)(231)), unchecked((sbyte)(23)),
-    unchecked((sbyte)(151)), unchecked((sbyte)(87)), unchecked((sbyte)(215)),
-    unchecked((sbyte)(55)), unchecked((sbyte)(183)), unchecked((sbyte)(119)),
-    unchecked((sbyte)(247)), unchecked((sbyte)(15)), unchecked((sbyte)(143)),
-    unchecked((sbyte)(79)), unchecked((sbyte)(207)), unchecked((sbyte)(47)),
-    unchecked((sbyte)(175)), unchecked((sbyte)(111)), unchecked((sbyte)(239)),
-    unchecked((sbyte)(31)), unchecked((sbyte)(159)), unchecked((sbyte)(95)),
-    unchecked((sbyte)(223)), unchecked((sbyte)(63)), unchecked((sbyte)(191)),
-    unchecked((sbyte)(127)), unchecked((sbyte)(255)) };
+  private static readonly sbyte[] fliptable;
+
+  static CCITTFactory() {
+    fliptable = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(128)),
+      unchecked((sbyte)(64)), unchecked((sbyte)(192)), unchecked((sbyte)(32)),
+      unchecked((sbyte)(160)), unchecked((sbyte)(96)), unchecked((sbyte)(224)),
+      unchecked((sbyte)(16)), unchecked((sbyte)(144)), unchecked((sbyte)(80)),
+      unchecked((sbyte)(208)), unchecked((sbyte)(48)), unchecked((sbyte)(176)),
+      unchecked((sbyte)(112)), unchecked((sbyte)(240)), unchecked((sbyte)(8)),
+      unchecked((sbyte)(136)), unchecked((sbyte)(72)), unchecked((sbyte)(200)),
+      unchecked((sbyte)(40)), unchecked((sbyte)(168)), unchecked((sbyte)(104)),
+      unchecked((sbyte)(232)), unchecked((sbyte)(24)), unchecked((sbyte)(152)),
+      unchecked((sbyte)(88)), unchecked((sbyte)(216)), unchecked((sbyte)(56)),
+      unchecked((sbyte)(184)), unchecked((sbyte)(120)), unchecked((sbyte)(248)),
+      unchecked((sbyte)(4)), unchecked((sbyte)(132)), unchecked((sbyte)(68)),
+      unchecked((sbyte)(196)), unchecked((sbyte)(36)), unchecked((sbyte)(164)),
+      unchecked((sbyte)(100)), unchecked((sbyte)(228)), unchecked((sbyte)(20)),
+      unchecked((sbyte)(148)), unchecked((sbyte)(84)), unchecked((sbyte)(212)),
+      unchecked((sbyte)(52)), unchecked((sbyte)(180)), unchecked((sbyte)(116)),
+      unchecked((sbyte)(244)), unchecked((sbyte)(12)), unchecked((sbyte)(140)),
+      unchecked((sbyte)(76)), unchecked((sbyte)(204)), unchecked((sbyte)(44)),
+      unchecked((sbyte)(172)), unchecked((sbyte)(108)), unchecked((sbyte)(236)),
+      unchecked((sbyte)(28)), unchecked((sbyte)(156)), unchecked((sbyte)(92)),
+      unchecked((sbyte)(220)), unchecked((sbyte)(60)), unchecked((sbyte)(188)),
+      unchecked((sbyte)(124)), unchecked((sbyte)(252)), unchecked((sbyte)(2)),
+      unchecked((sbyte)(130)), unchecked((sbyte)(66)), unchecked((sbyte)(194)),
+      unchecked((sbyte)(34)), unchecked((sbyte)(162)), unchecked((sbyte)(98)),
+      unchecked((sbyte)(226)), unchecked((sbyte)(18)), unchecked((sbyte)(146)),
+      unchecked((sbyte)(82)), unchecked((sbyte)(210)), unchecked((sbyte)(50)),
+      unchecked((sbyte)(178)), unchecked((sbyte)(114)), unchecked((sbyte)(242)),
+      unchecked((sbyte)(10)), unchecked((sbyte)(138)), unchecked((sbyte)(74)),
+      unchecked((sbyte)(202)), unchecked((sbyte)(42)), unchecked((sbyte)(170)),
+      unchecked((sbyte)(106)), unchecked((sbyte)(234)), unchecked((sbyte)(26)),
+      unchecked((sbyte)(154)), unchecked((sbyte)(90)), unchecked((sbyte)(218)),
+      unchecked((sbyte)(58)), unchecked((sbyte)(186)), unchecked((sbyte)(122)),
+      unchecked((sbyte)(250)), unchecked((sbyte)(6)), unchecked((sbyte)(134)),
+      unchecked((sbyte)(70)), unchecked((sbyte)(198)), unchecked((sbyte)(38)),
+      unchecked((sbyte)(166)), unchecked((sbyte)(102)), unchecked((sbyte)(230)),
+      unchecked((sbyte)(22)), unchecked((sbyte)(150)), unchecked((sbyte)(86)),
+      unchecked((sbyte)(214)), unchecked((sbyte)(54)), unchecked((sbyte)(182)),
+      unchecked((sbyte)(118)), unchecked((sbyte)(246)), unchecked((sbyte)(14)),
+      unchecked((sbyte)(142)), unchecked((sbyte)(78)), unchecked((sbyte)(206)),
+      unchecked((sbyte)(46)), unchecked((sbyte)(174)), unchecked((sbyte)(110)),
+      unchecked((sbyte)(238)), unchecked((sbyte)(30)), unchecked((sbyte)(158)),
+      unchecked((sbyte)(94)), unchecked((sbyte)(222)), unchecked((sbyte)(62)),
+      unchecked((sbyte)(190)), unchecked((sbyte)(126)), unchecked((sbyte)(254)),
+      unchecked((sbyte)(1)), unchecked((sbyte)(129)), unchecked((sbyte)(65)),
+      unchecked((sbyte)(193)), unchecked((sbyte)(33)), unchecked((sbyte)(161)),
+      unchecked((sbyte)(97)), unchecked((sbyte)(225)), unchecked((sbyte)(17)),
+      unchecked((sbyte)(145)), unchecked((sbyte)(81)), unchecked((sbyte)(209)),
+      unchecked((sbyte)(49)), unchecked((sbyte)(177)), unchecked((sbyte)(113)),
+      unchecked((sbyte)(241)), unchecked((sbyte)(9)), unchecked((sbyte)(137)),
+      unchecked((sbyte)(73)), unchecked((sbyte)(201)), unchecked((sbyte)(41)),
+      unchecked((sbyte)(169)), unchecked((sbyte)(105)), unchecked((sbyte)(233)),
+      unchecked((sbyte)(25)), unchecked((sbyte)(153)), unchecked((sbyte)(89)),
+      unchecked((sbyte)(217)), unchecked((sbyte)(57)), unchecked((sbyte)(185)),
+      unchecked((sbyte)(121)), unchecked((sbyte)(249)), unchecked((sbyte)(5)),
+      unchecked((sbyte)(133)), unchecked((sbyte)(69)), unchecked((sbyte)(197)),
+      unchecked((sbyte)(37)), unchecked((sbyte)(165)), unchecked((sbyte)(101)),
+      unchecked((sbyte)(229)), unchecked((sbyte)(21)), unchecked((sbyte)(149)),
+      unchecked((sbyte)(85)), unchecked((sbyte)(213)), unchecked((sbyte)(53)),
+      unchecked((sbyte)(181)), unchecked((sbyte)(117)), unchecked((sbyte)(245)),
+      unchecked((sbyte)(13)), unchecked((sbyte)(141)), unchecked((sbyte)(77)),
+      unchecked((sbyte)(205)), unchecked((sbyte)(45)), unchecked((sbyte)(173)),
+      unchecked((sbyte)(109)), unchecked((sbyte)(237)), unchecked((sbyte)(29)),
+      unchecked((sbyte)(157)), unchecked((sbyte)(93)), unchecked((sbyte)(221)),
+      unchecked((sbyte)(61)), unchecked((sbyte)(189)), unchecked((sbyte)(125)),
+      unchecked((sbyte)(253)), unchecked((sbyte)(3)), unchecked((sbyte)(131)),
+      unchecked((sbyte)(67)), unchecked((sbyte)(195)), unchecked((sbyte)(35)),
+      unchecked((sbyte)(163)), unchecked((sbyte)(99)), unchecked((sbyte)(227)),
+      unchecked((sbyte)(19)), unchecked((sbyte)(147)), unchecked((sbyte)(83)),
+      unchecked((sbyte)(211)), unchecked((sbyte)(51)), unchecked((sbyte)(179)),
+      unchecked((sbyte)(115)), unchecked((sbyte)(243)), unchecked((sbyte)(11)),
+      unchecked((sbyte)(139)), unchecked((sbyte)(75)), unchecked((sbyte)(203)),
+      unchecked((sbyte)(43)), unchecked((sbyte)(171)), unchecked((sbyte)(107)),
+      unchecked((sbyte)(235)), unchecked((sbyte)(27)), unchecked((sbyte)(155)),
+      unchecked((sbyte)(91)), unchecked((sbyte)(219)), unchecked((sbyte)(59)),
+      unchecked((sbyte)(187)), unchecked((sbyte)(123)), unchecked((sbyte)(251)),
+      unchecked((sbyte)(7)), unchecked((sbyte)(135)), unchecked((sbyte)(71)),
+      unchecked((sbyte)(199)), unchecked((sbyte)(39)), unchecked((sbyte)(167)),
+      unchecked((sbyte)(103)), unchecked((sbyte)(231)), unchecked((sbyte)(23)),
+      unchecked((sbyte)(151)), unchecked((sbyte)(87)), unchecked((sbyte)(215)),
+      unchecked((sbyte)(55)), unchecked((sbyte)(183)), unchecked((sbyte)(119)),
+      unchecked((sbyte)(247)), unchecked((sbyte)(15)), unchecked((sbyte)(143)),
+      unchecked((sbyte)(79)), unchecked((sbyte)(207)), unchecked((sbyte)(47)),
+      unchecked((sbyte)(175)), unchecked((sbyte)(111)), unchecked((sbyte)(239)),
+      unchecked((sbyte)(31)), unchecked((sbyte)(159)), unchecked((sbyte)(95)),
+      unchecked((sbyte)(223)), unchecked((sbyte)(63)), unchecked((sbyte)(191)),
+      unchecked((sbyte)(127)), unchecked((sbyte)(255)) };
+  }
 }

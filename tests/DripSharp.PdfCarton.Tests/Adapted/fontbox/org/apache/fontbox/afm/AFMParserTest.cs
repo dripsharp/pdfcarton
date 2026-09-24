@@ -16,139 +16,211 @@ public class AFMParserTest {
       global::DripSharp.PdfCarton.Fonts.Afm.AFMParser.StartFontMetrics)));
   }
 
-  internal virtual void testEndFontMetrics() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      "src/test/resources/afm/NoEndFontMetrics.afm"))) {
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
-        = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
-      global::System.IO.IOException e
-        = global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
-        => { parser.Parse(); }, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        global::DripSharp.Runtime.JavaCompat.Concat("The AFMParser should have thrown an IOException because of a missing ",
-        global::DripSharp.PdfCarton.Fonts.Afm.AFMParser.EndFontMetrics)));
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.StringContains(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e),
-        "Unknown AFM key"), null);
+  internal virtual void testEndFontMetrics() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        "src/test/resources/afm/NoEndFontMetrics.afm"));
+      global::System.Exception __dripsharpPrimary_58_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
+          = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
+        global::System.IO.IOException e
+          = global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
+          => { parser.Parse(); }, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          global::DripSharp.Runtime.JavaCompat.Concat("The AFMParser should have thrown an IOException because of a missing ",
+          global::DripSharp.PdfCarton.Fonts.Afm.AFMParser.EndFontMetrics)));
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.StringContains(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e),
+          "Unknown AFM key"), null);
+      } catch (global::System.Exception __dripsharpCaught_58_26_0) {
+        __dripsharpPrimary_58_26_0 = __dripsharpCaught_58_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_58_26_0);
+      }
     }
   }
 
-  internal virtual void testMalformedFloat() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      "src/test/resources/afm/MalformedFloat.afm"))) {
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
-        = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
-      global::System.IO.IOException e
-        = global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
-        => { parser.Parse(); }, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "The AFMParser should have thrown an IOException because of a malformed float value"));
-      global::DripSharp.Testing.JavaAssertions.InstanceOf<global::DripSharp.Runtime.JavaNumberFormatException>(global::DripSharp.Runtime.JavaCompat.GetCause(e)!,
-        null);
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.StringContains(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e),
-        "4,1ab"), null);
+  internal virtual void testMalformedFloat() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        "src/test/resources/afm/MalformedFloat.afm"));
+      global::System.Exception __dripsharpPrimary_70_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
+          = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
+        global::System.IO.IOException e
+          = global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
+          => { parser.Parse(); }, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "The AFMParser should have thrown an IOException because of a malformed float value"));
+        global::DripSharp.Testing.JavaAssertions.InstanceOf<global::DripSharp.Runtime.JavaNumberFormatException>(global::DripSharp.Runtime.JavaCompat.GetCause(e)!,
+          null);
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.StringContains(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e),
+          "4,1ab"), null);
+      } catch (global::System.Exception __dripsharpCaught_70_26_0) {
+        __dripsharpPrimary_70_26_0 = __dripsharpCaught_70_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_70_26_0);
+      }
     }
   }
 
-  internal virtual void testMalformedInteger() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      "src/test/resources/afm/MalformedInteger.afm"))) {
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
-        = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
-      global::System.IO.IOException e
-        = global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
-        => { parser.Parse(); }, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "The AFMParser should have thrown an IOException because of a malformed int value"));
-      global::DripSharp.Testing.JavaAssertions.InstanceOf<global::DripSharp.Runtime.JavaNumberFormatException>(global::DripSharp.Runtime.JavaCompat.GetCause(e)!,
-        null);
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.StringContains(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e),
-        "3.4"), null);
+  internal virtual void testMalformedInteger() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        "src/test/resources/afm/MalformedInteger.afm"));
+      global::System.Exception __dripsharpPrimary_83_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
+          = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
+        global::System.IO.IOException e
+          = global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
+          => { parser.Parse(); }, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "The AFMParser should have thrown an IOException because of a malformed int value"));
+        global::DripSharp.Testing.JavaAssertions.InstanceOf<global::DripSharp.Runtime.JavaNumberFormatException>(global::DripSharp.Runtime.JavaCompat.GetCause(e)!,
+          null);
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.StringContains(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(e),
+          "3.4"), null);
+      } catch (global::System.Exception __dripsharpCaught_83_26_0) {
+        __dripsharpPrimary_83_26_0 = __dripsharpCaught_83_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_83_26_0);
+      }
     }
   }
 
-  internal virtual void testHelveticaFontMetrics() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParserTest.HelveticaAfm))) {
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
-        = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
-      this.checkHelveticaFontMetrics(parser.Parse());
+  internal virtual void testHelveticaFontMetrics() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParserTest.HelveticaAfm));
+      global::System.Exception __dripsharpPrimary_96_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
+          = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
+        this.checkHelveticaFontMetrics(parser.Parse());
+      } catch (global::System.Exception __dripsharpCaught_96_26_0) {
+        __dripsharpPrimary_96_26_0 = __dripsharpCaught_96_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_96_26_0);
+      }
     }
   }
 
-  internal virtual void testHelveticaCharMetrics() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParserTest.HelveticaAfm))) {
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
-        = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
-      global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics fontMetrics = parser.Parse();
-      this.checkHelveticaCharMetrics(fontMetrics.GetCharMetrics());
+  internal virtual void testHelveticaCharMetrics() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParserTest.HelveticaAfm));
+      global::System.Exception __dripsharpPrimary_106_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
+          = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
+        global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics fontMetrics = parser.Parse();
+        this.checkHelveticaCharMetrics(fontMetrics.GetCharMetrics());
+      } catch (global::System.Exception __dripsharpCaught_106_26_0) {
+        __dripsharpPrimary_106_26_0 = __dripsharpCaught_106_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_106_26_0);
+      }
     }
   }
 
-  internal virtual void testHelveticaKernPairs() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParserTest.HelveticaAfm))) {
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
-        = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
-      global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics fontMetrics = parser.Parse();
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Afm.KernPair> kernPairs
-        = fontMetrics.GetKernPairs();
-      global::DripSharp.Testing.JavaAssertions.Equal(2705,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(kernPairs), null);
-      this.checkKernPair(kernPairs, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "A"), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "Ucircumflex"),
-        (float)(-50), (float)(0));
-      this.checkKernPair(kernPairs, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "W"), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "agrave"), (float)(-40),
-        (float)(0));
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetKernPairs0()),
-        null);
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetKernPairs1()),
-        null);
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetComposites()),
-        null);
+  internal virtual void testHelveticaKernPairs() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParserTest.HelveticaAfm));
+      global::System.Exception __dripsharpPrimary_119_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
+          = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
+        global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics fontMetrics = parser.Parse();
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Afm.KernPair> kernPairs
+          = fontMetrics.GetKernPairs();
+        global::DripSharp.Testing.JavaAssertions.Equal(2705,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(kernPairs), null);
+        this.checkKernPair(kernPairs, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "A"), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "Ucircumflex"),
+          (float)(unchecked(-50)), (float)(0));
+        this.checkKernPair(kernPairs, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "W"), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "agrave"),
+          (float)(unchecked(-40)), (float)(0));
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetKernPairs0()),
+          null);
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetKernPairs1()),
+          null);
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetComposites()),
+          null);
+      } catch (global::System.Exception __dripsharpCaught_119_26_0) {
+        __dripsharpPrimary_119_26_0 = __dripsharpCaught_119_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_119_26_0);
+      }
     }
   }
 
-  internal virtual void testHelveticaFontMetricsReducedDataset() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParserTest.HelveticaAfm))) {
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
-        = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
-      this.checkHelveticaFontMetrics(parser.Parse(true));
+  internal virtual void testHelveticaFontMetricsReducedDataset() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParserTest.HelveticaAfm));
+      global::System.Exception __dripsharpPrimary_143_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
+          = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
+        this.checkHelveticaFontMetrics(parser.Parse(true));
+      } catch (global::System.Exception __dripsharpCaught_143_26_0) {
+        __dripsharpPrimary_143_26_0 = __dripsharpCaught_143_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_143_26_0);
+      }
     }
   }
 
-  internal virtual void testHelveticaCharMetricsReducedDataset() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParserTest.HelveticaAfm))) {
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
-        = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
-      global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics fontMetrics = parser.Parse(true);
-      this.checkHelveticaCharMetrics(fontMetrics.GetCharMetrics());
+  internal virtual void testHelveticaCharMetricsReducedDataset() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParserTest.HelveticaAfm));
+      global::System.Exception __dripsharpPrimary_153_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
+          = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
+        global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics fontMetrics = parser.Parse(true);
+        this.checkHelveticaCharMetrics(fontMetrics.GetCharMetrics());
+      } catch (global::System.Exception __dripsharpCaught_153_26_0) {
+        __dripsharpPrimary_153_26_0 = __dripsharpCaught_153_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_153_26_0);
+      }
     }
   }
 
-  internal virtual void testHelveticaKernPairsReducedDataset() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParserTest.HelveticaAfm))) {
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
-        = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
-      global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics fontMetrics = parser.Parse(true);
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetKernPairs()),
-        null);
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetKernPairs0()),
-        null);
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetKernPairs1()),
-        null);
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetComposites()),
-        null);
+  internal virtual void testHelveticaKernPairsReducedDataset() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParserTest.HelveticaAfm));
+      global::System.Exception __dripsharpPrimary_166_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
+          = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(@is);
+        global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics fontMetrics = parser.Parse(true);
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetKernPairs()),
+          null);
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetKernPairs0()),
+          null);
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetKernPairs1()),
+          null);
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(fontMetrics.GetComposites()),
+          null);
+      } catch (global::System.Exception __dripsharpCaught_166_26_0) {
+        __dripsharpPrimary_166_26_0 = __dripsharpCaught_166_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_166_26_0);
+      }
     }
   }
 

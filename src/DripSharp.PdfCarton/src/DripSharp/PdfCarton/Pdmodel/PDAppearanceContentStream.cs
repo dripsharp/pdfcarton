@@ -137,4 +137,8 @@ public sealed class PDAppearanceContentStream
       }
     }
   }
+
+  static PDAppearanceContentStream() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.PDAbstractContentStream).TypeHandle);
+  }
 }

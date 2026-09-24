@@ -28,7 +28,7 @@ public class PDPageXYZDestination
 
   public virtual void SetLeft(int x) {
     base.Array.GrowToSize(5);
-    if ((x == -1)) {
+    if ((x == unchecked(-1))) {
       base.Array.Set(2, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
     } else {
       base.Array.SetInt(2, x);
@@ -41,7 +41,7 @@ public class PDPageXYZDestination
 
   public virtual void SetTop(int y) {
     base.Array.GrowToSize(5);
-    if ((y == -1)) {
+    if ((y == unchecked(-1))) {
       base.Array.Set(3, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
     } else {
       base.Array.SetInt(3, y);
@@ -53,15 +53,19 @@ public class PDPageXYZDestination
     if ((obj is global::DripSharp.PdfCarton.Cos.COSNumber)) {
       return ((global::DripSharp.PdfCarton.Cos.COSNumber)(obj!)).FloatValue();
     }
-    return -1;
+    return unchecked(-1);
   }
 
   public virtual void SetZoom(float zoom) {
     base.Array.GrowToSize(5);
-    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(zoom, (float)(-1)) == 0)) {
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(zoom, (float)(unchecked(-1))) == 0)) {
       base.Array.Set(4, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
     } else {
       base.Array.Set(4, new global::DripSharp.PdfCarton.Cos.COSFloat(zoom));
     }
+  }
+
+  static PDPageXYZDestination() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination).TypeHandle);
   }
 }

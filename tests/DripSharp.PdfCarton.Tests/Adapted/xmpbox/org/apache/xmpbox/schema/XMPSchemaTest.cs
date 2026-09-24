@@ -192,11 +192,11 @@ public class XMPSchemaTest {
     string seqdate = "SeqDate";
     string prefSchem = "";
     this.schem.SetBooleanPropertyValueAsSimple(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      @bool), boolVal);
+      @bool), (bool?)(boolVal));
     this.schem.SetDatePropertyValueAsSimple(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       date), dateVal);
     this.schem.SetIntegerPropertyValueAsSimple(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      integ), i);
+      integ), (int?)(i));
     this.schem.SetUnqualifiedLanguagePropertyValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       langprop), global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", lang),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", langVal));
@@ -299,7 +299,7 @@ public class XMPSchemaTest {
     string @bool = "nsSchem:booleanTestProp";
     bool boolVal = false;
     this.schem.SetBooleanPropertyValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      @bool), boolVal);
+      @bool), (bool?)(boolVal));
     global::DripSharp.Testing.JavaAssertions.Equal(boolVal,
       this.schem.GetBooleanPropertyValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       @bool)), null);
@@ -314,7 +314,7 @@ public class XMPSchemaTest {
     string intProp = "nsSchem:IntegerTestProp";
     int intPropVal = 5;
     this.schem.SetIntegerPropertyValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      intProp), intPropVal);
+      intProp), (int?)(intPropVal));
     global::DripSharp.Testing.JavaAssertions.Equal(intPropVal,
       this.schem.GetIntegerPropertyValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       intProp)), null);

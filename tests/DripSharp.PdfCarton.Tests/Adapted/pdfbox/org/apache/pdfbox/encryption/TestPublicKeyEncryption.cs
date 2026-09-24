@@ -5,9 +5,7 @@
 namespace DripSharp.PdfCarton.Encryption;
 
 public class TestPublicKeyEncryption {
-  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/test-output/crypto"));
+  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR;
 
   private global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permission1 = null!;
 
@@ -77,7 +75,7 @@ public class TestPublicKeyEncryption {
     this.document
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test.pdf"))) });
     this.text = new global::DripSharp.PdfCarton.Text.PDFTextStripper().GetText(this.document);
     this.producer = this.document.GetDocumentInformation().GetProducer();
@@ -116,22 +114,32 @@ public class TestPublicKeyEncryption {
     policy.SetEncryptionKeyLength(keyLength);
     this.document.Protect(policy);
     global::DripSharp.Runtime.JavaFile file
-      = this.save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testProtection"));
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument encryptedDoc = this.reload(file,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", this.password1),
-      this.getKeyStore(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      this.keyStore1)))) {
-      global::DripSharp.Testing.JavaAssertions.True(encryptedDoc.IsEncrypted(), null);
-      global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permission
-        = encryptedDoc.GetCurrentAccessPermission();
-      global::DripSharp.Testing.JavaAssertions.False(permission.CanAssembleDocument(), null);
-      global::DripSharp.Testing.JavaAssertions.False(permission.CanExtractContent(), null);
-      global::DripSharp.Testing.JavaAssertions.True(permission.CanExtractForAccessibility(), null);
-      global::DripSharp.Testing.JavaAssertions.False(permission.CanFillInForm(), null);
-      global::DripSharp.Testing.JavaAssertions.False(permission.CanModify(), null);
-      global::DripSharp.Testing.JavaAssertions.False(permission.CanModifyAnnotations(), null);
-      global::DripSharp.Testing.JavaAssertions.False(permission.CanPrint(), null);
-      global::DripSharp.Testing.JavaAssertions.False(permission.CanPrintFaithful(), null);
+      = this.save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testProtection")); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument encryptedDoc = this.reload(file,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", this.password1),
+        this.getKeyStore(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        this.keyStore1)));
+      global::System.Exception __dripsharpPrimary_194_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.True(encryptedDoc.IsEncrypted(), null);
+        global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permission
+          = encryptedDoc.GetCurrentAccessPermission();
+        global::DripSharp.Testing.JavaAssertions.False(permission.CanAssembleDocument(), null);
+        global::DripSharp.Testing.JavaAssertions.False(permission.CanExtractContent(), null);
+        global::DripSharp.Testing.JavaAssertions.True(permission.CanExtractForAccessibility(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.False(permission.CanFillInForm(), null);
+        global::DripSharp.Testing.JavaAssertions.False(permission.CanModify(), null);
+        global::DripSharp.Testing.JavaAssertions.False(permission.CanModifyAnnotations(), null);
+        global::DripSharp.Testing.JavaAssertions.False(permission.CanPrint(), null);
+        global::DripSharp.Testing.JavaAssertions.False(permission.CanPrintFaithful(), null);
+      } catch (global::System.Exception __dripsharpCaught_194_25_0) {
+        __dripsharpPrimary_194_25_0 = __dripsharpCaught_194_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(encryptedDoc,
+          __dripsharpPrimary_194_25_0);
+      }
     }
   }
 
@@ -144,42 +152,62 @@ public class TestPublicKeyEncryption {
     this.document.Protect(policy);
     global::DripSharp.Runtime.JavaFile file
       = this.save(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "testMultipleRecipients"));
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument encryptedDoc1 = this.reload(file,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", this.password1),
-      this.getKeyStore(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      this.keyStore1)))) {
-      global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permission__230_30
-        = encryptedDoc1.GetCurrentAccessPermission();
-      global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanAssembleDocument(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanExtractContent(), null);
-      global::DripSharp.Testing.JavaAssertions.True(permission__230_30.CanExtractForAccessibility(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanFillInForm(), null);
-      global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanModify(), null);
-      global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanModifyAnnotations(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanPrint(), null);
-      global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanPrintFaithful(), null);
-    }
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument encryptedDoc2 = this.reload(file,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", this.password2),
-      this.getKeyStore(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      this.keyStore2)))) {
-      global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permission__244_30
-        = encryptedDoc2.GetCurrentAccessPermission();
-      global::DripSharp.Testing.JavaAssertions.False(permission__244_30.CanAssembleDocument(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.False(permission__244_30.CanExtractContent(), null);
-      global::DripSharp.Testing.JavaAssertions.True(permission__244_30.CanExtractForAccessibility(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.False(permission__244_30.CanFillInForm(), null);
-      global::DripSharp.Testing.JavaAssertions.False(permission__244_30.CanModify(), null);
-      global::DripSharp.Testing.JavaAssertions.False(permission__244_30.CanModifyAnnotations(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.True(permission__244_30.CanPrint(), null);
-      global::DripSharp.Testing.JavaAssertions.False(permission__244_30.CanPrintFaithful(), null);
+      "testMultipleRecipients")); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument encryptedDoc1 = this.reload(file,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", this.password1),
+        this.getKeyStore(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        this.keyStore1)));
+      global::System.Exception __dripsharpPrimary_228_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permission__230_30
+          = encryptedDoc1.GetCurrentAccessPermission();
+        global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanAssembleDocument(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanExtractContent(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.True(permission__230_30.CanExtractForAccessibility(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanFillInForm(), null);
+        global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanModify(), null);
+        global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanModifyAnnotations(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanPrint(), null);
+        global::DripSharp.Testing.JavaAssertions.False(permission__230_30.CanPrintFaithful(), null);
+      } catch (global::System.Exception __dripsharpCaught_228_25_0) {
+        __dripsharpPrimary_228_25_0 = __dripsharpCaught_228_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(encryptedDoc1,
+          __dripsharpPrimary_228_25_0);
+      }
+    } {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument encryptedDoc2 = this.reload(file,
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", this.password2),
+        this.getKeyStore(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        this.keyStore2)));
+      global::System.Exception __dripsharpPrimary_242_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permission__244_30
+          = encryptedDoc2.GetCurrentAccessPermission();
+        global::DripSharp.Testing.JavaAssertions.False(permission__244_30.CanAssembleDocument(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.False(permission__244_30.CanExtractContent(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.True(permission__244_30.CanExtractForAccessibility(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.False(permission__244_30.CanFillInForm(), null);
+        global::DripSharp.Testing.JavaAssertions.False(permission__244_30.CanModify(), null);
+        global::DripSharp.Testing.JavaAssertions.False(permission__244_30.CanModifyAnnotations(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.True(permission__244_30.CanPrint(), null);
+        global::DripSharp.Testing.JavaAssertions.False(permission__244_30.CanPrintFaithful(), null);
+      } catch (global::System.Exception __dripsharpCaught_242_25_0) {
+        __dripsharpPrimary_242_25_0 = __dripsharpCaught_242_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(encryptedDoc2,
+          __dripsharpPrimary_242_25_0);
+      }
     }
   }
 
@@ -190,9 +218,10 @@ public class TestPublicKeyEncryption {
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
         typeof(global::System.IO.Stream), typeof(string),
         typeof(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction) },
-      new object[] { file, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        decryptionPassword), keyStore, (string)default!,
-        global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache() });
+      new object[] { (global::DripSharp.Runtime.JavaFile)file,
+        (string)global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", decryptionPassword),
+        (global::System.IO.Stream)keyStore, (string)((string)default!),
+        (global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)(global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache()) });
     global::DripSharp.Testing.JavaAssertions.Equal(this.text,
       new global::DripSharp.PdfCarton.Text.PDFTextStripper().GetText(doc2),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Extracted text is different"));
@@ -203,18 +232,26 @@ public class TestPublicKeyEncryption {
   }
 
   private static global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient getRecipient(string certificate,
-    global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permission) {
-    using (global::System.IO.Stream input
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", certificate))) {
-      global::DripSharp.Runtime.JavaCertificateFactory factory
-        = global::DripSharp.Runtime.JavaCertificateFactory.GetInstance(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "X.509"));
-      global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient recipient
-        = new global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient();
-      recipient.SetPermission(permission);
-      recipient.SetX509((global::System.Security.Cryptography.X509Certificates.X509Certificate2)(factory.GenerateCertificate(input)!));
-      return recipient;
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permission) { {
+      global::System.IO.Stream input
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", certificate));
+      global::System.Exception __dripsharpPrimary_290_26_0 = null!;
+      try {
+        global::DripSharp.Runtime.JavaCertificateFactory factory
+          = global::DripSharp.Runtime.JavaCertificateFactory.GetInstance(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "X.509"));
+        global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient recipient
+          = new global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient();
+        recipient.SetPermission(permission);
+        recipient.SetX509((global::System.Security.Cryptography.X509Certificates.X509Certificate2)(factory.GenerateCertificate(input)!));
+        return recipient;
+      } catch (global::System.Exception __dripsharpCaught_290_26_0) {
+        __dripsharpPrimary_290_26_0 = __dripsharpCaught_290_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(input, __dripsharpPrimary_290_26_0);
+      }
     }
   }
 
@@ -230,87 +267,122 @@ public class TestPublicKeyEncryption {
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(name,
       "-"), this.KeyLength), "bit.pdf")));
     global::DripSharp.Runtime.JavaFileBridge.Call(this.document, "Save",
-      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { (global::DripSharp.Runtime.JavaFile)file });
     return file;
   }
 
-  internal virtual void testReadPubkeyEncryptedAES128() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "AESkeylength128.pdf"))),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "w!z%C*F-JaNdRgUk"),
-      global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4421-keystore.pfx")),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testnutzer"))) {
-      global::DripSharp.Testing.JavaAssertions.Equal("PublicKeySecurityHandler",
-        ((object)(doc.GetEncryption().GetSecurityHandler())).GetType().Name, null);
-      global::DripSharp.Testing.JavaAssertions.Equal(128,
-        doc.GetEncryption().GetSecurityHandler().GetKeyLength(), null);
-      global::DripSharp.PdfCarton.Text.PDFTextStripper stripper
-        = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
-      global::DripSharp.Testing.JavaAssertions.Equal("Key length: 128",
-        global::DripSharp.Runtime.JavaCompat.StringTrim(stripper.GetText(doc)), null);
+  internal virtual void testReadPubkeyEncryptedAES128() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "AESkeylength128.pdf"))),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "w!z%C*F-JaNdRgUk"),
+        global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4421-keystore.pfx")),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testnutzer"));
+      global::System.Exception __dripsharpPrimary_321_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal("PublicKeySecurityHandler",
+          ((object)(doc.GetEncryption().GetSecurityHandler())).GetType().Name, null);
+        global::DripSharp.Testing.JavaAssertions.Equal(128,
+          doc.GetEncryption().GetSecurityHandler().GetKeyLength(), null);
+        global::DripSharp.PdfCarton.Text.PDFTextStripper stripper
+          = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
+        global::DripSharp.Testing.JavaAssertions.Equal("Key length: 128",
+          global::DripSharp.Runtime.JavaCompat.StringTrim(stripper.GetText(doc)), null);
+      } catch (global::System.Exception __dripsharpCaught_321_25_0) {
+        __dripsharpPrimary_321_25_0 = __dripsharpCaught_321_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_321_25_0);
+      }
     }
   }
 
-  internal virtual void testReadPubkeyEncryptedAES256() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "AESkeylength256.pdf"))),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "w!z%C*F-JaNdRgUk"),
-      global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4421-keystore.pfx")),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testnutzer"))) {
-      global::DripSharp.Testing.JavaAssertions.Equal("PublicKeySecurityHandler",
-        ((object)(doc.GetEncryption().GetSecurityHandler())).GetType().Name, null);
-      global::DripSharp.Testing.JavaAssertions.Equal(256,
-        doc.GetEncryption().GetSecurityHandler().GetKeyLength(), null);
-      global::DripSharp.PdfCarton.Text.PDFTextStripper stripper
-        = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
-      global::DripSharp.Testing.JavaAssertions.Equal("Key length: 256",
-        global::DripSharp.Runtime.JavaCompat.StringTrim(stripper.GetText(doc)), null);
+  internal virtual void testReadPubkeyEncryptedAES256() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "AESkeylength256.pdf"))),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "w!z%C*F-JaNdRgUk"),
+        global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4421-keystore.pfx")),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "testnutzer"));
+      global::System.Exception __dripsharpPrimary_345_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal("PublicKeySecurityHandler",
+          ((object)(doc.GetEncryption().GetSecurityHandler())).GetType().Name, null);
+        global::DripSharp.Testing.JavaAssertions.Equal(256,
+          doc.GetEncryption().GetSecurityHandler().GetKeyLength(), null);
+        global::DripSharp.PdfCarton.Text.PDFTextStripper stripper
+          = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
+        global::DripSharp.Testing.JavaAssertions.Equal("Key length: 256",
+          global::DripSharp.Runtime.JavaCompat.StringTrim(stripper.GetText(doc)), null);
+      } catch (global::System.Exception __dripsharpCaught_345_25_0) {
+        __dripsharpPrimary_345_25_0 = __dripsharpCaught_345_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_345_25_0);
+      }
     }
   }
 
-  internal virtual void testReadPubkeyEncryptedAES128withMetadataExposed() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "AES128ExposedMeta.pdf"))),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ""),
-      global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5249.p12")),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test"),
-      global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache())) {
-      global::DripSharp.Testing.JavaAssertions.Equal("PublicKeySecurityHandler",
-        ((object)(doc.GetEncryption().GetSecurityHandler())).GetType().Name, null);
-      global::DripSharp.Testing.JavaAssertions.Equal(128,
-        doc.GetEncryption().GetSecurityHandler().GetKeyLength(), null);
-      global::DripSharp.PdfCarton.Text.PDFTextStripper stripper
-        = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
-      stripper.SetLineSeparator(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "\n"));
-      global::DripSharp.Testing.JavaAssertions.Equal("AES key length: 128\nwith exposed Metadata",
-        global::DripSharp.Runtime.JavaCompat.StringTrim(stripper.GetText(doc)), null);
+  internal virtual void testReadPubkeyEncryptedAES128withMetadataExposed() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "AES128ExposedMeta.pdf"))),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ""),
+        global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5249.p12")),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test"),
+        global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+      global::System.Exception __dripsharpPrimary_369_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal("PublicKeySecurityHandler",
+          ((object)(doc.GetEncryption().GetSecurityHandler())).GetType().Name, null);
+        global::DripSharp.Testing.JavaAssertions.Equal(128,
+          doc.GetEncryption().GetSecurityHandler().GetKeyLength(), null);
+        global::DripSharp.PdfCarton.Text.PDFTextStripper stripper
+          = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
+        stripper.SetLineSeparator(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "\n"));
+        global::DripSharp.Testing.JavaAssertions.Equal("AES key length: 128\nwith exposed Metadata",
+          global::DripSharp.Runtime.JavaCompat.StringTrim(stripper.GetText(doc)), null);
+      } catch (global::System.Exception __dripsharpCaught_369_25_0) {
+        __dripsharpPrimary_369_25_0 = __dripsharpCaught_369_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_369_25_0);
+      }
     }
   }
 
-  internal virtual void testReadPubkeyEncryptedAES256withMetadataExposed() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "AES256ExposedMeta.pdf"))),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ""),
-      global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5249.p12")),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test"),
-      global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache())) {
-      global::DripSharp.Testing.JavaAssertions.Equal("PublicKeySecurityHandler",
-        ((object)(doc.GetEncryption().GetSecurityHandler())).GetType().Name, null);
-      global::DripSharp.Testing.JavaAssertions.Equal(256,
-        doc.GetEncryption().GetSecurityHandler().GetKeyLength(), null);
-      global::DripSharp.PdfCarton.Text.PDFTextStripper stripper
-        = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
-      stripper.SetLineSeparator(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "\n"));
-      global::DripSharp.Testing.JavaAssertions.Equal("AES key length: 256 \nwith exposed Metadata",
-        global::DripSharp.Runtime.JavaCompat.StringTrim(stripper.GetText(doc)), null);
+  internal virtual void testReadPubkeyEncryptedAES256withMetadataExposed() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "AES256ExposedMeta.pdf"))),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ""),
+        global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Encryption.TestPublicKeyEncryption),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5249.p12")),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test"),
+        global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+      global::System.Exception __dripsharpPrimary_393_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal("PublicKeySecurityHandler",
+          ((object)(doc.GetEncryption().GetSecurityHandler())).GetType().Name, null);
+        global::DripSharp.Testing.JavaAssertions.Equal(256,
+          doc.GetEncryption().GetSecurityHandler().GetKeyLength(), null);
+        global::DripSharp.PdfCarton.Text.PDFTextStripper stripper
+          = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
+        stripper.SetLineSeparator(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "\n"));
+        global::DripSharp.Testing.JavaAssertions.Equal("AES key length: 256 \nwith exposed Metadata",
+          global::DripSharp.Runtime.JavaCompat.StringTrim(stripper.GetText(doc)), null);
+      } catch (global::System.Exception __dripsharpCaught_393_25_0) {
+        __dripsharpPrimary_393_25_0 = __dripsharpCaught_393_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_393_25_0);
+      }
     }
   }
 
@@ -425,10 +497,17 @@ public class TestPublicKeyEncryption {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     init();
     return true;
+  }
+
+  static TestPublicKeyEncryption() {
+    TESTRESULTSDIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/test-output/crypto"));
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

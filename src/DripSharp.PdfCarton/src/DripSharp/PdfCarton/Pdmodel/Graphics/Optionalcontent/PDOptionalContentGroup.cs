@@ -102,4 +102,8 @@ public class PDOptionalContentGroup
     return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(base.ToString()!,
       " ("), this.GetName()), ")");
   }
+
+  static PDOptionalContentGroup() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList).TypeHandle);
+  }
 }

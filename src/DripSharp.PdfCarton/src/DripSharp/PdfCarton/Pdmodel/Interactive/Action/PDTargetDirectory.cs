@@ -57,7 +57,7 @@ public class PDTargetDirectory : global::DripSharp.PdfCarton.Pdmodel.Common.COSO
   }
 
   public virtual int GetPageNumber() {
-    return this.dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.P, -1);
+    return this.dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.P, unchecked(-1));
   }
 
   public virtual void SetPageNumber(int pageNumber) {
@@ -86,7 +86,7 @@ public class PDTargetDirectory : global::DripSharp.PdfCarton.Pdmodel.Common.COSO
   }
 
   public virtual int GetAnnotationIndex() {
-    return this.dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.A, -1);
+    return this.dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.A, unchecked(-1));
   }
 
   public virtual void SetAnnotationIndex(int index) {

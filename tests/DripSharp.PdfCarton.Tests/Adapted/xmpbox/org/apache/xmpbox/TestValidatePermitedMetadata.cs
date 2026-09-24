@@ -20,11 +20,11 @@ public class TestValidatePermitedMetadata {
         global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "http://"))) {
         int pos = global::DripSharp.Runtime.JavaCompat.StringLastIndexOf(line, (int)(':'));
         int spos = global::DripSharp.Runtime.JavaCompat.StringLastIndexOf(line, (int)('/'), pos);
-        string @namespace = global::DripSharp.Runtime.JavaCompat.StringSubstring(line, 0, (spos
-          + 1));
-        string preferred = global::DripSharp.Runtime.JavaCompat.StringSubstring(line, (spos + 1),
-          pos);
-        string fieldname = line.Substring((pos + 1));
+        string @namespace = global::DripSharp.Runtime.JavaCompat.StringSubstring(line, 0,
+          unchecked((spos + 1)));
+        string preferred = global::DripSharp.Runtime.JavaCompat.StringSubstring(line,
+          unchecked((spos + 1)), pos);
+        string fieldname = line.Substring(unchecked((pos + 1)));
         global::DripSharp.Runtime.JavaCompat.Add(@params, new string[] { @namespace, preferred,
             fieldname });
       }

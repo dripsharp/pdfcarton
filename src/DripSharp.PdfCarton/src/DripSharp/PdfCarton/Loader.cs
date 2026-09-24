@@ -14,7 +14,7 @@ public class Loader {
   public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadFDF(string filename) {
     return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadFDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(filename) });
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(filename) });
   }
 
   [global::DripSharp.Runtime.JavaFileBoundary]
@@ -35,19 +35,27 @@ public class Loader {
     }
   }
 
-  public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadFDF(global::System.IO.Stream input) {
-    using (global::DripSharp.PdfCarton.IO.RandomAccessRead readBuffer
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(input)) {
-      global::DripSharp.PdfCarton.Pdfparser.FDFParser parser
-        = new global::DripSharp.PdfCarton.Pdfparser.FDFParser(readBuffer);
-      return parser.Parse();
+  public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadFDF(global::System.IO.Stream input) { {
+      global::DripSharp.PdfCarton.IO.RandomAccessRead readBuffer
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(input);
+      global::System.Exception __dripsharpPrimary_104_31_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdfparser.FDFParser parser
+          = new global::DripSharp.PdfCarton.Pdfparser.FDFParser(readBuffer);
+        return parser.Parse();
+      } catch (global::System.Exception __dripsharpCaught_104_31_0) {
+        __dripsharpPrimary_104_31_0 = __dripsharpCaught_104_31_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(readBuffer, __dripsharpPrimary_104_31_0);
+      }
     }
   }
 
   public static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument LoadXFDF(string filename) {
     return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadXFDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(filename) });
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(filename) });
   }
 
   [global::DripSharp.Runtime.JavaFileBoundary]
@@ -55,10 +63,18 @@ public class Loader {
     return __JavaFile_LoadXFDF(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file));
   }
 
-  internal static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument __JavaFile_LoadXFDF(global::DripSharp.Runtime.JavaFile file) {
-    using (global::System.IO.Stream @is
-      = new global::System.IO.BufferedStream(global::DripSharp.Runtime.JavaCompat.OpenFileInput(file))) {
-      return global::DripSharp.PdfCarton.Loader.LoadXFDF(@is);
+  internal static global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFDocument __JavaFile_LoadXFDF(global::DripSharp.Runtime.JavaFile file) { {
+      global::System.IO.Stream @is
+        = new global::System.IO.BufferedStream(global::DripSharp.Runtime.JavaCompat.OpenFileInput(file));
+      global::System.Exception __dripsharpPrimary_136_26_0 = null!;
+      try {
+        return global::DripSharp.PdfCarton.Loader.LoadXFDF(@is);
+      } catch (global::System.Exception __dripsharpCaught_136_26_0) {
+        __dripsharpPrimary_136_26_0 = __dripsharpCaught_136_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_136_26_0);
+      }
     }
   }
 
@@ -107,8 +123,8 @@ public class Loader {
     return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
         typeof(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction) },
-      new object[] { file, "",
-        global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache() });
+      new object[] { (global::DripSharp.Runtime.JavaFile)file, (string)"",
+        (global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)(global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache()) });
   }
 
   [global::DripSharp.Runtime.JavaFileBoundary]
@@ -124,8 +140,9 @@ public class Loader {
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
         typeof(global::System.IO.Stream), typeof(string),
         typeof(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction) },
-      new object[] { file, "", (global::System.IO.Stream)default!, (string)default!,
-        streamCacheCreateFunction });
+      new object[] { (global::DripSharp.Runtime.JavaFile)file, (string)"",
+        (global::System.IO.Stream)((global::System.IO.Stream)default!), (string)((string)default!),
+        (global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)streamCacheCreateFunction });
   }
 
   [global::DripSharp.Runtime.JavaFileBoundary]
@@ -141,8 +158,9 @@ public class Loader {
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
         typeof(global::System.IO.Stream), typeof(string),
         typeof(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction) },
-      new object[] { file, password, (global::System.IO.Stream)default!, (string)default!,
-        global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache() });
+      new object[] { (global::DripSharp.Runtime.JavaFile)file, (string)password,
+        (global::System.IO.Stream)((global::System.IO.Stream)default!), (string)((string)default!),
+        (global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)(global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache()) });
   }
 
   [global::DripSharp.Runtime.JavaFileBoundary]
@@ -160,8 +178,9 @@ public class Loader {
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
         typeof(global::System.IO.Stream), typeof(string),
         typeof(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction) },
-      new object[] { file, password, (global::System.IO.Stream)default!, (string)default!,
-        streamCacheCreateFunction });
+      new object[] { (global::DripSharp.Runtime.JavaFile)file, (string)password,
+        (global::System.IO.Stream)((global::System.IO.Stream)default!), (string)((string)default!),
+        (global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)streamCacheCreateFunction });
   }
 
   [global::DripSharp.Runtime.JavaFileBoundary]
@@ -177,8 +196,9 @@ public class Loader {
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
         typeof(global::System.IO.Stream), typeof(string),
         typeof(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction) },
-      new object[] { file, password, keyStore, alias,
-        global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache() });
+      new object[] { (global::DripSharp.Runtime.JavaFile)file, (string)password,
+        (global::System.IO.Stream)keyStore, (string)alias,
+        (global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)(global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache()) });
   }
 
   [global::DripSharp.Runtime.JavaFileBoundary]

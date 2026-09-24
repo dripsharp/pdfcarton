@@ -22,4 +22,8 @@ public class TrueTypeContainer
     }
     return false;
   }
+
+  static TrueTypeContainer() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont>).TypeHandle);
+  }
 }

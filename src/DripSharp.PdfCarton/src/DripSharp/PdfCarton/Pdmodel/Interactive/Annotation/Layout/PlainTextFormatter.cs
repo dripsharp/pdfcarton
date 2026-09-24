@@ -211,7 +211,7 @@ public class PlainTextFormatter {
           break;
         case 3:
           if ((global::DripSharp.Runtime.JavaCompat.ListIndexOf(lines, line)
-            != (global::DripSharp.Runtime.JavaCompat.CollectionCount(lines) - 1))) {
+            != unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(lines) - 1)))) {
             interWordSpacing = line.getInterWordSpacing(this.width);
           }
           break;
@@ -235,7 +235,8 @@ public class PlainTextFormatter {
         this.contents.ShowText(word.getText());
         wordWidth
           = global::DripSharp.Runtime.JavaCompat.Unbox((float?)(word.getAttributes().GetIterator().GetAttribute(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Layout.PlainText.TextAttribute.Width)));
-        if ((wordIndex != (global::DripSharp.Runtime.JavaCompat.CollectionCount(words) - 1))) {
+        if ((wordIndex != unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(words)
+          - 1)))) {
           this.contents.NewLineAtOffset((wordWidth + interWordSpacing), 0.0F);
           lastPos = ((lastPos + wordWidth) + interWordSpacing);
         }

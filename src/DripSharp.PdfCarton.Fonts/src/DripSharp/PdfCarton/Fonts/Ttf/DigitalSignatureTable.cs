@@ -14,4 +14,8 @@ public class DigitalSignatureTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTa
   internal DigitalSignatureTable() : base() {
 
   }
+
+  static DigitalSignatureTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
+  }
 }

@@ -53,4 +53,8 @@ public class PDObjectStream : global::DripSharp.PdfCarton.Pdmodel.Common.PDStrea
   public virtual void SetExtends(global::DripSharp.PdfCarton.Pdmodel.Common.PDObjectStream stream) {
     this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Extends, stream);
   }
+
+  static PDObjectStream() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream).TypeHandle);
+  }
 }

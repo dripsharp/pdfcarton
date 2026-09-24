@@ -30,4 +30,8 @@ public class SetNonStrokingDeviceCMYKColor
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingCmyk;
   }
+
+  static SetNonStrokingDeviceCMYKColor() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingColor).TypeHandle);
+  }
 }

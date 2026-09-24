@@ -9,36 +9,28 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public sealed class COSInteger : global::DripSharp.PdfCarton.Cos.COSNumber {
-  private const int LOW = -100;
+  private const int LOW = unchecked(-100);
 
   private const int HIGH = 256;
 
-  private static readonly global::DripSharp.PdfCarton.Cos.COSInteger[] STATIC
-    = new global::DripSharp.PdfCarton.Cos.COSInteger[((global::DripSharp.PdfCarton.Cos.COSInteger.HIGH
-    - global::DripSharp.PdfCarton.Cos.COSInteger.LOW) + 1)];
+  private static readonly global::DripSharp.PdfCarton.Cos.COSInteger[] STATIC;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSInteger Zero
-    = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(0));
+  public static readonly global::DripSharp.PdfCarton.Cos.COSInteger Zero;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSInteger One
-    = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(1));
+  public static readonly global::DripSharp.PdfCarton.Cos.COSInteger One;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSInteger Two
-    = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(2));
+  public static readonly global::DripSharp.PdfCarton.Cos.COSInteger Two;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSInteger Three
-    = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(3));
+  public static readonly global::DripSharp.PdfCarton.Cos.COSInteger Three;
 
-  internal static readonly global::DripSharp.PdfCarton.Cos.COSInteger OUT_OF_RANGE_MAX
-    = global::DripSharp.PdfCarton.Cos.COSInteger.getInvalid(true);
+  internal static readonly global::DripSharp.PdfCarton.Cos.COSInteger OUT_OF_RANGE_MAX;
 
-  internal static readonly global::DripSharp.PdfCarton.Cos.COSInteger OUT_OF_RANGE_MIN
-    = global::DripSharp.PdfCarton.Cos.COSInteger.getInvalid(false);
+  internal static readonly global::DripSharp.PdfCarton.Cos.COSInteger OUT_OF_RANGE_MIN;
 
   public static global::DripSharp.PdfCarton.Cos.COSInteger Get(long val) {
     if (((global::DripSharp.PdfCarton.Cos.COSInteger.LOW <= val) && (val
       <= global::DripSharp.PdfCarton.Cos.COSInteger.HIGH))) {
-      int index = ((int)val - global::DripSharp.PdfCarton.Cos.COSInteger.LOW);
+      int index = unchecked(((int)val - global::DripSharp.PdfCarton.Cos.COSInteger.LOW));
       if ((global::DripSharp.PdfCarton.Cos.COSInteger.STATIC[index] == default!)) {
         global::DripSharp.PdfCarton.Cos.COSInteger.STATIC[index]
           = new global::DripSharp.PdfCarton.Cos.COSInteger(val, true);
@@ -100,5 +92,18 @@ public sealed class COSInteger : global::DripSharp.PdfCarton.Cos.COSNumber {
     global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output,
       global::DripSharp.Runtime.JavaCompat.StringGetBytes(global::DripSharp.Runtime.JavaCompat.StringValueOf(this.value),
       global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+  }
+
+  static COSInteger() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.COSNumber).TypeHandle);
+    STATIC
+      = new global::DripSharp.PdfCarton.Cos.COSInteger[unchecked((unchecked((global::DripSharp.PdfCarton.Cos.COSInteger.HIGH
+      - global::DripSharp.PdfCarton.Cos.COSInteger.LOW)) + 1))];
+    Zero = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(0));
+    One = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(1));
+    Two = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(2));
+    Three = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(3));
+    OUT_OF_RANGE_MAX = global::DripSharp.PdfCarton.Cos.COSInteger.getInvalid(true);
+    OUT_OF_RANGE_MIN = global::DripSharp.PdfCarton.Cos.COSInteger.getInvalid(false);
   }
 }

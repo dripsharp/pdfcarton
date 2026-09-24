@@ -14,4 +14,8 @@ public class LocaleType : global::DripSharp.PdfCarton.Xmp.Type.TextType {
     propertyName, value) {
 
   }
+
+  static LocaleType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType).TypeHandle);
+  }
 }

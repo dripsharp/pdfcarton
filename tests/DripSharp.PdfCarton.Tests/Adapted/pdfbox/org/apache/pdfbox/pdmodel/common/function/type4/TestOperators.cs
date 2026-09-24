@@ -10,15 +10,15 @@ public class TestOperators {
       "5 6 add")).Pop(11).IsEmpty();
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "5 0.23 add")).Pop(5.23F).IsEmpty();
-    int bigValue = (int.MaxValue - 2);
+    int bigValue = unchecked((int.MaxValue - 2));
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context
       = global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(bigValue,
       " "), bigValue), " add"))).ToExecutionContext();
     float floatResult
       = global::DripSharp.Runtime.JavaCompat.Unbox((float?)(context.GetStack().Pop()));
-    global::DripSharp.Testing.JavaAssertions.Equal((float)(((2 * (long)(int.MaxValue)) - 4)),
-      floatResult, null, (float)(1));
+    global::DripSharp.Testing.JavaAssertions.Equal((float)(unchecked((unchecked((2
+      * (long)(int.MaxValue))) - 4))), floatResult, null, (float)(1));
     global::DripSharp.Testing.JavaAssertions.True(context.GetStack().IsEmpty, null);
   }
 
@@ -59,7 +59,7 @@ public class TestOperators {
 
   internal virtual void testCvi() {
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "-47.8 cvi")).Pop(-47).IsEmpty();
+      "-47.8 cvi")).Pop(unchecked(-47)).IsEmpty();
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "520.9 cvi")).Pop(520).IsEmpty();
   }
@@ -107,7 +107,7 @@ public class TestOperators {
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "4 2 idiv")).Pop(2).IsEmpty();
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "-5 2 idiv")).Pop(-2).IsEmpty();
+      "-5 2 idiv")).Pop(unchecked(-2)).IsEmpty();
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidCastException>(()
       => global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "4.4 2 idiv")), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -134,7 +134,7 @@ public class TestOperators {
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "5 2 mod")).Pop(1).IsEmpty();
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "-5 3 mod")).Pop(-2).IsEmpty();
+      "-5 3 mod")).Pop(unchecked(-2)).IsEmpty();
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidCastException>(()
       => global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "4.4 2 mod")), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -149,8 +149,9 @@ public class TestOperators {
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "1.5 2.1 mul")).PopReal(3.15F, 0.001D).IsEmpty();
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.Runtime.JavaCompat.Concat((int.MaxValue - 3),
-      " 2 mul"))).PopReal((float)((2L * (int.MaxValue - 3))), 0.001D).IsEmpty();
+      global::DripSharp.Runtime.JavaCompat.Concat(unchecked((int.MaxValue - 3)),
+      " 2 mul"))).PopReal((float)(unchecked((2L * unchecked((int.MaxValue - 3))))),
+      0.001D).IsEmpty();
   }
 
   internal virtual void testNeg() {
@@ -159,7 +160,7 @@ public class TestOperators {
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "-3 neg")).Pop(3).IsEmpty();
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.Runtime.JavaCompat.Concat((int.MinValue + 1),
+      global::DripSharp.Runtime.JavaCompat.Concat(unchecked((int.MinValue + 1)),
       " neg"))).Pop(int.MaxValue).IsEmpty();
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(int.MinValue,
@@ -256,7 +257,7 @@ public class TestOperators {
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "true not false not")).Pop(true).Pop(false).IsEmpty();
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Type4Tester.Create(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "52 not -37 not")).Pop(37).Pop(-52).IsEmpty();
+      "52 not -37 not")).Pop(37).Pop(unchecked(-52)).IsEmpty();
   }
 
   internal virtual void testOr() {

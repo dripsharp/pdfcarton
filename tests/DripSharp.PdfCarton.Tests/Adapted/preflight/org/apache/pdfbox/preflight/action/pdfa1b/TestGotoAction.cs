@@ -70,4 +70,8 @@ public class TestGotoAction
     } finally {
     }
   }
+
+  static TestGotoAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.Pdfa1b.AbstractTestAction).TypeHandle);
+  }
 }

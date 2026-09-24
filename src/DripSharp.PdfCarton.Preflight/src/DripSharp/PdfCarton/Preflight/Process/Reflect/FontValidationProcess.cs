@@ -68,4 +68,8 @@ public class FontValidationProcess : global::DripSharp.PdfCarton.Preflight.Proce
       global::DripSharp.Runtime.JavaCompat.Concat("Unknown font type: ", subtype)));
     return default!;
   }
+
+  static FontValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+  }
 }

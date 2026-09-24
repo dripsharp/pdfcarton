@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public abstract class PDAbstractContentStream : global::System.IDisposable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   protected internal readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument Document = null!;
 
@@ -705,7 +704,8 @@ public abstract class PDAbstractContentStream : global::System.IDisposable {
     global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList propertyList) {
     this.WriteOperand(tag);
     global::DripSharp.PdfCarton.Cos.COSDictionary dict = propertyList.GetCOSObject();
-    if (((dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Mcid) > -1) && (dict.Size() == 1))) {
+    if (((dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Mcid) > unchecked(-1)) && (dict.Size()
+      == 1))) {
       this.Write(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("<</MCID ",
         dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Mcid)), ">> "));
     } else {
@@ -754,7 +754,7 @@ public abstract class PDAbstractContentStream : global::System.IDisposable {
     }
     int byteCount = global::DripSharp.PdfCarton.Util.NumberFormatUtil.FormatFloatFast(real,
       this.formatDecimal.GetMaximumFractionDigits(), this.formatBuffer);
-    if ((byteCount == -1)) {
+    if ((byteCount == unchecked(-1))) {
       this.Write(this.formatDecimal.Format((double)(real)));
     } else {
       global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.OutputStream, this.formatBuffer,
@@ -863,7 +863,7 @@ public abstract class PDAbstractContentStream : global::System.IDisposable {
     global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font font, string text) {
     string[] words = global::DripSharp.PdfCarton.Util.StringUtil.TokenizeOnSpace(text);
     global::DripSharp.Runtime.JavaByteArrayOutputStream @out
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream((2 * text.Length));
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(unchecked((2 * text.Length)));
     foreach (string word in words) {
       if ((word == default!)) {
         continue;
@@ -914,5 +914,9 @@ public abstract class PDAbstractContentStream : global::System.IDisposable {
         font.EncodeGlyphId((int)(glyphId__1761_22)));
     }
     return glyphIdsAfterGsub;
+  }
+
+  static PDAbstractContentStream() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

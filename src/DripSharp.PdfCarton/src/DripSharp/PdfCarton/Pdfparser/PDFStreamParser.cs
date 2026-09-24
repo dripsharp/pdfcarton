@@ -9,29 +9,32 @@
 namespace DripSharp.PdfCarton.Pdfparser;
 
 public class PDFStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly global::System.Text.RegularExpressions.Regex NUMBER_PATTERN
-    = global::DripSharp.Runtime.JavaCompat.CompileRegex("^\\d*(\\.\\d*)?$");
+  private static readonly global::System.Text.RegularExpressions.Regex NUMBER_PATTERN;
 
   private const int MAX_BIN_CHAR_TEST_LENGTH = 10;
 
-  private readonly sbyte[] binCharTestArr
-    = new sbyte[global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser.MAX_BIN_CHAR_TEST_LENGTH];
+  private readonly sbyte[] binCharTestArr;
 
-  private int inlineImageDepth = 0;
+  private int inlineImageDepth;
 
-  private long inlineOffset = 0;
+  private long inlineOffset;
 
   public PDFStreamParser(global::DripSharp.PdfCarton.Contentstream.PDContentStream pdContentstream)
   : base(((global::DripSharp.PdfCarton.Contentstream.PDContentStream)(pdContentstream)).GetContentsForStreamParsing()) {
-
+    this.binCharTestArr
+      = new sbyte[global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser.MAX_BIN_CHAR_TEST_LENGTH];
+    this.inlineImageDepth = 0;
+    this.inlineOffset = 0;
   }
 
   public PDFStreamParser(sbyte[] bytes)
   : base(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(bytes)) {
-
+    this.binCharTestArr
+      = new sbyte[global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser.MAX_BIN_CHAR_TEST_LENGTH];
+    this.inlineImageDepth = 0;
+    this.inlineOffset = 0;
   }
 
   public virtual global::System.Collections.Generic.IList<object> Parse() {
@@ -239,8 +242,8 @@ public class PDFStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser 
     int readBytes = base.Source.Read(this.binCharTestArr, 0,
       global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser.MAX_BIN_CHAR_TEST_LENGTH);
     bool noBinData = true;
-    int startOpIdx = -1;
-    int endOpIdx = -1;
+    int startOpIdx = unchecked(-1);
+    int endOpIdx = unchecked(-1);
     string s = "";
     if ((readBytes > 0)) {
       for (int bIdx = 0; (bIdx < readBytes); bIdx++) {
@@ -250,19 +253,20 @@ public class PDFStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser 
           noBinData = false;
           break;
         }
-        if (((startOpIdx == -1) && !(((((((int)b == 0) || ((int)b == 9)) || ((int)b == 32))
-          || ((int)b == 10)) || ((int)b == 13))))) {
+        if (((startOpIdx == unchecked(-1)) && !(((((((int)b == 0) || ((int)b == 9)) || ((int)b
+          == 32)) || ((int)b == 10)) || ((int)b == 13))))) {
           startOpIdx = bIdx;
         } else {
-          if ((((startOpIdx != -1) && (endOpIdx == -1)) && ((((((int)b == 0) || ((int)b == 9))
-            || ((int)b == 32)) || ((int)b == 10)) || ((int)b == 13)))) {
+          if ((((startOpIdx != unchecked(-1)) && (endOpIdx == unchecked(-1))) && ((((((int)b == 0)
+            || ((int)b == 9)) || ((int)b == 32)) || ((int)b == 10)) || ((int)b == 13)))) {
             endOpIdx = bIdx;
           }
         }
       }
-      if (((noBinData && (endOpIdx != -1)) && (startOpIdx != -1))) {
+      if (((noBinData && (endOpIdx != unchecked(-1))) && (startOpIdx != unchecked(-1)))) {
         s = global::DripSharp.Runtime.JavaCompat.NewString(this.binCharTestArr, startOpIdx,
-          (endOpIdx - startOpIdx), global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+          unchecked((endOpIdx - startOpIdx)),
+          global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
         if ((((!global::DripSharp.Runtime.JavaCompat.Equals("Q", s)
           && !global::DripSharp.Runtime.JavaCompat.Equals("EMC", s))
           && !global::DripSharp.Runtime.JavaCompat.Equals("S", s))
@@ -271,14 +275,15 @@ public class PDFStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser 
           noBinData = false;
         }
       }
-      if (((noBinData && (startOpIdx != -1)) && (readBytes
+      if (((noBinData && (startOpIdx != unchecked(-1))) && (readBytes
         == global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser.MAX_BIN_CHAR_TEST_LENGTH))) {
-        if ((endOpIdx == -1)) {
+        if ((endOpIdx == unchecked(-1))) {
           endOpIdx = global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser.MAX_BIN_CHAR_TEST_LENGTH;
           s = global::DripSharp.Runtime.JavaCompat.NewString(this.binCharTestArr, startOpIdx,
-            (endOpIdx - startOpIdx), global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+            unchecked((endOpIdx - startOpIdx)),
+            global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
         }
-        if ((((endOpIdx - startOpIdx) > 3)
+        if (((unchecked((endOpIdx - startOpIdx)) > 3)
           && !(global::DripSharp.Runtime.JavaCompat.RegexMatcher(global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser.NUMBER_PATTERN,
           s).Find()))) {
           noBinData = false;
@@ -298,7 +303,7 @@ public class PDFStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser 
     this.SkipSpaces();
     global::System.Text.StringBuilder buffer = new global::System.Text.StringBuilder(4);
     int nextChar = base.Source.Peek();
-    while (((((((((nextChar != -1)
+    while (((((((((nextChar != unchecked(-1))
       && !(global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsWhitespace(nextChar))) && (nextChar
       != (int)'[')) && (nextChar != (int)'<')) && (nextChar != (int)'(')) && (nextChar != (int)'/'))
       && (nextChar != (int)'%')) && ((nextChar < (int)'0') || (nextChar > (int)'9')))) {
@@ -325,5 +330,11 @@ public class PDFStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser 
     if (((base.Source != default!) && !(base.Source.IsClosed()))) {
       base.Source.Dispose();
     }
+  }
+
+  static PDFStreamParser() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdfparser.BaseParser).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    NUMBER_PATTERN = global::DripSharp.Runtime.JavaCompat.CompileRegex("^\\d*(\\.\\d*)?$");
   }
 }

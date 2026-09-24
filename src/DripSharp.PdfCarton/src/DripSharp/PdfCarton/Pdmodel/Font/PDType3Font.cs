@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public class PDType3Font : global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private global::DripSharp.PdfCarton.Pdmodel.PDResources resources = null!;
 
@@ -88,16 +87,20 @@ public class PDType3Font : global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont
   }
 
   public override float GetWidth(int code) {
-    int firstChar = base.Dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.FirstChar, -1);
-    int lastChar = base.Dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.LastChar, -1);
+    int firstChar = base.Dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.FirstChar,
+      unchecked(-1));
+    int lastChar = base.Dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.LastChar,
+      unchecked(-1));
     global::System.Collections.Generic.IList<float?> widths
       = global::DripSharp.Runtime.JavaCompat.CastList<float?>(this.GetWidths());
     if (((!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(widths) && (code >= firstChar)) && (code
       <= lastChar))) {
-      if (((code - firstChar) >= global::DripSharp.Runtime.JavaCompat.CollectionCount(widths))) {
+      if ((unchecked((code - firstChar))
+        >= global::DripSharp.Runtime.JavaCompat.CollectionCount(widths))) {
         return 0;
       }
-      float? w = global::DripSharp.Runtime.JavaCompat.ListGet(widths, (code - firstChar));
+      float? w = global::DripSharp.Runtime.JavaCompat.ListGet(widths, unchecked((code
+        - firstChar)));
       return ((w == default!) ? 0 : global::DripSharp.Runtime.JavaCompat.Unbox(w));
     } else {
       global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fd = this.GetFontDescriptor();
@@ -265,5 +268,10 @@ public class PDType3Font : global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont
     return ((stream != default!)
       ? new global::DripSharp.PdfCarton.Pdmodel.Font.PDType3CharProc(this, stream)
       : (global::DripSharp.PdfCarton.Pdmodel.Font.PDType3CharProc)(default!));
+  }
+
+  static PDType3Font() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

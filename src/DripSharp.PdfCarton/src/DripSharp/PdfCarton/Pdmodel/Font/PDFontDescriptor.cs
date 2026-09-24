@@ -33,7 +33,7 @@ public sealed class PDFontDescriptor : global::DripSharp.PdfCarton.Pdmodel.Commo
 
   private float capHeight = float.NegativeInfinity;
 
-  private int flags = -1;
+  private int flags = unchecked(-1);
 
   internal PDFontDescriptor() {
     this.dic = new global::DripSharp.PdfCarton.Cos.COSDictionary();
@@ -183,7 +183,7 @@ public sealed class PDFontDescriptor : global::DripSharp.PdfCarton.Pdmodel.Commo
   }
 
   public int GetFlags() {
-    if ((this.flags == -1)) {
+    if ((this.flags == unchecked(-1))) {
       this.flags = this.dic.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, 0);
     }
     return this.flags;

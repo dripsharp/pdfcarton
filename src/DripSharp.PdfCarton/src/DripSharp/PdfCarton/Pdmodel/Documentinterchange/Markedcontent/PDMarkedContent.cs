@@ -40,7 +40,7 @@ public class PDMarkedContent {
   }
 
   public virtual int GetMCID() {
-    return ((this.GetProperties() == default!) ? -1
+    return ((this.GetProperties() == default!) ? unchecked(-1)
       : this.GetProperties().GetInt(global::DripSharp.PdfCarton.Cos.COSName.Mcid));
   }
 

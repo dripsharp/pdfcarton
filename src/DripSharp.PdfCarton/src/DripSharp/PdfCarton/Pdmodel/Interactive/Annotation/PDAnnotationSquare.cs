@@ -42,4 +42,8 @@ public class PDAnnotationSquare
       ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
     }
   }
+
+  static PDAnnotationSquare() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquareCircle).TypeHandle);
+  }
 }

@@ -44,10 +44,9 @@ public sealed class PDPageContentStream
     public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
   }
 
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private bool sourcePageHadContents = false;
+  private bool sourcePageHadContents;
 
   public PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
     global::DripSharp.PdfCarton.Pdmodel.PDPage sourcePage) : this(document, sourcePage,
@@ -82,6 +81,8 @@ public sealed class PDPageContentStream
     global::DripSharp.PdfCarton.Pdmodel.PDResources resources) : base(document,
     stream.CreateOutputStream((compress ? global::DripSharp.PdfCarton.Cos.COSName.FlateDecode
     : (global::DripSharp.PdfCarton.Cos.COSName)(default!))), resources) {
+    this.sourcePageHadContents = false;
+
     if ((sourcePage.GetResources() == default!)) {
       sourcePage.SetResources(resources);
     }
@@ -102,12 +103,21 @@ public sealed class PDPageContentStream
       }
       if (resetContext) {
         global::DripSharp.PdfCarton.Pdmodel.Common.PDStream prefixStream
-          = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(document);
-        using (global::System.IO.Stream prefixOut = prefixStream.CreateOutputStream()) {
-          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(prefixOut,
-            global::DripSharp.Runtime.JavaCompat.StringGetBytes("q",
-            global::DripSharp.Runtime.JavaStandardCharsets.USASCII));
-          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(prefixOut, (int)('\n'));
+          = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(document); {
+          global::System.IO.Stream prefixOut = prefixStream.CreateOutputStream();
+          global::System.Exception __dripsharpPrimary_173_35_0 = null!;
+          try {
+            global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(prefixOut,
+              global::DripSharp.Runtime.JavaCompat.StringGetBytes("q",
+              global::DripSharp.Runtime.JavaStandardCharsets.USASCII));
+            global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(prefixOut, (int)('\n'));
+          } catch (global::System.Exception __dripsharpCaught_173_35_0) {
+            __dripsharpPrimary_173_35_0 = __dripsharpCaught_173_35_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(prefixOut,
+              __dripsharpPrimary_173_35_0);
+          }
         }
         array.Add(0, prefixStream.GetCOSObject());
       }
@@ -131,7 +141,7 @@ public sealed class PDPageContentStream
   public PDPageContentStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearance,
     global::System.IO.Stream outputStream) : base(doc, outputStream, appearance.GetResources()) {
-
+    this.sourcePageHadContents = false;
   }
 
   public void AppendRawCommands(string commands) {
@@ -152,5 +162,10 @@ public sealed class PDPageContentStream
 
   public void AppendRawCommands(float data) {
     this.WriteOperand(data);
+  }
+
+  static PDPageContentStream() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.PDAbstractContentStream).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -7,7 +7,7 @@ namespace DripSharp.PdfCarton.Xmp.Type;
 public abstract class AbstractTypeTester {
   private const long COUNTER_SEED = 0;
 
-  private static readonly long MAX_COUNTER = long.MaxValue;
+  private static readonly long MAX_COUNTER;
 
   public const int RandLoopCount = 50;
 
@@ -19,7 +19,8 @@ public abstract class AbstractTypeTester {
   }
 
   public virtual string CalculateSimpleGetter(string name) {
-    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder((3 + name.Length));
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(unchecked((3
+      + name.Length)));
     sb.Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       "get")).Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       this.CalculateFieldNameForMethod(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
@@ -28,7 +29,8 @@ public abstract class AbstractTypeTester {
   }
 
   public virtual string CalculateArrayGetter(string name) {
-    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder((4 + name.Length));
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(unchecked((4
+      + name.Length)));
     string fn
       = this.CalculateFieldNameForMethod(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       name));
@@ -42,7 +44,8 @@ public abstract class AbstractTypeTester {
   }
 
   public virtual string CalculateSimpleSetter(string name) {
-    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder((3 + name.Length));
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(unchecked((3
+      + name.Length)));
     sb.Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       "set")).Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       this.CalculateFieldNameForMethod(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
@@ -85,12 +88,14 @@ public abstract class AbstractTypeTester {
   public virtual object GetJavaValue(global::DripSharp.PdfCarton.Xmp.Type.Types type) {
     if (typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType).IsAssignableFrom(type.GetImplementingClass())) {
       return global::DripSharp.Runtime.JavaCompat.Concat("Text_String_",
-        (this.counterRandom.NextLong() % global::DripSharp.PdfCarton.Xmp.Type.AbstractTypeTester.MAX_COUNTER));
+        global::DripSharp.Runtime.JavaCompat.IntegralRemainder(this.counterRandom.NextLong(),
+        global::DripSharp.PdfCarton.Xmp.Type.AbstractTypeTester.MAX_COUNTER));
     } else {
       if ((type.GetImplementingClass() == typeof(global::DripSharp.PdfCarton.Xmp.Type.DateType))) {
         global::System.DateTimeOffset? calendar = global::System.DateTimeOffset.Now;
         calendar
-          = global::DripSharp.PdfCarton.Tests.Support.CalendarFromUnixTimeMilliseconds((this.counterRandom.NextLong() % global::DripSharp.PdfCarton.Xmp.Type.AbstractTypeTester.MAX_COUNTER));
+          = global::DripSharp.PdfCarton.Tests.Support.CalendarFromUnixTimeMilliseconds(global::DripSharp.Runtime.JavaCompat.IntegralRemainder(this.counterRandom.NextLong(),
+          global::DripSharp.PdfCarton.Xmp.Type.AbstractTypeTester.MAX_COUNTER));
         return calendar;
       } else {
         if ((type.GetImplementingClass()
@@ -116,6 +121,10 @@ public abstract class AbstractTypeTester {
       }
     }
     return result;
+  }
+
+  static AbstractTypeTester() {
+    MAX_COUNTER = long.MaxValue;
   }
 
   public AbstractTypeTester() {}

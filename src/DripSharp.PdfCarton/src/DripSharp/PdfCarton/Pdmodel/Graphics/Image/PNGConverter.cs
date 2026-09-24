@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 internal sealed class PNGConverter {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const int CHUNK_IHDR = 1229472850;
 
@@ -48,9 +47,11 @@ internal sealed class PNGConverter {
 
   private const int CHUNK_TIME = 1950960965;
 
-  private static readonly int[] CRC_TABLE = new int[256];
+  private static readonly int[] CRC_TABLE;
 
-  static PNGConverter() { {
+  static PNGConverter() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    CRC_TABLE = new int[256]; {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.makeCrcTable();
     }
   }
@@ -74,12 +75,12 @@ internal sealed class PNGConverter {
     int width = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.readInt(ihdr.bytes,
       ihdrStart);
     int height = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.readInt(ihdr.bytes,
-      (ihdrStart + 4));
-    int bitDepth = (ihdr.bytes[(ihdrStart + 8)] & 255);
-    int colorType = (ihdr.bytes[(ihdrStart + 9)] & 255);
-    int compressionMethod = (ihdr.bytes[(ihdrStart + 10)] & 255);
-    int filterMethod = (ihdr.bytes[(ihdrStart + 11)] & 255);
-    int interlaceMethod = (ihdr.bytes[(ihdrStart + 12)] & 255);
+      unchecked((ihdrStart + 4)));
+    int bitDepth = (ihdr.bytes[unchecked((ihdrStart + 8))] & 255);
+    int colorType = (ihdr.bytes[unchecked((ihdrStart + 9))] & 255);
+    int compressionMethod = (ihdr.bytes[unchecked((ihdrStart + 10))] & 255);
+    int filterMethod = (ihdr.bytes[unchecked((ihdrStart + 11))] & 255);
+    int interlaceMethod = (ihdr.bytes[unchecked((ihdrStart + 12))] & 255);
     if ((((((bitDepth != 1) && (bitDepth != 2)) && (bitDepth != 4)) && (bitDepth != 8)) && (bitDepth
       != 16))) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.LOG,
@@ -154,7 +155,7 @@ internal sealed class PNGConverter {
         global::DripSharp.Runtime.JavaCompat.StringValueOf("Indexed image without PLTE chunk."));
       return default!;
     }
-    if (((plte.length % 3) != 0)) {
+    if ((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(plte.length, 3) != 0)) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.LOG,
         global::DripSharp.Runtime.JavaCompat.StringValueOf("PLTE table corrupted, last (r,g,b) tuple is not complete."));
       return default!;
@@ -171,11 +172,12 @@ internal sealed class PNGConverter {
     if ((image == default!)) {
       return default!;
     }
-    int highVal = ((plte.length / 3) - 1);
+    int highVal = unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(plte.length, 3)
+      - 1));
     if ((highVal > 255)) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.LOG,
         global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.JavaStringFormat("Too much colors in PLTE, only 256 allowed, found %d colors.",
-        (highVal + 1))));
+        unchecked((highVal + 1)))));
       return default!;
     }
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.setupIndexedColorSpace(doc,
@@ -205,28 +207,36 @@ internal sealed class PNGConverter {
     imageDict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.DecodeParms, decodeParams);
     flateDecode.Decode(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.getIDATInputStream(state),
       outputStream, imageDict, 0);
-    int length = (image.GetWidth() * image.GetHeight());
+    int length = unchecked((image.GetWidth() * image.GetHeight()));
     sbyte[] bytes = new sbyte[length];
     sbyte[] transparencyTable = state.tRNS.getData();
-    sbyte[] decodedIDAT = global::DripSharp.Runtime.JavaCompat.ToSignedBytes(outputStream);
-    using (global::DripSharp.Runtime.JavaImageInputStream iis
-      = new global::DripSharp.Runtime.JavaImageInputStream(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(decodedIDAT))) {
-      int bitsPerComponent = state.bitsPerComponent;
-      int w = 0;
-      int neededBits = (bitsPerComponent * state.width);
-      int bitPadding = (neededBits % 8);
-      for (int i = 0; (i < bytes.Length); i++) {
-        int idx = (int)(iis.ReadBits(bitsPerComponent));
-        if ((idx < transparencyTable.Length)) {
-          bytes[i] = unchecked((sbyte)(transparencyTable[idx]));
-        } else {
-          bytes[i] = unchecked((sbyte)(255));
+    sbyte[] decodedIDAT = global::DripSharp.Runtime.JavaCompat.ToSignedBytes(outputStream); {
+      global::DripSharp.Runtime.JavaImageInputStream iis
+        = new global::DripSharp.Runtime.JavaImageInputStream(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(decodedIDAT));
+      global::System.Exception __dripsharpPrimary_271_31_0 = null!;
+      try {
+        int bitsPerComponent = state.bitsPerComponent;
+        int w = 0;
+        int neededBits = unchecked((bitsPerComponent * state.width));
+        int bitPadding = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(neededBits, 8);
+        for (int i = 0; (i < bytes.Length); i++) {
+          int idx = (int)(iis.ReadBits(bitsPerComponent));
+          if ((idx < transparencyTable.Length)) {
+            bytes[i] = unchecked((sbyte)(transparencyTable[idx]));
+          } else {
+            bytes[i] = unchecked((sbyte)(255));
+          }
+          w++;
+          if ((w == state.width)) {
+            w = 0;
+            iis.ReadBits(bitPadding);
+          }
         }
-        w++;
-        if ((w == state.width)) {
-          w = 0;
-          iis.ReadBits(bitPadding);
-        }
+      } catch (global::System.Exception __dripsharpCaught_271_31_0) {
+        __dripsharpPrimary_271_31_0 = __dripsharpCaught_271_31_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(iis, __dripsharpPrimary_271_31_0);
       }
     }
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.prepareImageXObject(doc,
@@ -245,11 +255,20 @@ internal sealed class PNGConverter {
       global::DripSharp.PdfCarton.Cos.COSInteger.One);
     indexedArray.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(highVal)));
     global::DripSharp.PdfCarton.Pdmodel.Common.PDStream colorTable
-      = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(doc);
-    using (global::System.IO.Stream colorTableStream
-      = colorTable.CreateOutputStream(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode)) {
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(colorTableStream, lookupTable.bytes,
-        lookupTable.start, lookupTable.length);
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(doc); {
+      global::System.IO.Stream colorTableStream
+        = colorTable.CreateOutputStream(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode);
+      global::System.Exception __dripsharpPrimary_316_27_0 = null!;
+      try {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(colorTableStream, lookupTable.bytes,
+          lookupTable.start, lookupTable.length);
+      } catch (global::System.Exception __dripsharpCaught_316_27_0) {
+        __dripsharpPrimary_316_27_0 = __dripsharpCaught_316_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(colorTableStream,
+          __dripsharpPrimary_316_27_0);
+      }
     }
     indexedArray.Add(colorTable);
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed indexed
@@ -346,7 +365,7 @@ internal sealed class PNGConverter {
     if ((state.iCCP != default!)) {
       int iccProfileDataStart = 0;
       while (((iccProfileDataStart < 80) && (iccProfileDataStart < state.iCCP.length))) {
-        if (((int)(state.iCCP.bytes[(state.iCCP.start + iccProfileDataStart)]) == 0)) {
+        if (((int)(state.iCCP.bytes[unchecked((state.iCCP.start + iccProfileDataStart))]) == 0)) {
           break;
         }
         iccProfileDataStart++;
@@ -357,23 +376,45 @@ internal sealed class PNGConverter {
           global::DripSharp.Runtime.JavaCompat.StringValueOf("Invalid iCCP chunk, to few bytes"));
         return default!;
       }
-      sbyte compressionMethod = state.iCCP.bytes[(state.iCCP.start + iccProfileDataStart)];
+      sbyte compressionMethod = state.iCCP.bytes[unchecked((state.iCCP.start
+        + iccProfileDataStart))];
       if (((int)compressionMethod != 0)) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.LOG,
           global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.JavaStringFormat("iCCP chunk: invalid compression method %d",
           compressionMethod)));
         return default!;
       }
-      iccProfileDataStart++;
-      using (global::System.IO.Stream rawOutputStream = cosStream.CreateRawOutputStream()) {
-        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(rawOutputStream, state.iCCP.bytes,
-          (state.iCCP.start + iccProfileDataStart), (state.iCCP.length - iccProfileDataStart));
+      iccProfileDataStart++; {
+        global::System.IO.Stream rawOutputStream = cosStream.CreateRawOutputStream();
+        global::System.Exception __dripsharpPrimary_445_31_0 = null!;
+        try {
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(rawOutputStream, state.iCCP.bytes,
+            unchecked((state.iCCP.start + iccProfileDataStart)), unchecked((state.iCCP.length
+            - iccProfileDataStart)));
+        } catch (global::System.Exception __dripsharpCaught_445_31_0) {
+          __dripsharpPrimary_445_31_0 = __dripsharpCaught_445_31_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(rawOutputStream,
+            __dripsharpPrimary_445_31_0);
+        }
       }
     } else {
       global::DripSharp.Runtime.JavaIccProfile rgbProfile
         = global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(global::DripSharp.Runtime.JavaColorSpace.CS_sRGB);
-      using (global::System.IO.Stream outputStream = cosStream.CreateOutputStream()) {
-        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(outputStream, rgbProfile.GetData());
+      {
+        global::System.IO.Stream outputStream = cosStream.CreateOutputStream();
+        global::System.Exception __dripsharpPrimary_455_31_0 = null!;
+        try {
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(outputStream,
+            rgbProfile.GetData());
+        } catch (global::System.Exception __dripsharpCaught_455_31_0) {
+          __dripsharpPrimary_455_31_0 = __dripsharpCaught_455_31_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(outputStream,
+            __dripsharpPrimary_455_31_0);
+        }
       }
     }
     return cosStream;
@@ -405,8 +446,7 @@ internal sealed class PNGConverter {
   }
 
   internal class MultipleInputStream : global::DripSharp.Runtime.JavaInputStream {
-    internal readonly global::System.Collections.Generic.IList<global::System.IO.Stream> inputStreams
-      = new global::System.Collections.Generic.List<global::System.IO.Stream>();
+    internal readonly global::System.Collections.Generic.IList<global::System.IO.Stream> inputStreams;
 
     internal int currentStreamIdx = default;
 
@@ -426,10 +466,10 @@ internal sealed class PNGConverter {
 
     public override int Read() {
       if (!(this.ensureStream())) {
-        return -1;
+        return unchecked(-1);
       }
       int ret = global::DripSharp.Runtime.JavaCompat.InputStreamRead(this.currentStream);
-      if ((ret == -1)) {
+      if ((ret == unchecked(-1))) {
         this.currentStream = default!;
         return this.Read();
       }
@@ -445,15 +485,19 @@ internal sealed class PNGConverter {
 
     public override int Read(sbyte[] b, int off, int len) {
       if (!(this.ensureStream())) {
-        return -1;
+        return unchecked(-1);
       }
       int ret = global::DripSharp.Runtime.JavaCompat.InputStreamRead(this.currentStream, b, off,
         len);
-      if ((ret == -1)) {
+      if ((ret == unchecked(-1))) {
         this.currentStream = default!;
         return this.Read(b, off, len);
       }
       return ret;
+    }
+
+    internal MultipleInputStream() {
+      this.inputStreams = new global::System.Collections.Generic.List<global::System.IO.Stream>();
     }
   }
 
@@ -538,14 +582,14 @@ internal sealed class PNGConverter {
     if ((chunk == default!)) {
       return true;
     }
-    if (((chunk.start + chunk.length) > chunk.bytes.Length)) {
+    if ((unchecked((chunk.start + chunk.length)) > chunk.bytes.Length)) {
       return false;
     }
     if ((chunk.start < 4)) {
       return false;
     }
     int ourCRC = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.crc(chunk.bytes,
-      (chunk.start - 4), (chunk.length + 4));
+      unchecked((chunk.start - 4)), unchecked((chunk.length + 4)));
     if ((ourCRC != chunk.crc)) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.LOG,
         global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.JavaStringFormat("Invalid CRC %08X on chunk %08X, expected %08X.",
@@ -568,7 +612,7 @@ internal sealed class PNGConverter {
 
     internal sbyte[] getData() {
       return global::DripSharp.Runtime.JavaCompat.CopyOfRange<sbyte>(this.bytes, this.start,
-        (this.start + this.length));
+        unchecked((this.start + this.length)));
     }
   }
 
@@ -599,9 +643,9 @@ internal sealed class PNGConverter {
 
   private static int readInt(sbyte[] data, int offset) {
     int b1 = ((data[offset] & 255) << unchecked((int)(24)));
-    int b2 = ((data[(offset + 1)] & 255) << unchecked((int)(16)));
-    int b3 = ((data[(offset + 2)] & 255) << unchecked((int)(8)));
-    int b4 = (data[(offset + 3)] & 255);
+    int b2 = ((data[unchecked((offset + 1))] & 255) << unchecked((int)(16)));
+    int b3 = ((data[unchecked((offset + 2))] & 255) << unchecked((int)(8)));
+    int b4 = (data[unchecked((offset + 3))] & 255);
     return (((b1 | b2) | b3) | b4);
   }
 
@@ -621,8 +665,8 @@ internal sealed class PNGConverter {
       = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.PNGConverterState();
     int ptr = 8;
     int firstChunkType
-      = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.readInt(imageData, (ptr
-      + 4));
+      = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.readInt(imageData,
+      unchecked((ptr + 4)));
     if ((firstChunkType
       != global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.CHUNK_IHDR)) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.LOG,
@@ -630,14 +674,14 @@ internal sealed class PNGConverter {
         firstChunkType)));
       return default!;
     }
-    while (((ptr + 12) <= imageData.Length)) {
+    while ((unchecked((ptr + 12)) <= imageData.Length)) {
       int chunkLength
         = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.readInt(imageData, ptr);
       int chunkType
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.readInt(imageData, (ptr
-        + 4));
+        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.readInt(imageData,
+        unchecked((ptr + 4)));
       ptr += 8;
-      if ((((ptr + chunkLength) + 4) > imageData.Length)) {
+      if ((unchecked((unchecked((ptr + chunkLength)) + 4)) > imageData.Length)) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.LOG,
           global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Not enough bytes. At offset ",
           ptr), " are "), chunkLength), " bytes expected. Overall length is "), imageData.Length)));
@@ -759,8 +803,8 @@ internal sealed class PNGConverter {
   }
 
   private static int updateCrc(sbyte[] buf, int offset, int len) {
-    int c = -1;
-    int end = (offset + len);
+    int c = unchecked(-1);
+    int end = unchecked((offset + len));
     for (int n = offset; (n < end); n++) {
       c
         = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.CRC_TABLE[((c ^ buf[n]) & 255)] ^ (c >>> unchecked((int)(8))));

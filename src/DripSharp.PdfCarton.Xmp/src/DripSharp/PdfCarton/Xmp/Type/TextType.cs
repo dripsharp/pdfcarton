@@ -34,6 +34,10 @@ public class TextType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimplePrope
     return this.textValue;
   }
 
+  static TextType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty).TypeHandle);
+  }
+
   protected override object __DripSharpCovariantBridgeGetValue() {
     return this.GetValue();
   }

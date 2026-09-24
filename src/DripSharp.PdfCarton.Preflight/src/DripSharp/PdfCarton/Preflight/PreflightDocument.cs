@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Preflight;
 
 public class PreflightDocument : global::DripSharp.PdfCarton.Pdmodel.PDDocument {
-  private readonly global::DripSharp.PdfCarton.Preflight.ValidationResult result
-    = new global::DripSharp.PdfCarton.Preflight.ValidationResult(true);
+  private readonly global::DripSharp.PdfCarton.Preflight.ValidationResult result;
 
   private readonly global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = null!;
 
@@ -36,6 +35,8 @@ public class PreflightDocument : global::DripSharp.PdfCarton.Pdmodel.PDDocument 
     global::DripSharp.PdfCarton.Preflight.Format format,
     global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config,
     global::DripSharp.PdfCarton.IO.RandomAccessRead source) : base(doc, source) {
+    this.result = new global::DripSharp.PdfCarton.Preflight.ValidationResult(true);
+
     this.specification = format;
     this.config = ((config == default!)
       ? global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.CreatePdfA1BConfiguration()

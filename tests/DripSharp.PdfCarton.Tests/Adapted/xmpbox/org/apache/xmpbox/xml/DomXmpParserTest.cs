@@ -5,30 +5,46 @@
 namespace DripSharp.PdfCarton.Xmp.Xml;
 
 public class DomXmpParserTest {
-  internal virtual void testPDFBox5649() {
-    using (global::System.IO.Stream fis
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/org/apache/xmpbox/xml/PDFBOX-5649.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser dxp
-        = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = dxp.Parse(fis);
-      global::DripSharp.Testing.JavaAssertions.NotNull(xmp, null);
+  internal virtual void testPDFBox5649() { {
+      global::System.IO.Stream fis
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/org/apache/xmpbox/xml/PDFBOX-5649.xml"));
+      global::System.Exception __dripsharpPrimary_75_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser dxp
+          = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = dxp.Parse(fis);
+        global::DripSharp.Testing.JavaAssertions.NotNull(xmp, null);
+      } catch (global::System.Exception __dripsharpCaught_75_26_0) {
+        __dripsharpPrimary_75_26_0 = __dripsharpCaught_75_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(fis, __dripsharpPrimary_75_26_0);
+      }
     }
   }
 
-  internal virtual void testPDFBox5835() {
-    using (global::System.IO.Stream fis
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/org/apache/xmpbox/xml/PDFBOX-5835.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser dxp
-        = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = dxp.Parse(fis);
-      global::DripSharp.Testing.JavaAssertions.Equal("A",
-        xmp.GetPDFAIdentificationSchema().GetConformance(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(3, xmp.GetPDFAIdentificationSchema().GetPart(),
-        null);
+  internal virtual void testPDFBox5835() { {
+      global::System.IO.Stream fis
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/org/apache/xmpbox/xml/PDFBOX-5835.xml"));
+      global::System.Exception __dripsharpPrimary_86_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser dxp
+          = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = dxp.Parse(fis);
+        global::DripSharp.Testing.JavaAssertions.Equal("A",
+          xmp.GetPDFAIdentificationSchema().GetConformance(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          xmp.GetPDFAIdentificationSchema().GetPart(), null);
+      } catch (global::System.Exception __dripsharpCaught_86_26_0) {
+        __dripsharpPrimary_86_26_0 = __dripsharpCaught_86_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(fis, __dripsharpPrimary_86_26_0);
+      }
     }
   }
 
@@ -222,44 +238,52 @@ public class DomXmpParserTest {
       global::DripSharp.PdfCarton.Xmp.Schema.XMPageTextSchema.NPages))), null);
   }
 
-  internal virtual void testPDFBox3882() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/org/apache/xmpbox/xml/PDFBOX-3882-dematbox.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser dxp
-        = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = dxp.Parse(@is);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> allProperties
-        = xmp.GetPDFExtensionSchema().GetSchemasProperty().GetAllProperties();
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(allProperties), null);
-      global::DripSharp.PdfCarton.Xmp.Type.PDFASchemaType pdfExtensionSchema
-        = (global::DripSharp.PdfCarton.Xmp.Type.PDFASchemaType)(global::DripSharp.Runtime.JavaCompat.ListGet(allProperties,
-        0)!);
-      global::DripSharp.Testing.JavaAssertions.Equal("http://www.sagemcom.com/documents/xmlns/dematbox",
-        pdfExtensionSchema.GetNamespaceURI(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("dematbox",
-        pdfExtensionSchema.GetPrefixValue(), null);
-      global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema extensionSchema
-        = xmp.GetSchema(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        pdfExtensionSchema.GetNamespaceURI()));
-      global::DripSharp.Testing.JavaAssertions.Equal(pdfExtensionSchema.GetNamespaceURI(),
-        extensionSchema.GetNamespace(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(pdfExtensionSchema.GetPrefixValue(),
-        extensionSchema.GetPrefix(), null);
-      global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty pageInfoProp
-        = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(extensionSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "PageInfo"))!);
-      global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType dst
-        = (global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType)(global::DripSharp.Runtime.JavaCompat.ListGet(pageInfoProp.GetAllProperties(),
-        0)!);
-      global::DripSharp.Testing.JavaAssertions.Equal("[number=IntegerType:1]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(dst.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "number"))), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("[origNumber=IntegerType:1]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(dst.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "origNumber"))), null);
+  internal virtual void testPDFBox3882() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/org/apache/xmpbox/xml/PDFBOX-3882-dematbox.xml"));
+      global::System.Exception __dripsharpPrimary_308_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser dxp
+          = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = dxp.Parse(@is);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.AbstractField> allProperties
+          = xmp.GetPDFExtensionSchema().GetSchemasProperty().GetAllProperties();
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(allProperties), null);
+        global::DripSharp.PdfCarton.Xmp.Type.PDFASchemaType pdfExtensionSchema
+          = (global::DripSharp.PdfCarton.Xmp.Type.PDFASchemaType)(global::DripSharp.Runtime.JavaCompat.ListGet(allProperties,
+          0)!);
+        global::DripSharp.Testing.JavaAssertions.Equal("http://www.sagemcom.com/documents/xmlns/dematbox",
+          pdfExtensionSchema.GetNamespaceURI(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("dematbox",
+          pdfExtensionSchema.GetPrefixValue(), null);
+        global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema extensionSchema
+          = xmp.GetSchema(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          pdfExtensionSchema.GetNamespaceURI()));
+        global::DripSharp.Testing.JavaAssertions.Equal(pdfExtensionSchema.GetNamespaceURI(),
+          extensionSchema.GetNamespace(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(pdfExtensionSchema.GetPrefixValue(),
+          extensionSchema.GetPrefix(), null);
+        global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty pageInfoProp
+          = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(extensionSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "PageInfo"))!);
+        global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType dst
+          = (global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType)(global::DripSharp.Runtime.JavaCompat.ListGet(pageInfoProp.GetAllProperties(),
+          0)!);
+        global::DripSharp.Testing.JavaAssertions.Equal("[number=IntegerType:1]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(dst.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "number"))), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("[origNumber=IntegerType:1]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(dst.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "origNumber"))), null);
+      } catch (global::System.Exception __dripsharpCaught_308_26_0) {
+        __dripsharpPrimary_308_26_0 = __dripsharpCaught_308_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_308_26_0);
+      }
     }
   }
 
@@ -1514,20 +1538,28 @@ public class DomXmpParserTest {
       global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex), null);
   }
 
-  internal virtual void testPDFBox6131() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/org/apache/xmpbox/xml/PDFBOX-6131-0015675.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser xmpParser
-        = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = xmpParser.Parse(@is);
-      global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema uaSchema2
-        = xmp.GetSchema(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "http://www.aiim.org/pdfua/ns/id/"));
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        uaSchema2.GetIntegerPropertyValueAsSimple(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "part")), null);
+  internal virtual void testPDFBox6131() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/org/apache/xmpbox/xml/PDFBOX-6131-0015675.xml"));
+      global::System.Exception __dripsharpPrimary_1460_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser xmpParser
+          = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = xmpParser.Parse(@is);
+        global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema uaSchema2
+          = xmp.GetSchema(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "http://www.aiim.org/pdfua/ns/id/"));
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          uaSchema2.GetIntegerPropertyValueAsSimple(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "part")), null);
+      } catch (global::System.Exception __dripsharpCaught_1460_26_0) {
+        __dripsharpPrimary_1460_26_0 = __dripsharpCaught_1460_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_1460_26_0);
+      }
     }
   }
 
@@ -1563,121 +1595,137 @@ public class DomXmpParserTest {
       "headline"))), null);
   }
 
-  internal virtual void testPDFBox6131_2() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/org/apache/xmpbox/xml/PDFBOX-6131-RMR6DEEUWZO6IM3A7WKRPX33SZMBTTQZ.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser xmpParser
-        = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = xmpParser.Parse(@is);
-      global::DripSharp.Testing.JavaAssertions.Equal(1, xmp.GetPDFAIdentificationSchema().GetPart(),
-        null);
+  internal virtual void testPDFBox6131_2() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/org/apache/xmpbox/xml/PDFBOX-6131-RMR6DEEUWZO6IM3A7WKRPX33SZMBTTQZ.xml"));
+      global::System.Exception __dripsharpPrimary_1513_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser xmpParser
+          = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = xmpParser.Parse(@is);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          xmp.GetPDFAIdentificationSchema().GetPart(), null);
+      } catch (global::System.Exception __dripsharpCaught_1513_26_0) {
+        __dripsharpPrimary_1513_26_0 = __dripsharpCaught_1513_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_1513_26_0);
+      }
     }
   }
 
-  internal virtual void testPDFBox6133() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/org/apache/xmpbox/xml/PDFBOX-6133-0064638.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser xmpParser
-        = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = xmpParser.Parse(@is);
-      global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema epaSchema
-        = xmp.GetSchema(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "http://www.epo.org/patent-bibliographic-data/1.0/"));
-      global::DripSharp.Testing.JavaAssertions.Equal("[TotalNumberOfPages=RealType:47.0]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "TotalNumberOfPages"))), null);
-      global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType pub
-        = (global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType)(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "Publication"))!);
-      global::DripSharp.Testing.JavaAssertions.Equal("[CountryCode=TextType:EP]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(pub.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "CountryCode"))), null);
-      global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty classification
-        = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "Classification"))!);
-      global::DripSharp.Testing.JavaAssertions.Equal(4,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(classification.GetAllProperties()),
-        null);
-      global::DripSharp.PdfCarton.Xmp.Type.TextType class3
-        = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(global::DripSharp.Runtime.JavaCompat.ListGet(classification.GetAllProperties(),
-        3)!);
-      global::DripSharp.Testing.JavaAssertions.Equal("A61K 39/215 20060101ALI20160203BHEP",
-        class3.GetStringValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("CORONAVIRUS",
-        epaSchema.GetUnqualifiedLanguagePropertyValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "Title"), global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "de")), null);
-      global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty documentStructure
-        = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "DocumentStructure"))!);
-      global::DripSharp.Testing.JavaAssertions.Equal(5,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(documentStructure.GetAllProperties()),
-        null);
-      global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType struct4
-        = (global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType)(global::DripSharp.Runtime.JavaCompat.ListGet(documentStructure.GetAllProperties(),
-        4)!);
-      global::DripSharp.Testing.JavaAssertions.Equal("[DocumentSection=TextType:cited-references]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(struct4.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "DocumentSection"))), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("[StartPage=RealType:47.0]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(struct4.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "StartPage"))), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("[NumberOfPages=RealType:1.0]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(struct4.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "NumberOfPages"))), null);
-      global::DripSharp.PdfCarton.Xmp.Xml.XmpSerializer serializer
-        = new global::DripSharp.PdfCarton.Xmp.Xml.XmpSerializer();
-      global::DripSharp.Runtime.JavaByteArrayOutputStream baos
-        = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-      serializer.Serialize(xmp, baos, true);
-      xmp
-        = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser().Parse(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos));
-      epaSchema = xmp.GetSchema(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "http://www.epo.org/patent-bibliographic-data/1.0/"));
-      global::DripSharp.Testing.JavaAssertions.Equal("[TotalNumberOfPages=RealType:47.0]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "TotalNumberOfPages"))), null);
-      pub
-        = (global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType)(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "Publication"))!);
-      global::DripSharp.Testing.JavaAssertions.Equal("[CountryCode=TextType:EP]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(pub.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "CountryCode"))), null);
-      classification
-        = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "Classification"))!);
-      global::DripSharp.Testing.JavaAssertions.Equal(4,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(classification.GetAllProperties()),
-        null);
-      class3
-        = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(global::DripSharp.Runtime.JavaCompat.ListGet(classification.GetAllProperties(),
-        3)!);
-      global::DripSharp.Testing.JavaAssertions.Equal("A61K 39/215 20060101ALI20160203BHEP",
-        class3.GetStringValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("CORONAVIRUS",
-        epaSchema.GetUnqualifiedLanguagePropertyValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "Title"), global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "de")), null);
-      documentStructure
-        = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "DocumentStructure"))!);
-      global::DripSharp.Testing.JavaAssertions.Equal(5,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(documentStructure.GetAllProperties()),
-        null);
-      struct4
-        = (global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType)(global::DripSharp.Runtime.JavaCompat.ListGet(documentStructure.GetAllProperties(),
-        4)!);
-      global::DripSharp.Testing.JavaAssertions.Equal("[DocumentSection=TextType:cited-references]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(struct4.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "DocumentSection"))), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("[StartPage=RealType:47.0]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(struct4.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "StartPage"))), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("[NumberOfPages=RealType:1.0]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(struct4.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "NumberOfPages"))), null);
+  internal virtual void testPDFBox6133() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/org/apache/xmpbox/xml/PDFBOX-6133-0064638.xml"));
+      global::System.Exception __dripsharpPrimary_1526_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser xmpParser
+          = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp = xmpParser.Parse(@is);
+        global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema epaSchema
+          = xmp.GetSchema(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "http://www.epo.org/patent-bibliographic-data/1.0/"));
+        global::DripSharp.Testing.JavaAssertions.Equal("[TotalNumberOfPages=RealType:47.0]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "TotalNumberOfPages"))), null);
+        global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType pub
+          = (global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType)(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "Publication"))!);
+        global::DripSharp.Testing.JavaAssertions.Equal("[CountryCode=TextType:EP]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(pub.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "CountryCode"))), null);
+        global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty classification
+          = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "Classification"))!);
+        global::DripSharp.Testing.JavaAssertions.Equal(4,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(classification.GetAllProperties()),
+          null);
+        global::DripSharp.PdfCarton.Xmp.Type.TextType class3
+          = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(global::DripSharp.Runtime.JavaCompat.ListGet(classification.GetAllProperties(),
+          3)!);
+        global::DripSharp.Testing.JavaAssertions.Equal("A61K 39/215 20060101ALI20160203BHEP",
+          class3.GetStringValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("CORONAVIRUS",
+          epaSchema.GetUnqualifiedLanguagePropertyValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "Title"), global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "de")), null);
+        global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty documentStructure
+          = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "DocumentStructure"))!);
+        global::DripSharp.Testing.JavaAssertions.Equal(5,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(documentStructure.GetAllProperties()),
+          null);
+        global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType struct4
+          = (global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType)(global::DripSharp.Runtime.JavaCompat.ListGet(documentStructure.GetAllProperties(),
+          4)!);
+        global::DripSharp.Testing.JavaAssertions.Equal("[DocumentSection=TextType:cited-references]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(struct4.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "DocumentSection"))), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("[StartPage=RealType:47.0]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(struct4.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "StartPage"))), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("[NumberOfPages=RealType:1.0]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(struct4.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "NumberOfPages"))), null);
+        global::DripSharp.PdfCarton.Xmp.Xml.XmpSerializer serializer
+          = new global::DripSharp.PdfCarton.Xmp.Xml.XmpSerializer();
+        global::DripSharp.Runtime.JavaByteArrayOutputStream baos
+          = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
+        serializer.Serialize(xmp, baos, true);
+        xmp
+          = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser().Parse(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos));
+        epaSchema = xmp.GetSchema(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "http://www.epo.org/patent-bibliographic-data/1.0/"));
+        global::DripSharp.Testing.JavaAssertions.Equal("[TotalNumberOfPages=RealType:47.0]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "TotalNumberOfPages"))), null);
+        pub
+          = (global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType)(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "Publication"))!);
+        global::DripSharp.Testing.JavaAssertions.Equal("[CountryCode=TextType:EP]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(pub.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "CountryCode"))), null);
+        classification
+          = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "Classification"))!);
+        global::DripSharp.Testing.JavaAssertions.Equal(4,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(classification.GetAllProperties()),
+          null);
+        class3
+          = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(global::DripSharp.Runtime.JavaCompat.ListGet(classification.GetAllProperties(),
+          3)!);
+        global::DripSharp.Testing.JavaAssertions.Equal("A61K 39/215 20060101ALI20160203BHEP",
+          class3.GetStringValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("CORONAVIRUS",
+          epaSchema.GetUnqualifiedLanguagePropertyValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "Title"), global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "de")), null);
+        documentStructure
+          = (global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty)(epaSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "DocumentStructure"))!);
+        global::DripSharp.Testing.JavaAssertions.Equal(5,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(documentStructure.GetAllProperties()),
+          null);
+        struct4
+          = (global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType)(global::DripSharp.Runtime.JavaCompat.ListGet(documentStructure.GetAllProperties(),
+          4)!);
+        global::DripSharp.Testing.JavaAssertions.Equal("[DocumentSection=TextType:cited-references]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(struct4.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "DocumentSection"))), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("[StartPage=RealType:47.0]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(struct4.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "StartPage"))), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("[NumberOfPages=RealType:1.0]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(struct4.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "NumberOfPages"))), null);
+      } catch (global::System.Exception __dripsharpCaught_1526_26_0) {
+        __dripsharpPrimary_1526_26_0 = __dripsharpCaught_1526_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_1526_26_0);
+      }
     }
   }
 

@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.IO;
 
 public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCache {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const int ENLARGE_PAGE_COUNT = 16;
 
@@ -49,7 +48,7 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
   internal ScratchFile(global::DripSharp.Runtime.JavaFile scratchFileDirectory)
   : this(global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.IO.MemoryUsageSetting>(global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupTempFileOnly(),
     "SetTempDir", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-    new object[] { scratchFileDirectory })) {
+    new object[] { (global::DripSharp.Runtime.JavaFile)scratchFileDirectory })) {
 
   }
 
@@ -70,12 +69,14 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
         this.scratchFileDirectory));
     }
     this.maxPageCount = (memUsageSetting.IsStorageRestricted()
-      ? (int)(global::System.Math.Min((long)(int.MaxValue), (memUsageSetting.GetMaxStorageBytes()
-      / global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE))) : int.MaxValue);
+      ? (int)(global::System.Math.Min((long)(int.MaxValue),
+      global::DripSharp.Runtime.JavaCompat.IntegralDivide(memUsageSetting.GetMaxStorageBytes(),
+      global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE))) : int.MaxValue);
     this.inMemoryMaxPageCount = (memUsageSetting.UseMainMemory()
       ? (memUsageSetting.IsMainMemoryRestricted()
-      ? (int)(global::System.Math.Min((long)(int.MaxValue), (memUsageSetting.GetMaxMainMemoryBytes()
-      / global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE))) : int.MaxValue) : 0);
+      ? (int)(global::System.Math.Min((long)(int.MaxValue),
+      global::DripSharp.Runtime.JavaCompat.IntegralDivide(memUsageSetting.GetMaxMainMemoryBytes(),
+      global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE))) : int.MaxValue) : 0);
   }
 
   private void initPages() {
@@ -123,7 +124,7 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
       }
       this.freePages.clear(idx);
       if ((idx >= this.pageCount)) {
-        this.pageCount = (idx + 1);
+        this.pageCount = unchecked((idx + 1));
       }
       return idx;
     }
@@ -158,24 +159,25 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
           }
         }
         long fileLen = this.raf.length();
-        long expectedFileLen = (((long)(this.pageCount) - this.inMemoryMaxPageCount)
-          * global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE);
+        long expectedFileLen = unchecked((unchecked(((long)(this.pageCount)
+          - this.inMemoryMaxPageCount)) * global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE));
         if ((expectedFileLen != fileLen)) {
           throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Expected scratch file size of ",
             expectedFileLen), " but found "), fileLen));
         }
-        if (((this.pageCount
-          + global::DripSharp.PdfCarton.IO.ScratchFile.ENLARGE_PAGE_COUNT) > this.pageCount)) {
-          fileLen += (global::DripSharp.PdfCarton.IO.ScratchFile.ENLARGE_PAGE_COUNT
-            * global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE);
+        if ((unchecked((this.pageCount
+          + global::DripSharp.PdfCarton.IO.ScratchFile.ENLARGE_PAGE_COUNT)) > this.pageCount)) {
+          fileLen += unchecked((global::DripSharp.PdfCarton.IO.ScratchFile.ENLARGE_PAGE_COUNT
+            * global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE));
           this.raf.setLength(fileLen);
-          this.freePages.set(this.pageCount, (this.pageCount
-            + global::DripSharp.PdfCarton.IO.ScratchFile.ENLARGE_PAGE_COUNT));
+          this.freePages.set(this.pageCount, unchecked((this.pageCount
+            + global::DripSharp.PdfCarton.IO.ScratchFile.ENLARGE_PAGE_COUNT)));
         }
       } else {
         if (!(this.maxMainMemoryIsRestricted)) {
           int oldSize = this.inMemoryPages.Length;
-          int newSize = (int)(global::System.Math.Min(((long)oldSize * 2), (long)(int.MaxValue)));
+          int newSize = (int)(global::System.Math.Min(unchecked(((long)oldSize * 2)),
+            (long)(int.MaxValue)));
           if ((newSize > oldSize)) {
             sbyte[][] newInMemoryPages = new sbyte[newSize][];
             global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.inMemoryPages, 0, newInMemoryPages,
@@ -196,7 +198,7 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
     if (((pageIdx < 0) || (pageIdx >= this.pageCount))) {
       this.checkClosed();
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Page index out of range: ",
-        pageIdx), ". Max value: "), (this.pageCount - 1)));
+        pageIdx), ". Max value: "), unchecked((this.pageCount - 1))));
     }
     if ((pageIdx < this.inMemoryMaxPageCount)) {
       sbyte[] page__339_20 = this.inMemoryPages[pageIdx];
@@ -214,8 +216,8 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
           pageIdx), " from."));
       }
       sbyte[] page__359_20 = new sbyte[global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE];
-      this.raf.seek((((long)pageIdx - this.inMemoryMaxPageCount)
-        * global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE));
+      this.raf.seek(unchecked((unchecked(((long)pageIdx - this.inMemoryMaxPageCount))
+        * global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE)));
       this.raf.readFully(page__359_20);
       return page__359_20;
     }
@@ -225,7 +227,7 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
     if (((pageIdx < 0) || (pageIdx >= this.pageCount))) {
       this.checkClosed();
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Page index out of range: ",
-        pageIdx), ". Max value: "), (this.pageCount - 1)));
+        pageIdx), ". Max value: "), unchecked((this.pageCount - 1))));
     }
     if ((page.Length != global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE)) {
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Wrong page size to write: ",
@@ -243,8 +245,8 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
     } else {
       lock (this.ioLock) {
         this.checkClosed();
-        this.raf.seek((((long)pageIdx - this.inMemoryMaxPageCount)
-          * global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE));
+        this.raf.seek(unchecked((unchecked(((long)pageIdx - this.inMemoryMaxPageCount))
+          * global::DripSharp.PdfCarton.IO.ScratchFile.PAGE_SIZE)));
         this.raf.write(page);
       }
     }
@@ -319,5 +321,9 @@ public class ScratchFile : global::DripSharp.PdfCarton.IO.RandomAccessStreamCach
     if ((ioexc! != default!)) {
       throw ioexc!;
     }
+  }
+
+  static ScratchFile() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -86,4 +86,8 @@ public class TestUriAction
     } finally {
     }
   }
+
+  static TestUriAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.Pdfa1b.AbstractTestAction).TypeHandle);
+  }
 }

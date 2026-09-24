@@ -22,4 +22,8 @@ public class PDTypedDictionaryWrapper
   public new virtual string GetType() {
     return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Type);
   }
+
+  static PDTypedDictionaryWrapper() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper).TypeHandle);
+  }
 }

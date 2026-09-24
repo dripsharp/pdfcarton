@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public class PDCIDFontType2 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = null!;
 
@@ -28,8 +27,7 @@ public class PDCIDFontType2 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont
 
   private global::DripSharp.PdfCarton.Fonts.Util.BoundingBox fontBBox = null!;
 
-  private readonly global::System.Collections.Generic.ISet<int> noMapping
-    = new global::System.Collections.Generic.HashSet<int>();
+  private readonly global::System.Collections.Generic.ISet<int> noMapping;
 
   public PDCIDFontType2(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary,
     global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font parent) : this(fontDictionary, parent,
@@ -41,6 +39,8 @@ public class PDCIDFontType2 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont
     global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font parent,
     global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont trueTypeFont) : base(fontDictionary,
     parent) {
+    this.noMapping = new global::System.Collections.Generic.HashSet<int>();
+
     global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fd = this.GetFontDescriptor();
     if ((trueTypeFont != default!)) {
       this.ttf = trueTypeFont;
@@ -216,8 +216,9 @@ public class PDCIDFontType2 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont
   }
 
   public override float GetHeight(int code) {
-    return ((this.ttf.GetHorizontalHeader().GetAscender() +
-      -(this.ttf.GetHorizontalHeader().GetDescender())) / (float)(float)(this.ttf.GetUnitsPerEm()));
+    return (unchecked((this.ttf.GetHorizontalHeader().GetAscender()
+      + unchecked(-(this.ttf.GetHorizontalHeader().GetDescender()))))
+      / (float)(float)(this.ttf.GetUnitsPerEm()));
   }
 
   public override float GetWidthFromFont(int code) {
@@ -231,7 +232,7 @@ public class PDCIDFontType2 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont
   }
 
   public override sbyte[] Encode(int unicode) {
-    int cid = -1;
+    int cid = unchecked(-1);
     if (this.__field_isEmbedded) {
       if (global::DripSharp.Runtime.JavaCompat.StringStartsWith(base.Parent.GetCMap().GetName(),
         "Identity-")) {
@@ -243,7 +244,7 @@ public class PDCIDFontType2 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont
           cid = base.Parent.GetCMapUCS2().ToCID(unicode);
         }
       }
-      if ((cid == -1)) {
+      if ((cid == unchecked(-1))) {
         global::DripSharp.PdfCarton.Fonts.Cmap.CMap toUnicodeCMap = base.Parent.GetToUnicodeCMap();
         if ((toUnicodeCMap != default!)) {
           sbyte[] codes
@@ -336,8 +337,8 @@ public class PDCIDFontType2 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont
     sbyte[] tagBytes = new sbyte[4];
     int remainingBytes = tagBytes.Length;
     int amountRead;
-    while (((amountRead = randomAccessRead.Read(tagBytes, (tagBytes.Length - remainingBytes),
-      remainingBytes)) > 0)) {
+    while (((amountRead = randomAccessRead.Read(tagBytes, unchecked((tagBytes.Length
+      - remainingBytes)), remainingBytes)) > 0)) {
       remainingBytes -= amountRead;
     }
     randomAccessRead.Seek(startPos);
@@ -348,5 +349,10 @@ public class PDCIDFontType2 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont
     } else {
       return new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(isEmbedded);
     }
+  }
+
+  static PDCIDFontType2() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -11,17 +11,22 @@ namespace DripSharp.PdfCarton.Cos;
 public class COSArray : global::DripSharp.PdfCarton.Cos.COSBase,
 global::DripSharp.Runtime.JavaIterableContract<global::DripSharp.PdfCarton.Cos.COSBase>,
 global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
-  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> objects
-    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>();
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> objects;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSUpdateState updateState = null!;
 
   public COSArray() {
+    this.objects
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>();
+
     this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
     this.SetDirect(true);
   }
 
   public COSArray(global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> cosObjectables) {
+    this.objects
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSBase>();
+
     if ((cosObjectables == default!)) {
       throw new global::System.ArgumentException("List of COSObjectables cannot be null");
     }
@@ -130,7 +135,7 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
   }
 
   public virtual int GetInt(int index) {
-    return this.GetInt(index, -1);
+    return this.GetInt(index, unchecked(-1));
   }
 
   public virtual int GetInt(int index, int defaultValue) {
@@ -248,7 +253,7 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
         }
       }
     }
-    return -1;
+    return unchecked(-1);
   }
 
   public virtual int IndexOfObject(global::DripSharp.PdfCarton.Cos.COSBase @object) {
@@ -273,7 +278,7 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
         }
       }
     }
-    return -1;
+    return unchecked(-1);
   }
 
   public virtual void GrowToSize(int size) {
@@ -356,8 +361,7 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
     global::DripSharp.PdfCarton.Cos.COSArray retval
       = new global::DripSharp.PdfCarton.Cos.COSArray();
     global::DripSharp.Runtime.JavaCompat.ForEach(integer, (s)
-      => retval.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(global::System.Convert.ToInt64(s,
-      global::System.Globalization.CultureInfo.InvariantCulture))));
+      => retval.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(global::DripSharp.Runtime.JavaCompat.NumberLongValue(s))));
     return retval;
   }
 
@@ -480,6 +484,10 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
       objectToAdd = new global::DripSharp.PdfCarton.Cos.COSObject(@object, @object.GetKey());
     }
     return objectToAdd;
+  }
+
+  static COSArray() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.COSBase).TypeHandle);
   }
 
   public virtual bool IsNeedToBeUpdated() {

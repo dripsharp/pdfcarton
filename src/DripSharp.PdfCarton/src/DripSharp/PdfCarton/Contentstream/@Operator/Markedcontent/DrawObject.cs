@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent;
 
 public class DrawObject : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public DrawObject(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
   : base(context) {
@@ -55,5 +54,10 @@ public class DrawObject : global::DripSharp.PdfCarton.Contentstream.@Operator.Op
 
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.DrawObject;
+  }
+
+  static DrawObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

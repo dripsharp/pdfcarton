@@ -9,82 +9,49 @@
 namespace DripSharp.PdfCarton.Pdfwriter;
 
 public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  public static readonly sbyte[] DictOpen
-    = global::DripSharp.Runtime.JavaCompat.StringGetBytes("<<",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] DictOpen;
 
-  public static readonly sbyte[] DictClose
-    = global::DripSharp.Runtime.JavaCompat.StringGetBytes(">>",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] DictClose;
 
-  public static readonly sbyte[] Space = new sbyte[] { unchecked((sbyte)(' ')) };
+  public static readonly sbyte[] Space;
 
-  public static readonly sbyte[] Comment = new sbyte[] { unchecked((sbyte)('%')) };
+  public static readonly sbyte[] Comment;
 
-  public static readonly sbyte[] Version
-    = global::DripSharp.Runtime.JavaCompat.StringGetBytes("PDF-1.4",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] Version;
 
-  public static readonly sbyte[] Garbage = new sbyte[] { unchecked((sbyte)(246)),
-    unchecked((sbyte)(228)), unchecked((sbyte)(252)), unchecked((sbyte)(223)) };
+  public static readonly sbyte[] Garbage;
 
-  public static readonly sbyte[] Eof = global::DripSharp.Runtime.JavaCompat.StringGetBytes("%%EOF",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] Eof;
 
-  public static readonly sbyte[] Reference
-    = global::DripSharp.Runtime.JavaCompat.StringGetBytes("R",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] Reference;
 
-  public static readonly sbyte[] Xref = global::DripSharp.Runtime.JavaCompat.StringGetBytes("xref",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] Xref;
 
-  public static readonly sbyte[] XrefFree = global::DripSharp.Runtime.JavaCompat.StringGetBytes("f",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] XrefFree;
 
-  public static readonly sbyte[] XrefUsed = global::DripSharp.Runtime.JavaCompat.StringGetBytes("n",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] XrefUsed;
 
-  public static readonly sbyte[] Trailer
-    = global::DripSharp.Runtime.JavaCompat.StringGetBytes("trailer",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] Trailer;
 
-  public static readonly sbyte[] Startxref
-    = global::DripSharp.Runtime.JavaCompat.StringGetBytes("startxref",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] Startxref;
 
-  public static readonly sbyte[] Obj = global::DripSharp.Runtime.JavaCompat.StringGetBytes("obj",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] Obj;
 
-  public static readonly sbyte[] Endobj
-    = global::DripSharp.Runtime.JavaCompat.StringGetBytes("endobj",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] Endobj;
 
-  public static readonly sbyte[] ArrayOpen
-    = global::DripSharp.Runtime.JavaCompat.StringGetBytes("[",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] ArrayOpen;
 
-  public static readonly sbyte[] ArrayClose
-    = global::DripSharp.Runtime.JavaCompat.StringGetBytes("]",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] ArrayClose;
 
-  public static readonly sbyte[] Stream
-    = global::DripSharp.Runtime.JavaCompat.StringGetBytes("stream",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] Stream;
 
-  public static readonly sbyte[] Endstream
-    = global::DripSharp.Runtime.JavaCompat.StringGetBytes("endstream",
-    global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+  public static readonly sbyte[] Endstream;
 
-  private static readonly global::DripSharp.Runtime.JavaDecimalFormat formatXrefOffset
-    = new global::DripSharp.Runtime.JavaDecimalFormat("0000000000",
-    global::System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat);
+  private static readonly global::DripSharp.Runtime.JavaDecimalFormat formatXrefOffset;
 
-  private static readonly global::DripSharp.Runtime.JavaDecimalFormat formatXrefGeneration
-    = new global::DripSharp.Runtime.JavaDecimalFormat("00000",
-    global::System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat);
+  private static readonly global::DripSharp.Runtime.JavaDecimalFormat formatXrefGeneration;
 
   private global::System.IO.Stream output = null!;
 
@@ -419,13 +386,14 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
       global::DripSharp.Runtime.JavaCompat.SortList(this.GetXRefEntries());
       global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry lastEntry
         = global::DripSharp.Runtime.JavaCompat.ListGet(this.GetXRefEntries(),
-        (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.GetXRefEntries()) - 1));
+        unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(this.GetXRefEntries())
+        - 1)));
       trailer.SetLong(global::DripSharp.PdfCarton.Cos.COSName.Size,
-        (lastEntry.GetReferencedKey().GetNumber() + 1));
+        unchecked((lastEntry.GetReferencedKey().GetNumber() + 1)));
       trailer.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Prev);
     }
     if (!(doc.IsXRefStream())) {
-      trailer.SetLong(global::DripSharp.PdfCarton.Cos.COSName.Size, (this.number + 1));
+      trailer.SetLong(global::DripSharp.PdfCarton.Cos.COSName.Size, unchecked((this.number + 1)));
       trailer.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.XrefStm);
     }
     trailer.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.DocChecksum);
@@ -460,7 +428,7 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
       this.SetStartxref(xrefStreamOffset);
       pdfxRefStream.AddEntry(new global::DripSharp.PdfCarton.Pdfparser.Xref.NormalXReference(xrefStreamOffset,
         xrefStreamKey, (global::DripSharp.PdfCarton.Cos.COSBase)default!));
-      pdfxRefStream.SetSize((this.number + 1));
+      pdfxRefStream.SetSize(unchecked((this.number + 1)));
       global::DripSharp.PdfCarton.Cos.COSStream xrefStream = pdfxRefStream.GetStream();
       this.DoWriteObject(xrefStreamKey, xrefStream);
     }
@@ -483,10 +451,10 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
     int xRefLength = xRefRanges.Length;
     int x = 0;
     int j = 0;
-    if (((xRefLength % 2) == 0)) {
+    if ((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(xRefLength, 2) == 0)) {
       while ((x < xRefLength)) {
-        long xRefRangeX1 = global::DripSharp.Runtime.JavaCompat.UnboxObject<long>(xRefRanges[(x
-          + 1)]);
+        long xRefRangeX1
+          = global::DripSharp.Runtime.JavaCompat.UnboxObject<long>(xRefRanges[unchecked((x + 1))]);
         this.writeXrefRange((long)(xRefRanges[x]), xRefRangeX1);
         for (int i = 0; (i < xRefRangeX1); ++i) {
           this.writeXrefEntry(global::DripSharp.Runtime.JavaCompat.ListGet(tmpXRefEntries, j++));
@@ -514,20 +482,20 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
           global::DripSharp.Runtime.JavaCompat.Add(freeNumbers, i__826_27);
         }
       }
-      last = (nr + 1);
+      last = unchecked((nr + 1));
     }
     int numberOfFreeNumbers = global::DripSharp.Runtime.JavaCompat.CollectionCount(freeNumbers);
     if ((numberOfFreeNumbers == 0)) {
       this.AddXRefEntry(global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference.NullEntry);
       return;
     }
-    for (int i__841_18 = 0; (i__841_18 < (numberOfFreeNumbers - 1)); i__841_18++) {
+    for (int i__841_18 = 0; (i__841_18 < unchecked((numberOfFreeNumbers - 1))); i__841_18++) {
       this.AddXRefEntry(new global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference(new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(global::DripSharp.Runtime.JavaCompat.ListGet(freeNumbers,
         i__841_18)), 65535), (long)(global::DripSharp.Runtime.JavaCompat.ListGet(freeNumbers,
-        (i__841_18 + 1)))));
+        unchecked((i__841_18 + 1))))));
     }
     this.AddXRefEntry(new global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference(new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(global::DripSharp.Runtime.JavaCompat.ListGet(freeNumbers,
-      (numberOfFreeNumbers - 1))), 65535), (long)(0)));
+      unchecked((numberOfFreeNumbers - 1)))), 65535), (long)(0)));
     long firstObjectNumber
       = global::DripSharp.Runtime.JavaCompat.UnboxObject<long>(global::DripSharp.Runtime.JavaCompat.ListGet(freeNumbers,
       0));
@@ -537,21 +505,29 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
     }
   }
 
-  private void doWriteIncrement() {
-    using (global::DripSharp.PdfCarton.IO.RandomAccessInputStream input
-      = new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(this.incrementalInput)) {
-      global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, this.incrementalOutput);
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.incrementalOutput,
-        global::DripSharp.Runtime.JavaCompat.ToSignedBytes(((global::DripSharp.Runtime.JavaByteArrayOutputStream)(this.output!))));
+  private void doWriteIncrement() { {
+      global::DripSharp.PdfCarton.IO.RandomAccessInputStream input
+        = new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(this.incrementalInput);
+      global::System.Exception __dripsharpPrimary_866_38_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, this.incrementalOutput);
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.incrementalOutput,
+          global::DripSharp.Runtime.JavaCompat.ToSignedBytes(((global::DripSharp.Runtime.JavaByteArrayOutputStream)(this.output!))));
+      } catch (global::System.Exception __dripsharpCaught_866_38_0) {
+        __dripsharpPrimary_866_38_0 = __dripsharpCaught_866_38_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(input, __dripsharpPrimary_866_38_0);
+      }
     }
   }
 
   private void doWriteSignature() {
     long inLength = this.incrementalInput.Length();
     long beforeLength = this.signatureOffset;
-    long afterOffset = (this.signatureOffset + this.signatureLength);
-    long afterLength = ((this.GetStandardOutput().GetPos() - (inLength + this.signatureLength))
-      - (this.signatureOffset - inLength));
+    long afterOffset = unchecked((this.signatureOffset + this.signatureLength));
+    long afterLength = unchecked((unchecked((this.GetStandardOutput().GetPos() - unchecked((inLength
+      + this.signatureLength)))) - unchecked((this.signatureOffset - inLength))));
     string byteRange
       = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("0 ",
       beforeLength), " "), afterOffset), " "), afterLength), "]");
@@ -573,9 +549,10 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
       global::DripSharp.Runtime.JavaStandardCharsets.ISO88591);
     for (int i = 0; (i < this.byteRangeLength); i++) {
       if ((i >= byteRangeBytes.Length)) {
-        this.incrementPart[(int)(((this.byteRangeOffset + i) - inLength))] = unchecked((sbyte)(32));
+        this.incrementPart[(int)(unchecked((unchecked((this.byteRangeOffset + i)) - inLength)))]
+          = unchecked((sbyte)(32));
       } else {
-        this.incrementPart[(int)(((this.byteRangeOffset + i) - inLength))]
+        this.incrementPart[(int)(unchecked((unchecked((this.byteRangeOffset + i)) - inLength)))]
           = unchecked((sbyte)(byteRangeBytes[i]));
       }
     }
@@ -590,10 +567,11 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
     if (((this.incrementPart == default!) || (this.incrementalInput == default!))) {
       throw new global::System.InvalidOperationException("PDF not prepared for signing");
     }
-    int incPartSigOffset = (int)((this.signatureOffset - this.incrementalInput.Length()));
-    int afterSigOffset = (incPartSigOffset + (int)(this.signatureLength));
-    int[] range = new int[] { 0, incPartSigOffset, afterSigOffset, (this.incrementPart.Length
-        - afterSigOffset) };
+    int incPartSigOffset = (int)(unchecked((this.signatureOffset
+      - this.incrementalInput.Length())));
+    int afterSigOffset = unchecked((incPartSigOffset + (int)(this.signatureLength)));
+    int[] range = new int[] { 0, incPartSigOffset, afterSigOffset,
+      unchecked((this.incrementPart.Length - afterSigOffset)) };
     return new global::DripSharp.Runtime.JavaSequenceInputStream(new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(this.incrementalInput),
       new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.COSFilterInputStream(this.incrementPart,
       range));
@@ -604,13 +582,14 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
       throw new global::System.InvalidOperationException("PDF not prepared for setting signature");
     }
     sbyte[] signatureBytes = global::DripSharp.PdfCarton.Util.Hex.GetBytes(cmsSignature);
-    if ((signatureBytes.Length > (this.signatureLength - 2))) {
+    if ((signatureBytes.Length > unchecked((this.signatureLength - 2)))) {
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Can't write signature, not enough space; ",
         "adjust it with SignatureOptions.setPreferredSignatureSize"));
     }
-    int incPartSigOffset = (int)((this.signatureOffset - this.incrementalInput.Length()));
+    int incPartSigOffset = (int)(unchecked((this.signatureOffset
+      - this.incrementalInput.Length())));
     global::DripSharp.Runtime.JavaCompat.ArrayCopy(signatureBytes, 0, this.incrementPart,
-      (incPartSigOffset + 1), signatureBytes.Length);
+      unchecked((incPartSigOffset + 1)), signatureBytes.Length);
     global::DripSharp.PdfCarton.IO.IOUtils.Copy(new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(this.incrementalInput),
       this.incrementalOutput);
     global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(this.incrementalOutput,
@@ -645,20 +624,21 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
   }
 
   protected internal virtual long[] GetXRefRanges(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry> xRefEntriesList) {
-    long last = -2;
+    long last = unchecked(-2);
     long count = 1;
     global::System.Collections.Generic.IList<long> list
       = new global::System.Collections.Generic.List<long>();
     foreach (global::DripSharp.PdfCarton.Pdfparser.Xref.XReferenceEntry entry in xRefEntriesList) {
       long nr = entry.GetReferencedKey().GetNumber();
-      if ((nr == (last + 1))) {
+      if ((nr == unchecked((last + 1)))) {
         ++count;
         last = nr;
       } else {
-        if ((last == -2)) {
+        if ((last == unchecked(-2))) {
           last = nr;
         } else {
-          global::DripSharp.Runtime.JavaCompat.Add(list, ((last - count) + 1));
+          global::DripSharp.Runtime.JavaCompat.Add(list, unchecked((unchecked((last - count))
+            + 1)));
           global::DripSharp.Runtime.JavaCompat.Add(list, count);
           last = nr;
           count = 1;
@@ -666,7 +646,7 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
       }
     }
     if (!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(xRefEntriesList)) {
-      global::DripSharp.Runtime.JavaCompat.Add(list, ((last - count) + 1));
+      global::DripSharp.Runtime.JavaCompat.Add(list, unchecked((unchecked((last - count)) + 1)));
       global::DripSharp.Runtime.JavaCompat.Add(list, count);
     }
     return global::DripSharp.Runtime.JavaCompat.CollectionToArray(list,
@@ -728,7 +708,7 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
       }
       count++;
       if (i.HasNext()) {
-        if (((count % 10) == 0)) {
+        if ((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(count, 10) == 0)) {
           this.GetStandardOutput().WriteEOL();
         } else {
           this.GetStandardOutput().Write(global::DripSharp.PdfCarton.Pdfwriter.COSWriter.Space);
@@ -797,15 +777,16 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
               && global::DripSharp.PdfCarton.Cos.COSName.Contents.Equals(entry.Key))) {
               this.signatureOffset = this.GetStandardOutput().GetPos();
               value.Accept(this);
-              this.signatureLength = (this.GetStandardOutput().GetPos() - this.signatureOffset);
+              this.signatureLength = unchecked((this.GetStandardOutput().GetPos()
+                - this.signatureOffset));
             } else {
               if ((this.reachedSignature
                 && global::DripSharp.PdfCarton.Cos.COSName.Byterange.Equals(entry.Key))) {
                 this.byteRangeArray = (global::DripSharp.PdfCarton.Cos.COSArray)(entry.Value!);
-                this.byteRangeOffset = (this.GetStandardOutput().GetPos() + 1);
+                this.byteRangeOffset = unchecked((this.GetStandardOutput().GetPos() + 1));
                 value.Accept(this);
-                this.byteRangeLength = ((this.GetStandardOutput().GetPos() - 1)
-                  - this.byteRangeOffset);
+                this.byteRangeLength = unchecked((unchecked((this.GetStandardOutput().GetPos() - 1))
+                  - this.byteRangeOffset));
                 this.reachedSignature = false;
               } else {
                 if ((value is global::DripSharp.PdfCarton.Cos.COSArray)) {
@@ -1098,6 +1079,50 @@ public class COSWriter : global::DripSharp.PdfCarton.Cos.ICOSVisitor {
       global::DripSharp.PdfCarton.Util.Hex.WriteHexBytes(bytes, output);
       global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, (int)('>'));
     }
+  }
+
+  static COSWriter() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    DictOpen = global::DripSharp.Runtime.JavaCompat.StringGetBytes("<<",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    DictClose = global::DripSharp.Runtime.JavaCompat.StringGetBytes(">>",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    Space = new sbyte[] { unchecked((sbyte)(' ')) };
+    Comment = new sbyte[] { unchecked((sbyte)('%')) };
+    Version = global::DripSharp.Runtime.JavaCompat.StringGetBytes("PDF-1.4",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    Garbage = new sbyte[] { unchecked((sbyte)(246)), unchecked((sbyte)(228)),
+      unchecked((sbyte)(252)), unchecked((sbyte)(223)) };
+    Eof = global::DripSharp.Runtime.JavaCompat.StringGetBytes("%%EOF",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    Reference = global::DripSharp.Runtime.JavaCompat.StringGetBytes("R",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    Xref = global::DripSharp.Runtime.JavaCompat.StringGetBytes("xref",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    XrefFree = global::DripSharp.Runtime.JavaCompat.StringGetBytes("f",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    XrefUsed = global::DripSharp.Runtime.JavaCompat.StringGetBytes("n",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    Trailer = global::DripSharp.Runtime.JavaCompat.StringGetBytes("trailer",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    Startxref = global::DripSharp.Runtime.JavaCompat.StringGetBytes("startxref",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    Obj = global::DripSharp.Runtime.JavaCompat.StringGetBytes("obj",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    Endobj = global::DripSharp.Runtime.JavaCompat.StringGetBytes("endobj",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    ArrayOpen = global::DripSharp.Runtime.JavaCompat.StringGetBytes("[",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    ArrayClose = global::DripSharp.Runtime.JavaCompat.StringGetBytes("]",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    Stream = global::DripSharp.Runtime.JavaCompat.StringGetBytes("stream",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    Endstream = global::DripSharp.Runtime.JavaCompat.StringGetBytes("endstream",
+      global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
+    formatXrefOffset = new global::DripSharp.Runtime.JavaDecimalFormat("0000000000",
+      global::DripSharp.Runtime.JavaCompat.DecimalFormatSymbols(global::System.Globalization.CultureInfo.GetCultureInfo("en-US")));
+    formatXrefGeneration = new global::DripSharp.Runtime.JavaDecimalFormat("00000",
+      global::DripSharp.Runtime.JavaCompat.DecimalFormatSymbols(global::System.Globalization.CultureInfo.GetCultureInfo("en-US")));
   }
 
   public virtual void VisitFromObject(global::DripSharp.PdfCarton.Cos.COSObject obj) {

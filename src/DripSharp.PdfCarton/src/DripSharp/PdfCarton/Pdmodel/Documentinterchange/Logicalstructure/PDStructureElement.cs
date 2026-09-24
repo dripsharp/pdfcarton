@@ -170,9 +170,9 @@ public class PDStructureElement
       for (int i = 0; (i < array__297_22.Size()); i++) {
         global::DripSharp.PdfCarton.Cos.COSBase entry = array__297_22.GetObject(i);
         if (global::DripSharp.Runtime.JavaCompat.Equals(entry, attributeObject.GetCOSObject())) {
-          global::DripSharp.PdfCarton.Cos.COSBase next = array__297_22.Get((i + 1));
+          global::DripSharp.PdfCarton.Cos.COSBase next = array__297_22.Get(unchecked((i + 1)));
           if ((next is global::DripSharp.PdfCarton.Cos.COSInteger)) {
-            array__297_22.Set((i + 1),
+            array__297_22.Set(unchecked((i + 1)),
               global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(this.GetRevisionNumber())));
           }
         }
@@ -296,7 +296,7 @@ public class PDStructureElement
   }
 
   public virtual void IncrementRevisionNumber() {
-    this.SetRevisionNumber((this.GetRevisionNumber() + 1));
+    this.SetRevisionNumber(unchecked((this.GetRevisionNumber() + 1)));
   }
 
   public virtual string GetTitle() {
@@ -422,5 +422,9 @@ public class PDStructureElement
       return root.GetRoleMap();
     }
     return global::DripSharp.Runtime.JavaCompat.EmptyMap<string, object>();
+  }
+
+  static PDStructureElement() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode).TypeHandle);
   }
 }

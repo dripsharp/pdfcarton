@@ -10,13 +10,18 @@ namespace DripSharp.PdfCarton.Preflight.Annotation;
 
 public class PopupAnnotationValidator
 : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup PdPopup
-    = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup PdPopup;
 
   public PopupAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
     global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdPopup = default!;
+
     this.PdPopup
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup(annotDictionary);
     this.PdAnnot = this.PdPopup;
+  }
+
+  static PopupAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator).TypeHandle);
   }
 }

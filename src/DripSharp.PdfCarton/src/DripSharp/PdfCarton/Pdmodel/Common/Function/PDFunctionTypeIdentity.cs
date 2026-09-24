@@ -30,4 +30,8 @@ public class PDFunctionTypeIdentity
   public override string ToString() {
     return "FunctionTypeIdentity";
   }
+
+  static PDFunctionTypeIdentity() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction).TypeHandle);
+  }
 }

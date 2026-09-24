@@ -270,7 +270,8 @@ internal class XMPSchemaTester {
   protected internal virtual string PrepareName(string prop,
     global::DripSharp.PdfCarton.Xmp.Type.PropertyType type) {
     string fu = this.FirstUpper(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", prop));
-    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder((fu.Length + 1));
+    global::System.Text.StringBuilder sb
+      = new global::System.Text.StringBuilder(unchecked((fu.Length + 1)));
     sb.Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", fu));
     if (global::DripSharp.Runtime.JavaCompat.StringEndsWith(fu,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "s"))) {} else {
@@ -285,7 +286,8 @@ internal class XMPSchemaTester {
   }
 
   protected internal virtual string SetMethod(string prop) {
-    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder((3 + prop.Length));
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(unchecked((3
+      + prop.Length)));
     sb.Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       "set")).Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       this.PrepareName(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", prop),
@@ -295,7 +297,8 @@ internal class XMPSchemaTester {
 
   protected internal virtual string AddMethod(string prop) {
     string fu = this.FirstUpper(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", prop));
-    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder((3 + prop.Length));
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(unchecked((3
+      + prop.Length)));
     sb.Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       "add")).Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", fu));
     return sb.ToString();
@@ -303,7 +306,8 @@ internal class XMPSchemaTester {
 
   protected internal virtual string GetMethod(string prop) {
     string fu = this.FirstUpper(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", prop));
-    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder((3 + prop.Length));
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(unchecked((3
+      + prop.Length)));
     sb.Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       "get")).Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       fu)).Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "Property"));
@@ -312,14 +316,16 @@ internal class XMPSchemaTester {
 
   protected internal virtual string SetValueMethod(string prop) {
     string fu = this.FirstUpper(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", prop));
-    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder((8 + prop.Length));
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(unchecked((8
+      + prop.Length)));
     sb.Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       "set")).Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", fu));
     return sb.ToString();
   }
 
   protected internal virtual string GetValueMethod(string prop) {
-    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder((8 + prop.Length));
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(unchecked((8
+      + prop.Length)));
     sb.Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       "get")).Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       this.PrepareName(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", prop),
@@ -329,8 +335,8 @@ internal class XMPSchemaTester {
 
   protected internal virtual string AddToValueMethod(string prop) {
     string fu = this.FirstUpper(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", prop));
-    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder((10
-      + prop.Length));
+    global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(unchecked((10
+      + prop.Length)));
     sb.Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
       "add")).Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", fu));
     return sb.ToString();

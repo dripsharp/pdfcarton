@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFDictionary : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSDictionary fdf = null!;
 
@@ -390,6 +389,10 @@ public class FDFDictionary : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjec
 
   public virtual void SetJavaScript(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFJavaScript js) {
     this.fdf.SetItem(global::DripSharp.PdfCarton.Cos.COSName.JavaScript, js);
+  }
+
+  static FDFDictionary() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

@@ -14,4 +14,8 @@ public class OTLTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
   internal OTLTable() : base() {
 
   }
+
+  static OTLTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
+  }
 }

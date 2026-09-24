@@ -52,4 +52,8 @@ public class BeginMarkedContentSequenceWithProperties
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContentSeq;
   }
+
+  static BeginMarkedContentSequenceWithProperties() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

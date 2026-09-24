@@ -9,24 +9,15 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Gsub;
 
 public class GsubWorkerForBengali : global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const string INIT_FEATURE = "init";
 
-  private static readonly global::System.Collections.Generic.IList<string> FEATURES_IN_ORDER
-    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<string>("locl", "nukt", "akhn",
-    "rphf", "blwf", "pstf", "half", "vatu", "cjct",
-    global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.INIT_FEATURE, "pres", "abvs",
-    "blws", "psts", "haln", "calt");
+  private static readonly global::System.Collections.Generic.IList<string> FEATURES_IN_ORDER;
 
-  private static readonly char[] BEFORE_HALF_CHARS = new char[] { '\u09BF', '\u09C7', '\u09C8' };
+  private static readonly char[] BEFORE_HALF_CHARS;
 
-  private static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.BeforeAndAfterSpanComponent[] BEFORE_AND_AFTER_SPAN_CHARS
-    = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.BeforeAndAfterSpanComponent[] { new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.BeforeAndAfterSpanComponent('\u09CB',
-      '\u09C7', '\u09BE'),
-    new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.BeforeAndAfterSpanComponent('\u09CC',
-      '\u09C7', '\u09D7') };
+  private static readonly global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.BeforeAndAfterSpanComponent[] BEFORE_AND_AFTER_SPAN_CHARS;
 
   private readonly global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmapLookup = null!;
 
@@ -84,11 +75,11 @@ public class GsubWorkerForBengali : global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.G
         glyphId)) {
         int previousGlyphId
           = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(originalGlyphIds,
-          (index - 1)));
+          unchecked((index - 1))));
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(repositionedGlyphIds, index,
           previousGlyphId);
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(repositionedGlyphIds, (index
-          - 1), glyphId);
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(repositionedGlyphIds,
+          unchecked((index - 1)), glyphId);
       }
     }
     return repositionedGlyphIds;
@@ -109,14 +100,14 @@ public class GsubWorkerForBengali : global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.G
       if ((beforeAndAfterSpanComponent != default!)) {
         int previousGlyphId
           = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(originalGlyphIds,
-          (index - 1)));
+          unchecked((index - 1))));
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(repositionedGlyphIds, index,
           previousGlyphId);
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(repositionedGlyphIds, (index
-          - 1),
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(repositionedGlyphIds,
+          unchecked((index - 1)),
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(this.getGlyphId(beforeAndAfterSpanComponent.beforeComponentCharacter)));
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListAdd(repositionedGlyphIds, (index
-          + 1),
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListAdd(repositionedGlyphIds,
+          unchecked((index + 1)),
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox(this.getGlyphId(beforeAndAfterSpanComponent.afterComponentCharacter)));
       }
     }
@@ -204,5 +195,19 @@ public class GsubWorkerForBengali : global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.G
       this.beforeComponentCharacter = beforeComponentCharacter;
       this.afterComponentCharacter = afterComponentCharacter;
     }
+  }
+
+  static GsubWorkerForBengali() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    FEATURES_IN_ORDER = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<string>("locl",
+      "nukt", "akhn", "rphf", "blwf", "pstf", "half", "vatu", "cjct",
+      global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.INIT_FEATURE, "pres", "abvs",
+      "blws", "psts", "haln", "calt");
+    BEFORE_HALF_CHARS = new char[] { '\u09BF', '\u09C7', '\u09C8' };
+    BEFORE_AND_AFTER_SPAN_CHARS
+      = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.BeforeAndAfterSpanComponent[] { new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.BeforeAndAfterSpanComponent('\u09CB',
+        '\u09C7', '\u09BE'),
+      new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForBengali.BeforeAndAfterSpanComponent('\u09CC',
+        '\u09C7', '\u09D7') };
   }
 }

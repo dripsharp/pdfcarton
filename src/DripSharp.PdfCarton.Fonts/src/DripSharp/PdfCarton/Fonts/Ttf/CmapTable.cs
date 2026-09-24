@@ -85,4 +85,8 @@ public class CmapTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
     }
     return default!;
   }
+
+  static CmapTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
+  }
 }

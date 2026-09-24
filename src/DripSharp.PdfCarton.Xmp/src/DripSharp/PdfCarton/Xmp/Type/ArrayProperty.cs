@@ -45,4 +45,8 @@ public class ArrayProperty : global::DripSharp.PdfCarton.Xmp.Type.AbstractComple
   public override string GetPrefix() {
     return this.prefix;
   }
+
+  static ArrayProperty() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractComplexProperty).TypeHandle);
+  }
 }

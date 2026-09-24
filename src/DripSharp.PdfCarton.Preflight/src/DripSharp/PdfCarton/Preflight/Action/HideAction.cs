@@ -40,4 +40,8 @@ public class HideAction : global::DripSharp.PdfCarton.Preflight.Action.AbstractA
     }
     return true;
   }
+
+  static HideAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager).TypeHandle);
+  }
 }

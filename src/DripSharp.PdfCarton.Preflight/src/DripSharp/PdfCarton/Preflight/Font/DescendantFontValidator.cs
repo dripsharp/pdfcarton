@@ -77,4 +77,8 @@ public abstract class DescendantFontValidator<T>
       }
     }
   }
+
+  static DescendantFontValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.SimpleFontValidator<T>).TypeHandle);
+  }
 }

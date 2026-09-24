@@ -38,4 +38,8 @@ public class FontType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredT
   public FontType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
   }
+
+  static FontType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

@@ -15,7 +15,7 @@ public class TestNumberFormatUtil {
         unchecked((sbyte)('1')) },
       global::DripSharp.Runtime.JavaCompat.CopyOfRange<sbyte>(this.buffer, 0, 2), null);
     global::DripSharp.Testing.JavaAssertions.Equal(3,
-      global::DripSharp.PdfCarton.Util.NumberFormatUtil.FormatFloatFast((float)(-51), 5,
+      global::DripSharp.PdfCarton.Util.NumberFormatUtil.FormatFloatFast((float)(unchecked(-51)), 5,
       this.buffer), null);
     global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)('-')),
         unchecked((sbyte)('5')), unchecked((sbyte)('1')) },
@@ -85,23 +85,23 @@ public class TestNumberFormatUtil {
   }
 
   internal virtual void testFormatOfRealValuesReturnsMinusOneIfItCannotBeFormatted() {
-    global::DripSharp.Testing.JavaAssertions.Equal(-1,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
       global::DripSharp.PdfCarton.Util.NumberFormatUtil.FormatFloatFast(float.NaN, 5, this.buffer),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "NaN should not be formattable"));
-    global::DripSharp.Testing.JavaAssertions.Equal(-1,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
       global::DripSharp.PdfCarton.Util.NumberFormatUtil.FormatFloatFast(float.PositiveInfinity, 5,
       this.buffer), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "+Infinity should not be formattable"));
-    global::DripSharp.Testing.JavaAssertions.Equal(-1,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
       global::DripSharp.PdfCarton.Util.NumberFormatUtil.FormatFloatFast(float.NegativeInfinity, 5,
       this.buffer), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "-Infinity should not be formattable"));
-    global::DripSharp.Testing.JavaAssertions.Equal(-1,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
       global::DripSharp.PdfCarton.Util.NumberFormatUtil.FormatFloatFast(((float)(long.MaxValue)
       + 1.0E12F), 5, this.buffer), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "Too big number should not be formattable"));
-    global::DripSharp.Testing.JavaAssertions.Equal(-1,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
       global::DripSharp.PdfCarton.Util.NumberFormatUtil.FormatFloatFast((float)(long.MinValue), 5,
       this.buffer), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "Too big negative number should not be formattable"));
@@ -152,14 +152,14 @@ public class TestNumberFormatUtil {
     for (int maxFractionDigits = 0; (maxFractionDigits <= 5); maxFractionDigits++) {
       global::DripSharp.Runtime.JavaCompat.JavaBigDecimal increment
         = global::DripSharp.Runtime.JavaCompat.JavaBigDecimalPow(global::DripSharp.Runtime.JavaCompat.JavaBigDecimalValueOf(10),
-        -maxFractionDigits);
+        unchecked(-maxFractionDigits));
       for (global::DripSharp.Runtime.JavaCompat.JavaBigDecimal value = minVal;
         (global::DripSharp.Runtime.JavaCompat.JavaBigDecimalCompare(value, maxVal) < 0); value
         = global::DripSharp.Runtime.JavaCompat.JavaBigDecimalAdd(value, increment)) {
         int byteCount
           = global::DripSharp.PdfCarton.Util.NumberFormatUtil.FormatFloatFast(global::DripSharp.Runtime.JavaCompat.JavaBigDecimalFloatValue(value),
           maxFractionDigits, formatBuffer);
-        global::DripSharp.Testing.JavaAssertions.NotEqual(-1, byteCount, null);
+        global::DripSharp.Testing.JavaAssertions.NotEqual(unchecked(-1), byteCount, null);
         string newStringResult = global::DripSharp.Runtime.JavaCompat.NewString(formatBuffer, 0,
           byteCount, global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
         global::DripSharp.Runtime.JavaCompat.JavaBigDecimal formattedDecimal

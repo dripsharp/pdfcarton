@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
 public class PDCaretAppearanceHandler
 : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDCaretAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
   : base(annotation) {
@@ -26,40 +25,49 @@ public class PDCaretAppearanceHandler
   public override void GenerateNormalAppearance() {
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationCaret annotation
       = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationCaret)(this.getAnnotation()!);
-    try {
-      using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
-        = this.getNormalAppearanceAsContentStream()) {
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color = this.getColor();
-        contentStream.SetStrokingColor(color);
-        contentStream.SetNonStrokingColor(color);
-        this.setOpacity(contentStream, annotation.GetConstantOpacity());
-        global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = this.getRectangle();
-        float rectWidth = rect.GetWidth();
-        float rectHeight = rect.GetHeight();
-        global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox
-          = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(rectWidth, rectHeight);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream pdAppearanceStream
-          = annotation.GetNormalAppearanceStream();
-        if (!(annotation.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Rd))) {
-          float rd = global::System.Math.Min(((float)rectHeight / 10), (float)(5));
-          annotation.SetRectDifferences(rd);
-          bbox = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(-rd, -rd, (rectWidth
-            + (2 * rd)), (rectHeight + (2 * rd)));
-          global::DripSharp.PdfCarton.Util.Matrix matrix = pdAppearanceStream.GetMatrix();
-          pdAppearanceStream.SetMatrix(matrix.CreateAffineTransform());
-          global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect2
-            = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle((rect.GetLowerLeftX()
-            - rd), (rect.GetLowerLeftY() - rd), (rectWidth + (2 * rd)), (rectHeight + (2 * rd)));
-          annotation.SetRectangle(rect2);
+    try { {
+        global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
+          = this.getNormalAppearanceAsContentStream();
+        global::System.Exception __dripsharpPrimary_54_40_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color = this.getColor();
+          contentStream.SetStrokingColor(color);
+          contentStream.SetNonStrokingColor(color);
+          this.setOpacity(contentStream, annotation.GetConstantOpacity());
+          global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect = this.getRectangle();
+          float rectWidth = rect.GetWidth();
+          float rectHeight = rect.GetHeight();
+          global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox
+            = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(rectWidth, rectHeight);
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream pdAppearanceStream
+            = annotation.GetNormalAppearanceStream();
+          if (!(annotation.GetCOSObject().ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Rd))) {
+            float rd = global::System.Math.Min(((float)rectHeight / 10), (float)(5));
+            annotation.SetRectDifferences(rd);
+            bbox = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(-rd, -rd, (rectWidth
+              + (2 * rd)), (rectHeight + (2 * rd)));
+            global::DripSharp.PdfCarton.Util.Matrix matrix = pdAppearanceStream.GetMatrix();
+            pdAppearanceStream.SetMatrix(matrix.CreateAffineTransform());
+            global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle rect2
+              = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle((rect.GetLowerLeftX()
+              - rd), (rect.GetLowerLeftY() - rd), (rectWidth + (2 * rd)), (rectHeight + (2 * rd)));
+            annotation.SetRectangle(rect2);
+          }
+          pdAppearanceStream.SetBBox(bbox);
+          float halfX = ((float)rectWidth / 2);
+          float halfY = ((float)rectHeight / 2);
+          contentStream.MoveTo((float)(0), (float)(0));
+          contentStream.CurveTo(halfX, (float)(0), halfX, halfY, halfX, rectHeight);
+          contentStream.CurveTo(halfX, halfY, halfX, (float)(0), rectWidth, (float)(0));
+          contentStream.ClosePath();
+          contentStream.Fill();
+        } catch (global::System.Exception __dripsharpCaught_54_40_0) {
+          __dripsharpPrimary_54_40_0 = __dripsharpCaught_54_40_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream,
+            __dripsharpPrimary_54_40_0);
         }
-        pdAppearanceStream.SetBBox(bbox);
-        float halfX = ((float)rectWidth / 2);
-        float halfY = ((float)rectHeight / 2);
-        contentStream.MoveTo((float)(0), (float)(0));
-        contentStream.CurveTo(halfX, (float)(0), halfX, halfY, halfX, rectHeight);
-        contentStream.CurveTo(halfX, halfY, halfX, (float)(0), rectWidth, (float)(0));
-        contentStream.ClosePath();
-        contentStream.Fill();
       }
     } catch (global::System.IO.IOException e) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDCaretAppearanceHandler.LOG,
@@ -70,4 +78,9 @@ public class PDCaretAppearanceHandler
   public override void GenerateRolloverAppearance() {}
 
   public override void GenerateDownAppearance() {}
+
+  static PDCaretAppearanceHandler() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  }
 }

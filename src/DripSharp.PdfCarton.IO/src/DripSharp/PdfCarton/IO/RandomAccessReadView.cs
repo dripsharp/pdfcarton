@@ -44,18 +44,18 @@ public class RandomAccessReadView : global::DripSharp.PdfCarton.IO.RandomAccessR
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Invalid position ",
         newOffset));
     }
-    this.randomAccessRead.Seek((this.startPosition + global::System.Math.Min(newOffset,
-      this.streamLength)));
+    this.randomAccessRead.Seek(unchecked((this.startPosition + global::System.Math.Min(newOffset,
+      this.streamLength))));
     this.currentPosition = newOffset;
   }
 
   public virtual int Read() {
     if (this.IsEOF()) {
-      return -1;
+      return unchecked(-1);
     }
     this.restorePosition();
     int readValue = this.randomAccessRead.Read();
-    if ((readValue > -1)) {
+    if ((readValue > unchecked(-1))) {
       this.currentPosition++;
     }
     return readValue;
@@ -63,7 +63,7 @@ public class RandomAccessReadView : global::DripSharp.PdfCarton.IO.RandomAccessR
 
   public virtual int Read(sbyte[] b, int off, int len) {
     if (this.IsEOF()) {
-      return -1;
+      return unchecked(-1);
     }
     this.restorePosition();
     int readBytes = this.randomAccessRead.Read(b, off, global::System.Math.Min(len,
@@ -101,7 +101,7 @@ public class RandomAccessReadView : global::DripSharp.PdfCarton.IO.RandomAccessR
   }
 
   private void restorePosition() {
-    this.randomAccessRead.Seek((this.startPosition + this.currentPosition));
+    this.randomAccessRead.Seek(unchecked((this.startPosition + this.currentPosition)));
   }
 
   private void checkClosed() {
@@ -117,13 +117,13 @@ public class RandomAccessReadView : global::DripSharp.PdfCarton.IO.RandomAccessR
   }
 
   public virtual int Available() {
-    return (int)(global::System.Math.Min((this.Length() - this.GetPosition()),
+    return (int)(global::System.Math.Min(unchecked((this.Length() - this.GetPosition())),
       (long)(int.MaxValue)));
   }
 
   public virtual int Peek() {
     int result = this.Read();
-    if ((result != -1)) {
+    if ((result != unchecked(-1))) {
       ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
     }
     return result;
@@ -138,12 +138,13 @@ public class RandomAccessReadView : global::DripSharp.PdfCarton.IO.RandomAccessR
   }
 
   public virtual void ReadFully(sbyte[] b, int offset, int length) {
-    if (((this.Length() - this.GetPosition()) < length)) {
+    if ((unchecked((this.Length() - this.GetPosition())) < length)) {
       throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
     }
     int bytesReadTotal = 0;
     while ((bytesReadTotal < length)) {
-      int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
+      int bytesReadNow = this.Read(b, unchecked((offset + bytesReadTotal)), unchecked((length
+        - bytesReadTotal)));
       if ((bytesReadNow <= 0)) {
         throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
       }
@@ -152,6 +153,6 @@ public class RandomAccessReadView : global::DripSharp.PdfCarton.IO.RandomAccessR
   }
 
   public virtual void Skip(int length) {
-    this.Seek((this.GetPosition() + length));
+    this.Seek(unchecked((this.GetPosition() + length)));
   }
 }

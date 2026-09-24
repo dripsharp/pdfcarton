@@ -9,11 +9,9 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Gsub;
 
 public class GsubWorkerForLatin : global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly global::System.Collections.Generic.IList<string> FEATURES_IN_ORDER
-    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<string>("ccmp", "liga", "clig");
+  private static readonly global::System.Collections.Generic.IList<string> FEATURES_IN_ORDER;
 
   private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData = null!;
 
@@ -67,5 +65,11 @@ public class GsubWorkerForLatin : global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.Gsu
       global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("originalGlyphs: ",
       originalGlyphs), ", gsubProcessedGlyphs: "), gsubProcessedGlyphs)));
     return gsubProcessedGlyphs;
+  }
+
+  static GsubWorkerForLatin() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    FEATURES_IN_ORDER = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<string>("ccmp",
+      "liga", "clig");
   }
 }

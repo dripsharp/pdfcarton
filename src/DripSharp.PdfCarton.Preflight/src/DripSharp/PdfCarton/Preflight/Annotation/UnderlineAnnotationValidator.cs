@@ -16,4 +16,8 @@ public class UnderlineAnnotationValidator
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnderline(annotDictionary);
     this.PdAnnot = this.PdMarkup;
   }
+
+  static UnderlineAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.MarkupAnnotationValidator).TypeHandle);
+  }
 }

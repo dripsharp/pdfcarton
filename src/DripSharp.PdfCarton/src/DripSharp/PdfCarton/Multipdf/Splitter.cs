@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Multipdf;
 
 public class Splitter {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDocument = null!;
 
@@ -144,12 +143,12 @@ public class Splitter {
     for (int p = 0; (p < dstPageTreeCount); ++p) {
       global::DripSharp.PdfCarton.Pdmodel.PDPage page = dstPageTree.Get(p);
       int sp1 = page.GetStructParents();
-      if ((sp1 != -1)) {
+      if ((sp1 != unchecked(-1))) {
         this.cloneTreeElement(srcNumberTreeAsMap, dstNumberTreeAsMap, sp1);
       }
       foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation ann in page.GetAnnotations()) {
         int sp2 = ann.GetStructParent();
-        if ((sp2 != -1)) {
+        if ((sp2 != unchecked(-1))) {
           this.cloneTreeElement(srcNumberTreeAsMap, dstNumberTreeAsMap, sp2);
         }
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream normalAppearanceStream
@@ -170,8 +169,8 @@ public class Splitter {
     dstStructureTreeRoot.SetParentTree(dstNumberTreeNode);
     int? upperLimit = dstNumberTreeNode.GetUpperLimit();
     if ((upperLimit != default!)) {
-      dstStructureTreeRoot.SetParentTreeNextKey((global::DripSharp.Runtime.JavaCompat.Unbox(upperLimit)
-        + 1));
+      dstStructureTreeRoot.SetParentTreeNextKey(unchecked((global::DripSharp.Runtime.JavaCompat.Unbox(upperLimit)
+        + 1)));
     }
     dstStructureTreeRoot.SetClassMap(srcStructureTreeRoot.GetClassMap());
     this.cloneRoleMap(srcStructureTreeRoot, dstStructureTreeRoot);
@@ -334,7 +333,7 @@ public class Splitter {
         if ((dstPageDict! != default!)) {
           global::DripSharp.PdfCarton.Pdmodel.PDPage dstPage
             = new global::DripSharp.PdfCarton.Pdmodel.PDPage(dstPageDict!);
-          if ((this.dstPageTree.IndexOf(dstPage) == -1)) {
+          if ((this.dstPageTree.IndexOf(dstPage) == unchecked(-1))) {
             return default!;
           }
         } else {
@@ -444,7 +443,8 @@ public class Splitter {
         if ((srcPageDict != default!)) {
           global::DripSharp.PdfCarton.Cos.COSArray annotationArray
             = srcPageDict.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Annots);
-          if (((annotationArray == default!) || (annotationArray.IndexOfObject(srcObj) == -1))) {
+          if (((annotationArray == default!) || (annotationArray.IndexOfObject(srcObj)
+            == unchecked(-1)))) {
             global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.Splitter.LOG,
               global::DripSharp.Runtime.JavaCompat.StringValueOf("An annotation OBJ that isn't in the page has been removed from the structure tree"));
             dstDict.RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Obj);
@@ -471,7 +471,7 @@ public class Splitter {
     visited.Add(res.GetCOSObject());
     foreach (global::DripSharp.PdfCarton.Cos.COSName name in res.GetXObjectNames()) {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject xObject = res.GetXObject(name);
-      int sp2 = -1;
+      int sp2 = unchecked(-1);
       if ((xObject is global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)) {
         sp2
           = ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject)(xObject!)).GetStructParents();
@@ -483,7 +483,7 @@ public class Splitter {
             = ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(xObject!)).GetStructParent();
         }
       }
-      if ((sp2 != -1)) {
+      if ((sp2 != unchecked(-1))) {
         this.cloneTreeElement(srcNumberTreeAsMap, dstNumberTreeAsMap, sp2);
       }
     }
@@ -515,8 +515,8 @@ public class Splitter {
 
   private void processPages() {
     foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page in this.sourceDocument.GetPages()) {
-      if ((((this.currentPageNumber + 1) >= this.startPage) && ((this.currentPageNumber + 1)
-        <= this.endPage))) {
+      if (((unchecked((this.currentPageNumber + 1)) >= this.startPage)
+        && (unchecked((this.currentPageNumber + 1)) <= this.endPage))) {
         this.ProcessPage(page);
         this.currentPageNumber++;
       } else {
@@ -547,8 +547,8 @@ public class Splitter {
   }
 
   protected internal virtual bool SplitAtPage(int pageNumber) {
-    return ((((pageNumber + 1) - global::System.Math.Max(1, this.startPage)) % this.splitLength)
-      == 0);
+    return (global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((unchecked((pageNumber
+      + 1)) - global::System.Math.Max(1, this.startPage))), this.splitLength) == 0);
   }
 
   protected internal virtual global::DripSharp.PdfCarton.Pdmodel.PDDocument CreateNewDocument() {
@@ -644,7 +644,7 @@ public class Splitter {
           global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.Splitter.LOG,
             (global::System.Exception)ex,
             global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Incorrect destination in link annotation on page ",
-            (this.currentPageNumber + 1)), " is removed")));
+            unchecked((this.currentPageNumber + 1))), " is removed")));
           link.SetDestination((global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination)default!);
         }
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction action = default!;
@@ -659,7 +659,7 @@ public class Splitter {
               global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Multipdf.Splitter.LOG,
                 (global::System.Exception)ex,
                 global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("GoToAction with incorrect destination in link annotation on page ",
-                (this.currentPageNumber + 1)), " is removed")));
+                unchecked((this.currentPageNumber + 1))), " is removed")));
               link.SetAction((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction)default!);
             }
           }
@@ -748,6 +748,10 @@ public class Splitter {
 
   protected internal global::DripSharp.PdfCarton.Pdmodel.PDDocument GetDestinationDocument() {
     return this.currentDestinationDocument;
+  }
+
+  static Splitter() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   public Splitter() {

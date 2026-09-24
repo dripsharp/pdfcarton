@@ -50,4 +50,8 @@ public class PDFAPropertyType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStr
       = (global::DripSharp.PdfCarton.Xmp.Type.ChoiceType)(this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.PDFAPropertyType.Category)!);
     return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
   }
+
+  static PDFAPropertyType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

@@ -9,18 +9,13 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public sealed class COSBoolean : global::DripSharp.PdfCarton.Cos.COSBase {
-  private static readonly sbyte[] TRUE_BYTES = new sbyte[] { unchecked((sbyte)(116)),
-    unchecked((sbyte)(114)), unchecked((sbyte)(117)), unchecked((sbyte)(101)) };
+  private static readonly sbyte[] TRUE_BYTES;
 
-  private static readonly sbyte[] FALSE_BYTES = new sbyte[] { unchecked((sbyte)(102)),
-    unchecked((sbyte)(97)), unchecked((sbyte)(108)), unchecked((sbyte)(115)),
-    unchecked((sbyte)(101)) };
+  private static readonly sbyte[] FALSE_BYTES;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSBoolean True
-    = new global::DripSharp.PdfCarton.Cos.COSBoolean(true);
+  public static readonly global::DripSharp.PdfCarton.Cos.COSBoolean True;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSBoolean False
-    = new global::DripSharp.PdfCarton.Cos.COSBoolean(false);
+  public static readonly global::DripSharp.PdfCarton.Cos.COSBoolean False;
 
   private readonly bool value = default;
 
@@ -69,5 +64,15 @@ public sealed class COSBoolean : global::DripSharp.PdfCarton.Cos.COSBase {
       global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output,
         global::DripSharp.PdfCarton.Cos.COSBoolean.FALSE_BYTES);
     }
+  }
+
+  static COSBoolean() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.COSBase).TypeHandle);
+    TRUE_BYTES = new sbyte[] { unchecked((sbyte)(116)), unchecked((sbyte)(114)),
+      unchecked((sbyte)(117)), unchecked((sbyte)(101)) };
+    FALSE_BYTES = new sbyte[] { unchecked((sbyte)(102)), unchecked((sbyte)(97)),
+      unchecked((sbyte)(108)), unchecked((sbyte)(115)), unchecked((sbyte)(101)) };
+    True = new global::DripSharp.PdfCarton.Cos.COSBoolean(true);
+    False = new global::DripSharp.PdfCarton.Cos.COSBoolean(false);
   }
 }

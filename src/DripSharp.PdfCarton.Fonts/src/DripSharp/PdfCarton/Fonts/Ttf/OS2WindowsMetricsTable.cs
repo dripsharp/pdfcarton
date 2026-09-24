@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class OS2WindowsMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const int WeightClassThin = 100;
 
@@ -112,7 +111,7 @@ public class OS2WindowsMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
 
   private int familyClass = default;
 
-  private sbyte[] panose = new sbyte[10];
+  private sbyte[] panose;
 
   private long unicodeRange1 = default;
 
@@ -122,7 +121,7 @@ public class OS2WindowsMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
 
   private long unicodeRange4 = default;
 
-  private string achVendId = "XXXX";
+  private string achVendId;
 
   private int fsSelection = default;
 
@@ -140,9 +139,9 @@ public class OS2WindowsMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
 
   private int winDescent = default;
 
-  private long codePageRange1 = 0;
+  private long codePageRange1;
 
-  private long codePageRange2 = 0;
+  private long codePageRange2;
 
   private int sxHeight = default;
 
@@ -155,7 +154,10 @@ public class OS2WindowsMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
   private int usMaxContext = default;
 
   internal OS2WindowsMetricsTable() : base() {
-
+    this.panose = new sbyte[10];
+    this.achVendId = "XXXX";
+    this.codePageRange1 = 0;
+    this.codePageRange2 = 0;
   }
 
   public virtual string GetAchVendId() {
@@ -505,5 +507,10 @@ public class OS2WindowsMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
       }
     }
     base.Initialized = true;
+  }
+
+  static OS2WindowsMetricsTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

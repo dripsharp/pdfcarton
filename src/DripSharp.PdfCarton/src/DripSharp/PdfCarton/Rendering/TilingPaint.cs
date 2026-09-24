@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 internal class TilingPaint : global::DripSharp.Runtime.JavaPaint {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.Runtime.JavaPaint paint = null!;
 
@@ -20,7 +19,8 @@ internal class TilingPaint : global::DripSharp.Runtime.JavaPaint {
 
   private const string DEFAULTMAXEDGE = "3000";
 
-  static TilingPaint() { {
+  static TilingPaint() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance; {
       string s
         = global::DripSharp.Runtime.JavaCompat.GetProperty("pdfbox.rendering.tilingpaint.maxedge",
         global::DripSharp.PdfCarton.Rendering.TilingPaint.DEFAULTMAXEDGE);
@@ -97,11 +97,11 @@ internal class TilingPaint : global::DripSharp.Runtime.JavaPaint {
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(image);
     if ((pattern.GetYStep() < 0)) {
       graphics.Translate(0, rasterHeight);
-      graphics.Scale((double)(1), (double)(-1));
+      graphics.Scale((double)(1), (double)(unchecked(-1)));
     }
     if ((pattern.GetXStep() < 0)) {
       graphics.Translate(rasterWidth, 0);
-      graphics.Scale((double)(-1), (double)(1));
+      graphics.Scale((double)(unchecked(-1)), (double)(1));
     }
     graphics.Scale((double)(xScale), (double)(yScale));
     global::DripSharp.PdfCarton.Util.Matrix newPatternMatrix
@@ -151,8 +151,8 @@ internal class TilingPaint : global::DripSharp.Runtime.JavaPaint {
     float width = (xStep * xScale);
     float height = (yStep * yScale);
     if ((global::System.Math.Abs((width
-      * height)) > (global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE
-      * global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE))) {
+      * height)) > unchecked((global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE
+      * global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE)))) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Rendering.TilingPaint.LOG,
         global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Pattern surface larger than ",
         global::DripSharp.PdfCarton.Rendering.TilingPaint.MAXEDGE), " x "),

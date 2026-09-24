@@ -36,24 +36,32 @@ public class PDIndexedTest {
       = ((global::DripSharp.PdfCarton.Cos.COSString)(indexedCOSArray.GetObject(3)!)).ToHexString();
     global::DripSharp.Testing.JavaAssertions.Equal(stringLookupData, lookupDataString,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "unexpected value for lookup data"));
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.PDPage page
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      global::DripSharp.PdfCarton.Pdmodel.PDResources resources
-        = new global::DripSharp.PdfCarton.Pdmodel.PDResources();
-      resources.Add(pdIndexed);
-      page.SetResources(resources);
-      document.AddPage(page);
-      global::DripSharp.Runtime.JavaByteArrayOutputStream baos
-        = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-      document.Save(baos,
-        global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.NoCompression);
-      string pdfAsString = global::DripSharp.PdfCarton.Tests.Support.OutputText(baos);
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.StringContains(pdfAsString,
-        outputString), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "output doesn't match expected string"));
+      "unexpected value for lookup data")); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_66_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDPage page
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        global::DripSharp.PdfCarton.Pdmodel.PDResources resources
+          = new global::DripSharp.PdfCarton.Pdmodel.PDResources();
+        resources.Add(pdIndexed);
+        page.SetResources(resources);
+        document.AddPage(page);
+        global::DripSharp.Runtime.JavaByteArrayOutputStream baos
+          = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
+        document.Save(baos,
+          global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.NoCompression);
+        string pdfAsString = global::DripSharp.PdfCarton.Tests.Support.OutputText(baos);
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.StringContains(pdfAsString,
+          outputString), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "output doesn't match expected string"));
+      } catch (global::System.Exception __dripsharpCaught_66_25_0) {
+        __dripsharpPrimary_66_25_0 = __dripsharpCaught_66_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_66_25_0);
+      }
     }
   }
 
@@ -75,8 +83,8 @@ public class PDIndexedTest {
       => global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed.Create((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace)default!,
       0, lookupDataEmpty), null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-      => global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed.Create(baseColorspace, -1,
-      lookupDataEmpty), null);
+      => global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed.Create(baseColorspace,
+      unchecked(-1), lookupDataEmpty), null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
       => global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed.Create(baseColorspace, 256,
       lookupDataEmpty), null);

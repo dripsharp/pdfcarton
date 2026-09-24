@@ -9,32 +9,34 @@
 namespace DripSharp.PdfCarton.Pdfparser;
 
 public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser {
-  private static readonly char[] XREF_TABLE = new char[] { 'x', 'r', 'e', 'f' };
+  private static readonly char[] XREF_TABLE;
 
-  private static readonly char[] XREF_STREAM = new char[] { '/', 'X', 'R', 'e', 'f' };
+  private static readonly char[] XREF_STREAM;
 
   private const long MINIMUM_SEARCH_OFFSET = 6;
 
-  private static readonly char[] EOF_MARKER = new char[] { '%', '%', 'E', 'O', 'F' };
+  private static readonly char[] EOF_MARKER;
 
-  private static readonly char[] OBJ_MARKER = new char[] { 'o', 'b', 'j' };
+  private static readonly char[] OBJ_MARKER;
 
-  private static readonly char[] TRAILER_MARKER = new char[] { 't', 'r', 'a', 'i', 'l', 'e', 'r' };
+  private static readonly char[] TRAILER_MARKER;
 
-  private static readonly char[] OBJ_STREAM = new char[] { '/', 'O', 'b', 'j', 'S', 't', 'm' };
+  private static readonly char[] OBJ_STREAM;
 
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
-    long> bfSearchCOSObjectKeyOffsets
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
-    long>();
+    long> bfSearchCOSObjectKeyOffsets;
 
-  private bool __field_bfSearchTriggered = false;
+  private bool __field_bfSearchTriggered;
 
   public BruteForceParser(global::DripSharp.PdfCarton.IO.RandomAccessRead source,
     global::DripSharp.PdfCarton.Cos.COSDocument document) : base(source) {
+    this.bfSearchCOSObjectKeyOffsets
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+      long>();
+    this.__field_bfSearchTriggered = false;
+
     this.Document = document;
   }
 
@@ -68,7 +70,7 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
       currentOffset++;
       if ((global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsWhitespace(nextChar)
         && this.IsString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.OBJ_MARKER))) {
-        long tempOffset = (currentOffset - 2);
+        long tempOffset = unchecked((currentOffset - 2));
         base.Source.Seek(tempOffset);
         int genID = base.Source.Peek();
         if (global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsDigit(genID)) {
@@ -96,9 +98,10 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
               }
               lastObjectId = objectId;
               lastGenID = genID;
-              lastObjOffset = (tempOffset + 1);
+              lastObjOffset = unchecked((tempOffset + 1));
               currentOffset
-                += (global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.OBJ_MARKER.Length - 1);
+                += unchecked((global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.OBJ_MARKER.Length
+                - 1));
               endOfObjFound = false;
             }
           }
@@ -126,16 +129,16 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
   }
 
   protected internal virtual long BfSearchForXRef(long xrefOffset) {
-    long newOffset = -1;
+    long newOffset = unchecked(-1);
     global::System.Collections.Generic.IList<long> bfSearchXRefTablesOffsets
       = this.bfSearchForXRefTables();
     global::System.Collections.Generic.IList<long> bfSearchXRefStreamsOffsets
       = this.bfSearchForXRefStreams();
     long newOffsetTable = this.searchNearestValue(bfSearchXRefTablesOffsets, xrefOffset);
     long newOffsetStream = this.searchNearestValue(bfSearchXRefStreamsOffsets, xrefOffset);
-    if (((newOffsetTable > -1) && (newOffsetStream > -1))) {
-      long differenceTable = (xrefOffset - newOffsetTable);
-      long differenceStream = (xrefOffset - newOffsetStream);
+    if (((newOffsetTable > unchecked(-1)) && (newOffsetStream > unchecked(-1)))) {
+      long differenceTable = unchecked((xrefOffset - newOffsetTable));
+      long differenceStream = unchecked((xrefOffset - newOffsetStream));
       if ((global::System.Math.Abs(differenceTable) > global::System.Math.Abs(differenceStream))) {
         newOffset = newOffsetStream;
         global::DripSharp.Runtime.JavaCompat.CollectionRemove(bfSearchXRefStreamsOffsets,
@@ -146,12 +149,12 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
           newOffsetTable);
       }
     } else {
-      if ((newOffsetTable > -1)) {
+      if ((newOffsetTable > unchecked(-1))) {
         newOffset = newOffsetTable;
         global::DripSharp.Runtime.JavaCompat.CollectionRemove(bfSearchXRefTablesOffsets,
           newOffsetTable);
       } else {
-        if ((newOffsetStream > -1)) {
+        if ((newOffsetStream > unchecked(-1))) {
           newOffset = newOffsetStream;
           global::DripSharp.Runtime.JavaCompat.CollectionRemove(bfSearchXRefStreamsOffsets,
             newOffsetStream);
@@ -163,19 +166,20 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
 
   private long searchNearestValue(global::System.Collections.Generic.IList<long> values,
     long offset) {
-    long newValue = -1;
+    long newValue = unchecked(-1);
     long? currentDifference = default!;
-    int currentOffsetIndex = -1;
+    int currentOffsetIndex = unchecked(-1);
     int numberOfOffsets = global::DripSharp.Runtime.JavaCompat.CollectionCount(values);
     for (int i = 0; (i < numberOfOffsets); i++) {
-      long newDifference = (offset - global::DripSharp.Runtime.JavaCompat.ListGet(values, i));
+      long newDifference = unchecked((offset - global::DripSharp.Runtime.JavaCompat.ListGet(values,
+        i)));
       if (((currentDifference! == default!)
         || (global::System.Math.Abs((long)(global::DripSharp.Runtime.JavaCompat.Unbox(currentDifference!))) > global::System.Math.Abs(newDifference)))) {
         currentDifference = newDifference;
         currentOffsetIndex = i;
       }
     }
-    if ((currentOffsetIndex > -1)) {
+    if ((currentOffsetIndex > unchecked(-1))) {
       newValue
         = global::DripSharp.Runtime.JavaCompat.UnboxObject<long>(global::DripSharp.Runtime.JavaCompat.ListGet(values,
         currentOffsetIndex));
@@ -241,8 +245,10 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
           }
           if (((existingOffset == default!)
             || (offset > global::DripSharp.Runtime.JavaCompat.Unbox(existingOffset)))) {
-            global::DripSharp.Runtime.JavaCompat.MapPut(bfCOSObjectOffsets, objKey, -stmObjNumber);
-            global::DripSharp.Runtime.JavaCompat.MapPut(xrefOffset, objKey, -stmObjNumber);
+            global::DripSharp.Runtime.JavaCompat.MapPut(bfCOSObjectOffsets, objKey,
+              unchecked(-stmObjNumber));
+            global::DripSharp.Runtime.JavaCompat.MapPut(xrefOffset, objKey,
+              unchecked(-stmObjNumber));
           }
         }
       } catch (global::System.IO.IOException exception) {
@@ -264,7 +270,7 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
     base.Source.Seek(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.MINIMUM_SEARCH_OFFSET);
     long trailerOffset
       = this.findString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.TRAILER_MARKER);
-    while ((trailerOffset != -1)) {
+    while ((trailerOffset != unchecked(-1))) {
       try {
         bool rootFound = false;
         bool infoFound = false;
@@ -331,10 +337,10 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
       global::DripSharp.PdfCarton.Cos.COSDictionary dictionary
         = (global::DripSharp.PdfCarton.Cos.COSDictionary)(baseObject!);
       if (this.isCatalog(dictionary)) {
-        rootObject = this.compareCOSObjects(cosObject, entrySet.Value, rootObject!);
+        rootObject = this.compareCOSObjects(cosObject, (long?)(entrySet.Value), rootObject!);
       } else {
         if (this.isInfo(dictionary)) {
-          infoObject = this.compareCOSObjects(cosObject, entrySet.Value, infoObject!);
+          infoObject = this.compareCOSObjects(cosObject, (long?)(entrySet.Value), infoObject!);
         }
       }
     }
@@ -366,12 +372,12 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
   }
 
   private long bfSearchForLastEOFMarker() {
-    long lastEOFMarker = -1;
+    long lastEOFMarker = unchecked(-1);
     long originOffset = base.Source.GetPosition();
     base.Source.Seek(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.MINIMUM_SEARCH_OFFSET);
     long tempMarker
       = this.findString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.EOF_MARKER);
-    while ((tempMarker != -1)) {
+    while ((tempMarker != unchecked(-1))) {
       try {
         this.SkipSpaces();
         if (!(this.IsString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.XREF_TABLE))) {
@@ -388,7 +394,7 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
         = this.findString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.EOF_MARKER);
     }
     base.Source.Seek(originOffset);
-    if ((lastEOFMarker == -1)) {
+    if ((lastEOFMarker == unchecked(-1))) {
       lastEOFMarker = long.MaxValue;
     }
     return lastEOFMarker;
@@ -404,16 +410,16 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
     char[] @string = " obj".ToCharArray();
     long positionObjStream
       = this.findString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.OBJ_STREAM);
-    while ((positionObjStream != -1)) {
-      long newOffset = -1;
+    while ((positionObjStream != unchecked(-1))) {
+      long newOffset = unchecked(-1);
       bool objFound = false;
       for (int i = 1; ((i < 40) && !objFound); i++) {
-        long currentOffset = (positionObjStream - (i * 10));
+        long currentOffset = unchecked((positionObjStream - unchecked((i * 10))));
         if ((currentOffset > 0)) {
           base.Source.Seek(currentOffset);
           for (int j = 0; (j < 10); j++) {
             if (this.IsString(@string)) {
-              long tempOffset = (currentOffset - 1);
+              long tempOffset = unchecked((currentOffset - 1));
               base.Source.Seek(tempOffset);
               int genID = base.Source.Peek();
               if (global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsDigit(genID)) {
@@ -451,8 +457,8 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
           }
         }
       }
-      base.Source.Seek((positionObjStream
-        + global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.OBJ_STREAM.Length));
+      base.Source.Seek(unchecked((positionObjStream
+        + global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.OBJ_STREAM.Length)));
       positionObjStream
         = this.findString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.OBJ_STREAM);
     }
@@ -465,12 +471,12 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
     base.Source.Seek(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.MINIMUM_SEARCH_OFFSET);
     long newOffset
       = this.findString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.XREF_TABLE);
-    while ((newOffset != -1)) {
-      base.Source.Seek((newOffset - 1));
+    while ((newOffset != unchecked(-1))) {
+      base.Source.Seek(unchecked((newOffset - 1)));
       if (this.IsWhitespace()) {
         global::DripSharp.Runtime.JavaCompat.Add(bfSearchXRefTablesOffsets, newOffset);
       }
-      base.Source.Seek((newOffset + 4));
+      base.Source.Seek(unchecked((newOffset + 4)));
       newOffset
         = this.findString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.XREF_TABLE);
     }
@@ -485,16 +491,16 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
     char[] @string = objString.ToCharArray();
     long xrefOffset
       = this.findString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.XREF_STREAM);
-    while ((xrefOffset != -1)) {
-      long newOffset = -1;
+    while ((xrefOffset != unchecked(-1))) {
+      long newOffset = unchecked(-1);
       bool objFound = false;
       for (int i = 1; ((i < 40) && !objFound); i++) {
-        long currentOffset = (xrefOffset - (i * 10));
+        long currentOffset = unchecked((xrefOffset - unchecked((i * 10))));
         if ((currentOffset > 0)) {
           base.Source.Seek(currentOffset);
           for (int j = 0; (j < 10); j++) {
             if (this.IsString(@string)) {
-              long tempOffset = (currentOffset - 1);
+              long tempOffset = unchecked((currentOffset - 1));
               base.Source.Seek(tempOffset);
               int genID = base.Source.Peek();
               if (global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsDigit(genID)) {
@@ -526,10 +532,10 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
           }
         }
       }
-      if ((newOffset > -1)) {
+      if ((newOffset > unchecked(-1))) {
         global::DripSharp.Runtime.JavaCompat.Add(bfSearchXRefStreamsOffsets, newOffset);
       }
-      base.Source.Seek((xrefOffset + 5));
+      base.Source.Seek(unchecked((xrefOffset + 5)));
       xrefOffset
         = this.findString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.XREF_STREAM);
     }
@@ -558,14 +564,14 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
   }
 
   private long findString(char[] @string) {
-    long position = -1L;
+    long position = unchecked(-1L);
     int stringLength = @string.Length;
     int counter = 0;
     int readChar = base.Source.Read();
-    while ((readChar != -1)) {
+    while ((readChar != unchecked(-1))) {
       if ((readChar == (int)(@string[counter]))) {
         if ((counter == 0)) {
-          position = (base.Source.GetPosition() - 1);
+          position = unchecked((base.Source.GetPosition() - 1));
         }
         counter++;
         if ((counter == stringLength)) {
@@ -574,7 +580,7 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
       } else {
         if ((counter > 0)) {
           counter = 0;
-          position = -1L;
+          position = unchecked(-1L);
           continue;
         }
       }
@@ -611,5 +617,16 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
       this.BfSearchForObjStreams(trailerResolver, securityHandler);
     }
     return trailer;
+  }
+
+  static BruteForceParser() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdfparser.COSParser).TypeHandle);
+    XREF_TABLE = new char[] { 'x', 'r', 'e', 'f' };
+    XREF_STREAM = new char[] { '/', 'X', 'R', 'e', 'f' };
+    EOF_MARKER = new char[] { '%', '%', 'E', 'O', 'F' };
+    OBJ_MARKER = new char[] { 'o', 'b', 'j' };
+    TRAILER_MARKER = new char[] { 't', 'r', 'a', 'i', 'l', 'e', 'r' };
+    OBJ_STREAM = new char[] { '/', 'O', 'b', 'j', 'S', 't', 'm' };
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

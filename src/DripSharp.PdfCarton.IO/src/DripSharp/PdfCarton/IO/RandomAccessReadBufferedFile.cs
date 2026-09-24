@@ -11,11 +11,9 @@ namespace DripSharp.PdfCarton.IO;
 public class RandomAccessReadBufferedFile : global::DripSharp.PdfCarton.IO.RandomAccessRead {
   private const int PAGE_SIZE_SHIFT = 12;
 
-  private static readonly int PAGE_SIZE
-    = (1 << unchecked((int)(global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile.PAGE_SIZE_SHIFT)));
+  private static readonly int PAGE_SIZE;
 
-  private static readonly long PAGE_OFFSET_MASK
-    = (-1L << unchecked((int)(global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile.PAGE_SIZE_SHIFT)));
+  private static readonly long PAGE_OFFSET_MASK;
 
   private const int MAX_CACHED_PAGES = 1000;
 
@@ -29,7 +27,7 @@ public class RandomAccessReadBufferedFile : global::DripSharp.PdfCarton.IO.Rando
   private readonly global::System.Collections.Generic.IDictionary<long,
     global::DripSharp.Runtime.JavaByteBuffer> pageCache;
 
-  private long curPageOffset = -1;
+  private long curPageOffset = unchecked(-1);
 
   private global::DripSharp.Runtime.JavaByteBuffer curPage = null!;
 
@@ -95,7 +93,7 @@ public class RandomAccessReadBufferedFile : global::DripSharp.PdfCarton.IO.Rando
       this.curPage = newPage;
     }
     this.fileOffset = global::System.Math.Min(position, this.fileLength);
-    this.offsetWithinPage = (int)((this.fileOffset - this.curPageOffset));
+    this.offsetWithinPage = (int)(unchecked((this.fileOffset - this.curPageOffset)));
   }
 
   private global::DripSharp.Runtime.JavaByteBuffer readPage() {
@@ -121,7 +119,7 @@ public class RandomAccessReadBufferedFile : global::DripSharp.PdfCarton.IO.Rando
   public virtual int Read() {
     this.checkClosed();
     if ((this.fileOffset >= this.fileLength)) {
-      return -1;
+      return unchecked(-1);
     }
     if ((this.offsetWithinPage
       == global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile.PAGE_SIZE)) {
@@ -134,19 +132,19 @@ public class RandomAccessReadBufferedFile : global::DripSharp.PdfCarton.IO.Rando
   public virtual int Read(sbyte[] b, int off, int len) {
     this.checkClosed();
     if ((this.fileOffset >= this.fileLength)) {
-      return -1;
+      return unchecked(-1);
     }
     if ((this.offsetWithinPage
       == global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile.PAGE_SIZE)) {
       this.Seek(this.fileOffset);
     }
     int commonLen
-      = global::System.Math.Min((global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile.PAGE_SIZE
-      - this.offsetWithinPage), len);
-    if (((this.fileLength
-      - this.fileOffset) < global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile.PAGE_SIZE)) {
-      commonLen = global::System.Math.Min(commonLen, (int)((int)((this.fileLength
-        - this.fileOffset))));
+      = global::System.Math.Min(unchecked((global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile.PAGE_SIZE
+      - this.offsetWithinPage)), len);
+    if ((unchecked((this.fileLength
+      - this.fileOffset)) < global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile.PAGE_SIZE)) {
+      commonLen = global::System.Math.Min(commonLen, (int)((int)(unchecked((this.fileLength
+        - this.fileOffset)))));
     }
     this.curPage.position(this.offsetWithinPage);
     this.curPage.get(b, off, commonLen);
@@ -182,7 +180,7 @@ public class RandomAccessReadBufferedFile : global::DripSharp.PdfCarton.IO.Rando
   }
 
   public virtual bool IsEOF() {
-    return (((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Peek() == -1);
+    return (((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Peek() == unchecked(-1));
   }
 
   public virtual global::DripSharp.PdfCarton.IO.RandomAccessReadView CreateView(long startPosition,
@@ -201,14 +199,21 @@ public class RandomAccessReadBufferedFile : global::DripSharp.PdfCarton.IO.Rando
       startPosition, streamLength);
   }
 
+  static RandomAccessReadBufferedFile() {
+    PAGE_SIZE
+      = (1 << unchecked((int)(global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile.PAGE_SIZE_SHIFT)));
+    PAGE_OFFSET_MASK
+      = (unchecked(-1L) << unchecked((int)(global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile.PAGE_SIZE_SHIFT)));
+  }
+
   public virtual int Available() {
-    return (int)(global::System.Math.Min((this.Length() - this.GetPosition()),
+    return (int)(global::System.Math.Min(unchecked((this.Length() - this.GetPosition())),
       (long)(int.MaxValue)));
   }
 
   public virtual int Peek() {
     int result = this.Read();
-    if ((result != -1)) {
+    if ((result != unchecked(-1))) {
       ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
     }
     return result;
@@ -223,12 +228,13 @@ public class RandomAccessReadBufferedFile : global::DripSharp.PdfCarton.IO.Rando
   }
 
   public virtual void ReadFully(sbyte[] b, int offset, int length) {
-    if (((this.Length() - this.GetPosition()) < length)) {
+    if ((unchecked((this.Length() - this.GetPosition())) < length)) {
       throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
     }
     int bytesReadTotal = 0;
     while ((bytesReadTotal < length)) {
-      int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
+      int bytesReadNow = this.Read(b, unchecked((offset + bytesReadTotal)), unchecked((length
+        - bytesReadTotal)));
       if ((bytesReadNow <= 0)) {
         throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
       }
@@ -237,11 +243,11 @@ public class RandomAccessReadBufferedFile : global::DripSharp.PdfCarton.IO.Rando
   }
 
   public virtual void Rewind(int bytes) {
-    this.Seek((this.GetPosition() - bytes));
+    this.Seek(unchecked((this.GetPosition() - bytes)));
   }
 
   public virtual void Skip(int length) {
-    this.Seek((this.GetPosition() + length));
+    this.Seek(unchecked((this.GetPosition() + length)));
   }
 
   private sealed class Anonymous_51_53 : global::DripSharp.Runtime.JavaLinkedHashMap<long,
@@ -254,7 +260,7 @@ public class RandomAccessReadBufferedFile : global::DripSharp.PdfCarton.IO.Rando
       this.__outer = __outer;
     }
 
-    internal const long serialVersionUID = -6302488539257741101L;
+    internal const long serialVersionUID = unchecked(-6302488539257741101L);
 
     protected internal override bool RemoveEldestEntry(global::DripSharp.Runtime.JavaMapEntry<long,
       global::DripSharp.Runtime.JavaByteBuffer> eldest) {

@@ -88,18 +88,19 @@ public abstract class Patch {
     int szU = patchCC[0].Length;
     for (int i = 1; (i < szV); i++) {
       for (int j = 1; (j < szU); j++) {
-        global::DripSharp.Runtime.JavaPoint2D p0 = patchCC[(i - 1)][(j - 1)].coordinate;
-        global::DripSharp.Runtime.JavaPoint2D p1 = patchCC[(i - 1)][j].coordinate;
+        global::DripSharp.Runtime.JavaPoint2D p0 = patchCC[unchecked((i - 1))][unchecked((j
+          - 1))].coordinate;
+        global::DripSharp.Runtime.JavaPoint2D p1 = patchCC[unchecked((i - 1))][j].coordinate;
         global::DripSharp.Runtime.JavaPoint2D p2 = patchCC[i][j].coordinate;
-        global::DripSharp.Runtime.JavaPoint2D p3 = patchCC[i][(j - 1)].coordinate;
+        global::DripSharp.Runtime.JavaPoint2D p3 = patchCC[i][unchecked((j - 1))].coordinate;
         bool ll = true;
         if ((this.overlaps(p0, p1) || this.overlaps(p0, p3))) {
           ll = false;
         } else {
           global::DripSharp.Runtime.JavaPoint2D[] llCorner
             = new global::DripSharp.Runtime.JavaPoint2D[] { p0, p1, p3 };
-          float[][] llColor = new float[][] { patchCC[(i - 1)][(j - 1)].color, patchCC[(i
-              - 1)][j].color, patchCC[i][(j - 1)].color };
+          float[][] llColor = new float[][] { patchCC[unchecked((i - 1))][unchecked((j - 1))].color,
+            patchCC[unchecked((i - 1))][j].color, patchCC[i][unchecked((j - 1))].color };
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle tmpll
             = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle(llCorner,
             llColor);
@@ -108,8 +109,8 @@ public abstract class Patch {
         if ((ll && (this.overlaps(p2, p1) || this.overlaps(p2, p3)))) {} else {
           global::DripSharp.Runtime.JavaPoint2D[] urCorner
             = new global::DripSharp.Runtime.JavaPoint2D[] { p3, p1, p2 };
-          float[][] urColor = new float[][] { patchCC[i][(j - 1)].color, patchCC[(i - 1)][j].color,
-            patchCC[i][j].color };
+          float[][] urColor = new float[][] { patchCC[i][unchecked((j - 1))].color,
+            patchCC[unchecked((i - 1))][j].color, patchCC[i][j].color };
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle tmpur
             = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle(urCorner,
             urColor);

@@ -44,7 +44,7 @@ public sealed class PDComboBox : global::DripSharp.PdfCarton.Pdmodel.Interactive
           = this.GetOptionsDisplayValues();
         int index = global::DripSharp.Runtime.JavaCompat.ListIndexOf(this.GetOptions(),
           global::DripSharp.Runtime.JavaCompat.ListGet(values, 0));
-        if (((index != -1)
+        if (((index != unchecked(-1))
           && (index < global::DripSharp.Runtime.JavaCompat.CollectionCount(displayValues)))) {
           apHelper.SetAppearanceValue(global::DripSharp.Runtime.JavaCompat.ListGet(displayValues,
             index));
@@ -55,5 +55,9 @@ public sealed class PDComboBox : global::DripSharp.PdfCarton.Pdmodel.Interactive
     } else {
       apHelper.SetAppearanceValue("");
     }
+  }
+
+  static PDComboBox() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDChoice).TypeHandle);
   }
 }

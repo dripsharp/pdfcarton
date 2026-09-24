@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Gsub;
 
 public class GlyphSubstitutionDataExtractor {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData GetGsubData(global::System.Collections.Generic.IDictionary<string,
     global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable> scriptList,
@@ -159,7 +158,8 @@ public class GlyphSubstitutionDataExtractor {
       = singleSubstTableFormat1.GetCoverageTable();
     for (int i = 0; (i < coverageTable.GetSize()); i++) {
       int coverageGlyphId = coverageTable.GetGlyphId(i);
-      int substituteGlyphId = (coverageGlyphId + singleSubstTableFormat1.GetDeltaGlyphID());
+      int substituteGlyphId = unchecked((coverageGlyphId
+        + singleSubstTableFormat1.GetDeltaGlyphID()));
       this.putNewSubstitutionEntry(glyphSubstitutionMap, substituteGlyphId,
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListOf<int>(coverageGlyphId));
     }
@@ -299,5 +299,9 @@ public class GlyphSubstitutionDataExtractor {
     public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable GetScriptTable() {
       return this.scriptTable;
     }
+  }
+
+  static GlyphSubstitutionDataExtractor() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -26,8 +26,8 @@ public sealed class LosslessFactory {
       if ((pdImageXObject != default!)) {
         if ((((pdImageXObject.GetColorSpace()
           == global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance)
-          && (pdImageXObject.GetBitsPerComponent() < 16)) && ((image.Width * image.Height) <= (50
-          * 50)))) {
+          && (pdImageXObject.GetBitsPerComponent() < 16)) && (unchecked((image.Width
+          * image.Height)) <= unchecked((50 * 50))))) {
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdImageXObjectClassic
             = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.createFromRGBImage(image,
             document);
@@ -70,21 +70,30 @@ public sealed class LosslessFactory {
     int[] rgbLineBuffer = new int[width];
     int bpc = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).PixelSize;
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(((((width * bpc) / 8) + ((((width
-      * bpc) % 8) != 0) ? 1 : 0)) * height));
-    using (global::DripSharp.Runtime.JavaImageOutputStream mcios
-      = new global::DripSharp.Runtime.JavaImageOutputStream(baos)) {
-      for (int y = 0; (y < height); ++y) {
-        foreach (int pixel in global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(image, 0, y,
-          width, 1, rgbLineBuffer, 0, width)) {
-          mcios.WriteBits((long)((pixel & 255)), bpc);
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(unchecked((unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((width
+      * bpc)), 8) + ((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((width
+      * bpc)), 8) != 0) ? 1 : 0))) * height))); {
+      global::DripSharp.Runtime.JavaImageOutputStream mcios
+        = new global::DripSharp.Runtime.JavaImageOutputStream(baos);
+      global::System.Exception __dripsharpPrimary_144_43_0 = null!;
+      try {
+        for (int y = 0; (y < height); ++y) {
+          foreach (int pixel in global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(image, 0, y,
+            width, 1, rgbLineBuffer, 0, width)) {
+            mcios.WriteBits((long)((pixel & 255)), bpc);
+          }
+          int bitOffset = mcios.BitOffset;
+          if ((bitOffset != 0)) {
+            mcios.WriteBits((long)(0), unchecked((8 - bitOffset)));
+          }
         }
-        int bitOffset = mcios.BitOffset;
-        if ((bitOffset != 0)) {
-          mcios.WriteBits((long)(0), (8 - bitOffset));
-        }
+        mcios.Flush();
+      } catch (global::System.Exception __dripsharpCaught_144_43_0) {
+        __dripsharpPrimary_144_43_0 = __dripsharpCaught_144_43_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(mcios, __dripsharpPrimary_144_43_0);
       }
-      mcios.Flush();
     }
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.prepareImageXObject(document,
       global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos), image.Width, image.Height, bpc,
@@ -99,7 +108,7 @@ public sealed class LosslessFactory {
     int bpc = 8;
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceColorSpace deviceColorSpace
       = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance;
-    sbyte[] imageData = new sbyte[((width * height) * 3)];
+    sbyte[] imageData = new sbyte[unchecked((unchecked((width * height)) * 3))];
     int byteIdx = 0;
     int alphaByteIdx = 0;
     int alphaBitPos = 7;
@@ -107,8 +116,10 @@ public sealed class LosslessFactory {
     int apbc = ((transparency == global::DripSharp.Runtime.PdfCartonTransparency.BITMASK) ? 1 : 8);
     sbyte[] alphaImageData;
     if ((transparency != global::DripSharp.Runtime.PdfCartonTransparency.OPAQUE)) {
-      alphaImageData = new sbyte[((((width * apbc) / 8) + ((((width * apbc) % 8) != 0) ? 1 : 0))
-        * height)];
+      alphaImageData
+        = new sbyte[unchecked((unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((width
+        * apbc)), 8) + ((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((width
+        * apbc)), 8) != 0) ? 1 : 0))) * height))];
     } else {
       alphaImageData = new sbyte[0];
     }
@@ -121,8 +132,9 @@ public sealed class LosslessFactory {
           = unchecked((sbyte)(unchecked((sbyte)(((pixel >> unchecked((int)(8))) & 255)))));
         imageData[byteIdx++] = unchecked((sbyte)(unchecked((sbyte)((pixel & 255)))));
         if ((transparency == global::DripSharp.Runtime.PdfCartonTransparency.BITMASK)) {
-          global::DripSharp.Runtime.JavaCompat.OrAssign(ref alphaImageData[alphaByteIdx],
-            (((pixel >> unchecked((int)(24))) & 1) << unchecked((int)(alphaBitPos))));
+          global::DripSharp.Runtime.JavaCompat.CompoundAssign(ref alphaImageData[alphaByteIdx],
+            __dripsharpValue_199_21_0
+            => unchecked((sbyte)((unchecked((byte)(__dripsharpValue_199_21_0)) | (((pixel >> unchecked((int)(24))) & 1) << unchecked((int)(alphaBitPos)))))));
           if ((--alphaBitPos < 0)) {
             alphaBitPos = 7;
             ++alphaByteIdx;
@@ -157,7 +169,8 @@ public sealed class LosslessFactory {
     sbyte[] byteArray, int width, int height, int bitsPerComponent,
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace initColorSpace) {
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream((byteArray.Length / 2));
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(global::DripSharp.Runtime.JavaCompat.IntegralDivide(byteArray.Length,
+      2));
     global::DripSharp.PdfCarton.Filter.Filter filter
       = global::DripSharp.PdfCarton.Filter.FilterFactory.Instance.GetFilter(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode);
     filter.Encode(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(byteArray), baos,
@@ -225,17 +238,17 @@ public sealed class LosslessFactory {
         || (this.transferType
         == global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_USHORT)) ? 2 : 1);
       this.bytesPerPixel
-        = (global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfColorComponents
-        * this.bytesPerComponent);
+        = unchecked((global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfColorComponents
+        * this.bytesPerComponent));
       this.height = image.Height;
       this.width = image.Width;
       this.imageType = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(image);
       this.hasAlpha
         = (global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfComponents
         != global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfColorComponents);
-      this.alphaImageData = (this.hasAlpha ? new sbyte[((this.width * this.height)
-        * this.bytesPerComponent)] : (sbyte[])(default!));
-      int dataRowByteCount = ((this.width * this.bytesPerPixel) + 1);
+      this.alphaImageData = (this.hasAlpha ? new sbyte[unchecked((unchecked((this.width
+        * this.height)) * this.bytesPerComponent))] : (sbyte[])(default!));
+      int dataRowByteCount = unchecked((unchecked((this.width * this.bytesPerPixel)) + 1));
       this.dataRawRowNone = new sbyte[dataRowByteCount];
       this.dataRawRowSub = new sbyte[dataRowByteCount];
       this.dataRawRowUp = new sbyte[dataRowByteCount];
@@ -266,14 +279,14 @@ public sealed class LosslessFactory {
           case var __case_358_30_0 when __case_358_30_0
             == global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_USHORT:
           elementsInRowPerPixel = this.componentsPerPixel;
-          prevRow = new short[(this.width * elementsInRowPerPixel)];
-          transferRow = new short[(this.width * elementsInRowPerPixel)];
+          prevRow = new short[unchecked((this.width * elementsInRowPerPixel))];
+          transferRow = new short[unchecked((this.width * elementsInRowPerPixel))];
           break;
           case var __case_363_30_0 when __case_363_30_0
             == global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE:
           elementsInRowPerPixel = this.componentsPerPixel;
-          prevRow = new sbyte[(this.width * elementsInRowPerPixel)];
-          transferRow = new sbyte[(this.width * elementsInRowPerPixel)];
+          prevRow = new sbyte[unchecked((this.width * elementsInRowPerPixel))];
+          transferRow = new sbyte[unchecked((this.width * elementsInRowPerPixel))];
           break;
           default:
             return default!;
@@ -284,8 +297,8 @@ public sealed class LosslessFactory {
         case var __case_374_22_0 when __case_374_22_0
           == global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_4BYTE_ABGR:
         elementsInRowPerPixel = this.componentsPerPixel;
-        prevRow = new sbyte[(this.width * elementsInRowPerPixel)];
-        transferRow = new sbyte[(this.width * elementsInRowPerPixel)];
+        prevRow = new sbyte[unchecked((this.width * elementsInRowPerPixel))];
+        transferRow = new sbyte[unchecked((this.width * elementsInRowPerPixel))];
         break;
         case var __case_380_22_0 when __case_380_22_0
           == global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_BGR:
@@ -294,16 +307,16 @@ public sealed class LosslessFactory {
         case var __case_382_22_0 when __case_382_22_0
           == global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB:
         elementsInRowPerPixel = 1;
-        prevRow = new int[(this.width * elementsInRowPerPixel)];
-        transferRow = new int[(this.width * elementsInRowPerPixel)];
+        prevRow = new int[unchecked((this.width * elementsInRowPerPixel))];
+        transferRow = new int[unchecked((this.width * elementsInRowPerPixel))];
         break;
         default:
           return default!;
       }
-      int elementsInTransferRow = (this.width * elementsInRowPerPixel);
+      int elementsInTransferRow = unchecked((this.width * elementsInRowPerPixel));
       global::DripSharp.Runtime.JavaByteArrayOutputStream stream
-        = new global::DripSharp.Runtime.JavaByteArrayOutputStream((((this.height * this.width)
-        * this.bytesPerPixel) / 2));
+        = new global::DripSharp.Runtime.JavaByteArrayOutputStream(global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((unchecked((this.height
+        * this.width)) * this.bytesPerPixel)), 2));
       global::DripSharp.Runtime.JavaDeflater deflater
         = new global::DripSharp.Runtime.JavaDeflater(global::DripSharp.PdfCarton.Filter.Filter.GetCompressionLevel());
       global::DripSharp.Runtime.JavaDeflaterOutputStream zip
@@ -392,7 +405,7 @@ public sealed class LosslessFactory {
       }
       zip.Dispose();
       deflater.End();
-      return this.preparePredictorPDImage(stream, (this.bytesPerComponent * 8));
+      return this.preparePredictorPDImage(stream, unchecked((this.bytesPerComponent * 8)));
     }
 
     internal void copyIntToBytes(int[] transferRow, int indexInTranferRow, sbyte[] targetValues,
@@ -435,25 +448,26 @@ public sealed class LosslessFactory {
       global::DripSharp.Runtime.JavaCompat.ArrayCopy(transferRow, indexInTranferRow, targetValues,
         0, targetValues.Length);
       if ((alphaImageData != default!)) {
-        alphaImageData[alphaPtr] = unchecked((sbyte)(transferRow[(indexInTranferRow
-          + targetValues.Length)]));
+        alphaImageData[alphaPtr] = unchecked((sbyte)(transferRow[unchecked((indexInTranferRow
+          + targetValues.Length))]));
       }
     }
 
     internal static void copyShortsToBytes(short[] transferRow, int indexInTranferRow,
       sbyte[] targetValues, sbyte[] alphaImageData, int alphaPtr) {
       int itr = indexInTranferRow;
-      for (int i = 0; (i < (targetValues.Length - 1)); i += 2) {
+      for (int i = 0; (i < unchecked((targetValues.Length - 1))); i += 2) {
         short val = transferRow[itr++];
         targetValues[i]
           = unchecked((sbyte)(unchecked((sbyte)(((val >> unchecked((int)(8))) & 255)))));
-        targetValues[(i + 1)] = unchecked((sbyte)(unchecked((sbyte)((val & 255)))));
+        targetValues[unchecked((i + 1))] = unchecked((sbyte)(unchecked((sbyte)((val & 255)))));
       }
       if ((alphaImageData != default!)) {
         short alpha = transferRow[itr];
         alphaImageData[alphaPtr]
           = unchecked((sbyte)(unchecked((sbyte)(((alpha >> unchecked((int)(8))) & 255)))));
-        alphaImageData[(alphaPtr + 1)] = unchecked((sbyte)(unchecked((sbyte)((alpha & 255)))));
+        alphaImageData[unchecked((alphaPtr + 1))]
+          = unchecked((sbyte)(unchecked((sbyte)((alpha & 255)))));
       }
     }
 
@@ -476,10 +490,20 @@ public sealed class LosslessFactory {
         if ((profile
           != global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(global::DripSharp.Runtime.JavaColorSpace.CS_sRGB))) {
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased pdProfile
-            = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased(this.document);
-          using (global::System.IO.Stream outputStream
-            = pdProfile.GetPDStream().CreateOutputStream(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode)) {
-            global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(outputStream, profile.GetData());
+            = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased(this.document); {
+            global::System.IO.Stream outputStream
+              = pdProfile.GetPDStream().CreateOutputStream(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode);
+            global::System.Exception __dripsharpPrimary_587_39_0 = null!;
+            try {
+              global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(outputStream,
+                profile.GetData());
+            } catch (global::System.Exception __dripsharpCaught_587_39_0) {
+              __dripsharpPrimary_587_39_0 = __dripsharpCaught_587_39_0;
+              throw;
+            } finally {
+              global::DripSharp.Runtime.JavaCompat.CloseResource(outputStream,
+                __dripsharpPrimary_587_39_0);
+            }
           }
           pdProfile.GetPDStream().GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.N,
             srcCspace.NumberOfComponents);
@@ -512,7 +536,8 @@ public sealed class LosslessFactory {
         != global::DripSharp.Runtime.PdfCartonTransparency.OPAQUE)) {
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdMask
           = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.prepareImageXObject(this.document,
-          this.alphaImageData, this.image.Width, this.image.Height, (8 * this.bytesPerComponent),
+          this.alphaImageData, this.image.Width, this.image.Height, unchecked((8
+          * this.bytesPerComponent)),
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance);
         imageXObject.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Smask, pdMask);
       }
@@ -550,7 +575,7 @@ public sealed class LosslessFactory {
     }
 
     internal static sbyte pngFilterSub(int x, int a) {
-      return unchecked((sbyte)(unchecked((sbyte)(((x & 255) - (a & 255))))));
+      return unchecked((sbyte)(unchecked((sbyte)(unchecked(((x & 255) - (a & 255)))))));
     }
 
     internal static sbyte pngFilterUp(int x, int b) {
@@ -559,14 +584,15 @@ public sealed class LosslessFactory {
     }
 
     internal static sbyte pngFilterAverage(int x, int a, int b) {
-      return unchecked((sbyte)(unchecked((sbyte)((x - ((b + a) / 2))))));
+      return unchecked((sbyte)(unchecked((sbyte)(unchecked((x
+        - global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((b + a)), 2)))))));
     }
 
     internal static sbyte pngFilterPaeth(int x, int a, int b, int c) {
-      int p = ((a + b) - c);
-      int pa = global::System.Math.Abs((p - a));
-      int pb = global::System.Math.Abs((p - b));
-      int pc = global::System.Math.Abs((p - c));
+      int p = unchecked((unchecked((a + b)) - c));
+      int pa = global::System.Math.Abs(unchecked((p - a)));
+      int pb = global::System.Math.Abs(unchecked((p - b)));
+      int pc = global::System.Math.Abs(unchecked((p - c)));
       int pr;
       if (((pa <= pb) && (pa <= pc))) {
         pr = a;
@@ -577,7 +603,7 @@ public sealed class LosslessFactory {
           pr = c;
         }
       }
-      int r = (x - pr);
+      int r = unchecked((x - pr));
       return unchecked((sbyte)(unchecked((sbyte)(r))));
     }
 

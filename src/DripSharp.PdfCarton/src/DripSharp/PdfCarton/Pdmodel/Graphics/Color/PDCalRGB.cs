@@ -116,4 +116,8 @@ public class PDCalRGB
     }
     base.Dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Matrix, matrixArray!);
   }
+
+  static PDCalRGB() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEDictionaryBasedColorSpace).TypeHandle);
+  }
 }

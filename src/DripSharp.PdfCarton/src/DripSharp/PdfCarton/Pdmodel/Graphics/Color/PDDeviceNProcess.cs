@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
 public class PDDeviceNProcess {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
@@ -67,5 +66,9 @@ public class PDDeviceNProcess {
     }
     sb.Append('}');
     return sb.ToString();
+  }
+
+  static PDDeviceNProcess() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

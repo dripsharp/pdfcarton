@@ -9,13 +9,9 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public sealed class FieldUtils {
-  internal static readonly global::System.Collections.Generic.IComparer<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> BY_VALUE_COMPARATOR
-    = global::DripSharp.Runtime.JavaCompat.ComparatorComparing<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue,
-    string>((value0) => value0.GetValue());
+  internal static readonly global::System.Collections.Generic.IComparer<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> BY_VALUE_COMPARATOR;
 
-  internal static readonly global::System.Collections.Generic.IComparer<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> BY_KEY_COMPARATOR
-    = global::DripSharp.Runtime.JavaCompat.ComparatorComparing<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue,
-    string>((value0) => value0.GetKey());
+  internal static readonly global::System.Collections.Generic.IComparer<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue> BY_KEY_COMPARATOR;
 
   internal class KeyValue {
     internal readonly string key = null!;
@@ -88,7 +84,7 @@ public sealed class FieldUtils {
             if ((entry is global::DripSharp.PdfCarton.Cos.COSArray)) {
               global::DripSharp.PdfCarton.Cos.COSArray cosArray
                 = (global::DripSharp.PdfCarton.Cos.COSArray)(entry!);
-              if (((cosArray.Size() >= (pairIdx + 1))
+              if (((cosArray.Size() >= unchecked((pairIdx + 1)))
                 && (cosArray.Get(pairIdx) is global::DripSharp.PdfCarton.Cos.COSString))) {
                 global::DripSharp.Runtime.JavaCompat.Add(entryList,
                   ((global::DripSharp.PdfCarton.Cos.COSString)(cosArray.Get(pairIdx)!)).GetString());
@@ -100,5 +96,14 @@ public sealed class FieldUtils {
       }
     }
     return global::System.Array.Empty<string>();
+  }
+
+  static FieldUtils() {
+    BY_VALUE_COMPARATOR
+      = global::DripSharp.Runtime.JavaCompat.ComparatorComparing<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue,
+      string>((value0) => value0.GetValue());
+    BY_KEY_COMPARATOR
+      = global::DripSharp.Runtime.JavaCompat.ComparatorComparing<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.FieldUtils.KeyValue,
+      string>((value0) => value0.GetKey());
   }
 }

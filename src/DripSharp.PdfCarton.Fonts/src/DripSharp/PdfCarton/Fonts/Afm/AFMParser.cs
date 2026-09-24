@@ -397,20 +397,23 @@ public class AFMParser {
       throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Error: Expected hex string of length >= 2 not='",
         hexToString));
     }
-    if ((((int)(hexToString[0]) != (int)'<') || ((int)(hexToString[(hexToString.Length - 1)])
-      != (int)'>'))) {
+    if ((((int)(hexToString[0]) != (int)'<') || ((int)(hexToString[unchecked((hexToString.Length
+      - 1))]) != (int)'>'))) {
       throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("String should be enclosed by angle brackets '",
         hexToString), "'"));
     }
     string hexString
       = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(hexToString, 1,
-      (hexToString.Length - 1));
-    sbyte[] data = new sbyte[(hexString.Length / 2)];
+      unchecked((hexToString.Length - 1)));
+    sbyte[] data
+      = new sbyte[global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(hexString.Length,
+      2)];
     for (int i = 0; (i < hexString.Length); i += 2) {
       string hex
         = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CodePointToString(hexString[i]),
-        hexString[(i + 1)]);
-      data[(i / 2)] = unchecked((sbyte)(unchecked((sbyte)(this.parseInt(hex,
+        hexString[unchecked((i + 1))]);
+      data[global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(i, 2)]
+        = unchecked((sbyte)(unchecked((sbyte)(this.parseInt(hex,
         global::DripSharp.PdfCarton.Fonts.Afm.AFMParser.BITS_IN_HEX)))));
     }
     return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(data,
@@ -633,7 +636,7 @@ public class AFMParser {
     }
     buf.Append(unchecked((char)(unchecked((char)(nextByte)))));
     nextByte = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(this.input);
-    while (((nextByte != -1)
+    while (((nextByte != unchecked(-1))
       && !(global::DripSharp.PdfCarton.Fonts.Afm.AFMParser.isEOL(nextByte)))) {
       buf.Append(unchecked((char)(unchecked((char)(nextByte)))));
       nextByte = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(this.input);
@@ -649,7 +652,7 @@ public class AFMParser {
     }
     buf.Append(unchecked((char)(unchecked((char)(nextByte)))));
     nextByte = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(this.input);
-    while (((nextByte != -1)
+    while (((nextByte != unchecked(-1))
       && !(global::DripSharp.PdfCarton.Fonts.Afm.AFMParser.isWhitespace(nextByte)))) {
       buf.Append(unchecked((char)(unchecked((char)(nextByte)))));
       nextByte = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(this.input);

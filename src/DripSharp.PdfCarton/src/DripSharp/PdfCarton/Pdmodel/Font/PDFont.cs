@@ -10,12 +10,9 @@ namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public abstract class PDFont : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable,
 global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  protected internal static readonly global::DripSharp.PdfCarton.Util.Matrix DefaultFontMatrix
-    = new global::DripSharp.PdfCarton.Util.Matrix(0.001F, (float)(0), (float)(0), 0.001F,
-    (float)(0), (float)(0));
+  protected internal static readonly global::DripSharp.PdfCarton.Util.Matrix DefaultFontMatrix;
 
   protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary Dict = null!;
 
@@ -142,10 +139,18 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike {
       string name = ((global::DripSharp.PdfCarton.Cos.COSName)(@base!)).GetName();
       return global::DripSharp.PdfCarton.Pdmodel.Font.CMapManager.GetPredefinedCMap(name);
     } else {
-      if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
-        using (global::DripSharp.PdfCarton.IO.RandomAccessRead input
-          = ((global::DripSharp.PdfCarton.Cos.COSStream)(@base!)).CreateView()) {
-          return global::DripSharp.PdfCarton.Pdmodel.Font.CMapManager.ParseCMap(input);
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) { {
+          global::DripSharp.PdfCarton.IO.RandomAccessRead input
+            = ((global::DripSharp.PdfCarton.Cos.COSStream)(@base!)).CreateView();
+          global::System.Exception __dripsharpPrimary_216_35_0 = null!;
+          try {
+            return global::DripSharp.PdfCarton.Pdmodel.Font.CMapManager.ParseCMap(input);
+          } catch (global::System.Exception __dripsharpCaught_216_35_0) {
+            __dripsharpPrimary_216_35_0 = __dripsharpCaught_216_35_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(input, __dripsharpPrimary_216_35_0);
+          }
         }
       } else {
         throw new global::System.IO.IOException("Expected Name or Stream");
@@ -173,10 +178,12 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike {
     }
     if (((this.Dict.GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Widths) != default!)
       || this.Dict.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.MissingWidth))) {
-      int firstChar = this.Dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.FirstChar, -1);
-      int lastChar = this.Dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.LastChar, -1);
+      int firstChar = this.Dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.FirstChar,
+        unchecked(-1));
+      int lastChar = this.Dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.LastChar,
+        unchecked(-1));
       int siz = global::DripSharp.Runtime.JavaCompat.CollectionCount(this.GetWidths());
-      int idx = (code - firstChar);
+      int idx = unchecked((code - firstChar));
       if (((((siz > 0) && (code >= firstChar)) && (code <= lastChar)) && (idx < siz))) {
         width = global::DripSharp.Runtime.JavaCompat.ListGet(this.GetWidths(), idx);
         if ((width == default!)) {
@@ -332,7 +339,7 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike {
         if (((this.toUnicodeCMap != default!)
           && this.Dict.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.ToUnicode))) {
           int spaceMapping = this.toUnicodeCMap.GetSpaceMapping();
-          if ((spaceMapping > -1)) {
+          if ((spaceMapping > unchecked(-1))) {
             this.fontWidthOfSpace = this.GetWidth(spaceMapping);
           }
         } else {
@@ -401,6 +408,12 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike {
 
   protected internal virtual global::DripSharp.PdfCarton.Fonts.Cmap.CMap GetToUnicodeCMap() {
     return this.toUnicodeCMap;
+  }
+
+  static PDFont() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    DefaultFontMatrix = new global::DripSharp.PdfCarton.Util.Matrix(0.001F, (float)(0), (float)(0),
+      0.001F, (float)(0), (float)(0));
   }
 
   public abstract global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetBoundingBox();

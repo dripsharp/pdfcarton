@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common;
 
 public class PDNumberTreeNode : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSDictionary node = null!;
 
@@ -66,11 +65,11 @@ public class PDNumberTreeNode : global::DripSharp.PdfCarton.Pdmodel.Common.COSOb
         = global::DripSharp.Runtime.JavaCompat.ListGet(kids, 0);
       global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode lastKid
         = global::DripSharp.Runtime.JavaCompat.ListGet(kids,
-        (global::DripSharp.Runtime.JavaCompat.CollectionCount(kids) - 1));
+        unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(kids) - 1)));
       int? lowerLimit = firstKid.GetLowerLimit();
-      this.setLowerLimit(lowerLimit);
+      this.setLowerLimit((int?)(lowerLimit));
       int? upperLimit = lastKid.GetUpperLimit();
-      this.setUpperLimit(upperLimit);
+      this.setUpperLimit((int?)(upperLimit));
       this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Kids,
         new global::DripSharp.PdfCarton.Cos.COSArray(global::DripSharp.Runtime.JavaCompat.ToListValues<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode>(kids)));
     } else {
@@ -102,7 +101,7 @@ public class PDNumberTreeNode : global::DripSharp.PdfCarton.Pdmodel.Common.COSOb
           <= 0)
           && (global::DripSharp.Runtime.JavaCompat.Unbox(childNode.GetUpperLimit()).CompareTo(global::DripSharp.Runtime.JavaCompat.Unbox(index))
           >= 0))) {
-          retval = childNode.GetValue(index);
+          retval = childNode.GetValue((int?)(index));
         }
       }
     } else {
@@ -122,12 +121,12 @@ public class PDNumberTreeNode : global::DripSharp.PdfCarton.Pdmodel.Common.COSOb
       int size = numbersArray.Size();
       indices = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int,
         global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>();
-      if (((size % 2) != 0)) {
+      if ((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(size, 2) != 0)) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode.LOG,
           global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Numbers array has odd size: ",
           size)));
       }
-      for (int i = 0; ((i + 1) < size); i += 2) {
+      for (int i = 0; (unchecked((i + 1)) < size); i += 2) {
         global::DripSharp.PdfCarton.Cos.COSBase @base = numbersArray.GetObject(i);
         if (!((@base is global::DripSharp.PdfCarton.Cos.COSInteger))) {
           global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode.LOG,
@@ -137,7 +136,8 @@ public class PDNumberTreeNode : global::DripSharp.PdfCarton.Pdmodel.Common.COSOb
         }
         global::DripSharp.PdfCarton.Cos.COSInteger key
           = (global::DripSharp.PdfCarton.Cos.COSInteger)(@base!);
-        global::DripSharp.PdfCarton.Cos.COSBase cosValue = numbersArray.GetObject((i + 1));
+        global::DripSharp.PdfCarton.Cos.COSBase cosValue = numbersArray.GetObject(unchecked((i
+          + 1)));
         global::DripSharp.Runtime.JavaCompat.MapPut(indices!, key.IntValue(), ((cosValue
           == default!) ? (global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable)(default!)
           : this.ConvertCOSToPD(cosValue)));
@@ -189,10 +189,10 @@ public class PDNumberTreeNode : global::DripSharp.PdfCarton.Pdmodel.Common.COSOb
       if (!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(keys)) {
         lower = global::DripSharp.Runtime.JavaCompat.ListGet(keys, 0);
         upper = global::DripSharp.Runtime.JavaCompat.ListGet(keys,
-          (global::DripSharp.Runtime.JavaCompat.CollectionCount(keys) - 1));
+          unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(keys) - 1)));
       }
-      this.setUpperLimit(upper!);
-      this.setLowerLimit(lower!);
+      this.setUpperLimit((int?)(upper!));
+      this.setLowerLimit((int?)(lower!));
       this.node.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Nums, array);
     }
   }
@@ -247,6 +247,10 @@ public class PDNumberTreeNode : global::DripSharp.PdfCarton.Pdmodel.Common.COSOb
     } else {
       arr.Set(0, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
     }
+  }
+
+  static PDNumberTreeNode() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

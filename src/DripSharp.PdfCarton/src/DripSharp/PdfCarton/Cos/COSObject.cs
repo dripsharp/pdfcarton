@@ -14,14 +14,15 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
 
   private global::DripSharp.PdfCarton.Cos.ICOSParser parser = null!;
 
-  private bool __field_isDereferenced = false;
+  private bool __field_isDereferenced;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSUpdateState updateState = null!;
 
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public COSObject(global::DripSharp.PdfCarton.Cos.COSBase @object) {
+    this.__field_isDereferenced = false;
+
     this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
     this.baseObject = @object;
     this.__field_isDereferenced = true;
@@ -36,6 +37,8 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
 
   public COSObject(global::DripSharp.PdfCarton.Cos.COSBase @object,
     global::DripSharp.PdfCarton.Cos.ICOSParser parser) {
+    this.__field_isDereferenced = false;
+
     this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
     this.baseObject = @object;
     this.__field_isDereferenced = (@object != default!);
@@ -44,6 +47,8 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
 
   public COSObject(global::DripSharp.PdfCarton.Cos.COSObjectKey key,
     global::DripSharp.PdfCarton.Cos.ICOSParser parser) {
+    this.__field_isDereferenced = false;
+
     this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
     this.parser = parser;
     this.SetKey(key);
@@ -102,6 +107,11 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
 
   public virtual global::DripSharp.PdfCarton.Cos.COSUpdateState GetUpdateState() {
     return this.updateState;
+  }
+
+  static COSObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.COSBase).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   public virtual bool IsNeedToBeUpdated() {

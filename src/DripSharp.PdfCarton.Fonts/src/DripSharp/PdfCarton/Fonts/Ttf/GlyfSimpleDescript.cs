@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class GlyfSimpleDescript : global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private int[] endPtsOfContours = null!;
 
@@ -33,12 +32,12 @@ public class GlyfSimpleDescript : global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDesc
       return;
     }
     this.endPtsOfContours = bais.ReadUnsignedShortArray((int)(numberOfContours));
-    int lastEndPt = this.endPtsOfContours[(numberOfContours - 1)];
+    int lastEndPt = this.endPtsOfContours[unchecked((numberOfContours - 1))];
     if ((((int)numberOfContours == 1) && (lastEndPt == 65535))) {
       this.pointCount = 0;
       return;
     }
-    this.pointCount = (lastEndPt + 1);
+    this.pointCount = unchecked((lastEndPt + 1));
     this.flags = new sbyte[this.pointCount];
     this.xCoordinates = new short[this.pointCount];
     this.yCoordinates = new short[this.pointCount];
@@ -81,14 +80,20 @@ public class GlyfSimpleDescript : global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDesc
         != 0)) {
         if (((this.flags[i__157_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.XShortVector)
           != 0)) {
-          x += unchecked((short)(bais.ReadUnsignedByte()));
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompoundAssign(ref x,
+            __dripsharpValue_163_21_0 => unchecked((short)((__dripsharpValue_163_21_0
+            + unchecked((short)(bais.ReadUnsignedByte()))))));
         }
       } else {
         if (((this.flags[i__157_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.XShortVector)
           != 0)) {
-          x -= unchecked((short)(bais.ReadUnsignedByte()));
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompoundAssign(ref x,
+            __dripsharpValue_170_21_0 => unchecked((short)((__dripsharpValue_170_21_0
+            - unchecked((short)(bais.ReadUnsignedByte()))))));
         } else {
-          x += bais.ReadSignedShort();
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompoundAssign(ref x,
+            __dripsharpValue_174_21_0 => unchecked((short)((__dripsharpValue_174_21_0
+            + bais.ReadSignedShort()))));
         }
       }
       this.xCoordinates[i__157_18] = x;
@@ -98,14 +103,20 @@ public class GlyfSimpleDescript : global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDesc
         != 0)) {
         if (((this.flags[i__180_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.YShortVector)
           != 0)) {
-          y += unchecked((short)(bais.ReadUnsignedByte()));
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompoundAssign(ref y,
+            __dripsharpValue_186_21_0 => unchecked((short)((__dripsharpValue_186_21_0
+            + unchecked((short)(bais.ReadUnsignedByte()))))));
         }
       } else {
         if (((this.flags[i__180_18] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.YShortVector)
           != 0)) {
-          y -= unchecked((short)(bais.ReadUnsignedByte()));
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompoundAssign(ref y,
+            __dripsharpValue_193_21_0 => unchecked((short)((__dripsharpValue_193_21_0
+            - unchecked((short)(bais.ReadUnsignedByte()))))));
         } else {
-          y += bais.ReadSignedShort();
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompoundAssign(ref y,
+            __dripsharpValue_197_21_0 => unchecked((short)((__dripsharpValue_197_21_0
+            + bais.ReadSignedShort()))));
         }
       }
       this.yCoordinates[i__180_18] = y;
@@ -118,14 +129,19 @@ public class GlyfSimpleDescript : global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDesc
       if (((this.flags[index] & global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript.Repeat) != 0)) {
         int repeats = bais.ReadUnsignedByte();
         for (int i = 1; (i <= repeats); i++) {
-          if (((index + i) >= this.flags.Length)) {
+          if ((unchecked((index + i)) >= this.flags.Length)) {
             throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("repeat count (",
               repeats), ") higher than remaining space"));
           }
-          this.flags[(index + i)] = unchecked((sbyte)(this.flags[index]));
+          this.flags[unchecked((index + i))] = unchecked((sbyte)(this.flags[index]));
         }
         index += repeats;
       }
     }
+  }
+
+  static GlyfSimpleDescript() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.GlyfDescript).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

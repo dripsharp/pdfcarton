@@ -25,14 +25,17 @@ public sealed class Type1FontUtil {
   }
 
   public static sbyte[] HexDecode(string @string) {
-    if (((@string.Length % 2) != 0)) {
+    if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralRemainder(@string.Length, 2)
+      != 0)) {
       throw new global::System.ArgumentException();
     }
-    sbyte[] bytes = new sbyte[(@string.Length / 2)];
+    sbyte[] bytes
+      = new sbyte[global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(@string.Length,
+      2)];
     for (int i = 0; (i < @string.Length); i += 2) {
-      bytes[(i / 2)]
+      bytes[global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(i, 2)]
         = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(@string,
-        i, (i + 2)), 16)))));
+        i, unchecked((i + 2))), 16)))));
     }
     return bytes;
   }
@@ -46,9 +49,9 @@ public sealed class Type1FontUtil {
   }
 
   private static sbyte[] encrypt(sbyte[] plaintextBytes, int r, int n) {
-    sbyte[] buffer = new sbyte[(plaintextBytes.Length + n)];
+    sbyte[] buffer = new sbyte[unchecked((plaintextBytes.Length + n))];
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayCopy(plaintextBytes, 0, buffer, n,
-      (buffer.Length - n));
+      unchecked((buffer.Length - n)));
     int c1 = 52845;
     int c2 = 22719;
     sbyte[] ciphertextBytes = new sbyte[buffer.Length];
@@ -56,7 +59,7 @@ public sealed class Type1FontUtil {
       int plain = (buffer[i] & 255);
       int cipher = (plain ^ (r >> unchecked((int)(8))));
       ciphertextBytes[i] = unchecked((sbyte)(unchecked((sbyte)(cipher))));
-      r = ((((cipher + r) * c1) + c2) & 65535);
+      r = (unchecked((unchecked((unchecked((cipher + r)) * c1)) + c2)) & 65535);
     }
     return ciphertextBytes;
   }
@@ -77,9 +80,9 @@ public sealed class Type1FontUtil {
       int cipher = (ciphertextBytes[i] & 255);
       int plain = (cipher ^ (r >> unchecked((int)(8))));
       buffer[i] = unchecked((sbyte)(unchecked((sbyte)(plain))));
-      r = ((((cipher + r) * c1) + c2) & 65535);
+      r = (unchecked((unchecked((unchecked((cipher + r)) * c1)) + c2)) & 65535);
     }
-    sbyte[] plaintextBytes = new sbyte[(ciphertextBytes.Length - n)];
+    sbyte[] plaintextBytes = new sbyte[unchecked((ciphertextBytes.Length - n))];
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayCopy(buffer, n, plaintextBytes, 0,
       plaintextBytes.Length);
     return plaintextBytes;

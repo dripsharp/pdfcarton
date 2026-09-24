@@ -50,8 +50,8 @@ public class MatrixTest {
     global::DripSharp.PdfCarton.Util.Matrix const2 = new global::DripSharp.PdfCarton.Util.Matrix();
     for (int x = 0; (x < 3); x++) {
       for (int y = 0; (y < 3); y++) {
-        const1.SetValue(x, y, (float)((x + y)));
-        const2.SetValue(x, y, (float)(((8 + x) + y)));
+        const1.SetValue(x, y, (float)(unchecked((x + y))));
+        const2.SetValue(x, y, (float)(unchecked((unchecked((8 + x)) + y))));
       }
     }
     float[] m1MultipliedByM1 = new float[] { 5, 8, 11, 8, 14, 20, 11, 20, 29 };
@@ -89,7 +89,7 @@ public class MatrixTest {
       = new global::DripSharp.PdfCarton.Util.Matrix();
     for (int x = 0; (x < 3); x++) {
       for (int y = 0; (y < 3); y++) {
-        testMatrix.SetValue(x, y, (float)((x + y)));
+        testMatrix.SetValue(x, y, (float)(unchecked((x + y))));
       }
     }
     global::DripSharp.PdfCarton.Util.Matrix m1 = testMatrix.Clone();
@@ -213,8 +213,8 @@ public class MatrixTest {
     global::DripSharp.PdfCarton.Util.Matrix m) {
     float delta = 1.0E-5F;
     for (int i = 0; (i < values.Length); i++) {
-      int row = (i / 3);
-      int column = (i % 3);
+      int row = global::DripSharp.Runtime.JavaCompat.IntegralDivide(i, 3);
+      int column = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(i, 3);
       global::System.Text.StringBuilder failureMsg = new global::System.Text.StringBuilder();
       failureMsg.Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "Incorrect value for matrix[")).Append(row).Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -240,7 +240,7 @@ public class MatrixTest {
     long stop = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Matrix multiplication took ",
-      (stop - start)), "ms.")));
+      unchecked((stop - start))), "ms.")));
   }
 
   [Xunit.Fact]

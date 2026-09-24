@@ -155,4 +155,8 @@ public class TiffSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema {
     this.SetUnqualifiedLanguagePropertyValue(global::DripSharp.PdfCarton.Xmp.Schema.TiffSchema.Copyright,
       lang, value);
   }
+
+  static TiffSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema).TypeHandle);
+  }
 }

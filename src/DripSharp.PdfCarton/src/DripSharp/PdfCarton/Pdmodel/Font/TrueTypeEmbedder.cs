@@ -15,9 +15,7 @@ internal abstract class TrueTypeEmbedder : global::DripSharp.PdfCarton.Pdmodel.F
 
   private const string BASE25 = "BCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-  private static readonly global::System.Collections.Generic.IList<string> TABLES
-    = global::DripSharp.Runtime.JavaCompat.AsList<string>("head", "hhea", "loca", "maxp", "cvt ",
-    "prep", "glyf", "hmtx", "fpgm", "gasp");
+  private static readonly global::System.Collections.Generic.IList<string> TABLES;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument document = null!;
 
@@ -76,14 +74,22 @@ internal abstract class TrueTypeEmbedder : global::DripSharp.PdfCarton.Pdmodel.F
   public void BuildFontFile2(global::System.IO.Stream ttfStream) {
     global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream
       = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(this.document, ttfStream,
-      global::DripSharp.PdfCarton.Cos.COSName.FlateDecode);
-    using (global::System.IO.Stream input = stream.CreateInputStream()) {
-      this.Ttf = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().ParseEmbedded(input);
-      if (!(this.isEmbeddingPermitted(this.Ttf))) {
-        throw new global::System.IO.IOException("This font does not permit embedding");
-      }
-      if ((this.FontDescriptor == default!)) {
-        this.FontDescriptor = this.createFontDescriptor(this.Ttf);
+      global::DripSharp.PdfCarton.Cos.COSName.FlateDecode); {
+      global::System.IO.Stream input = stream.CreateInputStream();
+      global::System.Exception __dripsharpPrimary_128_26_0 = null!;
+      try {
+        this.Ttf = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().ParseEmbedded(input);
+        if (!(this.isEmbeddingPermitted(this.Ttf))) {
+          throw new global::System.IO.IOException("This font does not permit embedding");
+        }
+        if ((this.FontDescriptor == default!)) {
+          this.FontDescriptor = this.createFontDescriptor(this.Ttf);
+        }
+      } catch (global::System.Exception __dripsharpCaught_128_26_0) {
+        __dripsharpPrimary_128_26_0 = __dripsharpCaught_128_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(input, __dripsharpPrimary_128_26_0);
       }
     }
     stream.GetCOSObject().SetLong(global::DripSharp.PdfCarton.Cos.COSName.Length1,
@@ -185,7 +191,7 @@ internal abstract class TrueTypeEmbedder : global::DripSharp.PdfCarton.Pdmodel.F
         fd.SetCapHeight((global::DripSharp.Runtime.JavaCompat.MathRound(capHPath.Bounds.Bottom)
           * scaling));
       } else {
-        fd.SetCapHeight(((os2.GetTypoAscender() + os2.GetTypoDescender()) * scaling));
+        fd.SetCapHeight((unchecked((os2.GetTypoAscender() + os2.GetTypoDescender())) * scaling));
       }
       global::SkiaSharp.SKPath xPath = ttf.GetPath("x");
       if ((xPath != default!)) {
@@ -255,8 +261,8 @@ internal abstract class TrueTypeEmbedder : global::DripSharp.PdfCarton.Pdmodel.F
     long num = global::System.Math.Abs(global::DripSharp.Runtime.JavaCompat.HashCode(gidToCid));
     global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
     do {
-      long div = (num / 25);
-      int mod = (int)((num % 25));
+      long div = global::DripSharp.Runtime.JavaCompat.IntegralDivide(num, 25);
+      int mod = (int)global::DripSharp.Runtime.JavaCompat.IntegralRemainder(num, 25);
       sb.Append(global::DripSharp.PdfCarton.Pdmodel.Font.TrueTypeEmbedder.BASE25[mod]);
       num = div;
     } while (((num != 0) && (sb.Length < 6)));
@@ -265,5 +271,10 @@ internal abstract class TrueTypeEmbedder : global::DripSharp.PdfCarton.Pdmodel.F
     }
     sb.Append('+');
     return sb.ToString();
+  }
+
+  static TrueTypeEmbedder() {
+    TABLES = global::DripSharp.Runtime.JavaCompat.AsList<string>("head", "hhea", "loca", "maxp",
+      "cvt ", "prep", "glyf", "hmtx", "fpgm", "gasp");
   }
 }

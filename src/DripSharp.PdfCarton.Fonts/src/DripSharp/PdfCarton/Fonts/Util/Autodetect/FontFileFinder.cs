@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Util.Autodetect;
 
 public class FontFileFinder {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontDirFinder fontDirFinder = default!;
 
@@ -106,5 +105,9 @@ public class FontFileFinder {
       || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringEndsWith(name, ".pfb"))
       || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringEndsWith(name, ".ttc"))
       && !global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringStartsWith(name, "fonts."));
+  }
+
+  static FontFileFinder() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

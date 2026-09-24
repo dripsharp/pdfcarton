@@ -41,4 +41,8 @@ public class PDFAFieldType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStruct
       = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(this.GetProperty(global::DripSharp.PdfCarton.Xmp.Type.PDFAFieldType.Description)!);
     return ((tt == default!) ? (string)(default!) : tt.GetStringValue());
   }
+
+  static PDFAFieldType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

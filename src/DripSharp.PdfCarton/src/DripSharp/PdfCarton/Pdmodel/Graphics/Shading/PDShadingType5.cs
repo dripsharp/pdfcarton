@@ -20,7 +20,8 @@ public class PDShadingType5
   }
 
   public virtual int GetVerticesPerRow() {
-    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.VerticesPerRow, -1);
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.VerticesPerRow,
+      unchecked(-1));
   }
 
   public virtual void SetVerticesPerRow(int verticesPerRow) {
@@ -50,35 +51,56 @@ public class PDShadingType5
     global::DripSharp.PdfCarton.Pdmodel.Common.PDRange[] colRange
       = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange[this.GetNumberOfColorComponents()];
     for (int i__105_18 = 0; (i__105_18 < colRange.Length); ++i__105_18) {
-      colRange[i__105_18] = this.GetDecodeForParameter((2 + i__105_18));
+      colRange[i__105_18] = this.GetDecodeForParameter(unchecked((2 + i__105_18)));
       if ((colRange[i__105_18] == default!)) {
         throw new global::System.IO.IOException("Range missing in shading /Decode entry");
       }
     }
     global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex> vlist
       = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex>();
-    long maxSrcCoord = ((long)(global::System.Math.Pow((double)(2),
-      (double)(this.GetBitsPerCoordinate()))) - 1);
-    long maxSrcColor = ((long)(global::System.Math.Pow((double)(2),
-      (double)(this.GetBitsPerComponent()))) - 1);
-    using (global::System.IO.Stream imageStream
-      = ((global::DripSharp.PdfCarton.Cos.COSStream)(dict!)).CreateInputStream()) {
-      using (global::DripSharp.Runtime.JavaImageInputStream mciis
-        = new global::DripSharp.Runtime.JavaImageInputStream(imageStream)) {
-        bool eof = false;
-        while (!eof) {
-          global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex p;
+    long maxSrcCoord
+      = unchecked((unchecked((long)(global::DripSharp.Runtime.JavaCompat.NumberLongValue(global::System.Math.Pow((double)(2),
+      (double)(this.GetBitsPerCoordinate()))))) - 1));
+    long maxSrcColor
+      = unchecked((unchecked((long)(global::DripSharp.Runtime.JavaCompat.NumberLongValue(global::System.Math.Pow((double)(2),
+      (double)(this.GetBitsPerComponent()))))) - 1)); {
+      global::System.IO.Stream imageStream
+        = ((global::DripSharp.PdfCarton.Cos.COSStream)(dict!)).CreateInputStream();
+      global::System.Exception __dripsharpPrimary_118_26_0 = null!;
+      try { {
+          global::DripSharp.Runtime.JavaImageInputStream mciis
+            = new global::DripSharp.Runtime.JavaImageInputStream(imageStream);
+          global::System.Exception __dripsharpPrimary_120_35_0 = null!;
           try {
-            p = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY, colRange, matrix,
-              xform);
-            global::DripSharp.Runtime.JavaCompat.Add(vlist, p);
-          } catch (global::System.IO.EndOfStreamException) {
-            eof = true;
+            bool eof = false;
+            while (!eof) {
+              global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex p;
+              try {
+                p = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY, colRange,
+                  matrix, xform);
+                global::DripSharp.Runtime.JavaCompat.Add(vlist, p);
+              } catch (global::System.IO.EndOfStreamException) {
+                eof = true;
+              }
+            }
+          } catch (global::System.Exception __dripsharpCaught_120_35_0) {
+            __dripsharpPrimary_120_35_0 = __dripsharpCaught_120_35_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(mciis, __dripsharpPrimary_120_35_0);
           }
         }
+      } catch (global::System.Exception __dripsharpCaught_118_26_0) {
+        __dripsharpPrimary_118_26_0 = __dripsharpCaught_118_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(imageStream,
+          __dripsharpPrimary_118_26_0);
       }
     }
-    int rowNum = (global::DripSharp.Runtime.JavaCompat.CollectionCount(vlist) / numPerRow);
+    int rowNum
+      = global::DripSharp.Runtime.JavaCompat.IntegralDivide(global::DripSharp.Runtime.JavaCompat.CollectionCount(vlist),
+      numPerRow);
     if ((rowNum < 2)) {
       return global::System.Array.Empty<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle>();
     }
@@ -87,8 +109,8 @@ public class PDShadingType5
       numPerRow);
     for (int i__146_18 = 0; (i__146_18 < rowNum); i__146_18++) {
       for (int j = 0; (j < numPerRow); j++) {
-        latticeArray[i__146_18][j] = global::DripSharp.Runtime.JavaCompat.ListGet(vlist, ((i__146_18
-          * numPerRow) + j));
+        latticeArray[i__146_18][j] = global::DripSharp.Runtime.JavaCompat.ListGet(vlist,
+          unchecked((unchecked((i__146_18 * numPerRow)) + j)));
       }
     }
     return this.createShadedTriangleList(rowNum, numPerRow, latticeArray);
@@ -99,17 +121,17 @@ public class PDShadingType5
     global::DripSharp.Runtime.JavaPoint2D[] ps = new global::DripSharp.Runtime.JavaPoint2D[3];
     float[][] cs = new float[3][];
     global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle> list
-      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle>(((rowNum
-      - 1) * (numPerRow - 1)));
-    for (int i = 0; (i < (rowNum - 1)); i++) {
-      for (int j = 0; (j < (numPerRow - 1)); j++) {
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle>(unchecked((unchecked((rowNum
+      - 1)) * unchecked((numPerRow - 1)))));
+    for (int i = 0; (i < unchecked((rowNum - 1))); i++) {
+      for (int j = 0; (j < unchecked((numPerRow - 1))); j++) {
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex vertex1 = latticeArray[i][j];
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex vertex2 = latticeArray[i][(j
-          + 1)];
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex vertex3 = latticeArray[(i
-          + 1)][j];
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex vertex4 = latticeArray[(i
-          + 1)][(j + 1)];
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex vertex2
+          = latticeArray[i][unchecked((j + 1))];
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex vertex3
+          = latticeArray[unchecked((i + 1))][j];
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex vertex4
+          = latticeArray[unchecked((i + 1))][unchecked((j + 1))];
         ps[0] = vertex1.point;
         ps[1] = vertex2.point;
         ps[2] = vertex3.point;
@@ -129,5 +151,9 @@ public class PDShadingType5
       }
     }
     return list;
+  }
+
+  static PDShadingType5() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDTriangleBasedShadingType).TypeHandle);
   }
 }

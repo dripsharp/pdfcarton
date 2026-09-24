@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public sealed class JPEGFactory {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private JPEGFactory() {}
 
@@ -72,31 +71,39 @@ public sealed class JPEGFactory {
     global::DripSharp.Runtime.JavaImageReader reader
       = global::DripSharp.PdfCarton.Filter.Filter.FindRasterReader("JPEG",
       "a suitable JAI I/O image filter is not installed");
-    try {
-      using (global::DripSharp.Runtime.JavaImageInputStream iis
-        = global::DripSharp.Runtime.PdfCartonImageIO.CreateImageInputStream(stream)) {
-        reader.SetInput(iis);
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.Dimensions meta
-          = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.Dimensions();
-        meta.width = reader.GetWidth(0);
-        meta.height = reader.GetHeight(0);
+    try { {
+        global::DripSharp.Runtime.JavaImageInputStream iis
+          = global::DripSharp.Runtime.PdfCartonImageIO.CreateImageInputStream(stream);
+        global::System.Exception __dripsharpPrimary_153_31_0 = null!;
         try {
-          meta.numComponents
-            = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.getNumComponentsFromImageMetadata(reader);
-          if ((meta.numComponents != 0)) {
-            return meta;
+          reader.SetInput(iis);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.Dimensions meta
+            = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.Dimensions();
+          meta.width = reader.GetWidth(0);
+          meta.height = reader.GetHeight(0);
+          try {
+            meta.numComponents
+              = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.getNumComponentsFromImageMetadata(reader);
+            if ((meta.numComponents != 0)) {
+              return meta;
+            }
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf("No image metadata, will decode image and use raster size"));
+          } catch (global::System.IO.IOException) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf("Error reading image metadata, will decode image and use raster size"));
           }
-          global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.LOG,
-            global::DripSharp.Runtime.JavaCompat.StringValueOf("No image metadata, will decode image and use raster size"));
-        } catch (global::System.IO.IOException) {
-          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.LOG,
-            global::DripSharp.Runtime.JavaCompat.StringValueOf("Error reading image metadata, will decode image and use raster size"));
+          global::DripSharp.Runtime.PdfCartonFontCompat.SetImageIoUseCache(false);
+          global::DripSharp.Runtime.JavaRaster raster = reader.ReadRaster(0,
+            (global::DripSharp.Runtime.JavaImageReadParam)default!);
+          meta.numComponents = raster.NumberOfBands;
+          return meta;
+        } catch (global::System.Exception __dripsharpCaught_153_31_0) {
+          __dripsharpPrimary_153_31_0 = __dripsharpCaught_153_31_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(iis, __dripsharpPrimary_153_31_0);
         }
-        global::DripSharp.Runtime.PdfCartonFontCompat.SetImageIoUseCache(false);
-        global::DripSharp.Runtime.JavaRaster raster = reader.ReadRaster(0,
-          (global::DripSharp.Runtime.JavaImageReadParam)default!);
-        meta.numComponents = raster.NumberOfBands;
-        return meta;
       }
     } finally {
       global::DripSharp.Runtime.JavaCompat.InputStreamReset(stream);
@@ -216,33 +223,41 @@ public sealed class JPEGFactory {
       = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.getJPEGImageWriter();
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    try {
-      using (global::DripSharp.Runtime.JavaImageOutputStream ios
-        = global::DripSharp.Runtime.PdfCartonImageIO.CreateImageOutputStream(baos)) {
-        if ((ios == default!)) {
-          throw new global::System.IO.IOException("ImageIO.createImageOutputStream() returned null");
+    try { {
+        global::DripSharp.Runtime.JavaImageOutputStream ios
+          = global::DripSharp.Runtime.PdfCartonImageIO.CreateImageOutputStream(baos);
+        global::System.Exception __dripsharpPrimary_357_32_0 = null!;
+        try {
+          if ((ios == default!)) {
+            throw new global::System.IO.IOException("ImageIO.createImageOutputStream() returned null");
+          }
+          imageWriter.SetOutput(ios);
+          global::DripSharp.Runtime.JavaImageWriteParam jpegParam
+            = imageWriter.GetDefaultWriteParam();
+          jpegParam.SetCompressionMode(global::DripSharp.Runtime.JavaImageWriteParam.MODE_EXPLICIT);
+          jpegParam.SetCompressionQuality(quality);
+          global::DripSharp.Runtime.JavaImageTypeSpecifier imageTypeSpecifier
+            = new global::DripSharp.Runtime.JavaImageTypeSpecifier(image);
+          global::DripSharp.Runtime.JavaImageMetadata data
+            = imageWriter.GetDefaultImageMetadata(imageTypeSpecifier, jpegParam);
+          global::System.Xml.XmlElement tree
+            = (global::System.Xml.XmlElement)(data.GetAsTree("javax_imageio_jpeg_image_1.0")!);
+          global::System.Xml.XmlElement jfif
+            = (global::System.Xml.XmlElement)(tree.GetElementsByTagName("app0JFIF").Item(0)!);
+          string dpiString = global::DripSharp.Runtime.JavaCompat.StringValueOf(dpi);
+          jfif.SetAttribute("Xdensity", dpiString);
+          jfif.SetAttribute("Ydensity", dpiString);
+          jfif.SetAttribute("resUnits", "1");
+          imageWriter.Write(data, new global::DripSharp.Runtime.JavaIioImage(image,
+            (global::System.Collections.Generic.IList<global::SkiaSharp.SKBitmap>)default!,
+            (global::DripSharp.Runtime.JavaImageMetadata)default!), jpegParam);
+          return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos);
+        } catch (global::System.Exception __dripsharpCaught_357_32_0) {
+          __dripsharpPrimary_357_32_0 = __dripsharpCaught_357_32_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(ios, __dripsharpPrimary_357_32_0);
         }
-        imageWriter.SetOutput(ios);
-        global::DripSharp.Runtime.JavaImageWriteParam jpegParam
-          = imageWriter.GetDefaultWriteParam();
-        jpegParam.SetCompressionMode(global::DripSharp.Runtime.JavaImageWriteParam.MODE_EXPLICIT);
-        jpegParam.SetCompressionQuality(quality);
-        global::DripSharp.Runtime.JavaImageTypeSpecifier imageTypeSpecifier
-          = new global::DripSharp.Runtime.JavaImageTypeSpecifier(image);
-        global::DripSharp.Runtime.JavaImageMetadata data
-          = imageWriter.GetDefaultImageMetadata(imageTypeSpecifier, jpegParam);
-        global::System.Xml.XmlElement tree
-          = (global::System.Xml.XmlElement)(data.GetAsTree("javax_imageio_jpeg_image_1.0")!);
-        global::System.Xml.XmlElement jfif
-          = (global::System.Xml.XmlElement)(tree.GetElementsByTagName("app0JFIF").Item(0)!);
-        string dpiString = global::DripSharp.Runtime.JavaCompat.StringValueOf(dpi);
-        jfif.SetAttribute("Xdensity", dpiString);
-        jfif.SetAttribute("Ydensity", dpiString);
-        jfif.SetAttribute("resUnits", "1");
-        imageWriter.Write(data, new global::DripSharp.Runtime.JavaIioImage(image,
-          (global::System.Collections.Generic.IList<global::SkiaSharp.SKBitmap>)default!,
-          (global::DripSharp.Runtime.JavaImageMetadata)default!), jpegParam);
-        return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos);
       }
     } finally {
       imageWriter.Dispose();
@@ -288,5 +303,9 @@ public sealed class JPEGFactory {
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_3BYTE_BGR);
     return new global::DripSharp.Runtime.JavaColorConvertOp().Filter(image, rgbImage);
+  }
+
+  static JPEGFactory() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

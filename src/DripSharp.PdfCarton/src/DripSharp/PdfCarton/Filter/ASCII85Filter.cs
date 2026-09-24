@@ -11,21 +11,41 @@ namespace DripSharp.PdfCarton.Filter;
 internal sealed class ASCII85Filter : global::DripSharp.PdfCarton.Filter.Filter {
   public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded,
     global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters,
-    int index) {
-    using (global::DripSharp.PdfCarton.Filter.ASCII85InputStream @is
-      = new global::DripSharp.PdfCarton.Filter.ASCII85InputStream(encoded)) {
-      global::DripSharp.PdfCarton.IO.IOUtils.Copy(@is, decoded);
+    int index) { {
+      global::DripSharp.PdfCarton.Filter.ASCII85InputStream @is
+        = new global::DripSharp.PdfCarton.Filter.ASCII85InputStream(encoded);
+      global::System.Exception __dripsharpPrimary_36_33_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.IO.IOUtils.Copy(@is, decoded);
+      } catch (global::System.Exception __dripsharpCaught_36_33_0) {
+        __dripsharpPrimary_36_33_0 = __dripsharpCaught_36_33_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_36_33_0);
+      }
     }
     decoded.Flush();
     return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
   }
 
   public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded,
-    global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
-    using (global::DripSharp.PdfCarton.Filter.ASCII85OutputStream os
-      = new global::DripSharp.PdfCarton.Filter.ASCII85OutputStream(encoded)) {
-      global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, os);
+    global::DripSharp.PdfCarton.Cos.COSDictionary parameters) { {
+      global::DripSharp.PdfCarton.Filter.ASCII85OutputStream os
+        = new global::DripSharp.PdfCarton.Filter.ASCII85OutputStream(encoded);
+      global::System.Exception __dripsharpPrimary_48_34_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, os);
+      } catch (global::System.Exception __dripsharpCaught_48_34_0) {
+        __dripsharpPrimary_48_34_0 = __dripsharpCaught_48_34_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(os, __dripsharpPrimary_48_34_0);
+      }
     }
     encoded.Flush();
+  }
+
+  static ASCII85Filter() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Filter.Filter).TypeHandle);
   }
 }

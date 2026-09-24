@@ -23,4 +23,8 @@ public class DeviceSettingsType : global::DripSharp.PdfCarton.Xmp.Type.AbstractS
   public DeviceSettingsType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
   }
+
+  static DeviceSettingsType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

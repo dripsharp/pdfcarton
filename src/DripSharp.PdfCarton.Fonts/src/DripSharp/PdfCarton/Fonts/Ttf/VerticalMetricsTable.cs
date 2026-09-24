@@ -40,7 +40,7 @@ public class VerticalMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTab
       bytesRead += 4;
     }
     if ((bytesRead < this.GetLength())) {
-      int numberNonVertical = (numGlyphs - this.numVMetrics);
+      int numberNonVertical = unchecked((numGlyphs - this.numVMetrics));
       if ((numberNonVertical < 0)) {
         numberNonVertical = numGlyphs;
       }
@@ -59,7 +59,7 @@ public class VerticalMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTab
     if ((gid < this.numVMetrics)) {
       return this.topSideBearing[gid];
     } else {
-      return this.additionalTopSideBearing[(gid - this.numVMetrics)];
+      return this.additionalTopSideBearing[unchecked((gid - this.numVMetrics))];
     }
   }
 
@@ -67,7 +67,11 @@ public class VerticalMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTab
     if ((gid < this.numVMetrics)) {
       return this.advanceHeight[gid];
     } else {
-      return this.advanceHeight[(this.advanceHeight.Length - 1)];
+      return this.advanceHeight[unchecked((this.advanceHeight.Length - 1))];
     }
+  }
+
+  static VerticalMetricsTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
   }
 }

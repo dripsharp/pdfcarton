@@ -182,4 +182,8 @@ public class TrailerValidationProcess
         "Invalid key in The Linearized dictionary"));
     }
   }
+
+  static TrailerValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+  }
 }

@@ -11,15 +11,23 @@ public class GsubWorkerForDfltTest {
 
   private static global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker gsubWorkerForDflt = null!;
 
-  internal static void init() {
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDfltTest.JOSEFIN_SANS_TTF)))) {
-      global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDfltTest.cmapLookup
-        = ttf.GetUnicodeCmapLookup();
-      global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDfltTest.gsubWorkerForDflt
-        = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerFactory().GetGsubWorker(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDfltTest.cmapLookup,
-        ttf.GetGsubData());
+  internal static void init() { {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDfltTest.JOSEFIN_SANS_TTF)));
+      global::System.Exception __dripsharpPrimary_64_27_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDfltTest.cmapLookup
+          = ttf.GetUnicodeCmapLookup();
+        global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDfltTest.gsubWorkerForDflt
+          = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerFactory().GetGsubWorker(global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDfltTest.cmapLookup,
+          ttf.GetGsubData());
+      } catch (global::System.Exception __dripsharpCaught_64_27_0) {
+        __dripsharpPrimary_64_27_0 = __dripsharpCaught_64_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(ttf, __dripsharpPrimary_64_27_0);
+      }
     }
   }
 
@@ -110,10 +118,14 @@ public class GsubWorkerForDfltTest {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     init();
     return true;
+  }
+
+  static GsubWorkerForDfltTest() {
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

@@ -13,17 +13,17 @@ public class TestIOUtils {
       = global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(data),
       buffer);
     global::DripSharp.Testing.JavaAssertions.Equal((long)(12), count, null);
-    buffer = new sbyte[(data.Length - 2)];
+    buffer = new sbyte[unchecked((data.Length - 2))];
     global::System.IO.Stream @in = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(data);
     count = global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(@in, buffer);
     global::DripSharp.Testing.JavaAssertions.Equal((long)(10), count, null);
     sbyte[] leftOver = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@in);
     global::DripSharp.Testing.JavaAssertions.Equal(2, leftOver.Length, null);
-    buffer = new sbyte[(data.Length + 2)];
+    buffer = new sbyte[unchecked((data.Length + 2))];
     @in = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(data);
     count = global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(@in, buffer);
     global::DripSharp.Testing.JavaAssertions.Equal((long)(12), count, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
       global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in), null);
   }
 
@@ -55,7 +55,9 @@ public class TestIOUtils {
   internal virtual void testToByteArrayLarge() {
     sbyte[] data = new sbyte[10000];
     for (int i = 0; (i < data.Length); i++) {
-      data[i] = unchecked((sbyte)(unchecked((sbyte)((i % 256)))));
+      data[i]
+        = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.IntegralRemainder(i,
+        256)))));
     }
     sbyte[] result
       = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(data));
@@ -88,7 +90,9 @@ public class TestIOUtils {
   internal virtual void testCopyLarge() {
     sbyte[] data = new sbyte[50000];
     for (int i = 0; (i < data.Length); i++) {
-      data[i] = unchecked((sbyte)(unchecked((sbyte)((i % 256)))));
+      data[i]
+        = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.IntegralRemainder(i,
+        256)))));
     }
     global::System.IO.Stream input = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(data);
     global::DripSharp.Runtime.JavaByteArrayOutputStream output

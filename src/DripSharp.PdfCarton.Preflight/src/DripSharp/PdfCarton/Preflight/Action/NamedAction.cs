@@ -37,4 +37,8 @@ public class NamedAction : global::DripSharp.PdfCarton.Preflight.Action.Abstract
     }
     return true;
   }
+
+  static NamedAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager).TypeHandle);
+  }
 }

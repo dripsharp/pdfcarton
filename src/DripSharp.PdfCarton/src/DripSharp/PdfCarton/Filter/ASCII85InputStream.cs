@@ -44,7 +44,7 @@ internal sealed class ASCII85InputStream : global::DripSharp.Runtime.JavaFilterI
   public override int Read() {
     if ((this.index >= this.n)) {
       if (this.eof) {
-        return -1;
+        return unchecked(-1);
       }
       this.index = 0;
       int k;
@@ -52,9 +52,9 @@ internal sealed class ASCII85InputStream : global::DripSharp.Runtime.JavaFilterI
       do {
         int zz__82_21
           = unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in)));
-        if ((zz__82_21 == -1)) {
+        if ((zz__82_21 == unchecked(-1))) {
           this.eof = true;
-          return -1;
+          return unchecked(-1);
         }
         z = unchecked((sbyte)(unchecked((sbyte)(zz__82_21))));
       } while (((((int)z == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.NEWLINE))
@@ -64,7 +64,7 @@ internal sealed class ASCII85InputStream : global::DripSharp.Runtime.JavaFilterI
         this.eof = true;
         this.ascii = (this.b = default!);
         this.n = 0;
-        return -1;
+        return unchecked(-1);
       } else {
         if (((int)z == (int)(global::DripSharp.PdfCarton.Filter.ASCII85InputStream.Z))) {
           this.b[0] = unchecked((sbyte)((this.b[1] = unchecked((sbyte)((this.b[2]
@@ -76,9 +76,9 @@ internal sealed class ASCII85InputStream : global::DripSharp.Runtime.JavaFilterI
             do {
               int zz__110_29
                 = unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in)));
-              if ((zz__110_29 == -1)) {
+              if ((zz__110_29 == unchecked(-1))) {
                 this.eof = true;
-                return -1;
+                return unchecked(-1);
               }
               z = unchecked((sbyte)(unchecked((sbyte)(zz__110_29))));
             } while (((((int)z
@@ -93,12 +93,12 @@ internal sealed class ASCII85InputStream : global::DripSharp.Runtime.JavaFilterI
               break;
             }
           }
-          this.n = (k - 1);
+          this.n = unchecked((k - 1));
           if ((this.n == 0)) {
             this.eof = true;
             this.ascii = default!;
             this.b = default!;
-            return -1;
+            return unchecked(-1);
           }
           if ((k < 5)) {
             for (++k; (k < 5); ++k) {
@@ -109,8 +109,8 @@ internal sealed class ASCII85InputStream : global::DripSharp.Runtime.JavaFilterI
           }
           long t = 0;
           for (k = 0; (k < 5); ++k) {
-            z = unchecked((sbyte)(unchecked((sbyte)((this.ascii[k]
-              - global::DripSharp.PdfCarton.Filter.ASCII85InputStream.OFFSET)))));
+            z = unchecked((sbyte)(unchecked((sbyte)(unchecked((this.ascii[k]
+              - global::DripSharp.PdfCarton.Filter.ASCII85InputStream.OFFSET))))));
             if ((((int)z < 0) || ((int)z > 93))) {
               this.n = 0;
               this.eof = true;
@@ -118,11 +118,11 @@ internal sealed class ASCII85InputStream : global::DripSharp.Runtime.JavaFilterI
               this.b = default!;
               throw new global::System.IO.IOException("Invalid data in Ascii85 stream");
             }
-            t = ((t * 85L) + z);
+            t = unchecked((unchecked((t * 85L)) + z));
           }
           for (k = 3; (k >= 0); --k) {
             this.b[k] = unchecked((sbyte)(unchecked((sbyte)((t & 255L)))));
-            t >>>= 8;
+            t >>>= unchecked((int)(8));
           }
         }
       }
@@ -132,17 +132,17 @@ internal sealed class ASCII85InputStream : global::DripSharp.Runtime.JavaFilterI
 
   public override int Read(sbyte[] data, int offset, int len) {
     if ((this.eof && (this.index >= this.n))) {
-      return -1;
+      return unchecked(-1);
     }
     for (int i = 0; (i < len); i++) {
       if ((this.index < this.n)) {
-        data[(i + offset)] = unchecked((sbyte)(this.b[this.index++]));
+        data[unchecked((i + offset))] = unchecked((sbyte)(this.b[this.index++]));
       } else {
         int t = this.Read();
-        if ((t == -1)) {
+        if ((t == unchecked(-1))) {
           return i;
         }
-        data[(i + offset)] = unchecked((sbyte)(unchecked((sbyte)(t))));
+        data[unchecked((i + offset))] = unchecked((sbyte)(unchecked((sbyte)(t))));
       }
     }
     return len;

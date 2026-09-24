@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public sealed class OpenTypeScript {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const string Inherited = "Inherited";
 
@@ -21,7 +20,8 @@ public sealed class OpenTypeScript {
   private static readonly global::System.Collections.Generic.IDictionary<string,
     string[]> UNICODE_SCRIPT_TO_OPENTYPE_TAG_MAP = null!;
 
-  static OpenTypeScript() { {
+  static OpenTypeScript() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance; {
       object[][] table = new object[][] { new object[] { "Adlam", new string[] { "adlm" } },
         new object[] { "Ahom", new string[] { "ahom" } }, new object[] { "Anatolian_Hieroglyphs",
           new string[] { "hluw" } }, new object[] { "Arabic", new string[] { "arab" } },
@@ -128,12 +128,30 @@ public sealed class OpenTypeScript {
       }
     } {
       string path = "/org/apache/fontbox/unicode/Scripts.txt";
-      try {
-        using (global::System.IO.Stream resourceAsStream
-          = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeScript),
-          path)) using (global::System.IO.Stream input
-          = new global::System.IO.BufferedStream(resourceAsStream)) {
-          global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeScript.parseScriptsFile(input);
+      try { {
+          global::System.IO.Stream resourceAsStream
+            = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeScript),
+            path);
+          global::System.Exception __dripsharpPrimary_223_26_0 = null!;
+          try {
+            global::System.IO.Stream input = new global::System.IO.BufferedStream(resourceAsStream);
+            global::System.Exception __dripsharpPrimary_224_26_0 = null!;
+            try {
+              global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeScript.parseScriptsFile(input);
+            } catch (global::System.Exception __dripsharpCaught_224_26_0) {
+              __dripsharpPrimary_224_26_0 = __dripsharpCaught_224_26_0;
+              throw;
+            } finally {
+              global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(input,
+                __dripsharpPrimary_224_26_0);
+            }
+          } catch (global::System.Exception __dripsharpCaught_223_26_0) {
+            __dripsharpPrimary_223_26_0 = __dripsharpCaught_223_26_0;
+            throw;
+          } finally {
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(resourceAsStream,
+              __dripsharpPrimary_223_26_0);
+          }
         }
       } catch (global::System.IO.IOException e) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeScript.LOG,
@@ -156,57 +174,67 @@ public sealed class OpenTypeScript {
     global::System.Collections.Generic.IDictionary<int[], string> unicodeRanges
       = new global::System.Collections.Generic.SortedDictionary<int[],
       string>(global::System.Collections.Generic.Comparer<int[]>.Create((o1, o2)
-      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareInt(o1[0], o2[0])));
-    using (global::DripSharp.PdfCarton.Runtime.Fonts.JavaLineNumberReader rd
-      = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLineNumberReader(new global::System.IO.StreamReader(inputStream,
-      global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.USASCII))) {
-      int[] lastRange = new int[] { int.MinValue, int.MinValue };
-      string lastScript = default!;
-      do {
-        string s = rd.ReadLine();
-        if ((s == default!)) {
-          break;
-        }
-        int comment = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringIndexOf(s,
-          (int)('#'));
-        if ((comment != -1)) {
-          s = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(s, 0, comment);
-        }
-        if ((s.Length < 2)) {
-          continue;
-        }
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaStringTokenizer st
-          = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaStringTokenizer(s, ";");
-        int nFields = st.countTokens();
-        if ((nFields < 2)) {
-          continue;
-        }
-        string characters
-          = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringTrim(st.nextToken());
-        string script
-          = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringTrim(st.nextToken());
-        int[] range = new int[2];
-        int rangeDelim = characters.IndexOf("..", global::System.StringComparison.Ordinal);
-        if ((rangeDelim == -1)) {
-          range[0] = (range[1]
-            = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(characters, 16));
-        } else {
-          range[0]
-            = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(characters,
-            0, rangeDelim), 16);
-          range[1]
-            = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(characters.Substring((rangeDelim
-            + 2)), 16);
-        }
-        if (((range[0] == (lastRange[1] + 1))
-          && global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(script, lastScript!))) {
-          lastRange[1] = range[1];
-        } else {
-          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(unicodeRanges, range, script);
-          lastRange = range;
-          lastScript = script;
-        }
-      } while (true);
+      => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareInt(o1[0], o2[0]))); {
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaLineNumberReader rd
+        = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLineNumberReader(new global::System.IO.StreamReader(inputStream,
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.USASCII));
+      global::System.Exception __dripsharpPrimary_242_31_0 = null!;
+      try {
+        int[] lastRange = new int[] { int.MinValue, int.MinValue };
+        string lastScript = default!;
+        do {
+          string s = rd.ReadLine();
+          if ((s == default!)) {
+            break;
+          }
+          int comment = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringIndexOf(s,
+            (int)('#'));
+          if ((comment != unchecked(-1))) {
+            s = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(s, 0, comment);
+          }
+          if ((s.Length < 2)) {
+            continue;
+          }
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaStringTokenizer st
+            = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaStringTokenizer(s, ";");
+          int nFields = st.countTokens();
+          if ((nFields < 2)) {
+            continue;
+          }
+          string characters
+            = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringTrim(st.nextToken());
+          string script
+            = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringTrim(st.nextToken());
+          int[] range = new int[2];
+          int rangeDelim = characters.IndexOf("..", global::System.StringComparison.Ordinal);
+          if ((rangeDelim == unchecked(-1))) {
+            range[0] = (range[1]
+              = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(characters, 16));
+          } else {
+            range[0]
+              = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(characters,
+              0, rangeDelim), 16);
+            range[1]
+              = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(characters.Substring(unchecked((rangeDelim
+              + 2))), 16);
+          }
+          if (((range[0] == unchecked((lastRange[1] + 1)))
+            && global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(script, lastScript!))) {
+            lastRange[1] = range[1];
+          } else {
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(unicodeRanges, range,
+              script);
+            lastRange = range;
+            lastScript = script;
+          }
+        } while (true);
+      } catch (global::System.Exception __dripsharpCaught_242_31_0) {
+        __dripsharpPrimary_242_31_0 = __dripsharpCaught_242_31_0;
+        throw;
+      } finally {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(rd,
+          __dripsharpPrimary_242_31_0);
+      }
     }
     global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeScript.unicodeRangeStarts
       = new int[global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapCount(unicodeRanges)];
@@ -231,7 +259,7 @@ public sealed class OpenTypeScript {
       = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.BinarySearch(global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeScript.unicodeRangeStarts,
       codePoint);
     if ((scriptIndex < 0)) {
-      scriptIndex = (-scriptIndex - 2);
+      scriptIndex = unchecked((unchecked(-scriptIndex) - 2));
     }
     return global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeScript.unicodeRangeScripts[scriptIndex];
   }

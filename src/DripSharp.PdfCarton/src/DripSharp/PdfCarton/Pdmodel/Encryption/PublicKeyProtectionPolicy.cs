@@ -10,13 +10,15 @@ namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 public sealed class PublicKeyProtectionPolicy
 : global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy {
-  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient> recipients
-    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient>();
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient> recipients;
 
   private global::System.Security.Cryptography.X509Certificates.X509Certificate2 decryptionCertificate
     = null!;
 
-  public PublicKeyProtectionPolicy() {}
+  public PublicKeyProtectionPolicy() {
+    this.recipients
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient>();
+  }
 
   public void AddRecipient(global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyRecipient recipient) {
     global::DripSharp.Runtime.JavaCompat.Add(this.recipients, recipient);
@@ -40,5 +42,9 @@ public sealed class PublicKeyProtectionPolicy
 
   public int GetNumberOfRecipients() {
     return global::DripSharp.Runtime.JavaCompat.CollectionCount(this.recipients);
+  }
+
+  static PublicKeyProtectionPolicy() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy).TypeHandle);
   }
 }

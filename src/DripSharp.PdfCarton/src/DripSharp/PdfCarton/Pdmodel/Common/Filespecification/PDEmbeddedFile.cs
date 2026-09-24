@@ -141,4 +141,8 @@ public class PDEmbeddedFile : global::DripSharp.PdfCarton.Pdmodel.Common.PDStrea
         global::DripSharp.PdfCarton.Cos.COSName.ResFork, macResFork);
     }
   }
+
+  static PDEmbeddedFile() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream).TypeHandle);
+  }
 }

@@ -61,4 +61,8 @@ public class FDFAnnotationText : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnno
   public void SetStateModel(string stateModel) {
     base.Annot.SetString(global::DripSharp.PdfCarton.Cos.COSName.StateModel, stateModel);
   }
+
+  static FDFAnnotationText() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation).TypeHandle);
+  }
 }

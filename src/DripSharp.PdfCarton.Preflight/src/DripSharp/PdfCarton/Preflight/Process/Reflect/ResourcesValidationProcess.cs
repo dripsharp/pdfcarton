@@ -142,4 +142,8 @@ public class ResourcesValidationProcess
       }
     }
   }
+
+  static ResourcesValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+  }
 }

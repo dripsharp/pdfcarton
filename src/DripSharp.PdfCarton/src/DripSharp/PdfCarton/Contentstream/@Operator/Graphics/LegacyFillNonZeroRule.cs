@@ -18,4 +18,8 @@ public sealed class LegacyFillNonZeroRule
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero;
   }
+
+  static LegacyFillNonZeroRule() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.FillNonZeroRule).TypeHandle);
+  }
 }

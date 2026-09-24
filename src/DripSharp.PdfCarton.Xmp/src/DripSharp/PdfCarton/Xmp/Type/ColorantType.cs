@@ -53,4 +53,8 @@ public class ColorantType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructu
   public ColorantType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
   }
+
+  static ColorantType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

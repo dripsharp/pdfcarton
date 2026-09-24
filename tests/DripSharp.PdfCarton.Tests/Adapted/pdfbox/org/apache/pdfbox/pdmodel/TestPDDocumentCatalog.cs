@@ -5,100 +5,160 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public class TestPDDocumentCatalog {
-  internal virtual void retrievePageLabels() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.TestPDDocumentCatalog),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test_pagelabels.pdf"))))) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog cat = doc.GetDocumentCatalog();
-      string[] labels = cat.GetPageLabels().GetLabelsByPageIndices();
-      global::DripSharp.Testing.JavaAssertions.Equal(12, labels.Length, null);
-      global::DripSharp.Testing.JavaAssertions.Equal("A1", labels[0], null);
-      global::DripSharp.Testing.JavaAssertions.Equal("A2", labels[1], null);
-      global::DripSharp.Testing.JavaAssertions.Equal("A3", labels[2], null);
-      global::DripSharp.Testing.JavaAssertions.Equal("i", labels[3], null);
-      global::DripSharp.Testing.JavaAssertions.Equal("ii", labels[4], null);
-      global::DripSharp.Testing.JavaAssertions.Equal("iii", labels[5], null);
-      global::DripSharp.Testing.JavaAssertions.Equal("iv", labels[6], null);
-      global::DripSharp.Testing.JavaAssertions.Equal("v", labels[7], null);
-      global::DripSharp.Testing.JavaAssertions.Equal("vi", labels[8], null);
-      global::DripSharp.Testing.JavaAssertions.Equal("vii", labels[9], null);
-      global::DripSharp.Testing.JavaAssertions.Equal("Appendix I", labels[10], null);
-      global::DripSharp.Testing.JavaAssertions.Equal("Appendix II", labels[11], null);
+  internal virtual void retrievePageLabels() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.TestPDDocumentCatalog),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test_pagelabels.pdf"))));
+      global::System.Exception __dripsharpPrimary_55_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog cat = doc.GetDocumentCatalog();
+        string[] labels = cat.GetPageLabels().GetLabelsByPageIndices();
+        global::DripSharp.Testing.JavaAssertions.Equal(12, labels.Length, null);
+        global::DripSharp.Testing.JavaAssertions.Equal("A1", labels[0], null);
+        global::DripSharp.Testing.JavaAssertions.Equal("A2", labels[1], null);
+        global::DripSharp.Testing.JavaAssertions.Equal("A3", labels[2], null);
+        global::DripSharp.Testing.JavaAssertions.Equal("i", labels[3], null);
+        global::DripSharp.Testing.JavaAssertions.Equal("ii", labels[4], null);
+        global::DripSharp.Testing.JavaAssertions.Equal("iii", labels[5], null);
+        global::DripSharp.Testing.JavaAssertions.Equal("iv", labels[6], null);
+        global::DripSharp.Testing.JavaAssertions.Equal("v", labels[7], null);
+        global::DripSharp.Testing.JavaAssertions.Equal("vi", labels[8], null);
+        global::DripSharp.Testing.JavaAssertions.Equal("vii", labels[9], null);
+        global::DripSharp.Testing.JavaAssertions.Equal("Appendix I", labels[10], null);
+        global::DripSharp.Testing.JavaAssertions.Equal("Appendix II", labels[11], null);
+      } catch (global::System.Exception __dripsharpCaught_55_25_0) {
+        __dripsharpPrimary_55_25_0 = __dripsharpCaught_55_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_55_25_0);
+      }
     }
   }
 
-  internal virtual void retrievePageLabelsOnMalformedPdf() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.TestPDDocumentCatalog),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "badpagelabels.pdf"))))) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog cat = doc.GetDocumentCatalog();
-      global::DripSharp.Testing.JavaAssertions.DoesNotThrow(()
-        => cat.GetPageLabels().GetLabelsByPageIndices(), null);
+  internal virtual void retrievePageLabelsOnMalformedPdf() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.TestPDDocumentCatalog),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "badpagelabels.pdf"))));
+      global::System.Exception __dripsharpPrimary_88_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog cat = doc.GetDocumentCatalog();
+        global::DripSharp.Testing.JavaAssertions.DoesNotThrow(()
+          => cat.GetPageLabels().GetLabelsByPageIndices(), null);
+      } catch (global::System.Exception __dripsharpCaught_88_25_0) {
+        __dripsharpPrimary_88_25_0 = __dripsharpCaught_88_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_88_25_0);
+      }
     }
   }
 
-  internal virtual void retrieveNumberOfPages() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.TestPDDocumentCatalog),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test.unc.pdf"))))) {
-      global::DripSharp.Testing.JavaAssertions.Equal(4, doc.GetNumberOfPages(), null);
+  internal virtual void retrieveNumberOfPages() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.TestPDDocumentCatalog),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test.unc.pdf"))));
+      global::System.Exception __dripsharpPrimary_111_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(4, doc.GetNumberOfPages(), null);
+      } catch (global::System.Exception __dripsharpCaught_111_25_0) {
+        __dripsharpPrimary_111_25_0 = __dripsharpCaught_111_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_111_25_0);
+      }
     }
   }
 
-  internal virtual void handleOutputIntents() {
-    using (global::System.IO.Stream colorProfile
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.TestPDDocumentCatalog),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "sRGB.icc"))) using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.TestPDDocumentCatalog),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test.unc.pdf"))))) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = doc.GetDocumentCatalog();
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent> outputIntents
-        = catalog.GetOutputIntents();
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(outputIntents),
-        null);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent oi
-        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent(doc, colorProfile);
-      oi.SetInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "sRGB IEC61966-2.1"));
-      oi.SetOutputCondition(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "sRGB IEC61966-2.1"));
-      oi.SetOutputConditionIdentifier(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "sRGB IEC61966-2.1"));
-      oi.SetRegistryName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "http://www.color.org"));
-      doc.GetDocumentCatalog().AddOutputIntent(oi);
-      outputIntents = catalog.GetOutputIntents();
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(outputIntents), null);
-      catalog.SetOutputIntents(outputIntents);
-      outputIntents = catalog.GetOutputIntents();
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(outputIntents), null);
+  internal virtual void handleOutputIntents() { {
+      global::System.IO.Stream colorProfile
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.TestPDDocumentCatalog),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "sRGB.icc"));
+      global::System.Exception __dripsharpPrimary_130_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+          = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.TestPDDocumentCatalog),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "test.unc.pdf"))));
+        global::System.Exception __dripsharpPrimary_131_28_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = doc.GetDocumentCatalog();
+          global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent> outputIntents
+            = catalog.GetOutputIntents();
+          global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.ListIsEmpty(outputIntents),
+            null);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent oi
+            = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDOutputIntent(doc,
+            colorProfile);
+          oi.SetInfo(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "sRGB IEC61966-2.1"));
+          oi.SetOutputCondition(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "sRGB IEC61966-2.1"));
+          oi.SetOutputConditionIdentifier(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "sRGB IEC61966-2.1"));
+          oi.SetRegistryName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "http://www.color.org"));
+          doc.GetDocumentCatalog().AddOutputIntent(oi);
+          outputIntents = catalog.GetOutputIntents();
+          global::DripSharp.Testing.JavaAssertions.Equal(1,
+            global::DripSharp.Runtime.JavaCompat.CollectionCount(outputIntents), null);
+          catalog.SetOutputIntents(outputIntents);
+          outputIntents = catalog.GetOutputIntents();
+          global::DripSharp.Testing.JavaAssertions.Equal(1,
+            global::DripSharp.Runtime.JavaCompat.CollectionCount(outputIntents), null);
+        } catch (global::System.Exception __dripsharpCaught_131_28_0) {
+          __dripsharpPrimary_131_28_0 = __dripsharpCaught_131_28_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_131_28_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_130_26_0) {
+        __dripsharpPrimary_130_26_0 = __dripsharpCaught_130_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(colorProfile,
+          __dripsharpPrimary_130_26_0);
+      }
     }
   }
 
-  internal virtual void handleBooleanInOpenAction() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      doc.GetDocumentCatalog().GetCOSObject().SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.OpenAction,
-        false);
-      global::DripSharp.Testing.JavaAssertions.Null(doc.GetDocumentCatalog().GetOpenAction(), null);
+  internal virtual void handleBooleanInOpenAction() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_163_25_0 = null!;
+      try {
+        doc.GetDocumentCatalog().GetCOSObject().SetBoolean(global::DripSharp.PdfCarton.Cos.COSName.OpenAction,
+          false);
+        global::DripSharp.Testing.JavaAssertions.Null(doc.GetDocumentCatalog().GetOpenAction(),
+          null);
+      } catch (global::System.Exception __dripsharpCaught_163_25_0) {
+        __dripsharpPrimary_163_25_0 = __dripsharpCaught_163_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_163_25_0);
+      }
     }
   }
 
-  internal virtual void testNullThreads() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog documentCatalog
-        = doc.GetDocumentCatalog();
-      global::DripSharp.Testing.JavaAssertions.Equal(0,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(documentCatalog.GetThreads()), null);
-      documentCatalog.SetThreads(new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThread>());
-      global::DripSharp.Testing.JavaAssertions.Equal(0,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(documentCatalog.GetThreads()), null);
-      documentCatalog.SetThreads((global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThread>)default!);
-      global::DripSharp.Testing.JavaAssertions.Equal(0,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(documentCatalog.GetThreads()), null);
+  internal virtual void testNullThreads() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_174_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog documentCatalog
+          = doc.GetDocumentCatalog();
+        global::DripSharp.Testing.JavaAssertions.Equal(0,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(documentCatalog.GetThreads()), null);
+        documentCatalog.SetThreads(new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThread>());
+        global::DripSharp.Testing.JavaAssertions.Equal(0,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(documentCatalog.GetThreads()), null);
+        documentCatalog.SetThreads((global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDThread>)default!);
+        global::DripSharp.Testing.JavaAssertions.Equal(0,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(documentCatalog.GetThreads()), null);
+      } catch (global::System.Exception __dripsharpCaught_174_25_0) {
+        __dripsharpPrimary_174_25_0 = __dripsharpCaught_174_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_174_25_0);
+      }
     }
   }
 

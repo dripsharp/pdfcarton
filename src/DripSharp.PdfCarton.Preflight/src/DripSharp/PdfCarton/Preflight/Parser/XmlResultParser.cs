@@ -49,15 +49,16 @@ public class XmlResultParser {
       result
         = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Preflight.ValidationResult>(typeof(global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser),
         "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-        new object[] { file });
+        new object[] { (global::DripSharp.Runtime.JavaFile)file });
     } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
       long after__96_18 = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-      return this.generateFailureResponse(rdocument, name, (after__96_18 - before), pdfType, e);
+      return this.generateFailureResponse(rdocument, name, unchecked((after__96_18 - before)),
+        pdfType, e);
     }
     long after__100_14 = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     if (result.IsValid()) {
       global::System.Xml.XmlElement preflight__103_21 = this.GenerateResponseSkeleton(rdocument,
-        name, (after__100_14 - before));
+        name, unchecked((after__100_14 - before)));
       global::System.Xml.XmlElement valid = rdocument.CreateElement("isValid");
       valid.SetAttribute("type", pdfType);
       valid.InnerText = "true";
@@ -65,7 +66,7 @@ public class XmlResultParser {
       return preflight__103_21;
     } else {
       global::System.Xml.XmlElement preflight__113_21 = this.GenerateResponseSkeleton(rdocument,
-        name, (after__100_14 - before));
+        name, unchecked((after__100_14 - before)));
       this.CreateResponseWithError(rdocument, pdfType, result, preflight__113_21);
       return preflight__113_21;
     }

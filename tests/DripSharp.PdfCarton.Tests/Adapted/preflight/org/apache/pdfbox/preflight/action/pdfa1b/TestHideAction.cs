@@ -78,4 +78,8 @@ public class TestHideAction
     } finally {
     }
   }
+
+  static TestHideAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.Pdfa1b.AbstractTestAction).TypeHandle);
+  }
 }

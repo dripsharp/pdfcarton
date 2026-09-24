@@ -38,4 +38,8 @@ public class PDActionGoTo : global::DripSharp.PdfCarton.Pdmodel.Interactive.Acti
     }
     this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.D, d);
   }
+
+  static PDActionGoTo() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
+  }
 }

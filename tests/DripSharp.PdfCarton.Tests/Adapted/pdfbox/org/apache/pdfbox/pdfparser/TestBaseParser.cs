@@ -67,11 +67,19 @@ public class TestBaseParser {
   }
 
   internal virtual void testBaseParserStackOverflow() {
-    try {
-      using (global::System.IO.Stream @is
-        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdfparser.TestBaseParser),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6041-example.pdf"))) {
-        global::DripSharp.PdfCarton.Loader.LoadPDF(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(@is)).Dispose();
+    try { {
+        global::System.IO.Stream @is
+          = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdfparser.TestBaseParser),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6041-example.pdf"));
+        global::System.Exception __dripsharpPrimary_99_26_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.Loader.LoadPDF(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(@is)).Dispose();
+        } catch (global::System.Exception __dripsharpCaught_99_26_0) {
+          __dripsharpPrimary_99_26_0 = __dripsharpCaught_99_26_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_99_26_0);
+        }
       }
     } catch (global::System.IO.IOException exception) {
       global::DripSharp.Testing.JavaAssertions.Equal("Missing root object specification in trailer.",

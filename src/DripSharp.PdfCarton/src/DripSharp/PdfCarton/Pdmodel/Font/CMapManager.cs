@@ -10,9 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 internal sealed class CMapManager {
   private static readonly global::System.Collections.Generic.IDictionary<string,
-    global::DripSharp.PdfCarton.Fonts.Cmap.CMap> CMAP_CACHE
-    = new global::System.Collections.Concurrent.ConcurrentDictionary<string,
-    global::DripSharp.PdfCarton.Fonts.Cmap.CMap>();
+    global::DripSharp.PdfCarton.Fonts.Cmap.CMap> CMAP_CACHE;
 
   private CMapManager() {}
 
@@ -36,5 +34,10 @@ internal sealed class CMapManager {
       targetCmap = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser().Parse(randomAccessRead);
     }
     return targetCmap!;
+  }
+
+  static CMapManager() {
+    CMAP_CACHE = new global::System.Collections.Concurrent.ConcurrentDictionary<string,
+      global::DripSharp.PdfCarton.Fonts.Cmap.CMap>();
   }
 }

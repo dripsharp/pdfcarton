@@ -39,25 +39,25 @@ public class PDRange : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable 
 
   public virtual float GetMin() {
     global::DripSharp.PdfCarton.Cos.COSNumber min
-      = (global::DripSharp.PdfCarton.Cos.COSNumber)(this.rangeArray.GetObject((this.startingIndex
-      * 2))!);
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(this.rangeArray.GetObject(unchecked((this.startingIndex
+      * 2)))!);
     return min.FloatValue();
   }
 
   public virtual void SetMin(float min) {
-    this.rangeArray.Set((this.startingIndex * 2),
+    this.rangeArray.Set(unchecked((this.startingIndex * 2)),
       new global::DripSharp.PdfCarton.Cos.COSFloat(min));
   }
 
   public virtual float GetMax() {
     global::DripSharp.PdfCarton.Cos.COSNumber max
-      = (global::DripSharp.PdfCarton.Cos.COSNumber)(this.rangeArray.GetObject(((this.startingIndex
-      * 2) + 1))!);
+      = (global::DripSharp.PdfCarton.Cos.COSNumber)(this.rangeArray.GetObject(unchecked((unchecked((this.startingIndex
+      * 2)) + 1)))!);
     return max.FloatValue();
   }
 
   public virtual void SetMax(float max) {
-    this.rangeArray.Set(((this.startingIndex * 2) + 1),
+    this.rangeArray.Set(unchecked((unchecked((this.startingIndex * 2)) + 1)),
       new global::DripSharp.PdfCarton.Cos.COSFloat(max));
   }
 

@@ -19,6 +19,10 @@ public class TestAbstractStructuredType {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "structuredPN")) {
 
     }
+
+    static MyStructuredType() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+    }
   }
 
   internal readonly global::DripSharp.PdfCarton.Xmp.XMPMetadata xmp

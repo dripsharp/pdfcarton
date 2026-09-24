@@ -33,8 +33,8 @@ public sealed class IterativeMergeSort {
     for (int blockSize = 1; (blockSize < arr.Length); blockSize
       = (blockSize << unchecked((int)(1)))) {
       for (int start = 0; (start < arr.Length); start += (blockSize << unchecked((int)(1)))) {
-        global::DripSharp.PdfCarton.Util.IterativeMergeSort.merge(arr, aux, start, (start
-          + blockSize), (start + (blockSize << unchecked((int)(1)))), cmp);
+        global::DripSharp.PdfCarton.Util.IterativeMergeSort.merge(arr, aux, start, unchecked((start
+          + blockSize)), unchecked((start + (blockSize << unchecked((int)(1))))), cmp);
       }
     }
   }
@@ -64,6 +64,6 @@ public sealed class IterativeMergeSort {
         }
       }
     }
-    global::DripSharp.Runtime.JavaCompat.ArrayCopy(aux, from, arr, from, (to - from));
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(aux, from, arr, from, unchecked((to - from)));
   }
 }

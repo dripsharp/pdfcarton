@@ -9,18 +9,11 @@
 namespace DripSharp.PdfCarton.Util;
 
 public sealed class Hex {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly sbyte[] HEX_BYTES = new sbyte[] { unchecked((sbyte)('0')),
-    unchecked((sbyte)('1')), unchecked((sbyte)('2')), unchecked((sbyte)('3')),
-    unchecked((sbyte)('4')), unchecked((sbyte)('5')), unchecked((sbyte)('6')),
-    unchecked((sbyte)('7')), unchecked((sbyte)('8')), unchecked((sbyte)('9')),
-    unchecked((sbyte)('A')), unchecked((sbyte)('B')), unchecked((sbyte)('C')),
-    unchecked((sbyte)('D')), unchecked((sbyte)('E')), unchecked((sbyte)('F')) };
+  private static readonly sbyte[] HEX_BYTES;
 
-  private static readonly char[] HEX_CHARS = new char[] { '0', '1', '2', '3', '4', '5', '6', '7',
-    '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+  private static readonly char[] HEX_CHARS;
 
   private Hex() {}
 
@@ -32,8 +25,8 @@ public sealed class Hex {
   }
 
   public static string GetString(sbyte[] bytes) {
-    global::System.Text.StringBuilder @string = new global::System.Text.StringBuilder((bytes.Length
-      * 2));
+    global::System.Text.StringBuilder @string
+      = new global::System.Text.StringBuilder(unchecked((bytes.Length * 2)));
     foreach (sbyte b in bytes) {
       @string.Append(global::DripSharp.PdfCarton.Util.Hex.HEX_CHARS[global::DripSharp.PdfCarton.Util.Hex.getHighNibble(b)]).Append(global::DripSharp.PdfCarton.Util.Hex.HEX_CHARS[global::DripSharp.PdfCarton.Util.Hex.getLowNibble(b)]);
     }
@@ -46,11 +39,11 @@ public sealed class Hex {
   }
 
   public static sbyte[] GetBytes(sbyte[] bytes) {
-    sbyte[] asciiBytes = new sbyte[(bytes.Length * 2)];
+    sbyte[] asciiBytes = new sbyte[unchecked((bytes.Length * 2))];
     for (int i = 0; (i < bytes.Length); i++) {
-      asciiBytes[(i * 2)]
+      asciiBytes[unchecked((i * 2))]
         = unchecked((sbyte)(global::DripSharp.PdfCarton.Util.Hex.HEX_BYTES[global::DripSharp.PdfCarton.Util.Hex.getHighNibble(bytes[i])]));
-      asciiBytes[((i * 2) + 1)]
+      asciiBytes[unchecked((unchecked((i * 2)) + 1))]
         = unchecked((sbyte)(global::DripSharp.PdfCarton.Util.Hex.HEX_BYTES[global::DripSharp.PdfCarton.Util.Hex.getLowNibble(bytes[i])]));
     }
     return asciiBytes;
@@ -66,7 +59,7 @@ public sealed class Hex {
   }
 
   public static char[] GetCharsUTF16BE(string text) {
-    char[] hex = new char[(text.Length * 4)];
+    char[] hex = new char[unchecked((text.Length * 4))];
     for (int stringIdx = 0, charIdx = 0; (stringIdx < text.Length); stringIdx++) {
       char c = text[stringIdx];
       hex[charIdx++]
@@ -108,18 +101,21 @@ public sealed class Hex {
 
   public static sbyte[] DecodeHex(string s) {
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(((s.Length + 1) / 2));
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((s.Length
+      + 1)), 2));
     int i = 0;
-    while ((i < (s.Length - 1))) {
+    while ((i < unchecked((s.Length - 1)))) {
       if ((((int)(s[i]) == (int)'\n') || ((int)(s[i]) == (int)'\r'))) {
         ++i;
       } else {
-        int value = ((16 * global::DripSharp.PdfCarton.Util.Hex.GetHexValue(s[i]))
-          + global::DripSharp.PdfCarton.Util.Hex.GetHexValue(s[(i + 1)]));
+        int value = unchecked((unchecked((16
+          * global::DripSharp.PdfCarton.Util.Hex.GetHexValue(s[i])))
+          + global::DripSharp.PdfCarton.Util.Hex.GetHexValue(s[unchecked((i + 1))])));
         if ((value >= 0)) {
           global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(baos, value);
         } else {
-          string hexByte = global::DripSharp.Runtime.JavaCompat.StringSubstring(s, i, (i + 2));
+          string hexByte = global::DripSharp.Runtime.JavaCompat.StringSubstring(s, i, unchecked((i
+            + 2)));
           global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Util.Hex.LOG,
             global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Can't parse ",
             hexByte), ", aborting decode")));
@@ -133,16 +129,28 @@ public sealed class Hex {
 
   public static int GetHexValue(char c) {
     if ((((int)c >= (int)'0') && ((int)c <= (int)'9'))) {
-      return (c - '0');
+      return unchecked((c - '0'));
     } else {
       if ((((int)c >= (int)'A') && ((int)c <= (int)'F'))) {
-        return ((c - 'A') + 10);
+        return unchecked((unchecked((c - 'A')) + 10));
       } else {
         if ((((int)c >= (int)'a') && ((int)c <= (int)'f'))) {
-          return ((c - 'a') + 10);
+          return unchecked((unchecked((c - 'a')) + 10));
         }
       }
     }
-    return -256;
+    return unchecked(-256);
+  }
+
+  static Hex() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    HEX_BYTES = new sbyte[] { unchecked((sbyte)('0')), unchecked((sbyte)('1')),
+      unchecked((sbyte)('2')), unchecked((sbyte)('3')), unchecked((sbyte)('4')),
+      unchecked((sbyte)('5')), unchecked((sbyte)('6')), unchecked((sbyte)('7')),
+      unchecked((sbyte)('8')), unchecked((sbyte)('9')), unchecked((sbyte)('A')),
+      unchecked((sbyte)('B')), unchecked((sbyte)('C')), unchecked((sbyte)('D')),
+      unchecked((sbyte)('E')), unchecked((sbyte)('F')) };
+    HEX_CHARS = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
+      'E', 'F' };
   }
 }

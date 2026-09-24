@@ -69,4 +69,8 @@ public class PublicKeyDecryptionMaterial
         ex);
     }
   }
+
+  static PublicKeyDecryptionMaterial() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.DecryptionMaterial).TypeHandle);
+  }
 }

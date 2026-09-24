@@ -33,7 +33,7 @@ public class TestPDNumberTreeNode {
     public override int GetHashCode() {
       int prime = 31;
       int result = 1;
-      result = ((prime * result) + this.value);
+      result = unchecked((unchecked((prime * result)) + this.value));
       return result;
     }
 
@@ -128,13 +128,13 @@ public class TestPDNumberTreeNode {
 
   internal virtual void testGetValue() {
     global::DripSharp.Testing.JavaAssertions.Equal(new global::DripSharp.PdfCarton.Pdmodel.Common.TestPDNumberTreeNode.PDTest(51),
-      this.node5.GetValue(4), null);
+      this.node5.GetValue((int?)(4)), null);
     global::DripSharp.Testing.JavaAssertions.Equal(new global::DripSharp.PdfCarton.Pdmodel.Common.TestPDNumberTreeNode.PDTest(70),
-      this.node1.GetValue(9), null);
+      this.node1.GetValue((int?)(9)), null);
     this.node1.SetKids((global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode>)default!);
     this.node1.SetNumbers(global::DripSharp.Runtime.JavaCompat.CastDictionary<int,
       global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(default!));
-    global::DripSharp.Testing.JavaAssertions.Null(this.node1.GetValue(0), null);
+    global::DripSharp.Testing.JavaAssertions.Null(this.node1.GetValue((int?)(0)), null);
   }
 
   internal virtual void testUpperLimit() {

@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class PDFieldTree
 : global::DripSharp.Runtime.JavaIterableContract<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm = null!;
 
@@ -51,7 +50,7 @@ public class PDFieldTree
       if (!(this.HasNext())) {
         throw new global::System.InvalidOperationException();
       }
-      return this.queue.Poll();
+      return this.queue.Poll()!;
     }
 
     public void Remove() {
@@ -77,6 +76,10 @@ public class PDFieldTree
         }
       }
     }
+  }
+
+  static PDFieldTree() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   global::System.Collections.Generic.IEnumerator<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField> global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField>.GetEnumerator() {return global::DripSharp.Runtime.JavaCompat.AsEnumerator(this.Iterator());

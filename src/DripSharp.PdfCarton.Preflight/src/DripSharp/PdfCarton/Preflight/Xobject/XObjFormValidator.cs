@@ -10,11 +10,13 @@ namespace DripSharp.PdfCarton.Preflight.Xobject;
 
 public class XObjFormValidator
 : global::DripSharp.PdfCarton.Preflight.Xobject.AbstractXObjValidator {
-  internal global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject pdXObj = default!;
+  internal global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject pdXObj;
 
   public XObjFormValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject xobj) : base(context,
     xobj.GetCOSObject()) {
+    this.pdXObj = default!;
+
     this.pdXObj = xobj;
   }
 
@@ -92,5 +94,9 @@ public class XObjFormValidator
       global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(base.Context,
         resources, global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ResourcesProcess);
     }
+  }
+
+  static XObjFormValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Xobject.AbstractXObjValidator).TypeHandle);
   }
 }

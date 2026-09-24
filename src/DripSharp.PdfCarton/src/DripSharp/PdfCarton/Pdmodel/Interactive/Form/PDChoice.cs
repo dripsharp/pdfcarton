@@ -242,4 +242,8 @@ public abstract class PDChoice
   }
 
   internal abstract override void constructAppearances();
+
+  static PDChoice() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDVariableText).TypeHandle);
+  }
 }

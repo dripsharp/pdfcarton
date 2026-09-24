@@ -114,7 +114,7 @@ public sealed class PublicKeySecurityHandler
         = new global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission(accessBytes);
       currentAccessPermission.SetReadOnly();
       this.SetCurrentAccessPermission(currentAccessPermission);
-      sbyte[] sha1Input = new sbyte[(recipientFieldsLength + 20)];
+      sbyte[] sha1Input = new sbyte[unchecked((recipientFieldsLength + 20))];
       global::DripSharp.Runtime.JavaCompat.ArrayCopy(envelopedData!, 0, sha1Input, 0, 20);
       int sha1InputOffset = 20;
       foreach (sbyte[] recipientFieldsByte in recipientFieldsBytes) {
@@ -126,11 +126,11 @@ public sealed class PublicKeySecurityHandler
       int encryptionVersion = encryption.GetVersion();
       if (((encryptionVersion == 4) || (encryptionVersion == 5))) {
         if (!(this.IsDecryptMetadata())) {
-          sha1Input = global::DripSharp.Runtime.JavaCompat.CopyOf(sha1Input, (sha1Input.Length
-            + 4));
+          sha1Input = global::DripSharp.Runtime.JavaCompat.CopyOf(sha1Input,
+            unchecked((sha1Input.Length + 4)));
           global::DripSharp.Runtime.JavaCompat.ArrayCopy(new sbyte[] { unchecked((sbyte)(255)),
               unchecked((sbyte)(255)), unchecked((sbyte)(255)), unchecked((sbyte)(255)) }, 0,
-            sha1Input, (sha1Input.Length - 4), 4);
+            sha1Input, unchecked((sha1Input.Length - 4)), 4);
         }
         if ((encryptionVersion == 4)) {
           mdResult
@@ -149,9 +149,10 @@ public sealed class PublicKeySecurityHandler
         mdResult
           = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getSHA1().Digest(sha1Input);
       }
-      this.SetEncryptionKey(new sbyte[(this.GetKeyLength() / 8)]);
+      this.SetEncryptionKey(new sbyte[global::DripSharp.Runtime.JavaCompat.IntegralDivide(this.GetKeyLength(),
+        8)]);
       global::DripSharp.Runtime.JavaCompat.ArrayCopy(mdResult, 0, this.GetEncryptionKey(), 0,
-        (this.GetKeyLength() / 8));
+        global::DripSharp.Runtime.JavaCompat.IntegralDivide(this.GetKeyLength(), 8));
     } catch (global::System.Security.Cryptography.CryptographicException e) {
       throw new global::System.IO.IOException(null, e);
     }
@@ -239,9 +240,10 @@ public sealed class PublicKeySecurityHandler
           dictionary.SetRecipients(recipientsFields);
           break;
       }
-      this.SetEncryptionKey(new sbyte[(this.GetKeyLength() / 8)]);
+      this.SetEncryptionKey(new sbyte[global::DripSharp.Runtime.JavaCompat.IntegralDivide(this.GetKeyLength(),
+        8)]);
       global::DripSharp.Runtime.JavaCompat.ArrayCopy(mdResult, 0, this.GetEncryptionKey(), 0,
-        (this.GetKeyLength() / 8));
+        global::DripSharp.Runtime.JavaCompat.IntegralDivide(this.GetKeyLength(), 8));
       doc.SetEncryptionDictionary(dictionary);
       doc.GetDocument().SetEncryptionDictionary(dictionary.GetCOSObject());
     } catch (global::System.Security.Cryptography.CryptographicException e) {
@@ -322,10 +324,18 @@ public sealed class PublicKeySecurityHandler
       throw new global::System.Exception("Could not find a suitable javax.crypto provider", e);
     }
     global::DripSharp.Runtime.JavaAlgorithmParameters parameters = apg.GenerateParameters();
-    global::DripSharp.Runtime.JavaAsn1Primitive @object;
-    using (global::DripSharp.Runtime.JavaAsn1InputStream input
-      = new global::DripSharp.Runtime.JavaAsn1InputStream(parameters.GetEncoded("ASN.1"))) {
-      @object = input.ReadObject();
+    global::DripSharp.Runtime.JavaAsn1Primitive @object; {
+      global::DripSharp.Runtime.JavaAsn1InputStream input
+        = new global::DripSharp.Runtime.JavaAsn1InputStream(parameters.GetEncoded("ASN.1"));
+      global::System.Exception __dripsharpPrimary_505_30_0 = null!;
+      try {
+        @object = input.ReadObject();
+      } catch (global::System.Exception __dripsharpCaught_505_30_0) {
+        __dripsharpPrimary_505_30_0 = __dripsharpCaught_505_30_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(input, __dripsharpPrimary_505_30_0);
+      }
     }
     keygen.Init(128);
     global::DripSharp.Runtime.JavaSecretKey secretkey = keygen.GenerateKey();
@@ -352,10 +362,18 @@ public sealed class PublicKeySecurityHandler
 
   private global::DripSharp.Runtime.JavaKeyTransRecipientInfo computeRecipientInfo(global::System.Security.Cryptography.X509Certificates.X509Certificate2 x509certificate,
     sbyte[] abyte0) {
-    global::DripSharp.Runtime.JavaTbsCertificate certificate;
-    using (global::DripSharp.Runtime.JavaAsn1InputStream input
-      = new global::DripSharp.Runtime.JavaAsn1InputStream(global::DripSharp.Runtime.PdfCartonCrypto.GetTbsCertificate(x509certificate))) {
-      certificate = global::DripSharp.Runtime.JavaTbsCertificate.GetInstance(input.ReadObject());
+    global::DripSharp.Runtime.JavaTbsCertificate certificate; {
+      global::DripSharp.Runtime.JavaAsn1InputStream input
+        = new global::DripSharp.Runtime.JavaAsn1InputStream(global::DripSharp.Runtime.PdfCartonCrypto.GetTbsCertificate(x509certificate));
+      global::System.Exception __dripsharpPrimary_533_30_0 = null!;
+      try {
+        certificate = global::DripSharp.Runtime.JavaTbsCertificate.GetInstance(input.ReadObject());
+      } catch (global::System.Exception __dripsharpCaught_533_30_0) {
+        __dripsharpPrimary_533_30_0 = __dripsharpCaught_533_30_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(input, __dripsharpPrimary_533_30_0);
+      }
     }
     global::DripSharp.Runtime.JavaAlgorithmIdentifier algorithmId
       = certificate.GetSubjectPublicKeyInfo().GetAlgorithm();
@@ -376,5 +394,9 @@ public sealed class PublicKeySecurityHandler
       = new global::DripSharp.Runtime.JavaRecipientIdentifier(serial);
     return new global::DripSharp.Runtime.JavaKeyTransRecipientInfo(recipientId, algorithmId,
       octets);
+  }
+
+  static PublicKeySecurityHandler() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandler<global::DripSharp.PdfCarton.Pdmodel.Encryption.PublicKeyProtectionPolicy>).TypeHandle);
   }
 }

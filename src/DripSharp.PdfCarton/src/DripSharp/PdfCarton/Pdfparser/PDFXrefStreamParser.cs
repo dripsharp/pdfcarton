@@ -9,13 +9,15 @@
 namespace DripSharp.PdfCarton.Pdfparser;
 
 public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser {
-  private readonly int[] w = new int[3];
+  private readonly int[] w;
 
-  private global::DripSharp.PdfCarton.Pdfparser.PDFXrefStreamParser.ObjectNumbers objectNumbers
-    = default!;
+  private global::DripSharp.PdfCarton.Pdfparser.PDFXrefStreamParser.ObjectNumbers objectNumbers;
 
   public PDFXrefStreamParser(global::DripSharp.PdfCarton.Cos.COSStream stream,
     global::DripSharp.PdfCarton.Cos.COSDocument document) : base(stream.CreateView()) {
+    this.w = new int[3];
+    this.objectNumbers = default!;
+
     this.Document = document;
     try {
       this.initParserValues(stream);
@@ -42,7 +44,7 @@ public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BasePar
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Incorrect /W array in XRef: ",
         global::DripSharp.Runtime.JavaCompat.ArrayToString(this.w)));
     }
-    if ((((this.w[0] + this.w[1]) + this.w[2]) > 20)) {
+    if ((unchecked((unchecked((this.w[0] + this.w[1])) + this.w[2])) > 20)) {
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Incorrect /W array in XRef: ",
         global::DripSharp.Runtime.JavaCompat.ArrayToString(this.w)));
     }
@@ -54,7 +56,8 @@ public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BasePar
       indexArray.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(stream.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Size,
         0))));
     }
-    if (((indexArray.Size() == 0) || ((indexArray.Size() % 2) == 1))) {
+    if (((indexArray.Size() == 0)
+      || (global::DripSharp.Runtime.JavaCompat.IntegralRemainder(indexArray.Size(), 2) == 1))) {
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Wrong number of values for /Index array in XRef: ",
         global::DripSharp.Runtime.JavaCompat.ArrayToString(this.w)));
     }
@@ -71,7 +74,7 @@ public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BasePar
   }
 
   public virtual void Parse(global::DripSharp.PdfCarton.Pdfparser.XrefTrailerResolver resolver) {
-    sbyte[] currLine = new sbyte[((this.w[0] + this.w[1]) + this.w[2])];
+    sbyte[] currLine = new sbyte[unchecked((unchecked((this.w[0] + this.w[1])) + this.w[2]))];
     while ((!(this.IsEOF()) && this.objectNumbers.HasNext())) {
       this.readNextValue(currLine);
       long objID
@@ -81,13 +84,14 @@ public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BasePar
         continue;
       }
       long offset = this.parseValue(currLine, this.w[0], this.w[1]);
-      int thirdValue = (int)(this.parseValue(currLine, (this.w[0] + this.w[1]), this.w[2]));
+      int thirdValue = (int)(this.parseValue(currLine, unchecked((this.w[0] + this.w[1])),
+        this.w[2]));
       if ((type == 1)) {
         resolver.SetXRef(new global::DripSharp.PdfCarton.Cos.COSObjectKey(objID, thirdValue),
           offset);
       } else {
         resolver.SetXRef(new global::DripSharp.PdfCarton.Cos.COSObjectKey(objID, 0, thirdValue),
-          -offset);
+          unchecked(-offset));
       }
     }
     this.Dispose();
@@ -96,7 +100,7 @@ public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BasePar
   private void readNextValue(sbyte[] value) {
     int remainingBytes = value.Length;
     int amountRead;
-    while (((amountRead = base.Source.Read(value, (value.Length - remainingBytes),
+    while (((amountRead = base.Source.Read(value, unchecked((value.Length - remainingBytes)),
       remainingBytes)) > 0)) {
       remainingBytes -= amountRead;
     }
@@ -105,7 +109,9 @@ public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BasePar
   private long parseValue(sbyte[] data, int start, int length) {
     long value = 0;
     for (int i = 0; (i < length); i++) {
-      value += (((long)(data[(i + start)]) & 255) << unchecked((int)((((length - i) - 1) * 8))));
+      value += (((long)(data[unchecked((i
+        + start))]) & 255) << unchecked((int)(unchecked((unchecked((unchecked((length - i)) - 1))
+        * 8)))));
     }
     return value;
   }
@@ -122,7 +128,8 @@ public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BasePar
     internal long currentNumber = 0;
 
     internal ObjectNumbers(global::DripSharp.PdfCarton.Cos.COSArray indexArray) {
-      this.start = new long[(indexArray.Size() / 2)];
+      this.start = new long[global::DripSharp.Runtime.JavaCompat.IntegralDivide(indexArray.Size(),
+        2)];
       this.end = new long[this.start.Length];
       int counter = 0;
       global::DripSharp.Runtime.JavaIterator<global::DripSharp.PdfCarton.Cos.COSBase> indexIter
@@ -142,7 +149,7 @@ public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BasePar
         }
         long sizeValue = ((global::DripSharp.PdfCarton.Cos.COSInteger)(@base!)).LongValue();
         this.start[counter] = startValue;
-        this.end[counter] = (startValue + sizeValue);
+        this.end[counter] = unchecked((startValue + sizeValue));
         counter++;
       }
       this.currentNumber = this.start[0];
@@ -153,7 +160,7 @@ public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BasePar
       if ((this.start.Length == 1)) {
         return (this.currentNumber < this.currentEnd);
       }
-      return ((this.currentRange < (this.start.Length - 1))
+      return ((this.currentRange < unchecked((this.start.Length - 1)))
         || (this.currentNumber < this.currentEnd));
     }
 
@@ -161,7 +168,7 @@ public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BasePar
       if ((this.currentNumber < this.currentEnd)) {
         return this.currentNumber++;
       }
-      if ((this.currentRange >= (this.start.Length - 1))) {
+      if ((this.currentRange >= unchecked((this.start.Length - 1)))) {
         throw new global::System.InvalidOperationException();
       }
       this.currentNumber = this.start[++(this.currentRange)];
@@ -171,5 +178,9 @@ public class PDFXrefStreamParser : global::DripSharp.PdfCarton.Pdfparser.BasePar
 
     public void Remove() {throw new global::System.NotSupportedException("Iterator removal is not supported.");
     }
+  }
+
+  static PDFXrefStreamParser() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdfparser.BaseParser).TypeHandle);
   }
 }

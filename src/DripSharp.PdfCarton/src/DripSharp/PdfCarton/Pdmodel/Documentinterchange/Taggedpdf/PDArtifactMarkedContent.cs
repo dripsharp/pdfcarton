@@ -58,4 +58,8 @@ public class PDArtifactMarkedContent
     }
     return false;
   }
+
+  static PDArtifactMarkedContent() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent).TypeHandle);
+  }
 }

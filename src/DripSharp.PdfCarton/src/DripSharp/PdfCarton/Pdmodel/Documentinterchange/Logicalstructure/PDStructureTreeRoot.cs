@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
 public class PDStructureTreeRoot
 : global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const string TYPE = "StructTreeRoot";
 
@@ -145,5 +144,10 @@ public class PDStructureTreeRoot
       });
     this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.ClassMap,
       classMapDictionary);
+  }
+
+  static PDStructureTreeRoot() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureNode).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

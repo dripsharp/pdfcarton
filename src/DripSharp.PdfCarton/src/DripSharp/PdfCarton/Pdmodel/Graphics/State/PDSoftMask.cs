@@ -38,8 +38,7 @@ public sealed class PDSoftMask : global::DripSharp.PdfCarton.Pdmodel.Common.COSO
     }
   }
 
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
@@ -123,6 +122,10 @@ public sealed class PDSoftMask : global::DripSharp.PdfCarton.Pdmodel.Common.COSO
 
   public global::DripSharp.PdfCarton.Util.Matrix GetInitialTransformationMatrix() {
     return this.ctm;
+  }
+
+  static PDSoftMask() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

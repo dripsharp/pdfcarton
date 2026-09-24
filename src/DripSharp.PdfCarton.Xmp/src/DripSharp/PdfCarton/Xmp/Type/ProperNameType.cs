@@ -14,4 +14,8 @@ public class ProperNameType : global::DripSharp.PdfCarton.Xmp.Type.TextType {
     propertyName, value) {
 
   }
+
+  static ProperNameType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType).TypeHandle);
+  }
 }

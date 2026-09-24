@@ -39,4 +39,8 @@ public class FDFParser : global::DripSharp.PdfCarton.Pdfparser.COSParser {
       }
     }
   }
+
+  static FDFParser() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdfparser.COSParser).TypeHandle);
+  }
 }

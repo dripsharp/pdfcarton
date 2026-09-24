@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public abstract class PDSimpleFont : global::DripSharp.PdfCarton.Pdmodel.Font.PDFont {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   protected internal global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding Encoding = null!;
 
@@ -18,19 +17,22 @@ public abstract class PDSimpleFont : global::DripSharp.PdfCarton.Pdmodel.Font.PD
 
   private bool? __field_isSymbolic = default;
 
-  private readonly global::System.Collections.Generic.ISet<int> noUnicode
-    = new global::System.Collections.Generic.HashSet<int>();
+  private readonly global::System.Collections.Generic.ISet<int> noUnicode;
 
-  internal PDSimpleFont() {}
+  internal PDSimpleFont() {
+    this.noUnicode = new global::System.Collections.Generic.HashSet<int>();
+  }
 
   internal PDSimpleFont(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName baseFont)
   : base(baseFont) {
+    this.noUnicode = new global::System.Collections.Generic.HashSet<int>();
+
     this.assignGlyphList(baseFont);
   }
 
   internal PDSimpleFont(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary)
   : base(fontDictionary) {
-
+    this.noUnicode = new global::System.Collections.Generic.HashSet<int>();
   }
 
   protected internal virtual void ReadEncoding() {
@@ -269,9 +271,10 @@ public abstract class PDSimpleFont : global::DripSharp.PdfCarton.Pdmodel.Font.PD
 
   public override bool HasExplicitWidth(int code) {
     if (base.Dict.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Widths)) {
-      int firstChar = base.Dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.FirstChar, -1);
-      if (((code >= firstChar) && ((code
-        - firstChar) < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.GetWidths())))) {
+      int firstChar = base.Dict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.FirstChar,
+        unchecked(-1));
+      if (((code >= firstChar) && (unchecked((code
+        - firstChar)) < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.GetWidths())))) {
         return true;
       }
     }
@@ -287,5 +290,10 @@ public abstract class PDSimpleFont : global::DripSharp.PdfCarton.Pdmodel.Font.PD
       this.GlyphList
         = global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetAdobeGlyphList();
     }
+  }
+
+  static PDSimpleFont() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

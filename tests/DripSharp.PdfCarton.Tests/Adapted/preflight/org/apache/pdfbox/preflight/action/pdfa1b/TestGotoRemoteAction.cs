@@ -120,4 +120,8 @@ public class TestGotoRemoteAction
     } finally {
     }
   }
+
+  static TestGotoRemoteAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.Pdfa1b.AbstractTestAction).TypeHandle);
+  }
 }

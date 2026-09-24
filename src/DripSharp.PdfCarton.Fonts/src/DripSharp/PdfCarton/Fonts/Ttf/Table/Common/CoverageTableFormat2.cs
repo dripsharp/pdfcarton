@@ -47,4 +47,8 @@ public class CoverageTableFormat2
     return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("CoverageTableFormat2[coverageFormat=%d]",
       this.GetCoverageFormat());
   }
+
+  static CoverageTableFormat2() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTableFormat1).TypeHandle);
+  }
 }

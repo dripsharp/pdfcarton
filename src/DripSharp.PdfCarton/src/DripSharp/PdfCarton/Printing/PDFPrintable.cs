@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Printing;
 
 public sealed class PDFPrintable : global::DripSharp.Runtime.JavaPrintable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const float RasterizeOff = 0.0F;
 
@@ -151,9 +150,11 @@ public sealed class PDFPrintable : global::DripSharp.Runtime.JavaPrintable {
         }
         image
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::System.Math.Max(1,
-          (int)((int)(((double)((imageableWidth * dpiScale)) / (double)scale)))),
-          global::System.Math.Max(1, (int)((int)(((double)((imageableHeight * dpiScale))
-          / (double)scale)))), global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
+          (int)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(((double)((imageableWidth
+          * dpiScale)) / (double)scale)))))), global::System.Math.Max(1,
+          (int)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(((double)((imageableHeight
+          * dpiScale)) / (double)scale)))))),
+          global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
         graphics2D = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(image!);
         printerGraphics.Scale(((double)scale / (float)dpiScale), ((double)scale / (float)dpiScale));
         scale = dpiScale;
@@ -170,12 +171,15 @@ public sealed class PDFPrintable : global::DripSharp.Runtime.JavaPrintable {
       }
       if (this.showPageBorder) {
         printerGraphics.SetTransform(printerBorderTransform);
-        printerGraphics.SetClip(0, 0, (int)((int)imageableWidth), (int)((int)imageableHeight));
+        printerGraphics.SetClip(0, 0,
+          (int)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(imageableWidth)))),
+          (int)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(imageableHeight)))));
         printerGraphics.Scale(borderScale, borderScale);
         printerGraphics.SetColor(global::DripSharp.Runtime.JavaColor.Gray);
         printerGraphics.SetStroke(new global::DripSharp.Runtime.JavaBasicStroke(0.5F));
-        printerGraphics.DrawRect(0, 0, (int)((int)(cropBox.GetWidth())),
-          (int)((int)(cropBox.GetHeight())));
+        printerGraphics.DrawRect(0, 0,
+          (int)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(cropBox.GetWidth())))),
+          (int)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(cropBox.GetHeight())))));
       }
       return global::DripSharp.Runtime.JavaPrintConstants.PAGE_EXISTS;
     } catch (global::System.IO.IOException e) {
@@ -208,5 +212,9 @@ public sealed class PDFPrintable : global::DripSharp.Runtime.JavaPrintable {
     } else {
       return mediaBox;
     }
+  }
+
+  static PDFPrintable() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

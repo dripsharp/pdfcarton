@@ -13,9 +13,11 @@ public class COSFilterInputStream : global::DripSharp.Runtime.JavaFilterInputStr
 
   private int range = default;
 
-  private long position = 0;
+  private long position;
 
   public COSFilterInputStream(global::System.IO.Stream @in, int[] byteRange) : base(@in) {
+    this.position = 0;
+
     this.calculateRanges(byteRange);
   }
 
@@ -25,8 +27,8 @@ public class COSFilterInputStream : global::DripSharp.Runtime.JavaFilterInputStr
   }
 
   public override int Read() {
-    if ((((this.range == -1) || (this.getRemaining() <= 0)) && !(this.nextRange()))) {
-      return -1;
+    if ((((this.range == unchecked(-1)) || (this.getRemaining() <= 0)) && !(this.nextRange()))) {
+      return unchecked(-1);
     }
     int result = base.Read();
     this.position++;
@@ -38,8 +40,8 @@ public class COSFilterInputStream : global::DripSharp.Runtime.JavaFilterInputStr
   }
 
   public override int Read(sbyte[] b, int off, int len) {
-    if ((((this.range == -1) || (this.getRemaining() <= 0)) && !(this.nextRange()))) {
-      return -1;
+    if ((((this.range == unchecked(-1)) || (this.getRemaining() <= 0)) && !(this.nextRange()))) {
+      return unchecked(-1);
     }
     int bytesRead = base.Read(b, off, (int)((int)(global::System.Math.Min((long)(len),
       this.getRemaining()))));
@@ -52,23 +54,25 @@ public class COSFilterInputStream : global::DripSharp.Runtime.JavaFilterInputStr
   }
 
   private void calculateRanges(int[] byteRange) {
-    this.ranges = new int[(byteRange.Length / 2)][];
-    for (int i = 0; (i < (byteRange.Length / 2)); i++) {
-      this.ranges[i] = new int[] { byteRange[(i * 2)], (byteRange[(i * 2)] + byteRange[((i * 2)
-          + 1)]) };
+    this.ranges = new int[global::DripSharp.Runtime.JavaCompat.IntegralDivide(byteRange.Length,
+      2)][];
+    for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.IntegralDivide(byteRange.Length, 2));
+      i++) {
+      this.ranges[i] = new int[] { byteRange[unchecked((i * 2))], unchecked((byteRange[unchecked((i
+          * 2))] + byteRange[unchecked((unchecked((i * 2)) + 1))])) };
     }
-    this.range = -1;
+    this.range = unchecked(-1);
   }
 
   private long getRemaining() {
-    return (this.ranges[this.range][1] - this.position);
+    return unchecked((this.ranges[this.range][1] - this.position));
   }
 
   private bool nextRange() {
-    if (((this.range + 1) < this.ranges.Length)) {
+    if ((unchecked((this.range + 1)) < this.ranges.Length)) {
       this.range++;
       while ((this.position < this.ranges[this.range][0])) {
-        long skipped = base.Skip((this.ranges[this.range][0] - this.position));
+        long skipped = base.Skip(unchecked((this.ranges[this.range][0] - this.position)));
         if ((skipped == 0)) {
           throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("FilterInputStream.skip() returns 0, range: ",
             global::DripSharp.Runtime.JavaCompat.ArrayToString(this.ranges[this.range])));

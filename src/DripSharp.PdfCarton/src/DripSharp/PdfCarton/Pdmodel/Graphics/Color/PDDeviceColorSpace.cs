@@ -18,5 +18,9 @@ public abstract class PDDeviceColorSpace
     return global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(this.GetName());
   }
 
+  static PDDeviceColorSpace() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace).TypeHandle);
+  }
+
   public PDDeviceColorSpace() {}
 }

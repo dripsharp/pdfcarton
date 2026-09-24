@@ -11,9 +11,9 @@ namespace DripSharp.PdfCarton.Pdfwriter;
 public class ContentStreamWriter {
   private readonly global::System.IO.Stream output = null!;
 
-  public static readonly sbyte[] Space = new sbyte[] { unchecked((sbyte)(32)) };
+  public static readonly sbyte[] Space;
 
-  public static readonly sbyte[] Eol = new sbyte[] { unchecked((sbyte)(10)) };
+  public static readonly sbyte[] Eol;
 
   public ContentStreamWriter(global::System.IO.Stream @out) {
     this.output = @out;
@@ -169,5 +169,10 @@ public class ContentStreamWriter {
         }
       }
     }
+  }
+
+  static ContentStreamWriter() {
+    Space = new sbyte[] { unchecked((sbyte)(32)) };
+    Eol = new sbyte[] { unchecked((sbyte)(10)) };
   }
 }

@@ -25,4 +25,8 @@ public class CIDType0FontValidator
       = new global::DripSharp.PdfCarton.Preflight.Font.Descriptor.CIDType0DescriptorHelper(base.Context,
       base.Font, base.FontContainer);
   }
+
+  static CIDType0FontValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.DescendantFontValidator<global::DripSharp.PdfCarton.Preflight.Font.Container.CIDType0Container>).TypeHandle);
+  }
 }

@@ -16,4 +16,8 @@ public class HighlightAnnotationValidator
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationHighlight(annotDictionary);
     this.PdAnnot = this.PdMarkup;
   }
+
+  static HighlightAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.MarkupAnnotationValidator).TypeHandle);
+  }
 }

@@ -10,14 +10,13 @@ namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class TrueTypeFont : global::System.IDisposable,
 global::DripSharp.PdfCarton.Fonts.FontBoxFont {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private float version = default;
 
-  private int numberOfGlyphs = -1;
+  private int numberOfGlyphs = unchecked(-1);
 
-  private int unitsPerEm = -1;
+  private int unitsPerEm = unchecked(-1);
 
   private bool enableGsub = true;
 
@@ -194,7 +193,7 @@ global::DripSharp.PdfCarton.Fonts.FontBoxFont {
   }
 
   public virtual int GetNumberOfGlyphs() {
-    if ((this.numberOfGlyphs == -1)) {
+    if ((this.numberOfGlyphs == unchecked(-1))) {
       global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable maximumProfile
         = this.GetMaximumProfile();
       if ((maximumProfile != default!)) {
@@ -207,7 +206,7 @@ global::DripSharp.PdfCarton.Fonts.FontBoxFont {
   }
 
   public virtual int GetUnitsPerEm() {
-    if ((this.unitsPerEm == -1)) {
+    if ((this.unitsPerEm == unchecked(-1))) {
       global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable header = this.GetHeader();
       if ((header != default!)) {
         this.unitsPerEm = header.GetUnitsPerEm();
@@ -343,7 +342,7 @@ global::DripSharp.PdfCarton.Fonts.FontBoxFont {
       }
     }
     int uni = this.parseUniName(name);
-    if ((uni > -1)) {
+    if ((uni > unchecked(-1))) {
       global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmap = this.GetUnicodeCmapLookup(false);
       return cmap.GetGlyphId(uni);
     }
@@ -370,24 +369,24 @@ global::DripSharp.PdfCarton.Fonts.FontBoxFont {
       int nameLength = name.Length;
       global::System.Text.StringBuilder uniStr = new global::System.Text.StringBuilder();
       try {
-        for (int chPos = 3; ((chPos + 4) <= nameLength); chPos += 4) {
+        for (int chPos = 3; (unchecked((chPos + 4)) <= nameLength); chPos += 4) {
           int codePoint
             = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringSubstring(name,
-            chPos, (chPos + 4)), 16);
+            chPos, unchecked((chPos + 4))), 16);
           if (((codePoint <= 55295) || (codePoint >= 57344))) {
             uniStr.Append(unchecked((char)(unchecked((char)(codePoint)))));
           }
         }
         string unicode = uniStr.ToString();
         if ((unicode.Length == 0)) {
-          return -1;
+          return unchecked(-1);
         }
         return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CodePointAt(unicode, 0);
       } catch (global::DripSharp.PdfCarton.Runtime.Fonts.JavaNumberFormatException) {
-        return -1;
+        return unchecked(-1);
       }
     }
-    return -1;
+    return unchecked(-1);
   }
 
   public virtual global::SkiaSharp.SKPath GetPath(string name) {
@@ -455,5 +454,9 @@ global::DripSharp.PdfCarton.Fonts.FontBoxFont {
       return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("(null - ",
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ExceptionMessage(e)), ")");
     }
+  }
+
+  static TrueTypeFont() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

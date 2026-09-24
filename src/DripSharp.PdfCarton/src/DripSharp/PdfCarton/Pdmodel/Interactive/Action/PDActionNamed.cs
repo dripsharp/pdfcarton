@@ -26,4 +26,8 @@ public class PDActionNamed : global::DripSharp.PdfCarton.Pdmodel.Interactive.Act
   public virtual void SetN(string name) {
     base.Action.SetName("N", name);
   }
+
+  static PDActionNamed() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
+  }
 }

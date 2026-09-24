@@ -13,13 +13,21 @@ public class GsubWorkerForLatinTest {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "calibri ligature test skipped"));
     global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmapLookup;
-    global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker gsubWorkerForLatin;
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file))) {
-      cmapLookup = ttf.GetUnicodeCmapLookup();
-      gsubWorkerForLatin
-        = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerFactory().GetGsubWorker(cmapLookup,
-        ttf.GetGsubData());
+    global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker gsubWorkerForLatin; {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file));
+      global::System.Exception __dripsharpPrimary_52_27_0 = null!;
+      try {
+        cmapLookup = ttf.GetUnicodeCmapLookup();
+        gsubWorkerForLatin
+          = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerFactory().GetGsubWorker(cmapLookup,
+          ttf.GetGsubData());
+      } catch (global::System.Exception __dripsharpCaught_52_27_0) {
+        __dripsharpPrimary_52_27_0 = __dripsharpCaught_52_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(ttf, __dripsharpPrimary_52_27_0);
+      }
     }
     global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.AsList<int>(286,
       299, 286, 272, 415, 448, 286),
@@ -49,14 +57,22 @@ public class GsubWorkerForLatinTest {
 
   internal virtual void testApplyLigaturesFoglihtenNo07() {
     global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmapLookup;
-    global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker gsubWorkerForLatin;
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      "src/test/resources/otf/FoglihtenNo07.otf")))) {
-      cmapLookup = ttf.GetUnicodeCmapLookup();
-      gsubWorkerForLatin
-        = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerFactory().GetGsubWorker(cmapLookup,
-        ttf.GetGsubData());
+    global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker gsubWorkerForLatin; {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        "src/test/resources/otf/FoglihtenNo07.otf")));
+      global::System.Exception __dripsharpPrimary_77_27_0 = null!;
+      try {
+        cmapLookup = ttf.GetUnicodeCmapLookup();
+        gsubWorkerForLatin
+          = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerFactory().GetGsubWorker(cmapLookup,
+          ttf.GetGsubData());
+      } catch (global::System.Exception __dripsharpCaught_77_27_0) {
+        __dripsharpPrimary_77_27_0 = __dripsharpCaught_77_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(ttf, __dripsharpPrimary_77_27_0);
+      }
     }
     global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.AsList<int>(66,
       1590, 645, 70),

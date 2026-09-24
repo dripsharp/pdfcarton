@@ -63,4 +63,8 @@ public class PDOptionalContentMembershipDictionary
   public virtual void SetVisibilityPolicy(global::DripSharp.PdfCarton.Cos.COSName visibilityPolicy) {
     base.Dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.P, visibilityPolicy);
   }
+
+  static PDOptionalContentMembershipDictionary() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList).TypeHandle);
+  }
 }

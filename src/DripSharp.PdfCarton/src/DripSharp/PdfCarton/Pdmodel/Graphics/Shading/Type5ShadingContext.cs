@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 internal class Type5ShadingContext
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.GouraudShadingContext {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   internal Type5ShadingContext(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType5 shading,
     global::DripSharp.Runtime.JavaColorModel cm, global::SkiaSharp.SKMatrix xform,
@@ -21,5 +20,10 @@ internal class Type5ShadingContext
       global::DripSharp.Runtime.JavaCompat.StringValueOf("Type5ShadingContext"));
     this.setTriangleList(shading.collectTriangles(xform, matrix));
     this.CreatePixelTable(deviceBounds);
+  }
+
+  static Type5ShadingContext() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.GouraudShadingContext).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

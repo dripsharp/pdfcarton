@@ -34,4 +34,8 @@ public class ThreadAction : global::DripSharp.PdfCarton.Preflight.Action.Abstrac
     }
     return true;
   }
+
+  static ThreadAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager).TypeHandle);
+  }
 }

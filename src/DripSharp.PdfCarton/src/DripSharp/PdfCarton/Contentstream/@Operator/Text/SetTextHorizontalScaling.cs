@@ -34,4 +34,8 @@ public class SetTextHorizontalScaling
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetTextHorizontalScaling;
   }
+
+  static SetTextHorizontalScaling() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

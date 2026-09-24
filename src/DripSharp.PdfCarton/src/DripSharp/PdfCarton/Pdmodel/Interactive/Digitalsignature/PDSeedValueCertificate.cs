@@ -207,7 +207,7 @@ public class PDSeedValueCertificate : global::DripSharp.PdfCarton.Pdmodel.Common
     string allowedChars = "01X";
     for (int c = 0; (c < keyUsageExtension.Length); c++) {
       if ((global::DripSharp.Runtime.JavaCompat.StringIndexOf(allowedChars,
-        (int)(keyUsageExtension[c])) == -1)) {
+        (int)(keyUsageExtension[c])) == unchecked(-1))) {
         throw new global::System.ArgumentException("characters can only be 0, 1, X");
       }
     }

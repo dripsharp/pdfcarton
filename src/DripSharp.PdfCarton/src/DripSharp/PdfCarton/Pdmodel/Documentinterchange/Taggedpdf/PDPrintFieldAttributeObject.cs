@@ -83,4 +83,8 @@ public class PDPrintFieldAttributeObject
     }
     return sb.ToString();
   }
+
+  static PDPrintFieldAttributeObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject).TypeHandle);
+  }
 }

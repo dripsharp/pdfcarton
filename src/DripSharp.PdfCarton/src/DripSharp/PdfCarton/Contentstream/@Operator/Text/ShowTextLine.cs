@@ -26,4 +26,8 @@ public class ShowTextLine : global::DripSharp.PdfCarton.Contentstream.@Operator.
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine;
   }
+
+  static ShowTextLine() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

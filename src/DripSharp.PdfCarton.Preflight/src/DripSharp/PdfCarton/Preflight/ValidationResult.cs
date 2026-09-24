@@ -224,7 +224,8 @@ public class ValidationResult {
     : this(errorCode) {
       if ((details != default!)) {
         global::System.Text.StringBuilder sb
-          = new global::System.Text.StringBuilder(((this.details.Length + details.Length) + 2));
+          = new global::System.Text.StringBuilder(unchecked((unchecked((this.details.Length
+          + details.Length)) + 2)));
         sb.Append(this.details).Append(", ").Append(details);
         this.details = ((sb.Length > 400)
           ? global::DripSharp.Runtime.JavaCompat.StringSubstring(sb.ToString(), 0, 400)

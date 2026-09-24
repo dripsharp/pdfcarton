@@ -26,10 +26,10 @@ public sealed class PDJPXColorSpace
 
   public override float[] GetDefaultDecode(int bitsPerComponent) {
     int n = this.GetNumberOfComponents();
-    float[] decode = new float[(n * 2)];
+    float[] decode = new float[unchecked((n * 2))];
     for (int i = 0; (i < n); i++) {
-      decode[(i * 2)] = this.awtColorSpace.GetMinValue(i);
-      decode[((i * 2) + 1)] = this.awtColorSpace.GetMaxValue(i);
+      decode[unchecked((i * 2))] = this.awtColorSpace.GetMinValue(i);
+      decode[unchecked((unchecked((i * 2)) + 1))] = this.awtColorSpace.GetMaxValue(i);
     }
     return decode;
   }
@@ -52,5 +52,9 @@ public sealed class PDJPXColorSpace
 
   public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
     throw new global::System.NotSupportedException("JPX color spaces don't have COS objects");
+  }
+
+  static PDJPXColorSpace() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace).TypeHandle);
   }
 }

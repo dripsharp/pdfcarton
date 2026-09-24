@@ -95,37 +95,53 @@ public class EndstreamFilterStreamTest {
       feos.CalculateLength(), null);
   }
 
-  internal virtual void testPDFBox2079EmbeddedFile() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "src/test/resources/org/apache/pdfbox/pdfparser"),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "embedded_zip.pdf")) })) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = doc.GetDocumentCatalog();
-      global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDictionary names = catalog.GetNames();
-      global::DripSharp.PdfCarton.Pdmodel.PDEmbeddedFilesNameTreeNode node
-        = names.GetEmbeddedFiles();
-      global::System.Collections.Generic.IDictionary<string,
-        global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification> map
-        = node.GetNames();
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.MapCount(map), null);
-      global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification spec
-        = global::DripSharp.Runtime.JavaCompat.MapGet(map, "My first attachment");
-      global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile file
-        = spec.GetEmbeddedFile();
-      global::System.IO.Stream input = file.CreateInputStream();
-      global::DripSharp.Runtime.JavaFile d
-        = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "target/test-output"));
-      global::DripSharp.PdfCarton.Tests.Support.Mkdirs(d);
-      global::DripSharp.Runtime.JavaFile f = global::DripSharp.Runtime.JavaCompat.NewJavaFile(d,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", spec.GetFile()));
-      using (global::System.IO.Stream os = global::DripSharp.Runtime.JavaCompat.OpenFileOutput(f)) {
-        global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, os);
+  internal virtual void testPDFBox2079EmbeddedFile() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "src/test/resources/org/apache/pdfbox/pdfparser"),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "embedded_zip.pdf")) });
+      global::System.Exception __dripsharpPrimary_111_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = doc.GetDocumentCatalog();
+        global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDictionary names = catalog.GetNames();
+        global::DripSharp.PdfCarton.Pdmodel.PDEmbeddedFilesNameTreeNode node
+          = names.GetEmbeddedFiles();
+        global::System.Collections.Generic.IDictionary<string,
+          global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification> map
+          = node.GetNames();
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.MapCount(map), null);
+        global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDComplexFileSpecification spec
+          = global::DripSharp.Runtime.JavaCompat.MapGet(map, "My first attachment");
+        global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDEmbeddedFile file
+          = spec.GetEmbeddedFile();
+        global::System.IO.Stream input = file.CreateInputStream();
+        global::DripSharp.Runtime.JavaFile d
+          = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "target/test-output"));
+        global::DripSharp.PdfCarton.Tests.Support.Mkdirs(d);
+        global::DripSharp.Runtime.JavaFile f = global::DripSharp.Runtime.JavaCompat.NewJavaFile(d,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", spec.GetFile())); {
+          global::System.IO.Stream os = global::DripSharp.Runtime.JavaCompat.OpenFileOutput(f);
+          global::System.Exception __dripsharpPrimary_125_31_0 = null!;
+          try {
+            global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, os);
+          } catch (global::System.Exception __dripsharpCaught_125_31_0) {
+            __dripsharpPrimary_125_31_0 = __dripsharpCaught_125_31_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(os, __dripsharpPrimary_125_31_0);
+          }
+        }
+        global::DripSharp.Testing.JavaAssertions.Equal((long)(17660), f.Length, null);
+      } catch (global::System.Exception __dripsharpCaught_111_25_0) {
+        __dripsharpPrimary_111_25_0 = __dripsharpCaught_111_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_111_25_0);
       }
-      global::DripSharp.Testing.JavaAssertions.Equal((long)(17660), f.Length, null);
     }
   }
 

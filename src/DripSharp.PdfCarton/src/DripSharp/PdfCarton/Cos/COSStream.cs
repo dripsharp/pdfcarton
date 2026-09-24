@@ -13,20 +13,21 @@ public class COSStream : global::DripSharp.PdfCarton.Cos.COSDictionary, global::
 
   private global::DripSharp.PdfCarton.IO.RandomAccessStreamCache streamCache = null!;
 
-  private bool closeStreamCache = false;
+  private bool closeStreamCache;
 
   private bool isWriting = default;
 
   private global::DripSharp.PdfCarton.IO.RandomAccessReadView randomAccessReadView = null!;
 
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public COSStream() : this((global::DripSharp.PdfCarton.IO.RandomAccessStreamCache)default!) {
 
   }
 
   public COSStream(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache streamCache) {
+    this.closeStreamCache = false;
+
     this.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Length, 0);
     this.streamCache = streamCache;
   }
@@ -225,12 +226,20 @@ public class COSStream : global::DripSharp.PdfCarton.Cos.COSDictionary, global::
   }
 
   public virtual string ToTextString() {
-    try {
-      using (global::System.IO.Stream input = this.CreateInputStream()) {
-        sbyte[] array = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(input);
-        global::DripSharp.PdfCarton.Cos.COSString @string
-          = new global::DripSharp.PdfCarton.Cos.COSString(array);
-        return @string.GetString();
+    try { {
+        global::System.IO.Stream input = this.CreateInputStream();
+        global::System.Exception __dripsharpPrimary_365_26_0 = null!;
+        try {
+          sbyte[] array = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(input);
+          global::DripSharp.PdfCarton.Cos.COSString @string
+            = new global::DripSharp.PdfCarton.Cos.COSString(array);
+          return @string.GetString();
+        } catch (global::System.Exception __dripsharpCaught_365_26_0) {
+          __dripsharpPrimary_365_26_0 = __dripsharpCaught_365_26_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(input, __dripsharpPrimary_365_26_0);
+        }
       }
     } catch (global::System.IO.IOException e) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Cos.COSStream.LOG,
@@ -267,5 +276,10 @@ public class COSStream : global::DripSharp.PdfCarton.Cos.COSDictionary, global::
 
   public virtual bool HasData() {
     return ((this.randomAccess != default!) || (this.randomAccessReadView != default!));
+  }
+
+  static COSStream() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.COSDictionary).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -50,6 +50,10 @@ internal class BitwiseOperators {
     protected internal override int ApplyforInteger(int int1, int int2) {
       return (int1 & int2);
     }
+
+    static And() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.AbstractLogicalOperator).TypeHandle);
+    }
   }
 
   internal class Bitshift : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator {
@@ -85,7 +89,7 @@ internal class BitwiseOperators {
       } else {
         if ((op1 is int)) {
           int int1 = global::DripSharp.Runtime.JavaCompat.Unbox((int?)op1);
-          int result__138_21 = -int1;
+          int result__138_21 = unchecked(-int1);
           stack.Push(result__138_21);
         } else {
           throw new global::System.InvalidCastException("Operand must be bool or int");
@@ -102,6 +106,10 @@ internal class BitwiseOperators {
 
     protected internal override int ApplyforInteger(int int1, int int2) {
       return (int1 | int2);
+    }
+
+    static Or() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.AbstractLogicalOperator).TypeHandle);
     }
   }
 
@@ -120,6 +128,10 @@ internal class BitwiseOperators {
 
     protected internal override int ApplyforInteger(int int1, int int2) {
       return (int1 ^ int2);
+    }
+
+    static Xor() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.AbstractLogicalOperator).TypeHandle);
     }
   }
 }

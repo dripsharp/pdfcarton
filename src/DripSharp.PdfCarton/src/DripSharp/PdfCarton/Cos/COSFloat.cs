@@ -13,11 +13,9 @@ public class COSFloat : global::DripSharp.PdfCarton.Cos.COSNumber {
 
   private string valueAsString = null!;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSFloat Zero
-    = new global::DripSharp.PdfCarton.Cos.COSFloat(0.0F, "0.0");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSFloat Zero;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSFloat One
-    = new global::DripSharp.PdfCarton.Cos.COSFloat(1.0F, "1.0");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSFloat One;
 
   public COSFloat(float aFloat) {
     this.value = aFloat;
@@ -81,11 +79,11 @@ public class COSFloat : global::DripSharp.PdfCarton.Cos.COSNumber {
   }
 
   public override long LongValue() {
-    return (long)(this.value);
+    return unchecked((long)(global::DripSharp.Runtime.JavaCompat.NumberLongValue(this.value)));
   }
 
   public override int IntValue() {
-    return (int)(this.value);
+    return unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(this.value)));
   }
 
   public override bool Equals(object o) {
@@ -121,5 +119,11 @@ public class COSFloat : global::DripSharp.PdfCarton.Cos.COSNumber {
     global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output,
       global::DripSharp.Runtime.JavaCompat.StringGetBytes(this.formatString(),
       global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+  }
+
+  static COSFloat() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.COSNumber).TypeHandle);
+    Zero = new global::DripSharp.PdfCarton.Cos.COSFloat(0.0F, "0.0");
+    One = new global::DripSharp.PdfCarton.Cos.COSFloat(1.0F, "1.0");
   }
 }

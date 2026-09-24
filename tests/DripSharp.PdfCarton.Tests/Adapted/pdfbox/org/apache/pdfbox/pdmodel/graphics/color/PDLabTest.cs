@@ -33,7 +33,7 @@ public class PDLabTest {
     dict.ToString();
     global::DripSharp.PdfCarton.Pdmodel.Common.PDRange pdRange
       = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange();
-    pdRange.SetMin((float)(-1));
+    pdRange.SetMin((float)(unchecked(-1)));
     pdRange.SetMax((float)(2));
     pdLab.SetARange(pdRange);
     pdRange = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange();

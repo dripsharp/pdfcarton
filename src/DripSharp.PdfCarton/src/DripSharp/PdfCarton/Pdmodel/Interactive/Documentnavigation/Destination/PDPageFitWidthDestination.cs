@@ -30,7 +30,7 @@ public class PDPageFitWidthDestination
 
   public virtual void SetTop(int y) {
     base.Array.GrowToSize(3);
-    if ((y == -1)) {
+    if ((y == unchecked(-1))) {
       base.Array.Set(2, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
     } else {
       base.Array.SetInt(2, y);
@@ -51,5 +51,9 @@ public class PDPageFitWidthDestination
       base.Array.SetName(1,
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitWidthDestination.Type);
     }
+  }
+
+  static PDPageFitWidthDestination() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination).TypeHandle);
   }
 }

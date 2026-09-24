@@ -20,4 +20,8 @@ public class BuiltInEncoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encoding
   public override string GetEncodingName() {
     return "built-in (TTF)";
   }
+
+  static BuiltInEncoding() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding).TypeHandle);
+  }
 }

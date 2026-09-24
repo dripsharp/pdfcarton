@@ -274,4 +274,8 @@ public class ExifSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema {
   public virtual string GetUserComment() {
     return this.GetUserComment((string)default!);
   }
+
+  static ExifSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema).TypeHandle);
+  }
 }

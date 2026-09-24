@@ -9,11 +9,9 @@
 namespace DripSharp.PdfCarton.Text;
 
 public sealed class TextPosition {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly global::System.Collections.Generic.IDictionary<int, string> DIACRITICS
-    = global::DripSharp.PdfCarton.Text.TextPosition.createDiacritics();
+  private static readonly global::System.Collections.Generic.IDictionary<int, string> DIACRITICS;
 
   private readonly global::DripSharp.PdfCarton.Util.Matrix textMatrix = null!;
 
@@ -47,7 +45,7 @@ public sealed class TextPosition {
 
   private string unicode = null!;
 
-  private float direction = -1;
+  private float direction = unchecked(-1);
 
   public TextPosition(int pageRotation, float pageWidth, float pageHeight,
     global::DripSharp.PdfCarton.Util.Matrix textMatrix, float endX, float endY, float maxHeight,
@@ -126,7 +124,8 @@ public sealed class TextPosition {
     int nextIndex;
     for (int index = 0; (index < length); index = nextIndex) {
       int codePoint = global::DripSharp.Runtime.JavaCompat.CodePointAt(text, index);
-      nextIndex = (index + global::DripSharp.Runtime.JavaCompat.CharacterCharCount(codePoint));
+      nextIndex = unchecked((index
+        + global::DripSharp.Runtime.JavaCompat.CharacterCharCount(codePoint)));
       sbyte directionality
         = global::DripSharp.Runtime.PdfCartonFontCompat.CharacterDirectionality(codePoint);
       if (((((int)directionality == (int)2) || ((int)directionality == (int)1)) && ((index != 0)
@@ -366,11 +365,12 @@ public sealed class TextPosition {
           float distanceOverlapping1 = (diacXEnd - currCharXStart);
           float percentage1 = ((float)distanceOverlapping1 / (float)(this.widths[i]));
           float distanceOverlapping2 = (currCharXStart - diacXStart);
-          float percentage2 = ((float)distanceOverlapping2 / (float)(this.widths[(i - 1)]));
+          float percentage2 = ((float)distanceOverlapping2 / (float)(this.widths[unchecked((i
+            - 1))]));
           if ((percentage1 >= percentage2)) {
             this.insertDiacritic(i, diacritic);
           } else {
-            this.insertDiacritic((i - 1), diacritic);
+            this.insertDiacritic(unchecked((i - 1)), diacritic);
           }
         }
         wasAdded = true;
@@ -383,7 +383,7 @@ public sealed class TextPosition {
             this.insertDiacritic(i, diacritic);
             wasAdded = true;
           } else {
-            if ((i == (strLen - 1))) {
+            if ((i == unchecked((strLen - 1)))) {
               this.insertDiacritic(i, diacritic);
               wasAdded = true;
             }
@@ -397,20 +397,20 @@ public sealed class TextPosition {
   private void insertDiacritic(int i, global::DripSharp.PdfCarton.Text.TextPosition diacritic) {
     global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
     sb.Append(this.unicode, 0, (i - 0));
-    float[] widths2 = new float[(this.widths.Length + 1)];
+    float[] widths2 = new float[unchecked((this.widths.Length + 1))];
     global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.widths, 0, widths2, 0, i);
     widths2[i] = this.widths[i];
-    widths2[(i + 1)] = 0;
-    global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.widths, (i + 1), widths2, (i + 2),
-      ((this.widths.Length - i) - 1));
+    widths2[unchecked((i + 1))] = 0;
+    global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.widths, unchecked((i + 1)), widths2,
+      unchecked((i + 2)), unchecked((unchecked((this.widths.Length - i)) - 1)));
     sb.Append(this.unicode[i]);
-    if (((i < (this.unicode.Length - 1)) && char.IsSurrogatePair(this.unicode[i], this.unicode[(i
-      + 1)]))) {
-      sb.Append(this.unicode[(i + 1)]);
+    if (((i < unchecked((this.unicode.Length - 1))) && char.IsSurrogatePair(this.unicode[i],
+      this.unicode[unchecked((i + 1))]))) {
+      sb.Append(this.unicode[unchecked((i + 1))]);
       i++;
     }
     sb.Append(this.combineDiacritic(diacritic.GetUnicode()));
-    sb.Append(this.unicode.Substring((i + 1)));
+    sb.Append(this.unicode.Substring(unchecked((i + 1))));
     this.unicode = sb.ToString();
     this.widths = widths2;
   }
@@ -518,20 +518,35 @@ public sealed class TextPosition {
 
   public override int GetHashCode() {
     int result = ((this.textMatrix != default!) ? this.textMatrix.GetHashCode() : 0);
-    result = ((31 * result) + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.endX));
-    result = ((31 * result) + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.endY));
-    result = ((31 * result) + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.maxHeight));
-    result = ((31 * result) + this.rotation);
-    result = ((31 * result) + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.x));
-    result = ((31 * result) + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.y));
-    result = ((31 * result) + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.pageHeight));
-    result = ((31 * result) + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.pageWidth));
-    result = ((31 * result)
-      + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.widthOfSpace));
-    result = ((31 * result) + global::DripSharp.Runtime.JavaCompat.ArrayHash(this.charCodes));
-    result = ((31 * result) + ((this.font != default!) ? this.font.GetHashCode() : 0));
-    result = ((31 * result) + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.fontSize));
-    result = ((31 * result) + this.fontSizePt);
+    result = unchecked((unchecked((31 * result))
+      + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.endX)));
+    result = unchecked((unchecked((31 * result))
+      + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.endY)));
+    result = unchecked((unchecked((31 * result))
+      + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.maxHeight)));
+    result = unchecked((unchecked((31 * result)) + this.rotation));
+    result = unchecked((unchecked((31 * result))
+      + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.x)));
+    result = unchecked((unchecked((31 * result))
+      + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.y)));
+    result = unchecked((unchecked((31 * result))
+      + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.pageHeight)));
+    result = unchecked((unchecked((31 * result))
+      + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.pageWidth)));
+    result = unchecked((unchecked((31 * result))
+      + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.widthOfSpace)));
+    result = unchecked((unchecked((31 * result))
+      + global::DripSharp.Runtime.JavaCompat.ArrayHash(this.charCodes)));
+    result = unchecked((unchecked((31 * result)) + ((this.font != default!)
+      ? this.font.GetHashCode() : 0)));
+    result = unchecked((unchecked((31 * result))
+      + global::DripSharp.Runtime.JavaCompat.FloatToIntBits(this.fontSize)));
+    result = unchecked((unchecked((31 * result)) + this.fontSizePt));
     return result;
+  }
+
+  static TextPosition() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    DIACRITICS = global::DripSharp.PdfCarton.Text.TextPosition.createDiacritics();
   }
 }

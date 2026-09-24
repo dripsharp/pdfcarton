@@ -10,13 +10,18 @@ namespace DripSharp.PdfCarton.Preflight.Annotation;
 
 public class PrintMarkAnnotationValidator
 : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnknown PdUnk
-    = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnknown PdUnk;
 
   public PrintMarkAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
     global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdUnk = default!;
+
     this.PdUnk
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnknown(annotDictionary);
     this.PdAnnot = this.PdUnk;
+  }
+
+  static PrintMarkAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator).TypeHandle);
   }
 }

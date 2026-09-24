@@ -52,55 +52,71 @@ public class TestPDPageTree {
     this.doc
       = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.TestPDPageTree),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "with_outline.pdf"))));
-    global::DripSharp.Testing.JavaAssertions.Equal(-1,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
       this.doc.GetPages().IndexOf(new global::DripSharp.PdfCarton.Pdmodel.PDPage()), null);
   }
 
-  internal virtual void testInsertBeforeBlankPage() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.PDPage pageOne
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      global::DripSharp.PdfCarton.Pdmodel.PDPage pageTwo
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      global::DripSharp.PdfCarton.Pdmodel.PDPage pageThree
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      document.AddPage(pageOne);
-      document.AddPage(pageTwo);
-      document.GetPages().InsertBefore(pageThree, pageTwo);
-      global::DripSharp.Testing.JavaAssertions.Equal(0, document.GetPages().IndexOf(pageOne),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Page one should be placed at index 0."));
-      global::DripSharp.Testing.JavaAssertions.Equal(2, document.GetPages().IndexOf(pageTwo),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Page two should be placed at index 2."));
-      global::DripSharp.Testing.JavaAssertions.Equal(1, document.GetPages().IndexOf(pageThree),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Page three should be placed at index 1."));
+  internal virtual void testInsertBeforeBlankPage() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_97_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDPage pageOne
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        global::DripSharp.PdfCarton.Pdmodel.PDPage pageTwo
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        global::DripSharp.PdfCarton.Pdmodel.PDPage pageThree
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        document.AddPage(pageOne);
+        document.AddPage(pageTwo);
+        document.GetPages().InsertBefore(pageThree, pageTwo);
+        global::DripSharp.Testing.JavaAssertions.Equal(0, document.GetPages().IndexOf(pageOne),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Page one should be placed at index 0."));
+        global::DripSharp.Testing.JavaAssertions.Equal(2, document.GetPages().IndexOf(pageTwo),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Page two should be placed at index 2."));
+        global::DripSharp.Testing.JavaAssertions.Equal(1, document.GetPages().IndexOf(pageThree),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Page three should be placed at index 1."));
+      } catch (global::System.Exception __dripsharpCaught_97_25_0) {
+        __dripsharpPrimary_97_25_0 = __dripsharpCaught_97_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_97_25_0);
+      }
     }
   }
 
-  internal virtual void testInsertAfterBlankPage() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.PDPage pageOne
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      global::DripSharp.PdfCarton.Pdmodel.PDPage pageTwo
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      global::DripSharp.PdfCarton.Pdmodel.PDPage pageThree
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      document.AddPage(pageOne);
-      document.AddPage(pageTwo);
-      document.GetPages().InsertAfter(pageThree, pageTwo);
-      global::DripSharp.Testing.JavaAssertions.Equal(0, document.GetPages().IndexOf(pageOne),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Page one should be placed at index 0."));
-      global::DripSharp.Testing.JavaAssertions.Equal(1, document.GetPages().IndexOf(pageTwo),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Page two should be placed at index 1."));
-      global::DripSharp.Testing.JavaAssertions.Equal(2, document.GetPages().IndexOf(pageThree),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Page three should be placed at index 2."));
+  internal virtual void testInsertAfterBlankPage() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_116_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDPage pageOne
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        global::DripSharp.PdfCarton.Pdmodel.PDPage pageTwo
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        global::DripSharp.PdfCarton.Pdmodel.PDPage pageThree
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        document.AddPage(pageOne);
+        document.AddPage(pageTwo);
+        document.GetPages().InsertAfter(pageThree, pageTwo);
+        global::DripSharp.Testing.JavaAssertions.Equal(0, document.GetPages().IndexOf(pageOne),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Page one should be placed at index 0."));
+        global::DripSharp.Testing.JavaAssertions.Equal(1, document.GetPages().IndexOf(pageTwo),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Page two should be placed at index 1."));
+        global::DripSharp.Testing.JavaAssertions.Equal(2, document.GetPages().IndexOf(pageThree),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Page three should be placed at index 2."));
+      } catch (global::System.Exception __dripsharpCaught_116_25_0) {
+        __dripsharpPrimary_116_25_0 = __dripsharpCaught_116_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_116_25_0);
+      }
     }
   }
 

@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Fixup.Processor;
 
 public class AcroFormOrphanWidgetsProcessor
 : global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AbstractProcessor {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public AcroFormOrphanWidgetsProcessor(global::DripSharp.PdfCarton.Pdmodel.PDDocument document)
   : base(document) {
@@ -197,5 +196,10 @@ public class AcroFormOrphanWidgetsProcessor
           global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ioe))));
       }
     }
+  }
+
+  static AcroFormOrphanWidgetsProcessor() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AbstractProcessor).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -30,23 +30,39 @@ public sealed class PDXFAResource : global::DripSharp.PdfCarton.Pdmodel.Common.C
     return new sbyte[0];
   }
 
-  private static sbyte[] getBytesFromPacket(global::DripSharp.PdfCarton.Cos.COSArray cosArray) {
-    using (global::DripSharp.Runtime.JavaByteArrayOutputStream baos
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream()) {
-      for (int i = 1; (i < cosArray.Size()); i += 2) {
-        global::DripSharp.PdfCarton.Cos.COSBase cosObj = cosArray.GetObject(i);
-        if ((cosObj is global::DripSharp.PdfCarton.Cos.COSStream)) {
-          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(baos,
-            global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDXFAResource.getBytesFromStream((global::DripSharp.PdfCarton.Cos.COSStream)(cosObj.GetCOSObject()!)));
+  private static sbyte[] getBytesFromPacket(global::DripSharp.PdfCarton.Cos.COSArray cosArray) { {
+      global::DripSharp.Runtime.JavaByteArrayOutputStream baos
+        = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
+      global::System.Exception __dripsharpPrimary_94_42_0 = null!;
+      try {
+        for (int i = 1; (i < cosArray.Size()); i += 2) {
+          global::DripSharp.PdfCarton.Cos.COSBase cosObj = cosArray.GetObject(i);
+          if ((cosObj is global::DripSharp.PdfCarton.Cos.COSStream)) {
+            global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(baos,
+              global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDXFAResource.getBytesFromStream((global::DripSharp.PdfCarton.Cos.COSStream)(cosObj.GetCOSObject()!)));
+          }
         }
+        return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos);
+      } catch (global::System.Exception __dripsharpCaught_94_42_0) {
+        __dripsharpPrimary_94_42_0 = __dripsharpCaught_94_42_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(baos, __dripsharpPrimary_94_42_0);
       }
-      return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos);
     }
   }
 
-  private static sbyte[] getBytesFromStream(global::DripSharp.PdfCarton.Cos.COSStream stream) {
-    using (global::System.IO.Stream @is = stream.CreateInputStream()) {
-      return global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
+  private static sbyte[] getBytesFromStream(global::DripSharp.PdfCarton.Cos.COSStream stream) { {
+      global::System.IO.Stream @is = stream.CreateInputStream();
+      global::System.Exception __dripsharpPrimary_113_32_0 = null!;
+      try {
+        return global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
+      } catch (global::System.Exception __dripsharpCaught_113_32_0) {
+        __dripsharpPrimary_113_32_0 = __dripsharpCaught_113_32_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_113_32_0);
+      }
     }
   }
 

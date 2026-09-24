@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public class PDDocumentCatalog : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSDictionary root = null!;
 
@@ -372,6 +371,10 @@ public class PDDocumentCatalog : global::DripSharp.PdfCarton.Pdmodel.Common.COSO
     if (((ocProperties != default!) && (this.document.GetVersion() < 1.5D))) {
       this.document.SetVersion(1.5F);
     }
+  }
+
+  static PDDocumentCatalog() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

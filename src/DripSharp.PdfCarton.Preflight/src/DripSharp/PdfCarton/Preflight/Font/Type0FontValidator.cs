@@ -142,36 +142,44 @@ public class Type0FontValidator
 
   private void processCMapAsStream(global::DripSharp.PdfCarton.Cos.COSStream aCMap) {
     this.CheckCIDSystemInfo(aCMap.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Cidsysteminfo));
-    try {
-      using (global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead
-        = aCMap.CreateView()) {
-        global::DripSharp.PdfCarton.Fonts.Cmap.CMap fontboxCMap
-          = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser(true).Parse(randomAccessRead);
-        int wmValue = fontboxCMap.GetWMode();
-        string cmnValue = fontboxCMap.GetName();
-        int wmode = aCMap.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Wmode,
-          global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryDefaultCmapWmode);
-        global::DripSharp.PdfCarton.Cos.COSName type
-          = aCMap.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Type);
-        string cmapName = aCMap.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Cmapname);
-        if ((((cmapName == default!) || global::DripSharp.Runtime.JavaCompat.Equals("", cmapName))
-          || (wmode > 1))) {
-          this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedCmapInvalidOrMissing,
-            global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
-            ": Some elements in the CMap dictionary are missing or invalid")));
-        } else {
-          if (!(((wmValue == wmode) && global::DripSharp.Runtime.JavaCompat.Equals(cmapName,
-            cmnValue)))) {
+    try { {
+        global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead = aCMap.CreateView();
+        global::System.Exception __dripsharpPrimary_249_31_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.Fonts.Cmap.CMap fontboxCMap
+            = new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser(true).Parse(randomAccessRead);
+          int wmValue = fontboxCMap.GetWMode();
+          string cmnValue = fontboxCMap.GetName();
+          int wmode = aCMap.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Wmode,
+            global::DripSharp.PdfCarton.Preflight.PreflightConstants.FontDictionaryDefaultCmapWmode);
+          global::DripSharp.PdfCarton.Cos.COSName type
+            = aCMap.GetCOSName(global::DripSharp.PdfCarton.Cos.COSName.Type);
+          string cmapName = aCMap.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Cmapname);
+          if ((((cmapName == default!) || global::DripSharp.Runtime.JavaCompat.Equals("", cmapName))
+            || (wmode > 1))) {
             this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedCmapInvalidOrMissing,
               global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
-              ": CMapName or WMode is inconsistent")));
+              ": Some elements in the CMap dictionary are missing or invalid")));
           } else {
-            if (!(global::DripSharp.PdfCarton.Cos.COSName.Cmap.Equals(type))) {
+            if (!(((wmValue == wmode) && global::DripSharp.Runtime.JavaCompat.Equals(cmapName,
+              cmnValue)))) {
               this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedCmapInvalidOrMissing,
                 global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
-                ": The CMap type is invalid")));
+                ": CMapName or WMode is inconsistent")));
+            } else {
+              if (!(global::DripSharp.PdfCarton.Cos.COSName.Cmap.Equals(type))) {
+                this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsCidkeyedCmapInvalidOrMissing,
+                  global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
+                  ": The CMap type is invalid")));
+              }
             }
           }
+        } catch (global::System.Exception __dripsharpCaught_249_31_0) {
+          __dripsharpPrimary_249_31_0 = __dripsharpCaught_249_31_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(randomAccessRead,
+            __dripsharpPrimary_249_31_0);
         }
       }
     } catch (global::System.IO.IOException e) {
@@ -228,5 +236,9 @@ public class Type0FontValidator
           ": The CIDSystemInfo is inconsistent")));
       }
     }
+  }
+
+  static Type0FontValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.FontValidator<global::DripSharp.PdfCarton.Preflight.Font.Container.Type0Container>).TypeHandle);
   }
 }

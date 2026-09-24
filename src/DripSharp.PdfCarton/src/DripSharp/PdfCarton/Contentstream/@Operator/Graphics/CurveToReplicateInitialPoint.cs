@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Contentstream.@Operator.Graphics;
 
 public class CurveToReplicateInitialPoint
 : global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public CurveToReplicateInitialPoint(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context)
   : base(context) {
@@ -59,5 +58,10 @@ public class CurveToReplicateInitialPoint
 
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateInitialPoint;
+  }
+
+  static CurveToReplicateInitialPoint() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

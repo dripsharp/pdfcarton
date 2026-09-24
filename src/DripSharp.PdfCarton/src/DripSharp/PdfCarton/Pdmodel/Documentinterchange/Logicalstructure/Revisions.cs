@@ -34,7 +34,7 @@ public class Revisions<T> {
 
   protected internal virtual void SetRevisionNumber(T @object, int revisionNumber) {
     int index = global::DripSharp.Runtime.JavaCompat.ListIndexOf(this.objects, @object);
-    if ((index > -1)) {
+    if ((index > unchecked(-1))) {
       global::DripSharp.Runtime.JavaCompat.ListSet(this.revisionNumbers, index, revisionNumber);
     }
   }

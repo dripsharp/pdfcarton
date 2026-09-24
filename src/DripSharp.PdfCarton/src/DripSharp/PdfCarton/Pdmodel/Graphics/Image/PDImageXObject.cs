@@ -10,21 +10,20 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public sealed class PDImageXObject : global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject,
 global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private global::DripSharp.Runtime.JavaSoftReference<global::SkiaSharp.SKBitmap> cachedImage
     = null!;
 
   private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace = null!;
 
-  private int cachedImageSubsampling = int.MaxValue;
+  private int cachedImageSubsampling;
 
-  private bool hasJPXFilter = false;
+  private bool hasJPXFilter;
 
-  private bool jpxValuesInitialized = false;
+  private bool jpxValuesInitialized;
 
-  private global::SkiaSharp.SKBitmap jpxSMask = default!;
+  private global::SkiaSharp.SKBitmap jpxSMask;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.PDResources resources = null!;
 
@@ -40,6 +39,11 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace initColorSpace)
   : base(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.createRawStream(document,
     encodedStream), global::DripSharp.PdfCarton.Cos.COSName.Image) {
+    this.cachedImageSubsampling = int.MaxValue;
+    this.hasJPXFilter = false;
+    this.jpxValuesInitialized = false;
+    this.jpxSMask = default!;
+
     this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Filter, cosFilter);
     this.resources = default!;
     this.colorSpace = default!;
@@ -52,12 +56,17 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
   public PDImageXObject(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream,
     global::DripSharp.PdfCarton.Pdmodel.PDResources resources) : base(stream,
     global::DripSharp.PdfCarton.Cos.COSName.Image) {
+    this.cachedImageSubsampling = int.MaxValue;
+    this.hasJPXFilter = false;
+    this.jpxValuesInitialized = false;
+    this.jpxSMask = default!;
+
     this.resources = resources;
     global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSName> filters
       = stream.GetFilters();
     if ((!global::DripSharp.Runtime.JavaCompat.ListIsEmpty(filters)
       && global::DripSharp.PdfCarton.Cos.COSName.JpxDecode.Equals(global::DripSharp.Runtime.JavaCompat.ListGet(filters,
-      (global::DripSharp.Runtime.JavaCompat.CollectionCount(filters) - 1))))) {
+      unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(filters) - 1)))))) {
       this.hasJPXFilter = true;
     }
   }
@@ -71,9 +80,17 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
 
   private static global::DripSharp.PdfCarton.Cos.COSStream createRawStream(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
     global::System.IO.Stream rawInput) {
-    global::DripSharp.PdfCarton.Cos.COSStream stream = document.GetDocument().CreateCOSStream();
-    using (global::System.IO.Stream output = stream.CreateRawOutputStream()) {
-      global::DripSharp.PdfCarton.IO.IOUtils.Copy(rawInput, output);
+    global::DripSharp.PdfCarton.Cos.COSStream stream = document.GetDocument().CreateCOSStream(); {
+      global::System.IO.Stream output = stream.CreateRawOutputStream();
+      global::System.Exception __dripsharpPrimary_174_27_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.IO.IOUtils.Copy(rawInput, output);
+      } catch (global::System.Exception __dripsharpCaught_174_27_0) {
+        __dripsharpPrimary_174_27_0 = __dripsharpCaught_174_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(output, __dripsharpPrimary_174_27_0);
+      }
     }
     return stream;
   }
@@ -83,7 +100,8 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
     return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject),
       "CreateFromFileByExtension", new global::System.Type[] { typeof(global::System.IO.FileInfo),
         typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(imagePath), doc });
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(imagePath),
+        (global::DripSharp.PdfCarton.Pdmodel.PDDocument)doc });
   }
 
   [global::DripSharp.Runtime.JavaFileBoundary]
@@ -97,17 +115,24 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument doc) {
     string name = file.Name;
     int dot = global::DripSharp.Runtime.JavaCompat.StringLastIndexOf(name, (int)('.'));
-    if ((dot == -1)) {
+    if ((dot == unchecked(-1))) {
       throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("Image type not supported: ",
         name));
     }
-    string ext = name.Substring((dot + 1)).ToLowerInvariant();
+    string ext = name.Substring(unchecked((dot + 1))).ToLowerInvariant();
     if ((global::DripSharp.Runtime.JavaCompat.Equals("jpg", ext)
-      || global::DripSharp.Runtime.JavaCompat.Equals("jpeg", ext))) {
-      using (global::System.IO.Stream fis
-        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(file)) {
-        return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(doc,
-          fis);
+      || global::DripSharp.Runtime.JavaCompat.Equals("jpeg", ext))) { {
+        global::System.IO.Stream fis = global::DripSharp.Runtime.JavaCompat.OpenFileInput(file);
+        global::System.Exception __dripsharpPrimary_228_34_0 = null!;
+        try {
+          return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(doc,
+            fis);
+        } catch (global::System.Exception __dripsharpCaught_228_34_0) {
+          __dripsharpPrimary_228_34_0 = __dripsharpCaught_228_34_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(fis, __dripsharpPrimary_228_34_0);
+        }
       }
     }
     if ((global::DripSharp.Runtime.JavaCompat.Equals("tif", ext)
@@ -116,7 +141,9 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
         return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
           "CreateFromFile",
           new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
-            typeof(global::System.IO.FileInfo) }, new object[] { doc, file });
+            typeof(global::System.IO.FileInfo) },
+          new object[] { (global::DripSharp.PdfCarton.Pdmodel.PDDocument)doc,
+            (global::DripSharp.Runtime.JavaFile)file });
       } catch (global::System.IO.IOException ex) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.LOG,
           (global::System.Exception)ex,
@@ -146,11 +173,20 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
   internal static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject __JavaFile_CreateFromFileByContent(global::DripSharp.Runtime.JavaFile file,
     global::DripSharp.PdfCarton.Pdmodel.PDDocument doc) {
     global::DripSharp.PdfCarton.Util.Filetypedetector.FileType fileType = default!;
-    try {
-      using (global::System.IO.BufferedStream bufferedInputStream
-        = new global::System.IO.BufferedStream(global::DripSharp.Runtime.JavaCompat.OpenFileInput(file))) {
-        fileType
-          = global::DripSharp.PdfCarton.Util.Filetypedetector.FileTypeDetector.DetectFileType(bufferedInputStream);
+    try { {
+        global::System.IO.BufferedStream bufferedInputStream
+          = new global::System.IO.BufferedStream(global::DripSharp.Runtime.JavaCompat.OpenFileInput(file));
+        global::System.Exception __dripsharpPrimary_280_34_0 = null!;
+        try {
+          fileType
+            = global::DripSharp.PdfCarton.Util.Filetypedetector.FileTypeDetector.DetectFileType(bufferedInputStream);
+        } catch (global::System.Exception __dripsharpCaught_280_34_0) {
+          __dripsharpPrimary_280_34_0 = __dripsharpCaught_280_34_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(bufferedInputStream,
+            __dripsharpPrimary_280_34_0);
+        }
       }
     } catch (global::System.IO.IOException e) {
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("Could not determine file type: ",
@@ -160,11 +196,18 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
       throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("Image type not supported: ",
         file.Name));
     }
-    if ((fileType! == global::DripSharp.PdfCarton.Util.Filetypedetector.FileType.Jpeg)) {
-      using (global::System.IO.Stream fis
-        = global::DripSharp.Runtime.JavaCompat.OpenFileInput(file)) {
-        return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(doc,
-          fis);
+    if ((fileType! == global::DripSharp.PdfCarton.Util.Filetypedetector.FileType.Jpeg)) { {
+        global::System.IO.Stream fis = global::DripSharp.Runtime.JavaCompat.OpenFileInput(file);
+        global::System.Exception __dripsharpPrimary_295_34_0 = null!;
+        try {
+          return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(doc,
+            fis);
+        } catch (global::System.Exception __dripsharpCaught_295_34_0) {
+          __dripsharpPrimary_295_34_0 = __dripsharpCaught_295_34_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(fis, __dripsharpPrimary_295_34_0);
+        }
       }
     }
     if ((fileType! == global::DripSharp.PdfCarton.Util.Filetypedetector.FileType.Tiff)) {
@@ -172,7 +215,9 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
         return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject>(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.CCITTFactory),
           "CreateFromFile",
           new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument),
-            typeof(global::System.IO.FileInfo) }, new object[] { doc, file });
+            typeof(global::System.IO.FileInfo) },
+          new object[] { (global::DripSharp.PdfCarton.Pdmodel.PDDocument)doc,
+            (global::DripSharp.Runtime.JavaFile)file });
       } catch (global::System.IO.IOException ex) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.LOG,
           (global::System.Exception)ex,
@@ -405,22 +450,28 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
           alpha.GetSamples(0, y__669_22, width, 1, 0, samples);
           if (!isSoft) {
             for (int x__674_30 = 0; (x__674_30 < width); x__674_30++) {
-              samples[x__674_30] ^= -1;
+              samples[x__674_30] ^= unchecked(-1);
             }
           }
           raster.SetSamples(0, y__669_22, width, 1, 3, samples);
         }
       } else {
         int[] alphas = new int[width];
-        int[] pixels = new int[(4 * width)];
+        int[] pixels = new int[unchecked((4 * width))];
         int fraction = 15;
         int factor = (255 << unchecked((int)(fraction)));
-        int m0 = (global::DripSharp.Runtime.JavaCompat.MathRoundFloat((factor * matte[0])) * 255);
-        int m1 = (global::DripSharp.Runtime.JavaCompat.MathRoundFloat((factor * matte[1])) * 255);
-        int m2 = (global::DripSharp.Runtime.JavaCompat.MathRoundFloat((factor * matte[2])) * 255);
-        int m0h = ((m0 / 255) + (1 << unchecked((int)((fraction - 1)))));
-        int m1h = ((m1 / 255) + (1 << unchecked((int)((fraction - 1)))));
-        int m2h = ((m2 / 255) + (1 << unchecked((int)((fraction - 1)))));
+        int m0 = unchecked((global::DripSharp.Runtime.JavaCompat.MathRoundFloat((factor * matte[0]))
+          * 255));
+        int m1 = unchecked((global::DripSharp.Runtime.JavaCompat.MathRoundFloat((factor * matte[1]))
+          * 255));
+        int m2 = unchecked((global::DripSharp.Runtime.JavaCompat.MathRoundFloat((factor * matte[2]))
+          * 255));
+        int m0h = unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(m0, 255)
+          + (1 << unchecked((int)(unchecked((fraction - 1)))))));
+        int m1h = unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(m1, 255)
+          + (1 << unchecked((int)(unchecked((fraction - 1)))))));
+        int m2h = unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(m2, 255)
+          + (1 << unchecked((int)(unchecked((fraction - 1)))))));
         for (int y__704_22 = 0; (y__704_22 < height); y__704_22++) {
           raster.GetPixels(0, y__704_22, width, 1, pixels);
           alpha.GetSamples(0, y__704_22, width, 1, 0, alphas);
@@ -431,14 +482,14 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
               offset += 3;
             } else {
               pixels[offset]
-                = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.clampColor((((((pixels[offset++]
-                * factor) - m0) / a) + m0h) >> unchecked((int)(fraction))));
+                = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.clampColor((unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((unchecked((pixels[offset++]
+                * factor)) - m0)), a) + m0h)) >> unchecked((int)(fraction))));
               pixels[offset]
-                = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.clampColor((((((pixels[offset++]
-                * factor) - m1) / a) + m1h) >> unchecked((int)(fraction))));
+                = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.clampColor((unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((unchecked((pixels[offset++]
+                * factor)) - m1)), a) + m1h)) >> unchecked((int)(fraction))));
               pixels[offset]
-                = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.clampColor((((((pixels[offset++]
-                * factor) - m2) / a) + m2h) >> unchecked((int)(fraction))));
+                = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.clampColor((unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((unchecked((pixels[offset++]
+                * factor)) - m2)), a) + m2h)) >> unchecked((int)(fraction))));
             }
             pixels[offset++] = a;
           }
@@ -458,15 +509,23 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
       return;
     }
     global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream = this.GetStream();
-    try {
-      using (global::DripSharp.PdfCarton.Cos.COSInputStream @is = stream.CreateInputStream()) {
-        global::DripSharp.PdfCarton.Filter.DecodeResult decodeResult = @is.GetDecodeResult();
-        stream.GetCOSObject().AddAll(decodeResult.GetParameters());
-        if ((this.colorSpace == default!)) {
-          this.colorSpace = decodeResult.GetJPXColorSpace();
+    try { {
+        global::DripSharp.PdfCarton.Cos.COSInputStream @is = stream.CreateInputStream();
+        global::System.Exception __dripsharpPrimary_748_29_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.Filter.DecodeResult decodeResult = @is.GetDecodeResult();
+          stream.GetCOSObject().AddAll(decodeResult.GetParameters());
+          if ((this.colorSpace == default!)) {
+            this.colorSpace = decodeResult.GetJPXColorSpace();
+          }
+          this.jpxSMask = decodeResult.GetJPXSMask();
+          this.jpxValuesInitialized = true;
+        } catch (global::System.Exception __dripsharpCaught_748_29_0) {
+          __dripsharpPrimary_748_29_0 = __dripsharpCaught_748_29_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_748_29_0);
         }
-        this.jpxSMask = decodeResult.GetJPXSMask();
-        this.jpxValuesInitialized = true;
       }
     } catch (global::System.IO.IOException exception) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.LOG,
@@ -479,8 +538,8 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
     int height, int type, bool interpolate) {
     int imgWidth = image.Width;
     int imgHeight = image.Height;
-    bool largeScale = ((width * height) > ((3000 * 3000) * ((type
-      == global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY) ? 3 : 1)));
+    bool largeScale = (unchecked((width * height)) > unchecked((unchecked((3000 * 3000)) * ((type
+      == global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY) ? 3 : 1))));
     interpolate &= ((imgWidth != width) || (imgHeight != height));
     global::SkiaSharp.SKBitmap image2
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height, type);
@@ -714,6 +773,11 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
 
   public void SetOptionalContent(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDPropertyList oc) {
     this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Oc, oc);
+  }
+
+  static PDImageXObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

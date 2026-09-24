@@ -200,7 +200,8 @@ public class COSWriterCompressionPool {
       (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.objectStreamObjects)); i++) {
       global::DripSharp.PdfCarton.Cos.COSObjectKey key
         = global::DripSharp.Runtime.JavaCompat.ListGet(this.objectStreamObjects, i);
-      if (((objectStream! == default!) || ((i % this.parameters.GetObjectStreamSize()) == 0))) {
+      if (((objectStream! == default!) || (global::DripSharp.Runtime.JavaCompat.IntegralRemainder(i,
+        this.parameters.GetObjectStreamSize()) == 0))) {
         objectStream
           = new global::DripSharp.PdfCarton.Pdfwriter.Compress.COSWriterObjectStream(this);
         global::DripSharp.Runtime.JavaCompat.Add(objectStreams, objectStream!);

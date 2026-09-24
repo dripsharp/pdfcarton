@@ -39,4 +39,8 @@ internal sealed class CryptFilter : global::DripSharp.PdfCarton.Filter.Filter {
         encryptionName.GetName()));
     }
   }
+
+  static CryptFilter() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Filter.Filter).TypeHandle);
+  }
 }

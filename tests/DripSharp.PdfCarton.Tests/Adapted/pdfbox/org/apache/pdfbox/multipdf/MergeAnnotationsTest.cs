@@ -5,13 +5,9 @@
 namespace DripSharp.PdfCarton.Multipdf;
 
 public class MergeAnnotationsTest {
-  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/test-output/merge/"));
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR;
 
-  private static readonly global::DripSharp.Runtime.JavaFile TARGET_PDF_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/pdfs"));
+  private static readonly global::DripSharp.Runtime.JavaFile TARGET_PDF_DIR;
 
   internal static void setUp() {
     global::DripSharp.PdfCarton.Tests.Support.Mkdirs(global::DripSharp.PdfCarton.Multipdf.MergeAnnotationsTest.OUT_DIR);
@@ -32,51 +28,63 @@ public class MergeAnnotationsTest {
     merger.SetDestinationFileName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(pdfOutput)));
     global::DripSharp.Runtime.JavaFileBridge.Call(merger, "AddSource",
-      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file1 });
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { (global::DripSharp.Runtime.JavaFile)file1 });
     global::DripSharp.Runtime.JavaFileBridge.Call(merger, "AddSource",
-      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file2 });
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { (global::DripSharp.Runtime.JavaFile)file2 });
     merger.MergeDocuments((global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)default!);
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedPDF
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { pdfOutput })) {
-      global::DripSharp.Testing.JavaAssertions.Equal(6, mergedPDF.GetNumberOfPages(),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "There shall be 6 pages"));
-      global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDestinationDictionary destinations
-        = mergedPDF.GetDocumentCatalog().GetDests();
-      global::DripSharp.Testing.JavaAssertions.Equal(12,
-        destinations.GetCOSObject().EntrySet().Count,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "There shall be 12 entries"));
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> sourceAnnotations01
-        = mergedPDF.GetPage(0).GetAnnotations();
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> sourceAnnotations02
-        = mergedPDF.GetPage(3).GetAnnotations();
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> targetAnnotations01
-        = mergedPDF.GetPage(2).GetAnnotations();
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> targetAnnotations02
-        = mergedPDF.GetPage(5).GetAnnotations();
-      global::DripSharp.Testing.JavaAssertions.Equal(3,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(sourceAnnotations01),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be 3 source annotations at the first page"));
-      global::DripSharp.Testing.JavaAssertions.Equal(3,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(targetAnnotations01),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be 3 source annotations at the third page"));
-      global::DripSharp.Testing.JavaAssertions.True(this.testAnnotationsMatch(sourceAnnotations01,
-        targetAnnotations01), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "The annotations shall match to each other"));
-      global::DripSharp.Testing.JavaAssertions.Equal(3,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(sourceAnnotations02),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be 3 source annotations at the first page"));
-      global::DripSharp.Testing.JavaAssertions.Equal(3,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(targetAnnotations02),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be 3 source annotations at the third page"));
-      global::DripSharp.Testing.JavaAssertions.True(this.testAnnotationsMatch(sourceAnnotations02,
-        targetAnnotations02), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "The annotations shall match to each other"));
+    {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedPDF
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)pdfOutput });
+      global::System.Exception __dripsharpPrimary_69_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(6, mergedPDF.GetNumberOfPages(),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "There shall be 6 pages"));
+        global::DripSharp.PdfCarton.Pdmodel.PDDocumentNameDestinationDictionary destinations
+          = mergedPDF.GetDocumentCatalog().GetDests();
+        global::DripSharp.Testing.JavaAssertions.Equal(12,
+          destinations.GetCOSObject().EntrySet().Count,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be 12 entries"));
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> sourceAnnotations01
+          = mergedPDF.GetPage(0).GetAnnotations();
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> sourceAnnotations02
+          = mergedPDF.GetPage(3).GetAnnotations();
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> targetAnnotations01
+          = mergedPDF.GetPage(2).GetAnnotations();
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> targetAnnotations02
+          = mergedPDF.GetPage(5).GetAnnotations();
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(sourceAnnotations01),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be 3 source annotations at the first page"));
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(targetAnnotations01),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be 3 source annotations at the third page"));
+        global::DripSharp.Testing.JavaAssertions.True(this.testAnnotationsMatch(sourceAnnotations01,
+          targetAnnotations01), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "The annotations shall match to each other"));
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(sourceAnnotations02),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be 3 source annotations at the first page"));
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(targetAnnotations02),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be 3 source annotations at the third page"));
+        global::DripSharp.Testing.JavaAssertions.True(this.testAnnotationsMatch(sourceAnnotations02,
+          targetAnnotations02), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "The annotations shall match to each other"));
+      } catch (global::System.Exception __dripsharpCaught_69_25_0) {
+        __dripsharpPrimary_69_25_0 = __dripsharpCaught_69_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(mergedPDF, __dripsharpPrimary_69_25_0);
+      }
     }
   }
 
@@ -115,10 +123,20 @@ public class MergeAnnotationsTest {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     setUp();
     return true;
+  }
+
+  static MergeAnnotationsTest() {
+    OUT_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/test-output/merge/"));
+    TARGET_PDF_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/pdfs"));
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

@@ -61,4 +61,8 @@ public class TrueTypeDescriptorHelper
       }
     }
   }
+
+  static TrueTypeDescriptorHelper() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.TrueTypeContainer>).TypeHandle);
+  }
 }

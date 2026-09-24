@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function;
 
 public class PDFunctionType0 : global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private global::DripSharp.PdfCarton.Cos.COSArray encode;
 
@@ -59,8 +58,8 @@ public class PDFunctionType0 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
         int sizeValuesSize = sizeValues.Size();
         for (int i = 0; (i < sizeValuesSize); i++) {
           this.encode.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Zero);
-          this.encode.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((sizeValues.GetInt(i)
-            - 1L)));
+          this.encode.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(unchecked((sizeValues.GetInt(i)
+            - 1L))));
         }
       }
     }
@@ -80,7 +79,8 @@ public class PDFunctionType0 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
   public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetEncodeForParameter(int paramNum) {
     global::DripSharp.PdfCarton.Pdmodel.Common.PDRange retval = default!;
     global::DripSharp.PdfCarton.Cos.COSArray encodeValues = this.getEncodeValues();
-    if (((encodeValues != default!) && (encodeValues.Size() >= ((paramNum * 2) + 1)))) {
+    if (((encodeValues != default!) && (encodeValues.Size() >= unchecked((unchecked((paramNum * 2))
+      + 1))))) {
       retval = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(encodeValues, paramNum);
     }
     return retval!;
@@ -94,7 +94,8 @@ public class PDFunctionType0 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
   public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetDecodeForParameter(int paramNum) {
     global::DripSharp.PdfCarton.Pdmodel.Common.PDRange retval = default!;
     global::DripSharp.PdfCarton.Cos.COSArray decodeValues = this.getDecodeValues();
-    if (((decodeValues != default!) && (decodeValues.Size() >= ((paramNum * 2) + 1)))) {
+    if (((decodeValues != default!) && (decodeValues.Size() >= unchecked((unchecked((paramNum * 2))
+      + 1))))) {
       retval = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(decodeValues, paramNum);
     }
     return retval!;
@@ -133,7 +134,7 @@ public class PDFunctionType0 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
 
     internal float[] rinterpol(int[] coord, int step) {
       float[] resultSample = new float[this.numberOfOutputValues];
-      if ((step == (this.@in.Length - 1))) {
+      if ((step == unchecked((this.@in.Length - 1)))) {
         if ((this.inPrev[step] == this.inNext[step])) {
           coord[step] = this.inPrev[step];
           int[] tmpSample = this.getSamples()[this.calcSampleIndex(coord)];
@@ -155,12 +156,12 @@ public class PDFunctionType0 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
       } else {
         if ((this.inPrev[step] == this.inNext[step])) {
           coord[step] = this.inPrev[step];
-          return this.rinterpol(coord, (step + 1));
+          return this.rinterpol(coord, unchecked((step + 1)));
         }
         coord[step] = this.inPrev[step];
-        float[] sample1__334_25 = this.rinterpol(coord, (step + 1));
+        float[] sample1__334_25 = this.rinterpol(coord, unchecked((step + 1)));
         coord[step] = this.inNext[step];
-        float[] sample2__336_25 = this.rinterpol(coord, (step + 1));
+        float[] sample2__336_25 = this.rinterpol(coord, unchecked((step + 1)));
         for (int i__337_26 = 0; (i__337_26 < this.numberOfOutputValues); ++i__337_26) {
           resultSample[i__337_26] = this.__outer.Interpolate(this.@in[step],
             (float)(this.inPrev[step]), (float)(this.inNext[step]), sample1__334_25[i__337_26],
@@ -175,14 +176,19 @@ public class PDFunctionType0 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
       int index = 0;
       int sizeProduct = 1;
       int dimension = vector.Length;
-      for (int i__359_22 = (dimension - 2); (i__359_22 >= 0); --i__359_22) {
-        global::DripSharp.Runtime.JavaCompat.MultiplyAssign(ref sizeProduct, sizeValues[i__359_22]);
+      for (int i__359_22 = unchecked((dimension - 2)); (i__359_22 >= 0); --i__359_22) {
+        global::DripSharp.Runtime.JavaCompat.CompoundAssign(ref sizeProduct,
+          __dripsharpValue_361_17_0
+          => global::DripSharp.Runtime.JavaCompat.MultiplyAssign(ref __dripsharpValue_361_17_0,
+          sizeValues[i__359_22]));
       }
-      for (int i__363_22 = (dimension - 1); (i__363_22 >= 0); --i__363_22) {
-        index += (sizeProduct * vector[i__363_22]);
-        if (((i__363_22 - 1) >= 0)) {
-          global::DripSharp.Runtime.JavaCompat.DivideAssign(ref sizeProduct, sizeValues[(i__363_22
-            - 1)]);
+      for (int i__363_22 = unchecked((dimension - 1)); (i__363_22 >= 0); --i__363_22) {
+        index += unchecked((sizeProduct * vector[i__363_22]));
+        if ((unchecked((i__363_22 - 1)) >= 0)) {
+          global::DripSharp.Runtime.JavaCompat.CompoundAssign(ref sizeProduct,
+            __dripsharpValue_368_21_0
+            => global::DripSharp.Runtime.JavaCompat.DivideAssign(ref __dripsharpValue_368_21_0,
+            sizeValues[unchecked((i__363_22 - 1))]));
         }
       }
       return index;
@@ -201,16 +207,33 @@ public class PDFunctionType0 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
           nOut);
         int bitsPerSample = this.__outer.GetBitsPerSample();
         int index = 0;
-        try {
-          using (global::System.IO.Stream @is = this.__outer.GetPDStream().CreateInputStream()) {
-            using (global::DripSharp.Runtime.JavaImageInputStream mciis
-              = new global::DripSharp.Runtime.JavaImageInputStream(@is)) {
-              for (int i__401_34 = 0; (i__401_34 < arraySize); i__401_34++) {
-                for (int k = 0; (k < nOut); k++) {
-                  this.__outer.samples[index][k] = (int)(mciis.ReadBits(bitsPerSample));
+        try { {
+            global::System.IO.Stream @is = this.__outer.GetPDStream().CreateInputStream();
+            global::System.Exception __dripsharpPrimary_394_34_0 = null!;
+            try { {
+                global::DripSharp.Runtime.JavaImageInputStream mciis
+                  = new global::DripSharp.Runtime.JavaImageInputStream(@is);
+                global::System.Exception __dripsharpPrimary_399_43_0 = null!;
+                try {
+                  for (int i__401_34 = 0; (i__401_34 < arraySize); i__401_34++) {
+                    for (int k = 0; (k < nOut); k++) {
+                      this.__outer.samples[index][k] = (int)(mciis.ReadBits(bitsPerSample));
+                    }
+                    index++;
+                  }
+                } catch (global::System.Exception __dripsharpCaught_399_43_0) {
+                  __dripsharpPrimary_399_43_0 = __dripsharpCaught_399_43_0;
+                  throw;
+                } finally {
+                  global::DripSharp.Runtime.JavaCompat.CloseResource(mciis,
+                    __dripsharpPrimary_399_43_0);
                 }
-                index++;
               }
+            } catch (global::System.Exception __dripsharpCaught_394_34_0) {
+              __dripsharpPrimary_394_34_0 = __dripsharpCaught_394_34_0;
+              throw;
+            } finally {
+              global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_394_34_0);
             }
           }
         } catch (global::System.IO.IOException exception) {
@@ -246,8 +269,10 @@ public class PDFunctionType0 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
         encodeValues.GetMax());
       input[i__440_18] = this.ClipToRange(input[i__440_18], (float)(0), (sizeValues[i__440_18]
         - 1));
-      inputPrev[i__440_18] = (int)(global::System.Math.Floor((double)(input[i__440_18])));
-      inputNext[i__440_18] = (int)(global::System.Math.Ceiling((double)(input[i__440_18])));
+      inputPrev[i__440_18]
+        = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Floor((double)(input[i__440_18])))));
+      inputNext[i__440_18]
+        = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Ceiling((double)(input[i__440_18])))));
     }
     float[] outputValues
       = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunctionType0.Rinterpol(input,
@@ -265,5 +290,10 @@ public class PDFunctionType0 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
         range.GetMax());
     }
     return outputValues;
+  }
+
+  static PDFunctionType0() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

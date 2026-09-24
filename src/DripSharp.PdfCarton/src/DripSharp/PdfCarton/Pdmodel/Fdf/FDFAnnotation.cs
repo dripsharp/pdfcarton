@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public abstract class FDFAnnotation : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const int FLAG_INVISIBLE = 1;
 
@@ -649,6 +648,10 @@ public abstract class FDFAnnotation : global::DripSharp.PdfCarton.Pdmodel.Common
     }
     return global::DripSharp.Runtime.JavaCompat.JavaStringFormat("<%s%s>%s</%s>", node.Name,
       builder, sb, node.Name);
+  }
+
+  static FDFAnnotation() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

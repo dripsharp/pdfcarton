@@ -10,26 +10,29 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public abstract class PDTriangleBasedShadingType
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading {
-  private global::DripSharp.PdfCarton.Cos.COSArray decode = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray decode;
 
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private int bitsPerCoordinate = -1;
+  private int bitsPerCoordinate;
 
-  private int bitsPerColorComponent = -1;
+  private int bitsPerColorComponent;
 
-  private int numberOfColorComponents = -1;
+  private int numberOfColorComponents;
 
   internal PDTriangleBasedShadingType(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary)
   : base(shadingDictionary) {
-
+    this.decode = default!;
+    this.bitsPerCoordinate = unchecked(-1);
+    this.bitsPerColorComponent = unchecked(-1);
+    this.numberOfColorComponents = unchecked(-1);
   }
 
   public virtual int GetBitsPerComponent() {
-    if ((this.bitsPerColorComponent == -1)) {
+    if ((this.bitsPerColorComponent == unchecked(-1))) {
       this.bitsPerColorComponent
-        = this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent, -1);
+        = this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent,
+        unchecked(-1));
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDTriangleBasedShadingType.LOG,
         global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("bitsPerColorComponent: ",
         this.bitsPerColorComponent)));
@@ -44,9 +47,10 @@ public abstract class PDTriangleBasedShadingType
   }
 
   public virtual int GetBitsPerCoordinate() {
-    if ((this.bitsPerCoordinate == -1)) {
+    if ((this.bitsPerCoordinate == unchecked(-1))) {
       this.bitsPerCoordinate
-        = this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerCoordinate, -1);
+        = this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerCoordinate,
+        unchecked(-1));
       if (global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDTriangleBasedShadingType.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDTriangleBasedShadingType.LOG,
           global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("bitsPerCoordinate: ",
@@ -63,7 +67,7 @@ public abstract class PDTriangleBasedShadingType
   }
 
   public virtual int GetNumberOfColorComponents() {
-    if ((this.numberOfColorComponents == -1)) {
+    if ((this.numberOfColorComponents == unchecked(-1))) {
       this.numberOfColorComponents = ((this.GetFunction() != default!) ? 1
         : this.GetColorSpace().GetNumberOfComponents());
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDTriangleBasedShadingType.LOG,
@@ -88,7 +92,8 @@ public abstract class PDTriangleBasedShadingType
   public virtual global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetDecodeForParameter(int paramNum) {
     global::DripSharp.PdfCarton.Pdmodel.Common.PDRange retval = default!;
     global::DripSharp.PdfCarton.Cos.COSArray decodeValues = this.getDecodeValues();
-    if (((decodeValues != default!) && (decodeValues.Size() >= ((paramNum * 2) + 1)))) {
+    if (((decodeValues != default!) && (decodeValues.Size() >= unchecked((unchecked((paramNum * 2))
+      + 1))))) {
       retval = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(decodeValues, paramNum);
     }
     return retval!;
@@ -129,7 +134,7 @@ public abstract class PDTriangleBasedShadingType
     }
     int bitOffset = input.BitOffset;
     if ((bitOffset != 0)) {
-      input.ReadBits((8 - bitOffset));
+      input.ReadBits(unchecked((8 - bitOffset)));
     }
     return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex(p, colorComponentTab);
   }
@@ -154,5 +159,10 @@ public abstract class PDTriangleBasedShadingType
       return new global::SkiaSharp.SKRect();
     }
     return bounds!;
+  }
+
+  static PDTriangleBasedShadingType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

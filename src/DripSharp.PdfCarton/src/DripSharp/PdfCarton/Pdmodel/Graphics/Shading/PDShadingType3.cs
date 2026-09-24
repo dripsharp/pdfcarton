@@ -22,4 +22,8 @@ public class PDShadingType3 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shadi
     return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.RadialShadingPaint(this,
       matrix);
   }
+
+  static PDShadingType3() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType2).TypeHandle);
+  }
 }

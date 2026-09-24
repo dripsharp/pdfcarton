@@ -435,20 +435,20 @@ internal class GroupGraphics : global::DripSharp.Runtime.PdfCartonGraphics2D {
         == global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
       for (int y__627_22 = 0; (y__627_22 < groupHeight); y__627_22++) {
         for (int x__629_26 = 0; (x__629_26 < groupWidth); x__629_26++) {
-          int index = (x__629_26 + (y__627_22 * groupWidth));
+          int index = unchecked((x__629_26 + unchecked((y__627_22 * groupWidth))));
           int alphagn__634_25 = ((groupAlphaData[index] >> unchecked((int)(24))) & 255);
           if ((alphagn__634_25 == 0)) {
             groupData[index] = 0;
             continue;
           }
-          int backdropX__642_25 = (x__629_26 + offsetX);
-          int backdropY__643_25 = (y__627_22 + offsetY);
+          int backdropX__642_25 = unchecked((x__629_26 + offsetX));
+          int backdropY__643_25 = unchecked((y__627_22 + offsetY));
           int backdropRGB__644_25;
           float alpha0__645_27;
           if (((((backdropX__642_25 >= 0) && (backdropX__642_25 < backdropWidth))
             && (backdropY__643_25 >= 0)) && (backdropY__643_25 < backdropHeight))) {
-            backdropRGB__644_25 = backdropData[(backdropX__642_25 + (backdropY__643_25
-              * backdropWidth))];
+            backdropRGB__644_25 = backdropData[unchecked((backdropX__642_25
+              + unchecked((backdropY__643_25 * backdropWidth))))];
             alpha0__645_27 = (backdropHasAlpha
               ? ((backdropRGB__644_25 >> unchecked((int)(24))) & 255) : 255);
           } else {
@@ -479,8 +479,8 @@ internal class GroupGraphics : global::DripSharp.Runtime.PdfCartonGraphics2D {
               y__679_22, 0);
             continue;
           }
-          int backdropX__690_25 = (x__681_26 + offsetX);
-          int backdropY__691_25 = (y__679_22 + offsetY);
+          int backdropX__690_25 = unchecked((x__681_26 + offsetX));
+          int backdropY__691_25 = unchecked((y__679_22 + offsetY));
           int backdropRGB__692_25;
           float alpha0__693_27;
           if (((((backdropX__690_25 >= 0) && (backdropX__690_25 < backdropWidth))

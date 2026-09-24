@@ -72,20 +72,36 @@ public class PDVisibleSignDesigner {
     this.readImageStream(imageStream);
   }
 
-  private void calculatePageSizeFromFile(string filename, int page) {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(filename) })) {
-      this.calculatePageSize(document, page);
+  private void calculatePageSizeFromFile(string filename, int page) { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(filename) });
+      global::System.Exception __dripsharpPrimary_170_25_0 = null!;
+      try {
+        this.calculatePageSize(document, page);
+      } catch (global::System.Exception __dripsharpCaught_170_25_0) {
+        __dripsharpPrimary_170_25_0 = __dripsharpCaught_170_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_170_25_0);
+      }
     }
   }
 
   private void calculatePageSizeFromRandomAccessRead(global::DripSharp.PdfCarton.IO.RandomAccessRead documentSource,
-    int page) {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(documentSource)) {
-      this.calculatePageSize(document, page);
+    int page) { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(documentSource);
+      global::System.Exception __dripsharpPrimary_180_25_0 = null!;
+      try {
+        this.calculatePageSize(document, page);
+      } catch (global::System.Exception __dripsharpCaught_180_25_0) {
+        __dripsharpPrimary_180_25_0 = __dripsharpCaught_180_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_180_25_0);
+      }
     }
   }
 
@@ -95,12 +111,13 @@ public class PDVisibleSignDesigner {
       throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat("First page of pdf is 1, not ",
         page));
     }
-    global::DripSharp.PdfCarton.Pdmodel.PDPage firstPage = document.GetPage((page - 1));
+    global::DripSharp.PdfCarton.Pdmodel.PDPage firstPage = document.GetPage(unchecked((page - 1)));
     global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle mediaBox = firstPage.GetMediaBox();
     this.pageHeight(mediaBox.GetHeight());
     this.__field_pageWidth = mediaBox.GetWidth();
     this.__field_imageSizeInPercents = 100;
-    this.rotation = (firstPage.GetRotation() % 360);
+    this.rotation = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(firstPage.GetRotation(),
+      360);
   }
 
   public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSignDesigner AdjustForRotation() {
@@ -129,8 +146,8 @@ public class PDVisibleSignDesigner {
         this.__field_xAxis = newX;
         this.__field_yAxis = newY;
         this.affineTransform
-          = global::DripSharp.Runtime.PdfCartonFontCompat.AffineTransform((float)(-1), (float)(0),
-          (float)(0), (float)(-1),
+          = global::DripSharp.Runtime.PdfCartonFontCompat.AffineTransform((float)(unchecked(-1)),
+          (float)(0), (float)(0), (float)(unchecked(-1)),
           (float)(global::DripSharp.Runtime.JavaCompat.Unbox(this.imageWidth)),
           (float)(global::DripSharp.Runtime.JavaCompat.Unbox(this.imageHeight)));
         break;
@@ -157,10 +174,18 @@ public class PDVisibleSignDesigner {
     return this;
   }
 
-  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSignDesigner SignatureImage(string path) {
-    using (global::System.IO.Stream @in
-      = new global::System.IO.BufferedStream(global::DripSharp.Runtime.JavaCompat.OpenFileInput(path))) {
-      this.readImageStream(@in);
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSignDesigner SignatureImage(string path) { {
+      global::System.IO.Stream @in
+        = new global::System.IO.BufferedStream(global::DripSharp.Runtime.JavaCompat.OpenFileInput(path));
+      global::System.Exception __dripsharpPrimary_272_26_0 = null!;
+      try {
+        this.readImageStream(@in);
+      } catch (global::System.Exception __dripsharpCaught_272_26_0) {
+        __dripsharpPrimary_272_26_0 = __dripsharpCaught_272_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@in, __dripsharpPrimary_272_26_0);
+      }
     }
     return this;
   }
@@ -171,9 +196,9 @@ public class PDVisibleSignDesigner {
     this.imageWidth += ((float)((global::DripSharp.Runtime.JavaCompat.Unbox(this.imageWidth)
       * percent)) / 100);
     this.__field_formatterRectangleParameters[2]
-      = (int)global::DripSharp.Runtime.JavaCompat.Unbox(this.imageWidth);
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::DripSharp.Runtime.JavaCompat.Unbox(this.imageWidth))));
     this.__field_formatterRectangleParameters[3]
-      = (int)global::DripSharp.Runtime.JavaCompat.Unbox(this.imageHeight);
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::DripSharp.Runtime.JavaCompat.Unbox(this.imageHeight))));
     return this;
   }
 
@@ -208,7 +233,8 @@ public class PDVisibleSignDesigner {
 
   public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSignDesigner Width(float width) {
     this.imageWidth = width;
-    this.__field_formatterRectangleParameters[2] = (int)width;
+    this.__field_formatterRectangleParameters[2]
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(width)));
     return this;
   }
 
@@ -218,7 +244,8 @@ public class PDVisibleSignDesigner {
 
   public virtual global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSignDesigner Height(float height) {
     this.imageHeight = height;
-    this.__field_formatterRectangleParameters[3] = (int)height;
+    this.__field_formatterRectangleParameters[3]
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(height)));
     return this;
   }
 

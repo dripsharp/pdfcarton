@@ -52,4 +52,8 @@ public sealed class AppendRectangleToPath
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.AppendRect;
   }
+
+  static AppendRectangleToPath() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor).TypeHandle);
+  }
 }

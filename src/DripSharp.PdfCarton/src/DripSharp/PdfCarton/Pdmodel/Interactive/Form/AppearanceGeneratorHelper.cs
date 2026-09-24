@@ -9,17 +9,13 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 internal class AppearanceGeneratorHelper {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly global::DripSharp.PdfCarton.Contentstream.@Operator.Operator BMC
-    = global::DripSharp.PdfCarton.Contentstream.@Operator.Operator.GetOperator("BMC");
+  private static readonly global::DripSharp.PdfCarton.Contentstream.@Operator.Operator BMC;
 
-  private static readonly global::DripSharp.PdfCarton.Contentstream.@Operator.Operator EMC
-    = global::DripSharp.PdfCarton.Contentstream.@Operator.Operator.GetOperator("EMC");
+  private static readonly global::DripSharp.PdfCarton.Contentstream.@Operator.Operator EMC;
 
-  private static readonly global::System.Text.RegularExpressions.Regex PATTERN
-    = global::DripSharp.Runtime.JavaCompat.CompileRegex("\\u000D\\u000A|[\\u000A\\u000B\\u000C\\u000D\\u0085\\u2028\\u2029]");
+  private static readonly global::System.Text.RegularExpressions.Regex PATTERN;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDVariableText field
     = null!;
@@ -29,8 +25,7 @@ internal class AppearanceGeneratorHelper {
 
   private string value = null!;
 
-  private static readonly float[] HIGHLIGHT_COLOR = new float[] { (153 / (float)255.0F), (193
-      / (float)255.0F), (215 / (float)255.0F) };
+  private static readonly float[] HIGHLIGHT_COLOR;
 
   private const int FONTSCALE = 1000;
 
@@ -226,217 +221,251 @@ internal class AppearanceGeneratorHelper {
 
   private void initializeAppearanceContent(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget,
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceCharacteristicsDictionary appearanceCharacteristics,
-    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream) {
-    using (global::DripSharp.Runtime.JavaByteArrayOutputStream output
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream()) using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contents
-      = new global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream(appearanceStream,
-      output)) {
-      if ((appearanceCharacteristics != default!)) {
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor backgroundColour
-          = appearanceCharacteristics.GetBackground();
-        if ((backgroundColour != default!)) {
-          contents.SetNonStrokingColor(backgroundColour);
-          global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox__380_33
-            = this.resolveBoundingBox(widget, appearanceStream);
-          contents.AddRect(bbox__380_33.GetLowerLeftX(), bbox__380_33.GetLowerLeftY(),
-            bbox__380_33.GetWidth(), bbox__380_33.GetHeight());
-          contents.Fill();
-        }
-        float lineWidth = 0.0F;
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor borderColour
-          = appearanceCharacteristics.GetBorderColour();
-        if ((borderColour != default!)) {
-          contents.SetStrokingColor(borderColour);
-          lineWidth = 1.0F;
-        }
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary borderStyle
-          = widget.GetBorderStyle();
-        if (((borderStyle != default!) && (borderStyle.GetWidth() > 0))) {
-          lineWidth = borderStyle.GetWidth();
-        }
-        if (((lineWidth > 0) && (borderColour != default!))) {
-          if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(lineWidth, (float)(1)) != 0)) {
-            contents.SetLineWidth(lineWidth);
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream) { {
+      global::DripSharp.Runtime.JavaByteArrayOutputStream output
+        = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
+      global::System.Exception __dripsharpPrimary_370_36_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contents
+          = new global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream(appearanceStream,
+          output);
+        global::System.Exception __dripsharpPrimary_371_40_0 = null!;
+        try {
+          if ((appearanceCharacteristics != default!)) {
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor backgroundColour
+              = appearanceCharacteristics.GetBackground();
+            if ((backgroundColour != default!)) {
+              contents.SetNonStrokingColor(backgroundColour);
+              global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox__380_33
+                = this.resolveBoundingBox(widget, appearanceStream);
+              contents.AddRect(bbox__380_33.GetLowerLeftX(), bbox__380_33.GetLowerLeftY(),
+                bbox__380_33.GetWidth(), bbox__380_33.GetHeight());
+              contents.Fill();
+            }
+            float lineWidth = 0.0F;
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor borderColour
+              = appearanceCharacteristics.GetBorderColour();
+            if ((borderColour != default!)) {
+              contents.SetStrokingColor(borderColour);
+              lineWidth = 1.0F;
+            }
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary borderStyle
+              = widget.GetBorderStyle();
+            if (((borderStyle != default!) && (borderStyle.GetWidth() > 0))) {
+              lineWidth = borderStyle.GetWidth();
+            }
+            if (((lineWidth > 0) && (borderColour != default!))) {
+              if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(lineWidth, (float)(1)) != 0)) {
+                contents.SetLineWidth(lineWidth);
+              }
+              global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox__404_33
+                = this.resolveBoundingBox(widget, appearanceStream);
+              global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle clipRect__405_33
+                = this.applyPadding(bbox__404_33,
+                global::System.Math.Max(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.DEFAULT_PADDING,
+                ((float)lineWidth / 2)));
+              contents.AddRect(clipRect__405_33.GetLowerLeftX(), clipRect__405_33.GetLowerLeftY(),
+                clipRect__405_33.GetWidth(), clipRect__405_33.GetHeight());
+              contents.CloseAndStroke();
+            }
+            if (((borderColour != default!) && this.shallComb())) {
+              int maxLen
+                = ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(this.field!)).GetMaxLen();
+              global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox__413_33
+                = this.resolveBoundingBox(widget, appearanceStream);
+              global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle clipRect__414_33
+                = this.applyPadding(bbox__413_33,
+                global::System.Math.Max(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.DEFAULT_PADDING,
+                ((float)lineWidth / 2)));
+              float lowerLeft = clipRect__414_33.GetLowerLeftX();
+              float height = clipRect__414_33.GetHeight();
+              float combWidth = ((float)(bbox__413_33.GetWidth()) / maxLen);
+              for (int i = 0; (i < unchecked((maxLen - 1))); i++) {
+                contents.MoveTo((combWidth + (combWidth * i)), height);
+                contents.LineTo((combWidth + (combWidth * i)), lowerLeft);
+              }
+              contents.CloseAndStroke();
+            }
           }
-          global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox__404_33
-            = this.resolveBoundingBox(widget, appearanceStream);
-          global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle clipRect__405_33
-            = this.applyPadding(bbox__404_33,
-            global::System.Math.Max(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.DEFAULT_PADDING,
-            ((float)lineWidth / 2)));
-          contents.AddRect(clipRect__405_33.GetLowerLeftX(), clipRect__405_33.GetLowerLeftY(),
-            clipRect__405_33.GetWidth(), clipRect__405_33.GetHeight());
-          contents.CloseAndStroke();
+          this.writeToStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(output),
+            appearanceStream);
+        } catch (global::System.Exception __dripsharpCaught_371_40_0) {
+          __dripsharpPrimary_371_40_0 = __dripsharpCaught_371_40_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(contents, __dripsharpPrimary_371_40_0);
         }
-        if (((borderColour != default!) && this.shallComb())) {
-          int maxLen
-            = ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(this.field!)).GetMaxLen();
-          global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox__413_33
-            = this.resolveBoundingBox(widget, appearanceStream);
-          global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle clipRect__414_33
-            = this.applyPadding(bbox__413_33,
-            global::System.Math.Max(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.DEFAULT_PADDING,
-            ((float)lineWidth / 2)));
-          float lowerLeft = clipRect__414_33.GetLowerLeftX();
-          float height = clipRect__414_33.GetHeight();
-          float combWidth = ((float)(bbox__413_33.GetWidth()) / maxLen);
-          for (int i = 0; (i < (maxLen - 1)); i++) {
-            contents.MoveTo((combWidth + (combWidth * i)), height);
-            contents.LineTo((combWidth + (combWidth * i)), lowerLeft);
-          }
-          contents.CloseAndStroke();
-        }
+      } catch (global::System.Exception __dripsharpCaught_370_36_0) {
+        __dripsharpPrimary_370_36_0 = __dripsharpCaught_370_36_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(output, __dripsharpPrimary_370_36_0);
       }
-      this.writeToStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(output),
-        appearanceStream);
     }
   }
 
   private void setAppearanceContent(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget,
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream) {
-    this.defaultAppearance.copyNeededResourcesTo(appearanceStream);
-    using (global::DripSharp.Runtime.JavaByteArrayOutputStream output
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream()) {
-      global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter writer
-        = new global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter(output);
-      global::System.Collections.Generic.IList<object> tokens
-        = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(appearanceStream).Parse();
-      int bmcIndex = global::DripSharp.Runtime.JavaCompat.ListIndexOf(tokens,
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.BMC);
-      if ((bmcIndex == -1)) {
-        writer.WriteTokens(global::DripSharp.Runtime.JavaCompat.CastObjects(tokens));
-        writer.WriteTokens(global::DripSharp.PdfCarton.Cos.COSName.Tx,
+    this.defaultAppearance.copyNeededResourcesTo(appearanceStream); {
+      global::DripSharp.Runtime.JavaByteArrayOutputStream output
+        = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
+      global::System.Exception __dripsharpPrimary_445_36_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter writer
+          = new global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriter(output);
+        global::System.Collections.Generic.IList<object> tokens
+          = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(appearanceStream).Parse();
+        int bmcIndex = global::DripSharp.Runtime.JavaCompat.ListIndexOf(tokens,
           global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.BMC);
-      } else {
-        writer.WriteTokens(global::DripSharp.Runtime.JavaCompat.CastObjects(global::DripSharp.Runtime.JavaCompat.SubList(tokens,
-          0, (bmcIndex + 1))));
+        if ((bmcIndex == unchecked(-1))) {
+          writer.WriteTokens(global::DripSharp.Runtime.JavaCompat.CastObjects(tokens));
+          writer.WriteTokens(global::DripSharp.PdfCarton.Cos.COSName.Tx,
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.BMC);
+        } else {
+          writer.WriteTokens(global::DripSharp.Runtime.JavaCompat.CastObjects(global::DripSharp.Runtime.JavaCompat.SubList(tokens,
+            0, unchecked((bmcIndex + 1)))));
+        }
+        this.insertGeneratedAppearance(widget, appearanceStream, output);
+        int emcIndex = global::DripSharp.Runtime.JavaCompat.ListIndexOf(tokens,
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.EMC);
+        if ((emcIndex == unchecked(-1))) {
+          writer.WriteTokens(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.EMC);
+        } else {
+          writer.WriteTokens(global::DripSharp.Runtime.JavaCompat.CastObjects(global::DripSharp.Runtime.JavaCompat.SubList(tokens,
+            emcIndex, global::DripSharp.Runtime.JavaCompat.CollectionCount(tokens))));
+        }
+        this.writeToStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(output),
+          appearanceStream);
+      } catch (global::System.Exception __dripsharpCaught_445_36_0) {
+        __dripsharpPrimary_445_36_0 = __dripsharpCaught_445_36_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(output, __dripsharpPrimary_445_36_0);
       }
-      this.insertGeneratedAppearance(widget, appearanceStream, output);
-      int emcIndex = global::DripSharp.Runtime.JavaCompat.ListIndexOf(tokens,
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.EMC);
-      if ((emcIndex == -1)) {
-        writer.WriteTokens(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.EMC);
-      } else {
-        writer.WriteTokens(global::DripSharp.Runtime.JavaCompat.CastObjects(global::DripSharp.Runtime.JavaCompat.SubList(tokens,
-          emcIndex, global::DripSharp.Runtime.JavaCompat.CollectionCount(tokens))));
-      }
-      this.writeToStream(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(output),
-        appearanceStream);
     }
   }
 
   private void insertGeneratedAppearance(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget,
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream,
-    global::System.IO.Stream output) {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contents
-      = new global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream(appearanceStream,
-      output)) {
-      global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox = this.resolveBoundingBox(widget,
-        appearanceStream);
-      float borderWidth = 0;
-      if ((widget.GetBorderStyle() != default!)) {
-        borderWidth = widget.GetBorderStyle().GetWidth();
-      }
-      float padding = global::System.Math.Max(1.0F, borderWidth);
-      global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle clipRect = this.applyPadding(bbox,
-        padding);
-      float clipRectLowerLeftY = clipRect.GetLowerLeftY();
-      float clipRectHeight = clipRect.GetHeight();
-      global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle contentRect
-        = this.applyPadding(clipRect, padding);
-      contents.SaveGraphicsState();
-      contents.AddRect(clipRect.GetLowerLeftX(), clipRectLowerLeftY, clipRect.GetWidth(),
-        clipRectHeight);
-      contents.Clip();
-      global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = this.defaultAppearance.getFont();
-      if ((font == default!)) {
-        throw new global::System.ArgumentException("font is null, check whether /DA entry is incomplete or incorrect");
-      }
-      if (((font.GetName() != default!)
-        && global::DripSharp.Runtime.JavaCompat.StringContains(font.GetName(), "+"))) {
-        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.LOG,
-          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Font '",
-          this.defaultAppearance.getFontName().GetName()), "' of field '"),
-          this.field.GetFullyQualifiedName()), "' contains subsetted font '"), font.GetName()),
-          "'")));
-        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.LOG,
-          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("This may bring trouble with PDField.setValue(), PDAcroForm.flatten() or ",
-          "PDAcroForm.refreshAppearances()")));
-        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.LOG,
-          global::DripSharp.Runtime.JavaCompat.StringValueOf("You should replace this font with a non-subsetted font:"));
-        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.LOG,
-          global::DripSharp.Runtime.JavaCompat.StringValueOf("PDFont font = PDType0Font.load(doc, new FileInputStream(fontfile), false);"));
-        global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.LOG,
-          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("acroForm.getDefaultResources().put(COSName.getPDFName(\"",
-          this.defaultAppearance.getFontName().GetName()), "\", font);")));
-      }
-      float fontSize = this.defaultAppearance.GetFontSize();
-      if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(fontSize, (float)(0)) == 0)) {
-        fontSize = this.calculateFontSize(font, contentRect);
-      }
-      if ((this.field is global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDListBox)) {
-        this.insertGeneratedListboxSelectionHighlight(contents, appearanceStream, font, fontSize);
-      }
-      contents.BeginText();
-      this.defaultAppearance.writeTo(contents, fontSize);
-      float y;
-      float fontScaleY = ((float)fontSize
-        / global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.FONTSCALE);
-      float fontBoundingBoxAtSize = (font.GetBoundingBox().GetHeight() * fontScaleY);
-      float fontCapAtSize;
-      float fontDescentAtSize;
-      if ((font.GetFontDescriptor() != default!)) {
-        fontCapAtSize = (font.GetFontDescriptor().GetCapHeight() * fontScaleY);
-        fontDescentAtSize = (font.GetFontDescriptor().GetDescent() * fontScaleY);
-      } else {
-        float fontCapHeight = this.resolveCapHeight(font);
-        float fontDescent = this.resolveDescent(font);
-        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.LOG,
-          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("missing font descriptor - resolved Cap/Descent to ",
-          fontCapHeight), "/"), fontDescent)));
-        fontCapAtSize = (fontCapHeight * fontScaleY);
-        fontDescentAtSize = (fontDescent * fontScaleY);
-      }
-      if (((this.field is global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)
-        && ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(this.field!)).IsMultiline())) {
-        y = (contentRect.GetUpperRightY() - fontBoundingBoxAtSize);
-      } else {
-        if ((fontCapAtSize > clipRectHeight)) {
-          y = (clipRectLowerLeftY + -fontDescentAtSize);
+    global::System.IO.Stream output) { {
+      global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contents
+        = new global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream(appearanceStream,
+        output);
+      global::System.Exception __dripsharpPrimary_488_40_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle bbox
+          = this.resolveBoundingBox(widget, appearanceStream);
+        float borderWidth = 0;
+        if ((widget.GetBorderStyle() != default!)) {
+          borderWidth = widget.GetBorderStyle().GetWidth();
+        }
+        float padding = global::System.Math.Max(1.0F, borderWidth);
+        global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle clipRect = this.applyPadding(bbox,
+          padding);
+        float clipRectLowerLeftY = clipRect.GetLowerLeftY();
+        float clipRectHeight = clipRect.GetHeight();
+        global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle contentRect
+          = this.applyPadding(clipRect, padding);
+        contents.SaveGraphicsState();
+        contents.AddRect(clipRect.GetLowerLeftX(), clipRectLowerLeftY, clipRect.GetWidth(),
+          clipRectHeight);
+        contents.Clip();
+        global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font = this.defaultAppearance.getFont();
+        if ((font == default!)) {
+          throw new global::System.ArgumentException("font is null, check whether /DA entry is incomplete or incorrect");
+        }
+        if (((font.GetName() != default!)
+          && global::DripSharp.Runtime.JavaCompat.StringContains(font.GetName(), "+"))) {
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Font '",
+            this.defaultAppearance.getFontName().GetName()), "' of field '"),
+            this.field.GetFullyQualifiedName()), "' contains subsetted font '"), font.GetName()),
+            "'")));
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("This may bring trouble with PDField.setValue(), PDAcroForm.flatten() or ",
+            "PDAcroForm.refreshAppearances()")));
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf("You should replace this font with a non-subsetted font:"));
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf("PDFont font = PDType0Font.load(doc, new FileInputStream(fontfile), false);"));
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("acroForm.getDefaultResources().put(COSName.getPDFName(\"",
+            this.defaultAppearance.getFontName().GetName()), "\", font);")));
+        }
+        float fontSize = this.defaultAppearance.GetFontSize();
+        if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(fontSize, (float)(0)) == 0)) {
+          fontSize = this.calculateFontSize(font, contentRect);
+        }
+        if ((this.field is global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDListBox)) {
+          this.insertGeneratedListboxSelectionHighlight(contents, appearanceStream, font, fontSize);
+        }
+        contents.BeginText();
+        this.defaultAppearance.writeTo(contents, fontSize);
+        float y;
+        float fontScaleY = ((float)fontSize
+          / global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.FONTSCALE);
+        float fontBoundingBoxAtSize = (font.GetBoundingBox().GetHeight() * fontScaleY);
+        float fontCapAtSize;
+        float fontDescentAtSize;
+        if ((font.GetFontDescriptor() != default!)) {
+          fontCapAtSize = (font.GetFontDescriptor().GetCapHeight() * fontScaleY);
+          fontDescentAtSize = (font.GetFontDescriptor().GetDescent() * fontScaleY);
         } else {
-          y = (clipRectLowerLeftY + ((float)((clipRectHeight - fontCapAtSize)) / 2));
-          if (((y - clipRectLowerLeftY) < -fontDescentAtSize)) {
-            float contentRectLowerLeftY = contentRect.GetLowerLeftY();
-            float fontDescentBased = (-fontDescentAtSize + contentRectLowerLeftY);
-            float fontCapBased = ((contentRect.GetHeight() - contentRectLowerLeftY)
-              - fontCapAtSize);
-            y = global::System.Math.Min(fontDescentBased, global::System.Math.Max(y, fontCapBased));
+          float fontCapHeight = this.resolveCapHeight(font);
+          float fontDescent = this.resolveDescent(font);
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("missing font descriptor - resolved Cap/Descent to ",
+            fontCapHeight), "/"), fontDescent)));
+          fontCapAtSize = (fontCapHeight * fontScaleY);
+          fontDescentAtSize = (fontDescent * fontScaleY);
+        }
+        if (((this.field is global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)
+          && ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(this.field!)).IsMultiline())) {
+          y = (contentRect.GetUpperRightY() - fontBoundingBoxAtSize);
+        } else {
+          if ((fontCapAtSize > clipRectHeight)) {
+            y = (clipRectLowerLeftY + -fontDescentAtSize);
+          } else {
+            y = (clipRectLowerLeftY + ((float)((clipRectHeight - fontCapAtSize)) / 2));
+            if (((y - clipRectLowerLeftY) < -fontDescentAtSize)) {
+              float contentRectLowerLeftY = contentRect.GetLowerLeftY();
+              float fontDescentBased = (-fontDescentAtSize + contentRectLowerLeftY);
+              float fontCapBased = ((contentRect.GetHeight() - contentRectLowerLeftY)
+                - fontCapAtSize);
+              y = global::System.Math.Min(fontDescentBased, global::System.Math.Max(y,
+                fontCapBased));
+            }
           }
         }
-      }
-      float x = contentRect.GetLowerLeftX();
-      if (this.shallComb()) {
-        this.insertGeneratedCombAppearance(contents, appearanceStream, font, fontSize);
-      } else {
-        if ((this.field is global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDListBox)) {
-          this.insertGeneratedListboxAppearance(contents, appearanceStream, contentRect, font,
-            fontSize);
+        float x = contentRect.GetLowerLeftX();
+        if (this.shallComb()) {
+          this.insertGeneratedCombAppearance(contents, appearanceStream, font, fontSize);
         } else {
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainText textContent
-            = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainText(this.value);
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceStyle appearanceStyle
-            = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceStyle();
-          appearanceStyle.setFont(font);
-          appearanceStyle.setFontSize(fontSize);
-          appearanceStyle.setLeading((font.GetBoundingBox().GetHeight() * fontScaleY));
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainTextFormatter formatter
-            = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainTextFormatter.Builder(contents).style(appearanceStyle).text(textContent).width(contentRect.GetWidth()).wrapLines(this.isMultiLine()).initialOffset(x,
-            y).textAlign(this.getTextAlign(widget)).build();
-          formatter.Format();
+          if ((this.field is global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDListBox)) {
+            this.insertGeneratedListboxAppearance(contents, appearanceStream, contentRect, font,
+              fontSize);
+          } else {
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainText textContent
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainText(this.value);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceStyle appearanceStyle
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceStyle();
+            appearanceStyle.setFont(font);
+            appearanceStyle.setFontSize(fontSize);
+            appearanceStyle.setLeading((font.GetBoundingBox().GetHeight() * fontScaleY));
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainTextFormatter formatter
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainTextFormatter.Builder(contents).style(appearanceStyle).text(textContent).width(contentRect.GetWidth()).wrapLines(this.isMultiLine()).initialOffset(x,
+              y).textAlign(this.getTextAlign(widget)).build();
+            formatter.Format();
+          }
         }
+        contents.EndText();
+        contents.RestoreGraphicsState();
+      } catch (global::System.Exception __dripsharpCaught_488_40_0) {
+        __dripsharpPrimary_488_40_0 = __dripsharpCaught_488_40_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(contents, __dripsharpPrimary_488_40_0);
       }
-      contents.EndText();
-      contents.RestoreGraphicsState();
     }
   }
 
@@ -481,7 +510,7 @@ internal class AppearanceGeneratorHelper {
     return ((((((this.field is global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)
       && ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(this.field!)).IsComb())
       && (((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(this.field!)).GetMaxLen()
-      != -1))
+      != unchecked(-1)))
       && !(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(this.field!)).IsMultiline()))
       && !(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(this.field!)).IsPassword()))
       && !(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(this.field!)).IsFileSelect()));
@@ -512,17 +541,18 @@ internal class AppearanceGeneratorHelper {
       * fontSize);
     float initialOffset = ((float)((combWidth - firstCharWidth)) / 2);
     if ((quadding == 2)) {
-      initialOffset = (initialOffset + ((maxLen - numChars) * combWidth));
+      initialOffset = (initialOffset + (unchecked((maxLen - numChars)) * combWidth));
     } else {
       if ((quadding == 1)) {
-        initialOffset = (initialOffset + (global::DripSharp.Runtime.JavaCompat.FloorDiv((maxLen
-          - numChars), 2) * combWidth));
+        initialOffset = (initialOffset
+          + (global::DripSharp.Runtime.JavaCompat.FloorDiv(unchecked((maxLen - numChars)), 2)
+          * combWidth));
       }
     }
     float xOffset = initialOffset;
     for (int i = 0; (i < numChars); i++) {
-      string combString = global::DripSharp.Runtime.JavaCompat.StringSubstring(this.value, i, (i
-        + 1));
+      string combString = global::DripSharp.Runtime.JavaCompat.StringSubstring(this.value, i,
+        unchecked((i + 1)));
       float currCharWidth = ((float)((((float)(font.GetStringWidth(combString))
         / global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.FONTSCALE)
         * fontSize)) / 2);
@@ -568,8 +598,8 @@ internal class AppearanceGeneratorHelper {
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.HIGHLIGHT_COLOR[1],
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper.HIGHLIGHT_COLOR[2]);
       contents.AddRect(paddingEdge.GetLowerLeftX(), ((paddingEdge.GetUpperRightY()
-        - (highlightBoxHeight * ((selectedIndex - topIndex) + 1))) + 2), paddingEdge.GetWidth(),
-        highlightBoxHeight);
+        - (highlightBoxHeight * unchecked((unchecked((selectedIndex - topIndex)) + 1)))) + 2),
+        paddingEdge.GetWidth(), highlightBoxHeight);
       contents.Fill();
     }
     contents.SetNonStrokingColor(0.0F);
@@ -621,16 +651,24 @@ internal class AppearanceGeneratorHelper {
       }
       contents.NewLineAtOffset(contentRect.GetLowerLeftX(), yTextPos);
       contents.ShowText(global::DripSharp.Runtime.JavaCompat.ListGet(options, i));
-      if ((i != (numOptions - 1))) {
+      if ((i != unchecked((numOptions - 1)))) {
         contents.EndText();
       }
     }
   }
 
   private void writeToStream(sbyte[] data,
-    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream) {
-    using (global::System.IO.Stream @out = appearanceStream.GetCOSObject().CreateOutputStream()) {
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, data);
+    global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream) { {
+      global::System.IO.Stream @out = appearanceStream.GetCOSObject().CreateOutputStream();
+      global::System.Exception __dripsharpPrimary_877_27_0 = null!;
+      try {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(@out, data);
+      } catch (global::System.Exception __dripsharpCaught_877_27_0) {
+        __dripsharpPrimary_877_27_0 = __dripsharpCaught_877_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@out, __dripsharpPrimary_877_27_0);
+      }
     }
   }
 
@@ -743,7 +781,7 @@ internal class AppearanceGeneratorHelper {
       }
     }
     if ((path! == default!)) {
-      return -1;
+      return unchecked(-1);
     }
     return (float)(path!.Bounds.Height);
   }
@@ -762,5 +800,15 @@ internal class AppearanceGeneratorHelper {
     return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle((box.GetLowerLeftX()
       + padding), (box.GetLowerLeftY() + padding), (box.GetWidth() - (2 * padding)),
       (box.GetHeight() - (2 * padding)));
+  }
+
+  static AppearanceGeneratorHelper() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    BMC = global::DripSharp.PdfCarton.Contentstream.@Operator.Operator.GetOperator("BMC");
+    EMC = global::DripSharp.PdfCarton.Contentstream.@Operator.Operator.GetOperator("EMC");
+    PATTERN
+      = global::DripSharp.Runtime.JavaCompat.CompileRegex("\\u000D\\u000A|[\\u000A\\u000B\\u000C\\u000D\\u0085\\u2028\\u2029]");
+    HIGHLIGHT_COLOR = new float[] { (153 / (float)255.0F), (193 / (float)255.0F), (215
+        / (float)255.0F) };
   }
 }

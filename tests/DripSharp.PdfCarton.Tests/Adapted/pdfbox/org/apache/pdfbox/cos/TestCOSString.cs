@@ -441,10 +441,15 @@ public class TestCOSString : global::DripSharp.PdfCarton.Cos.TestCOSBase {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     setUp();
     return true;
+  }
+
+  static TestCOSString() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.TestCOSBase).TypeHandle);
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

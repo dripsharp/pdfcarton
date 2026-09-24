@@ -47,4 +47,8 @@ public abstract class FDFAnnotationTextMarkup
       return default!;
     }
   }
+
+  static FDFAnnotationTextMarkup() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation).TypeHandle);
+  }
 }

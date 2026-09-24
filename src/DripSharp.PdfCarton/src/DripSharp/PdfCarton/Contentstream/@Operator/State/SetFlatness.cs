@@ -32,4 +32,8 @@ public class SetFlatness : global::DripSharp.PdfCarton.Contentstream.@Operator.O
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFlatness;
   }
+
+  static SetFlatness() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

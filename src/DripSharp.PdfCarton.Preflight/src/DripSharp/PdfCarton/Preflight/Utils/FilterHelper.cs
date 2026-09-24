@@ -9,10 +9,10 @@
 namespace DripSharp.PdfCarton.Preflight.Utils;
 
 public sealed class FilterHelper {
-  private static readonly global::System.Collections.Generic.ISet<string> ALLOWED_FILTERS
-    = new global::System.Collections.Generic.HashSet<string>();
+  private static readonly global::System.Collections.Generic.ISet<string> ALLOWED_FILTERS;
 
-  static FilterHelper() { {
+  static FilterHelper() {
+    ALLOWED_FILTERS = new global::System.Collections.Generic.HashSet<string>(); {
       global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterFlateDecode);
       global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterAsciiHex);
       global::DripSharp.PdfCarton.Preflight.Utils.FilterHelper.ALLOWED_FILTERS.Add(global::DripSharp.PdfCarton.Preflight.PreflightConstants.StreamDictionaryValueFilterAscii85);

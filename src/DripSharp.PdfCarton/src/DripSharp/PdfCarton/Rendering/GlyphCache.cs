@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 internal sealed class GlyphCache {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont font = null!;
 
@@ -70,5 +69,9 @@ internal sealed class GlyphCache {
         code), " in font "), fontName__93_20)));
       return new global::SkiaSharp.SKPath();
     }
+  }
+
+  static GlyphCache() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -43,14 +43,14 @@ internal class EndstreamFilterStream {
         this.hasLF = false;
       }
       if ((len > 0)) {
-        if (((int)(b[((off + len) - 1)]) == (int)'\r')) {
+        if (((int)(b[unchecked((unchecked((off + len)) - 1))]) == (int)'\r')) {
           this.hasCR = true;
           --len;
         } else {
-          if (((int)(b[((off + len) - 1)]) == (int)'\n')) {
+          if (((int)(b[unchecked((unchecked((off + len)) - 1))]) == (int)'\n')) {
             this.hasLF = true;
             --len;
-            if (((len > 0) && ((int)(b[((off + len) - 1)]) == (int)'\r'))) {
+            if (((len > 0) && ((int)(b[unchecked((unchecked((off + len)) - 1))]) == (int)'\r'))) {
               this.hasCR = true;
               --len;
             }

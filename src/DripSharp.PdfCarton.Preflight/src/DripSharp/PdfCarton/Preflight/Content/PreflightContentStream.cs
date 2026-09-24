@@ -221,4 +221,8 @@ public class PreflightContentStream
       }
     }
   }
+
+  static PreflightContentStream() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine).TypeHandle);
+  }
 }

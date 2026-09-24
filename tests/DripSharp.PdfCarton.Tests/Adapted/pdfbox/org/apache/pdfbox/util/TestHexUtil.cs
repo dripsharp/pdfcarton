@@ -48,11 +48,11 @@ public class TestHexUtil {
         s2)), null);
     }
     sbyte[] byteDstArray = global::DripSharp.PdfCarton.Util.Hex.GetBytes(byteSrcArray);
-    global::DripSharp.Testing.JavaAssertions.Equal(byteDstArray.Length, (byteSrcArray.Length * 2),
-      null);
+    global::DripSharp.Testing.JavaAssertions.Equal(byteDstArray.Length,
+      unchecked((byteSrcArray.Length * 2)), null);
     string dstString = global::DripSharp.PdfCarton.Util.Hex.GetString(byteSrcArray);
-    global::DripSharp.Testing.JavaAssertions.Equal(dstString.Length, (byteSrcArray.Length * 2),
-      null);
+    global::DripSharp.Testing.JavaAssertions.Equal(dstString.Length, unchecked((byteSrcArray.Length
+      * 2)), null);
     global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.StringGetBytes(dstString,
       global::DripSharp.Runtime.JavaStandardCharsets.USASCII), byteDstArray, null);
     global::DripSharp.Testing.JavaAssertions.Equal(byteSrcArray,
@@ -84,7 +84,7 @@ public class TestHexUtil {
     global::DripSharp.Testing.JavaAssertions.Equal(22, validHexCharacters.Count, null);
     for (char c__113_19 = unchecked((char)(0)); ((int)c__113_19 < 256); ++c__113_19) {
       if (!global::DripSharp.Runtime.JavaCompat.CollectionContains(validHexCharacters, c__113_19)) {
-        global::DripSharp.Testing.JavaAssertions.Equal(-256,
+        global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-256),
           global::DripSharp.PdfCarton.Util.Hex.GetHexValue(c__113_19), null);
       }
     }

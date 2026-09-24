@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Util;
 
 public sealed class DateConverter {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private DateConverter() {}
 
@@ -18,35 +17,25 @@ public sealed class DateConverter {
 
   private const int SECONDS_PER_MINUTE = 60;
 
-  private static readonly int MILLIS_PER_MINUTE
-    = (global::DripSharp.PdfCarton.Util.DateConverter.SECONDS_PER_MINUTE * 1000);
+  private static readonly int MILLIS_PER_MINUTE;
 
-  private static readonly int MILLIS_PER_HOUR
-    = (global::DripSharp.PdfCarton.Util.DateConverter.MINUTES_PER_HOUR
-    * global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_MINUTE);
+  private static readonly int MILLIS_PER_HOUR;
 
-  private static readonly int HALF_DAY = ((12
-    * global::DripSharp.PdfCarton.Util.DateConverter.MINUTES_PER_HOUR)
-    * global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_MINUTE);
+  private static readonly int HALF_DAY;
 
-  private static readonly int DAY = (2 * global::DripSharp.PdfCarton.Util.DateConverter.HALF_DAY);
+  private static readonly int DAY;
 
-  private static readonly string[] ALPHA_START_FORMATS
-    = new string[] { "EEEE, dd MMM yy hh:mm:ss a", "EEEE, MMM dd, yy hh:mm:ss a",
-    "EEEE, MMM dd, yy 'at' hh:mma", "EEEE, MMM dd, yy", "EEEE MMM dd, yy HH:mm:ss",
-    "EEEE MMM dd HH:mm:ss z yy", "EEEE MMM dd HH:mm:ss yy" };
+  private static readonly string[] ALPHA_START_FORMATS;
 
-  private static readonly string[] DIGIT_START_FORMATS = new string[] { "dd MMM yy HH:mm:ss",
-    "dd MMM yy HH:mm", "yyyy MMM d", "yyyymmddhh:mm:ss", "H:m M/d/yy", "M/d/yy HH:mm:ss",
-    "M/d/yy HH:mm", "M/d/yy" };
+  private static readonly string[] DIGIT_START_FORMATS;
 
   public static string ToString(global::System.DateTimeOffset? cal) {
     if ((cal == default!)) {
       return default!;
     }
     string offset
-      = global::DripSharp.PdfCarton.Util.DateConverter.formatTZoffset((long)((global::DripSharp.Runtime.JavaCompat.CalendarGet(cal,
-      15) + global::DripSharp.Runtime.JavaCompat.CalendarGet(cal, 16))), "'");
+      = global::DripSharp.PdfCarton.Util.DateConverter.formatTZoffset((long)(unchecked((global::DripSharp.Runtime.JavaCompat.CalendarGet(cal,
+      15) + global::DripSharp.Runtime.JavaCompat.CalendarGet(cal, 16)))), "'");
     return global::DripSharp.Runtime.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"),
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("D:",
       "%1$4tY%1$2tm%1$2td"), "%1$2tH%1$2tM%1$2tS"), "%2$s"), "'"), cal, offset);
@@ -54,27 +43,33 @@ public sealed class DateConverter {
 
   public static string ToISO8601(global::System.DateTimeOffset? cal) {
     string offset
-      = global::DripSharp.PdfCarton.Util.DateConverter.formatTZoffset((long)((global::DripSharp.Runtime.JavaCompat.CalendarGet(cal,
-      15) + global::DripSharp.Runtime.JavaCompat.CalendarGet(cal, 16))), ":");
+      = global::DripSharp.PdfCarton.Util.DateConverter.formatTZoffset((long)(unchecked((global::DripSharp.Runtime.JavaCompat.CalendarGet(cal,
+      15) + global::DripSharp.Runtime.JavaCompat.CalendarGet(cal, 16)))), ":");
     return global::DripSharp.Runtime.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"),
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("%1$4tY",
       "-%1$2tm"), "-%1$2td"), "T"), "%1$2tH:%1$2tM:%1$2tS"), "%2$s"), cal, offset);
   }
 
   private static int restrainTZoffset(long proposedOffset) {
-    if (((proposedOffset <= (14 * global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_HOUR))
-      && (proposedOffset >= (-14
-      * global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_HOUR)))) {
+    if (((proposedOffset <= unchecked((14
+      * global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_HOUR))) && (proposedOffset
+      >= unchecked((unchecked(-14)
+      * global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_HOUR))))) {
       return (int)proposedOffset;
     }
-    proposedOffset = ((((proposedOffset
-      + global::DripSharp.PdfCarton.Util.DateConverter.HALF_DAY) % global::DripSharp.PdfCarton.Util.DateConverter.DAY)
-      + global::DripSharp.PdfCarton.Util.DateConverter.DAY) % global::DripSharp.PdfCarton.Util.DateConverter.DAY);
+    proposedOffset
+      = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((proposedOffset
+      + global::DripSharp.PdfCarton.Util.DateConverter.HALF_DAY)),
+      global::DripSharp.PdfCarton.Util.DateConverter.DAY)
+      + global::DripSharp.PdfCarton.Util.DateConverter.DAY)),
+      global::DripSharp.PdfCarton.Util.DateConverter.DAY);
     if ((proposedOffset == 0)) {
       return global::DripSharp.PdfCarton.Util.DateConverter.HALF_DAY;
     }
-    proposedOffset = ((proposedOffset
-      - global::DripSharp.PdfCarton.Util.DateConverter.HALF_DAY) % global::DripSharp.PdfCarton.Util.DateConverter.HALF_DAY);
+    proposedOffset
+      = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((proposedOffset
+      - global::DripSharp.PdfCarton.Util.DateConverter.HALF_DAY)),
+      global::DripSharp.PdfCarton.Util.DateConverter.HALF_DAY);
     return (int)proposedOffset;
   }
 
@@ -96,13 +91,14 @@ public sealed class DateConverter {
     }
     int retval = 0;
     int index = where.GetIndex();
-    int limit = (index + global::System.Math.Min(maxlen, (text.Length - index)));
+    int limit = unchecked((index + global::System.Math.Min(maxlen, unchecked((text.Length
+      - index)))));
     for (; (index < limit); index++) {
-      int cval = (text[index] - '0');
+      int cval = unchecked((text[index] - '0'));
       if (((cval < 0) || (cval > 9))) {
         break;
       }
-      retval = ((retval * 10) + cval);
+      retval = unchecked((unchecked((retval * 10)) + cval));
     }
     if ((index == where.GetIndex())) {
       return remedy;
@@ -119,7 +115,7 @@ public sealed class DateConverter {
       && (global::DripSharp.Runtime.JavaCompat.StringIndexOf(optionals, (int)((currch
       = text[where.GetIndex()]))) >= 0))) {
       retval = (((int)currch != (int)' ') ? currch : retval);
-      where.SetIndex((where.GetIndex() + 1));
+      where.SetIndex(unchecked((where.GetIndex() + 1)));
     }
     return retval;
   }
@@ -127,7 +123,7 @@ public sealed class DateConverter {
   private static bool skipString(string text, string victim,
     global::DripSharp.Runtime.JavaParsePosition where) {
     if (global::DripSharp.Runtime.JavaCompat.StringStartsWith(text, victim, where.GetIndex())) {
-      where.SetIndex((where.GetIndex() + victim.Length));
+      where.SetIndex(unchecked((where.GetIndex() + victim.Length)));
       return true;
     }
     return false;
@@ -145,10 +141,11 @@ public sealed class DateConverter {
   private static global::System.DateTimeOffset? adjustTimeZoneNicely(global::System.DateTimeOffset? cal,
     global::System.TimeZoneInfo tz) {
     cal = global::DripSharp.Runtime.JavaCompat.CalendarSetTimeZone(cal, tz);
-    int offset = ((global::DripSharp.Runtime.JavaCompat.CalendarGet(cal, 15)
-      + global::DripSharp.Runtime.JavaCompat.CalendarGet(cal, 16))
-      / global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_MINUTE);
-    cal = global::DripSharp.Runtime.JavaCompat.CalendarAdd(cal, 12, -offset);
+    int offset
+      = global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((global::DripSharp.Runtime.JavaCompat.CalendarGet(cal,
+      15) + global::DripSharp.Runtime.JavaCompat.CalendarGet(cal, 16))),
+      global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_MINUTE);
+    cal = global::DripSharp.Runtime.JavaCompat.CalendarAdd(cal, 12, unchecked(-offset));
     return cal;
   }
 
@@ -166,16 +163,19 @@ public sealed class DateConverter {
       || global::DripSharp.PdfCarton.Util.DateConverter.skipString(text, "UTC", where));
     sign = (!hadGMT ? sign : global::DripSharp.PdfCarton.Util.DateConverter.skipOptionals(text,
       where, "+- "));
-    tzHours = global::DripSharp.PdfCarton.Util.DateConverter.parseTimeField(text, where, 2, -999);
+    tzHours = global::DripSharp.PdfCarton.Util.DateConverter.parseTimeField(text, where, 2,
+      unchecked(-999));
     global::DripSharp.PdfCarton.Util.DateConverter.skipOptionals(text, where, "': ");
     tzMin = global::DripSharp.PdfCarton.Util.DateConverter.parseTimeField(text, where, 2, 0);
     global::DripSharp.PdfCarton.Util.DateConverter.skipOptionals(text, where, "' ");
-    if ((tzHours != -999)) {
-      int hrSign = (((int)sign == (int)'-') ? -1 : 1);
+    if ((tzHours != unchecked(-999))) {
+      int hrSign = (((int)sign == (int)'-') ? unchecked(-1) : 1);
       global::DripSharp.Runtime.JavaCompat.TimeZoneSetRawOffset(tz,
-        global::DripSharp.PdfCarton.Util.DateConverter.restrainTZoffset((hrSign * ((tzHours
-        * (long)(global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_HOUR)) + (tzMin
-        * (long)(global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_MINUTE))))));
+        global::DripSharp.PdfCarton.Util.DateConverter.restrainTZoffset(unchecked((hrSign
+        * unchecked((unchecked((tzHours
+        * (long)(global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_HOUR)))
+        + unchecked((tzMin
+        * (long)(global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_MINUTE)))))))));
       global::DripSharp.PdfCarton.Util.DateConverter.updateZoneId(tz);
     } else {
       if (!hadGMT) {
@@ -200,10 +200,12 @@ public sealed class DateConverter {
     char pm = '+';
     if ((offset < 0)) {
       pm = '-';
-      offset = -offset;
+      offset = unchecked(-offset);
     }
-    int hh = (offset / 3600000);
-    int mm = ((offset % 3600000) / 60000);
+    int hh = global::DripSharp.Runtime.JavaCompat.IntegralDivide(offset, 3600000);
+    int mm
+      = global::DripSharp.Runtime.JavaCompat.IntegralDivide(global::DripSharp.Runtime.JavaCompat.IntegralRemainder(offset,
+      3600000), 60000);
     if ((offset == 0)) {
       global::DripSharp.Runtime.JavaCompat.TimeZoneSetId(tz, "GMT");
     } else {
@@ -228,12 +230,12 @@ public sealed class DateConverter {
     global::DripSharp.Runtime.JavaParsePosition where
       = new global::DripSharp.Runtime.JavaParsePosition(initialWhere.GetIndex());
     int year = global::DripSharp.PdfCarton.Util.DateConverter.parseTimeField(text, where, 4, 0);
-    if ((where.GetIndex() != (4 + initialWhere.GetIndex()))) {
+    if ((where.GetIndex() != unchecked((4 + initialWhere.GetIndex())))) {
       return default!;
     }
     global::DripSharp.PdfCarton.Util.DateConverter.skipOptionals(text, where, "/- ");
-    int month = (global::DripSharp.PdfCarton.Util.DateConverter.parseTimeField(text, where, 2, 1)
-      - 1);
+    int month = unchecked((global::DripSharp.PdfCarton.Util.DateConverter.parseTimeField(text,
+      where, 2, 1) - 1));
     global::DripSharp.PdfCarton.Util.DateConverter.skipOptionals(text, where, "/- ");
     int day = global::DripSharp.PdfCarton.Util.DateConverter.parseTimeField(text, where, 2, 1);
     global::DripSharp.PdfCarton.Util.DateConverter.skipOptionals(text, where, " T");
@@ -291,7 +293,7 @@ public sealed class DateConverter {
       global::DripSharp.Runtime.JavaCompat.StringTrim(text)))) {
       return default!;
     }
-    int longestLen = -999999;
+    int longestLen = unchecked(-999999);
     global::System.DateTimeOffset? longestDate = default!;
     int whereLen;
     global::DripSharp.Runtime.JavaParsePosition where
@@ -356,5 +358,22 @@ public sealed class DateConverter {
       return default!;
     }
     return calendar;
+  }
+
+  static DateConverter() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    MILLIS_PER_MINUTE = unchecked((global::DripSharp.PdfCarton.Util.DateConverter.SECONDS_PER_MINUTE
+      * 1000));
+    MILLIS_PER_HOUR = unchecked((global::DripSharp.PdfCarton.Util.DateConverter.MINUTES_PER_HOUR
+      * global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_MINUTE));
+    HALF_DAY = unchecked((unchecked((12
+      * global::DripSharp.PdfCarton.Util.DateConverter.MINUTES_PER_HOUR))
+      * global::DripSharp.PdfCarton.Util.DateConverter.MILLIS_PER_MINUTE));
+    DAY = unchecked((2 * global::DripSharp.PdfCarton.Util.DateConverter.HALF_DAY));
+    ALPHA_START_FORMATS = new string[] { "EEEE, dd MMM yy hh:mm:ss a",
+      "EEEE, MMM dd, yy hh:mm:ss a", "EEEE, MMM dd, yy 'at' hh:mma", "EEEE, MMM dd, yy",
+      "EEEE MMM dd, yy HH:mm:ss", "EEEE MMM dd HH:mm:ss z yy", "EEEE MMM dd HH:mm:ss yy" };
+    DIGIT_START_FORMATS = new string[] { "dd MMM yy HH:mm:ss", "dd MMM yy HH:mm", "yyyy MMM d",
+      "yyyymmddhh:mm:ss", "H:m M/d/yy", "M/d/yy HH:mm:ss", "M/d/yy HH:mm", "M/d/yy" };
   }
 }

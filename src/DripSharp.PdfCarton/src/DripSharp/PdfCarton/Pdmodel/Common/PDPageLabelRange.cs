@@ -11,14 +11,11 @@ namespace DripSharp.PdfCarton.Pdmodel.Common;
 public class PDPageLabelRange : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
   private readonly global::DripSharp.PdfCarton.Cos.COSDictionary root = null!;
 
-  private static readonly global::DripSharp.PdfCarton.Cos.COSName KEY_START
-    = global::DripSharp.PdfCarton.Cos.COSName.St;
+  private static readonly global::DripSharp.PdfCarton.Cos.COSName KEY_START;
 
-  private static readonly global::DripSharp.PdfCarton.Cos.COSName KEY_PREFIX
-    = global::DripSharp.PdfCarton.Cos.COSName.P;
+  private static readonly global::DripSharp.PdfCarton.Cos.COSName KEY_PREFIX;
 
-  private static readonly global::DripSharp.PdfCarton.Cos.COSName KEY_STYLE
-    = global::DripSharp.PdfCarton.Cos.COSName.S;
+  private static readonly global::DripSharp.PdfCarton.Cos.COSName KEY_STYLE;
 
   public const string StyleDecimal = "D";
 
@@ -78,6 +75,12 @@ public class PDPageLabelRange : global::DripSharp.PdfCarton.Pdmodel.Common.COSOb
     } else {
       this.root.RemoveItem(global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange.KEY_PREFIX);
     }
+  }
+
+  static PDPageLabelRange() {
+    KEY_START = global::DripSharp.PdfCarton.Cos.COSName.St;
+    KEY_PREFIX = global::DripSharp.PdfCarton.Cos.COSName.P;
+    KEY_STYLE = global::DripSharp.PdfCarton.Cos.COSName.S;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

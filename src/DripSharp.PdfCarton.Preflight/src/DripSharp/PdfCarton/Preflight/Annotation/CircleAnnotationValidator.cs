@@ -15,4 +15,8 @@ public class CircleAnnotationValidator
     new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationCircle(annotDictionary)) {
 
   }
+
+  static CircleAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.SquareCircleAnnotationValidator).TypeHandle);
+  }
 }

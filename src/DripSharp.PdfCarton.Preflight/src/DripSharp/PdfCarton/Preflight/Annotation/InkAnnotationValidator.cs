@@ -10,11 +10,12 @@ namespace DripSharp.PdfCarton.Preflight.Annotation;
 
 public class InkAnnotationValidator
 : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnknown PdUnk
-    = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnknown PdUnk;
 
   public InkAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
     global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdUnk = default!;
+
     this.PdUnk
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationUnknown(annotDictionary);
     this.PdAnnot = this.PdUnk;
@@ -22,5 +23,9 @@ public class InkAnnotationValidator
 
   protected internal override bool CheckSpecificMandatoryFields() {
     return base.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Inklist);
+  }
+
+  static InkAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator).TypeHandle);
   }
 }

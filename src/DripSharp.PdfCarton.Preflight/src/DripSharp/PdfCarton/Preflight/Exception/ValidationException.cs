@@ -9,25 +9,31 @@
 namespace DripSharp.PdfCarton.Preflight.Exception;
 
 public class ValidationException : global::System.IO.IOException {
-  internal const long serialVersionUID = -1616141241190424669L;
+  internal const long serialVersionUID = unchecked(-1616141241190424669L);
 
-  protected internal int? PageNumber = default!;
+  protected internal int? PageNumber;
 
   public ValidationException(string message, global::System.Exception cause, int? pageNumber)
   : base(message) {
+    this.PageNumber = default!;
+
     global::DripSharp.Runtime.JavaCompat.InitCause(this, cause);
     this.PageNumber = pageNumber;
   }
 
   public ValidationException(string message, global::System.Exception cause) : base(message) {
+    this.PageNumber = default!;
+
     global::DripSharp.Runtime.JavaCompat.InitCause(this, cause);
   }
 
   public ValidationException(string message) : base(message) {
-
+    this.PageNumber = default!;
   }
 
   public ValidationException(global::System.Exception cause) : base() {
+    this.PageNumber = default!;
+
     global::DripSharp.Runtime.JavaCompat.InitCause(this, cause);
   }
 

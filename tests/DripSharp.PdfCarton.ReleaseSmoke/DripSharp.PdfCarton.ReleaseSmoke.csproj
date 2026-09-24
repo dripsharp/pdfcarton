@@ -24,5 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="Fixtures/metadata.xmp" TargetPath="Fixtures/metadata.xmp" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures/promoted-regressions.tsv" TargetPath="Fixtures/promoted-regressions.tsv" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

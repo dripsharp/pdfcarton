@@ -11,57 +11,21 @@ namespace DripSharp.PdfCarton.Preflight.Content;
 public class StubOperator : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
   private readonly string name = null!;
 
-  private static readonly global::System.Collections.Generic.IList<string> CHECK_NO_OPERANDS
-    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokePath,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZero,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOddAndStroke,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseAndStroke,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndMarkedContent,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClosePath,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipNonZero,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipEvenOdd,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Endpath);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_NO_OPERANDS;
 
-  private static readonly global::System.Collections.Generic.IList<string> CHECK_STRING_OPERANDS
-    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContent,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetGraphicsStateParams,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetRenderingintent,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShadingFill,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowText,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPoint);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_STRING_OPERANDS;
 
-  private static readonly global::System.Collections.Generic.IList<string> CHECK_TAG_AND_PROPERTY_OPERANDS
-    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContentSeq,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPointWithProps);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_TAG_AND_PROPERTY_OPERANDS;
 
-  private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS_6
-    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveTo,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D1);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS_6;
 
-  private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS_4
-    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateFinalPoint,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateInitialPoint,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.AppendRect);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS_4;
 
-  private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS_2
-    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveTo,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LineTo,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D0);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS_2;
 
-  private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS
-    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorGray,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFlatness,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineMiterlimit);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_NUMBER_OPERANDS;
 
-  private static readonly global::System.Collections.Generic.IList<string> CHECK_ARRAY_OPERANDS
-    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted);
+  private static readonly global::System.Collections.Generic.IList<string> CHECK_ARRAY_OPERANDS;
 
   public StubOperator(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context,
     string name) : base(context) {
@@ -264,5 +228,52 @@ public class StubOperator : global::DripSharp.PdfCarton.Contentstream.@Operator.
 
   public override string GetName() {
     return this.name;
+  }
+
+  static StubOperator() {
+    CHECK_NO_OPERANDS
+      = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokePath,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZero,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LegacyFillNonZero,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZeroAndStroke,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOddAndStroke,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseAndStroke,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndMarkedContent,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClosePath,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipNonZero,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ClipEvenOdd,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Endpath);
+    CHECK_STRING_OPERANDS
+      = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContent,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetGraphicsStateParams,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetRenderingintent,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShadingFill,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowText,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextLine,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPoint);
+    CHECK_TAG_AND_PROPERTY_OPERANDS
+      = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.BeginMarkedContentSeq,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MarkedContentPointWithProps);
+    CHECK_NUMBER_OPERANDS_6
+      = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveTo,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D1);
+    CHECK_NUMBER_OPERANDS_4
+      = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateFinalPoint,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CurveToReplicateInitialPoint,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.AppendRect);
+    CHECK_NUMBER_OPERANDS_2
+      = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveTo,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LineTo,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Type3D0);
+    CHECK_NUMBER_OPERANDS
+      = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorGray,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetFlatness,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineMiterlimit);
+    CHECK_ARRAY_OPERANDS
+      = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowTextAdjusted);
   }
 }

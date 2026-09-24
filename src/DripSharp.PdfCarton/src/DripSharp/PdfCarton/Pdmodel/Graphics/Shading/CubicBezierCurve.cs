@@ -29,9 +29,9 @@ internal class CubicBezierCurve {
     if ((l < 0)) {
       l = 0;
     }
-    int sz = ((1 << unchecked((int)(l))) + 1);
+    int sz = unchecked(((1 << unchecked((int)(l))) + 1));
     global::DripSharp.Runtime.JavaPoint2D[] res = new global::DripSharp.Runtime.JavaPoint2D[sz];
-    double step = ((double)1 / (sz - 1));
+    double step = ((double)1 / unchecked((sz - 1)));
     double t = -step;
     for (int i = 0; (i < sz); i++) {
       t += step;

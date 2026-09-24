@@ -10,15 +10,7 @@ namespace DripSharp.PdfCarton.Preflight.Process;
 
 public class CatalogValidationProcess
 : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-  private static readonly global::System.Collections.Generic.IList<string> listICC
-    = global::DripSharp.Runtime.JavaCompat.AsList<string>("FOGRA43", "CGATS TR 006", "CGATS TR006",
-    "FOGRA39", "JC200103", "FOGRA27", "EUROSB104", "FOGRA45", "FOGRA46", "FOGRA41", "CGATS TR 001",
-    "CGATS TR001", "CGATS TR 003", "CGATS TR003", "CGATS TR 005", "CGATS TR005", "FOGRA28",
-    "JCW2003", "EUROSB204", "FOGRA47", "FOGRA44", "FOGRA29", "JC200104", "FOGRA40", "FOGRA30",
-    "FOGRA42", "IFRA26", "JCN2002", "CGATS TR 002", "CGATS TR002", "FOGRA33", "FOGRA37", "FOGRA31",
-    "FOGRA35", "FOGRA32", "FOGRA34", "FOGRA36", "FOGRA38", "sRGB", "sRGB IEC61966-2.1",
-    "Adobe RGB (1998)", "bg-sRGB", "sYCC", "scRGB", "scRGB-nl", "scYCC-nl", "ROMM RGB", "RIMM RGB",
-    "ERIMM RGB", "eciRGB", "opRGB");
+  private static readonly global::System.Collections.Generic.IList<string> listICC;
 
   private global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog catalog = null!;
 
@@ -191,9 +183,17 @@ public class CatalogValidationProcess
         = csFact.GetColorSpaceHelper(ctx, iccBased,
         global::DripSharp.PdfCarton.Preflight.Graphic.ColorSpaceHelperFactory.ColorSpaceRestriction.NoRestriction);
       csHelper.Validate();
-      if ((ctx.GetIccProfileWrapper() == default!)) {
-        using (global::System.IO.Stream @is = stream.CreateInputStream()) {
-          ctx.SetIccProfileWrapper(new global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper(global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is)));
+      if ((ctx.GetIccProfileWrapper() == default!)) { {
+          global::System.IO.Stream @is = stream.CreateInputStream();
+          global::System.Exception __dripsharpPrimary_328_34_0 = null!;
+          try {
+            ctx.SetIccProfileWrapper(new global::DripSharp.PdfCarton.Preflight.Graphic.ICCProfileWrapper(global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is)));
+          } catch (global::System.Exception __dripsharpCaught_328_34_0) {
+            __dripsharpPrimary_328_34_0 = __dripsharpCaught_328_34_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_328_34_0);
+          }
         }
       }
     } catch (global::System.Exception e) when (e is global::System.ArgumentException or global::System.IndexOutOfRangeException) {
@@ -205,5 +205,17 @@ public class CatalogValidationProcess
       throw new global::DripSharp.PdfCarton.Preflight.Exception.ValidationException("Unable to parse the ICC Profile.",
         e);
     }
+  }
+
+  static CatalogValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+    listICC = global::DripSharp.Runtime.JavaCompat.AsList<string>("FOGRA43", "CGATS TR 006",
+      "CGATS TR006", "FOGRA39", "JC200103", "FOGRA27", "EUROSB104", "FOGRA45", "FOGRA46", "FOGRA41",
+      "CGATS TR 001", "CGATS TR001", "CGATS TR 003", "CGATS TR003", "CGATS TR 005", "CGATS TR005",
+      "FOGRA28", "JCW2003", "EUROSB204", "FOGRA47", "FOGRA44", "FOGRA29", "JC200104", "FOGRA40",
+      "FOGRA30", "FOGRA42", "IFRA26", "JCN2002", "CGATS TR 002", "CGATS TR002", "FOGRA33",
+      "FOGRA37", "FOGRA31", "FOGRA35", "FOGRA32", "FOGRA34", "FOGRA36", "FOGRA38", "sRGB",
+      "sRGB IEC61966-2.1", "Adobe RGB (1998)", "bg-sRGB", "sYCC", "scRGB", "scRGB-nl", "scYCC-nl",
+      "ROMM RGB", "RIMM RGB", "ERIMM RGB", "eciRGB", "opRGB");
   }
 }

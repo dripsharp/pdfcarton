@@ -29,14 +29,22 @@ public class TestTTFParser {
   }
 
   internal virtual void testPostTable() {
-    global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont font;
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TestTTFParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      "/ttf/LiberationSans-Regular.ttf"))) {
-      global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser parser
-        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser();
-      font = parser.Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(@is));
+    global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont font; {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TestTTFParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        "/ttf/LiberationSans-Regular.ttf"));
+      global::System.Exception __dripsharpPrimary_72_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser parser
+          = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser();
+        font = parser.Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(@is));
+      } catch (global::System.Exception __dripsharpCaught_72_26_0) {
+        __dripsharpPrimary_72_26_0 = __dripsharpCaught_72_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_72_26_0);
+      }
     }
     global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable cmapTable = font.GetCmap();
     global::DripSharp.Testing.JavaAssertions.NotNull(cmapTable, null);

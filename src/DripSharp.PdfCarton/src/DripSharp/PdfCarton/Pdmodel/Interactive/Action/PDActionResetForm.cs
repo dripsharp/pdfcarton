@@ -34,4 +34,8 @@ public class PDActionResetForm : global::DripSharp.PdfCarton.Pdmodel.Interactive
   public virtual void SetFlags(int flags) {
     this.Action.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Flags, flags);
   }
+
+  static PDActionResetForm() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
+  }
 }

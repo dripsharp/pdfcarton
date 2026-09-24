@@ -16,4 +16,8 @@ internal class Type7ShadingContext
   : base(shading, colorModel, xform, matrix, deviceBounds, 16) {
 
   }
+
+  static Type7ShadingContext() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PatchMeshesShadingContext).TypeHandle);
+  }
 }

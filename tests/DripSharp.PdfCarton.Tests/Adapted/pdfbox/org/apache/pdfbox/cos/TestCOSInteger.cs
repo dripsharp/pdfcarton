@@ -12,7 +12,7 @@ public class TestCOSInteger : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
   }
 
   internal virtual void testEquals() {
-    for (int i = -1000; (i < 3000); i += 200) {
+    for (int i = unchecked(-1000); (i < 3000); i += 200) {
       global::DripSharp.PdfCarton.Cos.COSInteger test1
         = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(i));
       global::DripSharp.PdfCarton.Cos.COSInteger test2
@@ -26,13 +26,13 @@ public class TestCOSInteger : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
       global::DripSharp.Testing.JavaAssertions.Equal(test2, test3, null);
       global::DripSharp.Testing.JavaAssertions.Equal(test1, test3, null);
       global::DripSharp.PdfCarton.Cos.COSInteger test4
-        = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)((i + 1)));
+        = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(unchecked((i + 1))));
       global::DripSharp.Testing.JavaAssertions.NotEqual(test4, test1, null);
     }
   }
 
   internal virtual void testHashCode() {
-    for (int i = -1000; (i < 3000); i += 200) {
+    for (int i = unchecked(-1000); (i < 3000); i += 200) {
       global::DripSharp.PdfCarton.Cos.COSInteger test1
         = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(i));
       global::DripSharp.PdfCarton.Cos.COSInteger test2
@@ -40,28 +40,28 @@ public class TestCOSInteger : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
       global::DripSharp.Testing.JavaAssertions.Equal(test1.GetHashCode(), test2.GetHashCode(),
         null);
       global::DripSharp.PdfCarton.Cos.COSInteger test3
-        = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)((i + 1)));
+        = global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(unchecked((i + 1))));
       global::DripSharp.Testing.JavaAssertions.NotSame(test3.GetHashCode(), test1.GetHashCode(),
         null);
     }
   }
 
   internal override void testFloatValue() {
-    for (int i = -1000; (i < 3000); i += 200) {
+    for (int i = unchecked(-1000); (i < 3000); i += 200) {
       global::DripSharp.Testing.JavaAssertions.Equal((float)((float)i),
         global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(i)).FloatValue(), null);
     }
   }
 
   internal override void testIntValue() {
-    for (int i = -1000; (i < 3000); i += 200) {
+    for (int i = unchecked(-1000); (i < 3000); i += 200) {
       global::DripSharp.Testing.JavaAssertions.Equal(i,
         global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(i)).IntValue(), null);
     }
   }
 
   internal override void testLongValue() {
-    for (int i = -1000; (i < 3000); i += 200) {
+    for (int i = unchecked(-1000); (i < 3000); i += 200) {
       global::DripSharp.Testing.JavaAssertions.Equal((long)((long)i),
         global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(i)).LongValue(), null);
     }
@@ -72,7 +72,7 @@ public class TestCOSInteger : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
     global::DripSharp.PdfCarton.Pdfwriter.COSWriter visitor
       = new global::DripSharp.PdfCarton.Pdfwriter.COSWriter(outStream);
-    for (int i = -1000; (i < 3000); i += 200) {
+    for (int i = unchecked(-1000); (i < 3000); i += 200) {
       int index = i;
       global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => {
           global::DripSharp.PdfCarton.Cos.COSInteger cosInt
@@ -90,7 +90,7 @@ public class TestCOSInteger : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
   internal virtual void testWritePDF() {
     global::DripSharp.Runtime.JavaByteArrayOutputStream outStream
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    for (int i = -1000; (i < 3000); i += 200) {
+    for (int i = unchecked(-1000); (i < 3000); i += 200) {
       int index = i;
       global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => {
           global::DripSharp.PdfCarton.Cos.COSInteger cosInt
@@ -225,10 +225,15 @@ public class TestCOSInteger : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     setUp();
     return true;
+  }
+
+  static TestCOSInteger() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.TestCOSNumber).TypeHandle);
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

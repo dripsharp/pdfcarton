@@ -26,4 +26,8 @@ public class SubmitAction : global::DripSharp.PdfCarton.Preflight.Action.Abstrac
     }
     return true;
   }
+
+  static SubmitAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager).TypeHandle);
+  }
 }

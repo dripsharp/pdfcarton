@@ -5,24 +5,30 @@
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
 public class PDStructureElementTest {
-  private static readonly global::DripSharp.Runtime.JavaFile TARGETPDFDIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/pdfs"));
+  private static readonly global::DripSharp.Runtime.JavaFile TARGETPDFDIR;
 
   internal virtual void testPDFBox4197() {
     global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject>> attributeSet
       = new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject>>();
     global::System.Collections.Generic.ISet<string> classSet
-      = new global::System.Collections.Generic.HashSet<string>();
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElementTest.TARGETPDFDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4197.pdf")) })) {
-      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
-        = doc.GetDocumentCatalog().GetStructureTreeRoot();
-      this.checkElement(structureTreeRoot.GetK(), attributeSet, structureTreeRoot.GetClassMap(),
-        classSet);
+      = new global::System.Collections.Generic.HashSet<string>(); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElementTest.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4197.pdf")) });
+      global::System.Exception __dripsharpPrimary_63_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
+          = doc.GetDocumentCatalog().GetStructureTreeRoot();
+        this.checkElement(structureTreeRoot.GetK(), attributeSet, structureTreeRoot.GetClassMap(),
+          classSet);
+      } catch (global::System.Exception __dripsharpCaught_63_25_0) {
+        __dripsharpPrimary_63_25_0 = __dripsharpCaught_63_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_63_25_0);
+      }
     }
     global::DripSharp.Testing.JavaAssertions.Equal(117, attributeSet.Count, null);
     int cnt
@@ -36,14 +42,22 @@ public class PDStructureElementTest {
     global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject>> attributeSet
       = new global::System.Collections.Generic.HashSet<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject>>();
     global::System.Collections.Generic.ISet<string> classSet
-      = new global::System.Collections.Generic.HashSet<string>();
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElementTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-2725-878725.pdf"))))) {
-      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
-        = doc.GetDocumentCatalog().GetStructureTreeRoot();
-      this.checkElement(structureTreeRoot.GetK(), attributeSet, structureTreeRoot.GetClassMap(),
-        classSet);
+      = new global::System.Collections.Generic.HashSet<string>(); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.CreateBufferFromStream(global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElementTest),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-2725-878725.pdf"))));
+      global::System.Exception __dripsharpPrimary_86_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
+          = doc.GetDocumentCatalog().GetStructureTreeRoot();
+        this.checkElement(structureTreeRoot.GetK(), attributeSet, structureTreeRoot.GetClassMap(),
+          classSet);
+      } catch (global::System.Exception __dripsharpCaught_86_25_0) {
+        __dripsharpPrimary_86_25_0 = __dripsharpCaught_86_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_86_25_0);
+      }
     }
     foreach (global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.Revisions<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject> r in attributeSet) {
       if ((r.Size() >= 2)) {
@@ -144,7 +158,7 @@ public class PDStructureElementTest {
     structureElement.IncrementRevisionNumber();
     global::DripSharp.Testing.JavaAssertions.Equal(34, structureElement.GetRevisionNumber(), null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-      => structureElement.SetRevisionNumber(-1), null);
+      => structureElement.SetRevisionNumber(unchecked(-1)), null);
     structureElement.SetTitle(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "Title"));
     global::DripSharp.Testing.JavaAssertions.Equal("Title", structureElement.GetTitle(), null);
@@ -164,7 +178,7 @@ public class PDStructureElementTest {
     global::DripSharp.Testing.JavaAssertions.Equal("ExpF", structureElement.GetExpandedForm(),
       null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-      => structureElement.AppendKid(-1), null);
+      => structureElement.AppendKid(unchecked(-1)), null);
     structureElement.AppendKid(0);
     global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkedContentReference mcr1
       = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkedContentReference();
@@ -180,8 +194,8 @@ public class PDStructureElementTest {
     global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkedContentReference mcrSubZero
       = new global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDMarkedContentReference();
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-      => mcrSubZero.SetMCID(-1), null);
-    mcrSubZero.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.Mcid, -1);
+      => mcrSubZero.SetMCID(unchecked(-1)), null);
+    mcrSubZero.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.Mcid, unchecked(-1));
     global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent mcSubZero
       = global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent.Create(global::DripSharp.PdfCarton.Cos.COSName.S,
       mcrSubZero.GetCOSObject());
@@ -224,5 +238,11 @@ public class PDStructureElementTest {
       this.testSimple();
     } finally {
     }
+  }
+
+  static PDStructureElementTest() {
+    TARGETPDFDIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/pdfs"));
   }
 }

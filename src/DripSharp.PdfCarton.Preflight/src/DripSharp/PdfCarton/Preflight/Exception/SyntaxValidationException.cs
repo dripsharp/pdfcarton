@@ -30,4 +30,8 @@ public class SyntaxValidationException
   public virtual global::DripSharp.PdfCarton.Preflight.ValidationResult GetResult() {
     return this.result;
   }
+
+  static SyntaxValidationException() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Exception.ValidationException).TypeHandle);
+  }
 }

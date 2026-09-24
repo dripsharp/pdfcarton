@@ -65,7 +65,9 @@ public abstract class PDTerminalField
         int? clrF = fdfField.GetClearWidgetFieldFlags();
         if ((clrF != default!)) {
           int clrFValue = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(clrF);
-          global::DripSharp.Runtime.JavaCompat.XorAssign(ref clrFValue, 4294967295L);
+          global::DripSharp.Runtime.JavaCompat.CompoundAssign(ref clrFValue,
+            __dripsharpValue_133_21_0
+            => unchecked((int)((__dripsharpValue_133_21_0 ^ 4294967295L))));
           annotFlags = (annotFlags & clrFValue);
           widget.SetAnnotationFlags(annotFlags);
         }
@@ -117,4 +119,8 @@ public abstract class PDTerminalField
   }
 
   internal abstract void constructAppearances();
+
+  static PDTerminalField() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField).TypeHandle);
+  }
 }

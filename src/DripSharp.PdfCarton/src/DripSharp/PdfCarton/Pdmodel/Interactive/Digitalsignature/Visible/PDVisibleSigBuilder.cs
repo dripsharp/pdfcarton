@@ -13,8 +13,7 @@ public class PDVisibleSigBuilder
   private readonly global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDFTemplateStructure pdfStructure
     = null!;
 
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDVisibleSigBuilder() {
     this.pdfStructure
@@ -307,8 +306,10 @@ public class PDVisibleSigBuilder
     global::DripSharp.PdfCarton.Cos.COSName imageName,
     global::DripSharp.PdfCarton.Cos.COSName innerFormName,
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSignDesigner properties) {
-    int width = (int)(this.GetStructure().GetFormatterRectangle().GetWidth());
-    int height = (int)(this.GetStructure().GetFormatterRectangle().GetHeight());
+    int width
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(this.GetStructure().GetFormatterRectangle().GetWidth())));
+    int height
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(this.GetStructure().GetFormatterRectangle().GetHeight())));
     string imgFormContent
       = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("q ",
       width), " 0 0 "), height), " 0 0 cm /"), imageName.GetName()), " Do Q\n");
@@ -356,5 +357,9 @@ public class PDVisibleSigBuilder
   public virtual void CloseTemplate(global::DripSharp.PdfCarton.Pdmodel.PDDocument template) {
     template.Dispose();
     this.pdfStructure.GetTemplate().Dispose();
+  }
+
+  static PDVisibleSigBuilder() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

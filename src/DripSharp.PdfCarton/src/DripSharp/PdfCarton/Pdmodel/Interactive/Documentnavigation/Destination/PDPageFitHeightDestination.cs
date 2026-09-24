@@ -30,7 +30,7 @@ public class PDPageFitHeightDestination
 
   public virtual void SetLeft(int x) {
     base.Array.GrowToSize(3);
-    if ((x == -1)) {
+    if ((x == unchecked(-1))) {
       base.Array.Set(2, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
     } else {
       base.Array.SetInt(2, x);
@@ -51,5 +51,9 @@ public class PDPageFitHeightDestination
       base.Array.SetName(1,
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitHeightDestination.Type);
     }
+  }
+
+  static PDPageFitHeightDestination() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination).TypeHandle);
   }
 }

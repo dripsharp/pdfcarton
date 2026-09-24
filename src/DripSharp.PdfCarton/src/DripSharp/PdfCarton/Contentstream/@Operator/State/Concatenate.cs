@@ -51,4 +51,8 @@ public class Concatenate : global::DripSharp.PdfCarton.Contentstream.@Operator.O
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Concat;
   }
+
+  static Concatenate() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

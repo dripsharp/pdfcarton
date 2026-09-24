@@ -13,4 +13,8 @@ public class PDPostScriptXObject : global::DripSharp.PdfCarton.Pdmodel.Graphics.
     global::DripSharp.PdfCarton.Cos.COSName.Ps) {
 
   }
+
+  static PDPostScriptXObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject).TypeHandle);
+  }
 }

@@ -25,4 +25,8 @@ public class FDFAnnotationUnderline
     base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
       global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationUnderline.Subtype);
   }
+
+  static FDFAnnotationUnderline() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTextMarkup).TypeHandle);
+  }
 }

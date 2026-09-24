@@ -42,4 +42,8 @@ public class PDActionThread : global::DripSharp.PdfCarton.Pdmodel.Interactive.Ac
   public virtual void SetB(global::DripSharp.PdfCarton.Cos.COSBase b) {
     base.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.B, b);
   }
+
+  static PDActionThread() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
+  }
 }

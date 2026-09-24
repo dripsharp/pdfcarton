@@ -27,4 +27,8 @@ public class Restore : global::DripSharp.PdfCarton.Contentstream.@Operator.Opera
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Restore;
   }
+
+  static Restore() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

@@ -124,8 +124,8 @@ public sealed class Parser {
     }
 
     internal char peek() {
-      if ((this.index < (this.input.Length - 1))) {
-        return this.input[(this.index + 1)];
+      if ((this.index < unchecked((this.input.Length - 1)))) {
+        return this.input[unchecked((this.index + 1))];
       } else {
         return global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Parser.Tokenizer.EOT;
       }

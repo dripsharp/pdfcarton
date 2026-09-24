@@ -170,7 +170,8 @@ public class PredictorTest {
       global::DripSharp.PdfCarton.Filter.Predictor.calcSetBitSeq(global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "11111111"), 2), 0, 8, 255), null);
     global::DripSharp.Testing.JavaAssertions.Equal(126,
-      global::DripSharp.PdfCarton.Filter.Predictor.calcSetBitSeq(165, 0, 8, (217 + 165)), null);
+      global::DripSharp.PdfCarton.Filter.Predictor.calcSetBitSeq(165, 0, 8, unchecked((217 + 165))),
+      null);
     global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "00000010"), 2),
       global::DripSharp.PdfCarton.Filter.Predictor.calcSetBitSeq(global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",

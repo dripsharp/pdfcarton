@@ -90,4 +90,8 @@ public sealed class PDTransition : global::DripSharp.PdfCarton.Pdmodel.Common.PD
     this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.B,
       global::DripSharp.PdfCarton.Cos.COSBoolean.GetBoolean(opaque));
   }
+
+  static PDTransition() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper).TypeHandle);
+  }
 }

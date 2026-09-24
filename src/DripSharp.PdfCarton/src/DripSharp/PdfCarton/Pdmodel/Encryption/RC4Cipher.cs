@@ -31,15 +31,17 @@ internal class RC4Cipher {
     int keyIndex = 0;
     int saltIndex = 0;
     for (int i__63_18 = 0; (i__63_18 < this.salt.Length); i__63_18++) {
-      saltIndex = (((global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher.fixByte(key[keyIndex])
-        + this.salt[i__63_18]) + saltIndex) % 256);
+      saltIndex
+        = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((unchecked((global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher.fixByte(key[keyIndex])
+        + this.salt[i__63_18])) + saltIndex)), 256);
       global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher.swap(this.salt, i__63_18, saltIndex);
-      keyIndex = ((keyIndex + 1) % key.Length);
+      keyIndex = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((keyIndex + 1)),
+        key.Length);
     }
   }
 
   private static int fixByte(sbyte aByte) {
-    return (((int)aByte < 0) ? (256 + aByte) : aByte);
+    return (((int)aByte < 0) ? unchecked((256 + aByte)) : aByte);
   }
 
   private static void swap(int[] data, int firstIndex, int secondIndex) {
@@ -49,10 +51,13 @@ internal class RC4Cipher {
   }
 
   private int encrypt(sbyte aByte) {
-    this.b = ((this.b + 1) % 256);
-    this.c = ((this.salt[this.b] + this.c) % 256);
+    this.b = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((this.b + 1)), 256);
+    this.c = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((this.salt[this.b]
+      + this.c)), 256);
     global::DripSharp.PdfCarton.Pdmodel.Encryption.RC4Cipher.swap(this.salt, this.b, this.c);
-    int saltIndex = ((this.salt[this.b] + this.salt[this.c]) % 256);
+    int saltIndex
+      = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((this.salt[this.b]
+      + this.salt[this.c])), 256);
     return (aByte ^ unchecked((sbyte)(this.salt[saltIndex])));
   }
 
@@ -67,8 +72,8 @@ internal class RC4Cipher {
   public virtual void Write(global::System.IO.Stream data, global::System.IO.Stream output) {
     sbyte[] buffer = new sbyte[1024];
     int amountRead;
-    while (((amountRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(data, buffer)) !=
-      -1)) {
+    while (((amountRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(data, buffer))
+      != unchecked(-1))) {
       this.write(buffer, 0, amountRead, output, buffer);
     }
   }

@@ -116,4 +116,8 @@ public class PDAnnotationLink
       ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
     }
   }
+
+  static PDAnnotationLink() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation).TypeHandle);
+  }
 }

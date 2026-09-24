@@ -39,9 +39,7 @@ public sealed class TypeMapping {
     this.initialize();
   }
 
-  private static readonly global::System.Type[] SIMPLEPROPERTYCONSTPARAMS
-    = new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Xmp.XMPMetadata),
-    typeof(string), typeof(string), typeof(string), typeof(object) };
+  private static readonly global::System.Type[] SIMPLEPROPERTYCONSTPARAMS;
 
   private void initialize() {
     this.structuredMappings
@@ -490,5 +488,11 @@ public sealed class TypeMapping {
       return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("{type: ",
         this.__capture_0), ", card: "), this.__capture_1), '}');
     }
+  }
+
+  static TypeMapping() {
+    SIMPLEPROPERTYCONSTPARAMS
+      = new global::System.Type[] { typeof(global::DripSharp.PdfCarton.Xmp.XMPMetadata),
+      typeof(string), typeof(string), typeof(string), typeof(object) };
   }
 }

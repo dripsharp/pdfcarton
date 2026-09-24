@@ -22,7 +22,7 @@ public class PDFourColours : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjec
   public PDFourColours(global::DripSharp.PdfCarton.Cos.COSArray array) {
     this.array = array;
     if ((this.array.Size() < 4)) {
-      for (int i = (this.array.Size() - 1); (i < 4); i++) {
+      for (int i = unchecked((this.array.Size() - 1)); (i < 4); i++) {
         this.array.Add(global::DripSharp.PdfCarton.Cos.COSNull.Null);
       }
     }

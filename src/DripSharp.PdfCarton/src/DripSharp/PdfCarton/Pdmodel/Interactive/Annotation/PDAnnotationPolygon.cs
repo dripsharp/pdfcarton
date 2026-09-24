@@ -93,4 +93,8 @@ public class PDAnnotationPolygon
       ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
     }
   }
+
+  static PDAnnotationPolygon() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup).TypeHandle);
+  }
 }

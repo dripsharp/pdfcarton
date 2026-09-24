@@ -25,4 +25,8 @@ public class EndText : global::DripSharp.PdfCarton.Contentstream.@Operator.Opera
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.EndText;
   }
+
+  static EndText() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

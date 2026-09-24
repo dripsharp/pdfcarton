@@ -10,19 +10,19 @@ namespace DripSharp.PdfCarton.Preflight.Content;
 
 public class ContentStreamException
 : global::DripSharp.PdfCarton.Preflight.Exception.ValidationException {
-  private string errorCode = "";
+  private string errorCode;
 
   public ContentStreamException(string arg0, global::System.Exception arg1) : base(arg0) {
-
+    this.errorCode = "";
   }
 
   public ContentStreamException(string arg0) : base(arg0) {
-
+    this.errorCode = "";
   }
 
   public ContentStreamException(global::System.Exception arg0)
   : base(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(arg0)) {
-
+    this.errorCode = "";
   }
 
   public virtual string GetErrorCode() {
@@ -31,5 +31,9 @@ public class ContentStreamException
 
   public virtual void SetErrorCode(string errorCode) {
     this.errorCode = errorCode;
+  }
+
+  static ContentStreamException() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Exception.ValidationException).TypeHandle);
   }
 }

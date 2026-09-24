@@ -39,7 +39,7 @@ public class GlyphArraySplitterRegexImpl
         if ((s1.Length == s2.Length)) {
           return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringCompareTo(s2, s1);
         }
-        return (s2.Length - s1.Length);
+        return unchecked((s2.Length - s1.Length));
       }));
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(matchers, (glyphIds)
       => stringMatchers.Add(this.convertGlyphIdsToString(glyphIds)));

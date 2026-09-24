@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public class AxialShadingContext
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingContext {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType2 axialShadingType
     = null!;
@@ -80,12 +79,13 @@ public class AxialShadingContext
     double dist = global::System.Math.Sqrt((global::System.Math.Pow((deviceBounds.Right
       - deviceBounds.Left), (double)(2)) + global::System.Math.Pow((deviceBounds.Bottom
       - deviceBounds.Top), (double)(2))));
-    this.factor = (int)(global::System.Math.Ceiling((double)(dist)));
+    this.factor
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Ceiling((double)(dist)))));
     this.colorTable = this.calcColorTable();
   }
 
   private int[] calcColorTable() {
-    int[] map = new int[(this.factor + 1)];
+    int[] map = new int[unchecked((this.factor + 1))];
     if (((this.factor == 0) || (global::DripSharp.Runtime.JavaCompat.CompareFloat(this.d1d0,
       (float)(0)) == 0))) {
       float[] values__143_21 = this.axialShadingType.EvalFunction(this.domain[0]);
@@ -109,13 +109,13 @@ public class AxialShadingContext
     global::DripSharp.Runtime.JavaRaster raster
       = this.GetColorModel().CreateCompatibleWritableRaster(w, h);
     bool useBackground;
-    int[] data = new int[((w * h) * 4)];
+    int[] data = new int[unchecked((unchecked((w * h)) * 4))];
     float[] values = new float[2];
     for (int j = 0; (j < h); j++) {
       for (int i = 0; (i < w); i++) {
         useBackground = false;
-        values[0] = (x + i);
-        values[1] = (y + j);
+        values[0] = unchecked((x + i));
+        values[1] = unchecked((y + j));
         global::DripSharp.Runtime.PdfCartonFontCompat.TransformPoints(this.rat, values, 0, values,
           0, 1);
         double inputValue = ((this.x1x0 * (values[0] - this.coords[0])) + (this.y1y0 * (values[1]
@@ -153,16 +153,17 @@ public class AxialShadingContext
         if (useBackground) {
           value = this.getRgbBackground();
         } else {
-          int key = (int)((inputValue * this.factor));
+          int key = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((inputValue
+            * this.factor))));
           value = this.colorTable[key];
         }
-        int index = (((j * w) + i) * 4);
+        int index = unchecked((unchecked((unchecked((j * w)) + i)) * 4));
         data[index] = (value & 255);
-        value >>= 8;
-        data[(index + 1)] = (value & 255);
-        value >>= 8;
-        data[(index + 2)] = (value & 255);
-        data[(index + 3)] = 255;
+        value >>= unchecked((int)(8));
+        data[unchecked((index + 1))] = (value & 255);
+        value >>= unchecked((int)(8));
+        data[unchecked((index + 2))] = (value & 255);
+        data[unchecked((index + 3))] = 255;
       }
     }
     raster.SetPixels(0, 0, w, h, data);
@@ -183,5 +184,10 @@ public class AxialShadingContext
 
   public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction GetFunction() {
     return this.axialShadingType.GetFunction();
+  }
+
+  static AxialShadingContext() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingContext).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

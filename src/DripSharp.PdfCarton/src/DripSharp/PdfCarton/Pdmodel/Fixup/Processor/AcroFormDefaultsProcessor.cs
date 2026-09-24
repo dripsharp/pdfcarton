@@ -56,4 +56,8 @@ public class AcroFormDefaultsProcessor
       ((global::DripSharp.PdfCarton.Cos.COSUpdateInfo)(fontDict)).SetNeedToBeUpdated(true);
     }
   }
+
+  static AcroFormDefaultsProcessor() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AbstractProcessor).TypeHandle);
+  }
 }

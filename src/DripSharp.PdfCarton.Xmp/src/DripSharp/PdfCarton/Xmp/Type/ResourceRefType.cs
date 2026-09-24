@@ -324,4 +324,8 @@ public class ResourceRefType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStru
       return default!;
     }
   }
+
+  static ResourceRefType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

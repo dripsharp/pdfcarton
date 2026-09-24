@@ -15,4 +15,8 @@ public class UnixFontDirFinder
         "/.fonts"), "/usr/local/fonts", "/usr/local/share/fonts", "/usr/share/fonts",
       "/usr/X11R6/lib/X11/fonts", "/usr/share/X11/fonts" };
   }
+
+  static UnixFontDirFinder() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.NativeFontDirFinder).TypeHandle);
+  }
 }

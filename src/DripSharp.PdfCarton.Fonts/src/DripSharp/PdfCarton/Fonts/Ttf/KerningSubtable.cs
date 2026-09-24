@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class KerningSubtable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const int COVERAGE_HORIZONTAL = 1;
 
@@ -78,8 +77,8 @@ public class KerningSubtable {
       kerning = new int[ng];
       for (int i = 0; (i < ng); ++i) {
         int l = glyphs[i];
-        int r = -1;
-        for (int k = (i + 1); (k < ng); ++k) {
+        int r = unchecked(-1);
+        for (int k = unchecked((i + 1)); (k < ng); ++k) {
           int g = glyphs[k];
           if ((g >= 0)) {
             r = g;
@@ -186,7 +185,9 @@ public class KerningSubtable {
 
     public virtual void Read(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
       int numPairs = data.ReadUnsignedShort();
-      int searchRange = (data.ReadUnsignedShort() / 6);
+      int searchRange
+        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(data.ReadUnsignedShort(),
+        6);
       int entrySelector = data.ReadUnsignedShort();
       int rangeShift = data.ReadUnsignedShort();
       this.pairs
@@ -218,5 +219,9 @@ public class KerningSubtable {
       }
       return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareInt(p1[1], p2[1]);
     }
+  }
+
+  static KerningSubtable() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

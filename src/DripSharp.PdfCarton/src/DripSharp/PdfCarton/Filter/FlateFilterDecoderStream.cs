@@ -9,23 +9,28 @@
 namespace DripSharp.PdfCarton.Filter;
 
 public sealed class FlateFilterDecoderStream : global::DripSharp.Runtime.JavaFilterInputStream {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private bool isEOF = false;
+  private bool isEOF;
 
-  private int currentDataIndex = 0;
+  private int currentDataIndex;
 
-  private int bytesDecoded = 0;
+  private int bytesDecoded;
 
-  private readonly sbyte[] buffer = new sbyte[2048];
+  private readonly sbyte[] buffer;
 
-  private readonly sbyte[] decodedData = new sbyte[4096];
+  private readonly sbyte[] decodedData;
 
-  private readonly global::DripSharp.Runtime.JavaInflater inflater
-    = new global::DripSharp.Runtime.JavaInflater(true);
+  private readonly global::DripSharp.Runtime.JavaInflater inflater;
 
   public FlateFilterDecoderStream(global::System.IO.Stream inputStream) : base(inputStream) {
+    this.isEOF = false;
+    this.currentDataIndex = 0;
+    this.bytesDecoded = 0;
+    this.buffer = new sbyte[2048];
+    this.decodedData = new sbyte[4096];
+    this.inflater = new global::DripSharp.Runtime.JavaInflater(true);
+
     global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in);
     global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in);
   }
@@ -39,7 +44,7 @@ public sealed class FlateFilterDecoderStream : global::DripSharp.Runtime.JavaFil
     }
     if (this.inflater.NeedsInput()) {
       int bytesRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in, this.buffer);
-      if ((bytesRead > -1)) {
+      if ((bytesRead > unchecked(-1))) {
         this.inflater.SetInput(this.buffer, 0, bytesRead);
       } else {
         this.isEOF = true;
@@ -62,7 +67,7 @@ public sealed class FlateFilterDecoderStream : global::DripSharp.Runtime.JavaFil
           countZeros = 0;
         }
       }
-      this.bytesDecoded = (this.decodedData.Length - countZeros);
+      this.bytesDecoded = unchecked((this.decodedData.Length - countZeros));
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Filter.FlateFilterDecoderStream.LOG,
         global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("FlateFilter: premature end of stream due to a DataFormatException = ",
         global::DripSharp.Runtime.JavaCompat.ExceptionMessage(exception))));
@@ -73,25 +78,26 @@ public sealed class FlateFilterDecoderStream : global::DripSharp.Runtime.JavaFil
 
   public override int Read() {
     if (this.isEOF) {
-      return -1;
+      return unchecked(-1);
     }
     if (((this.currentDataIndex == this.bytesDecoded) && !(this.fetch()))) {
-      return -1;
+      return unchecked(-1);
     }
     return (this.decodedData[this.currentDataIndex++] & 255);
   }
 
   public override int Read(sbyte[] data, int offset, int length) {
     if (this.isEOF) {
-      return -1;
+      return unchecked(-1);
     }
     int numberOfBytesRead = 0;
     while ((numberOfBytesRead < length)) {
-      int available = (this.bytesDecoded - this.currentDataIndex);
+      int available = unchecked((this.bytesDecoded - this.currentDataIndex));
       if ((available > 0)) {
-        int bytes2Copy = global::System.Math.Min((length - numberOfBytesRead), available);
+        int bytes2Copy = global::System.Math.Min(unchecked((length - numberOfBytesRead)),
+          available);
         global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.decodedData, this.currentDataIndex,
-          data, (numberOfBytesRead + offset), bytes2Copy);
+          data, unchecked((numberOfBytesRead + offset)), bytes2Copy);
         this.currentDataIndex += bytes2Copy;
         numberOfBytesRead += bytes2Copy;
       } else {
@@ -124,5 +130,9 @@ public sealed class FlateFilterDecoderStream : global::DripSharp.Runtime.JavaFil
 
   public override void Reset() {
     throw new global::System.IO.IOException("reset is not supported");
+  }
+
+  static FlateFilterDecoderStream() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

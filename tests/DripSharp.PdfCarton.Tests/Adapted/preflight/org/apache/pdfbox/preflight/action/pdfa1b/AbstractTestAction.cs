@@ -10,7 +10,7 @@ public abstract class AbstractTestAction {
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       nameof(global::DripSharp.PdfCarton.Loader.LoadPDF),
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
         "src/test/resources/pdfa-with-annotations-square.pdf")) });
     global::DripSharp.PdfCarton.Preflight.PreflightDocument preflightDocument
       = new global::DripSharp.PdfCarton.Preflight.PreflightDocument(doc.GetDocument(),

@@ -23,4 +23,8 @@ public class FillNonZeroRule
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillNonZero;
   }
+
+  static FillNonZeroRule() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor).TypeHandle);
+  }
 }

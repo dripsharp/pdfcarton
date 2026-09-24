@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Filter;
 
 public class LZWFilter : global::DripSharp.PdfCarton.Filter.Filter {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const long ClearTable = 256;
 
@@ -52,15 +51,16 @@ public class LZWFilter : global::DripSharp.PdfCarton.Filter.Filter {
           curr = global::DripSharp.Runtime.JavaCompat.ListGet(codeTable, (int)((int)nextCommand));
           global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, curr);
           if ((prev! != default!)) {
-            sbyte[] entry = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(prev!, (prev!.Length
-              + 1));
+            sbyte[] entry = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(prev!,
+              unchecked((prev!.Length + 1)));
             entry[prev!.Length] = unchecked((sbyte)(curr[0]));
             global::DripSharp.Runtime.JavaCompat.Add(codeTable, entry);
           }
         } else {
           if (((nextCommand == global::DripSharp.Runtime.JavaCompat.CollectionCount(codeTable))
             && (prev! != default!))) {
-            curr = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(prev!, (prev!.Length + 1));
+            curr = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(prev!, unchecked((prev!.Length
+              + 1)));
             curr[prev!.Length] = unchecked((sbyte)(prev![0]));
             global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, curr);
             global::DripSharp.Runtime.JavaCompat.Add(codeTable, curr);
@@ -87,52 +87,62 @@ public class LZWFilter : global::DripSharp.PdfCarton.Filter.Filter {
     global::System.Collections.Generic.IList<sbyte[]> codeTable
       = global::DripSharp.PdfCarton.Filter.LZWFilter.createCodeTable();
     int chunk = 9;
-    sbyte[] inputPattern = default!;
-    using (global::DripSharp.Runtime.JavaImageOutputStream @out
-      = new global::DripSharp.Runtime.JavaImageOutputStream(encoded)) {
-      @out.WriteBits(global::DripSharp.PdfCarton.Filter.LZWFilter.ClearTable, chunk);
-      int foundCode = -1;
-      int r;
-      while (((r = global::DripSharp.Runtime.JavaCompat.InputStreamRead(rawData)) != -1)) {
-        sbyte by = unchecked((sbyte)(unchecked((sbyte)(r))));
-        if ((inputPattern! == default!)) {
-          inputPattern = new sbyte[] { by };
-          foundCode = (by & 255);
-        } else {
-          inputPattern = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(inputPattern!,
-            (inputPattern!.Length + 1));
-          inputPattern![(inputPattern!.Length - 1)] = unchecked((sbyte)(by));
-          int newFoundCode = global::DripSharp.PdfCarton.Filter.LZWFilter.findPatternCode(codeTable,
-            inputPattern!);
-          if ((newFoundCode == -1)) {
-            chunk
-              = global::DripSharp.PdfCarton.Filter.LZWFilter.calculateChunk((global::DripSharp.Runtime.JavaCompat.CollectionCount(codeTable)
-              - 1), true);
-            @out.WriteBits((long)(foundCode), chunk);
-            global::DripSharp.Runtime.JavaCompat.Add(codeTable, inputPattern!);
-            if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(codeTable) == 4096)) {
-              @out.WriteBits(global::DripSharp.PdfCarton.Filter.LZWFilter.ClearTable, chunk);
-              codeTable = global::DripSharp.PdfCarton.Filter.LZWFilter.createCodeTable();
-            }
+    sbyte[] inputPattern = default!; {
+      global::DripSharp.Runtime.JavaImageOutputStream @out
+        = new global::DripSharp.Runtime.JavaImageOutputStream(encoded);
+      global::System.Exception __dripsharpPrimary_145_43_0 = null!;
+      try {
+        @out.WriteBits(global::DripSharp.PdfCarton.Filter.LZWFilter.ClearTable, chunk);
+        int foundCode = unchecked(-1);
+        int r;
+        while (((r = global::DripSharp.Runtime.JavaCompat.InputStreamRead(rawData))
+          != unchecked(-1))) {
+          sbyte by = unchecked((sbyte)(unchecked((sbyte)(r))));
+          if ((inputPattern! == default!)) {
             inputPattern = new sbyte[] { by };
             foundCode = (by & 255);
           } else {
-            foundCode = newFoundCode;
+            inputPattern = global::DripSharp.Runtime.JavaCompat.CopyOf<sbyte>(inputPattern!,
+              unchecked((inputPattern!.Length + 1)));
+            inputPattern![unchecked((inputPattern!.Length - 1))] = unchecked((sbyte)(by));
+            int newFoundCode
+              = global::DripSharp.PdfCarton.Filter.LZWFilter.findPatternCode(codeTable,
+              inputPattern!);
+            if ((newFoundCode == unchecked(-1))) {
+              chunk
+                = global::DripSharp.PdfCarton.Filter.LZWFilter.calculateChunk(unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(codeTable)
+                - 1)), true);
+              @out.WriteBits((long)(foundCode), chunk);
+              global::DripSharp.Runtime.JavaCompat.Add(codeTable, inputPattern!);
+              if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(codeTable) == 4096)) {
+                @out.WriteBits(global::DripSharp.PdfCarton.Filter.LZWFilter.ClearTable, chunk);
+                codeTable = global::DripSharp.PdfCarton.Filter.LZWFilter.createCodeTable();
+              }
+              inputPattern = new sbyte[] { by };
+              foundCode = (by & 255);
+            } else {
+              foundCode = newFoundCode;
+            }
           }
         }
-      }
-      if ((foundCode != -1)) {
+        if ((foundCode != unchecked(-1))) {
+          chunk
+            = global::DripSharp.PdfCarton.Filter.LZWFilter.calculateChunk(unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(codeTable)
+            - 1)), true);
+          @out.WriteBits((long)(foundCode), chunk);
+        }
         chunk
-          = global::DripSharp.PdfCarton.Filter.LZWFilter.calculateChunk((global::DripSharp.Runtime.JavaCompat.CollectionCount(codeTable)
-          - 1), true);
-        @out.WriteBits((long)(foundCode), chunk);
+          = global::DripSharp.PdfCarton.Filter.LZWFilter.calculateChunk(global::DripSharp.Runtime.JavaCompat.CollectionCount(codeTable),
+          true);
+        @out.WriteBits(global::DripSharp.PdfCarton.Filter.LZWFilter.Eod, chunk);
+        @out.WriteBits((long)(0), 7);
+        @out.Flush();
+      } catch (global::System.Exception __dripsharpCaught_145_43_0) {
+        __dripsharpPrimary_145_43_0 = __dripsharpCaught_145_43_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@out, __dripsharpPrimary_145_43_0);
       }
-      chunk
-        = global::DripSharp.PdfCarton.Filter.LZWFilter.calculateChunk(global::DripSharp.Runtime.JavaCompat.CollectionCount(codeTable),
-        true);
-      @out.WriteBits(global::DripSharp.PdfCarton.Filter.LZWFilter.Eod, chunk);
-      @out.WriteBits((long)(0), 7);
-      @out.Flush();
     }
   }
 
@@ -147,7 +157,7 @@ public class LZWFilter : global::DripSharp.PdfCarton.Filter.Filter {
         return i;
       }
     }
-    return -1;
+    return unchecked(-1);
   }
 
   private static global::System.Collections.Generic.IList<sbyte[]> createCodeTable() {
@@ -158,8 +168,7 @@ public class LZWFilter : global::DripSharp.PdfCarton.Filter.Filter {
     return codeTable;
   }
 
-  private static readonly global::System.Collections.Generic.IList<sbyte[]> INITIAL_CODE_TABLE
-    = global::DripSharp.PdfCarton.Filter.LZWFilter.createInitialCodeTable();
+  private static readonly global::System.Collections.Generic.IList<sbyte[]> INITIAL_CODE_TABLE;
 
   private static global::System.Collections.Generic.IList<sbyte[]> createInitialCodeTable() {
     global::System.Collections.Generic.IList<sbyte[]> codeTable
@@ -174,7 +183,7 @@ public class LZWFilter : global::DripSharp.PdfCarton.Filter.Filter {
   }
 
   private static int calculateChunk(int tabSize, bool earlyChange) {
-    int i = (tabSize + (earlyChange ? 1 : 0));
+    int i = unchecked((tabSize + (earlyChange ? 1 : 0)));
     if ((i >= 2048)) {
       return 12;
     }
@@ -185,5 +194,11 @@ public class LZWFilter : global::DripSharp.PdfCarton.Filter.Filter {
       return 10;
     }
     return 9;
+  }
+
+  static LZWFilter() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Filter.Filter).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    INITIAL_CODE_TABLE = global::DripSharp.PdfCarton.Filter.LZWFilter.createInitialCodeTable();
   }
 }

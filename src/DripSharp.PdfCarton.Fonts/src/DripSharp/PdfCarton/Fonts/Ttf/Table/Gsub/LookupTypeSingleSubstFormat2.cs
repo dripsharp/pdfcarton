@@ -31,4 +31,8 @@ public class LookupTypeSingleSubstFormat2
       this.GetSubstFormat(),
       global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(this.substituteGlyphIDs));
   }
+
+  static LookupTypeSingleSubstFormat2() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable).TypeHandle);
+  }
 }

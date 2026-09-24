@@ -67,4 +67,8 @@ public class PDActionRemoteGoTo : global::DripSharp.PdfCarton.Pdmodel.Interactiv
         break;
     }
   }
+
+  static PDActionRemoteGoTo() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
+  }
 }

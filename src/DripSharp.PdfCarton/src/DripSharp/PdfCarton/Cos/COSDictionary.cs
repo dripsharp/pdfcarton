@@ -10,23 +10,28 @@ namespace DripSharp.PdfCarton.Cos;
 
 public class COSDictionary : global::DripSharp.PdfCarton.Cos.COSBase,
 global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const string PATH_SEPARATOR = "/";
 
   protected internal global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSName,
-    global::DripSharp.PdfCarton.Cos.COSBase> Items
-    = new global::DripSharp.Runtime.JavaLinkedHashMap<global::DripSharp.PdfCarton.Cos.COSName,
-    global::DripSharp.PdfCarton.Cos.COSBase>();
+    global::DripSharp.PdfCarton.Cos.COSBase> Items;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSUpdateState updateState = null!;
 
   public COSDictionary() {
+    this.Items
+      = new global::DripSharp.Runtime.JavaLinkedHashMap<global::DripSharp.PdfCarton.Cos.COSName,
+      global::DripSharp.PdfCarton.Cos.COSBase>();
+
     this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
   }
 
   public COSDictionary(global::DripSharp.PdfCarton.Cos.COSDictionary dict) {
+    this.Items
+      = new global::DripSharp.Runtime.JavaLinkedHashMap<global::DripSharp.PdfCarton.Cos.COSName,
+      global::DripSharp.PdfCarton.Cos.COSBase>();
+
     this.updateState = new global::DripSharp.PdfCarton.Cos.COSUpdateState(this);
     this.AddAll(dict);
   }
@@ -426,7 +431,7 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
 
   public virtual int GetEmbeddedInt(global::DripSharp.PdfCarton.Cos.COSName embeddedDictionary,
     global::DripSharp.PdfCarton.Cos.COSName key) {
-    return this.GetEmbeddedInt(embeddedDictionary, key, -1);
+    return this.GetEmbeddedInt(embeddedDictionary, key, unchecked(-1));
   }
 
   public virtual int GetEmbeddedInt(global::DripSharp.PdfCarton.Cos.COSName embeddedDictionary,
@@ -437,11 +442,11 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
   }
 
   public virtual int GetInt(string key) {
-    return this.GetInt(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(key), -1);
+    return this.GetInt(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(key), unchecked(-1));
   }
 
   public virtual int GetInt(global::DripSharp.PdfCarton.Cos.COSName key) {
-    return this.GetInt(key, -1);
+    return this.GetInt(key, unchecked(-1));
   }
 
   public virtual int GetInt(string key, int defaultValue) {
@@ -454,7 +459,7 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
 
   public virtual int GetInt(global::DripSharp.PdfCarton.Cos.COSName firstKey,
     global::DripSharp.PdfCarton.Cos.COSName secondKey) {
-    return this.GetInt(firstKey, secondKey, -1);
+    return this.GetInt(firstKey, secondKey, unchecked(-1));
   }
 
   public virtual int GetInt(global::DripSharp.PdfCarton.Cos.COSName firstKey,
@@ -468,11 +473,11 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
   }
 
   public virtual long GetLong(string key) {
-    return this.GetLong(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(key), -1L);
+    return this.GetLong(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(key), unchecked(-1L));
   }
 
   public virtual long GetLong(global::DripSharp.PdfCarton.Cos.COSName key) {
-    return this.GetLong(key, -1L);
+    return this.GetLong(key, unchecked(-1L));
   }
 
   public virtual long GetLong(string key, long defaultValue) {
@@ -489,11 +494,12 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
   }
 
   public virtual float GetFloat(string key) {
-    return this.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(key), (float)(-1));
+    return this.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(key),
+      (float)(unchecked(-1)));
   }
 
   public virtual float GetFloat(global::DripSharp.PdfCarton.Cos.COSName key) {
-    return this.GetFloat(key, (float)(-1));
+    return this.GetFloat(key, (float)(unchecked(-1)));
   }
 
   public virtual float GetFloat(string key, float defaultValue) {
@@ -630,11 +636,20 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
         sb__1375_27.Append(";");
       }
       sb__1375_27.Append("}");
-      if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) {
-        using (global::System.IO.Stream stream
-          = ((global::DripSharp.PdfCarton.Cos.COSStream)(@base!)).CreateRawInputStream()) {
-          sbyte[] b = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(stream);
-          sb__1375_27.Append("COSStream{").Append(global::DripSharp.Runtime.JavaCompat.ArrayHash(b)).Append("}");
+      if ((@base is global::DripSharp.PdfCarton.Cos.COSStream)) { {
+          global::System.IO.Stream stream
+            = ((global::DripSharp.PdfCarton.Cos.COSStream)(@base!)).CreateRawInputStream();
+          global::System.Exception __dripsharpPrimary_1386_34_0 = null!;
+          try {
+            sbyte[] b = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(stream);
+            sb__1375_27.Append("COSStream{").Append(global::DripSharp.Runtime.JavaCompat.ArrayHash(b)).Append("}");
+          } catch (global::System.Exception __dripsharpCaught_1386_34_0) {
+            __dripsharpPrimary_1386_34_0 = __dripsharpCaught_1386_34_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(stream,
+              __dripsharpPrimary_1386_34_0);
+          }
         }
       }
       return sb__1375_27.ToString();
@@ -760,6 +775,11 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
       }
     }
     return indirectObjects;
+  }
+
+  static COSDictionary() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.COSBase).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   public virtual bool IsNeedToBeUpdated() {

@@ -26,4 +26,8 @@ public class OECFType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredT
   public OECFType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
   }
+
+  static OECFType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

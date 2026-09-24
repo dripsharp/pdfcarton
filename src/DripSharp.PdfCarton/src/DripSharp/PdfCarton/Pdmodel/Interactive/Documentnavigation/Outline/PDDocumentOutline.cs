@@ -27,4 +27,8 @@ public sealed class PDDocumentOutline
   public override void OpenNode() {}
 
   public override void CloseNode() {}
+
+  static PDDocumentOutline() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode).TypeHandle);
+  }
 }

@@ -11,8 +11,7 @@ public class TestInvalidFiles {
 
   private const string ISARTOR_FILES = "invalid.files";
 
-  protected internal static readonly global::Microsoft.Extensions.Logging.ILogger Log
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  protected internal static readonly global::Microsoft.Extensions.Logging.ILogger Log;
 
   private static global::DripSharp.PdfCarton.Preflight.Integration.InvalidFileTester tester = null!;
 
@@ -29,8 +28,8 @@ public class TestInvalidFiles {
   internal virtual void validate(global::DripSharp.Runtime.JavaFile path, string expectedError) {
     global::DripSharp.Runtime.JavaFileBridge.Call(global::DripSharp.PdfCarton.Preflight.Integration.TestInvalidFiles.tester,
       "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
-      new object[] { path, global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
-        expectedError) });
+      new object[] { (global::DripSharp.Runtime.JavaFile)path,
+        (string)global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight", expectedError) });
   }
 
   protected internal static global::System.Collections.Generic.ICollection<object[]> StopIfExpected() {
@@ -120,5 +119,9 @@ public class TestInvalidFiles {
     } finally {
       closeDown();
     }
+  }
+
+  static TestInvalidFiles() {
+    Log = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

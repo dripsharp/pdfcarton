@@ -124,6 +124,10 @@ global::DripSharp.PdfCarton.Contentstream.PDContentStream {
     }
   }
 
+  static PDTilingPattern() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDAbstractPattern).TypeHandle);
+  }
+
   public virtual global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForStreamParsing() {
     return this.GetContentsForRandomAccess();
   }

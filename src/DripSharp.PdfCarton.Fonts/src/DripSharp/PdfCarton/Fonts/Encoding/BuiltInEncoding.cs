@@ -13,4 +13,8 @@ public class BuiltInEncoding : global::DripSharp.PdfCarton.Fonts.Encoding.Encodi
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ForEach(codeToName,
       this.AddCharacterEncoding);
   }
+
+  static BuiltInEncoding() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Encoding.Encoding).TypeHandle);
+  }
 }

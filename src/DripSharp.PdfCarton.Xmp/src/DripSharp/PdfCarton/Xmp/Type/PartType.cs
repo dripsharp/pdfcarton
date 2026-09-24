@@ -14,4 +14,8 @@ public class PartType : global::DripSharp.PdfCarton.Xmp.Type.TextType {
     propertyName, value) {
 
   }
+
+  static PartType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType).TypeHandle);
+  }
 }

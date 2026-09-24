@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Multipdf;
 
 public class PDFCloneUtility {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument destination = null!;
 
@@ -81,11 +80,26 @@ public class PDFCloneUtility {
 
   private global::DripSharp.PdfCarton.Cos.COSStream cloneCOSStream(global::DripSharp.PdfCarton.Cos.COSStream stream) {
     global::DripSharp.PdfCarton.Cos.COSStream newStream
-      = this.destination.GetDocument().CreateCOSStream();
-    using (global::System.IO.Stream output
-      = newStream.CreateRawOutputStream()) using (global::System.IO.Stream input
-      = stream.CreateRawInputStream()) {
-      global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, output);
+      = this.destination.GetDocument().CreateCOSStream(); {
+      global::System.IO.Stream output = newStream.CreateRawOutputStream();
+      global::System.Exception __dripsharpPrimary_149_27_0 = null!;
+      try {
+        global::System.IO.Stream input = stream.CreateRawInputStream();
+        global::System.Exception __dripsharpPrimary_150_29_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, output);
+        } catch (global::System.Exception __dripsharpCaught_150_29_0) {
+          __dripsharpPrimary_150_29_0 = __dripsharpCaught_150_29_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(input, __dripsharpPrimary_150_29_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_149_27_0) {
+        __dripsharpPrimary_149_27_0 = __dripsharpCaught_149_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(output, __dripsharpPrimary_149_27_0);
+      }
     }
     global::DripSharp.Runtime.JavaCompat.MapPut(this.clonedVersion, stream, newStream);
     foreach (global::DripSharp.Runtime.JavaMapEntry<global::DripSharp.PdfCarton.Cos.COSName,
@@ -180,5 +194,9 @@ public class PDFCloneUtility {
       }
     }
     return false;
+  }
+
+  static PDFCloneUtility() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

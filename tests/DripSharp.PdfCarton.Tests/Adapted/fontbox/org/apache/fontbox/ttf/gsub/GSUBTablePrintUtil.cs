@@ -81,7 +81,7 @@ public class GSUBTablePrintUtil {
     global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder();
     foreach (int glyphId in glyphIDs) {
       sb.Append(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        this.getUnicodeChar(rawGSubTableData, cmap, glyphId)));
+        this.getUnicodeChar(rawGSubTableData, cmap, (int?)(glyphId))));
     }
     return sb.ToString();
   }

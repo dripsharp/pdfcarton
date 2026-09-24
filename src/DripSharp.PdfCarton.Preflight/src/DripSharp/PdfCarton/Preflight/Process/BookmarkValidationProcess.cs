@@ -224,4 +224,8 @@ public class BookmarkValidationProcess
     }
     return (global::DripSharp.PdfCarton.Cos.COSObject)(@base!);
   }
+
+  static BookmarkValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+  }
 }

@@ -5,17 +5,11 @@
 namespace DripSharp.PdfCarton.Multipdf;
 
 public class MergeAcroFormsTest {
-  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "src/test/resources/org/apache/pdfbox/multipdf"));
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR;
 
-  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/test-output/merge/"));
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR;
 
-  private static readonly global::DripSharp.Runtime.JavaFile TARGET_PDF_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/pdfs"));
+  private static readonly global::DripSharp.Runtime.JavaFile TARGET_PDF_DIR;
 
   internal static void setUp() {
     global::DripSharp.PdfCarton.Tests.Support.Mkdirs(global::DripSharp.PdfCarton.Multipdf.MergeAcroFormsTest.OUT_DIR);
@@ -37,51 +31,70 @@ public class MergeAcroFormsTest {
       merger.GetDestinationFileName(), null);
     global::DripSharp.Runtime.JavaFileBridge.Call(merger, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { toBeMerged });
+      new object[] { (global::DripSharp.Runtime.JavaFile)toBeMerged });
     merger.AddSource(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(toBeMerged)));
     merger.MergeDocuments((global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)default!);
     merger.SetAcroFormMergeMode(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode.PdfboxLegacyMode);
     global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.AcroFormMergeMode.PdfboxLegacyMode,
-      merger.GetAcroFormMergeMode(), null);
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument compliantDocument
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.MergeAcroFormsTest.IN_DIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBoxLegacyMerge-SameMerged.pdf")) })) using (global::DripSharp.PdfCarton.Pdmodel.PDDocument toBeCompared
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.MergeAcroFormsTest.OUT_DIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBoxLegacyMerge-SameMerged.pdf")) })) {
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm compliantAcroForm
-        = compliantDocument.GetDocumentCatalog().GetAcroForm();
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm toBeComparedAcroForm
-        = toBeCompared.GetDocumentCatalog().GetAcroForm();
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.CollectionCount(compliantAcroForm.GetFields()),
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(toBeComparedAcroForm.GetFields()),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be the same number of root fields"));
-      foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField compliantField__87_26 in compliantAcroForm.GetFieldTree()) {
-        global::DripSharp.Testing.JavaAssertions.NotNull(toBeComparedAcroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          compliantField__87_26.GetFullyQualifiedName())),
+      merger.GetAcroFormMergeMode(), null); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument compliantDocument
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.MergeAcroFormsTest.IN_DIR,
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "There shall be a field with the same FQN"));
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField toBeComparedField__91_25
-          = toBeComparedAcroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          compliantField__87_26.GetFullyQualifiedName()));
-        this.compareFieldProperties(compliantField__87_26, toBeComparedField__91_25);
-      }
-      foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField toBeComparedField__95_26 in toBeComparedAcroForm.GetFieldTree()) {
-        global::DripSharp.Testing.JavaAssertions.NotNull(compliantAcroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          toBeComparedField__95_26.GetFullyQualifiedName())),
-          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "There shall be a field with the same FQN"));
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField compliantField__99_25
-          = compliantAcroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          toBeComparedField__95_26.GetFullyQualifiedName()));
-        this.compareFieldProperties(toBeComparedField__95_26, compliantField__99_25);
+          "PDFBoxLegacyMerge-SameMerged.pdf")) });
+      global::System.Exception __dripsharpPrimary_75_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocument toBeCompared
+          = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+          "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+          new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.MergeAcroFormsTest.OUT_DIR,
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "PDFBoxLegacyMerge-SameMerged.pdf")) });
+        global::System.Exception __dripsharpPrimary_77_28_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm compliantAcroForm
+            = compliantDocument.GetDocumentCatalog().GetAcroForm();
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm toBeComparedAcroForm
+            = toBeCompared.GetDocumentCatalog().GetAcroForm();
+          global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.CollectionCount(compliantAcroForm.GetFields()),
+            global::DripSharp.Runtime.JavaCompat.CollectionCount(toBeComparedAcroForm.GetFields()),
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "There shall be the same number of root fields"));
+          foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField compliantField__87_26 in compliantAcroForm.GetFieldTree()) {
+            global::DripSharp.Testing.JavaAssertions.NotNull(toBeComparedAcroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              compliantField__87_26.GetFullyQualifiedName())),
+              global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              "There shall be a field with the same FQN"));
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField toBeComparedField__91_25
+              = toBeComparedAcroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              compliantField__87_26.GetFullyQualifiedName()));
+            this.compareFieldProperties(compliantField__87_26, toBeComparedField__91_25);
+          }
+          foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField toBeComparedField__95_26 in toBeComparedAcroForm.GetFieldTree()) {
+            global::DripSharp.Testing.JavaAssertions.NotNull(compliantAcroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              toBeComparedField__95_26.GetFullyQualifiedName())),
+              global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              "There shall be a field with the same FQN"));
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField compliantField__99_25
+              = compliantAcroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              toBeComparedField__95_26.GetFullyQualifiedName()));
+            this.compareFieldProperties(toBeComparedField__95_26, compliantField__99_25);
+          }
+        } catch (global::System.Exception __dripsharpCaught_77_28_0) {
+          __dripsharpPrimary_77_28_0 = __dripsharpCaught_77_28_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(toBeCompared,
+            __dripsharpPrimary_77_28_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_75_25_0) {
+        __dripsharpPrimary_75_25_0 = __dripsharpCaught_75_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(compliantDocument,
+          __dripsharpPrimary_75_25_0);
       }
     }
   }
@@ -128,30 +141,41 @@ public class MergeAcroFormsTest {
     merger.SetDestinationFileName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(pdfOutput)));
     global::DripSharp.Runtime.JavaFileBridge.Call(merger, "AddSource",
-      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { f1 });
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { (global::DripSharp.Runtime.JavaFile)f1 });
     global::DripSharp.Runtime.JavaFileBridge.Call(merger, "AddSource",
-      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { f2 });
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { (global::DripSharp.Runtime.JavaFile)f2 });
     merger.MergeDocuments((global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)default!);
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedPDF
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { pdfOutput })) {
-      global::DripSharp.Testing.JavaAssertions.Equal(2, mergedPDF.GetNumberOfPages(),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "There shall be 2 pages"));
-      global::DripSharp.Testing.JavaAssertions.NotNull(mergedPDF.GetPage(0).GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Annots),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be an /Annots entry for the first page"));
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(mergedPDF.GetPage(0).GetAnnotations()),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be 1 annotation for the first page"));
-      global::DripSharp.Testing.JavaAssertions.NotNull(mergedPDF.GetPage(1).GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Annots),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be an /Annots entry for the second page"));
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(mergedPDF.GetPage(0).GetAnnotations()),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be 1 annotation for the second page"));
+    {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedPDF
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)pdfOutput });
+      global::System.Exception __dripsharpPrimary_154_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(2, mergedPDF.GetNumberOfPages(),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "There shall be 2 pages"));
+        global::DripSharp.Testing.JavaAssertions.NotNull(mergedPDF.GetPage(0).GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Annots),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be an /Annots entry for the first page"));
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(mergedPDF.GetPage(0).GetAnnotations()),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be 1 annotation for the first page"));
+        global::DripSharp.Testing.JavaAssertions.NotNull(mergedPDF.GetPage(1).GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Annots),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be an /Annots entry for the second page"));
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(mergedPDF.GetPage(0).GetAnnotations()),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be 1 annotation for the second page"));
+      } catch (global::System.Exception __dripsharpCaught_154_25_0) {
+        __dripsharpPrimary_154_25_0 = __dripsharpCaught_154_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(mergedPDF, __dripsharpPrimary_154_25_0);
+      }
     }
   }
 
@@ -170,35 +194,46 @@ public class MergeAcroFormsTest {
     merger.SetDestinationFileName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(pdfOutput)));
     global::DripSharp.Runtime.JavaFileBridge.Call(merger, "AddSource",
-      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file1 });
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { (global::DripSharp.Runtime.JavaFile)file1 });
     global::DripSharp.Runtime.JavaFileBridge.Call(merger, "AddSource",
-      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file2 });
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { (global::DripSharp.Runtime.JavaFile)file2 });
     merger.MergeDocuments((global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction)default!);
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedPDF
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { pdfOutput })) {
-      global::DripSharp.Testing.JavaAssertions.Equal(2, mergedPDF.GetNumberOfPages(),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "There shall be 2 pages"));
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
-        = mergedPDF.GetDocumentCatalog().GetAcroForm();
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField formField
-        = acroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Testfeld"));
-      global::DripSharp.Testing.JavaAssertions.NotNull(formField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ap),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be an /AP entry for the field"));
-      global::DripSharp.Testing.JavaAssertions.NotNull(formField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be a /V entry for the field"));
-      formField = acroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Testfeld2"));
-      global::DripSharp.Testing.JavaAssertions.NotNull(formField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ap),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be an /AP entry for the field"));
-      global::DripSharp.Testing.JavaAssertions.NotNull(formField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "There shall be a /V entry for the field"));
+    {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedPDF
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)pdfOutput });
+      global::System.Exception __dripsharpPrimary_189_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(2, mergedPDF.GetNumberOfPages(),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "There shall be 2 pages"));
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
+          = mergedPDF.GetDocumentCatalog().GetAcroForm();
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField formField
+          = acroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Testfeld"));
+        global::DripSharp.Testing.JavaAssertions.NotNull(formField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ap),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be an /AP entry for the field"));
+        global::DripSharp.Testing.JavaAssertions.NotNull(formField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be a /V entry for the field"));
+        formField = acroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Testfeld2"));
+        global::DripSharp.Testing.JavaAssertions.NotNull(formField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ap),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be an /AP entry for the field"));
+        global::DripSharp.Testing.JavaAssertions.NotNull(formField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "There shall be a /V entry for the field"));
+      } catch (global::System.Exception __dripsharpCaught_189_25_0) {
+        __dripsharpPrimary_189_25_0 = __dripsharpCaught_189_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(mergedPDF, __dripsharpPrimary_189_25_0);
+      }
     }
   }
 
@@ -232,10 +267,23 @@ public class MergeAcroFormsTest {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     setUp();
     return true;
+  }
+
+  static MergeAcroFormsTest() {
+    IN_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "src/test/resources/org/apache/pdfbox/multipdf"));
+    OUT_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/test-output/merge/"));
+    TARGET_PDF_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/pdfs"));
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

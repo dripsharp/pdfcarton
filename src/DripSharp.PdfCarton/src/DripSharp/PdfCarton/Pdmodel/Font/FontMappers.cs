@@ -14,8 +14,11 @@ public sealed class FontMappers {
   private FontMappers() {}
 
   internal class DefaultFontMapper {
-    internal static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper INSTANCE
-      = new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl();
+    internal static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper INSTANCE;
+
+    static DefaultFontMapper() {
+      INSTANCE = new global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl();
+    }
   }
 
   public static global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper Instance() {

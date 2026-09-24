@@ -22,4 +22,8 @@ public class CIDKeyedType2CharString : global::DripSharp.PdfCarton.Fonts.Cff.Typ
   public virtual int GetCID() {
     return this.cid;
   }
+
+  static CIDKeyedType2CharString() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString).TypeHandle);
+  }
 }

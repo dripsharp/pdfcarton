@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 internal class Type5ShadingPaint
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingPaint<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType5> {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   internal Type5ShadingPaint(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType5 shading,
     global::DripSharp.PdfCarton.Util.Matrix matrix) : base(shading, matrix) {
@@ -35,5 +34,10 @@ internal class Type5ShadingPaint
       return global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0,
         0).CreateContext(cm, deviceBounds, userBounds, xform, hints);
     }
+  }
+
+  static Type5ShadingPaint() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingPaint<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType5>).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

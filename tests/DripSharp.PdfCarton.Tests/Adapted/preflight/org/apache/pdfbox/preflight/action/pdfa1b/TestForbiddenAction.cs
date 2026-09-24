@@ -111,4 +111,8 @@ public class TestForbiddenAction
     } finally {
     }
   }
+
+  static TestForbiddenAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.Pdfa1b.AbstractTestAction).TypeHandle);
+  }
 }

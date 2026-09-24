@@ -29,4 +29,8 @@ public class FlashType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructured
   public FlashType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
   }
+
+  static FlashType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

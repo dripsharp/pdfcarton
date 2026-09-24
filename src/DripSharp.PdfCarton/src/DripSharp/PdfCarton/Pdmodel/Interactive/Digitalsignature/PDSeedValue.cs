@@ -9,12 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 
 public class PDSeedValue : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-  private static readonly global::System.Collections.Generic.IList<string> allowedDigestNames
-    = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Cos.COSName.DigestSha1.GetName(),
-    global::DripSharp.PdfCarton.Cos.COSName.DigestSha256.GetName(),
-    global::DripSharp.PdfCarton.Cos.COSName.DigestSha384.GetName(),
-    global::DripSharp.PdfCarton.Cos.COSName.DigestSha512.GetName(),
-    global::DripSharp.PdfCarton.Cos.COSName.DigestRipemd160.GetName());
+  private static readonly global::System.Collections.Generic.IList<string> allowedDigestNames;
 
   public const int FlagFilter = 1;
 
@@ -234,6 +229,15 @@ public class PDSeedValue : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjecta
   public virtual void SetLegalAttestation(global::System.Collections.Generic.IList<string> legalAttestation) {
     this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.LegalAttestation,
       global::DripSharp.PdfCarton.Cos.COSArray.OfCOSStrings(legalAttestation));
+  }
+
+  static PDSeedValue() {
+    allowedDigestNames
+      = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Cos.COSName.DigestSha1.GetName(),
+      global::DripSharp.PdfCarton.Cos.COSName.DigestSha256.GetName(),
+      global::DripSharp.PdfCarton.Cos.COSName.DigestSha384.GetName(),
+      global::DripSharp.PdfCarton.Cos.COSName.DigestSha512.GetName(),
+      global::DripSharp.PdfCarton.Cos.COSName.DigestRipemd160.GetName());
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

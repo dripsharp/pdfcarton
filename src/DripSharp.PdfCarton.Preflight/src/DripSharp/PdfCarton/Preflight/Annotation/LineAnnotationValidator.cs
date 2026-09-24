@@ -10,11 +10,12 @@ namespace DripSharp.PdfCarton.Preflight.Annotation;
 
 public class LineAnnotationValidator
 : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine PdLine
-    = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine PdLine;
 
   public LineAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
     global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdLine = default!;
+
     this.PdLine
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine(annotDictionary);
     this.PdAnnot = this.PdLine;
@@ -37,5 +38,9 @@ public class LineAnnotationValidator
 
   protected internal override bool CheckSpecificMandatoryFields() {
     return this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.L);
+  }
+
+  static LineAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator).TypeHandle);
   }
 }

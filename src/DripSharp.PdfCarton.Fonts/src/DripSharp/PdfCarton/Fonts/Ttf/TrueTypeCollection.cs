@@ -79,17 +79,46 @@ public class TrueTypeCollection : global::System.IDisposable {
   }
 
   internal static void __JavaFile_ProcessAllFontHeaders(global::DripSharp.Runtime.JavaFile ttcFile,
-    global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontHeadersProcessor trueTypeFontProcessor) {
-    using (global::DripSharp.PdfCarton.IO.RandomAccessRead read
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(ttcFile)) using (global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadUnbufferedDataStream(read)) using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection ttc
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection(stream)) {
-      for (int i = 0; (i < ttc.numFonts); i++) {
-        global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser parser
-          = ttc.createFontParserAtIndexAndSeek(i);
-        global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders headers
-          = parser.parseTableHeaders(new global::DripSharp.PdfCarton.Fonts.Ttf.TTCDataStream(ttc.stream));
-        trueTypeFontProcessor.Process(headers);
+    global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection.TrueTypeFontHeadersProcessor trueTypeFontProcessor) { {
+      global::DripSharp.PdfCarton.IO.RandomAccessRead read
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(ttcFile);
+      global::System.Exception __dripsharpPrimary_139_34_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream stream
+          = new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadUnbufferedDataStream(read);
+        global::System.Exception __dripsharpPrimary_140_31_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection ttc
+            = new global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeCollection(stream);
+          global::System.Exception __dripsharpPrimary_141_36_0 = null!;
+          try {
+            for (int i = 0; (i < ttc.numFonts); i++) {
+              global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser parser
+                = ttc.createFontParserAtIndexAndSeek(i);
+              global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders headers
+                = parser.parseTableHeaders(new global::DripSharp.PdfCarton.Fonts.Ttf.TTCDataStream(ttc.stream));
+              trueTypeFontProcessor.Process(headers);
+            }
+          } catch (global::System.Exception __dripsharpCaught_141_36_0) {
+            __dripsharpPrimary_141_36_0 = __dripsharpCaught_141_36_0;
+            throw;
+          } finally {
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(ttc,
+              __dripsharpPrimary_141_36_0);
+          }
+        } catch (global::System.Exception __dripsharpCaught_140_31_0) {
+          __dripsharpPrimary_140_31_0 = __dripsharpCaught_140_31_0;
+          throw;
+        } finally {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(stream,
+            __dripsharpPrimary_140_31_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_139_34_0) {
+        __dripsharpPrimary_139_34_0 = __dripsharpCaught_139_34_0;
+        throw;
+      } finally {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(read,
+          __dripsharpPrimary_139_34_0);
       }
     }
   }

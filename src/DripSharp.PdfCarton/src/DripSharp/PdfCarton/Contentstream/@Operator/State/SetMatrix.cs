@@ -53,4 +53,8 @@ public class SetMatrix : global::DripSharp.PdfCarton.Contentstream.@Operator.Ope
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetMatrix;
   }
+
+  static SetMatrix() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

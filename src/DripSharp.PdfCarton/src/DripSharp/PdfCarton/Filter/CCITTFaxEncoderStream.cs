@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutputStream {
-  private int currentBufferLength = 0;
+  private int currentBufferLength;
 
   private sbyte[] inputBuffer = null!;
 
@@ -23,15 +23,15 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
 
   private int[] changesReferenceRow = null!;
 
-  private int currentRow = 0;
+  private int currentRow;
 
-  private int changesCurrentRowLength = 0;
+  private int changesCurrentRowLength;
 
-  private int changesReferenceRowLength = 0;
+  private int changesReferenceRowLength;
 
-  private sbyte outputBuffer = unchecked((sbyte)(0));
+  private sbyte outputBuffer;
 
-  private sbyte outputBufferBitLength = unchecked((sbyte)(0));
+  private sbyte outputBufferBitLength;
 
   private readonly int fillOrder = default;
 
@@ -39,13 +39,21 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
 
   internal CCITTFaxEncoderStream(global::System.IO.Stream stream, int columns, int rows,
     int fillOrder) {
+    this.currentBufferLength = 0;
+    this.currentRow = 0;
+    this.changesCurrentRowLength = 0;
+    this.changesReferenceRowLength = 0;
+    this.outputBuffer = unchecked((sbyte)(0));
+    this.outputBufferBitLength = unchecked((sbyte)(0));
+
     this.stream = stream;
     this.columns = columns;
     this.rows = rows;
     this.fillOrder = fillOrder;
     this.changesReferenceRow = new int[columns];
     this.changesCurrentRow = new int[columns];
-    this.inputBufferLength = ((columns + 7) / 8);
+    this.inputBufferLength = global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((columns
+      + 7)), 8);
     this.inputBuffer = new sbyte[this.inputBufferLength];
   }
 
@@ -79,9 +87,10 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
     int index = 0;
     bool white = true;
     while ((index < this.columns)) {
-      int byteIndex = (index / 8);
-      int bit = (index % 8);
-      if (((((this.inputBuffer[byteIndex] >> unchecked((int)((7 - bit)))) & 1) == 1) == white)) {
+      int byteIndex = global::DripSharp.Runtime.JavaCompat.IntegralDivide(index, 8);
+      int bit = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(index, 8);
+      if (((((this.inputBuffer[byteIndex] >> unchecked((int)(unchecked((7 - bit))))) & 1) == 1)
+        == white)) {
         this.changesCurrentRow[this.changesCurrentRowLength] = index;
         this.changesCurrentRowLength++;
         white = !white;
@@ -105,8 +114,8 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
     for (int i = 0; (i < this.changesCurrentRowLength); i++) {
       if (((pos < this.changesCurrentRow[i]) || ((pos == 0) && white))) {
         result[0] = this.changesCurrentRow[i];
-        if (((i + 1) < this.changesCurrentRowLength)) {
-          result[1] = this.changesCurrentRow[(i + 1)];
+        if ((unchecked((i + 1)) < this.changesCurrentRowLength)) {
+          result[1] = this.changesCurrentRow[unchecked((i + 1))];
         }
         break;
       }
@@ -115,22 +124,25 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
   }
 
   private void writeRun(int runLength, bool white) {
-    int nonterm = (runLength / 64);
+    int nonterm = global::DripSharp.Runtime.JavaCompat.IntegralDivide(runLength, 64);
     global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.Code[] codes = (white
       ? global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.WHITE_NONTERMINATING_CODES
       : global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.BLACK_NONTERMINATING_CODES);
     while ((nonterm > 0)) {
       if ((nonterm >= codes.Length)) {
-        this.write(codes[(codes.Length - 1)].code, codes[(codes.Length - 1)].length);
+        this.write(codes[unchecked((codes.Length - 1))].code, codes[unchecked((codes.Length
+          - 1))].length);
         nonterm -= codes.Length;
       } else {
-        this.write(codes[(nonterm - 1)].code, codes[(nonterm - 1)].length);
+        this.write(codes[unchecked((nonterm - 1))].code, codes[unchecked((nonterm - 1))].length);
         nonterm = 0;
       }
     }
     global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.Code c = (white
-      ? global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.WHITE_TERMINATING_CODES[(runLength % 64)]
-      : global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.BLACK_TERMINATING_CODES[(runLength % 64)]);
+      ? global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.WHITE_TERMINATING_CODES[global::DripSharp.Runtime.JavaCompat.IntegralRemainder(runLength,
+      64)]
+      : global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.BLACK_TERMINATING_CODES[global::DripSharp.Runtime.JavaCompat.IntegralRemainder(runLength,
+      64)]);
     this.write(c.code, c.length);
   }
 
@@ -140,15 +152,15 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
     while ((index < this.columns)) {
       int[] nextChanges = this.getNextChanges(index, white);
       int[] nextRefs = this.getNextRefChanges(index, white);
-      int difference = (nextChanges[0] - nextRefs[0]);
+      int difference = unchecked((nextChanges[0] - nextRefs[0]));
       if ((nextChanges[0] > nextRefs[1])) {
         this.write(1, 4);
         index = nextRefs[1];
       } else {
-        if (((difference > 3) || (difference < -3))) {
+        if (((difference > 3) || (difference < unchecked(-3)))) {
           this.write(1, 3);
-          this.writeRun((nextChanges[0] - index), white);
-          this.writeRun((nextChanges[1] - nextChanges[0]), !white);
+          this.writeRun(unchecked((nextChanges[0] - index)), white);
+          this.writeRun(unchecked((nextChanges[1] - nextChanges[0])), !white);
           index = nextChanges[1];
         } else {
           switch (difference) {
@@ -164,20 +176,20 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
             case var __case_204_26_0 when __case_204_26_0 == 3:
               this.write(3, 7);
               break;
-            case var __case_207_26_0 when __case_207_26_0 == -1:
+            case var __case_207_26_0 when __case_207_26_0 == unchecked(-1):
               this.write(2, 3);
               break;
-            case var __case_210_26_0 when __case_210_26_0 == -2:
+            case var __case_210_26_0 when __case_210_26_0 == unchecked(-2):
               this.write(2, 6);
               break;
-            case var __case_213_26_0 when __case_213_26_0 == -3:
+            case var __case_213_26_0 when __case_213_26_0 == unchecked(-3):
               this.write(2, 7);
               break;
             default:
               break;
           }
           white = !white;
-          index = (nextRefs[0] + difference);
+          index = unchecked((nextRefs[0] + difference));
         }
       }
     }
@@ -188,8 +200,8 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
     for (int i = (white ? 0 : 1); (i < this.changesReferenceRowLength); i += 2) {
       if (((this.changesReferenceRow[i] > a0) || ((a0 == 0) && (i == 0)))) {
         result[0] = this.changesReferenceRow[i];
-        if (((i + 1) < this.changesReferenceRowLength)) {
-          result[1] = this.changesReferenceRow[(i + 1)];
+        if ((unchecked((i + 1)) < this.changesReferenceRowLength)) {
+          result[1] = this.changesReferenceRow[unchecked((i + 1))];
         }
         break;
       }
@@ -199,14 +211,22 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
 
   private void write(int code, int codeLength) {
     for (int i = 0; (i < codeLength); i++) {
-      bool codeBit = (((code >> unchecked((int)(((codeLength - i) - 1)))) & 1) == 1);
+      bool codeBit = (((code >> unchecked((int)(unchecked((unchecked((codeLength - i)) - 1))))) & 1)
+        == 1);
       if ((this.fillOrder
         == global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.FillLeftToRight)) {
-        global::DripSharp.Runtime.JavaCompat.OrAssign(ref this.outputBuffer, (codeBit
-          ? (1 << unchecked((int)((7 - (this.outputBufferBitLength % 8))))) : 0));
+        global::DripSharp.Runtime.JavaCompat.CompoundAssign(ref this.outputBuffer,
+          __dripsharpValue_244_17_0
+          => unchecked((sbyte)((unchecked((byte)(__dripsharpValue_244_17_0)) | (codeBit
+          ? (1 << unchecked((int)(unchecked((7
+          - global::DripSharp.Runtime.JavaCompat.IntegralRemainder(this.outputBufferBitLength,
+          8)))))) : 0)))));
       } else {
-        global::DripSharp.Runtime.JavaCompat.OrAssign(ref this.outputBuffer, (codeBit
-          ? (1 << unchecked((int)((this.outputBufferBitLength % 8)))) : 0));
+        global::DripSharp.Runtime.JavaCompat.CompoundAssign(ref this.outputBuffer,
+          __dripsharpValue_247_17_0
+          => unchecked((sbyte)((unchecked((byte)(__dripsharpValue_247_17_0)) | (codeBit
+          ? (1 << unchecked((int)(global::DripSharp.Runtime.JavaCompat.IntegralRemainder(this.outputBufferBitLength,
+          8)))) : 0)))));
       }
       this.outputBufferBitLength++;
       if (((int)(this.outputBufferBitLength) == 8)) {
@@ -264,7 +284,7 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
       for (int i__296_18 = 0;
         (i__296_18 < global::DripSharp.PdfCarton.Filter.CCITTFaxDecoderStream.WhiteCodes.Length);
         i__296_18++) {
-        int bitLength__297_17 = (i__296_18 + 4);
+        int bitLength__297_17 = unchecked((i__296_18 + 4));
         for (int j__298_22 = 0;
           (j__298_22 < global::DripSharp.PdfCarton.Filter.CCITTFaxDecoderStream.WhiteCodes[i__296_18].Length);
           j__298_22++) {
@@ -277,8 +297,8 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
               = new global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.Code(code__300_21,
               bitLength__297_17);
           } else {
-            global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.WHITE_NONTERMINATING_CODES[((value__299_21
-              / 64) - 1)]
+            global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.WHITE_NONTERMINATING_CODES[unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(value__299_21,
+              64) - 1))]
               = new global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.Code(code__300_21,
               bitLength__297_17);
           }
@@ -291,7 +311,7 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
       for (int i__313_18 = 0;
         (i__313_18 < global::DripSharp.PdfCarton.Filter.CCITTFaxDecoderStream.BLACK_CODES.Length);
         i__313_18++) {
-        int bitLength__314_17 = (i__313_18 + 2);
+        int bitLength__314_17 = unchecked((i__313_18 + 2));
         for (int j__315_22 = 0;
           (j__315_22 < global::DripSharp.PdfCarton.Filter.CCITTFaxDecoderStream.BLACK_CODES[i__313_18].Length);
           j__315_22++) {
@@ -304,8 +324,8 @@ internal sealed class CCITTFaxEncoderStream : global::DripSharp.Runtime.JavaOutp
               = new global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.Code(code__317_21,
               bitLength__314_17);
           } else {
-            global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.BLACK_NONTERMINATING_CODES[((value__316_21
-              / 64) - 1)]
+            global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.BLACK_NONTERMINATING_CODES[unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(value__316_21,
+              64) - 1))]
               = new global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream.Code(code__317_21,
               bitLength__314_17);
           }

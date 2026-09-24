@@ -10,11 +10,19 @@ public class GlyphSubstitutionTableLiberationFontTest {
   internal virtual void setUp() {
     global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser otfParser
       = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser();
-    string fontPath = "src/test/resources/ttf/LiberationSans-Regular.ttf";
-    using (global::DripSharp.PdfCarton.IO.RandomAccessRead fontFile
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      fontPath))) {
-      this.font = otfParser.Parse(fontFile);
+    string fontPath = "src/test/resources/ttf/LiberationSans-Regular.ttf"; {
+      global::DripSharp.PdfCarton.IO.RandomAccessRead fontFile
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        fontPath));
+      global::System.Exception __dripsharpPrimary_56_31_0 = null!;
+      try {
+        this.font = otfParser.Parse(fontFile);
+      } catch (global::System.Exception __dripsharpCaught_56_31_0) {
+        __dripsharpPrimary_56_31_0 = __dripsharpCaught_56_31_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(fontFile, __dripsharpPrimary_56_31_0);
+      }
     }
   }
 

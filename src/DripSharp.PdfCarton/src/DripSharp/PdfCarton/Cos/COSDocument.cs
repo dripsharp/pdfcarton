@@ -9,35 +9,29 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public class COSDocument : global::DripSharp.PdfCarton.Cos.COSBase, global::System.IDisposable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private float version = 1.4F;
-
-  private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
-    global::DripSharp.PdfCarton.Cos.COSObject> objectPool
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
-    global::DripSharp.PdfCarton.Cos.COSObject>();
+  private float version;
 
   private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
-    long> xrefTable
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
-    long>();
+    global::DripSharp.PdfCarton.Cos.COSObject> objectPool;
 
-  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSStream> streams
-    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSStream>();
+  private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+    long> xrefTable;
+
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSStream> streams;
 
   private global::DripSharp.PdfCarton.Cos.COSDictionary trailer = null!;
 
-  private bool __field_isDecrypted = false;
+  private bool __field_isDecrypted;
 
   private long startXref = default;
 
-  private bool closed = false;
+  private bool closed;
 
   private bool __field_isXRefStream = default;
 
-  private bool __field_hasHybridXRef = false;
+  private bool __field_hasHybridXRef;
 
   private readonly global::DripSharp.PdfCarton.IO.RandomAccessStreamCache streamCache = null!;
 
@@ -45,8 +39,7 @@ public class COSDocument : global::DripSharp.PdfCarton.Cos.COSBase, global::Syst
 
   private readonly global::DripSharp.PdfCarton.Cos.ICOSParser parser = null!;
 
-  private readonly global::DripSharp.PdfCarton.Cos.COSDocumentState documentState
-    = new global::DripSharp.PdfCarton.Cos.COSDocumentState();
+  private readonly global::DripSharp.PdfCarton.Cos.COSDocumentState documentState;
 
   public COSDocument()
   : this(global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache()) {
@@ -65,6 +58,20 @@ public class COSDocument : global::DripSharp.PdfCarton.Cos.COSBase, global::Syst
 
   public COSDocument(global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCacheCreateFunction,
     global::DripSharp.PdfCarton.Cos.ICOSParser parser) {
+    this.version = 1.4F;
+    this.objectPool
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+      global::DripSharp.PdfCarton.Cos.COSObject>();
+    this.xrefTable
+      = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
+      long>();
+    this.streams
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Cos.COSStream>();
+    this.__field_isDecrypted = false;
+    this.closed = false;
+    this.__field_hasHybridXRef = false;
+    this.documentState = new global::DripSharp.PdfCarton.Cos.COSDocumentState();
+
     this.streamCache = this.getStreamCache(streamCacheCreateFunction);
     this.parser = parser;
   }
@@ -311,5 +318,10 @@ public class COSDocument : global::DripSharp.PdfCarton.Cos.COSBase, global::Syst
 
   public virtual global::DripSharp.PdfCarton.Cos.COSDocumentState GetDocumentState() {
     return this.documentState;
+  }
+
+  static COSDocument() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.COSBase).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

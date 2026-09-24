@@ -17,4 +17,8 @@ public class XObjPostscriptValidator
   }
 
   protected internal override void CheckMandatoryFields() {}
+
+  static XObjPostscriptValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Xobject.AbstractXObjValidator).TypeHandle);
+  }
 }

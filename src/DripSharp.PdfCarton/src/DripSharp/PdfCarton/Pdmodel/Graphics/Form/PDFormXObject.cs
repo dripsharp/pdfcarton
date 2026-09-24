@@ -139,6 +139,10 @@ global::DripSharp.PdfCarton.Contentstream.PDContentStream {
     this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Oc, oc);
   }
 
+  static PDFormXObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject).TypeHandle);
+  }
+
   public virtual global::DripSharp.PdfCarton.IO.RandomAccessRead GetContentsForStreamParsing() {
     return this.GetContentsForRandomAccess();
   }

@@ -122,8 +122,8 @@ internal class CoonsPatch : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.CoordinateColorPair[][] patchCC
       = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.CoordinateColorPair>(szV,
       szU);
-    double stepV = ((double)1 / (szV - 1));
-    double stepU = ((double)1 / (szU - 1));
+    double stepV = ((double)1 / unchecked((szV - 1)));
+    double stepU = ((double)1 / unchecked((szU - 1)));
     double v = -stepV;
     for (int i = 0; (i < szV); i++) {
       v += stepV;
@@ -156,5 +156,9 @@ internal class CoonsPatch : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading
       }
     }
     return patchCC;
+  }
+
+  static CoonsPatch() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Patch).TypeHandle);
   }
 }

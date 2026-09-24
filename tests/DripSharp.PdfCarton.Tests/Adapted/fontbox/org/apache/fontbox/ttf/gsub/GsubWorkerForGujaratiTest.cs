@@ -11,14 +11,22 @@ public class GsubWorkerForGujaratiTest {
 
   private global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker gsubWorkerForGujarati = null!;
 
-  internal virtual void init() {
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForGujaratiTest.LOHIT_GUJARATI_TTF)))) {
-      this.cmapLookup = ttf.GetUnicodeCmapLookup();
-      this.gsubWorkerForGujarati
-        = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerFactory().GetGsubWorker(this.cmapLookup,
-        ttf.GetGsubData());
+  internal virtual void init() { {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForGujaratiTest.LOHIT_GUJARATI_TTF)));
+      global::System.Exception __dripsharpPrimary_55_27_0 = null!;
+      try {
+        this.cmapLookup = ttf.GetUnicodeCmapLookup();
+        this.gsubWorkerForGujarati
+          = new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerFactory().GetGsubWorker(this.cmapLookup,
+          ttf.GetGsubData());
+      } catch (global::System.Exception __dripsharpCaught_55_27_0) {
+        __dripsharpPrimary_55_27_0 = __dripsharpCaught_55_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(ttf, __dripsharpPrimary_55_27_0);
+      }
     }
   }
 

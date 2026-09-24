@@ -22,12 +22,12 @@ internal class TensorPatch : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shadin
       4);
     for (int i__50_18 = 0; (i__50_18 <= 3); i__50_18++) {
       square[0][i__50_18] = tcp[i__50_18];
-      square[3][i__50_18] = tcp[(9 - i__50_18)];
+      square[3][i__50_18] = tcp[unchecked((9 - i__50_18))];
     }
     for (int i__55_18 = 1; (i__55_18 <= 2); i__55_18++) {
-      square[i__55_18][0] = tcp[(12 - i__55_18)];
-      square[i__55_18][2] = tcp[(12 + i__55_18)];
-      square[i__55_18][3] = tcp[(3 + i__55_18)];
+      square[i__55_18][0] = tcp[unchecked((12 - i__55_18))];
+      square[i__55_18][2] = tcp[unchecked((12 + i__55_18))];
+      square[i__55_18][3] = tcp[unchecked((3 + i__55_18))];
     }
     square[1][1] = tcp[12];
     square[2][1] = tcp[15];
@@ -116,7 +116,7 @@ internal class TensorPatch : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shadin
     global::DripSharp.Runtime.JavaPoint2D[] implicitEdge
       = new global::DripSharp.Runtime.JavaPoint2D[4];
     for (int i = 0; (i < 4); i++) {
-      implicitEdge[i] = base.ControlPoints[3][(3 - i)];
+      implicitEdge[i] = base.ControlPoints[3][unchecked((3 - i))];
     }
     return implicitEdge;
   }
@@ -125,7 +125,7 @@ internal class TensorPatch : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shadin
     global::DripSharp.Runtime.JavaPoint2D[] implicitEdge
       = new global::DripSharp.Runtime.JavaPoint2D[4];
     for (int i = 0; (i < 4); i++) {
-      implicitEdge[i] = base.ControlPoints[(3 - i)][0];
+      implicitEdge[i] = base.ControlPoints[unchecked((3 - i))][0];
     }
     return implicitEdge;
   }
@@ -139,8 +139,8 @@ internal class TensorPatch : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shadin
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.CoordinateColorPair[][] patchCC
       = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.CoordinateColorPair>(szV,
       szU);
-    double stepU = ((double)1.0D / (szU - 1));
-    double stepV = ((double)1.0D / (szV - 1));
+    double stepU = ((double)1.0D / unchecked((szU - 1)));
+    double stepV = ((double)1.0D / unchecked((szV - 1)));
     double v = -stepV;
     for (int k = 0; (k < szV); k++) {
       v += stepV;
@@ -172,9 +172,9 @@ internal class TensorPatch : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shadin
   }
 
   private double[][] getBernsteinPolynomials(int lvl) {
-    int sz = ((1 << unchecked((int)(lvl))) + 1);
+    int sz = unchecked(((1 << unchecked((int)(lvl))) + 1));
     double[][] poly = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<double>(4, sz);
-    double step = ((double)1.0D / (sz - 1));
+    double step = ((double)1.0D / unchecked((sz - 1)));
     double t = -step;
     for (int i = 0; (i < sz); i++) {
       t += step;
@@ -184,5 +184,9 @@ internal class TensorPatch : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shadin
       poly[3][i] = ((t * t) * t);
     }
     return poly;
+  }
+
+  static TensorPatch() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Patch).TypeHandle);
   }
 }

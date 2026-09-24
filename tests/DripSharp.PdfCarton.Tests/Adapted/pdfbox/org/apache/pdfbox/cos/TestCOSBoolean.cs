@@ -5,11 +5,9 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public class TestCOSBoolean : global::DripSharp.PdfCarton.Cos.TestCOSBase {
-  internal readonly global::DripSharp.PdfCarton.Cos.COSBoolean cosBooleanTrue
-    = global::DripSharp.PdfCarton.Cos.COSBoolean.True;
+  internal readonly global::DripSharp.PdfCarton.Cos.COSBoolean cosBooleanTrue;
 
-  internal readonly global::DripSharp.PdfCarton.Cos.COSBoolean cosBooleanFalse
-    = global::DripSharp.PdfCarton.Cos.COSBoolean.False;
+  internal readonly global::DripSharp.PdfCarton.Cos.COSBoolean cosBooleanFalse;
 
   internal static void setUp() {
     global::DripSharp.PdfCarton.Cos.TestCOSBase.__field_TestCOSBase
@@ -34,9 +32,9 @@ public class TestCOSBoolean : global::DripSharp.PdfCarton.Cos.TestCOSBase {
 
   internal virtual void testGetBoolean() {
     global::DripSharp.Testing.JavaAssertions.Equal(this.cosBooleanTrue,
-      global::DripSharp.PdfCarton.Cos.COSBoolean.GetBoolean(true), null);
+      global::DripSharp.PdfCarton.Cos.COSBoolean.GetBoolean((bool?)(true)), null);
     global::DripSharp.Testing.JavaAssertions.Equal(this.cosBooleanFalse,
-      global::DripSharp.PdfCarton.Cos.COSBoolean.GetBoolean(false), null);
+      global::DripSharp.PdfCarton.Cos.COSBoolean.GetBoolean((bool?)(false)), null);
   }
 
   internal virtual void testEquals() {
@@ -150,10 +148,20 @@ public class TestCOSBoolean : global::DripSharp.PdfCarton.Cos.TestCOSBase {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     setUp();
     return true;
+  }
+
+  static TestCOSBoolean() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.TestCOSBase).TypeHandle);
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  }
+
+  public TestCOSBoolean() {
+    this.cosBooleanTrue = global::DripSharp.PdfCarton.Cos.COSBoolean.True;
+    this.cosBooleanFalse = global::DripSharp.PdfCarton.Cos.COSBoolean.False;
   }
 }

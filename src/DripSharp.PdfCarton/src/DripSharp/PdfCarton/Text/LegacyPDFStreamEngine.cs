@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Text;
 
 public class LegacyPDFStreamEngine : global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private int pageRotation = default;
 
@@ -22,19 +21,27 @@ public class LegacyPDFStreamEngine : global::DripSharp.PdfCarton.Contentstream.P
     = null!;
 
   private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSDictionary,
-    float> fontHeightMap
-    = new global::DripSharp.Runtime.JavaWeakHashMap<global::DripSharp.PdfCarton.Cos.COSDictionary,
-    float>();
+    float> fontHeightMap;
 
-  static LegacyPDFStreamEngine() { {
+  static LegacyPDFStreamEngine() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance; {
       string path = "/org/apache/pdfbox/resources/glyphlist/additional.txt";
-      try {
-        using (global::System.IO.Stream input
-          = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList),
-          path)) {
-          global::DripSharp.PdfCarton.Text.LegacyPDFStreamEngine.GLYPHLIST
-            = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetAdobeGlyphList(),
-            input);
+      try { {
+          global::System.IO.Stream input
+            = global::DripSharp.Runtime.JavaCompat.ClassGetResourceAsStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList),
+            path);
+          global::System.Exception __dripsharpPrimary_93_26_0 = null!;
+          try {
+            global::DripSharp.PdfCarton.Text.LegacyPDFStreamEngine.GLYPHLIST
+              = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList.GetAdobeGlyphList(),
+              input);
+          } catch (global::System.Exception __dripsharpCaught_93_26_0) {
+            __dripsharpPrimary_93_26_0 = __dripsharpCaught_93_26_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(input, __dripsharpPrimary_93_26_0);
+          }
         }
       } catch (global::System.IO.IOException ex) {
         throw new global::System.Exception(null, ex);
@@ -43,6 +50,10 @@ public class LegacyPDFStreamEngine : global::DripSharp.PdfCarton.Contentstream.P
   }
 
   internal LegacyPDFStreamEngine() {
+    this.fontHeightMap
+      = new global::DripSharp.Runtime.JavaWeakHashMap<global::DripSharp.PdfCarton.Cos.COSDictionary,
+      float>();
+
     this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Text.BeginText(this));
     this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.Concatenate(this));
     this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.DrawObject(this));
@@ -175,7 +186,8 @@ public class LegacyPDFStreamEngine : global::DripSharp.PdfCarton.Contentstream.P
       this.pageSize.GetWidth(), this.pageSize.GetHeight(), translatedTextRenderingMatrix, nextX,
       nextY, global::System.Math.Abs(dyDisplay), dxDisplay,
       global::System.Math.Abs(spaceWidthDisplay), unicode, new int[] { code }, font, fontSize,
-      (int)((int)((fontSize * textMatrix.GetScalingFactorX())))));
+      (int)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((fontSize
+      * textMatrix.GetScalingFactorX())))))));
   }
 
   protected internal virtual float ComputeFontHeight(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font) {

@@ -42,4 +42,8 @@ public class PDAnnotationSquiggly
       ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAppearanceHandler)(this.customAppearanceHandler)).GenerateAppearanceStreams();
     }
   }
+
+  static PDAnnotationSquiggly() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationTextMarkup).TypeHandle);
+  }
 }

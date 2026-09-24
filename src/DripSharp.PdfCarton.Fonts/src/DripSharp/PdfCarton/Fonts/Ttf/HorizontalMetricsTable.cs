@@ -39,7 +39,7 @@ public class HorizontalMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
       this.leftSideBearing[i__64_18] = data.ReadSignedShort();
       bytesRead += 4;
     }
-    int numberNonHorizontal = (numGlyphs - this.numHMetrics);
+    int numberNonHorizontal = unchecked((numGlyphs - this.numHMetrics));
     if ((numberNonHorizontal < 0)) {
       numberNonHorizontal = numGlyphs;
     }
@@ -62,7 +62,7 @@ public class HorizontalMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
     if ((gid < this.numHMetrics)) {
       return this.advanceWidth[gid];
     } else {
-      return this.advanceWidth[(this.advanceWidth.Length - 1)];
+      return this.advanceWidth[unchecked((this.advanceWidth.Length - 1))];
     }
   }
 
@@ -73,7 +73,11 @@ public class HorizontalMetricsTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
     if ((gid < this.numHMetrics)) {
       return this.leftSideBearing[gid];
     } else {
-      return this.nonHorizontalLeftSideBearing[(gid - this.numHMetrics)];
+      return this.nonHorizontalLeftSideBearing[unchecked((gid - this.numHMetrics))];
     }
+  }
+
+  static HorizontalMetricsTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
   }
 }

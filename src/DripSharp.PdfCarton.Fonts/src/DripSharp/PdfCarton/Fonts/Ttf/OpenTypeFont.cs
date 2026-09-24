@@ -69,4 +69,8 @@ public class OpenTypeFont : global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont {
       || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(base.Tables,
       global::DripSharp.PdfCarton.Fonts.Ttf.OTLTable.Tag));
   }
+
+  static OpenTypeFont() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont).TypeHandle);
+  }
 }

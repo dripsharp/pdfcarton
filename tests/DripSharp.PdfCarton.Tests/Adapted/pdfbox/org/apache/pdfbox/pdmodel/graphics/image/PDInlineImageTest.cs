@@ -5,9 +5,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public class PDInlineImageTest {
-  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/test-output/graphics"));
+  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR;
 
   internal static void setUp() {
     global::DripSharp.PdfCarton.Tests.Support.Mkdirs(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImageTest.TESTRESULTSDIR);
@@ -22,14 +20,16 @@ public class PDInlineImageTest {
     dict.SetInt(global::DripSharp.PdfCarton.Cos.COSName.W, width);
     dict.SetInt(global::DripSharp.PdfCarton.Cos.COSName.H, height);
     dict.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Bpc, 1);
-    int rowbytes = (width / 8);
-    if (((rowbytes * 8) < width)) {
+    int rowbytes = global::DripSharp.Runtime.JavaCompat.IntegralDivide(width, 8);
+    if ((unchecked((rowbytes * 8)) < width)) {
       ++rowbytes;
     }
-    int datalen = (rowbytes * height);
+    int datalen = unchecked((rowbytes * height));
     sbyte[] data = new sbyte[datalen];
     for (int i = 0; (i < datalen); ++i) {
-      data[i] = unchecked((sbyte)(((((i / 4) % 2) == 0)
+      data[i]
+        = unchecked((sbyte)(((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(global::DripSharp.Runtime.JavaCompat.IntegralDivide(i,
+        4), 2) == 0)
         ? unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.ParseInt(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "10101010"), 2))) : 0)));
     }
@@ -93,7 +93,8 @@ public class PDInlineImageTest {
     global::DripSharp.Testing.JavaAssertions.Equal(height, bim2.Height, null);
     for (int x__140_18 = 0; (x__140_18 < width); ++x__140_18) {
       for (int y__142_22 = 0; (y__142_22 < height); ++y__142_22) {
-        if ((((x__140_18 % 2) == 0) && ((y__142_22 % 2) == 0))) {
+        if (((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(x__140_18, 2) == 0)
+          && (global::DripSharp.Runtime.JavaCompat.IntegralRemainder(y__142_22, 2) == 0))) {
           global::DripSharp.Testing.JavaAssertions.Equal(16777215,
             (global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(bim1, x__140_18,
             y__142_22) & 16777215), null);
@@ -106,7 +107,8 @@ public class PDInlineImageTest {
     }
     for (int x__156_18 = 0; (x__156_18 < width); ++x__156_18) {
       for (int y__158_22 = 0; (y__158_22 < height); ++y__158_22) {
-        if ((((x__156_18 % 2) == 0) && ((y__158_22 % 2) == 0))) {
+        if (((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(x__156_18, 2) == 0)
+          && (global::DripSharp.Runtime.JavaCompat.IntegralRemainder(y__158_22, 2) == 0))) {
           global::DripSharp.Testing.JavaAssertions.Equal(0,
             (global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(bim2, x__156_18,
             y__158_22) & 16777215), null);
@@ -119,34 +121,66 @@ public class PDInlineImageTest {
     }
     global::DripSharp.Runtime.JavaFile pdfFile
       = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImageTest.TESTRESULTSDIR,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "inline.pdf"));
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__173_25
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.PDPage page
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      document__173_25.AddPage(page);
-      using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(document__173_25, page,
-        global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Append, false)) {
-        contentStream.DrawImage(inlineImage1, (float)(150), (float)(400));
-        contentStream.DrawImage(inlineImage1, (float)(150), (float)(500),
-          (float)((inlineImage1.GetWidth() * 2)), (float)((inlineImage1.GetHeight() * 2)));
-        contentStream.DrawImage(inlineImage1, (float)(150), (float)(600),
-          (float)((inlineImage1.GetWidth() * 4)), (float)((inlineImage1.GetHeight() * 4)));
-        contentStream.DrawImage(inlineImage2, (float)(350), (float)(400));
-        contentStream.DrawImage(inlineImage2, (float)(350), (float)(500),
-          (float)((inlineImage2.GetWidth() * 2)), (float)((inlineImage2.GetHeight() * 2)));
-        contentStream.DrawImage(inlineImage2, (float)(350), (float)(600),
-          (float)((inlineImage2.GetWidth() * 4)), (float)((inlineImage2.GetHeight() * 4)));
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "inline.pdf")); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document__173_25
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_173_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDPage page
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        document__173_25.AddPage(page); {
+          global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
+            = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(document__173_25, page,
+            global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Append, false);
+          global::System.Exception __dripsharpPrimary_177_38_0 = null!;
+          try {
+            contentStream.DrawImage(inlineImage1, (float)(150), (float)(400));
+            contentStream.DrawImage(inlineImage1, (float)(150), (float)(500),
+              (float)(unchecked((inlineImage1.GetWidth() * 2))),
+              (float)(unchecked((inlineImage1.GetHeight() * 2))));
+            contentStream.DrawImage(inlineImage1, (float)(150), (float)(600),
+              (float)(unchecked((inlineImage1.GetWidth() * 4))),
+              (float)(unchecked((inlineImage1.GetHeight() * 4))));
+            contentStream.DrawImage(inlineImage2, (float)(350), (float)(400));
+            contentStream.DrawImage(inlineImage2, (float)(350), (float)(500),
+              (float)(unchecked((inlineImage2.GetWidth() * 2))),
+              (float)(unchecked((inlineImage2.GetHeight() * 2))));
+            contentStream.DrawImage(inlineImage2, (float)(350), (float)(600),
+              (float)(unchecked((inlineImage2.GetWidth() * 4))),
+              (float)(unchecked((inlineImage2.GetHeight() * 4))));
+          } catch (global::System.Exception __dripsharpCaught_177_38_0) {
+            __dripsharpPrimary_177_38_0 = __dripsharpCaught_177_38_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream,
+              __dripsharpPrimary_177_38_0);
+          }
+        }
+        global::DripSharp.Runtime.JavaFileBridge.Call(document__173_25, "Save",
+          new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+          new object[] { (global::DripSharp.Runtime.JavaFile)pdfFile });
+      } catch (global::System.Exception __dripsharpCaught_173_25_0) {
+        __dripsharpPrimary_173_25_0 = __dripsharpCaught_173_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document__173_25,
+          __dripsharpPrimary_173_25_0);
       }
-      global::DripSharp.Runtime.JavaFileBridge.Call(document__173_25, "Save",
-        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdfFile });
-    }
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__189_25
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { pdfFile })) {
-      new global::DripSharp.PdfCarton.Rendering.PDFRenderer(document__189_25).RenderImage(0);
+    } {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document__189_25
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)pdfFile });
+      global::System.Exception __dripsharpPrimary_189_25_0 = null!;
+      try {
+        new global::DripSharp.PdfCarton.Rendering.PDFRenderer(document__189_25).RenderImage(0);
+      } catch (global::System.Exception __dripsharpCaught_189_25_0) {
+        __dripsharpPrimary_189_25_0 = __dripsharpCaught_189_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document__189_25,
+          __dripsharpPrimary_189_25_0);
+      }
     }
   }
 
@@ -218,7 +252,8 @@ public class PDInlineImageTest {
       global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(bim), null);
     global::DripSharp.Runtime.JavaDataBufferByte dbb
       = (global::DripSharp.Runtime.JavaDataBufferByte)(global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(bim).GetDataBuffer()!);
-    global::DripSharp.Testing.JavaAssertions.Equal((bim.Width * bim.Height), dbb.Size, null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((bim.Width * bim.Height)), dbb.Size,
+      null);
     sbyte[] data = dbb.GetData();
     for (int i = 0; (i < data.Length); ++i) {
       global::DripSharp.Testing.JavaAssertions.Equal(0, (int)(data[i]), null);
@@ -322,10 +357,17 @@ public class PDInlineImageTest {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     setUp();
     return true;
+  }
+
+  static PDInlineImageTest() {
+    TESTRESULTSDIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/test-output/graphics"));
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

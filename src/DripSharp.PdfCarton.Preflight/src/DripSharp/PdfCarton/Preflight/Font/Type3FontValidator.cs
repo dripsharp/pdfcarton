@@ -173,9 +173,11 @@ public class Type3FontValidator
         ": The CharProcs element isn't a dictionary")));
       return;
     }
-    int fc = this.Font.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.FirstChar, -1);
-    int lc = this.Font.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.LastChar, -1);
-    int expectedLength = ((lc - fc) + 1);
+    int fc = this.Font.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.FirstChar,
+      unchecked(-1));
+    int lc = this.Font.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.LastChar,
+      unchecked(-1));
+    int expectedLength = unchecked((unchecked((lc - fc)) + 1));
     if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(widths) != expectedLength)) {
       this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDictionaryInvalid,
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
@@ -184,7 +186,7 @@ public class Type3FontValidator
       return;
     }
     for (int i = 0; (i < expectedLength); i++) {
-      int code = (fc + i);
+      int code = unchecked((fc + i));
       float width
         = global::DripSharp.Runtime.JavaCompat.UnboxObject<float>(global::DripSharp.Runtime.JavaCompat.ListGet(widths,
         i));
@@ -289,5 +291,9 @@ public class Type3FontValidator
         }
       }
     }
+  }
+
+  static Type3FontValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.FontValidator<global::DripSharp.PdfCarton.Preflight.Font.Container.Type3Container>).TypeHandle);
   }
 }

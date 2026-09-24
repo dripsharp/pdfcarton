@@ -13,13 +13,22 @@ internal sealed class FlateFilter : global::DripSharp.PdfCarton.Filter.Filter {
     global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters,
     int index) {
     global::DripSharp.PdfCarton.Cos.COSDictionary decodeParams = this.GetDecodeParams(parameters,
-      index);
-    using (global::DripSharp.PdfCarton.Filter.FlateFilterDecoderStream decoderStream
-      = new global::DripSharp.PdfCarton.Filter.FlateFilterDecoderStream(encoded)) {
-      global::System.IO.Stream wrapPredictor
-        = global::DripSharp.PdfCarton.Filter.Predictor.wrapPredictor(decoded, decodeParams);
-      global::DripSharp.PdfCarton.IO.IOUtils.Copy(decoderStream, wrapPredictor);
-      wrapPredictor.Flush();
+      index); {
+      global::DripSharp.PdfCarton.Filter.FlateFilterDecoderStream decoderStream
+        = new global::DripSharp.PdfCarton.Filter.FlateFilterDecoderStream(encoded);
+      global::System.Exception __dripsharpPrimary_42_39_0 = null!;
+      try {
+        global::System.IO.Stream wrapPredictor
+          = global::DripSharp.PdfCarton.Filter.Predictor.wrapPredictor(decoded, decodeParams);
+        global::DripSharp.PdfCarton.IO.IOUtils.Copy(decoderStream, wrapPredictor);
+        wrapPredictor.Flush();
+      } catch (global::System.Exception __dripsharpCaught_42_39_0) {
+        __dripsharpPrimary_42_39_0 = __dripsharpCaught_42_39_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(decoderStream,
+          __dripsharpPrimary_42_39_0);
+      }
     }
     return new global::DripSharp.PdfCarton.Filter.DecodeResult(parameters);
   }
@@ -28,12 +37,24 @@ internal sealed class FlateFilter : global::DripSharp.PdfCarton.Filter.Filter {
     global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
     int compressionLevel = global::DripSharp.PdfCarton.Filter.Filter.GetCompressionLevel();
     global::DripSharp.Runtime.JavaDeflater deflater
-      = new global::DripSharp.Runtime.JavaDeflater(compressionLevel);
-    using (global::DripSharp.Runtime.JavaDeflaterOutputStream @out
-      = new global::DripSharp.Runtime.JavaDeflaterOutputStream(encoded, deflater)) {
-      global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, @out);
+      = new global::DripSharp.Runtime.JavaDeflater(compressionLevel); {
+      global::DripSharp.Runtime.JavaDeflaterOutputStream @out
+        = new global::DripSharp.Runtime.JavaDeflaterOutputStream(encoded, deflater);
+      global::System.Exception __dripsharpPrimary_58_35_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, @out);
+      } catch (global::System.Exception __dripsharpCaught_58_35_0) {
+        __dripsharpPrimary_58_35_0 = __dripsharpCaught_58_35_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@out, __dripsharpPrimary_58_35_0);
+      }
     }
     encoded.Flush();
     deflater.End();
+  }
+
+  static FlateFilter() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Filter.Filter).TypeHandle);
   }
 }

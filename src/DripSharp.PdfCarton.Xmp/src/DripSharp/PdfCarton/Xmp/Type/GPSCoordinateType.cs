@@ -14,4 +14,8 @@ public class GPSCoordinateType : global::DripSharp.PdfCarton.Xmp.Type.TextType {
     namespaceURI, prefix, propertyName, value) {
 
   }
+
+  static GPSCoordinateType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType).TypeHandle);
+  }
 }

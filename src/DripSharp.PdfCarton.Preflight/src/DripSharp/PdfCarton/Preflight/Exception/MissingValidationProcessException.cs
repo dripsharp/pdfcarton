@@ -21,4 +21,8 @@ public class MissingValidationProcessException
   public virtual string GetProcessName() {
     return this.processName;
   }
+
+  static MissingValidationProcessException() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Exception.ValidationException).TypeHandle);
+  }
 }

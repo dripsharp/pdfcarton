@@ -139,7 +139,7 @@ public sealed class PDOutlineItem
     global::DripSharp.PdfCarton.Pdmodel.PDPage page = pageDestination!.GetPage();
     if ((page == default!)) {
       int pageNumber = pageDestination!.GetPageNumber();
-      if ((pageNumber != -1)) {
+      if ((pageNumber != unchecked(-1))) {
         page = doc.GetPage(pageNumber);
       }
     }
@@ -210,5 +210,9 @@ public sealed class PDOutlineItem
     this.GetCOSObject().SetFlag(global::DripSharp.PdfCarton.Cos.COSName.F,
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem.BOLD_FLAG,
       bold);
+  }
+
+  static PDOutlineItem() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineNode).TypeHandle);
   }
 }

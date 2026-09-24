@@ -11,8 +11,7 @@ namespace DripSharp.PdfCarton.Pdmodel;
 public class PDPageTree
 : global::DripSharp.Runtime.JavaIterableContract<global::DripSharp.PdfCarton.Pdmodel.PDPage>,
 global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSDictionary root = null!;
 
@@ -179,7 +178,7 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
       if (!(this.HasNext())) {
         throw new global::System.InvalidOperationException();
       }
-      global::DripSharp.PdfCarton.Cos.COSDictionary next = this.queue.Poll();
+      global::DripSharp.PdfCarton.Cos.COSDictionary next = this.queue.Poll()!;
       global::DripSharp.PdfCarton.Pdmodel.PDPageTree.SanitizeType(next);
       global::DripSharp.PdfCarton.Pdmodel.ResourceCache resourceCache = ((this.__outer.document
         != default!) ? this.__outer.document.GetResourceCache()
@@ -195,7 +194,8 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
   }
 
   public virtual global::DripSharp.PdfCarton.Pdmodel.PDPage Get(int index) {
-    global::DripSharp.PdfCarton.Cos.COSDictionary dict = this.Get((index + 1), this.root, 0);
+    global::DripSharp.PdfCarton.Cos.COSDictionary dict = this.Get(unchecked((index + 1)), this.root,
+      0);
     global::DripSharp.PdfCarton.Pdmodel.PDPageTree.SanitizeType(dict);
     global::DripSharp.PdfCarton.Pdmodel.ResourceCache resourceCache = ((this.document != default!)
       ? this.document.GetResourceCache()
@@ -232,11 +232,11 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
     }
     if (this.IsPageTreeNode(node)) {
       int count = node.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Count, 0);
-      if ((pageNum <= (encountered + count))) {
+      if ((pageNum <= unchecked((encountered + count)))) {
         foreach (global::DripSharp.PdfCarton.Cos.COSDictionary kid in this.GetKids(node)) {
           if (this.IsPageTreeNode(kid)) {
             int kidCount = kid.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Count, 0);
-            if ((pageNum <= (encountered + kidCount))) {
+            if ((pageNum <= unchecked((encountered + kidCount)))) {
               return this.Get(pageNum, kid, encountered);
             } else {
               encountered += kidCount;
@@ -277,7 +277,7 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
     if (this.FindPage(context, this.root)) {
       return context.index;
     }
-    return -1;
+    return unchecked(-1);
   }
 
   private bool FindPage(global::DripSharp.PdfCarton.Pdmodel.PDPageTree.SearchContext context,
@@ -298,7 +298,7 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
   internal sealed class SearchContext {
     internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary searched = null!;
 
-    internal int index = -1;
+    internal int index = unchecked(-1);
 
     internal bool found = default;
 
@@ -321,7 +321,8 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
   }
 
   public virtual void Remove(int index) {
-    global::DripSharp.PdfCarton.Cos.COSDictionary node = this.Get((index + 1), this.root, 0);
+    global::DripSharp.PdfCarton.Cos.COSDictionary node = this.Get(unchecked((index + 1)), this.root,
+      0);
     this.Remove(node);
   }
 
@@ -341,7 +342,7 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
           global::DripSharp.PdfCarton.Cos.COSName.P);
         if ((node != default!)) {
           node.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Count,
-            (node.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Count) - 1));
+            unchecked((node.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Count) - 1)));
         }
       } while ((node != default!));
     }
@@ -358,7 +359,7 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
         global::DripSharp.PdfCarton.Cos.COSName.P);
       if ((node != default!)) {
         node.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Count,
-          (node.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Count) + 1));
+          unchecked((node.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Count) + 1)));
       }
     } while ((node != default!));
   }
@@ -401,7 +402,7 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
       global::DripSharp.PdfCarton.Cos.COSDictionary pageDict
         = (global::DripSharp.PdfCarton.Cos.COSDictionary)(kids.GetObject(i)!);
       if ((pageDict == prevPage.GetCOSObject())) {
-        kids.Add((i + 1), newPage.GetCOSObject());
+        kids.Add(unchecked((i + 1)), newPage.GetCOSObject());
         newPage.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Parent, parentDict);
         found = true;
         break;
@@ -416,10 +417,14 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
   private void IncreaseParents(global::DripSharp.PdfCarton.Cos.COSDictionary parentDict) {
     do {
       int cnt = parentDict.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Count);
-      parentDict.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Count, (cnt + 1));
+      parentDict.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Count, unchecked((cnt + 1)));
       parentDict = parentDict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.Parent,
         global::DripSharp.PdfCarton.Cos.COSName.P);
     } while ((parentDict != default!));
+  }
+
+  static PDPageTree() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

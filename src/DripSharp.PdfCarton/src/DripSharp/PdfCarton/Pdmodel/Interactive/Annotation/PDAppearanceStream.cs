@@ -17,4 +17,8 @@ public class PDAppearanceStream : global::DripSharp.PdfCarton.Pdmodel.Graphics.F
   : base(document) {
 
   }
+
+  static PDAppearanceStream() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject).TypeHandle);
+  }
 }

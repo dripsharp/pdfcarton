@@ -58,4 +58,8 @@ public class ObjectStreamXReference
       " key="), this.key), ", type="), this.GetType().GetNumericValue()), ", objectStreamIndex="),
       this.objectStreamIndex), ", parent="), this.parentKey), " }");
   }
+
+  static ObjectStreamXReference() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdfparser.Xref.AbstractXReference).TypeHandle);
+  }
 }

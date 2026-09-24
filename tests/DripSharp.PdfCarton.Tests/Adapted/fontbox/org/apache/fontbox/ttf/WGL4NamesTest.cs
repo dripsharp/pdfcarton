@@ -25,9 +25,9 @@ public class WGL4NamesTest {
       global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.GetGlyphName(209), null);
     global::DripSharp.Testing.JavaAssertions.Equal("ccaron",
       global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.GetGlyphName(256), null);
-    global::DripSharp.Testing.JavaAssertions.Null(global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.GetGlyphName((global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs
-      + 1)), null);
-    global::DripSharp.Testing.JavaAssertions.Null(global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.GetGlyphName(-1),
+    global::DripSharp.Testing.JavaAssertions.Null(global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.GetGlyphName(unchecked((global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.NumberOfMacGlyphs
+      + 1))), null);
+    global::DripSharp.Testing.JavaAssertions.Null(global::DripSharp.PdfCarton.Fonts.Ttf.WGL4Names.GetGlyphName(unchecked(-1)),
       null);
   }
 

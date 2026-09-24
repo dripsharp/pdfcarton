@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Fixup.Processor;
 
 public class AcroFormGenerateAppearancesProcessor
 : global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AbstractProcessor {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public AcroFormGenerateAppearancesProcessor(global::DripSharp.PdfCarton.Pdmodel.PDDocument document)
   : base(document) {
@@ -26,7 +25,7 @@ public class AcroFormGenerateAppearancesProcessor
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormGenerateAppearancesProcessor.LOG,
           global::DripSharp.Runtime.JavaCompat.StringValueOf("trying to generate appearance streams for fields as NeedAppearances is true()"));
         acroForm.RefreshAppearances();
-        acroForm.SetNeedAppearances(false);
+        acroForm.SetNeedAppearances((bool?)(false));
       } catch (global::System.Exception ex) when (ex is global::System.IO.IOException or global::System.ArgumentException) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormGenerateAppearancesProcessor.LOG,
           global::DripSharp.Runtime.JavaCompat.StringValueOf("couldn't generate appearance stream for some fields - check output"));
@@ -34,5 +33,10 @@ public class AcroFormGenerateAppearancesProcessor
           global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex)));
       }
     }
+  }
+
+  static AcroFormGenerateAppearancesProcessor() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AbstractProcessor).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

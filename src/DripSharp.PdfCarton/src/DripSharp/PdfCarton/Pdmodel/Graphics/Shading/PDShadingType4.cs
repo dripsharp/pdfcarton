@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public class PDShadingType4
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDTriangleBasedShadingType {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDShadingType4(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary)
   : base(shadingDictionary) {
@@ -23,7 +22,8 @@ public class PDShadingType4
   }
 
   public virtual int GetBitsPerFlag() {
-    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerFlag, -1);
+    return this.GetCOSObject().GetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerFlag,
+      unchecked(-1));
   }
 
   public virtual void SetBitsPerFlag(int bitsPerFlag) {
@@ -52,99 +52,130 @@ public class PDShadingType4
     global::DripSharp.PdfCarton.Pdmodel.Common.PDRange[] colRange
       = new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange[this.GetNumberOfColorComponents()];
     for (int i = 0; (i < colRange.Length); ++i) {
-      colRange[i] = this.GetDecodeForParameter((2 + i));
+      colRange[i] = this.GetDecodeForParameter(unchecked((2 + i)));
       if ((colRange[i] == default!)) {
         throw new global::System.IO.IOException("Range missing in shading /Decode entry");
       }
     }
     global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle> list
       = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle>();
-    long maxSrcCoord = ((long)(global::System.Math.Pow((double)(2),
-      (double)(this.GetBitsPerCoordinate()))) - 1);
-    long maxSrcColor = ((long)(global::System.Math.Pow((double)(2),
-      (double)(this.GetBitsPerComponent()))) - 1);
-    using (global::System.IO.Stream imageStream
-      = ((global::DripSharp.PdfCarton.Cos.COSStream)(dict!)).CreateInputStream()) {
-      using (global::DripSharp.Runtime.JavaImageInputStream mciis
-        = new global::DripSharp.Runtime.JavaImageInputStream(imageStream)) {
-        sbyte flag = unchecked((sbyte)(0));
-        try {
-          flag = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
-        } catch (global::System.IO.EndOfStreamException ex) {
-          global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4.LOG,
-            global::DripSharp.Runtime.JavaCompat.StringValueOf(ex));
-        }
-        bool eof = false;
-        while (!eof) {
-          global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex p0;
-          global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex p1;
-          global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex p2;
-          global::DripSharp.Runtime.JavaPoint2D[] ps;
-          float[][] cs;
-          int lastIndex;
+    long maxSrcCoord
+      = unchecked((unchecked((long)(global::DripSharp.Runtime.JavaCompat.NumberLongValue(global::System.Math.Pow((double)(2),
+      (double)(this.GetBitsPerCoordinate()))))) - 1));
+    long maxSrcColor
+      = unchecked((unchecked((long)(global::DripSharp.Runtime.JavaCompat.NumberLongValue(global::System.Math.Pow((double)(2),
+      (double)(this.GetBitsPerComponent()))))) - 1)); {
+      global::System.IO.Stream imageStream
+        = ((global::DripSharp.PdfCarton.Cos.COSStream)(dict!)).CreateInputStream();
+      global::System.Exception __dripsharpPrimary_123_26_0 = null!;
+      try { {
+          global::DripSharp.Runtime.JavaImageInputStream mciis
+            = new global::DripSharp.Runtime.JavaImageInputStream(imageStream);
+          global::System.Exception __dripsharpPrimary_125_35_0 = null!;
           try {
-            switch (flag) {
-              case var __case_150_30_0 when __case_150_30_0 == unchecked((sbyte)(0)):
-                p0 = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY, colRange,
-                  matrix, xform);
-                flag = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
-                if (((int)flag != 0)) {
-                  global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4.LOG,
-                    global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("bad triangle: ",
-                    flag)));
-                }
-                p1 = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY, colRange,
-                  matrix, xform);
-                mciis.ReadBits(bitsPerFlag);
-                if (((int)flag != 0)) {
-                  global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4.LOG,
-                    global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("bad triangle: ",
-                    flag)));
-                }
-                p2 = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY, colRange,
-                  matrix, xform);
-                ps = new global::DripSharp.Runtime.JavaPoint2D[] { p0.point, p1.point, p2.point };
-                cs = new float[][] { p0.color, p1.color, p2.color };
-                global::DripSharp.Runtime.JavaCompat.Add(list,
-                  new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle(ps, cs));
-                flag = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
-                break;
-              case var __case_172_30_0 when __case_172_30_0 == unchecked((sbyte)(1)):
-              case var __case_173_30_0 when __case_173_30_0 == unchecked((sbyte)(2)):
-                lastIndex = (global::DripSharp.Runtime.JavaCompat.CollectionCount(list) - 1);
-                if ((lastIndex < 0)) {
-                  global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4.LOG,
-                    global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("broken data stream: ",
-                    global::DripSharp.Runtime.JavaCompat.CollectionCount(list)), ", aborting")));
-                  eof = true;
-                } else {
-                  global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle preTri
-                    = global::DripSharp.Runtime.JavaCompat.ListGet(list, lastIndex);
-                  p2 = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY, colRange,
-                    matrix, xform);
-                  ps = new global::DripSharp.Runtime.JavaPoint2D[] { (((int)flag == 1)
-                      ? preTri.Corner[1] : preTri.Corner[0]), preTri.Corner[2], p2.point };
-                  cs = new float[][] { (((int)flag == 1) ? preTri.Color[1] : preTri.Color[0]),
-                    preTri.Color[2], p2.color };
-                  global::DripSharp.Runtime.JavaCompat.Add(list,
-                    new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle(ps,
-                    cs));
-                  flag = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
-                }
-                break;
-              default:
-                global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4.LOG,
-                  global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("bad flag ",
-                  flag), ", aborting")));
-                eof = true;
-                break;
+            sbyte flag = unchecked((sbyte)(0));
+            try {
+              flag = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
+            } catch (global::System.IO.EndOfStreamException ex) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4.LOG,
+                global::DripSharp.Runtime.JavaCompat.StringValueOf(ex));
             }
-          } catch (global::System.IO.EndOfStreamException) {
-            eof = true;
+            bool eof = false;
+            while (!eof) {
+              global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex p0;
+              global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex p1;
+              global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Vertex p2;
+              global::DripSharp.Runtime.JavaPoint2D[] ps;
+              float[][] cs;
+              int lastIndex;
+              try {
+                switch (flag) {
+                  case var __case_150_30_0 when __case_150_30_0 == unchecked((sbyte)(0)):
+                    p0 = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY, colRange,
+                      matrix, xform);
+                    flag
+                      = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
+                    if (((int)flag != 0)) {
+                      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4.LOG,
+                        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("bad triangle: ",
+                        flag)));
+                    }
+                    p1 = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY, colRange,
+                      matrix, xform);
+                    mciis.ReadBits(bitsPerFlag);
+                    if (((int)flag != 0)) {
+                      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4.LOG,
+                        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("bad triangle: ",
+                        flag)));
+                    }
+                    p2 = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY, colRange,
+                      matrix, xform);
+                    ps = new global::DripSharp.Runtime.JavaPoint2D[] { p0.point, p1.point,
+                      p2.point };
+                    cs = new float[][] { p0.color, p1.color, p2.color };
+                    global::DripSharp.Runtime.JavaCompat.Add(list,
+                      new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle(ps,
+                      cs));
+                    flag
+                      = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
+                    break;
+                  case var __case_172_30_0 when __case_172_30_0 == unchecked((sbyte)(1)):
+                  case var __case_173_30_0 when __case_173_30_0 == unchecked((sbyte)(2)):
+                    lastIndex
+                      = unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(list) - 1));
+                    if ((lastIndex < 0)) {
+                      global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4.LOG,
+                        global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("broken data stream: ",
+                        global::DripSharp.Runtime.JavaCompat.CollectionCount(list)),
+                        ", aborting")));
+                      eof = true;
+                    } else {
+                      global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle preTri
+                        = global::DripSharp.Runtime.JavaCompat.ListGet(list, lastIndex);
+                      p2 = this.ReadVertex(mciis, maxSrcCoord, maxSrcColor, rangeX, rangeY,
+                        colRange, matrix, xform);
+                      ps = new global::DripSharp.Runtime.JavaPoint2D[] { (((int)flag == 1)
+                          ? preTri.Corner[1] : preTri.Corner[0]), preTri.Corner[2], p2.point };
+                      cs = new float[][] { (((int)flag == 1) ? preTri.Color[1] : preTri.Color[0]),
+                        preTri.Color[2], p2.color };
+                      global::DripSharp.Runtime.JavaCompat.Add(list,
+                        new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadedTriangle(ps,
+                        cs));
+                      flag
+                        = unchecked((sbyte)(unchecked((sbyte)((mciis.ReadBits(bitsPerFlag) & 3)))));
+                    }
+                    break;
+                  default:
+                    global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType4.LOG,
+                      global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("bad flag ",
+                      flag), ", aborting")));
+                    eof = true;
+                    break;
+                }
+              } catch (global::System.IO.EndOfStreamException) {
+                eof = true;
+              }
+            }
+          } catch (global::System.Exception __dripsharpCaught_125_35_0) {
+            __dripsharpPrimary_125_35_0 = __dripsharpCaught_125_35_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(mciis, __dripsharpPrimary_125_35_0);
           }
         }
+      } catch (global::System.Exception __dripsharpCaught_123_26_0) {
+        __dripsharpPrimary_123_26_0 = __dripsharpCaught_123_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(imageStream,
+          __dripsharpPrimary_123_26_0);
       }
     }
     return list;
+  }
+
+  static PDShadingType4() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDTriangleBasedShadingType).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

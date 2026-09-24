@@ -32,29 +32,30 @@ internal class CIDRange {
     if ((bytes.Length == this.codeLength)) {
       int ch = global::DripSharp.PdfCarton.Fonts.Cmap.CMap.toInt(bytes);
       if (((this.from <= ch) && (ch <= this.to))) {
-        return (this.unicode + (ch - this.from));
+        return unchecked((this.unicode + unchecked((ch - this.from))));
       }
     }
-    return -1;
+    return unchecked(-1);
   }
 
   public virtual int Map(int code, int length) {
     if ((((length == this.codeLength) && (this.from <= code)) && (code <= this.to))) {
-      return (this.unicode + (code - this.from));
+      return unchecked((this.unicode + unchecked((code - this.from))));
     }
-    return -1;
+    return unchecked(-1);
   }
 
   public virtual int Unmap(int code) {
-    if (((this.unicode <= code) && (code <= (this.unicode + (this.to - this.from))))) {
-      return (this.from + (code - this.unicode));
+    if (((this.unicode <= code) && (code <= unchecked((this.unicode + unchecked((this.to
+      - this.from))))))) {
+      return unchecked((this.from + unchecked((code - this.unicode))));
     }
-    return -1;
+    return unchecked(-1);
   }
 
   public virtual bool Extend(int newFrom, int newTo, int newCid, int length) {
-    if ((((this.codeLength == length) && (newFrom == (this.to + 1))) && (newCid == (((this.unicode
-      + this.to) - this.from) + 1)))) {
+    if ((((this.codeLength == length) && (newFrom == unchecked((this.to + 1)))) && (newCid
+      == unchecked((unchecked((unchecked((this.unicode + this.to)) - this.from)) + 1))))) {
       this.to = newTo;
       return true;
     }

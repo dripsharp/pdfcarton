@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFAnnotationStamp : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const string Subtype = "Stamp";
 
@@ -193,31 +192,50 @@ public class FDFAnnotationStamp : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnn
             global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStamp.LOG,
               global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(parentAttrKey,
               " => Handling DATA with encoding: "), childEncodingAttr)));
-            if (global::DripSharp.Runtime.JavaCompat.Equals("HEX", childEncodingAttr)) {
-              using (global::System.IO.Stream os__249_47 = stream.CreateRawOutputStream()) {
-                global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os__249_47,
-                  global::DripSharp.PdfCarton.Util.Hex.DecodeHex(child.InnerText));
-                global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStamp.LOG,
-                  global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(parentAttrKey,
-                  " => Data was streamed")));
-              }
-            } else {
-              if (global::DripSharp.Runtime.JavaCompat.Equals("ASCII", childEncodingAttr)) {
-                using (global::System.IO.Stream os__257_47 = stream.CreateOutputStream()) {
-                  string encoding
-                    = global::DripSharp.Runtime.JavaCompat.XmlEncoding(child.OwnerDocument!);
-                  if ((encoding == default!)) {
-                    encoding
-                      = global::DripSharp.Runtime.JavaCompat.XmlInputEncoding(child.OwnerDocument!);
-                  }
-                  if ((encoding == default!)) {
-                    encoding = "UTF-8";
-                  }
-                  global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os__257_47,
-                    global::DripSharp.Runtime.JavaCompat.StringGetBytes(child.InnerText, encoding));
+            if (global::DripSharp.Runtime.JavaCompat.Equals("HEX", childEncodingAttr)) { {
+                global::System.IO.Stream os__249_47 = stream.CreateRawOutputStream();
+                global::System.Exception __dripsharpPrimary_249_47_0 = null!;
+                try {
+                  global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os__249_47,
+                    global::DripSharp.PdfCarton.Util.Hex.DecodeHex(child.InnerText));
                   global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStamp.LOG,
                     global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(parentAttrKey,
                     " => Data was streamed")));
+                } catch (global::System.Exception __dripsharpCaught_249_47_0) {
+                  __dripsharpPrimary_249_47_0 = __dripsharpCaught_249_47_0;
+                  throw;
+                } finally {
+                  global::DripSharp.Runtime.JavaCompat.CloseResource(os__249_47,
+                    __dripsharpPrimary_249_47_0);
+                }
+              }
+            } else {
+              if (global::DripSharp.Runtime.JavaCompat.Equals("ASCII", childEncodingAttr)) { {
+                  global::System.IO.Stream os__257_47 = stream.CreateOutputStream();
+                  global::System.Exception __dripsharpPrimary_257_47_0 = null!;
+                  try {
+                    string encoding
+                      = global::DripSharp.Runtime.JavaCompat.XmlEncoding(child.OwnerDocument!);
+                    if ((encoding == default!)) {
+                      encoding
+                        = global::DripSharp.Runtime.JavaCompat.XmlInputEncoding(child.OwnerDocument!);
+                    }
+                    if ((encoding == default!)) {
+                      encoding = "UTF-8";
+                    }
+                    global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os__257_47,
+                      global::DripSharp.Runtime.JavaCompat.StringGetBytes(child.InnerText,
+                      encoding));
+                    global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStamp.LOG,
+                      global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(parentAttrKey,
+                      " => Data was streamed")));
+                  } catch (global::System.Exception __dripsharpCaught_257_47_0) {
+                    __dripsharpPrimary_257_47_0 = __dripsharpCaught_257_47_0;
+                    throw;
+                  } finally {
+                    global::DripSharp.Runtime.JavaCompat.CloseResource(os__257_47,
+                      __dripsharpPrimary_257_47_0);
+                  }
                 }
               } else {
                 global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStamp.LOG,
@@ -406,5 +424,10 @@ public class FDFAnnotationStamp : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnn
       }
     }
     return dict;
+  }
+
+  static FDFAnnotationStamp() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

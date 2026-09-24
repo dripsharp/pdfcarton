@@ -24,4 +24,8 @@ public class FDFAnnotationSound : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnn
     base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
       global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationSound.Subtype);
   }
+
+  static FDFAnnotationSound() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation).TypeHandle);
+  }
 }

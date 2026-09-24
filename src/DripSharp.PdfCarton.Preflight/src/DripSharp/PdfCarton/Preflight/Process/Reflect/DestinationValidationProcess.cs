@@ -73,4 +73,8 @@ public class DestinationValidationProcess
       global::DripSharp.Runtime.JavaCompat.Concat("First element in Destination array entry must be an indirect reference to a dictionary of /Type /Page, but is ",
       ar.GetName(0))));
   }
+
+  static DestinationValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+  }
 }

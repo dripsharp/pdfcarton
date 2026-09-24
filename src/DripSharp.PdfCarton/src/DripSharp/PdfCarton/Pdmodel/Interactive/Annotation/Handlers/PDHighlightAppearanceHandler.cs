@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
 public class PDHighlightAppearanceHandler
 : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDHighlightAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
   : base(annotation) {
@@ -45,19 +44,23 @@ public class PDHighlightAppearanceHandler
     float minY = float.MaxValue;
     float maxX = float.Epsilon;
     float maxY = float.Epsilon;
-    for (int i__83_18 = 0; (i__83_18 < (pathsArray.Length / 2)); ++i__83_18) {
-      float x = pathsArray[(i__83_18 * 2)];
-      float y = pathsArray[((i__83_18 * 2) + 1)];
+    for (int i__83_18 = 0;
+      (i__83_18 < global::DripSharp.Runtime.JavaCompat.IntegralDivide(pathsArray.Length, 2));
+      ++i__83_18) {
+      float x = pathsArray[unchecked((i__83_18 * 2))];
+      float y = pathsArray[unchecked((unchecked((i__83_18 * 2)) + 1))];
       minX = global::System.Math.Min(minX, x);
       minY = global::System.Math.Min(minY, y);
       maxX = global::System.Math.Max(maxX, x);
       maxY = global::System.Math.Max(maxY, y);
     }
     float maxDelta = 0;
-    for (int i__95_18 = 0; (i__95_18 < (pathsArray.Length / 8)); ++i__95_18) {
-      float delta__100_19 = global::System.Math.Max(((float)((pathsArray[(i__95_18 + 0)]
-        - pathsArray[(i__95_18 + 4)])) / 4), ((float)((pathsArray[(i__95_18 + 1)]
-        - pathsArray[(i__95_18 + 5)])) / 4));
+    for (int i__95_18 = 0;
+      (i__95_18 < global::DripSharp.Runtime.JavaCompat.IntegralDivide(pathsArray.Length, 8));
+      ++i__95_18) {
+      float delta__100_19 = global::System.Math.Max(((float)((pathsArray[unchecked((i__95_18 + 0))]
+        - pathsArray[unchecked((i__95_18 + 4))])) / 4), ((float)((pathsArray[unchecked((i__95_18
+        + 1))] - pathsArray[unchecked((i__95_18 + 5))])) / 4));
       maxDelta = global::System.Math.Max(delta__100_19, maxDelta);
     }
     rect.SetLowerLeftX(global::System.Math.Min(((minX - ((float)(ab.width) / 2)) - maxDelta),
@@ -69,95 +72,127 @@ public class PDHighlightAppearanceHandler
     rect.SetUpperRightY(global::System.Math.Max(((maxY + ab.width) + maxDelta),
       rect.GetUpperRightY()));
     annotation.SetRectangle(rect);
-    try {
-      using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream cs
-        = this.getNormalAppearanceAsContentStream()) {
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState r0
-          = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState();
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState r1
-          = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState();
-        r0.SetAlphaSourceFlag(false);
-        r0.SetStrokingAlphaConstant(annotation.GetConstantOpacity());
-        r0.SetNonStrokingAlphaConstant(annotation.GetConstantOpacity());
-        r1.SetAlphaSourceFlag(false);
-        r1.SetBlendMode(global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.Multiply);
-        cs.SetGraphicsStateParameters(r0);
-        cs.SetGraphicsStateParameters(r1);
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject frm1
-          = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(this.CreateCOSStream());
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject frm2
-          = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(this.CreateCOSStream());
-        frm1.SetResources(new global::DripSharp.PdfCarton.Pdmodel.PDResources());
-        using (global::DripSharp.PdfCarton.Pdmodel.PDFormContentStream mwfofrmCS
-          = new global::DripSharp.PdfCarton.Pdmodel.PDFormContentStream(frm1)) {
-          mwfofrmCS.DrawForm(frm2);
-        }
-        frm1.SetBBox(annotation.GetRectangle());
-        frm1.SetGroup(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroupAttributes());
-        cs.DrawForm(frm1);
-        frm2.SetBBox(annotation.GetRectangle());
-        using (global::DripSharp.PdfCarton.Pdmodel.PDFormContentStream frm2CS
-          = new global::DripSharp.PdfCarton.Pdmodel.PDFormContentStream(frm2)) {
-          frm2CS.SetNonStrokingColor(color);
-          int of = 0;
-          while (((of + 7) < pathsArray.Length)) {
-            float delta__145_27 = 0;
-            if (((((global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[(of + 0)],
-              pathsArray[(of + 4)]) == 0)
-              && (global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[(of + 1)],
-              pathsArray[(of + 3)]) == 0))
-              && (global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[(of + 2)],
-              pathsArray[(of + 6)]) == 0))
-              && (global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[(of + 5)],
-              pathsArray[(of + 7)]) == 0))) {
-              delta__145_27 = ((float)((pathsArray[(of + 1)] - pathsArray[(of + 5)])) / 4);
-            } else {
-              if (((((global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[(of + 1)],
-                pathsArray[(of + 5)]) == 0)
-                && (global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[(of + 0)],
-                pathsArray[(of + 2)]) == 0))
-                && (global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[(of + 3)],
-                pathsArray[(of + 7)]) == 0))
-                && (global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[(of + 4)],
-                pathsArray[(of + 6)]) == 0))) {
-                delta__145_27 = ((float)((pathsArray[(of + 0)] - pathsArray[(of + 4)])) / 4);
-              }
+    try { {
+        global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream cs
+          = this.getNormalAppearanceAsContentStream();
+        global::System.Exception __dripsharpPrimary_111_40_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState r0
+            = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState();
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState r1
+            = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState();
+          r0.SetAlphaSourceFlag(false);
+          r0.SetStrokingAlphaConstant((float?)(annotation.GetConstantOpacity()));
+          r0.SetNonStrokingAlphaConstant((float?)(annotation.GetConstantOpacity()));
+          r1.SetAlphaSourceFlag(false);
+          r1.SetBlendMode(global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode.Multiply);
+          cs.SetGraphicsStateParameters(r0);
+          cs.SetGraphicsStateParameters(r1);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject frm1
+            = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(this.CreateCOSStream());
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject frm2
+            = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject(this.CreateCOSStream());
+          frm1.SetResources(new global::DripSharp.PdfCarton.Pdmodel.PDResources()); {
+            global::DripSharp.PdfCarton.Pdmodel.PDFormContentStream mwfofrmCS
+              = new global::DripSharp.PdfCarton.Pdmodel.PDFormContentStream(frm1);
+            global::System.Exception __dripsharpPrimary_125_38_0 = null!;
+            try {
+              mwfofrmCS.DrawForm(frm2);
+            } catch (global::System.Exception __dripsharpCaught_125_38_0) {
+              __dripsharpPrimary_125_38_0 = __dripsharpCaught_125_38_0;
+              throw;
+            } finally {
+              global::DripSharp.Runtime.JavaCompat.CloseResource(mwfofrmCS,
+                __dripsharpPrimary_125_38_0);
             }
-            frm2CS.MoveTo(pathsArray[(of + 4)], pathsArray[(of + 5)]);
-            if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[(of + 0)],
-              pathsArray[(of + 4)]) == 0)) {
-              frm2CS.CurveTo((pathsArray[(of + 4)] - delta__145_27), (pathsArray[(of + 5)]
-                + delta__145_27), (pathsArray[(of + 0)] - delta__145_27), (pathsArray[(of + 1)]
-                - delta__145_27), pathsArray[(of + 0)], pathsArray[(of + 1)]);
-            } else {
-              if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[(of + 5)],
-                pathsArray[(of + 1)]) == 0)) {
-                frm2CS.CurveTo((pathsArray[(of + 4)] + delta__145_27), (pathsArray[(of + 5)]
-                  + delta__145_27), (pathsArray[(of + 0)] - delta__145_27), (pathsArray[(of + 1)]
-                  + delta__145_27), pathsArray[(of + 0)], pathsArray[(of + 1)]);
-              } else {
-                frm2CS.LineTo(pathsArray[(of + 0)], pathsArray[(of + 1)]);
-              }
-            }
-            frm2CS.LineTo(pathsArray[(of + 2)], pathsArray[(of + 3)]);
-            if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[(of + 2)],
-              pathsArray[(of + 6)]) == 0)) {
-              frm2CS.CurveTo((pathsArray[(of + 2)] + delta__145_27), (pathsArray[(of + 3)]
-                - delta__145_27), (pathsArray[(of + 6)] + delta__145_27), (pathsArray[(of + 7)]
-                + delta__145_27), pathsArray[(of + 6)], pathsArray[(of + 7)]);
-            } else {
-              if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[(of + 3)],
-                pathsArray[(of + 7)]) == 0)) {
-                frm2CS.CurveTo((pathsArray[(of + 2)] - delta__145_27), (pathsArray[(of + 3)]
-                  - delta__145_27), (pathsArray[(of + 6)] + delta__145_27), (pathsArray[(of + 7)]
-                  - delta__145_27), pathsArray[(of + 6)], pathsArray[(of + 7)]);
-              } else {
-                frm2CS.LineTo(pathsArray[(of + 6)], pathsArray[(of + 7)]);
-              }
-            }
-            frm2CS.Fill();
-            of += 8;
           }
+          frm1.SetBBox(annotation.GetRectangle());
+          frm1.SetGroup(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDTransparencyGroupAttributes());
+          cs.DrawForm(frm1);
+          frm2.SetBBox(annotation.GetRectangle()); {
+            global::DripSharp.PdfCarton.Pdmodel.PDFormContentStream frm2CS
+              = new global::DripSharp.PdfCarton.Pdmodel.PDFormContentStream(frm2);
+            global::System.Exception __dripsharpPrimary_133_38_0 = null!;
+            try {
+              frm2CS.SetNonStrokingColor(color);
+              int of = 0;
+              while ((unchecked((of + 7)) < pathsArray.Length)) {
+                float delta__145_27 = 0;
+                if (((((global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[unchecked((of
+                  + 0))], pathsArray[unchecked((of + 4))]) == 0)
+                  && (global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[unchecked((of
+                  + 1))], pathsArray[unchecked((of + 3))]) == 0))
+                  && (global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[unchecked((of
+                  + 2))], pathsArray[unchecked((of + 6))]) == 0))
+                  && (global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[unchecked((of
+                  + 5))], pathsArray[unchecked((of + 7))]) == 0))) {
+                  delta__145_27 = ((float)((pathsArray[unchecked((of + 1))]
+                    - pathsArray[unchecked((of + 5))])) / 4);
+                } else {
+                  if (((((global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[unchecked((of
+                    + 1))], pathsArray[unchecked((of + 5))]) == 0)
+                    && (global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[unchecked((of
+                    + 0))], pathsArray[unchecked((of + 2))]) == 0))
+                    && (global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[unchecked((of
+                    + 3))], pathsArray[unchecked((of + 7))]) == 0))
+                    && (global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[unchecked((of
+                    + 4))], pathsArray[unchecked((of + 6))]) == 0))) {
+                    delta__145_27 = ((float)((pathsArray[unchecked((of + 0))]
+                      - pathsArray[unchecked((of + 4))])) / 4);
+                  }
+                }
+                frm2CS.MoveTo(pathsArray[unchecked((of + 4))], pathsArray[unchecked((of + 5))]);
+                if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[unchecked((of
+                  + 0))], pathsArray[unchecked((of + 4))]) == 0)) {
+                  frm2CS.CurveTo((pathsArray[unchecked((of + 4))] - delta__145_27),
+                    (pathsArray[unchecked((of + 5))] + delta__145_27), (pathsArray[unchecked((of
+                    + 0))] - delta__145_27), (pathsArray[unchecked((of + 1))] - delta__145_27),
+                    pathsArray[unchecked((of + 0))], pathsArray[unchecked((of + 1))]);
+                } else {
+                  if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[unchecked((of
+                    + 5))], pathsArray[unchecked((of + 1))]) == 0)) {
+                    frm2CS.CurveTo((pathsArray[unchecked((of + 4))] + delta__145_27),
+                      (pathsArray[unchecked((of + 5))] + delta__145_27), (pathsArray[unchecked((of
+                      + 0))] - delta__145_27), (pathsArray[unchecked((of + 1))] + delta__145_27),
+                      pathsArray[unchecked((of + 0))], pathsArray[unchecked((of + 1))]);
+                  } else {
+                    frm2CS.LineTo(pathsArray[unchecked((of + 0))], pathsArray[unchecked((of + 1))]);
+                  }
+                }
+                frm2CS.LineTo(pathsArray[unchecked((of + 2))], pathsArray[unchecked((of + 3))]);
+                if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[unchecked((of
+                  + 2))], pathsArray[unchecked((of + 6))]) == 0)) {
+                  frm2CS.CurveTo((pathsArray[unchecked((of + 2))] + delta__145_27),
+                    (pathsArray[unchecked((of + 3))] - delta__145_27), (pathsArray[unchecked((of
+                    + 6))] + delta__145_27), (pathsArray[unchecked((of + 7))] + delta__145_27),
+                    pathsArray[unchecked((of + 6))], pathsArray[unchecked((of + 7))]);
+                } else {
+                  if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(pathsArray[unchecked((of
+                    + 3))], pathsArray[unchecked((of + 7))]) == 0)) {
+                    frm2CS.CurveTo((pathsArray[unchecked((of + 2))] - delta__145_27),
+                      (pathsArray[unchecked((of + 3))] - delta__145_27), (pathsArray[unchecked((of
+                      + 6))] + delta__145_27), (pathsArray[unchecked((of + 7))] - delta__145_27),
+                      pathsArray[unchecked((of + 6))], pathsArray[unchecked((of + 7))]);
+                  } else {
+                    frm2CS.LineTo(pathsArray[unchecked((of + 6))], pathsArray[unchecked((of + 7))]);
+                  }
+                }
+                frm2CS.Fill();
+                of += 8;
+              }
+            } catch (global::System.Exception __dripsharpCaught_133_38_0) {
+              __dripsharpPrimary_133_38_0 = __dripsharpCaught_133_38_0;
+              throw;
+            } finally {
+              global::DripSharp.Runtime.JavaCompat.CloseResource(frm2CS,
+                __dripsharpPrimary_133_38_0);
+            }
+          }
+        } catch (global::System.Exception __dripsharpCaught_111_40_0) {
+          __dripsharpPrimary_111_40_0 = __dripsharpCaught_111_40_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(cs, __dripsharpPrimary_111_40_0);
         }
       }
     } catch (global::System.IO.IOException ex) {
@@ -169,4 +204,9 @@ public class PDHighlightAppearanceHandler
   public override void GenerateRolloverAppearance() {}
 
   public override void GenerateDownAppearance() {}
+
+  static PDHighlightAppearanceHandler() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  }
 }

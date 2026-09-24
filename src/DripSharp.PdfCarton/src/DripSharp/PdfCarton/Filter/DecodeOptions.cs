@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Filter;
 
 public class DecodeOptions {
-  public static readonly global::DripSharp.PdfCarton.Filter.DecodeOptions Default
-    = new global::DripSharp.PdfCarton.Filter.DecodeOptions.FinalDecodeOptions(true);
+  public static readonly global::DripSharp.PdfCarton.Filter.DecodeOptions Default;
 
   private global::SkiaSharp.SKRectI sourceRegion = default!;
 
@@ -114,5 +113,13 @@ public class DecodeOptions {
     }
 
     internal override void setFilterSubsampled(bool filterSubsampled) {}
+
+    static FinalDecodeOptions() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Filter.DecodeOptions).TypeHandle);
+    }
+  }
+
+  static DecodeOptions() {
+    Default = new global::DripSharp.PdfCarton.Filter.DecodeOptions.FinalDecodeOptions(true);
   }
 }

@@ -113,4 +113,8 @@ public class PDExportFormatAttributeObject
     }
     return sb.ToString();
   }
+
+  static PDExportFormatAttributeObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDLayoutAttributeObject).TypeHandle);
+  }
 }

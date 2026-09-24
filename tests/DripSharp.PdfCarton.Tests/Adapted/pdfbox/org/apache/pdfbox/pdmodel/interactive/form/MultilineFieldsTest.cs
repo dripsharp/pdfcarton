@@ -5,13 +5,9 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class MultilineFieldsTest {
-  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/test-output"));
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR;
 
-  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "src/test/resources/org/apache/pdfbox/pdmodel/interactive/form"));
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR;
 
   private const string NAME_OF_PDF = "MultilineFields.pdf";
 
@@ -26,7 +22,7 @@ public class MultilineFieldsTest {
     this.document
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.MultilineFieldsTest.IN_DIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.MultilineFieldsTest.IN_DIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.MultilineFieldsTest.NAME_OF_PDF)) });
     this.acroForm = this.document.GetDocumentCatalog().GetAcroForm();
@@ -99,13 +95,14 @@ public class MultilineFieldsTest {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.MultilineFieldsTest.NAME_OF_PDF));
     global::DripSharp.Runtime.JavaFileBridge.Call(this.document, "Save",
-      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { (global::DripSharp.Runtime.JavaFile)file });
     if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
       "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
-        typeof(string) }, new object[] { file,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        typeof(string) }, new object[] { (global::DripSharp.Runtime.JavaFile)file,
+        (string)global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.MultilineFieldsTest.IN_DIR)),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        (string)global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.MultilineFieldsTest.OUT_DIR)) }))) {
       global::DripSharp.PdfCarton.Tests.Support.ErrorStream.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Rendering of ",
@@ -119,7 +116,7 @@ public class MultilineFieldsTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument document
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.MultilineFieldsTest.IN_DIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.MultilineFieldsTest.IN_DIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX3812-acrobat-multiline-auto.pdf")) });
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
@@ -161,33 +158,42 @@ public class MultilineFieldsTest {
   }
 
   internal virtual void testMultilineBreak() {
-    string TEST_PDF = "PDFBOX-3835-input-acrobat-wrap.pdf";
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.MultilineFieldsTest.IN_DIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", TEST_PDF)) })) {
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm localAcroForm
-        = document.GetDocumentCatalog().GetAcroForm();
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField fieldInput
-        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(localAcroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "filled"))!);
-      string fieldValue = fieldInput.GetValue();
-      global::System.Collections.Generic.IList<string> acrobatLines
-        = this.getTextLinesFromAppearanceStream(fieldInput);
-      fieldInput.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", fieldValue));
-      global::System.Collections.Generic.IList<string> pdfboxLines
-        = this.getTextLinesFromAppearanceStream(fieldInput);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.CollectionCount(acrobatLines),
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(pdfboxLines),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Number of lines generated by PDFBox shall match Acrobat"));
-      for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(acrobatLines));
-        i++) {
-        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.ListGet(acrobatLines,
-          i).Length, global::DripSharp.Runtime.JavaCompat.ListGet(pdfboxLines, i).Length,
+    string TEST_PDF = "PDFBOX-3835-input-acrobat-wrap.pdf"; {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.MultilineFieldsTest.IN_DIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", TEST_PDF)) });
+      global::System.Exception __dripsharpPrimary_144_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm localAcroForm
+          = document.GetDocumentCatalog().GetAcroForm();
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField fieldInput
+          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(localAcroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "filled"))!);
+        string fieldValue = fieldInput.GetValue();
+        global::System.Collections.Generic.IList<string> acrobatLines
+          = this.getTextLinesFromAppearanceStream(fieldInput);
+        fieldInput.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          fieldValue));
+        global::System.Collections.Generic.IList<string> pdfboxLines
+          = this.getTextLinesFromAppearanceStream(fieldInput);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.CollectionCount(acrobatLines),
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(pdfboxLines),
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "Number of characters per lines generated by PDFBox shall match Acrobat"));
+          "Number of lines generated by PDFBox shall match Acrobat"));
+        for (int i = 0; (i < global::DripSharp.Runtime.JavaCompat.CollectionCount(acrobatLines));
+          i++) {
+          global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.ListGet(acrobatLines,
+            i).Length, global::DripSharp.Runtime.JavaCompat.ListGet(pdfboxLines, i).Length,
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "Number of characters per lines generated by PDFBox shall match Acrobat"));
+        }
+      } catch (global::System.Exception __dripsharpCaught_144_25_0) {
+        __dripsharpPrimary_144_25_0 = __dripsharpCaught_144_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_144_25_0);
       }
     }
   }
@@ -262,5 +268,14 @@ public class MultilineFieldsTest {
     } finally {
       this.tearDown();
     }
+  }
+
+  static MultilineFieldsTest() {
+    OUT_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/test-output"));
+    IN_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "src/test/resources/org/apache/pdfbox/pdmodel/interactive/form"));
   }
 }

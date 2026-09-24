@@ -9,11 +9,11 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public class PDShadingType1 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading {
-  private global::DripSharp.PdfCarton.Cos.COSArray domain = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray domain;
 
   public PDShadingType1(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary)
   : base(shadingDictionary) {
-
+    this.domain = default!;
   }
 
   public override int GetShadingType() {
@@ -49,5 +49,9 @@ public class PDShadingType1 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shadi
 
   public override global::DripSharp.Runtime.JavaPaint ToPaint(global::DripSharp.PdfCarton.Util.Matrix matrix) {
     return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Type1ShadingPaint(this, matrix);
+  }
+
+  static PDShadingType1() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading).TypeHandle);
   }
 }

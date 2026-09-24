@@ -10,21 +10,23 @@ namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public sealed class Standard14Fonts {
   private static readonly global::System.Collections.Generic.IDictionary<string,
-    global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName> ALIASES
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
-    global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName>(38);
+    global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName> ALIASES;
 
   private static readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName,
-    global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics> FONTS
-    = new global::System.Collections.Generic.Dictionary<global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName,
-    global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics>();
+    global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics> FONTS;
 
   private static readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName,
-    global::DripSharp.PdfCarton.Fonts.FontBoxFont> GENERIC_FONTS
-    = new global::System.Collections.Generic.Dictionary<global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName,
-    global::DripSharp.PdfCarton.Fonts.FontBoxFont>();
+    global::DripSharp.PdfCarton.Fonts.FontBoxFont> GENERIC_FONTS;
 
-  static Standard14Fonts() { {
+  static Standard14Fonts() {
+    ALIASES = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+      global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName>(38);
+    FONTS
+      = new global::System.Collections.Generic.Dictionary<global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName,
+      global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics>();
+    GENERIC_FONTS
+      = new global::System.Collections.Generic.Dictionary<global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName,
+      global::DripSharp.PdfCarton.Fonts.FontBoxFont>(); {
       global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.mapName(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.Courier);
       global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.mapName(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.CourierBold);
       global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.mapName(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.CourierBoldOblique);
@@ -102,14 +104,21 @@ public sealed class Standard14Fonts {
     if ((resourceAsStream == default!)) {
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("resource '",
         resourceName), "' not found"));
-    }
-    using (global::System.IO.Stream afmStream
-      = new global::System.IO.BufferedStream(resourceAsStream)) {
-      global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
-        = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(afmStream);
-      global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics metric = parser.Parse(true);
-      global::DripSharp.Runtime.JavaCompat.MapPut(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FONTS,
-        fontName, metric);
+    } {
+      global::System.IO.Stream afmStream = new global::System.IO.BufferedStream(resourceAsStream);
+      global::System.Exception __dripsharpPrimary_137_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Afm.AFMParser parser
+          = new global::DripSharp.PdfCarton.Fonts.Afm.AFMParser(afmStream);
+        global::DripSharp.PdfCarton.Fonts.Afm.FontMetrics metric = parser.Parse(true);
+        global::DripSharp.Runtime.JavaCompat.MapPut(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FONTS,
+          fontName, metric);
+      } catch (global::System.Exception __dripsharpCaught_137_26_0) {
+        __dripsharpPrimary_137_26_0 = __dripsharpCaught_137_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(afmStream, __dripsharpPrimary_137_26_0);
+      }
     }
   }
 
@@ -204,8 +213,8 @@ public sealed class Standard14Fonts {
             glyphName);
           if ((code != default!)) {
             string uniName__297_32
-              = global::DripSharp.PdfCarton.Pdmodel.Font.UniUtil.getUniNameOfCodePoint((global::DripSharp.Runtime.JavaCompat.Unbox(code)
-              + 61440));
+              = global::DripSharp.PdfCarton.Pdmodel.Font.UniUtil.getUniNameOfCodePoint(unchecked((global::DripSharp.Runtime.JavaCompat.Unbox(code)
+              + 61440)));
             if (mappedFont.HasGlyph(uniName__297_32)) {
               return mappedFont.GetPath(uniName__297_32);
             }

@@ -39,11 +39,11 @@ public class AccessPermission {
   public AccessPermission(sbyte[] b) {
     this.bytes = 0;
     this.bytes |= (b[0] & 255);
-    this.bytes <<= 8;
+    this.bytes <<= unchecked((int)(8));
     this.bytes |= (b[1] & 255);
-    this.bytes <<= 8;
+    this.bytes <<= unchecked((int)(8));
     this.bytes |= (b[2] & 255);
-    this.bytes <<= 8;
+    this.bytes <<= unchecked((int)(8));
     this.bytes |= (b[3] & 255);
   }
 
@@ -52,18 +52,18 @@ public class AccessPermission {
   }
 
   private bool isPermissionBitOn(int bit) {
-    return ((this.bytes & (1 << unchecked((int)((bit - 1))))) != 0);
+    return ((this.bytes & (1 << unchecked((int)(unchecked((bit - 1)))))) != 0);
   }
 
   private bool setPermissionBit(int bit, bool value) {
     int permissions = this.bytes;
     if (value) {
-      permissions = (permissions | (1 << unchecked((int)((bit - 1)))));
+      permissions = (permissions | (1 << unchecked((int)(unchecked((bit - 1))))));
     } else {
-      permissions = (permissions & ~((1 << unchecked((int)((bit - 1))))));
+      permissions = (permissions & ~((1 << unchecked((int)(unchecked((bit - 1)))))));
     }
     this.bytes = permissions;
-    return ((this.bytes & (1 << unchecked((int)((bit - 1))))) != 0);
+    return ((this.bytes & (1 << unchecked((int)(unchecked((bit - 1)))))) != 0);
   }
 
   public virtual bool IsOwnerPermission() {

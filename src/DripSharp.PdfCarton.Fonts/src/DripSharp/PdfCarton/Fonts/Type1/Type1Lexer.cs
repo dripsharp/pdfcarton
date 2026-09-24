@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Type1;
 
 internal class Type1Lexer {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Runtime.Fonts.JavaByteBuffer buffer = null!;
 
@@ -91,7 +90,7 @@ internal class Type1Lexer {
                             return new global::DripSharp.PdfCarton.Fonts.Type1.Token("<<",
                               global::DripSharp.PdfCarton.Fonts.Type1.Token.START_DICT);
                           } else {
-                            this.buffer.position((this.buffer.position() - 1));
+                            this.buffer.position(unchecked((this.buffer.position() - 1)));
                             return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c,
                               global::DripSharp.PdfCarton.Fonts.Type1.Token.NAME);
                           }
@@ -102,7 +101,7 @@ internal class Type1Lexer {
                               return new global::DripSharp.PdfCarton.Fonts.Type1.Token(">>",
                                 global::DripSharp.PdfCarton.Fonts.Type1.Token.END_DICT);
                             } else {
-                              this.buffer.position((this.buffer.position() - 1));
+                              this.buffer.position(unchecked((this.buffer.position() - 1)));
                               return new global::DripSharp.PdfCarton.Fonts.Type1.Token(c,
                                 global::DripSharp.PdfCarton.Fonts.Type1.Token.NAME);
                             }
@@ -115,7 +114,7 @@ internal class Type1Lexer {
                                   global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("NULL byte in font, skipped"));
                                 skip = true;
                               } else {
-                                this.buffer.position((this.buffer.position() - 1));
+                                this.buffer.position(unchecked((this.buffer.position() - 1)));
                                 global::DripSharp.PdfCarton.Fonts.Type1.Token number
                                   = this.tryReadNumber();
                                 if ((number != default!)) {
@@ -187,7 +186,7 @@ internal class Type1Lexer {
           return default!;
         } else {
           if ((((int)c != (int)'e') && ((int)c != (int)'E'))) {
-            this.buffer.position((this.buffer.position() - 1));
+            this.buffer.position(unchecked((this.buffer.position() - 1)));
             return new global::DripSharp.PdfCarton.Fonts.Type1.Token(sb.ToString(),
               global::DripSharp.PdfCarton.Fonts.Type1.Token.INTEGER);
           }
@@ -226,7 +225,7 @@ internal class Type1Lexer {
         c = this.getChar();
       }
     }
-    this.buffer.position((this.buffer.position() - 1));
+    this.buffer.position(unchecked((this.buffer.position() - 1)));
     if ((radix! != default!)) {
       int val;
       try {
@@ -360,5 +359,9 @@ internal class Type1Lexer {
     } catch (global::System.IO.EndOfStreamException) {
       throw new global::System.IO.IOException("Premature end of buffer reached");
     }
+  }
+
+  static Type1Lexer() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

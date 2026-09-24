@@ -39,6 +39,10 @@ public class IntegerType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimplePr
     return global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringValueOf(this.integerValue);
   }
 
+  static IntegerType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty).TypeHandle);
+  }
+
   protected override object __DripSharpCovariantBridgeGetValue() {
     return this.GetValue();
   }

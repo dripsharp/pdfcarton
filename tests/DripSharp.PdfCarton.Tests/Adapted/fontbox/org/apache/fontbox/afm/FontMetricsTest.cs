@@ -116,7 +116,7 @@ public class FontMetricsTest {
     fontMetrics.SetMetricSets(1);
     global::DripSharp.Testing.JavaAssertions.Equal(1, fontMetrics.GetMetricSets(), null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-      => fontMetrics.SetMetricSets(-1), null);
+      => fontMetrics.SetMetricSets(unchecked(-1)), null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
       => fontMetrics.SetMetricSets(3), null);
   }

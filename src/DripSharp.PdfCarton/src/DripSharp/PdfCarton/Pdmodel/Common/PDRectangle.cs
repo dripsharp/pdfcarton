@@ -11,58 +11,27 @@ namespace DripSharp.PdfCarton.Pdmodel.Common;
 public class PDRectangle : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
   private const float POINTS_PER_INCH = 72;
 
-  private static readonly float POINTS_PER_MM = ((1 / (float)((10 * 2.54F)))
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH);
+  private static readonly float POINTS_PER_MM;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle Letter
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((8.5F
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH), (11.0F
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH));
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle Letter;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle Tabloid
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((11.0F
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH), (17.0F
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH));
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle Tabloid;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle Legal
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((8.5F
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH), (14.0F
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH));
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle Legal;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A0
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((841
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (1189
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A0;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A1
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((594
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (841
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A1;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A2
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((420
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (594
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A2;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A3
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((297
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (420
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A3;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A4
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((210
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (297
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A4;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A5
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((148
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (210
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A5;
 
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A6
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((105
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (148
-    * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle A6;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSArray rectArray = null!;
 
@@ -94,7 +63,7 @@ public class PDRectangle : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjecta
     float[] values = global::DripSharp.Runtime.JavaCompat.CopyOf<float>(array.ToFloatArray(), 4);
     for (int i = 0; (i < values.Length); i++) {
       if ((global::System.Math.Abs(values[i]) > int.MaxValue)) {
-        values[i] = ((values[i] > 0) ? int.MaxValue : -(int.MaxValue));
+        values[i] = ((values[i] > 0) ? int.MaxValue : unchecked(-(int.MaxValue)));
       }
     }
     this.rectArray = new global::DripSharp.PdfCarton.Cos.COSArray();
@@ -208,5 +177,40 @@ public class PDRectangle : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjecta
     return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("[",
       this.GetLowerLeftX()), ","), this.GetLowerLeftY()), ","), this.GetUpperRightX()), ","),
       this.GetUpperRightY()), "]");
+  }
+
+  static PDRectangle() {
+    POINTS_PER_MM = ((1 / (float)((10 * 2.54F)))
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH);
+    Letter = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((8.5F
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH), (11.0F
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH));
+    Tabloid = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((11.0F
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH), (17.0F
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH));
+    Legal = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((8.5F
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH), (14.0F
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_INCH));
+    A0 = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((841
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (1189
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+    A1 = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((594
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (841
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+    A2 = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((420
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (594
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+    A3 = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((297
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (420
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+    A4 = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((210
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (297
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+    A5 = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((148
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (210
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
+    A6 = new global::DripSharp.PdfCarton.Pdmodel.Common.PDImmutableRectangle((105
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM), (148
+      * global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle.POINTS_PER_MM));
   }
 }

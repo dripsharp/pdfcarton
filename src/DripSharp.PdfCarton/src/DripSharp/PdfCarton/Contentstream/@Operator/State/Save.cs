@@ -21,4 +21,8 @@ public class Save : global::DripSharp.PdfCarton.Contentstream.@Operator.Operator
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.Save;
   }
+
+  static Save() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

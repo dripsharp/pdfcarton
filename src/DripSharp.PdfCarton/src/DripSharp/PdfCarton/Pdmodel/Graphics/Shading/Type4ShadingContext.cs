@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 internal class Type4ShadingContext
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.GouraudShadingContext {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly int bitsPerFlag = default;
 
@@ -27,5 +26,10 @@ internal class Type4ShadingContext
       this.bitsPerFlag)));
     this.setTriangleList(shading.collectTriangles(xform, matrix));
     this.CreatePixelTable(deviceBounds);
+  }
+
+  static Type4ShadingContext() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.GouraudShadingContext).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

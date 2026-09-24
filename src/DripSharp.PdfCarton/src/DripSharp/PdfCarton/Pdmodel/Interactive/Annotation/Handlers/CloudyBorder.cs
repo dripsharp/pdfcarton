@@ -9,18 +9,15 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
 internal class CloudyBorder {
-  private static readonly double ANGLE_180_DEG = global::System.Math.PI;
+  private static readonly double ANGLE_180_DEG;
 
-  private static readonly double ANGLE_90_DEG = ((double)(global::System.Math.PI) / 2);
+  private static readonly double ANGLE_90_DEG;
 
-  private static readonly double ANGLE_34_DEG
-    = global::DripSharp.Runtime.JavaCompat.ToRadians((double)(34));
+  private static readonly double ANGLE_34_DEG;
 
-  private static readonly double ANGLE_30_DEG
-    = global::DripSharp.Runtime.JavaCompat.ToRadians((double)(30));
+  private static readonly double ANGLE_30_DEG;
 
-  private static readonly double ANGLE_12_DEG
-    = global::DripSharp.Runtime.JavaCompat.ToRadians((double)(12));
+  private static readonly double ANGLE_12_DEG;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream output = null!;
 
@@ -197,12 +194,12 @@ internal class CloudyBorder {
     double[] array = new double[2];
     double anglePrev = 0;
     int n0 = this.computeParamsPolygon(advIntermDefault, advCornerDefault, k, cloudRadius,
-      polygon[(numPoints - 2)].Distance(polygon[0]), array);
+      polygon[unchecked((numPoints - 2))].Distance(polygon[0]), array);
     double alphaPrev = ((n0 == 0) ? array[0]
       : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder.ANGLE_34_DEG);
-    for (int j = 0; ((j + 1) < numPoints); j++) {
+    for (int j = 0; (unchecked((j + 1)) < numPoints); j++) {
       global::DripSharp.Runtime.JavaPoint2D pt = polygon[j];
-      global::DripSharp.Runtime.JavaPoint2D ptNext = polygon[(j + 1)];
+      global::DripSharp.Runtime.JavaPoint2D ptNext = polygon[unchecked((j + 1))];
       double length = pt.Distance(ptNext);
       if ((global::DripSharp.Runtime.JavaCompat.CompareDouble(length, 0.0D) == 0)) {
         alphaPrev
@@ -221,7 +218,7 @@ internal class CloudyBorder {
       double dx = array[1];
       double angleCur = global::System.Math.Atan2((ptNext.Y - pt.Y), (ptNext.X - pt.X));
       if ((j == 0)) {
-        global::DripSharp.Runtime.JavaPoint2D ptPrev = polygon[(numPoints - 2)];
+        global::DripSharp.Runtime.JavaPoint2D ptPrev = polygon[unchecked((numPoints - 2))];
         anglePrev = global::System.Math.Atan2((pt.Y - ptPrev.Y), (pt.X - ptPrev.X));
       }
       double cos
@@ -242,7 +239,7 @@ internal class CloudyBorder {
         this.addFirstIntermediateCurl(angleCur, cloudRadius, alpha, x, y);
         x += (advIntermDefault * cos);
         y += (advIntermDefault * sin);
-        numInterm = (n - 1);
+        numInterm = unchecked((n - 1));
       }
       global::DripSharp.Runtime.JavaPoint2D[] template = this.getIntermediateCurlTemplate(angleCur,
         cloudRadius);
@@ -263,10 +260,11 @@ internal class CloudyBorder {
       array[0]
         = global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder.ANGLE_34_DEG;
       array[1] = 0;
-      return -1;
+      return unchecked(-1);
     }
-    int n = (int)(global::System.Math.Ceiling((double)(((double)((length - (2 * advCorner)))
-      / (double)advInterm))));
+    int n
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Ceiling((double)(((double)((length
+      - (2 * advCorner))) / (double)advInterm))))));
     double e = (length - ((2 * advCorner) + (n * advInterm)));
     double dx = ((double)e / 2);
     double arg = ((double)(((k * r) + dx)) / (double)r);
@@ -350,15 +348,15 @@ internal class CloudyBorder {
     double y) {
     int n = template.Length;
     int i = 0;
-    if (((n % 3) == 1)) {
+    if ((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(n, 3) == 1)) {
       global::DripSharp.Runtime.JavaPoint2D a__483_28 = template[0];
       this.moveTo((a__483_28.X + x), (a__483_28.Y + y));
       i++;
     }
-    for (; ((i + 2) < n); i += 3) {
+    for (; (unchecked((i + 2)) < n); i += 3) {
       global::DripSharp.Runtime.JavaPoint2D a__489_28 = template[i];
-      global::DripSharp.Runtime.JavaPoint2D b = template[(i + 1)];
-      global::DripSharp.Runtime.JavaPoint2D c = template[(i + 2)];
+      global::DripSharp.Runtime.JavaPoint2D b = template[unchecked((i + 1))];
+      global::DripSharp.Runtime.JavaPoint2D c = template[unchecked((i + 2))];
       this.curveTo((a__489_28.X + x), (a__489_28.Y + y), (b.X + x), (b.Y + y), (c.X + x), (c.Y
         + y));
     }
@@ -399,9 +397,9 @@ internal class CloudyBorder {
 
   private void reversePolygon(global::DripSharp.Runtime.JavaPoint2D[] points) {
     int len = points.Length;
-    int n = (len / 2);
+    int n = global::DripSharp.Runtime.JavaCompat.IntegralDivide(len, 2);
     for (int i = 0; (i < n); i++) {
-      int j = ((len - i) - 1);
+      int j = unchecked((unchecked((len - i)) - 1));
       global::DripSharp.Runtime.JavaPoint2D pi = points[i];
       global::DripSharp.Runtime.JavaPoint2D pj = points[j];
       points[i] = pj;
@@ -419,7 +417,7 @@ internal class CloudyBorder {
     double a = 0;
     int len = points.Length;
     for (int i = 0; (i < len); i++) {
-      int j = ((i + 1) % len);
+      int j = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((i + 1)), len);
       a += ((points[i].X * points[j].Y) - (points[i].Y * points[j].X));
     }
     return a;
@@ -533,11 +531,11 @@ internal class CloudyBorder {
     }
     int size = global::DripSharp.Runtime.JavaCompat.CollectionCount(points);
     double closeTestLimit = 0.05D;
-    if (((size >= 2) && (global::DripSharp.Runtime.JavaCompat.ListGet(points, (size
-      - 1)).Distance(global::DripSharp.Runtime.JavaCompat.ListGet(points, 0)) > closeTestLimit))) {
+    if (((size >= 2) && (global::DripSharp.Runtime.JavaCompat.ListGet(points, unchecked((size
+      - 1))).Distance(global::DripSharp.Runtime.JavaCompat.ListGet(points, 0)) > closeTestLimit))) {
       global::DripSharp.Runtime.JavaCompat.Add(points,
         global::DripSharp.Runtime.JavaCompat.ListGet(points,
-        (global::DripSharp.Runtime.JavaCompat.CollectionCount(points) - 1)));
+        unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(points) - 1))));
     }
     return global::DripSharp.Runtime.JavaCompat.CollectionToArray(points,
       new global::DripSharp.Runtime.JavaPoint2D[global::DripSharp.Runtime.JavaCompat.CollectionCount(points)]);
@@ -594,12 +592,14 @@ internal class CloudyBorder {
     }
     double totLen = 0;
     for (int i__816_17 = 1; (i__816_17 < numPoints); i__816_17++) {
-      totLen += flatPolygon[(i__816_17 - 1)].Distance(flatPolygon[i__816_17]);
+      totLen += flatPolygon[unchecked((i__816_17 - 1))].Distance(flatPolygon[i__816_17]);
     }
     double k
       = global::System.Math.Cos(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder.ANGLE_34_DEG);
     double curlAdvance = ((2 * k) * cloudRadius);
-    int n = (int)(global::System.Math.Ceiling((double)(((double)totLen / (double)curlAdvance))));
+    int n
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Ceiling((double)(((double)totLen
+      / (double)curlAdvance))))));
     if ((n < 2)) {
       this.drawBasicEllipse(leftOrig, bottomOrig, rightOrig, topOrig);
       return;
@@ -621,9 +621,9 @@ internal class CloudyBorder {
     int centerPointsIndex = 0;
     double lengthRemain = 0;
     double comparisonToler = (this.lineWidth * 0.1D);
-    for (int i__855_18 = 0; ((i__855_18 + 1) < numPoints); i__855_18++) {
+    for (int i__855_18 = 0; (unchecked((i__855_18 + 1)) < numPoints); i__855_18++) {
       global::DripSharp.Runtime.JavaPoint2D p1 = flatPolygon[i__855_18];
-      global::DripSharp.Runtime.JavaPoint2D p2 = flatPolygon[(i__855_18 + 1)];
+      global::DripSharp.Runtime.JavaPoint2D p2 = flatPolygon[unchecked((i__855_18 + 1))];
       double dx = (p2.X - p1.X);
       double dy = (p2.Y - p1.Y);
       double length = p1.Distance(p2);
@@ -631,7 +631,8 @@ internal class CloudyBorder {
         continue;
       }
       double lengthTodo = (length + lengthRemain);
-      if (((lengthTodo >= (curlAdvance - comparisonToler)) || (i__855_18 == (numPoints - 2)))) {
+      if (((lengthTodo >= (curlAdvance - comparisonToler)) || (i__855_18 == unchecked((numPoints
+        - 2))))) {
         double cos
           = global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder.cosine(dx,
           length);
@@ -660,14 +661,14 @@ internal class CloudyBorder {
     double anglePrev = 0;
     double alphaPrev = 0;
     for (int i__909_18 = 0; (i__909_18 < numPoints); i__909_18++) {
-      int idxNext = (i__909_18 + 1);
-      if (((i__909_18 + 1) >= numPoints)) {
+      int idxNext = unchecked((i__909_18 + 1));
+      if ((unchecked((i__909_18 + 1)) >= numPoints)) {
         idxNext = 0;
       }
       global::DripSharp.Runtime.JavaPoint2D pt = centerPoints[i__909_18];
       global::DripSharp.Runtime.JavaPoint2D ptNext = centerPoints[idxNext];
       if ((i__909_18 == 0)) {
-        global::DripSharp.Runtime.JavaPoint2D ptPrev = centerPoints[(numPoints - 1)];
+        global::DripSharp.Runtime.JavaPoint2D ptPrev = centerPoints[unchecked((numPoints - 1))];
         anglePrev = global::System.Math.Atan2((pt.Y - ptPrev.Y), (pt.X - ptPrev.X));
         alphaPrev = this.computeParamsEllipse(ptPrev, pt, cloudRadius, curlAdvance);
       }
@@ -802,5 +803,13 @@ internal class CloudyBorder {
 
   private double getPolygonCloudRadius() {
     return ((4 * this.intensity) + (0.5D * this.lineWidth));
+  }
+
+  static CloudyBorder() {
+    ANGLE_180_DEG = global::System.Math.PI;
+    ANGLE_90_DEG = ((double)(global::System.Math.PI) / 2);
+    ANGLE_34_DEG = global::DripSharp.Runtime.JavaCompat.ToRadians((double)(34));
+    ANGLE_30_DEG = global::DripSharp.Runtime.JavaCompat.ToRadians((double)(30));
+    ANGLE_12_DEG = global::DripSharp.Runtime.JavaCompat.ToRadians((double)(12));
   }
 }

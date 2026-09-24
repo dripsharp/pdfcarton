@@ -24,7 +24,7 @@ public abstract class FontInfo {
   internal int getWeightClassAsPanose() {
     int usWeightClass = this.GetWeightClass();
     switch (usWeightClass) {
-      case var __case_82_18_0 when __case_82_18_0 == -1:
+      case var __case_82_18_0 when __case_82_18_0 == unchecked(-1):
         return 0;
       case var __case_83_18_0 when __case_83_18_0 == 0:
         return 0;

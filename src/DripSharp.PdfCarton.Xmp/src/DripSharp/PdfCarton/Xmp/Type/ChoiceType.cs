@@ -14,4 +14,8 @@ public class ChoiceType : global::DripSharp.PdfCarton.Xmp.Type.TextType {
     propertyName, value) {
 
   }
+
+  static ChoiceType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType).TypeHandle);
+  }
 }

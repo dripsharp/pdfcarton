@@ -32,4 +32,8 @@ public class PDAnnotationTextMarkup
       = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Quadpoints);
     return ((array != default!) ? array.ToFloatArray() : (float[])(default!));
   }
+
+  static PDAnnotationTextMarkup() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup).TypeHandle);
+  }
 }

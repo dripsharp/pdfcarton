@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 public sealed class SecurityHandlerFactory {
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandlerFactory Instance
-    = new global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandlerFactory();
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandlerFactory Instance;
 
   private readonly global::System.Collections.Generic.IDictionary<string,
     global::System.Type> nameToHandler
@@ -74,5 +73,9 @@ public sealed class SecurityHandlerFactory {
     } catch (global::System.Exception e) when (e is global::System.MissingMethodException or global::System.MemberAccessException or global::System.Reflection.TargetInvocationException) {
       throw new global::System.Exception(null, e);
     }
+  }
+
+  static SecurityHandlerFactory() {
+    Instance = new global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandlerFactory();
   }
 }

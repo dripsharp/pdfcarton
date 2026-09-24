@@ -312,4 +312,8 @@ internal class SchemaTester : global::DripSharp.PdfCarton.Xmp.Type.AbstractTypeT
     object result = get.Invoke(schema, new object?[] {  });
     global::DripSharp.Testing.JavaAssertions.Equal(value, result, null);
   }
+
+  static SchemaTester() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractTypeTester).TypeHandle);
+  }
 }

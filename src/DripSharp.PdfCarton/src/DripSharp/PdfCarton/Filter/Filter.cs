@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Filter;
 
 public abstract class Filter {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const string SyspropDeflatelevel = "org.apache.pdfbox.filter.deflatelevel";
 
@@ -113,7 +112,7 @@ public abstract class Filter {
         (global::System.Exception)ex,
         global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.ExceptionMessage(ex)));
     }
-    return global::System.Math.Max(-1,
+    return global::System.Math.Max(unchecked(-1),
       global::System.Math.Min(global::DripSharp.Runtime.JavaDeflater.BEST_COMPRESSION,
       compressionLevel));
   }
@@ -155,10 +154,11 @@ public abstract class Filter {
         length = randomAccessWriteBuffer!.Length();
       }
       if (((length <= 0) || (length
-        >= (global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb / 4)))) {
+        >= global::DripSharp.Runtime.JavaCompat.IntegralDivide(global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb,
+        4)))) {
         length = global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer.DefaultChunkSize4kb;
       } else {
-        length = (length * 4);
+        length = unchecked((length * 4));
       }
       randomAccessWriteBuffer
         = new global::DripSharp.PdfCarton.IO.RandomAccessReadWriteBuffer((int)((int)length));
@@ -177,5 +177,9 @@ public abstract class Filter {
     }
     randomAccessWriteBuffer!.Seek((long)(0));
     return randomAccessWriteBuffer!;
+  }
+
+  static Filter() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

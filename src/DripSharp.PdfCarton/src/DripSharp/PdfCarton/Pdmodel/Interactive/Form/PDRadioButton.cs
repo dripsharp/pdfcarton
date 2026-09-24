@@ -43,7 +43,7 @@ public sealed class PDRadioButton : global::DripSharp.PdfCarton.Pdmodel.Interact
       }
       idx++;
     }
-    return -1;
+    return unchecked(-1);
   }
 
   public global::System.Collections.Generic.IList<string> GetSelectedExportValues() {
@@ -65,5 +65,9 @@ public sealed class PDRadioButton : global::DripSharp.PdfCarton.Pdmodel.Interact
       }
       return selectedExportValues;
     }
+  }
+
+  static PDRadioButton() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton).TypeHandle);
   }
 }

@@ -49,4 +49,8 @@ public class Type0Container
   public override bool HasGlyph(int code) {
     return this.delegateFontContainer.HasGlyph(code);
   }
+
+  static Type0Container() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDFont>).TypeHandle);
+  }
 }

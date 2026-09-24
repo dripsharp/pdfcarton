@@ -53,6 +53,10 @@ public class BooleanType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSimplePr
       : global::DripSharp.PdfCarton.Xmp.Type.BooleanType.False);
   }
 
+  static BooleanType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractSimpleProperty).TypeHandle);
+  }
+
   protected override object __DripSharpCovariantBridgeGetValue() {
     return this.GetValue();
   }

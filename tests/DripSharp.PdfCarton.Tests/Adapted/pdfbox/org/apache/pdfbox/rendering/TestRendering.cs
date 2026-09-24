@@ -40,14 +40,22 @@ public class TestRendering {
     global::DripSharp.Runtime.JavaFile file
       = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.PdfCarton.Rendering.TestRendering.INPUT_DIR),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", fileName));
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { file })) {
-      global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer
-        = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(document);
-      global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => renderer.RenderImage(0), null);
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", fileName)); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)file });
+      global::System.Exception __dripsharpPrimary_71_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer
+          = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(document);
+        global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => renderer.RenderImage(0), null);
+      } catch (global::System.Exception __dripsharpCaught_71_25_0) {
+        __dripsharpPrimary_71_25_0 = __dripsharpCaught_71_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_71_25_0);
+      }
     }
   }
 
@@ -57,12 +65,12 @@ public class TestRendering {
     if (!(global::DripSharp.Runtime.JavaFileBridge.Call<bool>(typeof(global::DripSharp.PdfCarton.Rendering.TestPDFToImage),
       "DoTestFile", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string),
         typeof(string) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Rendering.TestRendering.INPUT_DIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", fileName)),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        (string)global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Rendering.TestRendering.INPUT_DIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        (string)global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Rendering.TestRendering.OUTPUT_DIR) }))) {
       global::DripSharp.Testing.JavaAssertions.Fail("Assertion failed.");
     }

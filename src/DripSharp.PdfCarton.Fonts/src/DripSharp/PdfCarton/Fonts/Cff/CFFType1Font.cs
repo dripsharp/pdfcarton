@@ -152,6 +152,10 @@ global::DripSharp.PdfCarton.Fonts.EncodedFont {
     return this.nominalWidthX;
   }
 
+  static CFFType1Font() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.CFFFont).TypeHandle);
+  }
+
   protected override global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString __DripSharpCovariantBridgeGetType2CharString(int gid) {
     return this.GetType2CharString(gid);
   }

@@ -10,5 +10,9 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
 public abstract class PDSpecialColorSpace
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace {
+  static PDSpecialColorSpace() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace).TypeHandle);
+  }
+
   public PDSpecialColorSpace() {}
 }

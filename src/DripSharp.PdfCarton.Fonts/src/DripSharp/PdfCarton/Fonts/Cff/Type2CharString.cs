@@ -9,11 +9,11 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public class Type2CharString : global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString {
-  private float defWidthX = 0;
+  private float defWidthX;
 
-  private float nominalWidthX = 0;
+  private float nominalWidthX;
 
-  private int pathCount = 0;
+  private int pathCount;
 
   private readonly int gid = default;
 
@@ -21,6 +21,10 @@ public class Type2CharString : global::DripSharp.PdfCarton.Fonts.Cff.Type1CharSt
     string fontName, string glyphName, int gid,
     global::System.Collections.Generic.IList<object> sequence, int defaultWidthX, int nomWidthX)
   : base(font, fontName, glyphName) {
+    this.defWidthX = 0;
+    this.nominalWidthX = 0;
+    this.pathCount = 0;
+
     this.gid = gid;
     this.defWidthX = defaultWidthX;
     this.nominalWidthX = nomWidthX;
@@ -39,21 +43,21 @@ public class Type2CharString : global::DripSharp.PdfCarton.Fonts.Cff.Type1CharSt
       (i < global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence)); ++i) {
       if ((global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CommandDiv.Equals(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(sequence,
         i)) && (i >= 2))) {
-        object num = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(sequence, (i
-          - 2));
-        object den = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(sequence, (i
-          - 1));
+        object num = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(sequence,
+          unchecked((i - 2)));
+        object den = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(sequence,
+          unchecked((i - 1)));
         if (((num is global::System.IConvertible) && (den is global::System.IConvertible))) {
           float f = ((float)(global::System.Convert.ToSingle(((global::System.IConvertible)(num!)),
             global::System.Globalization.CultureInfo.InvariantCulture))
             / (float)(global::System.Convert.ToSingle(((global::System.IConvertible)(den!)),
             global::System.Globalization.CultureInfo.InvariantCulture)));
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(newSequence,
-            (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(newSequence)
-            - 1));
+            unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(newSequence)
+            - 1)));
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(newSequence,
-            (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(newSequence)
-            - 1));
+            unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(newSequence)
+            - 1)));
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(newSequence, f);
         } else {
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(newSequence,
@@ -96,8 +100,8 @@ public class Type2CharString : global::DripSharp.PdfCarton.Fonts.Cff.Type1CharSt
       case 36:
       case 37:
         numbers = this.clearStack(numbers,
-          ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) % 2)
-          != 0));
+          (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralRemainder(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers),
+          2) != 0));
         this.expandStemHints(numbers, ((type2KeyWord
           == global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.Hstem)
           || (type2KeyWord
@@ -199,10 +203,10 @@ public class Type2CharString : global::DripSharp.PdfCarton.Fonts.Cff.Type1CharSt
           for (int i = 0; (i < 5); i++) {
             dx
               += global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers,
-              (i * 2)));
+              unchecked((i * 2))));
             dy
               += global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers,
-              ((i * 2) + 1)));
+              unchecked((unchecked((i * 2)) + 1))));
           }
           global::System.Collections.Generic.IList<global::System.IConvertible> first__222_26
             = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.SubList(numbers, 0, 6);
@@ -213,7 +217,8 @@ public class Type2CharString : global::DripSharp.PdfCarton.Fonts.Cff.Type1CharSt
             global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 8),
             global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 9), (dxIsBigger
             ? global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 10)
-            : (global::System.IConvertible)(-dx)), (dxIsBigger ? (global::System.IConvertible)(-dy)
+            : (global::System.IConvertible)(unchecked(-dx))), (dxIsBigger
+            ? (global::System.IConvertible)(unchecked(-dy))
             : global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers, 10)));
           this.addCommandList(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<global::System.Collections.Generic.IList<global::System.IConvertible>>(first__222_26,
             second__224_26),
@@ -223,22 +228,24 @@ public class Type2CharString : global::DripSharp.PdfCarton.Fonts.Cff.Type1CharSt
       case 41:
         if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) >= 2)) {
           this.addCommandList(global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString.split<global::System.IConvertible>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.SubList(numbers,
-            0, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) - 2)),
-            6), global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CommandRrcurveto);
+            0,
+            unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers)
+            - 2))), 6), global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CommandRrcurveto);
           this.AddCommand(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.SubList(numbers,
-            (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) - 2),
-            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers)),
+            unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers)
+            - 2)), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers)),
             global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CommandRlineto);
         }
         break;
       case 42:
         if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) >= 6)) {
           this.addCommandList(global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString.split<global::System.IConvertible>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.SubList(numbers,
-            0, (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) - 6)),
-            2), global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CommandRlineto);
+            0,
+            unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers)
+            - 6))), 2), global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CommandRlineto);
           this.AddCommand(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.SubList(numbers,
-            (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) - 6),
-            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers)),
+            unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers)
+            - 6)), global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers)),
             global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.CommandRrcurveto);
         }
         break;
@@ -338,8 +345,8 @@ public class Type2CharString : global::DripSharp.PdfCarton.Fonts.Cff.Type1CharSt
     bool horizontal) {
     while ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) >= 4)) {
       bool first
-        = ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers) % 4)
-        == 1);
+        = (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralRemainder(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(numbers),
+        4) == 1);
       if (horizontal) {
         this.AddCommand(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<global::System.IConvertible>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(numbers,
           (first ? 1 : 0)), (first
@@ -372,15 +379,20 @@ public class Type2CharString : global::DripSharp.PdfCarton.Fonts.Cff.Type1CharSt
 
   private static global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<E>> split<E>(global::System.Collections.Generic.IList<E> list,
     int size) {
-    int listSize = (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(list)
-      / size);
+    int listSize
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(list),
+      size);
     global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<E>> result
       = new global::System.Collections.Generic.List<global::System.Collections.Generic.IList<E>>(listSize);
     for (int i = 0; (i < listSize); i++) {
       global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(result,
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.SubList(list, (i * size), ((i + 1)
-        * size)));
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.SubList(list, unchecked((i * size)),
+        unchecked((unchecked((i + 1)) * size))));
     }
     return result;
+  }
+
+  static Type2CharString() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString).TypeHandle);
   }
 }

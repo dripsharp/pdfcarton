@@ -58,4 +58,8 @@ public class PDAnnotationRubberStamp
     return this.GetCOSObject().GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Name,
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationRubberStamp.NameDraft);
   }
+
+  static PDAnnotationRubberStamp() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup).TypeHandle);
+  }
 }

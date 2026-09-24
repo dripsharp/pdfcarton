@@ -31,4 +31,8 @@ public class UriAction : global::DripSharp.PdfCarton.Preflight.Action.AbstractAc
     }
     return true;
   }
+
+  static UriAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager).TypeHandle);
+  }
 }

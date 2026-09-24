@@ -73,4 +73,8 @@ public abstract class PDAnnotationSquareCircle
       = this.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Rd);
     return ((margin != default!) ? margin.ToFloatArray() : new float[] {  });
   }
+
+  static PDAnnotationSquareCircle() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup).TypeHandle);
+  }
 }

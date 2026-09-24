@@ -123,4 +123,8 @@ public abstract class PDAttributeObject
     }
     return sj.toString();
   }
+
+  static PDAttributeObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper).TypeHandle);
+  }
 }

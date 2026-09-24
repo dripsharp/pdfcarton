@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFDocument : global::System.IDisposable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSDocument document = null!;
 
@@ -85,17 +84,24 @@ public class FDFDocument : global::System.IDisposable {
     __JavaFile_Save(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(fileName));
   }
 
-  internal void __JavaFile_Save(global::DripSharp.Runtime.JavaFile fileName) {
-    using (global::System.IO.Stream fos
-      = global::DripSharp.Runtime.JavaCompat.OpenFileOutput(fileName)) {
-      this.Save(fos);
+  internal void __JavaFile_Save(global::DripSharp.Runtime.JavaFile fileName) { {
+      global::System.IO.Stream fos = global::DripSharp.Runtime.JavaCompat.OpenFileOutput(fileName);
+      global::System.Exception __dripsharpPrimary_188_31_0 = null!;
+      try {
+        this.Save(fos);
+      } catch (global::System.Exception __dripsharpCaught_188_31_0) {
+        __dripsharpPrimary_188_31_0 = __dripsharpCaught_188_31_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(fos, __dripsharpPrimary_188_31_0);
+      }
     }
   }
 
   public virtual void Save(string fileName) {
     global::DripSharp.Runtime.JavaFileBridge.Call(this, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(fileName) });
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(fileName) });
   }
 
   public virtual void Save(global::System.IO.Stream output) {
@@ -109,18 +115,26 @@ public class FDFDocument : global::System.IDisposable {
     __JavaFile_SaveXFDF(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(fileName));
   }
 
-  internal void __JavaFile_SaveXFDF(global::DripSharp.Runtime.JavaFile fileName) {
-    using (global::System.IO.TextWriter writer
-      = new global::System.IO.StreamWriter(global::DripSharp.Runtime.JavaCompat.OpenFileOutput(fileName),
-      global::DripSharp.Runtime.JavaStandardCharsets.UTF8)) {
-      this.SaveXFDF(writer);
+  internal void __JavaFile_SaveXFDF(global::DripSharp.Runtime.JavaFile fileName) { {
+      global::System.IO.TextWriter writer
+        = new global::System.IO.StreamWriter(global::DripSharp.Runtime.JavaCompat.OpenFileOutput(fileName),
+        global::DripSharp.Runtime.JavaStandardCharsets.UTF8);
+      global::System.Exception __dripsharpPrimary_228_29_0 = null!;
+      try {
+        this.SaveXFDF(writer);
+      } catch (global::System.Exception __dripsharpCaught_228_29_0) {
+        __dripsharpPrimary_228_29_0 = __dripsharpCaught_228_29_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(writer, __dripsharpPrimary_228_29_0);
+      }
     }
   }
 
   public virtual void SaveXFDF(string fileName) {
     global::DripSharp.Runtime.JavaFileBridge.Call(this, "SaveXFDF",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(fileName) });
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(fileName) });
   }
 
   public virtual void SaveXFDF(global::System.IO.TextWriter output) {
@@ -147,5 +161,9 @@ public class FDFDocument : global::System.IDisposable {
         throw firstException!;
       }
     }
+  }
+
+  static FDFDocument() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 internal class GlyphRenderer {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription glyphDescription = null!;
 
@@ -26,17 +25,17 @@ internal class GlyphRenderer {
 
   private global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point[] describe(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphDescription gd) {
     int endPtIndex = 0;
-    int endPtOfContourIndex = -1;
+    int endPtOfContourIndex = unchecked(-1);
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point[] points
       = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point[gd.GetPointCount()];
     for (int i = 0; (i < points.Length); i++) {
-      if ((endPtOfContourIndex == -1)) {
+      if ((endPtOfContourIndex == unchecked(-1))) {
         endPtOfContourIndex = gd.GetEndPtOfContours(endPtIndex);
       }
       bool endPt = (endPtOfContourIndex == i);
       if (endPt) {
         endPtIndex++;
-        endPtOfContourIndex = -1;
+        endPtOfContourIndex = unchecked(-1);
       }
       points[i]
         = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point((int)(gd.GetXCoordinate(i)),
@@ -55,8 +54,8 @@ internal class GlyphRenderer {
         global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point firstPoint = points[start];
         global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point lastPoint = points[p];
         global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point> contour
-          = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point>(((p
-          - start) + 3));
+          = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point>(unchecked((unchecked((p
+          - start)) + 3)));
         for (int q = start; (q <= p); ++q) {
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(contour, points[q]);
         }
@@ -81,19 +80,21 @@ internal class GlyphRenderer {
           if (pnow.onCurve) {
             this.lineTo(path, pnow);
           } else {
-            if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(contour, (j
-              + 1)).onCurve) {
+            if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(contour, unchecked((j
+              + 1))).onCurve) {
               this.quadTo(path, pnow,
-                global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(contour, (j + 1)));
+                global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(contour, unchecked((j
+                + 1))));
               ++j;
             } else {
               this.quadTo(path, pnow, this.midValue(pnow,
-                global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(contour, (j + 1))));
+                global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(contour, unchecked((j
+                + 1)))));
             }
           }
         }
         global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontCompat.Close(path);
-        start = (p + 1);
+        start = unchecked((p + 1));
       }
     }
     return path;
@@ -137,7 +138,9 @@ internal class GlyphRenderer {
   }
 
   private int midValue(int a, int b) {
-    return (a + ((b - a) / 2));
+    return unchecked((a
+      + global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(unchecked((b - a)),
+      2)));
   }
 
   private global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point midValue(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point point1,
@@ -171,5 +174,9 @@ internal class GlyphRenderer {
         "Point(%d,%d,%s,%s)", this.x, this.y, (this.onCurve ? (object)("onCurve") : (object)("")),
         (this.endOfContour ? (object)("endOfContour") : (object)("")));
     }
+  }
+
+  static GlyphRenderer() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Xmp.Xml;
 
 public class XmpSerializationException : global::System.Exception {
-  internal const long serialVersionUID = -3495894314480173555L;
+  internal const long serialVersionUID = unchecked(-3495894314480173555L);
 
   public XmpSerializationException(string message) : base(message) {
 

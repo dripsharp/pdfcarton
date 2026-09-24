@@ -17,17 +17,18 @@ public class PDSeparation : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
 
   private const int TINT_TRANSFORM = 3;
 
-  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace alternateColorSpace
-    = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace alternateColorSpace;
 
-  private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction __field_tintTransform
-    = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction __field_tintTransform;
 
-  private global::System.Collections.Generic.IDictionary<int, float[]> toRGBMap = default!;
+  private global::System.Collections.Generic.IDictionary<int, float[]> toRGBMap;
 
   public PDSeparation() {
     this.initialColor
       = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 1 }, this);
+    this.alternateColorSpace = default!;
+    this.__field_tintTransform = default!;
+    this.toRGBMap = default!;
 
     base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
     base.Array.Add(global::DripSharp.PdfCarton.Cos.COSName.Separation);
@@ -40,6 +41,9 @@ public class PDSeparation : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
     global::DripSharp.PdfCarton.Pdmodel.PDResources resources) {
     this.initialColor
       = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 1 }, this);
+    this.alternateColorSpace = default!;
+    this.__field_tintTransform = default!;
+    this.toRGBMap = default!;
 
     base.Array = separation;
     this.alternateColorSpace
@@ -82,7 +86,8 @@ public class PDSeparation : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
     if ((this.toRGBMap == default!)) {
       this.toRGBMap = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, float[]>();
     }
-    int key = (int)((value[0] * 255));
+    int key = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((value[0]
+      * 255))));
     float[] retval = global::DripSharp.Runtime.JavaCompat.MapGet(this.toRGBMap, key);
     if ((retval != default!)) {
       return retval;
@@ -153,9 +158,12 @@ public class PDSeparation : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
           float[] altColor = this.__field_tintTransform.Eval(samples);
           float[] fltab = this.alternateColorSpace.ToRGB(altColor);
           rgb = new int[3];
-          rgb[0] = (int)((fltab[0] * 255));
-          rgb[1] = (int)((fltab[1] * 255));
-          rgb[2] = (int)((fltab[2] * 255));
+          rgb[0] = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((fltab[0]
+            * 255))));
+          rgb[1] = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((fltab[1]
+            * 255))));
+          rgb[2] = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((fltab[2]
+            * 255))));
           global::DripSharp.Runtime.JavaCompat.MapPut(calculatedValues, hash, rgb);
         }
         rgbRaster.SetPixel(x, y, rgb);
@@ -168,7 +176,8 @@ public class PDSeparation : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
     samples[0] /= 255;
     float[] result = this.__field_tintTransform.Eval(samples);
     for (int s = 0; (s < alt.Length); s++) {
-      alt[s] = (int)((result[s] * 255));
+      alt[s] = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((result[s]
+        * 255))));
     }
   }
 
@@ -211,5 +220,9 @@ public class PDSeparation : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
     return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.GetName(),
       "{"), "\""), this.GetColorantName()), "\""), " "), this.alternateColorSpace.GetName()), " "),
       this.__field_tintTransform), "}");
+  }
+
+  static PDSeparation() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSpecialColorSpace).TypeHandle);
   }
 }

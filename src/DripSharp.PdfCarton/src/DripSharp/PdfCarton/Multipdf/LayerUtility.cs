@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Multipdf;
 
 public class LayerUtility {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const bool DEBUG = true;
 
@@ -29,19 +28,35 @@ public class LayerUtility {
 
   public virtual void WrapInSaveRestore(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
     global::DripSharp.PdfCarton.Cos.COSStream saveGraphicsStateStream
-      = this.GetDocument().GetDocument().CreateCOSStream();
-    using (global::System.IO.Stream saveStream = saveGraphicsStateStream.CreateOutputStream()) {
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(saveStream,
-        global::DripSharp.Runtime.JavaCompat.StringGetBytes("q\n",
-        global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+      = this.GetDocument().GetDocument().CreateCOSStream(); {
+      global::System.IO.Stream saveStream = saveGraphicsStateStream.CreateOutputStream();
+      global::System.Exception __dripsharpPrimary_92_27_0 = null!;
+      try {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(saveStream,
+          global::DripSharp.Runtime.JavaCompat.StringGetBytes("q\n",
+          global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+      } catch (global::System.Exception __dripsharpCaught_92_27_0) {
+        __dripsharpPrimary_92_27_0 = __dripsharpCaught_92_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(saveStream, __dripsharpPrimary_92_27_0);
+      }
     }
     global::DripSharp.PdfCarton.Cos.COSStream restoreGraphicsStateStream
-      = this.GetDocument().GetDocument().CreateCOSStream();
-    using (global::System.IO.Stream restoreStream
-      = restoreGraphicsStateStream.CreateOutputStream()) {
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(restoreStream,
-        global::DripSharp.Runtime.JavaCompat.StringGetBytes("Q\n",
-        global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+      = this.GetDocument().GetDocument().CreateCOSStream(); {
+      global::System.IO.Stream restoreStream = restoreGraphicsStateStream.CreateOutputStream();
+      global::System.Exception __dripsharpPrimary_98_27_0 = null!;
+      try {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(restoreStream,
+          global::DripSharp.Runtime.JavaCompat.StringGetBytes("Q\n",
+          global::DripSharp.Runtime.JavaStandardCharsets.ISO88591));
+      } catch (global::System.Exception __dripsharpCaught_98_27_0) {
+        __dripsharpPrimary_98_27_0 = __dripsharpCaught_98_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(restoreStream,
+          __dripsharpPrimary_98_27_0);
+      }
     }
     global::DripSharp.PdfCarton.Cos.COSDictionary pageDictionary = page.GetCOSObject();
     global::DripSharp.PdfCarton.Cos.COSBase contents
@@ -75,9 +90,7 @@ public class LayerUtility {
     return this.ImportPageAsForm(sourceDoc, page);
   }
 
-  private static readonly global::System.Collections.Generic.ISet<string> PAGE_TO_FORM_FILTER
-    = new global::System.Collections.Generic.HashSet<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("Group",
-    "LastModified", "Metadata"));
+  private static readonly global::System.Collections.Generic.ISet<string> PAGE_TO_FORM_FILTER;
 
   public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject ImportPageAsForm(global::DripSharp.PdfCarton.Pdmodel.PDDocument sourceDoc,
     global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
@@ -169,17 +182,26 @@ public class LayerUtility {
     }
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup layer
       = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Optionalcontent.PDOptionalContentGroup(layerName);
-    ocprops.AddGroup(layer);
-    using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
-      = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(this.targetDoc, targetPage,
-      global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Append,
-      !(global::DripSharp.PdfCarton.Multipdf.LayerUtility.DEBUG))) {
-      contentStream.BeginMarkedContent(global::DripSharp.PdfCarton.Cos.COSName.Oc, layer);
-      contentStream.SaveGraphicsState();
-      contentStream.Transform(new global::DripSharp.PdfCarton.Util.Matrix(transform));
-      contentStream.DrawForm(form);
-      contentStream.RestoreGraphicsState();
-      contentStream.EndMarkedContent();
+    ocprops.AddGroup(layer); {
+      global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
+        = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(this.targetDoc, targetPage,
+        global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Append,
+        !(global::DripSharp.PdfCarton.Multipdf.LayerUtility.DEBUG));
+      global::System.Exception __dripsharpPrimary_274_34_0 = null!;
+      try {
+        contentStream.BeginMarkedContent(global::DripSharp.PdfCarton.Cos.COSName.Oc, layer);
+        contentStream.SaveGraphicsState();
+        contentStream.Transform(new global::DripSharp.PdfCarton.Util.Matrix(transform));
+        contentStream.DrawForm(form);
+        contentStream.RestoreGraphicsState();
+        contentStream.EndMarkedContent();
+      } catch (global::System.Exception __dripsharpCaught_274_34_0) {
+        __dripsharpPrimary_274_34_0 = __dripsharpCaught_274_34_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream,
+          __dripsharpPrimary_274_34_0);
+      }
     }
     return layer;
   }
@@ -213,5 +235,12 @@ public class LayerUtility {
     } else {
       this.cloner.cloneMerge(srcOCProperties, dstOCProperties);
     }
+  }
+
+  static LayerUtility() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    PAGE_TO_FORM_FILTER
+      = new global::System.Collections.Generic.HashSet<string>(global::DripSharp.Runtime.JavaCompat.AsList<string>("Group",
+      "LastModified", "Metadata"));
   }
 }

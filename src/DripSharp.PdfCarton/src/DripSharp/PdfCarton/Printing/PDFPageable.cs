@@ -21,9 +21,9 @@ public sealed class PDFPageable : global::DripSharp.Runtime.JavaBook {
 
   private readonly global::DripSharp.PdfCarton.Printing.Orientation orientation = null!;
 
-  private bool subsamplingAllowed = false;
+  private bool subsamplingAllowed;
 
-  private global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints = default!;
+  private global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints;
 
   public PDFPageable(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) : this(document,
     global::DripSharp.PdfCarton.Printing.Orientation.Auto, false, (float)(0), true) {
@@ -51,6 +51,9 @@ public sealed class PDFPageable : global::DripSharp.Runtime.JavaBook {
   public PDFPageable(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
     global::DripSharp.PdfCarton.Printing.Orientation orientation, bool showPageBorder, float dpi,
     bool center) {
+    this.subsamplingAllowed = false;
+    this.renderingHints = default!;
+
     this.document = document;
     this.orientation = orientation;
     this.showPageBorder = showPageBorder;

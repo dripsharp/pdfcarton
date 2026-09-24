@@ -70,4 +70,8 @@ public class VersionType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructur
   public virtual void SetModifier(string value) {
     this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.VersionType.Modifier, value);
   }
+
+  static VersionType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

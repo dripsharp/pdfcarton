@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public class RadialShadingPaint
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingPaint<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType3> {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   internal RadialShadingPaint(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType3 shading,
     global::DripSharp.PdfCarton.Util.Matrix matrix) : base(shading, matrix) {
@@ -35,5 +34,10 @@ public class RadialShadingPaint
       return global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0,
         0).CreateContext(cm, deviceBounds, userBounds, xform, hints);
     }
+  }
+
+  static RadialShadingPaint() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingPaint<global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType3>).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

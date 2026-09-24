@@ -22,4 +22,8 @@ internal sealed class IdentityFilter : global::DripSharp.PdfCarton.Filter.Filter
     global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, encoded);
     encoded.Flush();
   }
+
+  static IdentityFilter() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Filter.Filter).TypeHandle);
+  }
 }

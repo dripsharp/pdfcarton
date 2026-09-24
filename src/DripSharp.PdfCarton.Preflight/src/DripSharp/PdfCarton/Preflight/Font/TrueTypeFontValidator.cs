@@ -47,4 +47,8 @@ public class TrueTypeFontValidator
       }
     }
   }
+
+  static TrueTypeFontValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.SimpleFontValidator<global::DripSharp.PdfCarton.Preflight.Font.Container.TrueTypeContainer>).TypeHandle);
+  }
 }

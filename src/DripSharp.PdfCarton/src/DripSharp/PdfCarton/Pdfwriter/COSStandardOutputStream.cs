@@ -9,22 +9,25 @@
 namespace DripSharp.PdfCarton.Pdfwriter;
 
 public class COSStandardOutputStream : global::DripSharp.Runtime.JavaFilterOutputStream {
-  public static readonly sbyte[] Crlf = new sbyte[] { unchecked((sbyte)('\r')),
-    unchecked((sbyte)('\n')) };
+  public static readonly sbyte[] Crlf;
 
-  public static readonly sbyte[] Lf = new sbyte[] { unchecked((sbyte)('\n')) };
+  public static readonly sbyte[] Lf;
 
-  public static readonly sbyte[] Eol = new sbyte[] { unchecked((sbyte)('\n')) };
+  public static readonly sbyte[] Eol;
 
-  private long position = 0;
+  private long position;
 
-  private bool onNewLine = false;
+  private bool onNewLine;
 
   public COSStandardOutputStream(global::System.IO.Stream @out) : base(@out) {
-
+    this.position = 0;
+    this.onNewLine = false;
   }
 
   public COSStandardOutputStream(global::System.IO.Stream @out, long position) : base(@out) {
+    this.position = 0;
+    this.onNewLine = false;
+
     this.position = position;
   }
 
@@ -65,5 +68,11 @@ public class COSStandardOutputStream : global::DripSharp.Runtime.JavaFilterOutpu
 
   public virtual void WriteLF() {
     this.Write(global::DripSharp.PdfCarton.Pdfwriter.COSStandardOutputStream.Lf);
+  }
+
+  static COSStandardOutputStream() {
+    Crlf = new sbyte[] { unchecked((sbyte)('\r')), unchecked((sbyte)('\n')) };
+    Lf = new sbyte[] { unchecked((sbyte)('\n')) };
+    Eol = new sbyte[] { unchecked((sbyte)('\n')) };
   }
 }

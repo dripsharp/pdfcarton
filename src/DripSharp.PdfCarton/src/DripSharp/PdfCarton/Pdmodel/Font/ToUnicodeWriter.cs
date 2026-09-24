@@ -68,7 +68,7 @@ internal sealed class ToUnicodeWriter {
       if (global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.allowCIDToUnicodeRange(prev!,
         next)) {
         global::DripSharp.Runtime.JavaCompat.ListSet(srcTo,
-          (global::DripSharp.Runtime.JavaCompat.CollectionCount(srcTo) - 1), next.Key);
+          unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(srcTo) - 1)), next.Key);
       } else {
         global::DripSharp.Runtime.JavaCompat.Add(srcFrom, next.Key);
         global::DripSharp.Runtime.JavaCompat.Add(srcTo, next.Key);
@@ -77,18 +77,19 @@ internal sealed class ToUnicodeWriter {
       prev = next;
     }
     int batchCount
-      = (int)(global::System.Math.Ceiling((double)((global::DripSharp.Runtime.JavaCompat.CollectionCount(srcFrom)
-      / (double)(double)(global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR)))));
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Ceiling((double)((global::DripSharp.Runtime.JavaCompat.CollectionCount(srcFrom)
+      / (double)(double)(global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR)))))));
     for (int batch = 0; (batch < batchCount); batch++) {
-      int count = ((batch == (batchCount - 1))
-        ? (global::DripSharp.Runtime.JavaCompat.CollectionCount(srcFrom)
-        - (global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR
-        * batch))
+      int count = ((batch == unchecked((batchCount - 1)))
+        ? unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(srcFrom)
+        - unchecked((global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR
+        * batch))))
         : global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR);
       writer.Write(global::DripSharp.Runtime.JavaCompat.Concat(count, " beginbfrange\n"));
       for (int j = 0; (j < count); j++) {
-        int index = ((batch
-          * global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR) + j);
+        int index = unchecked((unchecked((batch
+          * global::DripSharp.PdfCarton.Pdmodel.Font.ToUnicodeWriter.MAX_ENTRIES_PER_OPERATOR))
+          + j));
         global::DripSharp.Runtime.JavaCompat.WriterWriteCharCode(writer, (int)('<'));
         writer.Write(global::DripSharp.PdfCarton.Util.Hex.GetChars(unchecked((short)global::DripSharp.Runtime.JavaCompat.ListGet(srcFrom,
           index))));
@@ -128,7 +129,7 @@ internal sealed class ToUnicodeWriter {
   }
 
   internal static bool allowCodeRange(int prev, int next) {
-    if (((prev + 1) != next)) {
+    if ((unchecked((prev + 1)) != next)) {
       return false;
     }
     int prevH = ((prev >> unchecked((int)(8))) & 255);

@@ -19,4 +19,8 @@ public abstract class CFFEncoding : global::DripSharp.PdfCarton.Fonts.Encoding.E
     this.AddCharacterEncoding(code,
       global::DripSharp.PdfCarton.Fonts.Cff.CFFStandardString.GetName(sid));
   }
+
+  static CFFEncoding() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Encoding.Encoding).TypeHandle);
+  }
 }

@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Preflight.Process.Reflect;
 
 public class SinglePageValidationProcess
 : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOGGER
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOGGER;
 
   public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
     global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
@@ -150,5 +149,10 @@ public class SinglePageValidationProcess
           "Group has a transparency S entry or the S entry is null"));
       }
     }
+  }
+
+  static SinglePageValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+    LOGGER = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -28,7 +28,7 @@ public class PDPageFitRectangleDestination
 
   public virtual void SetLeft(int x) {
     base.Array.GrowToSize(6);
-    if ((x == -1)) {
+    if ((x == unchecked(-1))) {
       base.Array.Set(2, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
     } else {
       base.Array.SetInt(2, x);
@@ -41,7 +41,7 @@ public class PDPageFitRectangleDestination
 
   public virtual void SetBottom(int y) {
     base.Array.GrowToSize(6);
-    if ((y == -1)) {
+    if ((y == unchecked(-1))) {
       base.Array.Set(3, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
     } else {
       base.Array.SetInt(3, y);
@@ -54,7 +54,7 @@ public class PDPageFitRectangleDestination
 
   public virtual void SetRight(int x) {
     base.Array.GrowToSize(6);
-    if ((x == -1)) {
+    if ((x == unchecked(-1))) {
       base.Array.Set(4, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
     } else {
       base.Array.SetInt(4, x);
@@ -67,10 +67,14 @@ public class PDPageFitRectangleDestination
 
   public virtual void SetTop(int y) {
     base.Array.GrowToSize(6);
-    if ((y == -1)) {
+    if ((y == unchecked(-1))) {
       base.Array.Set(5, (global::DripSharp.PdfCarton.Cos.COSBase)default!);
     } else {
       base.Array.SetInt(5, y);
     }
+  }
+
+  static PDPageFitRectangleDestination() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination).TypeHandle);
   }
 }

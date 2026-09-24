@@ -13,14 +13,22 @@ public class TTFSubsetterTest {
       = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter(x);
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    ttfSubsetter.WriteToStream(baos);
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)))) {
-      global::DripSharp.Testing.JavaAssertions.Equal(1, subset.GetNumberOfGlyphs(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", ".notdef")),
-        null);
-      global::DripSharp.Testing.JavaAssertions.NotNull(subset.GetGlyph().GetGlyph(0), null);
+    ttfSubsetter.WriteToStream(baos); {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)));
+      global::System.Exception __dripsharpPrimary_60_27_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(1, subset.GetNumberOfGlyphs(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          ".notdef")), null);
+        global::DripSharp.Testing.JavaAssertions.NotNull(subset.GetGlyph().GetGlyph(0), null);
+      } catch (global::System.Exception __dripsharpCaught_60_27_0) {
+        __dripsharpPrimary_60_27_0 = __dripsharpCaught_60_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(subset, __dripsharpPrimary_60_27_0);
+      }
     }
   }
 
@@ -44,14 +52,22 @@ public class TTFSubsetterTest {
       = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter(x, tables);
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    ttfSubsetter.WriteToStream(baos);
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)))) {
-      global::DripSharp.Testing.JavaAssertions.Equal(1, subset.GetNumberOfGlyphs(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", ".notdef")),
-        null);
-      global::DripSharp.Testing.JavaAssertions.NotNull(subset.GetGlyph().GetGlyph(0), null);
+    ttfSubsetter.WriteToStream(baos); {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)));
+      global::System.Exception __dripsharpPrimary_95_27_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(1, subset.GetNumberOfGlyphs(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          ".notdef")), null);
+        global::DripSharp.Testing.JavaAssertions.NotNull(subset.GetGlyph().GetGlyph(0), null);
+      } catch (global::System.Exception __dripsharpCaught_95_27_0) {
+        __dripsharpPrimary_95_27_0 = __dripsharpCaught_95_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(subset, __dripsharpPrimary_95_27_0);
+      }
     }
   }
 
@@ -64,26 +80,35 @@ public class TTFSubsetterTest {
     ttfSubsetter.Add((int)('a'));
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    ttfSubsetter.WriteToStream(baos);
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)))) {
-      global::DripSharp.Testing.JavaAssertions.Equal(2, subset.GetNumberOfGlyphs(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", ".notdef")),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "a")), null);
-      global::DripSharp.Testing.JavaAssertions.NotNull(subset.GetGlyph().GetGlyph(0), null);
-      global::DripSharp.Testing.JavaAssertions.NotNull(subset.GetGlyph().GetGlyph(1), null);
-      global::DripSharp.Testing.JavaAssertions.Null(subset.GetGlyph().GetGlyph(2), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(full.GetAdvanceWidth(full.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "a"))),
-        subset.GetAdvanceWidth(subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "a"))), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(full.GetHorizontalMetrics().GetLeftSideBearing(full.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "a"))),
-        subset.GetHorizontalMetrics().GetLeftSideBearing(subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "a"))), null);
+    ttfSubsetter.WriteToStream(baos); {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)));
+      global::System.Exception __dripsharpPrimary_118_27_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(2, subset.GetNumberOfGlyphs(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          ".notdef")), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "a")),
+          null);
+        global::DripSharp.Testing.JavaAssertions.NotNull(subset.GetGlyph().GetGlyph(0), null);
+        global::DripSharp.Testing.JavaAssertions.NotNull(subset.GetGlyph().GetGlyph(1), null);
+        global::DripSharp.Testing.JavaAssertions.Null(subset.GetGlyph().GetGlyph(2), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(full.GetAdvanceWidth(full.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "a"))),
+          subset.GetAdvanceWidth(subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "a"))), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(full.GetHorizontalMetrics().GetLeftSideBearing(full.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "a"))),
+          subset.GetHorizontalMetrics().GetLeftSideBearing(subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "a"))), null);
+      } catch (global::System.Exception __dripsharpCaught_118_27_0) {
+        __dripsharpPrimary_118_27_0 = __dripsharpCaught_118_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(subset, __dripsharpPrimary_118_27_0);
+      }
     }
   }
 
@@ -132,18 +157,26 @@ public class TTFSubsetterTest {
     }
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    ttfSubsetter.WriteToStream(baos);
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)))) {
-      global::DripSharp.Testing.JavaAssertions.Equal(6, subset.GetNumberOfGlyphs(), null);
-      foreach (global::DripSharp.Runtime.JavaMapEntry<int,
-        int> entry in global::DripSharp.Runtime.JavaCompat.MapEntrySet(ttfSubsetter.GetGIDMap())) {
-        int newGID = entry.Key;
-        int oldGID = entry.Value;
-        global::DripSharp.Testing.JavaAssertions.Equal(full.GetAdvanceWidth((int)(oldGID)),
-          subset.GetAdvanceWidth((int)(newGID)), null);
-        global::DripSharp.Testing.JavaAssertions.Equal(full.GetHorizontalMetrics().GetLeftSideBearing((int)(oldGID)),
-          subset.GetHorizontalMetrics().GetLeftSideBearing((int)(newGID)), null);
+    ttfSubsetter.WriteToStream(baos); {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)));
+      global::System.Exception __dripsharpPrimary_186_27_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(6, subset.GetNumberOfGlyphs(), null);
+        foreach (global::DripSharp.Runtime.JavaMapEntry<int,
+          int> entry in global::DripSharp.Runtime.JavaCompat.MapEntrySet(ttfSubsetter.GetGIDMap())) {
+          int newGID = entry.Key;
+          int oldGID = entry.Value;
+          global::DripSharp.Testing.JavaAssertions.Equal(full.GetAdvanceWidth((int)(oldGID)),
+            subset.GetAdvanceWidth((int)(newGID)), null);
+          global::DripSharp.Testing.JavaAssertions.Equal(full.GetHorizontalMetrics().GetLeftSideBearing((int)(oldGID)),
+            subset.GetHorizontalMetrics().GetLeftSideBearing((int)(newGID)), null);
+        }
+      } catch (global::System.Exception __dripsharpCaught_186_27_0) {
+        __dripsharpPrimary_186_27_0 = __dripsharpCaught_186_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(subset, __dripsharpPrimary_186_27_0);
       }
     }
   }
@@ -159,30 +192,40 @@ public class TTFSubsetterTest {
     ttfSubsetter.Add((int)('B'));
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    ttfSubsetter.WriteToStream(baos);
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)))) {
-      global::DripSharp.Testing.JavaAssertions.Equal(4, subset.GetNumberOfGlyphs(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", ".notdef")),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "space")),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(2,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "A")), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(3,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "B")), null);
-      string[] names = new string[] { "A", "B", "space" };
-      foreach (string name in names) {
-        global::DripSharp.Testing.JavaAssertions.Equal(full.GetAdvanceWidth(full.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-          name))),
-          subset.GetAdvanceWidth(subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-          name))), null);
-        global::DripSharp.Testing.JavaAssertions.Equal(full.GetHorizontalMetrics().GetLeftSideBearing(full.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-          name))),
-          subset.GetHorizontalMetrics().GetLeftSideBearing(subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-          name))), null);
+    ttfSubsetter.WriteToStream(baos); {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)));
+      global::System.Exception __dripsharpPrimary_218_27_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(4, subset.GetNumberOfGlyphs(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          ".notdef")), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "space")),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(2,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "A")),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "B")),
+          null);
+        string[] names = new string[] { "A", "B", "space" };
+        foreach (string name in names) {
+          global::DripSharp.Testing.JavaAssertions.Equal(full.GetAdvanceWidth(full.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+            name))),
+            subset.GetAdvanceWidth(subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+            name))), null);
+          global::DripSharp.Testing.JavaAssertions.Equal(full.GetHorizontalMetrics().GetLeftSideBearing(full.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+            name))),
+            subset.GetHorizontalMetrics().GetLeftSideBearing(subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+            name))), null);
+        }
+      } catch (global::System.Exception __dripsharpCaught_218_27_0) {
+        __dripsharpPrimary_218_27_0 = __dripsharpCaught_218_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(subset, __dripsharpPrimary_218_27_0);
       }
     }
   }
@@ -199,54 +242,71 @@ public class TTFSubsetterTest {
     ttfSubsetter.Add((int)('\u200A'));
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    ttfSubsetter.WriteToStream(baos);
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)))) {
-      global::DripSharp.Testing.JavaAssertions.Equal(5, subset.GetNumberOfGlyphs(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", ".notdef")),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "O")), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(2,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "Odieresis")), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(3,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "uni200A")),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(4,
-        subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "dieresis.uc")), null);
-      global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable pst = subset.GetPostScript();
-      global::DripSharp.Testing.JavaAssertions.Equal(".notdef", pst.GetName(0), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("O", pst.GetName(1), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("Odieresis", pst.GetName(2), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("uni200A", pst.GetName(3), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("dieresis.uc", pst.GetName(4), null);
-      global::DripSharp.Testing.JavaAssertions.True(subset.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "uni200A")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "Hair space path should be empty"));
-      global::DripSharp.Testing.JavaAssertions.False(subset.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "dieresis.uc")).Bounds.IsEmpty,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "UC dieresis path should not be empty"));
+    ttfSubsetter.WriteToStream(baos); {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)));
+      global::System.Exception __dripsharpPrimary_253_27_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(5, subset.GetNumberOfGlyphs(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          ".notdef")), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "O")),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(2,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "Odieresis")), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "uni200A")), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(4,
+          subset.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "dieresis.uc")), null);
+        global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable pst = subset.GetPostScript();
+        global::DripSharp.Testing.JavaAssertions.Equal(".notdef", pst.GetName(0), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("O", pst.GetName(1), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("Odieresis", pst.GetName(2), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("uni200A", pst.GetName(3), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("dieresis.uc", pst.GetName(4), null);
+        global::DripSharp.Testing.JavaAssertions.True(subset.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "uni200A")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "Hair space path should be empty"));
+        global::DripSharp.Testing.JavaAssertions.False(subset.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "dieresis.uc")).Bounds.IsEmpty,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "UC dieresis path should not be empty"));
+      } catch (global::System.Exception __dripsharpCaught_253_27_0) {
+        __dripsharpPrimary_253_27_0 = __dripsharpCaught_253_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(subset, __dripsharpPrimary_253_27_0);
+      }
     }
   }
 
-  internal virtual void testPDFBox5728() {
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      "target/fonts/NotoMono-Regular.ttf")))) {
-      global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable postScript = ttf.GetPostScript();
-      global::DripSharp.Testing.JavaAssertions.Equal(3.0D, (double)(postScript.GetFormatType()),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Null(postScript.GetGlyphNames(), null);
-      global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter subsetter
-        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter(ttf);
-      subsetter.Add((int)('a'));
-      global::DripSharp.Runtime.JavaByteArrayOutputStream output
-        = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-      subsetter.WriteToStream(output);
+  internal virtual void testPDFBox5728() { {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        "target/fonts/NotoMono-Regular.ttf")));
+      global::System.Exception __dripsharpPrimary_286_27_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable postScript = ttf.GetPostScript();
+        global::DripSharp.Testing.JavaAssertions.Equal(3.0D, (double)(postScript.GetFormatType()),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Null(postScript.GetGlyphNames(), null);
+        global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter subsetter
+          = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter(ttf);
+        subsetter.Add((int)('a'));
+        global::DripSharp.Runtime.JavaByteArrayOutputStream output
+          = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
+        subsetter.WriteToStream(output);
+      } catch (global::System.Exception __dripsharpCaught_286_27_0) {
+        __dripsharpPrimary_286_27_0 = __dripsharpCaught_286_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(ttf, __dripsharpPrimary_286_27_0);
+      }
     }
   }
 
@@ -263,117 +323,144 @@ public class TTFSubsetterTest {
     ttfSubsetter.Add((int)('\u200C'));
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    ttfSubsetter.WriteToStream(baos);
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset__318_27
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)))) {
-      global::DripSharp.Testing.JavaAssertions.Equal(4, subset__318_27.GetNumberOfGlyphs(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0,
-        subset__318_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        ".notdef")), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        subset__318_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "A")), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(2,
-        subset__318_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "B")), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(3,
-        subset__318_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "uni200C")), null);
-      global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable pst__327_29
-        = subset__318_27.GetPostScript();
-      global::DripSharp.Testing.JavaAssertions.Equal(".notdef", pst__327_29.GetName(0), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("A", pst__327_29.GetName(1), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("B", pst__327_29.GetName(2), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("uni200C", pst__327_29.GetName(3), null);
-      global::DripSharp.Testing.JavaAssertions.False(subset__318_27.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "A")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "A path should not be empty"));
-      global::DripSharp.Testing.JavaAssertions.False(subset__318_27.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "B")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "B path should not be empty"));
-      global::DripSharp.Testing.JavaAssertions.False(subset__318_27.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "uni200C")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "ZWNJ path should not be empty"));
-      global::DripSharp.Testing.JavaAssertions.NotEqual((float)(0),
-        subset__318_27.GetWidth(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "A")),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "A width should not be zero."));
-      global::DripSharp.Testing.JavaAssertions.NotEqual((float)(0),
-        subset__318_27.GetWidth(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "B")),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "B width should not be zero."));
-      global::DripSharp.Testing.JavaAssertions.Equal((float)(0),
-        subset__318_27.GetWidth(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "uni200C")), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "ZWNJ width should be zero"));
+    ttfSubsetter.WriteToStream(baos); {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset__318_27
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos)));
+      global::System.Exception __dripsharpPrimary_318_27_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(4, subset__318_27.GetNumberOfGlyphs(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0,
+          subset__318_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          ".notdef")), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          subset__318_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "A")), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(2,
+          subset__318_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "B")), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          subset__318_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "uni200C")), null);
+        global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable pst__327_29
+          = subset__318_27.GetPostScript();
+        global::DripSharp.Testing.JavaAssertions.Equal(".notdef", pst__327_29.GetName(0), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("A", pst__327_29.GetName(1), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("B", pst__327_29.GetName(2), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("uni200C", pst__327_29.GetName(3), null);
+        global::DripSharp.Testing.JavaAssertions.False(subset__318_27.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "A")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "A path should not be empty"));
+        global::DripSharp.Testing.JavaAssertions.False(subset__318_27.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "B")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "B path should not be empty"));
+        global::DripSharp.Testing.JavaAssertions.False(subset__318_27.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "uni200C")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "ZWNJ path should not be empty"));
+        global::DripSharp.Testing.JavaAssertions.NotEqual((float)(0),
+          subset__318_27.GetWidth(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "A")), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "A width should not be zero."));
+        global::DripSharp.Testing.JavaAssertions.NotEqual((float)(0),
+          subset__318_27.GetWidth(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "B")), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "B width should not be zero."));
+        global::DripSharp.Testing.JavaAssertions.Equal((float)(0),
+          subset__318_27.GetWidth(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "uni200C")), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "ZWNJ width should be zero"));
+      } catch (global::System.Exception __dripsharpCaught_318_27_0) {
+        __dripsharpPrimary_318_27_0 = __dripsharpCaught_318_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(subset__318_27,
+          __dripsharpPrimary_318_27_0);
+      }
     }
     ttfSubsetter.ForceInvisible((int)('B'));
     ttfSubsetter.ForceInvisible((int)('\u200C'));
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos2
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    ttfSubsetter.WriteToStream(baos2);
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset__347_27
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos2)))) {
-      global::DripSharp.Testing.JavaAssertions.Equal(4, subset__347_27.GetNumberOfGlyphs(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0,
-        subset__347_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        ".notdef")), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        subset__347_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "A")), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(2,
-        subset__347_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "B")), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(3,
-        subset__347_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "uni200C")), null);
-      global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable pst__356_29
-        = subset__347_27.GetPostScript();
-      global::DripSharp.Testing.JavaAssertions.Equal(".notdef", pst__356_29.GetName(0), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("A", pst__356_29.GetName(1), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("B", pst__356_29.GetName(2), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("uni200C", pst__356_29.GetName(3), null);
-      global::DripSharp.Testing.JavaAssertions.False(subset__347_27.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "A")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "A path should not be empty"));
-      global::DripSharp.Testing.JavaAssertions.True(subset__347_27.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "B")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "B path should be empty"));
-      global::DripSharp.Testing.JavaAssertions.True(subset__347_27.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "uni200C")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "ZWNJ path should be empty"));
-      global::DripSharp.Testing.JavaAssertions.NotEqual((float)(0),
-        subset__347_27.GetWidth(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "A")),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "A width should not be zero."));
-      global::DripSharp.Testing.JavaAssertions.Equal((float)(0),
-        subset__347_27.GetWidth(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "B")),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox", "B width should be zero."));
-      global::DripSharp.Testing.JavaAssertions.Equal((float)(0),
-        subset__347_27.GetWidth(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "uni200C")), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-        "ZWNJ width should be zero"));
+    ttfSubsetter.WriteToStream(baos2); {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont subset__347_27
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser(true).Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos2)));
+      global::System.Exception __dripsharpPrimary_347_27_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(4, subset__347_27.GetNumberOfGlyphs(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0,
+          subset__347_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          ".notdef")), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          subset__347_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "A")), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(2,
+          subset__347_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "B")), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          subset__347_27.NameToGID(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "uni200C")), null);
+        global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable pst__356_29
+          = subset__347_27.GetPostScript();
+        global::DripSharp.Testing.JavaAssertions.Equal(".notdef", pst__356_29.GetName(0), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("A", pst__356_29.GetName(1), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("B", pst__356_29.GetName(2), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("uni200C", pst__356_29.GetName(3), null);
+        global::DripSharp.Testing.JavaAssertions.False(subset__347_27.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "A")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "A path should not be empty"));
+        global::DripSharp.Testing.JavaAssertions.True(subset__347_27.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "B")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "B path should be empty"));
+        global::DripSharp.Testing.JavaAssertions.True(subset__347_27.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "uni200C")).Bounds.IsEmpty, global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "ZWNJ path should be empty"));
+        global::DripSharp.Testing.JavaAssertions.NotEqual((float)(0),
+          subset__347_27.GetWidth(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "A")), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "A width should not be zero."));
+        global::DripSharp.Testing.JavaAssertions.Equal((float)(0),
+          subset__347_27.GetWidth(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "B")), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "B width should be zero."));
+        global::DripSharp.Testing.JavaAssertions.Equal((float)(0),
+          subset__347_27.GetWidth(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "uni200C")), global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+          "ZWNJ width should be zero"));
+      } catch (global::System.Exception __dripsharpCaught_347_27_0) {
+        __dripsharpPrimary_347_27_0 = __dripsharpCaught_347_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(subset__347_27,
+          __dripsharpPrimary_347_27_0);
+      }
     }
   }
 
-  internal virtual void testPDFBox6015() {
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      "target/fonts/Keyboard.ttf")))) {
-      global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup unicodeCmapLookup
-        = ttf.GetUnicodeCmapLookup();
-      global::DripSharp.Testing.JavaAssertions.Equal(185, unicodeCmapLookup.GetGlyphId((int)('a')),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(210, unicodeCmapLookup.GetGlyphId((int)('z')),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(159, unicodeCmapLookup.GetGlyphId((int)('A')),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(184, unicodeCmapLookup.GetGlyphId((int)('Z')),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(49, unicodeCmapLookup.GetGlyphId((int)('0')),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(58, unicodeCmapLookup.GetGlyphId((int)('9')),
-        null);
+  internal virtual void testPDFBox6015() { {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        "target/fonts/Keyboard.ttf")));
+      global::System.Exception __dripsharpPrimary_379_27_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup unicodeCmapLookup
+          = ttf.GetUnicodeCmapLookup();
+        global::DripSharp.Testing.JavaAssertions.Equal(185,
+          unicodeCmapLookup.GetGlyphId((int)('a')), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(210,
+          unicodeCmapLookup.GetGlyphId((int)('z')), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(159,
+          unicodeCmapLookup.GetGlyphId((int)('A')), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(184,
+          unicodeCmapLookup.GetGlyphId((int)('Z')), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(49, unicodeCmapLookup.GetGlyphId((int)('0')),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(58, unicodeCmapLookup.GetGlyphId((int)('9')),
+          null);
+      } catch (global::System.Exception __dripsharpCaught_379_27_0) {
+        __dripsharpPrimary_379_27_0 = __dripsharpCaught_379_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(ttf, __dripsharpPrimary_379_27_0);
+      }
     }
   }
 

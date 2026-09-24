@@ -9,7 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
 public class SecurityProvider {
-  private static object provider = default!;
+  private static object provider;
 
   private SecurityProvider() {}
 
@@ -22,5 +22,9 @@ public class SecurityProvider {
 
   public static void SetProvider(object provider) {
     global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityProvider.provider = provider;
+  }
+
+  static SecurityProvider() {
+    provider = default!;
   }
 }

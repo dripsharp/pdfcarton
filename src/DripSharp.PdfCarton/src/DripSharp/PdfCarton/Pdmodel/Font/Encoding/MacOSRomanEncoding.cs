@@ -10,17 +10,9 @@ namespace DripSharp.PdfCarton.Pdmodel.Font.Encoding;
 
 public class MacOSRomanEncoding
 : global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacRomanEncoding {
-  private static readonly object[][] MAC_OS_ROMAN_ENCODING_TABLE
-    = new object[][] { new object[] { 173, "notequal" }, new object[] { 176, "infinity" },
-    new object[] { 178, "lessequal" }, new object[] { 179, "greaterequal" }, new object[] { 182,
-    "partialdiff" }, new object[] { 183, "summation" }, new object[] { 184, "product" },
-    new object[] { 185, "pi" }, new object[] { 186, "integral" }, new object[] { 189, "Omega" },
-    new object[] { 195, "radical" }, new object[] { 197, "approxequal" }, new object[] { 198,
-    "Delta" }, new object[] { 215, "lozenge" }, new object[] { 219, "Euro" }, new object[] { 240,
-    "apple" } };
+  private static readonly object[][] MAC_OS_ROMAN_ENCODING_TABLE;
 
-  public static new readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacOSRomanEncoding Instance
-    = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacOSRomanEncoding();
+  public static new readonly global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacOSRomanEncoding Instance;
 
   public MacOSRomanEncoding() {
     foreach (object[] encodingEntry in global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacOSRomanEncoding.MAC_OS_ROMAN_ENCODING_TABLE) {
@@ -31,5 +23,17 @@ public class MacOSRomanEncoding
 
   public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
     return default!;
+  }
+
+  static MacOSRomanEncoding() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacRomanEncoding).TypeHandle);
+    MAC_OS_ROMAN_ENCODING_TABLE = new object[][] { new object[] { 173, "notequal" },
+      new object[] { 176, "infinity" }, new object[] { 178, "lessequal" }, new object[] { 179,
+      "greaterequal" }, new object[] { 182, "partialdiff" }, new object[] { 183, "summation" },
+      new object[] { 184, "product" }, new object[] { 185, "pi" }, new object[] { 186, "integral" },
+      new object[] { 189, "Omega" }, new object[] { 195, "radical" }, new object[] { 197,
+      "approxequal" }, new object[] { 198, "Delta" }, new object[] { 215, "lozenge" },
+      new object[] { 219, "Euro" }, new object[] { 240, "apple" } };
+    Instance = new global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacOSRomanEncoding();
   }
 }

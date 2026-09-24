@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.IO;
 
 public class RandomAccessInputStream : global::DripSharp.Runtime.JavaInputStream {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.IO.RandomAccessRead input = null!;
 
@@ -26,17 +25,18 @@ public class RandomAccessInputStream : global::DripSharp.Runtime.JavaInputStream
   }
 
   public override int Available() {
-    return (int)(global::System.Math.Max((long)(0), global::System.Math.Min((this.input.Length()
-      - this.position), (long)(int.MaxValue))));
+    return (int)(global::System.Math.Max((long)(0),
+      global::System.Math.Min(unchecked((this.input.Length() - this.position)),
+      (long)(int.MaxValue))));
   }
 
   public override int Read() {
     this.restorePosition();
     if (this.input.IsEOF()) {
-      return -1;
+      return unchecked(-1);
     }
     int b = this.input.Read();
-    if ((b != -1)) {
+    if ((b != unchecked(-1))) {
       this.position += 1;
     } else {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.IO.RandomAccessInputStream.LOG,
@@ -49,10 +49,10 @@ public class RandomAccessInputStream : global::DripSharp.Runtime.JavaInputStream
   public override int Read(sbyte[] b, int off, int len) {
     this.restorePosition();
     if (this.input.IsEOF()) {
-      return -1;
+      return unchecked(-1);
     }
     int n = this.input.Read(b, off, len);
-    if ((n != -1)) {
+    if ((n != unchecked(-1))) {
       this.position += n;
     } else {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.IO.RandomAccessInputStream.LOG,
@@ -67,8 +67,12 @@ public class RandomAccessInputStream : global::DripSharp.Runtime.JavaInputStream
       return 0;
     }
     this.restorePosition();
-    this.input.Seek((this.position + n));
+    this.input.Seek(unchecked((this.position + n)));
     this.position += n;
     return n;
+  }
+
+  static RandomAccessInputStream() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

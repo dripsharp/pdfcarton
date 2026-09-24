@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
 public class PDLinkAppearanceHandler
 : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDLinkAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
   : base(annotation) {
@@ -31,65 +30,81 @@ public class PDLinkAppearanceHandler
       return;
     }
     float lineWidth = this.getLineWidth();
-    try {
-      using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
-        = this.getNormalAppearanceAsContentStream()) {
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color = annotation.GetColor();
-        if ((color == default!)) {
-          color = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 0 },
-            global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance);
-        }
-        bool hasStroke = contentStream.SetStrokingColorOnDemand(color);
-        contentStream.SetBorderLine(lineWidth, annotation.GetBorderStyle(), annotation.GetBorder());
-        global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle borderEdge
-          = this.getPaddedRectangle(this.getRectangle(), ((float)lineWidth / 2));
-        float[] pathsArray = annotation.GetQuadPoints();
-        if ((pathsArray != default!)) {
-          for (int i = 0; (i < (pathsArray.Length / 2)); ++i) {
-            if (!(rect.Contains(pathsArray[(i * 2)], pathsArray[((i * 2) + 1)]))) {
-              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDLinkAppearanceHandler.LOG,
-                global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("At least one /QuadPoints entry (",
-                pathsArray[(i * 2)]), ";"), pathsArray[((i * 2) + 1)]),
-                ") is outside of rectangle, "), rect),
-                ", /QuadPoints are ignored and /Rect is used instead")));
-              pathsArray = default!;
-              break;
+    try { {
+        global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
+          = this.getNormalAppearanceAsContentStream();
+        global::System.Exception __dripsharpPrimary_67_40_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color = annotation.GetColor();
+          if ((color == default!)) {
+            color
+              = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 0 },
+              global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance);
+          }
+          bool hasStroke = contentStream.SetStrokingColorOnDemand(color);
+          contentStream.SetBorderLine(lineWidth, annotation.GetBorderStyle(),
+            annotation.GetBorder());
+          global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle borderEdge
+            = this.getPaddedRectangle(this.getRectangle(), ((float)lineWidth / 2));
+          float[] pathsArray = annotation.GetQuadPoints();
+          if ((pathsArray != default!)) {
+            for (int i = 0;
+              (i < global::DripSharp.Runtime.JavaCompat.IntegralDivide(pathsArray.Length, 2));
+              ++i) {
+              if (!(rect.Contains(pathsArray[unchecked((i * 2))], pathsArray[unchecked((unchecked((i
+                * 2)) + 1))]))) {
+                global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDLinkAppearanceHandler.LOG,
+                  global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("At least one /QuadPoints entry (",
+                  pathsArray[unchecked((i * 2))]), ";"), pathsArray[unchecked((unchecked((i * 2))
+                  + 1))]), ") is outside of rectangle, "), rect),
+                  ", /QuadPoints are ignored and /Rect is used instead")));
+                pathsArray = default!;
+                break;
+              }
             }
           }
-        }
-        if ((pathsArray == default!)) {
-          pathsArray = new float[8];
-          pathsArray[0] = borderEdge.GetLowerLeftX();
-          pathsArray[1] = borderEdge.GetLowerLeftY();
-          pathsArray[2] = borderEdge.GetUpperRightX();
-          pathsArray[3] = pathsArray[1];
-          pathsArray[4] = pathsArray[2];
-          pathsArray[5] = borderEdge.GetUpperRightY();
-          pathsArray[6] = pathsArray[0];
-          pathsArray[7] = pathsArray[5];
-        }
-        bool underlined = false;
-        if ((pathsArray.Length >= 8)) {
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary borderStyleDic
-            = annotation.GetBorderStyle();
-          if ((borderStyleDic != default!)) {
-            underlined
-              = global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary.StyleUnderline,
-              borderStyleDic.GetStyle());
+          if ((pathsArray == default!)) {
+            pathsArray = new float[8];
+            pathsArray[0] = borderEdge.GetLowerLeftX();
+            pathsArray[1] = borderEdge.GetLowerLeftY();
+            pathsArray[2] = borderEdge.GetUpperRightX();
+            pathsArray[3] = pathsArray[1];
+            pathsArray[4] = pathsArray[2];
+            pathsArray[5] = borderEdge.GetUpperRightY();
+            pathsArray[6] = pathsArray[0];
+            pathsArray[7] = pathsArray[5];
           }
-        }
-        int of = 0;
-        while (((of + 7) < pathsArray.Length)) {
-          contentStream.MoveTo(pathsArray[of], pathsArray[(of + 1)]);
-          contentStream.LineTo(pathsArray[(of + 2)], pathsArray[(of + 3)]);
-          if (!underlined) {
-            contentStream.LineTo(pathsArray[(of + 4)], pathsArray[(of + 5)]);
-            contentStream.LineTo(pathsArray[(of + 6)], pathsArray[(of + 7)]);
-            contentStream.ClosePath();
+          bool underlined = false;
+          if ((pathsArray.Length >= 8)) {
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary borderStyleDic
+              = annotation.GetBorderStyle();
+            if ((borderStyleDic != default!)) {
+              underlined
+                = global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary.StyleUnderline,
+                borderStyleDic.GetStyle());
+            }
           }
-          of += 8;
+          int of = 0;
+          while ((unchecked((of + 7)) < pathsArray.Length)) {
+            contentStream.MoveTo(pathsArray[of], pathsArray[unchecked((of + 1))]);
+            contentStream.LineTo(pathsArray[unchecked((of + 2))], pathsArray[unchecked((of + 3))]);
+            if (!underlined) {
+              contentStream.LineTo(pathsArray[unchecked((of + 4))], pathsArray[unchecked((of
+                + 5))]);
+              contentStream.LineTo(pathsArray[unchecked((of + 6))], pathsArray[unchecked((of
+                + 7))]);
+              contentStream.ClosePath();
+            }
+            of += 8;
+          }
+          contentStream.DrawShape(lineWidth, hasStroke, false);
+        } catch (global::System.Exception __dripsharpCaught_67_40_0) {
+          __dripsharpPrimary_67_40_0 = __dripsharpCaught_67_40_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream,
+            __dripsharpPrimary_67_40_0);
         }
-        contentStream.DrawShape(lineWidth, hasStroke, false);
       }
     } catch (global::System.IO.IOException e) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDLinkAppearanceHandler.LOG,
@@ -117,5 +132,10 @@ public class PDLinkAppearanceHandler
       }
     }
     return 1;
+  }
+
+  static PDLinkAppearanceHandler() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

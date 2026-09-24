@@ -9,14 +9,11 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public sealed class TTFSubsetter {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly sbyte[] PAD_BUF = new sbyte[] { unchecked((sbyte)(0)),
-    unchecked((sbyte)(0)), unchecked((sbyte)(0)), unchecked((sbyte)(0)) };
+  private static readonly sbyte[] PAD_BUF;
 
-  private static readonly global::System.TimeZoneInfo TIMEZONE_UTC
-    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetTimeZone("UTC");
+  private static readonly global::System.TimeZoneInfo TIMEZONE_UTC;
 
   private readonly global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf = null!;
 
@@ -91,20 +88,23 @@ public sealed class TTFSubsetter {
     @out.writeInt(65536);
     @out.writeShort(nTables);
     int mask = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.HighestOneBit(nTables);
-    int searchRange = (mask * 16);
+    int searchRange = unchecked((mask * 16));
     @out.writeShort(searchRange);
     int entrySelector = this.log2(mask);
     @out.writeShort(entrySelector);
-    int last = ((16 * nTables) - searchRange);
+    int last = unchecked((unchecked((16 * nTables)) - searchRange));
     @out.writeShort(last);
-    return ((65536L + this.toUInt32(nTables, searchRange)) + this.toUInt32(entrySelector, last));
+    return unchecked((unchecked((65536L + this.toUInt32(nTables, searchRange)))
+      + this.toUInt32(entrySelector, last)));
   }
 
   private long writeTableHeader(global::DripSharp.PdfCarton.Runtime.Fonts.JavaDataOutputStream @out,
     string tag, long offset, sbyte[] bytes) {
     long checksum = 0;
     for (int nup = 0, n = bytes.Length; (nup < n); nup++) {
-      checksum += ((bytes[nup] & 255L) << unchecked((int)((24 - ((nup % 4) * 8)))));
+      checksum += ((bytes[nup] & 255L) << unchecked((int)(unchecked((24
+        - unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralRemainder(nup, 4)
+        * 8)))))));
     }
     checksum &= 4294967295L;
     sbyte[] tagbytes = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringGetBytes(tag,
@@ -113,15 +113,17 @@ public sealed class TTFSubsetter {
     @out.writeInt((int)((int)checksum));
     @out.writeInt((int)((int)offset));
     @out.writeInt(bytes.Length);
-    return ((((this.toUInt32(tagbytes) + checksum) + checksum) + offset) + bytes.Length);
+    return unchecked((unchecked((unchecked((unchecked((this.toUInt32(tagbytes) + checksum))
+      + checksum)) + offset)) + bytes.Length));
   }
 
   private void writeTableBody(global::System.IO.Stream os, sbyte[] bytes) {
     int n = bytes.Length;
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.OutputStreamWrite(os, bytes);
-    if (((n % 4) != 0)) {
+    if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralRemainder(n, 4) != 0)) {
       global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.OutputStreamWrite(os,
-        global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.PAD_BUF, 0, (4 - (n % 4)));
+        global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.PAD_BUF, 0, unchecked((4
+        - global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralRemainder(n, 4))));
     }
   }
 
@@ -179,7 +181,7 @@ public sealed class TTFSubsetter {
     if (((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.SortedLast(this.glyphIds)
       >= h.GetNumberOfHMetrics())
       && !global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(this.glyphIds,
-      (h.GetNumberOfHMetrics() - 1)))) {
+      unchecked((h.GetNumberOfHMetrics() - 1))))) {
       ++hmetrics;
     }
     this.writeUint16(@out, hmetrics);
@@ -215,7 +217,8 @@ public sealed class TTFSubsetter {
       this.shouldCopyNameRecord)));
     this.writeUint16(@out, 0);
     this.writeUint16(@out, numRecords);
-    this.writeUint16(@out, ((2 * 3) + ((2 * 6) * numRecords)));
+    this.writeUint16(@out, unchecked((unchecked((2 * 3)) + unchecked((unchecked((2 * 6))
+      * numRecords)))));
     if ((numRecords == 0)) {
       return default!;
     }
@@ -350,8 +353,8 @@ public sealed class TTFSubsetter {
 
   private sbyte[] buildLocaTable(long[] newOffsets) {
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaByteArrayOutputStream bos
-      = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaByteArrayOutputStream((newOffsets.Length
-      * 4));
+      = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaByteArrayOutputStream(unchecked((newOffsets.Length
+      * 4)));
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaDataOutputStream @out
       = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaDataOutputStream(bos);
     foreach (long offset in newOffsets) {
@@ -370,71 +373,84 @@ public sealed class TTFSubsetter {
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable g = this.ttf.GetGlyph();
     long[] offsets = this.ttf.GetIndexToLocation().GetOffsets();
     do {
-      global::System.Collections.Generic.ISet<int> glyphIdsToAdd = default!;
-      using (global::System.IO.Stream @is = this.ttf.GetOriginalData()) {
-        long isResult = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamSkip(@is,
-          g.GetOffset());
-        if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareLong(isResult,
-          g.GetOffset()) != 0)) {
-          global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.LOG,
-            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Tried skipping ",
-            g.GetOffset()), " bytes but skipped only "), isResult), " bytes")));
-        }
-        long lastOff = 0L;
-        foreach (int gid in this.glyphIds) {
-          long offset = offsets[gid];
-          long length = (offsets[(gid + 1)] - offset);
-          isResult = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamSkip(@is,
-            (offset - lastOff));
-          if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareLong(isResult, (offset
-            - lastOff)) != 0)) {
+      global::System.Collections.Generic.ISet<int> glyphIdsToAdd = default!; {
+        global::System.IO.Stream @is = this.ttf.GetOriginalData();
+        global::System.Exception __dripsharpPrimary_508_30_0 = null!;
+        try {
+          long isResult = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamSkip(@is,
+            g.GetOffset());
+          if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareLong(isResult,
+            g.GetOffset()) != 0)) {
             global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.LOG,
               global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Tried skipping ",
-              (offset - lastOff)), " bytes but skipped only "), isResult), " bytes")));
+              g.GetOffset()), " bytes but skipped only "), isResult), " bytes")));
           }
-          sbyte[] buf = new sbyte[(int)length];
-          isResult = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(@is, buf);
-          if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareLong(isResult, length)
-            != 0)) {
-            global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.LOG,
-              global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Tried reading ",
-              length), " bytes but only "), isResult), " bytes read")));
-          }
-          if ((((buf.Length >= 2) && ((int)(buf[0]) == -1)) && ((int)(buf[1]) == -1))) {
-            int off = (2 * 5);
-            int flags;
-            do {
-              flags = (((buf[off] & 255) << unchecked((int)(8))) | (buf[(off + 1)] & 255));
-              off += 2;
-              int ogid = (((buf[off] & 255) << unchecked((int)(8))) | (buf[(off + 1)] & 255));
-              if (!global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(this.glyphIds,
-                ogid)) {
-                if ((glyphIdsToAdd! == default!)) {
-                  glyphIdsToAdd
-                    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewSortedSet<int>();
-                }
-                glyphIdsToAdd!.Add(ogid);
-              }
-              off += 2;
-              if (((flags & (1 << unchecked((int)(0)))) != 0)) {
-                off += (2 * 2);
-              } else {
+          long lastOff = 0L;
+          foreach (int gid in this.glyphIds) {
+            long offset = offsets[gid];
+            long length = unchecked((offsets[unchecked((gid + 1))] - offset));
+            isResult = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamSkip(@is,
+              unchecked((offset - lastOff)));
+            if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareLong(isResult,
+              unchecked((offset - lastOff))) != 0)) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.LOG,
+                global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Tried skipping ",
+                unchecked((offset - lastOff))), " bytes but skipped only "), isResult), " bytes")));
+            }
+            sbyte[] buf = new sbyte[(int)length];
+            isResult = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(@is,
+              buf);
+            if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareLong(isResult, length)
+              != 0)) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.LOG,
+                global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Tried reading ",
+                length), " bytes but only "), isResult), " bytes read")));
+            }
+            if ((((buf.Length >= 2) && ((int)(buf[0]) == unchecked(-1))) && ((int)(buf[1])
+              == unchecked(-1)))) {
+              int off = unchecked((2 * 5));
+              int flags;
+              do {
+                flags = (((buf[off] & 255) << unchecked((int)(8))) | (buf[unchecked((off
+                  + 1))] & 255));
                 off += 2;
-              }
-              if (((flags & (1 << unchecked((int)(7)))) != 0)) {
-                off += (2 * 4);
-              } else {
-                if (((flags & (1 << unchecked((int)(6)))) != 0)) {
-                  off += (2 * 2);
+                int ogid = (((buf[off] & 255) << unchecked((int)(8))) | (buf[unchecked((off
+                  + 1))] & 255));
+                if (!global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(this.glyphIds,
+                  ogid)) {
+                  if ((glyphIdsToAdd! == default!)) {
+                    glyphIdsToAdd
+                      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewSortedSet<int>();
+                  }
+                  glyphIdsToAdd!.Add(ogid);
+                }
+                off += 2;
+                if (((flags & (1 << unchecked((int)(0)))) != 0)) {
+                  off += unchecked((2 * 2));
                 } else {
-                  if (((flags & (1 << unchecked((int)(3)))) != 0)) {
-                    off += 2;
+                  off += 2;
+                }
+                if (((flags & (1 << unchecked((int)(7)))) != 0)) {
+                  off += unchecked((2 * 4));
+                } else {
+                  if (((flags & (1 << unchecked((int)(6)))) != 0)) {
+                    off += unchecked((2 * 2));
+                  } else {
+                    if (((flags & (1 << unchecked((int)(3)))) != 0)) {
+                      off += 2;
+                    }
                   }
                 }
-              }
-            } while (((flags & (1 << unchecked((int)(5)))) != 0));
+              } while (((flags & (1 << unchecked((int)(5)))) != 0));
+            }
+            lastOff = offsets[unchecked((gid + 1))];
           }
-          lastOff = offsets[(gid + 1)];
+        } catch (global::System.Exception __dripsharpCaught_508_30_0) {
+          __dripsharpPrimary_508_30_0 = __dripsharpCaught_508_30_0;
+          throw;
+        } finally {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(@is,
+            __dripsharpPrimary_508_30_0);
         }
       }
       hasNested = (glyphIdsToAdd! != default!);
@@ -448,101 +464,118 @@ public sealed class TTFSubsetter {
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaByteArrayOutputStream bos
       = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaByteArrayOutputStream(512);
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable g = this.ttf.GetGlyph();
-    long[] offsets = this.ttf.GetIndexToLocation().GetOffsets();
-    using (global::System.IO.Stream @is = this.ttf.GetOriginalData()) {
-      long isResult = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamSkip(@is,
-        g.GetOffset());
-      if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareLong(isResult, g.GetOffset())
-        != 0)) {
-        global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.LOG,
-          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Tried skipping ",
-          g.GetOffset()), " bytes but skipped only "), isResult), " bytes")));
-      }
-      long lastOff = 0;
-      long newOffset = 0;
-      int newGid = 0;
-      foreach (int gid in this.glyphIds) {
-        long offset = offsets[gid];
-        long length = (offsets[(gid + 1)] - offset);
-        newOffsets[newGid++] = newOffset;
-        isResult = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamSkip(@is, (offset
-          - lastOff));
-        if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareLong(isResult, (offset
-          - lastOff)) != 0)) {
+    long[] offsets = this.ttf.GetIndexToLocation().GetOffsets(); {
+      global::System.IO.Stream @is = this.ttf.GetOriginalData();
+      global::System.Exception __dripsharpPrimary_602_26_0 = null!;
+      try {
+        long isResult = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamSkip(@is,
+          g.GetOffset());
+        if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareLong(isResult,
+          g.GetOffset()) != 0)) {
           global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.LOG,
             global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Tried skipping ",
-            (offset - lastOff)), " bytes but skipped only "), isResult), " bytes")));
+            g.GetOffset()), " bytes but skipped only "), isResult), " bytes")));
         }
-        if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(this.invisibleGlyphIds,
-          gid)) {
-          lastOff = offset;
-          continue;
-        }
-        sbyte[] buf = new sbyte[(int)length];
-        isResult = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(@is, buf);
-        if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareLong(isResult, length)
-          != 0)) {
-          global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.LOG,
-            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Tried reading ",
-            length), " bytes but only "), isResult), " bytes read")));
-        }
-        if ((((buf.Length >= 2) && ((int)(buf[0]) == -1)) && ((int)(buf[1]) == -1))) {
-          int off = (2 * 5);
-          int flags;
-          do {
-            flags = (((buf[off] & 255) << unchecked((int)(8))) | (buf[(off + 1)] & 255));
-            off += 2;
-            int componentGid = (((buf[off] & 255) << unchecked((int)(8))) | (buf[(off + 1)] & 255));
-            if (!global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(this.glyphIds,
-              componentGid)) {
-              throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Internal error: componentGid ",
-                componentGid), " not in glyphIds set"));
-            }
-            int newComponentGid = this.getNewGlyphId(componentGid);
-            buf[off]
-              = unchecked((sbyte)(unchecked((sbyte)((newComponentGid >>> unchecked((int)(8)))))));
-            buf[(off + 1)] = unchecked((sbyte)(unchecked((sbyte)(newComponentGid))));
-            off += 2;
-            if (((flags & (1 << unchecked((int)(0)))) != 0)) {
-              off += (2 * 2);
-            } else {
+        long lastOff = 0;
+        long newOffset = 0;
+        int newGid = 0;
+        foreach (int gid in this.glyphIds) {
+          long offset = offsets[gid];
+          long length = unchecked((offsets[unchecked((gid + 1))] - offset));
+          newOffsets[newGid++] = newOffset;
+          isResult = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamSkip(@is,
+            unchecked((offset - lastOff)));
+          if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareLong(isResult,
+            unchecked((offset - lastOff))) != 0)) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.LOG,
+              global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Tried skipping ",
+              unchecked((offset - lastOff))), " bytes but skipped only "), isResult), " bytes")));
+          }
+          if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(this.invisibleGlyphIds,
+            gid)) {
+            lastOff = offset;
+            continue;
+          }
+          sbyte[] buf = new sbyte[(int)length];
+          isResult = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(@is, buf);
+          if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareLong(isResult, length)
+            != 0)) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.LOG,
+              global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Tried reading ",
+              length), " bytes but only "), isResult), " bytes read")));
+          }
+          if ((((buf.Length >= 2) && ((int)(buf[0]) == unchecked(-1))) && ((int)(buf[1])
+            == unchecked(-1)))) {
+            int off = unchecked((2 * 5));
+            int flags;
+            do {
+              flags = (((buf[off] & 255) << unchecked((int)(8))) | (buf[unchecked((off
+                + 1))] & 255));
               off += 2;
-            }
-            if (((flags & (1 << unchecked((int)(7)))) != 0)) {
-              off += (2 * 4);
-            } else {
-              if (((flags & (1 << unchecked((int)(6)))) != 0)) {
-                off += (2 * 2);
+              int componentGid = (((buf[off] & 255) << unchecked((int)(8))) | (buf[unchecked((off
+                + 1))] & 255));
+              if (!global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(this.glyphIds,
+                componentGid)) {
+                throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Internal error: componentGid ",
+                  componentGid), " not in glyphIds set"));
+              }
+              int newComponentGid = this.getNewGlyphId((int?)(componentGid));
+              buf[off]
+                = unchecked((sbyte)(unchecked((sbyte)((newComponentGid >>> unchecked((int)(8)))))));
+              buf[unchecked((off + 1))] = unchecked((sbyte)(unchecked((sbyte)(newComponentGid))));
+              off += 2;
+              if (((flags & (1 << unchecked((int)(0)))) != 0)) {
+                off += unchecked((2 * 2));
               } else {
-                if (((flags & (1 << unchecked((int)(3)))) != 0)) {
-                  off += 2;
+                off += 2;
+              }
+              if (((flags & (1 << unchecked((int)(7)))) != 0)) {
+                off += unchecked((2 * 4));
+              } else {
+                if (((flags & (1 << unchecked((int)(6)))) != 0)) {
+                  off += unchecked((2 * 2));
+                } else {
+                  if (((flags & (1 << unchecked((int)(3)))) != 0)) {
+                    off += 2;
+                  }
                 }
               }
+            } while (((flags & (1 << unchecked((int)(5)))) != 0));
+            if (((flags & 256) == 256)) {
+              int numInstr = (((buf[off] & 255) << unchecked((int)(8))) | (buf[unchecked((off
+                + 1))] & 255));
+              off += 2;
+              off += numInstr;
             }
-          } while (((flags & (1 << unchecked((int)(5)))) != 0));
-          if (((flags & 256) == 256)) {
-            int numInstr = (((buf[off] & 255) << unchecked((int)(8))) | (buf[(off + 1)] & 255));
-            off += 2;
-            off += numInstr;
-          }
-          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.OutputStreamWrite(bos, buf, 0, off);
-          newOffset += off;
-        } else {
-          if ((buf.Length > 0)) {
             global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.OutputStreamWrite(bos, buf, 0,
-              buf.Length);
-            newOffset += buf.Length;
+              off);
+            newOffset += off;
+          } else {
+            if ((buf.Length > 0)) {
+              global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.OutputStreamWrite(bos, buf, 0,
+                buf.Length);
+              newOffset += buf.Length;
+            }
           }
+          if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralRemainder(newOffset, 4)
+            != 0)) {
+            int len = unchecked((4
+              - (int)global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralRemainder(newOffset,
+              4)));
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.OutputStreamWrite(bos,
+              global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.PAD_BUF, 0, len);
+            newOffset += len;
+          }
+          lastOff = unchecked((offset + length));
         }
-        if (((newOffset % 4) != 0)) {
-          int len = (4 - (int)((newOffset % 4)));
-          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.OutputStreamWrite(bos,
-            global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.PAD_BUF, 0, len);
-          newOffset += len;
-        }
-        lastOff = (offset + length);
+        newOffsets[newGid++] = newOffset;
+      } catch (global::System.Exception __dripsharpCaught_602_26_0) {
+        __dripsharpPrimary_602_26_0 = __dripsharpCaught_602_26_0;
+        throw;
+      } finally {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(@is,
+          __dripsharpPrimary_602_26_0);
       }
-      newOffsets[newGid++] = newOffset;
     }
     return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ToSignedBytes(bos);
   }
@@ -574,34 +607,35 @@ public sealed class TTFSubsetter {
       = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Iterator(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapEntrySet(this.uniToGID));
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaMapEntry<int, int> lastChar = it.Next()!;
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaMapEntry<int, int> prevChar = lastChar;
-    int lastGid = this.getNewGlyphId(lastChar.Value);
+    int lastGid = this.getNewGlyphId((int?)(lastChar.Value));
     int[] startCode
-      = new int[(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapCount(this.uniToGID) + 1)];
+      = new int[unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapCount(this.uniToGID)
+      + 1))];
     int[] endCode = new int[startCode.Length];
     int[] idDelta = new int[startCode.Length];
     int segCount = 0;
     while (it.HasNext()) {
       global::DripSharp.PdfCarton.Runtime.Fonts.JavaMapEntry<int, int> curChar2Gid = it.Next()!;
-      int curGid = this.getNewGlyphId(curChar2Gid.Value);
+      int curGid = this.getNewGlyphId((int?)(curChar2Gid.Value));
       if ((curChar2Gid.Key > 65535)) {
         throw new global::System.NotSupportedException("non-BMP Unicode character");
       }
-      if (((curChar2Gid.Key != (prevChar.Key + 1)) || ((curGid - lastGid) != (curChar2Gid.Key
-        - lastChar.Key)))) {
+      if (((curChar2Gid.Key != unchecked((prevChar.Key + 1))) || (unchecked((curGid - lastGid))
+        != unchecked((curChar2Gid.Key - lastChar.Key))))) {
         if ((lastGid != 0)) {
           startCode[segCount]
             = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(lastChar.Key);
           endCode[segCount]
             = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(prevChar.Key);
-          idDelta[segCount] = (lastGid - lastChar.Key);
+          idDelta[segCount] = unchecked((lastGid - lastChar.Key));
           segCount++;
         } else {
           if (!global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Equals(lastChar.Key,
             prevChar.Key)) {
-            startCode[segCount] = (lastChar.Key + 1);
+            startCode[segCount] = unchecked((lastChar.Key + 1));
             endCode[segCount]
               = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(prevChar.Key);
-            idDelta[segCount] = (lastGid - lastChar.Key);
+            idDelta[segCount] = unchecked((lastGid - lastChar.Key));
             segCount++;
           }
         }
@@ -614,21 +648,25 @@ public sealed class TTFSubsetter {
       = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(lastChar.Key);
     endCode[segCount]
       = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(prevChar.Key);
-    idDelta[segCount] = (lastGid - lastChar.Key);
+    idDelta[segCount] = unchecked((lastGid - lastChar.Key));
     segCount++;
     startCode[segCount] = 65535;
     endCode[segCount] = 65535;
     idDelta[segCount] = 1;
     segCount++;
-    int searchRange = (2 * (int)(global::System.Math.Pow((double)(2),
-      (double)(this.log2(segCount)))));
+    int searchRange = unchecked((2
+      * unchecked((int)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(global::System.Math.Pow((double)(2),
+      (double)(this.log2(segCount))))))));
     this.writeUint16(@out, 4);
-    this.writeUint16(@out, ((8 * 2) + ((segCount * 4) * 2)));
+    this.writeUint16(@out, unchecked((unchecked((8 * 2)) + unchecked((unchecked((segCount * 4))
+      * 2)))));
     this.writeUint16(@out, 0);
-    this.writeUint16(@out, (segCount * 2));
+    this.writeUint16(@out, unchecked((segCount * 2)));
     this.writeUint16(@out, searchRange);
-    this.writeUint16(@out, this.log2((searchRange / 2)));
-    this.writeUint16(@out, ((2 * segCount) - searchRange));
+    this.writeUint16(@out,
+      this.log2(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(searchRange,
+      2)));
+    this.writeUint16(@out, unchecked((unchecked((2 * segCount)) - searchRange)));
     for (int i__834_18 = 0; (i__834_18 < segCount); i__834_18++) {
       this.writeUint16(@out, endCode[i__834_18]);
     }
@@ -679,7 +717,7 @@ public sealed class TTFSubsetter {
         int ordinal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ComputeIfAbsent(names,
           name__893_20, (dummy)
           => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapCount(names));
-        this.writeUint16(@out, (258 + ordinal));
+        this.writeUint16(@out, unchecked((258 + ordinal)));
       }
     }
     foreach (string name__909_21 in global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapKeySet(names)) {
@@ -700,7 +738,7 @@ public sealed class TTFSubsetter {
     global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable hm
       = this.ttf.GetHorizontalMetrics();
     global::System.IO.Stream @is = this.ttf.GetOriginalData();
-    int lastgid = (h.GetNumberOfHMetrics() - 1);
+    int lastgid = unchecked((h.GetNumberOfHMetrics() - 1));
     bool needLastGidWidth
       = ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.SortedLast(this.glyphIds) > lastgid)
       && !global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(this.glyphIds,
@@ -723,16 +761,17 @@ public sealed class TTFSubsetter {
             global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.OutputStreamWrite(bos,
               global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.PAD_BUF, 0, 4);
           } else {
-            offset = (gid * 4L);
+            offset = unchecked((gid * 4L));
             lastOffset = this.copyBytes(@is, bos, offset, lastOffset, 4);
           }
         } else {
           if (needLastGidWidth) {
             needLastGidWidth = false;
-            offset = (lastgid * 4L);
+            offset = unchecked((lastgid * 4L));
             lastOffset = this.copyBytes(@is, bos, offset, lastOffset, 2);
           }
-          offset = ((h.GetNumberOfHMetrics() * 4L) + ((gid - h.GetNumberOfHMetrics()) * 2L));
+          offset = unchecked((unchecked((h.GetNumberOfHMetrics() * 4L)) + unchecked((unchecked((gid
+            - h.GetNumberOfHMetrics())) * 2L))));
           lastOffset = this.copyBytes(@is, bos, offset, lastOffset, 2);
         }
       }
@@ -744,7 +783,7 @@ public sealed class TTFSubsetter {
 
   private long copyBytes(global::System.IO.Stream @is, global::System.IO.Stream os, long newOffset,
     long lastOffset, int count) {
-    long nskip = (newOffset - lastOffset);
+    long nskip = unchecked((newOffset - lastOffset));
     if ((nskip != global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamSkip(@is,
       nskip))) {
       throw new global::System.IO.EndOfStreamException("Unexpected EOF exception parsing glyphId of hmtx table.");
@@ -755,7 +794,7 @@ public sealed class TTFSubsetter {
       throw new global::System.IO.EndOfStreamException("Unexpected EOF exception parsing glyphId of hmtx table.");
     }
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.OutputStreamWrite(os, buf, 0, count);
-    return (newOffset + count);
+    return unchecked((newOffset + count));
   }
 
   public void WriteToStream(global::System.IO.Stream os) {
@@ -764,79 +803,90 @@ public sealed class TTFSubsetter {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Fonts.Ttf.TTFSubsetter.LOG,
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("font subset is empty"));
     }
-    this.addCompoundReferences();
-    using (global::DripSharp.PdfCarton.Runtime.Fonts.JavaDataOutputStream @out
-      = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaDataOutputStream(os)) {
-      long[] newLoca = new long[(this.glyphIds.Count + 1)];
-      sbyte[] head = this.buildHeadTable();
-      sbyte[] hhea = this.buildHheaTable();
-      sbyte[] maxp = this.buildMaxpTable();
-      sbyte[] name = this.buildNameTable();
-      sbyte[] os2 = this.buildOS2Table();
-      sbyte[] glyf = this.buildGlyfTable(newLoca);
-      sbyte[] loca = this.buildLocaTable(newLoca);
-      sbyte[] cmap = this.buildCmapTable();
-      sbyte[] hmtx = this.buildHmtxTable();
-      sbyte[] post = this.buildPostTable();
-      global::System.Collections.Generic.IDictionary<string, sbyte[]> tables
-        = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewSortedDictionary<string,
-        sbyte[]>();
-      if ((os2 != default!)) {
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
-          global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable.Tag, os2);
-      }
-      if ((cmap != default!)) {
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
-          global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.Tag, cmap);
-      }
-      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
-        global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable.Tag, glyf);
-      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
-        global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable.Tag, head);
-      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
-        global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalHeaderTable.Tag, hhea);
-      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
-        global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable.Tag, hmtx);
-      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
-        global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable.Tag, loca);
-      global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
-        global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable.Tag, maxp);
-      if ((name != default!)) {
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
-          global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable.Tag, name);
-      }
-      if ((post != default!)) {
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
-          global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.Tag, post);
-      }
-      foreach (global::DripSharp.PdfCarton.Runtime.Fonts.JavaMapEntry<string,
-        global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable> entry__1065_46 in global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapEntrySet(this.ttf.GetTableMap())) {
-        string tag = entry__1065_46.Key;
-        global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table = entry__1065_46.Value;
-        if ((!global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(tables, tag)
-          && ((this.keepTables == default!)
-          || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(this.keepTables,
-          tag)))) {
-          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables, tag,
-            this.ttf.GetTableBytes(table));
+    this.addCompoundReferences(); {
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaDataOutputStream @out
+        = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaDataOutputStream(os);
+      global::System.Exception __dripsharpPrimary_1023_31_0 = null!;
+      try {
+        long[] newLoca = new long[unchecked((this.glyphIds.Count + 1))];
+        sbyte[] head = this.buildHeadTable();
+        sbyte[] hhea = this.buildHheaTable();
+        sbyte[] maxp = this.buildMaxpTable();
+        sbyte[] name = this.buildNameTable();
+        sbyte[] os2 = this.buildOS2Table();
+        sbyte[] glyf = this.buildGlyfTable(newLoca);
+        sbyte[] loca = this.buildLocaTable(newLoca);
+        sbyte[] cmap = this.buildCmapTable();
+        sbyte[] hmtx = this.buildHmtxTable();
+        sbyte[] post = this.buildPostTable();
+        global::System.Collections.Generic.IDictionary<string, sbyte[]> tables
+          = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewSortedDictionary<string,
+          sbyte[]>();
+        if ((os2 != default!)) {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
+            global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable.Tag, os2);
         }
-      }
-      long checksum = this.writeFileHeader(@out,
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapCount(tables));
-      long offset = (12L + (16L
-        * global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapCount(tables)));
-      foreach (global::DripSharp.PdfCarton.Runtime.Fonts.JavaMapEntry<string,
-        sbyte[]> entry__1079_44 in global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapEntrySet(tables)) {
-        checksum += this.writeTableHeader(@out, entry__1079_44.Key, offset, entry__1079_44.Value);
-        offset += (((entry__1079_44.Value.Length + 3L) / 4) * 4);
-      }
-      checksum = (2981146554L - (checksum & 4294967295L));
-      head[8] = unchecked((sbyte)(unchecked((sbyte)((checksum >>> unchecked((int)(24)))))));
-      head[9] = unchecked((sbyte)(unchecked((sbyte)((checksum >>> unchecked((int)(16)))))));
-      head[10] = unchecked((sbyte)(unchecked((sbyte)((checksum >>> unchecked((int)(8)))))));
-      head[11] = unchecked((sbyte)(unchecked((sbyte)(checksum))));
-      foreach (sbyte[] bytes in tables.Values) {
-        this.writeTableBody(@out, bytes);
+        if ((cmap != default!)) {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
+            global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.Tag, cmap);
+        }
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
+          global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable.Tag, glyf);
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
+          global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable.Tag, head);
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
+          global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalHeaderTable.Tag, hhea);
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
+          global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable.Tag, hmtx);
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
+          global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable.Tag, loca);
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
+          global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable.Tag, maxp);
+        if ((name != default!)) {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
+            global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable.Tag, name);
+        }
+        if ((post != default!)) {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
+            global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.Tag, post);
+        }
+        foreach (global::DripSharp.PdfCarton.Runtime.Fonts.JavaMapEntry<string,
+          global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable> entry__1065_46 in global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapEntrySet(this.ttf.GetTableMap())) {
+          string tag = entry__1065_46.Key;
+          global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table = entry__1065_46.Value;
+          if ((!global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(tables, tag)
+            && ((this.keepTables == default!)
+            || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(this.keepTables,
+            tag)))) {
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables, tag,
+              this.ttf.GetTableBytes(table));
+          }
+        }
+        long checksum = this.writeFileHeader(@out,
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapCount(tables));
+        long offset = unchecked((12L + unchecked((16L
+          * global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapCount(tables)))));
+        foreach (global::DripSharp.PdfCarton.Runtime.Fonts.JavaMapEntry<string,
+          sbyte[]> entry__1079_44 in global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapEntrySet(tables)) {
+          checksum += this.writeTableHeader(@out, entry__1079_44.Key, offset, entry__1079_44.Value);
+          offset
+            += unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(unchecked((entry__1079_44.Value.Length
+            + 3L)), 4) * 4));
+        }
+        checksum = unchecked((2981146554L - (checksum & 4294967295L)));
+        head[8] = unchecked((sbyte)(unchecked((sbyte)((checksum >>> unchecked((int)(24)))))));
+        head[9] = unchecked((sbyte)(unchecked((sbyte)((checksum >>> unchecked((int)(16)))))));
+        head[10] = unchecked((sbyte)(unchecked((sbyte)((checksum >>> unchecked((int)(8)))))));
+        head[11] = unchecked((sbyte)(unchecked((sbyte)(checksum))));
+        foreach (sbyte[] bytes in tables.Values) {
+          this.writeTableBody(@out, bytes);
+        }
+      } catch (global::System.Exception __dripsharpCaught_1023_31_0) {
+        __dripsharpPrimary_1023_31_0 = __dripsharpCaught_1023_31_0;
+        throw;
+      } finally {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(@out,
+          __dripsharpPrimary_1023_31_0);
       }
     }
   }
@@ -845,8 +895,8 @@ public sealed class TTFSubsetter {
     double f) {
     double ip = global::System.Math.Floor(f);
     double fp = ((f - ip) * 65536.0D);
-    @out.writeShort((int)((int)ip));
-    @out.writeShort((int)((int)fp));
+    @out.writeShort((int)(unchecked((int)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(ip)))));
+    @out.writeShort((int)(unchecked((int)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(fp)))));
   }
 
   private void writeUint32(global::DripSharp.PdfCarton.Runtime.Fonts.JavaDataOutputStream @out,
@@ -879,8 +929,8 @@ public sealed class TTFSubsetter {
     long millisFor1904
       = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarGetTimeInMillis(cal);
     long secondsSince1904
-      = ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarGetTimeInMillis(calendar)
-      - millisFor1904) / 1000L);
+      = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarGetTimeInMillis(calendar)
+      - millisFor1904)), 1000L);
     @out.writeLong(secondsSince1904);
   }
 
@@ -893,11 +943,18 @@ public sealed class TTFSubsetter {
   }
 
   private int log2(int num) {
-    return (int)(global::System.Math.Floor(((double)(global::System.Math.Log((double)(num)))
-      / (double)(global::System.Math.Log((double)(2))))));
+    return unchecked((int)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NumberIntValue(global::System.Math.Floor(((double)(global::System.Math.Log((double)(num)))
+      / (double)(global::System.Math.Log((double)(2))))))));
   }
 
   public void AddGlyphIds(global::System.Collections.Generic.ISet<int> allGlyphIds) {
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AddAll(this.glyphIds, allGlyphIds);
+  }
+
+  static TTFSubsetter() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    PAD_BUF = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(0)), unchecked((sbyte)(0)),
+      unchecked((sbyte)(0)) };
+    TIMEZONE_UTC = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetTimeZone("UTC");
   }
 }

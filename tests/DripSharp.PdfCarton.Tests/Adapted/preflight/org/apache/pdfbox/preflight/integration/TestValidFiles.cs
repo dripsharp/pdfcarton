@@ -9,12 +9,11 @@ public class TestValidFiles {
 
   private const string ISARTOR_FILES = "valid.files";
 
-  protected internal static global::System.IO.Stream IsartorResultFile = default!;
+  protected internal static global::System.IO.Stream IsartorResultFile;
 
   internal global::DripSharp.Runtime.JavaFile path = null!;
 
-  protected internal static readonly global::Microsoft.Extensions.Logging.ILogger Log
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  protected internal static readonly global::Microsoft.Extensions.Logging.ILogger Log;
 
   protected internal global::Microsoft.Extensions.Logging.ILogger Logger = default!;
 
@@ -91,7 +90,7 @@ public class TestValidFiles {
     global::DripSharp.PdfCarton.Preflight.ValidationResult result
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Preflight.ValidationResult>(typeof(global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser),
       "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { path });
+      new object[] { (global::DripSharp.Runtime.JavaFile)path });
     global::DripSharp.Testing.JavaAssertions.False(result.IsValid(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(path,
@@ -121,5 +120,10 @@ public class TestValidFiles {
     } finally {
       afterClass();
     }
+  }
+
+  static TestValidFiles() {
+    IsartorResultFile = default!;
+    Log = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

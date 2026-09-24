@@ -9,12 +9,11 @@
 namespace DripSharp.PdfCarton.Preflight.Parser;
 
 public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
-  private static readonly global::System.Text.Encoding ENCODING
-    = global::DripSharp.Runtime.JavaStandardCharsets.ISO88591;
+  private static readonly global::System.Text.Encoding ENCODING;
 
-  private global::DripSharp.PdfCarton.Preflight.Format format = default!;
+  private global::DripSharp.PdfCarton.Preflight.Format format;
 
-  private global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config = default!;
+  private global::DripSharp.PdfCarton.Preflight.PreflightConfiguration config;
 
   private global::DripSharp.PdfCarton.Preflight.PreflightDocument preflightDocument = null!;
 
@@ -22,14 +21,16 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
 
   internal PreflightParser(global::DripSharp.Runtime.JavaFile file)
   : base(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(file)) {
-
+    this.format = default!;
+    this.config = default!;
   }
 
   public PreflightParser(global::System.IO.FileInfo file)
   : this(global::DripSharp.Runtime.JavaFileBridge.Import<global::DripSharp.Runtime.JavaFile>(file)) {}
 
   public PreflightParser(global::DripSharp.PdfCarton.IO.RandomAccessRead rar) : base(rar) {
-
+    this.format = default!;
+    this.config = default!;
   }
 
   public PreflightParser(string filename)
@@ -185,8 +186,8 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
             global::DripSharp.Runtime.JavaCompat.Concat("invalid xref line: ", currentLine)));
           break;
         }
-        if (global::DripSharp.Runtime.JavaCompat.Equals(splitString[(splitString.Length - 1)],
-          "n")) {
+        if (global::DripSharp.Runtime.JavaCompat.Equals(splitString[unchecked((splitString.Length
+          - 1))], "n")) {
           try {
             long currOffset = global::DripSharp.Runtime.JavaCompat.ParseLong(splitString[0]);
             int currGenID = global::DripSharp.Runtime.JavaCompat.ParseInt(splitString[1], 10);
@@ -244,13 +245,13 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
           base.Source.GetPosition())));
       }
     }
-    base.Source.Seek((base.Source.GetPosition() - 7));
+    base.Source.Seek(unchecked((base.Source.GetPosition() - 7)));
     return startOffset;
   }
 
   private void checkEndstreamKeyWord(global::DripSharp.PdfCarton.Cos.COSDictionary dic,
     long startOffset) {
-    base.Source.Seek((base.Source.GetPosition() - 10));
+    base.Source.Seek(unchecked((base.Source.GetPosition() - 10)));
     long endOffset = base.Source.GetPosition();
     int nextChar = base.Source.Read();
     bool eolFound = false;
@@ -265,7 +266,7 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
       base.Source.Read();
     }
     bool addStreamLengthErrorMessage = false;
-    long actualLength = (endOffset - startOffset);
+    long actualLength = unchecked((endOffset - startOffset));
     if (!eolFound) {
       this.addValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamDelimiter,
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Expected 'EOL' before the endstream keyword at offset ",
@@ -280,8 +281,9 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
       addStreamLengthErrorMessage = true;
     }
     int length = dic.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Length);
-    if ((addStreamLengthErrorMessage || ((length > -1) && ((!crlfFound && ((length - actualLength)
-      != 0)) || (crlfFound && ((length - actualLength) > 1)))))) {
+    if ((addStreamLengthErrorMessage || ((length > unchecked(-1)) && ((!crlfFound
+      && (unchecked((length - actualLength)) != 0)) || (crlfFound && (unchecked((length
+      - actualLength)) > 1)))))) {
       this.addValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamLengthInvalid,
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Stream length is invalid [dic=",
         dic), "; defined length="), length), "; actual length="), actualLength),
@@ -346,7 +348,7 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
         }
       } while (((int)nextChar != (int)'>'));
     }
-    if (((count % 2) != 0)) {
+    if ((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(count, 2) != 0)) {
       this.addValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxHexaStringEvenNumber,
         global::DripSharp.Runtime.JavaCompat.Concat("Hexa string shall contain even number of non white space char at offset ",
         base.Source.GetPosition())));
@@ -418,10 +420,10 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
           objKey.GetNumber()), ":"), objKey.GetGeneration()), "} has an offset of 0")));
       } else {
         if ((global::DripSharp.Runtime.JavaCompat.Unbox(offsetOrObjstmObNr) > 0)) {
-          referencedObject = this.parseFileObject(offsetOrObjstmObNr, objKey);
+          referencedObject = this.parseFileObject((long?)(offsetOrObjstmObNr), objKey);
         } else {
           referencedObject
-            = this.ParseObjectStreamObject(-global::DripSharp.Runtime.JavaCompat.Unbox(offsetOrObjstmObNr),
+            = this.ParseObjectStreamObject(unchecked(-global::DripSharp.Runtime.JavaCompat.Unbox(offsetOrObjstmObNr)),
             objKey);
         }
       }
@@ -512,7 +514,7 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
         " does not end with 'endobj'."));
     } else {
       offset = base.Source.GetPosition();
-      base.Source.Seek((endObjectOffset - 1));
+      base.Source.Seek(unchecked((endObjectOffset - 1)));
       if (!(this.nextIsEOL())) {
         this.addValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxObjDelimiter,
           global::DripSharp.Runtime.JavaCompat.Concat("EOL expected before the 'endobj' keyword at offset ",
@@ -532,12 +534,13 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
     int offset = base.LastIndexOf(pattern, buf, endOff);
     if (((offset > 0) && global::DripSharp.Runtime.JavaCompat.ArrayEquals(pattern,
       global::DripSharp.PdfCarton.Pdfparser.COSParser.EofMarker))) {
-      int tmpOffset = (offset + pattern.Length);
-      int offsetDiff = (buf.Length - tmpOffset);
+      int tmpOffset = unchecked((offset + pattern.Length));
+      int offsetDiff = unchecked((buf.Length - tmpOffset));
       if ((((offsetDiff > 2) || ((offsetDiff == 2) && (((int)(buf[tmpOffset])
-        != (int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiCr)) || ((int)(buf[(tmpOffset
-        + 1)]) != (int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiLf)))))
-        || ((offsetDiff == 1) && (((int)(buf[tmpOffset])
+        != (int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiCr))
+        || ((int)(buf[unchecked((tmpOffset + 1))])
+        != (int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiLf))))) || ((offsetDiff == 1)
+        && (((int)(buf[tmpOffset])
         != (int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiCr))
         && ((int)(buf[tmpOffset])
         != (int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiLf)))))) {
@@ -564,14 +567,26 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
     global::DripSharp.PdfCarton.Preflight.ValidationResult result;
     global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser parser
       = new global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser(file);
-    try {
-      using (global::DripSharp.PdfCarton.Preflight.PreflightDocument document
-        = (global::DripSharp.PdfCarton.Preflight.PreflightDocument)(parser.Parse()!)) {
-        result = document.Validate();
+    try { {
+        global::DripSharp.PdfCarton.Preflight.PreflightDocument document
+          = (global::DripSharp.PdfCarton.Preflight.PreflightDocument)(parser.Parse()!);
+        global::System.Exception __dripsharpPrimary_865_32_0 = null!;
+        try {
+          result = document.Validate();
+        } catch (global::System.Exception __dripsharpCaught_865_32_0) {
+          __dripsharpPrimary_865_32_0 = __dripsharpCaught_865_32_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_865_32_0);
+        }
       }
     } catch (global::DripSharp.PdfCarton.Preflight.Exception.SyntaxValidationException e) {
       result = e.GetResult();
     }
     return result;
+  }
+
+  static PreflightParser() {
+    ENCODING = global::DripSharp.Runtime.JavaStandardCharsets.ISO88591;
   }
 }

@@ -5,8 +5,7 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 public class TestPDFToImage {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public TestPDFToImage() {}
 
@@ -42,21 +41,22 @@ public class TestPDFToImage {
       for (int y = 0; (y < minHeight); ++y) {
         int rgb1 = global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(bim1, x, y);
         int rgb2 = global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(bim2, x, y);
-        if (((rgb1 != rgb2) && (((global::System.Math.Abs(((rgb1 & 255) - (rgb2 & 255))) > 3)
-          || (global::System.Math.Abs((((rgb1 >> unchecked((int)(8))) & 255)
-          - ((rgb2 >> unchecked((int)(8))) & 255))) > 3))
-          || (global::System.Math.Abs((((rgb1 >> unchecked((int)(16))) & 255)
-          - ((rgb2 >> unchecked((int)(16))) & 255))) > 3)))) {
+        if (((rgb1 != rgb2) && (((global::System.Math.Abs(unchecked(((rgb1 & 255)
+          - (rgb2 & 255)))) > 3)
+          || (global::System.Math.Abs(unchecked((((rgb1 >> unchecked((int)(8))) & 255)
+          - ((rgb2 >> unchecked((int)(8))) & 255)))) > 3))
+          || (global::System.Math.Abs(unchecked((((rgb1 >> unchecked((int)(16))) & 255)
+          - ((rgb2 >> unchecked((int)(16))) & 255)))) > 3)))) {
           if ((bim3! == default!)) {
             bim3
               = global::DripSharp.PdfCarton.Rendering.TestPDFToImage.createEmptyDiffImage(minWidth,
               minHeight, maxWidth, maxHeight);
           }
-          int r = global::System.Math.Abs(((rgb1 & 255) - (rgb2 & 255)));
-          int g = global::System.Math.Abs(((rgb1 & 65280) - (rgb2 & 65280)));
-          int b = global::System.Math.Abs(((rgb1 & 16711680) - (rgb2 & 16711680)));
-          global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(bim3!, x, y, (16777215
-            - ((r | g) | b)));
+          int r = global::System.Math.Abs(unchecked(((rgb1 & 255) - (rgb2 & 255))));
+          int g = global::System.Math.Abs(unchecked(((rgb1 & 65280) - (rgb2 & 65280))));
+          int b = global::System.Math.Abs(unchecked(((rgb1 & 16711680) - (rgb2 & 16711680))));
+          global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(bim3!, x, y, unchecked((16777215
+            - ((r | g) | b))));
         } else {
           if ((bim3! != default!)) {
             global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(bim3!, x, y,
@@ -83,93 +83,101 @@ public class TestPDFToImage {
     global::DripSharp.Runtime.JavaCompat.OpenFileOutput(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".parseerror")))).Dispose();
-    try {
-      using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-        new object[] { file })) {
-        int numPages = document.GetNumberOfPages();
-        if ((numPages < 1)) {
-          failed = true;
-          global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.LOG,
-            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("file ",
-            file.Name), " has < 1 page")));
-        } else {
-          global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".parseerror"))));
-          global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".parseerror"))));
-        }
-        global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.LOG,
-          global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Rendering: ",
-          file.Name)));
-        global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer
-          = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(document);
-        for (int i = 0; (i < numPages); i++) {
-          string fileName
-            = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(file.Name,
-            "-"), (i + 1)), ".png");
-          global::DripSharp.Runtime.JavaCompat.OpenFileOutput(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".rendererror")))).Dispose();
-          global::SkiaSharp.SKBitmap image = renderer.RenderImageWithDPI(i, (float)(96));
-          global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".rendererror"))));
-          global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".rendererror"))));
-          global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.LOG,
-            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Writing: ",
-            fileName)));
-          global::DripSharp.Runtime.JavaCompat.OpenFileOutput(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".writeerror")))).Dispose();
-          bool writeSuccess = global::DripSharp.PdfCarton.Tests.Support.WriteImage(image,
-            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PNG"),
-            global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", fileName)));
-          if (writeSuccess) {
+    try { {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+          = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+          "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+          new object[] { (global::DripSharp.Runtime.JavaFile)file });
+        global::System.Exception __dripsharpPrimary_171_25_0 = null!;
+        try {
+          int numPages = document.GetNumberOfPages();
+          if ((numPages < 1)) {
+            failed = true;
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("file ",
+              file.Name), " has < 1 page")));
+          } else {
             global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
               outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-              global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".writeerror"))));
+              global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".parseerror"))));
             global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
               outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-              global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".writeerror"))));
+              global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".parseerror"))));
           }
+          global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.LOG,
+            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Rendering: ",
+            file.Name)));
+          global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer
+            = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(document);
+          for (int i = 0; (i < numPages); i++) {
+            string fileName
+              = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(file.Name,
+              "-"), unchecked((i + 1))), ".png");
+            global::DripSharp.Runtime.JavaCompat.OpenFileOutput(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".rendererror")))).Dispose();
+            global::SkiaSharp.SKBitmap image = renderer.RenderImageWithDPI(i, (float)(96));
+            global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".rendererror"))));
+            global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".rendererror"))));
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Writing: ",
+              fileName)));
+            global::DripSharp.Runtime.JavaCompat.OpenFileOutput(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".writeerror")))).Dispose();
+            bool writeSuccess = global::DripSharp.PdfCarton.Tests.Support.WriteImage(image,
+              global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PNG"),
+              global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", fileName)));
+            if (writeSuccess) {
+              global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+                outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+                global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".writeerror"))));
+              global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+                outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+                global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".writeerror"))));
+            }
+          }
+          global::DripSharp.Runtime.JavaCompat.OpenFileOutput(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".saveerror")))).Dispose();
+          global::DripSharp.Runtime.JavaFile tmpFile
+            = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.Runtime.JavaCompat.createTempFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "pdfbox"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ".pdf")));
+          document.SetAllSecurityToBeRemoved(true);
+          global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
+            new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+            new object[] { (global::DripSharp.Runtime.JavaFile)tmpFile });
+          global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".saveerror"))));
+          global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".saveerror"))));
+          global::DripSharp.Runtime.JavaCompat.OpenFileOutput(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".reloaderror")))).Dispose();
+          global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+            "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+            new object[] { (global::DripSharp.Runtime.JavaFile)tmpFile }).Dispose();
+          global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".reloaderror"))));
+          global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".reloaderror"))));
+          global::DripSharp.Runtime.JavaCompat.FileDelete(tmpFile);
+          global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(tmpFile);
+        } catch (global::System.Exception __dripsharpCaught_171_25_0) {
+          __dripsharpPrimary_171_25_0 = __dripsharpCaught_171_25_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_171_25_0);
         }
-        global::DripSharp.Runtime.JavaCompat.OpenFileOutput(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".saveerror")))).Dispose();
-        global::DripSharp.Runtime.JavaFile tmpFile
-          = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.Runtime.JavaCompat.createTempFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "pdfbox"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ".pdf")));
-        document.SetAllSecurityToBeRemoved(true);
-        global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
-          new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-          new object[] { tmpFile });
-        global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".saveerror"))));
-        global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".saveerror"))));
-        global::DripSharp.Runtime.JavaCompat.OpenFileOutput(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".reloaderror")))).Dispose();
-        global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-          "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-          new object[] { tmpFile }).Dispose();
-        global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".reloaderror"))));
-        global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(file.Name, ".reloaderror"))));
-        global::DripSharp.Runtime.JavaCompat.FileDelete(tmpFile);
-        global::DripSharp.PdfCarton.Tests.Support.DeleteOnExit(tmpFile);
       }
     } catch (global::System.IO.IOException) {
       failed = true;
@@ -289,7 +297,7 @@ public class TestPDFToImage {
           int bytesRead = 0;
           int rcount;
           while (((rcount = global::DripSharp.Runtime.JavaCompat.InputStreamRead(rin, rbuffer,
-            bytesRead, (lcount - bytesRead))) > 0)) {
+            bytesRead, unchecked((lcount - bytesRead)))) > 0)) {
             bytesRead += rcount;
           }
           for (int byteIndex = 0; (byteIndex < lcount); byteIndex++) {
@@ -306,5 +314,9 @@ public class TestPDFToImage {
     } else {
       return false;
     }
+  }
+
+  static TestPDFToImage() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -9,12 +9,14 @@
 namespace DripSharp.PdfCarton.Preflight.Action;
 
 public class UndefAction : global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager {
-  private string actionName = default!;
+  private string actionName;
 
   public UndefAction(global::DripSharp.PdfCarton.Preflight.Action.ActionManagerFactory amFact,
     global::DripSharp.PdfCarton.Cos.COSDictionary adict,
     global::DripSharp.PdfCarton.Preflight.PreflightContext ctx, string aaKey, string name)
   : base(amFact, adict, ctx, aaKey) {
+    this.actionName = default!;
+
     this.actionName = name;
   }
 
@@ -23,5 +25,9 @@ public class UndefAction : global::DripSharp.PdfCarton.Preflight.Action.Abstract
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The action ",
       this.actionName), " is undefined")));
     return false;
+  }
+
+  static UndefAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager).TypeHandle);
   }
 }

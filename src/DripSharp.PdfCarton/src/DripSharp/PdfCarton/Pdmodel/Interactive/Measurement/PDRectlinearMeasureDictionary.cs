@@ -198,4 +198,8 @@ public class PDRectlinearMeasureDictionary
   public virtual void SetCYX(float cyx) {
     this.GetCOSObject().SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Cyx, cyx);
   }
+
+  static PDRectlinearMeasureDictionary() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Measurement.PDMeasureDictionary).TypeHandle);
+  }
 }

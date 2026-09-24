@@ -5,8 +5,7 @@
 namespace DripSharp.PdfCarton.Preflight.Integration;
 
 public class InvalidFileTester {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   protected internal global::System.IO.Stream OutputResult = default!;
 
@@ -31,7 +30,7 @@ public class InvalidFileTester {
     global::DripSharp.PdfCarton.Preflight.ValidationResult result
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Preflight.ValidationResult>(typeof(global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser),
       "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { path });
+      new object[] { (global::DripSharp.Runtime.JavaFile)path });
     global::DripSharp.Testing.JavaAssertions.False(result.IsValid(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(path,
@@ -104,5 +103,9 @@ public class InvalidFileTester {
 
   public virtual void After() {
     global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(this.OutputResult);
+  }
+
+  static InvalidFileTester() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

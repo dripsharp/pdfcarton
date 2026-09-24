@@ -17,7 +17,7 @@ public class PDFXRefStream {
 
   private readonly global::DripSharp.PdfCarton.Cos.COSStream stream = null!;
 
-  private long size = -1;
+  private long size = unchecked(-1);
 
   public PDFXRefStream(global::DripSharp.PdfCarton.Cos.COSDocument cosDocument) {
     this.stream = cosDocument.CreateCOSStream();
@@ -26,7 +26,7 @@ public class PDFXRefStream {
   public virtual global::DripSharp.PdfCarton.Cos.COSStream GetStream() {
     this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Type,
       global::DripSharp.PdfCarton.Cos.COSName.Xref);
-    if ((this.size == -1)) {
+    if ((this.size == unchecked(-1))) {
       throw new global::System.ArgumentException("size is not set in xrefstream");
     }
     this.stream.SetLong(global::DripSharp.PdfCarton.Cos.COSName.Size, this.size);
@@ -43,11 +43,20 @@ public class PDFXRefStream {
     foreach (int j in wEntry) {
       wAsArray.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(j)));
     }
-    this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.W, wAsArray);
-    using (global::System.IO.Stream outputStream
-      = this.stream.CreateOutputStream(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode)) {
-      this.writeStreamData(outputStream, wEntry);
-      outputStream.Flush();
+    this.stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.W, wAsArray); {
+      global::System.IO.Stream outputStream
+        = this.stream.CreateOutputStream(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode);
+      global::System.Exception __dripsharpPrimary_92_27_0 = null!;
+      try {
+        this.writeStreamData(outputStream, wEntry);
+        outputStream.Flush();
+      } catch (global::System.Exception __dripsharpCaught_92_27_0) {
+        __dripsharpPrimary_92_27_0 = __dripsharpCaught_92_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(outputStream,
+          __dripsharpPrimary_92_27_0);
+      }
     }
     global::System.Collections.Generic.ISet<global::DripSharp.PdfCarton.Cos.COSName> keySet
       = this.stream.KeySet();
@@ -99,7 +108,7 @@ public class PDFXRefStream {
     for (int i = 0; (i < w.Length); i++) {
       while ((wMax[i] > 0)) {
         w[i]++;
-        wMax[i] >>= 8;
+        wMax[i] >>= unchecked((int)(8));
       }
     }
     return w;
@@ -123,12 +132,12 @@ public class PDFXRefStream {
         first = objNumber;
         length = 1L;
       }
-      if (((global::DripSharp.Runtime.JavaCompat.Unbox(first!)
-        + global::DripSharp.Runtime.JavaCompat.Unbox(length!)) == objNumber)) {
+      if ((unchecked((global::DripSharp.Runtime.JavaCompat.Unbox(first!)
+        + global::DripSharp.Runtime.JavaCompat.Unbox(length!))) == objNumber)) {
         length += 1;
       }
-      if (((global::DripSharp.Runtime.JavaCompat.Unbox(first!)
-        + global::DripSharp.Runtime.JavaCompat.Unbox(length!)) < objNumber)) {
+      if ((unchecked((global::DripSharp.Runtime.JavaCompat.Unbox(first!)
+        + global::DripSharp.Runtime.JavaCompat.Unbox(length!))) < objNumber)) {
         global::DripSharp.Runtime.JavaCompat.Add(linkedList,
           global::DripSharp.Runtime.JavaCompat.Unbox(first!));
         global::DripSharp.Runtime.JavaCompat.Add(linkedList,
@@ -148,11 +157,11 @@ public class PDFXRefStream {
     sbyte[] buffer = new sbyte[bytes];
     for (int i__224_19 = 0; (i__224_19 < bytes); i__224_19++) {
       buffer[i__224_19] = unchecked((sbyte)(unchecked((sbyte)((number & 255)))));
-      number >>= 8;
+      number >>= unchecked((int)(8));
     }
     for (int i__230_19 = 0; (i__230_19 < bytes); i__230_19++) {
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os, (int)(buffer[((bytes - i__230_19)
-        - 1)]));
+      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os,
+        (int)(buffer[unchecked((unchecked((bytes - i__230_19)) - 1))]));
     }
   }
 

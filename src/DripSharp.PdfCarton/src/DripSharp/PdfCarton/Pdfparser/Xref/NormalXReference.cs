@@ -63,4 +63,8 @@ public class NormalXReference : global::DripSharp.PdfCarton.Pdfparser.Xref.Abstr
       ? "ObjectStreamParent{" : "NormalReference{"), " key="), this.key), ", type="),
       this.GetType().GetNumericValue()), ", byteOffset="), this.byteOffset), " }");
   }
+
+  static NormalXReference() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdfparser.Xref.AbstractXReference).TypeHandle);
+  }
 }

@@ -228,4 +228,8 @@ public class FDFAnnotationLine : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnno
       = base.Annot.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Co);
     return ((array != default!) ? array.ToFloatArray()[1] : 0.0F);
   }
+
+  static FDFAnnotationLine() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation).TypeHandle);
+  }
 }

@@ -28,4 +28,8 @@ public class GoToAction : global::DripSharp.PdfCarton.Preflight.Action.AbstractA
       global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.DestinationProcess);
     return true;
   }
+
+  static GoToAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.AbstractActionManager).TypeHandle);
+  }
 }

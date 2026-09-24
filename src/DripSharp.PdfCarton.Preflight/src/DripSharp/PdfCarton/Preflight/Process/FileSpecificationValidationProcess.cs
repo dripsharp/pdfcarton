@@ -25,4 +25,8 @@ public class FileSpecificationValidationProcess
         "EmbeddedFile entry is present in a FileSpecification dictionary"));
     }
   }
+
+  static FileSpecificationValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+  }
 }

@@ -9,9 +9,7 @@
 namespace DripSharp.PdfCarton.Pdfparser.Xref;
 
 public class FreeXReference : global::DripSharp.PdfCarton.Pdfparser.Xref.AbstractXReference {
-  public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference NullEntry
-    = new global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference(new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(0),
-    65535), (long)(0));
+  public static readonly global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference NullEntry;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSObjectKey key = null!;
 
@@ -39,5 +37,12 @@ public class FreeXReference : global::DripSharp.PdfCarton.Pdfparser.Xref.Abstrac
     return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("FreeReference{",
       "key="), this.key), ", nextFreeObject="), this.nextFreeObject), ", type="),
       this.GetType().GetNumericValue()), " }");
+  }
+
+  static FreeXReference() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdfparser.Xref.AbstractXReference).TypeHandle);
+    NullEntry
+      = new global::DripSharp.PdfCarton.Pdfparser.Xref.FreeXReference(new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(0),
+      65535), (long)(0));
   }
 }

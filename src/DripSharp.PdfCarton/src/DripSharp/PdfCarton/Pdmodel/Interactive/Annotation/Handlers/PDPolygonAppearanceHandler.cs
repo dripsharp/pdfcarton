@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
 public class PDPolygonAppearanceHandler
 : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDPolygonAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
   : base(annotation) {
@@ -40,9 +39,11 @@ public class PDPolygonAppearanceHandler
       return;
     }
     for (int i__78_18 = 0; (i__78_18 < pathArray.Length); ++i__78_18) {
-      for (int j = 0; (j < (pathArray[i__78_18].Length / 2)); ++j) {
-        float x = pathArray[i__78_18][(j * 2)];
-        float y = pathArray[i__78_18][((j * 2) + 1)];
+      for (int j = 0;
+        (j < global::DripSharp.Runtime.JavaCompat.IntegralDivide(pathArray[i__78_18].Length, 2));
+        ++j) {
+        float x = pathArray[i__78_18][unchecked((j * 2))];
+        float y = pathArray[i__78_18][unchecked((unchecked((j * 2)) + 1))];
         minX = global::System.Math.Min(minX, x);
         minY = global::System.Math.Min(minY, y);
         maxX = global::System.Math.Max(maxX, x);
@@ -54,47 +55,57 @@ public class PDPolygonAppearanceHandler
     rect.SetUpperRightX(global::System.Math.Max((maxX + lineWidth), rect.GetUpperRightX()));
     rect.SetUpperRightY(global::System.Math.Max((maxY + lineWidth), rect.GetUpperRightY()));
     annotation.SetRectangle(rect);
-    try {
-      using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
-        = this.getNormalAppearanceAsContentStream()) {
-        bool hasStroke = contentStream.SetStrokingColorOnDemand(this.getColor());
-        bool hasBackground
-          = contentStream.SetNonStrokingColorOnDemand(annotation.GetInteriorColor());
-        this.setOpacity(contentStream, annotation.GetConstantOpacity());
-        contentStream.SetBorderLine(lineWidth, annotation.GetBorderStyle(), annotation.GetBorder());
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary borderEffect
-          = annotation.GetBorderEffect();
-        if (((borderEffect != default!)
-          && global::DripSharp.Runtime.JavaCompat.Equals(borderEffect.GetStyle(),
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary.StyleCloudy))) {
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder cloudyBorder
-            = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder(contentStream,
-            (double)(borderEffect.GetIntensity()), (double)(lineWidth), this.getRectangle());
-          cloudyBorder.createCloudyPolygon(pathArray);
-          annotation.SetRectangle(cloudyBorder.getRectangle());
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream
-            = annotation.GetNormalAppearanceStream();
-          appearanceStream.SetBBox(cloudyBorder.getBBox());
-          appearanceStream.SetMatrix(cloudyBorder.getMatrix());
-        } else {
-          for (int i__124_26 = 0; (i__124_26 < pathArray.Length); i__124_26++) {
-            float[] pointsArray = pathArray[i__124_26];
-            if (((i__124_26 == 0) && (pointsArray.Length == 2))) {
-              contentStream.MoveTo(pointsArray[0], pointsArray[1]);
-            } else {
-              if ((pointsArray.Length == 2)) {
-                contentStream.LineTo(pointsArray[0], pointsArray[1]);
+    try { {
+        global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
+          = this.getNormalAppearanceAsContentStream();
+        global::System.Exception __dripsharpPrimary_97_40_0 = null!;
+        try {
+          bool hasStroke = contentStream.SetStrokingColorOnDemand(this.getColor());
+          bool hasBackground
+            = contentStream.SetNonStrokingColorOnDemand(annotation.GetInteriorColor());
+          this.setOpacity(contentStream, annotation.GetConstantOpacity());
+          contentStream.SetBorderLine(lineWidth, annotation.GetBorderStyle(),
+            annotation.GetBorder());
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary borderEffect
+            = annotation.GetBorderEffect();
+          if (((borderEffect != default!)
+            && global::DripSharp.Runtime.JavaCompat.Equals(borderEffect.GetStyle(),
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary.StyleCloudy))) {
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder cloudyBorder
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder(contentStream,
+              (double)(borderEffect.GetIntensity()), (double)(lineWidth), this.getRectangle());
+            cloudyBorder.createCloudyPolygon(pathArray);
+            annotation.SetRectangle(cloudyBorder.getRectangle());
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream
+              = annotation.GetNormalAppearanceStream();
+            appearanceStream.SetBBox(cloudyBorder.getBBox());
+            appearanceStream.SetMatrix(cloudyBorder.getMatrix());
+          } else {
+            for (int i__124_26 = 0; (i__124_26 < pathArray.Length); i__124_26++) {
+              float[] pointsArray = pathArray[i__124_26];
+              if (((i__124_26 == 0) && (pointsArray.Length == 2))) {
+                contentStream.MoveTo(pointsArray[0], pointsArray[1]);
               } else {
-                if ((pointsArray.Length == 6)) {
-                  contentStream.CurveTo(pointsArray[0], pointsArray[1], pointsArray[2],
-                    pointsArray[3], pointsArray[4], pointsArray[5]);
+                if ((pointsArray.Length == 2)) {
+                  contentStream.LineTo(pointsArray[0], pointsArray[1]);
+                } else {
+                  if ((pointsArray.Length == 6)) {
+                    contentStream.CurveTo(pointsArray[0], pointsArray[1], pointsArray[2],
+                      pointsArray[3], pointsArray[4], pointsArray[5]);
+                  }
                 }
               }
             }
+            contentStream.ClosePath();
           }
-          contentStream.ClosePath();
+          contentStream.DrawShape(lineWidth, hasStroke, hasBackground);
+        } catch (global::System.Exception __dripsharpCaught_97_40_0) {
+          __dripsharpPrimary_97_40_0 = __dripsharpCaught_97_40_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream,
+            __dripsharpPrimary_97_40_0);
         }
-        contentStream.DrawShape(lineWidth, hasStroke, hasBackground);
       }
     } catch (global::System.IO.IOException e) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDPolygonAppearanceHandler.LOG,
@@ -109,11 +120,11 @@ public class PDPolygonAppearanceHandler
       if ((verticesArray == default!)) {
         return default!;
       }
-      int points = (verticesArray.Length / 2);
+      int points = global::DripSharp.Runtime.JavaCompat.IntegralDivide(verticesArray.Length, 2);
       pathArray = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<float>(points, 2);
       for (int i = 0; (i < points); ++i) {
-        pathArray[i][0] = verticesArray[(i * 2)];
-        pathArray[i][1] = verticesArray[((i * 2) + 1)];
+        pathArray[i][0] = verticesArray[unchecked((i * 2))];
+        pathArray[i][1] = verticesArray[unchecked((unchecked((i * 2)) + 1))];
       }
     }
     return pathArray;
@@ -139,5 +150,10 @@ public class PDPolygonAppearanceHandler
       }
     }
     return 1;
+  }
+
+  static PDPolygonAppearanceHandler() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

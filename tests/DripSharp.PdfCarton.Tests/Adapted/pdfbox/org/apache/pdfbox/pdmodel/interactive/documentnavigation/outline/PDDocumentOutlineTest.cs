@@ -15,7 +15,8 @@ public class PDDocumentOutlineTest {
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem();
     firstLevelChild.AddLast(secondLevelChild);
     global::DripSharp.Testing.JavaAssertions.Equal(0, secondLevelChild.GetOpenCount(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, firstLevelChild.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), firstLevelChild.GetOpenCount(),
+      null);
     global::DripSharp.Testing.JavaAssertions.False((outline.GetOpenCount() < 0),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat("Outlines count cannot be ",
@@ -30,10 +31,10 @@ public class PDDocumentOutlineTest {
     outline.AddLast(root);
     global::DripSharp.Testing.JavaAssertions.Equal(1, outline.GetOpenCount(), null);
     root.AddLast(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), root.GetOpenCount(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(1, outline.GetOpenCount(), null);
     root.AddLast(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), root.GetOpenCount(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(1, outline.GetOpenCount(), null);
     root.OpenNode();
     global::DripSharp.Testing.JavaAssertions.Equal(2, root.GetOpenCount(), null);

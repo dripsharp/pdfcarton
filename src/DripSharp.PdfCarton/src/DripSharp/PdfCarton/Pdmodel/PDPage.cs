@@ -10,10 +10,9 @@ namespace DripSharp.PdfCarton.Pdmodel;
 
 public class PDPage : global::DripSharp.PdfCarton.Contentstream.PDContentStream,
 global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly sbyte[] DELIMITER = new sbyte[] { unchecked((sbyte)('\n')) };
+  private static readonly sbyte[] DELIMITER;
 
   private readonly global::DripSharp.PdfCarton.Cos.COSDictionary page = null!;
 
@@ -175,8 +174,8 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
         => typeof(global::DripSharp.PdfCarton.Cos.COSStream).IsInstanceOfType(value0)), (b)
         => (global::DripSharp.PdfCarton.Cos.COSStream)(b!)));
       global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.IO.RandomAccessRead> inputStreams
-        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.IO.RandomAccessRead>((global::DripSharp.Runtime.JavaCompat.CollectionCount(streams)
-        * 2));
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.IO.RandomAccessRead>(unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(streams)
+        * 2)));
       global::DripSharp.Runtime.JavaCompat.ForEach(streams, (stream) => {
           try {
             global::DripSharp.Runtime.JavaCompat.Add(inputStreams, stream.CreateView());
@@ -356,8 +355,9 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
       global::DripSharp.PdfCarton.Cos.COSName.Rotate);
     if ((obj is global::DripSharp.PdfCarton.Cos.COSNumber)) {
       int rotationAngle = ((global::DripSharp.PdfCarton.Cos.COSNumber)(obj!)).IntValue();
-      if (((rotationAngle % 90) == 0)) {
-        return (((rotationAngle % 360) + 360) % 360);
+      if ((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(rotationAngle, 90) == 0)) {
+        return global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(rotationAngle,
+          360) + 360)), 360);
       }
     }
     return 0;
@@ -546,6 +546,11 @@ global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
       throw new global::System.ArgumentException("User unit must be positive");
     }
     this.page.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.UserUnit, userUnit);
+  }
+
+  static PDPage() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    DELIMITER = new sbyte[] { unchecked((sbyte)('\n')) };
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

@@ -124,42 +124,44 @@ public class CFFParserTest {
     global::DripSharp.Testing.JavaAssertions.Equal(824,
       global::DripSharp.PdfCarton.Fonts.Cff.CFFParserTest.testCFFType1Font.GetNumCharStrings(),
       null);
-    global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(-4)),
+    global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(unchecked(-4))),
         unchecked((sbyte)(15)), unchecked((sbyte)(14)) },
       global::DripSharp.Runtime.JavaCompat.ListGet(charStringBytes, 1),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "Other char strings byte values than expected"));
     global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(72)),
-        unchecked((sbyte)(29)), unchecked((sbyte)(-13)), unchecked((sbyte)(29)),
-        unchecked((sbyte)(-9)), unchecked((sbyte)(-74)), unchecked((sbyte)(-9)),
-        unchecked((sbyte)(43)), unchecked((sbyte)(3)), unchecked((sbyte)(33)), unchecked((sbyte)(29)),
-        unchecked((sbyte)(14)) }, global::DripSharp.Runtime.JavaCompat.ListGet(charStringBytes, 16),
+        unchecked((sbyte)(29)), unchecked((sbyte)(unchecked(-13))), unchecked((sbyte)(29)),
+        unchecked((sbyte)(unchecked(-9))), unchecked((sbyte)(unchecked(-74))),
+        unchecked((sbyte)(unchecked(-9))), unchecked((sbyte)(43)), unchecked((sbyte)(3)),
+        unchecked((sbyte)(33)), unchecked((sbyte)(29)), unchecked((sbyte)(14)) },
+      global::DripSharp.Runtime.JavaCompat.ListGet(charStringBytes, 16),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "Other char strings byte values than expected"));
-    global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(-41)),
-        unchecked((sbyte)(88)), unchecked((sbyte)(29)), unchecked((sbyte)(-47)),
-        unchecked((sbyte)(-9)), unchecked((sbyte)(12)), unchecked((sbyte)(1)),
-        unchecked((sbyte)(-123)), unchecked((sbyte)(10)), unchecked((sbyte)(3)),
-        unchecked((sbyte)(35)), unchecked((sbyte)(29)), unchecked((sbyte)(-9)),
-        unchecked((sbyte)(-50)), unchecked((sbyte)(-9)), unchecked((sbyte)(62)),
-        unchecked((sbyte)(-9)), unchecked((sbyte)(3)), unchecked((sbyte)(10)), unchecked((sbyte)(85)),
-        unchecked((sbyte)(-56)), unchecked((sbyte)(61)), unchecked((sbyte)(10)) },
-      global::DripSharp.Runtime.JavaCompat.ListGet(charStringBytes, 195),
+    global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(unchecked(-41))),
+        unchecked((sbyte)(88)), unchecked((sbyte)(29)), unchecked((sbyte)(unchecked(-47))),
+        unchecked((sbyte)(unchecked(-9))), unchecked((sbyte)(12)), unchecked((sbyte)(1)),
+        unchecked((sbyte)(unchecked(-123))), unchecked((sbyte)(10)), unchecked((sbyte)(3)),
+        unchecked((sbyte)(35)), unchecked((sbyte)(29)), unchecked((sbyte)(unchecked(-9))),
+        unchecked((sbyte)(unchecked(-50))), unchecked((sbyte)(unchecked(-9))), unchecked((sbyte)(62)),
+        unchecked((sbyte)(unchecked(-9))), unchecked((sbyte)(3)), unchecked((sbyte)(10)),
+        unchecked((sbyte)(85)), unchecked((sbyte)(unchecked(-56))), unchecked((sbyte)(61)),
+        unchecked((sbyte)(10)) }, global::DripSharp.Runtime.JavaCompat.ListGet(charStringBytes, 195),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "Other char strings byte values than expected"));
-    global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(-5)),
-        unchecked((sbyte)(-69)), unchecked((sbyte)(-61)), unchecked((sbyte)(-8)),
-        unchecked((sbyte)(28)), unchecked((sbyte)(1)), unchecked((sbyte)(-9)), unchecked((sbyte)(57)),
-        unchecked((sbyte)(-39)), unchecked((sbyte)(-65)), unchecked((sbyte)(29)),
-        unchecked((sbyte)(14)) }, global::DripSharp.Runtime.JavaCompat.ListGet(charStringBytes, 525),
+    global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(unchecked(-5))),
+        unchecked((sbyte)(unchecked(-69))), unchecked((sbyte)(unchecked(-61))),
+        unchecked((sbyte)(unchecked(-8))), unchecked((sbyte)(28)), unchecked((sbyte)(1)),
+        unchecked((sbyte)(unchecked(-9))), unchecked((sbyte)(57)), unchecked((sbyte)(unchecked(-39))),
+        unchecked((sbyte)(unchecked(-65))), unchecked((sbyte)(29)), unchecked((sbyte)(14)) },
+      global::DripSharp.Runtime.JavaCompat.ListGet(charStringBytes, 525),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "Other char strings byte values than expected"));
     global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(107)),
-        unchecked((sbyte)(-48)), unchecked((sbyte)(10)), unchecked((sbyte)(-9)),
-        unchecked((sbyte)(20)), unchecked((sbyte)(-9)), unchecked((sbyte)(123)),
-        unchecked((sbyte)(3)), unchecked((sbyte)(-9)), unchecked((sbyte)(-112)),
-        unchecked((sbyte)(-8)), unchecked((sbyte)(-46)), unchecked((sbyte)(21)),
-        unchecked((sbyte)(-10)), unchecked((sbyte)(115)), unchecked((sbyte)(10)) },
+        unchecked((sbyte)(unchecked(-48))), unchecked((sbyte)(10)), unchecked((sbyte)(unchecked(-9))),
+        unchecked((sbyte)(20)), unchecked((sbyte)(unchecked(-9))), unchecked((sbyte)(123)),
+        unchecked((sbyte)(3)), unchecked((sbyte)(unchecked(-9))), unchecked((sbyte)(unchecked(-112))),
+        unchecked((sbyte)(unchecked(-8))), unchecked((sbyte)(unchecked(-46))), unchecked((sbyte)(21)),
+        unchecked((sbyte)(unchecked(-10))), unchecked((sbyte)(115)), unchecked((sbyte)(10)) },
       global::DripSharp.Runtime.JavaCompat.ListGet(charStringBytes, 738),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "Other char strings byte values than expected"));
@@ -173,24 +175,25 @@ public class CFFParserTest {
     global::DripSharp.Testing.JavaAssertions.Equal(278,
       global::DripSharp.Runtime.JavaCompat.CollectionCount(globalSubrIndex), null);
     global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(21)),
-        unchecked((sbyte)(-70)), unchecked((sbyte)(-83)), unchecked((sbyte)(-85)),
-        unchecked((sbyte)(-72)), unchecked((sbyte)(-72)), unchecked((sbyte)(105)),
-        unchecked((sbyte)(-85)), unchecked((sbyte)(92)), unchecked((sbyte)(91)),
+        unchecked((sbyte)(unchecked(-70))), unchecked((sbyte)(unchecked(-83))),
+        unchecked((sbyte)(unchecked(-85))), unchecked((sbyte)(unchecked(-72))),
+        unchecked((sbyte)(unchecked(-72))), unchecked((sbyte)(105)),
+        unchecked((sbyte)(unchecked(-85))), unchecked((sbyte)(92)), unchecked((sbyte)(91)),
         unchecked((sbyte)(105)), unchecked((sbyte)(107)), unchecked((sbyte)(10)),
-        unchecked((sbyte)(-83)), unchecked((sbyte)(-9)), unchecked((sbyte)(62)),
+        unchecked((sbyte)(unchecked(-83))), unchecked((sbyte)(unchecked(-9))), unchecked((sbyte)(62)),
         unchecked((sbyte)(10)) }, global::DripSharp.Runtime.JavaCompat.ListGet(globalSubrIndex, 12),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "Other global subr index values than expected"));
     global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(58)),
-        unchecked((sbyte)(122)), unchecked((sbyte)(29)), unchecked((sbyte)(-5)),
+        unchecked((sbyte)(122)), unchecked((sbyte)(29)), unchecked((sbyte)(unchecked(-5))),
         unchecked((sbyte)(48)), unchecked((sbyte)(6)), unchecked((sbyte)(11)) },
       global::DripSharp.Runtime.JavaCompat.ListGet(globalSubrIndex, 120),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "Other global subr index values than expected"));
     global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(68)),
-        unchecked((sbyte)(80)), unchecked((sbyte)(29)), unchecked((sbyte)(-45)),
-        unchecked((sbyte)(-9)), unchecked((sbyte)(16)), unchecked((sbyte)(-8)),
-        unchecked((sbyte)(-92)), unchecked((sbyte)(119)), unchecked((sbyte)(11)) },
+        unchecked((sbyte)(80)), unchecked((sbyte)(29)), unchecked((sbyte)(unchecked(-45))),
+        unchecked((sbyte)(unchecked(-9))), unchecked((sbyte)(16)), unchecked((sbyte)(unchecked(-8))),
+        unchecked((sbyte)(unchecked(-92))), unchecked((sbyte)(119)), unchecked((sbyte)(11)) },
       global::DripSharp.Runtime.JavaCompat.ListGet(globalSubrIndex, 253),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       "Other global subr index values than expected"));
@@ -202,29 +205,29 @@ public class CFFParserTest {
       "BlueValues"));
     this.assertNumberList(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       global::DripSharp.Runtime.JavaCompat.Concat("Blue values are different than expected: ",
-      global::DripSharp.Runtime.JavaCompat.StringValueOf(blues))), new int[] { -12, 0, 496, 508,
-        578, 590, 635, 647, 652, 664, 701, 713 }, blues);
+      global::DripSharp.Runtime.JavaCompat.StringValueOf(blues))), new int[] { unchecked(-12), 0,
+        496, 508, 578, 590, 635, 647, 652, 664, 701, 713 }, blues);
     global::System.Collections.Generic.IList<global::System.IConvertible> otherBlues
       = global::DripSharp.Runtime.JavaCompat.CastList<global::System.IConvertible>(global::DripSharp.Runtime.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CFFParserTest.testCFFType1Font.GetPrivateDict(),
       "OtherBlues"));
     this.assertNumberList(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       global::DripSharp.Runtime.JavaCompat.Concat("Other blues are different than expected: ",
-      global::DripSharp.Runtime.JavaCompat.StringValueOf(otherBlues))), new int[] { -196, -184 },
-      otherBlues);
+      global::DripSharp.Runtime.JavaCompat.StringValueOf(otherBlues))), new int[] { unchecked(-196),
+        unchecked(-184) }, otherBlues);
     global::System.Collections.Generic.IList<global::System.IConvertible> familyBlues
       = global::DripSharp.Runtime.JavaCompat.CastList<global::System.IConvertible>(global::DripSharp.Runtime.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CFFParserTest.testCFFType1Font.GetPrivateDict(),
       "FamilyBlues"));
     this.assertNumberList(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       global::DripSharp.Runtime.JavaCompat.Concat("Other blues are different than expected: ",
-      global::DripSharp.Runtime.JavaCompat.StringValueOf(familyBlues))), new int[] { -12, 0, 486,
-        498, 574, 586, 638, 650, 656, 668, 712, 724 }, familyBlues);
+      global::DripSharp.Runtime.JavaCompat.StringValueOf(familyBlues))), new int[] { unchecked(-12),
+        0, 486, 498, 574, 586, 638, 650, 656, 668, 712, 724 }, familyBlues);
     global::System.Collections.Generic.IList<global::System.IConvertible> familyOtherBlues
       = global::DripSharp.Runtime.JavaCompat.CastList<global::System.IConvertible>(global::DripSharp.Runtime.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CFFParserTest.testCFFType1Font.GetPrivateDict(),
       "FamilyOtherBlues"));
     this.assertNumberList(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
       global::DripSharp.Runtime.JavaCompat.Concat("Other blues are different than expected: ",
-      global::DripSharp.Runtime.JavaCompat.StringValueOf(familyOtherBlues))), new int[] { -217,
-        -205 }, familyOtherBlues);
+      global::DripSharp.Runtime.JavaCompat.StringValueOf(familyOtherBlues))),
+      new int[] { unchecked(-217), unchecked(-205) }, familyOtherBlues);
     global::System.Collections.Generic.IList<global::System.IConvertible> stemSnapH
       = global::DripSharp.Runtime.JavaCompat.CastList<global::System.IConvertible>(global::DripSharp.Runtime.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CFFParserTest.testCFFType1Font.GetPrivateDict(),
       "StemSnapH"));
@@ -286,11 +289,15 @@ public class CFFParserTest {
       }
     }
 
-    private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+    private static readonly bool __UpstreamBeforeAll;
 
     private static bool __RunUpstreamBeforeAll() {
       loadCFFFont();
       return true;
+    }
+
+    static PathRunner() {
+      __UpstreamBeforeAll = __RunUpstreamBeforeAll();
     }
 
     private readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFParserTest __outer;
@@ -423,10 +430,14 @@ public class CFFParserTest {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     loadCFFFont();
     return true;
+  }
+
+  static CFFParserTest() {
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

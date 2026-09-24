@@ -17,4 +17,8 @@ public class Type3Container
   public override bool HasGlyph(int code) {
     return (base.Font.GetCharProc(code) != default!);
   }
+
+  static Type3Container() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font>).TypeHandle);
+  }
 }

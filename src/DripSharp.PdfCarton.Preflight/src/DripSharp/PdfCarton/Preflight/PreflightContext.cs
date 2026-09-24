@@ -100,7 +100,7 @@ public class PreflightContext : global::System.IDisposable {
 
   public virtual void AddValidationError(global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error) {
     global::DripSharp.PdfCarton.Preflight.PreflightDocument pfDoc = this.document;
-    error.SetPageNumber(this.currentPageNumber);
+    error.SetPageNumber((int?)(this.currentPageNumber));
     pfDoc.AddValidationError(error);
   }
 

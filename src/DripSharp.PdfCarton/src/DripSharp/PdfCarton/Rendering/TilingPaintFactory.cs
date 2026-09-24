@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 internal class TilingPaintFactory {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Rendering.PageDrawer drawer = null!;
 
@@ -113,11 +112,16 @@ internal class TilingPaintFactory {
 
     public override int GetHashCode() {
       int hash = 7;
-      hash = ((23 * hash) + ((this.matrix != default!) ? this.matrix.GetHashCode() : 0));
-      hash = ((23 * hash) + ((this.patternDict != default!) ? this.patternDict.GetHashCode() : 0));
-      hash = ((23 * hash) + ((this.colorSpace != default!) ? this.colorSpace.GetHashCode() : 0));
-      hash = ((23 * hash) + ((this.color != default!) ? this.color.GetHashCode() : 0));
-      hash = ((23 * hash) + ((this.xform != default!) ? this.xform.GetHashCode() : 0));
+      hash = unchecked((unchecked((23 * hash)) + ((this.matrix != default!)
+        ? this.matrix.GetHashCode() : 0)));
+      hash = unchecked((unchecked((23 * hash)) + ((this.patternDict != default!)
+        ? this.patternDict.GetHashCode() : 0)));
+      hash = unchecked((unchecked((23 * hash)) + ((this.colorSpace != default!)
+        ? this.colorSpace.GetHashCode() : 0)));
+      hash = unchecked((unchecked((23 * hash)) + ((this.color != default!)
+        ? this.color.GetHashCode() : 0)));
+      hash = unchecked((unchecked((23 * hash)) + ((this.xform != default!)
+        ? this.xform.GetHashCode() : 0)));
       return hash;
     }
 
@@ -126,5 +130,9 @@ internal class TilingPaintFactory {
         "matrix="), this.matrix), ", pattern="), this.patternDict), ", colorSpace="),
         this.colorSpace), ", color="), this.color), ", xform="), this.xform), '}');
     }
+  }
+
+  static TilingPaintFactory() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

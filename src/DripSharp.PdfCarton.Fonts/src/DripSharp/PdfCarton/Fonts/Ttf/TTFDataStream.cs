@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 internal abstract class TTFDataStream : global::System.IDisposable {
-  private static readonly global::System.TimeZoneInfo TIMEZONE_UTC
-    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetTimeZone("UTC");
+  private static readonly global::System.TimeZoneInfo TIMEZONE_UTC;
 
   internal TTFDataStream() {}
 
@@ -36,12 +35,12 @@ internal abstract class TTFDataStream : global::System.IDisposable {
 
   public virtual int ReadSignedByte() {
     int signedByte = this.Read();
-    return ((signedByte <= 127) ? signedByte : (signedByte - 256));
+    return ((signedByte <= 127) ? signedByte : unchecked((signedByte - 256)));
   }
 
   public virtual int ReadUnsignedByte() {
     int unsignedByte = this.Read();
-    if ((unsignedByte == -1)) {
+    if ((unsignedByte == unchecked(-1))) {
       throw new global::System.IO.EndOfStreamException("premature EOF");
     }
     return unsignedByte;
@@ -57,8 +56,8 @@ internal abstract class TTFDataStream : global::System.IDisposable {
         this.GetCurrentPosition()), ", b1: "), byte1), ", b2: "), byte2), ", b3: "), byte3),
         ", b4: "), byte4));
     }
-    return ((((byte1 << unchecked((int)(24))) + (byte2 << unchecked((int)(16))))
-      + (byte3 << unchecked((int)(8)))) + byte4);
+    return unchecked((unchecked((unchecked(((byte1 << unchecked((int)(24)))
+      + (byte2 << unchecked((int)(16))))) + (byte3 << unchecked((int)(8))))) + byte4));
   }
 
   public virtual int ReadUnsignedShort() {
@@ -68,7 +67,7 @@ internal abstract class TTFDataStream : global::System.IDisposable {
       throw new global::System.IO.EndOfStreamException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("EOF at ",
         this.GetCurrentPosition()), ", b1: "), b1), ", b2: "), b2));
     }
-    return ((b1 << unchecked((int)(8))) + b2);
+    return unchecked(((b1 << unchecked((int)(8))) + b2));
   }
 
   public virtual int[] ReadUnsignedByteArray(int length) {
@@ -100,7 +99,7 @@ internal abstract class TTFDataStream : global::System.IDisposable {
     cal = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarSet(cal, 14, 0);
     long millisFor1904
       = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CalendarGetTimeInMillis(cal);
-    millisFor1904 += (secondsSince1904 * 1000);
+    millisFor1904 += unchecked((secondsSince1904 * 1000));
     cal = global::System.DateTimeOffset.FromUnixTimeMilliseconds(millisFor1904);
     return cal;
   }
@@ -117,7 +116,7 @@ internal abstract class TTFDataStream : global::System.IDisposable {
     int amountRead = 0;
     int totalAmountRead = 0;
     while (((totalAmountRead < numberOfBytes) && ((amountRead = this.Read(data, totalAmountRead,
-      (numberOfBytes - totalAmountRead))) != -1))) {
+      unchecked((numberOfBytes - totalAmountRead)))) != unchecked(-1)))) {
       totalAmountRead += amountRead;
     }
     if ((totalAmountRead == numberOfBytes)) {
@@ -138,6 +137,10 @@ internal abstract class TTFDataStream : global::System.IDisposable {
   public abstract global::System.IO.Stream GetOriginalData();
 
   public abstract long GetOriginalDataSize();
+
+  static TTFDataStream() {
+    TIMEZONE_UTC = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetTimeZone("UTC");
+  }
 
   public abstract void Dispose();
 }

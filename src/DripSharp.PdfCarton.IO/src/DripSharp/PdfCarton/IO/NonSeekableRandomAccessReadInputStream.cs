@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.IO;
 
 public class NonSeekableRandomAccessReadInputStream
 : global::DripSharp.PdfCarton.IO.RandomAccessRead {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   protected internal long Position = 0;
 
@@ -34,7 +33,7 @@ public class NonSeekableRandomAccessReadInputStream
     new sbyte[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.BUFFER_SIZE],
     new sbyte[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.BUFFER_SIZE] };
 
-  private readonly int[] bufferBytes = new int[] { -1, -1, -1 };
+  private readonly int[] bufferBytes = new int[] { unchecked(-1), unchecked(-1), unchecked(-1) };
 
   private bool __field_isClosed = false;
 
@@ -61,7 +60,7 @@ public class NonSeekableRandomAccessReadInputStream
     while ((remaining > 0)) {
       int bytesRead = this.Read(skipBuffer, 0, global::System.Math.Min(remaining,
         skipBuffer.Length));
-      if ((bytesRead == -1)) {
+      if ((bytesRead == unchecked(-1))) {
         break;
       }
       remaining -= bytesRead;
@@ -76,13 +75,13 @@ public class NonSeekableRandomAccessReadInputStream
   public virtual int Read() {
     this.CheckClosed();
     if (this.IsEOF()) {
-      return -1;
+      return unchecked(-1);
     }
     if (((this.CurrentBufferPointer
       >= this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT])
       && !(this.fetch()))) {
       this.__field_isEOF = true;
-      return -1;
+      return unchecked(-1);
     }
     this.Position++;
     return (this.buffers[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT][this.CurrentBufferPointer++] & 255);
@@ -93,7 +92,7 @@ public class NonSeekableRandomAccessReadInputStream
     if ((b == default!)) {
       throw new global::System.NullReferenceException("buffer is null");
     }
-    if ((((offset < 0) || (length < 0)) || ((offset + length) > b.Length))) {
+    if ((((offset < 0) || (length < 0)) || (unchecked((offset + length)) > b.Length))) {
       throw new global::System.ArgumentOutOfRangeException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("buffer length=",
         b.Length), " offset="), offset), " length="), length));
     }
@@ -101,17 +100,18 @@ public class NonSeekableRandomAccessReadInputStream
       return 0;
     }
     if (this.IsEOF()) {
-      return -1;
+      return unchecked(-1);
     }
     int numberOfBytesRead = 0;
     while ((numberOfBytesRead < length)) {
       int available
-        = (this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT]
-        - this.CurrentBufferPointer);
+        = unchecked((this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT]
+        - this.CurrentBufferPointer));
       if ((available > 0)) {
-        int bytes2Copy = global::System.Math.Min((length - numberOfBytesRead), available);
+        int bytes2Copy = global::System.Math.Min(unchecked((length - numberOfBytesRead)),
+          available);
         global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.buffers[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT],
-          this.CurrentBufferPointer, b, (numberOfBytesRead + offset), bytes2Copy);
+          this.CurrentBufferPointer, b, unchecked((numberOfBytesRead + offset)), bytes2Copy);
         this.CurrentBufferPointer += bytes2Copy;
         this.Position += bytes2Copy;
         numberOfBytesRead += bytes2Copy;
@@ -122,14 +122,15 @@ public class NonSeekableRandomAccessReadInputStream
         }
       }
     }
-    return ((numberOfBytesRead > 0) ? numberOfBytesRead : -1);
+    return ((numberOfBytesRead > 0) ? numberOfBytesRead : unchecked(-1));
   }
 
   public virtual void ReadFully(sbyte[] b, int offset, int length) {
     this.CheckClosed();
     int bytesReadTotal = 0;
     while ((bytesReadTotal < length)) {
-      int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
+      int bytesReadNow = this.Read(b, unchecked((offset + bytesReadTotal)), unchecked((length
+        - bytesReadTotal)));
       if ((bytesReadNow <= 0)) {
         throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
       }
@@ -149,22 +150,22 @@ public class NonSeekableRandomAccessReadInputStream
   public virtual int Available() {
     this.CheckClosed();
     int buffered = global::System.Math.Max(0,
-      (this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT]
-      - this.CurrentBufferPointer));
-    return (buffered + global::DripSharp.Runtime.JavaCompat.InputStreamAvailable(this.@is));
+      unchecked((this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT]
+      - this.CurrentBufferPointer)));
+    return unchecked((buffered
+      + global::DripSharp.Runtime.JavaCompat.InputStreamAvailable(this.@is)));
   }
 
   private bool fetch() {
     this.CheckClosed();
     this.CurrentBufferPointer = 0;
-    if ((this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.NEXT] >
-      -1)) {
+    if ((this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.NEXT] > unchecked(-1))) {
       this.switchBuffers(global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT,
         global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.LAST);
       this.switchBuffers(global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT,
         global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.NEXT);
-      this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.NEXT] =
-        -1;
+      this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.NEXT]
+        = unchecked(-1);
       return true;
     }
     try {
@@ -175,13 +176,14 @@ public class NonSeekableRandomAccessReadInputStream
         global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.buffers[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.LAST],
           this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT],
           this.buffers[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.LAST],
-          0, (global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.BUFFER_SIZE
-          - this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT]));
+          0,
+          unchecked((global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.BUFFER_SIZE
+          - this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT])));
         global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.buffers[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT],
           0,
           this.buffers[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.LAST],
-          (global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.BUFFER_SIZE
-          - this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT]),
+          unchecked((global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.BUFFER_SIZE
+          - this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT])),
           this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT]);
         this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.LAST]
           = global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.BUFFER_SIZE;
@@ -195,7 +197,7 @@ public class NonSeekableRandomAccessReadInputStream
       if ((this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT]
         <= 0)) {
         this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT]
-          = -1;
+          = unchecked(-1);
         return false;
       }
       this.Size
@@ -212,7 +214,8 @@ public class NonSeekableRandomAccessReadInputStream
 
   public virtual long Length() {
     this.CheckClosed();
-    return (this.Size + global::DripSharp.Runtime.JavaCompat.InputStreamAvailable(this.@is));
+    return unchecked((this.Size
+      + global::DripSharp.Runtime.JavaCompat.InputStreamAvailable(this.@is)));
   }
 
   public virtual void Rewind(int bytes) {
@@ -222,18 +225,18 @@ public class NonSeekableRandomAccessReadInputStream
       this.__field_isEOF = false;
     } else {
       if (((this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.LAST] > 0)
-        && ((bytes - this.CurrentBufferPointer)
+        && (unchecked((bytes - this.CurrentBufferPointer))
         <= this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.LAST]))) {
-        int remainingBytesToRewind = (bytes - this.CurrentBufferPointer);
+        int remainingBytesToRewind = unchecked((bytes - this.CurrentBufferPointer));
         this.switchBuffers(global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT,
           global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.NEXT);
         this.switchBuffers(global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT,
           global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.LAST);
         this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.LAST]
-          = -1;
+          = unchecked(-1);
         this.CurrentBufferPointer
-          = (this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT]
-          - remainingBytesToRewind);
+          = unchecked((this.bufferBytes[global::DripSharp.PdfCarton.IO.NonSeekableRandomAccessReadInputStream.CURRENT]
+          - remainingBytesToRewind));
         this.Position -= bytes;
         this.__field_isEOF = false;
       } else {
@@ -264,9 +267,13 @@ public class NonSeekableRandomAccessReadInputStream
       "DripSharp.PdfCarton.IO", "org.apache.pdfbox.io"), ".createView isn't supported."));
   }
 
+  static NonSeekableRandomAccessReadInputStream() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  }
+
   public virtual int Peek() {
     int result = this.Read();
-    if ((result != -1)) {
+    if ((result != unchecked(-1))) {
       ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
     }
     return result;

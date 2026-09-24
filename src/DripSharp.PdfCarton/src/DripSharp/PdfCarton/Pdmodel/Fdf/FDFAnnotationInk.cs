@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFAnnotationInk : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const string Subtype = "Ink";
 
@@ -81,5 +80,10 @@ public class FDFAnnotationInk : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnot
     } else {
       return default!;
     }
+  }
+
+  static FDFAnnotationInk() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

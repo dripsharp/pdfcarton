@@ -39,4 +39,8 @@ public class PDPageFitDestination
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitDestination.Type);
     }
   }
+
+  static PDPageFitDestination() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination).TypeHandle);
+  }
 }

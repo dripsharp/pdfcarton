@@ -58,26 +58,44 @@ public sealed class COSOutputStream : global::DripSharp.Runtime.JavaFilterOutput
     try {
       if ((this.buffer != default!)) {
         try {
-          for (int i = (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.filters) - 1); (i
-            >= 0); i--) {
-            using (global::System.IO.Stream unfilteredIn
-              = new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(this.buffer)) {
-              if ((i == 0)) {
-                global::DripSharp.Runtime.JavaCompat.ListGet(this.filters, i).Encode(unfilteredIn,
-                  @out, this.parameters, i);
-              } else {
-                global::DripSharp.PdfCarton.IO.RandomAccess filteredBuffer
-                  = this.streamCache.CreateBuffer();
-                try {
-                  using (global::System.IO.Stream filteredOut
-                    = new global::DripSharp.PdfCarton.IO.RandomAccessOutputStream(filteredBuffer)) {
-                    global::DripSharp.Runtime.JavaCompat.ListGet(this.filters,
-                      i).Encode(unfilteredIn, filteredOut, this.parameters, i);
+          for (int i = unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(this.filters)
+            - 1)); (i >= 0); i--) { {
+              global::System.IO.Stream unfilteredIn
+                = new global::DripSharp.PdfCarton.IO.RandomAccessInputStream(this.buffer);
+              global::System.Exception __dripsharpPrimary_116_42_0 = null!;
+              try {
+                if ((i == 0)) {
+                  global::DripSharp.Runtime.JavaCompat.ListGet(this.filters, i).Encode(unfilteredIn,
+                    @out, this.parameters, i);
+                } else {
+                  global::DripSharp.PdfCarton.IO.RandomAccess filteredBuffer
+                    = this.streamCache.CreateBuffer();
+                  try { {
+                      global::System.IO.Stream filteredOut
+                        = new global::DripSharp.PdfCarton.IO.RandomAccessOutputStream(filteredBuffer);
+                      global::System.Exception __dripsharpPrimary_129_51_0 = null!;
+                      try {
+                        global::DripSharp.Runtime.JavaCompat.ListGet(this.filters,
+                          i).Encode(unfilteredIn, filteredOut, this.parameters, i);
+                      } catch (global::System.Exception __dripsharpCaught_129_51_0) {
+                        __dripsharpPrimary_129_51_0 = __dripsharpCaught_129_51_0;
+                        throw;
+                      } finally {
+                        global::DripSharp.Runtime.JavaCompat.CloseResource(filteredOut,
+                          __dripsharpPrimary_129_51_0);
+                      }
+                    }
+                  } finally {
+                    this.buffer.Dispose();
+                    this.buffer = filteredBuffer;
                   }
-                } finally {
-                  this.buffer.Dispose();
-                  this.buffer = filteredBuffer;
                 }
+              } catch (global::System.Exception __dripsharpCaught_116_42_0) {
+                __dripsharpPrimary_116_42_0 = __dripsharpCaught_116_42_0;
+                throw;
+              } finally {
+                global::DripSharp.Runtime.JavaCompat.CloseResource(unfilteredIn,
+                  __dripsharpPrimary_116_42_0);
               }
             }
           }

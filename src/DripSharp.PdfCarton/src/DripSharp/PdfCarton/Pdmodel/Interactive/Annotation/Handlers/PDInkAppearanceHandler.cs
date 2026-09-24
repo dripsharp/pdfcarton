@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
 public class PDInkAppearanceHandler
 : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDInkAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
   : base(annotation) {
@@ -41,10 +40,11 @@ public class PDInkAppearanceHandler
     float maxX = float.Epsilon;
     float maxY = float.Epsilon;
     foreach (float[] pathArray__70_22 in ink.GetInkList()) {
-      int nPoints__72_17 = (pathArray__70_22.Length / 2);
+      int nPoints__72_17
+        = global::DripSharp.Runtime.JavaCompat.IntegralDivide(pathArray__70_22.Length, 2);
       for (int i__73_22 = 0; (i__73_22 < nPoints__72_17); ++i__73_22) {
-        float x__75_23 = pathArray__70_22[(i__73_22 * 2)];
-        float y__76_23 = pathArray__70_22[((i__73_22 * 2) + 1)];
+        float x__75_23 = pathArray__70_22[unchecked((i__73_22 * 2))];
+        float y__76_23 = pathArray__70_22[unchecked((unchecked((i__73_22 * 2)) + 1))];
         minX = global::System.Math.Min(minX, x__75_23);
         minY = global::System.Math.Min(minY, y__76_23);
         maxX = global::System.Math.Max(maxX, x__75_23);
@@ -60,27 +60,36 @@ public class PDInkAppearanceHandler
     rect.SetUpperRightX(global::System.Math.Max((maxX + (ab.width * 2)), rect.GetUpperRightX()));
     rect.SetUpperRightY(global::System.Math.Max((maxY + (ab.width * 2)), rect.GetUpperRightY()));
     ink.SetRectangle(rect);
-    try {
-      using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream cs
-        = this.getNormalAppearanceAsContentStream()) {
-        this.setOpacity(cs, ink.GetConstantOpacity());
-        cs.SetStrokingColor(color);
-        if ((ab.dashArray != default!)) {
-          cs.SetLineDashPattern(ab.dashArray, (float)(0));
-        }
-        cs.SetLineWidth(ab.width);
-        foreach (float[] pathArray__105_26 in ink.GetInkList()) {
-          int nPoints__107_21 = (pathArray__105_26.Length / 2);
-          for (int i__111_26 = 0; (i__111_26 < nPoints__107_21); ++i__111_26) {
-            float x__113_27 = pathArray__105_26[(i__111_26 * 2)];
-            float y__114_27 = pathArray__105_26[((i__111_26 * 2) + 1)];
-            if ((i__111_26 == 0)) {
-              cs.MoveTo(x__113_27, y__114_27);
-            } else {
-              cs.LineTo(x__113_27, y__114_27);
-            }
+    try { {
+        global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream cs
+          = this.getNormalAppearanceAsContentStream();
+        global::System.Exception __dripsharpPrimary_94_40_0 = null!;
+        try {
+          this.setOpacity(cs, ink.GetConstantOpacity());
+          cs.SetStrokingColor(color);
+          if ((ab.dashArray != default!)) {
+            cs.SetLineDashPattern(ab.dashArray, (float)(0));
           }
-          cs.Stroke();
+          cs.SetLineWidth(ab.width);
+          foreach (float[] pathArray__105_26 in ink.GetInkList()) {
+            int nPoints__107_21
+              = global::DripSharp.Runtime.JavaCompat.IntegralDivide(pathArray__105_26.Length, 2);
+            for (int i__111_26 = 0; (i__111_26 < nPoints__107_21); ++i__111_26) {
+              float x__113_27 = pathArray__105_26[unchecked((i__111_26 * 2))];
+              float y__114_27 = pathArray__105_26[unchecked((unchecked((i__111_26 * 2)) + 1))];
+              if ((i__111_26 == 0)) {
+                cs.MoveTo(x__113_27, y__114_27);
+              } else {
+                cs.LineTo(x__113_27, y__114_27);
+              }
+            }
+            cs.Stroke();
+          }
+        } catch (global::System.Exception __dripsharpCaught_94_40_0) {
+          __dripsharpPrimary_94_40_0 = __dripsharpCaught_94_40_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(cs, __dripsharpPrimary_94_40_0);
         }
       }
     } catch (global::System.IO.IOException ex) {
@@ -92,4 +101,9 @@ public class PDInkAppearanceHandler
   public override void GenerateRolloverAppearance() {}
 
   public override void GenerateDownAppearance() {}
+
+  static PDInkAppearanceHandler() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  }
 }

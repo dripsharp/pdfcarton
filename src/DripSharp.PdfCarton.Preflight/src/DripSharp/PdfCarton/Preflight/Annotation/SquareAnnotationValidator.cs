@@ -15,4 +15,8 @@ public class SquareAnnotationValidator
     new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquare(annotDictionary)) {
 
   }
+
+  static SquareAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.SquareCircleAnnotationValidator).TypeHandle);
+  }
 }

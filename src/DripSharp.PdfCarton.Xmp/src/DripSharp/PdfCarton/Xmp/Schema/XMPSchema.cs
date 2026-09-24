@@ -223,7 +223,7 @@ public class XMPSchema : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructured
   }
 
   public virtual void SetBooleanPropertyValueAsSimple(string simpleName, bool? @bool) {
-    this.SetBooleanPropertyValue(simpleName, @bool);
+    this.SetBooleanPropertyValue(simpleName, (bool?)(@bool));
   }
 
   public virtual void SetBooleanPropertyValue(string qualifiedName, bool? @bool) {
@@ -264,7 +264,7 @@ public class XMPSchema : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructured
   }
 
   public virtual void SetIntegerPropertyValueAsSimple(string simpleName, int? intValue) {
-    this.SetIntegerPropertyValue(simpleName, intValue);
+    this.SetIntegerPropertyValue(simpleName, (int?)(intValue));
   }
 
   public virtual void SetIntegerPropertyValue(string qualifiedName, int? intValue) {
@@ -685,5 +685,9 @@ public class XMPSchema : global::DripSharp.PdfCarton.Xmp.Type.AbstractStructured
     return (type.IsInstanceOfType(property)
       ? (T)(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.ClassCast<T>(type, property))
       : (T)(default!));
+  }
+
+  static XMPSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
   }
 }

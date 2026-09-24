@@ -49,4 +49,8 @@ public class PDFASchemaType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStruc
   public virtual global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty GetValueType() {
     return this.GetArrayProperty(global::DripSharp.PdfCarton.Xmp.Type.PDFASchemaType.ValueType);
   }
+
+  static PDFASchemaType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

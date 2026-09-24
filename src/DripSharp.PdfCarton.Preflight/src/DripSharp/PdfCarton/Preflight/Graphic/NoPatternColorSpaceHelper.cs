@@ -19,4 +19,8 @@ public class NoPatternColorSpaceHelper
     base.Context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorGraphicInvalidPatternColorSpaceForbidden,
       "Pattern color space is forbidden"));
   }
+
+  static NoPatternColorSpaceHelper() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Graphic.StandardColorSpaceHelper).TypeHandle);
+  }
 }

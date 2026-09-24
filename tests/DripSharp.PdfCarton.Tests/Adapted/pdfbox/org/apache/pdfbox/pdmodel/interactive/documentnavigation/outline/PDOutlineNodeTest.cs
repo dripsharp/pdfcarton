@@ -54,10 +54,10 @@ public class PDOutlineNodeTest {
     this.root.OpenNode();
     this.root.CloseNode();
     global::DripSharp.Testing.JavaAssertions.False(this.root.IsNodeOpen(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), this.root.GetOpenCount(), null);
     this.root.CloseNode();
     global::DripSharp.Testing.JavaAssertions.False(this.root.IsNodeOpen(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), this.root.GetOpenCount(), null);
   }
 
   internal virtual void openLeaf() {
@@ -73,7 +73,7 @@ public class PDOutlineNodeTest {
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem();
     this.root.AddLast(child);
     global::DripSharp.Testing.JavaAssertions.False(this.root.IsNodeOpen(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), this.root.GetOpenCount(), null);
   }
 
   internal virtual void closeNodeWithOpendParent() {
@@ -88,7 +88,7 @@ public class PDOutlineNodeTest {
     global::DripSharp.Testing.JavaAssertions.Equal(2, child.GetOpenCount(), null);
     child.CloseNode();
     global::DripSharp.Testing.JavaAssertions.Equal(1, this.root.GetOpenCount(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, child.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), child.GetOpenCount(), null);
   }
 
   internal virtual void closeNodeWithClosedParent() {
@@ -98,11 +98,11 @@ public class PDOutlineNodeTest {
     child.AddLast(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
     child.OpenNode();
     this.root.AddLast(child);
-    global::DripSharp.Testing.JavaAssertions.Equal(-3, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-3), this.root.GetOpenCount(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(2, child.GetOpenCount(), null);
     child.CloseNode();
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, this.root.GetOpenCount(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, child.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), child.GetOpenCount(), null);
   }
 
   internal virtual void openNodeWithOpendParent() {
@@ -113,7 +113,7 @@ public class PDOutlineNodeTest {
     this.root.AddLast(child);
     this.root.OpenNode();
     global::DripSharp.Testing.JavaAssertions.Equal(1, this.root.GetOpenCount(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, child.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), child.GetOpenCount(), null);
     child.OpenNode();
     global::DripSharp.Testing.JavaAssertions.Equal(3, this.root.GetOpenCount(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(2, child.GetOpenCount(), null);
@@ -125,10 +125,10 @@ public class PDOutlineNodeTest {
     child.AddLast(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
     child.AddLast(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
     this.root.AddLast(child);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, this.root.GetOpenCount(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, child.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), child.GetOpenCount(), null);
     child.OpenNode();
-    global::DripSharp.Testing.JavaAssertions.Equal(-3, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-3), this.root.GetOpenCount(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(2, child.GetOpenCount(), null);
   }
 
@@ -187,12 +187,12 @@ public class PDOutlineNodeTest {
     child.AddLast(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
     child.OpenNode();
     this.root.AddLast(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), this.root.GetOpenCount(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(2, child.GetOpenCount(), null);
     this.root.AddLast(child);
     global::DripSharp.Testing.JavaAssertions.NotEqual(child, this.root.GetFirstChild(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(child, this.root.GetLastChild(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-4, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-4), this.root.GetOpenCount(), null);
   }
 
   internal virtual void addFirstOpenChildToClosedParent() {
@@ -202,12 +202,12 @@ public class PDOutlineNodeTest {
     child.AddFirst(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
     child.OpenNode();
     this.root.AddFirst(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), this.root.GetOpenCount(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(2, child.GetOpenCount(), null);
     this.root.AddFirst(child);
     global::DripSharp.Testing.JavaAssertions.NotEqual(child, this.root.GetLastChild(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(child, this.root.GetFirstChild(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-4, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-4), this.root.GetOpenCount(), null);
   }
 
   internal virtual void addLastClosedChildToOpenParent() {
@@ -218,7 +218,7 @@ public class PDOutlineNodeTest {
     this.root.AddLast(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
     this.root.OpenNode();
     global::DripSharp.Testing.JavaAssertions.Equal(1, this.root.GetOpenCount(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, child.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), child.GetOpenCount(), null);
     this.root.AddLast(child);
     global::DripSharp.Testing.JavaAssertions.NotEqual(child, this.root.GetFirstChild(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(child, this.root.GetLastChild(), null);
@@ -233,7 +233,7 @@ public class PDOutlineNodeTest {
     this.root.AddFirst(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
     this.root.OpenNode();
     global::DripSharp.Testing.JavaAssertions.Equal(1, this.root.GetOpenCount(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, child.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), child.GetOpenCount(), null);
     this.root.AddFirst(child);
     global::DripSharp.Testing.JavaAssertions.NotEqual(child, this.root.GetLastChild(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(child, this.root.GetFirstChild(), null);
@@ -246,12 +246,12 @@ public class PDOutlineNodeTest {
     child.AddLast(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
     child.AddLast(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
     this.root.AddLast(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, this.root.GetOpenCount(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, child.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), child.GetOpenCount(), null);
     this.root.AddLast(child);
     global::DripSharp.Testing.JavaAssertions.NotEqual(child, this.root.GetFirstChild(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(child, this.root.GetLastChild(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), this.root.GetOpenCount(), null);
   }
 
   internal virtual void addFirstClosedChildToClosedParent() {
@@ -260,12 +260,12 @@ public class PDOutlineNodeTest {
     child.AddFirst(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
     child.AddFirst(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
     this.root.AddFirst(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem());
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, this.root.GetOpenCount(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, child.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), child.GetOpenCount(), null);
     this.root.AddFirst(child);
     global::DripSharp.Testing.JavaAssertions.NotEqual(child, this.root.GetLastChild(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(child, this.root.GetFirstChild(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), this.root.GetOpenCount(), null);
   }
 
   internal virtual void cannotAddLastAList() {

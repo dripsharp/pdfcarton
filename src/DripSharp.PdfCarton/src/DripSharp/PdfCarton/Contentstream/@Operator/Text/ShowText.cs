@@ -36,4 +36,8 @@ public class ShowText : global::DripSharp.PdfCarton.Contentstream.@Operator.Oper
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.ShowText;
   }
+
+  static ShowText() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

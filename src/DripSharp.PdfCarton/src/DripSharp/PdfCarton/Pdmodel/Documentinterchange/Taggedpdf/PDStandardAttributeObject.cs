@@ -229,4 +229,8 @@ public abstract class PDStandardAttributeObject
       ? (global::DripSharp.PdfCarton.Cos.COSBase)(default!) : value.GetCOSObject());
     this.PotentiallyNotifyChanged(oldValue, newValue);
   }
+
+  static PDStandardAttributeObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject).TypeHandle);
+  }
 }

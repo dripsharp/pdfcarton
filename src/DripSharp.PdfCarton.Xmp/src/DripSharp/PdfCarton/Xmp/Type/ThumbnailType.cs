@@ -83,4 +83,8 @@ public class ThumbnailType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStruct
   public virtual void SetFormat(string format) {
     this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType.Format, format);
   }
+
+  static ThumbnailType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

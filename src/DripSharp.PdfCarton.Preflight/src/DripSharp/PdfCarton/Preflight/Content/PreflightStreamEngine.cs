@@ -36,12 +36,15 @@ public abstract class PreflightStreamEngine
     public override string ToString() => global::DripSharp.Runtime.JavaCompat.EnumName(this);
   }
 
-  protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Context = default!;
+  protected internal global::DripSharp.PdfCarton.Preflight.PreflightContext Context;
 
-  protected internal global::DripSharp.PdfCarton.Pdmodel.PDPage ProcessedPage = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.PDPage ProcessedPage;
 
   public PreflightStreamEngine(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
     global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
+    this.Context = default!;
+    this.ProcessedPage = default!;
+
     this.Context = context;
     this.ProcessedPage = page;
     this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.State.SetLineWidth(this));

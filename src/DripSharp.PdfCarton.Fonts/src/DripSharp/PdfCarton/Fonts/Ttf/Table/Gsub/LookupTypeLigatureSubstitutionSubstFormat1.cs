@@ -33,4 +33,8 @@ public class LookupTypeLigatureSubstitutionSubstFormat1
       typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LookupTypeLigatureSubstitutionSubstFormat1).Name,
       this.GetSubstFormat());
   }
+
+  static LookupTypeLigatureSubstitutionSubstFormat1() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable).TypeHandle);
+  }
 }

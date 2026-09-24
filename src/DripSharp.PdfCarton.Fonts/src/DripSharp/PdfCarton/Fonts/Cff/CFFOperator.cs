@@ -30,13 +30,13 @@ public sealed class CFFOperator {
   }
 
   private static int calculateKey(int b0, int b1) {
-    return ((b1 << unchecked((int)(8))) + b0);
+    return unchecked(((b1 << unchecked((int)(8))) + b0));
   }
 
-  private static readonly global::System.Collections.Generic.IDictionary<int, string> keyMap
-    = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<int, string>(52);
+  private static readonly global::System.Collections.Generic.IDictionary<int, string> keyMap;
 
-  static CFFOperator() { {
+  static CFFOperator() {
+    keyMap = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<int, string>(52); {
       global::DripSharp.PdfCarton.Fonts.Cff.CFFOperator.register(0, "version");
       global::DripSharp.PdfCarton.Fonts.Cff.CFFOperator.register(1, "Notice");
       global::DripSharp.PdfCarton.Fonts.Cff.CFFOperator.register(12, 0, "Copyright");

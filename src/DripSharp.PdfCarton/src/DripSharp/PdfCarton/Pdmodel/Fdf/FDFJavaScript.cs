@@ -72,10 +72,10 @@ public class FDFJavaScript : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjec
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript> map
       = new global::DripSharp.Runtime.JavaLinkedHashMap<string,
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionJavaScript>();
-    for (int i = 0; ((i + 1) < array.Size()); i += 2) {
+    for (int i = 0; (unchecked((i + 1)) < array.Size()); i += 2) {
       string name = array.GetName(i);
       if ((name != default!)) {
-        global::DripSharp.PdfCarton.Cos.COSBase @base = array.GetObject((i + 1));
+        global::DripSharp.PdfCarton.Cos.COSBase @base = array.GetObject(unchecked((i + 1)));
         if ((@base is global::DripSharp.PdfCarton.Cos.COSDictionary)) {
           global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction action
             = global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionFactory.CreateAction((global::DripSharp.PdfCarton.Cos.COSDictionary)(@base!));

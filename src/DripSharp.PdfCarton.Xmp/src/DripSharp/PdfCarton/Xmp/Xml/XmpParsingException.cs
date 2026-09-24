@@ -89,7 +89,7 @@ public class XmpParsingException : global::System.Exception {
   private readonly global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType errorType
     = null!;
 
-  internal const long serialVersionUID = -8843096358184702908L;
+  internal const long serialVersionUID = unchecked(-8843096358184702908L);
 
   public XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType error,
     string message, global::System.Exception cause) : base(message, cause) {

@@ -11,13 +11,11 @@ namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 public abstract class SecurityHandler<TPOLICY>
 : global::DripSharp.Runtime.PdfBoxSecurityHandler where TPOLICY
 : global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const short DEFAULT_KEY_LENGTH = unchecked((short)(40));
 
-  private static readonly sbyte[] AES_SALT = new sbyte[] { unchecked((sbyte)(115)),
-    unchecked((sbyte)(65)), unchecked((sbyte)(108)), unchecked((sbyte)(84)) };
+  private static readonly sbyte[] AES_SALT;
 
   private short keyLength
     = global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandler<global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy>.DEFAULT_KEY_LENGTH;
@@ -96,16 +94,18 @@ public abstract class SecurityHandler<TPOLICY>
   }
 
   private sbyte[] calcFinalKey(long objectNumber, long genNumber) {
-    sbyte[] newKey = new sbyte[(this.encryptionKey.Length + 5)];
+    sbyte[] newKey = new sbyte[unchecked((this.encryptionKey.Length + 5))];
     global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.encryptionKey, 0, newKey, 0,
       this.encryptionKey.Length);
-    newKey[(newKey.Length - 5)] = unchecked((sbyte)(unchecked((sbyte)((objectNumber & 255)))));
-    newKey[(newKey.Length - 4)]
+    newKey[unchecked((newKey.Length - 5))]
+      = unchecked((sbyte)(unchecked((sbyte)((objectNumber & 255)))));
+    newKey[unchecked((newKey.Length - 4))]
       = unchecked((sbyte)(unchecked((sbyte)(((objectNumber >> unchecked((int)(8))) & 255)))));
-    newKey[(newKey.Length - 3)]
+    newKey[unchecked((newKey.Length - 3))]
       = unchecked((sbyte)(unchecked((sbyte)(((objectNumber >> unchecked((int)(16))) & 255)))));
-    newKey[(newKey.Length - 2)] = unchecked((sbyte)(unchecked((sbyte)((genNumber & 255)))));
-    newKey[(newKey.Length - 1)]
+    newKey[unchecked((newKey.Length - 2))]
+      = unchecked((sbyte)(unchecked((sbyte)((genNumber & 255)))));
+    newKey[unchecked((newKey.Length - 1))]
       = unchecked((sbyte)(unchecked((sbyte)(((genNumber >> unchecked((int)(8))) & 255)))));
     global::DripSharp.Runtime.JavaMessageDigest md
       = global::DripSharp.PdfCarton.Pdmodel.Encryption.MessageDigests.getMD5();
@@ -142,7 +142,8 @@ public abstract class SecurityHandler<TPOLICY>
       global::DripSharp.Runtime.JavaCipher decryptCipher = this.createCipher(finalKey, iv, decrypt);
       sbyte[] buffer = new sbyte[256];
       int n;
-      while (((n = global::DripSharp.Runtime.JavaCompat.InputStreamRead(data, buffer)) != -1)) {
+      while (((n = global::DripSharp.Runtime.JavaCompat.InputStreamRead(data, buffer))
+        != unchecked(-1))) {
         sbyte[] dst = decryptCipher.Update(buffer, 0, n);
         if ((dst != default!)) {
           global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, dst);
@@ -166,10 +167,18 @@ public abstract class SecurityHandler<TPOLICY>
     } catch (global::System.Security.Cryptography.CryptographicException e) {
       throw new global::System.IO.IOException(null, e);
     }
-    try {
-      using (global::DripSharp.Runtime.JavaCipherInputStream cis
-        = new global::DripSharp.Runtime.JavaCipherInputStream(data, cipher)) {
-        global::DripSharp.PdfCarton.IO.IOUtils.Copy(cis, output);
+    try { {
+        global::DripSharp.Runtime.JavaCipherInputStream cis
+          = new global::DripSharp.Runtime.JavaCipherInputStream(data, cipher);
+        global::System.Exception __dripsharpPrimary_377_32_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.IO.IOUtils.Copy(cis, output);
+        } catch (global::System.Exception __dripsharpCaught_377_32_0) {
+          __dripsharpPrimary_377_32_0 = __dripsharpCaught_377_32_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(cis, __dripsharpPrimary_377_32_0);
+        }
       }
     } catch (global::System.IO.IOException exception) {
       if (!((global::DripSharp.Runtime.JavaCompat.GetCause(exception)! is global::System.Security.Cryptography.CryptographicException))) {
@@ -277,14 +286,23 @@ public abstract class SecurityHandler<TPOLICY>
       return;
     }
     if (global::DripSharp.PdfCarton.Cos.COSName.Metadata.Equals(type)) {
-      sbyte[] buf;
-      using (global::System.IO.Stream @is = stream.CreateRawInputStream()) {
-        buf = new sbyte[10];
-        long isResult = global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(@is, buf);
-        if ((global::DripSharp.Runtime.JavaCompat.CompareLong(isResult, (long)(buf.Length)) != 0)) {
-          global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandler<global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy>.LOG,
-            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Tried reading ",
-            buf.Length), " bytes but only "), isResult), " bytes read")));
+      sbyte[] buf; {
+        global::System.IO.Stream @is = stream.CreateRawInputStream();
+        global::System.Exception __dripsharpPrimary_549_30_0 = null!;
+        try {
+          buf = new sbyte[10];
+          long isResult = global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(@is, buf);
+          if ((global::DripSharp.Runtime.JavaCompat.CompareLong(isResult, (long)(buf.Length))
+            != 0)) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandler<global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy>.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Tried reading ",
+              buf.Length), " bytes but only "), isResult), " bytes read")));
+          }
+        } catch (global::System.Exception __dripsharpCaught_549_30_0) {
+          __dripsharpPrimary_549_30_0 = __dripsharpCaught_549_30_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_549_30_0);
         }
       }
       if (global::DripSharp.Runtime.JavaCompat.ArrayEquals(buf,
@@ -298,11 +316,27 @@ public abstract class SecurityHandler<TPOLICY>
       }
     }
     this.decryptDictionary(stream, objNum, genNum);
-    try {
-      using (global::System.IO.Stream encryptedStream
-        = stream.CreateRawInputStream()) using (global::System.IO.Stream output
-        = stream.CreateRawOutputStream()) {
-        this.encryptData(objNum, genNum, encryptedStream, output, true);
+    try { {
+        global::System.IO.Stream encryptedStream = stream.CreateRawInputStream();
+        global::System.Exception __dripsharpPrimary_569_26_0 = null!;
+        try {
+          global::System.IO.Stream output = stream.CreateRawOutputStream();
+          global::System.Exception __dripsharpPrimary_570_30_0 = null!;
+          try {
+            this.encryptData(objNum, genNum, encryptedStream, output, true);
+          } catch (global::System.Exception __dripsharpCaught_570_30_0) {
+            __dripsharpPrimary_570_30_0 = __dripsharpCaught_570_30_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(output, __dripsharpPrimary_570_30_0);
+          }
+        } catch (global::System.Exception __dripsharpCaught_569_26_0) {
+          __dripsharpPrimary_569_26_0 = __dripsharpCaught_569_26_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(encryptedStream,
+            __dripsharpPrimary_569_26_0);
+        }
       }
     } catch (global::System.IO.IOException ex) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandler<global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy>.LOG,
@@ -317,14 +351,30 @@ public abstract class SecurityHandler<TPOLICY>
     if (!(stream.HasData())) {
       return;
     }
-    sbyte[] rawData;
-    using (global::System.IO.Stream @is = stream.CreateRawInputStream()) {
-      rawData = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
+    sbyte[] rawData; {
+      global::System.IO.Stream @is = stream.CreateRawInputStream();
+      global::System.Exception __dripsharpPrimary_601_26_0 = null!;
+      try {
+        rawData = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
+      } catch (global::System.Exception __dripsharpCaught_601_26_0) {
+        __dripsharpPrimary_601_26_0 = __dripsharpCaught_601_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_601_26_0);
+      }
     }
     global::System.IO.MemoryStream encryptedStream
-      = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(rawData);
-    using (global::System.IO.Stream output = stream.CreateRawOutputStream()) {
-      this.encryptData(objNum, (long)(genNum), encryptedStream, output, false);
+      = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(rawData); {
+      global::System.IO.Stream output = stream.CreateRawOutputStream();
+      global::System.Exception __dripsharpPrimary_606_27_0 = null!;
+      try {
+        this.encryptData(objNum, (long)(genNum), encryptedStream, output, false);
+      } catch (global::System.Exception __dripsharpCaught_606_27_0) {
+        __dripsharpPrimary_606_27_0 = __dripsharpCaught_606_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(output, __dripsharpPrimary_606_27_0);
+      }
     }
   }
 
@@ -466,5 +516,11 @@ public abstract class SecurityHandler<TPOLICY>
       }
     }
     return 2;
+  }
+
+  static SecurityHandler() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    AES_SALT = new sbyte[] { unchecked((sbyte)(115)), unchecked((sbyte)(65)),
+      unchecked((sbyte)(108)), unchecked((sbyte)(84)) };
   }
 }

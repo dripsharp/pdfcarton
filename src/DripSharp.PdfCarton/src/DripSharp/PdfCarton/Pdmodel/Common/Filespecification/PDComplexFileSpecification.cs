@@ -176,4 +176,8 @@ public class PDComplexFileSpecification
   public virtual string GetFileDescription() {
     return this.fs.GetString(global::DripSharp.PdfCarton.Cos.COSName.Desc);
   }
+
+  static PDComplexFileSpecification() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification).TypeHandle);
+  }
 }

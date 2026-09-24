@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Fonts.Util.Autodetect;
 
 public abstract class NativeFontDirFinder
 : global::DripSharp.PdfCarton.Fonts.Util.Autodetect.FontDirFinder {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   [global::DripSharp.Runtime.JavaFileBoundary]
   public virtual global::System.Collections.Generic.IList<global::System.IO.FileInfo> Find() {
@@ -42,6 +41,10 @@ public abstract class NativeFontDirFinder
   }
 
   protected internal abstract string[] GetSearchableDirectories();
+
+  static NativeFontDirFinder() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  }
 
   public NativeFontDirFinder() {}
 }

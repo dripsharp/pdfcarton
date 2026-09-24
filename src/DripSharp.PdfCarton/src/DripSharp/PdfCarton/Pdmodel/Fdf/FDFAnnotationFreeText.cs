@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFAnnotationFreeText : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const string Subtype = "FreeText";
 
@@ -139,5 +138,10 @@ public class FDFAnnotationFreeText : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDF
 
   public virtual string GetLineEndingStyle() {
     return base.Annot.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.Le);
+  }
+
+  static FDFAnnotationFreeText() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

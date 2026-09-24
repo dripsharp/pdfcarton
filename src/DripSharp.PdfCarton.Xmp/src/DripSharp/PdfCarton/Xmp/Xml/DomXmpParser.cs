@@ -754,7 +754,7 @@ public class DomXmpParser {
           global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Cannot understand PI data part : '",
           token), "' in '"), data), "'"));
       }
-      string quote = token.Substring((token.Length - 1));
+      string quote = token.Substring(unchecked((token.Length - 1)));
       int pos = token.IndexOf(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("=", quote),
         global::System.StringComparison.Ordinal);
       if ((pos <= 0)) {
@@ -764,13 +764,13 @@ public class DomXmpParser {
       }
       string name = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(token, 0,
         pos);
-      if (((token.Length - 1) < (pos + 2))) {
+      if ((unchecked((token.Length - 1)) < unchecked((pos + 2)))) {
         throw new global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart,
           global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.Concat("Cannot understand PI data part : '",
           token), "' in '"), data), "'"));
       }
-      string value = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(token, (pos
-        + 2), (token.Length - 1));
+      string value = global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.StringSubstring(token,
+        unchecked((pos + 2)), unchecked((token.Length - 1)));
       switch (name) {
         case var __case_901_22_0 when global::System.Object.Equals(__case_901_22_0, "id"):
           id = value;

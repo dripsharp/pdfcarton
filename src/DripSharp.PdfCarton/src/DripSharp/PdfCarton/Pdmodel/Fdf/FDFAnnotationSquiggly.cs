@@ -25,4 +25,8 @@ public class FDFAnnotationSquiggly
     base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
       global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationSquiggly.Subtype);
   }
+
+  static FDFAnnotationSquiggly() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTextMarkup).TypeHandle);
+  }
 }

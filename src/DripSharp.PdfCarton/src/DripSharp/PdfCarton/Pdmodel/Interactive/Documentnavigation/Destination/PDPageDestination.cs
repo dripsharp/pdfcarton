@@ -37,7 +37,7 @@ public abstract class PDPageDestination
   }
 
   public virtual int GetPageNumber() {
-    int retval = -1;
+    int retval = unchecked(-1);
     if ((this.Array.Size() > 0)) {
       global::DripSharp.PdfCarton.Cos.COSBase page = this.Array.GetObject(0);
       if ((page is global::DripSharp.PdfCarton.Cos.COSNumber)) {
@@ -48,7 +48,7 @@ public abstract class PDPageDestination
   }
 
   public virtual int RetrievePageNumber() {
-    int retval = -1;
+    int retval = unchecked(-1);
     if ((this.Array.Size() > 0)) {
       global::DripSharp.PdfCarton.Cos.COSBase page = this.Array.GetObject(0);
       if ((page is global::DripSharp.PdfCarton.Cos.COSNumber)) {
@@ -79,7 +79,7 @@ public abstract class PDPageDestination
         = new global::DripSharp.PdfCarton.Pdmodel.PDPageTree(parent);
       return pages.IndexOf(new global::DripSharp.PdfCarton.Pdmodel.PDPage(pageDict));
     }
-    return -1;
+    return unchecked(-1);
   }
 
   public virtual void SetPageNumber(int pageNumber) {
@@ -88,5 +88,9 @@ public abstract class PDPageDestination
 
   public override global::DripSharp.PdfCarton.Cos.COSBase GetCOSObject() {
     return this.Array;
+  }
+
+  static PDPageDestination() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination).TypeHandle);
   }
 }

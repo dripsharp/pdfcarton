@@ -58,9 +58,17 @@ public class FDFFieldTest {
   private global::DripSharp.PdfCarton.Cos.COSStream createStream(sbyte[] testString,
     global::DripSharp.PdfCarton.Cos.COSBase filters) {
     global::DripSharp.PdfCarton.Cos.COSStream stream
-      = new global::DripSharp.PdfCarton.Cos.COSStream();
-    using (global::System.IO.Stream output = stream.CreateOutputStream(filters)) {
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, testString);
+      = new global::DripSharp.PdfCarton.Cos.COSStream(); {
+      global::System.IO.Stream output = stream.CreateOutputStream(filters);
+      global::System.Exception __dripsharpPrimary_100_27_0 = null!;
+      try {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, testString);
+      } catch (global::System.Exception __dripsharpCaught_100_27_0) {
+        __dripsharpPrimary_100_27_0 = __dripsharpCaught_100_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(output, __dripsharpPrimary_100_27_0);
+      }
     }
     return stream;
   }

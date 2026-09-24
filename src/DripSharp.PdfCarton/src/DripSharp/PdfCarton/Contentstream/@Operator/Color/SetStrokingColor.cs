@@ -29,4 +29,8 @@ public class SetStrokingColor : global::DripSharp.PdfCarton.Contentstream.@Opera
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColor;
   }
+
+  static SetStrokingColor() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetColor).TypeHandle);
+  }
 }

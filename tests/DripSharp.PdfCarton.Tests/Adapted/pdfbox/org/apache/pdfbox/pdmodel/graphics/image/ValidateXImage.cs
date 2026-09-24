@@ -85,23 +85,33 @@ public class ValidateXImage {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename));
     global::DripSharp.PdfCarton.Pdmodel.PDPage page
       = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-    document.AddPage(page);
-    using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
-      = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(document, page,
-      global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Append, false)) {
-      contentStream.DrawImage(ximage, (float)(150), (float)(300));
-      contentStream.DrawImage(ximage, (float)(200), (float)(350));
+    document.AddPage(page); {
+      global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
+        = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(document, page,
+        global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Append, false);
+      global::System.Exception __dripsharpPrimary_142_34_0 = null!;
+      try {
+        contentStream.DrawImage(ximage, (float)(150), (float)(300));
+        contentStream.DrawImage(ximage, (float)(200), (float)(350));
+      } catch (global::System.Exception __dripsharpCaught_142_34_0) {
+        __dripsharpPrimary_142_34_0 = __dripsharpCaught_142_34_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream,
+          __dripsharpPrimary_142_34_0);
+      }
     }
     global::DripSharp.Testing.JavaAssertions.Equal(1,
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.count(document.GetPage(0).GetResources().GetXObjectNames()),
       null);
     global::DripSharp.Runtime.JavaFileBridge.Call(document, "Save",
-      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { pdfFile });
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { (global::DripSharp.Runtime.JavaFile)pdfFile });
     document.Dispose();
     document
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { pdfFile });
+      new object[] { (global::DripSharp.Runtime.JavaFile)pdfFile });
     global::DripSharp.Testing.JavaAssertions.Equal(1,
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.count(document.GetPage(0).GetResources().GetXObjectNames()),
       null);
@@ -167,7 +177,7 @@ public class ValidateXImage {
       global::DripSharp.Runtime.JavaRaster sourceRaster
         = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(image);
       int numShortPixelElements = (hasAlpha ? 3 : 4);
-      short[] pixelShort = new short[(numShortPixelElements * width)];
+      short[] pixelShort = new short[unchecked((numShortPixelElements * width))];
       int[] pixelInt = new int[width];
       for (int y = 0; (y < image.Height); y++) {
         sourceRaster.GetDataElements(0, y, width, 1, pixelShort);

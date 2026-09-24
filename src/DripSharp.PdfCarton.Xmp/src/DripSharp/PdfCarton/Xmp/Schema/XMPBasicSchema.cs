@@ -67,8 +67,8 @@ public class XMPBasicSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema {
     }
     global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType thumb
       = new global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType(this.GetMetadata());
-    thumb.SetHeight(height);
-    thumb.SetWidth(width);
+    thumb.SetHeight((int?)(height));
+    thumb.SetWidth((int?)(width));
     thumb.SetFormat(format);
     thumb.SetImage(img);
     this.altThumbs.GetContainer().AddProperty(thumb);
@@ -329,5 +329,9 @@ public class XMPBasicSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema {
       return thumbs;
     }
     return default!;
+  }
+
+  static XMPBasicSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema).TypeHandle);
   }
 }

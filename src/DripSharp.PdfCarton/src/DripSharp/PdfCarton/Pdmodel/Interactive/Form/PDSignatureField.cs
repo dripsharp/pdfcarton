@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class PDSignatureField
 : global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTerminalField {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDSignatureField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm)
   : base(acroForm) {
@@ -117,5 +116,10 @@ public class PDSignatureField
         "CreateVisibleSignature*.java files in the examples subproject "),
         "of the source code download")));
     }
+  }
+
+  static PDSignatureField() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTerminalField).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

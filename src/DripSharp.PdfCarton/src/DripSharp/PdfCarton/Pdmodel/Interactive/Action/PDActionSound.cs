@@ -28,7 +28,7 @@ public class PDActionSound : global::DripSharp.PdfCarton.Pdmodel.Interactive.Act
   }
 
   public virtual void SetVolume(float volume) {
-    if (((volume < -1) || (volume > 1))) {
+    if (((volume < unchecked(-1)) || (volume > 1))) {
       throw new global::System.ArgumentException("volume outside of the range \u22121.0 to 1.0");
     }
     base.Action.SetFloat(global::DripSharp.PdfCarton.Cos.COSName.Volume, volume);
@@ -36,7 +36,7 @@ public class PDActionSound : global::DripSharp.PdfCarton.Pdmodel.Interactive.Act
 
   public virtual float GetVolume() {
     float volume = base.Action.GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Volume, 1.0F);
-    return (((volume < -1) || (volume > 1)) ? 1 : volume);
+    return (((volume < unchecked(-1)) || (volume > 1)) ? 1 : volume);
   }
 
   public virtual void SetSynchronous(bool synchronous) {
@@ -61,5 +61,9 @@ public class PDActionSound : global::DripSharp.PdfCarton.Pdmodel.Interactive.Act
 
   public virtual bool GetMix() {
     return base.Action.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.Mix, false);
+  }
+
+  static PDActionSound() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
   }
 }

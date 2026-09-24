@@ -18,4 +18,8 @@ public abstract class GraphicsOperatorProcessor
   protected internal virtual global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine GetGraphicsContext() {
     return (global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine)(this.GetContext()!);
   }
+
+  static GraphicsOperatorProcessor() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

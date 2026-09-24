@@ -13,4 +13,8 @@ public class PDMMType1Font : global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Fon
   : base(fontDictionary) {
 
   }
+
+  static PDMMType1Font() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font).TypeHandle);
+  }
 }

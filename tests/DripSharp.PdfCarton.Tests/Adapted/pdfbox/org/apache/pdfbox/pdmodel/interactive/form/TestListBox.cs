@@ -61,7 +61,7 @@ public class TestListBox {
       this.choice.GetOptionsDisplayValues(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(this.exportValues,
       this.choice.GetOptionsExportValues(), null);
-    this.choice.SetTopIndex(1);
+    this.choice.SetTopIndex((int?)(1));
     this.choice.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.ListGet(this.exportValues, 2)));
     global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.ListGet(this.exportValues,

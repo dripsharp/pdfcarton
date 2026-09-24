@@ -62,4 +62,8 @@ public class FDFAnnotationCaret : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnn
   public virtual string GetSymbol() {
     return base.Annot.GetString(global::DripSharp.PdfCarton.Cos.COSName.Sy);
   }
+
+  static FDFAnnotationCaret() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation).TypeHandle);
+  }
 }

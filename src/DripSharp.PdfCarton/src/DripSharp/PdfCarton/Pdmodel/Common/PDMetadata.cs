@@ -28,9 +28,21 @@ public class PDMetadata : global::DripSharp.PdfCarton.Pdmodel.Common.PDStream {
     return this.CreateInputStream();
   }
 
-  public virtual void ImportXMPMetadata(sbyte[] xmp) {
-    using (global::System.IO.Stream os = this.CreateOutputStream()) {
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os, xmp);
+  public virtual void ImportXMPMetadata(sbyte[] xmp) { {
+      global::System.IO.Stream os = this.CreateOutputStream();
+      global::System.Exception __dripsharpPrimary_99_27_0 = null!;
+      try {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(os, xmp);
+      } catch (global::System.Exception __dripsharpCaught_99_27_0) {
+        __dripsharpPrimary_99_27_0 = __dripsharpCaught_99_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(os, __dripsharpPrimary_99_27_0);
+      }
     }
+  }
+
+  static PDMetadata() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDStream).TypeHandle);
   }
 }

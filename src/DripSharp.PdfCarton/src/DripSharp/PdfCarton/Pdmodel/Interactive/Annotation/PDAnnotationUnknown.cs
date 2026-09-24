@@ -13,4 +13,8 @@ public class PDAnnotationUnknown
   public PDAnnotationUnknown(global::DripSharp.PdfCarton.Cos.COSDictionary dic) : base(dic) {
 
   }
+
+  static PDAnnotationUnknown() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation).TypeHandle);
+  }
 }

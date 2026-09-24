@@ -56,9 +56,9 @@ public class HeaderTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
   internal override void readHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
     global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
     global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) {
-    data.Seek((data.GetCurrentPosition() + 44));
+    data.Seek(unchecked((data.GetCurrentPosition() + 44)));
     this.macStyle = data.ReadUnsignedShort();
-    outHeaders.setHeaderMacStyle(this.macStyle);
+    outHeaders.setHeaderMacStyle((int?)(this.macStyle));
   }
 
   internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
@@ -217,5 +217,9 @@ public class HeaderTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
 
   public virtual void SetYMin(short minValue) {
     this.yMin = minValue;
+  }
+
+  static HeaderTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
   }
 }

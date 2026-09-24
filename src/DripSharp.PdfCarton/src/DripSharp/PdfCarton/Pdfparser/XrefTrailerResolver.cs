@@ -60,8 +60,7 @@ public class XrefTrailerResolver {
   private global::DripSharp.PdfCarton.Pdfparser.XrefTrailerResolver.XrefTrailerObj resolvedXrefTrailer
     = default!;
 
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public global::DripSharp.PdfCarton.Cos.COSDictionary GetFirstTrailer() {
     if (global::DripSharp.Runtime.JavaCompat.MapIsEmpty(this.bytePosToXrefMap)) {
@@ -157,8 +156,8 @@ public class XrefTrailerResolver {
       global::DripSharp.Runtime.JavaCompat.Add(xrefSeqBytePos, startxrefBytePosValue);
       while ((curObj.Trailer != default!)) {
         long prevBytePos = curObj.Trailer.GetLong(global::DripSharp.PdfCarton.Cos.COSName.Prev,
-          -1L);
-        if ((prevBytePos == -1)) {
+          unchecked(-1L));
+        if ((prevBytePos == unchecked(-1))) {
           break;
         }
         curObj = global::DripSharp.Runtime.JavaCompat.MapGet(this.bytePosToXrefMap, prevBytePos);
@@ -206,7 +205,7 @@ public class XrefTrailerResolver {
     }
     global::System.Collections.Generic.ISet<long> refObjNrs
       = new global::System.Collections.Generic.HashSet<long>();
-    long cmpVal = -objstmObjNr;
+    long cmpVal = unchecked(-objstmObjNr);
     global::DripSharp.Runtime.JavaCompat.ForEach(this.resolvedXrefTrailer.xrefTable, (key, value)
       => {
         if ((value == cmpVal)) {
@@ -222,5 +221,9 @@ public class XrefTrailerResolver {
     }
     this.curXrefTrailerObj = default!;
     this.resolvedXrefTrailer = default!;
+  }
+
+  static XrefTrailerResolver() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

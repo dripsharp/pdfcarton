@@ -7,9 +7,9 @@ namespace DripSharp.PdfCarton.Cos;
 public class COSObjectKeyTest {
   internal virtual void testInputValues() {
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-      => new global::DripSharp.PdfCarton.Cos.COSObjectKey(-1L, 0), null);
+      => new global::DripSharp.PdfCarton.Cos.COSObjectKey(unchecked(-1L), 0), null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-      => new global::DripSharp.PdfCarton.Cos.COSObjectKey(1L, -1), null);
+      => new global::DripSharp.PdfCarton.Cos.COSObjectKey(1L, unchecked(-1)), null);
   }
 
   internal virtual void compareToInputNotNullOutputZero() {
@@ -28,7 +28,7 @@ public class COSObjectKeyTest {
       = new global::DripSharp.PdfCarton.Cos.COSObjectKey(9999999L, 0);
     int retvalNegative = objectUnderTest.CompareTo(other);
     int retvalPositive = other.CompareTo(objectUnderTest);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, retvalNegative, null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), retvalNegative, null);
     global::DripSharp.Testing.JavaAssertions.Equal(1, retvalPositive, null);
   }
 
@@ -64,9 +64,9 @@ public class COSObjectKeyTest {
       = new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(5), 0);
     global::DripSharp.Testing.JavaAssertions.Equal(0, key40.CompareTo(key40), null);
     global::DripSharp.Testing.JavaAssertions.Equal(0, key41.CompareTo(key41), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, key40.CompareTo(key41), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, key40.CompareTo(key50), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, key41.CompareTo(key50), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), key40.CompareTo(key41), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), key40.CompareTo(key50), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), key41.CompareTo(key50), null);
   }
 
   internal virtual void checkHashCode() {
@@ -87,46 +87,91 @@ public class COSObjectKeyTest {
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos2
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
     global::SkiaSharp.SKBitmap bim1orig;
-    global::SkiaSharp.SKBitmap bim2orig;
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "target/pdfs"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBOX-5742.pdf")) })) {
-      global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer
-        = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc);
-      bim1orig = renderer.RenderImage(0);
-      bim2orig = renderer.RenderImage(1);
-      global::DripSharp.PdfCarton.Multipdf.Splitter splitter
-        = new global::DripSharp.PdfCarton.Multipdf.Splitter();
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splits
-        = splitter.Split(doc);
-      global::DripSharp.Testing.JavaAssertions.Equal(2,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(splits), null);
-      using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc1__153_29
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splits,
-        0)) using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc2__154_29
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splits, 1)) {
-        doc1__153_29.Save(baos1);
-        doc2__154_29.Save(baos2);
+    global::SkiaSharp.SKBitmap bim2orig; {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "target/pdfs"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "PDFBOX-5742.pdf")) });
+      global::System.Exception __dripsharpPrimary_145_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer
+          = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc);
+        bim1orig = renderer.RenderImage(0);
+        bim2orig = renderer.RenderImage(1);
+        global::DripSharp.PdfCarton.Multipdf.Splitter splitter
+          = new global::DripSharp.PdfCarton.Multipdf.Splitter();
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splits
+          = splitter.Split(doc);
+        global::DripSharp.Testing.JavaAssertions.Equal(2,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(splits), null); {
+          global::DripSharp.PdfCarton.Pdmodel.PDDocument doc1__153_29
+            = global::DripSharp.Runtime.JavaCompat.ListGet(splits, 0);
+          global::System.Exception __dripsharpPrimary_153_29_0 = null!;
+          try {
+            global::DripSharp.PdfCarton.Pdmodel.PDDocument doc2__154_29
+              = global::DripSharp.Runtime.JavaCompat.ListGet(splits, 1);
+            global::System.Exception __dripsharpPrimary_154_29_0 = null!;
+            try {
+              doc1__153_29.Save(baos1);
+              doc2__154_29.Save(baos2);
+            } catch (global::System.Exception __dripsharpCaught_154_29_0) {
+              __dripsharpPrimary_154_29_0 = __dripsharpCaught_154_29_0;
+              throw;
+            } finally {
+              global::DripSharp.Runtime.JavaCompat.CloseResource(doc2__154_29,
+                __dripsharpPrimary_154_29_0);
+            }
+          } catch (global::System.Exception __dripsharpCaught_153_29_0) {
+            __dripsharpPrimary_153_29_0 = __dripsharpCaught_153_29_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(doc1__153_29,
+              __dripsharpPrimary_153_29_0);
+          }
+        }
+      } catch (global::System.Exception __dripsharpCaught_145_25_0) {
+        __dripsharpPrimary_145_25_0 = __dripsharpCaught_145_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_145_25_0);
       }
-    }
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc1__160_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos1))) using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc2__161_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos2))) {
-      global::DripSharp.Testing.JavaAssertions.Equal(1, doc1__160_25.GetNumberOfPages(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(1, doc2__161_25.GetNumberOfPages(), null);
-      global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer1
-        = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc1__160_25);
-      global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer2
-        = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc2__161_25);
-      global::SkiaSharp.SKBitmap bim1new = renderer1.RenderImage(0);
-      global::SkiaSharp.SKBitmap bim2new = renderer2.RenderImage(0);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(bim1orig,
-        bim1new);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(bim2orig,
-        bim2new);
+    } {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc1__160_25
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos1));
+      global::System.Exception __dripsharpPrimary_160_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocument doc2__161_25
+          = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos2));
+        global::System.Exception __dripsharpPrimary_161_25_0 = null!;
+        try {
+          global::DripSharp.Testing.JavaAssertions.Equal(1, doc1__160_25.GetNumberOfPages(), null);
+          global::DripSharp.Testing.JavaAssertions.Equal(1, doc2__161_25.GetNumberOfPages(), null);
+          global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer1
+            = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc1__160_25);
+          global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer2
+            = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc2__161_25);
+          global::SkiaSharp.SKBitmap bim1new = renderer1.RenderImage(0);
+          global::SkiaSharp.SKBitmap bim2new = renderer2.RenderImage(0);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(bim1orig,
+            bim1new);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(bim2orig,
+            bim2new);
+        } catch (global::System.Exception __dripsharpCaught_161_25_0) {
+          __dripsharpPrimary_161_25_0 = __dripsharpCaught_161_25_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(doc2__161_25,
+            __dripsharpPrimary_161_25_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_160_25_0) {
+        __dripsharpPrimary_160_25_0 = __dripsharpCaught_160_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc1__160_25,
+          __dripsharpPrimary_160_25_0);
+      }
     }
   }
 

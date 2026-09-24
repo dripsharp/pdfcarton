@@ -28,10 +28,12 @@ internal abstract class PatchMeshesShadingContext
   }
 
   protected internal override int[][] calcPixelTableArray(global::SkiaSharp.SKRectI deviceBounds) {
-    int[][] array = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<int>((deviceBounds.Width
-      + 1), (deviceBounds.Height + 1));
-    int initialValue = ((this.getBackground() != default!) ? this.getRgbBackground() : -1);
-    for (int i = 0; (i < (deviceBounds.Width + 1)); i++) {
+    int[][] array
+      = global::DripSharp.Runtime.JavaCompat.NewJaggedArray<int>(unchecked((deviceBounds.Width
+      + 1)), unchecked((deviceBounds.Height + 1)));
+    int initialValue = ((this.getBackground() != default!) ? this.getRgbBackground()
+      : unchecked(-1));
+    for (int i = 0; (i < unchecked((deviceBounds.Width + 1))); i++) {
       global::DripSharp.Runtime.JavaCompat.Fill(array[i], initialValue);
     }
     foreach (global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.Patch it in this.patchList) {
@@ -47,5 +49,9 @@ internal abstract class PatchMeshesShadingContext
 
   protected internal override bool isDataEmpty() {
     return global::DripSharp.Runtime.JavaCompat.ListIsEmpty(this.patchList);
+  }
+
+  static PatchMeshesShadingContext() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.TriangleBasedShadingContext).TypeHandle);
   }
 }

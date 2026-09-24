@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
 public sealed class PDDeviceRGB
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceColorSpace {
-  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB Instance
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB();
+  public static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB Instance;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor initialColor;
 
@@ -51,5 +50,10 @@ public sealed class PDDeviceRGB
 
   public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
     return default!;
+  }
+
+  static PDDeviceRGB() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceColorSpace).TypeHandle);
+    Instance = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB();
   }
 }

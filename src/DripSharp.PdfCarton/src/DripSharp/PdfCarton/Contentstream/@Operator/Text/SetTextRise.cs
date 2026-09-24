@@ -32,4 +32,8 @@ public class SetTextRise : global::DripSharp.PdfCarton.Contentstream.@Operator.O
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetTextRise;
   }
+
+  static SetTextRise() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

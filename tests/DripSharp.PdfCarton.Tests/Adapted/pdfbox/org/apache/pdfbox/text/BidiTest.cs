@@ -5,16 +5,11 @@
 namespace DripSharp.PdfCarton.Text;
 
 public class BidiTest {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "src/test/resources/org/apache/pdfbox/text/"));
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR;
 
-  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/test-output"));
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR;
 
   private const string NAME_OF_PDF = "BidiSample.pdf";
 
@@ -29,7 +24,7 @@ public class BidiTest {
     this.document
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Text.BidiTest.IN_DIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Text.BidiTest.IN_DIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Text.BidiTest.NAME_OF_PDF)) });
     this.stripper = new global::DripSharp.PdfCarton.Text.PDFTextStripper();
@@ -86,14 +81,29 @@ public class BidiTest {
         = global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ParentFile(inFile),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.Runtime.JavaCompat.Concat(inFile.Name, ".txt")));
-    }
-    using (global::System.IO.Stream os
-      = global::DripSharp.Runtime.JavaCompat.OpenFileOutput(outFile)) using (global::System.IO.TextWriter writer
-      = new global::System.IO.StreamWriter(os,
-      global::DripSharp.PdfCarton.Tests.Support.EncodingByName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Text.BidiTest.ENCODING)), 1024, false)) {
-      this.stripper.SetSortByPosition(bSort);
-      this.stripper.WriteText(this.document, writer);
+    } {
+      global::System.IO.Stream os = global::DripSharp.Runtime.JavaCompat.OpenFileOutput(outFile);
+      global::System.Exception __dripsharpPrimary_125_27_0 = null!;
+      try {
+        global::System.IO.TextWriter writer = new global::System.IO.StreamWriter(os,
+          global::DripSharp.PdfCarton.Tests.Support.EncodingByName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Text.BidiTest.ENCODING)), 1024, false);
+        global::System.Exception __dripsharpPrimary_126_21_0 = null!;
+        try {
+          this.stripper.SetSortByPosition(bSort);
+          this.stripper.WriteText(this.document, writer);
+        } catch (global::System.Exception __dripsharpCaught_126_21_0) {
+          __dripsharpPrimary_126_21_0 = __dripsharpCaught_126_21_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(writer, __dripsharpPrimary_126_21_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_125_27_0) {
+        __dripsharpPrimary_125_27_0 = __dripsharpCaught_125_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(os, __dripsharpPrimary_125_27_0);
+      }
     }
     if (bLogResult) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Text.BidiTest.LOG,
@@ -105,33 +115,52 @@ public class BidiTest {
     if (!global::System.IO.File.Exists(expectedFile.FullName)) {
       global::DripSharp.Testing.JavaAssertions.Fail("Assertion failed.");
       return;
-    }
-    using (global::DripSharp.Runtime.JavaLineNumberReader expectedReader
-      = new global::DripSharp.Runtime.JavaLineNumberReader(global::DripSharp.PdfCarton.Tests.Support.NewInputStreamReader(global::DripSharp.Runtime.JavaCompat.OpenFileInput(expectedFile),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Text.BidiTest.ENCODING)))) using (global::DripSharp.Runtime.JavaLineNumberReader actualReader
-      = new global::DripSharp.Runtime.JavaLineNumberReader(global::DripSharp.PdfCarton.Tests.Support.NewInputStreamReader(global::DripSharp.Runtime.JavaCompat.OpenFileInput(outFile),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.PdfCarton.Text.BidiTest.ENCODING)))) {
-      while (true) {
-        string expectedLine = expectedReader.ReadLine();
-        while (((expectedLine != default!)
-          && (global::DripSharp.Runtime.JavaCompat.StringTrim(expectedLine).Length == 0))) {
-          expectedLine = expectedReader.ReadLine();
+    } {
+      global::DripSharp.Runtime.JavaLineNumberReader expectedReader
+        = new global::DripSharp.Runtime.JavaLineNumberReader(global::DripSharp.PdfCarton.Tests.Support.NewInputStreamReader(global::DripSharp.Runtime.JavaCompat.OpenFileInput(expectedFile),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        global::DripSharp.PdfCarton.Text.BidiTest.ENCODING)));
+      global::System.Exception __dripsharpPrimary_148_31_0 = null!;
+      try {
+        global::DripSharp.Runtime.JavaLineNumberReader actualReader
+          = new global::DripSharp.Runtime.JavaLineNumberReader(global::DripSharp.PdfCarton.Tests.Support.NewInputStreamReader(global::DripSharp.Runtime.JavaCompat.OpenFileInput(outFile),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Text.BidiTest.ENCODING)));
+        global::System.Exception __dripsharpPrimary_150_31_0 = null!;
+        try {
+          while (true) {
+            string expectedLine = expectedReader.ReadLine();
+            while (((expectedLine != default!)
+              && (global::DripSharp.Runtime.JavaCompat.StringTrim(expectedLine).Length == 0))) {
+              expectedLine = expectedReader.ReadLine();
+            }
+            string actualLine = actualReader.ReadLine();
+            while (((actualLine != default!)
+              && (global::DripSharp.Runtime.JavaCompat.StringTrim(actualLine).Length == 0))) {
+              actualLine = actualReader.ReadLine();
+            }
+            if (!(this.stringsEqual(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              expectedLine), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              actualLine)))) {
+              global::DripSharp.Testing.JavaAssertions.Fail("Assertion failed.");
+            }
+            if (((expectedLine == default!) || (actualLine == default!))) {
+              break;
+            }
+          }
+        } catch (global::System.Exception __dripsharpCaught_150_31_0) {
+          __dripsharpPrimary_150_31_0 = __dripsharpCaught_150_31_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(actualReader,
+            __dripsharpPrimary_150_31_0);
         }
-        string actualLine = actualReader.ReadLine();
-        while (((actualLine != default!)
-          && (global::DripSharp.Runtime.JavaCompat.StringTrim(actualLine).Length == 0))) {
-          actualLine = actualReader.ReadLine();
-        }
-        if (!(this.stringsEqual(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          expectedLine), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          actualLine)))) {
-          global::DripSharp.Testing.JavaAssertions.Fail("Assertion failed.");
-        }
-        if (((expectedLine == default!) || (actualLine == default!))) {
-          break;
-        }
+      } catch (global::System.Exception __dripsharpCaught_148_31_0) {
+        __dripsharpPrimary_148_31_0 = __dripsharpCaught_148_31_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(expectedReader,
+          __dripsharpPrimary_148_31_0);
       }
     }
   }
@@ -215,5 +244,15 @@ public class BidiTest {
     } finally {
       this.tearDown();
     }
+  }
+
+  static BidiTest() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    IN_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "src/test/resources/org/apache/pdfbox/text/"));
+    OUT_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/test-output"));
   }
 }

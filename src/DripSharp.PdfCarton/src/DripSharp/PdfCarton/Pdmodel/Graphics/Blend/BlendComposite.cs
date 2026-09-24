@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Blend;
 
 public sealed class BlendComposite : global::DripSharp.Runtime.JavaComposite {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public static global::DripSharp.Runtime.JavaComposite GetInstance(global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendMode blendMode,
     float constantAlpha) {
@@ -80,12 +79,12 @@ public sealed class BlendComposite : global::DripSharp.Runtime.JavaComposite {
         dstOut.Width);
       int height = global::System.Math.Min(global::System.Math.Min(src.Height, dstIn.Height),
         dstOut.Height);
-      int x1 = (x0 + width);
-      int y1 = (y0 + height);
-      int dstInXShift = (dstIn.MinX - x0);
-      int dstInYShift = (dstIn.MinY - y0);
-      int dstOutXShift = (dstOut.MinX - x0);
-      int dstOutYShift = (dstOut.MinY - y0);
+      int x1 = unchecked((x0 + width));
+      int y1 = unchecked((y0 + height));
+      int dstInXShift = unchecked((dstIn.MinX - x0));
+      int dstInYShift = unchecked((dstIn.MinY - y0));
+      int dstOutXShift = unchecked((dstOut.MinX - x0));
+      int dstOutYShift = unchecked((dstOut.MinY - y0));
       global::DripSharp.Runtime.JavaColorSpace srcColorSpace = this.srcColorModel.ColorSpace;
       int numSrcColorComponents = this.srcColorModel.NumberOfColorComponents;
       int numSrcComponents = src.NumberOfBands;
@@ -113,7 +112,8 @@ public sealed class BlendComposite : global::DripSharp.Runtime.JavaComposite {
       for (int y = y0; (y < y1); y++) {
         for (int x = x0; (x < x1); x++) {
           srcPixel = src.GetDataElements(x, y, srcPixel!);
-          dstPixel = dstIn.GetDataElements((dstInXShift + x), (dstInYShift + y), dstPixel!);
+          dstPixel = dstIn.GetDataElements(unchecked((dstInXShift + x)), unchecked((dstInYShift
+            + y)), dstPixel!);
           srcComponents = this.srcColorModel.GetNormalizedComponents(srcPixel!, srcComponents, 0);
           dstComponents = this.dstColorModel.GetNormalizedComponents(dstPixel!, dstComponents!, 0);
           float srcAlpha = (srcHasAlpha ? srcComponents[numSrcColorComponents] : 1.0F);
@@ -184,11 +184,16 @@ public sealed class BlendComposite : global::DripSharp.Runtime.JavaComposite {
             dstComponents![numDstColorComponents] = resultAlpha;
           }
           dstPixel = this.dstColorModel.GetDataElements(dstComponents!, 0, dstPixel!);
-          dstOut.SetDataElements((dstOutXShift + x), (dstOutYShift + y), dstPixel!);
+          dstOut.SetDataElements(unchecked((dstOutXShift + x)), unchecked((dstOutYShift + y)),
+            dstPixel!);
         }
       }
     }
 
     private readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Blend.BlendComposite __outer;
+  }
+
+  static BlendComposite() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

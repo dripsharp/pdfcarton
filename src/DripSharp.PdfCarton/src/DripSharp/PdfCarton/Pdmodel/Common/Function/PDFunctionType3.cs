@@ -9,20 +9,23 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function;
 
 public class PDFunctionType3 : global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction {
-  private global::DripSharp.PdfCarton.Cos.COSArray functions = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray functions;
 
-  private global::DripSharp.PdfCarton.Cos.COSArray encode = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray encode;
 
-  private global::DripSharp.PdfCarton.Cos.COSArray bounds = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray bounds;
 
-  private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction[] functionsArray
-    = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction[] functionsArray;
 
-  private float[] boundsValues = default!;
+  private float[] boundsValues;
 
   public PDFunctionType3(global::DripSharp.PdfCarton.Cos.COSBase functionStream)
   : base(functionStream) {
-
+    this.functions = default!;
+    this.encode = default!;
+    this.bounds = default!;
+    this.functionsArray = default!;
+    this.boundsValues = default!;
   }
 
   public override int GetFunctionType() {
@@ -54,22 +57,22 @@ public class PDFunctionType3 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
         this.boundsValues = this.GetBounds().ToFloatArray();
       }
       int boundsSize = this.boundsValues.Length;
-      float[] partitionValues = new float[(boundsSize + 2)];
+      float[] partitionValues = new float[unchecked((boundsSize + 2))];
       int partitionValuesSize = partitionValues.Length;
       partitionValues[0] = domain.GetMin();
-      partitionValues[(partitionValuesSize - 1)] = domain.GetMax();
+      partitionValues[unchecked((partitionValuesSize - 1))] = domain.GetMax();
       global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.boundsValues, 0, partitionValues, 1,
         boundsSize);
-      for (int i__105_22 = 0; (i__105_22 < (partitionValuesSize - 1)); i__105_22++) {
-        if (((x >= partitionValues[i__105_22]) && ((x < partitionValues[(i__105_22 + 1)])
-          || ((i__105_22 == (partitionValuesSize - 2))
-          && (global::DripSharp.Runtime.JavaCompat.CompareFloat(x, partitionValues[(i__105_22 + 1)])
-          == 0))))) {
+      for (int i__105_22 = 0; (i__105_22 < unchecked((partitionValuesSize - 1))); i__105_22++) {
+        if (((x >= partitionValues[i__105_22]) && ((x < partitionValues[unchecked((i__105_22 + 1))])
+          || ((i__105_22 == unchecked((partitionValuesSize - 2)))
+          && (global::DripSharp.Runtime.JavaCompat.CompareFloat(x,
+          partitionValues[unchecked((i__105_22 + 1))]) == 0))))) {
           function = this.functionsArray[i__105_22];
           global::DripSharp.PdfCarton.Pdmodel.Common.PDRange encRange__111_29
             = this.getEncodeForParameter(i__105_22);
-          x = this.Interpolate(x, partitionValues[i__105_22], partitionValues[(i__105_22 + 1)],
-            encRange__111_29.GetMin(), encRange__111_29.GetMax());
+          x = this.Interpolate(x, partitionValues[i__105_22], partitionValues[unchecked((i__105_22
+            + 1))], encRange__111_29.GetMin(), encRange__111_29.GetMax());
           break;
         }
       }
@@ -107,5 +110,9 @@ public class PDFunctionType3 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
   private global::DripSharp.PdfCarton.Pdmodel.Common.PDRange getEncodeForParameter(int n) {
     global::DripSharp.PdfCarton.Cos.COSArray encodeValues = this.GetEncode();
     return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(encodeValues, n);
+  }
+
+  static PDFunctionType3() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction).TypeHandle);
   }
 }

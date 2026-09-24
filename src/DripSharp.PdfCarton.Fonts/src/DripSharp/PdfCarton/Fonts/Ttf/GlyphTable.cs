@@ -19,17 +19,21 @@ public class GlyphTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
 
   private int numGlyphs = default;
 
-  private int cached = 0;
+  private int cached;
 
-  private global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable hmt = default!;
+  private global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable hmt;
 
-  private global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable maxp = default!;
+  private global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable maxp;
 
   private const int MAX_CACHE_SIZE = 5000;
 
   private const int MAX_CACHED_GLYPHS = 100;
 
-  internal GlyphTable() {}
+  internal GlyphTable() {
+    this.cached = 0;
+    this.hmt = default!;
+    this.maxp = default!;
+  }
 
   internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
     global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
@@ -38,10 +42,19 @@ public class GlyphTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
     if ((this.numGlyphs < global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable.MAX_CACHE_SIZE)) {
       this.glyphs = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData[this.numGlyphs];
     }
-    sbyte[] dataBytes = data.Read((int)((int)(this.GetLength())));
-    using (global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer read
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(dataBytes)) {
-      this.data = new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadDataStream(read);
+    sbyte[] dataBytes = data.Read((int)((int)(this.GetLength()))); {
+      global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer read
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(dataBytes);
+      global::System.Exception __dripsharpPrimary_83_37_0 = null!;
+      try {
+        this.data = new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadDataStream(read);
+      } catch (global::System.Exception __dripsharpCaught_83_37_0) {
+        __dripsharpPrimary_83_37_0 = __dripsharpCaught_83_37_0;
+        throw;
+      } finally {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(read,
+          __dripsharpPrimary_83_37_0);
+      }
     }
     this.hmt = ttf.GetHorizontalMetrics();
     this.maxp = ttf.GetMaximumProfile();
@@ -66,7 +79,7 @@ public class GlyphTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData glyph;
     lock (this.data) {
       long[] offsets = this.loca.GetOffsets();
-      if (((offsets[gid] == offsets[(gid + 1)]) || (offsets[gid]
+      if (((offsets[gid] == offsets[unchecked((gid + 1))]) || (offsets[gid]
         == this.data.GetOriginalDataSize()))) {
         glyph = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData();
         glyph.initEmptyData();
@@ -98,5 +111,9 @@ public class GlyphTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
       glyph.GetDescription().Resolve();
     }
     return glyph;
+  }
+
+  static GlyphTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
   }
 }

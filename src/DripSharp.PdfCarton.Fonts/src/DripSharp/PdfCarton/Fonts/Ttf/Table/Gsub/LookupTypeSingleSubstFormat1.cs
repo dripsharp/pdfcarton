@@ -19,7 +19,7 @@ public class LookupTypeSingleSubstFormat1
   }
 
   public override int DoSubstitution(int gid, int coverageIndex) {
-    return ((coverageIndex < 0) ? gid : (gid + this.deltaGlyphID));
+    return ((coverageIndex < 0) ? gid : unchecked((gid + this.deltaGlyphID)));
   }
 
   public virtual short GetDeltaGlyphID() {
@@ -29,5 +29,9 @@ public class LookupTypeSingleSubstFormat1
   public override string ToString() {
     return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.JavaStringFormat("LookupTypeSingleSubstFormat1[substFormat=%d,deltaGlyphID=%d]",
       this.GetSubstFormat(), this.deltaGlyphID);
+  }
+
+  static LookupTypeSingleSubstFormat1() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable).TypeHandle);
   }
 }

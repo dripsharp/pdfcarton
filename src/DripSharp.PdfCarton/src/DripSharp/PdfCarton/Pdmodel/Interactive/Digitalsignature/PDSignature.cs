@@ -11,29 +11,21 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature;
 public class PDSignature : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
   private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FilterAdobePpklite
-    = global::DripSharp.PdfCarton.Cos.COSName.AdobePpklite;
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FilterAdobePpklite;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FilterEntrustPpkef
-    = global::DripSharp.PdfCarton.Cos.COSName.EntrustPpkef;
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FilterEntrustPpkef;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FilterCiciSignit
-    = global::DripSharp.PdfCarton.Cos.COSName.CiciSignit;
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FilterCiciSignit;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName FilterVerisignPpkvs
-    = global::DripSharp.PdfCarton.Cos.COSName.VerisignPpkvs;
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName FilterVerisignPpkvs;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SubfilterAdbeX509RsaSha1
-    = global::DripSharp.PdfCarton.Cos.COSName.AdbeX509RsaSha1;
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SubfilterAdbeX509RsaSha1;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SubfilterAdbePkcs7Detached
-    = global::DripSharp.PdfCarton.Cos.COSName.AdbePkcs7Detached;
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SubfilterAdbePkcs7Detached;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SubfilterEtsiCadesDetached
-    = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("ETSI.CAdES.detached");
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SubfilterEtsiCadesDetached;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSName SubfilterAdbePkcs7Sha1
-    = global::DripSharp.PdfCarton.Cos.COSName.AdbePkcs7Sha1;
+  public static readonly global::DripSharp.PdfCarton.Cos.COSName SubfilterAdbePkcs7Sha1;
 
   public PDSignature() {
     this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
@@ -145,16 +137,16 @@ public class PDSignature : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjecta
 
   public virtual sbyte[] GetContents(global::System.IO.Stream pdfFile) {
     int[] byteRange = this.GetByteRange();
-    int begin = ((byteRange[0] + byteRange[1]) + 1);
-    int len = (byteRange[2] - begin);
+    int begin = unchecked((unchecked((byteRange[0] + byteRange[1])) + 1));
+    int len = unchecked((byteRange[2] - begin));
     return this.getConvertedContents(new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.COSFilterInputStream(pdfFile,
       new int[] { begin, len }));
   }
 
   public virtual sbyte[] GetContents(sbyte[] pdfFile) {
     int[] byteRange = this.GetByteRange();
-    int begin = ((byteRange[0] + byteRange[1]) + 1);
-    int len = ((byteRange[2] - begin) - 1);
+    int begin = unchecked((unchecked((byteRange[0] + byteRange[1])) + 1));
+    int len = unchecked((unchecked((byteRange[2] - begin)) - 1));
     return this.getConvertedContents(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(pdfFile,
       begin, len));
   }
@@ -164,14 +156,16 @@ public class PDSignature : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjecta
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream(1024);
     sbyte[] buffer = new sbyte[1024];
     int readLen;
-    while (((readLen = global::DripSharp.Runtime.JavaCompat.InputStreamRead(@is, buffer)) != -1)) {
+    while (((readLen = global::DripSharp.Runtime.JavaCompat.InputStreamRead(@is, buffer))
+      != unchecked(-1))) {
       int writeLen = readLen;
       int start = 0;
       if ((((int)(buffer[0]) == 60) || ((int)(buffer[0]) == 40))) {
         ++start;
         --writeLen;
       }
-      if ((((int)(buffer[(readLen - 1)]) == 62) || ((int)(buffer[(readLen - 1)]) == 41))) {
+      if ((((int)(buffer[unchecked((readLen - 1))]) == 62) || ((int)(buffer[unchecked((readLen
+        - 1))]) == 41))) {
         --writeLen;
       }
       global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(baos, buffer, start, writeLen);
@@ -187,19 +181,35 @@ public class PDSignature : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjecta
     this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Contents, @string);
   }
 
-  public virtual sbyte[] GetSignedContent(global::System.IO.Stream pdfFile) {
-    using (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.COSFilterInputStream fis
-      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.COSFilterInputStream(pdfFile,
-      this.GetByteRange())) {
-      return fis.ToByteArray();
+  public virtual sbyte[] GetSignedContent(global::System.IO.Stream pdfFile) { {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.COSFilterInputStream fis
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.COSFilterInputStream(pdfFile,
+        this.GetByteRange());
+      global::System.Exception __dripsharpPrimary_414_35_0 = null!;
+      try {
+        return fis.ToByteArray();
+      } catch (global::System.Exception __dripsharpCaught_414_35_0) {
+        __dripsharpPrimary_414_35_0 = __dripsharpCaught_414_35_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(fis, __dripsharpPrimary_414_35_0);
+      }
     }
   }
 
-  public virtual sbyte[] GetSignedContent(sbyte[] pdfFile) {
-    using (global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.COSFilterInputStream fis
-      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.COSFilterInputStream(pdfFile,
-      this.GetByteRange())) {
-      return fis.ToByteArray();
+  public virtual sbyte[] GetSignedContent(sbyte[] pdfFile) { {
+      global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.COSFilterInputStream fis
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.COSFilterInputStream(pdfFile,
+        this.GetByteRange());
+      global::System.Exception __dripsharpPrimary_433_35_0 = null!;
+      try {
+        return fis.ToByteArray();
+      } catch (global::System.Exception __dripsharpCaught_433_35_0) {
+        __dripsharpPrimary_433_35_0 = __dripsharpCaught_433_35_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(fis, __dripsharpPrimary_433_35_0);
+      }
     }
   }
 
@@ -217,6 +227,18 @@ public class PDSignature : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjecta
 
   public virtual void SetPropBuild(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.PDPropBuild propBuild) {
     this.dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.PropBuild, propBuild);
+  }
+
+  static PDSignature() {
+    FilterAdobePpklite = global::DripSharp.PdfCarton.Cos.COSName.AdobePpklite;
+    FilterEntrustPpkef = global::DripSharp.PdfCarton.Cos.COSName.EntrustPpkef;
+    FilterCiciSignit = global::DripSharp.PdfCarton.Cos.COSName.CiciSignit;
+    FilterVerisignPpkvs = global::DripSharp.PdfCarton.Cos.COSName.VerisignPpkvs;
+    SubfilterAdbeX509RsaSha1 = global::DripSharp.PdfCarton.Cos.COSName.AdbeX509RsaSha1;
+    SubfilterAdbePkcs7Detached = global::DripSharp.PdfCarton.Cos.COSName.AdbePkcs7Detached;
+    SubfilterEtsiCadesDetached
+      = global::DripSharp.PdfCarton.Cos.COSName.GetPDFName("ETSI.CAdES.detached");
+    SubfilterAdbePkcs7Sha1 = global::DripSharp.PdfCarton.Cos.COSName.AdbePkcs7Sha1;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

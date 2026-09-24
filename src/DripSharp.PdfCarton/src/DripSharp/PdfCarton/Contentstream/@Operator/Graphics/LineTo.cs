@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Contentstream.@Operator.Graphics;
 
 public class LineTo
 : global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public LineTo(global::DripSharp.PdfCarton.Contentstream.PDFGraphicsStreamEngine context)
   : base(context) {
@@ -54,5 +53,10 @@ public class LineTo
 
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.LineTo;
+  }
+
+  static LineTo() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

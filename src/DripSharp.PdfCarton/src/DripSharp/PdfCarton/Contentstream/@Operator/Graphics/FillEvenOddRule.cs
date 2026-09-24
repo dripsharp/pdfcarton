@@ -23,4 +23,8 @@ public sealed class FillEvenOddRule
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.FillEvenOdd;
   }
+
+  static FillEvenOddRule() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor).TypeHandle);
+  }
 }

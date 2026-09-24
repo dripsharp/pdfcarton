@@ -82,9 +82,9 @@ public class PDFObjectStreamParserTest {
     global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
       long> xrefTable = cosDoc.GetXrefTable();
     global::DripSharp.Runtime.JavaCompat.MapPut(xrefTable,
-      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(6), 0, 0), -1L);
+      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(6), 0, 0), unchecked(-1L));
     global::DripSharp.Runtime.JavaCompat.MapPut(xrefTable,
-      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(4), 0, 2), -1L);
+      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(4), 0, 2), unchecked(-1L));
     global::DripSharp.PdfCarton.Pdfparser.PDFObjectStreamParser objectStreamParser
       = new global::DripSharp.PdfCarton.Pdfparser.PDFObjectStreamParser(stream, cosDoc);
     global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
@@ -100,7 +100,7 @@ public class PDFObjectStreamParserTest {
     global::DripSharp.Runtime.JavaCompat.MapRemove(xrefTable,
       new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(4), 0));
     global::DripSharp.Runtime.JavaCompat.MapPut(xrefTable,
-      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(4), 0, 1), -1L);
+      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(4), 0, 1), unchecked(-1L));
     objectStreamParser = new global::DripSharp.PdfCarton.Pdfparser.PDFObjectStreamParser(stream,
       cosDoc);
     objectNumbers = objectStreamParser.ParseAllObjects();
@@ -131,11 +131,11 @@ public class PDFObjectStreamParserTest {
     global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
       long> xrefTable = cosDoc.GetXrefTable();
     global::DripSharp.Runtime.JavaCompat.MapPut(xrefTable,
-      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(6), 0, 10), -1L);
+      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(6), 0, 10), unchecked(-1L));
     global::DripSharp.Runtime.JavaCompat.MapPut(xrefTable,
-      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(4), 0, 11), -1L);
+      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(4), 0, 11), unchecked(-1L));
     global::DripSharp.Runtime.JavaCompat.MapPut(xrefTable,
-      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(5), 0, 12), -1L);
+      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(5), 0, 12), unchecked(-1L));
     global::DripSharp.PdfCarton.Pdfparser.PDFObjectStreamParser objectStreamParser
       = new global::DripSharp.PdfCarton.Pdfparser.PDFObjectStreamParser(stream, cosDoc);
     global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
@@ -170,9 +170,9 @@ public class PDFObjectStreamParserTest {
     global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,
       long> xrefTable = cosDoc.GetXrefTable();
     global::DripSharp.Runtime.JavaCompat.MapPut(xrefTable,
-      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(6), 0, 10), -1L);
+      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(6), 0, 10), unchecked(-1L));
     global::DripSharp.Runtime.JavaCompat.MapPut(xrefTable,
-      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(4), 0, 11), -1L);
+      new global::DripSharp.PdfCarton.Cos.COSObjectKey((long)(4), 0, 11), unchecked(-1L));
     global::DripSharp.PdfCarton.Pdfparser.PDFObjectStreamParser objectStreamParser
       = new global::DripSharp.PdfCarton.Pdfparser.PDFObjectStreamParser(stream, cosDoc);
     global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSObjectKey,

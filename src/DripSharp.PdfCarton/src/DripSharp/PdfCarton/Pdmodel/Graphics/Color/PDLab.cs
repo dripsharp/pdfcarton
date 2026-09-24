@@ -147,13 +147,19 @@ public sealed class PDLab
       rangeArray = this.getDefaultRangeArray();
     }
     if ((range == default!)) {
-      rangeArray.Set(index, new global::DripSharp.PdfCarton.Cos.COSFloat((float)(-100)));
-      rangeArray.Set((index + 1), new global::DripSharp.PdfCarton.Cos.COSFloat((float)(100)));
+      rangeArray.Set(index, new global::DripSharp.PdfCarton.Cos.COSFloat((float)(unchecked(-100))));
+      rangeArray.Set(unchecked((index + 1)),
+        new global::DripSharp.PdfCarton.Cos.COSFloat((float)(100)));
     } else {
       rangeArray.Set(index, new global::DripSharp.PdfCarton.Cos.COSFloat(range.GetMin()));
-      rangeArray.Set((index + 1), new global::DripSharp.PdfCarton.Cos.COSFloat(range.GetMax()));
+      rangeArray.Set(unchecked((index + 1)),
+        new global::DripSharp.PdfCarton.Cos.COSFloat(range.GetMax()));
     }
     base.Dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Range, rangeArray);
     this.initialColor = default!;
+  }
+
+  static PDLab() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEDictionaryBasedColorSpace).TypeHandle);
   }
 }

@@ -27,4 +27,8 @@ public class LookupTypeMultipleSubstitutionFormat1
   public override int DoSubstitution(int gid, int coverageIndex) {
     throw new global::System.NotSupportedException("not applicable");
   }
+
+  static LookupTypeMultipleSubstitutionFormat1() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable).TypeHandle);
+  }
 }

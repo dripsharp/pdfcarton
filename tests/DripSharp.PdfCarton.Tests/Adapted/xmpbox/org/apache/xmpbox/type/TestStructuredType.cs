@@ -367,4 +367,8 @@ public class TestStructuredType : global::DripSharp.PdfCarton.Xmp.Type.AbstractT
     } finally {
     }
   }
+
+  static TestStructuredType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractTypeTester).TypeHandle);
+  }
 }

@@ -9,11 +9,9 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public sealed class COSNull : global::DripSharp.PdfCarton.Cos.COSBase {
-  public static readonly sbyte[] NullBytes = new sbyte[] { unchecked((sbyte)(110)),
-    unchecked((sbyte)(117)), unchecked((sbyte)(108)), unchecked((sbyte)(108)) };
+  public static readonly sbyte[] NullBytes;
 
-  public static readonly global::DripSharp.PdfCarton.Cos.COSNull Null
-    = new global::DripSharp.PdfCarton.Cos.COSNull();
+  public static readonly global::DripSharp.PdfCarton.Cos.COSNull Null;
 
   private COSNull() {}
 
@@ -28,5 +26,12 @@ public sealed class COSNull : global::DripSharp.PdfCarton.Cos.COSBase {
 
   public override string ToString() {
     return "COSNull{}";
+  }
+
+  static COSNull() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.COSBase).TypeHandle);
+    NullBytes = new sbyte[] { unchecked((sbyte)(110)), unchecked((sbyte)(117)),
+      unchecked((sbyte)(108)), unchecked((sbyte)(108)) };
+    Null = new global::DripSharp.PdfCarton.Cos.COSNull();
   }
 }

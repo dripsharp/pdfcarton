@@ -34,8 +34,8 @@ internal class PDType1FontEmbedder {
       = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(doc, pfbParser.GetInputStream(),
       global::DripSharp.PdfCarton.Cos.COSName.FlateDecode);
     for (int i = 0; (i < pfbParser.GetLengths().Length); i++) {
-      fontStream.GetCOSObject().SetInt(global::DripSharp.Runtime.JavaCompat.Concat("Length", (i
-        + 1)), pfbParser.GetLengths()[i]);
+      fontStream.GetCOSObject().SetInt(global::DripSharp.Runtime.JavaCompat.Concat("Length",
+        unchecked((i + 1))), pfbParser.GetLengths()[i]);
     }
     fd.SetFontFile(fontStream);
     dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.FontDesc, fd);

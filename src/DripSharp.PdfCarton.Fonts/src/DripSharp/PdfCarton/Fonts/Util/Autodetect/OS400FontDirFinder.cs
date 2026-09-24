@@ -14,4 +14,8 @@ public class OS400FontDirFinder
     return new string[] { global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetProperty("user.home"),
         "/.fonts"), "/QIBM/ProdData/OS400/Fonts" };
   }
+
+  static OS400FontDirFinder() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.NativeFontDirFinder).TypeHandle);
+  }
 }

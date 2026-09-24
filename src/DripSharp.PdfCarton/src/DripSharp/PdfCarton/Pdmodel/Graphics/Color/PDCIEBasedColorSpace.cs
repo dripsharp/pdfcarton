@@ -43,5 +43,9 @@ public abstract class PDCIEBasedColorSpace
     return this.GetName();
   }
 
+  static PDCIEBasedColorSpace() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace).TypeHandle);
+  }
+
   public PDCIEBasedColorSpace() {}
 }

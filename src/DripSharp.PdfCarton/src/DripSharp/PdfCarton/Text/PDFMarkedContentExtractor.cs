@@ -9,24 +9,28 @@
 namespace DripSharp.PdfCarton.Text;
 
 public class PDFMarkedContentExtractor : global::DripSharp.PdfCarton.Text.LegacyPDFStreamEngine {
-  private bool suppressDuplicateOverlappingText = true;
+  private bool suppressDuplicateOverlappingText;
 
-  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent> markedContents
-    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent>();
+  private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent> markedContents;
 
-  private readonly global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent> currentMarkedContents
-    = new global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent>();
+  private readonly global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent> currentMarkedContents;
 
   private readonly global::System.Collections.Generic.IDictionary<string,
-    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>> characterListMapping
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
-    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>();
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>> characterListMapping;
 
   public PDFMarkedContentExtractor() : this((string)default!) {
 
   }
 
   public PDFMarkedContentExtractor(string encoding) {
+    this.suppressDuplicateOverlappingText = true;
+    this.markedContents
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent>();
+    this.currentMarkedContents
+      = new global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent>();
+    this.characterListMapping = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
+      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>();
+
     this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent.BeginMarkedContentSequenceWithProperties(this));
     this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent.BeginMarkedContentSequence(this));
     this.AddOperator(new global::DripSharp.PdfCarton.Contentstream.@Operator.Markedcontent.EndMarkedContentSequence(this));
@@ -117,5 +121,9 @@ public class PDFMarkedContentExtractor : global::DripSharp.PdfCarton.Text.Legacy
 
   public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Markedcontent.PDMarkedContent> GetMarkedContents() {
     return this.markedContents;
+  }
+
+  static PDFMarkedContentExtractor() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Text.LegacyPDFStreamEngine).TypeHandle);
   }
 }

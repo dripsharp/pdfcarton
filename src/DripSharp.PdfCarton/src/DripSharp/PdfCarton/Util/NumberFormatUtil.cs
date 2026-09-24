@@ -22,8 +22,8 @@ public class NumberFormatUtil {
         (exp__41_18 < global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS.Length);
         exp__41_18++) {
         global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp__41_18]
-          = (global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[(exp__41_18 - 1)]
-          * 10);
+          = unchecked((global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[unchecked((exp__41_18
+          - 1))] * 10));
       }
       global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT = new int[10];
       global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[0] = 1;
@@ -31,8 +31,8 @@ public class NumberFormatUtil {
         (exp__49_18 < global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT.Length);
         exp__49_18++) {
         global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp__49_18]
-          = (global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[(exp__49_18 - 1)]
-          * 10);
+          = unchecked((global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[unchecked((exp__49_18
+          - 1))] * 10));
       }
     }
   }
@@ -43,17 +43,20 @@ public class NumberFormatUtil {
     if (((((float.IsNaN(value) || float.IsInfinity(value)) || (value > long.MaxValue)) || (value
       <= long.MinValue))
       || (maxFractionDigits > global::DripSharp.PdfCarton.Util.NumberFormatUtil.MAX_FRACTION_DIGITS))) {
-      return -1;
+      return unchecked(-1);
     }
     int offset = 0;
-    long integerPart = (long)value;
+    long integerPart
+      = unchecked((long)(global::DripSharp.Runtime.JavaCompat.NumberLongValue(value)));
     if ((value < 0)) {
       asciiBuffer[offset++] = unchecked((sbyte)('-'));
-      integerPart = -integerPart;
+      integerPart = unchecked(-integerPart);
     }
-    long fractionPart = (long)((((global::System.Math.Abs((double)((double)value)) - integerPart)
+    long fractionPart
+      = unchecked((long)(global::DripSharp.Runtime.JavaCompat.NumberLongValue((((global::System.Math.Abs((double)((double)value))
+      - integerPart)
       * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[maxFractionDigits])
-      + 0.5D));
+      + 0.5D))));
     if ((fractionPart
       >= global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[maxFractionDigits])) {
       integerPart++;
@@ -66,7 +69,7 @@ public class NumberFormatUtil {
     if (((fractionPart > 0) && (maxFractionDigits > 0))) {
       asciiBuffer[offset++] = unchecked((sbyte)('.'));
       offset = global::DripSharp.PdfCarton.Util.NumberFormatUtil.formatPositiveNumber(fractionPart,
-        (maxFractionDigits - 1), true, asciiBuffer, offset);
+        unchecked((maxFractionDigits - 1)), true, asciiBuffer, offset);
     }
     return offset;
   }
@@ -76,32 +79,36 @@ public class NumberFormatUtil {
     int offset = startOffset;
     long remaining = number;
     while ((remaining > int.MaxValue)) {
-      long digit__137_18 = (remaining
-        / global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp]);
-      remaining -= (digit__137_18
-        * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp]);
-      asciiBuffer[offset++] = unchecked((sbyte)(unchecked((sbyte)(('0' + digit__137_18)))));
+      long digit__137_18 = global::DripSharp.Runtime.JavaCompat.IntegralDivide(remaining,
+        global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp]);
+      remaining -= unchecked((digit__137_18
+        * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[exp]));
+      asciiBuffer[offset++]
+        = unchecked((sbyte)(unchecked((sbyte)(unchecked(('0' + digit__137_18))))));
       exp--;
     }
     int remainingInt = (int)remaining;
     while (((exp >= 0) && (!omitTrailingZeros || (remainingInt > 0)))) {
-      int digit__148_17 = (remainingInt
-        / global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp]);
-      remainingInt -= (digit__148_17
-        * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp]);
-      asciiBuffer[offset++] = unchecked((sbyte)(unchecked((sbyte)(('0' + digit__148_17)))));
+      int digit__148_17 = global::DripSharp.Runtime.JavaCompat.IntegralDivide(remainingInt,
+        global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp]);
+      remainingInt -= unchecked((digit__148_17
+        * global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS_INT[exp]));
+      asciiBuffer[offset++]
+        = unchecked((sbyte)(unchecked((sbyte)(unchecked(('0' + digit__148_17))))));
       exp--;
     }
     return offset;
   }
 
   private static int getExponent(long number) {
-    for (int exp = 0; (exp < (global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS.Length
-      - 1)); exp++) {
-      if ((number < global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[(exp + 1)])) {
+    for (int exp = 0;
+      (exp < unchecked((global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS.Length
+      - 1))); exp++) {
+      if ((number < global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS[unchecked((exp
+        + 1))])) {
         return exp;
       }
     }
-    return (global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS.Length - 1);
+    return unchecked((global::DripSharp.PdfCarton.Util.NumberFormatUtil.POWER_OF_TENS.Length - 1));
   }
 }

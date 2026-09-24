@@ -66,62 +66,73 @@ public sealed class JPXFilter : global::DripSharp.PdfCarton.Filter.Filter {
     global::DripSharp.Runtime.JavaImageReader reader
       = global::DripSharp.PdfCarton.Filter.Filter.FindImageReader("JPEG2000",
       "Java Advanced Imaging (JAI) Image I/O Tools are not installed");
-    try {
-      using (global::DripSharp.Runtime.JavaImageInputStream iis
-        = new global::DripSharp.Runtime.JavaImageInputStream(input)) {
-        reader.SetInput(iis, true, true);
-        global::DripSharp.Runtime.JavaImageReadParam irp = reader.GetDefaultReadParam();
-        irp.SetSourceRegion(options.GetSourceRegion());
-        irp.SetSourceSubsampling(options.GetSubsamplingX(), options.GetSubsamplingY(),
-          options.GetSubsamplingOffsetX(), options.GetSubsamplingOffsetY());
-        options.setFilterSubsampled(true);
-        global::SkiaSharp.SKBitmap image;
+    try { {
+        global::DripSharp.Runtime.JavaImageInputStream iis
+          = new global::DripSharp.Runtime.JavaImageInputStream(input);
+        global::System.Exception __dripsharpPrimary_120_31_0 = null!;
         try {
-          image = reader.Read(0, irp);
-        } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
-          throw new global::System.IO.IOException("Could not read JPEG 2000 (JPX) image", e);
-        }
-        global::DripSharp.PdfCarton.Cos.COSDictionary parameters = result.GetParameters();
-        int bpc = (global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).PixelSize
-          / global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(image).NumberOfBands);
-        parameters.SetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent, bpc);
-        if (!(parameters.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.ImageMask, false))) {
-          parameters.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Decode,
-            (global::DripSharp.PdfCarton.Cos.COSBase)default!);
-        }
-        parameters.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Width, reader.GetWidth(0));
-        parameters.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Height, reader.GetHeight(0));
-        if (!(parameters.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Colorspace))) {
-          if (((((global::DripSharp.Runtime.PdfCartonFontCompat.GetSampleModel(image) is global::DripSharp.Runtime.JavaMultiPixelPackedSampleModel)
-            && (global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).PixelSize == 1))
-            && (global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(image).NumberOfBands == 1))
-            && (global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image) is global::DripSharp.Runtime.JavaColorModel))) {
-            result.setColorSpace(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_GRAY)));
-          } else {
-            if (((global::DripSharp.Runtime.PdfCartonFontCompat.GetTransparency(image)
-              == global::DripSharp.Runtime.PdfCartonTransparency.TRANSLUCENT)
-              && (parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.SmaskInData) > 0))) {
-              global::SkiaSharp.SKBitmap smask
-                = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width,
-                image.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
-              global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(smask,
-                global::DripSharp.Runtime.PdfCartonFontCompat.GetAlphaRaster(image));
-              result.setJPXSMask(smask);
-              global::SkiaSharp.SKBitmap bim
-                = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width,
-                image.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
-              global::DripSharp.Runtime.PdfCartonGraphics2D g2d
-                = (global::DripSharp.Runtime.PdfCartonGraphics2D)(global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(bim)!);
-              g2d.DrawImage(image, 0, 0, (object)default!);
-              g2d.Dispose();
-              image = bim;
-              result.setColorSpace(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).ColorSpace));
+          reader.SetInput(iis, true, true);
+          global::DripSharp.Runtime.JavaImageReadParam irp = reader.GetDefaultReadParam();
+          irp.SetSourceRegion(options.GetSourceRegion());
+          irp.SetSourceSubsampling(options.GetSubsamplingX(), options.GetSubsamplingY(),
+            options.GetSubsamplingOffsetX(), options.GetSubsamplingOffsetY());
+          options.setFilterSubsampled(true);
+          global::SkiaSharp.SKBitmap image;
+          try {
+            image = reader.Read(0, irp);
+          } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
+            throw new global::System.IO.IOException("Could not read JPEG 2000 (JPX) image", e);
+          }
+          global::DripSharp.PdfCarton.Cos.COSDictionary parameters = result.GetParameters();
+          int bpc
+            = global::DripSharp.Runtime.JavaCompat.IntegralDivide(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).PixelSize,
+            global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(image).NumberOfBands);
+          parameters.SetInt(global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent, bpc);
+          if (!(parameters.GetBoolean(global::DripSharp.PdfCarton.Cos.COSName.ImageMask, false))) {
+            parameters.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Decode,
+              (global::DripSharp.PdfCarton.Cos.COSBase)default!);
+          }
+          parameters.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Width, reader.GetWidth(0));
+          parameters.SetInt(global::DripSharp.PdfCarton.Cos.COSName.Height, reader.GetHeight(0));
+          if (!(parameters.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Colorspace))) {
+            if (((((global::DripSharp.Runtime.PdfCartonFontCompat.GetSampleModel(image) is global::DripSharp.Runtime.JavaMultiPixelPackedSampleModel)
+              && (global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).PixelSize
+              == 1))
+              && (global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(image).NumberOfBands
+              == 1))
+              && (global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image) is global::DripSharp.Runtime.JavaColorModel))) {
+              result.setColorSpace(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_GRAY)));
             } else {
-              result.setColorSpace(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).ColorSpace));
+              if (((global::DripSharp.Runtime.PdfCartonFontCompat.GetTransparency(image)
+                == global::DripSharp.Runtime.PdfCartonTransparency.TRANSLUCENT)
+                && (parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.SmaskInData) > 0))) {
+                global::SkiaSharp.SKBitmap smask
+                  = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width,
+                  image.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
+                global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(smask,
+                  global::DripSharp.Runtime.PdfCartonFontCompat.GetAlphaRaster(image));
+                result.setJPXSMask(smask);
+                global::SkiaSharp.SKBitmap bim
+                  = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width,
+                  image.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
+                global::DripSharp.Runtime.PdfCartonGraphics2D g2d
+                  = (global::DripSharp.Runtime.PdfCartonGraphics2D)(global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(bim)!);
+                g2d.DrawImage(image, 0, 0, (object)default!);
+                g2d.Dispose();
+                image = bim;
+                result.setColorSpace(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).ColorSpace));
+              } else {
+                result.setColorSpace(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).ColorSpace));
+              }
             }
           }
+          return image;
+        } catch (global::System.Exception __dripsharpCaught_120_31_0) {
+          __dripsharpPrimary_120_31_0 = __dripsharpCaught_120_31_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(iis, __dripsharpPrimary_120_31_0);
         }
-        return image;
       }
     } finally {
       reader.Dispose();
@@ -131,5 +142,9 @@ public sealed class JPXFilter : global::DripSharp.PdfCarton.Filter.Filter {
   public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded,
     global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
     throw new global::System.NotSupportedException("JPX encoding not implemented");
+  }
+
+  static JPXFilter() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Filter.Filter).TypeHandle);
   }
 }

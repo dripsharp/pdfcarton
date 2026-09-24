@@ -11,7 +11,7 @@ public class TestInvalidDirectory {
       global::DripSharp.PdfCarton.Preflight.ValidationResult result
         = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Preflight.ValidationResult>(typeof(global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser),
         "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-        new object[] { target });
+        new object[] { (global::DripSharp.Runtime.JavaFile)target });
       global::DripSharp.Testing.JavaAssertions.False(result.IsValid(),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
         global::DripSharp.Runtime.JavaCompat.Concat("Test of ", target)));

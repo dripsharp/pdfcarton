@@ -142,7 +142,7 @@ public class PDPageLabels : global::DripSharp.PdfCarton.Pdmodel.Common.COSObject
     while (iterator.HasNext()) {
       global::DripSharp.Runtime.JavaMapEntry<int,
         global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange> entry = iterator.Next()!;
-      int numPages = (entry.Key - lastEntry.Key);
+      int numPages = unchecked((entry.Key - lastEntry.Key));
       global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator gen__271_28
         = new global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator(lastEntry.Value,
         numPages);
@@ -154,7 +154,7 @@ public class PDPageLabels : global::DripSharp.PdfCarton.Pdmodel.Common.COSObject
     }
     global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator gen__280_24
       = new global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator(lastEntry.Value,
-      (numberOfPages - lastEntry.Key));
+      unchecked((numberOfPages - lastEntry.Key)));
     while (gen__280_24.HasNext()) {
       handler.NewLabel(pageIndex, gen__280_24.Next());
       pageIndex++;
@@ -187,14 +187,15 @@ public class PDPageLabels : global::DripSharp.PdfCarton.Pdmodel.Common.COSObject
       string label = this.labelInfo.GetPrefix();
       if ((label != default!)) {
         int index = global::DripSharp.Runtime.JavaCompat.StringIndexOf(label, 0);
-        if ((index > -1)) {
+        if ((index > unchecked(-1))) {
           label = global::DripSharp.Runtime.JavaCompat.StringSubstring(label, 0, index);
         }
         buf.Append(label);
       }
       string style = this.labelInfo.GetStyle();
       if ((style != default!)) {
-        buf.Append(this.getNumber((this.labelInfo.GetStart() + this.currentPage), style));
+        buf.Append(this.getNumber(unchecked((this.labelInfo.GetStart() + this.currentPage)),
+          style));
       }
       this.currentPage++;
       return buf.ToString();
@@ -225,18 +226,18 @@ public class PDPageLabels : global::DripSharp.PdfCarton.Pdmodel.Common.COSObject
       return global::DripSharp.Runtime.JavaCompat.StringValueOf(pageIndex);
     }
 
-    internal static readonly string[][] ROMANS = new string[][] { new string[] { "", "i", "ii",
-        "iii", "iv", "v", "vi", "vii", "viii", "ix" }, new string[] { "", "x", "xx", "xxx", "xl", "l",
-        "lx", "lxx", "lxxx", "xc" }, new string[] { "", "c", "cc", "ccc", "cd", "d", "dc", "dcc",
-        "dccc", "cm" } };
+    internal static readonly string[][] ROMANS;
 
     internal static string makeRomanLabel(int pageIndex) {
       global::System.Text.StringBuilder buf = new global::System.Text.StringBuilder();
       int power = 0;
       while (((power < 3) && (pageIndex > 0))) {
         buf.Insert(0,
-          global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator.ROMANS[power][(pageIndex % 10)]);
-        pageIndex /= 10;
+          global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabels.LabelGenerator.ROMANS[power][global::DripSharp.Runtime.JavaCompat.IntegralRemainder(pageIndex,
+          10)]);
+        global::DripSharp.Runtime.JavaCompat.CompoundAssign(ref pageIndex, __dripsharpValue_383_17_0
+          => unchecked((int)(global::DripSharp.Runtime.JavaCompat.IntegralDivide(__dripsharpValue_383_17_0,
+          10))));
         power++;
       }
       for (int i = 0; (i < pageIndex); i++) {
@@ -247,8 +248,14 @@ public class PDPageLabels : global::DripSharp.PdfCarton.Pdmodel.Common.COSObject
 
     internal static string makeLetterLabel(int num) {
       global::System.Text.StringBuilder buf = new global::System.Text.StringBuilder();
-      int numLetters = ((num / 26) + global::System.Math.Sign((num % 26)));
-      int letter = ((((num % 26) + (26 * (1 - global::System.Math.Sign((num % 26))))) + 'a') - 1);
+      int numLetters = unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(num, 26)
+        + global::System.Math.Sign(global::DripSharp.Runtime.JavaCompat.IntegralRemainder(num,
+        26))));
+      int letter
+        = unchecked((unchecked((unchecked((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(num,
+        26) + unchecked((26 * unchecked((1
+        - global::System.Math.Sign(global::DripSharp.Runtime.JavaCompat.IntegralRemainder(num,
+        26)))))))) + 'a')) - 1));
       for (int i = 0; (i < numLetters); i++) {
         global::DripSharp.Runtime.JavaCompat.AppendCodePoint(buf, letter);
       }
@@ -257,6 +264,12 @@ public class PDPageLabels : global::DripSharp.PdfCarton.Pdmodel.Common.COSObject
 
     public virtual void Remove() {
       throw new global::System.NotSupportedException();
+    }
+
+    static LabelGenerator() {
+      ROMANS = new string[][] { new string[] { "", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii",
+        "ix" }, new string[] { "", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc" },
+        new string[] { "", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm" } };
     }
   }
 }

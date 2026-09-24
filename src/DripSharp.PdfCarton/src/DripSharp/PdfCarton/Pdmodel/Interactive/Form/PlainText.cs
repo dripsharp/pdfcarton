@@ -50,13 +50,17 @@ internal class PlainText {
   }
 
   internal class TextAttribute : global::DripSharp.Runtime.JavaAttributedCharacterAttribute {
-    internal const long serialVersionUID = -3138885145941283005L;
+    internal const long serialVersionUID = unchecked(-3138885145941283005L);
 
-    public static readonly global::DripSharp.Runtime.JavaAttributedCharacterAttribute Width
-      = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainText.TextAttribute("width");
+    public static readonly global::DripSharp.Runtime.JavaAttributedCharacterAttribute Width;
 
     protected internal TextAttribute(string name) : base(name) {
 
+    }
+
+    static TextAttribute() {
+      Width
+        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainText.TextAttribute("width");
     }
   }
 
@@ -93,11 +97,13 @@ internal class PlainText {
           end);
         float wordWidth = (font.GetStringWidth(word) * scale);
         bool wordNeedsSplit = false;
-        int splitOffset = (end - start);
+        int splitOffset = unchecked((end - start));
         lineWidth = (lineWidth + wordWidth);
         if (((lineWidth >= width)
-          && global::DripSharp.Runtime.JavaCompat.IsWhitespace(word[(word.Length - 1)]))) {
-          float whitespaceWidth = (font.GetStringWidth(word.Substring((word.Length - 1))) * scale);
+          && global::DripSharp.Runtime.JavaCompat.IsWhitespace(word[unchecked((word.Length
+          - 1))]))) {
+          float whitespaceWidth = (font.GetStringWidth(word.Substring(unchecked((word.Length - 1))))
+            * scale);
           lineWidth = (lineWidth - whitespaceWidth);
         }
         if (((lineWidth >= width)
@@ -129,7 +135,7 @@ internal class PlainText {
         wordInstance.setAttributes(@as);
         textLine.addWord(wordInstance);
         if (wordNeedsSplit) {
-          start = (start + splitOffset);
+          start = unchecked((start + splitOffset));
         } else {
           start = end;
           end = iterator.Next();
@@ -143,16 +149,17 @@ internal class PlainText {
     internal static float[] buildPrefixWidths(string word,
       global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font, float scale) {
       int wordLen = word.Length;
-      float[] prefixWidth = new float[(wordLen + 1)];
+      float[] prefixWidth = new float[unchecked((wordLen + 1))];
       int i = 0;
       while ((i < wordLen)) {
         int codePoint = global::DripSharp.Runtime.JavaCompat.CodePointAt(word, i);
         int charCount = global::DripSharp.Runtime.JavaCompat.CharacterCharCount(codePoint);
         float cpWidth
-          = (font.GetStringWidth(global::DripSharp.Runtime.JavaCompat.StringSubstring(word, i, (i
-          + charCount))) * scale);
+          = (font.GetStringWidth(global::DripSharp.Runtime.JavaCompat.StringSubstring(word, i,
+          unchecked((i + charCount)))) * scale);
         for (int j = 0; (j < charCount); j++) {
-          prefixWidth[((i + j) + 1)] = (prefixWidth[(i + j)] + ((j == 0) ? cpWidth : 0.0F));
+          prefixWidth[unchecked((unchecked((i + j)) + 1))] = (prefixWidth[unchecked((i + j))] + ((j
+            == 0) ? cpWidth : 0.0F));
         }
         i += charCount;
       }
@@ -161,13 +168,13 @@ internal class PlainText {
 
     internal static int findMaxFittingChars(float[] prefixWidth, float width) {
       int lo = 1;
-      int hi = (prefixWidth.Length - 1);
+      int hi = unchecked((prefixWidth.Length - 1));
       while ((lo < hi)) {
-        int mid = (((lo + hi) + 1) >>> unchecked((int)(1)));
+        int mid = (unchecked((unchecked((lo + hi)) + 1)) >>> unchecked((int)(1)));
         if ((prefixWidth[mid] < width)) {
           lo = mid;
         } else {
-          hi = (mid - 1);
+          hi = unchecked((mid - 1));
         }
       }
       return lo;
@@ -198,9 +205,12 @@ internal class PlainText {
         calculatedWidth = (calculatedWidth
           + global::DripSharp.Runtime.JavaCompat.UnboxObject<float>((float?)(word.getAttributes().GetIterator().GetAttribute(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainText.TextAttribute.Width))));
         string text = word.getText();
-        if (((indexOfWord == (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.words) - 1))
-          && global::DripSharp.Runtime.JavaCompat.IsWhitespace(text[(text.Length - 1)]))) {
-          float whitespaceWidth = (font.GetStringWidth(text.Substring((text.Length - 1))) * scale);
+        if (((indexOfWord
+          == unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(this.words) - 1)))
+          && global::DripSharp.Runtime.JavaCompat.IsWhitespace(text[unchecked((text.Length
+          - 1))]))) {
+          float whitespaceWidth = (font.GetStringWidth(text.Substring(unchecked((text.Length - 1))))
+            * scale);
           calculatedWidth = (calculatedWidth - whitespaceWidth);
         }
         ++indexOfWord;
@@ -214,7 +224,7 @@ internal class PlainText {
 
     internal virtual float getInterWordSpacing(float width) {
       return ((float)((width - this.lineWidth))
-        / (global::DripSharp.Runtime.JavaCompat.CollectionCount(this.words) - 1));
+        / unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(this.words) - 1)));
     }
 
     internal virtual void addWord(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PlainText.Word word) {

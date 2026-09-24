@@ -44,4 +44,8 @@ public class Type1FontValidator
       }
     }
   }
+
+  static Type1FontValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.SimpleFontValidator<global::DripSharp.PdfCarton.Preflight.Font.Container.Type1Container>).TypeHandle);
+  }
 }

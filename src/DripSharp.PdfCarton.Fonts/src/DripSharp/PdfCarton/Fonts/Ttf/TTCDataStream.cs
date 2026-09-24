@@ -48,4 +48,8 @@ internal class TTCDataStream : global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStre
   public override global::DripSharp.PdfCarton.IO.RandomAccessRead CreateSubView(long length) {
     return this.stream.CreateSubView(length);
   }
+
+  static TTCDataStream() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream).TypeHandle);
+  }
 }

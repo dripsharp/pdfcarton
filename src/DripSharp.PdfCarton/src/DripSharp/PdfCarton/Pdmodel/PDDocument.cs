@@ -9,13 +9,13 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public class PDDocument : global::System.IDisposable {
-  private static readonly int[] RESERVE_BYTE_RANGE = new int[] { 0, 1000000000, 1000000000,
-    1000000000 };
+  private static readonly int[] RESERVE_BYTE_RANGE;
 
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  static PDDocument() { {
+  static PDDocument() {
+    RESERVE_BYTE_RANGE = new int[] { 0, 1000000000, 1000000000, 1000000000 };
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance; {
       try {
         global::DripSharp.Runtime.JavaRaster raster
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBandedRaster(global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE,
@@ -186,7 +186,7 @@ public class PDDocument : global::System.IDisposable {
       signatureField!.SetValue(sigObject);
       firstWidget = global::DripSharp.Runtime.JavaCompat.ListGet(signatureField!.GetWidgets(), 0);
       int startIndex = global::System.Math.Min(global::System.Math.Max(options.GetPage(), 0),
-        (pageCount - 1));
+        unchecked((pageCount - 1)));
       page = pageTree.Get(startIndex);
       firstWidget.SetPage(page);
     } else {
@@ -461,7 +461,8 @@ public class PDDocument : global::System.IDisposable {
       = this.GetSignatureDictionaries();
     int size = global::DripSharp.Runtime.JavaCompat.CollectionCount(signatureDictionaries);
     if ((size > 0)) {
-      return global::DripSharp.Runtime.JavaCompat.ListGet(signatureDictionaries, (size - 1));
+      return global::DripSharp.Runtime.JavaCompat.ListGet(signatureDictionaries, unchecked((size
+        - 1)));
     }
     return default!;
   }
@@ -507,7 +508,7 @@ public class PDDocument : global::System.IDisposable {
   public virtual void Save(string fileName) {
     global::DripSharp.Runtime.JavaFileBridge.Call(this, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(fileName) });
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(fileName) });
   }
 
   [global::DripSharp.Runtime.JavaFileBoundary]
@@ -519,8 +520,8 @@ public class PDDocument : global::System.IDisposable {
     global::DripSharp.Runtime.JavaFileBridge.Call(this, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo),
         typeof(global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters) },
-      new object[] { file,
-        global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.DefaultCompression });
+      new object[] { (global::DripSharp.Runtime.JavaFile)file,
+        (global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters)(global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters.DefaultCompression) });
   }
 
   public virtual void Save(global::System.IO.Stream output) {
@@ -541,10 +542,19 @@ public class PDDocument : global::System.IDisposable {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.PDDocument.LOG,
         global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("You are overwriting the existing file ",
         file.Name), ", this will produce a corrupted file if you're also reading from it")));
-    }
-    using (global::System.IO.BufferedStream bufferedOutputStream
-      = new global::System.IO.BufferedStream(global::DripSharp.Runtime.JavaCompat.OpenFileOutput(file))) {
-      this.Save(bufferedOutputStream, compressParameters);
+    } {
+      global::System.IO.BufferedStream bufferedOutputStream
+        = new global::System.IO.BufferedStream(global::DripSharp.Runtime.JavaCompat.OpenFileOutput(file));
+      global::System.Exception __dripsharpPrimary_985_35_0 = null!;
+      try {
+        this.Save(bufferedOutputStream, compressParameters);
+      } catch (global::System.Exception __dripsharpCaught_985_35_0) {
+        __dripsharpPrimary_985_35_0 = __dripsharpCaught_985_35_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(bufferedOutputStream,
+          __dripsharpPrimary_985_35_0);
+      }
     }
   }
 
@@ -553,8 +563,8 @@ public class PDDocument : global::System.IDisposable {
     global::DripSharp.Runtime.JavaFileBridge.Call(this, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo),
         typeof(global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(fileName),
-        compressParameters });
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(fileName),
+        (global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters)compressParameters });
   }
 
   public virtual void Save(global::System.IO.Stream output,
@@ -713,7 +723,7 @@ public class PDDocument : global::System.IDisposable {
     float headerVersionFloat = this.GetDocument().GetVersion();
     if ((headerVersionFloat >= 1.4F)) {
       string catalogVersion = this.GetDocumentCatalog().GetVersion();
-      float catalogVersionFloat = -1;
+      float catalogVersionFloat = unchecked(-1);
       if ((catalogVersion != default!)) {
         try {
           catalogVersionFloat = global::DripSharp.Runtime.JavaCompat.ParseFloat(catalogVersion);

@@ -43,4 +43,8 @@ public class VerticalOriginTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTabl
     return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetOrDefault(this.origins,
       gid, this.defaultVertOriginY));
   }
+
+  static VerticalOriginTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
+  }
 }

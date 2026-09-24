@@ -19,26 +19,26 @@ public class SmallMap<K, V> : global::DripSharp.Runtime.JavaMapContract<K, V> {
 
   private int FindKey(object key) {
     if ((this.IsEmpty() || (key == default!))) {
-      return -1;
+      return unchecked(-1);
     }
     for (int aIdx = 0; (aIdx < this.mapArr.Length); aIdx += 2) {
       if (global::DripSharp.Runtime.JavaCompat.Equals(key, this.mapArr[aIdx])) {
         return aIdx;
       }
     }
-    return -1;
+    return unchecked(-1);
   }
 
   private int FindValue(object value) {
     if ((this.IsEmpty() || (value == default!))) {
-      return -1;
+      return unchecked(-1);
     }
     for (int aIdx = 1; (aIdx < this.mapArr.Length); aIdx += 2) {
       if (global::DripSharp.Runtime.JavaCompat.Equals(value, this.mapArr[aIdx])) {
         return aIdx;
       }
     }
-    return -1;
+    return unchecked(-1);
   }
 
   public virtual int Size() {
@@ -60,7 +60,8 @@ public class SmallMap<K, V> : global::DripSharp.Runtime.JavaMapContract<K, V> {
   public virtual V Get(object key) {
     int kIdx = this.FindKey(key);
     return ((kIdx < 0) ? (V)(default!)
-      : (V)(global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[(kIdx + 1)])));
+      : (V)(global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[unchecked((kIdx
+      + 1))])));
   }
 
   public virtual V Put(K key, V value) {
@@ -74,15 +75,17 @@ public class SmallMap<K, V> : global::DripSharp.Runtime.JavaMapContract<K, V> {
       int kIdx = this.FindKey(key);
       if ((kIdx < 0)) {
         int oldLen = this.mapArr.Length;
-        object[] newMapArr = new object[(oldLen + 2)];
+        object[] newMapArr = new object[unchecked((oldLen + 2))];
         global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, 0, newMapArr, 0, oldLen);
         newMapArr[oldLen] = key;
-        newMapArr[(oldLen + 1)] = value;
+        newMapArr[unchecked((oldLen + 1))] = value;
         this.mapArr = newMapArr;
         return default!;
       } else {
-        V oldValue = global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[(kIdx + 1)]);
-        this.mapArr[(kIdx + 1)] = value;
+        V oldValue
+          = global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[unchecked((kIdx
+          + 1))]);
+        this.mapArr[unchecked((kIdx + 1))] = value;
         return oldValue;
       }
     }
@@ -93,15 +96,16 @@ public class SmallMap<K, V> : global::DripSharp.Runtime.JavaMapContract<K, V> {
     if ((kIdx < 0)) {
       return default!;
     }
-    V oldValue = global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[(kIdx + 1)]);
+    V oldValue = global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.mapArr[unchecked((kIdx
+      + 1))]);
     int oldLen = this.mapArr.Length;
     if ((oldLen == 2)) {
       this.mapArr = default!;
     } else {
-      object[] newMapArr = new object[(oldLen - 2)];
+      object[] newMapArr = new object[unchecked((oldLen - 2))];
       global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, 0, newMapArr, 0, kIdx);
-      global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, (kIdx + 2), newMapArr, kIdx,
-        ((oldLen - kIdx) - 2));
+      global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, unchecked((kIdx + 2)), newMapArr,
+        kIdx, unchecked((unchecked((oldLen - kIdx)) - 2)));
       this.mapArr = newMapArr;
     }
     return oldValue;
@@ -122,8 +126,8 @@ public class SmallMap<K, V> : global::DripSharp.Runtime.JavaMapContract<K, V> {
       }
     } else {
       int oldLen = this.mapArr.Length;
-      object[] newMapArr = new object[(oldLen
-        + (global::DripSharp.Runtime.JavaCompat.MapCount(otherMap) << unchecked((int)(1))))];
+      object[] newMapArr = new object[unchecked((oldLen
+        + (global::DripSharp.Runtime.JavaCompat.MapCount(otherMap) << unchecked((int)(1)))))];
       global::DripSharp.Runtime.JavaCompat.ArrayCopy(this.mapArr, 0, newMapArr, 0, oldLen);
       int newIdx = oldLen;
       foreach (global::DripSharp.Runtime.JavaMapEntry<K,
@@ -133,7 +137,7 @@ public class SmallMap<K, V> : global::DripSharp.Runtime.JavaMapContract<K, V> {
         }
         int existKeyIdx = this.FindKey(entry__236_50.Key);
         if ((existKeyIdx >= 0)) {
-          newMapArr[(existKeyIdx + 1)] = entry__236_50.Value;
+          newMapArr[unchecked((existKeyIdx + 1))] = entry__236_50.Value;
         } else {
           newMapArr[newIdx++] = entry__236_50.Key;
           newMapArr[newIdx++] = entry__236_50.Value;
@@ -192,8 +196,8 @@ public class SmallMap<K, V> : global::DripSharp.Runtime.JavaMapContract<K, V> {
     }
 
     public virtual V GetValue() {
-      return global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.__outer.mapArr[(this.keyIdx
-        + 1)]);
+      return global::DripSharp.Runtime.JavaCompat.CastReference<V>(this.__outer.mapArr[unchecked((this.keyIdx
+        + 1))]);
     }
 
     public override V SetValue(V value) {
@@ -201,7 +205,7 @@ public class SmallMap<K, V> : global::DripSharp.Runtime.JavaMapContract<K, V> {
         throw new global::System.NullReferenceException("Key or value must not be null.");
       }
       V oldValue = this.GetValue();
-      this.__outer.mapArr[(this.keyIdx + 1)] = value;
+      this.__outer.mapArr[unchecked((this.keyIdx + 1))] = value;
       return oldValue;
     }
 

@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Filter;
 
 public sealed class FilterFactory {
-  public static readonly global::DripSharp.PdfCarton.Filter.FilterFactory Instance
-    = new global::DripSharp.PdfCarton.Filter.FilterFactory();
+  public static readonly global::DripSharp.PdfCarton.Filter.FilterFactory Instance;
 
   private readonly global::System.Collections.Generic.IDictionary<global::DripSharp.PdfCarton.Cos.COSName,
     global::DripSharp.PdfCarton.Filter.Filter> filters
@@ -90,5 +89,9 @@ public sealed class FilterFactory {
 
   internal global::System.Collections.Generic.ICollection<global::DripSharp.PdfCarton.Filter.Filter> getAllFilters() {
     return this.filters.Values;
+  }
+
+  static FilterFactory() {
+    Instance = new global::DripSharp.PdfCarton.Filter.FilterFactory();
   }
 }

@@ -5,11 +5,11 @@
 namespace DripSharp.PdfCarton.Util;
 
 public class TestDateUtil {
-  private const int MINS = (60 * 1000);
+  private const int MINS = unchecked((60 * 1000));
 
-  private static readonly int HRS = (60 * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS);
+  private static readonly int HRS;
 
-  private const int BAD = -666;
+  private const int BAD = unchecked(-666);
 
   internal virtual void testExtract() {
     global::System.TimeZoneInfo timezone = global::System.TimeZoneInfo.Local;
@@ -43,7 +43,7 @@ public class TestDateUtil {
       "D:20050526205258+01'00'"));
     global::DripSharp.Testing.JavaAssertions.Equal(2005,
       global::DripSharp.Runtime.JavaCompat.CalendarGet(c, 1), null);
-    global::DripSharp.Testing.JavaAssertions.Equal((5 - 1),
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((5 - 1)),
       global::DripSharp.Runtime.JavaCompat.CalendarGet(c, 2), null);
     global::DripSharp.Testing.JavaAssertions.Equal(26,
       global::DripSharp.Runtime.JavaCompat.CalendarGet(c, 5), null);
@@ -126,9 +126,9 @@ public class TestDateUtil {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "20170401+09'00'"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(2017, 4, 1, 0, 0, 0, +9, 30,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "20170401+09'30'"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(2018, 4, 1, 0, 0, 0, -2, 0,
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(2018, 4, 1, 0, 0, 0, unchecked(-2), 0,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "20180401-02'00'"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(2019, 4, 1, 6, 1, 1, -11, 0,
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(2019, 4, 1, 6, 1, 1, unchecked(-11), 0,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "20190401 6:1:1 -1100"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(2020, 5, 26, 11, 25, 10, 0, 0,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "26 May 2020 11:25:10"));
@@ -138,10 +138,10 @@ public class TestDateUtil {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "20160401+04'30'"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(2017, 4, 1, 0, 0, 0, +9, 30,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "20170401+09'30'"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(2018, 4, 1, 0, 0, 0, -2, 30,
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(2018, 4, 1, 0, 0, 0, unchecked(-2), 30,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "20180401-02'30'"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(2019, 4, 1, 6, 1, 1, -11, 30,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "20190401 6:1:1 -1130"));
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(2019, 4, 1, 6, 1, 1, unchecked(-11),
+      30, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "20190401 6:1:1 -1130"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(2000, 2, 29, 0, 0, 0, +11, 30,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", " 2000 Feb 29 GMT + 11:30"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(global::DripSharp.PdfCarton.Util.TestDateUtil.BAD,
@@ -201,15 +201,15 @@ public class TestDateUtil {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "7/6/1973 17:22:1"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1974, 7, 6, 0, 0, 0, 0, 0,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "7/6/1974"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1975, 7, 6, 17, 22, 1, -10, 0,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "1975-7-6T17:22:1-1000"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1976, 7, 6, 17, 22, 1, -4, 0,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "1976-7-6T17:22:1GMT-4"));
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1975, 7, 6, 17, 22, 1, unchecked(-10),
+      0, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "1975-7-6T17:22:1-1000"));
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1976, 7, 6, 17, 22, 1, unchecked(-4),
+      0, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "1976-7-6T17:22:1GMT-4"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(global::DripSharp.PdfCarton.Util.TestDateUtil.BAD,
-      7, 6, 17, 22, 1, -4, 0, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "2076-7-6T17:22:1EDT"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1960, 7, 6, 17, 22, 1, -5, 0,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "1960-7-6T17:22:1EST"));
+      7, 6, 17, 22, 1, unchecked(-4), 0,
+      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "2076-7-6T17:22:1EDT"));
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1960, 7, 6, 17, 22, 1, unchecked(-5),
+      0, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "1960-7-6T17:22:1EST"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1977, 7, 6, 0, 0, 0, 0, 0,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Wednesday, Jul 6, 1977"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1978, 7, 6, 17, 22, 1, 0, 0,
@@ -235,13 +235,15 @@ public class TestDateUtil {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "7/6/1987 17:22:1"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1988, 7, 6, 0, 0, 0, 0, 0,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "7/6/1988"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse((year - 79), 1, 1, 0, 0, 0, 0, 0,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(unchecked((year - 79)), 1, 1, 0, 0, 0,
+      0, 0, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("1/1/",
-      ((year - 79) % 100)), " 00:00:00")));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse((year + 19), 1, 1, 0, 0, 0, 0, 0,
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      global::DripSharp.Runtime.JavaCompat.Concat("1/1/", ((year + 19) % 100))));
+      global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((year - 79)), 100)),
+      " 00:00:00")));
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(unchecked((year + 19)), 1, 1, 0, 0, 0,
+      0, 0, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      global::DripSharp.Runtime.JavaCompat.Concat("1/1/",
+      global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((year + 19)), 100))));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1991, 7, 6, 17, 7, 1, +6, 0,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "19910706 17:7:1 Z+0600"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1992, 7, 6, 17, 7, 1, 0, 0,
@@ -254,9 +256,9 @@ public class TestDateUtil {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "19950706+02'00'"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1996, 7, 6, 0, 0, 0, 3, 0,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "19960706+03'00'"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1997, 7, 6, 0, 0, 0, -10, 0,
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1997, 7, 6, 0, 0, 0, unchecked(-10), 0,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "19970706-10'00'"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1998, 7, 6, 0, 0, 0, -11, 0,
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1998, 7, 6, 0, 0, 0, unchecked(-11), 0,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "19980706-11'00'"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParse(1999, 7, 6, 0, 0, 0, 0, 0,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "19990706"));
@@ -269,7 +271,8 @@ public class TestDateUtil {
   private static void checkToString(int yr, int mon, int day, int hr, int min, int sec,
     global::System.TimeZoneInfo tz, int offsetHours, int offsetMinutes) {
     global::System.DateTimeOffset? cal = global::DripSharp.Runtime.JavaCompat.CalendarInstance(tz);
-    cal = global::DripSharp.Runtime.JavaCompat.CalendarSet(cal, yr, (mon - 1), day, hr, min, sec);
+    cal = global::DripSharp.Runtime.JavaCompat.CalendarSet(cal, yr, unchecked((mon - 1)), day, hr,
+      min, sec);
     string pdfDate
       = global::DripSharp.Runtime.JavaCompat.JavaStringFormat(global::System.Globalization.CultureInfo.GetCultureInfo("en-US"),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -316,20 +319,20 @@ public class TestDateUtil {
       "D:    ")), null);
     global::DripSharp.Testing.JavaAssertions.Null(global::DripSharp.PdfCarton.Util.DateConverter.ToCalendar(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "D:")), null);
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2013, 8, 28, 3, 14, 15, tzPgh, -4,
-      0);
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2014, 2, 28, 3, 14, 15, tzPgh, -5,
-      0);
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2013, 8, 28, 3, 14, 15, tzPgh,
+      unchecked(-4), 0);
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2014, 2, 28, 3, 14, 15, tzPgh,
+      unchecked(-5), 0);
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2015, 8, 28, 3, 14, 15, tzBerlin,
       +2, 0);
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2016, 2, 28, 3, 14, 15, tzBerlin,
       +1, 0);
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2017, 8, 28, 3, 14, 15, tzAruba, -4,
-      0);
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2017, 8, 28, 3, 14, 15, tzAruba,
+      unchecked(-4), 0);
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2018, 1, 1, 1, 14, 15, tzJamaica,
-      -5, 0);
+      unchecked(-5), 0);
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2019, 12, 31, 12, 59, 59, tzJamaica,
-      -5, 0);
+      unchecked(-5), 0);
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2020, 2, 29, 0, 0, 0, tzMaputo, +2,
       0);
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2015, 8, 28, 3, 14, 15, tzAdelaide,
@@ -337,8 +340,8 @@ public class TestDateUtil {
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(2016, 2, 28, 3, 14, 15, tzAdelaide,
       +10, 30);
     for (int m = 1; (m <= 12); ++m) {
-      global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString((1980 + m), m, 1, 1, 14, 15,
-        tzMcMurdo, +0, 0);
+      global::DripSharp.PdfCarton.Util.TestDateUtil.checkToString(unchecked((1980 + m)), m, 1, 1,
+        14, 15, tzMcMurdo, +0, 0);
     }
   }
 
@@ -351,106 +354,107 @@ public class TestDateUtil {
   }
 
   internal virtual void testParseTZ() {
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(((0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked((unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "+00:00"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(((0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked((unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "-0000"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(((1
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked((unchecked((1
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "+1:00"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(-(((1
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked(-(unchecked((unchecked((1
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "-1:00"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(-(((1
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (30
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked(-(unchecked((unchecked((1
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((30
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "-0130"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(((11
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (59
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked((unchecked((11
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((59
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "1159"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(((12
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (30
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked((unchecked((12
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((30
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "1230"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(-(((12
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (30
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked(-(unchecked((unchecked((12
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((30
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "-12:30"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(((0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked((unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Z"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(-(((8
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked(-(unchecked((unchecked((8
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PST"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(((0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked((unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "EDT"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(-(((3
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked(-(unchecked((unchecked((3
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "GMT-0300"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(+(((11
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(+(unchecked((unchecked((11
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "GMT+11:00"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(-(((6
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked(-(unchecked((unchecked((6
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "America/Chicago"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(+(((3
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(+(unchecked((unchecked((3
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Europe/Moscow"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(+(((9
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (30
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(+(unchecked((unchecked((9
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((30
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Australia/Adelaide"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(((5
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked((unchecked((5
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "0500"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(((5
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked((unchecked((5
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "+0500"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(((11
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked((unchecked((11
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "+11'00'"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(0,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Z"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(((12
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked((unchecked((12
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "+12:00"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(-(((12
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked(-(unchecked((unchecked((12
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "-12:00"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(((14
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked((unchecked((14
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "1400"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(-(((14
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS) + (0
-      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS))),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkParseTZ(unchecked(-(unchecked((unchecked((14
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.HRS)) + unchecked((0
+      * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS)))))),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "-1400"));
   }
 
   private static void checkFormatOffset(double off, string expect) {
     global::System.TimeZoneInfo tz
-      = global::DripSharp.Runtime.JavaCompat.NewSimpleTimeZone((int)((int)((((off * 60) * 60)
-      * 1000))), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "junkID"));
+      = global::DripSharp.Runtime.JavaCompat.NewSimpleTimeZone((int)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((((off
+      * 60) * 60) * 1000))))), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "junkID"));
     string got
       = global::DripSharp.PdfCarton.Util.DateConverter.formatTZoffset((long)(global::DripSharp.Runtime.JavaCompat.TimeZoneRawOffset(tz)),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ":"));
@@ -464,7 +468,7 @@ public class TestDateUtil {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "+12:06"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkFormatOffset((double)(0),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "+00:00"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkFormatOffset((double)(-1),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkFormatOffset((double)(unchecked(-1)),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "-01:00"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkFormatOffset(0.5D,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "+00:30"));
@@ -474,7 +478,7 @@ public class TestDateUtil {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "+00:06"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkFormatOffset(-0.1D,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "-00:06"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkFormatOffset((double)(-12),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkFormatOffset((double)(unchecked(-12)),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "-12:00"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkFormatOffset((double)(12),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "+12:00"));
@@ -492,7 +496,7 @@ public class TestDateUtil {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "-11:06"));
     global::DripSharp.PdfCarton.Util.TestDateUtil.checkFormatOffset((double)(14),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "+14:00"));
-    global::DripSharp.PdfCarton.Util.TestDateUtil.checkFormatOffset((double)(-14),
+    global::DripSharp.PdfCarton.Util.TestDateUtil.checkFormatOffset((double)(unchecked(-14)),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "-14:00"));
   }
 
@@ -542,5 +546,9 @@ public class TestDateUtil {
       this.testToString();
     } finally {
     }
+  }
+
+  static TestDateUtil() {
+    HRS = unchecked((60 * global::DripSharp.PdfCarton.Util.TestDateUtil.MINS));
   }
 }

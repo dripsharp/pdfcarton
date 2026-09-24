@@ -56,9 +56,12 @@ public abstract class ShadingContext : global::DripSharp.Runtime.JavaPaintContex
   internal int convertToRGB(float[] values) {
     int normRGBValues;
     float[] rgbValues = this.shadingColorSpace.ToRGB(values);
-    normRGBValues = (int)((rgbValues[0] * 255));
-    normRGBValues |= ((int)((rgbValues[1] * 255)) << unchecked((int)(8)));
-    normRGBValues |= ((int)((rgbValues[2] * 255)) << unchecked((int)(16)));
+    normRGBValues
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((rgbValues[0] * 255))));
+    normRGBValues |= (unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((rgbValues[1]
+      * 255)))) << unchecked((int)(8)));
+    normRGBValues |= (unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((rgbValues[2]
+      * 255)))) << unchecked((int)(16)));
     return normRGBValues;
   }
 

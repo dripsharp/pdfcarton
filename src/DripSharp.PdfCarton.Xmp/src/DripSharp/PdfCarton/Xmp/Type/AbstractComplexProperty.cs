@@ -78,4 +78,8 @@ public abstract class AbstractComplexProperty : global::DripSharp.PdfCarton.Xmp.
     global::System.Type type) {
     return this.container.GetFirstEquivalentProperty(localName, type);
   }
+
+  static AbstractComplexProperty() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractField).TypeHandle);
+  }
 }

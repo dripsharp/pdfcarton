@@ -83,11 +83,11 @@ public sealed class Matrix : global::DripSharp.Runtime.JavaCloneable {
   }
 
   public float GetValue(int row, int column) {
-    return this.single[((row * 3) + column)];
+    return this.single[unchecked((unchecked((row * 3)) + column))];
   }
 
   public void SetValue(int row, int column, float value) {
-    this.single[((row * 3) + column)] = value;
+    this.single[unchecked((unchecked((row * 3)) + column))] = value;
   }
 
   public float[][] GetValues() {

@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 internal sealed class SampledImageReader {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private SampledImageReader() {}
 
@@ -28,41 +27,49 @@ internal sealed class SampledImageReader {
     g.Dispose();
     global::DripSharp.Runtime.JavaRaster raster
       = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(masked);
-    int[] transparent = new int[4];
-    using (global::System.IO.Stream iis = pdImage.CreateInputStream()) {
-      float[] decode
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.getDecodeArray(pdImage);
-      int value = ((decode[0] < decode[1]) ? 1 : 0);
-      int rowLen = (width / 8);
-      if (((width % 8) > 0)) {
-        rowLen++;
-      }
-      sbyte[] buff = new sbyte[rowLen];
-      for (int y = 0; (y < height); y++) {
-        int x = 0;
-        int readLen = (int)(global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(iis, buff));
-        for (int r = 0; ((r < rowLen) && (r < readLen)); r++) {
-          int byteValue = buff[r];
-          int mask = 128;
-          int shift = 7;
-          for (int i = 0; (i < 8); i++) {
-            int bit = ((byteValue & mask) >> unchecked((int)(shift)));
-            mask >>= 1;
-            --shift;
-            if ((bit == value)) {
-              raster.SetPixel(x, y, transparent);
-            }
-            x++;
-            if ((x == width)) {
-              break;
+    int[] transparent = new int[4]; {
+      global::System.IO.Stream iis = pdImage.CreateInputStream();
+      global::System.Exception __dripsharpPrimary_83_26_0 = null!;
+      try {
+        float[] decode
+          = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.getDecodeArray(pdImage);
+        int value = ((decode[0] < decode[1]) ? 1 : 0);
+        int rowLen = global::DripSharp.Runtime.JavaCompat.IntegralDivide(width, 8);
+        if ((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(width, 8) > 0)) {
+          rowLen++;
+        }
+        sbyte[] buff = new sbyte[rowLen];
+        for (int y = 0; (y < height); y++) {
+          int x = 0;
+          int readLen = (int)(global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(iis, buff));
+          for (int r = 0; ((r < rowLen) && (r < readLen)); r++) {
+            int byteValue = buff[r];
+            int mask = 128;
+            int shift = 7;
+            for (int i = 0; (i < 8); i++) {
+              int bit = ((byteValue & mask) >> unchecked((int)(shift)));
+              mask >>= unchecked((int)(1));
+              --shift;
+              if ((bit == value)) {
+                raster.SetPixel(x, y, transparent);
+              }
+              x++;
+              if ((x == width)) {
+                break;
+              }
             }
           }
+          if ((readLen != rowLen)) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf("premature EOF, image will be incomplete"));
+            break;
+          }
         }
-        if ((readLen != rowLen)) {
-          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.LOG,
-            global::DripSharp.Runtime.JavaCompat.StringValueOf("premature EOF, image will be incomplete"));
-          break;
-        }
+      } catch (global::System.Exception __dripsharpCaught_83_26_0) {
+        __dripsharpPrimary_83_26_0 = __dripsharpCaught_83_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(iis, __dripsharpPrimary_83_26_0);
       }
     }
     return masked;
@@ -82,8 +89,8 @@ internal sealed class SampledImageReader {
     } else {
       int x = global::System.Math.Max(0, region.Left);
       int y = global::System.Math.Max(0, region.Top);
-      int width = global::System.Math.Min(region.Width, (pdImage.GetWidth() - x));
-      int height = global::System.Math.Min(region.Height, (pdImage.GetHeight() - y));
+      int width = global::System.Math.Min(region.Width, unchecked((pdImage.GetWidth() - x)));
+      int height = global::System.Math.Min(region.Height, unchecked((pdImage.GetHeight() - y)));
       return global::DripSharp.Runtime.PdfCartonFontCompat.RectangleI(x, y, width, height);
     }
   }
@@ -100,10 +107,12 @@ internal sealed class SampledImageReader {
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace
       = pdImage.GetColorSpace();
     int numComponents = colorSpace.GetNumberOfComponents();
-    int width = (int)(global::System.Math.Ceiling((double)(((double)(clipped.Width)
-      / subsampling))));
-    int height = (int)(global::System.Math.Ceiling((double)(((double)(clipped.Height)
-      / subsampling))));
+    int width
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Ceiling((double)(((double)(clipped.Width)
+      / subsampling))))));
+    int height
+      = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Math.Ceiling((double)(((double)(clipped.Height)
+      / subsampling))))));
     int bitsPerComponent = pdImage.GetBitsPerComponent();
     if (((((width <= 0) || (height <= 0)) || (pdImage.GetWidth() <= 0)) || (pdImage.GetHeight()
       <= 0))) {
@@ -170,62 +179,83 @@ internal sealed class SampledImageReader {
     float[] decode
       = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.getDecodeArray(pdImage);
     global::DripSharp.PdfCarton.Filter.DecodeOptions options
-      = new global::DripSharp.PdfCarton.Filter.DecodeOptions();
-    using (global::System.IO.Stream imageStream = pdImage.CreateInputStream(options)) {
-      using (global::DripSharp.Runtime.JavaImageInputStream iis
-        = new global::DripSharp.Runtime.JavaImageInputStream(imageStream)) {
-        int inputWidth = pdImage.GetWidth();
-        int scanWidth = pdImage.GetWidth();
-        int scanHeight = pdImage.GetHeight();
-        float sampleMax = ((float)(global::System.Math.Pow((double)(2), (double)(bitsPerComponent)))
-          - 1.0F);
-        bool isIndexed
-          = (colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed);
-        int padding = (((inputWidth * numComponents) * bitsPerComponent) % 8);
-        if ((padding > 0)) {
-          padding = (8 - padding);
-        } else {
-          padding = 0;
-        }
-        bool isShort = (raster.GetDataBuffer().DataType
-          == global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_USHORT);
-        global::DripSharp.Runtime.JavaCompat.Assert(() => (!isIndexed || !isShort));
-        sbyte[] srcColorValuesBytes = (isShort ? (sbyte[])(default!) : new sbyte[numComponents]);
-        short[] srcColorValuesShort = (isShort ? new short[numComponents] : (short[])(default!));
-        for (int y = 0; (y < scanHeight); y++) {
-          for (int x = 0; (x < scanWidth); x++) {
-            for (int c = 0; (c < numComponents); c++) {
-              int value = (int)(iis.ReadBits(bitsPerComponent));
-              float dMin = decode[(c * 2)];
-              float dMax = decode[((c * 2) + 1)];
-              float output = (dMin + (value * ((float)((dMax - dMin)) / (float)sampleMax)));
-              if (isIndexed) {
-                srcColorValuesBytes[c]
-                  = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.MathRoundFloat(output)))));
-              } else {
+      = new global::DripSharp.PdfCarton.Filter.DecodeOptions(); {
+      global::System.IO.Stream imageStream = pdImage.CreateInputStream(options);
+      global::System.Exception __dripsharpPrimary_275_26_0 = null!;
+      try { {
+          global::DripSharp.Runtime.JavaImageInputStream iis
+            = new global::DripSharp.Runtime.JavaImageInputStream(imageStream);
+          global::System.Exception __dripsharpPrimary_278_35_0 = null!;
+          try {
+            int inputWidth = pdImage.GetWidth();
+            int scanWidth = pdImage.GetWidth();
+            int scanHeight = pdImage.GetHeight();
+            float sampleMax = ((float)(global::System.Math.Pow((double)(2),
+              (double)(bitsPerComponent))) - 1.0F);
+            bool isIndexed
+              = (colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed);
+            int padding
+              = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((unchecked((inputWidth
+              * numComponents)) * bitsPerComponent)), 8);
+            if ((padding > 0)) {
+              padding = unchecked((8 - padding));
+            } else {
+              padding = 0;
+            }
+            bool isShort = (raster.GetDataBuffer().DataType
+              == global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_USHORT);
+            global::DripSharp.Runtime.JavaCompat.Assert(() => (!isIndexed || !isShort));
+            sbyte[] srcColorValuesBytes = (isShort ? (sbyte[])(default!)
+              : new sbyte[numComponents]);
+            short[] srcColorValuesShort = (isShort ? new short[numComponents]
+              : (short[])(default!));
+            for (int y = 0; (y < scanHeight); y++) {
+              for (int x = 0; (x < scanWidth); x++) {
+                for (int c = 0; (c < numComponents); c++) {
+                  int value = (int)(iis.ReadBits(bitsPerComponent));
+                  float dMin = decode[unchecked((c * 2))];
+                  float dMax = decode[unchecked((unchecked((c * 2)) + 1))];
+                  float output = (dMin + (value * ((float)((dMax - dMin)) / (float)sampleMax)));
+                  if (isIndexed) {
+                    srcColorValuesBytes[c]
+                      = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.MathRoundFloat(output)))));
+                  } else {
+                    if (isShort) {
+                      int outputShort
+                        = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((((float)((output
+                        - global::System.Math.Min(dMin, dMax)))
+                        / (float)(global::System.Math.Abs((dMax - dMin)))) * 65535.0F));
+                      srcColorValuesShort[c] = unchecked((short)(unchecked((short)(outputShort))));
+                    } else {
+                      int outputByte
+                        = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((((float)((output
+                        - global::System.Math.Min(dMin, dMax)))
+                        / (float)(global::System.Math.Abs((dMax - dMin)))) * 255.0F));
+                      srcColorValuesBytes[c] = unchecked((sbyte)(unchecked((sbyte)(outputByte))));
+                    }
+                  }
+                }
                 if (isShort) {
-                  int outputShort
-                    = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((((float)((output
-                    - global::System.Math.Min(dMin, dMax))) / (float)(global::System.Math.Abs((dMax
-                    - dMin)))) * 65535.0F));
-                  srcColorValuesShort[c] = unchecked((short)(unchecked((short)(outputShort))));
+                  raster.SetDataElements(x, y, srcColorValuesShort);
                 } else {
-                  int outputByte
-                    = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((((float)((output
-                    - global::System.Math.Min(dMin, dMax))) / (float)(global::System.Math.Abs((dMax
-                    - dMin)))) * 255.0F));
-                  srcColorValuesBytes[c] = unchecked((sbyte)(unchecked((sbyte)(outputByte))));
+                  raster.SetDataElements(x, y, srcColorValuesBytes);
                 }
               }
+              iis.ReadBits(padding);
             }
-            if (isShort) {
-              raster.SetDataElements(x, y, srcColorValuesShort);
-            } else {
-              raster.SetDataElements(x, y, srcColorValuesBytes);
-            }
+          } catch (global::System.Exception __dripsharpCaught_278_35_0) {
+            __dripsharpPrimary_278_35_0 = __dripsharpCaught_278_35_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(iis, __dripsharpPrimary_278_35_0);
           }
-          iis.ReadBits(padding);
         }
+      } catch (global::System.Exception __dripsharpCaught_275_26_0) {
+        __dripsharpPrimary_275_26_0 = __dripsharpCaught_275_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(imageStream,
+          __dripsharpPrimary_275_26_0);
       }
     }
   }
@@ -241,166 +271,10 @@ internal sealed class SampledImageReader {
     global::DripSharp.Runtime.JavaRaster raster;
     global::DripSharp.PdfCarton.Filter.DecodeOptions options
       = new global::DripSharp.PdfCarton.Filter.DecodeOptions(currentSubsampling);
-    options.SetSourceRegion(clipped);
-    using (global::System.IO.Stream iis = pdImage.CreateInputStream(options)) {
-      int inputWidth;
-      int startx;
-      int starty;
-      int scanWidth;
-      int scanHeight;
-      if (options.IsFilterSubsampled()) {
-        inputWidth = width;
-        startx = 0;
-        starty = 0;
-        scanWidth = width;
-        scanHeight = height;
-        currentSubsampling = 1;
-      } else {
-        inputWidth = pdImage.GetWidth();
-        startx = clipped.Left;
-        starty = clipped.Top;
-        scanWidth = clipped.Width;
-        scanHeight = clipped.Height;
-      }
-      if ((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray)) {
-        bim = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
-          global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
-        raster = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(bim!);
-      } else {
-        raster
-          = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBandedRaster(global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE,
-          width, height, 1, new global::DripSharp.Runtime.JavaPoint(0, 0));
-      }
-      sbyte[] output
-        = ((global::DripSharp.Runtime.JavaDataBufferByte)(raster.GetDataBuffer()!)).GetData();
-      int idx = 0;
-      bool nosubsampling = (currentSubsampling == 1);
-      int stride = ((inputWidth + 7) / 8);
-      int invert = ((decode[0] < decode[1]) ? 0 : -1);
-      int endX = (startx + scanWidth);
-      sbyte[] buff = new sbyte[stride];
-      for (int y = 0; (y < (starty + scanHeight)); y++) {
-        int read = (int)(global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(iis, buff));
-        if (((y >= starty) && ((y % currentSubsampling) == 0))) {
-          int x = startx;
-          for (int r = (x / 8); ((r < stride) && (r < read)); r++) {
-            int value = ((buff[r] ^ invert) << unchecked((int)((24 + (x & 7)))));
-            for (int count = global::System.Math.Min((8 - (x & 7)), (endX - x)); (count > 0); x++,
-              count--) {
-              if ((nosubsampling || ((x % currentSubsampling) == 0))) {
-                if ((value < 0)) {
-                  output[idx] = unchecked((sbyte)(255));
-                }
-                idx++;
-              }
-              value <<= 1;
-            }
-          }
-        }
-        if ((read != stride)) {
-          global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.LOG,
-            global::DripSharp.Runtime.JavaCompat.StringValueOf("premature EOF, image will be incomplete"));
-          break;
-        }
-      }
-      if ((bim! != default!)) {
-        global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(bim!, raster);
-        return bim!;
-      }
-      return colorSpace.ToRGBImage(raster);
-    }
-  }
-
-  private static global::SkiaSharp.SKBitmap from8bit(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
-    global::DripSharp.Runtime.JavaRaster raster, global::SkiaSharp.SKRectI clipped, int subsampling,
-    int width, int height) {
-    int currentSubsampling = subsampling;
-    global::DripSharp.PdfCarton.Filter.DecodeOptions options
-      = new global::DripSharp.PdfCarton.Filter.DecodeOptions(currentSubsampling);
-    options.SetSourceRegion(clipped);
-    using (global::System.IO.Stream input = pdImage.CreateInputStream(options)) {
-      int inputWidth;
-      int startx;
-      int starty;
-      int scanWidth;
-      int scanHeight;
-      if (options.IsFilterSubsampled()) {
-        inputWidth = width;
-        startx = 0;
-        starty = 0;
-        scanWidth = width;
-        scanHeight = height;
-        currentSubsampling = 1;
-      } else {
-        inputWidth = pdImage.GetWidth();
-        startx = clipped.Left;
-        starty = clipped.Top;
-        scanWidth = clipped.Width;
-        scanHeight = clipped.Height;
-      }
-      int numComponents = pdImage.GetColorSpace().GetNumberOfComponents();
-      sbyte[] bank
-        = ((global::DripSharp.Runtime.JavaDataBufferByte)(raster.GetDataBuffer()!)).GetData();
-      if ((((((startx == 0) && (starty == 0)) && (scanWidth == width)) && (scanHeight == height))
-        && (currentSubsampling == 1))) {
-        long inputResult__505_22 = global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(input,
-          bank);
-        if ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)
-          && (global::DripSharp.Runtime.JavaCompat.CompareLong(inputResult__505_22, (((long)width
-          * height) * numComponents)) != 0))) {
-          global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.LOG,
-            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Tried reading ",
-            (((long)width * height) * numComponents)), " bytes but only "), inputResult__505_22),
-            " bytes read")));
-        }
-        return pdImage.GetColorSpace().ToRGBImage(raster);
-      }
-      sbyte[] tempBytes = new sbyte[(numComponents * inputWidth)];
-      int i = 0;
-      for (int y = 0; (y < (starty + scanHeight)); ++y) {
-        long inputResult__522_22 = global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(input,
-          tempBytes);
-        if ((global::DripSharp.Runtime.JavaCompat.CompareLong(inputResult__522_22,
-          (long)(tempBytes.Length)) != 0)) {
-          global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.LOG,
-            global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Tried reading ",
-            tempBytes.Length), " bytes but only "), inputResult__522_22), " bytes read")));
-        }
-        if (((y < starty) || ((y % currentSubsampling) > 0))) {
-          continue;
-        }
-        if ((currentSubsampling == 1)) {
-          global::DripSharp.Runtime.JavaCompat.ArrayCopy(tempBytes, (startx * numComponents), bank,
-            ((y * inputWidth) * numComponents), (scanWidth * numComponents));
-        } else {
-          for (int x = startx; (x < (startx + scanWidth)); x += currentSubsampling) {
-            for (int c = 0; (c < numComponents); c++) {
-              bank[i] = unchecked((sbyte)(tempBytes[((x * numComponents) + c)]));
-              ++i;
-            }
-          }
-        }
-      }
-      return pdImage.GetColorSpace().ToRGBImage(raster);
-    }
-  }
-
-  private static global::SkiaSharp.SKBitmap fromAny(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
-    global::DripSharp.Runtime.JavaRaster raster, global::DripSharp.PdfCarton.Cos.COSArray colorKey,
-    global::SkiaSharp.SKRectI clipped, int subsampling, int width, int height) {
-    int currentSubsampling = subsampling;
-    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace
-      = pdImage.GetColorSpace();
-    int numComponents = colorSpace.GetNumberOfComponents();
-    int bitsPerComponent = pdImage.GetBitsPerComponent();
-    float[] decode
-      = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.getDecodeArray(pdImage);
-    global::DripSharp.PdfCarton.Filter.DecodeOptions options
-      = new global::DripSharp.PdfCarton.Filter.DecodeOptions(currentSubsampling);
-    options.SetSourceRegion(clipped);
-    using (global::System.IO.Stream imageStream = pdImage.CreateInputStream(options)) {
-      using (global::DripSharp.Runtime.JavaImageInputStream iis
-        = new global::DripSharp.Runtime.JavaImageInputStream(imageStream)) {
+    options.SetSourceRegion(clipped); {
+      global::System.IO.Stream iis = pdImage.CreateInputStream(options);
+      global::System.Exception __dripsharpPrimary_377_26_0 = null!;
+      try {
         int inputWidth;
         int startx;
         int starty;
@@ -420,74 +294,279 @@ internal sealed class SampledImageReader {
           scanWidth = clipped.Width;
           scanHeight = clipped.Height;
         }
-        float sampleMax = ((float)(global::System.Math.Pow((double)(2), (double)(bitsPerComponent)))
-          - 1.0F);
-        bool isIndexed
-          = (colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed);
-        float[] colorKeyRanges = default!;
-        global::SkiaSharp.SKBitmap colorKeyMask = default!;
-        if ((colorKey != default!)) {
-          if ((colorKey.Size() >= (numComponents * 2))) {
-            colorKeyRanges = colorKey.ToFloatArray();
-            colorKeyMask = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
-              global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
-          } else {
+        if ((colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray)) {
+          bim = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
+            global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
+          raster = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(bim!);
+        } else {
+          raster
+            = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBandedRaster(global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE,
+            width, height, 1, new global::DripSharp.Runtime.JavaPoint(0, 0));
+        }
+        sbyte[] output
+          = ((global::DripSharp.Runtime.JavaDataBufferByte)(raster.GetDataBuffer()!)).GetData();
+        int idx = 0;
+        bool nosubsampling = (currentSubsampling == 1);
+        int stride = global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((inputWidth
+          + 7)), 8);
+        int invert = ((decode[0] < decode[1]) ? 0 : unchecked(-1));
+        int endX = unchecked((startx + scanWidth));
+        sbyte[] buff = new sbyte[stride];
+        for (int y = 0; (y < unchecked((starty + scanHeight))); y++) {
+          int read = (int)(global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(iis, buff));
+          if (((y >= starty) && (global::DripSharp.Runtime.JavaCompat.IntegralRemainder(y,
+            currentSubsampling) == 0))) {
+            int x = startx;
+            for (int r = global::DripSharp.Runtime.JavaCompat.IntegralDivide(x, 8); ((r < stride)
+              && (r < read)); r++) {
+              int value = ((buff[r] ^ invert) << unchecked((int)(unchecked((24 + (x & 7))))));
+              for (int count = global::System.Math.Min(unchecked((8 - (x & 7))), unchecked((endX
+                - x))); (count > 0); x++, count--) {
+                if ((nosubsampling || (global::DripSharp.Runtime.JavaCompat.IntegralRemainder(x,
+                  currentSubsampling) == 0))) {
+                  if ((value < 0)) {
+                    output[idx] = unchecked((sbyte)(255));
+                  }
+                  idx++;
+                }
+                value <<= unchecked((int)(1));
+              }
+            }
+          }
+          if ((read != stride)) {
             global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.LOG,
-              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("colorKey mask size is ",
-              colorKey.Size()), ", should be "), (numComponents * 2)), ", ignored")));
+              global::DripSharp.Runtime.JavaCompat.StringValueOf("premature EOF, image will be incomplete"));
+            break;
           }
         }
-        int padding = (((inputWidth * numComponents) * bitsPerComponent) % 8);
-        if ((padding > 0)) {
-          padding = (8 - padding);
-        } else {
-          padding = 0;
+        if ((bim! != default!)) {
+          global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(bim!, raster);
+          return bim!;
         }
-        sbyte[] srcColorValues = new sbyte[numComponents];
-        sbyte[] alpha = new sbyte[1];
-        for (int y = 0; (y < (starty + scanHeight)); y++) {
-          for (int x = 0; (x < (startx + scanWidth)); x++) {
-            bool isMasked = true;
-            for (int c = 0; (c < numComponents); c++) {
-              int value = (int)(iis.ReadBits(bitsPerComponent));
-              if ((colorKeyRanges! != default!)) {
-                isMasked &= ((value >= colorKeyRanges![(c * 2)]) && (value <= colorKeyRanges![((c
-                  * 2) + 1)]));
+        return colorSpace.ToRGBImage(raster);
+      } catch (global::System.Exception __dripsharpCaught_377_26_0) {
+        __dripsharpPrimary_377_26_0 = __dripsharpCaught_377_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(iis, __dripsharpPrimary_377_26_0);
+      }
+    }
+  }
+
+  private static global::SkiaSharp.SKBitmap from8bit(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
+    global::DripSharp.Runtime.JavaRaster raster, global::SkiaSharp.SKRectI clipped, int subsampling,
+    int width, int height) {
+    int currentSubsampling = subsampling;
+    global::DripSharp.PdfCarton.Filter.DecodeOptions options
+      = new global::DripSharp.PdfCarton.Filter.DecodeOptions(currentSubsampling);
+    options.SetSourceRegion(clipped); {
+      global::System.IO.Stream input = pdImage.CreateInputStream(options);
+      global::System.Exception __dripsharpPrimary_473_26_0 = null!;
+      try {
+        int inputWidth;
+        int startx;
+        int starty;
+        int scanWidth;
+        int scanHeight;
+        if (options.IsFilterSubsampled()) {
+          inputWidth = width;
+          startx = 0;
+          starty = 0;
+          scanWidth = width;
+          scanHeight = height;
+          currentSubsampling = 1;
+        } else {
+          inputWidth = pdImage.GetWidth();
+          startx = clipped.Left;
+          starty = clipped.Top;
+          scanWidth = clipped.Width;
+          scanHeight = clipped.Height;
+        }
+        int numComponents = pdImage.GetColorSpace().GetNumberOfComponents();
+        sbyte[] bank
+          = ((global::DripSharp.Runtime.JavaDataBufferByte)(raster.GetDataBuffer()!)).GetData();
+        if ((((((startx == 0) && (starty == 0)) && (scanWidth == width)) && (scanHeight == height))
+          && (currentSubsampling == 1))) {
+          long inputResult__505_22 = global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(input,
+            bank);
+          if ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)
+            && (global::DripSharp.Runtime.JavaCompat.CompareLong(inputResult__505_22,
+            unchecked((unchecked(((long)width * height)) * numComponents))) != 0))) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Tried reading ",
+              unchecked((unchecked(((long)width * height)) * numComponents))), " bytes but only "),
+              inputResult__505_22), " bytes read")));
+          }
+          return pdImage.GetColorSpace().ToRGBImage(raster);
+        }
+        sbyte[] tempBytes = new sbyte[unchecked((numComponents * inputWidth))];
+        int i = 0;
+        for (int y = 0; (y < unchecked((starty + scanHeight))); ++y) {
+          long inputResult__522_22 = global::DripSharp.PdfCarton.IO.IOUtils.PopulateBuffer(input,
+            tempBytes);
+          if ((global::DripSharp.Runtime.JavaCompat.CompareLong(inputResult__522_22,
+            (long)(tempBytes.Length)) != 0)) {
+            global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.LOG,
+              global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Tried reading ",
+              tempBytes.Length), " bytes but only "), inputResult__522_22), " bytes read")));
+          }
+          if (((y < starty) || (global::DripSharp.Runtime.JavaCompat.IntegralRemainder(y,
+            currentSubsampling) > 0))) {
+            continue;
+          }
+          if ((currentSubsampling == 1)) {
+            global::DripSharp.Runtime.JavaCompat.ArrayCopy(tempBytes, unchecked((startx
+              * numComponents)), bank, unchecked((unchecked((y * inputWidth)) * numComponents)),
+              unchecked((scanWidth * numComponents)));
+          } else {
+            for (int x = startx; (x < unchecked((startx + scanWidth))); x += currentSubsampling) {
+              for (int c = 0; (c < numComponents); c++) {
+                bank[i] = unchecked((sbyte)(tempBytes[unchecked((unchecked((x * numComponents))
+                  + c))]));
+                ++i;
               }
-              float dMin = decode[(c * 2)];
-              float dMax = decode[((c * 2) + 1)];
-              float output = (dMin + (value * ((float)((dMax - dMin)) / (float)sampleMax)));
-              if (isIndexed) {
-                srcColorValues[c]
-                  = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.MathRoundFloat(output)))));
+            }
+          }
+        }
+        return pdImage.GetColorSpace().ToRGBImage(raster);
+      } catch (global::System.Exception __dripsharpCaught_473_26_0) {
+        __dripsharpPrimary_473_26_0 = __dripsharpCaught_473_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(input, __dripsharpPrimary_473_26_0);
+      }
+    }
+  }
+
+  private static global::SkiaSharp.SKBitmap fromAny(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
+    global::DripSharp.Runtime.JavaRaster raster, global::DripSharp.PdfCarton.Cos.COSArray colorKey,
+    global::SkiaSharp.SKRectI clipped, int subsampling, int width, int height) {
+    int currentSubsampling = subsampling;
+    global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace
+      = pdImage.GetColorSpace();
+    int numComponents = colorSpace.GetNumberOfComponents();
+    int bitsPerComponent = pdImage.GetBitsPerComponent();
+    float[] decode
+      = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.getDecodeArray(pdImage);
+    global::DripSharp.PdfCarton.Filter.DecodeOptions options
+      = new global::DripSharp.PdfCarton.Filter.DecodeOptions(currentSubsampling);
+    options.SetSourceRegion(clipped); {
+      global::System.IO.Stream imageStream = pdImage.CreateInputStream(options);
+      global::System.Exception __dripsharpPrimary_571_26_0 = null!;
+      try { {
+          global::DripSharp.Runtime.JavaImageInputStream iis
+            = new global::DripSharp.Runtime.JavaImageInputStream(imageStream);
+          global::System.Exception __dripsharpPrimary_574_35_0 = null!;
+          try {
+            int inputWidth;
+            int startx;
+            int starty;
+            int scanWidth;
+            int scanHeight;
+            if (options.IsFilterSubsampled()) {
+              inputWidth = width;
+              startx = 0;
+              starty = 0;
+              scanWidth = width;
+              scanHeight = height;
+              currentSubsampling = 1;
+            } else {
+              inputWidth = pdImage.GetWidth();
+              startx = clipped.Left;
+              starty = clipped.Top;
+              scanWidth = clipped.Width;
+              scanHeight = clipped.Height;
+            }
+            float sampleMax = ((float)(global::System.Math.Pow((double)(2),
+              (double)(bitsPerComponent))) - 1.0F);
+            bool isIndexed
+              = (colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed);
+            float[] colorKeyRanges = default!;
+            global::SkiaSharp.SKBitmap colorKeyMask = default!;
+            if ((colorKey != default!)) {
+              if ((colorKey.Size() >= unchecked((numComponents * 2)))) {
+                colorKeyRanges = colorKey.ToFloatArray();
+                colorKeyMask = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width,
+                  height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
               } else {
-                int outputByte
-                  = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((((float)((output
-                  - global::System.Math.Min(dMin, dMax))) / (float)(global::System.Math.Abs((dMax
-                  - dMin)))) * 255.0F));
-                srcColorValues[c] = unchecked((sbyte)(unchecked((sbyte)(outputByte))));
+                global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.LOG,
+                  global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("colorKey mask size is ",
+                  colorKey.Size()), ", should be "), unchecked((numComponents * 2))),
+                  ", ignored")));
               }
             }
-            if (((((x >= startx) && (y >= starty)) && ((x % currentSubsampling) == 0))
-              && ((y % currentSubsampling) == 0))) {
-              raster.SetDataElements(((x - startx) / currentSubsampling), ((y - starty)
-                / currentSubsampling), srcColorValues);
-              if ((colorKeyMask! != default!)) {
-                alpha[0] = unchecked((sbyte)(unchecked((sbyte)((isMasked ? 255 : 0)))));
-                global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(colorKeyMask!).SetDataElements(((x
-                  - startx) / currentSubsampling), ((y - starty) / currentSubsampling), alpha);
-              }
+            int padding
+              = global::DripSharp.Runtime.JavaCompat.IntegralRemainder(unchecked((unchecked((inputWidth
+              * numComponents)) * bitsPerComponent)), 8);
+            if ((padding > 0)) {
+              padding = unchecked((8 - padding));
+            } else {
+              padding = 0;
             }
+            sbyte[] srcColorValues = new sbyte[numComponents];
+            sbyte[] alpha = new sbyte[1];
+            for (int y = 0; (y < unchecked((starty + scanHeight))); y++) {
+              for (int x = 0; (x < unchecked((startx + scanWidth))); x++) {
+                bool isMasked = true;
+                for (int c = 0; (c < numComponents); c++) {
+                  int value = (int)(iis.ReadBits(bitsPerComponent));
+                  if ((colorKeyRanges! != default!)) {
+                    isMasked &= ((value >= colorKeyRanges![unchecked((c * 2))]) && (value
+                      <= colorKeyRanges![unchecked((unchecked((c * 2)) + 1))]));
+                  }
+                  float dMin = decode[unchecked((c * 2))];
+                  float dMax = decode[unchecked((unchecked((c * 2)) + 1))];
+                  float output = (dMin + (value * ((float)((dMax - dMin)) / (float)sampleMax)));
+                  if (isIndexed) {
+                    srcColorValues[c]
+                      = unchecked((sbyte)(unchecked((sbyte)(global::DripSharp.Runtime.JavaCompat.MathRoundFloat(output)))));
+                  } else {
+                    int outputByte
+                      = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((((float)((output
+                      - global::System.Math.Min(dMin, dMax)))
+                      / (float)(global::System.Math.Abs((dMax - dMin)))) * 255.0F));
+                    srcColorValues[c] = unchecked((sbyte)(unchecked((sbyte)(outputByte))));
+                  }
+                }
+                if (((((x >= startx) && (y >= starty))
+                  && (global::DripSharp.Runtime.JavaCompat.IntegralRemainder(x, currentSubsampling)
+                  == 0)) && (global::DripSharp.Runtime.JavaCompat.IntegralRemainder(y,
+                  currentSubsampling) == 0))) {
+                  raster.SetDataElements(global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((x
+                    - startx)), currentSubsampling),
+                    global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((y - starty)),
+                    currentSubsampling), srcColorValues);
+                  if ((colorKeyMask! != default!)) {
+                    alpha[0] = unchecked((sbyte)(unchecked((sbyte)((isMasked ? 255 : 0)))));
+                    global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(colorKeyMask!).SetDataElements(global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((x
+                      - startx)), currentSubsampling),
+                      global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((y - starty)),
+                      currentSubsampling), alpha);
+                  }
+                }
+              }
+              iis.ReadBits(padding);
+            }
+            global::SkiaSharp.SKBitmap rgbImage = colorSpace.ToRGBImage(raster);
+            if ((colorKeyMask! != default!)) {
+              return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.applyColorKeyMask(rgbImage,
+                colorKeyMask!);
+            } else {
+              return rgbImage;
+            }
+          } catch (global::System.Exception __dripsharpCaught_574_35_0) {
+            __dripsharpPrimary_574_35_0 = __dripsharpCaught_574_35_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(iis, __dripsharpPrimary_574_35_0);
           }
-          iis.ReadBits(padding);
         }
-        global::SkiaSharp.SKBitmap rgbImage = colorSpace.ToRGBImage(raster);
-        if ((colorKeyMask! != default!)) {
-          return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.applyColorKeyMask(rgbImage,
-            colorKeyMask!);
-        } else {
-          return rgbImage;
-        }
+      } catch (global::System.Exception __dripsharpCaught_571_26_0) {
+        __dripsharpPrimary_571_26_0 = __dripsharpCaught_571_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(imageStream,
+          __dripsharpPrimary_571_26_0);
       }
     }
   }
@@ -526,9 +605,9 @@ internal sealed class SampledImageReader {
     global::DripSharp.PdfCarton.Cos.COSArray cosDecode = pdImage.GetDecode();
     if ((cosDecode != default!)) {
       int numberOfComponents = pdImage.GetColorSpace().GetNumberOfComponents();
-      if ((cosDecode.Size() >= (numberOfComponents * 2))) {
+      if ((cosDecode.Size() >= unchecked((numberOfComponents * 2)))) {
         bool error = false;
-        float[] decode = new float[(numberOfComponents * 2)];
+        float[] decode = new float[unchecked((numberOfComponents * 2))];
         for (int i = 0; (i < decode.Length); ++i) {
           global::DripSharp.PdfCarton.Cos.COSBase @base = cosDecode.Get(i);
           if ((@base is global::DripSharp.PdfCarton.Cos.COSNumber)) {
@@ -551,5 +630,9 @@ internal sealed class SampledImageReader {
         cosDecode), " not compatible with color space, using default")));
     }
     return pdImage.GetColorSpace().GetDefaultDecode(pdImage.GetBitsPerComponent());
+  }
+
+  static SampledImageReader() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

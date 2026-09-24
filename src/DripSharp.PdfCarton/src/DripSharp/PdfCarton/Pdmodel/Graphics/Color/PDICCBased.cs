@@ -10,12 +10,11 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
 public sealed class PDICCBased
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEBasedColorSpace {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream = null!;
 
-  private int numberOfComponents = -1;
+  private int numberOfComponents;
 
   private global::DripSharp.Runtime.JavaIccProfile iccProfile = null!;
 
@@ -26,11 +25,15 @@ public sealed class PDICCBased
 
   private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor initialColor = null!;
 
-  private bool isRGB = false;
+  private bool isRGB;
 
-  private bool useOnlyAlternateColorSpace = false;
+  private bool useOnlyAlternateColorSpace;
 
   public PDICCBased(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc) {
+    this.numberOfComponents = unchecked(-1);
+    this.isRGB = false;
+    this.useOnlyAlternateColorSpace = false;
+
     base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
     base.Array.Add(global::DripSharp.PdfCarton.Cos.COSName.Iccbased);
     this.stream = new global::DripSharp.PdfCarton.Pdmodel.Common.PDStream(doc);
@@ -38,6 +41,10 @@ public sealed class PDICCBased
   }
 
   private PDICCBased(global::DripSharp.PdfCarton.Cos.COSArray iccArray) {
+    this.numberOfComponents = unchecked(-1);
+    this.isRGB = false;
+    this.useOnlyAlternateColorSpace = false;
+
     this.useOnlyAlternateColorSpace
       = (global::DripSharp.Runtime.JavaCompat.GetProperty("org.apache.pdfbox.rendering.UseAlternateInsteadOfICCColorSpace")
       != default!);
@@ -100,33 +107,42 @@ public sealed class PDICCBased
           e.Message)));
       }
     }
-    try {
-      using (global::System.IO.Stream input = this.stream.CreateInputStream()) {
-        global::DripSharp.Runtime.JavaIccProfile profile;
-        lock (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased.LOG) {
-          profile = global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(input);
-          if (this.is_sRGB(profile)) {
-            this.isRGB = true;
-            this.awtColorSpace
-              = (global::DripSharp.Runtime.JavaIccColorSpace)(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_sRGB)!);
-            this.iccProfile = this.awtColorSpace.Profile;
-          } else {
-            profile
-              = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased.ensureDisplayProfile(profile);
-            this.awtColorSpace = new global::DripSharp.Runtime.JavaIccColorSpace(profile);
-            this.iccProfile = profile;
+    try { {
+        global::System.IO.Stream input = this.stream.CreateInputStream();
+        global::System.Exception __dripsharpPrimary_178_26_0 = null!;
+        try {
+          global::DripSharp.Runtime.JavaIccProfile profile;
+          lock (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased.LOG) {
+            profile = global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(input);
+            if (this.is_sRGB(profile)) {
+              this.isRGB = true;
+              this.awtColorSpace
+                = (global::DripSharp.Runtime.JavaIccColorSpace)(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_sRGB)!);
+              this.iccProfile = this.awtColorSpace.Profile;
+            } else {
+              profile
+                = global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased.ensureDisplayProfile(profile);
+              this.awtColorSpace = new global::DripSharp.Runtime.JavaIccColorSpace(profile);
+              this.iccProfile = profile;
+            }
+            int numOfComponents = this.GetNumberOfComponents();
+            float[] initial = new float[numOfComponents];
+            for (int c = 0; (c < initial.Length); c++) {
+              initial[c] = global::System.Math.Max((float)(0),
+                this.GetRangeForComponent(c).GetMin());
+            }
+            this.initialColor
+              = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(initial, this);
+            this.awtColorSpace.ToRgb(new float[numOfComponents]);
+            global::DripSharp.Runtime.PdfCartonFontCompat.ComponentColorModel(this.awtColorSpace,
+              false, false, global::DripSharp.Runtime.PdfCartonTransparency.OPAQUE,
+              global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE);
           }
-          int numOfComponents = this.GetNumberOfComponents();
-          float[] initial = new float[numOfComponents];
-          for (int c = 0; (c < initial.Length); c++) {
-            initial[c] = global::System.Math.Max((float)(0), this.GetRangeForComponent(c).GetMin());
-          }
-          this.initialColor
-            = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(initial, this);
-          this.awtColorSpace.ToRgb(new float[numOfComponents]);
-          global::DripSharp.Runtime.PdfCartonFontCompat.ComponentColorModel(this.awtColorSpace,
-            false, false, global::DripSharp.Runtime.PdfCartonTransparency.OPAQUE,
-            global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE);
+        } catch (global::System.Exception __dripsharpCaught_178_26_0) {
+          __dripsharpPrimary_178_26_0 = __dripsharpCaught_178_26_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(input, __dripsharpPrimary_178_26_0);
         }
       }
     } catch (global::System.Exception e) when (e is global::System.ArgumentException or global::System.InvalidOperationException or global::System.IndexOutOfRangeException or global::System.IO.IOException) {
@@ -153,7 +169,7 @@ public sealed class PDICCBased
     sbyte[] bytes
       = global::DripSharp.Runtime.JavaCompat.CopyOfRange<sbyte>(profile.GetData(global::DripSharp.Runtime.JavaIccProfile.icSigHead),
       global::DripSharp.Runtime.JavaIccProfile.icHdrModel,
-      (global::DripSharp.Runtime.JavaIccProfile.icHdrModel + 7));
+      unchecked((global::DripSharp.Runtime.JavaIccProfile.icHdrModel + 7)));
     string deviceModel
       = global::DripSharp.Runtime.JavaCompat.StringTrim(global::DripSharp.Runtime.JavaCompat.NewString(bytes,
       global::DripSharp.Runtime.JavaStandardCharsets.USASCII));
@@ -177,9 +193,11 @@ public sealed class PDICCBased
 
   private static void intToBigEndian(int value, sbyte[] array, int index) {
     array[index] = unchecked((sbyte)(unchecked((sbyte)((value >> unchecked((int)(24)))))));
-    array[(index + 1)] = unchecked((sbyte)(unchecked((sbyte)((value >> unchecked((int)(16)))))));
-    array[(index + 2)] = unchecked((sbyte)(unchecked((sbyte)((value >> unchecked((int)(8)))))));
-    array[(index + 3)] = unchecked((sbyte)(unchecked((sbyte)(value))));
+    array[unchecked((index + 1))]
+      = unchecked((sbyte)(unchecked((sbyte)((value >> unchecked((int)(16)))))));
+    array[unchecked((index + 2))]
+      = unchecked((sbyte)(unchecked((sbyte)((value >> unchecked((int)(8)))))));
+    array[unchecked((index + 3))] = unchecked((sbyte)(unchecked((sbyte)(value))));
   }
 
   public override float[] ToRGB(float[] value) {
@@ -240,10 +258,10 @@ public sealed class PDICCBased
   public override float[] GetDefaultDecode(int bitsPerComponent) {
     if ((this.awtColorSpace != default!)) {
       int n = this.GetNumberOfComponents();
-      float[] decode = new float[(n * 2)];
+      float[] decode = new float[unchecked((n * 2))];
       for (int i = 0; (i < n); i++) {
-        decode[(i * 2)] = this.awtColorSpace.GetMinValue(i);
-        decode[((i * 2) + 1)] = this.awtColorSpace.GetMaxValue(i);
+        decode[unchecked((i * 2))] = this.awtColorSpace.GetMinValue(i);
+        decode[unchecked((unchecked((i * 2)) + 1))] = this.awtColorSpace.GetMaxValue(i);
       }
       return decode;
     } else {
@@ -298,7 +316,8 @@ public sealed class PDICCBased
   public global::DripSharp.PdfCarton.Pdmodel.Common.PDRange GetRangeForComponent(int n) {
     global::DripSharp.PdfCarton.Cos.COSArray rangeArray
       = this.stream.GetCOSObject().GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Range);
-    if (((rangeArray == default!) || (rangeArray.Size() < (this.GetNumberOfComponents() * 2)))) {
+    if (((rangeArray == default!) || (rangeArray.Size() < unchecked((this.GetNumberOfComponents()
+      * 2))))) {
       return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange();
     }
     return new global::DripSharp.PdfCarton.Pdmodel.Common.PDRange(rangeArray, n);
@@ -320,7 +339,7 @@ public sealed class PDICCBased
       case var __case_482_18_0 when __case_482_18_0 == 4:
         return global::DripSharp.Runtime.JavaColorSpace.TYPE_CMYK;
       default:
-        return -1;
+        return unchecked(-1);
     }
   }
 
@@ -341,12 +360,14 @@ public sealed class PDICCBased
       rangeArray = new global::DripSharp.PdfCarton.Cos.COSArray();
       this.stream.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Range, rangeArray);
     }
-    while ((rangeArray.Size() < ((n + 1) * 2))) {
+    while ((rangeArray.Size() < unchecked((unchecked((n + 1)) * 2)))) {
       rangeArray.Add(global::DripSharp.PdfCarton.Cos.COSFloat.Zero);
       rangeArray.Add(global::DripSharp.PdfCarton.Cos.COSFloat.One);
     }
-    rangeArray.Set((n * 2), new global::DripSharp.PdfCarton.Cos.COSFloat(range.GetMin()));
-    rangeArray.Set(((n * 2) + 1), new global::DripSharp.PdfCarton.Cos.COSFloat(range.GetMax()));
+    rangeArray.Set(unchecked((n * 2)),
+      new global::DripSharp.PdfCarton.Cos.COSFloat(range.GetMin()));
+    rangeArray.Set(unchecked((unchecked((n * 2)) + 1)),
+      new global::DripSharp.PdfCarton.Cos.COSFloat(range.GetMax()));
   }
 
   public void SetMetadata(global::DripSharp.PdfCarton.Cos.COSStream metadata) {
@@ -360,5 +381,10 @@ public sealed class PDICCBased
   public override string ToString() {
     return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.GetName(),
       "{numberOfComponents: "), this.GetNumberOfComponents()), "}");
+  }
+
+  static PDICCBased() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEBasedColorSpace).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

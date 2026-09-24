@@ -54,4 +54,8 @@ public sealed class PDCheckBox : global::DripSharp.PdfCarton.Pdmodel.Interactive
     }
     return "";
   }
+
+  static PDCheckBox() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDButton).TypeHandle);
+  }
 }

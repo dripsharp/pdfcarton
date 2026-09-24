@@ -145,4 +145,8 @@ public sealed class PDTextField
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper(this);
     apHelper.SetAppearanceValue(this.GetValue());
   }
+
+  static PDTextField() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDVariableText).TypeHandle);
+  }
 }

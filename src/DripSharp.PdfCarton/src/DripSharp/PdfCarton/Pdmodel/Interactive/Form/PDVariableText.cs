@@ -113,4 +113,8 @@ public abstract class PDVariableText
     }
     return "";
   }
+
+  static PDVariableText() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTerminalField).TypeHandle);
+  }
 }

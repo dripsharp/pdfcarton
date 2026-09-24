@@ -146,4 +146,8 @@ public class XMPRightsManagementSchema : global::DripSharp.PdfCarton.Xmp.Schema.
   public virtual void SetCertificateProperty(global::DripSharp.PdfCarton.Xmp.Type.URLType url) {
     this.AddProperty(url);
   }
+
+  static XMPRightsManagementSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema).TypeHandle);
+  }
 }

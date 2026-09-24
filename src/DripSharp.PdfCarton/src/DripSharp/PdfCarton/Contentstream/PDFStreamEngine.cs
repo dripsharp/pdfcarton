@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Contentstream;
 
 public abstract class PDFStreamEngine {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::System.Collections.Generic.IDictionary<string,
     global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor> operators
@@ -423,7 +422,8 @@ public abstract class PDFStreamEngine {
     while ((global::DripSharp.Runtime.JavaCompat.InputStreamAvailable(@in) > 0)) {
       int before = global::DripSharp.Runtime.JavaCompat.InputStreamAvailable(@in);
       int code = font.ReadCode(@in);
-      int codeLength = (before - global::DripSharp.Runtime.JavaCompat.InputStreamAvailable(@in));
+      int codeLength = unchecked((before
+        - global::DripSharp.Runtime.JavaCompat.InputStreamAvailable(@in)));
       float wordSpacing = 0;
       if (((codeLength == 1) && (code == 32))) {
         wordSpacing += textState.GetWordSpacing();
@@ -641,4 +641,8 @@ public abstract class PDFStreamEngine {
 
   public virtual void MarkedContentPoint(global::DripSharp.PdfCarton.Cos.COSName tag,
     global::DripSharp.PdfCarton.Cos.COSDictionary properties) {}
+
+  static PDFStreamEngine() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  }
 }

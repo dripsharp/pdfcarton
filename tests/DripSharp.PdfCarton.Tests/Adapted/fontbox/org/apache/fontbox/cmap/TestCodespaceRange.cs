@@ -20,7 +20,8 @@ public class TestCodespaceRange {
 
   internal virtual void testConstructor() {
     sbyte[] startBytes1 = new sbyte[] { unchecked((sbyte)(0)) };
-    sbyte[] endBytes2 = new sbyte[] { unchecked((sbyte)(-1)), unchecked((sbyte)(-1)) };
+    sbyte[] endBytes2 = new sbyte[] { unchecked((sbyte)(unchecked(-1))),
+      unchecked((sbyte)(unchecked(-1))) };
     new global::DripSharp.PdfCarton.Fonts.Cmap.CodespaceRange(startBytes1, endBytes2);
     sbyte[] startBytes3 = new sbyte[] { unchecked((sbyte)(1)) };
     sbyte[] endBytes4 = new sbyte[] { unchecked((sbyte)(1)), unchecked((sbyte)(32)) };

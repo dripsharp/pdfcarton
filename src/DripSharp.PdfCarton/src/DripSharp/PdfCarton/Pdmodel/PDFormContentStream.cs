@@ -15,4 +15,8 @@ public sealed class PDFormContentStream
     form.GetContentStream().CreateOutputStream(), form.GetResources()) {
 
   }
+
+  static PDFormContentStream() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.PDAbstractContentStream).TypeHandle);
+  }
 }

@@ -23,4 +23,8 @@ public class PDTransparencyGroup : global::DripSharp.PdfCarton.Pdmodel.Graphics.
   : base(document) {
 
   }
+
+  static PDTransparencyGroup() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Form.PDFormXObject).TypeHandle);
+  }
 }

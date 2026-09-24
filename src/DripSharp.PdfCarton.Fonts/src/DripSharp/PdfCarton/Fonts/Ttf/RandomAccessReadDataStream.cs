@@ -9,31 +9,34 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 internal class RandomAccessReadDataStream : global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly long length = default;
 
   private readonly sbyte[] data = null!;
 
-  private int currentPosition = 0;
+  private int currentPosition;
 
   internal RandomAccessReadDataStream(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
+    this.currentPosition = 0;
+
     this.length = randomAccessRead.Length();
-    if ((this.length > (int.MaxValue - 8))) {
+    if ((this.length > unchecked((int.MaxValue - 8)))) {
       throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Stream is too long, size: ",
         this.length));
     }
     this.data = new sbyte[(int)(this.length)];
     int remainingBytes = this.data.Length;
     int amountRead;
-    while (((amountRead = randomAccessRead.Read(this.data, (this.data.Length - remainingBytes),
-      remainingBytes)) > 0)) {
+    while (((amountRead = randomAccessRead.Read(this.data, unchecked((this.data.Length
+      - remainingBytes)), remainingBytes)) > 0)) {
       remainingBytes -= amountRead;
     }
   }
 
   internal RandomAccessReadDataStream(global::System.IO.Stream inputStream) {
+    this.currentPosition = 0;
+
     this.data = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(inputStream);
     this.length = this.data.Length;
   }
@@ -46,13 +49,14 @@ internal class RandomAccessReadDataStream : global::DripSharp.PdfCarton.Fonts.Tt
 
   public override int Read() {
     if ((this.currentPosition >= this.length)) {
-      return -1;
+      return unchecked(-1);
     }
     return (this.data[this.currentPosition++] & 255);
   }
 
   public override long ReadLong() {
-    return (((long)(this.readInt()) << unchecked((int)(32))) + (this.readInt() & 4294967295L));
+    return unchecked((((long)(this.readInt()) << unchecked((int)(32)))
+      + (this.readInt() & 4294967295L)));
   }
 
   private int readInt() {
@@ -60,8 +64,8 @@ internal class RandomAccessReadDataStream : global::DripSharp.PdfCarton.Fonts.Tt
     int b2 = this.Read();
     int b3 = this.Read();
     int b4 = this.Read();
-    return ((((b1 << unchecked((int)(24))) + (b2 << unchecked((int)(16))))
-      + (b3 << unchecked((int)(8)))) + b4);
+    return unchecked((unchecked((unchecked(((b1 << unchecked((int)(24)))
+      + (b2 << unchecked((int)(16))))) + (b3 << unchecked((int)(8))))) + b4));
   }
 
   public override void Seek(long pos) {
@@ -74,9 +78,9 @@ internal class RandomAccessReadDataStream : global::DripSharp.PdfCarton.Fonts.Tt
 
   public override int Read(sbyte[] b, int off, int len) {
     if ((this.currentPosition >= this.length)) {
-      return -1;
+      return unchecked(-1);
     }
-    int remainingBytes = (int)((this.length - this.currentPosition));
+    int remainingBytes = (int)(unchecked((this.length - this.currentPosition)));
     int bytesToRead = global::System.Math.Min(remainingBytes, len);
     global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayCopy(this.data, this.currentPosition,
       b, off, bytesToRead);
@@ -103,5 +107,10 @@ internal class RandomAccessReadDataStream : global::DripSharp.PdfCarton.Fonts.Tt
 
   public override long GetOriginalDataSize() {
     return this.length;
+  }
+
+  static RandomAccessReadDataStream() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

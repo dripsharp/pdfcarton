@@ -22,4 +22,8 @@ public class XRefValidationProcess : global::DripSharp.PdfCarton.Preflight.Proce
         "Too many indirect objects"));
     }
   }
+
+  static XRefValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+  }
 }

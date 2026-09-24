@@ -9,22 +9,22 @@
 namespace DripSharp.PdfCarton.Fonts.Cmap;
 
 public class CMapStrings {
-  private static readonly global::System.Collections.Generic.IList<string> twoByteMappings
-    = new global::System.Collections.Generic.List<string>((256 * 256));
+  private static readonly global::System.Collections.Generic.IList<string> twoByteMappings;
 
-  private static readonly global::System.Collections.Generic.IList<string> oneByteMappings
-    = new global::System.Collections.Generic.List<string>(256);
+  private static readonly global::System.Collections.Generic.IList<string> oneByteMappings;
 
-  private static readonly global::System.Collections.Generic.IList<int> indexValues
-    = new global::System.Collections.Generic.List<int>((256 * 256));
+  private static readonly global::System.Collections.Generic.IList<int> indexValues;
 
-  private static readonly global::System.Collections.Generic.IList<sbyte[]> oneByteValues
-    = new global::System.Collections.Generic.List<sbyte[]>(256);
+  private static readonly global::System.Collections.Generic.IList<sbyte[]> oneByteValues;
 
-  private static readonly global::System.Collections.Generic.IList<sbyte[]> twoByteValues
-    = new global::System.Collections.Generic.List<sbyte[]>((256 * 256));
+  private static readonly global::System.Collections.Generic.IList<sbyte[]> twoByteValues;
 
-  static CMapStrings() { {
+  static CMapStrings() {
+    twoByteMappings = new global::System.Collections.Generic.List<string>(unchecked((256 * 256)));
+    oneByteMappings = new global::System.Collections.Generic.List<string>(256);
+    indexValues = new global::System.Collections.Generic.List<int>(unchecked((256 * 256)));
+    oneByteValues = new global::System.Collections.Generic.List<sbyte[]>(256);
+    twoByteValues = new global::System.Collections.Generic.List<sbyte[]>(unchecked((256 * 256))); {
       global::DripSharp.PdfCarton.Fonts.Cmap.CMapStrings.fillMappings();
     }
   }
@@ -42,7 +42,7 @@ public class CMapStrings {
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(global::DripSharp.PdfCarton.Fonts.Cmap.CMapStrings.twoByteValues,
           bytes__53_24);
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Add(global::DripSharp.PdfCarton.Fonts.Cmap.CMapStrings.indexValues,
-          ((i__49_18 * 256) + j));
+          unchecked((unchecked((i__49_18 * 256)) + j)));
       }
     }
     for (int i__59_18 = 0; (i__59_18 < 256); i__59_18++) {

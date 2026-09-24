@@ -16,38 +16,27 @@ public class CharStringCommand {
     = null!;
 
   private static readonly global::System.Collections.Generic.IDictionary<int,
-    global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand> CHAR_STRING_COMMANDS
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.createMap();
+    global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand> CHAR_STRING_COMMANDS;
 
-  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandClosepath
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Closepath.hashValue);
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandClosepath;
 
-  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandRlineto
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlineto.hashValue);
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandRlineto;
 
-  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandHlineto
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hlineto.hashValue);
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandHlineto;
 
-  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandVlineto
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vlineto.hashValue);
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandVlineto;
 
-  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandRrcurveto
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rrcurveto.hashValue);
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandRrcurveto;
 
-  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandHsbw
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hsbw.hashValue);
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandHsbw;
 
-  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandCallothersubr
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callothersubr.hashValue);
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandCallothersubr;
 
-  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandDiv
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Div.hashValue);
+  public static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand CommandDiv;
 
   private const int KEY_UNKNOWN = 99;
 
-  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand COMMAND_UNKNOWN
-    = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.KEY_UNKNOWN,
-    0);
+  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand COMMAND_UNKNOWN;
 
   private static global::System.Collections.Generic.IDictionary<int,
     global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand> createMap() {
@@ -1096,7 +1085,7 @@ public class CharStringCommand {
     }
 
     internal Key(int b0, int b1) {
-      this.hashValue = ((b0 << unchecked((int)(4))) + b1);
+      this.hashValue = unchecked(((b0 << unchecked((int)(4))) + b1));
     }
 
     internal static readonly global::System.Collections.Generic.IDictionary<int,
@@ -1120,7 +1109,7 @@ public class CharStringCommand {
     public static global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key ValueOfKey(int b0,
       int b1) {
       return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.BY_KEY,
-        ((b0 << unchecked((int)(4))) + b1));
+        unchecked(((b0 << unchecked((int)(4))) + b1)));
     }
 
     internal int getHashValue() {
@@ -1134,5 +1123,28 @@ public class CharStringCommand {
 
     public override string ToString()
       => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.EnumName(this);
+  }
+
+  static CharStringCommand() {
+    CHAR_STRING_COMMANDS = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.createMap();
+    CommandClosepath
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Closepath.hashValue);
+    CommandRlineto
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rlineto.hashValue);
+    CommandHlineto
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hlineto.hashValue);
+    CommandVlineto
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Vlineto.hashValue);
+    CommandRrcurveto
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Rrcurveto.hashValue);
+    CommandHsbw
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hsbw.hashValue);
+    CommandCallothersubr
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callothersubr.hashValue);
+    CommandDiv
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Div.hashValue);
+    COMMAND_UNKNOWN
+      = new global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand(global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.KEY_UNKNOWN,
+      0);
   }
 }

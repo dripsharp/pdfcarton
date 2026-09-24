@@ -9,11 +9,19 @@ public class GlyfCompositeDescriptTest {
     global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser otfParser
       = new global::DripSharp.PdfCarton.Fonts.Ttf.OTFParser();
     string fontPath = "src/test/resources/ttf/LiberationSans-Regular.ttf";
-    global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont font;
-    using (global::DripSharp.PdfCarton.IO.RandomAccessRead fontFile
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      fontPath))) {
-      font = otfParser.Parse(fontFile);
+    global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont font; {
+      global::DripSharp.PdfCarton.IO.RandomAccessRead fontFile
+        = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        fontPath));
+      global::System.Exception __dripsharpPrimary_45_31_0 = null!;
+      try {
+        font = otfParser.Parse(fontFile);
+      } catch (global::System.Exception __dripsharpCaught_45_31_0) {
+        __dripsharpPrimary_45_31_0 = __dripsharpCaught_45_31_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(fontFile, __dripsharpPrimary_45_31_0);
+      }
     }
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable glyphTable = font.GetGlyph();
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData aacuteGlyph = glyphTable.GetGlyph(131);

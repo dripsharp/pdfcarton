@@ -9,35 +9,39 @@
 namespace DripSharp.PdfCarton.IO;
 
 public sealed class IOUtils {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCache
-    = new global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.__StreamCacheCreateFunctionFunctionalAdapter(()
-    => new global::DripSharp.PdfCarton.IO.RandomAccessStreamCacheImpl());
+  private static readonly global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCache;
 
   private static readonly global::DripSharp.Runtime.JavaOptional<global::System.Action<global::DripSharp.Runtime.JavaByteBuffer>> UNMAPPER
     = null!;
 
-  private static readonly global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode> POSIX_DIR_PERMS
-    = global::DripSharp.Runtime.JavaCompat.fromString("rwx------");
+  private static readonly global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode> POSIX_DIR_PERMS;
 
-  private static readonly global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode> POSIX_FILE_PERMS
-    = global::DripSharp.Runtime.JavaCompat.fromString("rw-------");
+  private static readonly global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode> POSIX_FILE_PERMS;
 
-  private static readonly global::DripSharp.Runtime.JavaFileAttribute<global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode>> POSIX_DIR_PERMISSIONS
-    = global::DripSharp.Runtime.JavaCompat.asFileAttribute(global::DripSharp.PdfCarton.IO.IOUtils.POSIX_DIR_PERMS);
+  private static readonly global::DripSharp.Runtime.JavaFileAttribute<global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode>> POSIX_DIR_PERMISSIONS;
 
-  private static readonly global::DripSharp.Runtime.JavaFileAttribute<global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode>> POSIX_FILE_PERMISSIONS
-    = global::DripSharp.Runtime.JavaCompat.asFileAttribute(global::DripSharp.PdfCarton.IO.IOUtils.POSIX_FILE_PERMS);
+  private static readonly global::DripSharp.Runtime.JavaFileAttribute<global::System.Collections.Generic.ISet<global::DripSharp.Runtime.JavaUnixFileMode>> POSIX_FILE_PERMISSIONS;
 
-  private static readonly global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaPath> TEMP_DIRS_TO_DELETE
-    = global::DripSharp.Runtime.JavaCompat.SynchronizedList(new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaPath>());
+  private static readonly global::System.Collections.Generic.IList<global::DripSharp.Runtime.JavaPath> TEMP_DIRS_TO_DELETE;
 
-  private static readonly global::DripSharp.Runtime.JavaAtomicBoolean SHUTDOWN_HOOK_REGISTERED
-    = new global::DripSharp.Runtime.JavaAtomicBoolean(false);
+  private static readonly global::DripSharp.Runtime.JavaAtomicBoolean SHUTDOWN_HOOK_REGISTERED;
 
-  static IOUtils() { {
+  static IOUtils() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    streamCache
+      = new global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.__StreamCacheCreateFunctionFunctionalAdapter(()
+      => new global::DripSharp.PdfCarton.IO.RandomAccessStreamCacheImpl());
+    POSIX_DIR_PERMS = global::DripSharp.Runtime.JavaCompat.fromString("rwx------");
+    POSIX_FILE_PERMS = global::DripSharp.Runtime.JavaCompat.fromString("rw-------");
+    POSIX_DIR_PERMISSIONS
+      = global::DripSharp.Runtime.JavaCompat.asFileAttribute(global::DripSharp.PdfCarton.IO.IOUtils.POSIX_DIR_PERMS);
+    POSIX_FILE_PERMISSIONS
+      = global::DripSharp.Runtime.JavaCompat.asFileAttribute(global::DripSharp.PdfCarton.IO.IOUtils.POSIX_FILE_PERMS);
+    TEMP_DIRS_TO_DELETE
+      = global::DripSharp.Runtime.JavaCompat.SynchronizedList(new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaPath>());
+    SHUTDOWN_HOOK_REGISTERED = new global::DripSharp.Runtime.JavaAtomicBoolean(false); {
       global::DripSharp.PdfCarton.IO.IOUtils.UNMAPPER
         = global::DripSharp.Runtime.JavaOptional<global::System.Action<global::DripSharp.Runtime.JavaByteBuffer>>.OfNullable(global::DripSharp.Runtime.JavaCompat.doPrivileged(global::DripSharp.PdfCarton.IO.IOUtils.unmapper));
     }
@@ -56,7 +60,8 @@ public sealed class IOUtils {
     sbyte[] buffer = new sbyte[4096];
     long count = 0;
     int n = 0;
-    while ((-1 != (n = global::DripSharp.Runtime.JavaCompat.InputStreamRead(input, buffer)))) {
+    while ((unchecked(-1) != (n = global::DripSharp.Runtime.JavaCompat.InputStreamRead(input,
+      buffer)))) {
       global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, buffer, 0, n);
       count += n;
     }
@@ -66,7 +71,7 @@ public sealed class IOUtils {
   public static long PopulateBuffer(global::System.IO.Stream @in, sbyte[] buffer) {
     int remaining = buffer.Length;
     while ((remaining > 0)) {
-      int bufferWritePos = (buffer.Length - remaining);
+      int bufferWritePos = unchecked((buffer.Length - remaining));
       int bytesRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(@in, buffer,
         bufferWritePos, remaining);
       if ((bytesRead < 0)) {
@@ -74,7 +79,7 @@ public sealed class IOUtils {
       }
       remaining -= bytesRead;
     }
-    return ((long)(buffer.Length) - remaining);
+    return unchecked(((long)(buffer.Length) - remaining));
   }
 
   public static void CloseQuietly(global::System.IDisposable closeable) {
@@ -243,13 +248,21 @@ public sealed class IOUtils {
   }
 
   private static void deletePathRecursively(global::DripSharp.Runtime.JavaPath path) {
-    try {
-      using (global::DripSharp.Runtime.JavaStream<global::DripSharp.Runtime.JavaPath> entries
-        = global::DripSharp.Runtime.JavaCompat.walk(path)) {
-        global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.StreamSorted(entries,
-          global::DripSharp.Runtime.JavaCompat.ReverseComparer<global::DripSharp.Runtime.JavaPath>()),
-          (p)
-          => global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(p)));
+    try { {
+        global::DripSharp.Runtime.JavaStream<global::DripSharp.Runtime.JavaPath> entries
+          = global::DripSharp.Runtime.JavaCompat.walk(path);
+        global::System.Exception __dripsharpPrimary_427_27_0 = null!;
+        try {
+          global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.StreamSorted(entries,
+            global::DripSharp.Runtime.JavaCompat.ReverseComparer<global::DripSharp.Runtime.JavaPath>()),
+            (p)
+            => global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(p)));
+        } catch (global::System.Exception __dripsharpCaught_427_27_0) {
+          __dripsharpPrimary_427_27_0 = __dripsharpCaught_427_27_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(entries, __dripsharpPrimary_427_27_0);
+        }
       }
     } catch (global::System.IO.IOException) {}
   }

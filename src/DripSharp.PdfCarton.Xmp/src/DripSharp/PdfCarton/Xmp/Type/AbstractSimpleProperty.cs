@@ -50,5 +50,9 @@ public abstract class AbstractSimpleProperty : global::DripSharp.PdfCarton.Xmp.T
     return this.prefix;
   }
 
+  static AbstractSimpleProperty() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractField).TypeHandle);
+  }
+
   protected abstract object __DripSharpCovariantBridgeGetValue();
 }

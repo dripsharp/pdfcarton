@@ -125,9 +125,17 @@ public class StandardColorSpaceHelper
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased iccBased
       = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(colorSpace!);
     try {
-      global::DripSharp.Runtime.JavaIccProfile iccp;
-      using (global::System.IO.Stream @is = iccBased.GetPDStream().CreateInputStream()) {
-        iccp = global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is);
+      global::DripSharp.Runtime.JavaIccProfile iccp; {
+        global::System.IO.Stream @is = iccBased.GetPDStream().CreateInputStream();
+        global::System.Exception __dripsharpPrimary_248_30_0 = null!;
+        try {
+          iccp = global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is);
+        } catch (global::System.Exception __dripsharpCaught_248_30_0) {
+          __dripsharpPrimary_248_30_0 = __dripsharpCaught_248_30_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_248_30_0);
+        }
       }
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace alternateColorSpace
         = iccBased.GetAlternateColorSpace();

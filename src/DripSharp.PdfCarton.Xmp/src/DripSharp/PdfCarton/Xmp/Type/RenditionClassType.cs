@@ -14,4 +14,8 @@ public class RenditionClassType : global::DripSharp.PdfCarton.Xmp.Type.TextType 
     namespaceURI, prefix, propertyName, value) {
 
   }
+
+  static RenditionClassType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.TextType).TypeHandle);
+  }
 }

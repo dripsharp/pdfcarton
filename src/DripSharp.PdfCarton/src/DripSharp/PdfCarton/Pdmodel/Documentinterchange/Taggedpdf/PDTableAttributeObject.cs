@@ -104,4 +104,8 @@ public class PDTableAttributeObject
     }
     return sb.ToString();
   }
+
+  static PDTableAttributeObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject).TypeHandle);
+  }
 }

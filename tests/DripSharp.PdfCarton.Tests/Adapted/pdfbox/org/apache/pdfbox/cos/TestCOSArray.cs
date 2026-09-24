@@ -195,7 +195,7 @@ public class TestCOSArray {
       cosArray.IndexOf(global::DripSharp.PdfCarton.Cos.COSName.B), null);
     global::DripSharp.Testing.JavaAssertions.Equal(2,
       cosArray.IndexOf(global::DripSharp.PdfCarton.Cos.COSName.C), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
       cosArray.IndexOf(global::DripSharp.PdfCarton.Cos.COSName.D), null);
     cosArray.SetName(1, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "D"));
     global::DripSharp.Testing.JavaAssertions.Equal(3, cosArray.Size(), null);
@@ -220,7 +220,7 @@ public class TestCOSArray {
       cosArray.IndexOf(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(1))), null);
     global::DripSharp.Testing.JavaAssertions.Equal(2,
       cosArray.IndexOf(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(2))), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
       cosArray.IndexOf(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(3))), null);
     cosArray.SetInt(1, 3);
     global::DripSharp.Testing.JavaAssertions.Equal(3, cosArray.Size(), null);
@@ -249,7 +249,7 @@ public class TestCOSArray {
     global::DripSharp.Testing.JavaAssertions.Equal(2,
       cosArray.IndexOf(new global::DripSharp.PdfCarton.Cos.COSString(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "Test3"))), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
       cosArray.IndexOf(new global::DripSharp.PdfCarton.Cos.COSString(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "Test4"))), null);
     cosArray.SetString(1, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Test4"));

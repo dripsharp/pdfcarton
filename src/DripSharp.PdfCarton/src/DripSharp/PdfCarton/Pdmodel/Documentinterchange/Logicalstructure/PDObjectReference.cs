@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure;
 
 public class PDObjectReference : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const string Type = "OBJR";
 
@@ -78,6 +77,10 @@ public class PDObjectReference : global::DripSharp.PdfCarton.Pdmodel.Common.COSO
 
   public virtual void SetPage(global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
     this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Pg, page);
+  }
+
+  static PDObjectReference() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()

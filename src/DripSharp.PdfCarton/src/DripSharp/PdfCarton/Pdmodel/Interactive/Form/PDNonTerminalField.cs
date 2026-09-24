@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class PDNonTerminalField : global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDNonTerminalField(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm)
   : base(acroForm) {
@@ -132,5 +131,10 @@ public class PDNonTerminalField : global::DripSharp.PdfCarton.Pdmodel.Interactiv
 
   public override global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget> GetWidgets() {
     return global::System.Array.Empty<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget>();
+  }
+
+  static PDNonTerminalField() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -68,7 +68,7 @@ public abstract class SimpleFontValidator<T>
     }
     if (!areFieldsPresent) {
       missingFields = global::DripSharp.Runtime.JavaCompat.StringSubstring(missingFields, 0,
-        (missingFields.Length - 2));
+        unchecked((missingFields.Length - 2)));
       this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDictionaryInvalid,
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
         ": some required fields are missing from the Font dictionary: "), missingFields), ".")));
@@ -79,5 +79,9 @@ public abstract class SimpleFontValidator<T>
 
   protected internal virtual void ProcessFontDescriptorValidation() {
     this.DescriptorHelper.Validate();
+  }
+
+  static SimpleFontValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.FontValidator<T>).TypeHandle);
   }
 }

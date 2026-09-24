@@ -30,289 +30,433 @@ public class DeserializationTest {
     global::DripSharp.PdfCarton.Tests.Support.SetDefaultTimeZone(global::DripSharp.PdfCarton.Xmp.Parser.DeserializationTest.defaultTZ);
   }
 
-  internal virtual void testStructuredRecursive() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/org/apache/xmpbox/parser/structured_recursive.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
-      this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "62495942572014793625872774972947435765670563107818217447706375288846297812281"),
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
-    }
-  }
-
-  internal virtual void testEmptyLi() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/org/apache/xmpbox/parser/empty_list.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
-      this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "95754993383010030299848397520773287413798669761891751126809013411187892693280"),
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
-    }
-  }
-
-  internal virtual void testEmptyLi2() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/validxmp/emptyli.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
-      global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = metadata.GetDublinCoreSchema();
-      dc.GetCreatorsProperty();
-      this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "39450703080437563739186076111811684356424147071014681699119272065568305393521"),
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
-    }
-  }
-
-  internal virtual void testGetTitle() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/validxmp/emptyli.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
-      global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = metadata.GetDublinCoreSchema();
-      string s = dc.GetTitle((string)default!);
-      global::DripSharp.Testing.JavaAssertions.Equal("title value", s, null);
-    }
-  }
-
-  internal virtual void testAltBagSeq() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/org/apache/xmpbox/parser/AltBagSeqTest.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
-      this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "89123270336154452745819041017446278583816329940574853160909598044560152910018"),
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
-    }
-  }
-
-  internal virtual void testIsartorStyleWithThumbs() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/org/apache/xmpbox/parser/ThumbisartorStyle.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
-      global::DripSharp.Testing.JavaAssertions.Equal("uuid:09C78666-2F91-3A9C-92AF-3691A6D594F7",
-        metadata.GetXMPMediaManagementSchema().GetDocumentID(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.DateConverter.ToCalendar(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "2008-01-18T16:59:54+01:00")), metadata.GetXMPBasicSchema().GetCreateDate(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.DateConverter.ToCalendar(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "2008-01-18T16:59:54+01:00")), metadata.GetXMPBasicSchema().GetModifyDate(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.DateConverter.ToCalendar(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "2008-01-18T16:59:54+01:00")), metadata.GetXMPBasicSchema().GetMetadataDate(), null);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType> thumbs
-        = metadata.GetXMPBasicSchema().GetThumbnailsProperty();
-      global::DripSharp.Testing.JavaAssertions.NotNull(thumbs, null);
-      global::DripSharp.Testing.JavaAssertions.Equal(2,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(thumbs), null);
-      global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType thumb
-        = global::DripSharp.Runtime.JavaCompat.ListGet(thumbs, 0);
-      global::DripSharp.Testing.JavaAssertions.Equal(162, thumb.GetHeight(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(216, thumb.GetWidth(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("JPEG", thumb.GetFormat(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("/9j/4AAQSkZJRgABAgEASABIAAD",
-        thumb.GetImage(), null);
-      thumb = global::DripSharp.Runtime.JavaCompat.ListGet(thumbs, 1);
-      global::DripSharp.Testing.JavaAssertions.Equal(162, thumb.GetHeight(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(216, thumb.GetWidth(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("JPEG", thumb.GetFormat(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("/9j/4AAQSkZJRgABAgEASABIAAD",
-        thumb.GetImage(), null);
-      global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema acmeMailSchema
-        = metadata.GetSchema(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "http://www.acme.com/ns/email/1/"));
-      global::DripSharp.PdfCarton.Xmp.Type.DateType deliveryDate
-        = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(acmeMailSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "Delivery-Date"))!);
-      global::DripSharp.Testing.JavaAssertions.Equal("2007-11-09T09:55:36+01:00",
-        deliveryDate.GetStringValue(), null);
-      global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType dst
-        = (global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType)(acmeMailSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "From"))!);
-      global::DripSharp.Testing.JavaAssertions.Equal("[name=TextType:John Doe]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(dst.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "name"))), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("[mailto=TextType:john@acme.com]",
-        global::DripSharp.Runtime.JavaCompat.StringValueOf(dst.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "mailto"))), null);
-      this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "64755266855514150823517184659364700851455308334441170957883187622624192802093"),
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
-    }
-  }
-
-  internal virtual void testWithNoXPacketStart() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/invalidxmp/noxpacket.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
-        = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
-        => this.xdb.Parse(@is), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart,
-        ex.GetErrorType(), null);
-    }
-  }
-
-  internal virtual void testWithNoXPacketEnd() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/invalidxmp/noxpacketend.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
-        = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
-        => this.xdb.Parse(@is), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadEnd,
-        ex.GetErrorType(), null);
-    }
-  }
-
-  internal virtual void testWithNoRDFElement() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/invalidxmp/noroot.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
-        = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
-        => this.xdb.Parse(@is), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
-        ex.GetErrorType(), null);
-    }
-  }
-
-  internal virtual void testWithTwoRDFElement() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/invalidxmp/tworoot.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
-        = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
-        => this.xdb.Parse(@is), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
-        ex.GetErrorType(), null);
-    }
-  }
-
-  internal virtual void testWithInvalidRDFElementPrefix() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/invalidxmp/invalidroot2.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
-        = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
-        => this.xdb.Parse(@is), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
-        ex.GetErrorType(), null);
-    }
-  }
-
-  internal virtual void testWithRDFRootAsText() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/invalidxmp/invalidroot.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
-        = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
-        => this.xdb.Parse(@is), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
-        ex.GetErrorType(), null);
-    }
-  }
-
-  internal virtual void testUndefinedSchema() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/invalidxmp/undefinedschema.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
-        = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
-        => this.xdb.Parse(@is), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoSchema,
-        ex.GetErrorType(), null);
-    }
-  }
-
-  internal virtual void testUndefinedPropertyWithDefinedSchema() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/invalidxmp/undefinedpropertyindefinedschema.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
-        = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
-        => this.xdb.Parse(@is), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoType,
-        ex.GetErrorType(), null);
-    }
-  }
-
-  internal virtual void testUndefinedStructuredWithDefinedSchema() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/invalidxmp/undefinedstructuredindefinedschema.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
-        = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
-        => this.xdb.Parse(@is), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoValueType,
-        ex.GetErrorType(), null);
-    }
-  }
-
-  internal virtual void testRdfAboutFound() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/validxmp/emptyli.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema> schemas
-        = metadata.GetAllSchemas();
-      foreach (global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema xmpSchema in schemas) {
-        global::DripSharp.Testing.JavaAssertions.NotNull(xmpSchema.GetAboutAttribute(), null);
+  internal virtual void testStructuredRecursive() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/org/apache/xmpbox/parser/structured_recursive.xml"));
+      global::System.Exception __dripsharpPrimary_110_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
+        this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "62495942572014793625872774972947435765670563107818217447706375288846297812281"),
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
+      } catch (global::System.Exception __dripsharpCaught_110_26_0) {
+        __dripsharpPrimary_110_26_0 = __dripsharpCaught_110_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_110_26_0);
       }
     }
   }
 
-  internal virtual void testWithAttributesAsProperties() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/validxmp/attr_as_props.xml"))) {
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
-      global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema pdf = metadata.GetAdobePDFSchema();
-      global::DripSharp.Testing.JavaAssertions.Equal("GPL Ghostscript 8.64", pdf.GetProducer(),
-        null);
-      global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = metadata.GetDublinCoreSchema();
-      global::DripSharp.Testing.JavaAssertions.Equal("application/pdf", dc.GetFormat(), null);
-      global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema basic = metadata.GetXMPBasicSchema();
-      global::DripSharp.Testing.JavaAssertions.NotNull(basic.GetCreateDate(), null);
-      global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema pdfaIdentificationSchema
-        = metadata.GetPDFAIdentificationSchema();
-      global::DripSharp.Testing.JavaAssertions.Equal("B", pdfaIdentificationSchema.GetConformance(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(1, pdfaIdentificationSchema.GetPart(), null);
-      global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema xmpMediaManagementSchema
-        = metadata.GetXMPMediaManagementSchema();
-      global::DripSharp.Testing.JavaAssertions.Equal("e7127190-445c-11ea-0000-b3bc74086807",
-        xmpMediaManagementSchema.GetDocumentID(), null);
-      this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "27499224985683016678197540524065114038595582230834506941950503218519476041225"),
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
+  internal virtual void testEmptyLi() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/org/apache/xmpbox/parser/empty_list.xml"));
+      global::System.Exception __dripsharpPrimary_120_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
+        this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "95754993383010030299848397520773287413798669761891751126809013411187892693280"),
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
+      } catch (global::System.Exception __dripsharpCaught_120_26_0) {
+        __dripsharpPrimary_120_26_0 = __dripsharpCaught_120_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_120_26_0);
+      }
     }
   }
 
-  internal virtual void testSpaceTextValues() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-      "/validxmp/only_space_fields.xmp"))) {
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
-      global::DripSharp.Testing.JavaAssertions.Equal(" ",
-        metadata.GetAdobePDFSchema().GetProducer(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("Canon ",
-        metadata.GetXMPBasicSchema().GetCreatorTool(), null);
-      this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        "9220923061800113567693538810355030344095407871190202111473587642358933618073"),
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
+  internal virtual void testEmptyLi2() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/validxmp/emptyli.xml"));
+      global::System.Exception __dripsharpPrimary_130_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
+        global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = metadata.GetDublinCoreSchema();
+        dc.GetCreatorsProperty();
+        this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "39450703080437563739186076111811684356424147071014681699119272065568305393521"),
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
+      } catch (global::System.Exception __dripsharpCaught_130_26_0) {
+        __dripsharpPrimary_130_26_0 = __dripsharpCaught_130_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_130_26_0);
+      }
+    }
+  }
+
+  internal virtual void testGetTitle() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/validxmp/emptyli.xml"));
+      global::System.Exception __dripsharpPrimary_142_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
+        global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = metadata.GetDublinCoreSchema();
+        string s = dc.GetTitle((string)default!);
+        global::DripSharp.Testing.JavaAssertions.Equal("title value", s, null);
+      } catch (global::System.Exception __dripsharpCaught_142_26_0) {
+        __dripsharpPrimary_142_26_0 = __dripsharpCaught_142_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_142_26_0);
+      }
+    }
+  }
+
+  internal virtual void testAltBagSeq() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/org/apache/xmpbox/parser/AltBagSeqTest.xml"));
+      global::System.Exception __dripsharpPrimary_154_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
+        this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "89123270336154452745819041017446278583816329940574853160909598044560152910018"),
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
+      } catch (global::System.Exception __dripsharpCaught_154_26_0) {
+        __dripsharpPrimary_154_26_0 = __dripsharpCaught_154_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_154_26_0);
+      }
+    }
+  }
+
+  internal virtual void testIsartorStyleWithThumbs() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/org/apache/xmpbox/parser/ThumbisartorStyle.xml"));
+      global::System.Exception __dripsharpPrimary_165_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
+        global::DripSharp.Testing.JavaAssertions.Equal("uuid:09C78666-2F91-3A9C-92AF-3691A6D594F7",
+          metadata.GetXMPMediaManagementSchema().GetDocumentID(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.DateConverter.ToCalendar(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "2008-01-18T16:59:54+01:00")), metadata.GetXMPBasicSchema().GetCreateDate(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.DateConverter.ToCalendar(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "2008-01-18T16:59:54+01:00")), metadata.GetXMPBasicSchema().GetModifyDate(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.DateConverter.ToCalendar(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "2008-01-18T16:59:54+01:00")), metadata.GetXMPBasicSchema().GetMetadataDate(), null);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType> thumbs
+          = metadata.GetXMPBasicSchema().GetThumbnailsProperty();
+        global::DripSharp.Testing.JavaAssertions.NotNull(thumbs, null);
+        global::DripSharp.Testing.JavaAssertions.Equal(2,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(thumbs), null);
+        global::DripSharp.PdfCarton.Xmp.Type.ThumbnailType thumb
+          = global::DripSharp.Runtime.JavaCompat.ListGet(thumbs, 0);
+        global::DripSharp.Testing.JavaAssertions.Equal(162, thumb.GetHeight(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(216, thumb.GetWidth(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("JPEG", thumb.GetFormat(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("/9j/4AAQSkZJRgABAgEASABIAAD",
+          thumb.GetImage(), null);
+        thumb = global::DripSharp.Runtime.JavaCompat.ListGet(thumbs, 1);
+        global::DripSharp.Testing.JavaAssertions.Equal(162, thumb.GetHeight(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(216, thumb.GetWidth(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("JPEG", thumb.GetFormat(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("/9j/4AAQSkZJRgABAgEASABIAAD",
+          thumb.GetImage(), null);
+        global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema acmeMailSchema
+          = metadata.GetSchema(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "http://www.acme.com/ns/email/1/"));
+        global::DripSharp.PdfCarton.Xmp.Type.DateType deliveryDate
+          = (global::DripSharp.PdfCarton.Xmp.Type.DateType)(acmeMailSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "Delivery-Date"))!);
+        global::DripSharp.Testing.JavaAssertions.Equal("2007-11-09T09:55:36+01:00",
+          deliveryDate.GetStringValue(), null);
+        global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType dst
+          = (global::DripSharp.PdfCarton.Xmp.Type.DefinedStructuredType)(acmeMailSchema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "From"))!);
+        global::DripSharp.Testing.JavaAssertions.Equal("[name=TextType:John Doe]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(dst.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "name"))), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("[mailto=TextType:john@acme.com]",
+          global::DripSharp.Runtime.JavaCompat.StringValueOf(dst.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "mailto"))), null);
+        this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "64755266855514150823517184659364700851455308334441170957883187622624192802093"),
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
+      } catch (global::System.Exception __dripsharpCaught_165_26_0) {
+        __dripsharpPrimary_165_26_0 = __dripsharpCaught_165_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_165_26_0);
+      }
+    }
+  }
+
+  internal virtual void testWithNoXPacketStart() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/invalidxmp/noxpacket.xml"));
+      global::System.Exception __dripsharpPrimary_215_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
+          = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
+          => this.xdb.Parse(@is), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadStart,
+          ex.GetErrorType(), null);
+      } catch (global::System.Exception __dripsharpCaught_215_26_0) {
+        __dripsharpPrimary_215_26_0 = __dripsharpCaught_215_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_215_26_0);
+      }
+    }
+  }
+
+  internal virtual void testWithNoXPacketEnd() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/invalidxmp/noxpacketend.xml"));
+      global::System.Exception __dripsharpPrimary_225_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
+          = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
+          => this.xdb.Parse(@is), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.XpacketBadEnd,
+          ex.GetErrorType(), null);
+      } catch (global::System.Exception __dripsharpCaught_225_26_0) {
+        __dripsharpPrimary_225_26_0 = __dripsharpCaught_225_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_225_26_0);
+      }
+    }
+  }
+
+  internal virtual void testWithNoRDFElement() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/invalidxmp/noroot.xml"));
+      global::System.Exception __dripsharpPrimary_235_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
+          = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
+          => this.xdb.Parse(@is), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+          ex.GetErrorType(), null);
+      } catch (global::System.Exception __dripsharpCaught_235_26_0) {
+        __dripsharpPrimary_235_26_0 = __dripsharpCaught_235_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_235_26_0);
+      }
+    }
+  }
+
+  internal virtual void testWithTwoRDFElement() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/invalidxmp/tworoot.xml"));
+      global::System.Exception __dripsharpPrimary_245_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
+          = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
+          => this.xdb.Parse(@is), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+          ex.GetErrorType(), null);
+      } catch (global::System.Exception __dripsharpCaught_245_26_0) {
+        __dripsharpPrimary_245_26_0 = __dripsharpCaught_245_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_245_26_0);
+      }
+    }
+  }
+
+  internal virtual void testWithInvalidRDFElementPrefix() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/invalidxmp/invalidroot2.xml"));
+      global::System.Exception __dripsharpPrimary_255_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
+          = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
+          => this.xdb.Parse(@is), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+          ex.GetErrorType(), null);
+      } catch (global::System.Exception __dripsharpCaught_255_26_0) {
+        __dripsharpPrimary_255_26_0 = __dripsharpCaught_255_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_255_26_0);
+      }
+    }
+  }
+
+  internal virtual void testWithRDFRootAsText() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/invalidxmp/invalidroot.xml"));
+      global::System.Exception __dripsharpPrimary_265_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
+          = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
+          => this.xdb.Parse(@is), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.Format,
+          ex.GetErrorType(), null);
+      } catch (global::System.Exception __dripsharpCaught_265_26_0) {
+        __dripsharpPrimary_265_26_0 = __dripsharpCaught_265_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_265_26_0);
+      }
+    }
+  }
+
+  internal virtual void testUndefinedSchema() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/invalidxmp/undefinedschema.xml"));
+      global::System.Exception __dripsharpPrimary_275_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
+          = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
+          => this.xdb.Parse(@is), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoSchema,
+          ex.GetErrorType(), null);
+      } catch (global::System.Exception __dripsharpCaught_275_26_0) {
+        __dripsharpPrimary_275_26_0 = __dripsharpCaught_275_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_275_26_0);
+      }
+    }
+  }
+
+  internal virtual void testUndefinedPropertyWithDefinedSchema() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/invalidxmp/undefinedpropertyindefinedschema.xml"));
+      global::System.Exception __dripsharpPrimary_285_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
+          = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
+          => this.xdb.Parse(@is), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoType,
+          ex.GetErrorType(), null);
+      } catch (global::System.Exception __dripsharpCaught_285_26_0) {
+        __dripsharpPrimary_285_26_0 = __dripsharpCaught_285_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_285_26_0);
+      }
+    }
+  }
+
+  internal virtual void testUndefinedStructuredWithDefinedSchema() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/invalidxmp/undefinedstructuredindefinedschema.xml"));
+      global::System.Exception __dripsharpPrimary_295_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException ex
+          = global::DripSharp.Testing.JavaAssertions.Throws<global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException>(()
+          => this.xdb.Parse(@is), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Xmp.Xml.XmpParsingException.ErrorType.NoValueType,
+          ex.GetErrorType(), null);
+      } catch (global::System.Exception __dripsharpCaught_295_26_0) {
+        __dripsharpPrimary_295_26_0 = __dripsharpCaught_295_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_295_26_0);
+      }
+    }
+  }
+
+  internal virtual void testRdfAboutFound() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/validxmp/emptyli.xml"));
+      global::System.Exception __dripsharpPrimary_305_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema> schemas
+          = metadata.GetAllSchemas();
+        foreach (global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema xmpSchema in schemas) {
+          global::DripSharp.Testing.JavaAssertions.NotNull(xmpSchema.GetAboutAttribute(), null);
+        }
+      } catch (global::System.Exception __dripsharpCaught_305_26_0) {
+        __dripsharpPrimary_305_26_0 = __dripsharpCaught_305_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_305_26_0);
+      }
+    }
+  }
+
+  internal virtual void testWithAttributesAsProperties() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/validxmp/attr_as_props.xml"));
+      global::System.Exception __dripsharpPrimary_319_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
+        global::DripSharp.PdfCarton.Xmp.Schema.AdobePDFSchema pdf = metadata.GetAdobePDFSchema();
+        global::DripSharp.Testing.JavaAssertions.Equal("GPL Ghostscript 8.64", pdf.GetProducer(),
+          null);
+        global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema dc = metadata.GetDublinCoreSchema();
+        global::DripSharp.Testing.JavaAssertions.Equal("application/pdf", dc.GetFormat(), null);
+        global::DripSharp.PdfCarton.Xmp.Schema.XMPBasicSchema basic = metadata.GetXMPBasicSchema();
+        global::DripSharp.Testing.JavaAssertions.NotNull(basic.GetCreateDate(), null);
+        global::DripSharp.PdfCarton.Xmp.Schema.PDFAIdentificationSchema pdfaIdentificationSchema
+          = metadata.GetPDFAIdentificationSchema();
+        global::DripSharp.Testing.JavaAssertions.Equal("B",
+          pdfaIdentificationSchema.GetConformance(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(1, pdfaIdentificationSchema.GetPart(), null);
+        global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema xmpMediaManagementSchema
+          = metadata.GetXMPMediaManagementSchema();
+        global::DripSharp.Testing.JavaAssertions.Equal("e7127190-445c-11ea-0000-b3bc74086807",
+          xmpMediaManagementSchema.GetDocumentID(), null);
+        this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "27499224985683016678197540524065114038595582230834506941950503218519476041225"),
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
+      } catch (global::System.Exception __dripsharpCaught_319_26_0) {
+        __dripsharpPrimary_319_26_0 = __dripsharpCaught_319_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_319_26_0);
+      }
+    }
+  }
+
+  internal virtual void testSpaceTextValues() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+        "/validxmp/only_space_fields.xmp"));
+      global::System.Exception __dripsharpPrimary_348_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata = this.xdb.Parse(@is);
+        global::DripSharp.Testing.JavaAssertions.Equal(" ",
+          metadata.GetAdobePDFSchema().GetProducer(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("Canon ",
+          metadata.GetXMPBasicSchema().GetCreatorTool(), null);
+        this.checkTransform(metadata, global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          "9220923061800113567693538810355030344095407871190202111473587642358933618073"),
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(metadata.GetAllSchemas()));
+      } catch (global::System.Exception __dripsharpCaught_348_26_0) {
+        __dripsharpPrimary_348_26_0 = __dripsharpCaught_348_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_348_26_0);
+      }
     }
   }
 

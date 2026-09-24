@@ -18,4 +18,8 @@ public class PDActionMovie : global::DripSharp.PdfCarton.Pdmodel.Interactive.Act
   public PDActionMovie(global::DripSharp.PdfCarton.Cos.COSDictionary a) : base(a) {
 
   }
+
+  static PDActionMovie() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
+  }
 }

@@ -9,21 +9,9 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class ASCIIHexFilter : global::DripSharp.PdfCarton.Filter.Filter {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly int[] REVERSE_HEX = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1,
-      -1, -1, -1, -1, -1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1,
-      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-      -1, -1, -1, -1 };
+  private static readonly int[] REVERSE_HEX;
 
   public override global::DripSharp.PdfCarton.Filter.DecodeResult Decode(global::System.IO.Stream encoded,
     global::System.IO.Stream decoded, global::DripSharp.PdfCarton.Cos.COSDictionary parameters,
@@ -31,27 +19,31 @@ internal sealed class ASCIIHexFilter : global::DripSharp.PdfCarton.Filter.Filter
     int value;
     int firstByte;
     int secondByte;
-    while (((firstByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded)) != -1)) {
+    while (((firstByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded))
+      != unchecked(-1))) {
       while (global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.isWhitespace(firstByte)) {
         firstByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded);
       }
-      if (((firstByte == -1)
+      if (((firstByte == unchecked(-1))
         || global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.isEOD(firstByte))) {
         break;
       }
-      if ((global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[firstByte] == -1)) {
+      if ((global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[firstByte]
+        == unchecked(-1))) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.LOG,
           global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex, int: ",
           firstByte), " char: "), unchecked((char)(firstByte)))));
       }
-      value = (global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[firstByte] * 16);
+      value = unchecked((global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[firstByte]
+        * 16));
       secondByte = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded);
-      if (((secondByte == -1)
+      if (((secondByte == unchecked(-1))
         || global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.isEOD(secondByte))) {
         global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, value);
         break;
       }
-      if ((global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[secondByte] == -1)) {
+      if ((global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.REVERSE_HEX[secondByte]
+        == unchecked(-1))) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Filter.ASCIIHexFilter.LOG,
           global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid hex, int: ",
           secondByte), " char: "), unchecked((char)(secondByte)))));
@@ -84,10 +76,57 @@ internal sealed class ASCIIHexFilter : global::DripSharp.PdfCarton.Filter.Filter
   public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded,
     global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
     int byteRead;
-    while (((byteRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(input)) != -1)) {
+    while (((byteRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(input))
+      != unchecked(-1))) {
       global::DripSharp.PdfCarton.Util.Hex.WriteHexByte(unchecked((sbyte)(unchecked((sbyte)(byteRead)))),
         encoded);
     }
     encoded.Flush();
+  }
+
+  static ASCIIHexFilter() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Filter.Filter).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    REVERSE_HEX = new int[] { unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), 10, 11, 12, 13, 14,
+      15, unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), 10, 11, 12, 13, 14, 15, unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1), unchecked(-1),
+      unchecked(-1) };
   }
 }

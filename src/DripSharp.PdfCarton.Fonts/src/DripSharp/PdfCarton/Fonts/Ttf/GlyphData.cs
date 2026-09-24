@@ -33,13 +33,13 @@ public class GlyphData {
     this.boundingBox = new global::DripSharp.PdfCarton.Fonts.Util.BoundingBox((float)(this.xMin),
       (float)(this.yMin), (float)(this.xMax), (float)(this.yMax));
     if (((int)(this.numberOfContours) >= 0)) {
-      short x0 = unchecked((short)(unchecked((short)((leftSideBearing - this.xMin)))));
+      short x0 = unchecked((short)(unchecked((short)(unchecked((leftSideBearing - this.xMin))))));
       this.glyphDescription
         = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyfSimpleDescript(this.numberOfContours, data,
         x0);
     } else {
       this.glyphDescription = new global::DripSharp.PdfCarton.Fonts.Ttf.GlyfCompositeDescript(data,
-        glyphTable, (level + 1));
+        glyphTable, unchecked((level + 1)));
     }
   }
 

@@ -25,4 +25,8 @@ public class AcroFormDefaultFixup : global::DripSharp.PdfCarton.Pdmodel.Fixup.Ab
       new global::DripSharp.PdfCarton.Pdmodel.Fixup.Processor.AcroFormGenerateAppearancesProcessor(base.Document).Process();
     }
   }
+
+  static AcroFormDefaultFixup() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fixup.AbstractFixup).TypeHandle);
+  }
 }

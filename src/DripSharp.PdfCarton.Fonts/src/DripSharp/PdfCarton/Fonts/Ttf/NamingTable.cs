@@ -19,13 +19,17 @@ public class NamingTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
     global::System.Collections.Generic.IDictionary<int,
     global::System.Collections.Generic.IDictionary<int, string>>>> lookupTable = null!;
 
-  private string fontFamily = default!;
+  private string fontFamily;
 
-  private string fontSubFamily = default!;
+  private string fontSubFamily;
 
-  private string psName = default!;
+  private string psName;
 
-  internal NamingTable() {}
+  internal NamingTable() {
+    this.fontFamily = default!;
+    this.fontSubFamily = default!;
+    this.psName = default!;
+  }
 
   internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
     global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
@@ -62,8 +66,8 @@ public class NamingTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
         nr__90_25.SetString((string)default!);
         continue;
       }
-      data.Seek((((this.GetOffset() + (2L * 3)) + ((numberOfNameRecords * 2L) * 6))
-        + nr__90_25.GetStringOffset()));
+      data.Seek(unchecked((unchecked((unchecked((this.GetOffset() + unchecked((2L * 3))))
+        + unchecked((unchecked((numberOfNameRecords * 2L)) * 6)))) + nr__90_25.GetStringOffset())));
       global::System.Text.Encoding charset = this.getCharset(nr__90_25);
       string @string = data.ReadString(nr__90_25.GetStringLength(), charset);
       nr__90_25.SetString(@string);
@@ -223,5 +227,9 @@ public class NamingTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
 
   public virtual string GetPostScriptName() {
     return this.psName;
+  }
+
+  static NamingTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
   }
 }

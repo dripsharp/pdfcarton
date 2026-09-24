@@ -56,11 +56,11 @@ public class DataInputRandomAccessRead : global::DripSharp.PdfCarton.Fonts.Cff.D
       return this.randomAccessRead.Peek();
     }
     long currentPosition = this.randomAccessRead.GetPosition();
-    if (((currentPosition + offset) >= this.randomAccessRead.Length())) {
+    if ((unchecked((currentPosition + offset)) >= this.randomAccessRead.Length())) {
       throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Offset position is out of range ",
-        (currentPosition + offset)), " >= "), this.randomAccessRead.Length()));
+        unchecked((currentPosition + offset))), " >= "), this.randomAccessRead.Length()));
     }
-    this.randomAccessRead.Seek((currentPosition + offset));
+    this.randomAccessRead.Seek(unchecked((currentPosition + offset)));
     int peekValue = this.randomAccessRead.Read();
     this.randomAccessRead.Seek(currentPosition);
     return peekValue;

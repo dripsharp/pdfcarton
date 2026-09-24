@@ -59,4 +59,8 @@ public class PDListAttributeObject
     }
     return sb.ToString();
   }
+
+  static PDListAttributeObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.PDStandardAttributeObject).TypeHandle);
+  }
 }

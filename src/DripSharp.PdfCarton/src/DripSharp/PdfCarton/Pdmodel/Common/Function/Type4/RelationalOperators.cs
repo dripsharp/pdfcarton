@@ -64,6 +64,10 @@ internal class RelationalOperators {
         >= global::System.Convert.ToSingle(num2,
         global::System.Globalization.CultureInfo.InvariantCulture));
     }
+
+    static Ge() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.AbstractNumberComparisonOperator).TypeHandle);
+    }
   }
 
   internal class Gt
@@ -73,6 +77,10 @@ internal class RelationalOperators {
       return (global::System.Convert.ToSingle(num1,
         global::System.Globalization.CultureInfo.InvariantCulture) > global::System.Convert.ToSingle(num2,
         global::System.Globalization.CultureInfo.InvariantCulture));
+    }
+
+    static Gt() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.AbstractNumberComparisonOperator).TypeHandle);
     }
   }
 
@@ -85,6 +93,10 @@ internal class RelationalOperators {
         <= global::System.Convert.ToSingle(num2,
         global::System.Globalization.CultureInfo.InvariantCulture));
     }
+
+    static Le() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.AbstractNumberComparisonOperator).TypeHandle);
+    }
   }
 
   internal class Lt
@@ -95,6 +107,10 @@ internal class RelationalOperators {
         global::System.Globalization.CultureInfo.InvariantCulture) < global::System.Convert.ToSingle(num2,
         global::System.Globalization.CultureInfo.InvariantCulture));
     }
+
+    static Lt() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.AbstractNumberComparisonOperator).TypeHandle);
+    }
   }
 
   internal class Ne
@@ -102,6 +118,10 @@ internal class RelationalOperators {
     protected internal override bool IsEqual(object op1, object op2) {
       bool result = base.IsEqual(op1, op2);
       return !result;
+    }
+
+    static Ne() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Eq).TypeHandle);
     }
   }
 }

@@ -32,4 +32,8 @@ public class AnnotationValidationProcess
       }
     }
   }
+
+  static AnnotationValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+  }
 }

@@ -27,4 +27,8 @@ public sealed class CloseFillNonZeroAndStrokePath
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillNonZeroAndStroke;
   }
+
+  static CloseFillNonZeroAndStrokePath() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor).TypeHandle);
+  }
 }

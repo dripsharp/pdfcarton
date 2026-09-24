@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
 public abstract class PDAnnotation : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const int FLAG_INVISIBLE = (1 << unchecked((int)(0)));
 
@@ -464,6 +463,10 @@ public abstract class PDAnnotation : global::DripSharp.PdfCarton.Pdmodel.Common.
   public virtual void ConstructAppearances(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {}
 
   public virtual void ConstructAppearances() {}
+
+  static PDAnnotation() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  }
 
   global::DripSharp.PdfCarton.Cos.COSBase global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable.GetCOSObject()
     => (global::DripSharp.PdfCarton.Cos.COSBase)(this.GetCOSObject());

@@ -5,130 +5,206 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public class JPEGFactoryTest {
-  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/test-output/graphics"));
+  private static readonly global::DripSharp.Runtime.JavaFile TESTRESULTSDIR;
 
   internal static void setUp() {
     global::DripSharp.PdfCarton.Tests.Support.Mkdirs(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR);
   }
 
-  internal virtual void testCreateFromStream() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream is1
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "jpeg.jpg"))) using (global::System.IO.Stream is2
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg.jpg"))) {
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(document,
-        is1);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, 344,
-        287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance.GetName()));
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document, ximage,
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegrgbstream.pdf"));
-      this.checkJpegStream(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegrgbstream.pdf"), is2);
+  internal virtual void testCreateFromStream() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_77_25_0 = null!;
+      try {
+        global::System.IO.Stream is1
+          = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg.jpg"));
+        global::System.Exception __dripsharpPrimary_78_26_0 = null!;
+        try {
+          global::System.IO.Stream is2
+            = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg.jpg"));
+          global::System.Exception __dripsharpPrimary_79_26_0 = null!;
+          try {
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
+              = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(document,
+              is1);
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8,
+              344, 287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
+              global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance.GetName()));
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document,
+              ximage,
+              global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
+              global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegrgbstream.pdf"));
+            this.checkJpegStream(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
+              global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegrgbstream.pdf"),
+              is2);
+          } catch (global::System.Exception __dripsharpCaught_79_26_0) {
+            __dripsharpPrimary_79_26_0 = __dripsharpCaught_79_26_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(is2, __dripsharpPrimary_79_26_0);
+          }
+        } catch (global::System.Exception __dripsharpCaught_78_26_0) {
+          __dripsharpPrimary_78_26_0 = __dripsharpCaught_78_26_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(is1, __dripsharpPrimary_78_26_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_77_25_0) {
+        __dripsharpPrimary_77_25_0 = __dripsharpCaught_77_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_77_25_0);
+      }
     }
   }
 
-  internal virtual void testCreateFromStreamCMYK() {
-    using (global::System.IO.Stream is1
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "jpegcmyk.jpg"))) using (global::System.IO.Stream is2
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegcmyk.jpg"))) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(document,
-        is1);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, 343,
-        287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceCMYK.Instance.GetName()));
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document, ximage,
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegcmykstream.pdf"));
-      this.checkJpegStream(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegcmykstream.pdf"), is2);
+  internal virtual void testCreateFromStreamCMYK() { {
+      global::System.IO.Stream is1
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegcmyk.jpg"));
+      global::System.Exception __dripsharpPrimary_96_26_0 = null!;
+      try {
+        global::System.IO.Stream is2
+          = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegcmyk.jpg"));
+        global::System.Exception __dripsharpPrimary_97_26_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+            = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
+            = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(document,
+            is1);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, 343,
+            287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceCMYK.Instance.GetName()));
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document,
+            ximage,
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegcmykstream.pdf"));
+          this.checkJpegStream(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegcmykstream.pdf"),
+            is2);
+        } catch (global::System.Exception __dripsharpCaught_97_26_0) {
+          __dripsharpPrimary_97_26_0 = __dripsharpCaught_97_26_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(is2, __dripsharpPrimary_97_26_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_96_26_0) {
+        __dripsharpPrimary_96_26_0 = __dripsharpCaught_96_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(is1, __dripsharpPrimary_96_26_0);
+      }
     }
   }
 
-  internal virtual void testCreateFromStream256() {
-    using (global::System.IO.Stream is1
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "jpeg256.jpg"))) using (global::System.IO.Stream is2
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg256.jpg"))) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(document,
-        is1);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, 344,
-        287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document, ximage,
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg256stream.pdf"));
-      this.checkJpegStream(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg256stream.pdf"), is2);
+  internal virtual void testCreateFromStream256() { {
+      global::System.IO.Stream is1
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg256.jpg"));
+      global::System.Exception __dripsharpPrimary_115_26_0 = null!;
+      try {
+        global::System.IO.Stream is2
+          = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg256.jpg"));
+        global::System.Exception __dripsharpPrimary_116_26_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+            = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
+            = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromStream(document,
+            is1);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, 344,
+            287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document,
+            ximage,
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg256stream.pdf"));
+          this.checkJpegStream(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg256stream.pdf"), is2);
+        } catch (global::System.Exception __dripsharpCaught_116_26_0) {
+          __dripsharpPrimary_116_26_0 = __dripsharpCaught_116_26_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(is2, __dripsharpPrimary_116_26_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_115_26_0) {
+        __dripsharpPrimary_115_26_0 = __dripsharpCaught_115_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(is1, __dripsharpPrimary_115_26_0);
+      }
     }
   }
 
-  internal virtual void testCreateFromImageRGB() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg.jpg"))) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
-      global::SkiaSharp.SKBitmap image
-        = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
-      global::DripSharp.Testing.JavaAssertions.Equal(3,
-        global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfComponents,
-        null);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,
-        image);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, 344,
-        287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance.GetName()));
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document, ximage,
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegrgb.pdf"));
+  internal virtual void testCreateFromImageRGB() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg.jpg"));
+      global::System.Exception __dripsharpPrimary_134_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+          = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+        global::SkiaSharp.SKBitmap image
+          = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfComponents,
+          null);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
+          = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,
+          image);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, 344,
+          287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance.GetName()));
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document,
+          ximage, global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpegrgb.pdf"));
+      } catch (global::System.Exception __dripsharpCaught_134_26_0) {
+        __dripsharpPrimary_134_26_0 = __dripsharpCaught_134_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_134_26_0);
+      }
     }
   }
 
-  internal virtual void testCreateFromImage256() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg256.jpg"))) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
-      global::SkiaSharp.SKBitmap image
-        = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfComponents,
-        null);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,
-        image);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, 344,
-        287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document, ximage,
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg256.pdf"));
+  internal virtual void testCreateFromImage256() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg256.jpg"));
+      global::System.Exception __dripsharpPrimary_153_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+          = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+        global::SkiaSharp.SKBitmap image
+          = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfComponents,
+          null);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
+          = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,
+          image);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, 344,
+          287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document,
+          ximage, global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg256.pdf"));
+      } catch (global::System.Exception __dripsharpCaught_153_26_0) {
+        __dripsharpPrimary_153_26_0 = __dripsharpCaught_153_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_153_26_0);
+      }
     }
   }
 
@@ -142,47 +218,56 @@ public class JPEGFactoryTest {
       || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.Runtime.JavaCompat.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "java.specification.version")), "1.8")))) {
       return;
-    }
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg.jpg"))) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
-      global::SkiaSharp.SKBitmap image
-        = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
-      int width = image.Width;
-      int height = image.Height;
-      global::SkiaSharp.SKBitmap argbImage
-        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
-        global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
-      global::DripSharp.Runtime.PdfCartonGraphics2D ag
-        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(argbImage);
-      ag.DrawImage(image, 0, 0, (object)default!);
-      ag.Dispose();
-      for (int x = 0; (x < argbImage.Width); ++x) {
-        for (int y = 0; (y < argbImage.Height); ++y) {
-          global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(argbImage, x, y,
-            ((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(argbImage, x,
-            y) & 16777215) | (((y / 10) * 10) << unchecked((int)(24)))));
+    } {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg.jpg"));
+      global::System.Exception __dripsharpPrimary_181_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+          = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+        global::SkiaSharp.SKBitmap image
+          = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
+        int width = image.Width;
+        int height = image.Height;
+        global::SkiaSharp.SKBitmap argbImage
+          = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
+          global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
+        global::DripSharp.Runtime.PdfCartonGraphics2D ag
+          = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(argbImage);
+        ag.DrawImage(image, 0, 0, (object)default!);
+        ag.Dispose();
+        for (int x = 0; (x < argbImage.Width); ++x) {
+          for (int y = 0; (y < argbImage.Height); ++y) {
+            global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(argbImage, x, y,
+              ((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(argbImage, x,
+              y) & 16777215) | (unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(y,
+              10) * 10)) << unchecked((int)(24)))));
+          }
         }
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
+          = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,
+          argbImage);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, width,
+          height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance.GetName()));
+        global::DripSharp.Testing.JavaAssertions.NotNull(ximage.GetSoftMask(), null);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage.GetSoftMask(),
+          8, width, height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
+        global::DripSharp.Testing.JavaAssertions.True((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.ColorCount(ximage.GetSoftMask().GetImage()) > global::DripSharp.Runtime.JavaCompat.IntegralDivide(image.Height,
+          10)), null);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document,
+          ximage, global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg-intargb.pdf"));
+      } catch (global::System.Exception __dripsharpCaught_181_26_0) {
+        __dripsharpPrimary_181_26_0 = __dripsharpCaught_181_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_181_26_0);
       }
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,
-        argbImage);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, width,
-        height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance.GetName()));
-      global::DripSharp.Testing.JavaAssertions.NotNull(ximage.GetSoftMask(), null);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage.GetSoftMask(),
-        8, width, height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
-      global::DripSharp.Testing.JavaAssertions.True((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.ColorCount(ximage.GetSoftMask().GetImage()) > (image.Height
-        / 10)), null);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document, ximage,
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg-intargb.pdf"));
     }
   }
 
@@ -196,47 +281,56 @@ public class JPEGFactoryTest {
       || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.Runtime.JavaCompat.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "java.specification.version")), "1.8")))) {
       return;
-    }
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg.jpg"))) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
-      global::SkiaSharp.SKBitmap image
-        = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
-      int width = image.Width;
-      int height = image.Height;
-      global::SkiaSharp.SKBitmap argbImage
-        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
-        global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_4BYTE_ABGR);
-      global::DripSharp.Runtime.PdfCartonGraphics2D ag
-        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(argbImage);
-      ag.DrawImage(image, 0, 0, (object)default!);
-      ag.Dispose();
-      for (int x = 0; (x < argbImage.Width); ++x) {
-        for (int y = 0; (y < argbImage.Height); ++y) {
-          global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(argbImage, x, y,
-            ((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(argbImage, x,
-            y) & 16777215) | (((y / 10) * 10) << unchecked((int)(24)))));
+    } {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg.jpg"));
+      global::System.Exception __dripsharpPrimary_228_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+          = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+        global::SkiaSharp.SKBitmap image
+          = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
+        int width = image.Width;
+        int height = image.Height;
+        global::SkiaSharp.SKBitmap argbImage
+          = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
+          global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_4BYTE_ABGR);
+        global::DripSharp.Runtime.PdfCartonGraphics2D ag
+          = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(argbImage);
+        ag.DrawImage(image, 0, 0, (object)default!);
+        ag.Dispose();
+        for (int x = 0; (x < argbImage.Width); ++x) {
+          for (int y = 0; (y < argbImage.Height); ++y) {
+            global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(argbImage, x, y,
+              ((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(argbImage, x,
+              y) & 16777215) | (unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(y,
+              10) * 10)) << unchecked((int)(24)))));
+          }
         }
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
+          = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,
+          argbImage);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, width,
+          height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance.GetName()));
+        global::DripSharp.Testing.JavaAssertions.NotNull(ximage.GetSoftMask(), null);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage.GetSoftMask(),
+          8, width, height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
+        global::DripSharp.Testing.JavaAssertions.True((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.ColorCount(ximage.GetSoftMask().GetImage()) > global::DripSharp.Runtime.JavaCompat.IntegralDivide(image.Height,
+          10)), null);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document,
+          ximage, global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg-4bargb.pdf"));
+      } catch (global::System.Exception __dripsharpCaught_228_26_0) {
+        __dripsharpPrimary_228_26_0 = __dripsharpCaught_228_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_228_26_0);
       }
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,
-        argbImage);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, width,
-        height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance.GetName()));
-      global::DripSharp.Testing.JavaAssertions.NotNull(ximage.GetSoftMask(), null);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage.GetSoftMask(),
-        8, width, height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
-      global::DripSharp.Testing.JavaAssertions.True((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.ColorCount(ximage.GetSoftMask().GetImage()) > (image.Height
-        / 10)), null);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document, ximage,
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg-4bargb.pdf"));
     }
   }
 
@@ -250,41 +344,50 @@ public class JPEGFactoryTest {
       || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.Runtime.JavaCompat.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "java.specification.version")), "1.8")))) {
       return;
-    }
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg.jpg"))) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
-      global::SkiaSharp.SKBitmap image
-        = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
-      int width = image.Width;
-      int height = image.Height;
-      global::SkiaSharp.SKBitmap rgbImage
-        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
-        global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
-      global::DripSharp.Runtime.PdfCartonGraphics2D ag
-        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(rgbImage);
-      ag.DrawImage(image, 0, 0, (object)default!);
-      ag.Dispose();
-      for (int x = 0; (x < rgbImage.Width); ++x) {
-        for (int y = 0; (y < rgbImage.Height); ++y) {
-          global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(rgbImage, x, y,
-            ((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(rgbImage, x,
-            y) & 16777215) | (((y / 10) * 10) << unchecked((int)(24)))));
+    } {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg.jpg"));
+      global::System.Exception __dripsharpPrimary_276_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+          = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+        global::SkiaSharp.SKBitmap image
+          = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
+        int width = image.Width;
+        int height = image.Height;
+        global::SkiaSharp.SKBitmap rgbImage
+          = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
+          global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
+        global::DripSharp.Runtime.PdfCartonGraphics2D ag
+          = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(rgbImage);
+        ag.DrawImage(image, 0, 0, (object)default!);
+        ag.Dispose();
+        for (int x = 0; (x < rgbImage.Width); ++x) {
+          for (int y = 0; (y < rgbImage.Height); ++y) {
+            global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(rgbImage, x, y,
+              ((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(rgbImage, x,
+              y) & 16777215) | (unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(y,
+              10) * 10)) << unchecked((int)(24)))));
+          }
         }
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
+          = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,
+          rgbImage);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, width,
+          height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance.GetName()));
+        global::DripSharp.Testing.JavaAssertions.Null(ximage.GetSoftMask(), null);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document,
+          ximage, global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg-ushort555rgb.pdf"));
+      } catch (global::System.Exception __dripsharpCaught_276_26_0) {
+        __dripsharpPrimary_276_26_0 = __dripsharpCaught_276_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_276_26_0);
       }
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,
-        rgbImage);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 8, width,
-        height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance.GetName()));
-      global::DripSharp.Testing.JavaAssertions.Null(ximage.GetSoftMask(), null);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document, ximage,
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpeg-ushort555rgb.pdf"));
     }
   }
 
@@ -311,19 +414,36 @@ public class JPEGFactoryTest {
   }
 
   private void checkJpegStream(global::DripSharp.Runtime.JavaFile testResultsDir, string filename,
-    global::System.IO.Stream expected) {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(testResultsDir,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)) })) {
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject img
-        = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(doc.GetPage(0).GetResources().GetXObject(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Im1")))!);
-      using (global::System.IO.Stream dctStream
-        = img.CreateInputStream(global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Cos.COSName.DctDecode.GetName()))) {
-        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(expected),
-          global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(dctStream), null);
+    global::System.IO.Stream expected) { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(testResultsDir,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename)) });
+      global::System.Exception __dripsharpPrimary_331_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject img
+          = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(doc.GetPage(0).GetResources().GetXObject(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Im1")))!); {
+          global::System.IO.Stream dctStream
+            = img.CreateInputStream(global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Cos.COSName.DctDecode.GetName()));
+          global::System.Exception __dripsharpPrimary_335_30_0 = null!;
+          try {
+            global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(expected),
+              global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(dctStream), null);
+          } catch (global::System.Exception __dripsharpCaught_335_30_0) {
+            __dripsharpPrimary_335_30_0 = __dripsharpCaught_335_30_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(dctStream,
+              __dripsharpPrimary_335_30_0);
+          }
+        }
+      } catch (global::System.Exception __dripsharpCaught_331_25_0) {
+        __dripsharpPrimary_331_25_0 = __dripsharpCaught_331_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_331_25_0);
       }
     }
   }
@@ -418,10 +538,17 @@ public class JPEGFactoryTest {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     setUp();
     return true;
+  }
+
+  static JPEGFactoryTest() {
+    TESTRESULTSDIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/test-output/graphics"));
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

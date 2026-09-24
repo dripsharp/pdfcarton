@@ -284,7 +284,7 @@ public sealed class PdfaExtensionHelper {
           return default!;
       }
     }
-    string vt = valueType.Substring((pos + 1));
+    string vt = valueType.Substring(unchecked((pos + 1)));
     global::DripSharp.PdfCarton.Xmp.Type.Types type = default!;
     try {
       type = ((pos < 0) ? global::DripSharp.PdfCarton.Xmp.Type.Types.valueOf(valueType)

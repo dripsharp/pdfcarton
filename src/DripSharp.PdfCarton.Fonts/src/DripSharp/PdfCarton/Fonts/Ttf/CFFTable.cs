@@ -29,20 +29,29 @@ public class CFFTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
 
   internal override void readHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
     global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data,
-    global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) {
-    using (global::DripSharp.PdfCarton.IO.RandomAccessRead subReader
-      = data.CreateSubView(this.GetLength())) {
-      global::DripSharp.PdfCarton.IO.RandomAccessRead reader;
-      if ((subReader != default!)) {
-        reader = subReader;
-      } else {
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Assert(() => false, ()
-          => "It is inefficient to read TTFDataStream into an array");
-        sbyte[] bytes = data.Read((int)((int)(this.GetLength())));
-        reader = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(bytes);
+    global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders) { {
+      global::DripSharp.PdfCarton.IO.RandomAccessRead subReader
+        = data.CreateSubView(this.GetLength());
+      global::System.Exception __dripsharpPrimary_65_31_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.IO.RandomAccessRead reader;
+        if ((subReader != default!)) {
+          reader = subReader;
+        } else {
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Assert(() => false, ()
+            => "It is inefficient to read TTFDataStream into an array");
+          sbyte[] bytes = data.Read((int)((int)(this.GetLength())));
+          reader = new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(bytes);
+        }
+        new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser().ParseFirstSubFontROS(reader,
+          outHeaders);
+      } catch (global::System.Exception __dripsharpCaught_65_31_0) {
+        __dripsharpPrimary_65_31_0 = __dripsharpCaught_65_31_0;
+        throw;
+      } finally {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(subReader,
+          __dripsharpPrimary_65_31_0);
       }
-      new global::DripSharp.PdfCarton.Fonts.Cff.CFFParser().ParseFirstSubFontROS(reader,
-        outHeaders);
     }
   }
 
@@ -61,5 +70,9 @@ public class CFFTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
       return this.ttf.GetTableBytes(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(this.ttf.GetTableMap(),
         global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag));
     }
+  }
+
+  static CFFTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
   }
 }

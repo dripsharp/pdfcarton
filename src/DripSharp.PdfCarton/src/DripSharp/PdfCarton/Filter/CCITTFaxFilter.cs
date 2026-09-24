@@ -30,8 +30,10 @@ internal sealed class CCITTFaxFilter : global::DripSharp.PdfCarton.Filter.Filter
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid CCITT image dimensions: cols=",
         cols), ", rows="), rows));
     }
-    long arraySizeLong = ((((long)cols + 7) / 8) * rows);
-    long maxBytes = ((256 * 1024) * 1024L);
+    long arraySizeLong
+      = unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked(((long)cols + 7)),
+      8) * rows));
+    long maxBytes = unchecked((unchecked((256 * 1024)) * 1024L));
     string sysProp
       = global::DripSharp.Runtime.JavaCompat.GetProperty(global::DripSharp.PdfCarton.Filter.Filter.SyspropCcittfaxMaxbytes);
     if ((sysProp != default!)) {
@@ -64,7 +66,7 @@ internal sealed class CCITTFaxFilter : global::DripSharp.PdfCarton.Filter.Filter
         type = global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittT4;
         sbyte[] streamData = new sbyte[20];
         int bytesRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(encoded, streamData);
-        if ((bytesRead == -1)) {
+        if ((bytesRead == unchecked(-1))) {
           throw new global::System.IO.IOException("EOF while reading CCITT header");
         }
         global::DripSharp.Runtime.JavaPushbackInputStream pushbackInputStream
@@ -75,11 +77,14 @@ internal sealed class CCITTFaxFilter : global::DripSharp.PdfCarton.Filter.Filter
           && ((int)(streamData[1]) != 1)))) {
           type
             = global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittModifiedHuffmanRle;
-          short b = unchecked((short)(unchecked((short)((((streamData[0] << unchecked((int)(8)))
-            + (streamData[1] & 255)) >> unchecked((int)(4)))))));
-          for (int i = 12; (i < (bytesRead * 8)); i++) {
-            b = unchecked((short)(unchecked((short)(((b << unchecked((int)(1))) + ((streamData[(i
-              / 8)] >> unchecked((int)((7 - (i % 8))))) & 1))))));
+          short b
+            = unchecked((short)(unchecked((short)((unchecked(((streamData[0] << unchecked((int)(8)))
+            + (streamData[1] & 255))) >> unchecked((int)(4)))))));
+          for (int i = 12; (i < unchecked((bytesRead * 8))); i++) {
+            b = unchecked((short)(unchecked((short)(unchecked(((b << unchecked((int)(1)))
+              + ((streamData[global::DripSharp.Runtime.JavaCompat.IntegralDivide(i,
+              8)] >> unchecked((int)(unchecked((7
+              - global::DripSharp.Runtime.JavaCompat.IntegralRemainder(i, 8)))))) & 1)))))));
             if (((b & 4095) == 1)) {
               type = global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.CompressionCcittT4;
               break;
@@ -111,7 +116,8 @@ internal sealed class CCITTFaxFilter : global::DripSharp.PdfCarton.Filter.Filter
     sbyte[] result) {
     int pos = 0;
     int read;
-    while (((read = decoderStream.Read(result, pos, (result.Length - pos))) > -1)) {
+    while (((read = decoderStream.Read(result, pos, unchecked((result.Length
+      - pos)))) > unchecked(-1))) {
       pos += read;
       if ((pos >= result.Length)) {
         break;
@@ -133,5 +139,9 @@ internal sealed class CCITTFaxFilter : global::DripSharp.PdfCarton.Filter.Filter
       = new global::DripSharp.PdfCarton.Filter.CCITTFaxEncoderStream(encoded, cols, rows,
       global::DripSharp.PdfCarton.Filter.TIFFExtensionStatics.FillLeftToRight);
     global::DripSharp.PdfCarton.IO.IOUtils.Copy(input, ccittFaxEncoderStream);
+  }
+
+  static CCITTFaxFilter() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Filter.Filter).TypeHandle);
   }
 }

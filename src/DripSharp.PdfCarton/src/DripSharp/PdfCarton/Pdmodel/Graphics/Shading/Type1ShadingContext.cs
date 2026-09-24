@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 internal class Type1ShadingContext
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingContext {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType1 type1ShadingType
     = null!;
@@ -53,14 +52,14 @@ internal class Type1ShadingContext
   public override global::DripSharp.Runtime.JavaRaster GetRaster(int x, int y, int w, int h) {
     global::DripSharp.Runtime.JavaRaster raster
       = this.GetColorModel().CreateCompatibleWritableRaster(w, h);
-    int[] data = new int[((w * h) * 4)];
+    int[] data = new int[unchecked((unchecked((w * h)) * 4))];
     float[] values = new float[2];
     for (int j = 0; (j < h); j++) {
       for (int i = 0; (i < w); i++) {
-        int index = (((j * w) + i) * 4);
+        int index = unchecked((unchecked((unchecked((j * w)) + i)) * 4));
         bool useBackground = false;
-        values[0] = (x + i);
-        values[1] = (y + j);
+        values[0] = unchecked((x + i));
+        values[1] = unchecked((y + j));
         global::DripSharp.Runtime.PdfCartonFontCompat.TransformPoints(this.rat, values, 0, values,
           0, 1);
         if (((((values[0] < this.domain[0]) || (values[0] > this.domain[1]))
@@ -95,10 +94,16 @@ internal class Type1ShadingContext
             continue;
           }
         }
-        data[index] = (int)((tmpValues[0] * 255));
-        data[(index + 1)] = (int)((tmpValues[1] * 255));
-        data[(index + 2)] = (int)((tmpValues[2] * 255));
-        data[(index + 3)] = 255;
+        data[index]
+          = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((tmpValues[0]
+          * 255))));
+        data[unchecked((index + 1))]
+          = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((tmpValues[1]
+          * 255))));
+        data[unchecked((index + 2))]
+          = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue((tmpValues[2]
+          * 255))));
+        data[unchecked((index + 3))] = 255;
       }
     }
     raster.SetPixels(0, 0, w, h, data);
@@ -107,5 +112,10 @@ internal class Type1ShadingContext
 
   public virtual float[] GetDomain() {
     return this.domain;
+  }
+
+  static Type1ShadingContext() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingContext).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

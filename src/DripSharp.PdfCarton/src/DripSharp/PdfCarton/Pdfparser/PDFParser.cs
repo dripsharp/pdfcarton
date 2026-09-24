@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdfparser;
 
 public class PDFParser : global::DripSharp.PdfCarton.Pdfparser.COSParser {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDFParser(global::DripSharp.PdfCarton.IO.RandomAccessRead source) : this(source, "") {
 
@@ -96,7 +95,7 @@ public class PDFParser : global::DripSharp.PdfCarton.Pdfparser.COSParser {
   internal static global::DripSharp.PdfCarton.Pdmodel.PDDocument __JavaFile_Load(global::DripSharp.Runtime.JavaFile file) {
     return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { file });
+      new object[] { (global::DripSharp.Runtime.JavaFile)file });
   }
 
   [global::DripSharp.Runtime.JavaFileBoundary]
@@ -110,6 +109,11 @@ public class PDFParser : global::DripSharp.PdfCarton.Pdfparser.COSParser {
     string password) {
     return global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
-      new object[] { file, password });
+      new object[] { (global::DripSharp.Runtime.JavaFile)file, (string)password });
+  }
+
+  static PDFParser() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdfparser.COSParser).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

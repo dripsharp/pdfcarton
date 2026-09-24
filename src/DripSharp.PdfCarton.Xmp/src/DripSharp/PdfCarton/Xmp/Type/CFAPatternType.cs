@@ -23,4 +23,8 @@ public class CFAPatternType : global::DripSharp.PdfCarton.Xmp.Type.AbstractStruc
   public CFAPatternType(global::DripSharp.PdfCarton.Xmp.XMPMetadata metadata) : base(metadata) {
 
   }
+
+  static CFAPatternType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

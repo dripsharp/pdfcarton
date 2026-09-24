@@ -28,7 +28,7 @@ public class TextPositionComparator
       return global::DripSharp.Runtime.JavaCompat.CompareFloat(x1, x2);
     } else {
       if ((pos1YBottom < pos2YBottom)) {
-        return -1;
+        return unchecked(-1);
       } else {
         return 1;
       }

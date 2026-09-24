@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const string Tag = "GSUB";
 
@@ -23,20 +22,22 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
   private global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupListTable lookupListTable
     = null!;
 
-  private readonly global::System.Collections.Generic.IDictionary<int, int> lookupCache
-    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>();
+  private readonly global::System.Collections.Generic.IDictionary<int, int> lookupCache;
 
-  private readonly global::System.Collections.Generic.IDictionary<int, int> reverseLookup
-    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int, int>();
+  private readonly global::System.Collections.Generic.IDictionary<int, int> reverseLookup;
 
   private string lastUsedSupportedScript = null!;
 
   private global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData = null!;
 
-  private static readonly global::System.Text.RegularExpressions.Regex WORDPATTERN
-    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompileRegex("\\w{4}");
+  private static readonly global::System.Text.RegularExpressions.Regex WORDPATTERN;
 
-  internal GlyphSubstitutionTable() {}
+  internal GlyphSubstitutionTable() {
+    this.lookupCache = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int,
+      int>();
+    this.reverseLookup = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewJavaDictionary<int,
+      int>();
+  }
 
   internal override void read(global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
     global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream data) {
@@ -46,14 +47,14 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
     int scriptListOffset = data.ReadUnsignedShort();
     int featureListOffset = data.ReadUnsignedShort();
     int lookupListOffset = data.ReadUnsignedShort();
-    long featureVariationsOffset = -1L;
+    long featureVariationsOffset = unchecked(-1L);
     if ((minorVersion == 1L)) {
       featureVariationsOffset = data.ReadUnsignedInt();
     }
-    this.scriptList = this.readScriptList(data, (start + scriptListOffset));
-    this.featureListTable = this.readFeatureList(data, (start + featureListOffset));
+    this.scriptList = this.readScriptList(data, unchecked((start + scriptListOffset)));
+    this.featureListTable = this.readFeatureList(data, unchecked((start + featureListOffset)));
     if ((lookupListOffset > 0)) {
-      this.lookupListTable = this.readLookupList(data, (start + lookupListOffset));
+      this.lookupListTable = this.readLookupList(data, unchecked((start + lookupListOffset)));
     } else {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG,
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf("lookupListOffset is 0, LookupListTable is considered empty"));
@@ -82,12 +83,12 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
     for (int i__140_18 = 0; (i__140_18 < scriptCount); i__140_18++) {
       scriptTags[i__140_18] = data.ReadString(4);
       scriptOffsets[i__140_18] = data.ReadUnsignedShort();
-      if ((scriptOffsets[i__140_18] < (data.GetCurrentPosition() - offset))) {
+      if ((scriptOffsets[i__140_18] < unchecked((data.GetCurrentPosition() - offset)))) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG,
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("scriptOffsets[",
           i__140_18), "]: "), scriptOffsets[i__140_18]),
-          " implausible: data.getCurrentPosition() - offset = "), (data.GetCurrentPosition()
-          - offset))));
+          " implausible: data.getCurrentPosition() - offset = "),
+          unchecked((data.GetCurrentPosition() - offset)))));
         return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnmodifiableMap(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CastDictionary<string,
           global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable>(resultScriptList));
       }
@@ -98,7 +99,7 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
         continue;
       }
       global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable scriptTable
-        = this.readScriptTable(data, (offset + scriptOffsets[i__153_18]));
+        = this.readScriptTable(data, unchecked((offset + scriptOffsets[i__153_18])));
       global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(resultScriptList,
         scriptTags[i__153_18], scriptTable);
     }
@@ -116,22 +117,22 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
     for (int i__173_18 = 0; (i__173_18 < langSysCount); i__173_18++) {
       langSysTags[i__173_18] = data.ReadString(4);
       langSysOffsets[i__173_18] = data.ReadUnsignedShort();
-      if ((langSysOffsets[i__173_18] < (data.GetCurrentPosition() - offset))) {
+      if ((langSysOffsets[i__173_18] < unchecked((data.GetCurrentPosition() - offset)))) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG,
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("langSysOffsets[",
           i__173_18), "]: "), langSysOffsets[i__173_18]),
-          " implausible: data.getCurrentPosition() - offset = "), (data.GetCurrentPosition()
-          - offset))));
+          " implausible: data.getCurrentPosition() - offset = "),
+          unchecked((data.GetCurrentPosition() - offset)))));
         return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable((global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable)default!,
           new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<string,
           global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable>());
       }
       if (((i__173_18 > 0)
         && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringCompareTo(langSysTags[i__173_18],
-        langSysTags[(i__173_18 - 1)]) < 0))) {
+        langSysTags[unchecked((i__173_18 - 1))]) < 0))) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG,
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("LangSysRecords not alphabetically sorted by LangSys tag: ",
-          langSysTags[i__173_18]), " < "), langSysTags[(i__173_18 - 1)])));
+          langSysTags[i__173_18]), " < "), langSysTags[unchecked((i__173_18 - 1))])));
         return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.ScriptTable((global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable)default!,
           new global::DripSharp.PdfCarton.Runtime.Fonts.JavaLinkedHashMap<string,
           global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable>());
@@ -139,7 +140,7 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
     }
     global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable defaultLangSysTable = default!;
     if ((defaultLangSysOffset != 0)) {
-      defaultLangSysTable = this.readLangSysTable(data, (offset + defaultLangSysOffset));
+      defaultLangSysTable = this.readLangSysTable(data, unchecked((offset + defaultLangSysOffset)));
     }
     global::System.Collections.Generic.IDictionary<string,
       global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable> langSysTables
@@ -147,7 +148,7 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
       global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable>(langSysCount);
     for (int i__202_18 = 0; (i__202_18 < langSysCount); i__202_18++) {
       global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LangSysTable langSysTable
-        = this.readLangSysTable(data, (offset + langSysOffsets[i__202_18]));
+        = this.readLangSysTable(data, unchecked((offset + langSysOffsets[i__202_18])));
       global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(langSysTables,
         langSysTags[i__202_18], langSysTable);
     }
@@ -182,18 +183,18 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
       featureTags[i__232_18] = data.ReadString(4);
       if (((i__232_18 > 0)
         && (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringCompareTo(featureTags[i__232_18],
-        featureTags[(i__232_18 - 1)]) < 0))) {
+        featureTags[unchecked((i__232_18 - 1))]) < 0))) {
         if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.RegexMatcher(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.WORDPATTERN,
           featureTags[i__232_18]).Matches()
           && global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.RegexMatcher(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.WORDPATTERN,
-          featureTags[(i__232_18 - 1)]).Matches())) {
+          featureTags[unchecked((i__232_18 - 1))]).Matches())) {
           global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG,
             global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("FeatureRecord array not alphabetically sorted by FeatureTag: ",
-            featureTags[i__232_18]), " < "), featureTags[(i__232_18 - 1)])));
+            featureTags[i__232_18]), " < "), featureTags[unchecked((i__232_18 - 1))])));
         } else {
           global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG,
             global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("FeatureRecord array not alphabetically sorted by FeatureTag: ",
-            featureTags[i__232_18]), " < "), featureTags[(i__232_18 - 1)])));
+            featureTags[i__232_18]), " < "), featureTags[unchecked((i__232_18 - 1))])));
           return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureListTable(0,
             new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureRecord[0]);
         }
@@ -202,7 +203,7 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
     }
     for (int i__256_18 = 0; (i__256_18 < featureCount); i__256_18++) {
       global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureTable featureTable
-        = this.readFeatureTable(data, (offset + featureOffsets[i__256_18]));
+        = this.readFeatureTable(data, unchecked((offset + featureOffsets[i__256_18])));
       featureRecords[i__256_18]
         = new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.FeatureRecord(featureTags[i__256_18],
         featureTable);
@@ -234,12 +235,12 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
       if ((lookups[i__282_18] == 0)) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG,
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("lookups[",
-          i__282_18), "] is 0 at offset "), (data.GetCurrentPosition() - 2))));
+          i__282_18), "] is 0 at offset "), unchecked((data.GetCurrentPosition() - 2)))));
       } else {
-        if (((offset + lookups[i__282_18]) > data.GetOriginalDataSize())) {
+        if ((unchecked((offset + lookups[i__282_18])) > data.GetOriginalDataSize())) {
           global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG,
-            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat((offset
-            + lookups[i__282_18]), " > "), data.GetOriginalDataSize())));
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(unchecked((offset
+            + lookups[i__282_18])), " > "), data.GetOriginalDataSize())));
         }
       }
     }
@@ -254,7 +255,7 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
         = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(lookupTableMap,
         lookups[i__296_18]);
       if ((lookupTable == default!)) {
-        lookupTable = this.readLookupTable(data, (offset + lookups[i__296_18]));
+        lookupTable = this.readLookupTable(data, unchecked((offset + lookups[i__296_18])));
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(lookupTableMap,
           lookups[i__296_18], lookupTable);
       }
@@ -295,14 +296,14 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
       if ((subTableOffsets[i__354_18] == 0)) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG,
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("subTableOffsets[",
-          i__354_18), "] is 0 at offset "), (data.GetCurrentPosition() - 2))));
+          i__354_18), "] is 0 at offset "), unchecked((data.GetCurrentPosition() - 2)))));
         return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupTable(lookupType,
           lookupFlag, 0, new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable[0]);
       }
-      if (((offset + subTableOffsets[i__354_18]) > data.GetOriginalDataSize())) {
+      if ((unchecked((offset + subTableOffsets[i__354_18])) > data.GetOriginalDataSize())) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG,
-          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat((offset
-          + subTableOffsets[i__354_18]), " > "), data.GetOriginalDataSize())));
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(unchecked((offset
+          + subTableOffsets[i__354_18])), " > "), data.GetOriginalDataSize())));
         return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupTable(lookupType,
           lookupFlag, 0, new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.LookupSubTable[0]);
       }
@@ -321,33 +322,33 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
       case var __case_383_14_0 when __case_383_14_0 == 3:
       case var __case_384_14_0 when __case_384_14_0 == 4:
         for (int i__385_22 = 0; (i__385_22 < subTableCount); i__385_22++) {
-          subTables[i__385_22] = this.readLookupSubtable(data, (offset
-            + subTableOffsets[i__385_22]), lookupType);
+          subTables[i__385_22] = this.readLookupSubtable(data, unchecked((offset
+            + subTableOffsets[i__385_22])), lookupType);
         }
         break;
       case var __case_390_14_0 when __case_390_14_0 == 7:
         for (int i__393_22 = 0; (i__393_22 < subTableCount); i__393_22++) {
-          data.Seek((offset + subTableOffsets[i__393_22]));
+          data.Seek(unchecked((offset + subTableOffsets[i__393_22])));
           int substFormat = data.ReadUnsignedShort();
           if ((substFormat != 1)) {
             global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG,
               global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("The expected SubstFormat for ExtensionSubstFormat1 subtable is ",
-              substFormat), " but should be 1 at offset "), (offset
-              + subTableOffsets[i__393_22]))));
+              substFormat), " but should be 1 at offset "), unchecked((offset
+              + subTableOffsets[i__393_22])))));
             continue;
           }
           int extensionLookupType = data.ReadUnsignedShort();
           if (((lookupType != 7) && (lookupType != extensionLookupType))) {
             global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphSubstitutionTable.LOG,
               global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("extensionLookupType changed from ",
-              lookupType), " to "), extensionLookupType), " at offset "), ((offset
-              + subTableOffsets[i__393_22]) + 2))));
+              lookupType), " to "), extensionLookupType), " at offset "),
+              unchecked((unchecked((offset + subTableOffsets[i__393_22])) + 2)))));
             continue;
           }
           lookupType = extensionLookupType;
           long extensionOffset = data.ReadUnsignedInt();
-          long extensionLookupTableAddress = ((offset + subTableOffsets[i__393_22])
-            + extensionOffset);
+          long extensionLookupTableAddress = unchecked((unchecked((offset
+            + subTableOffsets[i__393_22])) + extensionOffset));
           subTables[i__393_22] = this.readLookupSubtable(data, extensionLookupTableAddress,
             extensionLookupType);
         }
@@ -371,7 +372,7 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
           int coverageOffset__436_17 = data.ReadUnsignedShort();
           short deltaGlyphID = data.ReadSignedShort();
           global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable__438_27
-            = this.readCoverageTable(data, (offset + coverageOffset__436_17));
+            = this.readCoverageTable(data, unchecked((offset + coverageOffset__436_17)));
           return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LookupTypeSingleSubstFormat1(substFormat,
             coverageTable__438_27, deltaGlyphID);
         }
@@ -383,7 +384,7 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
             substituteGlyphIDs[i] = data.ReadUnsignedShort();
           }
           global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable__452_27
-            = this.readCoverageTable(data, (offset + coverageOffset__445_17));
+            = this.readCoverageTable(data, unchecked((offset + coverageOffset__445_17)));
           return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LookupTypeSingleSubstFormat2(substFormat,
             coverageTable__452_27, substituteGlyphIDs);
         }
@@ -409,14 +410,14 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
       sequenceOffsets[i__476_18] = data.ReadUnsignedShort();
     }
     global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable
-      = this.readCoverageTable(data, (offset + coverage));
+      = this.readCoverageTable(data, unchecked((offset + coverage)));
     if ((sequenceCount != coverageTable.GetSize())) {
       throw new global::System.IO.IOException("According to the OpenTypeFont specifications, the coverage count should be equal to the no. of SequenceTables");
     }
     global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.SequenceTable[] sequenceTables
       = new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.SequenceTable[sequenceCount];
     for (int i__490_18 = 0; (i__490_18 < sequenceCount); i__490_18++) {
-      data.Seek((offset + sequenceOffsets[i__490_18]));
+      data.Seek(unchecked((offset + sequenceOffsets[i__490_18])));
       int glyphCount = data.ReadUnsignedShort();
       int[] substituteGlyphIDs = data.ReadUnsignedShortArray(glyphCount);
       sequenceTables[i__490_18]
@@ -441,14 +442,14 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
       alternateOffsets[i__517_18] = data.ReadUnsignedShort();
     }
     global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable
-      = this.readCoverageTable(data, (offset + coverage));
+      = this.readCoverageTable(data, unchecked((offset + coverage)));
     if ((altSetCount != coverageTable.GetSize())) {
       throw new global::System.IO.IOException("According to the OpenTypeFont specifications, the coverage count should be equal to the no. of AlternateSetTable");
     }
     global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.AlternateSetTable[] alternateSetTables
       = new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.AlternateSetTable[altSetCount];
     for (int i__532_18 = 0; (i__532_18 < altSetCount); i__532_18++) {
-      data.Seek((offset + alternateOffsets[i__532_18]));
+      data.Seek(unchecked((offset + alternateOffsets[i__532_18])));
       int glyphCount = data.ReadUnsignedShort();
       int[] alternateGlyphIDs = data.ReadUnsignedShortArray(glyphCount);
       alternateSetTables[i__532_18]
@@ -473,7 +474,7 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
       ligatureOffsets[i__561_18] = data.ReadUnsignedShort();
     }
     global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable coverageTable
-      = this.readCoverageTable(data, (offset + coverage));
+      = this.readCoverageTable(data, unchecked((offset + coverage)));
     if ((ligSetCount != coverageTable.GetSize())) {
       throw new global::System.IO.IOException("According to the OpenTypeFont specifications, the coverage count should be equal to the no. of LigatureSetTables");
     }
@@ -481,8 +482,8 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
       = new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureSetTable[ligSetCount];
     for (int i__576_18 = 0; (i__576_18 < ligSetCount); i__576_18++) {
       int coverageGlyphId = coverageTable.GetGlyphId(i__576_18);
-      ligatureSetTables[i__576_18] = this.readLigatureSetTable(data, (offset
-        + ligatureOffsets[i__576_18]), coverageGlyphId);
+      ligatureSetTables[i__576_18] = this.readLigatureSetTable(data, unchecked((offset
+        + ligatureOffsets[i__576_18])), coverageGlyphId);
     }
     return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LookupTypeLigatureSubstitutionSubstFormat1(substFormat,
       coverageTable, ligatureSetTables);
@@ -500,8 +501,8 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
     }
     for (int i__604_18 = 0; (i__604_18 < ligatureOffsets.Length); i__604_18++) {
       int ligatureOffset = ligatureOffsets[i__604_18];
-      ligatureTables[i__604_18] = this.readLigatureTable(data, (ligatureSetTableLocation
-        + ligatureOffset), coverageGlyphId);
+      ligatureTables[i__604_18] = this.readLigatureTable(data, unchecked((ligatureSetTableLocation
+        + ligatureOffset)), coverageGlyphId);
     }
     return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureSetTable(ligatureCount,
       ligatureTables);
@@ -520,7 +521,7 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
     if ((componentCount > 0)) {
       componentGlyphIDs[0] = coverageGlyphId;
     }
-    for (int i = 1; (i <= (componentCount - 1)); i++) {
+    for (int i = 1; (i <= unchecked((componentCount - 1))); i++) {
       componentGlyphIDs[i] = data.ReadUnsignedShort();
     }
     return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Gsub.LigatureTable(ligatureGlyph,
@@ -701,8 +702,8 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
 
   public virtual int GetSubstitution(int gid, string[] scriptTags,
     global::System.Collections.Generic.IList<string> enabledFeatures) {
-    if ((gid == -1)) {
-      return -1;
+    if ((gid == unchecked(-1))) {
+      return unchecked(-1);
     }
     int? cached
       = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGetNullable(this.lookupCache, gid);
@@ -760,5 +761,11 @@ public class GlyphSubstitutionTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFT
     int startCoverageIndex = data.ReadUnsignedShort();
     return new global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.RangeRecord(startGlyphID,
       endGlyphID, startCoverageIndex);
+  }
+
+  static GlyphSubstitutionTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    WORDPATTERN = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompileRegex("\\w{4}");
   }
 }

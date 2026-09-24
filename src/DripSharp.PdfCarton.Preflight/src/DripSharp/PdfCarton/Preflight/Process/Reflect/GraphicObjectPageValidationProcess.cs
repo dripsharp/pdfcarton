@@ -44,4 +44,8 @@ public class GraphicObjectPageValidationProcess
       validator!.Validate();
     }
   }
+
+  static GraphicObjectPageValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+  }
 }

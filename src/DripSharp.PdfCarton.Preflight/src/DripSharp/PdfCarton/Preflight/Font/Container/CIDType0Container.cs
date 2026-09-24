@@ -18,4 +18,8 @@ public class CIDType0Container
   public override bool HasGlyph(int code) {
     return (base.Font.CodeToGID(code) != 0);
   }
+
+  static CIDType0Container() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.Container.FontContainer<global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType0>).TypeHandle);
+  }
 }

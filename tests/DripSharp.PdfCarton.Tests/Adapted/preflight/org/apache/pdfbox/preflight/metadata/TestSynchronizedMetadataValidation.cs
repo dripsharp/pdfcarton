@@ -620,10 +620,14 @@ public class TestSynchronizedMetadataValidation {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     initSynchronizedMetadataValidation();
     return true;
+  }
+
+  static TestSynchronizedMetadataValidation() {
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

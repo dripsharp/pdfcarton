@@ -9,7 +9,7 @@ public class TestFilters {
     int COUNT = 10;
     global::DripSharp.PdfCarton.Tests.JavaRandom rd
       = new global::DripSharp.PdfCarton.Tests.JavaRandom((long)(123456));
-    for (int iter = 0; (iter < (COUNT * 2)); iter++) {
+    for (int iter = 0; (iter < unchecked((COUNT * 2))); iter++) {
       long seed;
       if ((iter < COUNT)) {
         seed = rd.NextLong();
@@ -20,18 +20,20 @@ public class TestFilters {
       try {
         global::DripSharp.PdfCarton.Tests.JavaRandom random
           = new global::DripSharp.PdfCarton.Tests.JavaRandom(seed);
-        int numBytes = (10000 + random.NextInt(20000));
+        int numBytes = unchecked((10000 + random.NextInt(20000)));
         sbyte[] original = new sbyte[numBytes];
         int upto = 0;
         while ((upto < numBytes)) {
-          int left = (numBytes - upto);
+          int left = unchecked((numBytes - upto));
           if ((random.NextBoolean() || (left < 2))) {
-            int end__82_35 = (upto + global::System.Math.Min(left, (10 + random.NextInt(100))));
+            int end__82_35 = unchecked((upto + global::System.Math.Min(left, unchecked((10
+              + random.NextInt(100))))));
             while ((upto < end__82_35)) {
               original[upto++] = unchecked((sbyte)(unchecked((sbyte)(random.NextInt()))));
             }
           } else {
-            int end__91_35 = (upto + global::System.Math.Min(left, (2 + random.NextInt(10))));
+            int end__91_35 = unchecked((upto + global::System.Math.Min(left, unchecked((2
+              + random.NextInt(10))))));
             sbyte value = unchecked((sbyte)(unchecked((sbyte)(random.NextInt(4)))));
             while ((upto < end__91_35)) {
               original[upto++] = unchecked((sbyte)(value));
@@ -57,25 +59,41 @@ public class TestFilters {
     }
   }
 
-  internal virtual void testPDFBOX4517() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
-      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "target/pdfs/PDFBOX-4517-cryptfilter.pdf")),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "userpassword1234") })) {
-      global::DripSharp.Testing.JavaAssertions.Equal(1, doc.GetNumberOfPages(), null);
+  internal virtual void testPDFBOX4517() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "target/pdfs/PDFBOX-4517-cryptfilter.pdf")),
+          (string)global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "userpassword1234") });
+      global::System.Exception __dripsharpPrimary_134_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(1, doc.GetNumberOfPages(), null);
+      } catch (global::System.Exception __dripsharpCaught_134_25_0) {
+        __dripsharpPrimary_134_25_0 = __dripsharpCaught_134_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_134_25_0);
+      }
     }
   }
 
-  internal virtual void testPDFBOX1977() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(((object)(this)).GetType(),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-1977.bin"))) {
-      global::DripSharp.PdfCarton.Filter.Filter lzwFilter
-        = global::DripSharp.PdfCarton.Filter.FilterFactory.Instance.GetFilter(global::DripSharp.PdfCarton.Cos.COSName.LzwDecode);
-      sbyte[] byteArray = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
-      this.checkEncodeDecode(lzwFilter, byteArray);
+  internal virtual void testPDFBOX1977() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(((object)(this)).GetType(),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-1977.bin"));
+      global::System.Exception __dripsharpPrimary_151_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Filter.Filter lzwFilter
+          = global::DripSharp.PdfCarton.Filter.FilterFactory.Instance.GetFilter(global::DripSharp.PdfCarton.Cos.COSName.LzwDecode);
+        sbyte[] byteArray = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
+        this.checkEncodeDecode(lzwFilter, byteArray);
+      } catch (global::System.Exception __dripsharpCaught_151_26_0) {
+        __dripsharpPrimary_151_26_0 = __dripsharpCaught_151_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_151_26_0);
+      }
     }
   }
 
@@ -94,7 +112,7 @@ public class TestFilters {
     this.checkEncodeDecode(rleFilter, input3);
     sbyte[] input4 = new sbyte[129];
     this.checkEncodeDecode(rleFilter, input4);
-    sbyte[] input5 = new sbyte[(128 + 128)];
+    sbyte[] input5 = new sbyte[unchecked((128 + 128))];
     this.checkEncodeDecode(rleFilter, input5);
     sbyte[] input6 = new sbyte[1];
     this.checkEncodeDecode(rleFilter, input6);

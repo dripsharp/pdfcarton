@@ -64,6 +64,10 @@ public sealed class CFFExpertSubsetCharset : global::DripSharp.PdfCarton.Fonts.C
     return global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertSubsetCharset.INSTANCE;
   }
 
-  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertSubsetCharset INSTANCE
-    = new global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertSubsetCharset();
+  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertSubsetCharset INSTANCE;
+
+  static CFFExpertSubsetCharset() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetType1).TypeHandle);
+    INSTANCE = new global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertSubsetCharset();
+  }
 }

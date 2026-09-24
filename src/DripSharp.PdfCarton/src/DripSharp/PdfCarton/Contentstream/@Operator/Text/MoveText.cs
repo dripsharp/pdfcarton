@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Contentstream.@Operator.Text;
 
 public class MoveText : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public MoveText(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
   : base(context) {
@@ -54,5 +53,10 @@ public class MoveText : global::DripSharp.PdfCarton.Contentstream.@Operator.Oper
 
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.MoveText;
+  }
+
+  static MoveText() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

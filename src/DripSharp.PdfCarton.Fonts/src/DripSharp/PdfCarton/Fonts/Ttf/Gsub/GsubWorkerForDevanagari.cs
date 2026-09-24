@@ -9,22 +9,17 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Gsub;
 
 public class GsubWorkerForDevanagari : global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const string RKRF_FEATURE = "rkrf";
 
   private const string VATU_FEATURE = "vatu";
 
-  private static readonly global::System.Collections.Generic.IList<string> FEATURES_IN_ORDER
-    = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<string>("locl", "nukt", "akhn",
-    "rphf", global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDevanagari.RKRF_FEATURE, "blwf",
-    "half", global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDevanagari.VATU_FEATURE, "cjct",
-    "pres", "abvs", "blws", "psts", "haln", "calt");
+  private static readonly global::System.Collections.Generic.IList<string> FEATURES_IN_ORDER;
 
-  private static readonly char[] REPH_CHARS = new char[] { '\u0930', '\u094D' };
+  private static readonly char[] REPH_CHARS;
 
-  private static readonly char[] BEFORE_REPH_CHARS = new char[] { '\u093E', '\u0940' };
+  private static readonly char[] BEFORE_REPH_CHARS;
 
   private const char BEFORE_HALF_CHAR = '\u093F';
 
@@ -108,8 +103,8 @@ public class GsubWorkerForDevanagari : global::DripSharp.PdfCarton.Fonts.Ttf.Gsu
     global::System.Collections.Generic.IList<int> rkrfList
       = new global::System.Collections.Generic.List<int>(originalGlyphIds);
     for (int index
-      = (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(originalGlyphIds)
-      - 1); (index > 1); index--) {
+      = unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(originalGlyphIds)
+      - 1)); (index > 1); index--) {
       int raGlyph
         = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(originalGlyphIds,
         index));
@@ -117,11 +112,11 @@ public class GsubWorkerForDevanagari : global::DripSharp.PdfCarton.Fonts.Ttf.Gsu
         == global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.rephGlyphIds, 0))) {
         int viramaGlyph
           = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(originalGlyphIds,
-          (index - 1)));
+          unchecked((index - 1))));
         if ((viramaGlyph
           == global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.rephGlyphIds, 1))) {
-          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rkrfList, (index - 1),
-            rkrfReplacement);
+          global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rkrfList, unchecked((index
+            - 1)), rkrfReplacement);
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(rkrfList, index);
         }
       }
@@ -133,40 +128,40 @@ public class GsubWorkerForDevanagari : global::DripSharp.PdfCarton.Fonts.Ttf.Gsu
     global::System.Collections.Generic.IList<int> rephAdjustedList
       = new global::System.Collections.Generic.List<int>(originalGlyphIds);
     for (int index = 0;
-      (index < (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(originalGlyphIds)
-      - 2)); index++) {
+      (index < unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(originalGlyphIds)
+      - 2))); index++) {
       int raGlyph
         = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(originalGlyphIds,
         index));
       int viramaGlyph
         = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(originalGlyphIds,
-        (index + 1)));
+        unchecked((index + 1))));
       if (((raGlyph
         == global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.rephGlyphIds, 0))
         && (viramaGlyph
         == global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(this.rephGlyphIds, 1)))) {
         int nextConsonantGlyph
           = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(originalGlyphIds,
-          (index + 2)));
+          unchecked((index + 2))));
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rephAdjustedList, index,
           nextConsonantGlyph);
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rephAdjustedList, (index + 1),
-          raGlyph);
-        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rephAdjustedList, (index + 2),
-          viramaGlyph);
-        if (((index
-          + 3) < global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(originalGlyphIds))) {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rephAdjustedList,
+          unchecked((index + 1)), raGlyph);
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rephAdjustedList,
+          unchecked((index + 2)), viramaGlyph);
+        if ((unchecked((index
+          + 3)) < global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(originalGlyphIds))) {
           int matraGlyph
             = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(originalGlyphIds,
-            (index + 3)));
+            unchecked((index + 3))));
           if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(this.beforeRephGlyphIds,
             matraGlyph)) {
-            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rephAdjustedList, (index
-              + 1), matraGlyph);
-            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rephAdjustedList, (index
-              + 2), raGlyph);
-            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rephAdjustedList, (index
-              + 3), viramaGlyph);
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rephAdjustedList,
+              unchecked((index + 1)), matraGlyph);
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rephAdjustedList,
+              unchecked((index + 2)), raGlyph);
+            global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListSet(rephAdjustedList,
+              unchecked((index + 3)), viramaGlyph);
           }
         }
       }
@@ -179,13 +174,13 @@ public class GsubWorkerForDevanagari : global::DripSharp.PdfCarton.Fonts.Ttf.Gsu
       = new global::System.Collections.Generic.List<int>(originalGlyphIds);
     int listSize
       = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(repositionedGlyphIds);
-    int foundIndex = (listSize - 1);
-    int nextIndex = (listSize - 2);
-    while ((nextIndex > -1)) {
+    int foundIndex = unchecked((listSize - 1));
+    int nextIndex = unchecked((listSize - 2));
+    while ((nextIndex > unchecked(-1))) {
       int glyph
         = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.UnboxObject<int>(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(repositionedGlyphIds,
         foundIndex));
-      int prevIndex = (foundIndex + 1);
+      int prevIndex = unchecked((foundIndex + 1));
       if (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionContains(this.beforeHalfGlyphIds,
         glyph)) {
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(repositionedGlyphIds,
@@ -277,5 +272,16 @@ public class GsubWorkerForDevanagari : global::DripSharp.PdfCarton.Fonts.Ttf.Gsu
 
   private int? getGlyphId(char character) {
     return this.cmapLookup.GetGlyphId((int)(character));
+  }
+
+  static GsubWorkerForDevanagari() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    FEATURES_IN_ORDER = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.AsList<string>("locl",
+      "nukt", "akhn", "rphf",
+      global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDevanagari.RKRF_FEATURE, "blwf",
+      "half", global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorkerForDevanagari.VATU_FEATURE,
+      "cjct", "pres", "abvs", "blws", "psts", "haln", "calt");
+    REPH_CHARS = new char[] { '\u0930', '\u094D' };
+    BEFORE_REPH_CHARS = new char[] { '\u093E', '\u0940' };
   }
 }

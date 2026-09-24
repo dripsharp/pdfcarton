@@ -33,4 +33,8 @@ public class Type1Encoding : global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.E
   public override string GetEncodingName() {
     return "built-in (Type 1)";
   }
+
+  static Type1Encoding() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding).TypeHandle);
+  }
 }

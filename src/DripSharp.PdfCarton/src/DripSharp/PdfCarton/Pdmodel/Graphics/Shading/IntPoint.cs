@@ -9,15 +9,14 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 internal class IntPoint : global::DripSharp.Runtime.JavaPoint {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   internal IntPoint(int x, int y) : base(x, y) {
 
   }
 
   public override int GetHashCode() {
-    return ((89 * (623 + this.IntX)) + this.IntY);
+    return unchecked((unchecked((89 * unchecked((623 + this.IntX)))) + this.IntY));
   }
 
   public override bool Equals(object obj) {
@@ -37,5 +36,9 @@ internal class IntPoint : global::DripSharp.Runtime.JavaPoint {
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.IntPoint other
       = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.IntPoint)(obj!);
     return ((this.IntX == other.IntX) && (this.IntY == other.IntY));
+  }
+
+  static IntPoint() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

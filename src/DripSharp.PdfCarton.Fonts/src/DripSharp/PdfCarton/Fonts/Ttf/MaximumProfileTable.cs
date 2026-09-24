@@ -187,4 +187,8 @@ public class MaximumProfileTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTabl
     }
     base.Initialized = true;
   }
+
+  static MaximumProfileTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
+  }
 }

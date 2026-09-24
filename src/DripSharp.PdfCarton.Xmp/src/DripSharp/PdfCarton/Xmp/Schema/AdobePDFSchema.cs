@@ -113,4 +113,8 @@ public class AdobePDFSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema {
     }
     return default!;
   }
+
+  static AdobePDFSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema).TypeHandle);
+  }
 }

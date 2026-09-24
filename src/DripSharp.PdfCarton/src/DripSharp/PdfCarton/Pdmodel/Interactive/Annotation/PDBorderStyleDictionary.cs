@@ -34,8 +34,10 @@ public class PDBorderStyleDictionary : global::DripSharp.PdfCarton.Pdmodel.Commo
   }
 
   public virtual void SetWidth(float w) {
-    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(w, (int)w) == 0)) {
-      this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.W, (int)((int)w));
+    if ((global::DripSharp.Runtime.JavaCompat.CompareFloat(w,
+      unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(w)))) == 0)) {
+      this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.W,
+        (int)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(w)))));
     } else {
       this.GetCOSObject().SetFloat(global::DripSharp.PdfCarton.Cos.COSName.W, w);
     }

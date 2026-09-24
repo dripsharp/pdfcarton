@@ -27,4 +27,8 @@ public sealed class CloseFillEvenOddAndStrokePath
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.CloseFillEvenOddAndStroke;
   }
+
+  static CloseFillEvenOddAndStrokePath() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Graphics.GraphicsOperatorProcessor).TypeHandle);
+  }
 }

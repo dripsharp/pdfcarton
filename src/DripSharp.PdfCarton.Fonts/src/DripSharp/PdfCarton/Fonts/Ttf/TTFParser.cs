@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf;
 
 public class TTFParser {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private bool isEmbedded = false;
 
@@ -49,10 +48,19 @@ public class TTFParser {
     }
   }
 
-  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders ParseTableHeaders(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) {
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream dataStream
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadUnbufferedDataStream(randomAccessRead)) {
-      return this.parseTableHeaders(dataStream);
+  public virtual global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders ParseTableHeaders(global::DripSharp.PdfCarton.IO.RandomAccessRead randomAccessRead) { {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream dataStream
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.RandomAccessReadUnbufferedDataStream(randomAccessRead);
+      global::System.Exception __dripsharpPrimary_116_28_0 = null!;
+      try {
+        return this.parseTableHeaders(dataStream);
+      } catch (global::System.Exception __dripsharpCaught_116_28_0) {
+        __dripsharpPrimary_116_28_0 = __dripsharpCaught_116_28_0;
+        throw;
+      } finally {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(dataStream,
+          __dripsharpPrimary_116_28_0);
+      }
     }
   }
 
@@ -66,7 +74,7 @@ public class TTFParser {
     for (int i = 0; (i < numberOfTables); i++) {
       global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable table = this.readTableDirectory(raf);
       if ((table != default!)) {
-        if (((table.GetOffset() + table.GetLength()) > font.GetOriginalDataSize())) {
+        if ((unchecked((table.GetOffset() + table.GetLength())) > font.GetOriginalDataSize())) {
           global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser.LOG,
             global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Skip table '",
             table.GetTag()), "' which goes past the file size; offset: "), table.GetOffset()),
@@ -141,60 +149,68 @@ public class TTFParser {
 
   internal virtual global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders parseTableHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream raf) {
     global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders outHeaders
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders();
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont font
-      = this.createFontWithTables(raf)) {
-      font.readTableHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable.Tag, outHeaders);
-      font.readTableHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable.Tag, outHeaders);
-      outHeaders.setOs2Windows(font.GetOS2Windows());
-      bool isOTFAndPostScript = false;
-      if (((font is global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)
-        && ((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(font!)).IsPostScript())) {
-        if (((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(font!)).IsSupportedOTF()) {
-          isOTFAndPostScript = true;
-          font.readTableHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag, outHeaders);
+      = new global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders(); {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont font = this.createFontWithTables(raf);
+      global::System.Exception __dripsharpPrimary_263_27_0 = null!;
+      try {
+        font.readTableHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable.Tag, outHeaders);
+        font.readTableHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable.Tag, outHeaders);
+        outHeaders.setOs2Windows(font.GetOS2Windows());
+        bool isOTFAndPostScript = false;
+        if (((font is global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)
+          && ((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(font!)).IsPostScript())) {
+          if (((global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont)(font!)).IsSupportedOTF()) {
+            isOTFAndPostScript = true;
+            font.readTableHeaders(global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag, outHeaders);
+          } else {
+            outHeaders.SetError("OpenType fonts using CFF2 outlines are not supported");
+            return outHeaders;
+          }
         } else {
-          outHeaders.SetError("OpenType fonts using CFF2 outlines are not supported");
-          return outHeaders;
-        }
-      } else {
-        if ((!((font is global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont))
-          && global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(font.Tables,
-          global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag))) {
-          outHeaders.SetError("True Type fonts using CFF outlines are not supported");
-          return outHeaders;
-        } else {
-          global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable gcid
-            = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(font.GetTableMap(),
-            "gcid");
-          if (((gcid != default!) && (gcid.GetLength()
-            >= global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders.BYTES_GCID))) {
-            outHeaders.setNonOtfGcid142(font.GetTableNBytes(gcid,
-              global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders.BYTES_GCID));
+          if ((!((font is global::DripSharp.PdfCarton.Fonts.Ttf.OpenTypeFont))
+            && global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(font.Tables,
+            global::DripSharp.PdfCarton.Fonts.Ttf.CFFTable.Tag))) {
+            outHeaders.SetError("True Type fonts using CFF outlines are not supported");
+            return outHeaders;
+          } else {
+            global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable gcid
+              = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapGet(font.GetTableMap(),
+              "gcid");
+            if (((gcid != default!) && (gcid.GetLength()
+              >= global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders.BYTES_GCID))) {
+              outHeaders.setNonOtfGcid142(font.GetTableNBytes(gcid,
+                global::DripSharp.PdfCarton.Fonts.Ttf.FontHeaders.BYTES_GCID));
+            }
           }
         }
-      }
-      outHeaders.setIsOTFAndPostScript(isOTFAndPostScript);
-      string[] mandatoryTables
-        = new string[] { global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable.Tag,
-        global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalHeaderTable.Tag,
-        global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable.Tag, (this.isEmbedded
-          ? (string)(default!) : global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.Tag),
-        (isOTFAndPostScript ? (string)(default!)
-          : global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable.Tag), (isOTFAndPostScript
-          ? (string)(default!) : global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable.Tag),
-        (this.isEmbedded ? (string)(default!)
-          : global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable.Tag),
-        global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable.Tag, (this.isEmbedded
-          ? (string)(default!) : global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.Tag) };
-      foreach (string tag in mandatoryTables) {
-        if (((tag != default!)
-          && !global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(font.Tables,
-          tag))) {
-          outHeaders.SetError(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("'",
-            tag), "' table is mandatory"));
-          return outHeaders;
+        outHeaders.setIsOTFAndPostScript(isOTFAndPostScript);
+        string[] mandatoryTables
+          = new string[] { global::DripSharp.PdfCarton.Fonts.Ttf.HeaderTable.Tag,
+          global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalHeaderTable.Tag,
+          global::DripSharp.PdfCarton.Fonts.Ttf.MaximumProfileTable.Tag, (this.isEmbedded
+            ? (string)(default!) : global::DripSharp.PdfCarton.Fonts.Ttf.PostScriptTable.Tag),
+          (isOTFAndPostScript ? (string)(default!)
+            : global::DripSharp.PdfCarton.Fonts.Ttf.IndexToLocationTable.Tag), (isOTFAndPostScript
+            ? (string)(default!) : global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable.Tag),
+          (this.isEmbedded ? (string)(default!)
+            : global::DripSharp.PdfCarton.Fonts.Ttf.NamingTable.Tag),
+          global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable.Tag, (this.isEmbedded
+            ? (string)(default!) : global::DripSharp.PdfCarton.Fonts.Ttf.CmapTable.Tag) };
+        foreach (string tag in mandatoryTables) {
+          if (((tag != default!)
+            && !global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapContainsKey(font.Tables,
+            tag))) {
+            outHeaders.SetError(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("'",
+              tag), "' table is mandatory"));
+            return outHeaders;
+          }
         }
+      } catch (global::System.Exception __dripsharpCaught_263_27_0) {
+        __dripsharpPrimary_263_27_0 = __dripsharpCaught_263_27_0;
+        throw;
+      } finally {
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CloseResource(font,
+          __dripsharpPrimary_263_27_0);
       }
     }
     return outHeaders;
@@ -290,5 +306,9 @@ public class TTFParser {
 
   protected internal virtual global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable ReadTable(string tag) {
     return new global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable();
+  }
+
+  static TTFParser() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

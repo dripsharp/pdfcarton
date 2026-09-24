@@ -54,18 +54,18 @@ public class DataInputByteArray : global::DripSharp.PdfCarton.Fonts.Cff.DataInpu
     if ((offset < 0)) {
       throw new global::System.IO.IOException("offset is negative");
     }
-    if (((this.bufferPosition + offset) >= this.inputBuffer.Length)) {
+    if ((unchecked((this.bufferPosition + offset)) >= this.inputBuffer.Length)) {
       throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Offset position is out of range ",
-        (this.bufferPosition + offset)), " >= "), this.inputBuffer.Length));
+        unchecked((this.bufferPosition + offset))), " >= "), this.inputBuffer.Length));
     }
-    return (this.inputBuffer[(this.bufferPosition + offset)] & 255);
+    return (this.inputBuffer[unchecked((this.bufferPosition + offset))] & 255);
   }
 
   public virtual sbyte[] ReadBytes(int length) {
     if ((length < 0)) {
       throw new global::System.IO.IOException("length is negative");
     }
-    if (((this.inputBuffer.Length - this.bufferPosition) < length)) {
+    if ((unchecked((this.inputBuffer.Length - this.bufferPosition)) < length)) {
       throw new global::System.IO.IOException("Premature end of buffer reached");
     }
     sbyte[] bytes = new sbyte[length];

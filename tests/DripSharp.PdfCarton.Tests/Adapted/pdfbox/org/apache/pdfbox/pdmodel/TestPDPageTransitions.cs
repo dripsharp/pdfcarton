@@ -5,51 +5,75 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public class TestPDPageTransitions {
-  internal virtual void readTransitions() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "/org/apache/pdfbox/pdmodel/interactive/pagenavigation/transitions_test.pdf"))) })) {
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransition firstTransition
-        = doc.GetPages().Get(0).GetTransition();
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.EnumName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle.Glitter),
-        firstTransition.GetStyle(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal((float)(2), firstTransition.GetDuration(),
-        null, (float)(0));
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection.TopLeftToBottomRight.GetCOSBase(),
-        firstTransition.GetDirection(), null);
+  internal virtual void readTransitions() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.ResourceUri(((object)(this)).GetType(),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "/org/apache/pdfbox/pdmodel/interactive/pagenavigation/transitions_test.pdf"))) });
+      global::System.Exception __dripsharpPrimary_43_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransition firstTransition
+          = doc.GetPages().Get(0).GetTransition();
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.EnumName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle.Glitter),
+          firstTransition.GetStyle(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal((float)(2), firstTransition.GetDuration(),
+          null, (float)(0));
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection.TopLeftToBottomRight.GetCOSBase(),
+          firstTransition.GetDirection(), null);
+      } catch (global::System.Exception __dripsharpCaught_43_25_0) {
+        __dripsharpPrimary_43_25_0 = __dripsharpCaught_43_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_43_25_0);
+      }
     }
   }
 
   internal virtual void saveAndReadTransitions() {
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.PDPage page__62_20
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      document.AddPage(page__62_20);
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransition transition
-        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransition(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle.Fly);
-      transition.SetDirection(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection.None);
-      transition.SetFlyScale(0.5F);
-      page__62_20.SetTransition(transition, (float)(2));
-      document.Save(baos);
-    }
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos))) {
-      global::DripSharp.PdfCarton.Pdmodel.PDPage page__74_20 = doc.GetPages().Get(0);
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransition loadedTransition
-        = page__74_20.GetTransition();
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.EnumName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle.Fly),
-        loadedTransition.GetStyle(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal((float)(2),
-        page__74_20.GetCOSObject().GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Dur), null,
-        (float)(0));
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection.None.GetCOSBase(),
-        loadedTransition.GetDirection(), null);
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_60_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDPage page__62_20
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        document.AddPage(page__62_20);
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransition transition
+          = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransition(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle.Fly);
+        transition.SetDirection(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection.None);
+        transition.SetFlyScale(0.5F);
+        page__62_20.SetTransition(transition, (float)(2));
+        document.Save(baos);
+      } catch (global::System.Exception __dripsharpCaught_60_25_0) {
+        __dripsharpPrimary_60_25_0 = __dripsharpCaught_60_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_60_25_0);
+      }
+    } {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos));
+      global::System.Exception __dripsharpPrimary_72_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDPage page__74_20 = doc.GetPages().Get(0);
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransition loadedTransition
+          = page__74_20.GetTransition();
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.EnumName(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionStyle.Fly),
+          loadedTransition.GetStyle(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal((float)(2),
+          page__74_20.GetCOSObject().GetFloat(global::DripSharp.PdfCarton.Cos.COSName.Dur), null,
+          (float)(0));
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Pdmodel.Interactive.Pagenavigation.PDTransitionDirection.None.GetCOSBase(),
+          loadedTransition.GetDirection(), null);
+      } catch (global::System.Exception __dripsharpCaught_72_25_0) {
+        __dripsharpPrimary_72_25_0 = __dripsharpCaught_72_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_72_25_0);
+      }
     }
   }
 

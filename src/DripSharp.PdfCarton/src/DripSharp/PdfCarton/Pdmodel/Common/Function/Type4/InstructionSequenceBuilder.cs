@@ -10,19 +10,20 @@ namespace DripSharp.PdfCarton.Pdmodel.Common.Function.Type4;
 
 public sealed class InstructionSequenceBuilder
 : global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Parser.AbstractSyntaxHandler {
-  private static readonly global::System.Text.RegularExpressions.Regex INTEGER_PATTERN
-    = global::DripSharp.Runtime.JavaCompat.CompileRegex("[\\+\\-]?\\d+");
+  private static readonly global::System.Text.RegularExpressions.Regex INTEGER_PATTERN;
 
-  private static readonly global::System.Text.RegularExpressions.Regex REAL_PATTERN
-    = global::DripSharp.Runtime.JavaCompat.CompileRegex("\\-?\\d*\\.\\d*([Ee]\\-?\\d+)?");
+  private static readonly global::System.Text.RegularExpressions.Regex REAL_PATTERN;
 
-  private readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence mainSequence
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence();
+  private readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence mainSequence;
 
-  private readonly global::DripSharp.Runtime.JavaStack<global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence> seqStack
-    = new global::DripSharp.Runtime.JavaStack<global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence>();
+  private readonly global::DripSharp.Runtime.JavaStack<global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence> seqStack;
 
   private InstructionSequenceBuilder() {
+    this.mainSequence
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence();
+    this.seqStack
+      = new global::DripSharp.Runtime.JavaStack<global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence>();
+
     this.seqStack.Push(this.mainSequence);
   }
 
@@ -81,5 +82,12 @@ public sealed class InstructionSequenceBuilder
 
   public static float ParseReal(string token) {
     return global::DripSharp.Runtime.JavaCompat.ParseFloat(token);
+  }
+
+  static InstructionSequenceBuilder() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Parser.AbstractSyntaxHandler).TypeHandle);
+    INTEGER_PATTERN = global::DripSharp.Runtime.JavaCompat.CompileRegex("[\\+\\-]?\\d+");
+    REAL_PATTERN
+      = global::DripSharp.Runtime.JavaCompat.CompileRegex("\\-?\\d*\\.\\d*([Ee]\\-?\\d+)?");
   }
 }

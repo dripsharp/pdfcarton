@@ -5,9 +5,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public class PNGConverterTest {
-  private static readonly global::DripSharp.Runtime.JavaFile PARENTDIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/test-output/graphics/graphics"));
+  private static readonly global::DripSharp.Runtime.JavaFile PARENTDIR;
 
   internal static void setup() {
     global::DripSharp.PdfCarton.Tests.Support.Mkdirs(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest.PARENTDIR);
@@ -89,73 +87,116 @@ public class PNGConverterTest {
       "png_gray_with_gama.png"));
   }
 
-  private void checkImageConvertFail(string name) {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", name))) {
-      sbyte[] imageBytes = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdImageXObject
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.convertPNGImage(doc,
-        imageBytes);
-      global::DripSharp.Testing.JavaAssertions.Null(pdImageXObject, null);
+  private void checkImageConvertFail(string name) { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_170_25_0 = null!;
+      try {
+        global::System.IO.Stream @is
+          = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", name));
+        global::System.Exception __dripsharpPrimary_171_26_0 = null!;
+        try {
+          sbyte[] imageBytes = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdImageXObject
+            = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.convertPNGImage(doc,
+            imageBytes);
+          global::DripSharp.Testing.JavaAssertions.Null(pdImageXObject, null);
+        } catch (global::System.Exception __dripsharpCaught_171_26_0) {
+          __dripsharpPrimary_171_26_0 = __dripsharpCaught_171_26_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_171_26_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_170_25_0) {
+        __dripsharpPrimary_170_25_0 = __dripsharpCaught_170_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_170_25_0);
+      }
     }
   }
 
-  private void checkImageConvert(string name) {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", name))) {
-      sbyte[] imageBytes = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdImageXObject
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.convertPNGImage(doc,
-        imageBytes);
-      global::DripSharp.Testing.JavaAssertions.NotNull(pdImageXObject, null);
-      global::DripSharp.Runtime.JavaIccProfile imageProfile = default!;
-      if ((pdImageXObject.GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)) {
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased iccColorSpace
-          = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(pdImageXObject.GetColorSpace()!);
-        imageProfile
-          = global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(iccColorSpace.GetPDStream().ToByteArray());
-      }
-      global::DripSharp.PdfCarton.Pdmodel.PDPage page
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      doc.AddPage(page);
-      using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page)) {
-        contentStream.SetNonStrokingColor((global::DripSharp.Runtime.JavaColor)global::SkiaSharp.SKColors.Pink);
-        contentStream.AddRect((float)(0), (float)(0), page.GetCropBox().GetWidth(),
-          page.GetCropBox().GetHeight());
-        contentStream.Fill();
-        contentStream.DrawImage(pdImageXObject, (float)(0), (float)(0),
-          (float)(pdImageXObject.GetWidth()), (float)(pdImageXObject.GetHeight()));
-      }
-      global::DripSharp.Runtime.JavaFileBridge.Call(doc, "Save",
-        new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest.PARENTDIR,
-          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.Runtime.JavaCompat.Concat(name, ".pdf"))) });
-      global::SkiaSharp.SKBitmap image = pdImageXObject.GetImage();
-      global::DripSharp.Testing.JavaAssertions.NotNull(pdImageXObject.GetRawRaster(), null);
-      global::SkiaSharp.SKBitmap expectedImage
-        = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(imageBytes));
-      if (((imageProfile! != default!)
-        && global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(expectedImage).ColorSpace.IsSrgb)) {
-        expectedImage
-          = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest.GetImageWithProfileData(expectedImage,
-          imageProfile!);
-      }
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(expectedImage,
-        image);
-      global::SkiaSharp.SKBitmap rawImage = pdImageXObject.GetRawImage();
-      if ((rawImage != default!)) {
-        global::DripSharp.Testing.JavaAssertions.Equal(rawImage.Width, pdImageXObject.GetWidth(),
-          null);
-        global::DripSharp.Testing.JavaAssertions.Equal(rawImage.Height, pdImageXObject.GetHeight(),
-          null);
-        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactoryTest.checkIdentRaw(expectedImage,
-          pdImageXObject);
+  private void checkImageConvert(string name) { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_181_25_0 = null!;
+      try {
+        global::System.IO.Stream @is
+          = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", name));
+        global::System.Exception __dripsharpPrimary_182_26_0 = null!;
+        try {
+          sbyte[] imageBytes = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdImageXObject
+            = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.convertPNGImage(doc,
+            imageBytes);
+          global::DripSharp.Testing.JavaAssertions.NotNull(pdImageXObject, null);
+          global::DripSharp.Runtime.JavaIccProfile imageProfile = default!;
+          if ((pdImageXObject.GetColorSpace() is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)) {
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased iccColorSpace
+              = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(pdImageXObject.GetColorSpace()!);
+            imageProfile
+              = global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(iccColorSpace.GetPDStream().ToByteArray());
+          }
+          global::DripSharp.PdfCarton.Pdmodel.PDPage page
+            = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+          doc.AddPage(page); {
+            global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
+              = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page);
+            global::System.Exception __dripsharpPrimary_197_38_0 = null!;
+            try {
+              contentStream.SetNonStrokingColor((global::DripSharp.Runtime.JavaColor)global::SkiaSharp.SKColors.Pink);
+              contentStream.AddRect((float)(0), (float)(0), page.GetCropBox().GetWidth(),
+                page.GetCropBox().GetHeight());
+              contentStream.Fill();
+              contentStream.DrawImage(pdImageXObject, (float)(0), (float)(0),
+                (float)(pdImageXObject.GetWidth()), (float)(pdImageXObject.GetHeight()));
+            } catch (global::System.Exception __dripsharpCaught_197_38_0) {
+              __dripsharpPrimary_197_38_0 = __dripsharpCaught_197_38_0;
+              throw;
+            } finally {
+              global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream,
+                __dripsharpPrimary_197_38_0);
+            }
+          }
+          global::DripSharp.Runtime.JavaFileBridge.Call(doc, "Save",
+            new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+            new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest.PARENTDIR,
+              global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+              global::DripSharp.Runtime.JavaCompat.Concat(name, ".pdf"))) });
+          global::SkiaSharp.SKBitmap image = pdImageXObject.GetImage();
+          global::DripSharp.Testing.JavaAssertions.NotNull(pdImageXObject.GetRawRaster(), null);
+          global::SkiaSharp.SKBitmap expectedImage
+            = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(imageBytes));
+          if (((imageProfile! != default!)
+            && global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(expectedImage).ColorSpace.IsSrgb)) {
+            expectedImage
+              = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest.GetImageWithProfileData(expectedImage,
+              imageProfile!);
+          }
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(expectedImage,
+            image);
+          global::SkiaSharp.SKBitmap rawImage = pdImageXObject.GetRawImage();
+          if ((rawImage != default!)) {
+            global::DripSharp.Testing.JavaAssertions.Equal(rawImage.Width,
+              pdImageXObject.GetWidth(), null);
+            global::DripSharp.Testing.JavaAssertions.Equal(rawImage.Height,
+              pdImageXObject.GetHeight(), null);
+            global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactoryTest.checkIdentRaw(expectedImage,
+              pdImageXObject);
+          }
+        } catch (global::System.Exception __dripsharpCaught_182_26_0) {
+          __dripsharpPrimary_182_26_0 = __dripsharpCaught_182_26_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_182_26_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_181_25_0) {
+        __dripsharpPrimary_181_25_0 = __dripsharpCaught_181_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_181_25_0);
       }
     }
   }
@@ -289,7 +330,7 @@ public class PNGConverterTest {
       global::System.Text.Encoding.UTF8), null);
     global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.checkChunkSane(chunk),
       null);
-    chunk.crc = -1729802258;
+    chunk.crc = unchecked(-1729802258);
     global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.checkChunkSane(chunk),
       null);
     chunk.start = 6;
@@ -305,9 +346,9 @@ public class PNGConverterTest {
       global::System.Text.Encoding.UTF8);
     global::DripSharp.Testing.JavaAssertions.Equal(472456355,
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.crc(b1, 0, b1.Length), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-632335482,
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.crc(b1, 2, (b1.Length - 4)),
-      null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-632335482),
+      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.crc(b1, 2,
+      unchecked((b1.Length - 4))), null);
   }
 
   internal virtual void testMapPNGRenderIntent() {
@@ -319,7 +360,7 @@ public class PNGConverterTest {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.mapPNGRenderIntent(2), null);
     global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSName.AbsoluteColorimetric,
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.mapPNGRenderIntent(3), null);
-    global::DripSharp.Testing.JavaAssertions.Null(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.mapPNGRenderIntent(-1),
+    global::DripSharp.Testing.JavaAssertions.Null(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.mapPNGRenderIntent(unchecked(-1)),
       null);
     global::DripSharp.Testing.JavaAssertions.Null(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.mapPNGRenderIntent(4),
       null);
@@ -327,27 +368,44 @@ public class PNGConverterTest {
 
   internal virtual void testImageConversionIntentIndexed() {
     this.checkImageConvert(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "929316.png"));
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "929316.png"))) {
-      sbyte[] imageBytes = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdImageXObject
-        = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.convertPNGImage(doc,
-        imageBytes);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSName.Perceptual,
-        pdImageXObject.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.Intent),
-        null);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed indexedColorspace
-        = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed)(pdImageXObject.GetColorSpace()!);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased iccColorspace
-        = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(indexedColorspace.GetBaseColorSpace()!);
-      global::DripSharp.Runtime.JavaIccProfile rgbProfile
-        = global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(global::DripSharp.Runtime.JavaColorSpace.CS_sRGB);
-      sbyte[] sRGB_bytes = rgbProfile.GetData();
-      global::DripSharp.Testing.JavaAssertions.Equal(sRGB_bytes,
-        iccColorspace.GetPDStream().ToByteArray(), null);
+      "929316.png")); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_373_25_0 = null!;
+      try {
+        global::System.IO.Stream @is
+          = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "929316.png"));
+        global::System.Exception __dripsharpPrimary_374_26_0 = null!;
+        try {
+          sbyte[] imageBytes = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdImageXObject
+            = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverter.convertPNGImage(doc,
+            imageBytes);
+          global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSName.Perceptual,
+            pdImageXObject.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.Intent),
+            null);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed indexedColorspace
+            = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed)(pdImageXObject.GetColorSpace()!);
+          global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased iccColorspace
+            = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(indexedColorspace.GetBaseColorSpace()!);
+          global::DripSharp.Runtime.JavaIccProfile rgbProfile
+            = global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(global::DripSharp.Runtime.JavaColorSpace.CS_sRGB);
+          sbyte[] sRGB_bytes = rgbProfile.GetData();
+          global::DripSharp.Testing.JavaAssertions.Equal(sRGB_bytes,
+            iccColorspace.GetPDStream().ToByteArray(), null);
+        } catch (global::System.Exception __dripsharpCaught_374_26_0) {
+          __dripsharpPrimary_374_26_0 = __dripsharpCaught_374_26_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_374_26_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_373_25_0) {
+        __dripsharpPrimary_373_25_0 = __dripsharpCaught_373_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_373_25_0);
+      }
     }
   }
 
@@ -521,10 +579,17 @@ public class PNGConverterTest {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     setup();
     return true;
+  }
+
+  static PNGConverterTest() {
+    PARENTDIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/test-output/graphics/graphics"));
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

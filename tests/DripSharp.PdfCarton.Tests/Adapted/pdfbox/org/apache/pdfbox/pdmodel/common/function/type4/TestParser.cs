@@ -27,7 +27,7 @@ public class TestParser {
     global::DripSharp.Testing.JavaAssertions.Equal((float)(1),
       global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder.ParseReal(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "+1")), null, 1.0E-5F);
-    global::DripSharp.Testing.JavaAssertions.Equal((float)(-1),
+    global::DripSharp.Testing.JavaAssertions.Equal((float)(unchecked(-1)),
       global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequenceBuilder.ParseReal(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "-1")), null, 1.0E-5F);
     global::DripSharp.Testing.JavaAssertions.Equal(3.14157D,

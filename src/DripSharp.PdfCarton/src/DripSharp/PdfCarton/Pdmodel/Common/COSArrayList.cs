@@ -151,8 +151,7 @@ public class COSArrayList<E> : global::DripSharp.Runtime.JavaListContract<E> {
             array!.Add(new global::DripSharp.PdfCarton.Cos.COSString((string)(next!)));
           } else {
             if (((next is int) || (next is long))) {
-              array!.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(global::System.Convert.ToInt64(((global::System.IConvertible)(next!)),
-                global::System.Globalization.CultureInfo.InvariantCulture)));
+              array!.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(global::DripSharp.Runtime.JavaCompat.NumberLongValue(((global::System.IConvertible)(next!)))));
             } else {
               if (((next is float) || (next is double))) {
                 array!.Add(new global::DripSharp.PdfCarton.Cos.COSFloat(global::System.Convert.ToSingle(((global::System.IConvertible)(next!)),
@@ -200,7 +199,7 @@ public class COSArrayList<E> : global::DripSharp.Runtime.JavaListContract<E> {
     global::DripSharp.Runtime.JavaCompat.ForEach(c, (item) => {
         global::DripSharp.PdfCarton.Cos.COSBase itemCOSBase
         = (global::DripSharp.Runtime.JavaCompat.CastReference<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(item)).GetCOSObject();
-        for (int i = (this.array.Size() - 1); (i >= 0); i--) {
+        for (int i = unchecked((this.array.Size() - 1)); (i >= 0); i--) {
           if (global::DripSharp.Runtime.JavaCompat.Equals(itemCOSBase, this.array.GetObject(i))) {
             this.array.Remove(i);
           }
@@ -214,7 +213,7 @@ public class COSArrayList<E> : global::DripSharp.Runtime.JavaListContract<E> {
     global::DripSharp.Runtime.JavaCompat.ForEach(c, (item) => {
         global::DripSharp.PdfCarton.Cos.COSBase itemCOSBase
         = (global::DripSharp.Runtime.JavaCompat.CastReference<global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(item)).GetCOSObject();
-        for (int i = (this.array.Size() - 1); (i >= 0); i--) {
+        for (int i = unchecked((this.array.Size() - 1)); (i >= 0); i--) {
           if (!global::DripSharp.Runtime.JavaCompat.Equals(itemCOSBase, this.array.GetObject(i))) {
             this.array.Remove(i);
           }

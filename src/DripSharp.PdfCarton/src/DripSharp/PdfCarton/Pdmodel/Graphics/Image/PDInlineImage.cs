@@ -57,7 +57,7 @@ public sealed class PDInlineImage : global::DripSharp.PdfCarton.Pdmodel.Graphics
       return 1;
     } else {
       return this.parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.Bpc,
-        global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent, -1);
+        global::DripSharp.PdfCarton.Cos.COSName.BitsPerComponent, unchecked(-1));
     }
   }
 
@@ -130,7 +130,7 @@ public sealed class PDInlineImage : global::DripSharp.PdfCarton.Pdmodel.Graphics
 
   public int GetHeight() {
     return this.parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.H,
-      global::DripSharp.PdfCarton.Cos.COSName.Height, -1);
+      global::DripSharp.PdfCarton.Cos.COSName.Height, unchecked(-1));
   }
 
   public void SetHeight(int height) {
@@ -139,7 +139,7 @@ public sealed class PDInlineImage : global::DripSharp.PdfCarton.Pdmodel.Graphics
 
   public int GetWidth() {
     return this.parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.W,
-      global::DripSharp.PdfCarton.Cos.COSName.Width, -1);
+      global::DripSharp.PdfCarton.Cos.COSName.Width, unchecked(-1));
   }
 
   public void SetWidth(int width) {

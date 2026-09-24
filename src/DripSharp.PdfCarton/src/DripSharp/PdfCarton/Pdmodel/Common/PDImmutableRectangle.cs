@@ -28,4 +28,8 @@ public sealed class PDImmutableRectangle : global::DripSharp.PdfCarton.Pdmodel.C
   public override void SetLowerLeftX(float value) {
     throw new global::System.NotSupportedException("Immutable class");
   }
+
+  static PDImmutableRectangle() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle).TypeHandle);
+  }
 }

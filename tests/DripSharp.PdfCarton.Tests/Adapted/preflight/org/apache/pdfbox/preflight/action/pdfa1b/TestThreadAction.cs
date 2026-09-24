@@ -61,4 +61,8 @@ public class TestThreadAction
     } finally {
     }
   }
+
+  static TestThreadAction() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Action.Pdfa1b.AbstractTestAction).TypeHandle);
+  }
 }

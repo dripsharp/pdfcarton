@@ -49,8 +49,9 @@ public class Validator_A1b {
             global::System.Xml.XmlElement result__109_33
               = global::DripSharp.Runtime.JavaFileBridge.Call<global::System.Xml.XmlElement>(xrp__99_33,
               "Validate", new global::System.Type[] { typeof(global::System.Xml.XmlDocument),
-                typeof(global::System.IO.FileInfo) }, new object[] { document__103_30,
-                file__107_31 });
+                typeof(global::System.IO.FileInfo) },
+              new object[] { (global::System.Xml.XmlDocument)document__103_30,
+                (global::DripSharp.Runtime.JavaFile)file__107_31 });
             root.AppendChild(result__109_33);
           }
           global::DripSharp.Runtime.JavaCompat.XmlTransform(transformer__96_29, document__103_30,
@@ -61,7 +62,7 @@ public class Validator_A1b {
             global::System.Xml.XmlElement result__120_33
               = global::DripSharp.Runtime.JavaFileBridge.Call<global::System.Xml.XmlElement>(xrp__99_33,
               "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-              new object[] { file__118_31 });
+              new object[] { (global::DripSharp.Runtime.JavaFile)file__118_31 });
             global::System.Xml.XmlDocument document__121_34 = result__120_33.OwnerDocument!;
             document__121_34.AppendChild(result__120_33);
             global::DripSharp.Runtime.JavaCompat.XmlTransform(transformer__96_29, document__121_34,
@@ -79,7 +80,7 @@ public class Validator_A1b {
         global::System.Xml.XmlElement result__140_25
           = global::DripSharp.Runtime.JavaFileBridge.Call<global::System.Xml.XmlElement>(xrp__139_33,
           "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-          new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(args[posFile]) });
+          new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(args[posFile]) });
         global::System.Xml.XmlDocument document__141_26 = result__140_25.OwnerDocument!;
         document__141_26.AppendChild(result__140_25);
         global::System.Xml.XmlWriterSettings transformer__144_29
@@ -110,7 +111,7 @@ public class Validator_A1b {
     global::DripSharp.PdfCarton.Preflight.ValidationResult result
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Preflight.ValidationResult>(typeof(global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser),
       "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { file });
+      new object[] { (global::DripSharp.Runtime.JavaFile)file });
     if (result.IsValid()) {
       global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("The file ",
         file.Name), " is a valid PDF/A-1b file"));
@@ -124,13 +125,13 @@ public class Validator_A1b {
           " : "), error.GetDetails()));
         if ((error.GetPageNumber() != default!)) {
           global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.Runtime.JavaCompat.Concat(" on page ",
-            (global::DripSharp.Runtime.JavaCompat.Unbox(error.GetPageNumber()) + 1)));
+            unchecked((global::DripSharp.Runtime.JavaCompat.Unbox(error.GetPageNumber()) + 1))));
         } else {
           (global::DripSharp.Runtime.JavaCompat.@out).WriteLine();
         }
       }
       (global::DripSharp.Runtime.JavaCompat.@out).WriteLine();
-      return -1;
+      return unchecked(-1);
     }
   }
 
@@ -139,14 +140,23 @@ public class Validator_A1b {
       = new global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaFile>();
     global::DripSharp.Runtime.JavaFile f = global::DripSharp.Runtime.JavaCompat.NewJavaFile(path);
     if (global::DripSharp.Runtime.JavaCompat.FileIsFile(f)) {
-      global::System.IO.TextReader fr = global::DripSharp.Runtime.JavaCompat.OpenFileReader(f);
-      using (global::System.IO.TextReader bufferedReader = fr) {
-        while (global::DripSharp.Runtime.JavaCompat.ReaderReady(bufferedReader)) {
-          global::DripSharp.Runtime.JavaFile fn
-            = global::DripSharp.Runtime.JavaCompat.NewJavaFile(bufferedReader.ReadLine());
-          if (global::DripSharp.Runtime.JavaCompat.FileExists(fn)) {
-            global::DripSharp.Runtime.JavaCompat.Add(files, fn);
+      global::System.IO.TextReader fr = global::DripSharp.Runtime.JavaCompat.OpenFileReader(f); {
+        global::System.IO.TextReader bufferedReader = fr;
+        global::System.Exception __dripsharpPrimary_205_33_0 = null!;
+        try {
+          while (global::DripSharp.Runtime.JavaCompat.ReaderReady(bufferedReader)) {
+            global::DripSharp.Runtime.JavaFile fn
+              = global::DripSharp.Runtime.JavaCompat.NewJavaFile(bufferedReader.ReadLine());
+            if (global::DripSharp.Runtime.JavaCompat.FileExists(fn)) {
+              global::DripSharp.Runtime.JavaCompat.Add(files, fn);
+            }
           }
+        } catch (global::System.Exception __dripsharpCaught_205_33_0) {
+          __dripsharpPrimary_205_33_0 = __dripsharpCaught_205_33_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(bufferedReader,
+            __dripsharpPrimary_205_33_0);
         }
       }
     } else {

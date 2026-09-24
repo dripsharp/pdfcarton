@@ -62,4 +62,8 @@ public class PDDefaultAttributeObject
     }
     return sb.Append('}').ToString();
   }
+
+  static PDDefaultAttributeObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject).TypeHandle);
+  }
 }

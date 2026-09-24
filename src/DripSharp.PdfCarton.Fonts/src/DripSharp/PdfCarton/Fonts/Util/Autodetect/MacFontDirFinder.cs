@@ -14,4 +14,8 @@ public class MacFontDirFinder
     return new string[] { global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.GetProperty("user.home"),
         "/Library/Fonts/"), "/Library/Fonts/", "/System/Library/Fonts/", "/Network/Library/Fonts/" };
   }
+
+  static MacFontDirFinder() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Util.Autodetect.NativeFontDirFinder).TypeHandle);
+  }
 }

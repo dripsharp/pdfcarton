@@ -66,4 +66,8 @@ public class PDUserAttributeObject
     return global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(base.ToString(),
       ", userProperties="), this.GetOwnerUserProperties());
   }
+
+  static PDUserAttributeObject() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDAttributeObject).TypeHandle);
+  }
 }

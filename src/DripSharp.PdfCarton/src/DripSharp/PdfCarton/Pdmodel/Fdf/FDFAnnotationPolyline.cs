@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Fdf;
 
 public class FDFAnnotationPolyline : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const string Subtype = "Polyline";
 
@@ -137,5 +136,10 @@ public class FDFAnnotationPolyline : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDF
 
   public virtual global::DripSharp.Runtime.JavaColor GetInteriorColor() {
     return this.getColor(global::DripSharp.PdfCarton.Cos.COSName.Ic);
+  }
+
+  static FDFAnnotationPolyline() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

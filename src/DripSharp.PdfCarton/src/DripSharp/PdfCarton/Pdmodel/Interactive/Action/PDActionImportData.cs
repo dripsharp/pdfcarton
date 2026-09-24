@@ -26,4 +26,8 @@ public class PDActionImportData : global::DripSharp.PdfCarton.Pdmodel.Interactiv
   public virtual void SetFile(global::DripSharp.PdfCarton.Pdmodel.Common.Filespecification.PDFileSpecification fs) {
     base.Action.SetItem(global::DripSharp.PdfCarton.Cos.COSName.F, fs);
   }
+
+  static PDActionImportData() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
+  }
 }

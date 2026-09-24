@@ -12,7 +12,7 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
   }
 
   internal abstract class BaseTester {
-    internal int low = -100000;
+    internal int low = unchecked(-100000);
 
     internal int high = 300000;
 
@@ -44,11 +44,15 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
 
     internal abstract void runTest(float num);
 
-    private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+    private static readonly bool __UpstreamBeforeAll;
 
     private static bool __RunUpstreamBeforeAll() {
       setUp();
       return true;
+    }
+
+    static BaseTester() {
+      __UpstreamBeforeAll = __RunUpstreamBeforeAll();
     }
 
     private readonly global::DripSharp.PdfCarton.Cos.TestCOSFloat __outer;
@@ -83,8 +87,8 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
       global::DripSharp.Testing.JavaAssertions.Equal(test2, test3, null);
       global::DripSharp.Testing.JavaAssertions.Equal(test1, test3, null);
       float nf
-        = global::System.BitConverter.Int32BitsToSingle((global::DripSharp.Runtime.JavaCompat.FloatToIntBits(num)
-        + 1));
+        = global::System.BitConverter.Int32BitsToSingle(unchecked((global::DripSharp.Runtime.JavaCompat.FloatToIntBits(num)
+        + 1)));
       global::DripSharp.PdfCarton.Cos.COSFloat test4
         = new global::DripSharp.PdfCarton.Cos.COSFloat(nf);
       global::DripSharp.Testing.JavaAssertions.NotEqual(test4, test1, null);
@@ -100,19 +104,24 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
       global::DripSharp.Testing.JavaAssertions.Equal(test1.GetHashCode(), test2.GetHashCode(),
         null);
       float nf
-        = global::System.BitConverter.Int32BitsToSingle((global::DripSharp.Runtime.JavaCompat.FloatToIntBits(num)
-        + 1));
+        = global::System.BitConverter.Int32BitsToSingle(unchecked((global::DripSharp.Runtime.JavaCompat.FloatToIntBits(num)
+        + 1)));
       global::DripSharp.PdfCarton.Cos.COSFloat test3
         = new global::DripSharp.PdfCarton.Cos.COSFloat(nf);
       global::DripSharp.Testing.JavaAssertions.NotSame(test3.GetHashCode(), test1.GetHashCode(),
         null);
     }
 
-    private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+    private static readonly bool __UpstreamBeforeAll;
 
     private static bool __RunUpstreamBeforeAll() {
       setUp();
       return true;
+    }
+
+    static HashCodeTester() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.TestCOSFloat.BaseTester).TypeHandle);
+      __UpstreamBeforeAll = __RunUpstreamBeforeAll();
     }
 
     private readonly global::DripSharp.PdfCarton.Cos.TestCOSFloat __outer;
@@ -133,11 +142,16 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
       global::DripSharp.Testing.JavaAssertions.Equal(num, testFloat.FloatValue(), null);
     }
 
-    private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+    private static readonly bool __UpstreamBeforeAll;
 
     private static bool __RunUpstreamBeforeAll() {
       setUp();
       return true;
+    }
+
+    static FloatValueTester() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.TestCOSFloat.BaseTester).TypeHandle);
+      __UpstreamBeforeAll = __RunUpstreamBeforeAll();
     }
 
     private readonly global::DripSharp.PdfCarton.Cos.TestCOSFloat __outer;
@@ -156,14 +170,20 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
     internal override void runTest(float num) {
       global::DripSharp.PdfCarton.Cos.COSFloat testFloat
         = new global::DripSharp.PdfCarton.Cos.COSFloat(num);
-      global::DripSharp.Testing.JavaAssertions.Equal((int)((int)num), testFloat.IntValue(), null);
+      global::DripSharp.Testing.JavaAssertions.Equal((int)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(num)))),
+        testFloat.IntValue(), null);
     }
 
-    private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+    private static readonly bool __UpstreamBeforeAll;
 
     private static bool __RunUpstreamBeforeAll() {
       setUp();
       return true;
+    }
+
+    static IntValueTester() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.TestCOSFloat.BaseTester).TypeHandle);
+      __UpstreamBeforeAll = __RunUpstreamBeforeAll();
     }
 
     private readonly global::DripSharp.PdfCarton.Cos.TestCOSFloat __outer;
@@ -181,15 +201,20 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
     internal override void runTest(float num) {
       global::DripSharp.PdfCarton.Cos.COSFloat testFloat
         = new global::DripSharp.PdfCarton.Cos.COSFloat(num);
-      global::DripSharp.Testing.JavaAssertions.Equal((long)((long)num), testFloat.LongValue(),
-        null);
+      global::DripSharp.Testing.JavaAssertions.Equal((long)(unchecked((long)(global::DripSharp.Runtime.JavaCompat.NumberLongValue(num)))),
+        testFloat.LongValue(), null);
     }
 
-    private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+    private static readonly bool __UpstreamBeforeAll;
 
     private static bool __RunUpstreamBeforeAll() {
       setUp();
       return true;
+    }
+
+    static LongValueTester() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.TestCOSFloat.BaseTester).TypeHandle);
+      __UpstreamBeforeAll = __RunUpstreamBeforeAll();
     }
 
     private readonly global::DripSharp.PdfCarton.Cos.TestCOSFloat __outer;
@@ -204,8 +229,7 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
   }
 
   internal class AcceptTester : global::DripSharp.PdfCarton.Cos.TestCOSFloat.BaseTester {
-    internal readonly global::DripSharp.Runtime.JavaByteArrayOutputStream outStream
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
+    internal readonly global::DripSharp.Runtime.JavaByteArrayOutputStream outStream;
 
     internal readonly global::DripSharp.PdfCarton.Pdfwriter.COSWriter visitor;
 
@@ -226,17 +250,23 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
       }
     }
 
-    private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+    private static readonly bool __UpstreamBeforeAll;
 
     private static bool __RunUpstreamBeforeAll() {
       setUp();
       return true;
     }
 
+    static AcceptTester() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.TestCOSFloat.BaseTester).TypeHandle);
+      __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+    }
+
     private readonly global::DripSharp.PdfCarton.Cos.TestCOSFloat __outer;
 
     internal AcceptTester(global::DripSharp.PdfCarton.Cos.TestCOSFloat __outer) : base(__outer) {
       this.__outer = __outer;
+      this.outStream = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
       this.visitor = new global::DripSharp.PdfCarton.Pdfwriter.COSWriter(this.outStream);
     }
   }
@@ -246,13 +276,13 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
   }
 
   internal class WritePDFTester : global::DripSharp.PdfCarton.Cos.TestCOSFloat.BaseTester {
-    internal readonly global::DripSharp.Runtime.JavaByteArrayOutputStream outStream
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
+    internal readonly global::DripSharp.Runtime.JavaByteArrayOutputStream outStream;
 
     internal WritePDFTester(global::DripSharp.PdfCarton.Cos.TestCOSFloat __outer) : base(__outer) {
       this.__outer = __outer;
+      this.outStream = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
 
-      this.SetLoop(-1000, 3000, 200);
+      this.SetLoop(unchecked(-1000), 3000, 200);
     }
 
     internal override void runTest(float num) {
@@ -281,11 +311,16 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
       }
     }
 
-    private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+    private static readonly bool __UpstreamBeforeAll;
 
     private static bool __RunUpstreamBeforeAll() {
       setUp();
       return true;
+    }
+
+    static WritePDFTester() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.TestCOSFloat.BaseTester).TypeHandle);
+      __UpstreamBeforeAll = __RunUpstreamBeforeAll();
     }
 
     private readonly global::DripSharp.PdfCarton.Cos.TestCOSFloat __outer;
@@ -307,7 +342,7 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
 
   internal virtual void testVerySmallValues() {
     double smallValue = ((float)(float.Epsilon) / (double)10.0D);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
       global::DripSharp.Runtime.JavaCompat.CompareDouble(smallValue, (double)(float.Epsilon)),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "Test must be performed with a value smaller than Float.MIN_VALUE."));
@@ -323,7 +358,7 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
       = new global::DripSharp.PdfCarton.Cos.COSFloat(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       asString));
     global::DripSharp.Testing.JavaAssertions.Equal(0.0F, cosFloat.FloatValue(), null);
-    smallValue *= -1;
+    smallValue *= unchecked(-1);
     asString = global::DripSharp.Runtime.JavaCompat.StringValueOf(smallValue);
     cosFloat
       = new global::DripSharp.PdfCarton.Cos.COSFloat(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -356,7 +391,7 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
       = new global::DripSharp.PdfCarton.Cos.COSFloat(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       asString));
     global::DripSharp.Testing.JavaAssertions.Equal(float.MaxValue, cosFloat.FloatValue(), null);
-    largeValue *= -1;
+    largeValue *= unchecked(-1);
     asString = global::DripSharp.Runtime.JavaCompat.StringValueOf(largeValue);
     cosFloat
       = new global::DripSharp.PdfCarton.Cos.COSFloat(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -422,14 +457,15 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
   }
 
   private string removeTrailingNull(string value) {
-    if (((global::DripSharp.Runtime.JavaCompat.StringIndexOf(value, (int)('.')) > -1)
+    if (((global::DripSharp.Runtime.JavaCompat.StringIndexOf(value, (int)('.')) > unchecked(-1))
       && !global::DripSharp.Runtime.JavaCompat.StringEndsWith(value,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ".0")))) {
       while ((global::DripSharp.Runtime.JavaCompat.StringEndsWith(value,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "0"))
         && !global::DripSharp.Runtime.JavaCompat.StringEndsWith(value,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", ".0")))) {
-        value = global::DripSharp.Runtime.JavaCompat.StringSubstring(value, 0, (value.Length - 1));
+        value = global::DripSharp.Runtime.JavaCompat.StringSubstring(value, 0,
+          unchecked((value.Length - 1)));
       }
     }
     return value;
@@ -615,10 +651,15 @@ public class TestCOSFloat : global::DripSharp.PdfCarton.Cos.TestCOSNumber {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     setUp();
     return true;
+  }
+
+  static TestCOSFloat() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.TestCOSNumber).TypeHandle);
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

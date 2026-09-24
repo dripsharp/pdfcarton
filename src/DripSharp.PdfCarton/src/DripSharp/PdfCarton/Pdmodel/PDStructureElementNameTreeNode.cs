@@ -28,4 +28,8 @@ public class PDStructureElementNameTreeNode
   protected internal override global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> CreateChildNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
     return new global::DripSharp.PdfCarton.Pdmodel.PDStructureElementNameTreeNode(dic);
   }
+
+  static PDStructureElementNameTreeNode() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement>).TypeHandle);
+  }
 }

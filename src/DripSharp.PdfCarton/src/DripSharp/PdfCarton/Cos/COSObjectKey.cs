@@ -10,16 +10,15 @@ namespace DripSharp.PdfCarton.Cos;
 
 public sealed class COSObjectKey
 : global::System.IComparable<global::DripSharp.PdfCarton.Cos.COSObjectKey> {
-  private static readonly int NUMBER_OFFSET = 16;
+  private static readonly int NUMBER_OFFSET;
 
-  private static readonly long GENERATION_MASK = ((long)(global::System.Math.Pow((double)(2),
-    (double)(global::DripSharp.PdfCarton.Cos.COSObjectKey.NUMBER_OFFSET))) - 1);
+  private static readonly long GENERATION_MASK;
 
   private readonly long numberAndGeneration = default;
 
   private readonly int streamIndex = default;
 
-  public COSObjectKey(long num, int gen) : this(num, gen, -1) {
+  public COSObjectKey(long num, int gen) : this(num, gen, unchecked(-1)) {
 
   }
 
@@ -76,5 +75,12 @@ public sealed class COSObjectKey
   public int CompareTo(global::DripSharp.PdfCarton.Cos.COSObjectKey other) {
     return global::DripSharp.Runtime.JavaCompat.CompareLong(this.numberAndGeneration,
       other.numberAndGeneration);
+  }
+
+  static COSObjectKey() {
+    NUMBER_OFFSET = 16;
+    GENERATION_MASK
+      = unchecked((unchecked((long)(global::DripSharp.Runtime.JavaCompat.NumberLongValue(global::System.Math.Pow((double)(2),
+      (double)(global::DripSharp.PdfCarton.Cos.COSObjectKey.NUMBER_OFFSET))))) - 1));
   }
 }

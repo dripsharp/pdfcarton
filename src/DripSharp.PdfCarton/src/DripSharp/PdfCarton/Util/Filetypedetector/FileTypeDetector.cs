@@ -98,7 +98,7 @@ public sealed class FileTypeDetector {
     global::DripSharp.Runtime.JavaCompat.InputStreamMark(inputStream, maxByteCount);
     sbyte[] bytes = new sbyte[maxByteCount];
     int bytesRead = global::DripSharp.Runtime.JavaCompat.InputStreamRead(inputStream, bytes);
-    if ((bytesRead == -1)) {
+    if ((bytesRead == unchecked(-1))) {
       throw new global::System.IO.IOException("Stream ended before file's magic number could be determined.");
     }
     global::DripSharp.Runtime.JavaCompat.InputStreamReset(inputStream);

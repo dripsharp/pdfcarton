@@ -23,7 +23,7 @@ public class PageTreeValidationProcess
       }
       int p = 0;
       foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page in context.GetDocument().GetPages()) {
-        context.SetCurrentPageNumber(p);
+        context.SetCurrentPageNumber((int?)(p));
         this.validatePage(context, page);
         if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(context.GetDocument().GetValidationErrors()) > context.GetConfig().GetMaxErrors())) {
           context.AddValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorUnknownError,
@@ -44,5 +44,9 @@ public class PageTreeValidationProcess
     global::DripSharp.PdfCarton.Pdmodel.PDPage page) {
     global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(context, page,
       global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.PageProcess);
+  }
+
+  static PageTreeValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
   }
 }

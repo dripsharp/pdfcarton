@@ -32,4 +32,8 @@ public class PDShadingType6
     global::DripSharp.PdfCarton.Util.Matrix matrix) {
     return this.getBounds(xform, matrix, 12);
   }
+
+  static PDShadingType6() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDMeshBasedShadingType).TypeHandle);
+  }
 }

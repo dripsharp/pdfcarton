@@ -9,11 +9,9 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 internal sealed class FontMapperImpl : global::DripSharp.PdfCarton.Pdmodel.Font.FontMapper {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontCache fontCache
-    = new global::DripSharp.PdfCarton.Pdmodel.Font.FontCache();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontCache fontCache;
 
   private global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider fontProvider = null!;
 
@@ -100,8 +98,12 @@ internal sealed class FontMapperImpl : global::DripSharp.PdfCarton.Pdmodel.Font.
   }
 
   internal class DefaultFontProvider {
-    internal static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider INSTANCE
-      = new global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.fontCache);
+    internal static readonly global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider INSTANCE;
+
+    static DefaultFontProvider() {
+      INSTANCE
+        = new global::DripSharp.PdfCarton.Pdmodel.Font.FileSystemFontProvider(global::DripSharp.PdfCarton.Pdmodel.Font.FontMapperImpl.fontCache);
+    }
   }
 
   public void SetProvider(global::DripSharp.PdfCarton.Pdmodel.Font.FontProvider fontProvider) {
@@ -327,8 +329,8 @@ internal sealed class FontMapperImpl : global::DripSharp.PdfCarton.Pdmodel.Font.
   private global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo getFont(global::DripSharp.PdfCarton.Pdmodel.Font.FontFormat format,
     string postScriptName) {
     int index = global::DripSharp.Runtime.JavaCompat.StringIndexOf(postScriptName, (int)('+'));
-    if ((index > -1)) {
-      postScriptName = postScriptName.Substring((index + 1));
+    if ((index > unchecked(-1))) {
+      postScriptName = postScriptName.Substring(unchecked((index + 1)));
     }
     global::DripSharp.PdfCarton.Pdmodel.Font.FontInfo info
       = global::DripSharp.Runtime.JavaCompat.MapGet(this.fontInfoByName,
@@ -438,14 +440,15 @@ internal sealed class FontMapperImpl : global::DripSharp.PdfCarton.Pdmodel.Font.
           }
           int weight = info.GetPanose().GetWeight();
           int weightClass = info.getWeightClassAsPanose();
-          if ((global::System.Math.Abs((weight - weightClass)) > 2)) {
+          if ((global::System.Math.Abs(unchecked((weight - weightClass))) > 2)) {
             weight = weightClass;
           }
           if ((panose.GetWeight() == weight)) {
             match.score += 2;
           } else {
             if (((panose.GetWeight() > 1) && (weight > 1))) {
-              float dist__631_31 = global::System.Math.Abs((panose.GetWeight() - weight));
+              float dist__631_31 = global::System.Math.Abs(unchecked((panose.GetWeight()
+                - weight)));
               match.score += (1 - (dist__631_31 * 0.5D));
             }
           }
@@ -547,5 +550,10 @@ internal sealed class FontMapperImpl : global::DripSharp.PdfCarton.Pdmodel.Font.
     }
     global::DripSharp.Runtime.JavaCompat.@out.WriteLine("-------");
     return bestMatch;
+  }
+
+  static FontMapperImpl() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    fontCache = new global::DripSharp.PdfCarton.Pdmodel.Font.FontCache();
   }
 }

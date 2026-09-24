@@ -27,8 +27,11 @@ public sealed class PDLineDashPattern : global::DripSharp.PdfCarton.Pdmodel.Comm
       }
       sum2 *= 2;
       if ((sum2 > 0)) {
-        global::DripSharp.Runtime.JavaCompat.AddAssign(ref phase, ((-phase < sum2) ? sum2
-          : ((global::System.Math.Floor((double)((-phase / (float)sum2))) + 1) * sum2)));
+        global::DripSharp.Runtime.JavaCompat.CompoundAssign(ref phase, __dripsharpValue_68_17_0
+          => global::DripSharp.Runtime.JavaCompat.AddAssign(ref __dripsharpValue_68_17_0,
+          ((unchecked(-phase) < sum2) ? sum2
+          : ((global::System.Math.Floor((double)((unchecked(-phase) / (float)sum2))) + 1)
+          * sum2))));
       } else {
         phase = 0;
       }

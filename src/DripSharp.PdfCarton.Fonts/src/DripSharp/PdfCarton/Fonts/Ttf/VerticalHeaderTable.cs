@@ -138,4 +138,8 @@ public class VerticalHeaderTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTabl
   public virtual short GetYMaxExtent() {
     return this.yMaxExtent;
   }
+
+  static VerticalHeaderTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
+  }
 }

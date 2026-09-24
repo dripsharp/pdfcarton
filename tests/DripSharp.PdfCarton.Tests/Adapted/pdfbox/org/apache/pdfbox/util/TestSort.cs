@@ -43,11 +43,11 @@ public class TestSort {
     global::DripSharp.PdfCarton.Tests.JavaRandom rnd
       = new global::DripSharp.PdfCarton.Tests.JavaRandom((long)(12345));
     for (int cnt = 0; (cnt < 100); ++cnt) {
-      int len = (rnd.NextInt(20000) + 2);
+      int len = unchecked((rnd.NextInt(20000) + 2));
       int[] input__88_23 = new int[len];
       int[] expected__89_23 = new int[len];
       for (int i = 0; (i < len); ++i) {
-        expected__89_23[i] = (input__88_23[i] = rnd.NextInt((rnd.NextInt(100) + 1)));
+        expected__89_23[i] = (input__88_23[i] = rnd.NextInt(unchecked((rnd.NextInt(100) + 1))));
       }
       global::System.Array.Sort(expected__89_23);
       this.doTest<int>(input__88_23, expected__89_23);

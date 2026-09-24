@@ -9,10 +9,9 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class JBIG2Filter : global::DripSharp.PdfCarton.Filter.Filter {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static bool levigoLogged = false;
+  private static bool levigoLogged;
 
   private static void logLevigoDonated() {
     if (!(global::DripSharp.PdfCarton.Filter.JBIG2Filter.levigoLogged)) {
@@ -51,39 +50,47 @@ internal sealed class JBIG2Filter : global::DripSharp.PdfCarton.Filter.Filter {
           encoded);
       }
     }
-    try {
-      using (global::DripSharp.Runtime.JavaImageInputStream iis
-        = global::DripSharp.Runtime.PdfCartonImageIO.CreateImageInputStream(source)) {
-        reader.SetInput(iis);
-        global::SkiaSharp.SKBitmap image;
+    try { {
+        global::DripSharp.Runtime.JavaImageInputStream iis
+          = global::DripSharp.Runtime.PdfCartonImageIO.CreateImageInputStream(source);
+        global::System.Exception __dripsharpPrimary_92_31_0 = null!;
         try {
-          image = reader.Read(0, irp);
-        } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
-          throw new global::System.IO.IOException("Could not read JBIG2 image", e);
-        }
-        if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).PixelSize
-          != bits)) {
-          if ((bits != 1)) {
-            global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Filter.JBIG2Filter.LOG,
-              global::DripSharp.Runtime.JavaCompat.StringValueOf("Attempting to handle a JBIG2 with more than 1-bit depth"));
+          reader.SetInput(iis);
+          global::SkiaSharp.SKBitmap image;
+          try {
+            image = reader.Read(0, irp);
+          } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
+            throw new global::System.IO.IOException("Could not read JBIG2 image", e);
           }
-          global::SkiaSharp.SKBitmap packedImage
-            = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height,
-            global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_BINARY);
-          global::DripSharp.Runtime.PdfCartonGraphics2D graphics
-            = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(packedImage);
-          graphics.DrawImage(image, 0, 0, (object)default!);
-          graphics.Dispose();
-          image = packedImage;
-        }
-        global::DripSharp.Runtime.JavaDataBuffer dBuf
-          = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageData(image).GetDataBuffer();
-        if ((dBuf.DataType
-          == global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE)) {
-          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded,
-            ((global::DripSharp.Runtime.JavaDataBufferByte)(dBuf!)).GetData());
-        } else {
-          throw new global::System.IO.IOException("Unexpected image buffer type");
+          if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).PixelSize
+            != bits)) {
+            if ((bits != 1)) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Filter.JBIG2Filter.LOG,
+                global::DripSharp.Runtime.JavaCompat.StringValueOf("Attempting to handle a JBIG2 with more than 1-bit depth"));
+            }
+            global::SkiaSharp.SKBitmap packedImage
+              = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width,
+              image.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_BINARY);
+            global::DripSharp.Runtime.PdfCartonGraphics2D graphics
+              = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(packedImage);
+            graphics.DrawImage(image, 0, 0, (object)default!);
+            graphics.Dispose();
+            image = packedImage;
+          }
+          global::DripSharp.Runtime.JavaDataBuffer dBuf
+            = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageData(image).GetDataBuffer();
+          if ((dBuf.DataType
+            == global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE)) {
+            global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded,
+              ((global::DripSharp.Runtime.JavaDataBufferByte)(dBuf!)).GetData());
+          } else {
+            throw new global::System.IO.IOException("Unexpected image buffer type");
+          }
+        } catch (global::System.Exception __dripsharpCaught_92_31_0) {
+          __dripsharpPrimary_92_31_0 = __dripsharpCaught_92_31_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(iis, __dripsharpPrimary_92_31_0);
         }
       }
     } finally {
@@ -102,5 +109,11 @@ internal sealed class JBIG2Filter : global::DripSharp.PdfCarton.Filter.Filter {
   public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded,
     global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
     throw new global::System.NotSupportedException("JBIG2 encoding not implemented");
+  }
+
+  static JBIG2Filter() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Filter.Filter).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    levigoLogged = false;
   }
 }

@@ -11,8 +11,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Font;
 public abstract class PDCIDFont : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable,
 global::DripSharp.PdfCarton.Pdmodel.Font.PDFontLike,
 global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   protected internal readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDType0Font Parent = null!;
 
@@ -34,7 +33,7 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
   private readonly global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange> displacementRanges
     = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.VerticalDisplacementRange>();
 
-  private readonly float[] dw2 = new float[] { 880, -1000 };
+  private readonly float[] dw2 = new float[] { 880, unchecked(-1000) };
 
   protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary Dict = null!;
 
@@ -54,7 +53,7 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     if ((wArray != default!)) {
       int size = wArray.Size();
       int counter = 0;
-      while ((counter < (size - 1))) {
+      while ((counter < unchecked((size - 1)))) {
         global::DripSharp.PdfCarton.Cos.COSBase firstCodeBase = wArray.GetObject(counter++);
         if (!((firstCodeBase is global::DripSharp.PdfCarton.Cos.COSNumber))) {
           global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.LOG,
@@ -75,8 +74,8 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
             if ((widthBase is global::DripSharp.PdfCarton.Cos.COSNumber)) {
               global::DripSharp.PdfCarton.Cos.COSNumber width__109_39
                 = (global::DripSharp.PdfCarton.Cos.COSNumber)(widthBase!);
-              global::DripSharp.Runtime.JavaCompat.MapPut(this.widths, (startRange__102_25
-                + i__104_30), width__109_39.FloatValue());
+              global::DripSharp.Runtime.JavaCompat.MapPut(this.widths, unchecked((startRange__102_25
+                + i__104_30)), width__109_39.FloatValue());
             } else {
               global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont.LOG,
                 global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Expected a number array member, got ",
@@ -136,7 +135,8 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
           global::DripSharp.PdfCarton.Cos.COSArray array
             = (global::DripSharp.PdfCarton.Cos.COSArray)(next!);
           for (int j = 0; (j < array.Size()); j++) {
-            int cid = (c.IntValue() + (j / 3));
+            int cid = unchecked((c.IntValue()
+              + global::DripSharp.Runtime.JavaCompat.IntegralDivide(j, 3)));
             global::DripSharp.PdfCarton.Cos.COSNumber w1y__175_35
               = (global::DripSharp.PdfCarton.Cos.COSNumber)(array.GetObject(j)!);
             global::DripSharp.PdfCarton.Cos.COSNumber v1x__176_35
@@ -306,16 +306,25 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     global::DripSharp.PdfCarton.Cos.COSStream stream
       = this.Dict.GetCOSStream(global::DripSharp.PdfCarton.Cos.COSName.CidToGidMap);
     if ((stream != default!)) {
-      sbyte[] mapAsBytes;
-      using (global::System.IO.Stream @is = stream.CreateInputStream()) {
-        mapAsBytes = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
+      sbyte[] mapAsBytes; {
+        global::System.IO.Stream @is = stream.CreateInputStream();
+        global::System.Exception __dripsharpPrimary_428_30_0 = null!;
+        try {
+          mapAsBytes = global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(@is);
+        } catch (global::System.Exception __dripsharpCaught_428_30_0) {
+          __dripsharpPrimary_428_30_0 = __dripsharpCaught_428_30_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_428_30_0);
+        }
       }
-      int numberOfInts = (mapAsBytes.Length / 2);
+      int numberOfInts = global::DripSharp.Runtime.JavaCompat.IntegralDivide(mapAsBytes.Length, 2);
       cid2gid = new int[numberOfInts];
       int offset = 0;
       for (int index = 0; (index < numberOfInts); index++) {
-        int gid = (((mapAsBytes[offset] & 255) << unchecked((int)(8))) | (mapAsBytes[(offset
-          + 1)] & 255));
+        int gid
+          = (((mapAsBytes[offset] & 255) << unchecked((int)(8))) | (mapAsBytes[unchecked((offset
+          + 1))] & 255));
         cid2gid![index] = gid;
         offset += 2;
       }
@@ -351,6 +360,10 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     public virtual float GetVerticalDisplacement() {
       return this.verticalDisplacment;
     }
+  }
+
+  static PDCIDFont() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 
   public abstract global::DripSharp.PdfCarton.Fonts.Util.BoundingBox GetBoundingBox();

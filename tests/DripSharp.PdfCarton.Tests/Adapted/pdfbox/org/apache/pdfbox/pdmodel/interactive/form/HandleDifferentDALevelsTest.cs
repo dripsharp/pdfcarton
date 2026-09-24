@@ -5,13 +5,9 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class HandleDifferentDALevelsTest {
-  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/test-output"));
+  private static readonly global::DripSharp.Runtime.JavaFile OUT_DIR;
 
-  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "src/test/resources/org/apache/pdfbox/pdmodel/interactive/form"));
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR;
 
   private const string NAME_OF_PDF = "DifferentDALevels.pdf";
 
@@ -23,7 +19,7 @@ public class HandleDifferentDALevelsTest {
     this.document
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.HandleDifferentDALevelsTest.IN_DIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.HandleDifferentDALevelsTest.IN_DIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.HandleDifferentDALevelsTest.NAME_OF_PDF)) });
     this.acroForm = this.document.GetDocumentCatalog().GetAcroForm();
@@ -47,7 +43,8 @@ public class HandleDifferentDALevelsTest {
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.HandleDifferentDALevelsTest.NAME_OF_PDF));
     global::DripSharp.Runtime.JavaFileBridge.Call(this.document, "Save",
-      new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
+      new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+      new object[] { (global::DripSharp.Runtime.JavaFile)file });
   }
 
   internal virtual void checkSingleAnnotation() {
@@ -113,8 +110,8 @@ public class HandleDifferentDALevelsTest {
   private string getFontSettingFromDA(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField field) {
     string defaultAppearance = field.GetDefaultAppearance();
     return global::DripSharp.Runtime.JavaCompat.StringSubstring(defaultAppearance, 0,
-      (defaultAppearance.LastIndexOf(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-      "Tf"), global::System.StringComparison.Ordinal) + 2));
+      unchecked((defaultAppearance.LastIndexOf(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "Tf"), global::System.StringComparison.Ordinal) + 2)));
   }
 
   private string getFontSettingFromDA(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget) {
@@ -122,8 +119,8 @@ public class HandleDifferentDALevelsTest {
       = widget.GetCOSObject().GetString(global::DripSharp.PdfCarton.Cos.COSName.Da);
     if ((defaultAppearance != default!)) {
       return global::DripSharp.Runtime.JavaCompat.StringSubstring(defaultAppearance, 0,
-        (defaultAppearance.LastIndexOf(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Tf"), global::System.StringComparison.Ordinal) + 2));
+        unchecked((defaultAppearance.LastIndexOf(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+        "Tf"), global::System.StringComparison.Ordinal) + 2)));
     }
     return defaultAppearance;
   }
@@ -156,5 +153,14 @@ public class HandleDifferentDALevelsTest {
     } finally {
       this.tearDown();
     }
+  }
+
+  static HandleDifferentDALevelsTest() {
+    OUT_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/test-output"));
+    IN_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "src/test/resources/org/apache/pdfbox/pdmodel/interactive/form"));
   }
 }

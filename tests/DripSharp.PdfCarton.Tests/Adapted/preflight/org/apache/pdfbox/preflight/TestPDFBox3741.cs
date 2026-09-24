@@ -9,7 +9,7 @@ public class TestPDFBox3741 {
     global::DripSharp.PdfCarton.Preflight.ValidationResult result
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Preflight.ValidationResult>(typeof(global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser),
       "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
         "src/test/resources/PDFBOX-3741.pdf")) });
     global::DripSharp.Testing.JavaAssertions.False(result.IsValid(),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",

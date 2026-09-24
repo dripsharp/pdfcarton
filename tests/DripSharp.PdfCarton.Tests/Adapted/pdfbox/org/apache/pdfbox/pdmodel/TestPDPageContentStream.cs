@@ -5,159 +5,215 @@
 namespace DripSharp.PdfCarton.Pdmodel;
 
 public class TestPDPageContentStream {
-  internal virtual void testSetCmykColors() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.PDPage page
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      doc.AddPage(page);
-      using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream__52_38
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page,
-        global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite, true)) {
-        contentStream__52_38.SetNonStrokingColor(0.1F, 0.2F, 0.3F, 0.4F);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__52_38.SetNonStrokingColor(1.1F, (float)(0), (float)(0), (float)(0)),
-          null);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__52_38.SetNonStrokingColor((float)(0), 1.1F, (float)(0), (float)(0)),
-          null);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__52_38.SetNonStrokingColor((float)(0), (float)(0), 1.1F, (float)(0)),
-          null);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__52_38.SetNonStrokingColor((float)(0), (float)(0), (float)(0), 1.1F),
-          null);
+  internal virtual void testSetCmykColors() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_47_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDPage page
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        doc.AddPage(page); {
+          global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream__52_38
+            = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page,
+            global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite, true);
+          global::System.Exception __dripsharpPrimary_52_38_0 = null!;
+          try {
+            contentStream__52_38.SetNonStrokingColor(0.1F, 0.2F, 0.3F, 0.4F);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__52_38.SetNonStrokingColor(1.1F, (float)(0), (float)(0), (float)(0)),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__52_38.SetNonStrokingColor((float)(0), 1.1F, (float)(0), (float)(0)),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__52_38.SetNonStrokingColor((float)(0), (float)(0), 1.1F, (float)(0)),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__52_38.SetNonStrokingColor((float)(0), (float)(0), (float)(0), 1.1F),
+              null);
+          } catch (global::System.Exception __dripsharpCaught_52_38_0) {
+            __dripsharpPrimary_52_38_0 = __dripsharpCaught_52_38_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream__52_38,
+              __dripsharpPrimary_52_38_0);
+          }
+        }
+        global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser parser
+          = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(page);
+        global::System.Collections.Generic.IList<object> pageTokens = parser.Parse();
+        global::DripSharp.Testing.JavaAssertions.Equal(0.1F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          0)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.2F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          1)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.3F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          2)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.4F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          3)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingCmyk,
+          ((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          4)!)).GetName(), null);
+        page = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        doc.AddPage(page); {
+          global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream__86_39
+            = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page,
+            global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite, false);
+          global::System.Exception __dripsharpPrimary_86_39_0 = null!;
+          try {
+            contentStream__86_39.SetStrokingColor(0.5F, 0.6F, 0.7F, 0.8F);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__86_39.SetStrokingColor(1.1F, (float)(0), (float)(0), (float)(0)),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__86_39.SetStrokingColor((float)(0), 1.1F, (float)(0), (float)(0)),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__86_39.SetStrokingColor((float)(0), (float)(0), 1.1F, (float)(0)),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__86_39.SetStrokingColor((float)(0), (float)(0), (float)(0), 1.1F),
+              null);
+          } catch (global::System.Exception __dripsharpCaught_86_39_0) {
+            __dripsharpPrimary_86_39_0 = __dripsharpCaught_86_39_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream__86_39,
+              __dripsharpPrimary_86_39_0);
+          }
+        }
+        parser = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(page);
+        pageTokens = parser.Parse();
+        global::DripSharp.Testing.JavaAssertions.Equal(0.5F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          0)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.6F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          1)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.7F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          2)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.8F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          3)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorCmyk,
+          ((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          4)!)).GetName(), null);
+      } catch (global::System.Exception __dripsharpCaught_47_25_0) {
+        __dripsharpPrimary_47_25_0 = __dripsharpCaught_47_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_47_25_0);
       }
-      global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser parser
-        = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(page);
-      global::System.Collections.Generic.IList<object> pageTokens = parser.Parse();
-      global::DripSharp.Testing.JavaAssertions.Equal(0.1F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        0)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.2F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        1)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.3F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        2)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.4F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        3)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingCmyk,
-        ((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        4)!)).GetName(), null);
-      page = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      doc.AddPage(page);
-      using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream__86_39
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page,
-        global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite, false)) {
-        contentStream__86_39.SetStrokingColor(0.5F, 0.6F, 0.7F, 0.8F);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__86_39.SetStrokingColor(1.1F, (float)(0), (float)(0), (float)(0)), null);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__86_39.SetStrokingColor((float)(0), 1.1F, (float)(0), (float)(0)), null);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__86_39.SetStrokingColor((float)(0), (float)(0), 1.1F, (float)(0)), null);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__86_39.SetStrokingColor((float)(0), (float)(0), (float)(0), 1.1F), null);
-      }
-      parser = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(page);
-      pageTokens = parser.Parse();
-      global::DripSharp.Testing.JavaAssertions.Equal(0.5F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        0)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.6F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        1)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.7F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        2)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.8F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        3)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorCmyk,
-        ((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        4)!)).GetName(), null);
     }
   }
 
-  internal virtual void testSetRGBandGColors() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.PDPage page
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      doc.AddPage(page);
-      using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream__126_38
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page,
-        global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite, true)) {
-        contentStream__126_38.SetNonStrokingColor(0.1F, 0.2F, 0.3F);
-        contentStream__126_38.SetNonStrokingColor(0.8F);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__126_38.SetNonStrokingColor(1.1F, (float)(0), (float)(0)), null);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__126_38.SetNonStrokingColor((float)(0), 1.1F, (float)(0)), null);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__126_38.SetNonStrokingColor((float)(0), (float)(0), 1.1F), null);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__126_38.SetNonStrokingColor(1.1F), null);
+  internal virtual void testSetRGBandGColors() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_121_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDPage page
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        doc.AddPage(page); {
+          global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream__126_38
+            = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page,
+            global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite, true);
+          global::System.Exception __dripsharpPrimary_126_38_0 = null!;
+          try {
+            contentStream__126_38.SetNonStrokingColor(0.1F, 0.2F, 0.3F);
+            contentStream__126_38.SetNonStrokingColor(0.8F);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__126_38.SetNonStrokingColor(1.1F, (float)(0), (float)(0)), null);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__126_38.SetNonStrokingColor((float)(0), 1.1F, (float)(0)), null);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__126_38.SetNonStrokingColor((float)(0), (float)(0), 1.1F), null);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__126_38.SetNonStrokingColor(1.1F), null);
+          } catch (global::System.Exception __dripsharpCaught_126_38_0) {
+            __dripsharpPrimary_126_38_0 = __dripsharpCaught_126_38_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream__126_38,
+              __dripsharpPrimary_126_38_0);
+          }
+        }
+        global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser parser
+          = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(page);
+        global::System.Collections.Generic.IList<object> pageTokens = parser.Parse();
+        global::DripSharp.Testing.JavaAssertions.Equal(0.1F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          0)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.2F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          1)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.3F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          2)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingRgb,
+          ((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          3)!)).GetName(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.8F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          4)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray,
+          ((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          5)!)).GetName(), null);
+        page = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        doc.AddPage(page); {
+          global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream__157_38
+            = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page,
+            global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite, false);
+          global::System.Exception __dripsharpPrimary_157_38_0 = null!;
+          try {
+            contentStream__157_38.SetStrokingColor(0.5F, 0.6F, 0.7F);
+            contentStream__157_38.SetStrokingColor(0.8F);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__157_38.SetStrokingColor(1.1F, (float)(0), (float)(0)), null);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__157_38.SetStrokingColor((float)(0), 1.1F, (float)(0)), null);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__157_38.SetStrokingColor((float)(0), (float)(0), 1.1F), null);
+            global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
+              => contentStream__157_38.SetStrokingColor(1.1F), null);
+          } catch (global::System.Exception __dripsharpCaught_157_38_0) {
+            __dripsharpPrimary_157_38_0 = __dripsharpCaught_157_38_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream__157_38,
+              __dripsharpPrimary_157_38_0);
+          }
+        }
+        parser = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(page);
+        pageTokens = parser.Parse();
+        global::DripSharp.Testing.JavaAssertions.Equal(0.5F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          0)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.6F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          1)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.7F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          2)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorRgb,
+          ((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          3)!)).GetName(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0.8F,
+          ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          4)!)).FloatValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorGray,
+          ((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
+          5)!)).GetName(), null);
+      } catch (global::System.Exception __dripsharpCaught_121_25_0) {
+        __dripsharpPrimary_121_25_0 = __dripsharpCaught_121_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_121_25_0);
       }
-      global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser parser
-        = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(page);
-      global::System.Collections.Generic.IList<object> pageTokens = parser.Parse();
-      global::DripSharp.Testing.JavaAssertions.Equal(0.1F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        0)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.2F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        1)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.3F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        2)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingRgb,
-        ((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        3)!)).GetName(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.8F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        4)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingGray,
-        ((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        5)!)).GetName(), null);
-      page = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      doc.AddPage(page);
-      using (global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream__157_38
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page,
-        global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite, false)) {
-        contentStream__157_38.SetStrokingColor(0.5F, 0.6F, 0.7F);
-        contentStream__157_38.SetStrokingColor(0.8F);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__157_38.SetStrokingColor(1.1F, (float)(0), (float)(0)), null);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__157_38.SetStrokingColor((float)(0), 1.1F, (float)(0)), null);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__157_38.SetStrokingColor((float)(0), (float)(0), 1.1F), null);
-        global::DripSharp.Testing.JavaAssertions.Throws<global::System.ArgumentException>(()
-          => contentStream__157_38.SetStrokingColor(1.1F), null);
-      }
-      parser = new global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser(page);
-      pageTokens = parser.Parse();
-      global::DripSharp.Testing.JavaAssertions.Equal(0.5F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        0)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.6F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        1)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.7F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        2)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorRgb,
-        ((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        3)!)).GetName(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0.8F,
-        ((global::DripSharp.PdfCarton.Cos.COSNumber)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        4)!)).FloatValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorGray,
-        ((global::DripSharp.PdfCarton.Contentstream.@Operator.Operator)(global::DripSharp.Runtime.JavaCompat.ListGet(pageTokens,
-        5)!)).GetName(), null);
     }
   }
 
@@ -171,86 +227,102 @@ public class TestPDPageContentStream {
       global::DripSharp.Runtime.JavaCompat.CollectionCount(tokens), null);
   }
 
-  internal virtual void testCloseContract() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.PDPage page
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      doc.AddPage(page);
-      global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page,
-        global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite, true);
-      contentStream.Dispose();
-      contentStream.Dispose();
+  internal virtual void testCloseContract() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_208_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDPage page
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        doc.AddPage(page);
+        global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page,
+          global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream.AppendMode.Overwrite, true);
+        contentStream.Dispose();
+        contentStream.Dispose();
+      } catch (global::System.Exception __dripsharpCaught_208_25_0) {
+        __dripsharpPrimary_208_25_0 = __dripsharpCaught_208_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_208_25_0);
+      }
     }
   }
 
-  internal virtual void testGeneralGraphicStateOperatorTextMode() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.PDPage page
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      doc.AddPage(page);
-      global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page);
-      contentStream.BeginText();
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject img1
-        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject(doc);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImage img2
-        = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImage(new global::DripSharp.PdfCarton.Cos.COSDictionary(),
-        new sbyte[0], new global::DripSharp.PdfCarton.Pdmodel.PDResources());
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
-        => contentStream.DrawImage(img1, 0.0F, 0.0F, 1.0F, 1.0F), null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
-        => contentStream.DrawImage(img1, new global::DripSharp.PdfCarton.Util.Matrix()), null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
-        => contentStream.DrawImage(img2, 0.0F, 0.0F, 1.0F, 1.0F), null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
-        => contentStream.AddRect((float)(0), (float)(0), (float)(1), (float)(1)), null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
-        => contentStream.CurveTo((float)(0), (float)(0), (float)(1), (float)(1), (float)(2),
-        (float)(2)), null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
-        => contentStream.CurveTo1((float)(0), (float)(0), (float)(1), (float)(1)), null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
-        => contentStream.CurveTo2((float)(0), (float)(0), (float)(1), (float)(1)), null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
-        => contentStream.MoveTo((float)(0), (float)(0)), null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
-        => contentStream.LineTo((float)(1), (float)(1)), null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
-        => contentStream.ShadingFill(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType1(new global::DripSharp.PdfCarton.Cos.COSDictionary())),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.Stroke,
-        null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.CloseAndStroke,
-        null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.CloseAndFillAndStroke,
-        null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.CloseAndFillAndStrokeEvenOdd,
-        null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.Fill,
-        null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.FillAndStroke,
-        null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.FillAndStrokeEvenOdd,
-        null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.FillEvenOdd,
-        null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.ClosePath,
-        null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.Clip,
-        null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.ClipEvenOdd,
-        null);
-      contentStream.SetLineCapStyle(0);
-      contentStream.SetLineJoinStyle(0);
-      contentStream.SetLineWidth(10.0F);
-      contentStream.SetLineDashPattern(new float[] { 2, 1 }, 0.0F);
-      contentStream.SetMiterLimit(1.0F);
-      contentStream.SetGraphicsStateParameters(new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState());
-      contentStream.EndText();
-      contentStream.Dispose();
+  internal virtual void testGeneralGraphicStateOperatorTextMode() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_226_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDPage page
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        doc.AddPage(page);
+        global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream contentStream
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPageContentStream(doc, page);
+        contentStream.BeginText();
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject img1
+          = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject(doc);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImage img2
+          = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImage(new global::DripSharp.PdfCarton.Cos.COSDictionary(),
+          new sbyte[0], new global::DripSharp.PdfCarton.Pdmodel.PDResources());
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
+          => contentStream.DrawImage(img1, 0.0F, 0.0F, 1.0F, 1.0F), null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
+          => contentStream.DrawImage(img1, new global::DripSharp.PdfCarton.Util.Matrix()), null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
+          => contentStream.DrawImage(img2, 0.0F, 0.0F, 1.0F, 1.0F), null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
+          => contentStream.AddRect((float)(0), (float)(0), (float)(1), (float)(1)), null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
+          => contentStream.CurveTo((float)(0), (float)(0), (float)(1), (float)(1), (float)(2),
+          (float)(2)), null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
+          => contentStream.CurveTo1((float)(0), (float)(0), (float)(1), (float)(1)), null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
+          => contentStream.CurveTo2((float)(0), (float)(0), (float)(1), (float)(1)), null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
+          => contentStream.MoveTo((float)(0), (float)(0)), null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
+          => contentStream.LineTo((float)(1), (float)(1)), null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(()
+          => contentStream.ShadingFill(new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShadingType1(new global::DripSharp.PdfCarton.Cos.COSDictionary())),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.Stroke,
+          null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.CloseAndStroke,
+          null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.CloseAndFillAndStroke,
+          null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.CloseAndFillAndStrokeEvenOdd,
+          null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.Fill,
+          null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.FillAndStroke,
+          null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.FillAndStrokeEvenOdd,
+          null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.FillEvenOdd,
+          null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.ClosePath,
+          null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.Clip,
+          null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.InvalidOperationException>(contentStream.ClipEvenOdd,
+          null);
+        contentStream.SetLineCapStyle(0);
+        contentStream.SetLineJoinStyle(0);
+        contentStream.SetLineWidth(10.0F);
+        contentStream.SetLineDashPattern(new float[] { 2, 1 }, 0.0F);
+        contentStream.SetMiterLimit(1.0F);
+        contentStream.SetGraphicsStateParameters(new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState());
+        contentStream.EndText();
+        contentStream.Dispose();
+      } catch (global::System.Exception __dripsharpCaught_226_25_0) {
+        __dripsharpPrimary_226_25_0 = __dripsharpCaught_226_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_226_25_0);
+      }
     }
   }
 

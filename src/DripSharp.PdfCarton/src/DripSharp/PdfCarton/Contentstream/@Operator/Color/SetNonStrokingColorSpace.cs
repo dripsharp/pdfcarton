@@ -38,4 +38,8 @@ public class SetNonStrokingColorSpace
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingColorspace;
   }
+
+  static SetNonStrokingColorSpace() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

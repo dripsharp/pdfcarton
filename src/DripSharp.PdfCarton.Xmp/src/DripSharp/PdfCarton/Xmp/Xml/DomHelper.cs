@@ -13,7 +13,7 @@ public sealed class DomHelper {
 
   public static global::System.Xml.XmlElement GetUniqueElementChild(global::System.Xml.XmlElement description) {
     global::System.Xml.XmlNodeList nl = description.ChildNodes;
-    int pos = -1;
+    int pos = unchecked(-1);
     for (int i = 0; (i < nl.Count); i++) {
       if ((nl.Item(i) is global::System.Xml.XmlElement)) {
         if ((pos >= 0)) {

@@ -9,9 +9,7 @@ public class PDFMergerUtilityTest {
 
   private const string TARGETTESTDIR = "target/test-output/merge/";
 
-  private static readonly global::DripSharp.Runtime.JavaFile TARGETPDFDIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/pdfs"));
+  private static readonly global::DripSharp.Runtime.JavaFile TARGETPDFDIR;
 
   private const int DPI = 96;
 
@@ -65,65 +63,91 @@ public class PDFMergerUtilityTest {
       global::DripSharp.PdfCarton.IO.IOUtils.CreateTempFileOnlyStreamCache());
   }
 
-  internal virtual void testPDFMergerOpenAction() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc1
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      doc1.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
-      doc1.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
-      doc1.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
-      global::DripSharp.Runtime.JavaFileBridge.Call(doc1, "Save",
-        new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
-          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "MergerOpenActionTest1.pdf")) });
+  internal virtual void testPDFMergerOpenAction() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc1
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_179_25_0 = null!;
+      try {
+        doc1.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
+        doc1.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
+        doc1.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
+        global::DripSharp.Runtime.JavaFileBridge.Call(doc1, "Save",
+          new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+          new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "MergerOpenActionTest1.pdf")) });
+      } catch (global::System.Exception __dripsharpCaught_179_25_0) {
+        __dripsharpPrimary_179_25_0 = __dripsharpCaught_179_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc1, __dripsharpPrimary_179_25_0);
+      }
     }
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination dest;
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc2
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      doc2.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
-      doc2.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
-      doc2.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
-      dest
-        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitDestination();
-      dest.SetPage(doc2.GetPage(1));
-      doc2.GetDocumentCatalog().SetOpenAction(dest);
-      global::DripSharp.Runtime.JavaFileBridge.Call(doc2, "Save",
-        new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-        new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
-          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-          "MergerOpenActionTest2.pdf")) });
+    {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc2
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_188_25_0 = null!;
+      try {
+        doc2.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
+        doc2.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
+        doc2.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
+        dest
+          = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageFitDestination();
+        dest.SetPage(doc2.GetPage(1));
+        doc2.GetDocumentCatalog().SetOpenAction(dest);
+        global::DripSharp.Runtime.JavaFileBridge.Call(doc2, "Save",
+          new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+          new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+            "MergerOpenActionTest2.pdf")) });
+      } catch (global::System.Exception __dripsharpCaught_188_25_0) {
+        __dripsharpPrimary_188_25_0 = __dripsharpCaught_188_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc2, __dripsharpPrimary_188_25_0);
+      }
     }
     global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility pdfMergerUtility
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility();
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "MergerOpenActionTest1.pdf")) });
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "MergerOpenActionTest2.pdf")) });
     pdfMergerUtility.SetDestinationFileName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR,
       "MergerOpenActionTestResult.pdf")));
     pdfMergerUtility.MergeDocuments(global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedDoc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "MergerOpenActionTestResult.pdf")) })) {
-      global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog documentCatalog
-        = mergedDoc.GetDocumentCatalog();
-      dest
-        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(documentCatalog.GetOpenAction()!);
-      global::DripSharp.Testing.JavaAssertions.Equal(4,
-        documentCatalog.GetPages().IndexOf(dest.GetPage()), null);
+    {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedDoc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "MergerOpenActionTestResult.pdf")) });
+      global::System.Exception __dripsharpPrimary_205_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog documentCatalog
+          = mergedDoc.GetDocumentCatalog();
+        dest
+          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(documentCatalog.GetOpenAction()!);
+        global::DripSharp.Testing.JavaAssertions.Equal(4,
+          documentCatalog.GetPages().IndexOf(dest.GetPage()), null);
+      } catch (global::System.Exception __dripsharpCaught_205_25_0) {
+        __dripsharpPrimary_205_25_0 = __dripsharpCaught_205_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(mergedDoc, __dripsharpPrimary_205_25_0);
+      }
     }
   }
 
@@ -133,7 +157,7 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument src
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-3999-GeneralForbearance.pdf")) });
     global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.ElementCounter elementCounter
@@ -146,14 +170,14 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-3999-GeneralForbearance.pdf")) });
     pdfMergerUtility.AppendDocument(dst, src);
     src.Dispose();
     global::DripSharp.Runtime.JavaFileBridge.Call(dst, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-3999-GeneralForbearance-merged.pdf")) });
@@ -161,16 +185,17 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-3999-GeneralForbearance-merged.pdf")) });
     elementCounter
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.ElementCounter(this);
     elementCounter.walk(doc.GetDocumentCatalog().GetStructureTreeRoot().GetK());
-    global::DripSharp.Testing.JavaAssertions.Equal((singleCnt * 2), elementCounter.cnt, null);
-    global::DripSharp.Testing.JavaAssertions.Equal((singleSetSize * 2), elementCounter.set.Count,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((singleCnt * 2)), elementCounter.cnt,
       null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((singleSetSize * 2)),
+      elementCounter.set.Count, null);
     this.checkForPageOrphans(doc);
     doc.Dispose();
   }
@@ -181,13 +206,13 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-3999-GeneralForbearance.pdf")) });
     doc.GetDocumentCatalog().GetAcroForm().Flatten();
     global::DripSharp.Runtime.JavaFileBridge.Call(doc, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-3999-GeneralForbearance-flattened.pdf")) });
@@ -202,14 +227,14 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument src
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-3999-GeneralForbearance-flattened.pdf")) });
     global::DripSharp.PdfCarton.Pdmodel.PDDocument dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-3999-GeneralForbearance-flattened.pdf")) });
@@ -217,7 +242,7 @@ public class PDFMergerUtilityTest {
     src.Dispose();
     global::DripSharp.Runtime.JavaFileBridge.Call(dst, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-3999-GeneralForbearance-flattened-merged.pdf")) });
@@ -225,7 +250,7 @@ public class PDFMergerUtilityTest {
     doc
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-3999-GeneralForbearance-flattened-merged.pdf")) });
@@ -233,9 +258,10 @@ public class PDFMergerUtilityTest {
     elementCounter
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.ElementCounter(this);
     elementCounter.walk(doc.GetDocumentCatalog().GetStructureTreeRoot().GetK());
-    global::DripSharp.Testing.JavaAssertions.Equal((singleCnt * 2), elementCounter.cnt, null);
-    global::DripSharp.Testing.JavaAssertions.Equal((singleSetSize * 2), elementCounter.set.Count,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((singleCnt * 2)), elementCounter.cnt,
       null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((singleSetSize * 2)),
+      elementCounter.set.Count, null);
     doc.Dispose();
   }
 
@@ -245,7 +271,7 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument src
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4408.pdf")) });
     global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.ElementCounter elementCounter
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.ElementCounter(this);
@@ -257,28 +283,29 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4408.pdf")) });
     pdfMergerUtility.AppendDocument(dst, src);
     src.Dispose();
     global::DripSharp.Runtime.JavaFileBridge.Call(dst, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4408-merged.pdf")) });
     dst.Dispose();
     dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4408-merged.pdf")) });
     elementCounter
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.ElementCounter(this);
     elementCounter.walk(dst.GetDocumentCatalog().GetStructureTreeRoot().GetK());
-    global::DripSharp.Testing.JavaAssertions.Equal((singleCnt * 2), elementCounter.cnt, null);
-    global::DripSharp.Testing.JavaAssertions.Equal((singleSetSize * 2), elementCounter.set.Count,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((singleCnt * 2)), elementCounter.cnt,
       null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((singleSetSize * 2)),
+      elementCounter.set.Count, null);
     this.checkWithNumberTree(dst);
     this.checkForPageOrphans(dst);
     dst.Dispose();
@@ -293,7 +320,7 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument src
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4417-001031.pdf")) });
     global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.ElementCounter elementCounter
@@ -306,14 +333,14 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4417-001031.pdf")) });
     pdfMergerUtility.AppendDocument(dst, src);
     src.Dispose();
     global::DripSharp.Runtime.JavaFileBridge.Call(dst, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-4417-001031-merged.pdf")) });
@@ -321,16 +348,17 @@ public class PDFMergerUtilityTest {
     dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-4417-001031-merged.pdf")) });
     elementCounter
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.ElementCounter(this);
     elementCounter.walk(dst.GetDocumentCatalog().GetStructureTreeRoot().GetK());
-    global::DripSharp.Testing.JavaAssertions.Equal((singleCnt * 2), elementCounter.cnt, null);
-    global::DripSharp.Testing.JavaAssertions.Equal((singleSetSize * 2), elementCounter.set.Count,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((singleCnt * 2)), elementCounter.cnt,
       null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((singleSetSize * 2)),
+      elementCounter.set.Count, null);
     this.checkWithNumberTree(dst);
     this.checkForPageOrphans(dst);
     dst.Dispose();
@@ -346,7 +374,7 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument src
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4417-054080.pdf")) });
     global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.ElementCounter elementCounter
@@ -357,14 +385,14 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4417-054080.pdf")) });
     pdfMergerUtility.AppendDocument(dst, src);
     src.Dispose();
     global::DripSharp.Runtime.JavaFileBridge.Call(dst, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-4417-054080-merged.pdf")) });
@@ -372,7 +400,7 @@ public class PDFMergerUtilityTest {
     dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-4417-054080-merged.pdf")) });
@@ -381,9 +409,10 @@ public class PDFMergerUtilityTest {
     elementCounter
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.ElementCounter(this);
     elementCounter.walk(dst.GetDocumentCatalog().GetStructureTreeRoot().GetK());
-    global::DripSharp.Testing.JavaAssertions.Equal((singleCnt * 2), elementCounter.cnt, null);
-    global::DripSharp.Testing.JavaAssertions.Equal((singleSetSize * 2), elementCounter.set.Count,
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((singleCnt * 2)), elementCounter.cnt,
       null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((singleSetSize * 2)),
+      elementCounter.set.Count, null);
     dst.Dispose();
     this.checkStructTreeRootCount(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
@@ -397,7 +426,7 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument src
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4418-000671.pdf")) });
     global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
       = src.GetDocumentCatalog().GetStructureTreeRoot();
@@ -409,8 +438,8 @@ public class PDFMergerUtilityTest {
     global::DripSharp.Testing.JavaAssertions.Equal(381,
       global::DripSharp.Runtime.JavaCompat.MapCount(numberTreeAsMap), null);
     global::DripSharp.Testing.JavaAssertions.Equal(743,
-      (global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))
-      + 1), null);
+      unchecked((global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))
+      + 1)), null);
     global::DripSharp.Testing.JavaAssertions.Equal(0,
       (int)((int)global::DripSharp.Runtime.JavaCompat.CollectionMin(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))),
       null);
@@ -419,7 +448,7 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4418-000314.pdf")) });
     structureTreeRoot = dst.GetDocumentCatalog().GetStructureTreeRoot();
     parentTree = structureTreeRoot.GetParentTree();
@@ -428,8 +457,8 @@ public class PDFMergerUtilityTest {
     global::DripSharp.Testing.JavaAssertions.Equal(7,
       global::DripSharp.Runtime.JavaCompat.MapCount(numberTreeAsMap), null);
     global::DripSharp.Testing.JavaAssertions.Equal(328,
-      (global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))
-      + 1), null);
+      unchecked((global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))
+      + 1)), null);
     global::DripSharp.Testing.JavaAssertions.Equal(321,
       (int)((int)global::DripSharp.Runtime.JavaCompat.CollectionMin(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))),
       null);
@@ -439,14 +468,14 @@ public class PDFMergerUtilityTest {
     src.Dispose();
     global::DripSharp.Runtime.JavaFileBridge.Call(dst, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4418-merged.pdf")) });
     dst.Dispose();
     dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4418-merged.pdf")) });
     this.checkWithNumberTree(dst);
@@ -455,15 +484,15 @@ public class PDFMergerUtilityTest {
     parentTree = structureTreeRoot.GetParentTree();
     numberTreeAsMap
       = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(parentTree);
-    global::DripSharp.Testing.JavaAssertions.Equal((381 + 7),
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((381 + 7)),
       global::DripSharp.Runtime.JavaCompat.MapCount(numberTreeAsMap), null);
-    global::DripSharp.Testing.JavaAssertions.Equal((408 + 743),
-      (global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))
-      + 1), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((408 + 743)),
+      unchecked((global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))
+      + 1)), null);
     global::DripSharp.Testing.JavaAssertions.Equal(321,
       (int)((int)global::DripSharp.Runtime.JavaCompat.CollectionMin(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))),
       null);
-    global::DripSharp.Testing.JavaAssertions.Equal((408 + 743),
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((408 + 743)),
       structureTreeRoot.GetParentTreeNextKey(), null);
     dst.Dispose();
     this.checkStructTreeRootCount(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -477,7 +506,7 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument src
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4423-000746.pdf")) });
     global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
       = src.GetDocumentCatalog().GetStructureTreeRoot();
@@ -489,8 +518,8 @@ public class PDFMergerUtilityTest {
     global::DripSharp.Testing.JavaAssertions.Equal(33,
       global::DripSharp.Runtime.JavaCompat.MapCount(numberTreeAsMap), null);
     global::DripSharp.Testing.JavaAssertions.Equal(64,
-      (global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))
-      + 1), null);
+      unchecked((global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))
+      + 1)), null);
     global::DripSharp.Testing.JavaAssertions.Equal(31,
       (int)((int)global::DripSharp.Runtime.JavaCompat.CollectionMin(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))),
       null);
@@ -502,14 +531,14 @@ public class PDFMergerUtilityTest {
     src.Dispose();
     global::DripSharp.Runtime.JavaFileBridge.Call(dst, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4423-merged.pdf")) });
     dst.Dispose();
     dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4423-merged.pdf")) });
     this.checkWithNumberTree(dst);
@@ -521,8 +550,8 @@ public class PDFMergerUtilityTest {
     global::DripSharp.Testing.JavaAssertions.Equal(33,
       global::DripSharp.Runtime.JavaCompat.MapCount(numberTreeAsMap), null);
     global::DripSharp.Testing.JavaAssertions.Equal(64,
-      (global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))
-      + 1), null);
+      unchecked((global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))
+      + 1)), null);
     global::DripSharp.Testing.JavaAssertions.Equal(31,
       (int)((int)global::DripSharp.Runtime.JavaCompat.CollectionMin(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))),
       null);
@@ -540,19 +569,19 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument src
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4418-000314.pdf")) });
     global::DripSharp.PdfCarton.Pdmodel.PDDocument dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4418-000314.pdf")) });
     dst.GetDocumentCatalog().GetStructureTreeRoot().GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.ParentTreeNextKey);
     pdfMergerUtility.AppendDocument(dst, src);
     src.Dispose();
     global::DripSharp.Runtime.JavaFileBridge.Call(dst, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-4418-000314-merged.pdf")) });
@@ -560,7 +589,7 @@ public class PDFMergerUtilityTest {
     dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-4418-000314-merged.pdf")) });
@@ -575,13 +604,13 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.PDDocument src
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4417-001031.pdf")) });
     global::DripSharp.PdfCarton.Pdmodel.PDDocument dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4417-054080.pdf")) });
     global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> srcIDTree
@@ -594,8 +623,8 @@ public class PDFMergerUtilityTest {
     global::System.Collections.Generic.IDictionary<string,
       global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement> dstIDTreeMap
       = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getIDTreeAsMap(dstIDTree);
-    int expectedTotal = (global::DripSharp.Runtime.JavaCompat.MapCount(srcIDTreeMap)
-      + global::DripSharp.Runtime.JavaCompat.MapCount(dstIDTreeMap));
+    int expectedTotal = unchecked((global::DripSharp.Runtime.JavaCompat.MapCount(srcIDTreeMap)
+      + global::DripSharp.Runtime.JavaCompat.MapCount(dstIDTreeMap)));
     global::DripSharp.Testing.JavaAssertions.Equal(192, expectedTotal, null);
     global::DripSharp.PdfCarton.Pdmodel.PDDocument emptyDest
       = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
@@ -608,7 +637,7 @@ public class PDFMergerUtilityTest {
     src.Dispose();
     global::DripSharp.Runtime.JavaFileBridge.Call(dst, "Save",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-4416-IDTree-merged.pdf")) });
@@ -616,7 +645,7 @@ public class PDFMergerUtilityTest {
     dst
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-4416-IDTree-merged.pdf")) });
@@ -635,97 +664,145 @@ public class PDFMergerUtilityTest {
 
   internal virtual void testMergeBogusStructParents1() {
     global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility pdfMergerUtility
-      = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility();
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument src
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBOX-4408.pdf")) })) using (global::DripSharp.PdfCarton.Pdmodel.PDDocument dst
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4408.pdf")) })) {
-      dst.GetDocumentCatalog().SetStructureTreeRoot((global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot)default!);
-      dst.GetPage(0).SetStructParents(9999);
-      global::DripSharp.Runtime.JavaCompat.ListGet(dst.GetPage(0).GetAnnotations(),
-        0).SetStructParent(9998);
-      pdfMergerUtility.AppendDocument(dst, src);
-      this.checkWithNumberTree(dst);
-      this.checkForPageOrphans(dst);
+      = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility(); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument src
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4408.pdf")) });
+      global::System.Exception __dripsharpPrimary_589_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocument dst
+          = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+          "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+          new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4408.pdf")) });
+        global::System.Exception __dripsharpPrimary_590_25_0 = null!;
+        try {
+          dst.GetDocumentCatalog().SetStructureTreeRoot((global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot)default!);
+          dst.GetPage(0).SetStructParents(9999);
+          global::DripSharp.Runtime.JavaCompat.ListGet(dst.GetPage(0).GetAnnotations(),
+            0).SetStructParent(9998);
+          pdfMergerUtility.AppendDocument(dst, src);
+          this.checkWithNumberTree(dst);
+          this.checkForPageOrphans(dst);
+        } catch (global::System.Exception __dripsharpCaught_590_25_0) {
+          __dripsharpPrimary_590_25_0 = __dripsharpCaught_590_25_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(dst, __dripsharpPrimary_590_25_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_589_25_0) {
+        __dripsharpPrimary_589_25_0 = __dripsharpCaught_589_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(src, __dripsharpPrimary_589_25_0);
+      }
     }
   }
 
   internal virtual void testMergeBogusStructParents2() {
     global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility pdfMergerUtility
-      = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility();
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument src
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBOX-4408.pdf")) })) using (global::DripSharp.PdfCarton.Pdmodel.PDDocument dst
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4408.pdf")) })) {
-      src.GetDocumentCatalog().SetStructureTreeRoot((global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot)default!);
-      src.GetPage(0).SetStructParents(9999);
-      global::DripSharp.Runtime.JavaCompat.ListGet(src.GetPage(0).GetAnnotations(),
-        0).SetStructParent(9998);
-      pdfMergerUtility.AppendDocument(dst, src);
-      this.checkWithNumberTree(dst);
-      this.checkForPageOrphans(dst);
+      = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility(); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument src
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4408.pdf")) });
+      global::System.Exception __dripsharpPrimary_611_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDDocument dst
+          = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+          "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+          new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+            global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4408.pdf")) });
+        global::System.Exception __dripsharpPrimary_612_25_0 = null!;
+        try {
+          src.GetDocumentCatalog().SetStructureTreeRoot((global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot)default!);
+          src.GetPage(0).SetStructParents(9999);
+          global::DripSharp.Runtime.JavaCompat.ListGet(src.GetPage(0).GetAnnotations(),
+            0).SetStructParent(9998);
+          pdfMergerUtility.AppendDocument(dst, src);
+          this.checkWithNumberTree(dst);
+          this.checkForPageOrphans(dst);
+        } catch (global::System.Exception __dripsharpCaught_612_25_0) {
+          __dripsharpPrimary_612_25_0 = __dripsharpCaught_612_25_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(dst, __dripsharpPrimary_612_25_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_611_25_0) {
+        __dripsharpPrimary_611_25_0 = __dripsharpCaught_611_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(src, __dripsharpPrimary_611_25_0);
+      }
     }
   }
 
-  internal virtual void testParentTree() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBOX-3999-GeneralForbearance.pdf")) })) {
-      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
-        = doc.GetDocumentCatalog().GetStructureTreeRoot();
-      global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode parentTree
-        = structureTreeRoot.GetParentTree();
-      parentTree.GetValue(0);
-      global::System.Collections.Generic.IDictionary<int,
-        global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> numberTreeAsMap
-        = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(parentTree);
-      global::DripSharp.Testing.JavaAssertions.Equal(31,
-        global::DripSharp.Runtime.JavaCompat.MapCount(numberTreeAsMap), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(31,
-        (global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))
-        + 1), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(0,
-        (int)((int)global::DripSharp.Runtime.JavaCompat.CollectionMin(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(31, structureTreeRoot.GetParentTreeNextKey(),
-        null);
+  internal virtual void testParentTree() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "PDFBOX-3999-GeneralForbearance.pdf")) });
+      global::System.Exception __dripsharpPrimary_632_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
+          = doc.GetDocumentCatalog().GetStructureTreeRoot();
+        global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode parentTree
+          = structureTreeRoot.GetParentTree();
+        parentTree.GetValue((int?)(0));
+        global::System.Collections.Generic.IDictionary<int,
+          global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable> numberTreeAsMap
+          = global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(parentTree);
+        global::DripSharp.Testing.JavaAssertions.Equal(31,
+          global::DripSharp.Runtime.JavaCompat.MapCount(numberTreeAsMap), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(31,
+          unchecked((global::DripSharp.Runtime.JavaCompat.CollectionMax(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))
+          + 1)), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(0,
+          (int)((int)global::DripSharp.Runtime.JavaCompat.CollectionMin(global::DripSharp.Runtime.JavaCompat.MapKeySet(numberTreeAsMap))),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(31, structureTreeRoot.GetParentTreeNextKey(),
+          null);
+      } catch (global::System.Exception __dripsharpCaught_632_25_0) {
+        __dripsharpPrimary_632_25_0 = __dripsharpCaught_632_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_632_25_0);
+      }
     }
   }
 
-  private void checkStructTreeRootCount(global::DripSharp.Runtime.JavaFile file) {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument pdf
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { file })) {
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSObject> structTreeRootObjects
-        = pdf.GetDocument().GetObjectsByType(global::DripSharp.PdfCarton.Cos.COSName.StructTreeRoot);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(structTreeRootObjects),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(file.ToString(),
-        " "), structTreeRootObjects)));
+  private void checkStructTreeRootCount(global::DripSharp.Runtime.JavaFile file) { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument pdf
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)file });
+      global::System.Exception __dripsharpPrimary_650_25_0 = null!;
+      try {
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSObject> structTreeRootObjects
+          = pdf.GetDocument().GetObjectsByType(global::DripSharp.PdfCarton.Cos.COSName.StructTreeRoot);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(structTreeRootObjects),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(file.ToString(),
+          " "), structTreeRootObjects)));
+      } catch (global::System.Exception __dripsharpCaught_650_25_0) {
+        __dripsharpPrimary_650_25_0 = __dripsharpCaught_650_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(pdf, __dripsharpPrimary_650_25_0);
+      }
     }
   }
 
   internal virtual void checkWithNumberTree(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
     global::DripSharp.PdfCarton.Pdmodel.PDDocumentCatalog documentCatalog
       = document.GetDocumentCatalog();
-    global::DripSharp.Testing.JavaAssertions.NotEqual(-1,
+    global::DripSharp.Testing.JavaAssertions.NotEqual(unchecked(-1),
       documentCatalog.GetStructureTreeRoot().GetParentTreeNextKey(), null);
     global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode parentTree
       = documentCatalog.GetStructureTreeRoot().GetParentTree();
@@ -752,7 +829,7 @@ public class PDFMergerUtilityTest {
     }
     global::DripSharp.PdfCarton.Pdmodel.PDPageTree pageTree = document.GetPages();
     foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page in pageTree) {
-      int pageNum = (pageTree.IndexOf(page) + 1);
+      int pageNum = unchecked((pageTree.IndexOf(page) + 1));
       if ((page.GetStructParents() >= 0)) {
         global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.CollectionContains(keySet,
           page.GetStructParents()), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -818,7 +895,7 @@ public class PDFMergerUtilityTest {
           }
         }
         global::DripSharp.Testing.JavaAssertions.True((set.Count == 0
-          || (global::System.Linq.Enumerable.Last(set) <= (array.Size() - 1))), null);
+          || (global::System.Linq.Enumerable.Last(set) <= unchecked((array.Size() - 1)))), null);
       }
       foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation ann in page.GetAnnotations()) {
         if ((ann.GetStructParent() >= 0)) {
@@ -845,24 +922,58 @@ public class PDFMergerUtilityTest {
       global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4383-src2.pdf"));
     this.createSimpleFile(inFile1);
-    this.createSimpleFile(inFile2);
-    using (global::System.IO.Stream @out
-      = global::DripSharp.Runtime.JavaCompat.OpenFileOutput(outFile)) using (global::DripSharp.PdfCarton.IO.RandomAccessRead rar1
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(inFile1)) using (global::DripSharp.PdfCarton.IO.RandomAccessRead rar2
-      = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(inFile2)) {
-      global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility merger
-        = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility();
-      merger.SetDestinationStream(@out);
-      global::DripSharp.Testing.JavaAssertions.Equal(@out, merger.GetDestinationStream(), null);
-      merger.AddSource(rar1);
-      merger.AddSource(rar2);
-      merger.MergeDocuments(global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-    }
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { outFile })) {
-      global::DripSharp.Testing.JavaAssertions.Equal(2, doc.GetNumberOfPages(), null);
+    this.createSimpleFile(inFile2); {
+      global::System.IO.Stream @out = global::DripSharp.Runtime.JavaCompat.OpenFileOutput(outFile);
+      global::System.Exception __dripsharpPrimary_785_27_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.IO.RandomAccessRead rar1
+          = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(inFile1);
+        global::System.Exception __dripsharpPrimary_787_31_0 = null!;
+        try {
+          global::DripSharp.PdfCarton.IO.RandomAccessRead rar2
+            = new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(inFile2);
+          global::System.Exception __dripsharpPrimary_788_31_0 = null!;
+          try {
+            global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility merger
+              = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility();
+            merger.SetDestinationStream(@out);
+            global::DripSharp.Testing.JavaAssertions.Equal(@out, merger.GetDestinationStream(),
+              null);
+            merger.AddSource(rar1);
+            merger.AddSource(rar2);
+            merger.MergeDocuments(global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
+          } catch (global::System.Exception __dripsharpCaught_788_31_0) {
+            __dripsharpPrimary_788_31_0 = __dripsharpCaught_788_31_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(rar2, __dripsharpPrimary_788_31_0);
+          }
+        } catch (global::System.Exception __dripsharpCaught_787_31_0) {
+          __dripsharpPrimary_787_31_0 = __dripsharpCaught_787_31_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(rar1, __dripsharpPrimary_787_31_0);
+        }
+      } catch (global::System.Exception __dripsharpCaught_785_27_0) {
+        __dripsharpPrimary_785_27_0 = __dripsharpCaught_785_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@out, __dripsharpPrimary_785_27_0);
+      }
+    } {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)outFile });
+      global::System.Exception __dripsharpPrimary_800_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(2, doc.GetNumberOfPages(), null);
+      } catch (global::System.Exception __dripsharpCaught_800_25_0) {
+        __dripsharpPrimary_800_25_0 = __dripsharpCaught_800_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_800_25_0);
+      }
     }
     global::DripSharp.Runtime.JavaCompat.DeleteIfExists(global::DripSharp.Runtime.JavaCompat.FileToPath(inFile1));
     global::DripSharp.Runtime.JavaCompat.DeleteIfExists(global::DripSharp.Runtime.JavaCompat.FileToPath(inFile2));
@@ -874,12 +985,12 @@ public class PDFMergerUtilityTest {
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility();
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFA3A.pdf")) });
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFA3A.pdf")) });
     pdfMergerUtility.SetDestinationFileName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -896,17 +1007,17 @@ public class PDFMergerUtilityTest {
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility();
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFA3A.pdf")) });
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFA3A.pdf")) });
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFA3A.pdf")) });
     pdfMergerUtility.SetDestinationFileName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
@@ -918,29 +1029,37 @@ public class PDFMergerUtilityTest {
       "PDFA3A-merged3.pdf"))));
   }
 
-  private void checkParts(global::DripSharp.Runtime.JavaFile file) {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { file })) {
-      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
-        = doc.GetDocumentCatalog().GetStructureTreeRoot();
-      global::DripSharp.PdfCarton.Cos.COSDictionary topDict
-        = (global::DripSharp.PdfCarton.Cos.COSDictionary)(structureTreeRoot.GetK()!);
-      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSName.Document,
-        topDict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.S), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(structureTreeRoot.GetCOSObject(),
-        topDict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.P), null);
-      global::DripSharp.PdfCarton.Cos.COSArray kArray
-        = topDict.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.K);
-      global::DripSharp.Testing.JavaAssertions.Equal(doc.GetNumberOfPages(), kArray.Size(), null);
-      for (int i = 0; (i < kArray.Size()); ++i) {
-        global::DripSharp.PdfCarton.Cos.COSDictionary dict
-          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(kArray.GetObject(i)!);
-        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSName.Part,
-          dict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.S), null);
-        global::DripSharp.Testing.JavaAssertions.Equal(topDict,
-          dict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.P), null);
+  private void checkParts(global::DripSharp.Runtime.JavaFile file) { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)file });
+      global::System.Exception __dripsharpPrimary_852_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
+          = doc.GetDocumentCatalog().GetStructureTreeRoot();
+        global::DripSharp.PdfCarton.Cos.COSDictionary topDict
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(structureTreeRoot.GetK()!);
+        global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSName.Document,
+          topDict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.S), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(structureTreeRoot.GetCOSObject(),
+          topDict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.P), null);
+        global::DripSharp.PdfCarton.Cos.COSArray kArray
+          = topDict.GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.K);
+        global::DripSharp.Testing.JavaAssertions.Equal(doc.GetNumberOfPages(), kArray.Size(), null);
+        for (int i = 0; (i < kArray.Size()); ++i) {
+          global::DripSharp.PdfCarton.Cos.COSDictionary dict
+            = (global::DripSharp.PdfCarton.Cos.COSDictionary)(kArray.GetObject(i)!);
+          global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSName.Part,
+            dict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.S), null);
+          global::DripSharp.Testing.JavaAssertions.Equal(topDict,
+            dict.GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.P), null);
+        }
+      } catch (global::System.Exception __dripsharpCaught_852_25_0) {
+        __dripsharpPrimary_852_25_0 = __dripsharpCaught_852_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_852_25_0);
       }
     }
   }
@@ -1007,12 +1126,21 @@ public class PDFMergerUtilityTest {
     }
   }
 
-  private void createSimpleFile(global::DripSharp.Runtime.JavaFile file) {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      doc.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
-      global::DripSharp.Runtime.JavaFileBridge.Call(doc, "Save",
-        new global::System.Type[] { typeof(global::System.IO.FileInfo) }, new object[] { file });
+  private void createSimpleFile(global::DripSharp.Runtime.JavaFile file) { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_933_25_0 = null!;
+      try {
+        doc.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
+        global::DripSharp.Runtime.JavaFileBridge.Call(doc, "Save",
+          new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+          new object[] { (global::DripSharp.Runtime.JavaFile)file });
+      } catch (global::System.Exception __dripsharpCaught_933_25_0) {
+        __dripsharpPrimary_933_25_0 = __dripsharpCaught_933_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_933_25_0);
+      }
     }
   }
 
@@ -1065,11 +1193,15 @@ public class PDFMergerUtilityTest {
       }
     }
 
-    private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+    private static readonly bool __UpstreamBeforeAll;
 
     private static bool __RunUpstreamBeforeAll() {
       setUp();
       return true;
+    }
+
+    static ElementCounter() {
+      __UpstreamBeforeAll = __RunUpstreamBeforeAll();
     }
 
     private readonly global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest __outer;
@@ -1160,23 +1292,26 @@ public class PDFMergerUtilityTest {
                   = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(destination!);
                 global::DripSharp.PdfCarton.Pdmodel.PDPage destPage = pageDestination.GetPage();
                 if ((destPage != default!)) {
-                  global::DripSharp.Testing.JavaAssertions.NotEqual(-1, pageTree.IndexOf(destPage),
+                  global::DripSharp.Testing.JavaAssertions.NotEqual(unchecked(-1),
+                    pageTree.IndexOf(destPage),
                     global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
                     global::DripSharp.Runtime.JavaCompat.Concat("Annotation destination page is not in the page tree: ",
                     destPage)));
                 }
               }
             }
-            if (((page != default!) && (pageTree.IndexOf(page) == -1))) {
+            if (((page != default!) && (pageTree.IndexOf(page) == unchecked(-1)))) {
               global::DripSharp.PdfCarton.Cos.COSBase item
                 = kdict.GetItem(global::DripSharp.PdfCarton.Cos.COSName.Obj);
               if ((item is global::DripSharp.PdfCarton.Cos.COSObject)) {
-                global::DripSharp.Testing.JavaAssertions.NotEqual(-1, pageTree.IndexOf(page),
+                global::DripSharp.Testing.JavaAssertions.NotEqual(unchecked(-1),
+                  pageTree.IndexOf(page),
                   global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
                   global::DripSharp.Runtime.JavaCompat.Concat("Annotation page is not in the page tree: ",
                   item)));
               } else {
-                global::DripSharp.Testing.JavaAssertions.NotEqual(-1, pageTree.IndexOf(page),
+                global::DripSharp.Testing.JavaAssertions.NotEqual(unchecked(-1),
+                  pageTree.IndexOf(page),
                   global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
                   "Annotation page is not in the page tree"));
               }
@@ -1192,79 +1327,104 @@ public class PDFMergerUtilityTest {
   private void checkMergeIdentical(string filename1, string filename2, string mergeFilename,
     global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCache) {
     int src1PageCount;
-    global::SkiaSharp.SKBitmap[] src1ImageTab;
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument srcDoc1
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename1)),
-        (string)default! })) {
-      src1PageCount = srcDoc1.GetNumberOfPages();
-      global::DripSharp.PdfCarton.Rendering.PDFRenderer src1PdfRenderer
-        = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(srcDoc1);
-      src1ImageTab = new global::SkiaSharp.SKBitmap[src1PageCount];
-      for (int page__1129_22 = 0; (page__1129_22 < src1PageCount); ++page__1129_22) {
-        src1ImageTab[page__1129_22] = src1PdfRenderer.RenderImageWithDPI(page__1129_22,
-          (float)(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.DPI));
+    global::SkiaSharp.SKBitmap[] src1ImageTab; {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument srcDoc1
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename1)),
+          (string)((string)default!) });
+      global::System.Exception __dripsharpPrimary_1124_25_0 = null!;
+      try {
+        src1PageCount = srcDoc1.GetNumberOfPages();
+        global::DripSharp.PdfCarton.Rendering.PDFRenderer src1PdfRenderer
+          = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(srcDoc1);
+        src1ImageTab = new global::SkiaSharp.SKBitmap[src1PageCount];
+        for (int page__1129_22 = 0; (page__1129_22 < src1PageCount); ++page__1129_22) {
+          src1ImageTab[page__1129_22] = src1PdfRenderer.RenderImageWithDPI(page__1129_22,
+            (float)(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.DPI));
+        }
+      } catch (global::System.Exception __dripsharpCaught_1124_25_0) {
+        __dripsharpPrimary_1124_25_0 = __dripsharpCaught_1124_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(srcDoc1, __dripsharpPrimary_1124_25_0);
       }
     }
     int src2PageCount;
-    global::SkiaSharp.SKBitmap[] src2ImageTab;
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument srcDoc2
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename2)),
-        (string)default! })) {
-      src2PageCount = srcDoc2.GetNumberOfPages();
-      global::DripSharp.PdfCarton.Rendering.PDFRenderer src2PdfRenderer
-        = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(srcDoc2);
-      src2ImageTab = new global::SkiaSharp.SKBitmap[src2PageCount];
-      for (int page__1142_22 = 0; (page__1142_22 < src2PageCount); ++page__1142_22) {
-        src2ImageTab[page__1142_22] = src2PdfRenderer.RenderImageWithDPI(page__1142_22,
-          (float)(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.DPI));
+    global::SkiaSharp.SKBitmap[] src2ImageTab; {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument srcDoc2
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename2)),
+          (string)((string)default!) });
+      global::System.Exception __dripsharpPrimary_1137_25_0 = null!;
+      try {
+        src2PageCount = srcDoc2.GetNumberOfPages();
+        global::DripSharp.PdfCarton.Rendering.PDFRenderer src2PdfRenderer
+          = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(srcDoc2);
+        src2ImageTab = new global::SkiaSharp.SKBitmap[src2PageCount];
+        for (int page__1142_22 = 0; (page__1142_22 < src2PageCount); ++page__1142_22) {
+          src2ImageTab[page__1142_22] = src2PdfRenderer.RenderImageWithDPI(page__1142_22,
+            (float)(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.DPI));
+        }
+      } catch (global::System.Exception __dripsharpCaught_1137_25_0) {
+        __dripsharpPrimary_1137_25_0 = __dripsharpCaught_1137_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(srcDoc2, __dripsharpPrimary_1137_25_0);
       }
     }
     global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility pdfMergerUtility
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility();
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename1)) });
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", filename2)) });
     pdfMergerUtility.SetDestinationFileName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR,
       mergeFilename)));
-    pdfMergerUtility.MergeDocuments(streamCache);
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedDoc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", mergeFilename)),
-        (string)default! })) {
-      global::DripSharp.PdfCarton.Rendering.PDFRenderer mergePdfRenderer
-        = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(mergedDoc);
-      int mergePageCount = mergedDoc.GetNumberOfPages();
-      global::DripSharp.Testing.JavaAssertions.Equal((src1PageCount + src2PageCount),
-        mergePageCount, null);
-      for (int page__1160_22 = 0; (page__1160_22 < src1PageCount); ++page__1160_22) {
-        global::SkiaSharp.SKBitmap bim__1162_31 = mergePdfRenderer.RenderImageWithDPI(page__1160_22,
-          (float)(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.DPI));
-        this.checkImagesIdentical(bim__1162_31, src1ImageTab[page__1160_22]);
-      }
-      for (int page__1165_22 = 0; (page__1165_22 < src2PageCount); ++page__1165_22) {
-        int mergePage = (page__1165_22 + src1PageCount);
-        global::SkiaSharp.SKBitmap bim__1168_31 = mergePdfRenderer.RenderImageWithDPI(mergePage,
-          (float)(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.DPI));
-        this.checkImagesIdentical(bim__1168_31, src2ImageTab[page__1165_22]);
+    pdfMergerUtility.MergeDocuments(streamCache); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedDoc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", mergeFilename)),
+          (string)((string)default!) });
+      global::System.Exception __dripsharpPrimary_1154_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Rendering.PDFRenderer mergePdfRenderer
+          = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(mergedDoc);
+        int mergePageCount = mergedDoc.GetNumberOfPages();
+        global::DripSharp.Testing.JavaAssertions.Equal(unchecked((src1PageCount + src2PageCount)),
+          mergePageCount, null);
+        for (int page__1160_22 = 0; (page__1160_22 < src1PageCount); ++page__1160_22) {
+          global::SkiaSharp.SKBitmap bim__1162_31
+            = mergePdfRenderer.RenderImageWithDPI(page__1160_22,
+            (float)(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.DPI));
+          this.checkImagesIdentical(bim__1162_31, src1ImageTab[page__1160_22]);
+        }
+        for (int page__1165_22 = 0; (page__1165_22 < src2PageCount); ++page__1165_22) {
+          int mergePage = unchecked((page__1165_22 + src1PageCount));
+          global::SkiaSharp.SKBitmap bim__1168_31 = mergePdfRenderer.RenderImageWithDPI(mergePage,
+            (float)(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.DPI));
+          this.checkImagesIdentical(bim__1168_31, src2ImageTab[page__1165_22]);
+        }
+      } catch (global::System.Exception __dripsharpCaught_1154_25_0) {
+        __dripsharpPrimary_1154_25_0 = __dripsharpCaught_1154_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(mergedDoc, __dripsharpPrimary_1154_25_0);
       }
     }
   }
@@ -1287,244 +1447,334 @@ public class PDFMergerUtilityTest {
     global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureElement structureElement) {
     global::DripSharp.PdfCarton.Pdmodel.PDPage page = structureElement.GetPage();
     if ((page != default!)) {
-      global::DripSharp.Testing.JavaAssertions.NotEqual(-1, pageTree.IndexOf(page),
+      global::DripSharp.Testing.JavaAssertions.NotEqual(unchecked(-1), pageTree.IndexOf(page),
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "Page is not in the page tree"));
     }
   }
 
-  internal virtual void testSplitWithStructureTree() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4417-001031.pdf")) })) {
-      global::DripSharp.PdfCarton.Multipdf.Splitter splitter
-        = new global::DripSharp.PdfCarton.Multipdf.Splitter();
-      splitter.SetStartPage(1);
-      splitter.SetEndPage(2);
-      splitter.SetSplitAtPage(2);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
-        = splitter.Split(doc);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
-      using (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0)) {
-        global::DripSharp.Testing.JavaAssertions.Equal(2, dstDoc.GetNumberOfPages(), null);
-        this.checkForPageOrphans(dstDoc);
-        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
-          = dstDoc.GetDocumentCatalog().GetStructureTreeRoot();
-        global::DripSharp.Testing.JavaAssertions.Equal(126,
-          global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getIDTreeAsMap(structureTreeRoot.GetIDTree())),
-          null);
-        global::DripSharp.Testing.JavaAssertions.Equal(2,
-          global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot.GetParentTree())),
-          null);
-        global::DripSharp.Testing.JavaAssertions.Equal(6,
-          global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot.GetRoleMap()), null);
+  internal virtual void testSplitWithStructureTree() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-4417-001031.pdf")) });
+      global::System.Exception __dripsharpPrimary_1201_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Multipdf.Splitter splitter
+          = new global::DripSharp.PdfCarton.Multipdf.Splitter();
+        splitter.SetStartPage(1);
+        splitter.SetEndPage(2);
+        splitter.SetSplitAtPage(2);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
+          = splitter.Split(doc);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null); {
+          global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
+            = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0);
+          global::System.Exception __dripsharpPrimary_1209_29_0 = null!;
+          try {
+            global::DripSharp.Testing.JavaAssertions.Equal(2, dstDoc.GetNumberOfPages(), null);
+            this.checkForPageOrphans(dstDoc);
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
+              = dstDoc.GetDocumentCatalog().GetStructureTreeRoot();
+            global::DripSharp.Testing.JavaAssertions.Equal(126,
+              global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getIDTreeAsMap(structureTreeRoot.GetIDTree())),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Equal(2,
+              global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot.GetParentTree())),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Equal(6,
+              global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot.GetRoleMap()), null);
+          } catch (global::System.Exception __dripsharpCaught_1209_29_0) {
+            __dripsharpPrimary_1209_29_0 = __dripsharpCaught_1209_29_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(dstDoc,
+              __dripsharpPrimary_1209_29_0);
+          }
+        }
+      } catch (global::System.Exception __dripsharpCaught_1201_25_0) {
+        __dripsharpPrimary_1201_25_0 = __dripsharpCaught_1201_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_1201_25_0);
       }
     }
   }
 
-  internal virtual void testSplitWithStructureTreeAndDestinations() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5762-722238.pdf")) })) {
-      global::DripSharp.PdfCarton.Multipdf.Splitter splitter
-        = new global::DripSharp.PdfCarton.Multipdf.Splitter();
-      splitter.SetStartPage(1);
-      splitter.SetEndPage(2);
-      splitter.SetSplitAtPage(2);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
-        = splitter.Split(doc);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
-      using (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0)) {
-        global::DripSharp.Testing.JavaAssertions.Equal(2, dstDoc.GetNumberOfPages(), null);
-        this.checkForPageOrphans(dstDoc);
-        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
-          = dstDoc.GetDocumentCatalog().GetStructureTreeRoot();
-        global::DripSharp.Testing.JavaAssertions.Equal(7,
-          global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot.GetParentTree())),
+  internal virtual void testSplitWithStructureTreeAndDestinations() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5762-722238.pdf")) });
+      global::System.Exception __dripsharpPrimary_1226_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Multipdf.Splitter splitter
+          = new global::DripSharp.PdfCarton.Multipdf.Splitter();
+        splitter.SetStartPage(1);
+        splitter.SetEndPage(2);
+        splitter.SetSplitAtPage(2);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
+          = splitter.Split(doc);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null); {
+          global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
+            = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0);
+          global::System.Exception __dripsharpPrimary_1234_29_0 = null!;
+          try {
+            global::DripSharp.Testing.JavaAssertions.Equal(2, dstDoc.GetNumberOfPages(), null);
+            this.checkForPageOrphans(dstDoc);
+            global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot
+              = dstDoc.GetDocumentCatalog().GetStructureTreeRoot();
+            global::DripSharp.Testing.JavaAssertions.Equal(7,
+              global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot.GetParentTree())),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Equal(4,
+              global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot.GetRoleMap()), null);
+            global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations
+              = dstDoc.GetPage(0).GetAnnotations();
+            global::DripSharp.Testing.JavaAssertions.Equal(5,
+              global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link1
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              0)!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link2
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              1)!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link3
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              2)!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link4
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              3)!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link5
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              4)!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd1
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link1.GetAction()!)).GetDestination()!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd2
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link2.GetAction()!)).GetDestination()!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd3
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link3.GetAction()!)).GetDestination()!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd4
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link4.GetAction()!)).GetDestination()!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd5
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link5.GetAction()!)).GetDestination()!);
+            global::DripSharp.PdfCarton.Pdmodel.PDPageTree pageTree = dstDoc.GetPages();
+            global::DripSharp.Testing.JavaAssertions.Equal(0, pageTree.IndexOf(pd1.GetPage()),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Equal(1, pageTree.IndexOf(pd2.GetPage()),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Null(pd3.GetPage(), null);
+            global::DripSharp.Testing.JavaAssertions.Null(pd4.GetPage(), null);
+            global::DripSharp.Testing.JavaAssertions.Null(pd5.GetPage(), null);
+          } catch (global::System.Exception __dripsharpCaught_1234_29_0) {
+            __dripsharpPrimary_1234_29_0 = __dripsharpCaught_1234_29_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(dstDoc,
+              __dripsharpPrimary_1234_29_0);
+          }
+        }
+      } catch (global::System.Exception __dripsharpCaught_1226_25_0) {
+        __dripsharpPrimary_1226_25_0 = __dripsharpCaught_1226_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_1226_25_0);
+      }
+    }
+  }
+
+  internal virtual void testSplitWithStructureTreeAndDestinationsAndRemovedAnnotations() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5762-722238.pdf")) });
+      global::System.Exception __dripsharpPrimary_1281_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Multipdf.Splitter splitter
+          = new global::DripSharp.PdfCarton.Multipdf.Splitter();
+        foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page in doc.GetPages()) {
+          page.SetAnnotations(global::System.Array.Empty<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation>());
+        }
+        splitter.SetStartPage(1);
+        splitter.SetEndPage(2);
+        splitter.SetSplitAtPage(2);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
+          = splitter.Split(doc);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null); {
+          global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
+            = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0);
+          global::System.Exception __dripsharpPrimary_1293_29_0 = null!;
+          try {
+            global::DripSharp.Testing.JavaAssertions.Equal(2, dstDoc.GetNumberOfPages(), null);
+            this.checkForPageOrphans(dstDoc);
+          } catch (global::System.Exception __dripsharpCaught_1293_29_0) {
+            __dripsharpPrimary_1293_29_0 = __dripsharpCaught_1293_29_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(dstDoc,
+              __dripsharpPrimary_1293_29_0);
+          }
+        }
+      } catch (global::System.Exception __dripsharpCaught_1281_25_0) {
+        __dripsharpPrimary_1281_25_0 = __dripsharpCaught_1281_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_1281_25_0);
+      }
+    }
+  }
+
+  internal virtual void testSinglePageSplit() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5792-240045.pdf")) });
+      global::System.Exception __dripsharpPrimary_1310_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Multipdf.Splitter splitter
+          = new global::DripSharp.PdfCarton.Multipdf.Splitter();
+        splitter.SetSplitAtPage(1);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
+          = splitter.Split(doc);
+        global::DripSharp.Testing.JavaAssertions.Equal(6,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
+        foreach (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc__1316_29 in splitResult) {
+          global::DripSharp.Testing.JavaAssertions.Equal(1, dstDoc__1316_29.GetNumberOfPages(),
+            null);
+          this.checkForPageOrphans(dstDoc__1316_29);
+          foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation ann in dstDoc__1316_29.GetPage(0).GetAnnotations()) {
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(ann!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo action
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link.GetAction()!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination destination
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(action.GetDestination()!);
+            global::DripSharp.Testing.JavaAssertions.Null(destination.GetPage(), null);
+          }
+        }
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot1
+          = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult,
+          0).GetDocumentCatalog().GetStructureTreeRoot();
+        global::DripSharp.Testing.JavaAssertions.Equal(6,
+          global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot1.GetParentTree())),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot1.GetRoleMap()), null);
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot2
+          = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult,
+          1).GetDocumentCatalog().GetStructureTreeRoot();
+        global::DripSharp.Testing.JavaAssertions.Equal(6,
+          global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot2.GetParentTree())),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot2.GetRoleMap()), null);
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot3
+          = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult,
+          2).GetDocumentCatalog().GetStructureTreeRoot();
+        global::DripSharp.Testing.JavaAssertions.Equal(6,
+          global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot3.GetParentTree())),
           null);
         global::DripSharp.Testing.JavaAssertions.Equal(4,
-          global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot.GetRoleMap()), null);
-        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations
-          = dstDoc.GetPage(0).GetAnnotations();
+          global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot3.GetRoleMap()), null);
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot4
+          = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult,
+          3).GetDocumentCatalog().GetStructureTreeRoot();
         global::DripSharp.Testing.JavaAssertions.Equal(5,
-          global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link1
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-          0)!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link2
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-          1)!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link3
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-          2)!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link4
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-          3)!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link5
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-          4)!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd1
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link1.GetAction()!)).GetDestination()!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd2
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link2.GetAction()!)).GetDestination()!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd3
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link3.GetAction()!)).GetDestination()!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd4
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link4.GetAction()!)).GetDestination()!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd5
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link5.GetAction()!)).GetDestination()!);
-        global::DripSharp.PdfCarton.Pdmodel.PDPageTree pageTree = dstDoc.GetPages();
-        global::DripSharp.Testing.JavaAssertions.Equal(0, pageTree.IndexOf(pd1.GetPage()), null);
-        global::DripSharp.Testing.JavaAssertions.Equal(1, pageTree.IndexOf(pd2.GetPage()), null);
-        global::DripSharp.Testing.JavaAssertions.Null(pd3.GetPage(), null);
-        global::DripSharp.Testing.JavaAssertions.Null(pd4.GetPage(), null);
-        global::DripSharp.Testing.JavaAssertions.Null(pd5.GetPage(), null);
-      }
-    }
-  }
-
-  internal virtual void testSplitWithStructureTreeAndDestinationsAndRemovedAnnotations() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5762-722238.pdf")) })) {
-      global::DripSharp.PdfCarton.Multipdf.Splitter splitter
-        = new global::DripSharp.PdfCarton.Multipdf.Splitter();
-      foreach (global::DripSharp.PdfCarton.Pdmodel.PDPage page in doc.GetPages()) {
-        page.SetAnnotations(global::System.Array.Empty<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation>());
-      }
-      splitter.SetStartPage(1);
-      splitter.SetEndPage(2);
-      splitter.SetSplitAtPage(2);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
-        = splitter.Split(doc);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
-      using (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0)) {
-        global::DripSharp.Testing.JavaAssertions.Equal(2, dstDoc.GetNumberOfPages(), null);
-        this.checkForPageOrphans(dstDoc);
-      }
-    }
-  }
-
-  internal virtual void testSinglePageSplit() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5792-240045.pdf")) })) {
-      global::DripSharp.PdfCarton.Multipdf.Splitter splitter
-        = new global::DripSharp.PdfCarton.Multipdf.Splitter();
-      splitter.SetSplitAtPage(1);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
-        = splitter.Split(doc);
-      global::DripSharp.Testing.JavaAssertions.Equal(6,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
-      foreach (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc__1316_29 in splitResult) {
-        global::DripSharp.Testing.JavaAssertions.Equal(1, dstDoc__1316_29.GetNumberOfPages(), null);
-        this.checkForPageOrphans(dstDoc__1316_29);
-        foreach (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation ann in dstDoc__1316_29.GetPage(0).GetAnnotations()) {
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link
-            = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(ann!);
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo action
-            = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link.GetAction()!);
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination destination
-            = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(action.GetDestination()!);
-          global::DripSharp.Testing.JavaAssertions.Null(destination.GetPage(), null);
+          global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot4.GetParentTree())),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(4,
+          global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot4.GetRoleMap()), null);
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot5
+          = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult,
+          4).GetDocumentCatalog().GetStructureTreeRoot();
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot5.GetParentTree())),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(6,
+          global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot5.GetRoleMap()), null);
+        global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot6
+          = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult,
+          5).GetDocumentCatalog().GetStructureTreeRoot();
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot6.GetParentTree())),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(7,
+          global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot6.GetRoleMap()), null);
+        foreach (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc__1346_29 in splitResult) {
+          dstDoc__1346_29.Dispose();
         }
-      }
-      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot1
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult,
-        0).GetDocumentCatalog().GetStructureTreeRoot();
-      global::DripSharp.Testing.JavaAssertions.Equal(6,
-        global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot1.GetParentTree())),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(3,
-        global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot1.GetRoleMap()), null);
-      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot2
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult,
-        1).GetDocumentCatalog().GetStructureTreeRoot();
-      global::DripSharp.Testing.JavaAssertions.Equal(6,
-        global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot2.GetParentTree())),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(3,
-        global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot2.GetRoleMap()), null);
-      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot3
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult,
-        2).GetDocumentCatalog().GetStructureTreeRoot();
-      global::DripSharp.Testing.JavaAssertions.Equal(6,
-        global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot3.GetParentTree())),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(4,
-        global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot3.GetRoleMap()), null);
-      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot4
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult,
-        3).GetDocumentCatalog().GetStructureTreeRoot();
-      global::DripSharp.Testing.JavaAssertions.Equal(5,
-        global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot4.GetParentTree())),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(4,
-        global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot4.GetRoleMap()), null);
-      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot5
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult,
-        4).GetDocumentCatalog().GetStructureTreeRoot();
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot5.GetParentTree())),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(6,
-        global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot5.GetRoleMap()), null);
-      global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Logicalstructure.PDStructureTreeRoot structureTreeRoot6
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult,
-        5).GetDocumentCatalog().GetStructureTreeRoot();
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.MapCount(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility.getNumberTreeAsMap(structureTreeRoot6.GetParentTree())),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(7,
-        global::DripSharp.Runtime.JavaCompat.MapCount(structureTreeRoot6.GetRoleMap()), null);
-      foreach (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc__1346_29 in splitResult) {
-        dstDoc__1346_29.Dispose();
+      } catch (global::System.Exception __dripsharpCaught_1310_25_0) {
+        __dripsharpPrimary_1310_25_0 = __dripsharpCaught_1310_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_1310_25_0);
       }
     }
   }
 
-  internal virtual void testSplitWithPopupAnnotations() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5809-509329.pdf")) })) {
-      global::DripSharp.PdfCarton.Multipdf.Splitter splitter
-        = new global::DripSharp.PdfCarton.Multipdf.Splitter();
-      splitter.SetStartPage(3);
-      splitter.SetEndPage(3);
-      splitter.SetSplitAtPage(1);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
-        = splitter.Split(doc);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations;
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText annotationText3;
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup annotationPopup4;
-      using (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0)) {
-        this.checkForPageOrphans(dstDoc);
-        global::DripSharp.Testing.JavaAssertions.Equal(1, dstDoc.GetNumberOfPages(), null);
-        annotations = dstDoc.GetPage(0).GetAnnotations();
+  internal virtual void testSplitWithPopupAnnotations() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5809-509329.pdf")) });
+      global::System.Exception __dripsharpPrimary_1356_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Multipdf.Splitter splitter
+          = new global::DripSharp.PdfCarton.Multipdf.Splitter();
+        splitter.SetStartPage(3);
+        splitter.SetEndPage(3);
+        splitter.SetSplitAtPage(1);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
+          = splitter.Split(doc);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations;
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText annotationText3;
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup annotationPopup4;
+        {
+          global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
+            = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0);
+          global::System.Exception __dripsharpPrimary_1367_29_0 = null!;
+          try {
+            this.checkForPageOrphans(dstDoc);
+            global::DripSharp.Testing.JavaAssertions.Equal(1, dstDoc.GetNumberOfPages(), null);
+            annotations = dstDoc.GetPage(0).GetAnnotations();
+            global::DripSharp.Testing.JavaAssertions.Equal(5,
+              global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
+            annotationText3
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              3)!);
+            annotationPopup4
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              4)!);
+            global::DripSharp.Testing.JavaAssertions.Equal(annotationText3.GetPopup(),
+              annotationPopup4, null);
+            global::DripSharp.Testing.JavaAssertions.Equal(annotationPopup4.GetParent(),
+              annotationText3, null);
+            global::DripSharp.Testing.JavaAssertions.Equal(annotationText3.GetPage(),
+              dstDoc.GetPage(0), null);
+          } catch (global::System.Exception __dripsharpCaught_1367_29_0) {
+            __dripsharpPrimary_1367_29_0 = __dripsharpCaught_1367_29_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(dstDoc,
+              __dripsharpPrimary_1367_29_0);
+          }
+        }
+        annotations = doc.GetPage(2).GetAnnotations();
         global::DripSharp.Testing.JavaAssertions.Equal(5,
           global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
         annotationText3
@@ -1537,196 +1787,252 @@ public class PDFMergerUtilityTest {
           null);
         global::DripSharp.Testing.JavaAssertions.Equal(annotationPopup4.GetParent(),
           annotationText3, null);
-        global::DripSharp.Testing.JavaAssertions.Equal(annotationText3.GetPage(), dstDoc.GetPage(0),
+        global::DripSharp.Testing.JavaAssertions.Equal(annotationText3.GetPage(), doc.GetPage(2),
           null);
+      } catch (global::System.Exception __dripsharpCaught_1356_25_0) {
+        __dripsharpPrimary_1356_25_0 = __dripsharpCaught_1356_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_1356_25_0);
       }
-      annotations = doc.GetPage(2).GetAnnotations();
-      global::DripSharp.Testing.JavaAssertions.Equal(5,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
-      annotationText3
-        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-        3)!);
-      annotationPopup4
-        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationPopup)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-        4)!);
-      global::DripSharp.Testing.JavaAssertions.Equal(annotationText3.GetPopup(), annotationPopup4,
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(annotationPopup4.GetParent(), annotationText3,
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(annotationText3.GetPage(), doc.GetPage(2),
-        null);
     }
   }
 
-  internal virtual void testSplitWithBrokenDestination() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5811-362972.pdf")) })) {
-      global::DripSharp.PdfCarton.Multipdf.Splitter splitter
-        = new global::DripSharp.PdfCarton.Multipdf.Splitter();
-      splitter.SetStartPage(2);
-      splitter.SetEndPage(2);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
-        = splitter.Split(doc);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations;
-      using (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0)) {
-        this.checkForPageOrphans(dstDoc);
-        global::DripSharp.Testing.JavaAssertions.Equal(1, dstDoc.GetNumberOfPages(), null);
-        annotations = dstDoc.GetPage(0).GetAnnotations();
+  internal virtual void testSplitWithBrokenDestination() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5811-362972.pdf")) });
+      global::System.Exception __dripsharpPrimary_1393_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Multipdf.Splitter splitter
+          = new global::DripSharp.PdfCarton.Multipdf.Splitter();
+        splitter.SetStartPage(2);
+        splitter.SetEndPage(2);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
+          = splitter.Split(doc);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations;
+        {
+          global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
+            = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0);
+          global::System.Exception __dripsharpPrimary_1401_29_0 = null!;
+          try {
+            this.checkForPageOrphans(dstDoc);
+            global::DripSharp.Testing.JavaAssertions.Equal(1, dstDoc.GetNumberOfPages(), null);
+            annotations = dstDoc.GetPage(0).GetAnnotations();
+            global::DripSharp.Testing.JavaAssertions.Equal(1,
+              global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link__1407_34
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              0)!);
+            global::DripSharp.Testing.JavaAssertions.Null(link__1407_34.GetDestination(), null);
+          } catch (global::System.Exception __dripsharpCaught_1401_29_0) {
+            __dripsharpPrimary_1401_29_0 = __dripsharpCaught_1401_29_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(dstDoc,
+              __dripsharpPrimary_1401_29_0);
+          }
+        }
+        annotations = doc.GetPage(1).GetAnnotations();
         global::DripSharp.Testing.JavaAssertions.Equal(1,
           global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link__1407_34
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link__1413_30
           = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
           0)!);
-        global::DripSharp.Testing.JavaAssertions.Null(link__1407_34.GetDestination(), null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
+          => { link__1413_30.GetDestination(); }, null);
+      } catch (global::System.Exception __dripsharpCaught_1393_25_0) {
+        __dripsharpPrimary_1393_25_0 = __dripsharpCaught_1393_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_1393_25_0);
       }
-      annotations = doc.GetPage(1).GetAnnotations();
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link__1413_30
-        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-        0)!);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
-        => { link__1413_30.GetDestination(); }, null);
     }
   }
 
-  internal virtual void testSplitWithNamedDestinations() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5840-410609.pdf")) })) {
-      global::DripSharp.PdfCarton.Multipdf.Splitter splitter
-        = new global::DripSharp.PdfCarton.Multipdf.Splitter();
-      splitter.SetSplitAtPage(6);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
-        = splitter.Split(doc);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations;
-      using (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0)) {
-        this.checkForPageOrphans(dstDoc);
-        global::DripSharp.Testing.JavaAssertions.Equal(6, dstDoc.GetNumberOfPages(), null);
-        annotations = dstDoc.GetPage(0).GetAnnotations();
+  internal virtual void testSplitWithNamedDestinations() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-5840-410609.pdf")) });
+      global::System.Exception __dripsharpPrimary_1421_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Multipdf.Splitter splitter
+          = new global::DripSharp.PdfCarton.Multipdf.Splitter();
+        splitter.SetSplitAtPage(6);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
+          = splitter.Split(doc);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations;
+        {
+          global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
+            = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0);
+          global::System.Exception __dripsharpPrimary_1428_29_0 = null!;
+          try {
+            this.checkForPageOrphans(dstDoc);
+            global::DripSharp.Testing.JavaAssertions.Equal(6, dstDoc.GetNumberOfPages(), null);
+            annotations = dstDoc.GetPage(0).GetAnnotations();
+            global::DripSharp.Testing.JavaAssertions.Equal(5,
+              global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link1
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              0)!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link2
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              1)!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link3
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              2)!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link4
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              3)!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link5
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              4)!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd1
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link1.GetAction()!)).GetDestination()!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd2
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link2.GetAction()!)).GetDestination()!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd3
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link3.GetAction()!)).GetDestination()!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd4
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link4.GetAction()!)).GetDestination()!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd5
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link5.GetAction()!)).GetDestination()!);
+            global::DripSharp.PdfCarton.Pdmodel.PDPageTree pageTree = dstDoc.GetPages();
+            global::DripSharp.Testing.JavaAssertions.Equal(0, pageTree.IndexOf(pd1.GetPage()),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Equal(1, pageTree.IndexOf(pd2.GetPage()),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Equal(3, pageTree.IndexOf(pd3.GetPage()),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Equal(3, pageTree.IndexOf(pd4.GetPage()),
+              null);
+            global::DripSharp.Testing.JavaAssertions.Equal(5, pageTree.IndexOf(pd5.GetPage()),
+              null);
+            global::DripSharp.Testing.JavaAssertions.NotNull(dstDoc.GetDocumentCatalog().GetMetadata(),
+              null);
+            global::DripSharp.Runtime.JavaByteArrayOutputStream baos
+              = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
+            dstDoc.Save(baos);
+            global::DripSharp.PdfCarton.Pdmodel.PDDocument reloadedDoc
+              = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos));
+            global::DripSharp.Testing.JavaAssertions.NotNull(reloadedDoc.GetDocumentCatalog().GetMetadata(),
+              null);
+            reloadedDoc.Dispose();
+          } catch (global::System.Exception __dripsharpCaught_1428_29_0) {
+            __dripsharpPrimary_1428_29_0 = __dripsharpCaught_1428_29_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(dstDoc,
+              __dripsharpPrimary_1428_29_0);
+          }
+        }
+        annotations = doc.GetPage(0).GetAnnotations();
         global::DripSharp.Testing.JavaAssertions.Equal(5,
           global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link1
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link
           = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
           0)!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link2
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-          1)!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link3
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-          2)!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link4
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-          3)!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link5
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-          4)!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd1
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link1.GetAction()!)).GetDestination()!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd2
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link2.GetAction()!)).GetDestination()!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd3
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link3.GetAction()!)).GetDestination()!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd4
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link4.GetAction()!)).GetDestination()!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination pd5
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDPageDestination)(((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link5.GetAction()!)).GetDestination()!);
-        global::DripSharp.PdfCarton.Pdmodel.PDPageTree pageTree = dstDoc.GetPages();
-        global::DripSharp.Testing.JavaAssertions.Equal(0, pageTree.IndexOf(pd1.GetPage()), null);
-        global::DripSharp.Testing.JavaAssertions.Equal(1, pageTree.IndexOf(pd2.GetPage()), null);
-        global::DripSharp.Testing.JavaAssertions.Equal(3, pageTree.IndexOf(pd3.GetPage()), null);
-        global::DripSharp.Testing.JavaAssertions.Equal(3, pageTree.IndexOf(pd4.GetPage()), null);
-        global::DripSharp.Testing.JavaAssertions.Equal(5, pageTree.IndexOf(pd5.GetPage()), null);
-        global::DripSharp.Testing.JavaAssertions.NotNull(dstDoc.GetDocumentCatalog().GetMetadata(),
+        global::DripSharp.Testing.JavaAssertions.True((((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link.GetAction()!)).GetDestination() is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDNamedDestination),
           null);
-        global::DripSharp.Runtime.JavaByteArrayOutputStream baos
-          = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-        dstDoc.Save(baos);
-        global::DripSharp.PdfCarton.Pdmodel.PDDocument reloadedDoc
-          = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos));
-        global::DripSharp.Testing.JavaAssertions.NotNull(reloadedDoc.GetDocumentCatalog().GetMetadata(),
-          null);
-        reloadedDoc.Dispose();
+      } catch (global::System.Exception __dripsharpCaught_1421_25_0) {
+        __dripsharpPrimary_1421_25_0 = __dripsharpCaught_1421_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_1421_25_0);
       }
-      annotations = doc.GetPage(0).GetAnnotations();
-      global::DripSharp.Testing.JavaAssertions.Equal(5,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink link
-        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-        0)!);
-      global::DripSharp.Testing.JavaAssertions.True((((global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDActionGoTo)(link.GetAction()!)).GetDestination() is global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDNamedDestination),
-        null);
     }
   }
 
-  internal virtual void testSplitWithPgEntryAtTheTop() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6009.pdf")) })) {
-      global::DripSharp.PdfCarton.Multipdf.Splitter splitter
-        = new global::DripSharp.PdfCarton.Multipdf.Splitter();
-      splitter.SetSplitAtPage(1);
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
-        = splitter.Split(doc);
-      global::DripSharp.Testing.JavaAssertions.Equal(3,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
-      foreach (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc in splitResult) {
-        global::DripSharp.Testing.JavaAssertions.Equal(1, dstDoc.GetNumberOfPages(), null);
-        this.checkWithNumberTree(dstDoc);
-        this.checkForPageOrphans(dstDoc);
+  internal virtual void testSplitWithPgEntryAtTheTop() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6009.pdf")) });
+      global::System.Exception __dripsharpPrimary_1483_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Multipdf.Splitter splitter
+          = new global::DripSharp.PdfCarton.Multipdf.Splitter();
+        splitter.SetSplitAtPage(1);
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
+          = splitter.Split(doc);
+        global::DripSharp.Testing.JavaAssertions.Equal(3,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
+        foreach (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc in splitResult) {
+          global::DripSharp.Testing.JavaAssertions.Equal(1, dstDoc.GetNumberOfPages(), null);
+          this.checkWithNumberTree(dstDoc);
+          this.checkForPageOrphans(dstDoc);
+        }
+        global::DripSharp.Runtime.JavaCompat.ForEach(splitResult,
+          global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly);
+      } catch (global::System.Exception __dripsharpCaught_1483_25_0) {
+        __dripsharpPrimary_1483_25_0 = __dripsharpCaught_1483_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_1483_25_0);
       }
-      global::DripSharp.Runtime.JavaCompat.ForEach(splitResult,
-        global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly);
     }
   }
 
-  internal virtual void testSplitWithOrphanPopupAnnotation() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBOX-6018-099267-p9-OrphanPopups.pdf")) })) {
-      global::DripSharp.PdfCarton.Multipdf.Splitter splitter
-        = new global::DripSharp.PdfCarton.Multipdf.Splitter();
-      global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
-        = splitter.Split(doc);
-      global::DripSharp.Testing.JavaAssertions.Equal(1,
-        global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null);
-      using (global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
-        = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0)) {
-        global::DripSharp.Testing.JavaAssertions.Equal(1, dstDoc.GetNumberOfPages(), null);
-        global::DripSharp.PdfCarton.Pdmodel.PDPage page = dstDoc.GetPage(0);
-        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations
-          = page.GetAnnotations();
-        global::DripSharp.Testing.JavaAssertions.Equal(2,
-          global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText ann0
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-          0)!);
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText ann1
-          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
-          1)!);
-        global::DripSharp.Testing.JavaAssertions.Equal(page, ann0.GetPage(), null);
-        global::DripSharp.Testing.JavaAssertions.Equal(page, ann1.GetPage(), null);
-        global::DripSharp.Testing.JavaAssertions.Equal(ann0, ann0.GetPopup().GetParent(), null);
-        global::DripSharp.Testing.JavaAssertions.Equal(ann1, ann1.GetPopup().GetParent(), null);
+  internal virtual void testSplitWithOrphanPopupAnnotation() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.SRCDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "PDFBOX-6018-099267-p9-OrphanPopups.pdf")) });
+      global::System.Exception __dripsharpPrimary_1509_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Multipdf.Splitter splitter
+          = new global::DripSharp.PdfCarton.Multipdf.Splitter();
+        global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.PDDocument> splitResult
+          = splitter.Split(doc);
+        global::DripSharp.Testing.JavaAssertions.Equal(1,
+          global::DripSharp.Runtime.JavaCompat.CollectionCount(splitResult), null); {
+          global::DripSharp.PdfCarton.Pdmodel.PDDocument dstDoc
+            = global::DripSharp.Runtime.JavaCompat.ListGet(splitResult, 0);
+          global::System.Exception __dripsharpPrimary_1514_29_0 = null!;
+          try {
+            global::DripSharp.Testing.JavaAssertions.Equal(1, dstDoc.GetNumberOfPages(), null);
+            global::DripSharp.PdfCarton.Pdmodel.PDPage page = dstDoc.GetPage(0);
+            global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation> annotations
+              = page.GetAnnotations();
+            global::DripSharp.Testing.JavaAssertions.Equal(2,
+              global::DripSharp.Runtime.JavaCompat.CollectionCount(annotations), null);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText ann0
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              0)!);
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText ann1
+              = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationText)(global::DripSharp.Runtime.JavaCompat.ListGet(annotations,
+              1)!);
+            global::DripSharp.Testing.JavaAssertions.Equal(page, ann0.GetPage(), null);
+            global::DripSharp.Testing.JavaAssertions.Equal(page, ann1.GetPage(), null);
+            global::DripSharp.Testing.JavaAssertions.Equal(ann0, ann0.GetPopup().GetParent(), null);
+            global::DripSharp.Testing.JavaAssertions.Equal(ann1, ann1.GetPopup().GetParent(), null);
+          } catch (global::System.Exception __dripsharpCaught_1514_29_0) {
+            __dripsharpPrimary_1514_29_0 = __dripsharpCaught_1514_29_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(dstDoc,
+              __dripsharpPrimary_1514_29_0);
+          }
+        }
+      } catch (global::System.Exception __dripsharpCaught_1509_25_0) {
+        __dripsharpPrimary_1509_25_0 = __dripsharpCaught_1509_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_1509_25_0);
       }
     }
   }
@@ -1736,26 +2042,35 @@ public class PDFMergerUtilityTest {
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility();
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-5939-google-docs-1.pdf")) });
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         "PDFBOX-5939-google-docs-1.pdf")) });
     pdfMergerUtility.SetDestinationFileName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR,
       "PDFBOX-5939-google-docs-result.pdf")));
     pdfMergerUtility.MergeDocuments(global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedDoc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "PDFBOX-5939-google-docs-result.pdf")) })) {
-      global::DripSharp.Testing.JavaAssertions.Equal(2, mergedDoc.GetNumberOfPages(), null);
+    {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedDoc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "PDFBOX-5939-google-docs-result.pdf")) });
+      global::System.Exception __dripsharpPrimary_1545_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(2, mergedDoc.GetNumberOfPages(), null);
+      } catch (global::System.Exception __dripsharpCaught_1545_25_0) {
+        __dripsharpPrimary_1545_25_0 = __dripsharpCaught_1545_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(mergedDoc, __dripsharpPrimary_1545_25_0);
+      }
     }
   }
 
@@ -1764,33 +2079,42 @@ public class PDFMergerUtilityTest {
       = new global::DripSharp.PdfCarton.Multipdf.PDFMergerUtility();
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "ComSquare1.pdf")) });
     global::DripSharp.Runtime.JavaFileBridge.Call(pdfMergerUtility, "AddSource",
       new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETPDFDIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "Ghostscript1.pdf")) });
     pdfMergerUtility.SetDestinationFileName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR,
       "PDFBOX-515-result.pdf")));
     pdfMergerUtility.MergeDocuments(global::DripSharp.PdfCarton.IO.IOUtils.CreateMemoryOnlyStreamCache());
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedDoc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-515-result.pdf")) })) {
-      global::DripSharp.Testing.JavaAssertions.Equal(2, mergedDoc.GetNumberOfPages(), null);
-      global::DripSharp.PdfCarton.Cos.COSDictionary imageDict
-        = (global::DripSharp.PdfCarton.Cos.COSDictionary)(mergedDoc.GetDocumentInformation().GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "ImPDF"))).GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Images"))).GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Kids).GetObject(0)!);
-      global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject imageXObject
-        = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject.CreateXObject(imageDict,
-        new global::DripSharp.PdfCarton.Pdmodel.PDResources())!);
-      global::SkiaSharp.SKBitmap bim = imageXObject.GetImage();
-      global::DripSharp.Testing.JavaAssertions.Equal(909, bim.Width, null);
-      global::DripSharp.Testing.JavaAssertions.Equal(233, bim.Height, null);
+    {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument mergedDoc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.TARGETTESTDIR),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-515-result.pdf")) });
+      global::System.Exception __dripsharpPrimary_1568_25_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.Equal(2, mergedDoc.GetNumberOfPages(), null);
+        global::DripSharp.PdfCarton.Cos.COSDictionary imageDict
+          = (global::DripSharp.PdfCarton.Cos.COSDictionary)(mergedDoc.GetDocumentInformation().GetCOSObject().GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "ImPDF"))).GetCOSDictionary(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Images"))).GetCOSArray(global::DripSharp.PdfCarton.Cos.COSName.Kids).GetObject(0)!);
+        global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject imageXObject
+          = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject.CreateXObject(imageDict,
+          new global::DripSharp.PdfCarton.Pdmodel.PDResources())!);
+        global::SkiaSharp.SKBitmap bim = imageXObject.GetImage();
+        global::DripSharp.Testing.JavaAssertions.Equal(909, bim.Width, null);
+        global::DripSharp.Testing.JavaAssertions.Equal(233, bim.Height, null);
+      } catch (global::System.Exception __dripsharpCaught_1568_25_0) {
+        __dripsharpPrimary_1568_25_0 = __dripsharpCaught_1568_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(mergedDoc, __dripsharpPrimary_1568_25_0);
+      }
     }
   }
 
@@ -2094,10 +2418,17 @@ public class PDFMergerUtilityTest {
     }
   }
 
-  private static readonly bool __UpstreamBeforeAll = __RunUpstreamBeforeAll();
+  private static readonly bool __UpstreamBeforeAll;
 
   private static bool __RunUpstreamBeforeAll() {
     setUp();
     return true;
+  }
+
+  static PDFMergerUtilityTest() {
+    TARGETPDFDIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/pdfs"));
+    __UpstreamBeforeAll = __RunUpstreamBeforeAll();
   }
 }

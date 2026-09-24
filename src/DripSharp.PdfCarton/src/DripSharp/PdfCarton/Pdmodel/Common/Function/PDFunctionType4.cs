@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function;
 
 public class PDFunctionType4 : global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction {
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators OPERATORS
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators OPERATORS;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.InstructionSequence instructions
     = null!;
@@ -45,12 +44,17 @@ public class PDFunctionType4 : global::DripSharp.PdfCarton.Pdmodel.Common.Functi
         numberOfOutputValues), " values be returned."));
     }
     float[] outputValues = new float[numberOfOutputValues];
-    for (int i__94_18 = (numberOfOutputValues - 1); (i__94_18 >= 0); i__94_18--) {
+    for (int i__94_18 = unchecked((numberOfOutputValues - 1)); (i__94_18 >= 0); i__94_18--) {
       global::DripSharp.PdfCarton.Pdmodel.Common.PDRange range = this.GetRangeForOutput(i__94_18);
       outputValues[i__94_18] = context.PopReal();
       outputValues[i__94_18] = this.ClipToRange(outputValues[i__94_18], range.GetMin(),
         range.GetMax());
     }
     return outputValues;
+  }
+
+  static PDFunctionType4() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction).TypeHandle);
+    OPERATORS = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operators();
   }
 }

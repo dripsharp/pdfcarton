@@ -150,6 +150,10 @@ public class TestPreflightConfiguration {
   internal class MockProcess2
   : global::DripSharp.PdfCarton.Preflight.TestPreflightConfiguration.MockProcess {
     public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx) {}
+
+    static MockProcess2() {
+      global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.TestPreflightConfiguration.MockProcess).TypeHandle);
+    }
   }
 
   [Xunit.Fact]

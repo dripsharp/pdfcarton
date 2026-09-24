@@ -28,10 +28,8 @@ internal class ArithmeticOperators {
       global::System.IConvertible num2 = context.PopNumber();
       global::System.IConvertible num1 = context.PopNumber();
       if (((num1 is int) && (num2 is int))) {
-        long sum__62_22 = (global::System.Convert.ToInt64(num1,
-          global::System.Globalization.CultureInfo.InvariantCulture)
-          + global::System.Convert.ToInt64(num2,
-          global::System.Globalization.CultureInfo.InvariantCulture));
+        long sum__62_22 = unchecked((global::DripSharp.Runtime.JavaCompat.NumberLongValue(num1)
+          + global::DripSharp.Runtime.JavaCompat.NumberLongValue(num2)));
         if (((sum__62_22 < int.MinValue) || (sum__62_22 > int.MaxValue))) {
           context.GetStack().Push((float)sum__62_22);
         } else {
@@ -135,7 +133,7 @@ internal class ArithmeticOperators {
     public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
       int num2 = context.PopInt();
       int num1 = context.PopInt();
-      context.GetStack().Push((num1 / num2));
+      context.GetStack().Push(global::DripSharp.Runtime.JavaCompat.IntegralDivide(num1, num2));
     }
   }
 
@@ -159,7 +157,7 @@ internal class ArithmeticOperators {
     public virtual void Execute(global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ExecutionContext context) {
       int int2 = context.PopInt();
       int int1 = context.PopInt();
-      context.GetStack().Push((int1 % int2));
+      context.GetStack().Push(global::DripSharp.Runtime.JavaCompat.IntegralRemainder(int1, int2));
     }
   }
 
@@ -168,10 +166,8 @@ internal class ArithmeticOperators {
       global::System.IConvertible num2 = context.PopNumber();
       global::System.IConvertible num1 = context.PopNumber();
       if (((num1 is int) && (num2 is int))) {
-        long result__262_22 = (global::System.Convert.ToInt64(num1,
-          global::System.Globalization.CultureInfo.InvariantCulture)
-          * global::System.Convert.ToInt64(num2,
-          global::System.Globalization.CultureInfo.InvariantCulture));
+        long result__262_22 = unchecked((global::DripSharp.Runtime.JavaCompat.NumberLongValue(num1)
+          * global::DripSharp.Runtime.JavaCompat.NumberLongValue(num2)));
         if (((result__262_22 >= int.MinValue) && (result__262_22 <= int.MaxValue))) {
           context.GetStack().Push((int)result__262_22);
         } else {
@@ -196,7 +192,7 @@ internal class ArithmeticOperators {
           context.GetStack().Push(-(global::System.Convert.ToSingle(num,
             global::System.Globalization.CultureInfo.InvariantCulture)));
         } else {
-          context.GetStack().Push(-global::DripSharp.Runtime.JavaCompat.NumberIntValue(num));
+          context.GetStack().Push(unchecked(-global::DripSharp.Runtime.JavaCompat.NumberIntValue(num)));
         }
       } else {
         context.GetStack().Push(-(global::System.Convert.ToSingle(num,
@@ -242,10 +238,8 @@ internal class ArithmeticOperators {
       global::System.IConvertible num2 = context.PopNumber();
       global::System.IConvertible num1 = context.PopNumber();
       if (((num1 is int) && (num2 is int))) {
-        long result__367_22 = (global::System.Convert.ToInt64(num1,
-          global::System.Globalization.CultureInfo.InvariantCulture)
-          - global::System.Convert.ToInt64(num2,
-          global::System.Globalization.CultureInfo.InvariantCulture));
+        long result__367_22 = unchecked((global::DripSharp.Runtime.JavaCompat.NumberLongValue(num1)
+          - global::DripSharp.Runtime.JavaCompat.NumberLongValue(num2)));
         if (((result__367_22 < int.MinValue) || (result__367_22 > int.MaxValue))) {
           stack.Push((float)result__367_22);
         } else {
@@ -267,8 +261,8 @@ internal class ArithmeticOperators {
       if ((num is int)) {
         context.GetStack().Push(global::DripSharp.Runtime.JavaCompat.NumberIntValue(num));
       } else {
-        context.GetStack().Push((float)(int)(global::System.Convert.ToSingle(num,
-          global::System.Globalization.CultureInfo.InvariantCulture)));
+        context.GetStack().Push((float)(unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(global::System.Convert.ToSingle(num,
+          global::System.Globalization.CultureInfo.InvariantCulture))))));
       }
     }
   }

@@ -113,4 +113,8 @@ public abstract class AbstractStructuredType
     return this.GetMetadata().GetTypeMapping().CreateArrayProperty(this.GetNamespace(),
       this.GetPrefix(), propertyName, type);
   }
+
+  static AbstractStructuredType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractComplexProperty).TypeHandle);
+  }
 }

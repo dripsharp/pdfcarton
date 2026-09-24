@@ -103,30 +103,38 @@ public class PDChoiceTest {
       "target/pdfs/PDFBOX-6150.pdf"));
     if (!global::System.IO.File.Exists(pdfFile.FullName)) {
       return;
-    }
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { pdfFile })) {
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
-        = document.GetDocumentCatalog().GetAcroForm();
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDChoice field
-        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDChoice)(acroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "shipping_country"))!);
-      field.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "DE"));
-      global::DripSharp.Testing.JavaAssertions.Equal("DE",
-        global::DripSharp.Runtime.JavaCompat.ListGet(field.GetValue(), 0),
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "The fields value should be set to DE"));
-      global::System.Collections.Generic.IList<string> content
-        = global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.TestUtils.GetStringsFromStream(field);
-      bool hasContent
-        = global::DripSharp.Runtime.JavaCompat.Any(global::DripSharp.Runtime.JavaCompat.Stream(content),
-        "Deutschland".Equals);
-      global::DripSharp.Testing.JavaAssertions.True(hasContent,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "The content should contain the display value for DE which is Deutschland"));
-      document.Dispose();
+    } {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)pdfFile });
+      global::System.Exception __dripsharpPrimary_165_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm acroForm
+          = document.GetDocumentCatalog().GetAcroForm();
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDChoice field
+          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDChoice)(acroForm.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "shipping_country"))!);
+        field.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "DE"));
+        global::DripSharp.Testing.JavaAssertions.Equal("DE",
+          global::DripSharp.Runtime.JavaCompat.ListGet(field.GetValue(), 0),
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "The fields value should be set to DE"));
+        global::System.Collections.Generic.IList<string> content
+          = global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.TestUtils.GetStringsFromStream(field);
+        bool hasContent
+          = global::DripSharp.Runtime.JavaCompat.Any(global::DripSharp.Runtime.JavaCompat.Stream(content),
+          "Deutschland".Equals);
+        global::DripSharp.Testing.JavaAssertions.True(hasContent,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "The content should contain the display value for DE which is Deutschland"));
+        document.Dispose();
+      } catch (global::System.Exception __dripsharpCaught_165_25_0) {
+        __dripsharpPrimary_165_25_0 = __dripsharpCaught_165_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_165_25_0);
+      }
     }
   }
 

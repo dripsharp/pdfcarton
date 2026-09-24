@@ -5,21 +5,29 @@
 namespace DripSharp.PdfCarton.Xmp.Schema;
 
 public class TestExifXmp {
-  internal virtual void testNonStrict() {
-    using (global::System.IO.Stream @is
-      = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(((object)(this)).GetType(),
-      global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/validxmp/exif.xmp"))) {
-      global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser builder
-        = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
-      builder.SetStrictParsing(false);
-      global::DripSharp.PdfCarton.Xmp.XMPMetadata rxmp = builder.Parse(@is);
-      global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema schema
-        = (global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema)(rxmp.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema))!);
-      global::DripSharp.PdfCarton.Xmp.Type.TextType ss
-        = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(schema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
-        global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema.SpectralSensitivity))!);
-      global::DripSharp.Testing.JavaAssertions.NotNull(ss, null);
-      global::DripSharp.Testing.JavaAssertions.Equal("spectral sens value", ss.GetValue(), null);
+  internal virtual void testNonStrict() { {
+      global::System.IO.Stream @is
+        = global::DripSharp.PdfCarton.Tests.Support.ResourceStream(((object)(this)).GetType(),
+        global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox", "/validxmp/exif.xmp"));
+      global::System.Exception __dripsharpPrimary_45_26_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser builder
+          = new global::DripSharp.PdfCarton.Xmp.Xml.DomXmpParser();
+        builder.SetStrictParsing(false);
+        global::DripSharp.PdfCarton.Xmp.XMPMetadata rxmp = builder.Parse(@is);
+        global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema schema
+          = (global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema)(rxmp.GetSchema(typeof(global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema))!);
+        global::DripSharp.PdfCarton.Xmp.Type.TextType ss
+          = (global::DripSharp.PdfCarton.Xmp.Type.TextType)(schema.GetProperty(global::DripSharp.PdfCarton.Tests.Support.TestPath("xmpbox",
+          global::DripSharp.PdfCarton.Xmp.Schema.ExifSchema.SpectralSensitivity))!);
+        global::DripSharp.Testing.JavaAssertions.NotNull(ss, null);
+        global::DripSharp.Testing.JavaAssertions.Equal("spectral sens value", ss.GetValue(), null);
+      } catch (global::System.Exception __dripsharpCaught_45_26_0) {
+        __dripsharpPrimary_45_26_0 = __dripsharpCaught_45_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_45_26_0);
+      }
     }
   }
 

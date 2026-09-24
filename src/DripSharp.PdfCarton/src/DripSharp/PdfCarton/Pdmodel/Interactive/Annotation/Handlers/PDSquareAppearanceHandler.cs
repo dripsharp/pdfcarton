@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
 public class PDSquareAppearanceHandler
 : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDSquareAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
   : base(annotation) {
@@ -27,36 +26,46 @@ public class PDSquareAppearanceHandler
     float lineWidth = this.getLineWidth();
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquare annotation
       = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationSquare)(this.getAnnotation()!);
-    try {
-      using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
-        = this.getNormalAppearanceAsContentStream()) {
-        bool hasStroke = contentStream.SetStrokingColorOnDemand(this.getColor());
-        bool hasBackground
-          = contentStream.SetNonStrokingColorOnDemand(annotation.GetInteriorColor());
-        this.setOpacity(contentStream, annotation.GetConstantOpacity());
-        contentStream.SetBorderLine(lineWidth, annotation.GetBorderStyle(), annotation.GetBorder());
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary borderEffect
-          = annotation.GetBorderEffect();
-        if (((borderEffect != default!)
-          && global::DripSharp.Runtime.JavaCompat.Equals(borderEffect.GetStyle(),
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary.StyleCloudy))) {
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder cloudyBorder
-            = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder(contentStream,
-            (double)(borderEffect.GetIntensity()), (double)(lineWidth), this.getRectangle());
-          cloudyBorder.createCloudyRectangle(annotation.GetRectDifference());
-          annotation.SetRectangle(cloudyBorder.getRectangle());
-          annotation.SetRectDifference(cloudyBorder.getRectDifference());
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream
-            = annotation.GetNormalAppearanceStream();
-          appearanceStream.SetBBox(cloudyBorder.getBBox());
-          appearanceStream.SetMatrix(cloudyBorder.getMatrix());
-        } else {
-          global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle borderBox
-            = this.handleBorderBox(annotation, lineWidth);
-          contentStream.AddRect(borderBox.GetLowerLeftX(), borderBox.GetLowerLeftY(),
-            borderBox.GetWidth(), borderBox.GetHeight());
+    try { {
+        global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
+          = this.getNormalAppearanceAsContentStream();
+        global::System.Exception __dripsharpPrimary_60_40_0 = null!;
+        try {
+          bool hasStroke = contentStream.SetStrokingColorOnDemand(this.getColor());
+          bool hasBackground
+            = contentStream.SetNonStrokingColorOnDemand(annotation.GetInteriorColor());
+          this.setOpacity(contentStream, annotation.GetConstantOpacity());
+          contentStream.SetBorderLine(lineWidth, annotation.GetBorderStyle(),
+            annotation.GetBorder());
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary borderEffect
+            = annotation.GetBorderEffect();
+          if (((borderEffect != default!)
+            && global::DripSharp.Runtime.JavaCompat.Equals(borderEffect.GetStyle(),
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary.StyleCloudy))) {
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder cloudyBorder
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder(contentStream,
+              (double)(borderEffect.GetIntensity()), (double)(lineWidth), this.getRectangle());
+            cloudyBorder.createCloudyRectangle(annotation.GetRectDifference());
+            annotation.SetRectangle(cloudyBorder.getRectangle());
+            annotation.SetRectDifference(cloudyBorder.getRectDifference());
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream
+              = annotation.GetNormalAppearanceStream();
+            appearanceStream.SetBBox(cloudyBorder.getBBox());
+            appearanceStream.SetMatrix(cloudyBorder.getMatrix());
+          } else {
+            global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle borderBox
+              = this.handleBorderBox(annotation, lineWidth);
+            contentStream.AddRect(borderBox.GetLowerLeftX(), borderBox.GetLowerLeftY(),
+              borderBox.GetWidth(), borderBox.GetHeight());
+          }
+          contentStream.DrawShape(lineWidth, hasStroke, hasBackground);
+        } catch (global::System.Exception __dripsharpCaught_60_40_0) {
+          __dripsharpPrimary_60_40_0 = __dripsharpCaught_60_40_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream,
+            __dripsharpPrimary_60_40_0);
         }
-        contentStream.DrawShape(lineWidth, hasStroke, hasBackground);
       }
     } catch (global::System.IO.IOException e) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDSquareAppearanceHandler.LOG,
@@ -84,5 +93,10 @@ public class PDSquareAppearanceHandler
       }
     }
     return 1;
+  }
+
+  static PDSquareAppearanceHandler() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

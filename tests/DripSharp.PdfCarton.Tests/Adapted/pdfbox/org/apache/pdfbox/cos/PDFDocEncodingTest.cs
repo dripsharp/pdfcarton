@@ -5,10 +5,10 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public class PDFDocEncodingTest {
-  internal static readonly global::System.Collections.Generic.IList<string> deviations
-    = new global::System.Collections.Generic.List<string>();
+  internal static readonly global::System.Collections.Generic.IList<string> deviations;
 
-  static PDFDocEncodingTest() { {
+  static PDFDocEncodingTest() {
+    deviations = new global::System.Collections.Generic.List<string>(); {
       global::DripSharp.Runtime.JavaCompat.Add(global::DripSharp.PdfCarton.Cos.PDFDocEncodingTest.deviations,
         global::DripSharp.Runtime.JavaCompat.StringValueOf('\u02D8'));
       global::DripSharp.Runtime.JavaCompat.Add(global::DripSharp.PdfCarton.Cos.PDFDocEncodingTest.deviations,

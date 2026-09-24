@@ -10,11 +10,12 @@ namespace DripSharp.PdfCarton.Preflight.Annotation;
 
 public class LinkAnnotationValidator
 : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink PdLink
-    = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink PdLink;
 
   public LinkAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
     global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdLink = default!;
+
     this.PdLink
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLink(annotDictionary);
     this.PdAnnot = this.PdLink;
@@ -46,5 +47,9 @@ public class LinkAnnotationValidator
       return false;
     }
     return true;
+  }
+
+  static LinkAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator).TypeHandle);
   }
 }

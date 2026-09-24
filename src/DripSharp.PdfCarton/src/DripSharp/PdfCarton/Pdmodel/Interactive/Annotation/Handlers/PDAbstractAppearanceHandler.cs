@@ -17,17 +17,13 @@ public abstract class PDAbstractAppearanceHandler
 
   protected internal readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument Document = null!;
 
-  protected internal static readonly global::System.Collections.Generic.ISet<string> ShortStyles
-    = global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.createShortStyles();
+  protected internal static readonly global::System.Collections.Generic.ISet<string> ShortStyles;
 
-  internal static readonly double ARROW_ANGLE
-    = global::DripSharp.Runtime.JavaCompat.ToRadians((double)(30));
+  internal static readonly double ARROW_ANGLE;
 
-  protected internal static readonly global::System.Collections.Generic.ISet<string> InteriorColorStyles
-    = global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.createInteriorColorStyles();
+  protected internal static readonly global::System.Collections.Generic.ISet<string> InteriorColorStyles;
 
-  protected internal static readonly global::System.Collections.Generic.ISet<string> AngledStyles
-    = global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.createAngledStyles();
+  protected internal static readonly global::System.Collections.Generic.ISet<string> AngledStyles;
 
   public PDAbstractAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
   : this(annotation, (global::DripSharp.PdfCarton.Pdmodel.PDDocument)default!) {
@@ -146,8 +142,8 @@ public abstract class PDAbstractAppearanceHandler
     if ((opacity < 1)) {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState gs
         = new global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDExtendedGraphicsState();
-      gs.SetStrokingAlphaConstant(opacity);
-      gs.SetNonStrokingAlphaConstant(opacity);
+      gs.SetStrokingAlphaConstant((float?)(opacity));
+      gs.SetNonStrokingAlphaConstant((float?)(opacity));
       contentStream.SetGraphicsStateParameters(gs);
     }
   }
@@ -155,7 +151,7 @@ public abstract class PDAbstractAppearanceHandler
   internal virtual void drawStyle(string style,
     global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream cs, float x, float y, float width,
     bool hasStroke, bool hasBackground, bool ending) {
-    int sign = (ending ? -1 : 1);
+    int sign = (ending ? unchecked(-1) : 1);
     switch (style) {
       case var __case_306_18_0 when global::System.Object.Equals(__case_306_18_0,
           global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine.LeOpenArrow):
@@ -184,7 +180,7 @@ public abstract class PDAbstractAppearanceHandler
           global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine.LeROpenArrow):
       case var __case_324_18_0 when global::System.Object.Equals(__case_324_18_0,
           global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine.LeRClosedArrow):
-        this.drawArrow(cs, (x + (-sign * width)), y, ((-sign * width) * 9));
+        this.drawArrow(cs, (x + (unchecked(-sign) * width)), y, ((unchecked(-sign) * width) * 9));
         break;
       case var __case_327_18_0 when global::System.Object.Equals(__case_327_18_0,
           global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationLine.LeSlash):
@@ -350,6 +346,16 @@ public abstract class PDAbstractAppearanceHandler
       borderBox = this.getPaddedRectangle(borderBox, ((float)lineWidth / 2));
     }
     return borderBox;
+  }
+
+  static PDAbstractAppearanceHandler() {
+    ShortStyles
+      = global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.createShortStyles();
+    ARROW_ANGLE = global::DripSharp.Runtime.JavaCompat.ToRadians((double)(30));
+    InteriorColorStyles
+      = global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.createInteriorColorStyles();
+    AngledStyles
+      = global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler.createAngledStyles();
   }
 
   public virtual void GenerateAppearanceStreams() {

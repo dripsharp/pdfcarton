@@ -23,4 +23,8 @@ public class PDIntegerNameTreeNode
   protected internal override global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Cos.COSInteger> CreateChildNode(global::DripSharp.PdfCarton.Cos.COSDictionary dic) {
     return new global::DripSharp.PdfCarton.Pdmodel.Common.PDIntegerNameTreeNode(dic);
   }
+
+  static PDIntegerNameTreeNode() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDNameTreeNode<global::DripSharp.PdfCarton.Cos.COSInteger>).TypeHandle);
+  }
 }

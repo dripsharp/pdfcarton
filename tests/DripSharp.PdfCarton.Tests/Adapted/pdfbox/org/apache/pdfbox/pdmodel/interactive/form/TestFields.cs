@@ -8,119 +8,143 @@ public class TestFields {
   private const string PATH_OF_PDF
     = "src/test/resources/org/apache/pdfbox/pdmodel/interactive/form/AcroFormsBasicFields.pdf";
 
-  internal virtual void testFlags() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm form
-        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm(doc);
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField textBox
-        = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField(form);
-      global::DripSharp.Testing.JavaAssertions.False(textBox.IsComb(), null);
-      textBox.SetComb(true);
-      global::DripSharp.Testing.JavaAssertions.True(textBox.IsComb(), null);
-      textBox.SetComb(false);
-      global::DripSharp.Testing.JavaAssertions.False(textBox.IsComb(), null);
-      textBox.SetComb(true);
-      textBox.SetDoNotScroll(true);
-      global::DripSharp.Testing.JavaAssertions.True(textBox.IsComb(), null);
-      global::DripSharp.Testing.JavaAssertions.True(textBox.DoNotScroll(), null);
-      textBox.SetComb(false);
-      textBox.SetDoNotScroll(false);
-      global::DripSharp.Testing.JavaAssertions.False(textBox.IsComb(), null);
-      global::DripSharp.Testing.JavaAssertions.False(textBox.DoNotScroll(), null);
-      textBox.SetComb(false);
-      global::DripSharp.Testing.JavaAssertions.False(textBox.IsComb(), null);
-      textBox.SetComb(false);
-      global::DripSharp.Testing.JavaAssertions.False(textBox.IsComb(), null);
-      textBox.SetComb(true);
-      global::DripSharp.Testing.JavaAssertions.True(textBox.IsComb(), null);
-      textBox.SetComb(true);
-      global::DripSharp.Testing.JavaAssertions.True(textBox.IsComb(), null);
+  internal virtual void testFlags() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_55_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm form
+          = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm(doc);
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField textBox
+          = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField(form);
+        global::DripSharp.Testing.JavaAssertions.False(textBox.IsComb(), null);
+        textBox.SetComb(true);
+        global::DripSharp.Testing.JavaAssertions.True(textBox.IsComb(), null);
+        textBox.SetComb(false);
+        global::DripSharp.Testing.JavaAssertions.False(textBox.IsComb(), null);
+        textBox.SetComb(true);
+        textBox.SetDoNotScroll(true);
+        global::DripSharp.Testing.JavaAssertions.True(textBox.IsComb(), null);
+        global::DripSharp.Testing.JavaAssertions.True(textBox.DoNotScroll(), null);
+        textBox.SetComb(false);
+        textBox.SetDoNotScroll(false);
+        global::DripSharp.Testing.JavaAssertions.False(textBox.IsComb(), null);
+        global::DripSharp.Testing.JavaAssertions.False(textBox.DoNotScroll(), null);
+        textBox.SetComb(false);
+        global::DripSharp.Testing.JavaAssertions.False(textBox.IsComb(), null);
+        textBox.SetComb(false);
+        global::DripSharp.Testing.JavaAssertions.False(textBox.IsComb(), null);
+        textBox.SetComb(true);
+        global::DripSharp.Testing.JavaAssertions.True(textBox.IsComb(), null);
+        textBox.SetComb(true);
+        global::DripSharp.Testing.JavaAssertions.True(textBox.IsComb(), null);
+      } catch (global::System.Exception __dripsharpCaught_55_25_0) {
+        __dripsharpPrimary_55_25_0 = __dripsharpCaught_55_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_55_25_0);
+      }
     }
   }
 
-  internal virtual void testAcroFormsBasicFields() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.TestFields.PATH_OF_PDF)) })) {
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm form
-        = doc.GetDocumentCatalog().GetAcroForm();
-      global::DripSharp.Testing.JavaAssertions.NotNull(form, null);
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField textField
-        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(form.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "TextField"))!);
-      global::DripSharp.Testing.JavaAssertions.Null(textField.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.V),
-        null);
-      textField.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "field value"));
-      global::DripSharp.Testing.JavaAssertions.NotNull(textField.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.V),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal("field value", textField.GetValue(), null);
-      global::DripSharp.Testing.JavaAssertions.NotNull(textField.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.V),
-        null);
-      textField.SetValue((string)default!);
-      global::DripSharp.Testing.JavaAssertions.Null(textField.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.V),
-        null);
-      textField
-        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(form.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "TextField-DefaultValue"))!);
-      global::DripSharp.Testing.JavaAssertions.NotNull(textField, null);
-      global::DripSharp.Testing.JavaAssertions.Equal("DefaultValue", textField.GetDefaultValue(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(textField.GetDefaultValue(),
-        ((global::DripSharp.PdfCarton.Cos.COSString)(textField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Dv)!)).GetString(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal("/Helv 12 Tf 0 g",
-        textField.GetDefaultAppearance(), null);
-      textField
-        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(form.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "RichTextField-DefaultValue"))!);
-      global::DripSharp.Testing.JavaAssertions.NotNull(textField, null);
-      global::DripSharp.Testing.JavaAssertions.Equal("DefaultValue", textField.GetDefaultValue(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal(textField.GetDefaultValue(),
-        ((global::DripSharp.PdfCarton.Cos.COSString)(textField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Dv)!)).GetString(),
-        null);
-      global::DripSharp.Testing.JavaAssertions.Equal("DefaultValue", textField.GetValue(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("/Helv 12 Tf 0 g",
-        textField.GetDefaultAppearance(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal("font: Helvetica,sans-serif 12.0pt; text-align:left; color:#000000 ",
-        textField.GetDefaultStyleString(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(338, textField.GetRichTextValue().Length,
-        null);
-      textField
-        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(form.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "LongRichTextField"))!);
-      global::DripSharp.Testing.JavaAssertions.NotNull(textField, null);
-      global::DripSharp.Testing.JavaAssertions.Equal("org.apache.pdfbox.cos.COSStream",
-        global::DripSharp.Runtime.JavaCompat.ClassName(((object)(textField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V))).GetType(),
-        "DripSharp.PdfCarton", "org.apache.pdfbox"), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(145396, textField.GetValue().Length, null);
+  internal virtual void testAcroFormsBasicFields() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.TestFields.PATH_OF_PDF)) });
+      global::System.Exception __dripsharpPrimary_103_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm form
+          = doc.GetDocumentCatalog().GetAcroForm();
+        global::DripSharp.Testing.JavaAssertions.NotNull(form, null);
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField textField
+          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(form.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "TextField"))!);
+        global::DripSharp.Testing.JavaAssertions.Null(textField.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.V),
+          null);
+        textField.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "field value"));
+        global::DripSharp.Testing.JavaAssertions.NotNull(textField.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.V),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal("field value", textField.GetValue(), null);
+        global::DripSharp.Testing.JavaAssertions.NotNull(textField.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.V),
+          null);
+        textField.SetValue((string)default!);
+        global::DripSharp.Testing.JavaAssertions.Null(textField.GetCOSObject().GetItem(global::DripSharp.PdfCarton.Cos.COSName.V),
+          null);
+        textField
+          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(form.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "TextField-DefaultValue"))!);
+        global::DripSharp.Testing.JavaAssertions.NotNull(textField, null);
+        global::DripSharp.Testing.JavaAssertions.Equal("DefaultValue", textField.GetDefaultValue(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(textField.GetDefaultValue(),
+          ((global::DripSharp.PdfCarton.Cos.COSString)(textField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Dv)!)).GetString(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal("/Helv 12 Tf 0 g",
+          textField.GetDefaultAppearance(), null);
+        textField
+          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(form.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "RichTextField-DefaultValue"))!);
+        global::DripSharp.Testing.JavaAssertions.NotNull(textField, null);
+        global::DripSharp.Testing.JavaAssertions.Equal("DefaultValue", textField.GetDefaultValue(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal(textField.GetDefaultValue(),
+          ((global::DripSharp.PdfCarton.Cos.COSString)(textField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Dv)!)).GetString(),
+          null);
+        global::DripSharp.Testing.JavaAssertions.Equal("DefaultValue", textField.GetValue(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("/Helv 12 Tf 0 g",
+          textField.GetDefaultAppearance(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal("font: Helvetica,sans-serif 12.0pt; text-align:left; color:#000000 ",
+          textField.GetDefaultStyleString(), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(338, textField.GetRichTextValue().Length,
+          null);
+        textField
+          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(form.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "LongRichTextField"))!);
+        global::DripSharp.Testing.JavaAssertions.NotNull(textField, null);
+        global::DripSharp.Testing.JavaAssertions.Equal("org.apache.pdfbox.cos.COSStream",
+          global::DripSharp.Runtime.JavaCompat.ClassName(((object)(textField.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.V))).GetType(),
+          "DripSharp.PdfCarton", "org.apache.pdfbox"), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(145396, textField.GetValue().Length, null);
+      } catch (global::System.Exception __dripsharpCaught_103_25_0) {
+        __dripsharpPrimary_103_25_0 = __dripsharpCaught_103_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_103_25_0);
+      }
     }
   }
 
-  internal virtual void testWidgetMissingRect() {
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.TestFields.PATH_OF_PDF)) })) {
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm form
-        = doc.GetDocumentCatalog().GetAcroForm();
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField textField
-        = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(form.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "TextField-DefaultValue"))!);
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget
-        = global::DripSharp.Runtime.JavaCompat.ListGet(textField.GetWidgets(), 0);
-      global::DripSharp.Testing.JavaAssertions.NotNull(widget.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ap),
-        null);
-      widget.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Rect);
-      textField.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "field value"));
-      global::DripSharp.Testing.JavaAssertions.Null(widget.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ap),
-        null);
+  internal virtual void testWidgetMissingRect() { {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.TestFields.PATH_OF_PDF)) });
+      global::System.Exception __dripsharpPrimary_162_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDAcroForm form
+          = doc.GetDocumentCatalog().GetAcroForm();
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField textField
+          = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTextField)(form.GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "TextField-DefaultValue"))!);
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationWidget widget
+          = global::DripSharp.Runtime.JavaCompat.ListGet(textField.GetWidgets(), 0);
+        global::DripSharp.Testing.JavaAssertions.NotNull(widget.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ap),
+          null);
+        widget.GetCOSObject().RemoveItem(global::DripSharp.PdfCarton.Cos.COSName.Rect);
+        textField.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "field value"));
+        global::DripSharp.Testing.JavaAssertions.Null(widget.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Ap),
+          null);
+      } catch (global::System.Exception __dripsharpCaught_162_25_0) {
+        __dripsharpPrimary_162_25_0 = __dripsharpCaught_162_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(doc, __dripsharpPrimary_162_25_0);
+      }
     }
   }
 

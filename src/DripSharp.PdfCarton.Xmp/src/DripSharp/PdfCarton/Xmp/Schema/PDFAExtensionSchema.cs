@@ -28,4 +28,8 @@ public class PDFAExtensionSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSch
     return this.getPropertyAs<global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty>(global::DripSharp.PdfCarton.Xmp.Schema.PDFAExtensionSchema.Schemas,
       typeof(global::DripSharp.PdfCarton.Xmp.Type.ArrayProperty));
   }
+
+  static PDFAExtensionSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema).TypeHandle);
+  }
 }

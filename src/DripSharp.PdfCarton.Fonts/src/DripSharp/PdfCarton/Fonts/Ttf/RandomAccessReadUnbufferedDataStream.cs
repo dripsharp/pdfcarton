@@ -92,10 +92,14 @@ internal class RandomAccessReadUnbufferedDataStream
     }
 
     public override long Skip(long n) {
-      this.randomAccessRead.Seek((this.randomAccessRead.GetPosition() + n));
+      this.randomAccessRead.Seek(unchecked((this.randomAccessRead.GetPosition() + n)));
       return n;
     }
 
     public override void Dispose() {}
+  }
+
+  static RandomAccessReadUnbufferedDataStream() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFDataStream).TypeHandle);
   }
 }

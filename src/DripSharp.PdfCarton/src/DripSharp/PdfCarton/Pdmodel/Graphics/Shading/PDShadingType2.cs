@@ -9,15 +9,17 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Shading;
 
 public class PDShadingType2 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading {
-  private global::DripSharp.PdfCarton.Cos.COSArray coords = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray coords;
 
-  private global::DripSharp.PdfCarton.Cos.COSArray domain = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray domain;
 
-  private global::DripSharp.PdfCarton.Cos.COSArray extend = default!;
+  private global::DripSharp.PdfCarton.Cos.COSArray extend;
 
   public PDShadingType2(global::DripSharp.PdfCarton.Cos.COSDictionary shadingDictionary)
   : base(shadingDictionary) {
-
+    this.coords = default!;
+    this.domain = default!;
+    this.extend = default!;
   }
 
   public override int GetShadingType() {
@@ -62,5 +64,9 @@ public class PDShadingType2 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shadi
 
   public override global::DripSharp.Runtime.JavaPaint ToPaint(global::DripSharp.PdfCarton.Util.Matrix matrix) {
     return new global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.AxialShadingPaint(this, matrix);
+  }
+
+  static PDShadingType2() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading).TypeHandle);
   }
 }

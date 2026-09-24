@@ -68,7 +68,7 @@ public class RandomAccessReadBuffer : global::DripSharp.PdfCarton.IO.RandomAcces
     sbyte[] eofCheck = new sbyte[1];
     while (((remainingBytes > 0) && ((bytesRead
       = global::DripSharp.Runtime.JavaCompat.InputStreamRead(input, this.CurrentBuffer.array(),
-      offset, remainingBytes)) > -1))) {
+      offset, remainingBytes)) > unchecked(-1)))) {
       remainingBytes -= bytesRead;
       offset += bytesRead;
       this.Size += bytesRead;
@@ -77,7 +77,7 @@ public class RandomAccessReadBuffer : global::DripSharp.PdfCarton.IO.RandomAcces
         this.ExpandBuffer();
         this.CurrentBuffer.put(eofCheck);
         offset = 1;
-        remainingBytes = (this.ChunkSize - 1);
+        remainingBytes = unchecked((this.ChunkSize - 1));
         this.Size++;
       }
     }
@@ -117,8 +117,11 @@ public class RandomAccessReadBuffer : global::DripSharp.PdfCarton.IO.RandomAcces
     }
     if ((position < this.Size)) {
       this.Pointer = position;
-      this.bufferListIndex = ((this.ChunkSize > 0) ? (int)((this.Pointer / this.ChunkSize)) : 0);
-      this.CurrentBufferPointer = ((this.ChunkSize > 0) ? (int)((this.Pointer % this.ChunkSize))
+      this.bufferListIndex = ((this.ChunkSize > 0)
+        ? (int)global::DripSharp.Runtime.JavaCompat.IntegralDivide(this.Pointer, this.ChunkSize)
+        : 0);
+      this.CurrentBufferPointer = ((this.ChunkSize > 0)
+        ? (int)global::DripSharp.Runtime.JavaCompat.IntegralRemainder(this.Pointer, this.ChunkSize)
         : 0);
       this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList,
         this.bufferListIndex);
@@ -127,7 +130,9 @@ public class RandomAccessReadBuffer : global::DripSharp.PdfCarton.IO.RandomAcces
       this.bufferListIndex = this.bufferListMaxIndex;
       this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList,
         this.bufferListIndex);
-      this.CurrentBufferPointer = ((this.ChunkSize > 0) ? (int)((this.Size % this.ChunkSize)) : 0);
+      this.CurrentBufferPointer = ((this.ChunkSize > 0)
+        ? (int)global::DripSharp.Runtime.JavaCompat.IntegralRemainder(this.Size, this.ChunkSize)
+        : 0);
     }
     this.CurrentBuffer.position(this.CurrentBufferPointer);
   }
@@ -140,11 +145,11 @@ public class RandomAccessReadBuffer : global::DripSharp.PdfCarton.IO.RandomAcces
   public virtual int Read() {
     this.CheckClosed();
     if ((this.Pointer >= this.Size)) {
-      return -1;
+      return unchecked(-1);
     }
     if ((this.CurrentBufferPointer >= this.ChunkSize)) {
       if ((this.bufferListIndex >= this.bufferListMaxIndex)) {
-        return -1;
+        return unchecked(-1);
       } else {
         this.CurrentBuffer = global::DripSharp.Runtime.JavaCompat.ListGet(this.bufferList,
           ++(this.bufferListIndex));
@@ -158,11 +163,11 @@ public class RandomAccessReadBuffer : global::DripSharp.PdfCarton.IO.RandomAcces
   public virtual int Read(sbyte[] b, int offset, int length) {
     this.CheckClosed();
     int bytesRead = this.readRemainingBytes(b, offset, length);
-    if ((bytesRead == -1)) {
+    if ((bytesRead == unchecked(-1))) {
       if ((((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Available() > 0)) {
         bytesRead = 0;
       } else {
-        return -1;
+        return unchecked(-1);
       }
     }
     while (((bytesRead < length)
@@ -170,19 +175,21 @@ public class RandomAccessReadBuffer : global::DripSharp.PdfCarton.IO.RandomAcces
       if ((this.CurrentBufferPointer == this.ChunkSize)) {
         this.nextBuffer();
       }
-      bytesRead += this.readRemainingBytes(b, (offset + bytesRead), (length - bytesRead));
+      bytesRead += this.readRemainingBytes(b, unchecked((offset + bytesRead)), unchecked((length
+        - bytesRead)));
     }
     return bytesRead;
   }
 
   private int readRemainingBytes(sbyte[] b, int offset, int length) {
     if ((this.Pointer >= this.Size)) {
-      return -1;
+      return unchecked(-1);
     }
-    int maxLength = (int)(global::System.Math.Min((long)(length), (this.Size - this.Pointer)));
-    int remainingBytes = (this.ChunkSize - this.CurrentBufferPointer);
+    int maxLength = (int)(global::System.Math.Min((long)(length), unchecked((this.Size
+      - this.Pointer))));
+    int remainingBytes = unchecked((this.ChunkSize - this.CurrentBufferPointer));
     if ((remainingBytes == 0)) {
-      return -1;
+      return unchecked(-1);
     }
     if ((maxLength >= remainingBytes)) {
       this.CurrentBuffer.position(this.CurrentBufferPointer);
@@ -278,13 +285,13 @@ public class RandomAccessReadBuffer : global::DripSharp.PdfCarton.IO.RandomAcces
   }
 
   public virtual int Available() {
-    return (int)(global::System.Math.Min((this.Length() - this.GetPosition()),
+    return (int)(global::System.Math.Min(unchecked((this.Length() - this.GetPosition())),
       (long)(int.MaxValue)));
   }
 
   public virtual int Peek() {
     int result = this.Read();
-    if ((result != -1)) {
+    if ((result != unchecked(-1))) {
       ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this)).Rewind(1);
     }
     return result;
@@ -299,12 +306,13 @@ public class RandomAccessReadBuffer : global::DripSharp.PdfCarton.IO.RandomAcces
   }
 
   public virtual void ReadFully(sbyte[] b, int offset, int length) {
-    if (((this.Length() - this.GetPosition()) < length)) {
+    if ((unchecked((this.Length() - this.GetPosition())) < length)) {
       throw new global::System.IO.EndOfStreamException("Premature end of buffer reached");
     }
     int bytesReadTotal = 0;
     while ((bytesReadTotal < length)) {
-      int bytesReadNow = this.Read(b, (offset + bytesReadTotal), (length - bytesReadTotal));
+      int bytesReadNow = this.Read(b, unchecked((offset + bytesReadTotal)), unchecked((length
+        - bytesReadTotal)));
       if ((bytesReadNow <= 0)) {
         throw new global::System.IO.EndOfStreamException("EOF, should have been detected earlier");
       }
@@ -313,10 +321,10 @@ public class RandomAccessReadBuffer : global::DripSharp.PdfCarton.IO.RandomAcces
   }
 
   public virtual void Rewind(int bytes) {
-    this.Seek((this.GetPosition() - bytes));
+    this.Seek(unchecked((this.GetPosition() - bytes)));
   }
 
   public virtual void Skip(int length) {
-    this.Seek((this.GetPosition() + length));
+    this.Seek(unchecked((this.GetPosition() + length)));
   }
 }

@@ -174,9 +174,18 @@ public abstract class FontDescriptorHelper<T> where T
   }
 
   protected internal sbyte[] GetMetaDataStreamAsBytes(global::DripSharp.PdfCarton.Pdmodel.Common.PDMetadata metadata) {
-    try {
-      using (global::System.IO.Stream metaDataContent = metadata.CreateInputStream()) {
-        return global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(metaDataContent);
+    try { {
+        global::System.IO.Stream metaDataContent = metadata.CreateInputStream();
+        global::System.Exception __dripsharpPrimary_261_26_0 = null!;
+        try {
+          return global::DripSharp.PdfCarton.IO.IOUtils.ToByteArray(metaDataContent);
+        } catch (global::System.Exception __dripsharpCaught_261_26_0) {
+          __dripsharpPrimary_261_26_0 = __dripsharpCaught_261_26_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(metaDataContent,
+            __dripsharpPrimary_261_26_0);
+        }
       }
     } catch (global::System.IO.IOException e) {
       this.FContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataFormatStream,

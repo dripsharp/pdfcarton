@@ -179,8 +179,8 @@ public abstract class PDField : global::DripSharp.PdfCarton.Pdmodel.Common.COSOb
             = global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField.fromDictionary(this.acroForm,
             kidDictionary,
             (global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField)(this!));
-          if (((retval! != default!) && (name.Length > (nameIndex + 1)))) {
-            retval = retval!.findKid(name, (nameIndex + 1));
+          if (((retval! != default!) && (name.Length > unchecked((nameIndex + 1))))) {
+            retval = retval!.findKid(name, unchecked((nameIndex + 1)));
           }
         }
       }

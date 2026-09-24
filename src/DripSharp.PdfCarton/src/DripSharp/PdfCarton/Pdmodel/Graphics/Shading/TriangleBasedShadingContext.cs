@@ -12,19 +12,20 @@ internal abstract class TriangleBasedShadingContext
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingContext {
   private int[][] pixelTableArray = null!;
 
-  private int xOffset = 0;
+  private int xOffset;
 
-  private int yOffset = 0;
+  private int yOffset;
 
   internal TriangleBasedShadingContext(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PDShading shading,
     global::DripSharp.Runtime.JavaColorModel cm, global::SkiaSharp.SKMatrix xform,
     global::DripSharp.PdfCarton.Util.Matrix matrix) : base(shading, cm, xform, matrix) {
-
+    this.xOffset = 0;
+    this.yOffset = 0;
   }
 
   protected internal void CreatePixelTable(global::SkiaSharp.SKRectI deviceBounds) {
-    this.xOffset = -(deviceBounds.Left);
-    this.yOffset = -(deviceBounds.Top);
+    this.xOffset = unchecked(-(deviceBounds.Left));
+    this.yOffset = unchecked(-(deviceBounds.Top));
     this.pixelTableArray = this.calcPixelTableArray(deviceBounds);
   }
 
@@ -46,11 +47,11 @@ internal abstract class TriangleBasedShadingContext
       } else {
         int[] boundary = tri.GetBoundary();
         boundary[0] = global::System.Math.Max(boundary[0], deviceBounds.Left);
-        boundary[1] = global::System.Math.Min(boundary[1], (deviceBounds.Left
-          + deviceBounds.Width));
+        boundary[1] = global::System.Math.Min(boundary[1], unchecked((deviceBounds.Left
+          + deviceBounds.Width)));
         boundary[2] = global::System.Math.Max(boundary[2], deviceBounds.Top);
-        boundary[3] = global::System.Math.Min(boundary[3], (deviceBounds.Top
-          + deviceBounds.Height));
+        boundary[3] = global::System.Math.Min(boundary[3], unchecked((deviceBounds.Top
+          + deviceBounds.Height)));
         for (int x = boundary[0]; (x <= boundary[1]); x++) {
           for (int y = boundary[2]; (y <= boundary[3]); y++) {
             global::DripSharp.Runtime.JavaPoint p = new global::DripSharp.Runtime.JavaPoint(x, y);
@@ -87,8 +88,8 @@ internal abstract class TriangleBasedShadingContext
   }
 
   private void addValueToArray(global::DripSharp.Runtime.JavaPoint p, int value, int[][] array) {
-    int xIndex = (p.IntX + this.xOffset);
-    int yIndex = (p.IntY + this.yOffset);
+    int xIndex = unchecked((p.IntX + this.xOffset));
+    int yIndex = unchecked((p.IntY + this.yOffset));
     if (((((xIndex < 0) || (yIndex < 0)) || (xIndex >= array.Length)) || (yIndex
       >= array[0].Length))) {
       return;
@@ -97,11 +98,11 @@ internal abstract class TriangleBasedShadingContext
   }
 
   private int getValueFromArray(int x, int y) {
-    int xIndex = (x + this.xOffset);
-    int yIndex = (y + this.yOffset);
+    int xIndex = unchecked((x + this.xOffset));
+    int yIndex = unchecked((y + this.yOffset));
     if (((((xIndex < 0) || (yIndex < 0)) || (xIndex >= this.pixelTableArray.Length)) || (yIndex
       >= this.pixelTableArray[0].Length))) {
-      return -1;
+      return unchecked(-1);
     }
     return this.pixelTableArray[xIndex][yIndex];
   }
@@ -118,24 +119,28 @@ internal abstract class TriangleBasedShadingContext
   public override global::DripSharp.Runtime.JavaRaster GetRaster(int x, int y, int w, int h) {
     global::DripSharp.Runtime.JavaRaster raster
       = this.GetColorModel().CreateCompatibleWritableRaster(w, h);
-    int[] data = new int[((w * h) * 4)];
+    int[] data = new int[unchecked((unchecked((w * h)) * 4))];
     if ((!(this.isDataEmpty()) || (this.getBackground() != default!))) {
       for (int row = 0; (row < h); row++) {
         for (int col = 0; (col < w); col++) {
-          int value = this.getValueFromArray((x + col), (y + row));
+          int value = this.getValueFromArray(unchecked((x + col)), unchecked((y + row)));
           if ((value >= 0)) {
-            int index = (((row * w) + col) * 4);
+            int index = unchecked((unchecked((unchecked((row * w)) + col)) * 4));
             data[index] = (value & 255);
-            value >>= 8;
-            data[(index + 1)] = (value & 255);
-            value >>= 8;
-            data[(index + 2)] = (value & 255);
-            data[(index + 3)] = 255;
+            value >>= unchecked((int)(8));
+            data[unchecked((index + 1))] = (value & 255);
+            value >>= unchecked((int)(8));
+            data[unchecked((index + 2))] = (value & 255);
+            data[unchecked((index + 3))] = 255;
           }
         }
       }
     }
     raster.SetPixels(0, 0, w, h, data);
     return raster;
+  }
+
+  static TriangleBasedShadingContext() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.ShadingContext).TypeHandle);
   }
 }

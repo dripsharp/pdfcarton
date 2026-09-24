@@ -380,4 +380,8 @@ public class DublinCoreSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema
     this.RemoveUnqualifiedBagValue(global::DripSharp.PdfCarton.Xmp.Schema.DublinCoreSchema.Type,
       type);
   }
+
+  static DublinCoreSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema).TypeHandle);
+  }
 }

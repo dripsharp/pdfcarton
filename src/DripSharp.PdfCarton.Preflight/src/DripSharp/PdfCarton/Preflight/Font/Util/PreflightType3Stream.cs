@@ -12,17 +12,22 @@ public class PreflightType3Stream
 : global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine {
   private readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDType3CharProc charProc = null!;
 
-  private bool firstOperator = true;
+  private bool firstOperator;
 
-  private float width = 0;
+  private float width;
 
-  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImage image = default!;
+  private global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImage image;
 
-  private global::DripSharp.PdfCarton.Fonts.Util.BoundingBox box = default!;
+  private global::DripSharp.PdfCarton.Fonts.Util.BoundingBox box;
 
   public PreflightType3Stream(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
     global::DripSharp.PdfCarton.Pdmodel.PDPage page,
     global::DripSharp.PdfCarton.Pdmodel.Font.PDType3CharProc charProc) : base(context, page) {
+    this.firstOperator = true;
+    this.width = 0;
+    this.image = default!;
+    this.box = default!;
+
     this.charProc = charProc;
   }
 
@@ -97,5 +102,9 @@ public class PreflightType3Stream
 
   public virtual float GetWidth() {
     return this.width;
+  }
+
+  static PreflightType3Stream() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Content.PreflightStreamEngine).TypeHandle);
   }
 }

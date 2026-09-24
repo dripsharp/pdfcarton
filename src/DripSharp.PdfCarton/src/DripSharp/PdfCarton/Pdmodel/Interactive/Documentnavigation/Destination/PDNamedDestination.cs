@@ -49,4 +49,8 @@ public class PDNamedDestination
       this.namedDestination = new global::DripSharp.PdfCarton.Cos.COSString(dest);
     }
   }
+
+  static PDNamedDestination() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Destination.PDDestination).TypeHandle);
+  }
 }

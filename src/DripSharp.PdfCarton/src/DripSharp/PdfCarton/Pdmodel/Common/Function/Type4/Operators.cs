@@ -9,131 +9,89 @@
 namespace DripSharp.PdfCarton.Pdmodel.Common.Function.Type4;
 
 public class Operators {
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ABS
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Abs();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ABS;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ADD
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Add();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ADD;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ATAN
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Atan();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ATAN;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator CEILING
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Ceiling();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator CEILING;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator COS
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Cos();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator COS;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator CVI
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Cvi();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator CVI;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator CVR
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Cvr();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator CVR;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator DIV
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Div();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator DIV;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator EXP
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Exp();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator EXP;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator FLOOR
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Floor();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator FLOOR;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator IDIV
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.IDiv();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator IDIV;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LN
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Ln();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LN;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LOG
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Log();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LOG;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator MOD
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Mod();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator MOD;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator MUL
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Mul();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator MUL;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator NEG
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Neg();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator NEG;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ROUND
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Round();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ROUND;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator SIN
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Sin();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator SIN;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator SQRT
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Sqrt();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator SQRT;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator SUB
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Sub();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator SUB;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator TRUNCATE
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Truncate();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator TRUNCATE;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator AND
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.And();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator AND;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator BITSHIFT
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Bitshift();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator BITSHIFT;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator EQ
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Eq();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator EQ;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator FALSE
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.False();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator FALSE;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator GE
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Ge();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator GE;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator GT
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Gt();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator GT;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LE
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Le();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LE;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LT
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Lt();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator LT;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator NE
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Ne();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator NE;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator NOT
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Not();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator NOT;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator OR
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Or();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator OR;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator TRUE
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.True();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator TRUE;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator XOR
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Xor();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator XOR;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator IF
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ConditionalOperators.If();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator IF;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator IFELSE
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ConditionalOperators.IfElse();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator IFELSE;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator COPY
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Copy();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator COPY;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator DUP
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Dup();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator DUP;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator EXCH
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Exch();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator EXCH;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator INDEX
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Index();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator INDEX;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator POP
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Pop();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator POP;
 
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ROLL
-    = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Roll();
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator ROLL;
 
   private readonly global::System.Collections.Generic.IDictionary<string,
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator> operators
@@ -229,5 +187,56 @@ public class Operators {
 
   public virtual global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.Operator GetOperator(string operatorName) {
     return global::DripSharp.Runtime.JavaCompat.MapGet(this.operators, operatorName);
+  }
+
+  static Operators() {
+    ABS = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Abs();
+    ADD = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Add();
+    ATAN = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Atan();
+    CEILING
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Ceiling();
+    COS = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Cos();
+    CVI = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Cvi();
+    CVR = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Cvr();
+    DIV = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Div();
+    EXP = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Exp();
+    FLOOR
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Floor();
+    IDIV = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.IDiv();
+    LN = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Ln();
+    LOG = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Log();
+    MOD = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Mod();
+    MUL = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Mul();
+    NEG = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Neg();
+    ROUND
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Round();
+    SIN = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Sin();
+    SQRT = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Sqrt();
+    SUB = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Sub();
+    TRUNCATE
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ArithmeticOperators.Truncate();
+    AND = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.And();
+    BITSHIFT
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Bitshift();
+    EQ = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Eq();
+    FALSE = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.False();
+    GE = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Ge();
+    GT = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Gt();
+    LE = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Le();
+    LT = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Lt();
+    NE = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.RelationalOperators.Ne();
+    NOT = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Not();
+    OR = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Or();
+    TRUE = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.True();
+    XOR = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.BitwiseOperators.Xor();
+    IF = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ConditionalOperators.If();
+    IFELSE
+      = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.ConditionalOperators.IfElse();
+    COPY = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Copy();
+    DUP = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Dup();
+    EXCH = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Exch();
+    INDEX = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Index();
+    POP = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Pop();
+    ROLL = new global::DripSharp.PdfCarton.Pdmodel.Common.Function.Type4.StackOperators.Roll();
   }
 }

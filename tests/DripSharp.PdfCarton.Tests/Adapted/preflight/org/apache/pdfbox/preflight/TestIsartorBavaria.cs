@@ -134,7 +134,7 @@ public class TestIsartorBavaria {
     global::DripSharp.PdfCarton.Preflight.ValidationResult result
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Preflight.ValidationResult>(typeof(global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser),
       "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { file });
+      new object[] { (global::DripSharp.Runtime.JavaFile)file });
     if ((result != default!)) {
       if (global::DripSharp.Runtime.JavaCompat.CollectionIsEmpty(expectedErrorSet)) {
         global::System.Collections.Generic.ISet<string> errorSet__169_29

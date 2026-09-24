@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline;
 
 public abstract class PDOutlineNode
 : global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDOutlineNode() {}
 
@@ -138,8 +137,8 @@ public abstract class PDOutlineNode
 
   private void switchNodeCount() {
     int openCount = this.GetOpenCount();
-    this.setOpenCount(-openCount);
-    this.updateParentOpenCount(-openCount);
+    this.setOpenCount(unchecked(-openCount));
+    this.updateParentOpenCount(unchecked(-openCount));
   }
 
   public virtual bool IsNodeOpen() {
@@ -156,10 +155,10 @@ public abstract class PDOutlineNode
         return;
       }
       if (parent.IsNodeOpen()) {
-        parent.setOpenCount((parent.GetOpenCount() + delta));
+        parent.setOpenCount(unchecked((parent.GetOpenCount() + delta)));
         parent.updateParentOpenCount(delta);
       } else {
-        parent.setOpenCount((parent.GetOpenCount() - delta));
+        parent.setOpenCount(unchecked((parent.GetOpenCount() - delta)));
       }
     }
   }
@@ -167,5 +166,10 @@ public abstract class PDOutlineNode
   public virtual global::System.Collections.Generic.IEnumerable<global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem> Children() {
     return new global::DripSharp.Runtime.JavaIterableAdapter<global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItem>(()
       => new global::DripSharp.PdfCarton.Pdmodel.Interactive.Documentnavigation.Outline.PDOutlineItemIterator(this.GetFirstChild()));
+  }
+
+  static PDOutlineNode() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.PDDictionaryWrapper).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

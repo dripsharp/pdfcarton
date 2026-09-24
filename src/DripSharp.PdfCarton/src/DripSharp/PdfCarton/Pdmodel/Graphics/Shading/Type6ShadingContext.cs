@@ -16,4 +16,8 @@ internal class Type6ShadingContext
   : base(shading, colorModel, xform, matrix, deviceBounds, 12) {
 
   }
+
+  static Type6ShadingContext() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Shading.PatchMeshesShadingContext).TypeHandle);
+  }
 }

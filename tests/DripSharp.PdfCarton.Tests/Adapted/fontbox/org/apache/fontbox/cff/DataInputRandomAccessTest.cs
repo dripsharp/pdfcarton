@@ -6,50 +6,53 @@ namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public class DataInputRandomAccessTest {
   internal virtual void testReadBytes() {
-    sbyte[] data = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(-1)),
-      unchecked((sbyte)(2)), unchecked((sbyte)(-3)), unchecked((sbyte)(4)), unchecked((sbyte)(-5)),
-      unchecked((sbyte)(6)), unchecked((sbyte)(-7)), unchecked((sbyte)(8)),
-      unchecked((sbyte)(-9)) };
+    sbyte[] data = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(unchecked(-1))),
+      unchecked((sbyte)(2)), unchecked((sbyte)(unchecked(-3))), unchecked((sbyte)(4)),
+      unchecked((sbyte)(unchecked(-5))), unchecked((sbyte)(6)), unchecked((sbyte)(unchecked(-7))),
+      unchecked((sbyte)(8)), unchecked((sbyte)(unchecked(-9))) };
     global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput
       = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputRandomAccessRead(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(data));
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
       => dataInput.ReadBytes(20), null);
     global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(0)) },
       dataInput.ReadBytes(1), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(-1)),
-        unchecked((sbyte)(2)), unchecked((sbyte)(-3)) }, dataInput.ReadBytes(3), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(unchecked(-1))),
+        unchecked((sbyte)(2)), unchecked((sbyte)(unchecked(-3))) }, dataInput.ReadBytes(3), null);
     dataInput.SetPosition(6);
     global::DripSharp.Testing.JavaAssertions.Equal(new sbyte[] { unchecked((sbyte)(6)),
-        unchecked((sbyte)(-7)), unchecked((sbyte)(8)) }, dataInput.ReadBytes(3), null);
+        unchecked((sbyte)(unchecked(-7))), unchecked((sbyte)(8)) }, dataInput.ReadBytes(3), null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
-      => dataInput.ReadBytes(-1), null);
+      => dataInput.ReadBytes(unchecked(-1)), null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
       => dataInput.ReadBytes(5), null);
   }
 
   internal virtual void testReadByte() {
-    sbyte[] data = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(-1)),
-      unchecked((sbyte)(2)), unchecked((sbyte)(-3)), unchecked((sbyte)(4)), unchecked((sbyte)(-5)),
-      unchecked((sbyte)(6)), unchecked((sbyte)(-7)), unchecked((sbyte)(8)),
-      unchecked((sbyte)(-9)) };
+    sbyte[] data = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(unchecked(-1))),
+      unchecked((sbyte)(2)), unchecked((sbyte)(unchecked(-3))), unchecked((sbyte)(4)),
+      unchecked((sbyte)(unchecked(-5))), unchecked((sbyte)(6)), unchecked((sbyte)(unchecked(-7))),
+      unchecked((sbyte)(8)), unchecked((sbyte)(unchecked(-9))) };
     global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput
       = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputRandomAccessRead(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(data));
     global::DripSharp.Testing.JavaAssertions.Equal(0, (int)(dataInput.ReadByte()), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-1, (int)(dataInput.ReadByte()), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), (int)(dataInput.ReadByte()),
+      null);
     dataInput.SetPosition(6);
     global::DripSharp.Testing.JavaAssertions.Equal(6, (int)(dataInput.ReadByte()), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-7, (int)(dataInput.ReadByte()), null);
-    dataInput.SetPosition((dataInput.Length() - 1));
-    global::DripSharp.Testing.JavaAssertions.Equal(-9, (int)(dataInput.ReadByte()), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-7), (int)(dataInput.ReadByte()),
+      null);
+    dataInput.SetPosition(unchecked((dataInput.Length() - 1)));
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-9), (int)(dataInput.ReadByte()),
+      null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
       => { dataInput.ReadByte(); }, null);
   }
 
   internal virtual void testReadUnsignedByte() {
-    sbyte[] data = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(-1)),
-      unchecked((sbyte)(2)), unchecked((sbyte)(-3)), unchecked((sbyte)(4)), unchecked((sbyte)(-5)),
-      unchecked((sbyte)(6)), unchecked((sbyte)(-7)), unchecked((sbyte)(8)),
-      unchecked((sbyte)(-9)) };
+    sbyte[] data = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(unchecked(-1))),
+      unchecked((sbyte)(2)), unchecked((sbyte)(unchecked(-3))), unchecked((sbyte)(4)),
+      unchecked((sbyte)(unchecked(-5))), unchecked((sbyte)(6)), unchecked((sbyte)(unchecked(-7))),
+      unchecked((sbyte)(8)), unchecked((sbyte)(unchecked(-9))) };
     global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput
       = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputRandomAccessRead(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(data));
     global::DripSharp.Testing.JavaAssertions.Equal(0, dataInput.ReadUnsignedByte(), null);
@@ -57,39 +60,39 @@ public class DataInputRandomAccessTest {
     dataInput.SetPosition(6);
     global::DripSharp.Testing.JavaAssertions.Equal(6, dataInput.ReadUnsignedByte(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(249, dataInput.ReadUnsignedByte(), null);
-    dataInput.SetPosition((dataInput.Length() - 1));
+    dataInput.SetPosition(unchecked((dataInput.Length() - 1)));
     global::DripSharp.Testing.JavaAssertions.Equal(247, dataInput.ReadUnsignedByte(), null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
       => { dataInput.ReadUnsignedByte(); }, null);
   }
 
   internal virtual void testBasics() {
-    sbyte[] data = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(-1)),
-      unchecked((sbyte)(2)), unchecked((sbyte)(-3)), unchecked((sbyte)(4)), unchecked((sbyte)(-5)),
-      unchecked((sbyte)(6)), unchecked((sbyte)(-7)), unchecked((sbyte)(8)),
-      unchecked((sbyte)(-9)) };
+    sbyte[] data = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(unchecked(-1))),
+      unchecked((sbyte)(2)), unchecked((sbyte)(unchecked(-3))), unchecked((sbyte)(4)),
+      unchecked((sbyte)(unchecked(-5))), unchecked((sbyte)(6)), unchecked((sbyte)(unchecked(-7))),
+      unchecked((sbyte)(8)), unchecked((sbyte)(unchecked(-9))) };
     global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput
       = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputRandomAccessRead(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(data));
     global::DripSharp.Testing.JavaAssertions.Equal(10, dataInput.Length(), null);
     global::DripSharp.Testing.JavaAssertions.True(dataInput.HasRemaining(), null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
-      => dataInput.SetPosition(-1), null);
+      => dataInput.SetPosition(unchecked(-1)), null);
     int length = dataInput.Length();
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
       => dataInput.SetPosition(length), null);
   }
 
   internal virtual void testPeek() {
-    sbyte[] data = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(-1)),
-      unchecked((sbyte)(2)), unchecked((sbyte)(-3)), unchecked((sbyte)(4)), unchecked((sbyte)(-5)),
-      unchecked((sbyte)(6)), unchecked((sbyte)(-7)), unchecked((sbyte)(8)),
-      unchecked((sbyte)(-9)) };
+    sbyte[] data = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(unchecked(-1))),
+      unchecked((sbyte)(2)), unchecked((sbyte)(unchecked(-3))), unchecked((sbyte)(4)),
+      unchecked((sbyte)(unchecked(-5))), unchecked((sbyte)(6)), unchecked((sbyte)(unchecked(-7))),
+      unchecked((sbyte)(8)), unchecked((sbyte)(unchecked(-9))) };
     global::DripSharp.PdfCarton.Fonts.Cff.DataInput dataInput
       = new global::DripSharp.PdfCarton.Fonts.Cff.DataInputRandomAccessRead(new global::DripSharp.PdfCarton.IO.RandomAccessReadBuffer(data));
     global::DripSharp.Testing.JavaAssertions.Equal(0, dataInput.PeekUnsignedByte(0), null);
     global::DripSharp.Testing.JavaAssertions.Equal(251, dataInput.PeekUnsignedByte(5), null);
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
-      => dataInput.PeekUnsignedByte(-1), null);
+      => dataInput.PeekUnsignedByte(unchecked(-1)), null);
     int length = dataInput.Length();
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
       => dataInput.PeekUnsignedByte(length), null);

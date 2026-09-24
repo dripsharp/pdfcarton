@@ -94,4 +94,8 @@ public class PDAnnotationWidget
     }
     this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Parent, field);
   }
+
+  static PDAnnotationWidget() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation).TypeHandle);
+  }
 }

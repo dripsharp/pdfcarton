@@ -98,6 +98,10 @@ public sealed class CFFExpertCharset : global::DripSharp.PdfCarton.Fonts.Cff.CFF
     return global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertCharset.INSTANCE;
   }
 
-  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertCharset INSTANCE
-    = new global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertCharset();
+  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertCharset INSTANCE;
+
+  static CFFExpertCharset() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetType1).TypeHandle);
+    INSTANCE = new global::DripSharp.PdfCarton.Fonts.Cff.CFFExpertCharset();
+  }
 }

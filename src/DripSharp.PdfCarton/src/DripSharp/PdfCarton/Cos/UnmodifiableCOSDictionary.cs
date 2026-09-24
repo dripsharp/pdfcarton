@@ -19,4 +19,8 @@ global::DripSharp.PdfCarton.Cos.COSUpdateInfo {
   public override void SetNeedToBeUpdated(bool flag) {
     throw new global::System.NotSupportedException();
   }
+
+  static UnmodifiableCOSDictionary() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.COSDictionary).TypeHandle);
+  }
 }

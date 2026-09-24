@@ -40,4 +40,8 @@ public sealed class PDListBox : global::DripSharp.PdfCarton.Pdmodel.Interactive.
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.AppearanceGeneratorHelper(this);
     apHelper.SetAppearanceValue("");
   }
+
+  static PDListBox() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDChoice).TypeHandle);
+  }
 }

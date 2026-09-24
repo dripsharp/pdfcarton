@@ -92,4 +92,8 @@ public class PDActionEmbeddedGoTo
   public virtual void SetTargetDirectory(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDTargetDirectory targetDirectory) {
     this.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.T, targetDirectory);
   }
+
+  static PDActionEmbeddedGoTo() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
+  }
 }

@@ -16,9 +16,7 @@ public sealed class Operator {
   private global::DripSharp.PdfCarton.Cos.COSDictionary imageParameters = null!;
 
   private static readonly global::System.Collections.Concurrent.ConcurrentDictionary<string,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.Operator> operators
-    = new global::System.Collections.Concurrent.ConcurrentDictionary<string,
-    global::DripSharp.PdfCarton.Contentstream.@Operator.Operator>();
+    global::DripSharp.PdfCarton.Contentstream.@Operator.Operator> operators;
 
   private Operator(string aOperator) {
     this.theOperator = aOperator;
@@ -76,5 +74,10 @@ public sealed class Operator {
 
   public void SetImageParameters(global::DripSharp.PdfCarton.Cos.COSDictionary @params) {
     this.imageParameters = @params;
+  }
+
+  static Operator() {
+    operators = new global::System.Collections.Concurrent.ConcurrentDictionary<string,
+      global::DripSharp.PdfCarton.Contentstream.@Operator.Operator>();
   }
 }

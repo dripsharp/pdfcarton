@@ -36,7 +36,7 @@ public abstract class TestCOSNumber : global::DripSharp.PdfCarton.Cos.TestCOSBas
     global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(256)),
       global::DripSharp.PdfCarton.Cos.COSNumber.Get(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "256")), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(-1000)),
+    global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(unchecked(-1000))),
       global::DripSharp.PdfCarton.Cos.COSNumber.Get(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "-1000")), null);
     global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(2000)),
@@ -98,6 +98,10 @@ public abstract class TestCOSNumber : global::DripSharp.PdfCarton.Cos.TestCOSBas
     global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
       => global::DripSharp.PdfCarton.Cos.COSNumber.Get(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       "18446744073307F448448")), null);
+  }
+
+  static TestCOSNumber() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.TestCOSBase).TypeHandle);
   }
 
   internal TestCOSNumber() {}

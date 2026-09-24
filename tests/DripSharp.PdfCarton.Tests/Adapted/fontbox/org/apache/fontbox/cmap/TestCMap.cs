@@ -13,12 +13,20 @@ public class TestCMap {
     global::DripSharp.Testing.JavaAssertions.Equal("a", cMap.ToUnicode(bs), null);
   }
 
-  internal virtual void testPDFBox3997() {
-    using (global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
-      = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
-      "target/fonts/NotoEmoji-Regular.ttf")))) {
-      global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmap = ttf.GetUnicodeCmapLookup(false);
-      global::DripSharp.Testing.JavaAssertions.Equal(886, cmap.GetGlyphId(128641), null);
+  internal virtual void testPDFBox3997() { {
+      global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf
+        = new global::DripSharp.PdfCarton.Fonts.Ttf.TTFParser().Parse(new global::DripSharp.PdfCarton.IO.RandomAccessReadBufferedFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("fontbox",
+        "target/fonts/NotoEmoji-Regular.ttf")));
+      global::System.Exception __dripsharpPrimary_58_27_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmap = ttf.GetUnicodeCmapLookup(false);
+        global::DripSharp.Testing.JavaAssertions.Equal(886, cmap.GetGlyphId(128641), null);
+      } catch (global::System.Exception __dripsharpCaught_58_27_0) {
+        __dripsharpPrimary_58_27_0 = __dripsharpCaught_58_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(ttf, __dripsharpPrimary_58_27_0);
+      }
     }
   }
 

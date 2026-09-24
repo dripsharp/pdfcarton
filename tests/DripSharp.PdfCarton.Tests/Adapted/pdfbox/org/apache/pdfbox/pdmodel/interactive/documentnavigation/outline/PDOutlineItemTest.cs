@@ -58,24 +58,24 @@ public class PDOutlineItemTest {
 
   internal virtual void insertSiblingAfter_OpenChildToClosedParent() {
     this.newSibling.OpenNode();
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), this.root.GetOpenCount(), null);
     this.first.InsertSiblingAfter(this.newSibling);
     global::DripSharp.Testing.JavaAssertions.Equal(this.first.GetNextSibling(), this.newSibling,
       null);
     global::DripSharp.Testing.JavaAssertions.Equal(this.second.GetPreviousSibling(),
       this.newSibling, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-5, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-5), this.root.GetOpenCount(), null);
   }
 
   internal virtual void insertSiblingBefore_OpenChildToClosedParent() {
     this.newSibling.OpenNode();
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), this.root.GetOpenCount(), null);
     this.second.InsertSiblingBefore(this.newSibling);
     global::DripSharp.Testing.JavaAssertions.Equal(this.first.GetNextSibling(), this.newSibling,
       null);
     global::DripSharp.Testing.JavaAssertions.Equal(this.second.GetPreviousSibling(),
       this.newSibling, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-5, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-5), this.root.GetOpenCount(), null);
   }
 
   internal virtual void insertSiblingAfter_ClosedChildToOpenParent() {
@@ -101,23 +101,23 @@ public class PDOutlineItemTest {
   }
 
   internal virtual void insertSiblingAfter_ClosedChildToClosedParent() {
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), this.root.GetOpenCount(), null);
     this.first.InsertSiblingAfter(this.newSibling);
     global::DripSharp.Testing.JavaAssertions.Equal(this.first.GetNextSibling(), this.newSibling,
       null);
     global::DripSharp.Testing.JavaAssertions.Equal(this.second.GetPreviousSibling(),
       this.newSibling, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-3, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-3), this.root.GetOpenCount(), null);
   }
 
   internal virtual void insertSiblingBefore_ClosedChildToClosedParent() {
-    global::DripSharp.Testing.JavaAssertions.Equal(-2, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-2), this.root.GetOpenCount(), null);
     this.second.InsertSiblingBefore(this.newSibling);
     global::DripSharp.Testing.JavaAssertions.Equal(this.first.GetNextSibling(), this.newSibling,
       null);
     global::DripSharp.Testing.JavaAssertions.Equal(this.second.GetPreviousSibling(),
       this.newSibling, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(-3, this.root.GetOpenCount(), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-3), this.root.GetOpenCount(), null);
   }
 
   internal virtual void insertSiblingTop() {

@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 internal sealed class PDCIDFontType2Embedder
 : global::DripSharp.PdfCarton.Pdmodel.Font.TrueTypeEmbedder {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument document = null!;
 
@@ -199,14 +198,14 @@ internal sealed class PDCIDFontType2Embedder
     int> cidToGid) {
     int cidMax
       = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(global::DripSharp.Runtime.JavaCompat.SortedLastKey(cidToGid));
-    sbyte[] buffer = new sbyte[((cidMax * 2) + 2)];
+    sbyte[] buffer = new sbyte[unchecked((unchecked((cidMax * 2)) + 2))];
     int bi = 0;
     for (int i = 0; (i <= cidMax); i++) {
       int? gid = global::DripSharp.Runtime.JavaCompat.MapGetNullable(cidToGid, i);
       if ((gid != default!)) {
         buffer[bi]
           = unchecked((sbyte)(unchecked((sbyte)(((global::DripSharp.Runtime.JavaCompat.Unbox(gid) >> unchecked((int)(8))) & 255)))));
-        buffer[(bi + 1)]
+        buffer[unchecked((bi + 1))]
           = unchecked((sbyte)(unchecked((sbyte)((global::DripSharp.Runtime.JavaCompat.Unbox(gid) & 255)))));
       }
       bi += 2;
@@ -221,10 +220,14 @@ internal sealed class PDCIDFontType2Embedder
   private void buildCIDSet(global::System.Collections.Generic.SortedDictionary<int, int> cidToGid) {
     int cidMax
       = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(global::DripSharp.Runtime.JavaCompat.SortedLastKey(cidToGid));
-    sbyte[] bytes = new sbyte[((cidMax / 8) + 1)];
+    sbyte[] bytes = new sbyte[unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(cidMax,
+      8) + 1))];
     for (int cid = 0; (cid <= cidMax); cid++) {
-      int mask = (1 << unchecked((int)((7 - (cid % 8)))));
-      global::DripSharp.Runtime.JavaCompat.OrAssign(ref bytes[(cid / 8)], mask);
+      int mask = (1 << unchecked((int)(unchecked((7
+        - global::DripSharp.Runtime.JavaCompat.IntegralRemainder(cid, 8))))));
+      global::DripSharp.Runtime.JavaCompat.CompoundAssign(ref bytes[global::DripSharp.Runtime.JavaCompat.IntegralDivide(cid,
+        8)], __dripsharpValue_327_13_0
+        => unchecked((sbyte)((unchecked((byte)(__dripsharpValue_327_13_0)) | mask))));
     }
     global::System.IO.Stream input = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(bytes);
     global::DripSharp.PdfCarton.Pdmodel.Common.PDStream stream
@@ -251,7 +254,7 @@ internal sealed class PDCIDFontType2Embedder
       if ((width == 1000)) {
         continue;
       }
-      if ((prev != (cid - 1))) {
+      if ((prev != unchecked((cid - 1)))) {
         ws = new global::DripSharp.PdfCarton.Cos.COSArray();
         widths.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(cid)));
         widths.Add(ws);
@@ -271,9 +274,10 @@ internal sealed class PDCIDFontType2Embedder
     }
     float scaling = ((float)1000.0F / base.Ttf.GetHeader().GetUnitsPerEm());
     long v = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((vhea.GetAscender() * scaling));
-    long w1 = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((-(vhea.GetAdvanceHeightMax())
+    long w1
+      = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((unchecked(-(vhea.GetAdvanceHeightMax()))
       * scaling));
-    if (((v != 880) || (w1 != -1000))) {
+    if (((v != 880) || (w1 != unchecked(-1000)))) {
       global::DripSharp.PdfCarton.Cos.COSArray cosDw2
         = new global::DripSharp.PdfCarton.Cos.COSArray();
       cosDw2.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(v));
@@ -295,7 +299,8 @@ internal sealed class PDCIDFontType2Embedder
     global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable hmtx
       = base.Ttf.GetHorizontalMetrics();
     long v_y = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((vhea.GetAscender() * scaling));
-    long w1 = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((-(vhea.GetAdvanceHeightMax())
+    long w1
+      = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((unchecked(-(vhea.GetAdvanceHeightMax()))
       * scaling));
     global::DripSharp.PdfCarton.Cos.COSArray heights
       = new global::DripSharp.PdfCarton.Cos.COSArray();
@@ -308,15 +313,16 @@ internal sealed class PDCIDFontType2Embedder
       if ((glyph == default!)) {
         continue;
       }
-      long height = global::DripSharp.Runtime.JavaCompat.MathRoundFloat(((glyph.GetYMaximum()
-        + vmtx.GetTopSideBearing(cid)) * scaling));
+      long height
+        = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((unchecked((glyph.GetYMaximum()
+        + vmtx.GetTopSideBearing(cid))) * scaling));
       long advance
-        = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((-(vmtx.GetAdvanceHeight(cid))
+        = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((unchecked(-(vmtx.GetAdvanceHeight(cid)))
         * scaling));
       if (((height == v_y) && (advance == w1))) {
         continue;
       }
-      if ((prev != (cid - 1))) {
+      if ((prev != unchecked((cid - 1)))) {
         w2 = new global::DripSharp.PdfCarton.Cos.COSArray();
         heights.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(cid)));
         heights.Add(w2);
@@ -324,7 +330,8 @@ internal sealed class PDCIDFontType2Embedder
       w2.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(advance));
       long width = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((hmtx.GetAdvanceWidth(cid)
         * scaling));
-      w2.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get((width / 2)));
+      w2.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(global::DripSharp.Runtime.JavaCompat.IntegralDivide(width,
+        2)));
       w2.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(height));
       prev = cid;
     }
@@ -333,12 +340,13 @@ internal sealed class PDCIDFontType2Embedder
 
   private void buildWidths(global::DripSharp.PdfCarton.Cos.COSDictionary cidFont) {
     int cidMax = base.Ttf.GetNumberOfGlyphs();
-    int[] gidwidths = new int[(cidMax * 2)];
+    int[] gidwidths = new int[unchecked((cidMax * 2))];
     global::DripSharp.PdfCarton.Fonts.Ttf.HorizontalMetricsTable horizontalMetricsTable
       = base.Ttf.GetHorizontalMetrics();
     for (int cid = 0; (cid < cidMax); cid++) {
-      gidwidths[(cid * 2)] = cid;
-      gidwidths[((cid * 2) + 1)] = horizontalMetricsTable.GetAdvanceWidth(cid);
+      gidwidths[unchecked((cid * 2))] = cid;
+      gidwidths[unchecked((unchecked((cid * 2)) + 1))]
+        = horizontalMetricsTable.GetAdvanceWidth(cid);
     }
     cidFont.SetItem(global::DripSharp.PdfCarton.Cos.COSName.W, this.getWidths(gidwidths));
   }
@@ -380,15 +388,16 @@ internal sealed class PDCIDFontType2Embedder
     outer.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastCid));
     global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder.State state
       = global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder.State.First;
-    for (int i = 2; (i < (widths.Length - 1)); i += 2) {
+    for (int i = 2; (i < unchecked((widths.Length - 1))); i += 2) {
       long cid = widths[i];
-      long value = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((widths[(i + 1)] * scaling));
+      long value = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((widths[unchecked((i + 1))]
+        * scaling));
       switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(state)) {
         case 0:
-          if (((cid == (lastCid + 1)) && (value == lastValue))) {
+          if (((cid == unchecked((lastCid + 1))) && (value == lastValue))) {
             state = global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder.State.Serial;
           } else {
-            if ((cid == (lastCid + 1))) {
+            if ((cid == unchecked((lastCid + 1)))) {
               state = global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder.State.Bracket;
               inner = new global::DripSharp.PdfCarton.Cos.COSArray();
               inner.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastValue));
@@ -401,12 +410,12 @@ internal sealed class PDCIDFontType2Embedder
           }
           break;
         case 1:
-          if (((cid == (lastCid + 1)) && (value == lastValue))) {
+          if (((cid == unchecked((lastCid + 1))) && (value == lastValue))) {
             state = global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder.State.Serial;
             outer.Add(inner);
             outer.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastCid));
           } else {
-            if ((cid == (lastCid + 1))) {
+            if ((cid == unchecked((lastCid + 1)))) {
               inner.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastValue));
             } else {
               state = global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder.State.First;
@@ -417,7 +426,7 @@ internal sealed class PDCIDFontType2Embedder
           }
           break;
         case 2:
-          if (((cid != (lastCid + 1)) || (value != lastValue))) {
+          if (((cid != unchecked((lastCid + 1))) || (value != lastValue))) {
             outer.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastCid));
             outer.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastValue));
             outer.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(cid));
@@ -451,7 +460,7 @@ internal sealed class PDCIDFontType2Embedder
       return;
     }
     int cidMax = base.Ttf.GetNumberOfGlyphs();
-    int[] gidMetrics = new int[(cidMax * 4)];
+    int[] gidMetrics = new int[unchecked((cidMax * 4))];
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable glyphTable = base.Ttf.GetGlyph();
     global::DripSharp.PdfCarton.Fonts.Ttf.VerticalMetricsTable verticalMetricsTable
       = base.Ttf.GetVerticalMetrics();
@@ -460,13 +469,14 @@ internal sealed class PDCIDFontType2Embedder
     for (int cid = 0; (cid < cidMax); cid++) {
       global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData glyph = glyphTable.GetGlyph(cid);
       if ((glyph == default!)) {
-        gidMetrics[(cid * 4)] = int.MinValue;
+        gidMetrics[unchecked((cid * 4))] = int.MinValue;
       } else {
-        gidMetrics[(cid * 4)] = cid;
-        gidMetrics[((cid * 4) + 1)] = verticalMetricsTable.GetAdvanceHeight(cid);
-        gidMetrics[((cid * 4) + 2)] = htable.GetAdvanceWidth(cid);
-        gidMetrics[((cid * 4) + 3)] = (glyph.GetYMaximum()
-          + verticalMetricsTable.GetTopSideBearing(cid));
+        gidMetrics[unchecked((cid * 4))] = cid;
+        gidMetrics[unchecked((unchecked((cid * 4)) + 1))]
+          = verticalMetricsTable.GetAdvanceHeight(cid);
+        gidMetrics[unchecked((unchecked((cid * 4)) + 2))] = htable.GetAdvanceWidth(cid);
+        gidMetrics[unchecked((unchecked((cid * 4)) + 3))] = unchecked((glyph.GetYMaximum()
+          + verticalMetricsTable.GetTopSideBearing(cid)));
       }
     }
     cidFont.SetItem(global::DripSharp.PdfCarton.Cos.COSName.W2,
@@ -479,7 +489,7 @@ internal sealed class PDCIDFontType2Embedder
     }
     float scaling = ((float)1000.0F / base.Ttf.GetHeader().GetUnitsPerEm());
     long lastCid = values[0];
-    long lastW1Value = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((-(values[1])
+    long lastW1Value = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((unchecked(-(values[1]))
       * scaling));
     long lastVxValue = global::DripSharp.Runtime.JavaCompat.MathRoundFloat(((float)((values[2]
       * scaling)) / (float)2.0F));
@@ -489,24 +499,26 @@ internal sealed class PDCIDFontType2Embedder
     outer.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastCid));
     global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder.State state
       = global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder.State.First;
-    for (int i = 4; (i < (values.Length - 3)); i += 4) {
+    for (int i = 4; (i < unchecked((values.Length - 3))); i += 4) {
       long cid = values[i];
       if ((cid == int.MinValue)) {
         continue;
       }
-      long w1Value = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((-(values[(i + 1)])
-        * scaling));
-      long vxValue = global::DripSharp.Runtime.JavaCompat.MathRoundFloat(((float)((values[(i + 2)]
+      long w1Value
+        = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((unchecked(-(values[unchecked((i
+        + 1))])) * scaling));
+      long vxValue
+        = global::DripSharp.Runtime.JavaCompat.MathRoundFloat(((float)((values[unchecked((i + 2))]
         * scaling)) / 2));
-      long vyValue = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((values[(i + 3)]
+      long vyValue = global::DripSharp.Runtime.JavaCompat.MathRoundFloat((values[unchecked((i + 3))]
         * scaling));
       switch (global::DripSharp.Runtime.JavaCompat.EnumOrdinal(state)) {
         case 0:
-          if (((((cid == (lastCid + 1)) && (w1Value == lastW1Value)) && (vxValue == lastVxValue))
-            && (vyValue == lastVyValue))) {
+          if (((((cid == unchecked((lastCid + 1))) && (w1Value == lastW1Value)) && (vxValue
+            == lastVxValue)) && (vyValue == lastVyValue))) {
             state = global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder.State.Serial;
           } else {
-            if ((cid == (lastCid + 1))) {
+            if ((cid == unchecked((lastCid + 1)))) {
               state = global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder.State.Bracket;
               inner = new global::DripSharp.PdfCarton.Cos.COSArray();
               inner.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastW1Value));
@@ -523,13 +535,13 @@ internal sealed class PDCIDFontType2Embedder
           }
           break;
         case 1:
-          if (((((cid == (lastCid + 1)) && (w1Value == lastW1Value)) && (vxValue == lastVxValue))
-            && (vyValue == lastVyValue))) {
+          if (((((cid == unchecked((lastCid + 1))) && (w1Value == lastW1Value)) && (vxValue
+            == lastVxValue)) && (vyValue == lastVyValue))) {
             state = global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2Embedder.State.Serial;
             outer.Add(inner);
             outer.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastCid));
           } else {
-            if ((cid == (lastCid + 1))) {
+            if ((cid == unchecked((lastCid + 1)))) {
               inner.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastW1Value));
               inner.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastVxValue));
               inner.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastVyValue));
@@ -544,8 +556,8 @@ internal sealed class PDCIDFontType2Embedder
           }
           break;
         case 2:
-          if (((((cid != (lastCid + 1)) || (w1Value != lastW1Value)) || (vxValue != lastVxValue))
-            || (vyValue != lastVyValue))) {
+          if (((((cid != unchecked((lastCid + 1))) || (w1Value != lastW1Value)) || (vxValue
+            != lastVxValue)) || (vyValue != lastVyValue))) {
             outer.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastCid));
             outer.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastW1Value));
             outer.Add(global::DripSharp.PdfCarton.Cos.COSInteger.Get(lastVxValue));
@@ -587,5 +599,10 @@ internal sealed class PDCIDFontType2Embedder
   public global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont GetCIDFont() {
     return new global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType2(this.cidFont, this.parent,
       base.Ttf);
+  }
+
+  static PDCIDFontType2Embedder() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.TrueTypeEmbedder).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -9,12 +9,9 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 internal class SoftMask : global::DripSharp.Runtime.JavaPaint {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly global::DripSharp.Runtime.JavaColorModel ARGB_COLOR_MODEL
-    = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(1,
-    1, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB));
+  private static readonly global::DripSharp.Runtime.JavaColorModel ARGB_COLOR_MODEL;
 
   private readonly global::DripSharp.Runtime.JavaPaint paint = null!;
 
@@ -45,7 +42,9 @@ internal class SoftMask : global::DripSharp.Runtime.JavaPaint {
       try {
         global::DripSharp.Runtime.JavaColor color
           = global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromRgb(backdropColor.ToRGB());
-        this.bc = ((((299 * color.Red) + (587 * color.Green)) + (114 * color.Blue)) / 1000);
+        this.bc
+          = global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((unchecked((unchecked((299
+          * color.Red)) + unchecked((587 * color.Green)))) + unchecked((114 * color.Blue)))), 1000);
       } catch (global::System.IO.IOException ex) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Rendering.SoftMask.LOG,
           (global::System.Exception)ex,
@@ -92,8 +91,10 @@ internal class SoftMask : global::DripSharp.Runtime.JavaPaint {
       }
       global::DripSharp.Runtime.JavaRaster outputRaster
         = this.GetColorModel().CreateCompatibleWritableRaster(w, h);
-      x1 = (x1 - (int)(this.__outer.bboxDevice.Left));
-      y1 = (y1 - (int)(this.__outer.bboxDevice.Top));
+      x1 = unchecked((x1
+        - unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(this.__outer.bboxDevice.Left)))));
+      y1 = unchecked((y1
+        - unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(this.__outer.bboxDevice.Top)))));
       int[] gray = new int[4];
       object pixelInput = default!;
       int[] pixelOutput = new int[4];
@@ -107,9 +108,9 @@ internal class SoftMask : global::DripSharp.Runtime.JavaPaint {
           pixelOutput[2] = contextRasterColorModel.GetBlue(pixelInput!);
           pixelOutput[3] = contextRasterColorModel.GetAlpha(pixelInput!);
           gray[0] = 0;
-          if ((((((x1 + x) >= 0) && ((y1 + y) >= 0)) && ((x1 + x) < maskRaster.Width)) && ((y1
-            + y) < maskRaster.Height))) {
-            maskRaster.GetPixel((x1 + x), (y1 + y), gray);
+          if (((((unchecked((x1 + x)) >= 0) && (unchecked((y1 + y)) >= 0)) && (unchecked((x1
+            + x)) < maskRaster.Width)) && (unchecked((y1 + y)) < maskRaster.Height))) {
+            maskRaster.GetPixel(unchecked((x1 + x)), unchecked((y1 + y)), gray);
             int g = gray[0];
             if ((this.__outer.transferFunction != default!)) {
               try {
@@ -150,5 +151,12 @@ internal class SoftMask : global::DripSharp.Runtime.JavaPaint {
     }
 
     private readonly global::DripSharp.PdfCarton.Rendering.SoftMask __outer;
+  }
+
+  static SoftMask() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    ARGB_COLOR_MODEL
+      = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(1,
+      1, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB));
   }
 }

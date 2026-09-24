@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Preflight.Process.Reflect;
 
 public class ShadingPatternValidationProcess
 : global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOGGER
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOGGER;
 
   public override void Validate(global::DripSharp.PdfCarton.Preflight.PreflightContext context) {
     global::DripSharp.PdfCarton.Preflight.PreflightPath vPath = context.GetValidationPath();
@@ -62,5 +61,10 @@ public class ShadingPatternValidationProcess
       global::DripSharp.PdfCarton.Preflight.Utils.ContextHelper.ValidateElement(context, resources,
         global::DripSharp.PdfCarton.Preflight.PreflightConfiguration.ExtgstateProcess);
     }
+  }
+
+  static ShadingPatternValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+    LOGGER = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

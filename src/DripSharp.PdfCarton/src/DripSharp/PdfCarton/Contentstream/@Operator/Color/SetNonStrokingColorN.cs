@@ -18,4 +18,8 @@ public class SetNonStrokingColorN
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.NonStrokingColorN;
   }
+
+  static SetNonStrokingColorN() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetNonStrokingColor).TypeHandle);
+  }
 }

@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Ttf.Gsub;
 
 public class GsubWorkerFactory {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public virtual global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.GsubWorker GetGsubWorker(global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup cmapLookup,
     global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData) {
@@ -36,5 +35,9 @@ public class GsubWorkerFactory {
       default:
         return new global::DripSharp.PdfCarton.Fonts.Ttf.Gsub.DefaultGsubWorker();
     }
+  }
+
+  static GsubWorkerFactory() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

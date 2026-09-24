@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Filter;
 
 internal sealed class DCTFilter : global::DripSharp.PdfCarton.Filter.Filter {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const int POS_TRANSFORM = 11;
 
@@ -22,51 +21,59 @@ internal sealed class DCTFilter : global::DripSharp.PdfCarton.Filter.Filter {
     global::DripSharp.Runtime.JavaImageReader reader
       = global::DripSharp.PdfCarton.Filter.Filter.FindRasterReader("JPEG",
       "a suitable JAI I/O image filter is not installed");
-    try {
-      using (global::DripSharp.Runtime.JavaImageInputStream iis
-        = global::DripSharp.Runtime.PdfCartonImageIO.CreateImageInputStream(encoded)) {
-        if ((iis.Read() != 10)) {
-          iis.Seek((long)(0));
+    try { {
+        global::DripSharp.Runtime.JavaImageInputStream iis
+          = global::DripSharp.Runtime.PdfCartonImageIO.CreateImageInputStream(encoded);
+        global::System.Exception __dripsharpPrimary_63_31_0 = null!;
+        try {
+          if ((iis.Read() != 10)) {
+            iis.Seek((long)(0));
+          }
+          reader.SetInput(iis);
+          global::DripSharp.Runtime.JavaImageReadParam irp = reader.GetDefaultReadParam();
+          irp.SetSourceSubsampling(options.GetSubsamplingX(), options.GetSubsamplingY(),
+            options.GetSubsamplingOffsetX(), options.GetSubsamplingOffsetY());
+          irp.SetSourceRegion(options.GetSourceRegion());
+          options.setFilterSubsampled(true);
+          global::DripSharp.Runtime.JavaRaster raster = this.readImageRaster(reader, irp);
+          if ((raster.NumberOfBands == 4)) {
+            int colorTransform;
+            try {
+              colorTransform
+                = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(this.getAdobeTransform(reader.GetImageMetadata(0)));
+            } catch (global::System.Exception e) when (e is global::System.IO.IOException or global::System.OverflowException) {
+              global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Filter.DCTFilter.LOG,
+                (global::System.Exception)e,
+                global::DripSharp.Runtime.JavaCompat.StringValueOf("Couldn't read us\u00EDng getAdobeTransform() - using getAdobeTransformByBruteForce() as fallback"));
+              colorTransform = this.getAdobeTransformByBruteForce(iis);
+            }
+            switch (colorTransform) {
+              case var __case_101_26_0 when __case_101_26_0 == 0:
+                break;
+              case var __case_104_26_0 when __case_104_26_0 == 1:
+                global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Filter.DCTFilter.LOG,
+                  global::DripSharp.Runtime.JavaCompat.StringValueOf("There is no 4 channel YCbCr, using YCCK"));
+                break;
+              case var __case_107_26_0 when __case_107_26_0 == 2:
+                raster = this.fromYCCKtoCMYK(raster);
+                break;
+              default:
+                throw new global::System.ArgumentException("Unknown colorTransform");
+            }
+          } else {
+            if ((raster.NumberOfBands == 3)) {
+              raster = this.fromBGRtoRGB(raster);
+            }
+          }
+          global::DripSharp.Runtime.JavaDataBufferByte dataBuffer
+            = (global::DripSharp.Runtime.JavaDataBufferByte)(raster.GetDataBuffer()!);
+          global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, dataBuffer.GetData());
+        } catch (global::System.Exception __dripsharpCaught_63_31_0) {
+          __dripsharpPrimary_63_31_0 = __dripsharpCaught_63_31_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(iis, __dripsharpPrimary_63_31_0);
         }
-        reader.SetInput(iis);
-        global::DripSharp.Runtime.JavaImageReadParam irp = reader.GetDefaultReadParam();
-        irp.SetSourceSubsampling(options.GetSubsamplingX(), options.GetSubsamplingY(),
-          options.GetSubsamplingOffsetX(), options.GetSubsamplingOffsetY());
-        irp.SetSourceRegion(options.GetSourceRegion());
-        options.setFilterSubsampled(true);
-        global::DripSharp.Runtime.JavaRaster raster = this.readImageRaster(reader, irp);
-        if ((raster.NumberOfBands == 4)) {
-          int colorTransform;
-          try {
-            colorTransform
-              = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(this.getAdobeTransform(reader.GetImageMetadata(0)));
-          } catch (global::System.Exception e) when (e is global::System.IO.IOException or global::System.OverflowException) {
-            global::Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(global::DripSharp.PdfCarton.Filter.DCTFilter.LOG,
-              (global::System.Exception)e,
-              global::DripSharp.Runtime.JavaCompat.StringValueOf("Couldn't read us\u00EDng getAdobeTransform() - using getAdobeTransformByBruteForce() as fallback"));
-            colorTransform = this.getAdobeTransformByBruteForce(iis);
-          }
-          switch (colorTransform) {
-            case var __case_101_26_0 when __case_101_26_0 == 0:
-              break;
-            case var __case_104_26_0 when __case_104_26_0 == 1:
-              global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Filter.DCTFilter.LOG,
-                global::DripSharp.Runtime.JavaCompat.StringValueOf("There is no 4 channel YCbCr, using YCCK"));
-              break;
-            case var __case_107_26_0 when __case_107_26_0 == 2:
-              raster = this.fromYCCKtoCMYK(raster);
-              break;
-            default:
-              throw new global::System.ArgumentException("Unknown colorTransform");
-          }
-        } else {
-          if ((raster.NumberOfBands == 3)) {
-            raster = this.fromBGRtoRGB(raster);
-          }
-        }
-        global::DripSharp.Runtime.JavaDataBufferByte dataBuffer
-          = (global::DripSharp.Runtime.JavaDataBufferByte)(raster.GetDataBuffer()!);
-        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, dataBuffer.GetData());
       }
     } catch (global::System.InvalidOperationException ex) {
       throw new global::System.IO.IOException(null, ex);
@@ -124,8 +131,8 @@ internal sealed class DCTFilter : global::DripSharp.PdfCarton.Filter.Filter {
             global::DripSharp.Runtime.JavaCompat.StringValueOf("app14Adobe entry appears several times, using the last one"));
         }
         global::System.Xml.XmlElement adobe
-          = (global::System.Xml.XmlElement)(app14AdobeNodeList.Item((app14AdobeNodeListLength
-          - 1))!);
+          = (global::System.Xml.XmlElement)(app14AdobeNodeList.Item(unchecked((app14AdobeNodeListLength
+          - 1)))!);
         return global::DripSharp.Runtime.JavaCompat.ParseInt(adobe.GetAttribute("transform"), 10);
       }
     }
@@ -136,7 +143,7 @@ internal sealed class DCTFilter : global::DripSharp.PdfCarton.Filter.Filter {
     int a = 0;
     iis.Seek((long)(0));
     int by;
-    while (((by = iis.Read()) != -1)) {
+    while (((by = iis.Read()) != unchecked(-1))) {
       if (((int)(global::DripSharp.PdfCarton.Filter.DCTFilter.ADOBE[a]) == by)) {
         ++a;
         if ((a != global::DripSharp.PdfCarton.Filter.DCTFilter.ADOBE.Length)) {
@@ -144,18 +151,18 @@ internal sealed class DCTFilter : global::DripSharp.PdfCarton.Filter.Filter {
         }
         a = 0;
         long afterAdobePos = iis.StreamPosition;
-        iis.Seek((afterAdobePos - 9));
+        iis.Seek(unchecked((afterAdobePos - 9)));
         int tag = iis.ReadUnsignedShort();
         if ((tag != 65518)) {
           iis.Seek(afterAdobePos);
           continue;
         }
         int len = iis.ReadUnsignedShort();
-        if ((len >= (global::DripSharp.PdfCarton.Filter.DCTFilter.POS_TRANSFORM + 1))) {
+        if ((len >= unchecked((global::DripSharp.PdfCarton.Filter.DCTFilter.POS_TRANSFORM + 1)))) {
           sbyte[] app14 = new sbyte[global::System.Math.Max(len,
-            (global::DripSharp.PdfCarton.Filter.DCTFilter.POS_TRANSFORM + 1))];
-          if ((iis.Read(app14) >= (global::DripSharp.PdfCarton.Filter.DCTFilter.POS_TRANSFORM
-            + 1))) {
+            unchecked((global::DripSharp.PdfCarton.Filter.DCTFilter.POS_TRANSFORM + 1)))];
+          if ((iis.Read(app14)
+            >= unchecked((global::DripSharp.PdfCarton.Filter.DCTFilter.POS_TRANSFORM + 1)))) {
             return app14[global::DripSharp.PdfCarton.Filter.DCTFilter.POS_TRANSFORM];
           }
         }
@@ -179,13 +186,13 @@ internal sealed class DCTFilter : global::DripSharp.PdfCarton.Filter.Filter {
         int r = this.clamp(((Y + (1.402F * Cr)) - 179.456F));
         int g = this.clamp((((Y - (0.34414F * Cb)) - (0.71414F * Cr)) + 135.45984F));
         int b = this.clamp(((Y + (1.772F * Cb)) - 226.816F));
-        int cyan = (255 - r);
-        int magenta = (255 - g);
-        int yellow = (255 - b);
+        int cyan = unchecked((255 - r));
+        int magenta = unchecked((255 - g));
+        int yellow = unchecked((255 - b));
         value[0] = cyan;
         value[1] = magenta;
         value[2] = yellow;
-        value[3] = (int)K;
+        value[3] = unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(K)));
         writableRaster.SetPixel(x, y, value);
       }
     }
@@ -196,14 +203,14 @@ internal sealed class DCTFilter : global::DripSharp.PdfCarton.Filter.Filter {
     global::DripSharp.Runtime.JavaRaster writableRaster = raster.CreateCompatibleWritableRaster();
     int width = raster.Width;
     int height = raster.Height;
-    int w3 = (width * 3);
+    int w3 = unchecked((width * 3));
     int[] tab = new int[w3];
     for (int y = 0; (y < height); y++) {
       raster.GetPixels(0, y, width, 1, tab);
       for (int off = 0; (off < w3); off += 3) {
         int tmp = tab[off];
-        tab[off] = tab[(off + 2)];
-        tab[(off + 2)] = tmp;
+        tab[off] = tab[unchecked((off + 2))];
+        tab[unchecked((off + 2))] = tmp;
       }
       writableRaster.SetPixels(0, y, width, 1, tab);
     }
@@ -233,11 +240,17 @@ internal sealed class DCTFilter : global::DripSharp.PdfCarton.Filter.Filter {
   }
 
   private int clamp(float value) {
-    return (int)(((value < 0) ? 0 : ((value > 255) ? 255 : value)));
+    return unchecked((int)(global::DripSharp.Runtime.JavaCompat.NumberIntValue(((value < 0) ? 0
+      : ((value > 255) ? 255 : value)))));
   }
 
   public override void Encode(global::System.IO.Stream input, global::System.IO.Stream encoded,
     global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
     throw new global::System.NotSupportedException("DCTFilter encoding not implemented, use the JPEGFactory methods instead");
+  }
+
+  static DCTFilter() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Filter.Filter).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

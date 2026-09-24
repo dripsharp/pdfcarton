@@ -19,7 +19,7 @@ public abstract class COSNumber : global::DripSharp.PdfCarton.Cos.COSBase {
     if ((number.Length == 1)) {
       char digit = number[0];
       if ((((int)'0' <= (int)digit) && ((int)digit <= (int)'9'))) {
-        return global::DripSharp.PdfCarton.Cos.COSInteger.Get(((long)digit - '0'));
+        return global::DripSharp.PdfCarton.Cos.COSInteger.Get(unchecked(((long)digit - '0')));
       }
       if ((((int)digit == (int)'-') || ((int)digit == (int)'.'))) {
         return global::DripSharp.PdfCarton.Cos.COSInteger.Zero;
@@ -55,6 +55,10 @@ public abstract class COSNumber : global::DripSharp.PdfCarton.Cos.COSBase {
       }
     }
     return false;
+  }
+
+  static COSNumber() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Cos.COSBase).TypeHandle);
   }
 
   public COSNumber() {}

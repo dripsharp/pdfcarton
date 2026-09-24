@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Fonts.Pfb;
 
 public class PfbParser {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const int PFB_HEADER_LENGTH = 18;
 
@@ -55,7 +54,7 @@ public class PfbParser {
     long total = 0;
     do {
       int r = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(@in);
-      if (((r == -1) && (total > 0))) {
+      if (((r == unchecked(-1)) && (total > 0))) {
         break;
       }
       if ((r != global::DripSharp.PdfCarton.Fonts.Pfb.PfbParser.START_MARKER)) {
@@ -117,8 +116,8 @@ public class PfbParser {
       sbyte[] ar__207_20 = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(barrList,
         i__201_18);
       if ((((i__201_18
-        == (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(typeList) - 1))
-        && (ar__207_20.Length < 600))
+        == unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(typeList)
+        - 1))) && (ar__207_20.Length < 600))
         && global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringContains(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewString(ar__207_20,
         global::DripSharp.PdfCarton.Runtime.Fonts.JavaStandardCharsets.USASCII), "cleartomark"))) {
         cleartomarkSegment = ar__207_20;
@@ -142,7 +141,7 @@ public class PfbParser {
         dstPos, ar__226_20.Length);
       dstPos += ar__226_20.Length;
     }
-    this.lengths[1] = (dstPos - this.lengths[0]);
+    this.lengths[1] = unchecked((dstPos - this.lengths[0]));
     if ((cleartomarkSegment! != default!)) {
       global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayCopy(cleartomarkSegment!, 0,
         this.pfbdata, dstPos, cleartomarkSegment!.Length);
@@ -156,7 +155,7 @@ public class PfbParser {
     sbyte[] tmpbuf = new sbyte[global::DripSharp.PdfCarton.Fonts.Pfb.PfbParser.BUFFER_SIZE];
     int amountRead;
     while (((amountRead = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.InputStreamRead(@in,
-      tmpbuf)) != -1)) {
+      tmpbuf)) != unchecked(-1))) {
       global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.OutputStreamWrite(@out, tmpbuf, 0,
         amountRead);
     }
@@ -186,6 +185,10 @@ public class PfbParser {
 
   public virtual sbyte[] GetSegment2() {
     return global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CopyOfRange<sbyte>(this.pfbdata,
-      this.lengths[0], (this.lengths[0] + this.lengths[1]));
+      this.lengths[0], unchecked((this.lengths[0] + this.lengths[1])));
+  }
+
+  static PfbParser() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

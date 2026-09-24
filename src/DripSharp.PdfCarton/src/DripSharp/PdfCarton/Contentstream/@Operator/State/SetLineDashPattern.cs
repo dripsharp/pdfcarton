@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Contentstream.@Operator.State;
 
 public class SetLineDashPattern
 : global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public SetLineDashPattern(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine context)
   : base(context) {
@@ -58,5 +57,10 @@ public class SetLineDashPattern
 
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetLineDashpattern;
+  }
+
+  static SetLineDashPattern() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

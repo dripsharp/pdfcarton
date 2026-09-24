@@ -206,4 +206,8 @@ public class HorizontalHeaderTable : global::DripSharp.PdfCarton.Fonts.Ttf.TTFTa
   public virtual void SetXMaxExtent(short maxExtentValue) {
     this.xMaxExtent = maxExtentValue;
   }
+
+  static HorizontalHeaderTable() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.TTFTable).TypeHandle);
+  }
 }

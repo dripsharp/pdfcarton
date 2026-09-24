@@ -9,17 +9,13 @@
 namespace DripSharp.PdfCarton.Fonts.Cff;
 
 public class Type2CharStringParser {
-  private static readonly int CALLSUBR
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callsubr.getHashValue();
+  private static readonly int CALLSUBR;
 
-  private static readonly int CALLGSUBR
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callgsubr.getHashValue();
+  private static readonly int CALLGSUBR;
 
-  private static readonly int HINTMASK
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hintmask.getHashValue();
+  private static readonly int HINTMASK;
 
-  private static readonly int CNTRMASK
-    = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Cntrmask.getHashValue();
+  private static readonly int CNTRMASK;
 
   private readonly string fontName = null!;
 
@@ -49,7 +45,9 @@ public class Type2CharStringParser {
         } else {
           if (((b0 == global::DripSharp.PdfCarton.Fonts.Cff.Type2CharStringParser.HINTMASK) || (b0
             == global::DripSharp.PdfCarton.Fonts.Cff.Type2CharStringParser.CNTRMASK))) {
-            glyphData.vstemCount += (this.countNumbers(glyphData.sequence) / 2);
+            glyphData.vstemCount
+              += global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(this.countNumbers(glyphData.sequence),
+              2);
             int maskLength = this.getMaskLength(glyphData.hstemCount, glyphData.vstemCount);
             for (int i = 0; (i < maskLength); i++) {
               input.ReadUnsignedByte();
@@ -79,8 +77,8 @@ public class Type2CharStringParser {
     global::DripSharp.PdfCarton.Fonts.Cff.Type2CharStringParser.GlyphData glyphData) {
     int subrNumber
       = this.calculateSubrNumber((int)(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Unbox((int?)global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(glyphData.sequence,
-      (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(glyphData.sequence)
-      - 1)))), subrIndex.Length);
+      unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(glyphData.sequence)
+      - 1))))), subrIndex.Length);
     return ((subrNumber < subrIndex.Length) ? subrIndex[subrNumber] : (sbyte[])(default!));
   }
 
@@ -105,25 +103,25 @@ public class Type2CharStringParser {
     this.parseSequence(subrBytes, globalSubrIndex, localSubrIndex, glyphData);
     object lastItem
       = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(glyphData.sequence,
-      (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(glyphData.sequence)
-      - 1));
+      unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(glyphData.sequence)
+      - 1)));
     if (((lastItem is global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand)
       && (global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Type2KeyWord.Ret
       == ((global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand)(lastItem!)).GetType2KeyWord()))) {
       global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListRemove(glyphData.sequence,
-        (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(glyphData.sequence)
-        - 1));
+        unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(glyphData.sequence)
+        - 1)));
     }
   }
 
   private int calculateSubrNumber(int operand, int subrIndexlength) {
     if ((subrIndexlength < 1240)) {
-      return (107 + operand);
+      return unchecked((107 + operand));
     }
     if ((subrIndexlength < 33900)) {
-      return (1131 + operand);
+      return unchecked((1131 + operand));
     }
-    return (32768 + operand);
+    return unchecked((32768 + operand));
   }
 
   private global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand readCommand(int b0,
@@ -132,11 +130,15 @@ public class Type2CharStringParser {
     switch (b0) {
       case var __case_171_14_0 when __case_171_14_0 == 1:
       case var __case_172_14_0 when __case_172_14_0 == 18:
-        glyphData.hstemCount += (this.countNumbers(glyphData.sequence) / 2);
+        glyphData.hstemCount
+          += global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(this.countNumbers(glyphData.sequence),
+          2);
         return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(b0);
       case var __case_175_14_0 when __case_175_14_0 == 3:
       case var __case_176_14_0 when __case_176_14_0 == 23:
-        glyphData.vstemCount += (this.countNumbers(glyphData.sequence) / 2);
+        glyphData.vstemCount
+          += global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(this.countNumbers(glyphData.sequence),
+          2);
         return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(b0);
       case var __case_179_14_0 when __case_179_14_0 == 12:
         return global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.GetInstance(b0,
@@ -152,15 +154,16 @@ public class Type2CharStringParser {
       return (int)(((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort());
     }
     if (((b0 >= 32) && (b0 <= 246))) {
-      return (b0 - 139);
+      return unchecked((b0 - 139));
     }
     if (((b0 >= 247) && (b0 <= 250))) {
       int b1__198_17 = input.ReadUnsignedByte();
-      return ((((b0 - 247) * 256) + b1__198_17) + 108);
+      return unchecked((unchecked((unchecked((unchecked((b0 - 247)) * 256)) + b1__198_17)) + 108));
     }
     if (((b0 >= 251) && (b0 <= 254))) {
       int b1__203_17 = input.ReadUnsignedByte();
-      return (((-((b0 - 251)) * 256) - b1__203_17) - 108);
+      return unchecked((unchecked((unchecked((unchecked(-(unchecked((b0 - 251)))) * 256))
+        - b1__203_17)) - 108));
     }
     if ((b0 == 255)) {
       short value = ((global::DripSharp.PdfCarton.Fonts.Cff.DataInput)(input)).ReadShort();
@@ -173,9 +176,10 @@ public class Type2CharStringParser {
   }
 
   private int getMaskLength(int hstemCount, int vstemCount) {
-    int hintCount = (hstemCount + vstemCount);
-    int length = (hintCount / 8);
-    if (((hintCount % 8) > 0)) {
+    int hintCount = unchecked((hstemCount + vstemCount));
+    int length = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralDivide(hintCount, 8);
+    if ((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IntegralRemainder(hintCount,
+      8) > 0)) {
       length++;
     }
     return length;
@@ -183,8 +187,9 @@ public class Type2CharStringParser {
 
   private int countNumbers(global::System.Collections.Generic.IList<object> sequence) {
     int count = 0;
-    for (int i = (global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence)
-      - 1); (i > -1); i--) {
+    for (int i
+      = unchecked((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CollectionCount(sequence)
+      - 1)); (i > unchecked(-1)); i--) {
       if (!((global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ListGet(sequence,
         i) is global::System.IConvertible))) {
         return count;
@@ -211,5 +216,13 @@ public class Type2CharStringParser {
     }
 
     private readonly global::DripSharp.PdfCarton.Fonts.Cff.Type2CharStringParser __outer;
+  }
+
+  static Type2CharStringParser() {
+    CALLSUBR = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callsubr.getHashValue();
+    CALLGSUBR
+      = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Callgsubr.getHashValue();
+    HINTMASK = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Hintmask.getHashValue();
+    CNTRMASK = global::DripSharp.PdfCarton.Fonts.Cff.CharStringCommand.Key.Cntrmask.getHashValue();
   }
 }

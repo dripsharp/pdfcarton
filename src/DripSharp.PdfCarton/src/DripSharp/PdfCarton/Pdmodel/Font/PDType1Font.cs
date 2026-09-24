@@ -10,15 +10,16 @@ namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public class PDType1Font : global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont,
 global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private static readonly global::System.Collections.Generic.IDictionary<string, string> ALT_NAMES
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, string>();
+  private static readonly global::System.Collections.Generic.IDictionary<string, string> ALT_NAMES;
 
   private const int PFB_START_MARKER = 128;
 
-  static PDType1Font() { {
+  static PDType1Font() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    ALT_NAMES = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, string>(); {
       global::DripSharp.Runtime.JavaCompat.MapPut(global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font.ALT_NAMES,
         "ff", "f_f");
       global::DripSharp.Runtime.JavaCompat.MapPut(global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font.ALT_NAMES,
@@ -50,8 +51,7 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
 
   private readonly global::SkiaSharp.SKMatrix fontMatrixTransform = default;
 
-  private readonly global::System.Collections.Generic.IDictionary<int, sbyte[]> codeToBytesMap
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, sbyte[]>();
+  private readonly global::System.Collections.Generic.IDictionary<int, sbyte[]> codeToBytesMap;
 
   private global::DripSharp.PdfCarton.Util.Matrix fontMatrix = null!;
 
@@ -59,6 +59,8 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
 
   public PDType1Font(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName baseFont)
   : base(baseFont) {
+    this.codeToBytesMap = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, sbyte[]>();
+
     base.Dict.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
       global::DripSharp.PdfCarton.Cos.COSName.Type1);
     base.Dict.SetName(global::DripSharp.PdfCarton.Cos.COSName.BaseFont, baseFont.GetName());
@@ -109,6 +111,8 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
   public PDType1Font(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc,
     global::System.IO.Stream pfbIn,
     global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding encoding) {
+    this.codeToBytesMap = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, sbyte[]>();
+
     global::DripSharp.PdfCarton.Pdmodel.Font.PDType1FontEmbedder embedder
       = new global::DripSharp.PdfCarton.Pdmodel.Font.PDType1FontEmbedder(doc, base.Dict, pfbIn,
       encoding);
@@ -123,6 +127,8 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
 
   public PDType1Font(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary)
   : base(fontDictionary) {
+    this.codeToBytesMap = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, sbyte[]>();
+
     global::DripSharp.PdfCarton.Pdmodel.Font.PDFontDescriptor fd = this.GetFontDescriptor();
     global::DripSharp.PdfCarton.Fonts.Type1.Type1Font t1 = default!;
     bool fontIsDamaged = false;
@@ -148,14 +154,14 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
             == global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font.PFB_START_MARKER)) {
             t1 = global::DripSharp.PdfCarton.Fonts.Type1.Type1Font.CreateWithPFB(bytes);
           } else {
-            if (((length1 < 0) || (length1 > (length1 + length2)))) {
+            if (((length1 < 0) || (length1 > unchecked((length1 + length2))))) {
               throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Invalid length data, actual length: ",
                 bytes.Length), ", /Length1: "), length1), ", /Length2: "), length2));
             }
             sbyte[] segment1 = global::DripSharp.Runtime.JavaCompat.CopyOfRange<sbyte>(bytes, 0,
               length1);
             sbyte[] segment2 = global::DripSharp.Runtime.JavaCompat.CopyOfRange<sbyte>(bytes,
-              length1, (length1 + length2));
+              length1, unchecked((length1 + length2)));
             if (((length1 > 0) && (length2 > 0))) {
               t1 = global::DripSharp.PdfCarton.Fonts.Type1.Type1Font.CreateWithSegments(segment1,
                 segment2);
@@ -199,17 +205,17 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
   }
 
   private int repairLength1(sbyte[] bytes, int length1) {
-    int offset = global::System.Math.Max(0, (length1 - 4));
-    if (((offset <= 0) || (offset > (bytes.Length - 4)))) {
-      offset = (bytes.Length - 4);
+    int offset = global::System.Math.Max(0, unchecked((length1 - 4)));
+    if (((offset <= 0) || (offset > unchecked((bytes.Length - 4))))) {
+      offset = unchecked((bytes.Length - 4));
     }
     offset = global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font.findBinaryOffsetAfterExec(bytes,
       offset);
     if (((offset == 0) && (length1 > 0))) {
       offset = global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font.findBinaryOffsetAfterExec(bytes,
-        (bytes.Length - 4));
+        unchecked((bytes.Length - 4)));
     }
-    if ((((length1 - offset) != 0) && (offset > 0))) {
+    if (((unchecked((length1 - offset)) != 0) && (offset > 0))) {
       if (global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Warning)) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font.LOG,
           global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Ignored invalid Length1 ",
@@ -223,8 +229,9 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
   private static int findBinaryOffsetAfterExec(sbyte[] bytes, int startOffset) {
     int offset = startOffset;
     while ((offset > 0)) {
-      if ((((((int)(bytes[(offset + 0)]) == (int)'e') && ((int)(bytes[(offset + 1)]) == (int)'x'))
-        && ((int)(bytes[(offset + 2)]) == (int)'e')) && ((int)(bytes[(offset + 3)]) == (int)'c'))) {
+      if ((((((int)(bytes[unchecked((offset + 0))]) == (int)'e') && ((int)(bytes[unchecked((offset
+        + 1))]) == (int)'x')) && ((int)(bytes[unchecked((offset + 2))]) == (int)'e'))
+        && ((int)(bytes[unchecked((offset + 3))]) == (int)'c'))) {
         offset += 4;
         while (((offset < bytes.Length) && (((((int)(bytes[offset]) == (int)'\r')
           || ((int)(bytes[offset]) == (int)'\n')) || ((int)(bytes[offset]) == (int)' '))
@@ -239,11 +246,11 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
   }
 
   private int repairLength2(sbyte[] bytes, int length1, int length2) {
-    if (((length2 < 0) || (length2 > (bytes.Length - length1)))) {
+    if (((length2 < 0) || (length2 > unchecked((bytes.Length - length1))))) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDType1Font.LOG,
         global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Ignored invalid Length2 ",
         length2), " for Type 1 font "), this.GetName())));
-      return (bytes.Length - length1);
+      return unchecked((bytes.Length - length1));
     }
     return length2;
   }
@@ -407,8 +414,8 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
           name);
         if ((code != default!)) {
           uniName
-            = global::DripSharp.PdfCarton.Pdmodel.Font.UniUtil.getUniNameOfCodePoint((global::DripSharp.Runtime.JavaCompat.Unbox(code)
-            + 61440));
+            = global::DripSharp.PdfCarton.Pdmodel.Font.UniUtil.getUniNameOfCodePoint(unchecked((global::DripSharp.Runtime.JavaCompat.Unbox(code)
+            + 61440)));
           if (this.genericFont.HasGlyph(uniName)) {
             return uniName;
           }

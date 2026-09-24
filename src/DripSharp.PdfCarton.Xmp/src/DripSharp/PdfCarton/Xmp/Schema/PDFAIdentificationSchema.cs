@@ -11,9 +11,7 @@ namespace DripSharp.PdfCarton.Xmp.Schema;
 [global::DripSharp.PdfCarton.Xmp.Type.StructuredTypeAttribute("http://www.aiim.org/pdfa/ns/id/",
   "pdfaid")]
 public class PDFAIdentificationSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema {
-  private static readonly global::System.Collections.Generic.ISet<string> VALID_VALUES
-    = new global::System.Collections.Generic.HashSet<string>(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.AsList<string>("A",
-    "B", "U", "e", "f"));
+  private static readonly global::System.Collections.Generic.ISet<string> VALID_VALUES;
 
   [global::DripSharp.PdfCarton.Xmp.Type.PropertyTypeAttribute("Integer", "Simple")]
   public const string Part = "part";
@@ -199,5 +197,12 @@ public class PDFAIdentificationSchema : global::DripSharp.PdfCarton.Xmp.Schema.X
       return default!;
     }
     return tmp.GetValue();
+  }
+
+  static PDFAIdentificationSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema).TypeHandle);
+    VALID_VALUES
+      = new global::System.Collections.Generic.HashSet<string>(global::DripSharp.PdfCarton.Runtime.Xmp.JavaCompat.AsList<string>("A",
+      "B", "U", "e", "f"));
   }
 }

@@ -95,4 +95,8 @@ public class AcroFormValidationProcess
         ((global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDNonTerminalField)(field!)).GetChildren()));
     }
   }
+
+  static AcroFormValidationProcess() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Process.AbstractProcess).TypeHandle);
+  }
 }

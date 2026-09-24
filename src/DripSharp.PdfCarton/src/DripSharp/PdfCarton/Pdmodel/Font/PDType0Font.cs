@@ -10,13 +10,11 @@ namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public class PDType0Font : global::DripSharp.PdfCarton.Pdmodel.Font.PDFont,
 global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont descendantFont = null!;
 
-  private readonly global::System.Collections.Generic.ISet<int> noUnicode
-    = new global::System.Collections.Generic.HashSet<int>();
+  private readonly global::System.Collections.Generic.ISet<int> noUnicode;
 
   private readonly global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubData gsubData = null!;
 
@@ -36,6 +34,8 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
 
   public PDType0Font(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary)
   : base(fontDictionary) {
+    this.noUnicode = new global::System.Collections.Generic.HashSet<int>();
+
     this.gsubData = global::DripSharp.PdfCarton.Fonts.Ttf.Model.GsubDataStatics.NoDataFound;
     this.cmapLookup = default!;
     global::DripSharp.PdfCarton.Cos.COSArray descendantFonts
@@ -66,6 +66,8 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
   private PDType0Font(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
     global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf, bool embedSubset, bool closeTTF,
     bool vertical) {
+    this.noUnicode = new global::System.Collections.Generic.HashSet<int>();
+
     if (vertical) {
       ttf.EnableVerticalSubstitutions();
     }
@@ -305,7 +307,7 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
   }
 
   public override global::DripSharp.PdfCarton.Util.Vector GetPositionVector(int code) {
-    return this.descendantFont.GetPositionVector(code).Scale((-1 / (float)1000.0F));
+    return this.descendantFont.GetPositionVector(code).Scale((unchecked(-1) / (float)1000.0F));
   }
 
   public override global::DripSharp.PdfCarton.Util.Vector GetDisplacement(int code) {
@@ -445,5 +447,10 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
 
   public virtual global::DripSharp.PdfCarton.Fonts.Ttf.CmapLookup GetCmapLookup() {
     return this.cmapLookup;
+  }
+
+  static PDType0Font() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation;
 
 public class PDAnnotationPopup
 : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const string SubType = "Popup";
 
@@ -55,5 +54,10 @@ public class PDAnnotationPopup
         global::DripSharp.Runtime.JavaCompat.StringValueOf("An exception while trying to get the parent markup - ignoring"));
       return default!;
     }
+  }
+
+  static PDAnnotationPopup() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

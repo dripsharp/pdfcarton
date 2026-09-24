@@ -112,4 +112,8 @@ public abstract class PDFGraphicsStreamEngine
   public abstract void FillAndStrokePath(int windingRule);
 
   public abstract void ShadingFill(global::DripSharp.PdfCarton.Cos.COSName shadingName);
+
+  static PDFGraphicsStreamEngine() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.PDFStreamEngine).TypeHandle);
+  }
 }

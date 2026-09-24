@@ -12,16 +12,19 @@ public abstract class PDCIEDictionaryBasedColorSpace
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEBasedColorSpace {
   protected internal readonly global::DripSharp.PdfCarton.Cos.COSDictionary Dictionary = null!;
 
-  private static readonly global::DripSharp.Runtime.JavaColorSpace CIEXYZ
-    = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_CIEXYZ);
+  private static readonly global::DripSharp.Runtime.JavaColorSpace CIEXYZ;
 
-  protected internal float WpX = 1;
+  protected internal float WpX;
 
-  protected internal float WpY = 1;
+  protected internal float WpY;
 
-  protected internal float WpZ = 1;
+  protected internal float WpZ;
 
   protected internal PDCIEDictionaryBasedColorSpace(global::DripSharp.PdfCarton.Cos.COSName cosName) {
+    this.WpX = 1;
+    this.WpY = 1;
+    this.WpZ = 1;
+
     base.Array = new global::DripSharp.PdfCarton.Cos.COSArray();
     this.Dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
     base.Array.Add(cosName);
@@ -30,6 +33,10 @@ public abstract class PDCIEDictionaryBasedColorSpace
   }
 
   protected internal PDCIEDictionaryBasedColorSpace(global::DripSharp.PdfCarton.Cos.COSArray rgb) {
+    this.WpX = 1;
+    this.WpY = 1;
+    this.WpZ = 1;
+
     base.Array = rgb;
     this.Dictionary = (global::DripSharp.PdfCarton.Cos.COSDictionary)(base.Array.GetObject(1)!);
     this.fillWhitepointCache(this.GetWhitepoint());
@@ -95,5 +102,11 @@ public abstract class PDCIEDictionaryBasedColorSpace
 
   public virtual void SetBlackPoint(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDTristimulus blackpoint) {
     this.Dictionary.SetItem(global::DripSharp.PdfCarton.Cos.COSName.BlackPoint, blackpoint);
+  }
+
+  static PDCIEDictionaryBasedColorSpace() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDCIEBasedColorSpace).TypeHandle);
+    CIEXYZ
+      = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_CIEXYZ);
   }
 }

@@ -112,6 +112,10 @@ public sealed class CFFISOAdobeCharset : global::DripSharp.PdfCarton.Fonts.Cff.C
     return global::DripSharp.PdfCarton.Fonts.Cff.CFFISOAdobeCharset.INSTANCE;
   }
 
-  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFISOAdobeCharset INSTANCE
-    = new global::DripSharp.PdfCarton.Fonts.Cff.CFFISOAdobeCharset();
+  private static readonly global::DripSharp.PdfCarton.Fonts.Cff.CFFISOAdobeCharset INSTANCE;
+
+  static CFFISOAdobeCharset() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Cff.CFFCharsetType1).TypeHandle);
+    INSTANCE = new global::DripSharp.PdfCarton.Fonts.Cff.CFFISOAdobeCharset();
+  }
 }

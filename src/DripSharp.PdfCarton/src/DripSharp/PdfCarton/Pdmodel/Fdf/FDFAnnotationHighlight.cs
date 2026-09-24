@@ -25,4 +25,8 @@ public class FDFAnnotationHighlight
     base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
       global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationHighlight.Subtype);
   }
+
+  static FDFAnnotationHighlight() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTextMarkup).TypeHandle);
+  }
 }

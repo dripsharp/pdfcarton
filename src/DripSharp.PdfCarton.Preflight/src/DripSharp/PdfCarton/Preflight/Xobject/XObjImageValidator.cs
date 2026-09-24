@@ -10,15 +10,15 @@ namespace DripSharp.PdfCarton.Preflight.Xobject;
 
 public class XObjImageValidator
 : global::DripSharp.PdfCarton.Preflight.Xobject.AbstractXObjValidator {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOGGER
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOGGER;
 
-  protected internal global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject XImage
-    = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject XImage;
 
   public XObjImageValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext context,
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject xobj) : base(context,
     xobj.GetCOSObject()) {
+    this.XImage = default!;
+
     this.XImage = xobj;
   }
 
@@ -121,5 +121,10 @@ public class XObjImageValidator
     this.CheckIntent();
     this.CheckBPC();
     this.CheckColorSpaceAndImageMask();
+  }
+
+  static XObjImageValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Xobject.AbstractXObjValidator).TypeHandle);
+    LOGGER = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

@@ -34,4 +34,8 @@ public class XMPageTextSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema
   : base(metadata, prefix) {
 
   }
+
+  static XMPageTextSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema).TypeHandle);
+  }
 }

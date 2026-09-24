@@ -25,4 +25,8 @@ public class FDFAnnotationStrikeOut
     base.Annot.SetName(global::DripSharp.PdfCarton.Cos.COSName.Subtype,
       global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationStrikeOut.Subtype);
   }
+
+  static FDFAnnotationStrikeOut() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotationTextMarkup).TypeHandle);
+  }
 }

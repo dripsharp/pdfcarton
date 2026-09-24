@@ -38,12 +38,12 @@ public class Benchmark {
     int size = global::DripSharp.Runtime.JavaCompat.CollectionCount(lfd);
     for (int i__74_18 = 0; (i__74_18 < loop); i__74_18++) {
       global::DripSharp.Runtime.JavaFile file = global::DripSharp.Runtime.JavaCompat.ListGet(lfd,
-        (i__74_18 % size));
+        global::DripSharp.Runtime.JavaCompat.IntegralRemainder(i__74_18, size));
       long startLTime = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
       global::DripSharp.PdfCarton.Preflight.ValidationResult result
         = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Preflight.ValidationResult>(typeof(global::DripSharp.PdfCarton.Preflight.Parser.PreflightParser),
         "Validate", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-        new object[] { file });
+        new object[] { (global::DripSharp.Runtime.JavaFile)file });
       if (!(result.IsValid())) {
         resFile.Write(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
           global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(file),
@@ -57,7 +57,7 @@ public class Benchmark {
       long endLTime = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
       resFile.Write(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(file.Name,
-        " (ms) : "), (endLTime - startLTime)), "\n")));
+        " (ms) : "), unchecked((endLTime - startLTime))), "\n")));
       resFile.Flush();
     }
     long endGTime = global::System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
@@ -69,10 +69,11 @@ public class Benchmark {
       sdf.Format(global::System.DateTimeOffset.FromUnixTimeMilliseconds(endGTime))), "\n")));
     resFile.Write(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Duration (ms) : ",
-      (endGTime - startGTime)), "\n")));
+      unchecked((endGTime - startGTime))), "\n")));
     resFile.Write(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Average (ms) : ",
-      (int)(((endGTime - startGTime) / loop))), "\n")));
+      (int)global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((endGTime - startGTime)),
+      loop)), "\n")));
     global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
       global::DripSharp.Runtime.JavaCompat.Concat("Start : ",
       sdf.Format(global::System.DateTimeOffset.FromUnixTimeMilliseconds(startGTime)))));
@@ -80,10 +81,12 @@ public class Benchmark {
       global::DripSharp.Runtime.JavaCompat.Concat("End : ",
       sdf.Format(global::System.DateTimeOffset.FromUnixTimeMilliseconds(endGTime)))));
     global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
-      global::DripSharp.Runtime.JavaCompat.Concat("Duration (ms) : ", (endGTime - startGTime))));
+      global::DripSharp.Runtime.JavaCompat.Concat("Duration (ms) : ", unchecked((endGTime
+      - startGTime)))));
     global::DripSharp.Runtime.JavaCompat.@out.WriteLine(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
-      global::DripSharp.Runtime.JavaCompat.Concat("Average (ms) : ", (int)(((endGTime - startGTime)
-      / loop)))));
+      global::DripSharp.Runtime.JavaCompat.Concat("Average (ms) : ",
+      (int)global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((endGTime - startGTime)),
+      loop))));
     resFile.Flush();
     global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(resFile);
   }

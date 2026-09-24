@@ -37,4 +37,8 @@ public class CoverageTableFormat1
       this.GetCoverageFormat(),
       global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.ArrayToString(this.glyphArray));
   }
+
+  static CoverageTableFormat1() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Fonts.Ttf.Table.Common.CoverageTable).TypeHandle);
+  }
 }

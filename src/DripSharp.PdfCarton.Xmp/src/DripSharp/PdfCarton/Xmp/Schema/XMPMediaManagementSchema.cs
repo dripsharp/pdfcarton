@@ -390,4 +390,8 @@ public class XMPMediaManagementSchema : global::DripSharp.PdfCarton.Xmp.Schema.X
   public virtual global::System.Collections.Generic.IList<string> GetIngredients() {
     return this.GetUnqualifiedBagValueList(global::DripSharp.PdfCarton.Xmp.Schema.XMPMediaManagementSchema.Ingredients);
   }
+
+  static XMPMediaManagementSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema).TypeHandle);
+  }
 }

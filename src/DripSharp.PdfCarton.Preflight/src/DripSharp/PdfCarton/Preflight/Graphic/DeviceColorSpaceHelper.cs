@@ -45,4 +45,8 @@ public class DeviceColorSpaceHelper
         break;
     }
   }
+
+  static DeviceColorSpaceHelper() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Graphic.StandardColorSpaceHelper).TypeHandle);
+  }
 }

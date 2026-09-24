@@ -41,9 +41,17 @@ public class TestCOSStream {
     sbyte[] testStringEncoded = this.encodeData(testString,
       global::DripSharp.PdfCarton.Cos.COSName.FlateDecode);
     global::DripSharp.PdfCarton.Cos.COSStream stream
-      = new global::DripSharp.PdfCarton.Cos.COSStream();
-    using (global::System.IO.Stream output = stream.CreateRawOutputStream()) {
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, testStringEncoded);
+      = new global::DripSharp.PdfCarton.Cos.COSStream(); {
+      global::System.IO.Stream output = stream.CreateRawOutputStream();
+      global::System.Exception __dripsharpPrimary_89_27_0 = null!;
+      try {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, testStringEncoded);
+      } catch (global::System.Exception __dripsharpCaught_89_27_0) {
+        __dripsharpPrimary_89_27_0 = __dripsharpCaught_89_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(output, __dripsharpPrimary_89_27_0);
+      }
     }
     stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Filter,
       global::DripSharp.PdfCarton.Cos.COSName.FlateDecode);
@@ -80,9 +88,17 @@ public class TestCOSStream {
       = new global::DripSharp.PdfCarton.Cos.COSArray();
     filters.Add(global::DripSharp.PdfCarton.Cos.COSName.Ascii85Decode);
     filters.Add(global::DripSharp.PdfCarton.Cos.COSName.FlateDecode);
-    stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Filter, filters);
-    using (global::System.IO.Stream output = stream.CreateRawOutputStream()) {
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, testStringEncoded);
+    stream.SetItem(global::DripSharp.PdfCarton.Cos.COSName.Filter, filters); {
+      global::System.IO.Stream output = stream.CreateRawOutputStream();
+      global::System.Exception __dripsharpPrimary_136_27_0 = null!;
+      try {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, testStringEncoded);
+      } catch (global::System.Exception __dripsharpCaught_136_27_0) {
+        __dripsharpPrimary_136_27_0 = __dripsharpCaught_136_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(output, __dripsharpPrimary_136_27_0);
+      }
     }
     this.validateDecoded(stream, testString);
   }
@@ -103,21 +119,37 @@ public class TestCOSStream {
     this.validateEncoded(stream, testStringEncoded);
   }
 
-  internal virtual void testHasStreamData() {
-    using (global::DripSharp.PdfCarton.Cos.COSStream stream
-      = new global::DripSharp.PdfCarton.Cos.COSStream()) {
-      global::DripSharp.Testing.JavaAssertions.False(stream.HasData(), null);
-      global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
-        => { stream.CreateInputStream(); },
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "createInputStream should have thrown an IOException"));
-      sbyte[] testString
-        = global::DripSharp.Runtime.JavaCompat.StringGetBytes("This is a test string to be used as input for TestCOSStream",
-        global::DripSharp.Runtime.JavaStandardCharsets.USASCII);
-      using (global::System.IO.Stream output = stream.CreateOutputStream()) {
-        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, testString);
+  internal virtual void testHasStreamData() { {
+      global::DripSharp.PdfCarton.Cos.COSStream stream
+        = new global::DripSharp.PdfCarton.Cos.COSStream();
+      global::System.Exception __dripsharpPrimary_167_24_0 = null!;
+      try {
+        global::DripSharp.Testing.JavaAssertions.False(stream.HasData(), null);
+        global::DripSharp.Testing.JavaAssertions.Throws<global::System.IO.IOException>(()
+          => { stream.CreateInputStream(); },
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "createInputStream should have thrown an IOException"));
+        sbyte[] testString
+          = global::DripSharp.Runtime.JavaCompat.StringGetBytes("This is a test string to be used as input for TestCOSStream",
+          global::DripSharp.Runtime.JavaStandardCharsets.USASCII); {
+          global::System.IO.Stream output = stream.CreateOutputStream();
+          global::System.Exception __dripsharpPrimary_175_31_0 = null!;
+          try {
+            global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, testString);
+          } catch (global::System.Exception __dripsharpCaught_175_31_0) {
+            __dripsharpPrimary_175_31_0 = __dripsharpCaught_175_31_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(output, __dripsharpPrimary_175_31_0);
+          }
+        }
+        global::DripSharp.Testing.JavaAssertions.True(stream.HasData(), null);
+      } catch (global::System.Exception __dripsharpCaught_167_24_0) {
+        __dripsharpPrimary_167_24_0 = __dripsharpCaught_167_24_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(stream, __dripsharpPrimary_167_24_0);
       }
-      global::DripSharp.Testing.JavaAssertions.True(stream.HasData(), null);
     }
   }
 
@@ -134,9 +166,17 @@ public class TestCOSStream {
   private global::DripSharp.PdfCarton.Cos.COSStream createStream(sbyte[] testString,
     global::DripSharp.PdfCarton.Cos.COSBase filters) {
     global::DripSharp.PdfCarton.Cos.COSStream stream
-      = new global::DripSharp.PdfCarton.Cos.COSStream();
-    using (global::System.IO.Stream output = stream.CreateOutputStream(filters)) {
-      global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, testString);
+      = new global::DripSharp.PdfCarton.Cos.COSStream(); {
+      global::System.IO.Stream output = stream.CreateOutputStream(filters);
+      global::System.Exception __dripsharpPrimary_194_27_0 = null!;
+      try {
+        global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(output, testString);
+      } catch (global::System.Exception __dripsharpCaught_194_27_0) {
+        __dripsharpPrimary_194_27_0 = __dripsharpCaught_194_27_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(output, __dripsharpPrimary_194_27_0);
+      }
     }
     return stream;
   }

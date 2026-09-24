@@ -9,11 +9,9 @@
 namespace DripSharp.PdfCarton.Pdfwriter.Compress;
 
 public class CompressParameters {
-  public static readonly global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters DefaultCompression
-    = new global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters();
+  public static readonly global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters DefaultCompression;
 
-  public static readonly global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters NoCompression
-    = new global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters(0);
+  public static readonly global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters NoCompression;
 
   public const int DefaultObjectStreamSize = 200;
 
@@ -37,5 +35,10 @@ public class CompressParameters {
 
   public virtual bool IsCompress() {
     return (this.objectStreamSize > 0);
+  }
+
+  static CompressParameters() {
+    DefaultCompression = new global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters();
+    NoCompression = new global::DripSharp.PdfCarton.Pdfwriter.Compress.CompressParameters(0);
   }
 }

@@ -16,4 +16,8 @@ public class StrikeoutAnnotationValidator
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationStrikeout(annotDictionary);
     this.PdAnnot = this.PdMarkup;
   }
+
+  static StrikeoutAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.MarkupAnnotationValidator).TypeHandle);
+  }
 }

@@ -42,4 +42,8 @@ public abstract class SetColor
   protected internal abstract void setColor(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color);
 
   protected internal abstract global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace GetColorSpace();
+
+  static SetColor() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
+  }
 }

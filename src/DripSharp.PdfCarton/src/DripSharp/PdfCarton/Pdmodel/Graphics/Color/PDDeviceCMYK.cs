@@ -11,7 +11,9 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 public class PDDeviceCMYK : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceColorSpace {
   public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceCMYK Instance = null!;
 
-  static PDDeviceCMYK() { {
+  static PDDeviceCMYK() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceColorSpace).TypeHandle);
+    {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceCMYK.Instance
         = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceCMYK();
     }
@@ -21,14 +23,16 @@ public class PDDeviceCMYK : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
 
   private global::DripSharp.Runtime.JavaIccColorSpace awtColorSpace = null!;
 
-  private volatile bool initDone = false;
+  private volatile bool initDone;
 
-  private bool usePureJavaCMYKConversion = false;
+  private bool usePureJavaCMYKConversion;
 
   protected internal PDDeviceCMYK() {
     this.initialColor
       = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] { 0, 0, 0, 1 },
       this);
+    this.initDone = false;
+    this.usePureJavaCMYKConversion = false;
   }
 
   protected internal virtual void Init() {
@@ -60,9 +64,17 @@ public class PDDeviceCMYK : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
     if ((resourceAsStream == default!)) {
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("resource '",
         resourceName), "' not found"));
-    }
-    using (global::System.IO.Stream @is = new global::System.IO.BufferedStream(resourceAsStream)) {
-      return global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is);
+    } {
+      global::System.IO.Stream @is = new global::System.IO.BufferedStream(resourceAsStream);
+      global::System.Exception __dripsharpPrimary_110_26_0 = null!;
+      try {
+        return global::DripSharp.Runtime.PdfCartonFontCompat.GetIccProfile(@is);
+      } catch (global::System.Exception __dripsharpCaught_110_26_0) {
+        __dripsharpPrimary_110_26_0 = __dripsharpCaught_110_26_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(@is, __dripsharpPrimary_110_26_0);
+      }
     }
   }
 
@@ -111,8 +123,8 @@ public class PDDeviceCMYK : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
       float[] destValues = new float[3];
       int startX = raster.MinX;
       int startY = raster.MinY;
-      int endX = (raster.Width + startX);
-      int endY = (raster.Height + startY);
+      int endX = unchecked((raster.Width + startX));
+      int endY = unchecked((raster.Height + startY));
       for (int x = startX; (x < endX); x++) {
         for (int y = startY; (y < endY); y++) {
           raster.GetPixel(x, y, srcValues);

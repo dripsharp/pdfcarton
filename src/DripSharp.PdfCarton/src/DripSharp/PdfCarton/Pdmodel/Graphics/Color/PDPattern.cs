@@ -10,9 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
 public sealed class PDPattern
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSpecialColorSpace {
-  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor EMPTY_PATTERN
-    = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] {  },
-    (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace)default!);
+  private static readonly global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor EMPTY_PATTERN;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.PDResources resources = null!;
 
@@ -79,5 +77,11 @@ public sealed class PDPattern
 
   public override string ToString() {
     return "Pattern";
+  }
+
+  static PDPattern() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSpecialColorSpace).TypeHandle);
+    EMPTY_PATTERN = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor(new float[] {  },
+      (global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace)default!);
   }
 }

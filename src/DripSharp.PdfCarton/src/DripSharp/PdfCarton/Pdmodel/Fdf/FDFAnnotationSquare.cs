@@ -68,4 +68,8 @@ public class FDFAnnotationSquare : global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAn
     return ((rd != default!) ? new global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle(rd)
       : (global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle)(default!));
   }
+
+  static FDFAnnotationSquare() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Fdf.FDFAnnotation).TypeHandle);
+  }
 }

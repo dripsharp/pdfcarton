@@ -135,4 +135,8 @@ public class PDAnnotationMarkup
       ? new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary(bs)
       : (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderStyleDictionary)(default!));
   }
+
+  static PDAnnotationMarkup() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation).TypeHandle);
+  }
 }

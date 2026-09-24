@@ -22,7 +22,7 @@ public class SetCharSpacing
         arguments);
     }
     object charSpacing = global::DripSharp.Runtime.JavaCompat.ListGet(arguments,
-      (global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) - 1));
+      unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(arguments) - 1)));
     if ((charSpacing is global::DripSharp.PdfCarton.Cos.COSNumber)) {
       global::DripSharp.PdfCarton.Cos.COSNumber characterSpacing
         = (global::DripSharp.PdfCarton.Cos.COSNumber)(charSpacing!);
@@ -32,5 +32,9 @@ public class SetCharSpacing
 
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.SetCharSpacing;
+  }
+
+  static SetCharSpacing() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorProcessor).TypeHandle);
   }
 }

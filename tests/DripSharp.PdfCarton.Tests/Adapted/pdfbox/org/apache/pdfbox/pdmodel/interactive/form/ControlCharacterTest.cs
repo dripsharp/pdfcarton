@@ -5,9 +5,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Interactive.Form;
 
 public class ControlCharacterTest {
-  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "src/test/resources/org/apache/pdfbox/pdmodel/interactive/form"));
+  private static readonly global::DripSharp.Runtime.JavaFile IN_DIR;
 
   private const string NAME_OF_PDF = "ControlCharacters.pdf";
 
@@ -19,7 +17,7 @@ public class ControlCharacterTest {
     this.document
       = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
       "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.ControlCharacterTest.IN_DIR,
+      new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.ControlCharacterTest.IN_DIR,
         global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
         global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.ControlCharacterTest.NAME_OF_PDF)) });
     this.acroForm = this.document.GetDocumentCatalog().GetAcroForm();
@@ -108,5 +106,11 @@ public class ControlCharacterTest {
     } finally {
       this.tearDown();
     }
+  }
+
+  static ControlCharacterTest() {
+    IN_DIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "src/test/resources/org/apache/pdfbox/pdmodel/interactive/form"));
   }
 }

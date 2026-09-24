@@ -5,87 +5,120 @@
 namespace DripSharp.PdfCarton.Cos;
 
 public class TestCOSName {
-  private static readonly global::DripSharp.Runtime.JavaFile TARGETPDFDIR
-    = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-    "target/pdfs"));
+  private static readonly global::DripSharp.Runtime.JavaFile TARGETPDFDIR;
 
   internal virtual void PDFBox4076() {
     string special = "\u4E2D\u56FD\u4F60\u597D!";
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__47_25
-      = new global::DripSharp.PdfCarton.Pdmodel.PDDocument()) {
-      global::DripSharp.PdfCarton.Pdmodel.PDPage page
-        = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
-      document__47_25.AddPage(page);
-      document__47_25.GetDocumentCatalog().GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        special)), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", special));
-      document__47_25.Save(baos);
-    }
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document__55_25
-      = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos))) {
-      global::DripSharp.PdfCarton.Cos.COSDictionary catalogDict
-        = document__55_25.GetDocumentCatalog().GetCOSObject();
-      global::DripSharp.Testing.JavaAssertions.True(catalogDict.ContainsKey(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        special)), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(special,
-        catalogDict.GetString(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        special)), null);
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document__47_25
+        = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
+      global::System.Exception __dripsharpPrimary_47_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.PDPage page
+          = new global::DripSharp.PdfCarton.Pdmodel.PDPage();
+        document__47_25.AddPage(page);
+        document__47_25.GetDocumentCatalog().GetCOSObject().SetString(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          special)), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", special));
+        document__47_25.Save(baos);
+      } catch (global::System.Exception __dripsharpCaught_47_25_0) {
+        __dripsharpPrimary_47_25_0 = __dripsharpCaught_47_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document__47_25,
+          __dripsharpPrimary_47_25_0);
+      }
+    } {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document__55_25
+        = global::DripSharp.PdfCarton.Loader.LoadPDF(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos));
+      global::System.Exception __dripsharpPrimary_55_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Cos.COSDictionary catalogDict
+          = document__55_25.GetDocumentCatalog().GetCOSObject();
+        global::DripSharp.Testing.JavaAssertions.True(catalogDict.ContainsKey(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          special)), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(special,
+          catalogDict.GetString(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          special)), null);
+      } catch (global::System.Exception __dripsharpCaught_55_25_0) {
+        __dripsharpPrimary_55_25_0 = __dripsharpCaught_55_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document__55_25,
+          __dripsharpPrimary_55_25_0);
+      }
     }
   }
 
   internal virtual void PDFBox6178() {
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Cos.TestCOSName.TARGETPDFDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6178.pdf")) })) {
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field
-        = document.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!).GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Geschlecht"));
-      field.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "m\u00E4nnlich"));
-      global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.ListGet(field.GetWidgets(),
-        0).GetAppearance().GetNormalAppearance().GetCOSObject().KeySet(), (k) => {
-          try {
-            k.WritePDF(baos);
-          } catch (global::System.IO.IOException) {}
-        });
-      string writtenKeys
-        = global::DripSharp.Runtime.JavaCompat.NewString(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos),
-        global::DripSharp.PdfCarton.Tests.Support.EncodingByName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "UTF-8")));
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.StringContains(writtenKeys,
-        "/m#E4nnlich"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Output should be /m#e4nnlich (with 0xE4 as hex escape)"));
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Cos.TestCOSName.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6178.pdf")) });
+      global::System.Exception __dripsharpPrimary_73_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field
+          = document.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!).GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Geschlecht"));
+        field.SetValue(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "m\u00E4nnlich"));
+        global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.ListGet(field.GetWidgets(),
+          0).GetAppearance().GetNormalAppearance().GetCOSObject().KeySet(), (k) => {
+            try {
+              k.WritePDF(baos);
+            } catch (global::System.IO.IOException) {}
+          });
+        string writtenKeys
+          = global::DripSharp.Runtime.JavaCompat.NewString(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos),
+          global::DripSharp.PdfCarton.Tests.Support.EncodingByName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "UTF-8")));
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.StringContains(writtenKeys,
+          "/m#E4nnlich"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Output should be /m#e4nnlich (with 0xE4 as hex escape)"));
+      } catch (global::System.Exception __dripsharpCaught_73_25_0) {
+        __dripsharpPrimary_73_25_0 = __dripsharpCaught_73_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_73_25_0);
+      }
     }
   }
 
   internal virtual void NameWithASCII_NUL() {
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
-      = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    using (global::DripSharp.PdfCarton.Pdmodel.PDDocument document
-      = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
-      "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
-      new object[] { global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Cos.TestCOSName.TARGETPDFDIR,
-        global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6178-1.pdf")) })) {
-      global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field
-        = document.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!).GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Geschlecht"));
-      global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.ListGet(field.GetWidgets(),
-        0).GetAppearance().GetNormalAppearance().GetCOSObject().KeySet(), (k) => {
-          try {
-            k.WritePDF(baos);
-          } catch (global::System.IO.IOException) {}
-        });
-      string writtenKeys
-        = global::DripSharp.Runtime.JavaCompat.NewString(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos),
-        global::DripSharp.PdfCarton.Tests.Support.EncodingByName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "UTF-8")));
-      global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.StringContains(writtenKeys,
-        "/m#00nnlich"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-        "Output should be /m#00nnlich (with 0xE4 as hex escape)"));
+      = new global::DripSharp.Runtime.JavaByteArrayOutputStream(); {
+      global::DripSharp.PdfCarton.Pdmodel.PDDocument document
+        = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
+        "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
+        new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Cos.TestCOSName.TARGETPDFDIR,
+          global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PDFBOX-6178-1.pdf")) });
+      global::System.Exception __dripsharpPrimary_105_25_0 = null!;
+      try {
+        global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDField field
+          = document.GetDocumentCatalog().GetAcroForm((global::DripSharp.PdfCarton.Pdmodel.Fixup.PDDocumentFixup)default!).GetField(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Geschlecht"));
+        global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.Runtime.JavaCompat.ListGet(field.GetWidgets(),
+          0).GetAppearance().GetNormalAppearance().GetCOSObject().KeySet(), (k) => {
+            try {
+              k.WritePDF(baos);
+            } catch (global::System.IO.IOException) {}
+          });
+        string writtenKeys
+          = global::DripSharp.Runtime.JavaCompat.NewString(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos),
+          global::DripSharp.PdfCarton.Tests.Support.EncodingByName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "UTF-8")));
+        global::DripSharp.Testing.JavaAssertions.True(global::DripSharp.Runtime.JavaCompat.StringContains(writtenKeys,
+          "/m#00nnlich"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+          "Output should be /m#00nnlich (with 0xE4 as hex escape)"));
+      } catch (global::System.Exception __dripsharpCaught_105_25_0) {
+        __dripsharpPrimary_105_25_0 = __dripsharpCaught_105_25_0;
+        throw;
+      } finally {
+        global::DripSharp.Runtime.JavaCompat.CloseResource(document, __dripsharpPrimary_105_25_0);
+      }
     }
   }
 
@@ -111,5 +144,11 @@ public class TestCOSName {
       this.PDFBox6178();
     } finally {
     }
+  }
+
+  static TestCOSName() {
+    TARGETPDFDIR
+      = global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+      "target/pdfs"));
   }
 }

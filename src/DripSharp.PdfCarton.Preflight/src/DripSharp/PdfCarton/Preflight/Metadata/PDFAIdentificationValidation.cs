@@ -43,7 +43,7 @@ public class PDFAIdentificationValidation {
       }
     }
     this.CheckConformanceLevel(ve, id.GetConformance());
-    this.CheckPartNumber(ve, ((id.GetPart() == default!) ? -1
+    this.CheckPartNumber(ve, ((id.GetPart() == default!) ? unchecked(-1)
       : global::DripSharp.Runtime.JavaCompat.Unbox(id.GetPart())));
     if ((id.GetRevProperty() != default!)) {
       global::DripSharp.Runtime.JavaCompat.Add(ve,

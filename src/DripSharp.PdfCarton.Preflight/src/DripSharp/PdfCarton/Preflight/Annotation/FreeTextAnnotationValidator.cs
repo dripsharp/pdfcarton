@@ -10,11 +10,12 @@ namespace DripSharp.PdfCarton.Preflight.Annotation;
 
 public class FreeTextAnnotationValidator
 : global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator {
-  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup PdFreeText
-    = default!;
+  protected internal global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup PdFreeText;
 
   public FreeTextAnnotationValidator(global::DripSharp.PdfCarton.Preflight.PreflightContext ctx,
     global::DripSharp.PdfCarton.Cos.COSDictionary annotDictionary) : base(ctx, annotDictionary) {
+    this.PdFreeText = default!;
+
     this.PdFreeText
       = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationMarkup(annotDictionary);
     this.PdAnnot = this.PdFreeText;
@@ -22,5 +23,9 @@ public class FreeTextAnnotationValidator
 
   protected internal override bool CheckSpecificMandatoryFields() {
     return this.AnnotDictionary.ContainsKey(global::DripSharp.PdfCarton.Cos.COSName.Da);
+  }
+
+  static FreeTextAnnotationValidator() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Annotation.AnnotationValidator).TypeHandle);
   }
 }

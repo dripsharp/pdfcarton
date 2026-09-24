@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf;
 
 public class StandardStructureTypes {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public const string Document = "Document";
 
@@ -110,10 +109,11 @@ public class StandardStructureTypes {
 
   public const string Form = "Form";
 
-  public static readonly global::System.Collections.Generic.IList<string> Types
-    = new global::System.Collections.Generic.List<string>();
+  public static readonly global::System.Collections.Generic.IList<string> Types;
 
-  static StandardStructureTypes() { {
+  static StandardStructureTypes() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    Types = new global::System.Collections.Generic.List<string>(); {
       global::System.Reflection.FieldInfo[] fields
         = typeof(global::DripSharp.PdfCarton.Pdmodel.Documentinterchange.Taggedpdf.StandardStructureTypes).GetFields();
       foreach (global::System.Reflection.FieldInfo field in fields) {

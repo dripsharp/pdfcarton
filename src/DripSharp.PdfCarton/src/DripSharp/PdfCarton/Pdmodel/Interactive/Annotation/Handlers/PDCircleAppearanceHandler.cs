@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers;
 
 public class PDCircleAppearanceHandler
 : global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   public PDCircleAppearanceHandler(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotation annotation)
   : base(annotation) {
@@ -27,49 +26,59 @@ public class PDCircleAppearanceHandler
     float lineWidth = this.getLineWidth();
     global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationCircle annotation
       = (global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAnnotationCircle)(this.getAnnotation()!);
-    try {
-      using (global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
-        = this.getNormalAppearanceAsContentStream()) {
-        bool hasStroke = contentStream.SetStrokingColorOnDemand(this.getColor());
-        bool hasBackground
-          = contentStream.SetNonStrokingColorOnDemand(annotation.GetInteriorColor());
-        this.setOpacity(contentStream, annotation.GetConstantOpacity());
-        contentStream.SetBorderLine(lineWidth, annotation.GetBorderStyle(), annotation.GetBorder());
-        global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary borderEffect
-          = annotation.GetBorderEffect();
-        if (((borderEffect != default!)
-          && global::DripSharp.Runtime.JavaCompat.Equals(borderEffect.GetStyle(),
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary.StyleCloudy))) {
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder cloudyBorder
-            = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder(contentStream,
-            (double)(borderEffect.GetIntensity()), (double)(lineWidth), this.getRectangle());
-          cloudyBorder.createCloudyEllipse(annotation.GetRectDifference());
-          annotation.SetRectangle(cloudyBorder.getRectangle());
-          annotation.SetRectDifference(cloudyBorder.getRectDifference());
-          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream
-            = annotation.GetNormalAppearanceStream();
-          appearanceStream.SetBBox(cloudyBorder.getBBox());
-          appearanceStream.SetMatrix(cloudyBorder.getMatrix());
-        } else {
-          global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle borderBox
-            = this.handleBorderBox(annotation, lineWidth);
-          float x0 = borderBox.GetLowerLeftX();
-          float y0 = borderBox.GetLowerLeftY();
-          float x1 = borderBox.GetUpperRightX();
-          float y1 = borderBox.GetUpperRightY();
-          float xm = (x0 + ((float)(borderBox.GetWidth()) / 2));
-          float ym = (y0 + ((float)(borderBox.GetHeight()) / 2));
-          float magic = 0.55555415F;
-          float vOffset = (((float)(borderBox.GetHeight()) / 2) * magic);
-          float hOffset = (((float)(borderBox.GetWidth()) / 2) * magic);
-          contentStream.MoveTo(xm, y1);
-          contentStream.CurveTo((xm + hOffset), y1, x1, (ym + vOffset), x1, ym);
-          contentStream.CurveTo(x1, (ym - vOffset), (xm + hOffset), y0, xm, y0);
-          contentStream.CurveTo((xm - hOffset), y0, x0, (ym - vOffset), x0, ym);
-          contentStream.CurveTo(x0, (ym + vOffset), (xm - hOffset), y1, xm, y1);
-          contentStream.ClosePath();
+    try { {
+        global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream
+          = this.getNormalAppearanceAsContentStream();
+        global::System.Exception __dripsharpPrimary_59_40_0 = null!;
+        try {
+          bool hasStroke = contentStream.SetStrokingColorOnDemand(this.getColor());
+          bool hasBackground
+            = contentStream.SetNonStrokingColorOnDemand(annotation.GetInteriorColor());
+          this.setOpacity(contentStream, annotation.GetConstantOpacity());
+          contentStream.SetBorderLine(lineWidth, annotation.GetBorderStyle(),
+            annotation.GetBorder());
+          global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary borderEffect
+            = annotation.GetBorderEffect();
+          if (((borderEffect != default!)
+            && global::DripSharp.Runtime.JavaCompat.Equals(borderEffect.GetStyle(),
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDBorderEffectDictionary.StyleCloudy))) {
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder cloudyBorder
+              = new global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.CloudyBorder(contentStream,
+              (double)(borderEffect.GetIntensity()), (double)(lineWidth), this.getRectangle());
+            cloudyBorder.createCloudyEllipse(annotation.GetRectDifference());
+            annotation.SetRectangle(cloudyBorder.getRectangle());
+            annotation.SetRectDifference(cloudyBorder.getRectDifference());
+            global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.PDAppearanceStream appearanceStream
+              = annotation.GetNormalAppearanceStream();
+            appearanceStream.SetBBox(cloudyBorder.getBBox());
+            appearanceStream.SetMatrix(cloudyBorder.getMatrix());
+          } else {
+            global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle borderBox
+              = this.handleBorderBox(annotation, lineWidth);
+            float x0 = borderBox.GetLowerLeftX();
+            float y0 = borderBox.GetLowerLeftY();
+            float x1 = borderBox.GetUpperRightX();
+            float y1 = borderBox.GetUpperRightY();
+            float xm = (x0 + ((float)(borderBox.GetWidth()) / 2));
+            float ym = (y0 + ((float)(borderBox.GetHeight()) / 2));
+            float magic = 0.55555415F;
+            float vOffset = (((float)(borderBox.GetHeight()) / 2) * magic);
+            float hOffset = (((float)(borderBox.GetWidth()) / 2) * magic);
+            contentStream.MoveTo(xm, y1);
+            contentStream.CurveTo((xm + hOffset), y1, x1, (ym + vOffset), x1, ym);
+            contentStream.CurveTo(x1, (ym - vOffset), (xm + hOffset), y0, xm, y0);
+            contentStream.CurveTo((xm - hOffset), y0, x0, (ym - vOffset), x0, ym);
+            contentStream.CurveTo(x0, (ym + vOffset), (xm - hOffset), y1, xm, y1);
+            contentStream.ClosePath();
+          }
+          contentStream.DrawShape(lineWidth, hasStroke, hasBackground);
+        } catch (global::System.Exception __dripsharpCaught_59_40_0) {
+          __dripsharpPrimary_59_40_0 = __dripsharpCaught_59_40_0;
+          throw;
+        } finally {
+          global::DripSharp.Runtime.JavaCompat.CloseResource(contentStream,
+            __dripsharpPrimary_59_40_0);
         }
-        contentStream.DrawShape(lineWidth, hasStroke, hasBackground);
       }
     } catch (global::System.IO.IOException e) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogError(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDCircleAppearanceHandler.LOG,
@@ -97,5 +106,10 @@ public class PDCircleAppearanceHandler
       }
     }
     return 1;
+  }
+
+  static PDCircleAppearanceHandler() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Annotation.Handlers.PDAbstractAppearanceHandler).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
   }
 }

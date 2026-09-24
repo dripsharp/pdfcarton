@@ -34,7 +34,7 @@ public class PDExtendedGraphicsState : global::DripSharp.PdfCarton.Pdmodel.Commo
   public virtual void CopyIntoGraphicsState(global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState gs) {
     foreach (global::DripSharp.PdfCarton.Cos.COSName key in this.dict.KeySet()) {
       if (key.Equals(global::DripSharp.PdfCarton.Cos.COSName.Lw)) {
-        gs.SetLineWidth(this.defaultIfNull(this.GetLineWidth(), (float)(1)));
+        gs.SetLineWidth(this.defaultIfNull((float?)(this.GetLineWidth()), (float)(1)));
       } else {
         if (key.Equals(global::DripSharp.PdfCarton.Cos.COSName.Lc)) {
           gs.SetLineCap(this.GetLineCapStyle());
@@ -43,7 +43,7 @@ public class PDExtendedGraphicsState : global::DripSharp.PdfCarton.Pdmodel.Commo
             gs.SetLineJoin(this.GetLineJoinStyle());
           } else {
             if (key.Equals(global::DripSharp.PdfCarton.Cos.COSName.Ml)) {
-              gs.SetMiterLimit(this.defaultIfNull(this.GetMiterLimit(), (float)(10)));
+              gs.SetMiterLimit(this.defaultIfNull((float?)(this.GetMiterLimit()), (float)(10)));
             } else {
               if (key.Equals(global::DripSharp.PdfCarton.Cos.COSName.D)) {
                 gs.SetLineDashPattern(this.GetLineDashPattern());
@@ -71,22 +71,22 @@ public class PDExtendedGraphicsState : global::DripSharp.PdfCarton.Pdmodel.Commo
                           }
                         } else {
                           if (key.Equals(global::DripSharp.PdfCarton.Cos.COSName.Fl)) {
-                            gs.SetFlatness((double)(this.defaultIfNull(this.GetFlatnessTolerance(),
+                            gs.SetFlatness((double)(this.defaultIfNull((float?)(this.GetFlatnessTolerance()),
                               1.0F)));
                           } else {
                             if (key.Equals(global::DripSharp.PdfCarton.Cos.COSName.Sm)) {
-                              gs.SetSmoothness((double)(this.defaultIfNull(this.GetSmoothnessTolerance(),
+                              gs.SetSmoothness((double)(this.defaultIfNull((float?)(this.GetSmoothnessTolerance()),
                                 (float)(0))));
                             } else {
                               if (key.Equals(global::DripSharp.PdfCarton.Cos.COSName.Sa)) {
                                 gs.SetStrokeAdjustment(this.GetAutomaticStrokeAdjustment());
                               } else {
                                 if (key.Equals(global::DripSharp.PdfCarton.Cos.COSName.Ca)) {
-                                  gs.SetAlphaConstant((double)(this.defaultIfNull(this.GetStrokingAlphaConstant(),
+                                  gs.SetAlphaConstant((double)(this.defaultIfNull((float?)(this.GetStrokingAlphaConstant()),
                                     1.0F)));
                                 } else {
                                   if (key.Equals(global::DripSharp.PdfCarton.Cos.COSName.CaNs)) {
-                                    gs.SetNonStrokeAlphaConstant((double)(this.defaultIfNull(this.GetNonStrokingAlphaConstant(),
+                                    gs.SetNonStrokeAlphaConstant((double)(this.defaultIfNull((float?)(this.GetNonStrokingAlphaConstant()),
                                       1.0F)));
                                   } else {
                                     if (key.Equals(global::DripSharp.PdfCarton.Cos.COSName.Ais)) {
@@ -152,7 +152,7 @@ public class PDExtendedGraphicsState : global::DripSharp.PdfCarton.Pdmodel.Commo
   }
 
   public virtual void SetLineWidth(float? width) {
-    this.setFloatItem(global::DripSharp.PdfCarton.Cos.COSName.Lw, width);
+    this.setFloatItem(global::DripSharp.PdfCarton.Cos.COSName.Lw, (float?)(width));
   }
 
   public virtual int GetLineCapStyle() {
@@ -176,7 +176,7 @@ public class PDExtendedGraphicsState : global::DripSharp.PdfCarton.Pdmodel.Commo
   }
 
   public virtual void SetMiterLimit(float? miterLimit) {
-    this.setFloatItem(global::DripSharp.PdfCarton.Cos.COSName.Ml, miterLimit);
+    this.setFloatItem(global::DripSharp.PdfCarton.Cos.COSName.Ml, (float?)(miterLimit));
   }
 
   public virtual global::DripSharp.PdfCarton.Pdmodel.Graphics.PDLineDashPattern GetLineDashPattern() {
@@ -268,7 +268,7 @@ public class PDExtendedGraphicsState : global::DripSharp.PdfCarton.Pdmodel.Commo
   }
 
   public virtual void SetFlatnessTolerance(float? flatness) {
-    this.setFloatItem(global::DripSharp.PdfCarton.Cos.COSName.Fl, flatness);
+    this.setFloatItem(global::DripSharp.PdfCarton.Cos.COSName.Fl, (float?)(flatness));
   }
 
   public virtual float? GetSmoothnessTolerance() {
@@ -276,7 +276,7 @@ public class PDExtendedGraphicsState : global::DripSharp.PdfCarton.Pdmodel.Commo
   }
 
   public virtual void SetSmoothnessTolerance(float? smoothness) {
-    this.setFloatItem(global::DripSharp.PdfCarton.Cos.COSName.Sm, smoothness);
+    this.setFloatItem(global::DripSharp.PdfCarton.Cos.COSName.Sm, (float?)(smoothness));
   }
 
   public virtual bool GetAutomaticStrokeAdjustment() {
@@ -292,7 +292,7 @@ public class PDExtendedGraphicsState : global::DripSharp.PdfCarton.Pdmodel.Commo
   }
 
   public virtual void SetStrokingAlphaConstant(float? alpha) {
-    this.setFloatItem(global::DripSharp.PdfCarton.Cos.COSName.Ca, alpha);
+    this.setFloatItem(global::DripSharp.PdfCarton.Cos.COSName.Ca, (float?)(alpha));
   }
 
   public virtual float? GetNonStrokingAlphaConstant() {
@@ -300,7 +300,7 @@ public class PDExtendedGraphicsState : global::DripSharp.PdfCarton.Pdmodel.Commo
   }
 
   public virtual void SetNonStrokingAlphaConstant(float? alpha) {
-    this.setFloatItem(global::DripSharp.PdfCarton.Cos.COSName.CaNs, alpha);
+    this.setFloatItem(global::DripSharp.PdfCarton.Cos.COSName.CaNs, (float?)(alpha));
   }
 
   public virtual bool GetAlphaSourceFlag() {

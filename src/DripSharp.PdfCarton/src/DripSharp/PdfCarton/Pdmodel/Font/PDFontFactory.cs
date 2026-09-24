@@ -9,8 +9,7 @@
 namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public sealed class PDFontFactory {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const string FONT_TYPE1C = "Type1C";
 
@@ -20,8 +19,7 @@ public sealed class PDFontFactory {
 
   private const string FONT_TRUE_TYPE = "true";
 
-  private static readonly sbyte[] TTF_HEADER = new sbyte[] { unchecked((sbyte)(0)),
-    unchecked((sbyte)(1)), unchecked((sbyte)(0)), unchecked((sbyte)(0)) };
+  private static readonly sbyte[] TTF_HEADER;
 
   private PDFontFactory() {}
 
@@ -31,13 +29,9 @@ public sealed class PDFontFactory {
   }
 
   internal class FontType {
-    internal static readonly global::System.Collections.Generic.IList<string> cidType0Types
-      = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Cos.COSName.Type1.GetName(),
-      global::DripSharp.PdfCarton.Pdmodel.Font.PDFontFactory.FONT_TYPE1C);
+    internal static readonly global::System.Collections.Generic.IList<string> cidType0Types;
 
-    internal static readonly global::System.Collections.Generic.IList<string> cidType2Types
-      = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Cos.COSName.TrueType.GetName(),
-      global::DripSharp.PdfCarton.Cos.COSName.OpenType.GetName());
+    internal static readonly global::System.Collections.Generic.IList<string> cidType2Types;
 
     internal readonly global::DripSharp.PdfCarton.Cos.COSName type = null!;
 
@@ -78,6 +72,15 @@ public sealed class PDFontFactory {
         return false;
       }
       return ((this.subtype != default!) && this.subtype.Equals(cidSubtype));
+    }
+
+    static FontType() {
+      cidType0Types
+        = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Cos.COSName.Type1.GetName(),
+        global::DripSharp.PdfCarton.Pdmodel.Font.PDFontFactory.FONT_TYPE1C);
+      cidType2Types
+        = global::DripSharp.Runtime.JavaCompat.AsList<string>(global::DripSharp.PdfCarton.Cos.COSName.TrueType.GetName(),
+        global::DripSharp.PdfCarton.Cos.COSName.OpenType.GetName());
     }
   }
 
@@ -298,15 +301,24 @@ public sealed class PDFontFactory {
     }
     sbyte[] header = default!;
     if ((fontFile != default!)) {
-      try {
-        using (global::DripSharp.PdfCarton.IO.RandomAccessRead fontView = fontFile.CreateView()) {
-          int headerLength = 4;
-          header = new sbyte[headerLength];
-          int remainingBytes = headerLength;
-          int amountRead;
-          while (((amountRead = fontView.Read(header!, (headerLength - remainingBytes),
-            remainingBytes)) > 0)) {
-            remainingBytes -= amountRead;
+      try { {
+          global::DripSharp.PdfCarton.IO.RandomAccessRead fontView = fontFile.CreateView();
+          global::System.Exception __dripsharpPrimary_342_35_0 = null!;
+          try {
+            int headerLength = 4;
+            header = new sbyte[headerLength];
+            int remainingBytes = headerLength;
+            int amountRead;
+            while (((amountRead = fontView.Read(header!, unchecked((headerLength - remainingBytes)),
+              remainingBytes)) > 0)) {
+              remainingBytes -= amountRead;
+            }
+          } catch (global::System.Exception __dripsharpCaught_342_35_0) {
+            __dripsharpPrimary_342_35_0 = __dripsharpCaught_342_35_0;
+            throw;
+          } finally {
+            global::DripSharp.Runtime.JavaCompat.CloseResource(fontView,
+              __dripsharpPrimary_342_35_0);
           }
         }
       } catch (global::System.IO.IOException ex) {
@@ -339,5 +351,11 @@ public sealed class PDFontFactory {
           type));
       }
     }
+  }
+
+  static PDFontFactory() {
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    TTF_HEADER = new sbyte[] { unchecked((sbyte)(0)), unchecked((sbyte)(1)), unchecked((sbyte)(0)),
+      unchecked((sbyte)(0)) };
   }
 }

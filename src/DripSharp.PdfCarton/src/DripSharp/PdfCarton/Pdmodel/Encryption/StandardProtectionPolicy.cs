@@ -12,12 +12,15 @@ public sealed class StandardProtectionPolicy
 : global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy {
   private global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permissions = null!;
 
-  private string ownerPassword = "";
+  private string ownerPassword;
 
-  private string userPassword = "";
+  private string userPassword;
 
   public StandardProtectionPolicy(string ownerPassword, string userPassword,
     global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission permissions) {
+    this.ownerPassword = "";
+    this.userPassword = "";
+
     this.ownerPassword = ownerPassword;
     this.userPassword = userPassword;
     this.permissions = permissions;
@@ -45,5 +48,9 @@ public sealed class StandardProtectionPolicy
 
   public void SetUserPassword(string userPassword) {
     this.userPassword = userPassword;
+  }
+
+  static StandardProtectionPolicy() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy).TypeHandle);
   }
 }

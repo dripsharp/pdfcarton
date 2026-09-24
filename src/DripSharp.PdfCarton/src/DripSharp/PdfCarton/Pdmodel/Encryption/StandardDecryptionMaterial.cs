@@ -19,4 +19,8 @@ public class StandardDecryptionMaterial
   public virtual string GetPassword() {
     return this.password;
   }
+
+  static StandardDecryptionMaterial() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Encryption.DecryptionMaterial).TypeHandle);
+  }
 }

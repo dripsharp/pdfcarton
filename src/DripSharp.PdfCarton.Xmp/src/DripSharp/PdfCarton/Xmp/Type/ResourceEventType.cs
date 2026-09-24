@@ -83,4 +83,8 @@ public class ResourceEventType : global::DripSharp.PdfCarton.Xmp.Type.AbstractSt
     this.AddSimpleProperty(global::DripSharp.PdfCarton.Xmp.Type.ResourceEventType.Parameters,
       value);
   }
+
+  static ResourceEventType() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Type.AbstractStructuredType).TypeHandle);
+  }
 }

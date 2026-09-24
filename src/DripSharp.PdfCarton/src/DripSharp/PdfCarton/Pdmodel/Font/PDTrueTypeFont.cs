@@ -10,8 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 public class PDTrueTypeFont : global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont,
 global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
-  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG
-    = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+  private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
   private const int START_RANGE_F000 = 61440;
 
@@ -20,10 +19,13 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
   private const int START_RANGE_F200 = 61952;
 
   private static readonly global::System.Collections.Generic.IDictionary<string,
-    int> INVERTED_MACOS_ROMAN = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
-    int>(250);
+    int> INVERTED_MACOS_ROMAN;
 
-  static PDTrueTypeFont() { {
+  static PDTrueTypeFont() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont).TypeHandle);
+    LOG = global::Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+    INVERTED_MACOS_ROMAN = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, int>(250);
+    {
       global::DripSharp.Runtime.JavaCompat.ForEach(global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.MacOSRomanEncoding.Instance.GetCodeToNameMap(),
         (key, value)
         => global::DripSharp.Runtime.JavaCompat.MapPutIfAbsent(global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont.INVERTED_MACOS_ROMAN,
@@ -39,21 +41,26 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
 
   private readonly bool __field_isDamaged = default;
 
-  private global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmapWinUnicode = default!;
+  private global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmapWinUnicode;
 
-  private global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmapWinSymbol = default!;
+  private global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmapWinSymbol;
 
-  private global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmapMacRoman = default!;
+  private global::DripSharp.PdfCarton.Fonts.Ttf.CmapSubtable cmapMacRoman;
 
-  private bool cmapInitialized = false;
+  private bool cmapInitialized;
 
-  private readonly global::System.Collections.Generic.IDictionary<int, int> gidToCode
-    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, int>();
+  private readonly global::System.Collections.Generic.IDictionary<int, int> gidToCode;
 
   private global::DripSharp.PdfCarton.Fonts.Util.BoundingBox fontBBox = null!;
 
   public PDTrueTypeFont(global::DripSharp.PdfCarton.Cos.COSDictionary fontDictionary)
   : base(fontDictionary) {
+    this.cmapWinUnicode = default!;
+    this.cmapWinSymbol = default!;
+    this.cmapMacRoman = default!;
+    this.cmapInitialized = false;
+    this.gidToCode = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, int>();
+
     global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttfFont = default!;
     bool fontIsDamaged = false;
     if ((this.GetFontDescriptor() != default!)) {
@@ -100,6 +107,12 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
   private PDTrueTypeFont(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
     global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont ttf,
     global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.Encoding encoding, bool closeTTF) {
+    this.cmapWinUnicode = default!;
+    this.cmapWinSymbol = default!;
+    this.cmapMacRoman = default!;
+    this.cmapInitialized = false;
+    this.gidToCode = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int, int>();
+
     global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFontEmbedder embedder
       = new global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFontEmbedder(document, base.Dict,
       ttf, encoding);
@@ -440,16 +453,16 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
         gid = this.cmapWinSymbol.GetGlyphId(code);
         if (((code >= 0) && (code <= 255))) {
           if ((gid == 0)) {
-            gid = this.cmapWinSymbol.GetGlyphId((code
-              + global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont.START_RANGE_F000));
+            gid = this.cmapWinSymbol.GetGlyphId(unchecked((code
+              + global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont.START_RANGE_F000)));
           }
           if ((gid == 0)) {
-            gid = this.cmapWinSymbol.GetGlyphId((code
-              + global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont.START_RANGE_F100));
+            gid = this.cmapWinSymbol.GetGlyphId(unchecked((code
+              + global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont.START_RANGE_F100)));
           }
           if ((gid == 0)) {
-            gid = this.cmapWinSymbol.GetGlyphId((code
-              + global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont.START_RANGE_F200));
+            gid = this.cmapWinSymbol.GetGlyphId(unchecked((code
+              + global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont.START_RANGE_F200)));
           }
         }
       }
@@ -512,8 +525,8 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     sbyte[] tagBytes = new sbyte[4];
     int remainingBytes = tagBytes.Length;
     int amountRead;
-    while (((amountRead = randomAccessRead.Read(tagBytes, (tagBytes.Length - remainingBytes),
-      remainingBytes)) > 0)) {
+    while (((amountRead = randomAccessRead.Read(tagBytes, unchecked((tagBytes.Length
+      - remainingBytes)), remainingBytes)) > 0)) {
       remainingBytes -= amountRead;
     }
     randomAccessRead.Seek(startPos);

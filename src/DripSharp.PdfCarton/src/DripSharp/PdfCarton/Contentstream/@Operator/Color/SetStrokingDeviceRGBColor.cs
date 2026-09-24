@@ -30,4 +30,8 @@ public class SetStrokingDeviceRGBColor
   public override string GetName() {
     return global::DripSharp.PdfCarton.Contentstream.@Operator.OperatorName.StrokingColorRgb;
   }
+
+  static SetStrokingDeviceRGBColor() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Contentstream.@Operator.Color.SetStrokingColor).TypeHandle);
+  }
 }

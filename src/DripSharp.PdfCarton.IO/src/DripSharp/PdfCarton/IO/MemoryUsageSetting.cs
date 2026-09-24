@@ -28,10 +28,10 @@ public sealed class MemoryUsageSetting {
       => new global::DripSharp.PdfCarton.IO.ScratchFile(this));
 
     bool locUseMainMemory = (!useTempFile || useMainMemory);
-    long locMaxMainMemoryBytes = (useMainMemory ? maxMainMemoryBytes : -1);
-    long locMaxStorageBytes = ((maxStorageBytes > 0) ? maxStorageBytes : -1);
-    if ((locMaxMainMemoryBytes < -1)) {
-      locMaxMainMemoryBytes = -1;
+    long locMaxMainMemoryBytes = (useMainMemory ? maxMainMemoryBytes : unchecked(-1));
+    long locMaxStorageBytes = ((maxStorageBytes > 0) ? maxStorageBytes : unchecked(-1));
+    if ((locMaxMainMemoryBytes < unchecked(-1))) {
+      locMaxMainMemoryBytes = unchecked(-1);
     }
     if ((locUseMainMemory && (locMaxMainMemoryBytes == 0))) {
       if (useTempFile) {
@@ -40,8 +40,8 @@ public sealed class MemoryUsageSetting {
         locMaxMainMemoryBytes = locMaxStorageBytes;
       }
     }
-    if (((locUseMainMemory && (locMaxStorageBytes > -1)) && ((locMaxMainMemoryBytes == -1)
-      || (locMaxMainMemoryBytes > locMaxStorageBytes)))) {
+    if (((locUseMainMemory && (locMaxStorageBytes > unchecked(-1))) && ((locMaxMainMemoryBytes
+      == unchecked(-1)) || (locMaxMainMemoryBytes > locMaxStorageBytes)))) {
       locMaxStorageBytes = locMaxMainMemoryBytes;
     }
     this.__field_useMainMemory = locUseMainMemory;
@@ -51,7 +51,7 @@ public sealed class MemoryUsageSetting {
   }
 
   public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupMainMemoryOnly() {
-    return global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupMainMemoryOnly((long)(-1));
+    return global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupMainMemoryOnly((long)(unchecked(-1)));
   }
 
   public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupMainMemoryOnly(long maxMainMemoryBytes) {
@@ -60,7 +60,7 @@ public sealed class MemoryUsageSetting {
   }
 
   public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupTempFileOnly() {
-    return global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupTempFileOnly((long)(-1));
+    return global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupTempFileOnly((long)(unchecked(-1)));
   }
 
   public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupTempFileOnly(long maxStorageBytes) {
@@ -70,7 +70,7 @@ public sealed class MemoryUsageSetting {
 
   public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupMixed(long maxMainMemoryBytes) {
     return global::DripSharp.PdfCarton.IO.MemoryUsageSetting.SetupMixed(maxMainMemoryBytes,
-      (long)(-1));
+      (long)(unchecked(-1)));
   }
 
   public static global::DripSharp.PdfCarton.IO.MemoryUsageSetting SetupMixed(long maxMainMemoryBytes,

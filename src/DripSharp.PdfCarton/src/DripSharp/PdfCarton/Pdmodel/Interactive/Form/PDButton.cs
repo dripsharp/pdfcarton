@@ -79,7 +79,7 @@ public abstract class PDButton
       throw new global::System.ArgumentException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("index '",
         index), "' is not a valid index for the field "), this.GetFullyQualifiedName()),
         ", valid indices are from 0 to "),
-        (global::DripSharp.Runtime.JavaCompat.CollectionCount(exportValues) - 1)));
+        unchecked((global::DripSharp.Runtime.JavaCompat.CollectionCount(exportValues) - 1))));
     }
     this.updateByValue(global::DripSharp.Runtime.JavaCompat.StringValueOf(index));
     this.ApplyChange();
@@ -257,9 +257,13 @@ public abstract class PDButton
       this.updateByValue(value);
     } else {
       int optionsIndex = global::DripSharp.Runtime.JavaCompat.ListIndexOf(options, value);
-      if ((optionsIndex != -1)) {
+      if ((optionsIndex != unchecked(-1))) {
         this.updateByValue(this.getOnValue(optionsIndex));
       }
     }
+  }
+
+  static PDButton() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Form.PDTerminalField).TypeHandle);
   }
 }

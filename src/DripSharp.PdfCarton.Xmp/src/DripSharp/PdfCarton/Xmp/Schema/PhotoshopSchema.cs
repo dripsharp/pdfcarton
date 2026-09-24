@@ -515,4 +515,8 @@ public class PhotoshopSchema : global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema 
   public virtual void SetUrgencyProperty(global::DripSharp.PdfCarton.Xmp.Type.IntegerType text) {
     this.AddProperty(text);
   }
+
+  static PhotoshopSchema() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Xmp.Schema.XMPSchema).TypeHandle);
+  }
 }

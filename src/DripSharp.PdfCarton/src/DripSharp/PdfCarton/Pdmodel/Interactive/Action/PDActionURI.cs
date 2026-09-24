@@ -49,4 +49,8 @@ public class PDActionURI : global::DripSharp.PdfCarton.Pdmodel.Interactive.Actio
   public virtual void SetTrackMousePosition(bool value) {
     this.Action.SetBoolean("IsMap", value);
   }
+
+  static PDActionURI() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Pdmodel.Interactive.Action.PDAction).TypeHandle);
+  }
 }

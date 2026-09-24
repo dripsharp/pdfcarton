@@ -52,4 +52,8 @@ public class CIDType2DescriptorHelper
         ": The FontFile can't be read")));
     }
   }
+
+  static CIDType2DescriptorHelper() {
+    global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::DripSharp.PdfCarton.Preflight.Font.Descriptor.FontDescriptorHelper<global::DripSharp.PdfCarton.Preflight.Font.Container.CIDType2Container>).TypeHandle);
+  }
 }
