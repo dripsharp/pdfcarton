@@ -17,6 +17,8 @@ jobs:
     timeout-minutes: 240
     env:
       PDFCARTON_RELEASE_REDUCED_TESTS: "1"
+      RepositoryCommit: ${{ github.sha }}
+      SourceRevisionId: ${{ github.sha }}
     steps:
       - name: Require the PdfCarton master branch
         shell: bash
