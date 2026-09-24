@@ -48,3 +48,21 @@ regression. It proves all five internal pack commands, exact one-pair public
 inventory, the single-package-reference consumer and isolated source
 configuration, fail-closed symbol and metadata inventories, and fatal
 restore/build/run failures.
+
+## Required Windows package handoff
+
+The NuGet workflow defaults to prepare-only. It uploads the verified package
+pair and `SHA256SUMS` without publishing. From the authoritative DripSharp source
+checkout, run `python3 scripts/verify-pdfcarton-windows.py verify-prepared
+--run-id ID --version VERSION --commit FULL_SHA` to test that exact artifact on
+the configured personal Windows host. When publication is owner-authorized,
+use `publish-prepared` with the same arguments: it reruns the candidate gate,
+checks current release prerequisites and dispatches publication with the tested
+checksum identity. Do not dispatch publish mode around this command.
+
+Publish mode accepts only the successful prepare-only run for the same master
+commit and verifies the supplied SHA256 of its checksum list before pushing the
+existing artifact. It does not regenerate, rebuild or repack. Follow actual
+configured environment protection rules. After indexing, the source checkout's
+`published --version VERSION --commit FULL_SHA` command must restore and execute
+from NuGet.org on Windows before reporting release verification complete.

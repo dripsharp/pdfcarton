@@ -2,9 +2,25 @@ name: Release PdfCarton to NuGet
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Prepare an artifact, or publish the exact Windows-verified prepare artifact
+        type: choice
+        options: [prepare, publish]
+        default: prepare
+        required: true
+      package_checksums_sha256:
+        description: SHA256 of the exact Windows-tested artifact checksum list
+        type: string
+        required: false
+      prepare_run_id:
+        description: Successful prepare-only run verified on Windows by the source repository release command
+        type: string
+        required: false
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: nuget-release
@@ -12,6 +28,7 @@ concurrency:
 
 jobs:
   prepare:
+    if: inputs.mode == 'prepare'
     name: Build and prepare PdfCarton
     runs-on: ubuntu-latest
     timeout-minutes: 240
@@ -76,24 +93,54 @@ jobs:
 
   publish:
     name: Publish PdfCarton to nuget.org
-    needs: prepare
+    if: inputs.mode == 'publish'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment: release
     permissions:
+      contents: read
+      actions: read
       id-token: write
     steps:
+      - name: Require an exact successful prepare-only run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREPARE_RUN_ID: ${{ inputs.prepare_run_id }}
+          EXPECTED_SHA: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$GITHUB_REF" == refs/heads/master ]]
+          [[ "$PREPARE_RUN_ID" =~ ^[0-9]+$ ]]
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PREPARE_RUN_ID" > /tmp/prepare-run.json
+          jq -e --arg sha "$EXPECTED_SHA" '
+            .status == "completed" and .conclusion == "success" and
+            .event == "workflow_dispatch" and .head_branch == "master" and
+            .head_sha == $sha and .path == ".github/workflows/nuget-release.yml"
+          ' /tmp/prepare-run.json
+          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$PREPARE_RUN_ID/jobs" \
+            | jq -s -e '[.[].jobs[]] |
+                any(.name == "Build and prepare PdfCarton" and .conclusion == "success") and
+                any(.name == "Publish PdfCarton to nuget.org" and .conclusion == "skipped")'
+
       - name: Download the tested PdfCarton release packages
         uses: actions/download-artifact@v4
         with:
           name: pdfcarton-nuget-release
           path: release-artifacts
+          run-id: ${{ inputs.prepare_run_id }}
+          github-token: ${{ github.token }}
 
       - name: Verify the tested PdfCarton release packages
         id: packages
+        env:
+          EXPECTED_CHECKSUMS_SHA256: ${{ inputs.package_checksums_sha256 }}
         shell: bash
         working-directory: release-artifacts
         run: |
+          set -euo pipefail
+          [[ "$EXPECTED_CHECKSUMS_SHA256" =~ ^[0-9a-f]{64}$ ]]
+          echo "$EXPECTED_CHECKSUMS_SHA256  SHA256SUMS" | sha256sum --check --strict
           sha256sum --check --strict SHA256SUMS
 
           shopt -s nullglob
@@ -115,6 +162,22 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
+
+      - name: Recheck immutable version before publication
+        shell: bash
+        working-directory: release-artifacts
+        run: |
+          set -euo pipefail
+          version=$(python3 - <<'PYCODE'
+          import glob, xml.etree.ElementTree as ET, zipfile
+          with zipfile.ZipFile(glob.glob('*.nupkg')[0]) as package:
+              manifest = next(name for name in package.namelist() if name.endswith('.nuspec'))
+              print(ET.fromstring(package.read(manifest)).findtext('{*}metadata/{*}version'))
+          PYCODE
+          )
+          status=$(curl --silent --show-error --location --max-time 30 --output /dev/null --write-out '%{http_code}' \
+            "https://api.nuget.org/v3-flatcontainer/dripsharp.pdfcarton/$version/dripsharp.pdfcarton.$version.nupkg")
+          [[ "$status" == 404 ]] || { echo "Version unavailable or availability unknown (HTTP $status)"; exit 1; }
 
       - name: Obtain a short-lived NuGet API key
         id: nuget-login
