@@ -138,24 +138,24 @@ public sealed class JPEGFactory {
   }
 
   public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromImage(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
-    global::SkiaSharp.SKBitmap image) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image) {
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,
       image, 0.75F);
   }
 
   public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromImage(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
-    global::SkiaSharp.SKBitmap image, float quality) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image, float quality) {
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,
       image, quality, 72);
   }
 
   public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromImage(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
-    global::SkiaSharp.SKBitmap image, float quality, int dpi) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image, float quality, int dpi) {
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.createJPEG(document,
       image, quality, dpi);
   }
 
-  private static global::SkiaSharp.SKBitmap getAlphaImage(global::SkiaSharp.SKBitmap image) {
+  private static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage getAlphaImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image) {
     if (!(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).HasAlpha)) {
       return default!;
     }
@@ -169,16 +169,17 @@ public sealed class JPEGFactory {
     if ((alphaRaster == default!)) {
       return default!;
     }
-    global::SkiaSharp.SKBitmap alphaImage
-      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage alphaImage
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image),
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
     global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(alphaImage, alphaRaster);
     return alphaImage;
   }
 
   private static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject createJPEG(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
-    global::SkiaSharp.SKBitmap image, float quality, int dpi) {
-    global::SkiaSharp.SKBitmap awtColorImage
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image, float quality, int dpi) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage awtColorImage
       = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.getColorImage(image);
     sbyte[] encoded
       = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.encodeImageToJPEGStream(awtColorImage,
@@ -187,10 +188,11 @@ public sealed class JPEGFactory {
       = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(encoded);
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdImage
       = new global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject(document,
-      encodedByteStream, global::DripSharp.PdfCarton.Cos.COSName.DctDecode, awtColorImage.Width,
-      awtColorImage.Height, 8,
+      encodedByteStream, global::DripSharp.PdfCarton.Cos.COSName.DctDecode,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(awtColorImage),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(awtColorImage), 8,
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.getColorSpaceFromAWT(awtColorImage));
-    global::SkiaSharp.SKBitmap awtAlphaImage
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage awtAlphaImage
       = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.getAlphaImage(image);
     if ((awtAlphaImage != default!)) {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage xAlpha
@@ -217,8 +219,8 @@ public sealed class JPEGFactory {
     throw new global::System.IO.IOException("No ImageWriter found for JPEG format");
   }
 
-  private static sbyte[] encodeImageToJPEGStream(global::SkiaSharp.SKBitmap image, float quality,
-    int dpi) {
+  private static sbyte[] encodeImageToJPEGStream(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image,
+    float quality, int dpi) {
     global::DripSharp.Runtime.JavaImageWriter imageWriter
       = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.getJPEGImageWriter();
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
@@ -249,7 +251,7 @@ public sealed class JPEGFactory {
           jfif.SetAttribute("Ydensity", dpiString);
           jfif.SetAttribute("resUnits", "1");
           imageWriter.Write(data, new global::DripSharp.Runtime.JavaIioImage(image,
-            (global::System.Collections.Generic.IList<global::SkiaSharp.SKBitmap>)default!,
+            (global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage>)default!,
             (global::DripSharp.Runtime.JavaImageMetadata)default!), jpegParam);
           return global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos);
         } catch (global::System.Exception __dripsharpCaught_357_32_0) {
@@ -264,7 +266,7 @@ public sealed class JPEGFactory {
     }
   }
 
-  private static global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace getColorSpaceFromAWT(global::SkiaSharp.SKBitmap awtImage) {
+  private static global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace getColorSpaceFromAWT(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage awtImage) {
     if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(awtImage).NumberOfComponents
       == 1)) {
       return global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance;
@@ -291,7 +293,7 @@ public sealed class JPEGFactory {
     }
   }
 
-  private static global::SkiaSharp.SKBitmap getColorImage(global::SkiaSharp.SKBitmap image) {
+  private static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage getColorImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image) {
     if (!(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).HasAlpha)) {
       return image;
     }
@@ -299,8 +301,9 @@ public sealed class JPEGFactory {
       != global::DripSharp.Runtime.JavaColorSpace.TYPE_RGB)) {
       throw new global::System.NotSupportedException("only RGB color spaces are implemented");
     }
-    global::SkiaSharp.SKBitmap rgbImage
-      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage rgbImage
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image),
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_3BYTE_BGR);
     return new global::DripSharp.Runtime.JavaColorConvertOp().Filter(image, rgbImage);
   }

@@ -230,7 +230,8 @@ public class PDAcroFormFlattenTest {
           string fileName
             = global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(outputPrefix,
             unchecked((i + 1))), ".png");
-          global::SkiaSharp.SKBitmap image = renderer.RenderImageWithDPI(i, (float)(96));
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image
+            = renderer.RenderImageWithDPI(i, (float)(96));
           global::DripSharp.PdfCarton.Tests.Support.WriteImage(image,
             global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "PNG"),
             global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",

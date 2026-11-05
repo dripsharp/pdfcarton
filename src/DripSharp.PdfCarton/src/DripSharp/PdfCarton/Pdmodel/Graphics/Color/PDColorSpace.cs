@@ -200,11 +200,11 @@ public abstract class PDColorSpace : global::DripSharp.PdfCarton.Pdmodel.Common.
 
   public abstract float[] ToRGB(float[] value);
 
-  public abstract global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster);
+  public abstract global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRGBImage(global::DripSharp.Runtime.JavaRaster raster);
 
-  public abstract global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster);
+  public abstract global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRawImage(global::DripSharp.Runtime.JavaRaster raster);
 
-  protected internal global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster,
+  protected internal global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRawImage(global::DripSharp.Runtime.JavaRaster raster,
     global::DripSharp.Runtime.JavaColorSpace awtColorSpace) {
     global::DripSharp.Runtime.JavaColorModel colorModel
       = global::DripSharp.Runtime.PdfCartonFontCompat.ComponentColorModel(awtColorSpace, false,
@@ -214,18 +214,19 @@ public abstract class PDColorSpace : global::DripSharp.PdfCarton.Pdmodel.Common.
       (global::DripSharp.Runtime.JavaHashtable<object, object>)default!);
   }
 
-  protected internal virtual global::SkiaSharp.SKBitmap ToRGBImageAWT(global::DripSharp.Runtime.JavaRaster raster,
+  protected internal virtual global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRGBImageAWT(global::DripSharp.Runtime.JavaRaster raster,
     global::DripSharp.Runtime.JavaColorSpace colorSpace) {
     global::DripSharp.Runtime.JavaColorModel colorModel
       = global::DripSharp.Runtime.PdfCartonFontCompat.ComponentColorModel(colorSpace, false, false,
       global::DripSharp.Runtime.PdfCartonTransparency.OPAQUE, raster.GetDataBuffer().DataType);
-    global::SkiaSharp.SKBitmap src
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage src
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateImage(colorModel, raster, false,
       (global::DripSharp.Runtime.JavaHashtable<object, object>)default!);
-    global::SkiaSharp.SKBitmap dest
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage dest
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(raster.Width, raster.Height,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
-    if (((src.Width == 1) || (src.Height == 1))) {
+    if (((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(src) == 1)
+      || (global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(src) == 1))) {
       global::DripSharp.Runtime.PdfCartonGraphics2D g2d
         = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(dest);
       g2d.DrawImage(src, 0, 0, (object)default!);

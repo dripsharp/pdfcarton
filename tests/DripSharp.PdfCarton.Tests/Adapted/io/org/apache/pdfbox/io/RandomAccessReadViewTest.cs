@@ -148,7 +148,7 @@ public class RandomAccessReadViewTest {
           global::DripSharp.Testing.JavaAssertions.Equal((long)(0),
             randomAccessReadView.GetPosition(), null);
           sbyte[] buffer = new sbyte[4];
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessReadView))).Read(buffer);
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessReadView)).Read(buffer);
           global::DripSharp.Testing.JavaAssertions.Equal(10, (int)(buffer[0]), null);
           global::DripSharp.Testing.JavaAssertions.Equal(13, (int)(buffer[3]), null);
           global::DripSharp.Testing.JavaAssertions.Equal((long)(4),
@@ -243,7 +243,7 @@ public class RandomAccessReadViewTest {
           randomAccessReadView.Read();
           sbyte[] readBytes = new sbyte[6];
           global::DripSharp.Testing.JavaAssertions.Equal(readBytes.Length,
-            ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessReadView))).Read(readBytes),
+            ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessReadView)).Read(readBytes),
             null);
           global::DripSharp.Testing.JavaAssertions.Equal((long)(8),
             randomAccessReadView.GetPosition(), null);

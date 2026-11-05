@@ -98,7 +98,7 @@ public class PDSeparation : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
     return retval;
   }
 
-  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
     if ((this.alternateColorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDLab)) {
       return this.toRGBImage2(raster);
     } else {
@@ -136,10 +136,10 @@ public class PDSeparation : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
     return this.alternateColorSpace.ToRGBImage(altRaster);
   }
 
-  private global::SkiaSharp.SKBitmap toRGBImage2(global::DripSharp.Runtime.JavaRaster raster) {
+  private global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage toRGBImage2(global::DripSharp.Runtime.JavaRaster raster) {
     int width = raster.Width;
     int height = raster.Height;
-    global::SkiaSharp.SKBitmap rgbImage
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage rgbImage
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
     global::DripSharp.Runtime.JavaRaster rgbRaster
@@ -181,7 +181,7 @@ public class PDSeparation : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
     }
   }
 
-  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
     return this.ToRawImage(raster,
       global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_GRAY));
   }

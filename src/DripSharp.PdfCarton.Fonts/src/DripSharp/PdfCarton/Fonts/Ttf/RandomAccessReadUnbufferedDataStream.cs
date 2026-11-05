@@ -84,7 +84,7 @@ internal class RandomAccessReadUnbufferedDataStream
     }
 
     public override int Read(sbyte[] b) {
-      return ((global::DripSharp.PdfCarton.IO.RandomAccessRead)this.randomAccessRead).Read(b);
+      return ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.randomAccessRead)).Read(b);
     }
 
     public override int Read(sbyte[] b, int off, int len) {

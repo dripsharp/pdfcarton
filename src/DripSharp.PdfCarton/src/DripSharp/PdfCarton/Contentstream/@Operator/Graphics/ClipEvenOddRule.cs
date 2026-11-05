@@ -17,7 +17,7 @@ public sealed class ClipEvenOddRule
 
   public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
     global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-    this.GetGraphicsContext().Clip(global::DripSharp.Runtime.JavaPathIterator.WIND_EVEN_ODD);
+    this.GetGraphicsContext().Clip(global::DripSharp.PdfCarton.Runtime.Fonts.JavaPathIterator.WIND_EVEN_ODD);
   }
 
   public override string GetName() {

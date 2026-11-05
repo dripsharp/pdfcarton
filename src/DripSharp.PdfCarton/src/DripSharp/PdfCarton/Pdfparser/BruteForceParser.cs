@@ -72,7 +72,7 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
         && this.IsString(global::DripSharp.PdfCarton.Pdfparser.BruteForceParser.OBJ_MARKER))) {
         long tempOffset = unchecked((currentOffset - 2));
         base.Source.Seek(tempOffset);
-        int genID = base.Source.Peek();
+        int genID = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek();
         if (global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsDigit(genID)) {
           genID -= 48;
           tempOffset--;
@@ -188,7 +188,7 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
   }
 
   protected internal virtual void BfSearchForObjStreams(global::DripSharp.PdfCarton.Pdfparser.XrefTrailerResolver trailerResolver,
-    global::DripSharp.Runtime.PdfBoxSecurityHandler securityHandler) {
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.ISecurityHandler securityHandler) {
     this.SecurityHandler = securityHandler;
     long originOffset = base.Source.GetPosition();
     global::System.Collections.Generic.IDictionary<long,
@@ -421,7 +421,7 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
             if (this.IsString(@string)) {
               long tempOffset = unchecked((currentOffset - 1));
               base.Source.Seek(tempOffset);
-              int genID = base.Source.Peek();
+              int genID = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek();
               if (global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsDigit(genID)) {
                 tempOffset--;
                 base.Source.Seek(tempOffset);
@@ -502,7 +502,7 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
             if (this.IsString(@string)) {
               long tempOffset = unchecked((currentOffset - 1));
               base.Source.Seek(tempOffset);
-              int genID = base.Source.Peek();
+              int genID = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek();
               if (global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsDigit(genID)) {
                 tempOffset--;
                 base.Source.Seek(tempOffset);
@@ -590,7 +590,7 @@ public class BruteForceParser : global::DripSharp.PdfCarton.Pdfparser.COSParser 
   }
 
   protected internal virtual global::DripSharp.PdfCarton.Cos.COSDictionary RebuildTrailer(global::DripSharp.PdfCarton.Pdfparser.XrefTrailerResolver trailerResolver,
-    global::DripSharp.Runtime.PdfBoxSecurityHandler securityHandler) {
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.ISecurityHandler securityHandler) {
     this.SecurityHandler = securityHandler;
     trailerResolver.Reset();
     trailerResolver.NextXrefObj((long)(0),

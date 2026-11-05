@@ -88,6 +88,6 @@ public class Benchmark {
       (int)global::DripSharp.Runtime.JavaCompat.IntegralDivide(unchecked((endGTime - startGTime)),
       loop))));
     resFile.Flush();
-    global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(resFile);
+    global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(resFile);
   }
 }

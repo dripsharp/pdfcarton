@@ -173,7 +173,7 @@ public class TestListBox {
   }
 
   internal virtual void tearDown() {
-    global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(this.doc);
+    global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(this.doc);
   }
 
   [Xunit.Fact]

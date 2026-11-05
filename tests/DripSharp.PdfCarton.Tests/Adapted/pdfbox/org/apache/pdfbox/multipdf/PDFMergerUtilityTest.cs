@@ -1327,7 +1327,7 @@ public class PDFMergerUtilityTest {
   private void checkMergeIdentical(string filename1, string filename2, string mergeFilename,
     global::DripSharp.PdfCarton.IO.RandomAccessStreamCache.StreamCacheCreateFunction streamCache) {
     int src1PageCount;
-    global::SkiaSharp.SKBitmap[] src1ImageTab; {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage[] src1ImageTab; {
       global::DripSharp.PdfCarton.Pdmodel.PDDocument srcDoc1
         = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
         "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
@@ -1340,7 +1340,7 @@ public class PDFMergerUtilityTest {
         src1PageCount = srcDoc1.GetNumberOfPages();
         global::DripSharp.PdfCarton.Rendering.PDFRenderer src1PdfRenderer
           = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(srcDoc1);
-        src1ImageTab = new global::SkiaSharp.SKBitmap[src1PageCount];
+        src1ImageTab = new global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage[src1PageCount];
         for (int page__1129_22 = 0; (page__1129_22 < src1PageCount); ++page__1129_22) {
           src1ImageTab[page__1129_22] = src1PdfRenderer.RenderImageWithDPI(page__1129_22,
             (float)(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.DPI));
@@ -1353,7 +1353,7 @@ public class PDFMergerUtilityTest {
       }
     }
     int src2PageCount;
-    global::SkiaSharp.SKBitmap[] src2ImageTab; {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage[] src2ImageTab; {
       global::DripSharp.PdfCarton.Pdmodel.PDDocument srcDoc2
         = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
         "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo), typeof(string) },
@@ -1366,7 +1366,7 @@ public class PDFMergerUtilityTest {
         src2PageCount = srcDoc2.GetNumberOfPages();
         global::DripSharp.PdfCarton.Rendering.PDFRenderer src2PdfRenderer
           = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(srcDoc2);
-        src2ImageTab = new global::SkiaSharp.SKBitmap[src2PageCount];
+        src2ImageTab = new global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage[src2PageCount];
         for (int page__1142_22 = 0; (page__1142_22 < src2PageCount); ++page__1142_22) {
           src2ImageTab[page__1142_22] = src2PdfRenderer.RenderImageWithDPI(page__1142_22,
             (float)(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.DPI));
@@ -1409,14 +1409,15 @@ public class PDFMergerUtilityTest {
         global::DripSharp.Testing.JavaAssertions.Equal(unchecked((src1PageCount + src2PageCount)),
           mergePageCount, null);
         for (int page__1160_22 = 0; (page__1160_22 < src1PageCount); ++page__1160_22) {
-          global::SkiaSharp.SKBitmap bim__1162_31
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim__1162_31
             = mergePdfRenderer.RenderImageWithDPI(page__1160_22,
             (float)(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.DPI));
           this.checkImagesIdentical(bim__1162_31, src1ImageTab[page__1160_22]);
         }
         for (int page__1165_22 = 0; (page__1165_22 < src2PageCount); ++page__1165_22) {
           int mergePage = unchecked((page__1165_22 + src1PageCount));
-          global::SkiaSharp.SKBitmap bim__1168_31 = mergePdfRenderer.RenderImageWithDPI(mergePage,
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim__1168_31
+            = mergePdfRenderer.RenderImageWithDPI(mergePage,
             (float)(global::DripSharp.PdfCarton.Multipdf.PDFMergerUtilityTest.DPI));
           this.checkImagesIdentical(bim__1168_31, src2ImageTab[page__1165_22]);
         }
@@ -1429,12 +1430,14 @@ public class PDFMergerUtilityTest {
     }
   }
 
-  private void checkImagesIdentical(global::SkiaSharp.SKBitmap bim1,
-    global::SkiaSharp.SKBitmap bim2) {
-    global::DripSharp.Testing.JavaAssertions.Equal(bim1.Height, bim2.Height, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(bim1.Width, bim2.Width, null);
-    int w = bim1.Width;
-    int h = bim1.Height;
+  private void checkImagesIdentical(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim1,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim2) {
+    global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim1),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim2), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim1),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim2), null);
+    int w = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim1);
+    int h = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim1);
     for (int i = 0; (i < w); ++i) {
       for (int j = 0; (j < h); ++j) {
         global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(bim1,
@@ -2106,9 +2109,11 @@ public class PDFMergerUtilityTest {
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject imageXObject
           = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(global::DripSharp.PdfCarton.Pdmodel.Graphics.PDXObject.CreateXObject(imageDict,
           new global::DripSharp.PdfCarton.Pdmodel.PDResources())!);
-        global::SkiaSharp.SKBitmap bim = imageXObject.GetImage();
-        global::DripSharp.Testing.JavaAssertions.Equal(909, bim.Width, null);
-        global::DripSharp.Testing.JavaAssertions.Equal(233, bim.Height, null);
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim = imageXObject.GetImage();
+        global::DripSharp.Testing.JavaAssertions.Equal(909,
+          global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim), null);
+        global::DripSharp.Testing.JavaAssertions.Equal(233,
+          global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim), null);
       } catch (global::System.Exception __dripsharpCaught_1568_25_0) {
         __dripsharpPrimary_1568_25_0 = __dripsharpCaught_1568_25_0;
         throw;

@@ -101,7 +101,7 @@ public abstract class CFFFont : global::DripSharp.PdfCarton.Fonts.FontBoxFont {
 
   protected abstract global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString __DripSharpCovariantBridgeGetType2CharString(int cidOrGid);
 
-  public abstract global::SkiaSharp.SKPath GetPath(string name);
+  public abstract global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(string name);
 
   public abstract float GetWidth(string name);
 

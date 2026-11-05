@@ -17,7 +17,7 @@ internal class GlyphRenderer {
     this.glyphDescription = glyphDescription;
   }
 
-  public virtual global::SkiaSharp.SKPath GetPath() {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath() {
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point[] points
       = this.describe(this.glyphDescription);
     return this.calculatePath(points);
@@ -46,8 +46,9 @@ internal class GlyphRenderer {
     return points;
   }
 
-  private global::SkiaSharp.SKPath calculatePath(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point[] points) {
-    global::SkiaSharp.SKPath path = new global::SkiaSharp.SKPath();
+  private global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D calculatePath(global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point[] points) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path
+      = global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontCompat.CreatePath();
     int start = 0;
     for (int p = 0, len = points.Length; (p < len); ++p) {
       if (points[p].endOfContour) {
@@ -100,7 +101,7 @@ internal class GlyphRenderer {
     return path;
   }
 
-  private void moveTo(global::SkiaSharp.SKPath path,
+  private void moveTo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path,
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point point) {
     global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontCompat.MoveTo(path, (float)(point.x),
       (float)(point.y));
@@ -112,7 +113,7 @@ internal class GlyphRenderer {
     }
   }
 
-  private void lineTo(global::SkiaSharp.SKPath path,
+  private void lineTo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path,
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point point) {
     global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontCompat.LineTo(path, (float)(point.x),
       (float)(point.y));
@@ -124,7 +125,7 @@ internal class GlyphRenderer {
     }
   }
 
-  private void quadTo(global::SkiaSharp.SKPath path,
+  private void quadTo(global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path,
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point ctrlPoint,
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer.Point point) {
     global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontCompat.QuadTo(path, (float)(ctrlPoint.x),

@@ -31,7 +31,7 @@ public interface PDFTemplateBuilder {
   public void CreateProcSetArray();
 
   public void CreateSignatureImage(global::DripSharp.PdfCarton.Pdmodel.PDDocument template,
-    global::SkiaSharp.SKBitmap image);
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image);
 
   public void CreateFormatterRectangle(int[] @params);
 

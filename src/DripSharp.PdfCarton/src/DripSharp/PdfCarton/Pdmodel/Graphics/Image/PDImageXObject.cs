@@ -12,7 +12,7 @@ public sealed class PDImageXObject : global::DripSharp.PdfCarton.Pdmodel.Graphic
 global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
   private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
-  private global::DripSharp.Runtime.JavaSoftReference<global::SkiaSharp.SKBitmap> cachedImage
+  private global::DripSharp.Runtime.JavaSoftReference<global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage> cachedImage
     = null!;
 
   private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace = null!;
@@ -23,7 +23,7 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
 
   private bool jpxValuesInitialized;
 
-  private global::SkiaSharp.SKBitmap jpxSMask;
+  private global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage jpxSMask;
 
   private readonly global::DripSharp.PdfCarton.Pdmodel.PDResources resources = null!;
 
@@ -154,7 +154,7 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
     if (((global::DripSharp.Runtime.JavaCompat.Equals("gif", ext)
       || global::DripSharp.Runtime.JavaCompat.Equals("bmp", ext))
       || global::DripSharp.Runtime.JavaCompat.Equals("png", ext))) {
-      global::SkiaSharp.SKBitmap bim
+      global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
         = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(file);
       return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.CreateFromImage(doc,
         bim);
@@ -228,7 +228,7 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
     if ((((fileType! == global::DripSharp.PdfCarton.Util.Filetypedetector.FileType.Bmp)
       || (fileType! == global::DripSharp.PdfCarton.Util.Filetypedetector.FileType.Gif))
       || (fileType! == global::DripSharp.PdfCarton.Util.Filetypedetector.FileType.Png))) {
-      global::SkiaSharp.SKBitmap bim
+      global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
         = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(file);
       return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.CreateFromImage(doc,
         bim);
@@ -283,7 +283,7 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
       }
       global::System.IO.MemoryStream bais
         = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(byteArray);
-      global::SkiaSharp.SKBitmap bim
+      global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
         = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(bais);
       return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.CreateFromImage(document,
         bim);
@@ -313,20 +313,21 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
     this.GetCOSObject().SetInt(global::DripSharp.PdfCarton.Cos.COSName.StructParent, key);
   }
 
-  public global::SkiaSharp.SKBitmap GetImage() {
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetImage() {
     return this.GetImage((global::SkiaSharp.SKRectI)default!, 1);
   }
 
-  public global::SkiaSharp.SKBitmap GetImage(global::SkiaSharp.SKRectI region, int subsampling) {
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetImage(global::SkiaSharp.SKRectI region,
+    int subsampling) {
     if ((((region == default!) && (subsampling == this.cachedImageSubsampling)) && (this.cachedImage
       != default!))) {
-      global::SkiaSharp.SKBitmap cached = this.cachedImage.Get();
+      global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage cached = this.cachedImage.Get();
       if ((cached != default!)) {
         return cached;
       }
     }
     this.initJPXValues();
-    global::SkiaSharp.SKBitmap image;
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image;
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject softMask = this.GetSoftMask();
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject mask = this.GetMask();
     if ((this.jpxSMask != default!)) {
@@ -356,12 +357,12 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
     if (((region == default!) && (subsampling <= this.cachedImageSubsampling))) {
       this.cachedImageSubsampling = subsampling;
       this.cachedImage
-        = new global::DripSharp.Runtime.JavaSoftReference<global::SkiaSharp.SKBitmap>(image);
+        = new global::DripSharp.Runtime.JavaSoftReference<global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage>(image);
     }
     return image;
   }
 
-  public global::SkiaSharp.SKBitmap GetRawImage() {
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetRawImage() {
     return this.GetColorSpace().ToRawImage(this.GetRawRaster());
   }
 
@@ -385,7 +386,7 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
     return matte!;
   }
 
-  public global::SkiaSharp.SKBitmap GetStencilImage(global::DripSharp.Runtime.JavaPaint paint) {
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetStencilImage(global::DripSharp.Runtime.JavaPaint paint) {
     if (!(this.IsStencil())) {
       throw new global::System.InvalidOperationException("Image is not a stencil");
     }
@@ -393,24 +394,30 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
       paint);
   }
 
-  public global::SkiaSharp.SKBitmap GetOpaqueImage() {
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetOpaqueImage() {
     return this.GetOpaqueImage((global::SkiaSharp.SKRectI)default!, 1);
   }
 
-  public global::SkiaSharp.SKBitmap GetOpaqueImage(global::SkiaSharp.SKRectI region,
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetOpaqueImage(global::SkiaSharp.SKRectI region,
     int subsampling) {
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetRGBImage(this,
       region, subsampling, (global::DripSharp.PdfCarton.Cos.COSArray)default!);
   }
 
-  private global::SkiaSharp.SKBitmap applyMask(global::SkiaSharp.SKBitmap image,
-    global::SkiaSharp.SKBitmap mask, bool interpolateMask, bool isSoft, float[] matte) {
+  private global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage applyMask(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage mask, bool interpolateMask,
+    bool isSoft, float[] matte) {
     if ((mask == default!)) {
       return image;
     }
-    int width = global::System.Math.Max(image.Width, mask.Width);
-    int height = global::System.Math.Max(image.Height, mask.Height);
-    if (((mask.Width < width) || (mask.Height < height))) {
+    int width
+      = global::System.Math.Max(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(mask));
+    int height
+      = global::System.Math.Max(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(mask));
+    if (((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(mask) < width)
+      || (global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(mask) < height))) {
       mask = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.scaleImage(mask,
         width, height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY,
         interpolateMask);
@@ -421,7 +428,8 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
           width, height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY, false);
       }
     }
-    if (((image.Width < width) || (image.Height < height))) {
+    if (((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image) < width)
+      || (global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image) < height))) {
       image = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.scaleImage(image,
         width, height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB,
         this.GetInterpolate());
@@ -534,14 +542,14 @@ global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage {
     }
   }
 
-  private static global::SkiaSharp.SKBitmap scaleImage(global::SkiaSharp.SKBitmap image, int width,
-    int height, int type, bool interpolate) {
-    int imgWidth = image.Width;
-    int imgHeight = image.Height;
+  private static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage scaleImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image,
+    int width, int height, int type, bool interpolate) {
+    int imgWidth = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image);
+    int imgHeight = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image);
     bool largeScale = (unchecked((width * height)) > unchecked((unchecked((3000 * 3000)) * ((type
       == global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY) ? 3 : 1))));
     interpolate &= ((imgWidth != width) || (imgHeight != height));
-    global::SkiaSharp.SKBitmap image2
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image2
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height, type);
     if (interpolate) {
       global::SkiaSharp.SKMatrix af

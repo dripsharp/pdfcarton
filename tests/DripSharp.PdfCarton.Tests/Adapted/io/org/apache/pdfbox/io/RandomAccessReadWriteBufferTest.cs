@@ -136,7 +136,7 @@ public class RandomAccessReadWriteBufferTest {
           null);
         sbyte[] bytesRead = new sbyte[11];
         global::DripSharp.Testing.JavaAssertions.Equal(11,
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessReadWrite))).Read(bytesRead),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessReadWrite)).Read(bytesRead),
           null);
         global::DripSharp.Testing.JavaAssertions.Equal(1, (int)(bytesRead[0]), null);
         global::DripSharp.Testing.JavaAssertions.Equal(7, (int)(bytesRead[6]), null);

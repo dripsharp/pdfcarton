@@ -165,9 +165,10 @@ public class PNGConverterTest {
             new object[] { (global::DripSharp.Runtime.JavaFile)global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PNGConverterTest.PARENTDIR,
               global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
               global::DripSharp.Runtime.JavaCompat.Concat(name, ".pdf"))) });
-          global::SkiaSharp.SKBitmap image = pdImageXObject.GetImage();
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image
+            = pdImageXObject.GetImage();
           global::DripSharp.Testing.JavaAssertions.NotNull(pdImageXObject.GetRawRaster(), null);
-          global::SkiaSharp.SKBitmap expectedImage
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage expectedImage
             = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(imageBytes));
           if (((imageProfile! != default!)
             && global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(expectedImage).ColorSpace.IsSrgb)) {
@@ -177,11 +178,12 @@ public class PNGConverterTest {
           }
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(expectedImage,
             image);
-          global::SkiaSharp.SKBitmap rawImage = pdImageXObject.GetRawImage();
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage rawImage
+            = pdImageXObject.GetRawImage();
           if ((rawImage != default!)) {
-            global::DripSharp.Testing.JavaAssertions.Equal(rawImage.Width,
+            global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(rawImage),
               pdImageXObject.GetWidth(), null);
-            global::DripSharp.Testing.JavaAssertions.Equal(rawImage.Height,
+            global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(rawImage),
               pdImageXObject.GetHeight(), null);
             global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactoryTest.checkIdentRaw(expectedImage,
               pdImageXObject);
@@ -201,7 +203,7 @@ public class PNGConverterTest {
     }
   }
 
-  public static global::SkiaSharp.SKBitmap GetImageWithProfileData(global::SkiaSharp.SKBitmap sourceImage,
+  public static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetImageWithProfileData(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage sourceImage,
     global::DripSharp.Runtime.JavaIccProfile realProfile) {
     global::DripSharp.Runtime.JavaHashtable<string, object> properties
       = new global::DripSharp.Runtime.JavaHashtable<string, object>();

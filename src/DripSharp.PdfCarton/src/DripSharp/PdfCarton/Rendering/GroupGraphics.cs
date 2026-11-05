@@ -9,28 +9,29 @@
 namespace DripSharp.PdfCarton.Rendering;
 
 internal class GroupGraphics : global::DripSharp.Runtime.PdfCartonGraphics2D {
-  private readonly global::SkiaSharp.SKBitmap groupImage = null!;
+  private readonly global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage groupImage = null!;
 
-  private readonly global::SkiaSharp.SKBitmap groupAlphaImage = null!;
+  private readonly global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage groupAlphaImage = null!;
 
   private readonly global::DripSharp.Runtime.PdfCartonGraphics2D groupG2D = null!;
 
   private readonly global::DripSharp.Runtime.PdfCartonGraphics2D alphaG2D = null!;
 
-  internal GroupGraphics(global::SkiaSharp.SKBitmap groupImage,
+  internal GroupGraphics(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage groupImage,
     global::DripSharp.Runtime.PdfCartonGraphics2D groupGraphics) {
     this.groupImage = groupImage;
     this.groupG2D = groupGraphics;
     this.groupAlphaImage
-      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(groupImage.Width,
-      groupImage.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(groupImage),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(groupImage),
+      global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
     this.alphaG2D
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(this.groupAlphaImage);
   }
 
-  private GroupGraphics(global::SkiaSharp.SKBitmap groupImage,
+  private GroupGraphics(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage groupImage,
     global::DripSharp.Runtime.PdfCartonGraphics2D groupGraphics,
-    global::SkiaSharp.SKBitmap groupAlphaImage,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage groupAlphaImage,
     global::DripSharp.Runtime.PdfCartonGraphics2D alphaGraphics) {
     this.groupImage = groupImage;
     this.groupG2D = groupGraphics;
@@ -77,38 +78,40 @@ internal class GroupGraphics : global::DripSharp.Runtime.PdfCartonGraphics2D {
     this.alphaG2D.DrawArc(x, y, width, height, startAngle, arcAngle);
   }
 
-  public override bool DrawImage(global::SkiaSharp.SKBitmap img, int x, int y,
-    global::DripSharp.Runtime.JavaColor bgcolor, object observer) {
+  public override bool DrawImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage img,
+    int x, int y, global::DripSharp.Runtime.JavaColor bgcolor, object observer) {
     this.groupG2D.DrawImage(img, x, y, bgcolor, observer);
     return this.alphaG2D.DrawImage(img, x, y, bgcolor, observer);
   }
 
-  public override bool DrawImage(global::SkiaSharp.SKBitmap img, int x, int y, object observer) {
+  public override bool DrawImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage img,
+    int x, int y, object observer) {
     this.groupG2D.DrawImage(img, x, y, observer);
     return this.alphaG2D.DrawImage(img, x, y, observer);
   }
 
-  public override bool DrawImage(global::SkiaSharp.SKBitmap img, int x, int y, int width,
-    int height, global::DripSharp.Runtime.JavaColor bgcolor, object observer) {
+  public override bool DrawImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage img,
+    int x, int y, int width, int height, global::DripSharp.Runtime.JavaColor bgcolor,
+    object observer) {
     this.groupG2D.DrawImage(img, x, y, width, height, bgcolor, observer);
     return this.alphaG2D.DrawImage(img, x, y, width, height, bgcolor, observer);
   }
 
-  public override bool DrawImage(global::SkiaSharp.SKBitmap img, int x, int y, int width,
-    int height, object observer) {
+  public override bool DrawImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage img,
+    int x, int y, int width, int height, object observer) {
     this.groupG2D.DrawImage(img, x, y, width, height, observer);
     return this.alphaG2D.DrawImage(img, x, y, width, height, observer);
   }
 
-  public override bool DrawImage(global::SkiaSharp.SKBitmap img, int dx1, int dy1, int dx2, int dy2,
-    int sx1, int sy1, int sx2, int sy2, global::DripSharp.Runtime.JavaColor bgcolor,
-    object observer) {
+  public override bool DrawImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage img,
+    int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2,
+    global::DripSharp.Runtime.JavaColor bgcolor, object observer) {
     this.groupG2D.DrawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, bgcolor, observer);
     return this.alphaG2D.DrawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, bgcolor, observer);
   }
 
-  public override bool DrawImage(global::SkiaSharp.SKBitmap img, int dx1, int dy1, int dx2, int dy2,
-    int sx1, int sy1, int sx2, int sy2, object observer) {
+  public override bool DrawImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage img,
+    int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, object observer) {
     this.groupG2D.DrawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer);
     return this.alphaG2D.DrawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer);
   }
@@ -255,25 +258,25 @@ internal class GroupGraphics : global::DripSharp.Runtime.PdfCartonGraphics2D {
     this.alphaG2D.DrawGlyphVector(g, x, y);
   }
 
-  public override void DrawImage(global::SkiaSharp.SKBitmap img,
+  public override void DrawImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage img,
     global::DripSharp.Runtime.JavaBufferedImageOperation op, int x, int y) {
     this.groupG2D.DrawBufferedImage(img, op, x, y);
     this.alphaG2D.DrawBufferedImage(img, op, x, y);
   }
 
-  public override bool DrawImage(global::SkiaSharp.SKBitmap img, global::SkiaSharp.SKMatrix xform,
-    object obs) {
+  public override bool DrawImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage img,
+    global::SkiaSharp.SKMatrix xform, object obs) {
     this.groupG2D.DrawImage(img, xform, obs);
     return this.alphaG2D.DrawImage(img, xform, obs);
   }
 
-  public override void DrawRenderableImage(global::SkiaSharp.SKBitmap img,
+  public override void DrawRenderableImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage img,
     global::SkiaSharp.SKMatrix xform) {
     this.groupG2D.DrawRenderableImage(img, xform);
     this.alphaG2D.DrawRenderableImage(img, xform);
   }
 
-  public override void DrawRenderedImage(global::SkiaSharp.SKBitmap img,
+  public override void DrawRenderedImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage img,
     global::SkiaSharp.SKMatrix xform) {
     this.groupG2D.DrawRenderedImage(img, xform);
     this.alphaG2D.DrawRenderedImage(img, xform);
@@ -403,12 +406,12 @@ internal class GroupGraphics : global::DripSharp.Runtime.PdfCartonGraphics2D {
     this.alphaG2D.Translate(tx, ty);
   }
 
-  internal virtual void removeBackdrop(global::SkiaSharp.SKBitmap backdrop, int offsetX,
-    int offsetY) {
-    int groupWidth = this.groupImage.Width;
-    int groupHeight = this.groupImage.Height;
-    int backdropWidth = backdrop.Width;
-    int backdropHeight = backdrop.Height;
+  internal virtual void removeBackdrop(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage backdrop,
+    int offsetX, int offsetY) {
+    int groupWidth = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(this.groupImage);
+    int groupHeight = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(this.groupImage);
+    int backdropWidth = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(backdrop);
+    int backdropHeight = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(backdrop);
     int groupType = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(this.groupImage);
     int groupAlphaType
       = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(this.groupAlphaImage);

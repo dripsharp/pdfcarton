@@ -15,7 +15,8 @@ public sealed class JPXFilter : global::DripSharp.PdfCarton.Filter.Filter {
     global::DripSharp.PdfCarton.Filter.DecodeResult result
       = new global::DripSharp.PdfCarton.Filter.DecodeResult(new global::DripSharp.PdfCarton.Cos.COSDictionary());
     result.GetParameters().AddAll(parameters);
-    global::SkiaSharp.SKBitmap image = this.readJPX(encoded, options, result);
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image = this.readJPX(encoded, options,
+      result);
     global::DripSharp.Runtime.JavaRaster raster
       = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(image);
     switch (raster.GetDataBuffer().DataType) {
@@ -38,8 +39,10 @@ public sealed class JPXFilter : global::DripSharp.PdfCarton.Filter.Filter {
       case var __case_86_18_0 when __case_86_18_0
         == global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_INT:
       int[] ar = new int[raster.NumberOfBands];
-      for (int y = 0; (y < image.Height); ++y) {
-        for (int x = 0; (x < image.Width); ++x) {
+      for (int y = 0; (y < global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image));
+        ++y) {
+        for (int x = 0; (x < global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image));
+          ++x) {
           raster.GetPixel(x, y, ar);
           for (int i = 0; (i < ar.Length); ++i) {
             global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(decoded, ar[i]);
@@ -60,7 +63,7 @@ public sealed class JPXFilter : global::DripSharp.PdfCarton.Filter.Filter {
       global::DripSharp.PdfCarton.Filter.DecodeOptions.Default);
   }
 
-  private global::SkiaSharp.SKBitmap readJPX(global::System.IO.Stream input,
+  private global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage readJPX(global::System.IO.Stream input,
     global::DripSharp.PdfCarton.Filter.DecodeOptions options,
     global::DripSharp.PdfCarton.Filter.DecodeResult result) {
     global::DripSharp.Runtime.JavaImageReader reader
@@ -77,7 +80,7 @@ public sealed class JPXFilter : global::DripSharp.PdfCarton.Filter.Filter {
           irp.SetSourceSubsampling(options.GetSubsamplingX(), options.GetSubsamplingY(),
             options.GetSubsamplingOffsetX(), options.GetSubsamplingOffsetY());
           options.setFilterSubsampled(true);
-          global::SkiaSharp.SKBitmap image;
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image;
           try {
             image = reader.Read(0, irp);
           } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
@@ -106,15 +109,17 @@ public sealed class JPXFilter : global::DripSharp.PdfCarton.Filter.Filter {
               if (((global::DripSharp.Runtime.PdfCartonFontCompat.GetTransparency(image)
                 == global::DripSharp.Runtime.PdfCartonTransparency.TRANSLUCENT)
                 && (parameters.GetInt(global::DripSharp.PdfCarton.Cos.COSName.SmaskInData) > 0))) {
-                global::SkiaSharp.SKBitmap smask
-                  = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width,
-                  image.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
+                global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage smask
+                  = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+                  global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image),
+                  global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY);
                 global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(smask,
                   global::DripSharp.Runtime.PdfCartonFontCompat.GetAlphaRaster(image));
                 result.setJPXSMask(smask);
-                global::SkiaSharp.SKBitmap bim
-                  = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width,
-                  image.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
+                global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
+                  = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+                  global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image),
+                  global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
                 global::DripSharp.Runtime.PdfCartonGraphics2D g2d
                   = (global::DripSharp.Runtime.PdfCartonGraphics2D)(global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(bim)!);
                 g2d.DrawImage(image, 0, 0, (object)default!);

@@ -137,7 +137,7 @@ public class PDRectangle : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjecta
     return (this.GetUpperRightY() - this.GetLowerLeftY());
   }
 
-  public virtual global::SkiaSharp.SKPath Transform(global::DripSharp.PdfCarton.Util.Matrix matrix) {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D Transform(global::DripSharp.PdfCarton.Util.Matrix matrix) {
     float x1 = this.GetLowerLeftX();
     float y1 = this.GetLowerLeftY();
     float x2 = this.GetUpperRightX();
@@ -146,7 +146,8 @@ public class PDRectangle : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjecta
     global::DripSharp.Runtime.JavaPoint2D p1 = matrix.TransformPoint(x2, y1);
     global::DripSharp.Runtime.JavaPoint2D p2 = matrix.TransformPoint(x2, y2);
     global::DripSharp.Runtime.JavaPoint2D p3 = matrix.TransformPoint(x1, y2);
-    global::SkiaSharp.SKPath path = new global::SkiaSharp.SKPath();
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
     global::DripSharp.Runtime.PdfCartonFontCompat.MoveTo(path, p0.X, p0.Y);
     global::DripSharp.Runtime.PdfCartonFontCompat.LineTo(path, p1.X, p1.Y);
     global::DripSharp.Runtime.PdfCartonFontCompat.LineTo(path, p2.X, p2.Y);
@@ -159,12 +160,13 @@ public class PDRectangle : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjecta
     return this.rectArray;
   }
 
-  public virtual global::SkiaSharp.SKPath ToGeneralPath() {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D ToGeneralPath() {
     float x1 = this.GetLowerLeftX();
     float y1 = this.GetLowerLeftY();
     float x2 = this.GetUpperRightX();
     float y2 = this.GetUpperRightY();
-    global::SkiaSharp.SKPath path = new global::SkiaSharp.SKPath();
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
     global::DripSharp.Runtime.PdfCartonFontCompat.MoveTo(path, x1, y1);
     global::DripSharp.Runtime.PdfCartonFontCompat.LineTo(path, x2, y1);
     global::DripSharp.Runtime.PdfCartonFontCompat.LineTo(path, x2, y2);

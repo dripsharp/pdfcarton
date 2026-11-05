@@ -10,7 +10,7 @@ namespace DripSharp.PdfCarton.Pdmodel.Font;
 
 internal sealed class ToUnicodeWriter {
   private readonly global::System.Collections.Generic.IDictionary<int, string> cidToUnicode
-    = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int, string>();
+    = new global::DripSharp.Runtime.JavaTreeMap<int, string>();
 
   private int wMode = default;
 

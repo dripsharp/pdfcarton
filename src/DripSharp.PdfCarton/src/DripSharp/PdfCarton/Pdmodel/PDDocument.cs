@@ -686,7 +686,7 @@ public class PDDocument : global::System.IDisposable {
     if (!(this.IsEncrypted())) {
       this.encryption = new global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption();
     }
-    global::DripSharp.Runtime.PdfBoxSecurityHandler securityHandler
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.ISecurityHandler securityHandler
       = global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandlerFactory.Instance.NewSecurityHandlerForPolicy(policy);
     if ((securityHandler == default!)) {
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("No security handler for policy ",

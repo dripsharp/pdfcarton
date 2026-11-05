@@ -410,7 +410,7 @@ public sealed class PDAcroForm : global::DripSharp.PdfCarton.Pdmodel.Common.COSO
     global::DripSharp.PdfCarton.Util.Matrix appearanceStreamMatrix = appearanceStream.GetMatrix();
     global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle appearanceStreamBBox
       = appearanceStream.GetBBox();
-    global::SkiaSharp.SKPath transformedAppearanceBox
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D transformedAppearanceBox
       = appearanceStreamBBox.Transform(appearanceStreamMatrix);
     return transformedAppearanceBox.Bounds;
   }

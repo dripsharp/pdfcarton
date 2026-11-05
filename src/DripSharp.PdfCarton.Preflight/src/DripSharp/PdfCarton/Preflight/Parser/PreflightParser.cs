@@ -133,7 +133,7 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
   }
 
   protected internal override bool ParseXrefTable(long startByteOffset) {
-    if ((base.Source.Peek() != (int)'x')) {
+    if ((((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek() != (int)'x')) {
       return false;
     }
     string xref = this.ReadString();
@@ -170,10 +170,11 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
       }
       this.SkipSpaces();
       for (int i = 0; (i < count); i++) {
-        if ((base.Source.IsEOF() || this.IsEndOfName(unchecked((char)(base.Source.Peek()))))) {
+        if ((base.Source.IsEOF()
+          || this.IsEndOfName(unchecked((char)(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek()))))) {
           break;
         }
-        if ((base.Source.Peek() == (int)'t')) {
+        if ((((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek() == (int)'t')) {
           this.addValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxCrossRef,
             "Expected xref line but 't' found"));
           break;
@@ -234,7 +235,8 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
     long startOffset = base.Source.GetPosition();
     int nextChar = base.Source.Read();
     if (((nextChar == (int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiCr))
-      && (base.Source.Peek() == (int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiLf)))) {
+      && (((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek()
+      == (int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiLf)))) {
       startOffset += 2;
     } else {
       if ((nextChar == (int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiLf))) {
@@ -258,7 +260,7 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
     bool crlfFound = false;
     if ((nextChar == (int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiLf))) {
       eolFound = true;
-      base.Source.Rewind(2);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Rewind(2);
       if ((base.Source.Read() == (int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiCr))) {
         endOffset--;
         crlfFound = true;
@@ -270,7 +272,8 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
     if (!eolFound) {
       this.addValidationError(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorSyntaxStreamDelimiter,
         global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Expected 'EOL' before the endstream keyword at offset ",
-        base.Source.GetPosition()), " but found '"), base.Source.Peek()), "'")));
+        base.Source.GetPosition()), " but found '"),
+        ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek()), "'")));
       addStreamLengthErrorMessage = true;
     }
     string endstreamV = this.ReadString();
@@ -295,7 +298,8 @@ public class PreflightParser : global::DripSharp.PdfCarton.Pdfparser.PDFParser {
     bool succeed = false;
     int nextChar = base.Source.Read();
     if ((((int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiCr) == nextChar)
-      && ((int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiLf) == base.Source.Peek()))) {
+      && ((int)(global::DripSharp.PdfCarton.Pdfparser.BaseParser.AsciiLf)
+      == ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek()))) {
       base.Source.Read();
       succeed = true;
     } else {

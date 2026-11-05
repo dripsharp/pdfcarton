@@ -53,44 +53,58 @@ public class PDInlineImageTest {
       (global::DripSharp.PdfCarton.Pdmodel.PDResources)default!);
     global::DripSharp.Runtime.JavaPaint paint
       = global::DripSharp.Runtime.PdfCartonFontCompat.ColorFromComponents(0, 0, 0);
-    global::SkiaSharp.SKBitmap stencilImage = inlineImage1.GetStencilImage(paint);
-    global::DripSharp.Testing.JavaAssertions.Equal(width, stencilImage.Width, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(height, stencilImage.Height, null);
-    global::SkiaSharp.SKBitmap stencilImage2 = inlineImage2.GetStencilImage(paint);
-    global::DripSharp.Testing.JavaAssertions.Equal(width, stencilImage2.Width, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(height, stencilImage2.Height, null);
-    global::SkiaSharp.SKBitmap image1 = inlineImage1.GetImage();
-    global::DripSharp.Testing.JavaAssertions.Equal(width, image1.Width, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(height, image1.Height, null);
-    global::SkiaSharp.SKBitmap image2 = inlineImage2.GetImage();
-    global::DripSharp.Testing.JavaAssertions.Equal(width, image2.Width, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(height, image2.Height, null);
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage stencilImage
+      = inlineImage1.GetStencilImage(paint);
+    global::DripSharp.Testing.JavaAssertions.Equal(width,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(stencilImage), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(stencilImage), null);
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage stencilImage2
+      = inlineImage2.GetStencilImage(paint);
+    global::DripSharp.Testing.JavaAssertions.Equal(width,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(stencilImage2), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(stencilImage2), null);
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image1 = inlineImage1.GetImage();
+    global::DripSharp.Testing.JavaAssertions.Equal(width,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image1), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image1), null);
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image2 = inlineImage2.GetImage();
+    global::DripSharp.Testing.JavaAssertions.Equal(width,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image2), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image2), null);
     bool writeOk = global::DripSharp.PdfCarton.Tests.Support.WriteImage(image1,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "png"),
       global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImageTest.TESTRESULTSDIR,
       "/inline-grid1.png"))));
     global::DripSharp.Testing.JavaAssertions.True(writeOk, null);
-    global::SkiaSharp.SKBitmap bim1
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim1
       = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImageTest.TESTRESULTSDIR,
       "/inline-grid1.png"))));
     global::DripSharp.Testing.JavaAssertions.NotNull(bim1, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(width, bim1.Width, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(height, bim1.Height, null);
+    global::DripSharp.Testing.JavaAssertions.Equal(width,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim1), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim1), null);
     writeOk = global::DripSharp.PdfCarton.Tests.Support.WriteImage(image2,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "png"),
       global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImageTest.TESTRESULTSDIR,
       "/inline-grid2.png"))));
     global::DripSharp.Testing.JavaAssertions.True(writeOk, null);
-    global::SkiaSharp.SKBitmap bim2
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim2
       = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
       global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDInlineImageTest.TESTRESULTSDIR,
       "/inline-grid2.png"))));
     global::DripSharp.Testing.JavaAssertions.NotNull(bim2, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(width, bim2.Width, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(height, bim2.Height, null);
+    global::DripSharp.Testing.JavaAssertions.Equal(width,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim2), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim2), null);
     for (int x__140_18 = 0; (x__140_18 < width); ++x__140_18) {
       for (int y__142_22 = 0; (y__142_22 < height); ++y__142_22) {
         if (((global::DripSharp.Runtime.JavaCompat.IntegralRemainder(x__140_18, 2) == 0)
@@ -243,17 +257,21 @@ public class PDInlineImageTest {
       inlineImage.GetColorSpace(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(1, inlineImage.GetBitsPerComponent(), null);
     global::DripSharp.Testing.JavaAssertions.Equal("tiff", inlineImage.GetSuffix(), null);
-    global::SkiaSharp.SKBitmap bim = inlineImage.GetImage();
-    global::DripSharp.Testing.JavaAssertions.Equal(width, bim.Width, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(height, bim.Height, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(inlineImage.GetWidth(), bim.Width, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(inlineImage.GetHeight(), bim.Height, null);
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim = inlineImage.GetImage();
+    global::DripSharp.Testing.JavaAssertions.Equal(width,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(height,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(inlineImage.GetWidth(),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(inlineImage.GetHeight(),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim), null);
     global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_GRAY,
       global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(bim), null);
     global::DripSharp.Runtime.JavaDataBufferByte dbb
       = (global::DripSharp.Runtime.JavaDataBufferByte)(global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(bim).GetDataBuffer()!);
-    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((bim.Width * bim.Height)), dbb.Size,
-      null);
+    global::DripSharp.Testing.JavaAssertions.Equal(unchecked((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim)
+      * global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim))), dbb.Size, null);
     sbyte[] data = dbb.GetData();
     for (int i = 0; (i < data.Length); ++i) {
       global::DripSharp.Testing.JavaAssertions.Equal(0, (int)(data[i]), null);

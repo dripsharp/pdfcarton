@@ -127,7 +127,7 @@ public class PDVisibleSigBuilder
   }
 
   public virtual void CreateSignatureImage(global::DripSharp.PdfCarton.Pdmodel.PDDocument template,
-    global::SkiaSharp.SKBitmap image) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image) {
     this.pdfStructure.SetImage(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.CreateFromImage(template,
       image));
     global::Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(global::DripSharp.PdfCarton.Pdmodel.Interactive.Digitalsignature.Visible.PDVisibleSigBuilder.LOG,

@@ -75,7 +75,7 @@ public class RandomAccessReadBufferedFileTest {
         global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessSource.GetPosition(),
           null);
         sbyte[] buffer = new sbyte[4];
-        ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource))).Read(buffer);
+        ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource)).Read(buffer);
         global::DripSharp.Testing.JavaAssertions.Equal((int)('0'), (int)(buffer[0]), null);
         global::DripSharp.Testing.JavaAssertions.Equal((int)('3'), (int)(buffer[3]), null);
         global::DripSharp.Testing.JavaAssertions.Equal((long)(4), randomAccessSource.GetPosition(),
@@ -152,7 +152,7 @@ public class RandomAccessReadBufferedFileTest {
         randomAccessSource.Read();
         sbyte[] readBytes = new sbyte[6];
         global::DripSharp.Testing.JavaAssertions.Equal(readBytes.Length,
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource))).Read(readBytes),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource)).Read(readBytes),
           null);
         global::DripSharp.Testing.JavaAssertions.Equal((long)(8), randomAccessSource.GetPosition(),
           null);
@@ -191,7 +191,7 @@ public class RandomAccessReadBufferedFileTest {
           ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource)).Peek(), null);
         sbyte[] readBytes = new sbyte[6];
         global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource))).Read(readBytes),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource)).Read(readBytes),
           null);
         randomAccessSource.Seek((long)(0));
         global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessSource.GetPosition(),
@@ -369,7 +369,7 @@ public class RandomAccessReadBufferedFileTest {
         int length = (int)(randomAccessSource__275_31.Length());
         sbyte[] b__278_20 = new sbyte[length];
         bufferLen
-          = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource__275_31))).Read(b__278_20);
+          = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource__275_31)).Read(b__278_20);
         global::DripSharp.Testing.JavaAssertions.True((unchecked((bufferLen * 2)) < length), null);
       } catch (global::System.Exception __dripsharpCaught_275_31_0) {
         __dripsharpPrimary_275_31_0 = __dripsharpCaught_275_31_0;

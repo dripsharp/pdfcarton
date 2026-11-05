@@ -13,11 +13,11 @@ internal sealed class SampledImageReader {
 
   private SampledImageReader() {}
 
-  public static global::SkiaSharp.SKBitmap GetStencilImage(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
+  public static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetStencilImage(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
     global::DripSharp.Runtime.JavaPaint paint) {
     int width = pdImage.GetWidth();
     int height = pdImage.GetHeight();
-    global::SkiaSharp.SKBitmap masked
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage masked
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
     global::DripSharp.Runtime.PdfCartonGraphics2D g
@@ -75,7 +75,7 @@ internal sealed class SampledImageReader {
     return masked;
   }
 
-  public static global::SkiaSharp.SKBitmap GetRGBImage(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
+  public static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetRGBImage(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
     global::DripSharp.PdfCarton.Cos.COSArray colorKey) {
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetRGBImage(pdImage,
       (global::SkiaSharp.SKRectI)default!, 1, colorKey);
@@ -95,7 +95,7 @@ internal sealed class SampledImageReader {
     }
   }
 
-  public static global::SkiaSharp.SKBitmap GetRGBImage(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
+  public static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetRGBImage(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
     global::SkiaSharp.SKRectI region, int subsampling,
     global::DripSharp.PdfCarton.Cos.COSArray colorKey) {
     if (pdImage.IsEmpty()) {
@@ -260,14 +260,14 @@ internal sealed class SampledImageReader {
     }
   }
 
-  private static global::SkiaSharp.SKBitmap from1Bit(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
+  private static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage from1Bit(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
     global::SkiaSharp.SKRectI clipped, int subsampling, int width, int height) {
     int currentSubsampling = subsampling;
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace
       = pdImage.GetColorSpace();
     float[] decode
       = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.getDecodeArray(pdImage);
-    global::SkiaSharp.SKBitmap bim = default!;
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim = default!;
     global::DripSharp.Runtime.JavaRaster raster;
     global::DripSharp.PdfCarton.Filter.DecodeOptions options
       = new global::DripSharp.PdfCarton.Filter.DecodeOptions(currentSubsampling);
@@ -340,7 +340,6 @@ internal sealed class SampledImageReader {
           }
         }
         if ((bim! != default!)) {
-          global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(bim!, raster);
           return bim!;
         }
         return colorSpace.ToRGBImage(raster);
@@ -353,7 +352,7 @@ internal sealed class SampledImageReader {
     }
   }
 
-  private static global::SkiaSharp.SKBitmap from8bit(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
+  private static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage from8bit(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
     global::DripSharp.Runtime.JavaRaster raster, global::SkiaSharp.SKRectI clipped, int subsampling,
     int width, int height) {
     int currentSubsampling = subsampling;
@@ -438,7 +437,7 @@ internal sealed class SampledImageReader {
     }
   }
 
-  private static global::SkiaSharp.SKBitmap fromAny(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
+  private static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage fromAny(global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImage pdImage,
     global::DripSharp.Runtime.JavaRaster raster, global::DripSharp.PdfCarton.Cos.COSArray colorKey,
     global::SkiaSharp.SKRectI clipped, int subsampling, int width, int height) {
     int currentSubsampling = subsampling;
@@ -482,7 +481,7 @@ internal sealed class SampledImageReader {
             bool isIndexed
               = (colorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDIndexed);
             float[] colorKeyRanges = default!;
-            global::SkiaSharp.SKBitmap colorKeyMask = default!;
+            global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage colorKeyMask = default!;
             if ((colorKey != default!)) {
               if ((colorKey.Size() >= unchecked((numComponents * 2)))) {
                 colorKeyRanges = colorKey.ToFloatArray();
@@ -547,7 +546,8 @@ internal sealed class SampledImageReader {
               }
               iis.ReadBits(padding);
             }
-            global::SkiaSharp.SKBitmap rgbImage = colorSpace.ToRGBImage(raster);
+            global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage rgbImage
+              = colorSpace.ToRGBImage(raster);
             if ((colorKeyMask! != default!)) {
               return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.applyColorKeyMask(rgbImage,
                 colorKeyMask!);
@@ -571,11 +571,11 @@ internal sealed class SampledImageReader {
     }
   }
 
-  private static global::SkiaSharp.SKBitmap applyColorKeyMask(global::SkiaSharp.SKBitmap image,
-    global::SkiaSharp.SKBitmap mask) {
-    int width = image.Width;
-    int height = image.Height;
-    global::SkiaSharp.SKBitmap masked
+  private static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage applyColorKeyMask(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage mask) {
+    int width = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image);
+    int height = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image);
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage masked
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
     global::DripSharp.Runtime.JavaRaster src

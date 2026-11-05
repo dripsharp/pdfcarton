@@ -43,9 +43,10 @@ public class PDFObjectStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseP
       if ((objectOffset != default!)) {
         long currentPosition = base.Source.GetPosition();
         if (((this.firstObject > 0) && (currentPosition < this.firstObject))) {
-          base.Source.Skip(unchecked((this.firstObject - (int)currentPosition)));
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Skip(unchecked((this.firstObject
+            - (int)currentPosition)));
         }
-        base.Source.Skip((int)(global::DripSharp.Runtime.JavaCompat.Unbox(objectOffset)));
+        ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Skip((int)(global::DripSharp.Runtime.JavaCompat.Unbox(objectOffset)));
         streamObject = this.ParseDirObject();
         if ((streamObject! != default!)) {
           streamObject!.SetDirect(false);
@@ -73,7 +74,8 @@ public class PDFObjectStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseP
         = (global::DripSharp.Runtime.JavaCompat.MapCount(objectNumbers) > numberOfObjNumbers);
       long currentPosition = base.Source.GetPosition();
       if (((this.firstObject > 0) && (currentPosition < this.firstObject))) {
-        base.Source.Skip(unchecked((this.firstObject - (int)currentPosition)));
+        ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Skip(unchecked((this.firstObject
+          - (int)currentPosition)));
       }
       int index = 0;
       foreach (global::DripSharp.Runtime.JavaMapEntry<int,
@@ -88,7 +90,8 @@ public class PDFObjectStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseP
         int finalPosition = unchecked((this.firstObject + entry.Key));
         currentPosition = base.Source.GetPosition();
         if (((finalPosition > 0) && (currentPosition < finalPosition))) {
-          base.Source.Skip(unchecked((finalPosition - (int)currentPosition)));
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Skip(unchecked((finalPosition
+            - (int)currentPosition)));
         }
         global::DripSharp.PdfCarton.Cos.COSBase streamObject = this.ParseDirObject();
         if ((streamObject != default!)) {
@@ -122,7 +125,7 @@ public class PDFObjectStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseP
 
   private global::System.Collections.Generic.IDictionary<int, long> privateReadObjectOffsets() {
     global::System.Collections.Generic.IDictionary<int, long> objectOffsets
-      = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int, long>();
+      = new global::DripSharp.Runtime.JavaTreeMap<int, long>();
     long firstObjectPosition = unchecked((unchecked((base.Source.GetPosition() + this.firstObject))
       - 1));
     for (int i = 0; (i < this.numberOfObjects); i++) {

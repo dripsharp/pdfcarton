@@ -298,14 +298,14 @@ public class OverlayTest {
           global::DripSharp.Testing.JavaAssertions.Equal(modelDocument.GetNumberOfPages(),
             resultDocument.GetNumberOfPages(), null);
           for (int page = 0; (page < modelDocument.GetNumberOfPages()); ++page) {
-            global::SkiaSharp.SKBitmap modelImage
+            global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage modelImage
               = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(modelDocument).RenderImage(page);
-            global::SkiaSharp.SKBitmap resultImage
+            global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage resultImage
               = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(resultDocument).RenderImage(page);
-            global::DripSharp.Testing.JavaAssertions.Equal(modelImage.Width, resultImage.Width,
-              null);
-            global::DripSharp.Testing.JavaAssertions.Equal(modelImage.Height, resultImage.Height,
-              null);
+            global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(modelImage),
+              global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(resultImage), null);
+            global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(modelImage),
+              global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(resultImage), null);
             global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(modelImage),
               global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(resultImage), null);
             global::DripSharp.Runtime.JavaDataBufferInt modelDataBuffer

@@ -171,12 +171,6 @@ public abstract class PDFStreamEngine {
       a.Translate((float)((float)-(transformedBox.Left)), (float)((float)-(transformedBox.Top)));
       global::DripSharp.PdfCarton.Util.Matrix aa
         = global::DripSharp.PdfCarton.Util.Matrix.Concatenate(a, matrix);
-      for (int row = 0; row < 3; row++) {
-        for (int column = 0; column < 2; column++) {
-          aa.SetValue(row, column, (float)global::System.Math.Round(aa.GetValue(row, column), 5,
-            global::System.MidpointRounding.AwayFromZero));
-        }
-      }
       global::DripSharp.PdfCarton.Pdmodel.PDResources parent = this.pushResources(appearance);
       global::DripSharp.Runtime.JavaDeque<global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState> savedStack
         = this.SaveGraphicsStack();
@@ -341,7 +335,7 @@ public abstract class PDFStreamEngine {
     if ((rectangle != default!)) {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.State.PDGraphicsState graphicsState
         = this.GetGraphicsState();
-      global::SkiaSharp.SKPath clip
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D clip
         = rectangle.Transform(graphicsState.GetCurrentTransformationMatrix());
       graphicsState.IntersectClippingPath(clip);
     }

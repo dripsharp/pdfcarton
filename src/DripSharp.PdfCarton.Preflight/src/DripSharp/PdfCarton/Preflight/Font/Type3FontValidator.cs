@@ -158,7 +158,8 @@ public class Type3FontValidator
   }
 
   private void checkCharProcsAndMetrics() {
-    global::System.Collections.Generic.IList<float?> widths = this.GetWidths(this.Font);
+    global::System.Collections.Generic.IList<float?> widths
+      = global::DripSharp.Runtime.JavaCompat.CastList<float?>(this.GetWidths(this.Font));
     if (((widths == default!) || global::DripSharp.Runtime.JavaCompat.ListIsEmpty(widths))) {
       this.FontContainer.Push(new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorFontsDictionaryInvalid,
         global::DripSharp.Runtime.JavaCompat.Concat(this.Font.GetName(),
@@ -223,9 +224,9 @@ public class Type3FontValidator
     global::DripSharp.PdfCarton.Cos.COSArray array
       = (global::DripSharp.PdfCarton.Cos.COSArray)(font.GetCOSObject().GetDictionaryObject(global::DripSharp.PdfCarton.Cos.COSName.Widths)!);
     if ((array != default!)) {
-      return array.ToCOSNumberFloatList();
+      return global::DripSharp.Runtime.JavaCompat.CastList<float?>(array.ToCOSNumberFloatList());
     }
-    return global::System.Array.Empty<float?>();
+    return global::DripSharp.Runtime.JavaCompat.CastList<float?>(global::System.Array.Empty<float>());
   }
 
   private global::DripSharp.PdfCarton.Pdmodel.Font.PDType3CharProc getCharProc(int code) {

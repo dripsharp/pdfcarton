@@ -22,19 +22,21 @@ public class ValidateXImage {
     global::DripSharp.Testing.JavaAssertions.Equal(colorSpaceName, ximage.GetColorSpace().GetName(),
       null);
     global::DripSharp.Testing.JavaAssertions.NotNull(ximage.GetImage(), null);
-    global::DripSharp.Testing.JavaAssertions.Equal(ximage.GetWidth(), ximage.GetImage().Width,
-      null);
-    global::DripSharp.Testing.JavaAssertions.Equal(ximage.GetHeight(), ximage.GetImage().Height,
-      null);
+    global::DripSharp.Testing.JavaAssertions.Equal(ximage.GetWidth(),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(ximage.GetImage()), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(ximage.GetHeight(),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(ximage.GetImage()), null);
     global::DripSharp.Runtime.JavaRaster rawRaster = ximage.GetRawRaster();
     global::DripSharp.Testing.JavaAssertions.NotNull(rawRaster, null);
     global::DripSharp.Testing.JavaAssertions.Equal(rawRaster.Width, ximage.GetWidth(), null);
     global::DripSharp.Testing.JavaAssertions.Equal(rawRaster.Height, ximage.GetHeight(), null);
     if (global::DripSharp.Runtime.JavaCompat.Equals(colorSpaceName, "ICCBased")) {
-      global::SkiaSharp.SKBitmap rawImage = ximage.GetRawImage();
+      global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage rawImage = ximage.GetRawImage();
       global::DripSharp.Testing.JavaAssertions.NotNull(rawImage, null);
-      global::DripSharp.Testing.JavaAssertions.Equal(rawImage.Width, ximage.GetWidth(), null);
-      global::DripSharp.Testing.JavaAssertions.Equal(rawImage.Height, ximage.GetHeight(), null);
+      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(rawImage),
+        ximage.GetWidth(), null);
+      global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(rawImage),
+        ximage.GetHeight(), null);
     }
     bool canEncode = true;
     bool writeOk;
@@ -64,11 +66,11 @@ public class ValidateXImage {
     public override void Write(int b) {}
   }
 
-  public static int ColorCount(global::SkiaSharp.SKBitmap bim) {
+  public static int ColorCount(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim) {
     global::System.Collections.Generic.ISet<int> colors
       = new global::System.Collections.Generic.HashSet<int>();
-    int w = bim.Width;
-    int h = bim.Height;
+    int w = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim);
+    int h = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim);
     for (int y = 0; (y < h); y++) {
       for (int x = 0; (x < w); x++) {
         colors.Add(global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(bim, x, y));
@@ -127,17 +129,19 @@ public class ValidateXImage {
     return count;
   }
 
-  public static void CheckIdent(global::SkiaSharp.SKBitmap expectedImage,
-    global::SkiaSharp.SKBitmap actualImage) {
+  public static void CheckIdent(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage expectedImage,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage actualImage) {
     string errMsg = "";
     expectedImage
       = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.ConvertToSRGB(expectedImage);
     actualImage
       = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.ConvertToSRGB(actualImage);
-    int w = expectedImage.Width;
-    int h = expectedImage.Height;
-    global::DripSharp.Testing.JavaAssertions.Equal(w, actualImage.Width, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(h, actualImage.Height, null);
+    int w = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(expectedImage);
+    int h = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(expectedImage);
+    global::DripSharp.Testing.JavaAssertions.Equal(w,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(actualImage), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(h,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(actualImage), null);
     for (int y = 0; (y < h); ++y) {
       for (int x = 0; (x < w); ++x) {
         if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(expectedImage, x, y)
@@ -155,13 +159,13 @@ public class ValidateXImage {
     }
   }
 
-  public static global::SkiaSharp.SKBitmap ConvertToSRGB(global::SkiaSharp.SKBitmap image) {
+  public static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ConvertToSRGB(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image) {
     if (global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).ColorSpace.IsSrgb) {
       return image;
     }
     if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(image).GetDataBuffer().DataType
       == global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_USHORT)) {
-      int width = image.Width;
+      int width = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image);
       bool hasAlpha = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).HasAlpha;
       global::DripSharp.PdfCarton.Tests.JavaDirectColorModel colorModel
         = new global::DripSharp.PdfCarton.Tests.JavaDirectColorModel(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).ColorSpace,
@@ -169,9 +173,10 @@ public class ValidateXImage {
         global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_INT);
       global::DripSharp.Runtime.JavaRaster targetRaster
         = global::DripSharp.PdfCarton.Tests.Support.CreatePackedRaster(global::DripSharp.Runtime.PdfCartonFontCompat.DATA_BUFFER_TYPE_INT,
-        image.Width, image.Height, colorModel.GetMasks(), new global::DripSharp.Runtime.JavaPoint(0,
-        0));
-      global::SkiaSharp.SKBitmap image8Bit
+        global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+        global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image), colorModel.GetMasks(),
+        new global::DripSharp.Runtime.JavaPoint(0, 0));
+      global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image8Bit
         = global::DripSharp.Runtime.PdfCartonFontCompat.CreateImage(colorModel, targetRaster, false,
         new global::DripSharp.Runtime.JavaHashtable<object, object>());
       global::DripSharp.Runtime.JavaRaster sourceRaster
@@ -179,7 +184,8 @@ public class ValidateXImage {
       int numShortPixelElements = (hasAlpha ? 3 : 4);
       short[] pixelShort = new short[unchecked((numShortPixelElements * width))];
       int[] pixelInt = new int[width];
-      for (int y = 0; (y < image.Height); y++) {
+      for (int y = 0; (y < global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image));
+        y++) {
         sourceRaster.GetDataElements(0, y, width, 1, pixelShort);
         int ptrShort = 0;
         for (int x = 0; (x < width); x++) {
@@ -204,8 +210,9 @@ public class ValidateXImage {
       }
       image = image8Bit;
     }
-    global::SkiaSharp.SKBitmap destination
-      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage destination
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image),
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
     global::DripSharp.Runtime.JavaColorConvertOp op
       = new global::DripSharp.Runtime.JavaColorConvertOp(global::DripSharp.Runtime.PdfCartonFontCompat.GetColorSpace(global::DripSharp.Runtime.JavaColorSpace.CS_sRGB));

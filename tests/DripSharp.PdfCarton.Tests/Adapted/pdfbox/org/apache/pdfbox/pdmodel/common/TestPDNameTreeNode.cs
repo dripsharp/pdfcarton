@@ -24,7 +24,7 @@ public class TestPDNameTreeNode {
     this.node5 = new global::DripSharp.PdfCarton.Pdmodel.Common.PDIntegerNameTreeNode();
     global::System.Collections.Generic.IDictionary<string,
       global::DripSharp.PdfCarton.Cos.COSInteger> names
-      = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<string,
+      = new global::DripSharp.Runtime.JavaTreeMap<string,
       global::DripSharp.PdfCarton.Cos.COSInteger>();
     global::DripSharp.Runtime.JavaCompat.MapPut(names, "Actinium",
       global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(89)));
@@ -42,7 +42,7 @@ public class TestPDNameTreeNode {
       global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(85)));
     this.node5.SetNames(names);
     this.node24 = new global::DripSharp.PdfCarton.Pdmodel.Common.PDIntegerNameTreeNode();
-    names = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<string,
+    names = new global::DripSharp.Runtime.JavaTreeMap<string,
       global::DripSharp.PdfCarton.Cos.COSInteger>();
     global::DripSharp.Runtime.JavaCompat.MapPut(names, "Xenon",
       global::DripSharp.PdfCarton.Cos.COSInteger.Get((long)(54)));

@@ -150,7 +150,7 @@ public class PDFTextStripper : global::DripSharp.PdfCarton.Text.LegacyPDFStreamE
   protected internal global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>> CharactersByArticle;
 
   private readonly global::System.Collections.Generic.IDictionary<string,
-    global::System.Collections.Generic.SortedDictionary<float,
+    global::DripSharp.Runtime.JavaTreeMap<float,
     global::System.Collections.Generic.SortedSet<float>>> characterListMapping;
 
   protected internal global::DripSharp.PdfCarton.Pdmodel.PDDocument Document = null!;
@@ -192,7 +192,7 @@ public class PDFTextStripper : global::DripSharp.PdfCarton.Text.LegacyPDFStreamE
     this.CharactersByArticle
       = new global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.TextPosition>>();
     this.characterListMapping = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string,
-      global::System.Collections.Generic.SortedDictionary<float,
+      global::DripSharp.Runtime.JavaTreeMap<float,
       global::System.Collections.Generic.SortedSet<float>>>();
     this.listOfPatterns = default!;
 
@@ -637,10 +637,10 @@ public class PDFTextStripper : global::DripSharp.PdfCarton.Text.LegacyPDFStreamE
       string textCharacter = text.GetUnicode();
       float textX = text.GetX();
       float textY = text.GetY();
-      global::System.Collections.Generic.SortedDictionary<float,
+      global::DripSharp.Runtime.JavaTreeMap<float,
         global::System.Collections.Generic.SortedSet<float>> sameTextCharacters
         = global::DripSharp.Runtime.JavaCompat.ComputeIfAbsent(this.characterListMapping,
-        textCharacter, (k) => global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<float,
+        textCharacter, (k) => new global::DripSharp.Runtime.JavaTreeMap<float,
         global::System.Collections.Generic.SortedSet<float>>());
       bool suppressCharacter = false;
       float tolerance = ((float)(((float)(text.GetWidth()) / textCharacter.Length)) / (float)3.0F);
@@ -1208,8 +1208,39 @@ public class PDFTextStripper : global::DripSharp.PdfCarton.Text.LegacyPDFStreamE
   }
 
   private string normalizeWord(string word) {
-    return this.handleDirection(global::DripSharp.Runtime.PdfBoxTextCompatibility.NormalizeVisualWord(word,
-      this.sortByPosition));
+    global::System.Text.StringBuilder builder = default!;
+    int p = 0;
+    int q = 0;
+    int strLength = word.Length;
+    for (; (q < strLength); q++) {
+      char c = word[q];
+      if ((((64256 <= (int)c) && ((int)c <= 65023)) || ((65136 <= (int)c) && ((int)c <= 65279)))) {
+        if ((builder! == default!)) {
+          builder = new global::System.Text.StringBuilder(unchecked((strLength * 2)));
+        }
+        builder!.Append(word, p, (q - p));
+        if (((((int)c == 65010) && (q > 0)) && (((int)(word[unchecked((q - 1))]) == 1575)
+          || ((int)(word[unchecked((q - 1))]) == 65165)))) {
+          builder!.Append("\u0644\u0644\u0647");
+        } else {
+          string normalized
+            = global::DripSharp.Runtime.JavaCompat.StringTrim(global::DripSharp.Runtime.JavaCompat.Normalize(global::DripSharp.Runtime.JavaCompat.StringSubstring(word,
+            q, unchecked((q + 1))), global::System.Text.NormalizationForm.FormKC));
+          if (((64285 <= (int)c) && (normalized.Length > 1))) {
+            normalized
+              = global::DripSharp.Runtime.JavaCompat.Reverse(new global::System.Text.StringBuilder(normalized)).ToString();
+          }
+          builder!.Append(normalized);
+        }
+        p = unchecked((q + 1));
+      }
+    }
+    if ((builder! == default!)) {
+      return this.handleDirection(word);
+    } else {
+      builder!.Append(word, p, (q - p));
+      return this.handleDirection(builder!.ToString());
+    }
   }
 
   private global::System.Text.StringBuilder normalizeAdd(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Text.PDFTextStripper.WordWithTextPositions> normalized,

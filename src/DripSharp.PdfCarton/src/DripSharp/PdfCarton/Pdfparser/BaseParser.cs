@@ -202,7 +202,8 @@ public abstract class BaseParser {
       obj.SetDirect(isDirect);
       while (true) {
         this.SkipSpaces();
-        char c = unchecked((char)(unchecked((char)(this.Source.Peek()))));
+        char c
+          = unchecked((char)(unchecked((char)(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Peek()))));
         if (((int)c == (int)'>')) {
           break;
         } else {
@@ -263,7 +264,7 @@ public abstract class BaseParser {
     if ((c == unchecked(-1))) {
       return true;
     }
-    this.Source.Rewind(1);
+    ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
     return false;
   }
 
@@ -301,13 +302,13 @@ public abstract class BaseParser {
       whitespace = this.Source.Read();
     }
     if (!(this.skipLinebreak(whitespace))) {
-      this.Source.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
     }
   }
 
   protected internal virtual bool SkipLinebreak() {
     if (!(this.skipLinebreak(this.Source.Read()))) {
-      this.Source.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
       return false;
     }
     return true;
@@ -317,7 +318,7 @@ public abstract class BaseParser {
     if (this.isCR(linebreak)) {
       int next = this.Source.Read();
       if (!(this.isLF(next))) {
-        this.Source.Rewind(1);
+        ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
       }
     } else {
       if (!(this.isLF(linebreak))) {
@@ -333,9 +334,9 @@ public abstract class BaseParser {
     }
     sbyte[] nextThreeBytes = new sbyte[3];
     int amountRead
-      = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)this.Source).Read(nextThreeBytes);
+      = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Read(nextThreeBytes);
     if ((amountRead > 0)) {
-      this.Source.Rewind(amountRead);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(amountRead);
     }
     if ((amountRead < 3)) {
       return bracesParameter;
@@ -472,7 +473,7 @@ public abstract class BaseParser {
       }
     }
     if ((c != unchecked(-1))) {
-      this.Source.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
     }
     return new global::DripSharp.PdfCarton.Cos.COSString(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(@out));
   }
@@ -524,7 +525,8 @@ public abstract class BaseParser {
       global::DripSharp.PdfCarton.Cos.COSBase pbo;
       this.SkipSpaces();
       int i;
-      while ((((i = this.Source.Peek()) > 0) && (unchecked((char)(i)) != (int)']'))) {
+      while ((((i = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Peek()) > 0)
+        && (unchecked((char)(i)) != (int)']'))) {
         pbo = this.ParseDirObject();
         if ((pbo is global::DripSharp.PdfCarton.Cos.COSObject)) {
           pbo = default!;
@@ -555,10 +557,12 @@ public abstract class BaseParser {
             global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Corrupt array element at offset ",
             this.Source.GetPosition()), ", start offset: "), startPosition)));
           string isThisTheEnd = this.ReadString();
-          if (((isThisTheEnd.Length == 0) && (this.Source.Peek() == (int)'['))) {
+          if (((isThisTheEnd.Length == 0)
+            && (((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Peek()
+            == (int)'['))) {
             return po;
           }
-          this.Source.Rewind(global::DripSharp.Runtime.JavaCompat.StringGetBytes(isThisTheEnd,
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(global::DripSharp.Runtime.JavaCompat.StringGetBytes(isThisTheEnd,
             global::DripSharp.Runtime.JavaStandardCharsets.ISO88591).Length);
           if ((global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdfparser.BaseParser.EndobjString,
             isThisTheEnd)
@@ -635,7 +639,7 @@ public abstract class BaseParser {
             c = unchecked(-1);
             break;
           }
-          this.Source.Rewind(1);
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
           c = ch1;
           global::DripSharp.Runtime.JavaCompat.OutputStreamWrite(buffer, ch);
         }
@@ -645,7 +649,7 @@ public abstract class BaseParser {
       }
     }
     if ((c != unchecked(-1))) {
-      this.Source.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
     }
     return global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.Runtime.JavaCompat.ToSignedBytes(buffer));
   }
@@ -671,12 +675,14 @@ public abstract class BaseParser {
         throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Pdfparser.BaseParser.MAX_RECUSRION_MSG);
       }
       this.SkipSpaces();
-      char c = unchecked((char)(unchecked((char)(this.Source.Peek()))));
+      char c
+        = unchecked((char)(unchecked((char)(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Peek()))));
       switch (c) {
         case var __case_982_15_0 when __case_982_15_0 == '<':
           this.Source.Read();
-          c = unchecked((char)(unchecked((char)(this.Source.Peek()))));
-          this.Source.Rewind(1);
+          c
+            = unchecked((char)(unchecked((char)(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Peek()))));
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
           return (((int)c == (int)'<')
             ? (global::DripSharp.PdfCarton.Cos.COSBase)(this.ParseCOSDictionary(true))
             : (global::DripSharp.PdfCarton.Cos.COSBase)(this.ParseCOSString()));
@@ -708,7 +714,7 @@ public abstract class BaseParser {
           long startOffset = this.Source.GetPosition();
           string badString = this.ReadString();
           if ((badString.Length == 0)) {
-            int peek = this.Source.Peek();
+            int peek = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Peek();
             throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Unknown dir object c='",
               c), "' cInt="), (int)c), " peek='"), unchecked((char)(peek))), "' peekInt="), peek),
               " at offset "), this.Source.GetPosition()), " (start offset: "), startOffset), ")"));
@@ -717,7 +723,7 @@ public abstract class BaseParser {
             badString)
             || global::DripSharp.Runtime.JavaCompat.Equals(global::DripSharp.PdfCarton.Pdfparser.BaseParser.EndstreamString,
             badString))) {
-            this.Source.Rewind(global::DripSharp.Runtime.JavaCompat.StringGetBytes(badString,
+            ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(global::DripSharp.Runtime.JavaCompat.StringGetBytes(badString,
               global::DripSharp.Runtime.JavaStandardCharsets.ISO88591).Length);
           } else {
             global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdfparser.BaseParser.LOG,
@@ -747,12 +753,12 @@ public abstract class BaseParser {
       c = unchecked((char)(unchecked((char)(ic))));
     }
     if ((ic != unchecked(-1))) {
-      this.Source.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
     }
     char lastc = buf[unchecked((buf.Length - 1))];
     if ((((int)lastc == (int)'e') || ((int)lastc == (int)'E'))) {
       buf.Remove(unchecked((buf.Length - 1)), 1);
-      this.Source.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
     }
     return global::DripSharp.PdfCarton.Cos.COSNumber.Get(buf.ToString());
   }
@@ -766,7 +772,7 @@ public abstract class BaseParser {
       c = this.Source.Read();
     }
     if ((c != unchecked(-1))) {
-      this.Source.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
     }
     return buffer.ToString();
   }
@@ -802,13 +808,13 @@ public abstract class BaseParser {
       c = this.Source.Read();
     }
     if ((c != unchecked(-1))) {
-      this.Source.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
     }
     return buffer.ToString();
   }
 
   protected internal virtual bool IsClosing() {
-    return (this.Source.Peek() == (int)']');
+    return (((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Peek() == (int)']');
   }
 
   protected internal virtual bool IsClosing(int c) {
@@ -828,14 +834,15 @@ public abstract class BaseParser {
       }
       buffer.Append(unchecked((char)(unchecked((char)(c)))));
     }
-    if ((this.isCR(c) && this.isLF(this.Source.Peek()))) {
+    if ((this.isCR(c)
+      && this.isLF(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Peek()))) {
       this.Source.Read();
     }
     return buffer.ToString();
   }
 
   protected internal virtual bool IsEOL() {
-    return this.IsEOL(this.Source.Peek());
+    return this.IsEOL(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Peek());
   }
 
   protected internal virtual bool IsEOF() {
@@ -855,7 +862,7 @@ public abstract class BaseParser {
   }
 
   protected internal virtual bool IsWhitespace() {
-    return global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsWhitespace(this.Source.Peek());
+    return global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsWhitespace(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Peek());
   }
 
   protected internal static bool IsWhitespace(int c) {
@@ -876,7 +883,7 @@ public abstract class BaseParser {
   }
 
   protected internal virtual bool IsSpace() {
-    return this.IsSpace(this.Source.Peek());
+    return this.IsSpace(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Peek());
   }
 
   protected internal virtual bool IsSpace(int c) {
@@ -884,7 +891,7 @@ public abstract class BaseParser {
   }
 
   protected internal virtual bool IsDigit() {
-    return global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsDigit(this.Source.Peek());
+    return global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsDigit(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Peek());
   }
 
   protected internal static bool IsDigit(int c) {
@@ -905,7 +912,7 @@ public abstract class BaseParser {
       }
     }
     if ((c != unchecked(-1))) {
-      this.Source.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
     }
   }
 
@@ -936,7 +943,7 @@ public abstract class BaseParser {
     try {
       retval = global::DripSharp.Runtime.JavaCompat.ParseInt(intBuffer.ToString(), 10);
     } catch (global::DripSharp.Runtime.JavaNumberFormatException e) {
-      this.Source.Rewind(global::DripSharp.Runtime.JavaCompat.StringGetBytes(intBuffer.ToString(),
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(global::DripSharp.Runtime.JavaCompat.StringGetBytes(intBuffer.ToString(),
         global::DripSharp.Runtime.JavaStandardCharsets.ISO88591).Length);
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error: Expected an integer type at offset ",
         this.Source.GetPosition()), ", instead got '"), intBuffer), "'"), e);
@@ -951,7 +958,7 @@ public abstract class BaseParser {
     try {
       retval = global::DripSharp.Runtime.JavaCompat.ParseLong(longBuffer.ToString());
     } catch (global::DripSharp.Runtime.JavaNumberFormatException e) {
-      this.Source.Rewind(global::DripSharp.Runtime.JavaCompat.StringGetBytes(longBuffer.ToString(),
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(global::DripSharp.Runtime.JavaCompat.StringGetBytes(longBuffer.ToString(),
         global::DripSharp.Runtime.JavaStandardCharsets.ISO88591).Length);
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Error: Expected a long type at offset ",
         this.Source.GetPosition()), ", instead got '"), longBuffer), "'"), e);
@@ -970,7 +977,7 @@ public abstract class BaseParser {
       }
     }
     if ((lastByte != unchecked(-1))) {
-      this.Source.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.Source)).Rewind(1);
     }
     return buffer;
   }

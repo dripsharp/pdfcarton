@@ -86,8 +86,8 @@ public class COSObjectKeyTest {
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos2
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream();
-    global::SkiaSharp.SKBitmap bim1orig;
-    global::SkiaSharp.SKBitmap bim2orig; {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim1orig;
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim2orig; {
       global::DripSharp.PdfCarton.Pdmodel.PDDocument doc
         = global::DripSharp.Runtime.JavaFileBridge.Call<global::DripSharp.PdfCarton.Pdmodel.PDDocument>(typeof(global::DripSharp.PdfCarton.Loader),
         "LoadPDF", new global::System.Type[] { typeof(global::System.IO.FileInfo) },
@@ -152,8 +152,10 @@ public class COSObjectKeyTest {
             = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc1__160_25);
           global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer2
             = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc2__161_25);
-          global::SkiaSharp.SKBitmap bim1new = renderer1.RenderImage(0);
-          global::SkiaSharp.SKBitmap bim2new = renderer2.RenderImage(0);
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim1new
+            = renderer1.RenderImage(0);
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim2new
+            = renderer2.RenderImage(0);
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(bim1orig,
             bim1new);
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(bim2orig,

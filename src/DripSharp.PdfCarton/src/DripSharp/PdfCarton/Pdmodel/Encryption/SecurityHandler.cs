@@ -8,8 +8,7 @@
 #nullable disable
 namespace DripSharp.PdfCarton.Pdmodel.Encryption;
 
-public abstract class SecurityHandler<TPOLICY>
-: global::DripSharp.Runtime.PdfBoxSecurityHandler where TPOLICY
+public abstract class SecurityHandler<TPOLICY> : ISecurityHandler where TPOLICY
 : global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy {
   private static readonly global::Microsoft.Extensions.Logging.ILogger LOG;
 
@@ -523,4 +522,59 @@ public abstract class SecurityHandler<TPOLICY>
     AES_SALT = new sbyte[] { unchecked((sbyte)(115)), unchecked((sbyte)(65)),
       unchecked((sbyte)(108)), unchecked((sbyte)(84)) };
   }
+
+  void ISecurityHandler.SetDecryptMetadata(bool decryptMetadata)
+    => this.SetDecryptMetadata(decryptMetadata);
+
+  void ISecurityHandler.SetStringFilterName(global::DripSharp.PdfCarton.Cos.COSName stringFilterName)
+    => this.SetStringFilterName(stringFilterName);
+
+  void ISecurityHandler.SetStreamFilterName(global::DripSharp.PdfCarton.Cos.COSName streamFilterName)
+    => this.SetStreamFilterName(streamFilterName);
+
+  void ISecurityHandler.EncryptDataRC4(sbyte[] finalKey, global::System.IO.Stream input,
+    global::System.IO.Stream output) => this.EncryptDataRC4(finalKey, input, output);
+
+  void ISecurityHandler.EncryptDataRC4(sbyte[] finalKey, sbyte[] input,
+    global::System.IO.Stream output) => this.EncryptDataRC4(finalKey, input, output);
+
+  global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy ISecurityHandler.GetProtectionPolicy()
+    => this.GetProtectionPolicy();
+
+  void ISecurityHandler.SetProtectionPolicy(global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy protectionPolicy)
+    => this.SetProtectionPolicy((TPOLICY)(object)protectionPolicy);
+
+  int ISecurityHandler.ComputeVersionNumber() => this.ComputeVersionNumber();
+}
+
+public interface ISecurityHandler {
+  void SetDecryptMetadata(bool decryptMetadata);
+  bool IsDecryptMetadata();
+  void SetStringFilterName(global::DripSharp.PdfCarton.Cos.COSName stringFilterName);
+  void SetStreamFilterName(global::DripSharp.PdfCarton.Cos.COSName streamFilterName);
+  void SetCustomSecureRandom(global::DripSharp.Runtime.JavaRandom customSecureRandom);
+  void PrepareDocumentForEncryption(global::DripSharp.PdfCarton.Pdmodel.PDDocument doc);
+  void PrepareForDecryption(global::DripSharp.PdfCarton.Pdmodel.Encryption.PDEncryption encryption,
+    global::DripSharp.PdfCarton.Cos.COSArray documentIDArray,
+    global::DripSharp.PdfCarton.Pdmodel.Encryption.DecryptionMaterial decryptionMaterial);
+  void EncryptDataRC4(sbyte[] finalKey, global::System.IO.Stream input,
+    global::System.IO.Stream output);
+  void EncryptDataRC4(sbyte[] finalKey, sbyte[] input, global::System.IO.Stream output);
+  global::DripSharp.PdfCarton.Cos.COSBase Decrypt(global::DripSharp.PdfCarton.Cos.COSBase obj,
+    long objNum, long genNum);
+  void DecryptStream(global::DripSharp.PdfCarton.Cos.COSStream stream, long objNum, long genNum);
+  void EncryptStream(global::DripSharp.PdfCarton.Cos.COSStream stream, long objNum, int genNum);
+  void EncryptString(global::DripSharp.PdfCarton.Cos.COSString @string, long objNum, int genNum);
+  int GetKeyLength();
+  void SetKeyLength(int keyLen);
+  void SetCurrentAccessPermission(global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission currentAccessPermission);
+  global::DripSharp.PdfCarton.Pdmodel.Encryption.AccessPermission GetCurrentAccessPermission();
+  bool IsAES();
+  void SetAES(bool aesValue);
+  bool HasProtectionPolicy();
+  global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy GetProtectionPolicy();
+  void SetProtectionPolicy(global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy protectionPolicy);
+  sbyte[] GetEncryptionKey();
+  void SetEncryptionKey(sbyte[] encryptionKey);
+  int ComputeVersionNumber();
 }

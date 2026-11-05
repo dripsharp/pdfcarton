@@ -39,7 +39,7 @@ public sealed class SecurityHandlerFactory {
       securityHandler);
   }
 
-  public global::DripSharp.Runtime.PdfBoxSecurityHandler NewSecurityHandlerForPolicy(global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy policy) {
+  public global::DripSharp.PdfCarton.Pdmodel.Encryption.ISecurityHandler NewSecurityHandlerForPolicy(global::DripSharp.PdfCarton.Pdmodel.Encryption.ProtectionPolicy policy) {
     global::System.Type handlerClass
       = global::DripSharp.Runtime.JavaCompat.MapGet(this.policyToHandler,
       ((object)(policy)).GetType());
@@ -51,7 +51,7 @@ public sealed class SecurityHandlerFactory {
     return this.newSecurityHandler(handlerClass, argsClasses, args);
   }
 
-  public global::DripSharp.Runtime.PdfBoxSecurityHandler NewSecurityHandlerForFilter(string name) {
+  public global::DripSharp.PdfCarton.Pdmodel.Encryption.ISecurityHandler NewSecurityHandlerForFilter(string name) {
     global::System.Type handlerClass
       = global::DripSharp.Runtime.JavaCompat.MapGet(this.nameToHandler, name);
     if ((handlerClass == default!)) {
@@ -62,13 +62,13 @@ public sealed class SecurityHandlerFactory {
     return this.newSecurityHandler(handlerClass, argsClasses, args);
   }
 
-  private global::DripSharp.Runtime.PdfBoxSecurityHandler newSecurityHandler(global::System.Type handlerClass,
+  private global::DripSharp.PdfCarton.Pdmodel.Encryption.ISecurityHandler newSecurityHandler(global::System.Type handlerClass,
     global::System.Type[] argsClasses, object[] args) {
     try {
       global::System.Reflection.ConstructorInfo ctor
         = global::DripSharp.Runtime.JavaCompat.ClassGetDeclaredConstructor(handlerClass,
         argsClasses);
-      return global::DripSharp.Runtime.JavaCompat.ConstructorInvoke<global::DripSharp.Runtime.PdfBoxSecurityHandler>(ctor,
+      return global::DripSharp.Runtime.JavaCompat.ConstructorInvoke<global::DripSharp.PdfCarton.Pdmodel.Encryption.ISecurityHandler>(ctor,
         args);
     } catch (global::System.Exception e) when (e is global::System.MissingMethodException or global::System.MemberAccessException or global::System.Reflection.TargetInvocationException) {
       throw new global::System.Exception(null, e);

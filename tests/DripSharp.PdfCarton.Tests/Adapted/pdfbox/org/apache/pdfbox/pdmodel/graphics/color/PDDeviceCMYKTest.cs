@@ -46,10 +46,10 @@ public class PDDeviceCMYKTest {
       = global::DripSharp.Runtime.PdfCartonFontCompat.ComponentColorModel(icc_ColorSpace, false,
       false, global::DripSharp.Runtime.PdfCartonTransparency.OPAQUE,
       raster.GetDataBuffer().DataType);
-    global::SkiaSharp.SKBitmap src
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage src
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateImage(colorModel, raster, false,
       (global::DripSharp.Runtime.JavaHashtable<object, object>)default!);
-    global::SkiaSharp.SKBitmap dest
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage dest
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(raster.Width, raster.Height,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
     colorConvertOp.Filter(src, dest);

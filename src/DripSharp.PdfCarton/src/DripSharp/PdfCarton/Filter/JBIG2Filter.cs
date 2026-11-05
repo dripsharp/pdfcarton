@@ -56,7 +56,7 @@ internal sealed class JBIG2Filter : global::DripSharp.PdfCarton.Filter.Filter {
         global::System.Exception __dripsharpPrimary_92_31_0 = null!;
         try {
           reader.SetInput(iis);
-          global::SkiaSharp.SKBitmap image;
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image;
           try {
             image = reader.Read(0, irp);
           } catch (global::System.Exception e) when (e is not global::System.TypeInitializationException) {
@@ -68,9 +68,10 @@ internal sealed class JBIG2Filter : global::DripSharp.PdfCarton.Filter.Filter {
               global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Filter.JBIG2Filter.LOG,
                 global::DripSharp.Runtime.JavaCompat.StringValueOf("Attempting to handle a JBIG2 with more than 1-bit depth"));
             }
-            global::SkiaSharp.SKBitmap packedImage
-              = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width,
-              image.Height, global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_BINARY);
+            global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage packedImage
+              = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+              global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image),
+              global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_BINARY);
             global::DripSharp.Runtime.PdfCartonGraphics2D graphics
               = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(packedImage);
             graphics.DrawImage(image, 0, 0, (object)default!);

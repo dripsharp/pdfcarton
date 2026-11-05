@@ -40,15 +40,15 @@ public sealed class PDDeviceRGB
     return value;
   }
 
-  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
-    global::SkiaSharp.SKBitmap image
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(raster.Width, raster.Height,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
     global::DripSharp.Runtime.PdfCartonFontCompat.SetImageData(image, raster);
     return image;
   }
 
-  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
     return default!;
   }
 

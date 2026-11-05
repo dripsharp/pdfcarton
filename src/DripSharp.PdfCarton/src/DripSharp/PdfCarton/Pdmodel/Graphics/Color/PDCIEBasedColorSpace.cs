@@ -10,10 +10,10 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.Color;
 
 public abstract class PDCIEBasedColorSpace
 : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace {
-  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
     int width = raster.Width;
     int height = raster.Height;
-    global::SkiaSharp.SKBitmap rgbImage
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage rgbImage
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
     global::DripSharp.Runtime.JavaRaster rgbRaster
@@ -35,7 +35,7 @@ public abstract class PDCIEBasedColorSpace
     return rgbImage;
   }
 
-  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
     return default!;
   }
 

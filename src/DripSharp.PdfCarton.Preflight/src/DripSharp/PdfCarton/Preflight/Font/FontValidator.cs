@@ -10,9 +10,6 @@ namespace DripSharp.PdfCarton.Preflight.Font;
 
 public abstract class FontValidator<T> : IFontValidator where T
 : global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer {
-  global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer IFontValidator.GetFontContainer()
-    => GetFontContainer();
-
   protected internal readonly T FontContainer = default!;
 
   protected internal readonly global::DripSharp.PdfCarton.Preflight.PreflightContext Context
@@ -37,4 +34,18 @@ public abstract class FontValidator<T> : IFontValidator where T
   public virtual T GetFontContainer() {
     return this.FontContainer;
   }
+
+  void IFontValidator.CheckEncoding() => this.CheckEncoding();
+
+  void IFontValidator.CheckToUnicode() => this.CheckToUnicode();
+
+  global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer IFontValidator.GetFontContainer()
+    => this.GetFontContainer();
+}
+
+public interface IFontValidator {
+  void Validate();
+  void CheckEncoding();
+  void CheckToUnicode();
+  global::DripSharp.PdfCarton.Preflight.Font.Container.IFontContainer GetFontContainer();
 }

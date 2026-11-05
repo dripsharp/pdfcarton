@@ -16,7 +16,7 @@ public class DataInputRandomAccessRead : global::DripSharp.PdfCarton.Fonts.Cff.D
   }
 
   public virtual bool HasRemaining() {
-    return (this.randomAccessRead.Available() > 0);
+    return (((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.randomAccessRead)).Available() > 0);
   }
 
   public virtual int GetPosition() {
@@ -53,7 +53,7 @@ public class DataInputRandomAccessRead : global::DripSharp.PdfCarton.Fonts.Cff.D
       throw new global::System.IO.IOException("offset is negative");
     }
     if ((offset == 0)) {
-      return this.randomAccessRead.Peek();
+      return ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.randomAccessRead)).Peek();
     }
     long currentPosition = this.randomAccessRead.GetPosition();
     if ((unchecked((currentPosition + offset)) >= this.randomAccessRead.Length())) {
@@ -71,7 +71,7 @@ public class DataInputRandomAccessRead : global::DripSharp.PdfCarton.Fonts.Cff.D
       throw new global::System.IO.IOException("length is negative");
     }
     sbyte[] bytes = new sbyte[length];
-    this.randomAccessRead.ReadFully(bytes);
+    ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(this.randomAccessRead)).ReadFully(bytes);
     return bytes;
   }
 

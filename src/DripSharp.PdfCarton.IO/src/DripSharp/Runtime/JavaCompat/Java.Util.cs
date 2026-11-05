@@ -333,19 +333,35 @@ public
 #endif
 sealed class JavaWeakHashMap<K, V> : IDictionary<K, V> where K : class
 {
+    // Entries are chained per Java hash code (computed once, at insertion, as
+    // java.util.WeakHashMap does) and linked in insertion order for iteration.
+    // Count and iteration sweep collected keys first, so they never report one.
+    // Other operations unlink collected entries they meet in a chain and sweep
+    // the whole map once per max(size at the last sweep, 16) operations, so
+    // purging is amortised O(1) per operation even under insert-only traffic.
     private sealed class Entry
     {
-        internal Entry(K key, V value)
+        internal Entry(K key, int hash, V value)
         {
             Key = new WeakReference<K>(key);
+            Hash = hash;
             Value = value;
         }
 
         internal WeakReference<K> Key { get; }
+        internal int Hash { get; }
         internal V Value { get; set; }
+        internal Entry? NextInBucket { get; set; }
+        internal Entry? Previous { get; set; }
+        internal Entry? Next { get; set; }
     }
 
-    private readonly List<Entry> entries = new();
+    private readonly Dictionary<int, Entry> buckets = new();
+    private Entry? first;
+    private Entry? last;
+    private int size;
+    private const int MinimumSweepInterval = 16;
+    private int operationsUntilSweep = MinimumSweepInterval;
 
     public V this[K key]
     {
@@ -355,10 +371,11 @@ sealed class JavaWeakHashMap<K, V> : IDictionary<K, V> where K : class
         set
         {
             ArgumentNullException.ThrowIfNull(key);
-            if (Find(key) is { } entry)
+            var hash = JavaCompat.HashCode(key);
+            if (Find(key, hash) is { } entry)
                 entry.Value = value;
             else
-                entries.Add(new Entry(key, value));
+                Insert(key, hash, value);
         }
     }
 
@@ -374,8 +391,8 @@ sealed class JavaWeakHashMap<K, V> : IDictionary<K, V> where K : class
     {
         get
         {
-            RemoveCollectedEntries();
-            return entries.Count;
+            Sweep();
+            return size;
         }
     }
 
@@ -384,36 +401,29 @@ sealed class JavaWeakHashMap<K, V> : IDictionary<K, V> where K : class
     public void Add(K key, V value)
     {
         ArgumentNullException.ThrowIfNull(key);
-        if (ContainsKey(key)) throw new ArgumentException("An item with the same key already exists.");
-        entries.Add(new Entry(key, value));
+        var hash = JavaCompat.HashCode(key);
+        if (Find(key, hash) is not null) throw new ArgumentException("An item with the same key already exists.");
+        Insert(key, hash, value);
     }
 
     public bool ContainsKey(K key)
     {
         ArgumentNullException.ThrowIfNull(key);
-        return Find(key) is not null;
+        return Find(key, JavaCompat.HashCode(key)) is not null;
     }
 
     public bool Remove(K key)
     {
         ArgumentNullException.ThrowIfNull(key);
-        RemoveCollectedEntries();
-        for (var index = 0; index < entries.Count; index++)
-        {
-            if (entries[index].Key.TryGetTarget(out var candidate) &&
-                JavaCompat.Equals(candidate, key))
-            {
-                entries.RemoveAt(index);
-                return true;
-            }
-        }
-        return false;
+        if (Find(key, JavaCompat.HashCode(key)) is not { } entry) return false;
+        Unlink(entry);
+        return true;
     }
 
     public bool TryGetValue(K key, out V value)
     {
         ArgumentNullException.ThrowIfNull(key);
-        if (Find(key) is { } entry)
+        if (Find(key, JavaCompat.HashCode(key)) is { } entry)
         {
             value = entry.Value;
             return true;
@@ -424,7 +434,14 @@ sealed class JavaWeakHashMap<K, V> : IDictionary<K, V> where K : class
 
     public void Add(KeyValuePair<K, V> item) => Add(item.Key, item.Value);
 
-    public void Clear() => entries.Clear();
+    public void Clear()
+    {
+        buckets.Clear();
+        first = null;
+        last = null;
+        size = 0;
+        operationsUntilSweep = MinimumSweepInterval;
+    }
 
     public bool Contains(KeyValuePair<K, V> item) =>
         TryGetValue(item.Key, out var value) &&
@@ -442,25 +459,69 @@ sealed class JavaWeakHashMap<K, V> : IDictionary<K, V> where K : class
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() =>
         GetEnumerator();
 
-    private Entry? Find(K key)
+    private Entry? Find(K key, int hash)
     {
-        RemoveCollectedEntries();
-        foreach (var entry in entries)
+        if (--operationsUntilSweep <= 0) Sweep();
+        if (!buckets.TryGetValue(hash, out var entry)) return null;
+        while (entry is not null)
         {
-            if (entry.Key.TryGetTarget(out var candidate) &&
-                JavaCompat.Equals(candidate, key))
-            {
+            var next = entry.NextInBucket;
+            if (!entry.Key.TryGetTarget(out var candidate))
+                Unlink(entry);
+            else if (JavaCompat.Equals(key, candidate))
                 return entry;
-            }
+            entry = next;
         }
         return null;
     }
 
+    private void Insert(K key, int hash, V value)
+    {
+        var entry = new Entry(key, hash, value);
+        if (buckets.TryGetValue(hash, out var head))
+        {
+            while (head.NextInBucket is { } next) head = next;
+            head.NextInBucket = entry;
+        }
+        else
+        {
+            buckets.Add(hash, entry);
+        }
+        entry.Previous = last;
+        if (last is null) first = entry;
+        else last.Next = entry;
+        last = entry;
+        size++;
+    }
+
+    private void Unlink(Entry entry)
+    {
+        var head = buckets[entry.Hash];
+        if (ReferenceEquals(head, entry))
+        {
+            if (entry.NextInBucket is { } next) buckets[entry.Hash] = next;
+            else buckets.Remove(entry.Hash);
+        }
+        else
+        {
+            while (!ReferenceEquals(head.NextInBucket, entry)) head = head.NextInBucket!;
+            head.NextInBucket = entry.NextInBucket;
+        }
+        if (entry.Previous is null) first = entry.Next;
+        else entry.Previous.Next = entry.Next;
+        if (entry.Next is null) last = entry.Previous;
+        else entry.Next.Previous = entry.Previous;
+        entry.NextInBucket = null;
+        entry.Previous = null;
+        entry.Next = null;
+        size--;
+    }
+
     private List<KeyValuePair<K, V>> Snapshot()
     {
-        RemoveCollectedEntries();
-        var snapshot = new List<KeyValuePair<K, V>>(entries.Count);
-        foreach (var entry in entries)
+        Sweep();
+        var snapshot = new List<KeyValuePair<K, V>>(size);
+        for (var entry = first; entry is not null; entry = entry.Next)
         {
             if (entry.Key.TryGetTarget(out var key))
                 snapshot.Add(new KeyValuePair<K, V>(key, entry.Value));
@@ -468,13 +529,16 @@ sealed class JavaWeakHashMap<K, V> : IDictionary<K, V> where K : class
         return snapshot;
     }
 
-    private void RemoveCollectedEntries()
+    private void Sweep()
     {
-        for (var index = entries.Count - 1; index >= 0; index--)
+        var entry = first;
+        while (entry is not null)
         {
-            if (!entries[index].Key.TryGetTarget(out _))
-                entries.RemoveAt(index);
+            var next = entry.Next;
+            if (!entry.Key.TryGetTarget(out _)) Unlink(entry);
+            entry = next;
         }
+        operationsUntilSweep = Math.Max(size, MinimumSweepInterval);
     }
 }
 
@@ -629,139 +693,715 @@ internal sealed class JavaHashtable<K, V> : IDictionary<K, V> where K : notnull
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
 
+// java.util.BitSet: bits packed into 64-bit words; wordsInUse is the logical
+// size (index of the highest word with a set bit, plus one), as in the JDK.
 internal sealed class JavaBitSet
 {
-    private readonly HashSet<int> values = new();
-    internal void clear() => values.Clear();
-    internal void clear(int index) => values.Remove(index);
-    internal bool get(int index) => values.Contains(index);
-    internal int nextSetBit(int fromIndex) =>
-        values.Where(value => value >= fromIndex).DefaultIfEmpty(-1).Min();
-    internal void set(int index) => values.Add(index);
+    private const int AddressBitsPerWord = 6;
+    private const ulong WordMask = ulong.MaxValue;
+    private static readonly byte[] DeBruijnTrailingZeros =
+    {
+        0, 1, 48, 2, 57, 49, 28, 3, 61, 58, 50, 42, 38, 29, 17, 4,
+        62, 55, 59, 36, 53, 51, 43, 22, 45, 39, 33, 30, 24, 18, 12, 5,
+        63, 47, 56, 27, 60, 41, 37, 16, 54, 35, 52, 21, 44, 32, 23, 11,
+        46, 26, 40, 15, 34, 20, 31, 10, 25, 14, 19, 9, 13, 8, 7, 6
+    };
+    private ulong[] words = new ulong[1];
+    private int wordsInUse;
+
+    internal void clear()
+    {
+        Array.Clear(words, 0, wordsInUse);
+        wordsInUse = 0;
+    }
+
+    internal void clear(int bitIndex)
+    {
+        if (bitIndex < 0) throw IndexOutOfBounds("bitIndex < 0: " + bitIndex);
+        var wordIndex = bitIndex >> AddressBitsPerWord;
+        if (wordIndex >= wordsInUse) return;
+        words[wordIndex] &= ~(1UL << (bitIndex & 63));
+        if (words[wordIndex] == 0 && wordIndex == wordsInUse - 1) RecalculateWordsInUse();
+    }
+
+    internal bool get(int bitIndex)
+    {
+        if (bitIndex < 0) throw IndexOutOfBounds("bitIndex < 0: " + bitIndex);
+        var wordIndex = bitIndex >> AddressBitsPerWord;
+        return wordIndex < wordsInUse && (words[wordIndex] & (1UL << (bitIndex & 63))) != 0;
+    }
+
+    internal int nextSetBit(int fromIndex)
+    {
+        if (fromIndex < 0) throw IndexOutOfBounds("fromIndex < 0: " + fromIndex);
+        var wordIndex = fromIndex >> AddressBitsPerWord;
+        if (wordIndex >= wordsInUse) return -1;
+        var word = words[wordIndex] & (WordMask << (fromIndex & 63));
+        while (true)
+        {
+            if (word != 0) return (wordIndex << AddressBitsPerWord) + TrailingZeros(word);
+            if (++wordIndex == wordsInUse) return -1;
+            word = words[wordIndex];
+        }
+    }
+
+    internal void set(int bitIndex)
+    {
+        if (bitIndex < 0) throw IndexOutOfBounds("bitIndex < 0: " + bitIndex);
+        var wordIndex = bitIndex >> AddressBitsPerWord;
+        ExpandTo(wordIndex);
+        words[wordIndex] |= 1UL << (bitIndex & 63);
+    }
+
     internal void set(int fromIndex, int toIndex)
     {
-        for (var index = fromIndex; index < toIndex; index++) values.Add(index);
+        if (fromIndex < 0) throw IndexOutOfBounds("fromIndex < 0: " + fromIndex);
+        if (toIndex < 0) throw IndexOutOfBounds("toIndex < 0: " + toIndex);
+        if (fromIndex > toIndex)
+            throw IndexOutOfBounds("fromIndex: " + fromIndex + " > toIndex: " + toIndex);
+        if (fromIndex == toIndex) return;
+        var startWordIndex = fromIndex >> AddressBitsPerWord;
+        var endWordIndex = (toIndex - 1) >> AddressBitsPerWord;
+        ExpandTo(endWordIndex);
+        var firstWordMask = WordMask << (fromIndex & 63);
+        var lastWordMask = WordMask >> (-toIndex & 63);
+        if (startWordIndex == endWordIndex)
+        {
+            words[startWordIndex] |= firstWordMask & lastWordMask;
+            return;
+        }
+        words[startWordIndex] |= firstWordMask;
+        for (var index = startWordIndex + 1; index < endWordIndex; index++) words[index] = WordMask;
+        words[endWordIndex] |= lastWordMask;
     }
+
+    private void ExpandTo(int wordIndex)
+    {
+        var wordsRequired = wordIndex + 1;
+        if (wordsInUse >= wordsRequired) return;
+        if (words.Length < wordsRequired)
+            Array.Resize(ref words, Math.Max(2 * words.Length, wordsRequired));
+        wordsInUse = wordsRequired;
+    }
+
+    private void RecalculateWordsInUse()
+    {
+        var index = wordsInUse - 1;
+        while (index >= 0 && words[index] == 0) index--;
+        wordsInUse = index + 1;
+    }
+
+    private static int TrailingZeros(ulong word) =>
+        DeBruijnTrailingZeros[(int)(((word & (0UL - word)) * 0x03F79D71B4CB0A89UL) >> 58)];
+
+    private static ArgumentOutOfRangeException IndexOutOfBounds(string message) =>
+        new(null, message);
 }
 
 internal static class JavaZlib
 {
-    private static readonly Type? ZLibStreamType =
-        Type.GetType("System.IO.Compression.ZLibStream, System.IO.Compression");
+    internal static uint Adler32(byte[] bytes) => Adler32(1, bytes);
 
-    internal static byte[] DecompressAvailable(MemoryStream compressed)
+    internal static uint Adler32(uint adler, ReadOnlySpan<byte> bytes)
     {
-        var result = DecompressAvailable(compressed, out var failure);
-        if (failure is not null) throw failure;
-        return result;
-    }
-
-    internal static byte[] DecompressAvailable(
-        MemoryStream compressed, out InvalidDataException? failure)
-    {
-        var bytes = compressed.ToArray();
-        failure = null;
-        if (bytes.Length < 2) return Array.Empty<byte>();
-        ValidateHeader(bytes);
-        if (ZLibStreamType is not null)
+        var first = adler & 0xffff;
+        var second = adler >> 16;
+        while (bytes.Length > 0)
         {
-            using var input = new MemoryStream(bytes, writable: false);
-            using var inflater = (Stream)Activator.CreateInstance(
-                ZLibStreamType,
-                new object[] { input, CompressionMode.Decompress, true })!;
-            using var decoded = new MemoryStream();
-            try
+            // 5552 is the longest run whose sums cannot overflow 32 bits.
+            var count = Math.Min(bytes.Length, 5552);
+            for (var index = 0; index < count; index++)
             {
-                inflater.CopyTo(decoded);
+                first += bytes[index];
+                second += first;
             }
-            catch (InvalidDataException error)
-            {
-                failure = error;
-            }
-            return decoded.ToArray();
-        }
-        return DecompressRaw(bytes, bytes.Length - 2);
-    }
-
-    internal static byte[] Decompress(MemoryStream compressed)
-    {
-        var bytes = compressed.ToArray();
-        if (bytes.Length < 2)
-            throw new InvalidDataException("The zlib stream is incomplete.");
-        var result = DecompressAvailable(compressed, out var failure);
-        if (failure is not null) throw failure;
-        if (ZLibStreamType is null)
-            ValidateChecksum(bytes, result, final: true);
-        return result;
-    }
-
-    internal static void ValidateChecksumIfPresent(
-        MemoryStream compressed, byte[] result)
-    {
-        if (ZLibStreamType is null)
-            ValidateChecksum(compressed.ToArray(), result, final: false);
-    }
-
-    private static void ValidateChecksum(byte[] bytes, byte[] result, bool final)
-    {
-        var actual = Adler32(result);
-        var trailer = new[]
-        {
-            (byte)(actual >> 24), (byte)(actual >> 16),
-            (byte)(actual >> 8), (byte)actual
-        };
-        var trailerCandidate = false;
-        for (var length = 4; length >= 1; length--)
-        {
-            if (bytes.Length < 2 + length) continue;
-            byte[] prefix;
-            try
-            {
-                prefix = DecompressRaw(bytes, bytes.Length - 2 - length);
-            }
-            catch (InvalidDataException)
-            {
-                continue;
-            }
-            if (!prefix.AsSpan().SequenceEqual(result)) continue;
-            trailerCandidate = true;
-            if (bytes.AsSpan(bytes.Length - length, length)
-                .SequenceEqual(trailer.AsSpan(0, length)))
-                return;
-        }
-        if (trailerCandidate &&
-            (final || (bytes.Length >= 4 &&
-                bytes.AsSpan(bytes.Length - 4, 3)
-                    .SequenceEqual(trailer.AsSpan(0, 3)))))
-            throw new InvalidDataException("The zlib stream checksum is invalid.");
-    }
-
-    private static byte[] DecompressRaw(byte[] bytes, int count)
-    {
-        using var payload = new MemoryStream(bytes, 2, count, writable: false);
-        using var inflater = new DeflateStream(payload, CompressionMode.Decompress);
-        using var decoded = new MemoryStream();
-        inflater.CopyTo(decoded);
-        return decoded.ToArray();
-    }
-
-    private static void ValidateHeader(byte[] bytes)
-    {
-        var header = (bytes[0] << 8) | bytes[1];
-        if ((bytes[0] & 0x0f) != 8 || header % 31 != 0 || (bytes[1] & 0x20) != 0)
-            throw new InvalidDataException("The zlib stream header is invalid.");
-    }
-
-    internal static uint Adler32(byte[] bytes)
-    {
-        uint first = 1;
-        uint second = 0;
-        foreach (var value in bytes)
-        {
-            first = (first + value) % 65521;
-            second = (second + first) % 65521;
+            first %= 65521;
+            second %= 65521;
+            bytes = bytes.Slice(count);
         }
         return (second << 16) | first;
+    }
+}
+
+// Push-style inflater with java.util.zip.Inflater (zlib) semantics. The bit
+// accumulator, block mode, Huffman tables, pending match and 32 KiB history
+// persist between calls, so every supplied byte is decoded once and a temporary
+// end of input is never mistaken for the end of the stream. Output goes straight
+// into the caller's buffer and stops when that buffer is full; the end-of-block
+// code, following block headers and the zlib trailer are still consumed then.
+internal sealed class JavaInflateEngine
+{
+    private enum Mode
+    {
+        Header, DictionaryId, NeedDictionary, BlockHeader, StoredLength, Stored,
+        TableCounts, CodeLengthCodes, CodeLengths, Codes, Literal, Copy, Trailer, Done, Bad
+    }
+
+    private const int WindowMask = 32767;
+    private const int PrimaryBits = 10;
+    private const int NeedMore = -1;
+    private const int InvalidCode = -2;
+
+    private static readonly int[] LengthBase =
+    {
+        3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59,
+        67, 83, 99, 115, 131, 163, 195, 227, 258
+    };
+    private static readonly byte[] LengthExtra =
+    {
+        0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4,
+        5, 5, 5, 5, 0
+    };
+    private static readonly int[] DistanceBase =
+    {
+        1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513,
+        769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577
+    };
+    private static readonly byte[] DistanceExtra =
+    {
+        0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10,
+        11, 11, 12, 12, 13, 13
+    };
+    private static readonly byte[] CodeLengthOrder =
+        { 16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15 };
+    private static readonly HuffmanTable FixedLiterals = HuffmanTable.Fixed(literals: true);
+    private static readonly HuffmanTable FixedDistances = HuffmanTable.Fixed(literals: false);
+
+    private readonly bool zlibWrapper;
+    private readonly byte[] window = new byte[WindowMask + 1];
+    private readonly byte[] codeLengthLengths = new byte[19];
+    private readonly byte[] lengths = new byte[286 + 30];
+    private byte[] input = Array.Empty<byte>();
+    private int inputPosition;
+    private int inputLimit;
+    private ulong bits;
+    private int bitCount;
+    private bool starved;
+    private Mode mode;
+    private bool lastBlock;
+    private int windowPosition;
+    private long totalOut;
+    private uint adler = 1;
+    private int checksumStart;
+    private int storedRemaining;
+    private int copyLength;
+    private int copyDistance;
+    private byte pendingLiteral;
+    private int literalCount;
+    private int distanceCount;
+    private int codeLengthCount;
+    private int lengthIndex;
+    private HuffmanTable? codeLengthTable;
+    private HuffmanTable? dynamicLiterals;
+    private HuffmanTable? dynamicDistances;
+    private HuffmanTable literalTable = FixedLiterals;
+    private HuffmanTable distanceTable = FixedDistances;
+    private string? failure;
+
+    internal JavaInflateEngine(bool nowrap)
+    {
+        zlibWrapper = !nowrap;
+        mode = nowrap ? Mode.BlockHeader : Mode.Header;
+    }
+
+    internal bool Finished => mode == Mode.Done;
+    internal bool NeedsDictionary => mode == Mode.NeedDictionary;
+    // A starved decoder has accepted its held-back partial symbol, as zlib does.
+    internal bool NeedsInput => starved || inputPosition == inputLimit;
+
+    internal void SetInput(ReadOnlySpan<byte> data)
+    {
+        // Like Inflater.setInput, new input replaces unread input.
+        if (!starved) inputPosition = inputLimit;
+        var kept = inputLimit - inputPosition;
+        if (kept + data.Length > input.Length)
+        {
+            var grown = new byte[Math.Max(kept + data.Length, 2 * input.Length)];
+            Buffer.BlockCopy(input, inputPosition, grown, 0, kept);
+            input = grown;
+        }
+        else if (inputPosition > 0)
+        {
+            Buffer.BlockCopy(input, inputPosition, input, 0, kept);
+        }
+        inputPosition = 0;
+        data.CopyTo(input.AsSpan(kept));
+        inputLimit = kept + data.Length;
+        if (data.Length > 0) starved = false;
+    }
+
+    internal int Inflate(Span<byte> output)
+    {
+        if (mode == Mode.Bad) throw new InvalidDataException(failure);
+        if (output.Length == 0) return 0;
+        checksumStart = 0;
+        int produced;
+        try
+        {
+            produced = Decode(output);
+        }
+        finally
+        {
+            ReturnWholeBytes();
+        }
+        if (zlibWrapper)
+            adler = JavaZlib.Adler32(adler, output.Slice(checksumStart, produced - checksumStart));
+        totalOut += produced;
+        return produced;
+    }
+
+    private int Decode(Span<byte> output)
+    {
+        var produced = 0;
+        while (true)
+        {
+            switch (mode)
+            {
+                case Mode.Header:
+                {
+                    Fill();
+                    if (bitCount < 16) return Starve(produced);
+                    var method = Take(8);
+                    var flags = Take(8);
+                    if (((method << 8) | flags) % 31 != 0) throw Fail("incorrect header check");
+                    if ((method & 15) != 8) throw Fail("unknown compression method");
+                    if ((method >> 4) + 8 > 15) throw Fail("invalid window size");
+                    mode = (flags & 0x20) != 0 ? Mode.DictionaryId : Mode.BlockHeader;
+                    break;
+                }
+                case Mode.DictionaryId:
+                    Fill();
+                    if (bitCount < 32) return Starve(produced);
+                    Take(16);
+                    Take(16);
+                    mode = Mode.NeedDictionary;
+                    break;
+                case Mode.NeedDictionary:
+                case Mode.Done:
+                    return produced;
+                case Mode.BlockHeader:
+                    Fill();
+                    if (bitCount < 3) return Starve(produced);
+                    lastBlock = Take(1) == 1;
+                    switch (Take(2))
+                    {
+                        case 0:
+                            Take(bitCount & 7);
+                            mode = Mode.StoredLength;
+                            break;
+                        case 1:
+                            literalTable = FixedLiterals;
+                            distanceTable = FixedDistances;
+                            mode = Mode.Codes;
+                            break;
+                        case 2:
+                            mode = Mode.TableCounts;
+                            break;
+                        default:
+                            throw Fail("invalid block type");
+                    }
+                    break;
+                case Mode.StoredLength:
+                {
+                    Fill();
+                    if (bitCount < 32) return Starve(produced);
+                    var length = Take(16);
+                    if (length != (~Take(16) & 0xffff)) throw Fail("invalid stored block lengths");
+                    storedRemaining = length;
+                    mode = Mode.Stored;
+                    break;
+                }
+                case Mode.Stored:
+                {
+                    if (storedRemaining == 0)
+                    {
+                        FinishBlock();
+                        break;
+                    }
+                    if (produced == output.Length) return produced;
+                    if (bitCount >= 8)
+                    {
+                        var value = (byte)Take(8);
+                        window[windowPosition] = value;
+                        windowPosition = (windowPosition + 1) & WindowMask;
+                        output[produced++] = value;
+                        storedRemaining--;
+                        break;
+                    }
+                    if (inputPosition == inputLimit) return Starve(produced);
+                    var count = Math.Min(storedRemaining,
+                        Math.Min(output.Length - produced, inputLimit - inputPosition));
+                    var source = new ReadOnlySpan<byte>(input, inputPosition, count);
+                    source.CopyTo(output.Slice(produced));
+                    Remember(source);
+                    inputPosition += count;
+                    produced += count;
+                    storedRemaining -= count;
+                    break;
+                }
+                case Mode.TableCounts:
+                    Fill();
+                    if (bitCount < 14) return Starve(produced);
+                    literalCount = Take(5) + 257;
+                    distanceCount = Take(5) + 1;
+                    codeLengthCount = Take(4) + 4;
+                    if (literalCount > 286 || distanceCount > 30)
+                        throw Fail("too many length or distance symbols");
+                    Array.Clear(codeLengthLengths, 0, codeLengthLengths.Length);
+                    lengthIndex = 0;
+                    mode = Mode.CodeLengthCodes;
+                    break;
+                case Mode.CodeLengthCodes:
+                    while (lengthIndex < codeLengthCount)
+                    {
+                        Fill();
+                        if (bitCount < 3) return Starve(produced);
+                        codeLengthLengths[CodeLengthOrder[lengthIndex++]] = (byte)Take(3);
+                    }
+                    codeLengthTable ??= new HuffmanTable(19);
+                    if (!codeLengthTable.Build(codeLengthLengths, 0, 19, incompleteAllowed: false))
+                        throw Fail("invalid code lengths set");
+                    lengthIndex = 0;
+                    mode = Mode.CodeLengths;
+                    break;
+                case Mode.CodeLengths:
+                    if (!DecodeCodeLengths()) return Starve(produced);
+                    break;
+                case Mode.Codes:
+                    if (!DecodeCodes(output, ref produced)) return produced;
+                    break;
+                case Mode.Literal:
+                    if (produced == output.Length) return produced;
+                    window[windowPosition] = pendingLiteral;
+                    windowPosition = (windowPosition + 1) & WindowMask;
+                    output[produced++] = pendingLiteral;
+                    mode = Mode.Codes;
+                    break;
+                case Mode.Copy:
+                {
+                    // zlib checks the distance when the first byte is copied.
+                    if (produced == output.Length) return produced;
+                    if (copyDistance > totalOut + produced)
+                        throw Fail("invalid distance too far back");
+                    var count = Math.Min(copyLength, output.Length - produced);
+                    var source = (windowPosition - copyDistance) & WindowMask;
+                    for (var index = 0; index < count; index++)
+                    {
+                        var value = window[source];
+                        window[windowPosition] = value;
+                        output[produced++] = value;
+                        source = (source + 1) & WindowMask;
+                        windowPosition = (windowPosition + 1) & WindowMask;
+                    }
+                    copyLength -= count;
+                    if (copyLength > 0) return produced;
+                    mode = Mode.Codes;
+                    break;
+                }
+                case Mode.Trailer:
+                {
+                    Fill();
+                    if (bitCount < 32) return Starve(produced);
+                    uint expected = 0;
+                    for (var index = 0; index < 4; index++)
+                        expected = (expected << 8) | (uint)Take(8);
+                    adler = JavaZlib.Adler32(
+                        adler, output.Slice(checksumStart, produced - checksumStart));
+                    checksumStart = produced;
+                    if (expected != adler) throw Fail("incorrect data check");
+                    mode = Mode.Done;
+                    break;
+                }
+                default:
+                    throw new InvalidDataException(failure);
+            }
+        }
+    }
+
+    private bool DecodeCodeLengths()
+    {
+        var total = literalCount + distanceCount;
+        while (lengthIndex < total)
+        {
+            Fill();
+            var savedPosition = inputPosition;
+            var savedBits = bits;
+            var savedCount = bitCount;
+            var symbol = DecodeSymbol(codeLengthTable!);
+            if (symbol == NeedMore) return false;
+            if (symbol == InvalidCode) throw Fail("invalid code lengths set");
+            if (symbol < 16)
+            {
+                lengths[lengthIndex++] = (byte)symbol;
+                continue;
+            }
+            var extra = symbol == 16 ? 2 : symbol == 17 ? 3 : 7;
+            if (bitCount < extra)
+            {
+                inputPosition = savedPosition;
+                bits = savedBits;
+                bitCount = savedCount;
+                return false;
+            }
+            byte value = 0;
+            int repeat;
+            if (symbol == 16)
+            {
+                if (lengthIndex == 0) throw Fail("invalid bit length repeat");
+                value = lengths[lengthIndex - 1];
+                repeat = 3 + Take(2);
+            }
+            else
+            {
+                repeat = symbol == 17 ? 3 + Take(3) : 11 + Take(7);
+            }
+            if (lengthIndex + repeat > total) throw Fail("invalid bit length repeat");
+            while (repeat-- > 0) lengths[lengthIndex++] = value;
+        }
+        if (lengths[256] == 0) throw Fail("invalid code -- missing end-of-block");
+        dynamicLiterals ??= new HuffmanTable(288);
+        if (!dynamicLiterals.Build(lengths, 0, literalCount, incompleteAllowed: true))
+            throw Fail("invalid literal/lengths set");
+        dynamicDistances ??= new HuffmanTable(32);
+        if (!dynamicDistances.Build(lengths, literalCount, distanceCount, incompleteAllowed: true))
+            throw Fail("invalid distances set");
+        literalTable = dynamicLiterals;
+        distanceTable = dynamicDistances;
+        mode = Mode.Codes;
+        return true;
+    }
+
+    // Decodes symbols until the block ends or a match starts (true), or output or
+    // input runs out (false). A symbol whose bits are incomplete is rolled back
+    // whole. As in zlib, a complete symbol is consumed even when the output is
+    // full and is emitted by the next call, so NeedsInput agrees with zlib.
+    private bool DecodeCodes(Span<byte> output, ref int produced)
+    {
+        while (true)
+        {
+            Fill();
+            var savedPosition = inputPosition;
+            var savedBits = bits;
+            var savedCount = bitCount;
+            var symbol = DecodeSymbol(literalTable);
+            if (symbol < 256)
+            {
+                if (symbol == NeedMore)
+                {
+                    starved = true;
+                    return false;
+                }
+                if (symbol == InvalidCode) throw Fail("invalid literal/length code");
+                if (produced == output.Length)
+                {
+                    pendingLiteral = (byte)symbol;
+                    mode = Mode.Literal;
+                    return false;
+                }
+                window[windowPosition] = (byte)symbol;
+                windowPosition = (windowPosition + 1) & WindowMask;
+                output[produced++] = (byte)symbol;
+                continue;
+            }
+            if (symbol == 256)
+            {
+                FinishBlock();
+                return true;
+            }
+            symbol -= 257;
+            if (symbol >= 29) throw Fail("invalid literal/length code");
+            var length = 0;
+            var distanceSymbol = NeedMore;
+            if (bitCount >= LengthExtra[symbol])
+            {
+                length = LengthBase[symbol] + Take(LengthExtra[symbol]);
+                distanceSymbol = DecodeSymbol(distanceTable);
+            }
+            if (distanceSymbol == InvalidCode || distanceSymbol >= 30)
+                throw Fail("invalid distance code");
+            if (distanceSymbol == NeedMore || bitCount < DistanceExtra[distanceSymbol])
+            {
+                inputPosition = savedPosition;
+                bits = savedBits;
+                bitCount = savedCount;
+                starved = true;
+                return false;
+            }
+            copyLength = length;
+            copyDistance = DistanceBase[distanceSymbol] + Take(DistanceExtra[distanceSymbol]);
+            mode = Mode.Copy;
+            return true;
+        }
+    }
+
+    private int DecodeSymbol(HuffmanTable table)
+    {
+        var entry = table.Primary[(int)(bits & ((1UL << PrimaryBits) - 1))];
+        var length = entry & 15;
+        if (entry != 0 && length <= bitCount)
+        {
+            bits >>= length;
+            bitCount -= length;
+            return entry >> 4;
+        }
+        // Canonical decode for long codes, unassigned codes and short input.
+        int code = 0, first = 0, index = 0;
+        for (length = 1; length <= 15; length++)
+        {
+            if (length > bitCount) return NeedMore;
+            code |= (int)((bits >> (length - 1)) & 1);
+            int count = table.Counts[length];
+            if (code - count < first)
+            {
+                bits >>= length;
+                bitCount -= length;
+                return table.Symbols[index + (code - first)];
+            }
+            index += count;
+            first = (first + count) << 1;
+            code <<= 1;
+        }
+        return InvalidCode;
+    }
+
+    private void FinishBlock()
+    {
+        if (!lastBlock)
+        {
+            mode = Mode.BlockHeader;
+            return;
+        }
+        Take(bitCount & 7);
+        mode = zlibWrapper ? Mode.Trailer : Mode.Done;
+    }
+
+    private void Fill()
+    {
+        while (bitCount <= 56 && inputPosition < inputLimit)
+        {
+            bits |= (ulong)input[inputPosition++] << bitCount;
+            bitCount += 8;
+        }
+    }
+
+    private int Take(int count)
+    {
+        var value = (int)(bits & ((1UL << count) - 1));
+        bits >>= count;
+        bitCount -= count;
+        return value;
+    }
+
+    // Between calls the accumulator holds only the unread bits of one partly
+    // consumed byte; whole bytes go back to the input so Remaining is exact.
+    private void ReturnWholeBytes()
+    {
+        inputPosition -= bitCount >> 3;
+        bitCount &= 7;
+        bits &= (1UL << bitCount) - 1;
+    }
+
+    private int Starve(int produced)
+    {
+        starved = true;
+        return produced;
+    }
+
+    private void Remember(ReadOnlySpan<byte> data)
+    {
+        while (data.Length > 0)
+        {
+            var count = Math.Min(data.Length, window.Length - windowPosition);
+            data.Slice(0, count).CopyTo(window.AsSpan(windowPosition));
+            windowPosition = (windowPosition + count) & WindowMask;
+            data = data.Slice(count);
+        }
+    }
+
+    private InvalidDataException Fail(string message)
+    {
+        mode = Mode.Bad;
+        failure = message;
+        return new InvalidDataException(message);
+    }
+
+    private sealed class HuffmanTable
+    {
+        internal readonly short[] Counts = new short[16];
+        internal readonly short[] Symbols;
+        // (symbol << 4) | length for codes of at most PrimaryBits bits, Invalid
+        // for a one-bit prefix no code has (incomplete sets), 0 for long codes.
+        internal readonly int[] Primary = new int[1 << PrimaryBits];
+        private const int Invalid = (InvalidCode << 4) | 1;
+
+        internal HuffmanTable(int capacity) => Symbols = new short[capacity];
+
+        internal static HuffmanTable Fixed(bool literals)
+        {
+            var lengths = new byte[literals ? 288 : 32];
+            for (var index = 0; index < lengths.Length; index++)
+                lengths[index] = !literals ? (byte)5
+                    : index < 144 ? (byte)8
+                    : index < 256 ? (byte)9
+                    : index < 280 ? (byte)7
+                    : (byte)8;
+            var table = new HuffmanTable(lengths.Length);
+            table.Build(lengths, 0, lengths.Length, incompleteAllowed: true);
+            return table;
+        }
+
+        // zlib's inflate_table rules: over-subscribed sets are invalid, and an
+        // incomplete set is allowed only as a single one-bit literal or distance
+        // code. As in zlib, a missing code is invalid once its first bit is read,
+        // and every code of an empty set is.
+        internal bool Build(byte[] lengths, int offset, int count, bool incompleteAllowed)
+        {
+            Array.Clear(Counts, 0, Counts.Length);
+            Array.Clear(Primary, 0, Primary.Length);
+            for (var index = 0; index < count; index++) Counts[lengths[offset + index]]++;
+            Counts[0] = 0;
+            var max = 15;
+            while (max > 0 && Counts[max] == 0) max--;
+            if (max == 0)
+            {
+                for (var slot = 0; slot < Primary.Length; slot++) Primary[slot] = Invalid;
+                return true;
+            }
+            var left = 1;
+            for (var length = 1; length <= 15; length++)
+            {
+                left = (left << 1) - Counts[length];
+                if (left < 0) return false;
+            }
+            if (left > 0 && (!incompleteAllowed || max != 1)) return false;
+            Span<int> offsets = stackalloc int[16];
+            for (var length = 1; length < 15; length++)
+                offsets[length + 1] = offsets[length] + Counts[length];
+            for (var symbol = 0; symbol < count; symbol++)
+            {
+                var length = lengths[offset + symbol];
+                if (length != 0) Symbols[offsets[length]++] = (short)symbol;
+            }
+            var code = 0;
+            var position = 0;
+            for (var length = 1; length <= 15; length++, code <<= 1)
+            {
+                for (var remaining = Counts[length]; remaining > 0; remaining--, code++)
+                {
+                    var symbol = Symbols[position++];
+                    if (length > PrimaryBits) continue;
+                    var reversed = 0;
+                    for (var bit = 0; bit < length; bit++)
+                        reversed |= ((code >> bit) & 1) << (length - 1 - bit);
+                    for (var slot = reversed; slot < Primary.Length; slot += 1 << length)
+                        Primary[slot] = (symbol << 4) | length;
+                }
+            }
+            if (left > 0)
+                for (var slot = 0; slot < Primary.Length; slot++)
+                    if (Primary[slot] == 0) Primary[slot] = Invalid;
+            return true;
+        }
     }
 }
 
@@ -834,14 +1474,18 @@ internal sealed class JavaZlibOutputStream : Stream
     }
 }
 
+// java.util.zip.InflaterOutputStream (JDK 17): each write is supplied whole and
+// its output is written in 512-byte pieces as soon as it is decoded.
 internal sealed class JavaInflaterOutputStream : Stream
 {
     private readonly Stream destination;
-    private readonly MemoryStream compressed = new();
-    private int emitted;
+    private readonly JavaInflateEngine inflater = new(nowrap: false);
+    private readonly byte[] decoded = new byte[512];
+    private readonly byte[] single = new byte[1];
     private bool disposed;
 
-    internal JavaInflaterOutputStream(Stream destination) => this.destination = destination;
+    internal JavaInflaterOutputStream(Stream destination) =>
+        this.destination = destination ?? throw new ArgumentNullException(nameof(destination));
 
     public override bool CanRead => false;
     public override bool CanSeek => false;
@@ -855,35 +1499,56 @@ internal sealed class JavaInflaterOutputStream : Stream
 
     public override void Flush()
     {
+        ObjectDisposedException.ThrowIf(disposed, this);
+        if (inflater.Finished) return;
+        WritePending();
         destination.Flush();
     }
+
     public override int Read(byte[] buffer, int offset, int count) => throw new NotSupportedException();
     public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
     public override void SetLength(long value) => throw new NotSupportedException();
+
     public override void Write(byte[] buffer, int offset, int count)
     {
         ObjectDisposedException.ThrowIf(disposed, this);
-        compressed.Write(buffer, offset, count);
-        EmitAvailable();
+        ArgumentNullException.ThrowIfNull(buffer);
+        if (offset < 0 || count < 0 || offset > buffer.Length - count)
+            throw new ArgumentOutOfRangeException(nameof(count));
+        if (count == 0) return;
+        while (true)
+        {
+            if (inflater.NeedsInput)
+            {
+                inflater.SetInput(new ReadOnlySpan<byte>(buffer, offset, count));
+                count = 0;
+            }
+            int produced;
+            do
+            {
+                produced = inflater.Inflate(decoded);
+                if (produced > 0) destination.Write(decoded, 0, produced);
+            } while (produced > 0);
+            if (inflater.NeedsDictionary)
+                throw new InvalidDataException("ZLIB dictionary missing");
+            if (inflater.Finished || count == 0) break;
+        }
     }
 
     public override void WriteByte(byte value)
     {
-        ObjectDisposedException.ThrowIf(disposed, this);
-        compressed.WriteByte(value);
-        EmitAvailable();
+        single[0] = value;
+        Write(single, 0, 1);
     }
 
-    private void EmitAvailable()
+    private void WritePending()
     {
-        var position = compressed.Position;
-        var bytes = JavaZlib.DecompressAvailable(compressed, out var failure);
-        if (bytes.Length > emitted)
-            destination.Write(bytes, emitted, bytes.Length - emitted);
-        emitted = bytes.Length;
-        compressed.Position = position;
-        JavaZlib.ValidateChecksumIfPresent(compressed, bytes);
-        if (failure is not null) throw failure;
+        while (!inflater.Finished && !inflater.NeedsInput)
+        {
+            var produced = inflater.Inflate(decoded);
+            if (produced < 1) break;
+            destination.Write(decoded, 0, produced);
+        }
     }
 
     protected override void Dispose(bool disposing)
@@ -892,17 +1557,14 @@ internal sealed class JavaInflaterOutputStream : Stream
         disposed = true;
         try
         {
-            var position = compressed.Position;
-            var bytes = JavaZlib.Decompress(compressed);
-            if (bytes.Length > emitted)
-                destination.Write(bytes, emitted, bytes.Length - emitted);
-            emitted = bytes.Length;
-            compressed.Position = position;
-            destination.Flush();
+            if (!inflater.Finished)
+            {
+                WritePending();
+                destination.Flush();
+            }
         }
         finally
         {
-            compressed.Dispose();
             destination.Dispose();
             base.Dispose(disposing);
         }
@@ -916,16 +1578,13 @@ public
 #endif
 sealed class JavaInflater
 {
-    private readonly MemoryStream compressed = new();
-    private readonly bool rawDeflate;
-    private int emitted;
-    private bool needsInput = true;
+    private readonly JavaInflateEngine engine;
     private bool ended;
 
-    internal JavaInflater(bool nowrap) => rawDeflate = nowrap;
+    internal JavaInflater(bool nowrap) => engine = new JavaInflateEngine(nowrap);
 
-    public bool Finished() => false;
-    public bool NeedsInput() => needsInput;
+    public bool Finished() => engine.Finished;
+    public bool NeedsInput() => engine.NeedsInput;
 
     public void SetInput(sbyte[] input, int offset, int length)
     {
@@ -935,54 +1594,19 @@ sealed class JavaInflater
         ArgumentOutOfRangeException.ThrowIfNegative(length);
         if (offset > input.Length - length)
             throw new ArgumentException("The input range exceeds the supplied buffer.");
-        compressed.Position = compressed.Length;
-        compressed.Write(JavaCompat.ToUnsignedBytes(input), offset, length);
-        needsInput = false;
+        engine.SetInput(MemoryMarshal.Cast<sbyte, byte>(new ReadOnlySpan<sbyte>(input, offset, length)));
     }
 
+    // Decoded bytes are written into output as they are produced; when the
+    // stream is malformed, those written before the error stay in output.
     public int Inflate(sbyte[] output)
     {
         ObjectDisposedException.ThrowIf(ended, this);
         ArgumentNullException.ThrowIfNull(output);
-        if (output.Length == 0) return 0;
-
-        var inputPosition = compressed.Position;
-        compressed.Position = 0;
-        using var decoded = new MemoryStream();
-        if (rawDeflate)
-        {
-            using var inflater = new DeflateStream(
-                compressed, CompressionMode.Decompress, leaveOpen: true);
-            inflater.CopyTo(decoded);
-        }
-        else
-        {
-            var decodedBytes = JavaZlib.Decompress(compressed);
-            decoded.Write(decodedBytes, 0, decodedBytes.Length);
-        }
-        compressed.Position = inputPosition;
-
-        var available = checked((int)decoded.Length - emitted);
-        if (available <= 0)
-        {
-            needsInput = true;
-            return 0;
-        }
-        var count = Math.Min(output.Length, available);
-        var bytes = decoded.GetBuffer();
-        for (var index = 0; index < count; index++)
-            output[index] = unchecked((sbyte)bytes[emitted + index]);
-        emitted += count;
-        needsInput = count == available;
-        return count;
+        return engine.Inflate(MemoryMarshal.Cast<sbyte, byte>(output.AsSpan()));
     }
 
-    public void End()
-    {
-        if (ended) return;
-        ended = true;
-        compressed.Dispose();
-    }
+    public void End() => ended = true;
 }
 
 #if DRIPSHARP_INTERNAL_JAVA_COMPAT
@@ -1020,7 +1644,9 @@ public
 #endif
 sealed class JavaDeflaterOutputStream : JavaOutputStream
 {
+    private const int ScratchSize = 8192;
     private readonly JavaZlibOutputStream compressed;
+    private byte[]? scratch;
 
     internal JavaDeflaterOutputStream(Stream destination, JavaDeflater deflater)
     {
@@ -1030,8 +1656,28 @@ sealed class JavaDeflaterOutputStream : JavaOutputStream
     }
 
     public override void Write(int value) => compressed.WriteByte(unchecked((byte)value));
-    public override void Write(sbyte[] buffer, int offset, int count) =>
-        compressed.Write(JavaCompat.ToUnsignedBytes(buffer), offset, count);
+    public override void Write(sbyte[] buffer, int offset, int count)
+    {
+        ArgumentNullException.ThrowIfNull(buffer);
+        JavaCompat.RequireByteRange(buffer.Length, offset, count);
+        if (count == 0)
+        {
+            // Still reach the stream so a closed stream rejects the write.
+            compressed.Write(Array.Empty<byte>(), 0, 0);
+            return;
+        }
+        // Copy only [offset, offset + count) through a reused chunk, so a small
+        // write from a large buffer costs O(count), not O(buffer length).
+        var chunk = scratch ??= new byte[ScratchSize];
+        while (count > 0)
+        {
+            var length = Math.Min(count, chunk.Length);
+            Buffer.BlockCopy(buffer, offset, chunk, 0, length);
+            compressed.Write(chunk, 0, length);
+            offset += length;
+            count -= length;
+        }
+    }
     public override void Flush() => compressed.Flush();
 
     public override void Dispose()
@@ -1079,21 +1725,65 @@ public
 #endif
 sealed class JavaCrc32
 {
+    // Reflected CRC-32 (polynomial 0xEDB88320, the zlib/PNG/ZIP checksum)
+    // computed by slicing-by-8: eight 256-entry tables, where table k maps a
+    // byte to its CRC contribution after k further zero bytes.
+    private const uint Polynomial = 0xedb88320u;
+    private static readonly uint[] Tables = BuildTables();
     private uint crc = uint.MaxValue;
+
+    private static uint[] BuildTables()
+    {
+        var tables = new uint[8 * 256];
+        for (uint value = 0; value < 256; value++)
+        {
+            var entry = value;
+            for (var bit = 0; bit < 8; bit++)
+                entry = (entry >> 1) ^ ((entry & 1) == 0 ? 0u : Polynomial);
+            tables[value] = entry;
+        }
+        for (var table = 1; table < 8; table++)
+        {
+            for (var value = 0; value < 256; value++)
+            {
+                var previous = tables[((table - 1) * 256) + value];
+                tables[(table * 256) + value] = (previous >> 8) ^ tables[previous & 0xff];
+            }
+        }
+        return tables;
+    }
 
     public void Update(sbyte[] values, int offset, int length)
     {
         ArgumentNullException.ThrowIfNull(values);
         if (offset < 0 || length < 0 || offset > values.Length - length)
             throw new IndexOutOfRangeException();
-        for (var index = offset; index < offset + length; index++)
+        var tables = Tables;
+        var current = crc;
+        var index = offset;
+        var end = offset + length;
+        for (; end - index >= 8; index += 8)
         {
-            crc ^= unchecked((byte)values[index]);
-            for (var bit = 0; bit < 8; bit++)
-            {
-                crc = (crc >> 1) ^ ((crc & 1) == 0 ? 0u : 0xedb88320u);
-            }
+            var low = current ^ (unchecked((byte)values[index])
+                | ((uint)unchecked((byte)values[index + 1]) << 8)
+                | ((uint)unchecked((byte)values[index + 2]) << 16)
+                | ((uint)unchecked((byte)values[index + 3]) << 24));
+            var high = unchecked((byte)values[index + 4])
+                | ((uint)unchecked((byte)values[index + 5]) << 8)
+                | ((uint)unchecked((byte)values[index + 6]) << 16)
+                | ((uint)unchecked((byte)values[index + 7]) << 24);
+            current = tables[(7 * 256) + (low & 0xff)]
+                ^ tables[(6 * 256) + ((low >> 8) & 0xff)]
+                ^ tables[(5 * 256) + ((low >> 16) & 0xff)]
+                ^ tables[(4 * 256) + (low >> 24)]
+                ^ tables[(3 * 256) + (high & 0xff)]
+                ^ tables[(2 * 256) + ((high >> 8) & 0xff)]
+                ^ tables[256 + ((high >> 16) & 0xff)]
+                ^ tables[high >> 24];
         }
+        for (; index < end; index++)
+            current = (current >> 8) ^ tables[(current ^ unchecked((byte)values[index])) & 0xff];
+        crc = current;
     }
 
     public long GetValue() => crc ^ uint.MaxValue;
@@ -1226,22 +1916,16 @@ public
 #endif
 class JavaMapEntry<K, V>
 {
-    private readonly IDictionary<K, V>? source;
     private readonly K key;
-    private V value;
+    // JavaLinkedHashMap entries are the map's own storage, as in Java, so
+    // the map updates this field directly.
+    private protected V __entryValue;
     private readonly bool mutable;
 
     protected JavaMapEntry()
     {
         key = default!;
-        value = default!;
-    }
-
-    internal JavaMapEntry(IDictionary<K, V> source, K key)
-    {
-        this.source = source;
-        this.key = key;
-        value = source.TryGetValue(key, out var current) ? current : default!;
+        __entryValue = default!;
     }
 
     internal JavaMapEntry(K key, V value)
@@ -1252,31 +1936,19 @@ class JavaMapEntry<K, V>
     protected JavaMapEntry(K key, V value, bool mutable)
     {
         this.key = key;
-        this.value = value;
+        __entryValue = value;
         this.mutable = mutable;
     }
 
     public virtual K Key => key;
-    public virtual V Value => source is not null && source.TryGetValue(key, out var current)
-        ? current
-        : value;
+    public virtual V Value => __entryValue;
 
     public virtual V SetValue(V replacement)
     {
-        if (source is null)
-        {
-            if (!mutable) throw new NotSupportedException("This Java map entry is immutable.");
-            var previousValue = value;
-            value = replacement;
-            return previousValue;
-        }
-        var previous = Value;
-        if (source is JavaMapValueUpdater<K, V> linked)
-            linked.ReplaceValueWithoutAccess(key, replacement);
-        else
-            source[key] = replacement;
-        value = replacement;
-        return previous;
+        if (!mutable) throw new NotSupportedException("This Java map entry is immutable.");
+        var previousValue = __entryValue;
+        __entryValue = replacement;
+        return previousValue;
     }
 
     public override bool Equals(object? other)
@@ -1442,11 +2114,18 @@ sealed class JavaListIterator<T> : JavaIterator<T>
             return list[cursor++];
         }
         prepared = false;
+        if (iterator is JavaRemovableIterator removable) removable.MarkReturned();
         return iterator!.Current;
     }
 
     public void Remove()
     {
+        // Map views (entrySet() among them) enumerate with removable iterators.
+        if (list is null && iterator is JavaRemovableIterator removable)
+        {
+            removable.Remove();
+            return;
+        }
         if (list is null)
             throw new NotSupportedException(
                 "This Java iterator does not expose mutable removal semantics.");
@@ -1645,7 +2324,13 @@ internal sealed class JavaMapEntrySet<K, V> : ISet<JavaMapEntry<K, V>> where K :
         return source.Remove(item.Key);
     }
 
-    public IEnumerator<JavaMapEntry<K, V>> GetEnumerator() => new Enumerator(source);
+    // An insertion-ordered JavaLinkedHashMap hands out its own entries without
+    // a key snapshot; other maps (and access-ordered ones, where a lookup
+    // reorders entries) iterate a snapshot of the keys.
+    public IEnumerator<JavaMapEntry<K, V>> GetEnumerator() =>
+        source is JavaLinkedHashMap<K, V> linked && linked.TryGetEntryEnumerator(out var entries)
+            ? entries
+            : new Enumerator(source);
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public void ExceptWith(IEnumerable<JavaMapEntry<K, V>> other)
@@ -1686,6 +2371,34 @@ internal sealed class JavaMapEntrySet<K, V> : ISet<JavaMapEntry<K, V>> where K :
 
     private HashSet<JavaMapEntry<K, V>> Snapshot() => new(this);
 
+    // An entry over an arbitrary IDictionary: reads and writes go through to
+    // the map while the key is present. Once the key has left the map the
+    // entry is detached, as in Java, and setValue changes only the entry.
+    private sealed class LiveEntry : JavaMapEntry<K, V>
+    {
+        private readonly IDictionary<K, V> source;
+
+        internal LiveEntry(IDictionary<K, V> source, K key)
+            : base(key, source.TryGetValue(key, out var current) ? current : default!, mutable: true)
+        {
+            this.source = source;
+        }
+
+        public override V Value => source.TryGetValue(Key, out var current) ? current : __entryValue;
+
+        public override V SetValue(V replacement)
+        {
+            if (!source.TryGetValue(Key, out var previous))
+                previous = __entryValue;
+            else if (source is JavaMapValueUpdater<K, V> linked)
+                linked.ReplaceValueWithoutAccess(Key, replacement);
+            else
+                source[Key] = replacement;
+            __entryValue = replacement;
+            return previous;
+        }
+    }
+
     private sealed class Enumerator : IEnumerator<JavaMapEntry<K, V>>, JavaRemovableIterator
     {
         private readonly IDictionary<K, V> source;
@@ -1713,7 +2426,7 @@ internal sealed class JavaMapEntrySet<K, V> : ISet<JavaMapEntry<K, V>> where K :
                 if (!source.ContainsKey(key)) continue;
                 preparedKey = key;
                 hasPreparedKey = true;
-                Current = new JavaMapEntry<K, V>(source, key);
+                Current = new LiveEntry(source, key);
                 return true;
             }
             preparedKey = default;
@@ -1793,6 +2506,576 @@ internal sealed class JavaMapKeySet<K, V> : ISet<K> where K : notnull
         throw new NotSupportedException("Java Map.keySet does not support adding keys.");
     public override string ToString() =>
         "[" + string.Join(", ", source.Keys.Select(item => JavaCompat.StringValueOf(item))) + "]";
+}
+
+// java.util.TreeMap: a height-balanced (AVL) search tree ordered by the map's
+// comparator. SortedDictionary cannot seek to a key, so SortedMap.subMap would
+// have to scan and copy the whole map. A subMap view here is another
+// JavaTreeMap sharing the same tree with the half-open key range
+// [lower, upper): it seeks its lower bound in O(log n), stays backed by the
+// map, and rejects writes outside its range, as Java's view does.
+#if DRIPSHARP_INTERNAL_JAVA_COMPAT
+internal
+#else
+public
+#endif
+class JavaTreeMap<K, V> : IDictionary<K, V>, IDictionary where K : notnull
+{
+    // Java natural ordering. For primitive keys it is exactly their CompareTo,
+    // which the default comparer calls without boxing.
+    private static readonly IComparer<K> NaturalOrder = typeof(K).IsPrimitive
+        ? Comparer<K>.Default
+        : Comparer<K>.Create(JavaCompat.CompareNatural);
+
+    private sealed class Node(K key, V value)
+    {
+        internal readonly K Key = key;
+        internal V Value = value;
+        internal Node? Left;
+        internal Node? Right;
+        internal int Height = 1;
+    }
+
+    private sealed class Tree(IComparer<K> comparer)
+    {
+        internal readonly IComparer<K> Comparer = comparer;
+        internal Node? Root;
+        internal int Count;
+        // Bumped by structural changes only; replacing a value is not one.
+        internal int Version;
+
+        internal Node? Find(K key)
+        {
+            if (key is null) throw new ArgumentNullException(nameof(key));
+            var node = Root;
+            while (node is not null)
+            {
+                var order = Comparer.Compare(key, node.Key);
+                if (order == 0) return node;
+                node = order < 0 ? node.Left : node.Right;
+            }
+            return null;
+        }
+
+        internal void Put(K key, V value, bool replace)
+        {
+            var existing = Find(key);
+            if (existing is not null)
+            {
+                if (!replace)
+                    throw new ArgumentException("An item with the same key has already been added.");
+                existing.Value = value;
+                return;
+            }
+            Root = Insert(Root, key, value);
+            Count++;
+            Version++;
+        }
+
+        internal bool Delete(K key)
+        {
+            if (Find(key) is null) return false;
+            Root = Delete(Root!, key);
+            Count--;
+            Version++;
+            return true;
+        }
+
+        internal void Clear()
+        {
+            Root = null;
+            Count = 0;
+            Version++;
+        }
+
+        private Node Insert(Node? node, K key, V value)
+        {
+            if (node is null) return new Node(key, value);
+            if (Comparer.Compare(key, node.Key) < 0) node.Left = Insert(node.Left, key, value);
+            else node.Right = Insert(node.Right, key, value);
+            return Balance(node);
+        }
+
+        private Node? Delete(Node node, K key)
+        {
+            var order = Comparer.Compare(key, node.Key);
+            if (order < 0)
+            {
+                node.Left = Delete(node.Left!, key);
+            }
+            else if (order > 0)
+            {
+                node.Right = Delete(node.Right!, key);
+            }
+            else
+            {
+                if (node.Left is null) return node.Right;
+                if (node.Right is null) return node.Left;
+                var successor = node.Right;
+                while (successor.Left is not null) successor = successor.Left;
+                successor.Right = DeleteFirst(node.Right);
+                successor.Left = node.Left;
+                node = successor;
+            }
+            return Balance(node);
+        }
+
+        private static Node? DeleteFirst(Node node)
+        {
+            if (node.Left is null) return node.Right;
+            node.Left = DeleteFirst(node.Left);
+            return Balance(node);
+        }
+
+        private static int Height(Node? node) => node?.Height ?? 0;
+
+        private static void Measure(Node node) =>
+            node.Height = Math.Max(Height(node.Left), Height(node.Right)) + 1;
+
+        private static Node RotateRight(Node node)
+        {
+            var left = node.Left!;
+            node.Left = left.Right;
+            left.Right = node;
+            Measure(node);
+            Measure(left);
+            return left;
+        }
+
+        private static Node RotateLeft(Node node)
+        {
+            var right = node.Right!;
+            node.Right = right.Left;
+            right.Left = node;
+            Measure(node);
+            Measure(right);
+            return right;
+        }
+
+        private static Node Balance(Node node)
+        {
+            Measure(node);
+            var skew = Height(node.Left) - Height(node.Right);
+            if (skew > 1)
+            {
+                if (Height(node.Left!.Left) < Height(node.Left.Right)) node.Left = RotateLeft(node.Left);
+                return RotateRight(node);
+            }
+            if (skew < -1)
+            {
+                if (Height(node.Right!.Right) < Height(node.Right.Left)) node.Right = RotateRight(node.Right);
+                return RotateLeft(node);
+            }
+            return node;
+        }
+    }
+
+    private readonly Tree tree;
+    private readonly bool bounded;
+    private readonly K lower;
+    private readonly K upper;
+
+    public JavaTreeMap() : this(null) { }
+
+    public JavaTreeMap(IComparer<K>? comparer)
+    {
+        tree = new Tree(comparer ?? NaturalOrder);
+        lower = default!;
+        upper = default!;
+    }
+
+    private JavaTreeMap(Tree tree, K lower, K upper)
+    {
+        this.tree = tree;
+        bounded = true;
+        this.lower = lower;
+        this.upper = upper;
+    }
+
+    private int Compare(K left, K right) => tree.Comparer.Compare(left, right);
+
+    private bool InRange(K key) =>
+        !bounded || (Compare(key, lower) >= 0 && Compare(key, upper) < 0);
+
+    private K RequireInRange(K key) =>
+        InRange(key) ? key : throw new ArgumentException("key out of range");
+
+    private Cursor<Node> Nodes() => new(this, node => node);
+
+    // In-order walk over lower <= key < upper (every node when unbounded),
+    // failing fast once the map changes structurally. The pending left spine
+    // never holds more nodes than the tree is high, so it is sized once.
+    private sealed class Cursor<TResult>(JavaTreeMap<K, V> map, Func<Node, TResult> project)
+        : IEnumerator<TResult>
+    {
+        private Node[]? pending;
+        private int depth;
+        private int version;
+        private TResult current = default!;
+
+        public TResult Current => current;
+        object? IEnumerator.Current => current;
+        public Cursor<TResult> GetEnumerator() => this;
+
+        public bool MoveNext()
+        {
+            var tree = map.tree;
+            if (pending is null)
+            {
+                version = tree.Version;
+                pending = new Node[tree.Root?.Height ?? 0];
+                for (var node = tree.Root; node is not null;)
+                {
+                    if (map.bounded && tree.Comparer.Compare(node.Key, map.lower) < 0)
+                    {
+                        node = node.Right;
+                    }
+                    else
+                    {
+                        pending[depth++] = node;
+                        node = node.Left;
+                    }
+                }
+            }
+            else if (version != tree.Version)
+            {
+                throw new InvalidOperationException(
+                    "Collection was modified; enumeration operation may not execute.");
+            }
+            if (depth == 0) return false;
+            var next = pending[--depth];
+            if (map.bounded && tree.Comparer.Compare(next.Key, map.upper) >= 0)
+            {
+                depth = 0;
+                return false;
+            }
+            for (var node = next.Right; node is not null; node = node.Left) pending[depth++] = node;
+            current = project(next);
+            return true;
+        }
+
+        public void Reset()
+        {
+            pending = null;
+            depth = 0;
+        }
+
+        public void Dispose() { }
+    }
+
+    // SortedMap.subMap(fromKey, toKey): the live view of fromKey <= key < toKey.
+    internal JavaTreeMap<K, V> SubMap(K fromKey, K toKey)
+    {
+        if (Compare(fromKey, toKey) > 0) throw new ArgumentException("fromKey > toKey");
+        if (bounded)
+        {
+            if (!InRange(fromKey)) throw new ArgumentException("fromKey out of range");
+            if (Compare(toKey, lower) < 0 || Compare(toKey, upper) > 0)
+                throw new ArgumentException("toKey out of range");
+        }
+        return new JavaTreeMap<K, V>(tree, fromKey, toKey);
+    }
+
+    public int Count
+    {
+        get
+        {
+            if (!bounded) return tree.Count;
+            var count = 0;
+            foreach (var _ in Nodes()) count++;
+            return count;
+        }
+    }
+
+    public bool IsReadOnly => false;
+    bool IDictionary.IsFixedSize => false;
+    bool IDictionary.IsReadOnly => false;
+    bool ICollection.IsSynchronized => false;
+    object ICollection.SyncRoot => this;
+    public ICollection<K> Keys => new KeyCollection(this);
+    public ICollection<V> Values => new ValueCollection(this);
+    ICollection IDictionary.Keys => new KeyCollection(this);
+    ICollection IDictionary.Values => new ValueCollection(this);
+
+    public V this[K key]
+    {
+        get => TryGetValue(key, out var value) ? value : throw new KeyNotFoundException();
+        set => tree.Put(RequireInRange(key), value, replace: true);
+    }
+
+    object? IDictionary.this[object key]
+    {
+        get => JavaCompat.TryMapKey(key, out K typed) && TryGetValue(typed, out var value)
+            ? value
+            : null;
+        set => this[RequireKey(key)] = RequireValue(value);
+    }
+
+    public void Add(K key, V value) => tree.Put(RequireInRange(key), value, replace: false);
+    public void Add(KeyValuePair<K, V> item) => Add(item.Key, item.Value);
+    void IDictionary.Add(object key, object? value) => Add(RequireKey(key), RequireValue(value));
+
+    public bool ContainsKey(K key) => InRange(key) && tree.Find(key) is not null;
+
+    public bool TryGetValue(K key, out V value)
+    {
+        var node = InRange(key) ? tree.Find(key) : null;
+        value = node is null ? default! : node.Value;
+        return node is not null;
+    }
+
+    public bool Remove(K key) => InRange(key) && tree.Delete(key);
+    public bool Remove(KeyValuePair<K, V> item) => Contains(item) && Remove(item.Key);
+
+    void IDictionary.Remove(object key)
+    {
+        if (JavaCompat.TryMapKey(key, out K typed)) Remove(typed);
+    }
+
+    public void Clear()
+    {
+        if (!bounded)
+        {
+            tree.Clear();
+            return;
+        }
+        var keys = new List<K>();
+        foreach (var node in Nodes()) keys.Add(node.Key);
+        foreach (var key in keys) tree.Delete(key);
+    }
+
+    public bool Contains(KeyValuePair<K, V> item) =>
+        TryGetValue(item.Key, out var value) && JavaCompat.Equals(value, item.Value);
+
+    bool IDictionary.Contains(object key) =>
+        JavaCompat.TryMapKey(key, out K typed) && ContainsKey(typed);
+
+    public void CopyTo(KeyValuePair<K, V>[] array, int arrayIndex)
+    {
+        foreach (var item in this) array[arrayIndex++] = item;
+    }
+
+    void ICollection.CopyTo(Array array, int index)
+    {
+        foreach (var item in this) array.SetValue(new DictionaryEntry(item.Key, item.Value), index++);
+    }
+
+    public IEnumerator<KeyValuePair<K, V>> GetEnumerator() =>
+        new Cursor<KeyValuePair<K, V>>(this, node => new KeyValuePair<K, V>(node.Key, node.Value));
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IDictionaryEnumerator IDictionary.GetEnumerator() => new DictionaryEnumerator(GetEnumerator());
+
+    private static K RequireKey(object? key) =>
+        JavaCompat.TryMapKey(key, out K typed)
+            ? typed
+            : throw new ArgumentException($"Key must be assignable to {typeof(K)}.", nameof(key));
+
+    private static V RequireValue(object? value)
+    {
+        if (value is V typed) return typed;
+        if (value is null && default(V) is null) return default!;
+        throw new ArgumentException($"Value must be assignable to {typeof(V)}.", nameof(value));
+    }
+
+    private sealed class DictionaryEnumerator(IEnumerator<KeyValuePair<K, V>> inner) : IDictionaryEnumerator
+    {
+        public DictionaryEntry Entry => new(Key, Value);
+        public object Key => inner.Current.Key;
+        public object? Value => inner.Current.Value;
+        public object Current => Entry;
+        public bool MoveNext() => inner.MoveNext();
+        public void Reset() => inner.Reset();
+    }
+
+    private sealed class KeyCollection(JavaTreeMap<K, V> source) : ICollection<K>, ICollection
+    {
+        bool ICollection.IsSynchronized => false;
+        object ICollection.SyncRoot => source;
+        void ICollection.CopyTo(Array array, int index)
+        {
+            foreach (var item in this) array.SetValue(item, index++);
+        }
+        public int Count => source.Count;
+        public bool IsReadOnly => false;
+        public void Add(K item) => throw new NotSupportedException("Java Map.keySet does not support add().");
+        public void Clear() => source.Clear();
+        public bool Contains(K item) => source.ContainsKey(item);
+        public void CopyTo(K[] array, int arrayIndex)
+        {
+            foreach (var item in this) array[arrayIndex++] = item;
+        }
+        public bool Remove(K item) => source.Remove(item);
+        public IEnumerator<K> GetEnumerator() => new Cursor<K>(source, node => node.Key);
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+
+    private sealed class ValueCollection(JavaTreeMap<K, V> source) : ICollection<V>, ICollection
+    {
+        bool ICollection.IsSynchronized => false;
+        object ICollection.SyncRoot => source;
+        void ICollection.CopyTo(Array array, int index)
+        {
+            foreach (var item in this) array.SetValue(item, index++);
+        }
+        public int Count => source.Count;
+        public bool IsReadOnly => false;
+        public void Add(V item) => throw new NotSupportedException("Java Map.values does not support add().");
+        public void Clear() => source.Clear();
+        public bool Contains(V item)
+        {
+            foreach (var node in source.Nodes())
+                if (JavaCompat.Equals(node.Value, item)) return true;
+            return false;
+        }
+        public void CopyTo(V[] array, int arrayIndex)
+        {
+            foreach (var item in this) array[arrayIndex++] = item;
+        }
+        public bool Remove(V item)
+        {
+            foreach (var node in source.Nodes())
+                if (JavaCompat.Equals(node.Value, item)) return source.Remove(node.Key);
+            return false;
+        }
+        public IEnumerator<V> GetEnumerator() => new Cursor<V>(source, node => node.Value);
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+}
+
+// SortedSet.headSet/subSet on a TreeSet: the live view of its half-open range
+// [lower, upper), with no lower bound for headSet. SortedSet.GetViewBetween
+// seeks in O(log n) but includes its upper bound, so the view leaves it out.
+internal sealed class JavaSortedSetView<T> : ISet<T>, ICollection
+{
+    private readonly SortedSet<T> source;
+    private readonly bool hasLower;
+    private readonly T lower;
+    private readonly T upper;
+
+    private JavaSortedSetView(SortedSet<T> source, bool hasLower, T lower, T upper)
+    {
+        this.source = source;
+        this.hasLower = hasLower;
+        this.lower = lower;
+        this.upper = upper;
+    }
+
+    internal static JavaSortedSetView<T> HeadSet(SortedSet<T> source, T toKey) =>
+        new(source, false, default!, toKey);
+
+    internal static JavaSortedSetView<T> SubSet(SortedSet<T> source, T fromKey, T toKey) =>
+        source.Comparer.Compare(fromKey, toKey) > 0
+            ? throw new ArgumentException("fromKey > toKey")
+            : new(source, true, fromKey, toKey);
+
+    internal JavaSortedSetView<T> HeadSet(T toKey) =>
+        new(source, hasLower, lower, RequireUpperInRange(toKey));
+
+    internal JavaSortedSetView<T> SubSet(T fromKey, T toKey)
+    {
+        if (Compare(fromKey, toKey) > 0) throw new ArgumentException("fromKey > toKey");
+        if (!InRange(fromKey)) throw new ArgumentException("fromKey out of range");
+        return new(source, true, fromKey, RequireUpperInRange(toKey));
+    }
+
+    private int Compare(T left, T right) => source.Comparer.Compare(left, right);
+
+    private bool InRange(T item) =>
+        (!hasLower || Compare(item, lower) >= 0) && Compare(item, upper) < 0;
+
+    private T RequireUpperInRange(T toKey) =>
+        (hasLower && Compare(toKey, lower) < 0) || Compare(toKey, upper) > 0
+            ? throw new ArgumentException("toKey out of range")
+            : toKey;
+
+    // The SortedSet view of [lower, upper], or null when the range is empty.
+    private SortedSet<T>? Window()
+    {
+        if (source.Count == 0) return null;
+        var from = hasLower ? lower : source.Min!;
+        return Compare(from, upper) > 0 ? null : source.GetViewBetween(from, upper);
+    }
+
+    private SortedSet<T> Snapshot() => new(this, source.Comparer);
+
+    public int Count
+    {
+        get
+        {
+            var window = Window();
+            if (window is null || window.Count == 0) return 0;
+            return window.Count - (Compare(window.Max!, upper) == 0 ? 1 : 0);
+        }
+    }
+
+    public bool IsReadOnly => false;
+    bool ICollection.IsSynchronized => false;
+    object ICollection.SyncRoot => source;
+
+    void ICollection.CopyTo(Array array, int index)
+    {
+        foreach (var item in this) array.SetValue(item, index++);
+    }
+
+    public bool Add(T item) =>
+        InRange(item) ? source.Add(item) : throw new ArgumentException("key out of range");
+
+    void ICollection<T>.Add(T item) => Add(item);
+    public bool Contains(T item) => InRange(item) && source.Contains(item);
+    public bool Remove(T item) => InRange(item) && source.Remove(item);
+
+    public void Clear()
+    {
+        foreach (var item in this.ToList()) source.Remove(item);
+    }
+
+    public void CopyTo(T[] array, int arrayIndex)
+    {
+        foreach (var item in this) array[arrayIndex++] = item;
+    }
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        var window = Window();
+        if (window is null) yield break;
+        foreach (var item in window)
+        {
+            if (Compare(item, upper) >= 0) yield break;
+            yield return item;
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    public void UnionWith(IEnumerable<T> other)
+    {
+        foreach (var item in other) Add(item);
+    }
+
+    public void ExceptWith(IEnumerable<T> other)
+    {
+        foreach (var item in other.ToList()) Remove(item);
+    }
+
+    public void IntersectWith(IEnumerable<T> other)
+    {
+        var retained = new SortedSet<T>(other, source.Comparer);
+        foreach (var item in this.Where(item => !retained.Contains(item)).ToList()) source.Remove(item);
+    }
+
+    public void SymmetricExceptWith(IEnumerable<T> other)
+    {
+        foreach (var item in new SortedSet<T>(other, source.Comparer))
+            if (!Remove(item)) Add(item);
+    }
+
+    public bool IsProperSubsetOf(IEnumerable<T> other) => Snapshot().IsProperSubsetOf(other);
+    public bool IsProperSupersetOf(IEnumerable<T> other) => Snapshot().IsProperSupersetOf(other);
+    public bool IsSubsetOf(IEnumerable<T> other) => Snapshot().IsSubsetOf(other);
+    public bool IsSupersetOf(IEnumerable<T> other) => Snapshot().IsSupersetOf(other);
+    public bool Overlaps(IEnumerable<T> other) => Snapshot().Overlaps(other);
+    public bool SetEquals(IEnumerable<T> other) => Snapshot().SetEquals(other);
 }
 
 internal sealed class JavaStringJoiner
@@ -1913,33 +3196,94 @@ class JavaLinkedHashMap<K, V> :
     JavaMapValueUpdater<K, V>
     where K : notnull
 {
-    private readonly struct StorageKey(K value)
+    // Keys whose Java equals and hashCode reduce to .NET Equals and
+    // GetHashCode: integral primitives, char, bool and enums (compared
+    // without boxing), and sealed classes that JavaCompat.Equals does not
+    // treat specially (not collections, arrays, URIs or read-only adapters).
+    // float and double are excluded because Java compares their bits. Hash
+    // values only place entries in buckets and are never observable.
+    private static readonly bool PlainKeys = HasPlainEquality(typeof(K));
+
+    private static bool HasPlainEquality(Type type)
     {
-        internal K Value { get; } = value;
-        public static implicit operator StorageKey(K value) => new(value);
+        if (type.IsEnum) return true;
+        if (type.IsValueType)
+            return type == typeof(int) || type == typeof(long) || type == typeof(short) ||
+                   type == typeof(sbyte) || type == typeof(byte) || type == typeof(char) ||
+                   type == typeof(bool) || type == typeof(ushort) || type == typeof(uint) ||
+                   type == typeof(ulong);
+        return type.IsSealed &&
+               !typeof(IEnumerable).IsAssignableFrom(type) &&
+               !typeof(JavaReadOnlyAdapter).IsAssignableFrom(type) &&
+               !typeof(Uri).IsAssignableFrom(type);
     }
 
-    private sealed class StorageKeyComparer : IEqualityComparer<StorageKey>
+    private static int HashOf(K key)
     {
-        public bool Equals(StorageKey left, StorageKey right) =>
-            JavaCompat.Equals(left.Value, right.Value);
-        public int GetHashCode(StorageKey value) => JavaCompat.HashCode(value.Value);
+        if (key is null) return 0;
+        return PlainKeys ? key.GetHashCode() : JavaCompat.HashCode(key);
     }
 
-    private sealed class Entry(K key, V value)
+    // As in Java, the probe key's equals receives the stored key.
+    private static bool KeysEqual(K probe, K stored)
     {
-        internal K Key { get; } = key;
-        internal V Value { get; set; } = value;
+        if (!PlainKeys) return JavaCompat.Equals(probe, stored);
+        if (typeof(K).IsValueType) return EqualityComparer<K>.Default.Equals(probe, stored);
+        return ReferenceEquals(probe, stored) || (probe is not null && probe.Equals(stored));
+    }
+
+    // Each entry is both the map's storage and the Map.Entry that entrySet()
+    // and removeEldestEntry hand out, as in Java. Entries form an intrusive
+    // doubly linked list in iteration order; a removed entry is unlinked.
+    // Each entry is also chained into its hash bucket by NextInBucket.
+    private sealed class Entry : JavaMapEntry<K, V>
+    {
+        internal Entry(K key, V value, long stamp, int hash)
+            : base(key, value, mutable: true)
+        {
+            Stamp = stamp;
+            Hash = hash;
+        }
+
+        internal readonly int Hash;
+        internal Entry? NextInBucket;
+        internal Entry? Before;
+        internal Entry? After;
+        // Insertion sequence number, or -1 once the entry has left the map.
+        internal long Stamp;
+
+        internal bool Removed => Stamp < 0;
+
+        internal V Stored
+        {
+            get => __entryValue;
+            set => __entryValue = value;
+        }
     }
 
     private sealed class KeyComparer : IEqualityComparer<K>
     {
-        public bool Equals(K? left, K? right) => JavaCompat.Equals(left, right);
-        public int GetHashCode(K value) => JavaCompat.HashCode(value);
+        public bool Equals(K? left, K? right) => KeysEqual(left!, right!);
+        public int GetHashCode(K value) => HashOf(value);
     }
 
-    private readonly Dictionary<StorageKey, LinkedListNode<Entry>> entries;
-    private readonly LinkedList<Entry> order = new();
+    private const int DefaultBuckets = 8;
+    private const int MaximumBuckets = 1 << 30;
+    private static readonly Entry?[] NoBuckets = new Entry?[0];
+
+    // A chained hash table with a power-of-two bucket count, allocated on the
+    // first insertion and doubled when it is three quarters full. Entries
+    // keep their hash, so growing relinks them without rehashing keys.
+    private Entry?[] buckets = NoBuckets;
+    private int bucketShift;
+    private int count;
+    private readonly int initialBuckets;
+    private Entry? head;
+    private Entry? tail;
+    private long nextStamp;
+    // Bumped by every structural change and access-order move; key, value and
+    // KeyValuePair enumerations fail fast on it.
+    private int version;
     private readonly bool accessOrder;
 
     public JavaLinkedHashMap() : this(0, 0.75f, false) { }
@@ -1951,10 +3295,82 @@ class JavaLinkedHashMap<K, V> :
         if (initialCapacity < 0) throw new ArgumentOutOfRangeException(nameof(initialCapacity));
         if (!(loadFactor > 0) || float.IsNaN(loadFactor))
             throw new ArgumentOutOfRangeException(nameof(loadFactor));
-        entries = new Dictionary<StorageKey, LinkedListNode<Entry>>(
-            initialCapacity, new StorageKeyComparer());
+        var size = DefaultBuckets;
+        if (initialCapacity > 0)
+        {
+            // Room for initialCapacity entries at three quarters full.
+            var wanted = initialCapacity >= MaximumBuckets / 4 * 3
+                ? MaximumBuckets
+                : (int)Math.Min(MaximumBuckets, (initialCapacity * 4L + 2) / 3);
+            size = 2;
+            while (size < wanted) size <<= 1;
+        }
+        initialBuckets = size;
         this.accessOrder = accessOrder;
     }
+
+    private int BucketOf(int hash) =>
+        (int)(unchecked((uint)hash * 2654435769u) >> bucketShift);
+
+    private Entry? Find(K key) => count == 0 ? null : Find(key, HashOf(key));
+
+    private Entry? Find(K key, int hash)
+    {
+        if (count == 0) return null;
+        for (var entry = buckets[BucketOf(hash)]; entry is not null; entry = entry.NextInBucket)
+            if (entry.Hash == hash && KeysEqual(key, entry.Key)) return entry;
+        return null;
+    }
+
+    private void AddToBuckets(Entry entry)
+    {
+        if (buckets.Length == 0) Allocate(initialBuckets);
+        else if (count >= buckets.Length - (buckets.Length >> 2) && buckets.Length < MaximumBuckets)
+            Allocate(buckets.Length << 1);
+        var index = BucketOf(entry.Hash);
+        entry.NextInBucket = buckets[index];
+        buckets[index] = entry;
+        count++;
+    }
+
+    private void Allocate(int size)
+    {
+        var shift = 32;
+        for (var length = size; length > 1; length >>= 1) shift--;
+        buckets = new Entry?[size];
+        bucketShift = shift;
+        for (var entry = head; entry is not null; entry = entry.After)
+        {
+            var index = BucketOf(entry.Hash);
+            entry.NextInBucket = buckets[index];
+            buckets[index] = entry;
+        }
+    }
+
+    private void RemoveFromBuckets(Entry entry)
+    {
+        var index = BucketOf(entry.Hash);
+        Entry? previous = null;
+        for (var current = buckets[index]; current is not null; current = current.NextInBucket)
+        {
+            if (ReferenceEquals(current, entry))
+            {
+                if (previous is null) buckets[index] = current.NextInBucket;
+                else previous.NextInBucket = current.NextInBucket;
+                current.NextInBucket = null;
+                count--;
+                return;
+            }
+            previous = current;
+        }
+    }
+
+    private void RemoveEntry(Entry entry)
+    {
+        RemoveFromBuckets(entry);
+        Detach(entry);
+    }
+
     public JavaLinkedHashMap(IEnumerable<KeyValuePair<K, V>> values) : this()
     {
         PutAll(values);
@@ -1962,7 +3378,7 @@ class JavaLinkedHashMap<K, V> :
 
     protected internal virtual bool RemoveEldestEntry(JavaMapEntry<K, V> eldest) => false;
 
-    public int Count => entries.Count;
+    public int Count => count;
     public bool IsReadOnly => false;
     bool IDictionary.IsFixedSize => false;
     bool IDictionary.IsReadOnly => false;
@@ -1976,9 +3392,9 @@ class JavaLinkedHashMap<K, V> :
     {
         get
         {
-            if (!entries.TryGetValue(key, out var node)) throw new KeyNotFoundException();
-            RecordAccess(node);
-            return node.Value.Value;
+            var entry = Find(key) ?? throw new KeyNotFoundException();
+            RecordAccess(entry);
+            return entry.Stored;
         }
         set => Put(key, value);
     }
@@ -1993,36 +3409,43 @@ class JavaLinkedHashMap<K, V> :
 
     internal V Get(K key)
     {
-        if (!entries.TryGetValue(key, out var node)) return default!;
-        RecordAccess(node);
-        return node.Value.Value;
+        var entry = Find(key);
+        if (entry is null) return default!;
+        RecordAccess(entry);
+        return entry.Stored;
     }
 
     internal V GetOrDefault(K key, V fallback)
     {
-        if (!entries.TryGetValue(key, out var node)) return fallback;
-        RecordAccess(node);
-        return node.Value.Value;
+        var entry = Find(key);
+        if (entry is null) return fallback;
+        RecordAccess(entry);
+        return entry.Stored;
     }
 
     internal V PutIfAbsent(K key, V value)
     {
-        if (entries.TryGetValue(key, out var node))
+        var hash = HashOf(key);
+        var entry = Find(key, hash);
+        if (entry is not null)
         {
-            var previous = node.Value.Value;
-            RecordAccess(node);
+            var previous = entry.Stored;
+            RecordAccess(entry);
             if (previous is not null) return previous;
+            entry.Stored = value;
+            return previous;
         }
-        return Put(key, value);
+        Insert(key, value, hash);
+        return default!;
     }
 
     internal V ComputeIfAbsent(K key, Func<K, V> factory)
     {
-        var present = entries.TryGetValue(key, out var node);
-        if (present)
+        var entry = Find(key);
+        if (entry is not null)
         {
-            var current = node!.Value.Value;
-            RecordAccess(node);
+            var current = entry.Stored;
+            RecordAccess(entry);
             if (current is not null) return current;
         }
         var value = factory(key);
@@ -2033,20 +3456,31 @@ class JavaLinkedHashMap<K, V> :
 
     internal V Put(K key, V value)
     {
-        if (entries.TryGetValue(key, out var existing))
+        var hash = HashOf(key);
+        var existing = Find(key, hash);
+        if (existing is not null)
         {
-            var previous = existing.Value.Value;
-            existing.Value.Value = value;
+            var previous = existing.Stored;
+            existing.Stored = value;
             RecordAccess(existing);
             return previous;
         }
-
-        var node = order.AddLast(new Entry(key, value));
-        entries.Add(key, node);
-        var eldest = order.First!;
-        if (RemoveEldestEntry(new JavaMapEntry<K, V>(this, eldest.Value.Key)))
-            Remove(eldest.Value.Key);
+        Insert(key, value, hash);
         return default!;
+    }
+
+    // Adds a mapping for a key known to be absent, then offers the eldest
+    // entry to removeEldestEntry, which (as in Java) receives the entry itself.
+    private void Insert(K key, V value, int hash)
+    {
+        var entry = new Entry(key, value, nextStamp, hash);
+        // Bucket first: growing the table relinks the entries already in the list.
+        AddToBuckets(entry);
+        nextStamp++;
+        Link(entry);
+        var eldest = head!;
+        if (RemoveEldestEntry(eldest))
+            Remove(eldest.Key);
     }
 
     internal void PutAll(IEnumerable<KeyValuePair<K, V>> values)
@@ -2056,8 +3490,8 @@ class JavaLinkedHashMap<K, V> :
 
     internal void ReplaceValueWithoutAccess(K key, V value)
     {
-        if (!entries.TryGetValue(key, out var node)) throw new KeyNotFoundException();
-        node.Value.Value = value;
+        var entry = Find(key) ?? throw new KeyNotFoundException();
+        entry.Stored = value;
     }
 
     void JavaMapValueUpdater<K, V>.ReplaceValueWithoutAccess(K key, V value) =>
@@ -2065,47 +3499,106 @@ class JavaLinkedHashMap<K, V> :
 
     internal ISet<K> KeySet() => new KeySetView(this);
 
-    private void RecordAccess(LinkedListNode<Entry> node)
+    private void RecordAccess(Entry entry)
     {
-        if (!accessOrder || ReferenceEquals(order.Last, node)) return;
-        order.Remove(node);
-        order.AddLast(node);
+        if (!accessOrder || ReferenceEquals(tail, entry)) return;
+        Unlink(entry);
+        Link(entry);
+    }
+
+    private void Link(Entry entry)
+    {
+        entry.Before = tail;
+        entry.After = null;
+        if (tail is null) head = entry;
+        else tail.After = entry;
+        tail = entry;
+        version++;
+    }
+
+    private void Unlink(Entry entry)
+    {
+        var before = entry.Before;
+        var after = entry.After;
+        if (before is null) head = after;
+        else before.After = after;
+        if (after is null) tail = before;
+        else after.Before = before;
+        entry.Before = null;
+        entry.After = null;
+        version++;
+    }
+
+    // A detached entry may outlive the map through entrySet() or
+    // RemoveEldestEntry, so it keeps no links to other entries.
+    private void Detach(Entry entry)
+    {
+        Unlink(entry);
+        entry.Stamp = -1;
+    }
+
+    // The first live entry inserted after the given stamp; entries are in
+    // stamp order in an insertion-ordered map.
+    private Entry? FirstAfter(long stamp)
+    {
+        var entry = head;
+        while (entry is not null && entry.Stamp <= stamp) entry = entry.After;
+        return entry;
+    }
+
+    private IEnumerable<Entry> Ordered()
+    {
+        var expected = version;
+        for (var entry = head; entry is not null; entry = entry.After)
+        {
+            yield return entry;
+            if (version != expected)
+                throw new InvalidOperationException(
+                    "Collection was modified; enumeration operation may not execute.");
+        }
+    }
+
+    internal bool TryGetEntryEnumerator(out IEnumerator<JavaMapEntry<K, V>> enumerator)
+    {
+        enumerator = accessOrder ? null! : new EntryEnumerator(this);
+        return !accessOrder;
     }
 
     public void Add(K key, V value)
     {
-        if (entries.ContainsKey(key)) throw new ArgumentException("An item with the same key has already been added.");
+        if (Find(key) is not null) throw new ArgumentException("An item with the same key has already been added.");
         Put(key, value);
     }
 
-    public bool ContainsKey(K key) => entries.ContainsKey(key);
+    public bool ContainsKey(K key) => Find(key) is not null;
 
     public bool Remove(K key)
     {
-        if (!entries.TryGetValue(key, out var node)) return false;
-        entries.Remove(key);
-        order.Remove(node);
+        var entry = Find(key);
+        if (entry is null) return false;
+        RemoveEntry(entry);
         return true;
     }
 
     public bool Remove(K key, out V value)
     {
-        if (!entries.TryGetValue(key, out var node))
+        var entry = Find(key);
+        if (entry is null)
         {
             value = default!;
             return false;
         }
-        value = node.Value.Value;
-        entries.Remove(key);
-        order.Remove(node);
+        value = entry.Stored;
+        RemoveEntry(entry);
         return true;
     }
 
     public bool TryGetValue(K key, out V value)
     {
-        if (entries.TryGetValue(key, out var node))
+        var entry = Find(key);
+        if (entry is not null)
         {
-            value = node.Value.Value;
+            value = entry.Stored;
             return true;
         }
         value = default!;
@@ -2116,12 +3609,26 @@ class JavaLinkedHashMap<K, V> :
     void IDictionary.Add(object key, object? value) => Add(RequireKey(key), RequireValue(value));
     public void Clear()
     {
-        entries.Clear();
-        order.Clear();
+        if (count != 0) Array.Clear(buckets, 0, buckets.Length);
+        count = 0;
+        var entry = head;
+        while (entry is not null)
+        {
+            var after = entry.After;
+            // An escaped Map.Entry must not keep the cleared entries alive.
+            entry.NextInBucket = null;
+            entry.Before = null;
+            entry.After = null;
+            entry.Stamp = -1;
+            entry = after;
+        }
+        head = null;
+        tail = null;
+        version++;
     }
 
     public bool Contains(KeyValuePair<K, V> item) =>
-        entries.TryGetValue(item.Key, out var node) && JavaCompat.Equals(node.Value.Value, item.Value);
+        Find(item.Key) is { } entry && JavaCompat.Equals(entry.Stored, item.Value);
     bool IDictionary.Contains(object key) =>
         JavaCompat.TryMapKey(key, out K typed) && ContainsKey(typed);
 
@@ -2143,8 +3650,8 @@ class JavaLinkedHashMap<K, V> :
 
     public IEnumerator<KeyValuePair<K, V>> GetEnumerator()
     {
-        foreach (var entry in order)
-            yield return new KeyValuePair<K, V>(entry.Key, entry.Value);
+        foreach (var entry in Ordered())
+            yield return new KeyValuePair<K, V>(entry.Key, entry.Stored);
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -2188,7 +3695,7 @@ class JavaLinkedHashMap<K, V> :
         public bool Remove(K item) => source.Remove(item);
         public IEnumerator<K> GetEnumerator()
         {
-            foreach (var entry in source.order) yield return entry.Key;
+            foreach (var entry in source.Ordered()) yield return entry.Key;
         }
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
@@ -2199,26 +3706,101 @@ class JavaLinkedHashMap<K, V> :
         public bool IsReadOnly => false;
         public void Add(V item) => throw new NotSupportedException("Java Map.values does not support add().");
         public void Clear() => source.Clear();
-        public bool Contains(V item) => source.order.Any(entry => JavaCompat.Equals(entry.Value, item));
+        public bool Contains(V item)
+        {
+            for (var entry = source.head; entry is not null; entry = entry.After)
+                if (JavaCompat.Equals(entry.Stored, item)) return true;
+            return false;
+        }
         public void CopyTo(V[] array, int arrayIndex)
         {
             foreach (var item in this) array[arrayIndex++] = item;
         }
         public bool Remove(V item)
         {
-            var node = source.order.First;
-            while (node is not null)
-            {
-                if (JavaCompat.Equals(node.Value.Value, item)) return source.Remove(node.Value.Key);
-                node = node.Next;
-            }
+            for (var entry = source.head; entry is not null; entry = entry.After)
+                if (JavaCompat.Equals(entry.Stored, item)) return source.Remove(entry.Key);
             return false;
         }
         public IEnumerator<V> GetEnumerator()
         {
-            foreach (var entry in source.order) yield return entry.Value;
+            foreach (var entry in source.Ordered()) yield return entry.Stored;
         }
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+
+    // entrySet() iteration over an insertion-ordered map: walks the entries
+    // themselves, with no key snapshot and no per-entry lookup. As with the
+    // snapshot iterator it replaces, entries removed before they are reached
+    // are skipped, entries added after the iterator was created are not
+    // visited, and Iterator.remove() removes the last entry returned.
+    private sealed class EntryEnumerator : IEnumerator<JavaMapEntry<K, V>>, JavaRemovableIterator
+    {
+        private readonly JavaLinkedHashMap<K, V> source;
+        private readonly long limit;
+        private Entry? prepared;
+        private long preparedStamp = -1;
+        // The successor captured when Iterator.remove() detached the prepared entry.
+        private Entry? resume;
+        private Entry? returned;
+        private bool exhausted;
+        private bool canRemove;
+
+        internal EntryEnumerator(JavaLinkedHashMap<K, V> source)
+        {
+            this.source = source;
+            limit = source.nextStamp;
+        }
+
+        public JavaMapEntry<K, V> Current { get; private set; } = default!;
+        object IEnumerator.Current => Current;
+
+        public bool MoveNext()
+        {
+            if (exhausted) return false;
+            Entry? entry;
+            if (prepared is null) entry = source.head;
+            else if (!prepared.Removed) entry = prepared.After;
+            else if (resume is not null && !resume.Removed) entry = resume;
+            // The prepared entry was removed behind the iterator's back
+            // (concurrent modification in Java): find its position by stamp.
+            else entry = source.FirstAfter(preparedStamp);
+            resume = null;
+            if (entry is null || entry.Stamp >= limit)
+            {
+                exhausted = true;
+                prepared = null;
+                Current = default!;
+                return false;
+            }
+            prepared = entry;
+            preparedStamp = entry.Stamp;
+            Current = entry;
+            return true;
+        }
+
+        public void MarkReturned()
+        {
+            if (prepared is null)
+                throw new InvalidOperationException("Iterator has no current map entry.");
+            returned = prepared;
+            canRemove = true;
+        }
+
+        public void Remove()
+        {
+            if (!canRemove)
+                throw new InvalidOperationException("Iterator.remove() requires one preceding next().");
+            if (!returned!.Removed)
+            {
+                if (ReferenceEquals(returned, prepared)) resume = returned.After;
+                source.RemoveEntry(returned);
+            }
+            canRemove = false;
+        }
+
+        public void Reset() => throw new NotSupportedException();
+        public void Dispose() { }
     }
 
     private sealed class KeySetView(JavaLinkedHashMap<K, V> source) : ISet<K>
@@ -2570,6 +4152,10 @@ internal static partial class JavaCompat
 
     internal static T[] ArrayCopy<T>(T[] source, int length, Type? _) => CopyOf(source, length);
 
+    // Byte arrays (COSName keys among them) compare as spans, without LINQ.
+    internal static bool ArrayEquals(sbyte[]? left, sbyte[]? right) =>
+        ReferenceEquals(left, right) ||
+        (left is not null && right is not null && left.AsSpan().SequenceEqual(right));
     internal static bool ArrayEquals<T>(T[]? left, T[]? right) =>
         ReferenceEquals(left, right) ||
         (left is not null && right is not null && left.SequenceEqual(right));
@@ -2699,18 +4285,32 @@ internal static partial class JavaCompat
         map.Keys.First();
     internal static K SortedLastKey<K, V>(IDictionary<K, V> map) where K : notnull =>
         map.Keys.Last();
+    // TreeMap and TreeSet range queries return live views that seek their
+    // bounds in O(log n); other maps and sets fall back to a filtered copy.
     internal static IDictionary<K, V> SortedSubMap<K, V>(
         IDictionary<K, V> map, K lower, K upper) where K : notnull =>
-        map.Where(pair => JavaCompare(pair.Key, lower) >= 0
-            && JavaCompare(pair.Key, upper) < 0)
-            .ToDictionary(pair => pair.Key, pair => pair.Value);
+        map is JavaTreeMap<K, V> tree
+            ? tree.SubMap(lower, upper)
+            : map.Where(pair => JavaCompare(pair.Key, lower) >= 0
+                    && JavaCompare(pair.Key, upper) < 0)
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
     internal static ISet<T> SortedHeadSet<T>(ISet<T> values, T upper) =>
-        new SortedSet<T>(values.Where(value => JavaCompare(value, upper) < 0),
-            Comparer<T>.Create(JavaCompare));
+        values switch
+        {
+            JavaSortedSetView<T> view => view.HeadSet(upper),
+            SortedSet<T> sorted => JavaSortedSetView<T>.HeadSet(sorted, upper),
+            _ => new SortedSet<T>(values.Where(value => JavaCompare(value, upper) < 0),
+                Comparer<T>.Create(JavaCompare)),
+        };
     internal static ISet<T> SortedSubSet<T>(ISet<T> values, T lower, T upper) =>
-        new SortedSet<T>(values.Where(value =>
-                JavaCompare(value, lower) >= 0 && JavaCompare(value, upper) < 0),
-            Comparer<T>.Create(JavaCompare));
+        values switch
+        {
+            JavaSortedSetView<T> view => view.SubSet(lower, upper),
+            SortedSet<T> sorted => JavaSortedSetView<T>.SubSet(sorted, lower, upper),
+            _ => new SortedSet<T>(values.Where(value =>
+                    JavaCompare(value, lower) >= 0 && JavaCompare(value, upper) < 0),
+                Comparer<T>.Create(JavaCompare)),
+        };
     internal static T SortedFirst<T>(ISet<T> values) => values.First();
     internal static T SortedLast<T>(ISet<T> values) => values.Last();
     internal static ISet<K> MapKeySet<K, V>(IDictionary<K, V> map) where K : notnull =>
@@ -2882,10 +4482,16 @@ internal static partial class JavaCompat
     // Java generic casts may legally carry null even when the declaration is
     // not annotated. Keep that runtime behavior while presenting the helper's
     // declared result as the Java target type; generated nullable APIs still
-    // surface their own explicit `?` contract.
-    internal static IList<T> CastList<T>(object? values) => values is null
-        ? null!
-        : ((IEnumerable)values).Cast<object?>().Select(value => (T)value!).ToList();
+    // surface their own explicit `?` contract. Like a Java cast, a list that
+    // already has the target element type is returned as is, not copied
+    // (callers such as PDFont.getWidths cast a cached list on every call);
+    // an array, or a list of another element type, is converted.
+    internal static IList<T> CastList<T>(object? values) => values switch
+    {
+        null => null!,
+        IList<T> typed and not Array => typed,
+        _ => ((IEnumerable)values).Cast<object?>().Select(value => (T)value!).ToList(),
+    };
     internal static ICollection<T> CastCollection<T>(object? values)
     {
         if (values is null) return null!;
@@ -3082,13 +4688,502 @@ internal static partial class JavaCompat
             if (Equals(values[index], value)) return index;
         return -1;
     }
+    // Collections.sort and List.sort. ArrayList and Arrays.asList sort their
+    // backing array in place, so a comparator that throws (including the
+    // contract-violation IllegalArgumentException) leaves the list in the
+    // partially merged order Java leaves; other lists are written back only
+    // after a successful sort.
     internal static void SortList<T>(IList<T> values, IComparer<T>? comparer = null)
     {
-        var sorted = values.OrderBy(value => value, comparer ?? Comparer<T>.Create(JavaCompare)).ToArray();
-        for (var index = 0; index < sorted.Length; index++) values[index] = sorted[index];
+        var order = comparer ?? Comparer<T>.Create(JavaCompare);
+        if (values is T[] array)
+        {
+            JavaMergeSort<T>.Sort(array, order);
+            return;
+        }
+        var copy = new T[values.Count];
+        values.CopyTo(copy, 0);
+        try
+        {
+            JavaMergeSort<T>.Sort(copy, order);
+        }
+        catch when (values is List<T>)
+        {
+            for (var index = 0; index < copy.Length; index++) values[index] = copy[index];
+            throw;
+        }
+        for (var index = 0; index < copy.Length; index++) values[index] = copy[index];
     }
     internal static void SortList<T>(IList<T> values, Comparison<T> comparison) =>
         SortList(values, Comparer<T>.Create(comparison));
+
+    // The sorted copy behind Stream.sorted, ordered like Arrays.sort.
+    private static IEnumerable<T> MergeSorted<T>(IEnumerable<T> values, IComparer<T> comparer)
+    {
+        var copy = values.ToArray();
+        JavaMergeSort<T>.Sort(copy, comparer);
+        foreach (var value in copy) yield return value;
+    }
+
+    // Java sorts objects with a stable, adaptive merge sort (TimSort). With a
+    // comparator that is not transitive (PDFBox's TextPositionComparator)
+    // the result depends on exactly which pairs are compared, so this follows
+    // the published algorithm, Tim Peters's description of Python's list sort
+    // (Objects/listsort.txt), with the parameters and checks the JVM shows in
+    // black-box comparison traces: arrays shorter than 32 are one binary
+    // insertion sort, shorter runs are extended to the minimum run length by
+    // binary insertion, the run stack keeps the four-run invariant, merges
+    // trim with galloping searches and start galloping after 7 consecutive
+    // wins, and a merge whose run runs out early throws
+    // IllegalArgumentException ("Comparison method violates its general
+    // contract!"). For comparators that define a total preorder the result
+    // is the unique stable order.
+    private sealed class JavaMergeSort<T>
+    {
+        private const int MinMerge = 32;
+        private const int MinGallop = 7;
+        private readonly T[] a;
+        private readonly IComparer<T> comparer;
+        private readonly int[] runBase = new int[64];
+        private readonly int[] runLength = new int[64];
+        private int stackSize;
+        private int minGallop = MinGallop;
+        private T[] temp = Array.Empty<T>();
+
+        private JavaMergeSort(T[] a, IComparer<T> comparer)
+        {
+            this.a = a;
+            this.comparer = comparer;
+        }
+
+        internal static void Sort(T[] a, IComparer<T> comparer)
+        {
+            var remaining = a.Length;
+            if (remaining < 2) return;
+            var sorter = new JavaMergeSort<T>(a, comparer);
+            if (remaining < MinMerge)
+            {
+                sorter.BinaryInsertionSort(0, remaining, sorter.CountRunAndMakeAscending(0, remaining));
+                return;
+            }
+            var minimumRun = MinimumRunLength(remaining);
+            var low = 0;
+            do
+            {
+                var run = sorter.CountRunAndMakeAscending(low, a.Length);
+                if (run < minimumRun)
+                {
+                    var forced = Math.Min(remaining, minimumRun);
+                    sorter.BinaryInsertionSort(low, low + forced, low + run);
+                    run = forced;
+                }
+                sorter.PushRun(low, run);
+                sorter.MergeCollapse();
+                low += run;
+                remaining -= run;
+            }
+            while (remaining != 0);
+            sorter.MergeForceCollapse();
+        }
+
+        // The top bits of n that are below MinMerge, plus one when any lower
+        // bit is set.
+        private static int MinimumRunLength(int n)
+        {
+            var lowBits = 0;
+            while (n >= MinMerge)
+            {
+                lowBits |= n & 1;
+                n >>= 1;
+            }
+            return n + lowBits;
+        }
+
+        private static ArgumentException ContractViolation() =>
+            new("Comparison method violates its general contract!");
+
+        // a[low..high) where a[low..sorted) is already in order.
+        private void BinaryInsertionSort(int low, int high, int sorted)
+        {
+            if (sorted == low) sorted++;
+            for (; sorted < high; sorted++)
+            {
+                var pivot = a[sorted];
+                var left = low;
+                var right = sorted;
+                while (left < right)
+                {
+                    var middle = (int)((uint)(left + right) >> 1);
+                    if (comparer.Compare(pivot, a[middle]) < 0) right = middle;
+                    else left = middle + 1;
+                }
+                Array.Copy(a, left, a, left + 1, sorted - left);
+                a[left] = pivot;
+            }
+        }
+
+        // The length of the run at low: non-descending, or strictly
+        // descending and then reversed.
+        private int CountRunAndMakeAscending(int low, int high)
+        {
+            var end = low + 1;
+            if (end == high) return 1;
+            if (comparer.Compare(a[end++], a[low]) < 0)
+            {
+                while (end < high && comparer.Compare(a[end], a[end - 1]) < 0) end++;
+                Array.Reverse(a, low, end - low);
+            }
+            else
+            {
+                while (end < high && comparer.Compare(a[end], a[end - 1]) >= 0) end++;
+            }
+            return end - low;
+        }
+
+        private void PushRun(int start, int length)
+        {
+            runBase[stackSize] = start;
+            runLength[stackSize] = length;
+            stackSize++;
+        }
+
+        // With runs ..., W, X, Y, Z on top of the stack, merge until
+        // X > Y + Z, W > X + Y and Y > Z; Y merges with the shorter of X
+        // and Z, preferring Z.
+        private void MergeCollapse()
+        {
+            while (stackSize > 1)
+            {
+                var n = stackSize - 2;
+                if ((n > 0 && runLength[n - 1] <= runLength[n] + runLength[n + 1])
+                    || (n > 1 && runLength[n - 2] <= runLength[n] + runLength[n - 1]))
+                {
+                    if (runLength[n - 1] < runLength[n + 1]) n--;
+                }
+                else if (runLength[n] > runLength[n + 1])
+                {
+                    break;
+                }
+                MergeAt(n);
+            }
+        }
+
+        private void MergeForceCollapse()
+        {
+            while (stackSize > 1)
+            {
+                var n = stackSize - 2;
+                if (n > 0 && runLength[n - 1] < runLength[n + 1]) n--;
+                MergeAt(n);
+            }
+        }
+
+        // Merges stack runs i and i + 1.
+        private void MergeAt(int i)
+        {
+            var baseA = runBase[i];
+            var lengthA = runLength[i];
+            var baseB = runBase[i + 1];
+            var lengthB = runLength[i + 1];
+            runLength[i] = lengthA + lengthB;
+            if (i == stackSize - 3)
+            {
+                runBase[i + 1] = runBase[i + 2];
+                runLength[i + 1] = runLength[i + 2];
+            }
+            stackSize--;
+
+            // Elements of A not greater than B's first are already in place,
+            // and so are elements of B not less than A's last.
+            var skipped = GallopRight(a[baseB], a, baseA, lengthA, 0);
+            baseA += skipped;
+            lengthA -= skipped;
+            if (lengthA == 0) return;
+            lengthB = GallopLeft(a[baseA + lengthA - 1], a, baseB, lengthB, lengthB - 1);
+            if (lengthB == 0) return;
+            if (lengthA <= lengthB) MergeLow(baseA, lengthA, baseB, lengthB);
+            else MergeHigh(baseA, lengthA, baseB, lengthB);
+        }
+
+        // The first index k in run[start..start+length) with key <= run[k],
+        // searched exponentially outwards from start + hint.
+        private int GallopLeft(T key, T[] run, int start, int length, int hint)
+        {
+            var previous = 0;
+            var offset = 1;
+            if (comparer.Compare(key, run[start + hint]) > 0)
+            {
+                var maximum = length - hint;
+                while (offset < maximum && comparer.Compare(key, run[start + hint + offset]) > 0)
+                {
+                    previous = offset;
+                    offset = (offset << 1) + 1;
+                    if (offset <= 0) offset = maximum;
+                }
+                if (offset > maximum) offset = maximum;
+                previous += hint;
+                offset += hint;
+            }
+            else
+            {
+                var maximum = hint + 1;
+                while (offset < maximum && comparer.Compare(key, run[start + hint - offset]) <= 0)
+                {
+                    previous = offset;
+                    offset = (offset << 1) + 1;
+                    if (offset <= 0) offset = maximum;
+                }
+                if (offset > maximum) offset = maximum;
+                var swap = previous;
+                previous = hint - offset;
+                offset = hint - swap;
+            }
+            previous++;
+            while (previous < offset)
+            {
+                var middle = previous + ((offset - previous) >> 1);
+                if (comparer.Compare(key, run[start + middle]) > 0) previous = middle + 1;
+                else offset = middle;
+            }
+            return offset;
+        }
+
+        // The first index k in run[start..start+length) with key < run[k].
+        private int GallopRight(T key, T[] run, int start, int length, int hint)
+        {
+            var previous = 0;
+            var offset = 1;
+            if (comparer.Compare(key, run[start + hint]) < 0)
+            {
+                var maximum = hint + 1;
+                while (offset < maximum && comparer.Compare(key, run[start + hint - offset]) < 0)
+                {
+                    previous = offset;
+                    offset = (offset << 1) + 1;
+                    if (offset <= 0) offset = maximum;
+                }
+                if (offset > maximum) offset = maximum;
+                var swap = previous;
+                previous = hint - offset;
+                offset = hint - swap;
+            }
+            else
+            {
+                var maximum = length - hint;
+                while (offset < maximum && comparer.Compare(key, run[start + hint + offset]) >= 0)
+                {
+                    previous = offset;
+                    offset = (offset << 1) + 1;
+                    if (offset <= 0) offset = maximum;
+                }
+                if (offset > maximum) offset = maximum;
+                previous += hint;
+                offset += hint;
+            }
+            previous++;
+            while (previous < offset)
+            {
+                var middle = previous + ((offset - previous) >> 1);
+                if (comparer.Compare(key, run[start + middle]) < 0) offset = middle;
+                else previous = middle + 1;
+            }
+            return offset;
+        }
+
+        private T[] Temp(int length)
+        {
+            if (temp.Length < length) temp = new T[Math.Max(length, Math.Min(a.Length >> 1, 256))];
+            return temp;
+        }
+
+        // Merges adjacent runs A = a[baseA..) and B = a[baseB..) through a
+        // copy of A, front to back. A's first element is greater than B's
+        // first and A's last is greater than every element of B.
+        private void MergeLow(int baseA, int lengthA, int baseB, int lengthB)
+        {
+            var left = Temp(lengthA);
+            Array.Copy(a, baseA, left, 0, lengthA);
+            var cursorA = 0;
+            var cursorB = baseB;
+            var destination = baseA;
+            a[destination++] = a[cursorB++];
+            if (--lengthB == 0)
+            {
+                Array.Copy(left, cursorA, a, destination, lengthA);
+                return;
+            }
+            if (lengthA == 1)
+            {
+                Array.Copy(a, cursorB, a, destination, lengthB);
+                a[destination + lengthB] = left[cursorA];
+                return;
+            }
+            var gallop = minGallop;
+            while (true)
+            {
+                var winsA = 0;
+                var winsB = 0;
+                do
+                {
+                    if (comparer.Compare(a[cursorB], left[cursorA]) < 0)
+                    {
+                        a[destination++] = a[cursorB++];
+                        winsB++;
+                        winsA = 0;
+                        if (--lengthB == 0) goto Done;
+                    }
+                    else
+                    {
+                        a[destination++] = left[cursorA++];
+                        winsA++;
+                        winsB = 0;
+                        if (--lengthA == 1) goto Done;
+                    }
+                }
+                while ((winsA | winsB) < gallop);
+
+                do
+                {
+                    winsA = GallopRight(a[cursorB], left, cursorA, lengthA, 0);
+                    if (winsA != 0)
+                    {
+                        Array.Copy(left, cursorA, a, destination, winsA);
+                        destination += winsA;
+                        cursorA += winsA;
+                        lengthA -= winsA;
+                        if (lengthA <= 1) goto Done;
+                    }
+                    a[destination++] = a[cursorB++];
+                    if (--lengthB == 0) goto Done;
+                    winsB = GallopLeft(left[cursorA], a, cursorB, lengthB, 0);
+                    if (winsB != 0)
+                    {
+                        Array.Copy(a, cursorB, a, destination, winsB);
+                        destination += winsB;
+                        cursorB += winsB;
+                        lengthB -= winsB;
+                        if (lengthB == 0) goto Done;
+                    }
+                    a[destination++] = left[cursorA++];
+                    if (--lengthA == 1) goto Done;
+                    gallop--;
+                }
+                while (winsA >= MinGallop || winsB >= MinGallop);
+                if (gallop < 0) gallop = 0;
+                gallop += 2;
+            }
+        Done:
+            minGallop = gallop < 1 ? 1 : gallop;
+            if (lengthA == 1)
+            {
+                Array.Copy(a, cursorB, a, destination, lengthB);
+                a[destination + lengthB] = left[cursorA];
+            }
+            else if (lengthA == 0)
+            {
+                throw ContractViolation();
+            }
+            else
+            {
+                Array.Copy(left, cursorA, a, destination, lengthA);
+            }
+        }
+
+        // The mirror image of MergeLow through a copy of B, back to front.
+        private void MergeHigh(int baseA, int lengthA, int baseB, int lengthB)
+        {
+            var right = Temp(lengthB);
+            Array.Copy(a, baseB, right, 0, lengthB);
+            var cursorA = baseA + lengthA - 1;
+            var cursorB = lengthB - 1;
+            var destination = baseB + lengthB - 1;
+            a[destination--] = a[cursorA--];
+            if (--lengthA == 0)
+            {
+                Array.Copy(right, 0, a, destination - (lengthB - 1), lengthB);
+                return;
+            }
+            if (lengthB == 1)
+            {
+                destination -= lengthA;
+                cursorA -= lengthA;
+                Array.Copy(a, cursorA + 1, a, destination + 1, lengthA);
+                a[destination] = right[cursorB];
+                return;
+            }
+            var gallop = minGallop;
+            while (true)
+            {
+                var winsA = 0;
+                var winsB = 0;
+                do
+                {
+                    if (comparer.Compare(right[cursorB], a[cursorA]) < 0)
+                    {
+                        a[destination--] = a[cursorA--];
+                        winsA++;
+                        winsB = 0;
+                        if (--lengthA == 0) goto Done;
+                    }
+                    else
+                    {
+                        a[destination--] = right[cursorB--];
+                        winsB++;
+                        winsA = 0;
+                        if (--lengthB == 1) goto Done;
+                    }
+                }
+                while ((winsA | winsB) < gallop);
+
+                do
+                {
+                    winsA = lengthA - GallopRight(right[cursorB], a, baseA, lengthA, lengthA - 1);
+                    if (winsA != 0)
+                    {
+                        destination -= winsA;
+                        cursorA -= winsA;
+                        lengthA -= winsA;
+                        Array.Copy(a, cursorA + 1, a, destination + 1, winsA);
+                        if (lengthA == 0) goto Done;
+                    }
+                    a[destination--] = right[cursorB--];
+                    if (--lengthB == 1) goto Done;
+                    winsB = lengthB - GallopLeft(a[cursorA], right, 0, lengthB, lengthB - 1);
+                    if (winsB != 0)
+                    {
+                        destination -= winsB;
+                        cursorB -= winsB;
+                        lengthB -= winsB;
+                        Array.Copy(right, cursorB + 1, a, destination + 1, winsB);
+                        if (lengthB <= 1) goto Done;
+                    }
+                    a[destination--] = a[cursorA--];
+                    if (--lengthA == 0) goto Done;
+                    gallop--;
+                }
+                while (winsA >= MinGallop || winsB >= MinGallop);
+                if (gallop < 0) gallop = 0;
+                gallop += 2;
+            }
+        Done:
+            minGallop = gallop < 1 ? 1 : gallop;
+            if (lengthB == 1)
+            {
+                destination -= lengthA;
+                cursorA -= lengthA;
+                Array.Copy(a, cursorA + 1, a, destination + 1, lengthA);
+                a[destination] = right[cursorB];
+            }
+            else if (lengthB == 0)
+            {
+                throw ContractViolation();
+            }
+            else
+            {
+                Array.Copy(right, 0, a, destination - (lengthB - 1), lengthB);
+            }
+        }
+    }
     internal static int ListLastIndexOf<T>(IList<T> values, object? value)
     {
         for (var index = values.Count - 1; index >= 0; index--)
@@ -3144,12 +5239,27 @@ internal static partial class JavaCompat
         if (right is JavaReadOnlyAdapter rightAdapter) right = rightAdapter.MutableSource;
         if (ReferenceEquals(left, right)) return true;
         if (left is null || right is null) return false;
+        if (left is string leftText) return right is string rightText && string.Equals(leftText, rightText);
+        // Java Float/Double.equals compare canonical bits: NaN equals NaN and
+        // 0.0 differs from -0.0, consistent with their hashCode.
+        if (left is double leftDouble)
+            return right is double rightDouble &&
+                   DoubleToLongBits(leftDouble) == DoubleToLongBits(rightDouble);
+        if (left is float leftFloat)
+            return right is float rightFloat &&
+                   FloatToIntBits(leftFloat) == FloatToIntBits(rightFloat);
         if (left is Uri leftUri)
             return right is Uri rightUri && UriEquals(leftUri, rightUri);
-        if (IsJavaList(left)) return IsJavaList(right) && ListsEqual((IEnumerable)left, (IEnumerable)right);
-        if (IsJavaSet(left)) return IsJavaSet(right) && SetsEqual((IEnumerable)left, (IEnumerable)right);
-        if (left is IDictionary leftMap)
-            return right is IDictionary rightMap && MapsEqual(leftMap, rightMap);
+        if (left is IEnumerable leftValues)
+        {
+            var leftKind = CollectionKindOf(left);
+            if ((leftKind & JavaCollectionKind.List) != 0)
+                return IsJavaList(right) && ListsEqual(leftValues, (IEnumerable)right);
+            if ((leftKind & JavaCollectionKind.Set) != 0)
+                return IsJavaSet(right) && SetsEqual(leftValues, (IEnumerable)right);
+            if (left is IDictionary leftMap)
+                return right is IDictionary rightMap && MapsEqual(leftMap, rightMap);
+        }
         return left.Equals(right);
     }
 
@@ -3184,7 +5294,97 @@ internal static partial class JavaCompat
         }
     }
 
-    internal static int ArrayHash(Array? values)
+    // java.util.Arrays.hashCode: one typed overload per Java element type, so
+    // elements are never boxed and each uses the Java wrapper's hashCode.
+    internal static int ArrayHash(sbyte[]? values)
+    {
+        if (values is null) return 0;
+        unchecked
+        {
+            var result = 1;
+            foreach (var value in values) result = 31 * result + value;
+            return result;
+        }
+    }
+
+    internal static int ArrayHash(short[]? values)
+    {
+        if (values is null) return 0;
+        unchecked
+        {
+            var result = 1;
+            foreach (var value in values) result = 31 * result + value;
+            return result;
+        }
+    }
+
+    internal static int ArrayHash(char[]? values)
+    {
+        if (values is null) return 0;
+        unchecked
+        {
+            var result = 1;
+            foreach (var value in values) result = 31 * result + value;
+            return result;
+        }
+    }
+
+    internal static int ArrayHash(int[]? values)
+    {
+        if (values is null) return 0;
+        unchecked
+        {
+            var result = 1;
+            foreach (var value in values) result = 31 * result + value;
+            return result;
+        }
+    }
+
+    internal static int ArrayHash(long[]? values)
+    {
+        if (values is null) return 0;
+        unchecked
+        {
+            var result = 1;
+            foreach (var value in values) result = 31 * result + (int)(value ^ (long)((ulong)value >> 32));
+            return result;
+        }
+    }
+
+    internal static int ArrayHash(float[]? values)
+    {
+        if (values is null) return 0;
+        unchecked
+        {
+            var result = 1;
+            foreach (var value in values) result = 31 * result + FloatToIntBits(value);
+            return result;
+        }
+    }
+
+    internal static int ArrayHash(double[]? values)
+    {
+        if (values is null) return 0;
+        unchecked
+        {
+            var result = 1;
+            foreach (var value in values) result = 31 * result + DoubleHashCode(value);
+            return result;
+        }
+    }
+
+    internal static int ArrayHash(bool[]? values)
+    {
+        if (values is null) return 0;
+        unchecked
+        {
+            var result = 1;
+            foreach (var value in values) result = 31 * result + (value ? 1231 : 1237);
+            return result;
+        }
+    }
+
+    internal static int ArrayHash(object?[]? values)
     {
         if (values is null) return 0;
         unchecked
@@ -3195,17 +5395,89 @@ internal static partial class JavaCompat
         }
     }
 
+    internal static int ArrayHash(Array? values) => values switch
+    {
+        null => 0,
+        sbyte[] typed => ArrayHash(typed),
+        short[] typed => ArrayHash(typed),
+        char[] typed => ArrayHash(typed),
+        int[] typed => ArrayHash(typed),
+        long[] typed => ArrayHash(typed),
+        float[] typed => ArrayHash(typed),
+        double[] typed => ArrayHash(typed),
+        bool[] typed => ArrayHash(typed),
+        object?[] typed => ArrayHash(typed),
+        _ => ArrayHashOfOtherArray(values),
+    };
+
+    private static int ArrayHashOfOtherArray(Array values)
+    {
+        unchecked
+        {
+            var result = 1;
+            foreach (var value in values) result = 31 * result + JavaHashCode(value);
+            return result;
+        }
+    }
+
+    [Flags]
+    private enum JavaCollectionKind : byte
+    {
+        None = 0,
+        List = 1,
+        Set = 2,
+    }
+
+    private sealed class JavaCollectionKindEntry(JavaCollectionKind kind)
+    {
+        internal JavaCollectionKind Kind { get; } = kind;
+    }
+
+    // Java list/set classification depends only on the runtime type, so the
+    // interface scan runs once per type instead of once per comparison. Types
+    // are weak keys, so a collectible type is not rooted by this cache; misses
+    // are serialized so a type is classified at most once.
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Type, JavaCollectionKindEntry>
+        CollectionKinds = new();
+
+    private static JavaCollectionKind CollectionKindOf(object value)
+    {
+        if (value is not IEnumerable) return JavaCollectionKind.None;
+        var type = value.GetType();
+        if (CollectionKinds.TryGetValue(type, out var entry)) return entry.Kind;
+        lock (CollectionKinds)
+        {
+            if (!CollectionKinds.TryGetValue(type, out entry))
+            {
+                entry = new JavaCollectionKindEntry(ClassifyCollection(type));
+                CollectionKinds.Add(type, entry);
+            }
+            return entry.Kind;
+        }
+    }
+
+    private static JavaCollectionKind ClassifyCollection(Type type)
+    {
+        var interfaces = type.GetInterfaces();
+        var kind = JavaCollectionKind.None;
+        if (!type.IsArray &&
+            (typeof(IList).IsAssignableFrom(type) || interfaces.Any(contract =>
+                contract.IsGenericType &&
+                (contract.GetGenericTypeDefinition() == typeof(IList<>) ||
+                 contract.GetGenericTypeDefinition() == typeof(IReadOnlyList<>)))))
+            kind |= JavaCollectionKind.List;
+        if (interfaces.Any(contract =>
+                contract.IsGenericType &&
+                contract.GetGenericTypeDefinition() == typeof(ISet<>)))
+            kind |= JavaCollectionKind.Set;
+        return kind;
+    }
+
     private static bool IsJavaList(object value) =>
-        value is not Array && value is IEnumerable &&
-        (value is IList || value.GetType().GetInterfaces().Any(type =>
-            type.IsGenericType &&
-            (type.GetGenericTypeDefinition() == typeof(IList<>) ||
-             type.GetGenericTypeDefinition() == typeof(IReadOnlyList<>))));
+        (CollectionKindOf(value) & JavaCollectionKind.List) != 0;
 
     private static bool IsJavaSet(object value) =>
-        value is IEnumerable && value.GetType().GetInterfaces().Any(type =>
-            type.IsGenericType &&
-            type.GetGenericTypeDefinition() == typeof(ISet<>));
+        (CollectionKindOf(value) & JavaCollectionKind.Set) != 0;
 
     internal static bool IsSet(object? value) => value is not null && IsJavaSet(value);
 
@@ -3252,6 +5524,18 @@ internal static partial class JavaCompat
         if (value is JavaReadOnlyAdapter adapter) value = adapter.MutableSource;
         if (value is null) return 0;
         if (value is string text) return StringHashCode(text);
+        // Boxed Java wrappers: .NET GetHashCode differs from Character,
+        // Boolean, Float and Double.hashCode (and, on .NET Framework, from
+        // Byte and Short.hashCode). int and long already match.
+        switch (value)
+        {
+            case char character: return character;
+            case bool flag: return flag ? 1231 : 1237;
+            case double number: return DoubleHashCode(number);
+            case float number: return FloatToIntBits(number);
+            case sbyte number: return number;
+            case short number: return number;
+        }
         if (value is Uri uri)
         {
             var schemeHash = StringComparer.OrdinalIgnoreCase.GetHashCode(UriScheme(uri) ?? "");
@@ -3282,20 +5566,22 @@ internal static partial class JavaCompat
                 result += JavaHashCode(entry.Key) ^ JavaHashCode(entry.Value);
             return result;
         }
-        if (IsJavaSet(value))
+        if (value is not IEnumerable values) return value.GetHashCode();
+        var kind = CollectionKindOf(value);
+        if ((kind & JavaCollectionKind.Set) != 0)
         {
             unchecked
             {
                 var result = 0;
-                foreach (var element in (IEnumerable)value) result += JavaHashCode(element);
+                foreach (var element in values) result += JavaHashCode(element);
                 return result;
             }
         }
-        if (!IsJavaList(value)) return value.GetHashCode();
+        if ((kind & JavaCollectionKind.List) == 0) return value.GetHashCode();
         unchecked
         {
             var result = 1;
-            foreach (var element in (IEnumerable)value) result = 31 * result + JavaHashCode(element);
+            foreach (var element in values) result = 31 * result + JavaHashCode(element);
             return result;
         }
     }
@@ -3381,10 +5667,10 @@ internal static partial class JavaCompat
     internal static long Sum(IEnumerable<long> values) => values.Sum();
     internal static IEnumerable<T> Filter<T>(IEnumerable<T> values, Func<T, bool> predicate) => values.Where(predicate);
     internal static IEnumerable<T> Sorted<T>(IEnumerable<T> values) =>
-        values.OrderBy(value => value, Comparer<T>.Create(JavaCompare));
-    internal static IEnumerable<T> Sorted<T>(IEnumerable<T> values, IComparer<T> comparer) => values.OrderBy(value => value, comparer);
+        MergeSorted(values, Comparer<T>.Create(JavaCompare));
+    internal static IEnumerable<T> Sorted<T>(IEnumerable<T> values, IComparer<T> comparer) => MergeSorted(values, comparer);
     internal static IEnumerable<T> Sorted<T>(IEnumerable<T> values, Comparison<T> comparison) =>
-        values.OrderBy(value => value, Comparer<T>.Create(comparison));
+        MergeSorted(values, Comparer<T>.Create(comparison));
     internal static IComparer<T> NaturalOrder<T>() =>
         Comparer<T>.Create(JavaCompare);
     internal static Comparison<T> ToComparison<T>(IComparer<T> comparer) =>
@@ -3594,11 +5880,43 @@ internal static partial class JavaCompat
         IEnumerable<KeyValuePair<K, V>> values) where K : notnull =>
         values.ToDictionary(entry => entry.Key, entry => entry.Value);
 
-    internal static byte[] ToUnsignedBytes(sbyte[] values) =>
-        values.Select(value => unchecked((byte)value)).ToArray();
+    // sbyte[] <-> byte[] conversions are one Buffer.BlockCopy of the
+    // requested range. Both element types are one byte wide, so the copy keeps
+    // every bit pattern, and the result is a real array of the target type.
+    internal static byte[] ToUnsignedBytes(sbyte[] values)
+    {
+        ArgumentNullException.ThrowIfNull(values);
+        return ToUnsignedBytes(values, 0, values.Length);
+    }
+    internal static byte[] ToUnsignedBytes(sbyte[] values, int offset, int length)
+    {
+        ArgumentNullException.ThrowIfNull(values);
+        RequireByteRange(values.Length, offset, length);
+        var result = new byte[length];
+        Buffer.BlockCopy(values, offset, result, 0, length);
+        return result;
+    }
     internal static byte[] ToUnsignedBytes(byte[] values) => values;
-    internal static sbyte[] ToSignedBytes(byte[] values) =>
-        values.Select(value => unchecked((sbyte)value)).ToArray();
+    internal static sbyte[] ToSignedBytes(byte[] values)
+    {
+        ArgumentNullException.ThrowIfNull(values);
+        return ToSignedBytes(values, 0, values.Length);
+    }
+    internal static sbyte[] ToSignedBytes(byte[] values, int offset, int length)
+    {
+        ArgumentNullException.ThrowIfNull(values);
+        RequireByteRange(values.Length, offset, length);
+        var result = new sbyte[length];
+        Buffer.BlockCopy(values, offset, result, 0, length);
+        return result;
+    }
+    internal static void RequireByteRange(int arrayLength, int offset, int length)
+    {
+        if (offset < 0 || length < 0 || offset > arrayLength - length)
+            throw new ArgumentOutOfRangeException(
+                nameof(offset),
+                $"Range [{offset}, {offset} + {length}) is outside an array of length {arrayLength}.");
+    }
     internal static void ForEach<T>(IEnumerable<T> values, Action<T> action)
     {
         foreach (var value in values) action(value);
@@ -3707,13 +6025,13 @@ internal static partial class JavaCompat
         IEnumerable<T> values, Func<T, bool> predicate) =>
         new(values.Where(predicate));
     internal static JavaStream<T> StreamSorted<T>(IEnumerable<T> values) =>
-        new(values.OrderBy(value => value, Comparer<T>.Create(JavaCompare)));
+        new(MergeSorted(values, Comparer<T>.Create(JavaCompare)));
     internal static JavaStream<T> StreamSorted<T>(
         IEnumerable<T> values, IComparer<T> comparer) =>
-        new(values.OrderBy(value => value, comparer));
+        new(MergeSorted(values, comparer));
     internal static JavaStream<T> StreamSorted<T>(
         IEnumerable<T> values, Comparison<T> comparison) =>
-        new(values.OrderBy(value => value, Comparer<T>.Create(comparison)));
+        new(MergeSorted(values, Comparer<T>.Create(comparison)));
 
     internal static bool EconomicMapEquals<K, V>(
         IJavaEconomicMap<K, V> left,

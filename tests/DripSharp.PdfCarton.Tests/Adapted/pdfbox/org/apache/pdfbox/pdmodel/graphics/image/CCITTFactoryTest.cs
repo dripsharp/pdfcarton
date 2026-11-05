@@ -30,7 +30,7 @@ public class CCITTFactoryTest {
           287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "tiff"),
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
-        global::SkiaSharp.SKBitmap bim3
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim3
           = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           tiffG3Path)));
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(bim3,
@@ -65,7 +65,7 @@ public class CCITTFactoryTest {
           287, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "tiff"),
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
-        global::SkiaSharp.SKBitmap bim4
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim4
           = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           tiffG3Path)));
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(bim4,
@@ -147,10 +147,13 @@ public class CCITTFactoryTest {
               if ((ximage == default!)) {
                 break;
               }
-              global::SkiaSharp.SKBitmap bim = imageReader.Read(pdfPageNum, null);
+              global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
+                = imageReader.Read(pdfPageNum, null);
               global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.Validate(ximage, 1,
-                bim.Width, bim.Height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
-                "tiff"), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
+                global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim),
+                global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim),
+                global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "tiff"),
+                global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
                 global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
               global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(bim,
                 ximage.GetOpaqueImage((global::SkiaSharp.SKRectI)default!, 1));
@@ -225,7 +228,7 @@ public class CCITTFactoryTest {
         = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
       global::System.Exception __dripsharpPrimary_171_25_0 = null!;
       try {
-        global::SkiaSharp.SKBitmap bim
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
           = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.PdfCarton.Tests.Support.TestFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           tiffG4Path)));
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject ximage3
@@ -290,14 +293,16 @@ public class CCITTFactoryTest {
         = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
       global::System.Exception __dripsharpPrimary_197_25_0 = null!;
       try {
-        global::SkiaSharp.SKBitmap bim
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(343, 287,
           global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_BINARY);
-        global::DripSharp.Testing.JavaAssertions.NotEqual(unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(bim.Width,
-          8) * 8)), bim.Width, null);
+        global::DripSharp.Testing.JavaAssertions.NotEqual(unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim),
+          8) * 8)), global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim), null);
         int col = 0;
-        for (int x = 0; (x < bim.Width); ++x) {
-          for (int y = 0; (y < bim.Height); ++y) {
+        for (int x = 0; (x < global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim));
+          ++x) {
+          for (int y = 0; (y < global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim));
+            ++y) {
             global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(bim, x, y, (col & 16777215));
             col = ~col;
           }
@@ -476,7 +481,7 @@ public class CCITTFactoryTest {
           2232, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "tiff"),
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
-        global::SkiaSharp.SKBitmap bim
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
           = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(ba));
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(bim,
           ximg.GetOpaqueImage((global::SkiaSharp.SKRectI)default!, 1));

@@ -42,11 +42,11 @@ public sealed class PDJPXColorSpace
     return this.awtColorSpace.ToRgb(value);
   }
 
-  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
     return this.ToRGBImageAWT(raster, this.awtColorSpace);
   }
 
-  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
     return this.ToRawImage(raster, this.awtColorSpace);
   }
 

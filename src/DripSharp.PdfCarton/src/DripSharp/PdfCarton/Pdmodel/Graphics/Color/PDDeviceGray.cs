@@ -39,14 +39,14 @@ public sealed class PDDeviceGray
     return new float[] { value[0], value[0], value[0] };
   }
 
-  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
     return default!;
   }
 
-  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
     int width = raster.Width;
     int height = raster.Height;
-    global::SkiaSharp.SKBitmap image
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
     global::DripSharp.Runtime.JavaRaster dstRaster

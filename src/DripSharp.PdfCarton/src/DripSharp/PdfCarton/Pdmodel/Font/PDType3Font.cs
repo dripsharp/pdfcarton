@@ -67,7 +67,7 @@ public class PDType3Font : global::DripSharp.PdfCarton.Pdmodel.Font.PDSimpleFont
     return false;
   }
 
-  public override global::SkiaSharp.SKPath GetPath(string name) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(string name) {
     throw new global::System.NotSupportedException("not supported for Type 3 fonts");
   }
 

@@ -11,10 +11,10 @@ namespace DripSharp.PdfCarton.Pdmodel.Graphics.State;
 public class PDGraphicsState : global::DripSharp.Runtime.JavaCloneable {
   private bool isClippingPathDirty = default;
 
-  private global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> clippingPaths
-    = new global::System.Collections.Generic.List<global::SkiaSharp.SKPath>(1);
+  private global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D> clippingPaths
+    = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D>(1);
 
-  private global::DripSharp.Runtime.JavaArea clippingPathCache = default!;
+  private global::DripSharp.PdfCarton.Runtime.Fonts.JavaArea clippingPathCache = default!;
 
   private global::DripSharp.PdfCarton.Util.Matrix currentTransformationMatrix
     = new global::DripSharp.PdfCarton.Util.Matrix();
@@ -79,7 +79,7 @@ public class PDGraphicsState : global::DripSharp.Runtime.JavaCloneable {
 
   public PDGraphicsState(global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle page) {
     global::DripSharp.Runtime.JavaCompat.Add(this.clippingPaths,
-      global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(page.ToGeneralPath()));
+      global::DripSharp.Runtime.PdfCartonFontCompat.CreateDoublePath(page.ToGeneralPath()));
   }
 
   public virtual global::DripSharp.PdfCarton.Util.Matrix GetCurrentTransformationMatrix() {
@@ -291,33 +291,34 @@ public class PDGraphicsState : global::DripSharp.Runtime.JavaCloneable {
     this.nonStrokingColorSpace = colorSpace;
   }
 
-  public virtual void IntersectClippingPath(global::SkiaSharp.SKPath path) {
-    this.intersectClippingPath(global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(path),
+  public virtual void IntersectClippingPath(global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path) {
+    this.intersectClippingPath(global::DripSharp.Runtime.PdfCartonFontCompat.CreateDoublePath(path),
       true);
   }
 
-  private void intersectClippingPath(global::SkiaSharp.SKPath path, bool clonePath) {
+  private void intersectClippingPath(global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path,
+    bool clonePath) {
     if (!(this.isClippingPathDirty)) {
       this.clippingPaths
-        = new global::System.Collections.Generic.List<global::SkiaSharp.SKPath>(this.clippingPaths);
+        = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D>(this.clippingPaths);
       this.isClippingPathDirty = true;
     }
     global::DripSharp.Runtime.JavaCompat.Add(this.clippingPaths, (clonePath
-      ? (global::SkiaSharp.SKPath)((global::SkiaSharp.SKPath)(new global::SkiaSharp.SKPath(path)!))
+      ? (global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D)((global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D)(global::DripSharp.Runtime.PdfCartonFontCompat.ClonePath(path)!))
       : path));
     this.clippingPathCache = default!;
   }
 
-  public virtual void IntersectClippingPath(global::DripSharp.Runtime.JavaArea area) {
-    this.intersectClippingPath(global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(area),
+  public virtual void IntersectClippingPath(global::DripSharp.PdfCarton.Runtime.Fonts.JavaArea area) {
+    this.intersectClippingPath(global::DripSharp.Runtime.PdfCartonFontCompat.CreateDoublePath(area),
       false);
   }
 
-  public virtual global::DripSharp.Runtime.JavaArea GetCurrentClippingPath() {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaArea GetCurrentClippingPath() {
     if ((global::DripSharp.Runtime.JavaCompat.CollectionCount(this.clippingPaths) == 1)) {
       if ((this.clippingPathCache == default!)) {
         this.clippingPathCache
-          = new global::DripSharp.Runtime.JavaArea(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths,
+          = global::DripSharp.Runtime.PdfCartonFontCompat.CreateArea(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths,
           0));
       }
       return this.clippingPathCache;
@@ -332,25 +333,26 @@ public class PDGraphicsState : global::DripSharp.Runtime.JavaCloneable {
         global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths,
         i__633_18)), ref boundingBox);
     }
-    global::DripSharp.Runtime.JavaArea clippingArea
-      = new global::DripSharp.Runtime.JavaArea(boundingBox);
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaArea clippingArea
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateArea(boundingBox);
     for (int i__640_18 = 0;
       (i__640_18 < global::DripSharp.Runtime.JavaCompat.CollectionCount(this.clippingPaths));
       i__640_18++) {
-      global::DripSharp.Runtime.JavaArea nextArea
-        = new global::DripSharp.Runtime.JavaArea(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths,
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaArea nextArea
+        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateArea(global::DripSharp.Runtime.JavaCompat.ListGet(this.clippingPaths,
         i__640_18));
       clippingArea.Intersect(nextArea);
       nextArea.Reset();
     }
     this.clippingPathCache = clippingArea;
-    this.clippingPaths = new global::System.Collections.Generic.List<global::SkiaSharp.SKPath>(1);
+    this.clippingPaths
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D>(1);
     global::DripSharp.Runtime.JavaCompat.Add(this.clippingPaths,
-      global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath(clippingArea));
+      global::DripSharp.Runtime.PdfCartonFontCompat.CreateDoublePath(clippingArea));
     return clippingArea;
   }
 
-  public virtual global::System.Collections.Generic.IList<global::SkiaSharp.SKPath> GetCurrentClippingPaths() {
+  public virtual global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D> GetCurrentClippingPaths() {
     return this.clippingPaths;
   }
 

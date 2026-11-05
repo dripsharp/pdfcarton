@@ -35,7 +35,7 @@ public class TestPDFPrintable {
         global::DripSharp.PdfCarton.Printing.PDFPrintable printable
           = new global::DripSharp.PdfCarton.Printing.PDFPrintable(doc,
           global::DripSharp.PdfCarton.Printing.Scaling.ActualSize, true, dpi);
-        global::SkiaSharp.SKBitmap output
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage output
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_WIDTH,
           global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_HEIGHT,
           global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
@@ -92,8 +92,8 @@ public class TestPDFPrintable {
     if ((clip == default!)) {
       return default!;
     }
-    return global::DripSharp.Runtime.PdfCartonFontCompat.ShapeBounds(global::DripSharp.Runtime.PdfCartonFontCompat.CreateTransformedShape(g2d.GetTransform(),
-      clip));
+    return global::DripSharp.Runtime.PdfCartonFontCompat.TransformedShapeBounds(g2d.GetTransform(),
+      clip);
   }
 
   internal virtual void testPrintReturnsNoSuchPageForInvalidIndex() { {
@@ -104,7 +104,7 @@ public class TestPDFPrintable {
         doc.AddPage(new global::DripSharp.PdfCarton.Pdmodel.PDPage());
         global::DripSharp.PdfCarton.Printing.PDFPrintable printable
           = new global::DripSharp.PdfCarton.Printing.PDFPrintable(doc);
-        global::SkiaSharp.SKBitmap output
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage output
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_WIDTH,
           global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_HEIGHT,
           global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
@@ -141,7 +141,7 @@ public class TestPDFPrintable {
         global::DripSharp.PdfCarton.Printing.PDFPrintable printable
           = new global::DripSharp.PdfCarton.Printing.PDFPrintable(doc,
           global::DripSharp.PdfCarton.Printing.Scaling.ActualSize, true, dpi);
-        global::SkiaSharp.SKBitmap output
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage output
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_WIDTH,
           global::DripSharp.PdfCarton.Printing.TestPDFPrintable.IMAGE_HEIGHT,
           global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
@@ -167,9 +167,9 @@ public class TestPDFPrintable {
     }
   }
 
-  private static void assertBorderPixelIsGray(global::SkiaSharp.SKBitmap image) {
+  private static void assertBorderPixelIsGray(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image) {
     bool foundGray = false;
-    int width = image.Width;
+    int width = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image);
     for (int x = 0; (x < width); x++) {
       if (global::DripSharp.PdfCarton.Printing.TestPDFPrintable.isGray(global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(image,
         x, 0))) {
@@ -178,7 +178,7 @@ public class TestPDFPrintable {
       }
     }
     if (!foundGray) {
-      int height = image.Height;
+      int height = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image);
       for (int y = 0; (y < height); y++) {
         if (global::DripSharp.PdfCarton.Printing.TestPDFPrintable.isGray(global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(image,
           0, y))) {

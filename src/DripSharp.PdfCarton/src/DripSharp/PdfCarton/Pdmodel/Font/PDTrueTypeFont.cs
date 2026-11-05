@@ -314,10 +314,11 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     return this.__field_isEmbedded;
   }
 
-  public virtual global::SkiaSharp.SKPath GetPath(int code) {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(int code) {
     if (((this.otf != default!) && this.otf.IsPostScript())) {
-      global::SkiaSharp.SKPath path = this.getPathFromOutlines(code);
-      return ((path == default!) ? new global::SkiaSharp.SKPath() : path);
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path = this.getPathFromOutlines(code);
+      return ((path == default!) ? global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath()
+        : path);
     }
     int gid = this.CodeToGID(code);
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphTable glyphTable = this.ttf.GetGlyph();
@@ -327,13 +328,13 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     }
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData glyph = glyphTable.GetGlyph(gid);
     if ((glyph == default!)) {
-      return new global::SkiaSharp.SKPath();
+      return global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
     } else {
       return glyph.GetPath();
     }
   }
 
-  public override global::SkiaSharp.SKPath GetPath(string name) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(string name) {
     int gid = this.ttf.NameToGID(name);
     if ((gid == 0)) {
       try {
@@ -346,18 +347,18 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
       }
     }
     if ((gid == 0)) {
-      return new global::SkiaSharp.SKPath();
+      return global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
     }
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData glyph = this.ttf.GetGlyph().GetGlyph(gid);
     if ((glyph != default!)) {
       return glyph.GetPath();
     } else {
-      return new global::SkiaSharp.SKPath();
+      return global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
     }
   }
 
-  public virtual global::SkiaSharp.SKPath GetNormalizedPath(int code) {
-    global::SkiaSharp.SKPath path = default!;
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetNormalizedPath(int code) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path = default!;
     if (((this.otf != default!) && this.otf.IsPostScript())) {
       path = this.getPathFromOutlines(code);
     } else {
@@ -368,7 +369,7 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
       }
     }
     if ((path! == default!)) {
-      return new global::SkiaSharp.SKPath();
+      return global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
     }
     if ((this.ttf.GetUnitsPerEm() != 1000)) {
       float scale = ((float)1000.0F / this.ttf.GetUnitsPerEm());
@@ -378,7 +379,7 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     return path!;
   }
 
-  private global::SkiaSharp.SKPath getPathFromOutlines(int code) {
+  private global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D getPathFromOutlines(int code) {
     global::DripSharp.PdfCarton.Fonts.Cff.CFFFont cffFont = this.otf.GetCFF().GetFont();
     string name = this.GetEncoding().GetName(code);
     int sid = cffFont.GetCharset().GetSID(name);
@@ -386,7 +387,7 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     global::DripSharp.PdfCarton.Fonts.Cff.Type2CharString type2CharString
       = cffFont.GetType2CharString(gid);
     return ((type2CharString != default!) ? type2CharString.GetPath()
-      : (global::SkiaSharp.SKPath)(default!));
+      : (global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D)(default!));
   }
 
   public override bool HasGlyph(string name) {

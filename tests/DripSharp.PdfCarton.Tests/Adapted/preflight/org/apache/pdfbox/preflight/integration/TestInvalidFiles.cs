@@ -76,7 +76,7 @@ public class TestInvalidFiles {
         = global::DripSharp.Runtime.JavaCompat.OpenFileInput(global::DripSharp.PdfCarton.Tests.Support.TestPath("preflight",
         expectedPath));
       props.Load(expected);
-      global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(expected);
+      global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(expected);
     }
     global::System.Collections.Generic.IList<object[]> data
       = new global::System.Collections.Generic.List<object[]>();

@@ -510,7 +510,7 @@ internal class CloudyBorder {
     global::DripSharp.Runtime.JavaEllipse ellipse = new global::DripSharp.Runtime.JavaEllipse(left,
       bottom, (right - left), (top - bottom));
     double flatness = 0.5D;
-    global::DripSharp.Runtime.JavaPathIterator iterator
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPathIterator iterator
       = ellipse.GetPathIterator((global::SkiaSharp.SKMatrix)default!, flatness);
     double[] coords = new double[6];
     global::System.Collections.Generic.List<global::DripSharp.Runtime.JavaPoint2D> points
@@ -518,9 +518,9 @@ internal class CloudyBorder {
     while (!(iterator.IsDone())) {
       switch (iterator.CurrentSegment(coords)) {
         case var __case_718_22_0 when __case_718_22_0
-          == global::DripSharp.Runtime.JavaPathIterator.SEG_MOVETO:
+          == global::DripSharp.PdfCarton.Runtime.Fonts.JavaPathIterator.SEG_MOVETO:
         case var __case_719_22_0 when __case_719_22_0
-          == global::DripSharp.Runtime.JavaPathIterator.SEG_LINETO:
+          == global::DripSharp.PdfCarton.Runtime.Fonts.JavaPathIterator.SEG_LINETO:
         global::DripSharp.Runtime.JavaCompat.Add(points,
           new global::DripSharp.Runtime.JavaPoint2D(coords[0], coords[1]));
         break;

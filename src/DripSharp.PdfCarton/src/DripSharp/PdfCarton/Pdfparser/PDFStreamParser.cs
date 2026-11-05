@@ -56,12 +56,14 @@ public class PDFStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser 
       this.Dispose();
       return default!;
     }
-    char c = unchecked((char)(unchecked((char)(base.Source.Peek()))));
+    char c
+      = unchecked((char)(unchecked((char)(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek()))));
     switch (c) {
       case var __case_118_18_0 when __case_118_18_0 == '<':
         base.Source.Read();
-        c = unchecked((char)(unchecked((char)(base.Source.Peek()))));
-        base.Source.Rewind(1);
+        c
+          = unchecked((char)(unchecked((char)(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek()))));
+        ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Rewind(1);
         if (((int)c == (int)'<')) {
           try {
             return this.ParseCOSDictionary(true);
@@ -124,13 +126,14 @@ public class PDFStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser 
         global::System.Text.StringBuilder buf = new global::System.Text.StringBuilder();
         buf.Append(c);
         base.Source.Read();
-        if ((((int)c == (int)'-') && (base.Source.Peek() == (int)c))) {
+        if ((((int)c == (int)'-')
+          && (((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek() == (int)c))) {
           base.Source.Read();
         }
         bool dotNotRead = ((int)c != (int)'.');
         while (((global::DripSharp.Runtime.JavaCompat.IsDigit((c
-          = unchecked((char)(unchecked((char)(base.Source.Peek())))))) || (dotNotRead && ((int)c
-          == (int)'.'))) || ((int)c == (int)'-'))) {
+          = unchecked((char)(unchecked((char)(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek()))))))
+          || (dotNotRead && ((int)c == (int)'.'))) || ((int)c == (int)'-'))) {
           if (((int)c != (int)'-')) {
             buf.Append(c);
           }
@@ -289,7 +292,7 @@ public class PDFStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser 
           noBinData = false;
         }
       }
-      base.Source.Rewind(readBytes);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Rewind(readBytes);
     }
     if (!noBinData) {
       global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdfparser.PDFStreamParser.LOG,
@@ -302,17 +305,17 @@ public class PDFStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser 
   private string readOperator() {
     this.SkipSpaces();
     global::System.Text.StringBuilder buffer = new global::System.Text.StringBuilder(4);
-    int nextChar = base.Source.Peek();
+    int nextChar = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek();
     while (((((((((nextChar != unchecked(-1))
       && !(global::DripSharp.PdfCarton.Pdfparser.BaseParser.IsWhitespace(nextChar))) && (nextChar
       != (int)'[')) && (nextChar != (int)'<')) && (nextChar != (int)'(')) && (nextChar != (int)'/'))
       && (nextChar != (int)'%')) && ((nextChar < (int)'0') || (nextChar > (int)'9')))) {
       char currentChar = unchecked((char)(unchecked((char)(base.Source.Read()))));
-      nextChar = base.Source.Peek();
+      nextChar = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek();
       buffer.Append(currentChar);
       if ((((int)currentChar == (int)'d') && ((nextChar == (int)'0') || (nextChar == (int)'1')))) {
         buffer.Append(unchecked((char)(unchecked((char)(base.Source.Read())))));
-        nextChar = base.Source.Peek();
+        nextChar = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek();
       }
     }
     return buffer.ToString();
@@ -323,7 +326,7 @@ public class PDFStreamParser : global::DripSharp.PdfCarton.Pdfparser.BaseParser 
   }
 
   private bool hasNextSpaceOrReturn() {
-    return this.isSpaceOrReturn(base.Source.Peek());
+    return this.isSpaceOrReturn(((global::DripSharp.PdfCarton.IO.RandomAccessRead)(base.Source)).Peek());
   }
 
   public virtual void Dispose() {

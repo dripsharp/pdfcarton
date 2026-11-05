@@ -251,7 +251,7 @@ public abstract class PDSimpleFont : global::DripSharp.PdfCarton.Pdmodel.Font.PD
       != 0)));
   }
 
-  public abstract global::SkiaSharp.SKPath GetPath(string name);
+  public abstract global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(string name);
 
   public abstract bool HasGlyph(string name);
 

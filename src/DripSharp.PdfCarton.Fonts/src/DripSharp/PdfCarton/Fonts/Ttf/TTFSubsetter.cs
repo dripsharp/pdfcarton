@@ -40,8 +40,7 @@ public sealed class TTFSubsetter {
     global::System.Collections.Generic.IList<string> tables) {
     this.ttf = ttf;
     this.keepTables = tables;
-    this.uniToGID = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewSortedDictionary<int,
-      int>();
+    this.uniToGID = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaTreeMap<int, int>();
     this.glyphIds = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewSortedSet<int>();
     this.invisibleGlyphIds = new global::System.Collections.Generic.HashSet<int>();
     this.unicodeCmap = ttf.GetUnicodeCmapLookup();
@@ -820,8 +819,7 @@ public sealed class TTFSubsetter {
         sbyte[] hmtx = this.buildHmtxTable();
         sbyte[] post = this.buildPostTable();
         global::System.Collections.Generic.IDictionary<string, sbyte[]> tables
-          = global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.NewSortedDictionary<string,
-          sbyte[]>();
+          = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaTreeMap<string, sbyte[]>();
         if ((os2 != default!)) {
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.MapPut(tables,
             global::DripSharp.PdfCarton.Fonts.Ttf.OS2WindowsMetricsTable.Tag, os2);

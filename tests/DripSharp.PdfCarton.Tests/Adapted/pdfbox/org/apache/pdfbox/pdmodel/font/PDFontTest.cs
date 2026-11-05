@@ -598,12 +598,12 @@ public class PDFontTest {
         global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont tr
           = global::DripSharp.PdfCarton.Pdmodel.Font.PDTrueTypeFont.Load(doc, ttf,
           global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.WinAnsiEncoding.Instance);
-        global::SkiaSharp.SKPath path1
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path1
           = tr.GetPath(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "oslash"));
-        global::SkiaSharp.SKPath path2 = tr.GetPath(248);
+        global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path2 = tr.GetPath(248);
         global::DripSharp.Testing.JavaAssertions.False(global::DripSharp.Runtime.PdfCartonFontCompat.PathIterator(path2,
           (global::SkiaSharp.SKMatrix)default!).IsDone(), null);
-        global::DripSharp.Testing.JavaAssertions.True((new global::DripSharp.Runtime.JavaArea(path1)).Equals(new global::DripSharp.Runtime.JavaArea(path2)),
+        global::DripSharp.Testing.JavaAssertions.True((global::DripSharp.Runtime.PdfCartonFontCompat.CreateArea(path1)).Equals(global::DripSharp.Runtime.PdfCartonFontCompat.CreateArea(path2)),
           null);
       } catch (global::System.Exception __dripsharpCaught_459_25_0) {
         __dripsharpPrimary_459_25_0 = __dripsharpCaught_459_25_0;

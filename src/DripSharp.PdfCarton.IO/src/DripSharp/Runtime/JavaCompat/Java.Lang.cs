@@ -98,6 +98,17 @@ abstract class JavaReference<T> where T : class
     public abstract void Clear();
 }
 
+// Java keeps a softly reachable referent until the collector needs the memory,
+// whereas a .NET WeakReference is cleared by the next collection of any
+// generation, which made every translated soft cache (FontCache,
+// DefaultResourceCache, PDResources, PDImageXObject) forget its entries
+// constantly. A soft reference therefore holds its referent strongly through a
+// JavaSoftReferenceSlot, whose clock demotes it to a weak hold once two full
+// collections have passed without a use. Full collections are rare while memory is plentiful and frequent under
+// memory pressure, so used entries survive ordinary gen0/gen1 collections while
+// unused ones become collectible as the heap fills. A demoted referent that is
+// still reachable elsewhere is promoted again by Get, like a Java soft
+// reference whose referent was never cleared.
 #if DRIPSHARP_INTERNAL_JAVA_COMPAT
 internal
 #else
@@ -105,21 +116,207 @@ public
 #endif
 sealed class JavaSoftReference<T> : JavaReference<T> where T : class
 {
-    private WeakReference<T>? reference;
+    private JavaSoftReferenceSlot? slot;
 
     public JavaSoftReference(T? value)
     {
         if (value is not null)
-            reference = new WeakReference<T>(value);
+            slot = new JavaSoftReferenceSlot(value);
     }
 
-    public override T? Get()
+    public override T? Get() => (T?)Volatile.Read(ref slot)?.Get();
+
+    public override void Clear() => Volatile.Write(ref slot, null);
+}
+
+internal sealed class JavaSoftReferenceSlot
+{
+    private readonly WeakReference<object> reference;
+    private object? strong;
+    private int usedEpoch;
+
+    internal JavaSoftReferenceSlot(object value)
     {
-        var current = reference;
-        return current is not null && current.TryGetTarget(out var value) ? value : null;
+        strong = value;
+        reference = new WeakReference<object>(value);
+        usedEpoch = Clock.Register(this);
     }
 
-    public override void Clear() => reference = null;
+    internal object? Get()
+    {
+        var value = Volatile.Read(ref strong);
+        if (value is null)
+        {
+            if (!reference.TryGetTarget(out value))
+                return null;
+            Volatile.Write(ref strong, value);
+        }
+        else if (Volatile.Read(ref usedEpoch) == Clock.Epoch)
+            return value;
+        Volatile.Write(ref usedEpoch, Clock.Register(this));
+        return value;
+    }
+
+    internal void Expire(int throughEpoch)
+    {
+        if (Volatile.Read(ref usedEpoch) <= throughEpoch)
+            Volatile.Write(ref strong, null);
+    }
+
+    // Counts full (max-generation) collections with a self-reregistering
+    // finalizable sentinel and remembers the slots used in the current and the
+    // previous epoch. Each full collection expires the slots whose last use is
+    // older than the previous epoch. Every slot is demoted, however recently
+    // used, when the heap is under pressure: several full collections happened
+    // before the sentinel's finalizer could run, or the runtime reports a
+    // memory load at its high-load threshold. The sentinel stops rearming when
+    // its collectible load context unloads, so it never keeps that alive.
+    private static class Clock
+    {
+        private const int MinimumPrune = 1024;
+        private static readonly object Gate = new();
+        private static List<WeakReference<JavaSoftReferenceSlot>> current = new();
+        private static List<WeakReference<JavaSoftReferenceSlot>> previous = new();
+        private static int pruneAt = MinimumPrune;
+        private static int epoch;
+        private static int observedFullCollections = GC.CollectionCount(GC.MaxGeneration);
+        private static volatile bool stopped;
+        private static readonly MethodInfo? MemoryInfo =
+            typeof(GC).GetMethod("GetGCMemoryInfo", Type.EmptyTypes);
+
+        static Clock()
+        {
+            StopWhenTheLoadContextUnloads();
+            _ = new Sentinel();
+        }
+
+        internal static int Epoch => Volatile.Read(ref epoch);
+
+        internal static int Register(JavaSoftReferenceSlot slot)
+        {
+            lock (Gate)
+            {
+                if (current.Count >= pruneAt)
+                {
+                    current.RemoveAll(entry => !entry.TryGetTarget(out _));
+                    pruneAt = Math.Max(MinimumPrune, current.Count * 2);
+                }
+                current.Add(new WeakReference<JavaSoftReferenceSlot>(slot));
+                return epoch;
+            }
+        }
+
+        private static void Advance(bool underPressure)
+        {
+            // Allocate before rotating, so an OutOfMemoryException leaves
+            // every bucket in place for the next attempt.
+            var fresh = new List<WeakReference<JavaSoftReferenceSlot>>();
+            var freshPrevious = underPressure ? new List<WeakReference<JavaSoftReferenceSlot>>() : null;
+            List<WeakReference<JavaSoftReferenceSlot>> expired;
+            List<WeakReference<JavaSoftReferenceSlot>>? alsoExpired = null;
+            int throughEpoch;
+            lock (Gate)
+            {
+                expired = previous;
+                if (freshPrevious is not null)
+                {
+                    alsoExpired = current;
+                    previous = freshPrevious;
+                    throughEpoch = epoch;
+                }
+                else
+                {
+                    previous = current;
+                    throughEpoch = epoch - 1;
+                }
+                current = fresh;
+                pruneAt = MinimumPrune;
+                Volatile.Write(ref epoch, epoch + 1);
+            }
+            Expire(expired, throughEpoch);
+            if (alsoExpired is not null)
+                Expire(alsoExpired, throughEpoch);
+        }
+
+        private static void Expire(List<WeakReference<JavaSoftReferenceSlot>> entries, int throughEpoch)
+        {
+            foreach (var entry in entries)
+                if (entry.TryGetTarget(out var slot))
+                    slot.Expire(throughEpoch);
+        }
+
+        private static bool MemoryLoadIsHigh()
+        {
+            if (MemoryInfo is null)
+                return false;
+            try
+            {
+                object info = MemoryInfo.Invoke(null, null)!;
+                Type type = info.GetType();
+                long load = (long)type.GetProperty("MemoryLoadBytes")!.GetValue(info)!;
+                long high = (long)type.GetProperty("HighMemoryLoadThresholdBytes")!.GetValue(info)!;
+                return high > 0 && load >= high;
+            }
+            catch (Exception)
+            {
+                // A runtime without the memory-load contract, or no memory to
+                // ask: count full collections only.
+                return false;
+            }
+        }
+
+        // netstandard2.0 has no AssemblyLoadContext, so its Unloading event is
+        // found by name; a runtime without it cannot unload this assembly.
+        private static void StopWhenTheLoadContextUnloads()
+        {
+            try
+            {
+                Type? loadContextType = Type.GetType(
+                    "System.Runtime.Loader.AssemblyLoadContext, System.Runtime.Loader", false);
+                EventInfo? unloading = loadContextType?.GetEvent("Unloading");
+                object? context = loadContextType
+                    ?.GetMethod("GetLoadContext", new[] { typeof(Assembly) })
+                    ?.Invoke(null, new object[] { typeof(Clock).Assembly });
+                MethodInfo stop = typeof(Clock).GetMethod(
+                    nameof(Stop), BindingFlags.NonPublic | BindingFlags.Static)!;
+                if (context is not null && unloading?.EventHandlerType is { } handlerType)
+                    unloading.AddEventHandler(context, Delegate.CreateDelegate(handlerType, stop));
+            }
+            catch (Exception)
+            {
+                // Without the event the sentinel rearms until process shutdown.
+            }
+        }
+
+        private static void Stop(object? context) => stopped = true;
+
+        private sealed class Sentinel
+        {
+            ~Sentinel()
+            {
+                if (stopped || Environment.HasShutdownStarted)
+                    return;
+                try
+                {
+                    int full = GC.CollectionCount(GC.MaxGeneration);
+                    int passed = full - observedFullCollections;
+                    if (passed > 0)
+                    {
+                        Advance(passed > 1 || MemoryLoadIsHigh());
+                        observedFullCollections = full;
+                    }
+                }
+                catch (OutOfMemoryException)
+                {
+                    // Retry at the next collection; the epoch did not advance.
+                }
+                finally
+                {
+                    GC.ReRegisterForFinalize(this);
+                }
+            }
+        }
+    }
 }
 
 #if DRIPSHARP_INTERNAL_JAVA_COMPAT
@@ -593,12 +790,25 @@ internal static partial class JavaCompat
 
     internal static long NumberLongValue(IConvertible value) => value switch
     {
-        float number => float.IsNaN(number) ? 0 : number >= long.MaxValue ? long.MaxValue
-            : number <= long.MinValue ? long.MinValue : (long)number,
-        double number => double.IsNaN(number) ? 0 : number >= long.MaxValue ? long.MaxValue
-            : number <= long.MinValue ? long.MinValue : (long)number,
+        float number => NumberLongValue(number),
+        double number => NumberLongValue(number),
         _ => value.ToInt64(CultureInfo.InvariantCulture)
     };
+
+    // Primitive overloads keep Java's (int)/(long) casts in per-pixel loops
+    // from boxing. Integral ones stop int/long arguments binding to float.
+    internal static long NumberLongValue(float number) =>
+        float.IsNaN(number) ? 0 : number >= long.MaxValue ? long.MaxValue
+            : number <= long.MinValue ? long.MinValue : (long)number;
+    internal static long NumberLongValue(double number) =>
+        double.IsNaN(number) ? 0 : number >= long.MaxValue ? long.MaxValue
+            : number <= long.MinValue ? long.MinValue : (long)number;
+    internal static long NumberLongValue(long number) => number;
+    internal static long NumberLongValue(ulong number) => checked((long)number);
+    internal static int NumberIntValue(float number) => NarrowToInt(number);
+    internal static int NumberIntValue(double number) => NarrowToInt(number);
+    internal static int NumberIntValue(long number) => unchecked((int)number);
+    internal static int NumberIntValue(ulong number) => unchecked((int)checked((long)number));
 
     internal static int NumberIntValue(IConvertible value) => value switch
     {
@@ -709,30 +919,58 @@ internal static partial class JavaCompat
 
     private static string JavaString(object? value) => StringValueOf(value);
 
-    internal static bool IsDigit(int codePoint) =>
-        Rune.IsValid(codePoint) &&
-        Rune.GetUnicodeCategory(new Rune(codePoint)) == UnicodeCategory.DecimalDigitNumber;
-
-    internal static bool IsLetterOrDigit(int codePoint) =>
-        Rune.IsValid(codePoint) &&
-        (Rune.IsLetter(new Rune(codePoint)) || IsDigit(codePoint));
-
-    internal static bool IsUnicodeIdentifierStart(int codePoint)
+    // Character queries run for every character PDF, CMap and Type 1 tokenizers
+    // read. ASCII is answered directly, and other BMP code points use the char
+    // overload, which never allocates on any target framework. Surrogate code
+    // units and values outside Unicode have no category, as before.
+    private static bool TryGetUnicodeCategory(int codePoint, out UnicodeCategory category)
     {
-        if (!Rune.IsValid(codePoint)) return false;
-        var category = Rune.GetUnicodeCategory(new Rune(codePoint));
-        return Rune.IsLetter(new Rune(codePoint)) ||
-               category is UnicodeCategory.LetterNumber or UnicodeCategory.CurrencySymbol or UnicodeCategory.ConnectorPunctuation;
+        if ((uint)codePoint <= char.MaxValue)
+        {
+            category = CharUnicodeInfo.GetUnicodeCategory((char)codePoint);
+            return category != UnicodeCategory.Surrogate;
+        }
+        if (!Rune.IsValid(codePoint))
+        {
+            category = UnicodeCategory.OtherNotAssigned;
+            return false;
+        }
+        category = Rune.GetUnicodeCategory(new Rune(codePoint));
+        return true;
     }
 
-    internal static bool IsUnicodeIdentifierPart(int codePoint)
+    private static bool IsLetterCategory(UnicodeCategory category) =>
+        category is UnicodeCategory.UppercaseLetter or UnicodeCategory.LowercaseLetter or
+            UnicodeCategory.TitlecaseLetter or UnicodeCategory.ModifierLetter or
+            UnicodeCategory.OtherLetter;
+
+    internal static bool IsDigit(int codePoint)
     {
-        if (!Rune.IsValid(codePoint)) return false;
-        var category = Rune.GetUnicodeCategory(new Rune(codePoint));
-        return IsUnicodeIdentifierStart(codePoint) ||
-               category is UnicodeCategory.DecimalDigitNumber or UnicodeCategory.NonSpacingMark or
-                   UnicodeCategory.SpacingCombiningMark or UnicodeCategory.Format;
+        if ((uint)codePoint < 0x80) return (uint)(codePoint - '0') <= 9;
+        return TryGetUnicodeCategory(codePoint, out var category) &&
+            category == UnicodeCategory.DecimalDigitNumber;
     }
+
+    internal static bool IsLetterOrDigit(int codePoint)
+    {
+        if ((uint)codePoint < 0x80)
+            return (uint)(codePoint - '0') <= 9 || (uint)((codePoint | 0x20) - 'a') <= 'z' - 'a';
+        return TryGetUnicodeCategory(codePoint, out var category) &&
+            (IsLetterCategory(category) || category == UnicodeCategory.DecimalDigitNumber);
+    }
+
+    internal static bool IsUnicodeIdentifierStart(int codePoint) =>
+        TryGetUnicodeCategory(codePoint, out var category) && IsUnicodeIdentifierStart(category);
+
+    private static bool IsUnicodeIdentifierStart(UnicodeCategory category) =>
+        IsLetterCategory(category) ||
+        category is UnicodeCategory.LetterNumber or UnicodeCategory.CurrencySymbol or UnicodeCategory.ConnectorPunctuation;
+
+    internal static bool IsUnicodeIdentifierPart(int codePoint) =>
+        TryGetUnicodeCategory(codePoint, out var category) &&
+        (IsUnicodeIdentifierStart(category) ||
+         category is UnicodeCategory.DecimalDigitNumber or UnicodeCategory.NonSpacingMark or
+             UnicodeCategory.SpacingCombiningMark or UnicodeCategory.Format);
 
     internal static string CodePointToString(int codePoint)
     {
@@ -752,8 +990,28 @@ internal static partial class JavaCompat
             ? char.ConvertToUtf32(first, value[index + 1])
             : first;
     }
-    internal static int CharacterType(int codePoint) =>
-        !Rune.IsValid(codePoint) ? 0 : Rune.GetUnicodeCategory(new Rune(codePoint)) switch
+    // A nested holder keeps the table independent of JavaCompat's static
+    // initialization order across its partial files.
+    private static class AsciiCharacterTypes
+    {
+        internal static readonly sbyte[] Values = Table();
+
+        private static sbyte[] Table()
+        {
+            var types = new sbyte[0x80];
+            for (var index = 0; index < types.Length; index++)
+                types[index] = (sbyte)CharacterType(CharUnicodeInfo.GetUnicodeCategory((char)index));
+            return types;
+        }
+    }
+
+    internal static int CharacterType(int codePoint)
+    {
+        if ((uint)codePoint < 0x80) return AsciiCharacterTypes.Values[codePoint];
+        return TryGetUnicodeCategory(codePoint, out var category) ? CharacterType(category) : 0;
+    }
+
+    private static int CharacterType(UnicodeCategory category) => category switch
     {
         UnicodeCategory.UppercaseLetter => 1,
         UnicodeCategory.LowercaseLetter => 2,
@@ -795,9 +1053,14 @@ internal static partial class JavaCompat
         return digit >= 0 && digit < radix ? digit : -1;
     }
     internal static bool IsWhitespace(char value) => char.IsWhiteSpace(value);
-    internal static int ToUpperCase(int codePoint) => Rune.IsValid(codePoint)
-        ? Rune.ToUpperInvariant(new Rune(codePoint)).Value
-        : codePoint;
+    internal static int ToUpperCase(int codePoint)
+    {
+        if ((uint)codePoint < 0x80)
+            return (uint)(codePoint - 'a') <= 'z' - 'a' ? codePoint - ('a' - 'A') : codePoint;
+        if ((uint)codePoint <= char.MaxValue)
+            return char.IsSurrogate((char)codePoint) ? codePoint : char.ToUpperInvariant((char)codePoint);
+        return Rune.IsValid(codePoint) ? Rune.ToUpperInvariant(new Rune(codePoint)).Value : codePoint;
+    }
     internal static StringBuilder AppendCodePoint(StringBuilder builder, int codePoint) =>
         builder.Append(CodePointToString(codePoint));
 
@@ -889,33 +1152,37 @@ internal static partial class JavaCompat
     internal static sbyte[] StringGetBytes(string value, Encoding encoding)
     {
         if (ReferenceEquals(encoding, JavaStandardCharsets.UTF16))
-        {
-            return new byte[] { 0xfe, 0xff }
-                .Concat(Encoding.BigEndianUnicode.GetBytes(value))
-                .Select(item => unchecked((sbyte)item))
-                .ToArray();
-        }
+            return Utf16WithByteOrderMark(value);
         if (encoding.CodePage == Encoding.UTF8.CodePage)
-        {
-            encoding = (Encoding)new UTF8Encoding(false, false).Clone();
-            encoding.EncoderFallback = new EncoderReplacementFallback("?");
-        }
-        return encoding.GetBytes(value).Select(item => unchecked((sbyte)item)).ToArray();
+            encoding = JavaUtf8Encoder;
+        return ToSignedBytes(encoding.GetBytes(value));
+    }
+    // String.getBytes(UTF_8) replaces unpaired surrogates with '?'. The
+    // replacement fallback is immutable, so one shared encoder is thread-safe.
+    private static readonly Encoding JavaUtf8Encoder = CreateJavaUtf8Encoder();
+    private static Encoding CreateJavaUtf8Encoder()
+    {
+        var encoding = (Encoding)new UTF8Encoding(false, false).Clone();
+        encoding.EncoderFallback = new EncoderReplacementFallback("?");
+        return encoding;
+    }
+    private static sbyte[] Utf16WithByteOrderMark(string value)
+    {
+        var payload = Encoding.BigEndianUnicode.GetBytes(value);
+        var result = new sbyte[payload.Length + 2];
+        result[0] = unchecked((sbyte)0xfe);
+        result[1] = unchecked((sbyte)0xff);
+        Buffer.BlockCopy(payload, 0, result, 2, payload.Length);
+        return result;
     }
     internal static sbyte[] StringGetBytes(string value, string encoding)
     {
         if (encoding.Equals("UTF-16", StringComparison.OrdinalIgnoreCase))
-        {
-            var payload = Encoding.BigEndianUnicode.GetBytes(value);
-            return new byte[] { 0xfe, 0xff }.Concat(payload)
-                .Select(item => unchecked((sbyte)item)).ToArray();
-        }
+            return Utf16WithByteOrderMark(value);
         if (encoding.Equals("UTF-16BE", StringComparison.OrdinalIgnoreCase))
-            return Encoding.BigEndianUnicode.GetBytes(value)
-                .Select(item => unchecked((sbyte)item)).ToArray();
+            return ToSignedBytes(Encoding.BigEndianUnicode.GetBytes(value));
         if (encoding.Equals("UTF-16LE", StringComparison.OrdinalIgnoreCase))
-            return Encoding.Unicode.GetBytes(value)
-                .Select(item => unchecked((sbyte)item)).ToArray();
+            return ToSignedBytes(Encoding.Unicode.GetBytes(value));
         if (encoding.Equals("ISO-8859-1", StringComparison.OrdinalIgnoreCase))
         {
             var bytes = new List<sbyte>();
@@ -1064,30 +1331,60 @@ internal static partial class JavaCompat
 
     internal static string EnumName(object value)
     {
-        const BindingFlags flags = BindingFlags.Public | BindingFlags.Static;
-        var field = value.GetType().GetFields(flags)
-            .FirstOrDefault(candidate => ReferenceEquals(candidate.GetValue(null), value));
-        return field?.GetCustomAttribute<JavaEnumNameAttribute>()?.Name
-               ?? field?.Name
-               ?? value.ToString()
-               ?? string.Empty;
+        var field = EnumConstantField(value, out _);
+        if (field is not null)
+            return field.GetCustomAttribute<JavaEnumNameAttribute>()?.Name ?? field.Name;
+        // A translated enum's ToString calls EnumName, so only values that are
+        // not translated enum constants may fall back to ToString.
+        if (!IsTranslatedEnum(value.GetType()))
+            return value.ToString() ?? string.Empty;
+        throw new InvalidOperationException(
+            $"{value.GetType().FullName} is not a declared enum constant yet; its enum is still initializing.");
     }
 
     internal static int EnumOrdinal(object value)
     {
         var type = value.GetType();
         if (type.IsEnum) return Convert.ToInt32(value, CultureInfo.InvariantCulture);
-        const BindingFlags flags = BindingFlags.Public | BindingFlags.Static;
-        var constants = type.GetFields(flags)
-            .Where(field => type.IsAssignableFrom(field.FieldType))
-            .OrderBy(field => field.MetadataToken)
-            .ToArray();
-        var field = constants.FirstOrDefault(
-            candidate => ReferenceEquals(candidate.GetValue(null), value));
+        var field = EnumConstantField(value, out var constants);
         if (field is null)
             throw new ArgumentException("Value is not a declared enum constant", nameof(value));
         return field.GetCustomAttribute<JavaEnumOrdinalAttribute>()?.Ordinal
                ?? Array.IndexOf(constants, field);
+    }
+
+    // A constant with a body is an instance of a nested subclass that declares
+    // no constants, so the declaring enum is the nearest type in the value's
+    // base chain with a public static field holding the value.
+    private static FieldInfo? EnumConstantField(object value, out FieldInfo[] constants)
+    {
+        const BindingFlags flags = BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly;
+        for (var type = value.GetType(); type is not null && type != typeof(object); type = type.BaseType)
+        {
+            var declaring = type;
+            constants = declaring.GetFields(flags)
+                .Where(field => declaring.IsAssignableFrom(field.FieldType))
+                .OrderBy(field => field.MetadataToken)
+                .ToArray();
+            foreach (var field in constants)
+            {
+                if (ReferenceEquals(field.GetValue(null), value))
+                    return field;
+            }
+        }
+        constants = Array.Empty<FieldInfo>();
+        return null;
+    }
+
+    private static bool IsTranslatedEnum(Type type)
+    {
+        const BindingFlags flags = BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly;
+        for (var current = type; current is not null && current != typeof(object); current = current.BaseType)
+        {
+            if (current.GetFields(flags).Any(field => field.IsDefined(typeof(JavaEnumNameAttribute), false)))
+                return true;
+        }
+        return false;
     }
 
     internal static T EnumValueOf<T>(string name)
@@ -1208,29 +1505,96 @@ internal static partial class JavaCompat
         if (!negative) return (long)magnitude;
         return magnitude == negativeLimit ? minimum : -(long)magnitude;
     }
+    private enum FloatingLiteralKind { Decimal, Hexadecimal, NaN, PositiveInfinity, NegativeInfinity }
+
     // Java accepts ASCII trim, decimal/hex literals and optional type suffixes,
     // but never locale grouping, localized digits, or case-insensitive specials.
-    private static string FloatingLiteral(string value)
+    // The scanner validates that grammar in place, so a plain token is parsed
+    // without a regular expression or a substring. On success [start, end) is
+    // the literal without surrounding control characters or its type suffix,
+    // and for hexadecimal literals [digits, exponent) holds the significand.
+    private static FloatingLiteralKind ScanFloatingLiteral(
+        string value, out int start, out int end, out int digits, out int exponent)
     {
         if (value is null) throw new NullReferenceException();
-        var start = 0;
-        var end = value.Length;
+        start = 0;
+        end = value.Length;
         while (start < end && value[start] <= ' ') start++;
         while (end > start && value[end - 1] <= ' ') end--;
-        var text = value.Substring(start, end - start);
-        if (Regex.IsMatch(text, @"\A[+-]?(?:NaN|Infinity)\z")) return text;
-        if (!Regex.IsMatch(text, @"\A[+-]?(?:(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?|0[xX](?:[0-9a-fA-F]+(?:\.[0-9a-fA-F]*)?|\.[0-9a-fA-F]+)[pP][+-]?[0-9]+)[fFdD]?\z"))
-            throw new JavaNumberFormatException(text.Length == 0 ? "empty String" : $"For input string: \"{text}\"");
-        return text.Length > 0 && "fFdD".IndexOf(text[text.Length - 1]) >= 0
-            ? text.Substring(0, text.Length - 1) : text;
+        var index = start;
+        var negative = false;
+        if (index < end && value[index] is '+' or '-')
+        {
+            negative = value[index] == '-';
+            index++;
+        }
+        digits = index;
+        exponent = end;
+        if (IsLiteralAt(value, index, end, "NaN")) return FloatingLiteralKind.NaN;
+        if (IsLiteralAt(value, index, end, "Infinity"))
+            return negative ? FloatingLiteralKind.NegativeInfinity : FloatingLiteralKind.PositiveInfinity;
+        var hexadecimal = end - index >= 2 && value[index] == '0' && value[index + 1] is 'x' or 'X';
+        if (hexadecimal) index += 2;
+        digits = index;
+        var significandDigits = SkipDigits(value, ref index, end, hexadecimal);
+        if (index < end && value[index] == '.')
+        {
+            index++;
+            significandDigits += SkipDigits(value, ref index, end, hexadecimal);
+        }
+        var valid = significandDigits > 0;
+        exponent = index;
+        if (valid && index < end &&
+            (hexadecimal ? value[index] is 'p' or 'P' : value[index] is 'e' or 'E'))
+        {
+            index++;
+            if (index < end && value[index] is '+' or '-') index++;
+            valid = SkipDigits(value, ref index, end, false) > 0;
+        }
+        else if (hexadecimal)
+        {
+            valid = false;
+        }
+        var literalEnd = index;
+        if (index < end && value[index] is 'f' or 'F' or 'd' or 'D') index++;
+        if (!valid || index != end)
+        {
+            throw new JavaNumberFormatException(start == end
+                ? "empty String"
+                : $"For input string: \"{value.Substring(start, end - start)}\"");
+        }
+        end = literalEnd;
+        return hexadecimal ? FloatingLiteralKind.Hexadecimal : FloatingLiteralKind.Decimal;
     }
 
-    private static ulong HexFloatingBits(string text, int precision, int minimumExponent, int maximumExponent)
+    private static bool IsLiteralAt(string value, int index, int end, string literal) =>
+        end - index == literal.Length &&
+        string.CompareOrdinal(value, index, literal, 0, literal.Length) == 0;
+
+    private static int SkipDigits(string value, ref int index, int end, bool hexadecimal)
     {
-        var negative = text[0] == '-';
+        var begin = index;
+        while (index < end)
+        {
+            var character = value[index];
+            if ((uint)(character - '0') > 9 &&
+                (!hexadecimal || (uint)((character | 0x20) - 'a') > 'f' - 'a'))
+                break;
+            index++;
+        }
+        return index - begin;
+    }
+
+    // Decimal text goes to the runtime's correctly rounded parser; only a literal
+    // with surrounding control characters or a type suffix needs a copy.
+    private static string DecimalLiteralText(string value, int start, int end) =>
+        start == 0 && end == value.Length ? value : value.Substring(start, end - start);
+
+    private static ulong HexFloatingBits(
+        string text, bool negative, int begin, int p, int end,
+        int precision, int minimumExponent, int maximumExponent)
+    {
         var sign = negative ? 1UL << (precision == 53 ? 63 : 31) : 0UL;
-        var begin = text[0] == '+' || negative ? 3 : 2;
-        var p = text.IndexOfAny(new[] { 'p', 'P' });
         var significand = BigInteger.Zero;
         var fractionDigits = 0;
         var fraction = false;
@@ -1242,7 +1606,7 @@ internal static partial class JavaCompat
             if (fraction) fractionDigits++;
         }
         if (significand.IsZero) return sign;
-        var exponent = BigInteger.Parse(text.Substring(p + 1), CultureInfo.InvariantCulture) - 4 * fractionDigits;
+        var exponent = BigInteger.Parse(text.Substring(p + 1, end - p - 1), CultureInfo.InvariantCulture) - 4 * fractionDigits;
         var length = 0;
         for (var n = significand; n > 0; n >>= 1) length++;
         var top = exponent + length - 1;
@@ -1271,19 +1635,33 @@ internal static partial class JavaCompat
 
     internal static double ParseDouble(string value)
     {
-        var text = FloatingLiteral(value);
-        if (text.EndsWith("NaN", StringComparison.Ordinal)) return double.NaN;
-        if (text.IndexOf("0x", StringComparison.OrdinalIgnoreCase) >= 0)
-            return BitConverter.Int64BitsToDouble(unchecked((long)HexFloatingBits(text, 53, -1022, 1023)));
-        return double.Parse(text, NumberStyles.Float, CultureInfo.InvariantCulture);
+        switch (ScanFloatingLiteral(value, out var start, out var end, out var digits, out var exponent))
+        {
+            case FloatingLiteralKind.NaN: return double.NaN;
+            case FloatingLiteralKind.PositiveInfinity: return double.PositiveInfinity;
+            case FloatingLiteralKind.NegativeInfinity: return double.NegativeInfinity;
+            case FloatingLiteralKind.Hexadecimal:
+                return BitConverter.Int64BitsToDouble(unchecked((long)HexFloatingBits(
+                    value, value[start] == '-', digits, exponent, end, 53, -1022, 1023)));
+            default:
+                return double.Parse(
+                    DecimalLiteralText(value, start, end), NumberStyles.Float, CultureInfo.InvariantCulture);
+        }
     }
     internal static float ParseFloat(string value)
     {
-        var text = FloatingLiteral(value);
-        if (text.EndsWith("NaN", StringComparison.Ordinal)) return float.NaN;
-        if (text.IndexOf("0x", StringComparison.OrdinalIgnoreCase) >= 0)
-            return BitConverter.ToSingle(BitConverter.GetBytes(unchecked((uint)HexFloatingBits(text, 24, -126, 127))), 0);
-        return float.Parse(text, NumberStyles.Float, CultureInfo.InvariantCulture);
+        switch (ScanFloatingLiteral(value, out var start, out var end, out var digits, out var exponent))
+        {
+            case FloatingLiteralKind.NaN: return float.NaN;
+            case FloatingLiteralKind.PositiveInfinity: return float.PositiveInfinity;
+            case FloatingLiteralKind.NegativeInfinity: return float.NegativeInfinity;
+            case FloatingLiteralKind.Hexadecimal:
+                return BitConverter.ToSingle(BitConverter.GetBytes(unchecked((uint)HexFloatingBits(
+                    value, value[start] == '-', digits, exponent, end, 24, -126, 127))), 0);
+            default:
+                return float.Parse(
+                    DecimalLiteralText(value, start, end), NumberStyles.Float, CultureInfo.InvariantCulture);
+        }
     }
     internal static int CompareLong(long left, long right) => left.CompareTo(right);
     internal static int CompareInt(int left, int right) => left.CompareTo(right);
@@ -1315,7 +1693,16 @@ internal static partial class JavaCompat
     internal static int HighestOneBit(int value) =>
         value == 0 ? 0 : 1 << (31 - IntLeadingZeros(value));
     internal static int FloatToIntBits(float value) =>
-        float.IsNaN(value) ? 0x7fc00000 : BitConverter.ToInt32(BitConverter.GetBytes(value), 0);
+        float.IsNaN(value) ? 0x7fc00000 : new SingleBits { Single = value }.Int32;
+
+    // netstandard2.0 has no BitConverter.SingleToInt32Bits; an overlapping
+    // field reads the IEEE bits without allocating or unsafe code.
+    [StructLayout(LayoutKind.Explicit)]
+    private struct SingleBits
+    {
+        [FieldOffset(0)] internal float Single;
+        [FieldOffset(0)] internal int Int32;
+    }
     private static int LeadingZeroCount(ulong value)
     {
         if (value == 0) return 64;
@@ -1323,11 +1710,11 @@ internal static partial class JavaCompat
         for (var bit = 1UL << 63; (value & bit) == 0; bit >>= 1) count++;
         return count;
     }
+    internal static long DoubleToLongBits(double value) =>
+        double.IsNaN(value) ? 0x7ff8000000000000L : BitConverter.DoubleToInt64Bits(value);
     internal static int DoubleHashCode(double value)
     {
-        var bits = double.IsNaN(value)
-            ? 0x7ff8000000000000L
-            : BitConverter.DoubleToInt64Bits(value);
+        var bits = DoubleToLongBits(value);
         return unchecked((int)(bits ^ (long)((ulong)bits >> 32)));
     }
     internal static int Signum(long value) => Math.Sign(value);
@@ -1400,9 +1787,8 @@ internal static partial class JavaCompat
     internal static bool CharacterIsDefined(int codePoint)
     {
         if (codePoint is >= 0xd800 and <= 0xdfff) return true;
-        return Rune.IsValid(codePoint) &&
-            Rune.GetUnicodeCategory(new Rune(codePoint)) !=
-                UnicodeCategory.OtherNotAssigned;
+        return TryGetUnicodeCategory(codePoint, out var category) &&
+            category != UnicodeCategory.OtherNotAssigned;
     }
     internal static bool IsBmpCodePoint(int codePoint) => (uint)codePoint <= 0xffff;
     internal static bool IsValidCodePoint(int codePoint) => (uint)codePoint <= 0x10ffff;

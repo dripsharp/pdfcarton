@@ -14,7 +14,7 @@ public sealed class LosslessFactory {
   private LosslessFactory() {}
 
   public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromImage(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
-    global::SkiaSharp.SKBitmap image) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image) {
     if (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.isGrayImage(image)) {
       return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.createFromGrayImage(image,
         document);
@@ -26,8 +26,10 @@ public sealed class LosslessFactory {
       if ((pdImageXObject != default!)) {
         if ((((pdImageXObject.GetColorSpace()
           == global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceRGB.Instance)
-          && (pdImageXObject.GetBitsPerComponent() < 16)) && (unchecked((image.Width
-          * image.Height)) <= unchecked((50 * 50))))) {
+          && (pdImageXObject.GetBitsPerComponent() < 16))
+          && (unchecked((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image)
+          * global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image))) <= unchecked((50
+          * 50))))) {
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdImageXObjectClassic
             = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.createFromRGBImage(image,
             document);
@@ -45,7 +47,7 @@ public sealed class LosslessFactory {
       document);
   }
 
-  private static bool isGrayImage(global::SkiaSharp.SKBitmap image) {
+  private static bool isGrayImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image) {
     if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetTransparency(image)
       != global::DripSharp.Runtime.PdfCartonTransparency.OPAQUE)) {
       return false;
@@ -63,10 +65,10 @@ public sealed class LosslessFactory {
     return false;
   }
 
-  private static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject createFromGrayImage(global::SkiaSharp.SKBitmap image,
+  private static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject createFromGrayImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image,
     global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-    int height = image.Height;
-    int width = image.Width;
+    int height = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image);
+    int width = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image);
     int[] rgbLineBuffer = new int[width];
     int bpc = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).PixelSize;
     global::DripSharp.Runtime.JavaByteArrayOutputStream baos
@@ -96,14 +98,16 @@ public sealed class LosslessFactory {
       }
     }
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.prepareImageXObject(document,
-      global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos), image.Width, image.Height, bpc,
+      global::DripSharp.Runtime.JavaCompat.ToSignedBytes(baos),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image), bpc,
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance);
   }
 
-  private static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject createFromRGBImage(global::SkiaSharp.SKBitmap image,
+  private static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject createFromRGBImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image,
     global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-    int height = image.Height;
-    int width = image.Width;
+    int height = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image);
+    int width = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image);
     int[] rgbLineBuffer = new int[width];
     int bpc = 8;
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceColorSpace deviceColorSpace
@@ -154,11 +158,13 @@ public sealed class LosslessFactory {
     }
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdImage
       = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.prepareImageXObject(document,
-      imageData, image.Width, image.Height, bpc, deviceColorSpace);
+      imageData, global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image), bpc, deviceColorSpace);
     if ((transparency != global::DripSharp.Runtime.PdfCartonTransparency.OPAQUE)) {
       global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdMask
         = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.prepareImageXObject(document,
-        alphaImageData, image.Width, image.Height, apbc,
+        alphaImageData, global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+        global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image), apbc,
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance);
       pdImage.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Smask, pdMask);
     }
@@ -185,7 +191,7 @@ public sealed class LosslessFactory {
   internal class PredictorEncoder {
     internal readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument document = null!;
 
-    internal readonly global::SkiaSharp.SKBitmap image = null!;
+    internal readonly global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image = null!;
 
     internal readonly int componentsPerPixel = default;
 
@@ -226,7 +232,7 @@ public sealed class LosslessFactory {
     internal readonly sbyte[] tmpResultValues = null!;
 
     internal PredictorEncoder(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
-      global::SkiaSharp.SKBitmap image) {
+      global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image) {
       this.document = document;
       this.image = image;
       this.componentsPerPixel
@@ -240,8 +246,8 @@ public sealed class LosslessFactory {
       this.bytesPerPixel
         = unchecked((global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfColorComponents
         * this.bytesPerComponent));
-      this.height = image.Height;
-      this.width = image.Width;
+      this.height = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image);
+      this.width = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image);
       this.imageType = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(image);
       this.hasAlpha
         = (global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfComponents
@@ -473,8 +479,8 @@ public sealed class LosslessFactory {
 
     internal global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject preparePredictorPDImage(global::DripSharp.Runtime.JavaByteArrayOutputStream stream,
       int bitsPerComponent) {
-      int h = this.image.Height;
-      int w = this.image.Width;
+      int h = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(this.image);
+      int w = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(this.image);
       global::DripSharp.Runtime.JavaColorSpace srcCspace
         = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(this.image).ColorSpace;
       int srcCspaceType = srcCspace.Type;
@@ -536,7 +542,9 @@ public sealed class LosslessFactory {
         != global::DripSharp.Runtime.PdfCartonTransparency.OPAQUE)) {
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject pdMask
           = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.prepareImageXObject(this.document,
-          this.alphaImageData, this.image.Width, this.image.Height, unchecked((8
+          this.alphaImageData,
+          global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(this.image),
+          global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(this.image), unchecked((8
           * this.bytesPerComponent)),
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance);
         imageXObject.GetCOSObject().SetItem(global::DripSharp.PdfCarton.Cos.COSName.Smask, pdMask);

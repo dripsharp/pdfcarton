@@ -21,7 +21,7 @@ public class PDVisibleSignDesigner {
 
   private float __field_pageWidth = default;
 
-  private global::SkiaSharp.SKBitmap image = null!;
+  private global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image = null!;
 
   private string __field_signatureFieldName = "sig";
 
@@ -51,19 +51,20 @@ public class PDVisibleSignDesigner {
     this.calculatePageSize(document, page);
   }
 
-  public PDVisibleSignDesigner(string filename, global::SkiaSharp.SKBitmap image, int page) {
+  public PDVisibleSignDesigner(string filename,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image, int page) {
     this.setImage(image);
     this.calculatePageSizeFromFile(filename, page);
   }
 
   public PDVisibleSignDesigner(global::DripSharp.PdfCarton.IO.RandomAccessRead documentSource,
-    global::SkiaSharp.SKBitmap image, int page) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image, int page) {
     this.setImage(image);
     this.calculatePageSizeFromRandomAccessRead(documentSource, page);
   }
 
   public PDVisibleSignDesigner(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
-    global::SkiaSharp.SKBitmap image, int page) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image, int page) {
     this.setImage(image);
     this.calculatePageSize(document, page);
   }
@@ -267,7 +268,7 @@ public class PDVisibleSignDesigner {
     return this;
   }
 
-  public virtual global::SkiaSharp.SKBitmap GetImage() {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetImage() {
     return this.image;
   }
 
@@ -276,12 +277,14 @@ public class PDVisibleSignDesigner {
     this.setImage(global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(stream));
   }
 
-  private void setImage(global::SkiaSharp.SKBitmap image) {
+  private void setImage(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image) {
     this.image = image;
-    this.imageHeight = (float)(image.Height);
-    this.imageWidth = (float)(image.Width);
-    this.__field_formatterRectangleParameters[2] = image.Width;
-    this.__field_formatterRectangleParameters[3] = image.Height;
+    this.imageHeight = (float)(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image));
+    this.imageWidth = (float)(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image));
+    this.__field_formatterRectangleParameters[2]
+      = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image);
+    this.__field_formatterRectangleParameters[3]
+      = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image);
   }
 
   public virtual global::SkiaSharp.SKMatrix GetTransform() {

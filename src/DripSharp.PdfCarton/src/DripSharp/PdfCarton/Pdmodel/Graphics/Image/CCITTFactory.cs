@@ -12,14 +12,14 @@ public sealed class CCITTFactory {
   private CCITTFactory() {}
 
   public static global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject CreateFromImage(global::DripSharp.PdfCarton.Pdmodel.PDDocument document,
-    global::SkiaSharp.SKBitmap image) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image) {
     if (((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(image)
       != global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_BYTE_BINARY)
       && (global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).PixelSize != 1))) {
       throw new global::System.ArgumentException("Only 1-bit b/w images supported");
     }
-    int height = image.Height;
-    int width = image.Width;
+    int height = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image);
+    int width = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image);
     global::DripSharp.Runtime.JavaByteArrayOutputStream bos
       = new global::DripSharp.Runtime.JavaByteArrayOutputStream(global::System.Math.Max(32,
       unchecked((unchecked((width + 1)) * height)))); {

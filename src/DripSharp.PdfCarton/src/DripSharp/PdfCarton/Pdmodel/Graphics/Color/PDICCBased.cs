@@ -222,7 +222,7 @@ public sealed class PDICCBased
     return result;
   }
 
-  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
     if ((this.awtColorSpace != default!)) {
       return this.ToRGBImageAWT(raster, this.awtColorSpace);
     } else {
@@ -230,7 +230,7 @@ public sealed class PDICCBased
     }
   }
 
-  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
     if ((this.awtColorSpace == default!)) {
       return this.alternateColorSpace.ToRawImage(raster);
     }

@@ -93,7 +93,7 @@ public class RandomAccessReadMemoryMappedFileTest {
         global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessSource.GetPosition(),
           null);
         sbyte[] buffer = new sbyte[4];
-        ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource))).Read(buffer);
+        ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource)).Read(buffer);
         global::DripSharp.Testing.JavaAssertions.Equal((int)('0'), (int)(buffer[0]), null);
         global::DripSharp.Testing.JavaAssertions.Equal((int)('3'), (int)(buffer[3]), null);
         global::DripSharp.Testing.JavaAssertions.Equal((long)(4), randomAccessSource.GetPosition(),
@@ -152,7 +152,7 @@ public class RandomAccessReadMemoryMappedFileTest {
         randomAccessSource.Read();
         sbyte[] readBytes = new sbyte[6];
         global::DripSharp.Testing.JavaAssertions.Equal(readBytes.Length,
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource))).Read(readBytes),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource)).Read(readBytes),
           null);
         global::DripSharp.Testing.JavaAssertions.Equal((long)(8), randomAccessSource.GetPosition(),
           null);
@@ -191,7 +191,7 @@ public class RandomAccessReadMemoryMappedFileTest {
           ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource)).Peek(), null);
         sbyte[] readBytes = new sbyte[6];
         global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource))).Read(readBytes),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource)).Read(readBytes),
           null);
         randomAccessSource.Seek((long)(0));
         global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessSource.GetPosition(),

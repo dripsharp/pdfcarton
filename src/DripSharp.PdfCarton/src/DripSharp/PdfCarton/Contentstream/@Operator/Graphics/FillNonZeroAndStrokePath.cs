@@ -17,7 +17,7 @@ public class FillNonZeroAndStrokePath
 
   public override void Process(global::DripSharp.PdfCarton.Contentstream.@Operator.Operator @operator,
     global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Cos.COSBase> operands) {
-    this.GetGraphicsContext().FillAndStrokePath(global::DripSharp.Runtime.JavaPathIterator.WIND_NON_ZERO);
+    this.GetGraphicsContext().FillAndStrokePath(global::DripSharp.PdfCarton.Runtime.Fonts.JavaPathIterator.WIND_NON_ZERO);
   }
 
   public override string GetName() {

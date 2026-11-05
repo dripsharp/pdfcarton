@@ -35,7 +35,7 @@ public class PreflightType3Stream
     this.ProcessChildStream(charProc, new global::DripSharp.PdfCarton.Pdmodel.PDPage());
   }
 
-  public virtual global::SkiaSharp.SKBitmap CreateImage() {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage CreateImage() {
     this.ShowType3Character(this.charProc);
     return this.image.GetImage();
   }

@@ -115,17 +115,17 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     return base.Dict.GetNameAsString(global::DripSharp.PdfCarton.Cos.COSName.BaseFont);
   }
 
-  public override global::SkiaSharp.SKPath GetPath(string name) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(string name) {
     if (((global::DripSharp.Runtime.JavaCompat.Equals(name, ".notdef") && !(this.IsEmbedded()))
       && !(this.IsStandard14()))) {
-      return new global::SkiaSharp.SKPath();
+      return global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
     }
     if (global::DripSharp.Runtime.JavaCompat.Equals("sfthyphen", name)) {
       return this.genericFont.GetPath("hyphen");
     }
     if (global::DripSharp.Runtime.JavaCompat.Equals("nbspace", name)) {
       if (!(this.HasGlyph("space"))) {
-        return new global::SkiaSharp.SKPath();
+        return global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
       }
       return this.genericFont.GetPath("space");
     }
@@ -144,7 +144,7 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     return this.HasGlyph(name);
   }
 
-  public virtual global::SkiaSharp.SKPath GetPath(int code) {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(int code) {
     string name = this.GetEncoding().GetName(code);
     name = this.getNameInFont(name);
     if (global::DripSharp.Runtime.JavaCompat.Equals("sfthyphen", name)) {
@@ -152,19 +152,19 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
     }
     if (global::DripSharp.Runtime.JavaCompat.Equals("nbspace", name)) {
       if (!(this.HasGlyph("space"))) {
-        return new global::SkiaSharp.SKPath();
+        return global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
       }
       return this.GetPath("space");
     }
     return this.GetPath(name);
   }
 
-  public virtual global::SkiaSharp.SKPath GetNormalizedPath(int code) {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetNormalizedPath(int code) {
     string name = this.GetEncoding().GetName(code);
     name = this.getNameInFont(name);
     if (global::DripSharp.Runtime.JavaCompat.Equals("nbspace", name)) {
       if (!(this.HasGlyph("space"))) {
-        return new global::SkiaSharp.SKPath();
+        return global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
       }
       name = "space";
     } else {
@@ -172,7 +172,7 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
         name = "hyphen";
       }
     }
-    global::SkiaSharp.SKPath path = this.GetPath(name);
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path = this.GetPath(name);
     if ((path == default!)) {
       return this.GetPath(".notdef");
     }

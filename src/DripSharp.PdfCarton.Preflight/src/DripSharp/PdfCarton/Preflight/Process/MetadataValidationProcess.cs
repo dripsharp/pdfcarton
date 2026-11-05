@@ -158,7 +158,7 @@ public class MetadataValidationProcess
         "xapGImg:image decoded base64 content is not in JPEG format"));
       return;
     }
-    global::SkiaSharp.SKBitmap bim;
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim;
     try {
       bim
         = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(global::DripSharp.Runtime.JavaCompat.NewMemoryStream(binImage));
@@ -173,12 +173,14 @@ public class MetadataValidationProcess
         new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataFormat,
         "xapGImg:format must be 'JPEG'"));
     }
-    if ((bim.Height != global::DripSharp.Runtime.JavaCompat.Unbox(tb.GetHeight()))) {
+    if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim)
+      != global::DripSharp.Runtime.JavaCompat.Unbox(tb.GetHeight()))) {
       this.AddValidationError(ctx,
         new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataFormat,
         "xapGImg:height does not match the actual base64-encoded thumbnail image data"));
     }
-    if ((bim.Width != global::DripSharp.Runtime.JavaCompat.Unbox(tb.GetWidth()))) {
+    if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim)
+      != global::DripSharp.Runtime.JavaCompat.Unbox(tb.GetWidth()))) {
       this.AddValidationError(ctx,
         new global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError(global::DripSharp.PdfCarton.Preflight.PreflightConstants.ErrorMetadataFormat,
         "xapGImg:width does not match the actual base64-encoded thumbnail image data"));

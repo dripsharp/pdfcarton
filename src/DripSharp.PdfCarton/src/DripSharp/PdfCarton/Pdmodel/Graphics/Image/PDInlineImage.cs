@@ -238,12 +238,13 @@ public sealed class PDInlineImage : global::DripSharp.PdfCarton.Pdmodel.Graphics
     return this.decodedData;
   }
 
-  public global::SkiaSharp.SKBitmap GetImage() {
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetImage() {
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetRGBImage(this,
       (global::DripSharp.PdfCarton.Cos.COSArray)default!);
   }
 
-  public global::SkiaSharp.SKBitmap GetImage(global::SkiaSharp.SKRectI region, int subsampling) {
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetImage(global::SkiaSharp.SKRectI region,
+    int subsampling) {
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetRGBImage(this,
       region, subsampling, (global::DripSharp.PdfCarton.Cos.COSArray)default!);
   }
@@ -252,11 +253,11 @@ public sealed class PDInlineImage : global::DripSharp.PdfCarton.Pdmodel.Graphics
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.SampledImageReader.GetRawRaster(this);
   }
 
-  public global::SkiaSharp.SKBitmap GetRawImage() {
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetRawImage() {
     return this.GetColorSpace().ToRawImage(this.GetRawRaster());
   }
 
-  public global::SkiaSharp.SKBitmap GetStencilImage(global::DripSharp.Runtime.JavaPaint paint) {
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetStencilImage(global::DripSharp.Runtime.JavaPaint paint) {
     if (!(this.IsStencil())) {
       throw new global::System.InvalidOperationException("Image is not a stencil");
     }

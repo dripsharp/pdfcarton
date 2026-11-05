@@ -315,8 +315,8 @@ public class TestOptionalContentGroups {
   }
 
   internal virtual void testOCGGenerationSameNameCanHaveSameVisibilityOff() {
-    global::SkiaSharp.SKBitmap expectedImage;
-    global::SkiaSharp.SKBitmap actualImage; {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage expectedImage;
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage actualImage; {
       global::DripSharp.PdfCarton.Pdmodel.PDDocument doc__339_25
         = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
       global::System.Exception __dripsharpPrimary_339_25_0 = null!;

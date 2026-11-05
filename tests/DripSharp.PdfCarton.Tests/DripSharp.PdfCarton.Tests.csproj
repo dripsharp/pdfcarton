@@ -24,6 +24,15 @@
     <ProjectReference Include="../../src/DripSharp.PdfCarton.Preflight/DripSharp.PdfCarton.Preflight.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Fixtures/cmyk-h2v1.jpg" TargetPath="Fixtures/cmyk-h2v1.jpg" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures/cmyk-h3v1.jpg" TargetPath="Fixtures/cmyk-h3v1.jpg" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures/cmyk-narrow3.jpg" TargetPath="Fixtures/cmyk-narrow3.jpg" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures/cmyk.jpg" TargetPath="Fixtures/cmyk.jpg" CopyToOutputDirectory="PreserveNewest" />
     <None Update="Fixtures/metadata.xmp" TargetPath="Fixtures/metadata.xmp" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures/ycck-h1v2.jpg" TargetPath="Fixtures/ycck-h1v2.jpg" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures/ycck-h1v4.jpg" TargetPath="Fixtures/ycck-h1v4.jpg" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures/ycck-narrow2.jpg" TargetPath="Fixtures/ycck-narrow2.jpg" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures/ycck-progressive.jpg" TargetPath="Fixtures/ycck-progressive.jpg" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures/ycck.jpg" TargetPath="Fixtures/ycck.jpg" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

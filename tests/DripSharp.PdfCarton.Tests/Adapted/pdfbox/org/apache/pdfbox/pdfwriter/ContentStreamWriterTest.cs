@@ -34,7 +34,8 @@ public class ContentStreamWriterTest {
         global::DripSharp.PdfCarton.Rendering.PDFRenderer r
           = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc);
         for (int i = 0; (i < doc.GetNumberOfPages()); ++i) {
-          global::SkiaSharp.SKBitmap bim1 = r.RenderImageWithDPI(i, (float)(96));
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim1 = r.RenderImageWithDPI(i,
+            (float)(96));
           global::DripSharp.PdfCarton.Tests.Support.WriteImage(bim1,
             global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "png"),
             global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Pdfwriter.ContentStreamWriterTest.TESTDIRIN,

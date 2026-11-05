@@ -21,7 +21,7 @@ public class PDFRenderer {
 
   private global::DripSharp.Runtime.PdfCartonRenderingHints renderingHints = default!;
 
-  private global::SkiaSharp.SKBitmap pageImage = null!;
+  private global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage pageImage = null!;
 
   private float imageDownscalingOptimizationThreshold = 0.5F;
 
@@ -72,32 +72,34 @@ public class PDFRenderer {
     this.imageDownscalingOptimizationThreshold = imageDownscalingOptimizationThreshold;
   }
 
-  public virtual global::SkiaSharp.SKBitmap RenderImage(int pageIndex) {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage RenderImage(int pageIndex) {
     return this.RenderImage(pageIndex, (float)(1));
   }
 
-  public virtual global::SkiaSharp.SKBitmap RenderImage(int pageIndex, float scale) {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage RenderImage(int pageIndex,
+    float scale) {
     return this.RenderImage(pageIndex, scale, global::DripSharp.PdfCarton.Rendering.ImageType.Rgb);
   }
 
-  public virtual global::SkiaSharp.SKBitmap RenderImageWithDPI(int pageIndex, float dpi) {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage RenderImageWithDPI(int pageIndex,
+    float dpi) {
     return this.RenderImage(pageIndex, ((float)dpi / (float)72.0F),
       global::DripSharp.PdfCarton.Rendering.ImageType.Rgb);
   }
 
-  public virtual global::SkiaSharp.SKBitmap RenderImageWithDPI(int pageIndex, float dpi,
-    global::DripSharp.PdfCarton.Rendering.ImageType imageType) {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage RenderImageWithDPI(int pageIndex,
+    float dpi, global::DripSharp.PdfCarton.Rendering.ImageType imageType) {
     return this.RenderImage(pageIndex, ((float)dpi / (float)72.0F), imageType);
   }
 
-  public virtual global::SkiaSharp.SKBitmap RenderImage(int pageIndex, float scale,
-    global::DripSharp.PdfCarton.Rendering.ImageType imageType) {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage RenderImage(int pageIndex,
+    float scale, global::DripSharp.PdfCarton.Rendering.ImageType imageType) {
     return this.RenderImage(pageIndex, scale, imageType, ((this.defaultDestination == default!)
       ? global::DripSharp.PdfCarton.Rendering.RenderDestination.Export : this.defaultDestination));
   }
 
-  public virtual global::SkiaSharp.SKBitmap RenderImage(int pageIndex, float scale,
-    global::DripSharp.PdfCarton.Rendering.ImageType imageType,
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage RenderImage(int pageIndex,
+    float scale, global::DripSharp.PdfCarton.Rendering.ImageType imageType,
     global::DripSharp.PdfCarton.Rendering.RenderDestination destination) {
     global::DripSharp.PdfCarton.Pdmodel.PDPage page = this.pageTree.Get(pageIndex);
     global::DripSharp.PdfCarton.Pdmodel.Common.PDRectangle cropBox = page.GetCropBox();
@@ -121,7 +123,7 @@ public class PDFRenderer {
     } else {
       bimType = imageType.toBufferedImageType();
     }
-    global::SkiaSharp.SKBitmap image;
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image;
     if (((rotationAngle == 90) || (rotationAngle == 270))) {
       image = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(heightPx, widthPx,
         bimType);
@@ -140,7 +142,8 @@ public class PDFRenderer {
       } else {
         g.SetBackground(global::DripSharp.Runtime.JavaColor.White);
       }
-      g.ClearRect(0, 0, image.Width, image.Height);
+      g.ClearRect(0, 0, global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+        global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image));
       this.transform(g, page.GetRotation(), cropBox, scale, scale);
       global::DripSharp.Runtime.PdfCartonRenderingHints actualRenderingHints = ((this.renderingHints
         == default!) ? this.createDefaultRenderingHints(g) : this.renderingHints);
@@ -155,13 +158,16 @@ public class PDFRenderer {
     }
     if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(image)
       != imageType.toBufferedImageType())) {
-      global::SkiaSharp.SKBitmap newImage
-        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(image.Width, image.Height,
+      global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage newImage
+        = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+        global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image),
         imageType.toBufferedImageType());
       global::DripSharp.Runtime.PdfCartonGraphics2D dstGraphics
         = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(newImage);
       dstGraphics.SetBackground(global::DripSharp.Runtime.JavaColor.White);
-      dstGraphics.ClearRect(0, 0, image.Width, image.Height);
+      dstGraphics.ClearRect(0, 0,
+        global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image),
+        global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image));
       dstGraphics.DrawImage(image, 0, 0, (object)default!);
       dstGraphics.Dispose();
       image = newImage;
@@ -295,7 +301,7 @@ public class PDFRenderer {
     return false;
   }
 
-  internal virtual global::SkiaSharp.SKBitmap getPageImage() {
+  internal virtual global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage getPageImage() {
     return this.pageImage;
   }
 }

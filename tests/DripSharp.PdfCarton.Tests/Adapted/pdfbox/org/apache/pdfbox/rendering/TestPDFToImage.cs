@@ -9,9 +9,9 @@ public class TestPDFToImage {
 
   public TestPDFToImage() {}
 
-  private static global::SkiaSharp.SKBitmap createEmptyDiffImage(int minWidth, int minHeight,
-    int maxWidth, int maxHeight) {
-    global::SkiaSharp.SKBitmap bim3
+  private static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage createEmptyDiffImage(int minWidth,
+    int minHeight, int maxWidth, int maxHeight) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim3
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(maxWidth, maxHeight,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
     global::DripSharp.Runtime.PdfCartonGraphics2D graphics
@@ -26,13 +26,21 @@ public class TestPDFToImage {
     return bim3;
   }
 
-  private static global::SkiaSharp.SKBitmap diffImages(global::SkiaSharp.SKBitmap bim1,
-    global::SkiaSharp.SKBitmap bim2) {
-    int minWidth = global::System.Math.Min(bim1.Width, bim2.Width);
-    int minHeight = global::System.Math.Min(bim1.Height, bim2.Height);
-    int maxWidth = global::System.Math.Max(bim1.Width, bim2.Width);
-    int maxHeight = global::System.Math.Max(bim1.Height, bim2.Height);
-    global::SkiaSharp.SKBitmap bim3 = default!;
+  private static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage diffImages(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim1,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim2) {
+    int minWidth
+      = global::System.Math.Min(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim1),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim2));
+    int minHeight
+      = global::System.Math.Min(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim1),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim2));
+    int maxWidth
+      = global::System.Math.Max(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim1),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim2));
+    int maxHeight
+      = global::System.Math.Max(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim1),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim2));
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim3 = default!;
     if (((minWidth != maxWidth) || (minHeight != maxHeight))) {
       bim3 = global::DripSharp.PdfCarton.Rendering.TestPDFToImage.createEmptyDiffImage(minWidth,
         minHeight, maxWidth, maxHeight);
@@ -116,7 +124,8 @@ public class TestPDFToImage {
             global::DripSharp.Runtime.JavaCompat.OpenFileOutput(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
               outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
               global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".rendererror")))).Dispose();
-            global::SkiaSharp.SKBitmap image = renderer.RenderImageWithDPI(i, (float)(96));
+            global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image
+              = renderer.RenderImageWithDPI(i, (float)(96));
             global::DripSharp.Runtime.JavaCompat.FileDelete(global::DripSharp.Runtime.JavaCompat.NewJavaFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
               outDir), global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
               global::DripSharp.Runtime.JavaCompat.Concat(fileName, ".rendererror"))));
@@ -225,7 +234,7 @@ public class TestPDFToImage {
         } else {
           if (!(global::DripSharp.PdfCarton.Rendering.TestPDFToImage.filesAreIdentical(outFile,
             inFile))) {
-            global::SkiaSharp.SKBitmap bim3
+            global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim3
               = global::DripSharp.PdfCarton.Rendering.TestPDFToImage.diffImages(global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(inFile),
               global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(outFile));
             if ((bim3 != default!)) {

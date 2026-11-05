@@ -742,7 +742,7 @@ internal class AppearanceGeneratorHelper {
   }
 
   private float resolveGlyphHeight(global::DripSharp.PdfCarton.Pdmodel.Font.PDFont font, int code) {
-    global::SkiaSharp.SKPath path = default!;
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path = default!;
     if ((font is global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font)) {
       global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font t3Font
         = (global::DripSharp.PdfCarton.Pdmodel.Font.PDType3Font)(font!);

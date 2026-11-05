@@ -17,7 +17,7 @@ public class Type1CharString {
 
   private readonly string glyphName = null!;
 
-  private global::SkiaSharp.SKPath path = default!;
+  private global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path = default!;
 
   private int width = 0;
 
@@ -72,7 +72,7 @@ public class Type1CharString {
     return this.width;
   }
 
-  public virtual global::SkiaSharp.SKPath GetPath() {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath() {
     lock (global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString.LOG) {
       if ((this.path == default!)) {
         this.render();
@@ -82,7 +82,7 @@ public class Type1CharString {
   }
 
   private void render() {
-    this.path = new global::SkiaSharp.SKPath();
+    this.path = global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontCompat.CreatePath();
     this.leftSideBearing = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaPoint2D((float)(0),
       (float)(0));
     this.width = 0;
@@ -420,7 +420,7 @@ public class Type1CharString {
     try {
       global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString accent
         = this.font.GetType1CharString(accentName);
-      global::SkiaSharp.SKPath accentPath = accent.GetPath();
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D accentPath = accent.GetPath();
       if ((this.path == accentPath)) {
         global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Fonts.Cff.Type1CharString.LOG,
           global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.StringValueOf(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat(global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.Concat("Path for ",

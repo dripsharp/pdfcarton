@@ -91,7 +91,7 @@ internal sealed class DCTFilter : global::DripSharp.PdfCarton.Filter.Filter {
     if ((global::DripSharp.Runtime.JavaCompat.Equals("3", numChannels) || (numChannels.Length
       == 0))) {
       try {
-        global::SkiaSharp.SKBitmap image = reader.Read(0, irp);
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image = reader.Read(0, irp);
         if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfColorComponents
           == 4)) {
           throw new global::System.IO.IOException("CMYK image");

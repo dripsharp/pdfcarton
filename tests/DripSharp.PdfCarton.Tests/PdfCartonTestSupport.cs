@@ -66,51 +66,6 @@ internal static class Support
         }
     }
 
-    internal static void CloseQuietly(object? closeable)
-    {
-        try
-        {
-            switch (closeable)
-            {
-                case global::System.Action action:
-                    action();
-                    break;
-                case global::System.IDisposable disposable:
-                    disposable.Dispose();
-                    break;
-            }
-        }
-        catch
-        {
-            // This is the exact contract of Java IOUtils.closeQuietly.
-        }
-    }
-
-    internal static global::System.IO.IOException? CloseAndLogException(
-        object? closeable,
-        global::Microsoft.Extensions.Logging.ILogger _,
-        string __,
-        global::System.IO.IOException? initial)
-    {
-        try
-        {
-            switch (closeable)
-            {
-                case global::System.Action action:
-                    action();
-                    break;
-                case global::System.IDisposable disposable:
-                    disposable.Dispose();
-                    break;
-            }
-        }
-        catch (global::System.IO.IOException error)
-        {
-            return initial ?? error;
-        }
-        return initial;
-    }
-
     internal static global::System.IO.TextReader NewInputStreamReader(
         global::System.IO.Stream input, string encoding) =>
         new global::System.IO.StreamReader(
@@ -424,31 +379,33 @@ internal static class Support
     internal static int ColorRgb(global::DripSharp.Runtime.JavaColor color) =>
         unchecked((int)(uint)(global::SkiaSharp.SKColor)color);
 
-    internal static global::SkiaSharp.SKBitmap CreateCompatibleImage(
+    internal static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage CreateCompatibleImage(
         int width, int height, int transparency) =>
         global::DripSharp.Runtime.PdfCartonFontCompat.CreateCompatibleImage(
             width, height, transparency);
 
-    internal static bool IsAlphaPremultiplied(global::SkiaSharp.SKBitmap image) =>
+    internal static bool IsAlphaPremultiplied(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image) =>
         image.AlphaType == global::SkiaSharp.SKAlphaType.Premul;
 
-    internal static global::SkiaSharp.SKBitmap Subimage(
-        global::SkiaSharp.SKBitmap source,
+    // A copy of the region (the tests only read subimages).
+    internal static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage Subimage(
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage source,
         int x,
         int y,
         int width,
         int height)
     {
-        var result = new global::SkiaSharp.SKBitmap(
-            width, height, source.ColorType, source.AlphaType);
-        if (!source.ExtractSubset(
-                result,
-                new global::SkiaSharp.SKRectI(x, y, x + width, y + height)))
-        {
-            result.Dispose();
+        if (x < 0 || y < 0 || width <= 0 || height <= 0 ||
+            (long)x + width > source.Width || (long)y + height > source.Height)
             throw new global::System.ArgumentException(
                 "Requested subimage is outside the source image.");
-        }
+        var result = new global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage(source.Info.WithSize(width, height));
+        var from = source.GetPixelSpan();
+        var to = result.GetPixelSpan();
+        var rowLength = width * source.BytesPerPixel;
+        for (int row = 0; row < height; row++)
+            from.Slice((y + row) * source.RowBytes + x * source.BytesPerPixel, rowLength)
+                .CopyTo(to.Slice(row * result.RowBytes, rowLength));
         global::DripSharp.Runtime.PdfCartonFontCompat.RegisterImageType(
             result,
             global::DripSharp.Runtime.PdfCartonFontCompat.GetImageType(source));
@@ -456,7 +413,7 @@ internal static class Support
     }
 
     internal static global::DripSharp.Runtime.JavaRaster CopyImageData(
-        global::SkiaSharp.SKBitmap source,
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage source,
         global::DripSharp.Runtime.JavaRaster? destination)
     {
         global::DripSharp.Runtime.JavaRaster sourceRaster =
@@ -506,7 +463,7 @@ internal static class Support
             "Unsupported rectangular raster data layout.", nameof(values));
     }
 
-    internal static global::SkiaSharp.SKBitmap ReadImage(global::System.Uri uri)
+    internal static global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ReadImage(global::System.Uri uri)
     {
         using global::System.IO.Stream input = uri.IsFile
             ? global::System.IO.File.OpenRead(uri.LocalPath)
@@ -515,7 +472,7 @@ internal static class Support
     }
 
     internal static bool WriteImage(
-        global::SkiaSharp.SKBitmap image,
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image,
         string format,
         global::DripSharp.Runtime.JavaFile destination)
     {
@@ -525,20 +482,18 @@ internal static class Support
                 ? global::SkiaSharp.SKEncodedImageFormat.Jpeg
                 : global::SkiaSharp.SKEncodedImageFormat.Png;
         global::System.IO.Directory.CreateDirectory(destination.DirectoryName!);
-        using global::SkiaSharp.SKImage encodedImage =
-            global::SkiaSharp.SKImage.FromBitmap(image);
-        using global::SkiaSharp.SKData data = encodedImage.Encode(encodedFormat, 100);
+        byte[] data = image.Encode(encodedFormat, 100);
         using global::System.IO.Stream output = new global::System.IO.FileStream(
             destination.OpenPath(),
             global::System.IO.FileMode.Create,
             global::System.IO.FileAccess.Write,
             global::System.IO.FileShare.None);
-        data.SaveTo(output);
+        output.Write(data, 0, data.Length);
         return true;
     }
 
     internal static bool WriteImage(
-        global::SkiaSharp.SKBitmap image,
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image,
         string format,
         global::System.IO.Stream output)
     {
@@ -547,10 +502,8 @@ internal static class Support
             format.Equals("jpeg", global::System.StringComparison.OrdinalIgnoreCase)
                 ? global::SkiaSharp.SKEncodedImageFormat.Jpeg
                 : global::SkiaSharp.SKEncodedImageFormat.Png;
-        using global::SkiaSharp.SKImage encodedImage =
-            global::SkiaSharp.SKImage.FromBitmap(image);
-        using global::SkiaSharp.SKData data = encodedImage.Encode(encodedFormat, 100);
-        data.SaveTo(output);
+        byte[] data = image.Encode(encodedFormat, 100);
+        output.Write(data, 0, data.Length);
         return true;
     }
 
@@ -724,6 +677,15 @@ internal static class Support
         return probe;
     }
 
+    internal static string NewLifecycleContractArtifactRoot()
+    {
+        string root = MutableArtifactRoot(global::System.IO.Path.Combine(
+            "LifecycleContractArtifacts",
+            global::System.Guid.NewGuid().ToString("N")));
+        global::System.IO.Directory.CreateDirectory(root);
+        return root;
+    }
+
     private static void ResetMutableArtifactRoot(string name)
     {
         string root = MutableArtifactRoot(name);
@@ -876,8 +838,24 @@ internal static class Support
     }
 }
 
+// The mapped mutable roots are shared by every test class, and upstream
+// @BeforeAll setup creates subdirectories in them once per class (sometimes
+// early, when another class calls a static helper). This collection never
+// runs alongside other collections, even if parallelization is enabled.
+[global::Xunit.CollectionDefinition(
+    PdfCartonTestSupportContractTests.MutableArtifactRootsCollection,
+    DisableParallelization = true)]
+public sealed class PdfCartonMutableArtifactRootsCollection
+{
+}
+
+[global::Xunit.Collection(
+    PdfCartonTestSupportContractTests.MutableArtifactRootsCollection)]
 public sealed class PdfCartonTestSupportContractTests
 {
+    internal const string MutableArtifactRootsCollection =
+        "PdfCarton mutable artifact roots";
+
     [global::Xunit.Fact]
     public void MutableArtifactCleanupPreservesGovernedFixturesAndBuildInputs()
     {
@@ -887,16 +865,47 @@ public sealed class PdfCartonTestSupportContractTests
             Support.TestPath("pdfbox", "target/test-input-ext"),
             Support.TestPath("pdfbox", "target/test-output")
         };
-        foreach (string root in mappedMutableRoots)
+        string neighbourArtifact = Support.TestPath(
+            "pdfbox", "target/test-output/lifecycle-neighbour/artifact.txt");
+        global::System.IO.Directory.CreateDirectory(
+            global::System.IO.Path.GetDirectoryName(neighbourArtifact)!);
+        global::System.IO.File.WriteAllText(
+            neighbourArtifact, "artifact owned by another test class");
+        string setAside = Support.NewLifecycleContractArtifactRoot();
+        string[] setAsideRoots = new string[mappedMutableRoots.Length];
+        try
         {
-            if (global::System.IO.Directory.Exists(root))
-                global::System.IO.Directory.Delete(root, recursive: true);
-            global::Xunit.Assert.False(global::System.IO.Directory.Exists(root), root);
+            for (int i = 0; i < mappedMutableRoots.Length; i++)
+            {
+                string root = mappedMutableRoots[i];
+                setAsideRoots[i] = global::System.IO.Path.Combine(
+                    setAside, i.ToString(
+                        global::System.Globalization.CultureInfo.InvariantCulture));
+                if (global::System.IO.Directory.Exists(root))
+                    global::System.IO.Directory.Move(root, setAsideRoots[i]);
+                global::Xunit.Assert.False(global::System.IO.Directory.Exists(root), root);
+            }
+            Support.InitializeTestEnvironment();
+            Support.InitializeTestEnvironment();
+            foreach (string root in mappedMutableRoots)
+                global::Xunit.Assert.True(global::System.IO.Directory.Exists(root), root);
         }
-        Support.InitializeTestEnvironment();
-        Support.InitializeTestEnvironment();
-        foreach (string root in mappedMutableRoots)
-            global::Xunit.Assert.True(global::System.IO.Directory.Exists(root), root);
+        finally
+        {
+            for (int i = 0; i < mappedMutableRoots.Length; i++)
+            {
+                if (setAsideRoots[i] is null ||
+                    !global::System.IO.Directory.Exists(setAsideRoots[i])) continue;
+                if (global::System.IO.Directory.Exists(mappedMutableRoots[i]))
+                    global::System.IO.Directory.Delete(mappedMutableRoots[i], recursive: true);
+                global::System.IO.Directory.Move(setAsideRoots[i], mappedMutableRoots[i]);
+            }
+            global::System.IO.Directory.Delete(setAside, recursive: true);
+        }
+        global::Xunit.Assert.True(
+            global::System.IO.File.Exists(neighbourArtifact), neighbourArtifact);
+        global::System.IO.Directory.Delete(
+            global::System.IO.Path.GetDirectoryName(neighbourArtifact)!, recursive: true);
 
         GeneratedSuiteIntegrityTests.VerifyGovernedFixtures();
         string assembly = typeof(PdfCartonTestSupportContractTests).Assembly.Location;
@@ -926,6 +935,32 @@ public sealed class PdfCartonTestSupportContractTests
             "io", "src/test/resources/org/apache/pdfbox/io/RandomAccessReadFile1.txt");
         global::Xunit.Assert.True(
             global::System.IO.File.Exists(restoredFixture), restoredFixture);
+    }
+
+    [global::Xunit.Fact]
+    public void MutableArtifactCleanupRunsInNonParallelCollection()
+    {
+        global::System.Reflection.CustomAttributeData collection =
+            global::Xunit.Assert.Single(
+                typeof(PdfCartonTestSupportContractTests).GetCustomAttributesData(),
+                data => data.AttributeType == typeof(global::Xunit.CollectionAttribute));
+        global::Xunit.Assert.Equal(
+            MutableArtifactRootsCollection,
+            global::Xunit.Assert.Single(collection.ConstructorArguments).Value);
+
+        global::System.Reflection.CustomAttributeData definition =
+            global::Xunit.Assert.Single(
+                typeof(PdfCartonMutableArtifactRootsCollection).GetCustomAttributesData(),
+                data => data.AttributeType ==
+                        typeof(global::Xunit.CollectionDefinitionAttribute));
+        global::Xunit.Assert.Equal(
+            MutableArtifactRootsCollection,
+            global::Xunit.Assert.Single(definition.ConstructorArguments).Value);
+        global::System.Reflection.CustomAttributeNamedArgument disable =
+            global::Xunit.Assert.Single(
+                definition.NamedArguments,
+                argument => argument.MemberName == "DisableParallelization");
+        global::Xunit.Assert.True(disable.TypedValue.Value is true);
     }
 
     [global::Xunit.Fact]

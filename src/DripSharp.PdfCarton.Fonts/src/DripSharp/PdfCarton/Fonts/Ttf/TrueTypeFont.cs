@@ -389,11 +389,11 @@ global::DripSharp.PdfCarton.Fonts.FontBoxFont {
     return unchecked(-1);
   }
 
-  public virtual global::SkiaSharp.SKPath GetPath(string name) {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(string name) {
     int gid = this.NameToGID(name);
     global::DripSharp.PdfCarton.Fonts.Ttf.GlyphData glyph = this.GetGlyph().GetGlyph(gid);
     if ((glyph == default!)) {
-      return new global::SkiaSharp.SKPath();
+      return global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonFontCompat.CreatePath();
     } else {
       return glyph.GetPath();
     }

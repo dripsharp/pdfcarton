@@ -114,7 +114,7 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
     }
   }
 
-  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
     if ((this.attributes != default!)) {
       return this.toRGBWithAttributes(raster);
     } else {
@@ -122,10 +122,10 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
     }
   }
 
-  private global::SkiaSharp.SKBitmap toRGBWithAttributes(global::DripSharp.Runtime.JavaRaster raster) {
+  private global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage toRGBWithAttributes(global::DripSharp.Runtime.JavaRaster raster) {
     int width = raster.Width;
     int height = raster.Height;
-    global::SkiaSharp.SKBitmap rgbImage
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage rgbImage
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
     global::DripSharp.Runtime.JavaRaster rgbRaster
@@ -165,7 +165,7 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
           componentRaster.SetPixel(x__255_26, y__253_22, componentSamples);
         }
       }
-      global::SkiaSharp.SKBitmap rgbComponentImage
+      global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage rgbComponentImage
         = componentColorSpace.ToRGBImage(componentRaster);
       global::DripSharp.Runtime.JavaRaster rgbComponentRaster
         = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(rgbComponentImage);
@@ -185,14 +185,14 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
     return rgbImage;
   }
 
-  private global::SkiaSharp.SKBitmap toRGBWithTintTransform(global::DripSharp.Runtime.JavaRaster raster) {
+  private global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage toRGBWithTintTransform(global::DripSharp.Runtime.JavaRaster raster) {
     global::System.Collections.Generic.IDictionary<string, int[]> map1
       = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<string, int[]>();
     string key;
     global::System.Text.StringBuilder keyBuilder = new global::System.Text.StringBuilder();
     int width = raster.Width;
     int height = raster.Height;
-    global::SkiaSharp.SKBitmap rgbImage
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage rgbImage
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
     global::DripSharp.Runtime.JavaRaster rgbRaster
@@ -277,7 +277,7 @@ public class PDDeviceN : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDSp
     return this.alternateColorSpace.ToRGB(altValue);
   }
 
-  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
     return default!;
   }
 

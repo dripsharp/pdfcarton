@@ -141,7 +141,7 @@ global::DripSharp.PdfCarton.Fonts.Type1.Type1CharStringReader {
     return this.fontName;
   }
 
-  public global::SkiaSharp.SKPath GetPath(string name) {
+  public global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(string name) {
     return this.GetType1CharString(name).GetPath();
   }
 

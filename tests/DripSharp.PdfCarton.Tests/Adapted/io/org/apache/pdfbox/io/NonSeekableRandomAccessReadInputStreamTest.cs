@@ -92,7 +92,7 @@ public class NonSeekableRandomAccessReadInputStreamTest {
         global::DripSharp.Testing.JavaAssertions.Equal((long)(0), randomAccessSource.GetPosition(),
           null);
         sbyte[] buffer = new sbyte[4];
-        ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource))).Read(buffer);
+        ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource)).Read(buffer);
         global::DripSharp.Testing.JavaAssertions.Equal(0, (int)(buffer[0]), null);
         global::DripSharp.Testing.JavaAssertions.Equal(3, (int)(buffer[3]), null);
         global::DripSharp.Testing.JavaAssertions.Equal((long)(4), randomAccessSource.GetPosition(),
@@ -161,7 +161,7 @@ public class NonSeekableRandomAccessReadInputStreamTest {
         randomAccessSource.Read();
         sbyte[] readBytes = new sbyte[6];
         global::DripSharp.Testing.JavaAssertions.Equal(readBytes.Length,
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource))).Read(readBytes),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessSource)).Read(readBytes),
           null);
         global::DripSharp.Testing.JavaAssertions.Equal((long)(8), randomAccessSource.GetPosition(),
           null);
@@ -289,11 +289,10 @@ public class NonSeekableRandomAccessReadInputStreamTest {
       global::System.Exception __dripsharpPrimary_233_31_0 = null!;
       try {
         int len
-          = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(rar))).Read(new sbyte[unchecked((ba.Length
+          = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(rar)).Read(new sbyte[unchecked((ba.Length
           - rewSize))]);
         global::DripSharp.Testing.JavaAssertions.Equal(unchecked((ba.Length - rewSize)), len, null);
-        len
-          = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(rar))).Read(new sbyte[rewSize]);
+        len = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(rar)).Read(new sbyte[rewSize]);
         global::DripSharp.Testing.JavaAssertions.Equal(rewSize, len, null);
         int by = rar.Read();
         global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), by, null);
@@ -325,7 +324,7 @@ public class NonSeekableRandomAccessReadInputStreamTest {
         global::DripSharp.Testing.JavaAssertions.Equal((long)(unchecked((4096 * 2))), rar.Length(),
           null);
         int len
-          = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(rar))).Read(new sbyte[unchecked((4096
+          = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(rar)).Read(new sbyte[unchecked((4096
           + 1))]);
         global::DripSharp.Testing.JavaAssertions.Equal((long)(unchecked((4096 * 2))), rar.Length(),
           null);
@@ -337,14 +336,12 @@ public class NonSeekableRandomAccessReadInputStreamTest {
         global::DripSharp.Testing.JavaAssertions.Equal((long)(unchecked((4096 * 2))), rar.Length(),
           null);
         sbyte[] buf = new sbyte[4096];
-        len
-          = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(rar))).Read(buf);
+        len = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(rar)).Read(buf);
         global::DripSharp.Testing.JavaAssertions.Equal(unchecked((4096 - 2)), len, null);
         global::DripSharp.Testing.JavaAssertions.Equal(4, (int)(buf[unchecked((len - 1))]), null);
         global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1), rar.Read(), null);
         global::DripSharp.Testing.JavaAssertions.Equal(unchecked(-1),
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(rar))).Read(new sbyte[1]),
-          null);
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(rar)).Read(new sbyte[1]), null);
       } catch (global::System.Exception __dripsharpCaught_257_31_0) {
         __dripsharpPrimary_257_31_0 = __dripsharpCaught_257_31_0;
         throw;
@@ -610,8 +607,7 @@ public class NonSeekableRandomAccessReadInputStreamTest {
       global::System.Exception __dripsharpPrimary_523_31_0 = null!;
       try {
         sbyte[] buf = new sbyte[4096];
-        int bytesRead
-          = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(rar))).Read(buf);
+        int bytesRead = ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(rar)).Read(buf);
         global::DripSharp.Testing.JavaAssertions.Equal(4096, bytesRead, null);
         bytesRead = rar.Read(buf, 0, 3);
         global::DripSharp.Testing.JavaAssertions.Equal(3, bytesRead, null);

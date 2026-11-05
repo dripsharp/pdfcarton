@@ -188,7 +188,7 @@ public sealed class Standard14Fonts {
       baseName);
   }
 
-  public static global::SkiaSharp.SKPath GetGlyphPath(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName baseName,
+  public static global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetGlyphPath(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName baseName,
     string glyphName) {
     if (!global::DripSharp.Runtime.JavaCompat.Equals(glyphName, ".notdef")) {
       global::DripSharp.PdfCarton.Fonts.FontBoxFont mappedFont
@@ -222,7 +222,7 @@ public sealed class Standard14Fonts {
         }
       }
     }
-    return new global::SkiaSharp.SKPath();
+    return global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
   }
 
   private static global::DripSharp.PdfCarton.Pdmodel.Font.Encoding.GlyphList getGlyphList(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName baseName) {

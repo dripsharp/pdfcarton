@@ -19,14 +19,16 @@ public class TestQuality {
       try {
         global::DripSharp.PdfCarton.Rendering.PDFRenderer renderer
           = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(doc);
-        global::SkiaSharp.SKBitmap renderedImage = renderer.RenderImageWithDPI(0, (float)(300));
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage renderedImage
+          = renderer.RenderImageWithDPI(0, (float)(300));
         global::DripSharp.Testing.JavaAssertions.Equal(2,
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.ColorCount(renderedImage),
           null);
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject xObjectImage
           = (global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject)(doc.GetPage(0).GetResources().GetXObject(global::DripSharp.PdfCarton.Cos.COSName.GetPDFName(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           "I0")))!);
-        global::SkiaSharp.SKBitmap extractedImage = xObjectImage.GetImage();
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage extractedImage
+          = xObjectImage.GetImage();
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(extractedImage,
           renderedImage);
       } catch (global::System.Exception __dripsharpCaught_48_25_0) {

@@ -104,7 +104,7 @@ public class TestIOUtils {
 
   internal virtual void testCloseQuietlyNull() {
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(()
-      => global::DripSharp.PdfCarton.Tests.Support.CloseQuietly((global::System.Action)default!),
+      => global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly((global::System.IDisposable)default!),
       null);
   }
 
@@ -112,16 +112,17 @@ public class TestIOUtils {
     global::System.IO.MemoryStream stream
       = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(new sbyte[10]);
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(()
-      => global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(stream), null);
+      => global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(stream), null);
   }
 
   internal virtual void testCloseQuietlySuppressesException() {
     global::DripSharp.Testing.JavaAssertions.DoesNotThrow(() => {
-        global::System.Action failingCloseable = () => {
+        global::System.IDisposable failingCloseable
+        = new global::DripSharp.Runtime.JavaCloseableAdapter(() => {
           throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Tests.Support.TestPath("io",
           "Test IOException"));
-        };
-        global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(failingCloseable);
+        });
+        global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(failingCloseable);
       }, null);
   }
 
@@ -131,7 +132,7 @@ public class TestIOUtils {
     global::System.IO.MemoryStream stream
       = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(new sbyte[10]);
     global::System.IO.IOException result
-      = global::DripSharp.PdfCarton.Tests.Support.CloseAndLogException(stream, logger,
+      = global::DripSharp.PdfCarton.IO.IOUtils.CloseAndLogException(stream, logger,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "testResource"),
       (global::System.IO.IOException)default!);
     global::DripSharp.Testing.JavaAssertions.Null(result, null);
@@ -143,11 +144,12 @@ public class TestIOUtils {
     global::System.IO.IOException closeException
       = new global::System.IO.IOException(global::DripSharp.PdfCarton.Tests.Support.TestPath("io",
       "Close error"));
-    global::System.Action failingCloseable = () => {
-      throw closeException;
-    };
+    global::System.IDisposable failingCloseable
+      = new global::DripSharp.Runtime.JavaCloseableAdapter(() => {
+        throw closeException;
+      });
     global::System.IO.IOException result
-      = global::DripSharp.PdfCarton.Tests.Support.CloseAndLogException(failingCloseable, logger,
+      = global::DripSharp.PdfCarton.IO.IOUtils.CloseAndLogException(failingCloseable, logger,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "testResource"),
       (global::System.IO.IOException)default!);
     global::DripSharp.Testing.JavaAssertions.Equal(closeException, result, null);
@@ -159,12 +161,13 @@ public class TestIOUtils {
     global::System.IO.IOException initialException
       = new global::System.IO.IOException(global::DripSharp.PdfCarton.Tests.Support.TestPath("io",
       "Initial error"));
-    global::System.Action failingCloseable = () => {
-      throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Tests.Support.TestPath("io",
+    global::System.IDisposable failingCloseable
+      = new global::DripSharp.Runtime.JavaCloseableAdapter(() => {
+        throw new global::System.IO.IOException(global::DripSharp.PdfCarton.Tests.Support.TestPath("io",
         "Close error"));
-    };
+      });
     global::System.IO.IOException result
-      = global::DripSharp.PdfCarton.Tests.Support.CloseAndLogException(failingCloseable, logger,
+      = global::DripSharp.PdfCarton.IO.IOUtils.CloseAndLogException(failingCloseable, logger,
       global::DripSharp.PdfCarton.Tests.Support.TestPath("io", "testResource"), initialException);
     global::DripSharp.Testing.JavaAssertions.Equal(initialException, result, null);
   }

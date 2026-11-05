@@ -76,7 +76,7 @@ public class TestIsartorValidation {
       expectedPath));
     global::DripSharp.Runtime.JavaProperties props = new global::DripSharp.Runtime.JavaProperties();
     props.Load(expected);
-    global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(expected);
+    global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(expected);
     global::System.Collections.Generic.IList<object[]> data
       = new global::System.Collections.Generic.List<object[]>();
     global::System.Collections.Generic.ICollection<object> files

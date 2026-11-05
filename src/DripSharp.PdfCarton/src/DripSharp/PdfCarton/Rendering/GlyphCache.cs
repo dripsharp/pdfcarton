@@ -14,15 +14,17 @@ internal sealed class GlyphCache {
   private readonly global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont font = null!;
 
   private readonly global::System.Collections.Generic.IDictionary<int,
-    global::SkiaSharp.SKPath> cache = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int,
-    global::SkiaSharp.SKPath>();
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D> cache
+    = global::DripSharp.Runtime.JavaCompat.NewJavaDictionary<int,
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D>();
 
   internal GlyphCache(global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont font) {
     this.font = font;
   }
 
-  public global::SkiaSharp.SKPath GetPathForCharacterCode(int code) {
-    global::SkiaSharp.SKPath path = global::DripSharp.Runtime.JavaCompat.MapGet(this.cache, code);
+  public global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPathForCharacterCode(int code) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path
+      = global::DripSharp.Runtime.JavaCompat.MapGet(this.cache, code);
     if ((path != default!)) {
       return path;
     }
@@ -46,7 +48,7 @@ internal sealed class GlyphCache {
               code), " in "), ((object)(this.font)).GetType().Name), " "), fontName__59_24),
               " (embedded or system font used: "), simpleFont.GetFontBoxFont().GetName()), ")")));
             if (((code == 10) && simpleFont.IsStandard14())) {
-              path = new global::SkiaSharp.SKPath();
+              path = global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
               global::DripSharp.Runtime.JavaCompat.MapPut(this.cache, code, path);
               return path;
             }
@@ -67,7 +69,7 @@ internal sealed class GlyphCache {
         (global::System.Exception)e,
         global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat(global::DripSharp.Runtime.JavaCompat.Concat("Glyph rendering failed for code ",
         code), " in font "), fontName__93_20)));
-      return new global::SkiaSharp.SKPath();
+      return global::DripSharp.Runtime.PdfCartonFontCompat.CreatePath();
     }
   }
 

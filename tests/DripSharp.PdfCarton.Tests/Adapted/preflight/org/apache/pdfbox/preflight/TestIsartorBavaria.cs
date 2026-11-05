@@ -24,7 +24,7 @@ public class TestIsartorBavaria {
     global::System.IO.Stream expected = global::DripSharp.Runtime.JavaCompat.OpenFileInput(f);
     global::DripSharp.Runtime.JavaProperties props = new global::DripSharp.Runtime.JavaProperties();
     props.Load(expected);
-    global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(expected);
+    global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(expected);
     global::System.Collections.Generic.IList<object[]> data
       = new global::System.Collections.Generic.List<object[]>();
     global::DripSharp.Runtime.JavaFile isartor
@@ -125,7 +125,7 @@ public class TestIsartorBavaria {
 
   internal static void afterClass() {
     if ((global::DripSharp.PdfCarton.Preflight.TestIsartorBavaria.isartorResultFile != default!)) {
-      global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(global::DripSharp.PdfCarton.Preflight.TestIsartorBavaria.isartorResultFile);
+      global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(global::DripSharp.PdfCarton.Preflight.TestIsartorBavaria.isartorResultFile);
     }
   }
 

@@ -186,14 +186,14 @@ internal abstract class TrueTypeEmbedder : global::DripSharp.PdfCarton.Pdmodel.F
       fd.SetCapHeight((os2.GetCapHeight() * scaling));
       fd.SetXHeight((os2.GetHeight() * scaling));
     } else {
-      global::SkiaSharp.SKPath capHPath = ttf.GetPath("H");
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D capHPath = ttf.GetPath("H");
       if ((capHPath != default!)) {
         fd.SetCapHeight((global::DripSharp.Runtime.JavaCompat.MathRound(capHPath.Bounds.Bottom)
           * scaling));
       } else {
         fd.SetCapHeight((unchecked((os2.GetTypoAscender() + os2.GetTypoDescender())) * scaling));
       }
-      global::SkiaSharp.SKPath xPath = ttf.GetPath("x");
+      global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D xPath = ttf.GetPath("x");
       if ((xPath != default!)) {
         fd.SetXHeight((global::DripSharp.Runtime.JavaCompat.MathRound(xPath.Bounds.Bottom)
           * scaling));

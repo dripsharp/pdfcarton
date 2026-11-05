@@ -50,8 +50,8 @@ internal sealed class PDCIDFontType2Embedder
 
   protected internal override void BuildSubset(global::System.IO.Stream ttfSubset, string tag,
     global::System.Collections.Generic.IDictionary<int, int> gidToCid) {
-    global::System.Collections.Generic.SortedDictionary<int, int> cidToGid
-      = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int, int>();
+    global::DripSharp.Runtime.JavaTreeMap<int, int> cidToGid
+      = new global::DripSharp.Runtime.JavaTreeMap<int, int>();
     global::DripSharp.Runtime.JavaCompat.ForEach(gidToCid, (newGID, oldGID)
       => global::DripSharp.Runtime.JavaCompat.MapPut(cidToGid, oldGID, newGID));
     this.buildToUnicodeCMap(gidToCid);
@@ -194,8 +194,7 @@ internal sealed class PDCIDFontType2Embedder
     this.cidFont.SetName(global::DripSharp.PdfCarton.Cos.COSName.BaseFont, newName);
   }
 
-  private void buildCIDToGIDMap(global::System.Collections.Generic.SortedDictionary<int,
-    int> cidToGid) {
+  private void buildCIDToGIDMap(global::DripSharp.Runtime.JavaTreeMap<int, int> cidToGid) {
     int cidMax
       = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(global::DripSharp.Runtime.JavaCompat.SortedLastKey(cidToGid));
     sbyte[] buffer = new sbyte[unchecked((unchecked((cidMax * 2)) + 2))];
@@ -217,7 +216,7 @@ internal sealed class PDCIDFontType2Embedder
     this.cidFont.SetItem(global::DripSharp.PdfCarton.Cos.COSName.CidToGidMap, stream);
   }
 
-  private void buildCIDSet(global::System.Collections.Generic.SortedDictionary<int, int> cidToGid) {
+  private void buildCIDSet(global::DripSharp.Runtime.JavaTreeMap<int, int> cidToGid) {
     int cidMax
       = global::DripSharp.Runtime.JavaCompat.UnboxObject<int>(global::DripSharp.Runtime.JavaCompat.SortedLastKey(cidToGid));
     sbyte[] bytes = new sbyte[unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(cidMax,
@@ -236,7 +235,7 @@ internal sealed class PDCIDFontType2Embedder
     base.FontDescriptor.SetCIDSet(stream);
   }
 
-  private void buildWidths(global::System.Collections.Generic.SortedDictionary<int, int> cidToGid) {
+  private void buildWidths(global::DripSharp.Runtime.JavaTreeMap<int, int> cidToGid) {
     float scaling = ((float)1000.0F / base.Ttf.GetHeader().GetUnitsPerEm());
     global::DripSharp.PdfCarton.Cos.COSArray widths
       = new global::DripSharp.PdfCarton.Cos.COSArray();
@@ -287,8 +286,7 @@ internal sealed class PDCIDFontType2Embedder
     return true;
   }
 
-  private void buildVerticalMetrics(global::System.Collections.Generic.SortedDictionary<int,
-    int> cidToGid) {
+  private void buildVerticalMetrics(global::DripSharp.Runtime.JavaTreeMap<int, int> cidToGid) {
     if (!(this.buildVerticalHeader(this.cidFont))) {
       return;
     }

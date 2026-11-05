@@ -40,7 +40,7 @@ global::DripSharp.PdfCarton.Fonts.EncodedFont {
     }
   }
 
-  public override global::SkiaSharp.SKPath GetPath(string name) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(string name) {
     return this.GetType1CharString(name).GetPath();
   }
 

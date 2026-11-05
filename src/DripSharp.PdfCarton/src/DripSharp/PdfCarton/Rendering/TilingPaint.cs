@@ -73,7 +73,7 @@ internal class TilingPaint : global::DripSharp.Runtime.JavaPaint {
     return this.paint.CreateContext(cm, deviceBounds, userBounds, xformPattern, hints);
   }
 
-  private global::SkiaSharp.SKBitmap getImage(global::DripSharp.PdfCarton.Rendering.PageDrawer drawer,
+  private global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage getImage(global::DripSharp.PdfCarton.Rendering.PageDrawer drawer,
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Pattern.PDTilingPattern pattern,
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColorSpace colorSpace,
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor color,
@@ -90,7 +90,7 @@ internal class TilingPaint : global::DripSharp.Runtime.JavaPaint {
       global::DripSharp.PdfCarton.Rendering.TilingPaint.ceiling((double)(width)));
     int rasterHeight = global::System.Math.Max(1,
       global::DripSharp.PdfCarton.Rendering.TilingPaint.ceiling((double)(height)));
-    global::SkiaSharp.SKBitmap image
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(rasterWidth, rasterHeight,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
     global::DripSharp.Runtime.PdfCartonGraphics2D graphics

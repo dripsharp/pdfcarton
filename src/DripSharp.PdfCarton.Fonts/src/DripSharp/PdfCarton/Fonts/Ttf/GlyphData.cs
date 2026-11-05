@@ -60,7 +60,7 @@ public class GlyphData {
     return this.glyphDescription;
   }
 
-  public virtual global::SkiaSharp.SKPath GetPath() {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath() {
     return new global::DripSharp.PdfCarton.Fonts.Ttf.GlyphRenderer(this.glyphDescription).GetPath();
   }
 

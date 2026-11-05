@@ -15,7 +15,7 @@ internal class SoftMask : global::DripSharp.Runtime.JavaPaint {
 
   private readonly global::DripSharp.Runtime.JavaPaint paint = null!;
 
-  private readonly global::SkiaSharp.SKBitmap mask = null!;
+  private readonly global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage mask = null!;
 
   private readonly global::SkiaSharp.SKRect bboxDevice = default;
 
@@ -24,7 +24,8 @@ internal class SoftMask : global::DripSharp.Runtime.JavaPaint {
   private readonly global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction transferFunction
     = null!;
 
-  internal SoftMask(global::DripSharp.Runtime.JavaPaint paint, global::SkiaSharp.SKBitmap mask,
+  internal SoftMask(global::DripSharp.Runtime.JavaPaint paint,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage mask,
     global::SkiaSharp.SKRect bboxDevice,
     global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDColor backdropColor,
     global::DripSharp.PdfCarton.Pdmodel.Common.Function.PDFunction transferFunction) {

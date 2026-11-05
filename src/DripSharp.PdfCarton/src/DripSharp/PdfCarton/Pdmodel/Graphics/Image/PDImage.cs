@@ -9,15 +9,16 @@
 namespace DripSharp.PdfCarton.Pdmodel.Graphics.Image;
 
 public interface PDImage : global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable {
-  public global::SkiaSharp.SKBitmap GetImage();
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetImage();
 
   public global::DripSharp.Runtime.JavaRaster GetRawRaster();
 
-  public global::SkiaSharp.SKBitmap GetRawImage();
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetRawImage();
 
-  public global::SkiaSharp.SKBitmap GetImage(global::SkiaSharp.SKRectI region, int subsampling);
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetImage(global::SkiaSharp.SKRectI region,
+    int subsampling);
 
-  public global::SkiaSharp.SKBitmap GetStencilImage(global::DripSharp.Runtime.JavaPaint paint);
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetStencilImage(global::DripSharp.Runtime.JavaPaint paint);
 
   public global::System.IO.Stream CreateInputStream();
 

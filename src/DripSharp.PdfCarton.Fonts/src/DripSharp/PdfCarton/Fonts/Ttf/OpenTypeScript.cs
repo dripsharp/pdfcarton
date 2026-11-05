@@ -172,7 +172,7 @@ public sealed class OpenTypeScript {
 
   private static void parseScriptsFile(global::System.IO.Stream inputStream) {
     global::System.Collections.Generic.IDictionary<int[], string> unicodeRanges
-      = new global::System.Collections.Generic.SortedDictionary<int[],
+      = new global::DripSharp.PdfCarton.Runtime.Fonts.JavaTreeMap<int[],
       string>(global::System.Collections.Generic.Comparer<int[]>.Create((o1, o2)
       => global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.CompareInt(o1[0], o2[0]))); {
       global::DripSharp.PdfCarton.Runtime.Fonts.JavaLineNumberReader rd

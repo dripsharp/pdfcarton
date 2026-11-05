@@ -37,7 +37,7 @@ public class OpenTypeFont : global::DripSharp.PdfCarton.Fonts.Ttf.TrueTypeFont {
     return base.GetGlyph();
   }
 
-  public override global::SkiaSharp.SKPath GetPath(string name) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(string name) {
     if ((this.hasPostScriptTag && this.IsSupportedOTF())) {
       int gid = this.NameToGID(name);
       return this.GetCFF().GetFont().GetType2CharString(gid).GetPath();

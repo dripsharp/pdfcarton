@@ -18,8 +18,16 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.Pkcs;
 #endif
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Xml;
 using SkiaSharp;
+// The managed geometry and image types live in the FontBox assembly only (see
+// DripSharp.PdfCarton.Geometry.cs), whose compat namespace this is.
+using JavaArea = global::DripSharp.PdfCarton.Runtime.Fonts.JavaArea;
+using JavaPath2D = global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D;
+using JavaPathIterator = global::DripSharp.PdfCarton.Runtime.Fonts.JavaPathIterator;
+using PdfCartonImage = global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage;
+using PdfCartonPixelLease = global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonPixelLease;
 
 namespace DripSharp.Runtime;
 
@@ -1168,6 +1176,9 @@ public sealed class JavaImageReader : IDisposable
 {
     private readonly string formatName;
     private JavaImageInputStream? input;
+    // The size of image sizeIndex of the current input, when known (not -1).
+    private int sizeIndex = -1;
+    private SKSizeI imageSize;
 
     internal JavaImageReader(string formatName) => this.formatName = formatName;
 
@@ -1180,6 +1191,7 @@ public sealed class JavaImageReader : IDisposable
         bool seekForwardOnly,
         bool ignoreMetadata)
     {
+        sizeIndex = -1;
         if (source is null)
         {
             input = null;
@@ -1195,32 +1207,82 @@ public sealed class JavaImageReader : IDisposable
 
     public JavaImageReadParam GetDefaultReadParam() => new();
 
-    public int GetWidth(int imageIndex)
+    public int GetWidth(int imageIndex) => GetSize(imageIndex).Width;
+
+    public int GetHeight(int imageIndex) => GetSize(imageIndex).Height;
+
+    // ImageIO reads an image's size from its header. Skia's codec reads the
+    // header alone for the formats it decodes (JPEG among them), and the JPX
+    // adapter reads the codestream's main header; JBIG2 and TIFF have no
+    // header-only read, so their size is that of the last decode of the
+    // current input, or a decode. A read remembers its image's full size.
+    private SKSizeI GetSize(int imageIndex)
     {
         RequireImageIndex(imageIndex);
-        using var bitmap = Decode(imageIndex);
-        return bitmap.Width;
+        if (imageIndex == sizeIndex) return imageSize;
+        var size = imageIndex == 0 && !IsTiff ? ReadHeaderSize() : null;
+        if (size is null)
+        {
+            _ = Decode(imageIndex);
+            return imageSize;
+        }
+        sizeIndex = imageIndex;
+        imageSize = size.Value;
+        return imageSize;
     }
 
-    public int GetHeight(int imageIndex)
+    private SKSizeI? ReadHeaderSize()
     {
-        RequireImageIndex(imageIndex);
-        using var bitmap = Decode(imageIndex);
-        return bitmap.Height;
+        var encoded = RequireInput().Bytes;
+        if (PdfCartonImageCodecs.Supports(formatName))
+            return PdfCartonImageCodecs.ReadSize(formatName, encoded);
+        using var stream = new MemoryStream(encoded, writable: false);
+        using var codec = SKCodec.Create(stream) ??
+            throw new IOException($"Unable to decode {formatName} image data.");
+        return new SKSizeI(codec.Info.Width, codec.Info.Height);
     }
 
-    public SKBitmap Read(int imageIndex, JavaImageReadParam? parameters)
+    // A decoded JBIG2 or JPX image keeps its pixels unrendered until they
+    // are first used (PdfCartonFontCompat.RenderOnFirstNativeUse), so
+    // JBIG2Filter and JPXFilter, which read only its raster, never render
+    // them, while a caller drawing or reading its pixels sees them.
+    public PdfCartonImage Read(int imageIndex, JavaImageReadParam? parameters)
+    {
+        var bitmap = ReadDeferred(imageIndex, parameters);
+        PdfCartonFontCompat.RenderOnFirstNativeUse(bitmap);
+        return bitmap;
+    }
+
+    // Read leaving the native pixels to EnsureNativePixels alone, for compat
+    // callers that read its raster or draw it through compat graphics.
+    internal PdfCartonImage ReadDeferred(int imageIndex, JavaImageReadParam? parameters)
     {
         RequireImageIndex(imageIndex);
         var bitmap = Decode(imageIndex);
         return ApplyReadParameters(bitmap, parameters);
     }
 
+    // ImageIO's readRaster returns a four-component JPEG's stored samples,
+    // CMYK or YCCK, without colour conversion; DCTFilter interprets them.
     public JavaRaster ReadRaster(
         int imageIndex,
         JavaImageReadParam? parameters)
     {
-        using var image = Read(imageIndex, parameters);
+        RequireImageIndex(imageIndex);
+        if (imageIndex == 0 &&
+            formatName.Equals("JPEG", StringComparison.OrdinalIgnoreCase) &&
+            new JavaImageMetadata(RequireInput().Bytes).ComponentCount == 4 &&
+            PdfCartonImageCodecs.ReadJpegSamples(RequireInput().Bytes) is { } samples)
+        {
+            decodesOnCurrentThread++;
+            sizeIndex = 0;
+            imageSize = new SKSizeI(samples.Width, samples.Height);
+            return ApplyReadParameters(samples, parameters);
+        }
+        // Skia decodes other four-component JPEGs to RGB only, so their K is
+        // lost; ImageIO's libjpeg rejects most of them (arithmetic coding,
+        // 12-bit samples).
+        var image = ReadDeferred(imageIndex, parameters);
         var raster = PdfCartonFontCompat.GetImageData(image);
         if (!formatName.Equals("JPEG", StringComparison.OrdinalIgnoreCase))
             return raster;
@@ -1283,7 +1345,7 @@ public sealed class JavaImageReader : IDisposable
         RequireImageIndex(imageIndex);
         if (formatName.Equals("JPEG", StringComparison.OrdinalIgnoreCase))
             return new JavaImageMetadata(RequireInput().Bytes);
-        using var bitmap = Decode(imageIndex);
+        var bitmap = Decode(imageIndex);
         return new JavaImageMetadata(
             PdfCartonFontCompat.GetColorModel(bitmap).NumberOfComponents);
     }
@@ -1291,12 +1353,30 @@ public sealed class JavaImageReader : IDisposable
     public void Dispose()
     {
         input = null;
+        sizeIndex = -1;
     }
 
-    private SKBitmap Decode(int imageIndex)
+    // Pixel decodes run on this thread, for tests.
+    [ThreadStatic] private static int decodesOnCurrentThread;
+
+    internal static int DecodesOnCurrentThread => decodesOnCurrentThread;
+
+    private bool IsTiff =>
+        formatName.Equals("TIFF", StringComparison.OrdinalIgnoreCase) ||
+        formatName.Equals("TIF", StringComparison.OrdinalIgnoreCase);
+
+    private PdfCartonImage Decode(int imageIndex)
     {
-        if (formatName.Equals("TIFF", StringComparison.OrdinalIgnoreCase) ||
-            formatName.Equals("TIF", StringComparison.OrdinalIgnoreCase))
+        decodesOnCurrentThread++;
+        var bitmap = DecodePixels(imageIndex);
+        sizeIndex = imageIndex;
+        imageSize = new SKSizeI(bitmap.Width, bitmap.Height);
+        return bitmap;
+    }
+
+    private PdfCartonImage DecodePixels(int imageIndex)
+    {
+        if (IsTiff)
         {
             return PdfCartonFontCompat.DecodeImage(
                 RequireInput().Bytes,
@@ -1310,15 +1390,16 @@ public sealed class JavaImageReader : IDisposable
         using var stream = new MemoryStream(
             RequireInput().Bytes,
             writable: false);
-        var bitmap = SKBitmap.Decode(stream) ??
+        var bitmap = PdfCartonFontCompat.DecodeStream(stream) ??
             throw new IOException(
                 $"Unable to decode {formatName} image data.");
-        PdfCartonFontCompat.RegisterImageType(
+        PdfCartonFontCompat.RegisterDecodedImageType(
             bitmap,
             string.Equals(formatName, "JPEG", StringComparison.OrdinalIgnoreCase) &&
                 bitmap.ColorType != SKColorType.Gray8
                 ? PdfCartonFontCompat.TYPE_3BYTE_BGR
-                : PdfCartonFontCompat.InferImageType(bitmap));
+                : PdfCartonFontCompat.InferImageType(bitmap),
+            RequireInput().Bytes);
         return bitmap;
     }
 
@@ -1333,25 +1414,138 @@ public sealed class JavaImageReader : IDisposable
                 "Image index must not be negative.");
     }
 
-    private static SKBitmap ApplyReadParameters(
-        SKBitmap source,
+    // Returns source when the parameters select every pixel unchanged
+    // (ImageIO reads a full-bounds region with 1x1 subsampling without a
+    // copy), otherwise the selected pixels in an image of the source's type
+    // and colour type.
+    internal static PdfCartonImage ApplyReadParameters(
+        PdfCartonImage source,
         JavaImageReadParam? parameters)
     {
-        if (parameters is null ||
-            (!parameters.SourceRegion.HasValue &&
-             parameters.SubsamplingX == 1 &&
-             parameters.SubsamplingY == 1))
-        {
+        if (parameters is null) return source;
+        var (firstX, firstY, outputWidth, outputHeight, span) =
+            Selection(source.Width, source.Height, parameters);
+        // Output pixel (x, y) reads source pixel (firstX + x * periodX,
+        // firstY + y * periodY), so a source-sized output is the source.
+        if (outputWidth == source.Width && outputHeight == source.Height)
             return source;
+
+        var periodX = parameters.SubsamplingX;
+        var periodY = parameters.SubsamplingY;
+        if (PdfCartonFontCompat.HasManagedImageData(source))
+        {
+            var colorModel = PdfCartonFontCompat.GetColorModel(source);
+            var sourceRaster = PdfCartonFontCompat.GetRaster(source);
+            var destinationRaster =
+                colorModel.CreateCompatibleWritableRaster(outputWidth, outputHeight);
+            var bands = sourceRaster.NumberOfBands;
+            var row = new int[checked(span * bands)];
+            for (var y = 0; y < outputHeight; y++)
+            {
+                sourceRaster.GetPixels(firstX, firstY + y * periodY, span, 1, row);
+                // Selected pixels move left in place, never over unread ones.
+                for (var x = 1; periodX != 1 && x < outputWidth; x++)
+                    Array.Copy(row, x * periodX * bands, row, x * bands, bands);
+                destinationRaster.SetPixels(0, y, outputWidth, 1, row);
+            }
+            // Like the source, the copy is read through its raster and
+            // rendered only if drawn.
+            var managedDestination = PdfCartonFontCompat.CreateDeferredImage(
+                colorModel,
+                destinationRaster,
+                isRasterPremultiplied: false,
+                null);
+            return managedDestination;
         }
 
-        var sourceRegion = parameters.SourceRegion ??
-            new SKRectI(0, 0, source.Width, source.Height);
+        // Native pixels are copied as bytes, so the copy keeps the source's
+        // colour type: a Gray8 image stays a one-band image.
+        var info = source.Info;
+        var destination = new PdfCartonImage(info.WithSize(outputWidth, outputHeight));
+        var imageType = PdfCartonFontCompat.GetImageType(source);
+        var pixelBytes = info.BytesPerPixel;
+        var input = source.GetPixelSpan();
+        var output = destination.GetPixelSpan();
+        for (var y = 0; y < outputHeight; y++)
+        {
+            var inputRow = input.Slice(
+                (firstY + y * periodY) * source.RowBytes + firstX * pixelBytes,
+                span * pixelBytes);
+            var outputRow = output.Slice(
+                y * destination.RowBytes,
+                outputWidth * pixelBytes);
+            if (periodX == 1)
+            {
+                inputRow.Slice(0, outputRow.Length).CopyTo(outputRow);
+                continue;
+            }
+            for (var x = 0; x < outputWidth; x++)
+            {
+                inputRow.Slice(x * periodX * pixelBytes, pixelBytes)
+                    .CopyTo(outputRow.Slice(x * pixelBytes, pixelBytes));
+            }
+        }
+        PdfCartonFontCompat.RegisterImageType(destination, imageType);
+        return destination;
+    }
+
+    // The samples a read selects from a raster of interleaved byte samples:
+    // the source itself when that is every pixel, as for an image.
+    private static JavaRaster ApplyReadParameters(
+        JavaRaster source,
+        JavaImageReadParam? parameters)
+    {
+        if (parameters is null) return source;
+        var (firstX, firstY, outputWidth, outputHeight, _) =
+            Selection(source.Width, source.Height, parameters);
+        if (outputWidth == source.Width && outputHeight == source.Height)
+            return source;
+        var bands = source.NumberOfBands;
+        var destination = new JavaRaster(
+            PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE,
+            outputWidth,
+            outputHeight,
+            bands);
+        var input = source.GetByteData();
+        var output = destination.GetByteData();
+        var periodX = parameters.SubsamplingX;
+        for (var y = 0; y < outputHeight; y++)
+        {
+            var inputRow = ((firstY + y * parameters.SubsamplingY) * source.Width + firstX) * bands;
+            var outputRow = y * outputWidth * bands;
+            if (periodX == 1)
+            {
+                Array.Copy(input, inputRow, output, outputRow, outputWidth * bands);
+                continue;
+            }
+            for (var x = 0; x < outputWidth; x++)
+            {
+                Array.Copy(
+                    input,
+                    inputRow + x * periodX * bands,
+                    output,
+                    outputRow + x * bands,
+                    bands);
+            }
+        }
+        return destination;
+    }
+
+    // ImageIO's source region, clipped to the image, and subsampling: output
+    // pixel (x, y) is source pixel (FirstX + x * periodX, FirstY + y *
+    // periodY), and source columns FirstX .. FirstX + Span - 1 hold every
+    // selected column.
+    private static (int FirstX, int FirstY, int Width, int Height, int Span) Selection(
+        int width,
+        int height,
+        JavaImageReadParam parameters)
+    {
+        var sourceRegion = parameters.SourceRegion ?? new SKRectI(0, 0, width, height);
         sourceRegion = new SKRectI(
             Math.Max(0, sourceRegion.Left),
             Math.Max(0, sourceRegion.Top),
-            Math.Min(source.Width, sourceRegion.Right),
-            Math.Min(source.Height, sourceRegion.Bottom));
+            Math.Min(width, sourceRegion.Right),
+            Math.Min(height, sourceRegion.Bottom));
         var firstX = sourceRegion.Left + parameters.SubsamplingOffsetX;
         var firstY = sourceRegion.Top + parameters.SubsamplingOffsetY;
         var outputWidth = Math.Max(
@@ -1364,63 +1558,10 @@ public sealed class JavaImageReader : IDisposable
             parameters.SubsamplingY);
         if (outputWidth == 0 || outputHeight == 0)
         {
-            source.Dispose();
             throw new ArgumentException(
                 "The source region and subsampling produce an empty image.");
         }
-
-        if (PdfCartonFontCompat.HasManagedImageData(source))
-        {
-            var colorModel = PdfCartonFontCompat.GetColorModel(source);
-            var sourceRaster = PdfCartonFontCompat.GetRaster(source);
-            var destinationRaster =
-                colorModel.CreateCompatibleWritableRaster(outputWidth, outputHeight);
-            for (var y = 0; y < outputHeight; y++)
-            {
-                for (var x = 0; x < outputWidth; x++)
-                {
-                    destinationRaster.SetPixel(
-                        x,
-                        y,
-                        sourceRaster.GetPixel(
-                            firstX + x * parameters.SubsamplingX,
-                            firstY + y * parameters.SubsamplingY,
-                            (int[]?)null));
-                }
-            }
-            var managedDestination = PdfCartonFontCompat.CreateImage(
-                colorModel,
-                destinationRaster,
-                isRasterPremultiplied: false,
-                null);
-            source.Dispose();
-            return managedDestination;
-        }
-
-        var destination = new SKBitmap(
-            new SKImageInfo(
-                outputWidth,
-                outputHeight,
-                SKColorType.Bgra8888,
-                source.AlphaType));
-        var imageType = PdfCartonFontCompat.GetImageType(source);
-        using var input = new PdfCartonPixels(source);
-        using var output = new PdfCartonPixels(destination);
-        for (var y = 0; y < outputHeight; y++)
-        {
-            for (var x = 0; x < outputWidth; x++)
-            {
-                output.Set(
-                    x,
-                    y,
-                    input.Get(
-                        firstX + x * parameters.SubsamplingX,
-                        firstY + y * parameters.SubsamplingY));
-            }
-        }
-        PdfCartonFontCompat.RegisterImageType(destination, imageType);
-        source.Dispose();
-        return destination;
+        return (firstX, firstY, outputWidth, outputHeight, sourceRegion.Right - firstX);
     }
 }
 
@@ -1455,19 +1596,19 @@ public sealed class JavaImageWriteParam
 
 public sealed class JavaImageTypeSpecifier
 {
-    public JavaImageTypeSpecifier(SKBitmap renderedImage)
+    public JavaImageTypeSpecifier(PdfCartonImage renderedImage)
     {
         Image = renderedImage ??
             throw new ArgumentNullException(nameof(renderedImage));
     }
 
-    internal SKBitmap Image { get; }
+    internal PdfCartonImage Image { get; }
 }
 
 public sealed class JavaIioImage
 {
     public JavaIioImage(
-        SKBitmap renderedImage,
+        PdfCartonImage renderedImage,
         object? thumbnails,
         JavaImageMetadata? metadata)
     {
@@ -1477,7 +1618,7 @@ public sealed class JavaIioImage
         _ = metadata;
     }
 
-    internal SKBitmap RenderedImage { get; }
+    internal PdfCartonImage RenderedImage { get; }
 }
 
 public sealed class JavaImageWriter : IDisposable
@@ -1522,15 +1663,16 @@ public sealed class JavaImageWriter : IDisposable
         var quality = (int)Math.Round(
             parameters.CompressionQuality * 100,
             MidpointRounding.AwayFromZero);
-        using var encoded = new MemoryStream();
-        if (!image.RenderedImage.Encode(
-                encoded,
-                SKEncodedImageFormat.Jpeg,
-                quality))
+        PdfCartonBitmapView.Publish(image.RenderedImage);
+        byte[] bytes;
+        try
         {
-            throw new IOException("Skia failed to encode the JPEG image.");
+            bytes = image.RenderedImage.Encode(SKEncodedImageFormat.Jpeg, quality);
         }
-        var bytes = encoded.ToArray();
+        catch (InvalidOperationException error)
+        {
+            throw new IOException("Skia failed to encode the JPEG image.", error);
+        }
         if (metadata.JpegDensity is { } density)
             SetJfifDensity(bytes, density);
         destination.Destination.Write(bytes, 0, bytes.Length);
@@ -1655,31 +1797,42 @@ public sealed class JavaDataBufferInt : JavaDataBuffer
     {
     }
 
-    public int[] GetData()
-    {
-        var values = new int[Size];
-        for (var index = 0; index < values.Length; index++) values[index] = GetElement(index);
-        return values;
-    }
+    public int[] GetData() => Raster.GetIntData();
 }
 
-// A scoped view keeps the bitmap alive and invalidates Skia's cached images once
-// after a write batch. Never retain the span across a bitmap resize or disposal.
+// A scoped view of an image's pixel bytes.
 internal ref struct PdfCartonPixels
 {
-    private readonly SKBitmap bitmap;
+    private readonly PdfCartonImage? bitmap;
+    // Or a Skia bitmap compat made over pixels it owns (a paint tile).
+    private readonly SKBitmap? native;
     private readonly Span<byte> bytes;
     private readonly SKImageInfo info;
     private readonly int rowBytes;
-    private bool changed;
 
-    internal PdfCartonPixels(SKBitmap bitmap)
+    internal PdfCartonPixels(PdfCartonImage bitmap)
     {
         this.bitmap = bitmap;
+        native = null;
         info = bitmap.Info;
         rowBytes = bitmap.RowBytes;
         bytes = bitmap.GetPixelSpan();
-        changed = false;
+    }
+
+    internal PdfCartonPixels(SKBitmap native)
+    {
+        bitmap = null;
+        this.native = native;
+        info = native.Info;
+        rowBytes = native.RowBytes;
+        bytes = native.GetPixelSpan();
+    }
+
+    private PdfCartonPixelLease? Lease(out SKBitmap target)
+    {
+        var lease = bitmap?.Lease();
+        target = lease?.Bitmap ?? native!;
+        return lease;
     }
 
     internal SKColor Get(int x, int y)
@@ -1689,7 +1842,10 @@ internal ref struct PdfCartonPixels
         if (info.ColorType == SKColorType.Gray8)
             return new SKColor(bytes[offset], bytes[offset], bytes[offset]);
         if (info.ColorType is not SKColorType.Bgra8888 and not SKColorType.Rgba8888)
-            return bitmap.GetPixel(x, y);
+        {
+            using var lease = Lease(out var target);
+            return target.GetPixel(x, y);
+        }
         var red = bytes[offset + (info.ColorType == SKColorType.Bgra8888 ? 2 : 0)];
         var green = bytes[offset + 1];
         var blue = bytes[offset + (info.ColorType == SKColorType.Bgra8888 ? 0 : 2)];
@@ -1729,11 +1885,146 @@ internal ref struct PdfCartonPixels
         else
         {
             // Let Skia convert uncommon pixel formats; this does not create a canvas.
-            using var pixels = bitmap.PeekPixels();
+            using var lease = Lease(out var target);
+            using var pixels = target.PeekPixels();
             if (!pixels.Erase(color, new SKRectI(x, y, x + 1, y + 1)))
                 throw new InvalidOperationException("Unable to write bitmap pixel.");
         }
-        changed = true;
+    }
+
+    // Copies every pixel's components, exactly as Get returns them, into
+    // interleaved byte samples of a width x height raster: band b of pixel
+    // (x, y) lands at (y * width + x) * bands + bandOffsets[b]. Bands are gray,
+    // or red, green, blue and alpha. False for formats Get converts.
+    internal bool TryCopyComponents(int width, int height, Span<sbyte> samples, int[] bandOffsets)
+    {
+        var bands = bandOffsets.Length;
+        if (width != info.Width || height != info.Height ||
+            samples.Length < checked(width * height * bands))
+            return false;
+        if (info.ColorType == SKColorType.Gray8)
+        {
+            if (bands != 1) return false;
+            for (var y = 0; y < height; y++)
+            {
+                var input = bytes.Slice(y * rowBytes, width);
+                var output = samples.Slice(y * width);
+                for (var x = 0; x < width; x++)
+                    output[x + bandOffsets[0]] = unchecked((sbyte)input[x]);
+            }
+            return true;
+        }
+        if (info.ColorType is not SKColorType.Bgra8888 and not SKColorType.Rgba8888 ||
+            info.AlphaType == SKAlphaType.Premul ||
+            bands is not 3 and not 4)
+            return false;
+        var redIndex = info.ColorType == SKColorType.Bgra8888 ? 2 : 0;
+        var blueIndex = 2 - redIndex;
+        var opaque = info.AlphaType == SKAlphaType.Opaque;
+        int red = bandOffsets[0], green = bandOffsets[1], blue = bandOffsets[2];
+        var alpha = bands == 4 ? bandOffsets[3] : -1;
+        for (var y = 0; y < height; y++)
+        {
+            var input = bytes.Slice(y * rowBytes, width * 4);
+            var output = samples.Slice(y * width * bands, width * bands);
+            for (int x = 0, source = 0, target = 0; x < width; x++, source += 4, target += bands)
+            {
+                output[target + red] = unchecked((sbyte)input[source + redIndex]);
+                output[target + green] = unchecked((sbyte)input[source + 1]);
+                output[target + blue] = unchecked((sbyte)input[source + blueIndex]);
+                if (alpha >= 0)
+                    output[target + alpha] = opaque ? (sbyte)-1 : unchecked((sbyte)input[source + 3]);
+            }
+        }
+        return true;
+    }
+
+    // Writes one full row, storing exactly what Set stores for each color.
+    internal void SetRow(int y, ReadOnlySpan<SKColor> colors)
+    {
+        if ((uint)y >= (uint)info.Height || colors.Length != info.Width)
+            throw new ArgumentOutOfRangeException();
+        var offset = y * rowBytes;
+        if (info.ColorType == SKColorType.Bgra8888 &&
+            info.AlphaType != SKAlphaType.Premul &&
+            BitConverter.IsLittleEndian)
+        {
+            // SKColor is 0xAARRGGBB, so its little-endian bytes are BGRA.
+            var output = MemoryMarshal.Cast<byte, uint>(bytes.Slice(offset, colors.Length * 4));
+            var input = MemoryMarshal.Cast<SKColor, uint>(colors);
+            if (info.AlphaType != SKAlphaType.Opaque)
+            {
+                input.CopyTo(output);
+                return;
+            }
+            for (var x = 0; x < input.Length; x++) output[x] = input[x] | 0xff000000;
+            return;
+        }
+        if (info.ColorType == SKColorType.Gray8)
+        {
+            for (var x = 0; x < colors.Length; x++)
+            {
+                var color = colors[x];
+                if (color.Red == color.Green && color.Red == color.Blue)
+                {
+                    bytes[offset + x] = color.Red;
+                }
+                else
+                    Set(x, y, color);
+            }
+            return;
+        }
+        for (var x = 0; x < colors.Length; x++) Set(x, y, colors[x]);
+    }
+
+    // Writes the packed ARGB of width pixels of row y from x into
+    // values[start...], each as getRGB derives it from Get: a Gray8 sample
+    // through grayTable (TYPE_BYTE_GRAY) or as opaque gray, unpremultiplied
+    // BGRA as stored. False, writing nothing, for other formats and for any
+    // region outside the pixels or the array; the caller then converts
+    // pixel by pixel, keeping Get's bounds checks. A short-lived process reads
+    // few images, so this loop is optimized from its first call (512 is
+    // MethodImplOptions.AggressiveOptimization, which netstandard2.0 lacks).
+    [MethodImpl((MethodImplOptions)512)]
+    internal bool TryGetArgbRow(int x, int y, int width, int[] values, int start, int[]? grayTable)
+    {
+        if (width <= 0 || (uint)y >= (uint)info.Height || x < 0 || x > info.Width - width ||
+            start < 0 || start > values.Length - width ||
+            (long)y * rowBytes + (long)(x + width) * info.BytesPerPixel > bytes.Length)
+            return false;
+        var output = values.AsSpan(start, width);
+        if (info.ColorType == SKColorType.Gray8)
+        {
+            var samples = bytes.Slice(y * rowBytes + x, width);
+            if (grayTable is not null)
+                for (var column = 0; column < width; column++) output[column] = grayTable[samples[column]];
+            else
+                for (var column = 0; column < width; column++)
+                    output[column] = unchecked((int)0xff000000) | samples[column] * 0x010101;
+            return true;
+        }
+        if (info.ColorType != SKColorType.Bgra8888 || info.AlphaType == SKAlphaType.Premul ||
+            !BitConverter.IsLittleEndian)
+            return false;
+        // Little-endian BGRA bytes are the packed 0xAARRGGBB value.
+        var input = MemoryMarshal.Cast<byte, int>(bytes.Slice(y * rowBytes + x * 4, width * 4));
+        if (info.AlphaType != SKAlphaType.Opaque)
+        {
+            input.CopyTo(output);
+            return true;
+        }
+        var opaque = 0;
+        if (Vector.IsHardwareAccelerated)
+        {
+            var alpha = new Vector<int>(unchecked((int)0xff000000));
+            var inputVectors = MemoryMarshal.Cast<int, Vector<int>>(input);
+            var outputVectors = MemoryMarshal.Cast<int, Vector<int>>(output);
+            for (var vector = 0; vector < inputVectors.Length; vector++)
+                outputVectors[vector] = inputVectors[vector] | alpha;
+            opaque = inputVectors.Length * Vector<int>.Count;
+        }
+        for (; opaque < width; opaque++) output[opaque] = input[opaque] | unchecked((int)0xff000000);
+        return true;
     }
 
     // The caller validates the region and sample array before entering these bulk
@@ -1744,8 +2035,8 @@ internal ref struct PdfCartonPixels
             info.AlphaType != SKAlphaType.Unpremul || !BitConverter.IsLittleEndian)
             return false;
         if (width == 0 || height == 0) return true;
-        // A retained JavaRaster can outlive a bitmap reallocation. Let the
-        // original per-pixel path preserve its bounds and partial-write behavior.
+        // Out-of-bounds regions take the original per-pixel path, which keeps
+        // its bounds checks and partial-write behavior.
         if (x > info.Width - width || y > info.Height - height) return false;
 
         var sampleCount = checked(width * 4);
@@ -1797,7 +2088,6 @@ internal ref struct PdfCartonPixels
             var output = bytes.Slice((y + row) * rowBytes + x * 4, sampleCount);
             // Mark before writing so Dispose also invalidates Skia after any
             // partially completed write, just as the per-pixel path does.
-            changed = true;
             var offset = 0;
             if (Vector.IsHardwareAccelerated)
             {
@@ -1849,10 +2139,10 @@ internal ref struct PdfCartonPixels
             throw new ArgumentOutOfRangeException();
     }
 
-    private static byte Premultiply(byte value, byte alpha) =>
+    internal static byte Premultiply(byte value, byte alpha) =>
         (byte)((value * alpha + 127) / 255);
 
-    private static byte Unpremultiply(byte value, byte alpha)
+    internal static byte Unpremultiply(byte value, byte alpha)
     {
         if (alpha == 0) return 0;
         // Match SkUnPreMultiply's 24-bit scale and rounding, including ties.
@@ -1862,26 +2152,158 @@ internal ref struct PdfCartonPixels
 
     public void Dispose()
     {
-        if (changed) bitmap.NotifyPixelsChanged();
-        GC.KeepAlive(bitmap);
     }
 
-    internal static SKColor Read(SKBitmap bitmap, int x, int y)
+    internal static SKColor Read(PdfCartonImage bitmap, int x, int y)
     {
         using var pixels = new PdfCartonPixels(bitmap);
         return pixels.Get(x, y);
     }
 
-    internal static void Write(SKBitmap bitmap, int x, int y, SKColor color)
+    internal static void Write(PdfCartonImage bitmap, int x, int y, SKColor color)
     {
         using var pixels = new PdfCartonPixels(bitmap);
         pixels.Set(x, y, color);
     }
 }
 
+// A raster's cached view of an image's pixels. Format, row stride and pixel
+// array are read once, so per-pixel reads and writes make no native call and
+// no lookup. Writes into an exposed byte sample array that is the image's
+// storage are rendered into its pixels by Publish, which compat draws and
+// encodes call before Skia reads an image.
+internal sealed class PdfCartonBitmapView
+{
+    private sealed class PendingWrites
+    {
+        // Set when a raster's exposed sample array is the image's storage
+        // (PdfCartonFontCompat.ExposeSamples): renders the array's writes.
+        internal volatile Action? Refresh;
+    }
+
+    private static readonly ConditionalWeakTable<PdfCartonImage, PendingWrites> PendingByBitmap = new();
+    private static readonly ConditionalWeakTable<PdfCartonImage, PendingWrites>.CreateValueCallback
+        CreatePendingWrites = _ => new PendingWrites();
+
+    private readonly PdfCartonImage bitmap;
+    private readonly int[]? ints;
+    private readonly sbyte[]? bytes;
+    private readonly int width;
+    private readonly int height;
+    private readonly int rowBytes;
+    private readonly int bytesPerPixel;
+    private readonly SKColorType colorType;
+    private readonly SKAlphaType alphaType;
+
+    internal PdfCartonBitmapView(PdfCartonImage bitmap)
+    {
+        this.bitmap = bitmap;
+        var pixels = bitmap.Storage;
+        ints = pixels as int[];
+        bytes = pixels as sbyte[];
+        width = bitmap.Width;
+        height = bitmap.Height;
+        bytesPerPixel = bitmap.BytesPerPixel;
+        colorType = bitmap.ColorType;
+        alphaType = bitmap.AlphaType;
+        rowBytes = bitmap.RowBytes;
+    }
+
+    internal SKAlphaType AlphaType => alphaType;
+
+    internal SKColor Get(int x, int y)
+    {
+        var offset = Offset(x, y);
+        if (colorType == SKColorType.Gray8 && bytes is not null)
+        {
+            var gray = unchecked((byte)bytes[offset]);
+            return new SKColor(gray, gray, gray);
+        }
+        if (colorType is SKColorType.Bgra8888 or SKColorType.Rgba8888 && ints is not null)
+        {
+            var value = ReadPixel(offset);
+            var red = unchecked((byte)(colorType == SKColorType.Bgra8888 ? value >> 16 : value));
+            var green = unchecked((byte)(value >> 8));
+            var blue = unchecked((byte)(colorType == SKColorType.Bgra8888 ? value : value >> 16));
+            var alpha = alphaType == SKAlphaType.Opaque ? byte.MaxValue : unchecked((byte)(value >> 24));
+            if (alphaType == SKAlphaType.Premul && alpha != byte.MaxValue)
+            {
+                red = PdfCartonPixels.Unpremultiply(red, alpha);
+                green = PdfCartonPixels.Unpremultiply(green, alpha);
+                blue = PdfCartonPixels.Unpremultiply(blue, alpha);
+            }
+            return new SKColor(red, green, blue, alpha);
+        }
+        using var lease = bitmap.Lease();
+        return lease.Bitmap.GetPixel(x, y);
+    }
+
+    internal void Set(int x, int y, SKColor color)
+    {
+        var offset = Offset(x, y);
+        if (colorType == SKColorType.Gray8 && bytes is not null &&
+            color.Red == color.Green && color.Red == color.Blue)
+        {
+            bytes[offset] = unchecked((sbyte)color.Red);
+        }
+        else if (colorType is SKColorType.Bgra8888 or SKColorType.Rgba8888 && ints is not null)
+        {
+            var red = color.Red;
+            var green = color.Green;
+            var blue = color.Blue;
+            var alpha = alphaType == SKAlphaType.Opaque ? byte.MaxValue : color.Alpha;
+            if (alphaType == SKAlphaType.Premul)
+            {
+                red = PdfCartonPixels.Premultiply(red, alpha);
+                green = PdfCartonPixels.Premultiply(green, alpha);
+                blue = PdfCartonPixels.Premultiply(blue, alpha);
+            }
+            var (low, high) = colorType == SKColorType.Bgra8888 ? (blue, red) : (red, blue);
+            WritePixel(offset, (uint)low | (uint)green << 8 | (uint)high << 16 | (uint)alpha << 24);
+        }
+        else
+        {
+            // Let Skia convert uncommon pixel formats; this does not create a canvas.
+            using var lease = bitmap.Lease();
+            using var pixmap = lease.Bitmap.PeekPixels();
+            if (!pixmap.Erase(color, new SKRectI(x, y, x + 1, y + 1)))
+                throw new InvalidOperationException("Unable to write bitmap pixel.");
+        }
+    }
+
+    // Renders writes into an exposed byte sample array that is the image's
+    // storage into its pixels, before Skia reads them.
+    internal static void Publish(PdfCartonImage bitmap)
+    {
+        if (PendingByBitmap.TryGetValue(bitmap, out var pending)) pending.Refresh?.Invoke();
+    }
+
+    internal static void SetRefresh(PdfCartonImage bitmap, Action refresh) =>
+        PendingByBitmap.GetValue(bitmap, CreatePendingWrites).Refresh = refresh;
+
+    private int Offset(int x, int y)
+    {
+        if ((uint)x >= (uint)width || (uint)y >= (uint)height)
+            throw new ArgumentOutOfRangeException();
+        return y * rowBytes + x * bytesPerPixel;
+    }
+
+    // Memory order B, G, R, A for BGRA: the low byte is the first in memory.
+    private uint ReadPixel(int offset)
+    {
+        var value = unchecked((uint)ints![offset >> 2]);
+        return BitConverter.IsLittleEndian ? value : System.Buffers.Binary.BinaryPrimitives.ReverseEndianness(value);
+    }
+
+    private void WritePixel(int offset, uint value) =>
+        ints![offset >> 2] = unchecked((int)(BitConverter.IsLittleEndian
+            ? value
+            : System.Buffers.Binary.BinaryPrimitives.ReverseEndianness(value)));
+}
+
 public sealed class JavaRaster
 {
-    private readonly SKBitmap? bitmap;
+    private readonly PdfCartonImage? bitmap;
     private Array? storage;
     private readonly int width;
     private readonly int height;
@@ -1891,8 +2313,14 @@ public sealed class JavaRaster
     private readonly int scanlineStride;
     private readonly int[] bandOffsets;
     private readonly int packedPixelBits;
+    private readonly int[]? bitMasks;
+    private readonly int[]? bitShifts;
+    // A bitmap view's image type and native pixel view, fixed when the view
+    // is created, so per-pixel accessors make no native or table lookup.
+    private readonly int imageType;
+    private readonly PdfCartonBitmapView? view;
 
-    internal JavaRaster(SKBitmap bitmap)
+    internal JavaRaster(PdfCartonImage bitmap)
     {
         this.bitmap = bitmap;
         width = bitmap.Width;
@@ -1900,7 +2328,8 @@ public sealed class JavaRaster
         numberOfBands =
             bitmap.ColorType == SKColorType.Gray8 ? 1 :
             bitmap.AlphaType == SKAlphaType.Opaque ? 3 : 4;
-        var imageType = PdfCartonFontCompat.GetImageType(bitmap);
+        imageType = PdfCartonFontCompat.GetImageType(bitmap);
+        view = new PdfCartonBitmapView(bitmap);
         transferType = imageType switch
         {
             PdfCartonFontCompat.TYPE_INT_RGB or
@@ -1913,8 +2342,9 @@ public sealed class JavaRaster
         };
         pixelStride = numberOfBands;
         scanlineStride = checked(width * pixelStride);
-        bandOffsets = imageType == PdfCartonFontCompat.TYPE_3BYTE_BGR
-            ? [2, 1, 0]
+        // Java's PixelInterleavedSampleModel layouts: B,G,R and A,B,G,R bytes.
+        bandOffsets = imageType == PdfCartonFontCompat.TYPE_3BYTE_BGR ? [2, 1, 0]
+            : imageType == PdfCartonFontCompat.TYPE_4BYTE_ABGR && numberOfBands == 4 ? [3, 2, 1, 0]
             : Enumerable.Range(0, numberOfBands).ToArray();
     }
 
@@ -1980,7 +2410,50 @@ public sealed class JavaRaster
             pixelBits,
             new sbyte[checked((width * pixelBits + 7) / 8 * height)]);
 
-    internal static JavaRaster BinarySnapshot(SKBitmap bitmap)
+    // Wraps rows of (width * pixelBits + 7) / 8 bytes without copying them.
+    internal static JavaRaster Packed(int width, int height, int pixelBits, sbyte[] data) =>
+        new(width, height, pixelBits, data);
+
+    // Java's SinglePixelPackedSampleModel, as DirectColorModel's compatible
+    // raster: one int per pixel, each band selected by its bit mask. Data
+    // elements are the packed ints; pixels and samples are the band values.
+    private JavaRaster(int width, int height, int[] bitMasks, int[] packedData)
+    {
+        if (width <= 0 || height <= 0 || bitMasks.Length == 0)
+            throw new ArgumentException("Raster dimensions and band count must be positive.");
+        this.width = width;
+        this.height = height;
+        numberOfBands = bitMasks.Length;
+        transferType = PdfCartonFontCompat.DATA_BUFFER_TYPE_INT;
+        pixelStride = 1;
+        scanlineStride = width;
+        bandOffsets = new int[numberOfBands];
+        this.bitMasks = (int[])bitMasks.Clone();
+        bitShifts = new int[numberOfBands];
+        for (var band = 0; band < numberOfBands; band++)
+            bitShifts[band] = JavaCompat.TrailingZeroCount(unchecked((uint)bitMasks[band]));
+        if (packedData.Length < checked(width * height))
+            throw new ArgumentException("Packed raster storage is truncated.", nameof(packedData));
+        storage = packedData;
+    }
+
+    internal static JavaRaster SinglePixelPacked(int width, int height, int[] bitMasks) =>
+        new(width, height, bitMasks, new int[checked(width * height)]);
+
+    internal bool IsSinglePixelPacked => bitMasks is not null;
+
+    // Sets every packed pixel to one value, as Arrays.fill on the int data.
+    internal void FillStorage(int value)
+    {
+        if (bitMasks is null || storage is not int[] packed)
+            throw new InvalidOperationException("Only single-pixel-packed int rasters can be filled.");
+        packed.AsSpan().Fill(value);
+    }
+
+    internal bool HasBitMasks(ReadOnlySpan<int> masks) =>
+        bitMasks is not null && masks.SequenceEqual(bitMasks);
+
+    internal static JavaRaster BinarySnapshot(PdfCartonImage bitmap)
     {
         ArgumentNullException.ThrowIfNull(bitmap);
         var scanlineStride = checked((bitmap.Width + 7) / 8);
@@ -2013,7 +2486,7 @@ public sealed class JavaRaster
             scanlineStride <= 0 || pixelStride <= 0 ||
             bandOffsets.Length == 0 || bandOffsets.Any(offset => offset < 0))
             throw new ArgumentException("Invalid interleaved raster layout.");
-        storage = buffer.Raster.storage ??
+        storage = buffer.Raster.storage ?? buffer.Raster.ExposedPixelArray() ??
             throw new ArgumentException(
                 "Interleaved raster construction requires an array-backed data buffer.",
                 nameof(buffer));
@@ -2042,10 +2515,17 @@ public sealed class JavaRaster
     public int TransferType => transferType;
     internal int PackedPixelBits => packedPixelBits;
     internal int StorageSize => storage?.Length ?? checked(width * height);
+    // A managed sample array that no bitmap view shadows.
+    internal bool HasArrayStorage => storage is not null && bitmap is null;
+    // True while this raster reads and writes the bitmap's native pixels.
+    internal bool IsLiveViewOf(PdfCartonImage image) =>
+        storage is null && ReferenceEquals(bitmap, image);
 
     public JavaRaster CreateCompatibleWritableRaster() =>
         packedPixelBits != 0
             ? Packed(Width, Height, packedPixelBits)
+            : bitMasks is not null
+            ? SinglePixelPacked(Width, Height, bitMasks)
             : new(
                 TransferType,
                 Width,
@@ -2063,12 +2543,20 @@ public sealed class JavaRaster
                 packedPixelBits,
                 (sbyte[])storage!.Clone());
         }
+        if (bitMasks is not null)
+            return new JavaRaster(Width, Height, bitMasks, (int[])storage!.Clone());
         var copy = new JavaRaster(
             TransferType,
             Width,
             Height,
             NumberOfBands,
             bandOffsets);
+        if (bitmap is not null && storage is null && copy.storage is sbyte[] samples)
+        {
+            using var access = new PdfCartonPixels(bitmap);
+            if (access.TryCopyComponents(Width, Height, samples, bandOffsets))
+                return copy;
+        }
         var row = new int[checked(Width * NumberOfBands)];
         for (var y = 0; y < Height; y++)
             copy.SetPixels(0, y, Width, 1, GetPixels(0, y, Width, 1, row));
@@ -2078,14 +2566,39 @@ public sealed class JavaRaster
     internal JavaRaster CopyRegion(int x, int y, int width, int height)
     {
         ValidateRegion(x, y, width, height);
+        if (bitmap is not null && storage is null &&
+            imageType is PdfCartonFontCompat.TYPE_INT_RGB or
+                PdfCartonFontCompat.TYPE_INT_ARGB or PdfCartonFontCompat.TYPE_INT_BGR)
+        {
+            // An INT bitmap's data elements are packed pixels, so its copy is a
+            // packed raster holding the same elements: the image's colour
+            // model decodes element zero of each one (BlendComposite's dstIn).
+            var packed = SinglePixelPacked(width, height, BitmapPixelMasks());
+            var data = (int[])packed.storage!;
+            var elements = new int[width];
+            for (var line = 0; line < height; line++)
+            {
+                GetDataElements(x, y + line, width, 1, elements);
+                Array.Copy(elements, 0, data, line * width, width);
+            }
+            return packed;
+        }
         var copy = packedPixelBits != 0
             ? Packed(width, height, packedPixelBits)
+            : bitMasks is not null
+            ? SinglePixelPacked(width, height, bitMasks)
             : new JavaRaster(TransferType, width, height, NumberOfBands, bandOffsets);
         var row = new int[checked(width * NumberOfBands)];
         for (var offset = 0; offset < height; offset++)
             copy.SetPixels(0, offset, width, 1, GetPixels(x, y + offset, width, 1, row));
         return copy;
     }
+
+    // Band masks of the packed pixels an INT bitmap view's data elements hold.
+    private int[] BitmapPixelMasks() =>
+        imageType == PdfCartonFontCompat.TYPE_INT_BGR ? [0xff, 0xff00, 0xff0000]
+        : NumberOfBands == 4 ? [0xff0000, 0xff00, 0xff, unchecked((int)0xff000000)]
+        : [0xff0000, 0xff00, 0xff];
 
     public JavaDataBuffer GetDataBuffer() =>
         TransferType switch
@@ -2178,6 +2691,63 @@ public sealed class JavaRaster
         return pixels;
     }
 
+    // Managed samples back this raster: an array-backed raster or a bitmap
+    // view whose storage GetByteData/GetUShortData materialized.
+    internal bool HasSampleStorage => storage is not null;
+
+    // Reads row y's samples from managed storage, band-interleaved exactly as
+    // GetPixels returns them. Callers check HasSampleStorage.
+    internal void ReadRowSamples(int y, int[] samples)
+    {
+        if ((uint)y >= (uint)height || samples.Length < width * numberOfBands)
+            throw new IndexOutOfRangeException();
+        var rowStart = y * scanlineStride;
+        if (packedPixelBits != 0)
+        {
+            var packed = (sbyte[])storage!;
+            var mask = (1 << packedPixelBits) - 1;
+            for (var x = 0; x < width; x++)
+            {
+                var bitOffset = x * packedPixelBits;
+                samples[x] = unchecked((byte)packed[rowStart + (bitOffset >> 3)]) >>
+                    (8 - packedPixelBits - (bitOffset & 7)) & mask;
+            }
+            return;
+        }
+        var offset = 0;
+        if (bitMasks is not null)
+        {
+            var pixels = (int[])storage!;
+            for (var x = 0; x < width; x++)
+            {
+                var pixel = unchecked((uint)pixels[rowStart + x]);
+                for (var band = 0; band < numberOfBands; band++)
+                    samples[offset++] = unchecked((int)((pixel & (uint)bitMasks[band]) >> bitShifts![band]));
+            }
+            return;
+        }
+        switch (storage)
+        {
+            case sbyte[] bytes:
+                for (var x = 0; x < width; x++, rowStart += pixelStride)
+                    for (var band = 0; band < numberOfBands; band++)
+                        samples[offset++] = unchecked((byte)bytes[rowStart + bandOffsets[band]]);
+                return;
+            case short[] words:
+                for (var x = 0; x < width; x++, rowStart += pixelStride)
+                    for (var band = 0; band < numberOfBands; band++)
+                        samples[offset++] = unchecked((ushort)words[rowStart + bandOffsets[band]]);
+                return;
+            case int[] integers:
+                for (var x = 0; x < width; x++, rowStart += pixelStride)
+                    for (var band = 0; band < numberOfBands; band++)
+                        samples[offset++] = integers[rowStart + bandOffsets[band]];
+                return;
+            default:
+                throw new InvalidOperationException("Raster does not use array-backed storage.");
+        }
+    }
+
     public object GetDataElements(
         int x,
         int y,
@@ -2191,25 +2761,36 @@ public sealed class JavaRaster
             var values = output as int[] ?? new int[checked(width * height)];
             if (values.Length < width * height) throw new IndexOutOfRangeException();
             var offset = 0;
-            var imageType = PdfCartonFontCompat.GetImageType(bitmap);
-            using var access = new PdfCartonPixels(bitmap);
+            var pixels = view!;
+            var bgr = imageType == PdfCartonFontCompat.TYPE_INT_BGR;
+            var alphaMask = imageType == PdfCartonFontCompat.TYPE_INT_ARGB ||
+                            pixels.AlphaType != SKAlphaType.Opaque
+                ? 0xff000000u
+                : 0u;
             for (var row = y; row < y + height; row++)
             {
                 for (var column = x; column < x + width; column++)
                 {
-                    var color = access.Get(column, row);
-                    values[offset++] = imageType == PdfCartonFontCompat.TYPE_INT_BGR
+                    var color = pixels.Get(column, row);
+                    values[offset++] = bgr
                         ? color.Red | color.Green << 8 | color.Blue << 16
-                        : unchecked((int)(((imageType == PdfCartonFontCompat.TYPE_INT_ARGB ||
-                                            bitmap.AlphaType != SKAlphaType.Opaque)
-                                               ? (uint)color.Alpha << 24
-                                               : 0) |
+                        : unchecked((int)(((uint)color.Alpha << 24 & alphaMask) |
                                           (uint)color.Red << 16 |
                                           (uint)color.Green << 8 |
                                           color.Blue));
                 }
             }
             return values;
+        }
+
+        if (bitMasks is not null)
+        {
+            var packed = output as int[] ?? new int[checked(width * height)];
+            if (packed.Length < width * height) throw new IndexOutOfRangeException();
+            var data = (int[])storage!;
+            for (var row = 0; row < height; row++)
+                Array.Copy(data, (y + row) * scanlineStride + x, packed, row * width, width);
+            return packed;
         }
 
         var length = checked(width * height * NumberOfBands);
@@ -2252,6 +2833,19 @@ public sealed class JavaRaster
         var bytes = output as sbyte[] ?? new sbyte[length];
         if (bytes.Length < length) throw new IndexOutOfRangeException();
         var byteOffset = 0;
+        if (view is not null && storage is null)
+        {
+            for (var row = y; row < y + height; row++)
+            {
+                for (var column = x; column < x + width; column++)
+                {
+                    var color = view.Get(column, row);
+                    for (var band = 0; band < NumberOfBands; band++)
+                        bytes[byteOffset++] = unchecked((sbyte)Component(color, band));
+                }
+            }
+            return bytes;
+        }
         for (var row = y; row < y + height; row++)
         {
             for (var column = x; column < x + width; column++)
@@ -2308,6 +2902,16 @@ public sealed class JavaRaster
             values is int[] packed)
         {
             if (packed.Length == 0) throw new IndexOutOfRangeException();
+            if (imageType == PdfCartonFontCompat.TYPE_INT_BGR)
+            {
+                // The element GetDataElements packs: 0x00BBGGRR.
+                var element = packed[0];
+                view!.Set(x, y, new SKColor(
+                    unchecked((byte)element),
+                    unchecked((byte)(element >> 8)),
+                    unchecked((byte)(element >> 16))));
+                return;
+            }
             SetStorageElement(y * Width + x, packed[0]);
             return;
         }
@@ -2331,9 +2935,18 @@ public sealed class JavaRaster
                 _ => throw new ArgumentException("Unsupported raster data elements.")
             };
             var red = Value(0);
-            PdfCartonPixels.Write(bitmap, x, y, NumberOfBands == 1
+            view!.Set(x, y, NumberOfBands == 1
                 ? new SKColor(red, red, red)
                 : new SKColor(red, Value(1), Value(2), NumberOfBands == 4 ? Value(3) : (byte)255));
+            return;
+        }
+
+        if (bitMasks is not null)
+        {
+            if (values is not int[] packedValues)
+                throw new ArgumentException("Raster data elements do not match its transfer type.");
+            if (packedValues.Length == 0) throw new IndexOutOfRangeException();
+            ((int[])storage!)[y * scanlineStride + x] = packedValues[0];
             return;
         }
 
@@ -2363,7 +2976,7 @@ public sealed class JavaRaster
         if (values.Length < NumberOfBands) throw new IndexOutOfRangeException();
         if (bitmap is not null && storage is null)
         {
-            PdfCartonPixels.Write(bitmap, x, y, PixelColor(values, 0));
+            view!.Set(x, y, PixelColor(values, 0));
             return;
         }
         for (var band = 0; band < NumberOfBands; band++)
@@ -2383,7 +2996,7 @@ public sealed class JavaRaster
         if (values.Length < NumberOfBands) throw new IndexOutOfRangeException();
         if (bitmap is not null && storage is null)
         {
-            var color = PdfCartonPixels.Read(bitmap, x, y);
+            var color = view!.Get(x, y);
             for (var band = 0; band < NumberOfBands; band++)
                 values[band] = Component(color, band);
         }
@@ -2400,7 +3013,7 @@ public sealed class JavaRaster
         if (values.Length < NumberOfBands) throw new IndexOutOfRangeException();
         if (bitmap is not null && storage is null)
         {
-            var color = PdfCartonPixels.Read(bitmap, x, y);
+            var color = view!.Get(x, y);
             for (var band = 0; band < NumberOfBands; band++)
                 values[band] = Component(color, band);
         }
@@ -2418,7 +3031,7 @@ public sealed class JavaRaster
         if (bitmap is not null && storage is null)
         {
             var red = unchecked((byte)(int)values[0]);
-            PdfCartonPixels.Write(bitmap, x, y, NumberOfBands == 1
+            view!.Set(x, y, NumberOfBands == 1
                 ? new SKColor(red, red, red)
                 : new SKColor(red, unchecked((byte)(int)values[1]), unchecked((byte)(int)values[2]),
                     NumberOfBands == 4 ? unchecked((byte)(int)values[3]) : (byte)255));
@@ -2434,7 +3047,7 @@ public sealed class JavaRaster
         if (storage is sbyte[] bytes) return unchecked((byte)bytes[index]);
         if (storage is short[] words) return unchecked((ushort)words[index]);
         if (storage is int[] integers) return integers[index];
-        var color = PdfCartonPixels.Read(bitmap!, index % width, index / width);
+        var color = view!.Get(index % width, index / width);
         return NumberOfBands == 1
             ? color.Red
             : unchecked((int)((uint)color.Alpha << 24 |
@@ -2457,10 +3070,10 @@ public sealed class JavaRaster
         if (NumberOfBands == 1)
         {
             var gray = unchecked((byte)value);
-            PdfCartonPixels.Write(bitmap!, x, y, new SKColor(gray, gray, gray));
+            view!.Set(x, y, new SKColor(gray, gray, gray));
             return;
         }
-        PdfCartonPixels.Write(bitmap!,
+        view!.Set(
             x,
             y,
             new SKColor(
@@ -2481,9 +3094,15 @@ public sealed class JavaRaster
             var mask = (1 << packedPixelBits) - 1;
             return unchecked((byte)((sbyte[])storage!)[index]) >> shift & mask;
         }
+        if (bitMasks is not null)
+        {
+            return unchecked((int)(
+                ((uint)((int[])storage!)[y * scanlineStride + x] & (uint)bitMasks[band]) >>
+                bitShifts![band]));
+        }
         return storage is not null
             ? GetStorageElement(StorageIndex(x, y, band))
-            : Component(PdfCartonPixels.Read(bitmap!, x, y), band);
+            : Component(view!.Get(x, y), band);
     }
 
     private void SetComponent(int x, int y, int band, int value)
@@ -2502,13 +3121,20 @@ public sealed class JavaRaster
                 (sbyte)(current & ~mask | (value & componentMask) << shift));
             return;
         }
+        if (bitMasks is not null)
+        {
+            var data = (int[])storage!;
+            var index = y * scanlineStride + x;
+            var bandMask = bitMasks[band];
+            data[index] = data[index] & ~bandMask | value << bitShifts![band] & bandMask;
+            return;
+        }
         if (storage is not null)
         {
             SetStoredValue(StorageIndex(x, y, band), value);
             return;
         }
-        var color = PdfCartonPixels.Read(bitmap!, x, y);
-        PdfCartonPixels.Write(bitmap!, x, y, WithComponent(color, band, value));
+        view!.Set(x, y, WithComponent(view.Get(x, y), band, value));
     }
 
     private int StorageIndex(int x, int y, int band) =>
@@ -2532,11 +3158,70 @@ public sealed class JavaRaster
         }
     }
 
+    // The array holding a live view's image pixels when it is what getData()
+    // returns (int- and byte-backed images), marked as handed out.
+    private Array? ExposedPixelArray()
+    {
+        if (storage is not null || bitmap is null) return null;
+        Array? pixels = TransferType == PdfCartonFontCompat.DATA_BUFFER_TYPE_INT
+            ? bitmap.IntPixels
+            : TransferType == PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE && NumberOfBands == 1
+                ? bitmap.BytePixels
+                : null;
+        if (pixels is not null) bitmap.ExposePixels();
+        return pixels;
+    }
+
+    // DataBufferByte.getData(). A view of a byte-backed bitmap (Java's
+    // TYPE_BYTE_GRAY images) returns the bitmap's pixels. Any other bitmap
+    // view's samples move into a managed array once; for an image's retained
+    // raster that array becomes the image's storage, as in Java
+    // (PdfCartonFontCompat.ExposeSamples).
     internal sbyte[] GetByteData()
     {
-        if (storage is null) MaterializeStorage(PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE);
+        if (TransferType == PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE &&
+            ExposedPixelArray() is sbyte[] pixels)
+            return pixels;
+        if (storage is null)
+        {
+            MaterializeStorage(PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE);
+            if (storage is sbyte[] samples) PdfCartonFontCompat.ExposeSamples(bitmap!, this, samples);
+        }
         return storage as sbyte[]
             ?? throw new InvalidOperationException("Raster is not byte-backed.");
+    }
+
+    // DataBufferInt.getData(): the int storage itself. An array-backed raster
+    // returns its array, and a view of an int-backed bitmap (Java's
+    // TYPE_INT_RGB and TYPE_INT_ARGB images) the bitmap's pixels. Any other
+    // bitmap's pixels are not packed ints Java code can address, so its data
+    // elements are read once, in bulk, into a detached array.
+    internal int[] GetIntData()
+    {
+        if (storage is int[] integers) return integers;
+        if (storage is not null || bitmap is null ||
+            TransferType != PdfCartonFontCompat.DATA_BUFFER_TYPE_INT)
+            throw new InvalidOperationException("Raster is not int-backed.");
+        if (bitmap.IntPixels is { } pixels)
+        {
+            bitmap.ExposePixels();
+            return pixels;
+        }
+        var elements = new int[StorageSize];
+        using var access = new PdfCartonPixels(bitmap);
+        var index = 0;
+        for (var y = 0; y < Height; y++)
+        {
+            for (var x = 0; x < Width; x++)
+            {
+                var color = access.Get(x, y);
+                elements[index++] = NumberOfBands == 1
+                    ? color.Red
+                    : unchecked((int)((uint)color.Alpha << 24 | (uint)color.Red << 16 |
+                                      (uint)color.Green << 8 | color.Blue));
+            }
+        }
+        return elements;
     }
 
     internal short[] GetUShortData()
@@ -2554,6 +3239,9 @@ public sealed class JavaRaster
             ? new sbyte[checked(Width * Height * NumberOfBands)]
             : new short[checked(Width * Height * NumberOfBands)];
         using var access = new PdfCartonPixels(bitmap);
+        if (storage is sbyte[] samples &&
+            access.TryCopyComponents(Width, Height, samples, bandOffsets))
+            return;
         for (var y = 0; y < Height; y++)
         {
             for (var x = 0; x < Width; x++)
@@ -2622,11 +3310,13 @@ public sealed class PdfCartonAffineTransformOp
         this.interpolationType = interpolationType;
     }
 
-    public SKBitmap Filter(SKBitmap source, SKBitmap destination)
+    public PdfCartonImage Filter(PdfCartonImage source, PdfCartonImage destination)
     {
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(destination);
-        using var canvas = new SKCanvas(destination);
+        PdfCartonBitmapView.Publish(source);
+        using var destinationLease = destination.Lease();
+        var canvas = destinationLease.Canvas;
         canvas.Clear(SKColors.Transparent);
         canvas.SetMatrix(transform);
         using var paint = new SKPaint();
@@ -2634,12 +3324,8 @@ public sealed class PdfCartonAffineTransformOp
             interpolationType == TYPE_BICUBIC
                 ? new SKSamplingOptions(SKCubicResampler.Mitchell)
                 : new SKSamplingOptions(SKFilterMode.Linear);
-        canvas.DrawBitmap(
-            source,
-            0,
-            0,
-            sampling,
-            paint);
+        using var image = PdfCartonFontCompat.DrawableImage(source, destinationLease.Bitmap);
+        canvas.DrawImage(image!, 0, 0, sampling, paint);
         return destination;
     }
 }
@@ -2647,6 +3333,13 @@ public sealed class PdfCartonAffineTransformOp
 public sealed class JavaColorConvertOp
 {
     private readonly JavaColorSpace? destinationColorSpace;
+    // The constructor's spaces, which Java converts every colour through
+    // between the source and destination images' spaces.
+    private readonly JavaColorSpace[] spaces = Array.Empty<JavaColorSpace>();
+    // Java's op holds ICC profiles when it was given only ICC spaces (all
+    // but public-override subclasses) and a list of spaces otherwise.
+    private readonly bool hasProfiles;
+    private readonly bool hasCustomSpaces;
 
     public JavaColorConvertOp()
     {
@@ -2659,83 +3352,252 @@ public sealed class JavaColorConvertOp
         ArgumentNullException.ThrowIfNull(sourceColorSpace);
         this.destinationColorSpace = destinationColorSpace ??
             throw new ArgumentNullException(nameof(destinationColorSpace));
+        spaces = [sourceColorSpace, destinationColorSpace];
+        hasCustomSpaces = sourceColorSpace.OverridesArrayConversions ||
+            destinationColorSpace.OverridesArrayConversions;
+        hasProfiles = !hasCustomSpaces;
     }
 
     public JavaColorConvertOp(JavaColorSpace destinationColorSpace)
     {
         this.destinationColorSpace = destinationColorSpace ??
             throw new ArgumentNullException(nameof(destinationColorSpace));
+        spaces = [destinationColorSpace];
+        hasCustomSpaces = destinationColorSpace.OverridesArrayConversions;
+        hasProfiles = !hasCustomSpaces;
     }
 
-    public SKBitmap Filter(SKBitmap source, SKBitmap? destination)
+    public PdfCartonImage Filter(PdfCartonImage source, PdfCartonImage? destination)
     {
         ArgumentNullException.ThrowIfNull(source);
-        if (destination is null)
-        {
-            var colorSpace = destinationColorSpace ??
-                PdfCartonFontCompat.GetColorModel(source).ColorSpace;
-            var colorModel = new JavaColorModel(
-                colorSpace,
-                false,
-                PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE);
-            var raster = colorModel.CreateCompatibleWritableRaster(
-                source.Width,
-                source.Height);
-            destination = PdfCartonFontCompat.CreateImage(
-                colorModel,
-                raster,
-                false,
-                null);
-        }
-        if (source.Width != destination.Width ||
-            source.Height != destination.Height)
+        if (destination is not null) return Convert(source, destination);
+
+        var colorSpace = destinationColorSpace ??
+            PdfCartonFontCompat.GetColorModel(source).ColorSpace;
+        var colorModel = new JavaColorModel(
+            colorSpace,
+            false,
+            PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE);
+        var raster = colorModel.CreateCompatibleWritableRaster(
+            source.Width,
+            source.Height);
+        // Convert ends with SetImageData, which renders the pixels, so the
+        // new image skips CreateImage's eager render.
+        var created = PdfCartonFontCompat.CreateDeferredImage(
+            colorModel,
+            raster,
+            false,
+            null);
+        return Convert(source, created);
+    }
+
+    // The source is read only through its raster, so a CreateImage source
+    // is never rendered natively.
+    private PdfCartonImage Convert(PdfCartonImage source, PdfCartonImage destination)
+    {
+        var sourceRaster = PdfCartonFontCompat.GetRaster(source);
+        var width = sourceRaster.Width;
+        var height = sourceRaster.Height;
+        if (width != destination.Width || height != destination.Height)
         {
             throw new ArgumentException(
                 "Source and destination image dimensions must match.");
         }
         var sourceColorModel = PdfCartonFontCompat.GetColorModel(source);
         var destinationColorModel = PdfCartonFontCompat.GetColorModel(destination);
-        var sourceRaster = PdfCartonFontCompat.GetRaster(source);
         var destinationRaster = PdfCartonFontCompat.GetRaster(destination);
+        var sourceCount = sourceColorModel.NumberOfComponents;
+        var sourceAlphaIndex = sourceColorModel.NumberOfColorComponents;
+        var sourceColorSpace = sourceColorModel.ColorSpace;
+        var destinationColorSpace = destinationColorModel.ColorSpace;
+        var destinationColorCount = destinationColorModel.NumberOfColorComponents;
+        var destinationHasAlpha = destinationColorModel.HasAlpha;
+        // Java converts through the constructor's spaces in turn. An op of
+        // ICC spaces runs one profile transform from the source's profile
+        // to the destination's, leaving out a first or last space with the
+        // profile that image already has; an op given a public-override
+        // space passes each colour through every space's fromCIEXYZ and
+        // toCIEXYZ.
+        var start = 0;
+        var stop = spaces.Length;
+        if (hasProfiles && SameProfile(sourceColorSpace, spaces[0])) start++;
+        if (hasProfiles && stop > start && SameProfile(destinationColorSpace, spaces[stop - 1])) stop--;
+        // With no space left between two images sharing one profile, Java
+        // draws the source onto the destination as Graphics2D.drawImage
+        // does: through 8-bit sRGB (clipping a wide gamut), compositing the
+        // source's alpha over the destination's pixels.
+        if (start >= stop && !hasCustomSpaces && SameProfile(sourceColorSpace, destinationColorSpace))
+            return DrawOver(destination, sourceColorModel, sourceRaster, destinationColorModel, destinationRaster);
+        // Java renders relative colorimetric when the source's profile is an
+        // output profile and perceptually otherwise, whatever the op's
+        // profiles are (perceptually when the source is a public-override
+        // space); an op given a public-override space, or one without
+        // profiles converting such a space, goes through toCIEXYZ and
+        // fromCIEXYZ, which are colorimetric.
+        var throughCieXyz = hasCustomSpaces ||
+            !hasProfiles && (sourceColorSpace.OverridesArrayConversions ||
+                destinationColorSpace.OverridesArrayConversions);
+        var colorimetric = throughCieXyz || sourceColorSpace is JavaIccColorSpace icc &&
+            !icc.IsSrgb && icc.Profile.GetProfileClass() == JavaIccProfile.CLASS_OUTPUT;
+        // Each pixel is read once into a reused row buffer and converted once
+        // through the D50 PCS, as Java's profile-to-profile transform does,
+        // without allocating.
+        var sourceRow = new float[checked(width * sourceCount)];
+        int[]? sourceSamples = null;
         object? sourcePixel = null;
         object? destinationPixel = null;
-        float[]? sourceComponents = null;
         var destinationComponents =
             new float[destinationColorModel.NumberOfComponents];
-        for (var y = 0; y < source.Height; y++)
+        Span<float> xyz = stackalloc float[3];
+        Span<float> converted = stackalloc float[JavaColorSpace.MaximumComponents];
+        Span<float> intermediate = stackalloc float[JavaColorSpace.MaximumComponents];
+        // When the destination raster is the bitmap's own live pixel view under
+        // its image-type model, the converted components go straight to the
+        // native pixels: the per-pixel raster writes and the final re-render
+        // would store exactly these bytes.
+        var direct = PdfCartonFontCompat.RendersAsStored(
+            destination,
+            destinationColorModel,
+            destinationRaster);
+        var output = direct ? new PdfCartonPixels(destination) : default;
+        try
         {
-            for (var x = 0; x < source.Width; x++)
+            for (var y = 0; y < height; y++)
             {
-                sourcePixel =
-                    sourceRaster.GetDataElements(x, y, 1, 1, sourcePixel);
-                sourceComponents = sourceColorModel.GetNormalizedComponents(
-                    sourcePixel,
-                    sourceComponents,
-                    0);
-                var rgb = sourceColorModel.ColorSpace.ToRgb(sourceComponents);
-                var converted = destinationColorModel.ColorSpace.FromRgb(rgb);
-                Array.Copy(
-                    converted,
-                    destinationComponents,
-                    destinationColorModel.NumberOfColorComponents);
-                if (destinationColorModel.HasAlpha)
+                sourceColorModel.GetNormalizedRow(
+                    sourceRaster,
+                    y,
+                    sourceRow,
+                    ref sourceSamples,
+                    ref sourcePixel);
+                for (var x = 0; x < width; x++)
                 {
-                    destinationComponents[
-                        destinationColorModel.NumberOfColorComponents] =
-                        sourceColorModel.HasAlpha
-                            ? sourceComponents[sourceColorModel.NumberOfColorComponents]
+                    var sourceComponents =
+                        new ReadOnlySpan<float>(sourceRow, x * sourceCount, sourceCount);
+                    ToXyz(sourceColorSpace, sourceComponents, xyz, colorimetric, throughCieXyz);
+                    for (var index = start; index < stop; index++)
+                    {
+                        var space = spaces[index];
+                        var count = FromXyz(space, xyz, intermediate, colorimetric, throughCieXyz);
+                        ToXyz(space, intermediate.Slice(0, count), xyz, colorimetric, throughCieXyz);
+                    }
+                    var convertedCount = FromXyz(
+                        destinationColorSpace, xyz, converted, colorimetric, throughCieXyz);
+                    if (convertedCount < destinationColorCount)
+                        throw new ArgumentException(
+                            "The converted color has fewer components than the destination.");
+                    var alpha = !destinationHasAlpha
+                        ? 1f
+                        : sourceColorModel.HasAlpha
+                            ? sourceComponents[sourceAlphaIndex]
                             : 1f;
+                    if (direct)
+                    {
+                        var first = PdfCartonFontCompat.ComponentByte(converted[0]);
+                        output.Set(
+                            x,
+                            y,
+                            destinationColorCount == 1
+                                ? new SKColor(first, first, first)
+                                : new SKColor(
+                                    first,
+                                    PdfCartonFontCompat.ComponentByte(converted[1]),
+                                    PdfCartonFontCompat.ComponentByte(converted[2]),
+                                    destinationHasAlpha
+                                        ? PdfCartonFontCompat.ComponentByte(alpha)
+                                        : byte.MaxValue));
+                        continue;
+                    }
+                    converted.Slice(0, destinationColorCount)
+                        .CopyTo(destinationComponents);
+                    if (destinationHasAlpha)
+                        destinationComponents[destinationColorCount] = alpha;
+                    destinationPixel = destinationColorModel.GetDataElements(
+                        destinationComponents,
+                        0,
+                        destinationPixel);
+                    destinationRaster.SetDataElements(x, y, destinationPixel);
                 }
-                destinationPixel = destinationColorModel.GetDataElements(
-                    destinationComponents,
-                    0,
-                    destinationPixel);
-                destinationRaster.SetDataElements(x, y, destinationPixel);
+            }
+        }
+        finally
+        {
+            if (direct) output.Dispose();
+        }
+        PdfCartonFontCompat.SetImageData(destination, destinationRaster);
+        return destination;
+    }
+
+    // Every destination pixel is stored again, through the colour model as
+    // Java2D's drawing loops store a colour, from the source-over composite
+    // of both rasters' current pixels as those loops read them.
+    private static PdfCartonImage DrawOver(
+        PdfCartonImage destination,
+        JavaColorModel sourceColorModel,
+        JavaRaster sourceRaster,
+        JavaColorModel destinationColorModel,
+        JavaRaster destinationRaster)
+    {
+        int[]? sourceSamples = null, destinationSamples = null;
+        object? sourcePixel = null, destinationPixel = null, element = null;
+        float[]? components = null;
+        for (var y = 0; y < destinationRaster.Height; y++)
+        {
+            for (var x = 0; x < destinationRaster.Width; x++)
+            {
+                var top = sourceColorModel.RenderedColorAt(sourceRaster, x, y, ref sourceSamples, ref sourcePixel);
+                var under = destinationColorModel.RenderedColorAt(
+                    destinationRaster, x, y, ref destinationSamples, ref destinationPixel);
+                var sourceAlpha = top.Alpha / 255f;
+                var underAlpha = under.Alpha / 255f * (1f - sourceAlpha);
+                var alpha = sourceAlpha + underAlpha;
+                byte Channel(byte over, byte below) => alpha <= 0f ? (byte)0 :
+                    PdfCartonFontCompat.ComponentByte((over * sourceAlpha + below * underAlpha) / 255f / alpha);
+                var drawn = new SKColor(
+                    Channel(top.Red, under.Red),
+                    Channel(top.Green, under.Green),
+                    Channel(top.Blue, under.Blue),
+                    PdfCartonFontCompat.ComponentByte(alpha));
+                element = destinationColorModel.GetDrawnDataElements(
+                    unchecked((int)(uint)drawn), ref components, element);
+                destinationRaster.SetDataElements(x, y, element);
             }
         }
         PdfCartonFontCompat.SetImageData(destination, destinationRaster);
         return destination;
     }
+
+    // An op converting through CIE XYZ uses every space's public toCIEXYZ
+    // and fromCIEXYZ, which quantize through 16-bit samples as Java's do;
+    // a profile transform converts each space's PCS values unquantized.
+    private static void ToXyz(
+        JavaColorSpace space, ReadOnlySpan<float> components, Span<float> xyz,
+        bool colorimetric, bool throughCieXyz)
+    {
+        if (!throughCieXyz || space.OverridesArrayConversions)
+            space.ConvertToXyz(components, xyz, colorimetric);
+        else
+            space.ToCieXyz(components.ToArray()).AsSpan(0, 3).CopyTo(xyz);
+    }
+
+    private static int FromXyz(
+        JavaColorSpace space, ReadOnlySpan<float> xyz, Span<float> output,
+        bool colorimetric, bool throughCieXyz)
+    {
+        if (!throughCieXyz || space.OverridesArrayConversions)
+            return space.ConvertFromXyz(xyz, output, colorimetric);
+        var result = space.FromCieXyz(xyz.ToArray());
+        result.AsSpan().CopyTo(output);
+        return result.Length;
+    }
+
+    // Java compares the profiles of an image's ICC space and the op's by
+    // identity, not by content.
+    private static bool SameProfile(JavaColorSpace image, JavaColorSpace space) =>
+        !image.OverridesArrayConversions &&
+        (ReferenceEquals(image, space) ||
+            image is JavaIccColorSpace imageIcc && space is JavaIccColorSpace spaceIcc &&
+            ReferenceEquals(imageIcc.Profile, spaceIcc.Profile));
 }
 
 public sealed class JavaLookupTable
@@ -2777,7 +3639,7 @@ public sealed class JavaLookupOp
         _ = renderingHints;
     }
 
-    public SKBitmap Filter(SKBitmap source, SKBitmap destination)
+    public PdfCartonImage Filter(PdfCartonImage source, PdfCartonImage destination)
     {
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(destination);
@@ -2869,14 +3731,16 @@ public sealed class JavaColor : JavaPaint, IEquatable<JavaColor>
     public static implicit operator SKColor(JavaColor color) => color.Value;
     public static implicit operator JavaColor(SKColor color) => new(color);
 
+    // Java's ColorPaintContext: a raster of the default ARGB model holding
+    // the colour's ARGB value, so the pixels and the model agree on alpha,
+    // opaque colours included.
     private sealed class SolidPaintContext : JavaPaintContext
     {
-        private readonly List<SKBitmap> rasters = new();
-        private readonly SKColor color;
+        private readonly int argb;
         private readonly JavaColorModel colorModel =
             new(PdfCartonFontCompat.TYPE_INT_ARGB);
 
-        internal SolidPaintContext(SKColor color) => this.color = color;
+        internal SolidPaintContext(SKColor color) => argb = unchecked((int)(uint)color);
 
         public JavaColorModel GetColorModel() => colorModel;
 
@@ -2886,23 +3750,12 @@ public sealed class JavaColor : JavaPaint, IEquatable<JavaColor>
             _ = y;
             if (width <= 0 || height <= 0)
                 throw new ArgumentException("Raster dimensions must be positive.");
-            var bitmap = new SKBitmap(
-                width,
-                height,
-                SKColorType.Bgra8888,
-                color.Alpha == byte.MaxValue
-                    ? SKAlphaType.Opaque
-                    : SKAlphaType.Unpremul);
-            bitmap.Erase(color);
-            rasters.Add(bitmap);
-            return new JavaRaster(bitmap);
+            var raster = colorModel.CreateCompatibleWritableRaster(width, height);
+            raster.FillStorage(argb);
+            return raster;
         }
 
-        public void Dispose()
-        {
-            foreach (var raster in rasters) raster.Dispose();
-            rasters.Clear();
-        }
+        public void Dispose() { }
     }
 }
 
@@ -2920,14 +3773,14 @@ public interface JavaPaint
 
 public sealed class JavaTexturePaint : JavaPaint
 {
-    public JavaTexturePaint(SKBitmap image, SKRect anchor)
+    public JavaTexturePaint(PdfCartonImage image, SKRect anchor)
     {
         ArgumentNullException.ThrowIfNull(image);
         Image = image;
         Anchor = anchor;
     }
 
-    public SKBitmap Image { get; }
+    public PdfCartonImage Image { get; }
     public SKRect Anchor { get; }
 
     public JavaPaintContext CreateContext(
@@ -2940,8 +3793,7 @@ public sealed class JavaTexturePaint : JavaPaint
         _ = colorModel;
         _ = deviceBounds;
         _ = userBounds;
-        _ = hints;
-        return new TexturePaintContext(Image, Anchor, transform);
+        return new TexturePaintContext(Image, Anchor, transform, hints);
     }
 
     public int GetTransparency() =>
@@ -2949,82 +3801,99 @@ public sealed class JavaTexturePaint : JavaPaint
             ? PdfCartonTransparency.OPAQUE
             : PdfCartonTransparency.TRANSLUCENT;
 
-    private sealed class TexturePaintContext : JavaPaintContext
+    // java.awt.TexturePaintContext drawn by Skia: PdfCartonGraphics2D fills
+    // with its shader, and GetRaster (custom paints such as SoftMask that
+    // wrap it) draws that shader into an INT_ARGB raster. No pixel is
+    // sampled in managed code.
+    internal sealed class TexturePaintContext : JavaPaintContext
     {
-        private readonly List<SKBitmap> rasters = new();
-        private readonly SKBitmap image;
-        private readonly SKRect anchor;
-        private readonly SKMatrix deviceToUser;
-        private readonly JavaColorModel colorModel;
+        private readonly PdfCartonImage image;
+        private readonly SKMatrix deviceFromImage;
+        private readonly SKSamplingOptions sampling;
+        private readonly JavaColorModel colorModel =
+            new(PdfCartonFontCompat.TYPE_INT_ARGB);
 
         internal TexturePaintContext(
-            SKBitmap image,
+            PdfCartonImage image,
             SKRect anchor,
-            SKMatrix userToDevice)
+            SKMatrix userToDevice,
+            PdfCartonRenderingHints? hints)
         {
             if (anchor.Width == 0 || anchor.Height == 0)
                 throw new ArgumentException(
                     "Texture paint anchor dimensions cannot be zero.",
                     nameof(anchor));
             this.image = image;
-            this.anchor = anchor;
-            deviceToUser = PdfCartonFontCompat.CreateInverse(userToDevice);
-            colorModel = PdfCartonFontCompat.GetColorModel(image);
+            // As Java: bilinear unless the interpolation hint is nearest
+            // neighbour or, without one, the rendering hint is not quality.
+            object? interpolation = null;
+            hints?.TryGetValue(PdfCartonRenderingHints.KEY_INTERPOLATION, out interpolation);
+            var filter = interpolation is null
+                ? ReferenceEquals(
+                    hints?.GetValueOrDefault(PdfCartonRenderingHints.KEY_RENDERING),
+                    PdfCartonRenderingHints.VALUE_RENDER_QUALITY)
+                : !ReferenceEquals(
+                    interpolation,
+                    PdfCartonRenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+            sampling = new SKSamplingOptions(filter ? SKFilterMode.Linear : SKFilterMode.Nearest);
+            // Java maps the device pixel's corner to image position u and
+            // takes texel floor(u), or blends floor(u) and the next texel by
+            // frac(u). Skia maps pixel centres and samples texel centres, so
+            // shift by half a device pixel and, when filtering, half a texel.
+            var matrix = SKMatrix.Concat(
+                SKMatrix.CreateTranslation(0.5f, 0.5f),
+                SKMatrix.Concat(
+                    userToDevice,
+                    SKMatrix.CreateScaleTranslation(
+                        anchor.Width / image.Width,
+                        anchor.Height / image.Height,
+                        anchor.Left,
+                        anchor.Top)));
+            deviceFromImage = filter
+                ? SKMatrix.Concat(matrix, SKMatrix.CreateTranslation(-0.5f, -0.5f))
+                : matrix;
         }
 
         public JavaColorModel GetColorModel() => colorModel;
+
+        // The repeating image shader for a canvas whose matrix is userToDevice;
+        // null when that matrix cannot be inverted (nothing is drawn).
+        // rasterTarget is the bitmap the shader is drawn on, as for DrawableImage.
+        internal SKShader? CreateShader(SKMatrix userToDevice, SKBitmap? rasterTarget)
+        {
+            if (!userToDevice.TryInvert(out var deviceToUser)) return null;
+            PdfCartonFontCompat.EnsureNativePixels(image);
+            using var view = PdfCartonFontCompat.DrawableImage(image, rasterTarget);
+            return view?.ToShader(
+                SKShaderTileMode.Repeat,
+                SKShaderTileMode.Repeat,
+                sampling,
+                SKMatrix.Concat(deviceToUser, deviceFromImage)) ?? SKShader.CreateEmpty();
+        }
 
         public JavaRaster GetRaster(int x, int y, int width, int height)
         {
             if (width <= 0 || height <= 0)
                 throw new ArgumentException("Raster dimensions must be positive.");
-            var bitmap = new SKBitmap(
+            var bitmap = PdfCartonFontCompat.CreateIntermediate(
                 width,
                 height,
-                image.ColorType,
-                image.AlphaType,
-                image.ColorSpace);
-            using var input = new PdfCartonPixels(image);
-            using var output = new PdfCartonPixels(bitmap);
-            for (var row = 0; row < height; row++)
+                PdfCartonFontCompat.TYPE_INT_ARGB);
+            using (var bitmapLease = bitmap.Lease())
+            using (var shader = CreateShader(SKMatrix.CreateTranslation(x, y), bitmapLease.Bitmap))
             {
-                for (var column = 0; column < width; column++)
+                if (shader is not null)
                 {
-                    var deviceX = x + column;
-                    var deviceY = y + row;
-                    var userX =
-                        deviceToUser.ScaleX * deviceX +
-                        deviceToUser.SkewX * deviceY +
-                        deviceToUser.TransX;
-                    var userY =
-                        deviceToUser.SkewY * deviceX +
-                        deviceToUser.ScaleY * deviceY +
-                        deviceToUser.TransY;
-                    var imageX = Mod(
-                        (int)Math.Floor(
-                            (userX - anchor.Left) / anchor.Width * image.Width),
-                        image.Width);
-                    var imageY = Mod(
-                        (int)Math.Floor(
-                            (userY - anchor.Top) / anchor.Height * image.Height),
-                        image.Height);
-                    output.Set(column, row, input.Get(imageX, imageY));
+                    var canvas = bitmapLease.Canvas;
+                    using var paint = new SKPaint { Shader = shader, BlendMode = SKBlendMode.Src };
+                    canvas.DrawPaint(paint);
                 }
             }
-            rasters.Add(bitmap);
-            return new JavaRaster(bitmap);
+            return PdfCartonFontCompat.GetRaster(bitmap);
         }
 
         public void Dispose()
         {
-            foreach (var raster in rasters) raster.Dispose();
-            rasters.Clear();
-        }
-
-        private static int Mod(int value, int modulus)
-        {
-            var result = value % modulus;
-            return result < 0 ? result + modulus : result;
         }
     }
 }
@@ -3041,6 +3910,10 @@ public sealed class PdfCartonRenderingHints : Dictionary<object, object>
     public static readonly object KEY_ANTIALIASING = new();
     public static readonly object VALUE_ANTIALIAS_OFF = new();
     public static readonly object VALUE_ANTIALIAS_ON = new();
+    public static readonly object KEY_STROKE_CONTROL = new();
+    public static readonly object VALUE_STROKE_DEFAULT = new();
+    public static readonly object VALUE_STROKE_NORMALIZE = new();
+    public static readonly object VALUE_STROKE_PURE = new();
 
     public PdfCartonRenderingHints(object? initialValues)
     {
@@ -3106,6 +3979,11 @@ public sealed class JavaIccProfile
     public int GetMinorVersion() => profile.MinorVersion;
     internal float[] ToRgb(float[] components) => profile.ToRgb(components);
     internal float[] FromRgb(float[] rgb) => profile.FromRgb(rgb);
+    internal void ToRgb(ReadOnlySpan<float> components, Span<float> rgb) =>
+        profile.ToRgb(components, rgb);
+    internal int FromRgb(ReadOnlySpan<float> rgb, Span<float> components) =>
+        profile.FromRgb(rgb, components);
+    internal PdfCartonIccProfileData Data => profile;
 }
 
 public static class PdfCartonTransparency
@@ -3193,9 +4071,12 @@ public sealed class JavaBasicStroke : JavaStroke
     public float DashPhase { get; }
     public object CreateStrokedShape(object shape)
     {
-        using var path = PdfCartonFontCompat.CreatePath(shape);
+        using var path = PdfCartonFontCompat.BorrowPath(shape);
         using var paint = CreateSkiaPaint();
-        return paint.GetFillPath(path) ?? new SKPath();
+        using var outline = paint.GetFillPath(path.Path);
+        var result = new JavaPath2D(JavaPath2D.WIND_NON_ZERO, outline?.VerbCount ?? 0, doublePrecision: false);
+        if (outline is not null) result.ReadFrom(outline);
+        return result;
     }
 
     internal SKPaint CreateSkiaPaint()
@@ -3321,9 +4202,9 @@ public sealed class JavaAlphaComposite : JavaComposite
                     var resultAlpha =
                         sourceAlpha + destinationAlpha * (1f - sourceAlpha);
 
-                    var sourceRgb = sourceColorModel.ColorSpace.ToRgb(sourceComponents);
+                    var sourceRgb = sourceColorModel.DrawingSpace.ToRgb(sourceComponents);
                     var destinationRgb =
-                        destinationColorModel.ColorSpace.ToRgb(destinationComponents);
+                        destinationColorModel.DrawingSpace.ToRgb(destinationComponents);
                     var resultRgb = new float[3];
                     for (var component = 0; component < resultRgb.Length; component++)
                     {
@@ -3334,7 +4215,7 @@ public sealed class JavaAlphaComposite : JavaComposite
                                (1f - sourceAlpha)) / resultAlpha;
                     }
 
-                    var result = destinationColorModel.ColorSpace.FromRgb(resultRgb);
+                    var result = destinationColorModel.DrawingSpace.FromRgb(resultRgb);
                     Array.Copy(
                         result,
                         destinationComponents,
@@ -3370,11 +4251,10 @@ public class JavaColorModel
     {
         this.imageType = imageType;
         explicitTransparency = transparency;
-        ColorSpace = imageType == PdfCartonFontCompat.TYPE_BYTE_GRAY
-            ? new JavaColorSpace(JavaColorSpace.CS_GRAY)
-            : new JavaIccColorSpace(
-                JavaColorSpace.CS_sRGB,
-                PdfCartonFontCompat.GetIccProfile(JavaColorSpace.CS_sRGB));
+        ColorSpace = PdfCartonFontCompat.GetColorSpace(
+            imageType == PdfCartonFontCompat.TYPE_BYTE_GRAY
+                ? JavaColorSpace.CS_GRAY
+                : JavaColorSpace.CS_sRGB);
         if (imageType == PdfCartonFontCompat.TYPE_BYTE_BINARY)
             Palette = [SKColors.Black, SKColors.White];
     }
@@ -3449,34 +4329,58 @@ public class JavaColorModel
         sbyte[] red,
         sbyte[] green,
         sbyte[] blue)
+        : this(pixelBits, mapSize, red, green, blue, null)
+    {
+    }
+
+    // Java's IndexColorModel: pixels of more than eight bits are stored as
+    // unsigned shorts. With alpha, the model is OPAQUE when every entry is
+    // opaque, BITMASK when every entry is opaque or fully transparent, and
+    // TRANSLUCENT otherwise; it has alpha unless it is OPAQUE.
+    internal JavaColorModel(
+        int pixelBits,
+        int mapSize,
+        sbyte[] red,
+        sbyte[] green,
+        sbyte[] blue,
+        sbyte[]? alpha)
     {
         if (pixelBits is <= 0 or > 16)
             throw new ArgumentOutOfRangeException(nameof(pixelBits));
         if (mapSize <= 0 ||
             red.Length < mapSize ||
             green.Length < mapSize ||
-            blue.Length < mapSize)
+            blue.Length < mapSize ||
+            alpha is not null && alpha.Length < mapSize)
         {
             throw new ArgumentException(
                 "The indexed color arrays must contain every palette entry.");
         }
 
         imageType = PdfCartonFontCompat.TYPE_CUSTOM;
-        explicitColorSpace = new JavaIccColorSpace(
-            JavaColorSpace.CS_sRGB,
-            PdfCartonFontCompat.GetIccProfile(JavaColorSpace.CS_sRGB));
-        explicitAlpha = false;
-        explicitDataType = PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE;
+        explicitColorSpace = PdfCartonFontCompat.GetColorSpace(JavaColorSpace.CS_sRGB);
+        explicitDataType = pixelBits > 8
+            ? PdfCartonFontCompat.DATA_BUFFER_TYPE_USHORT
+            : PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE;
         explicitPixelSize = pixelBits;
         ColorSpace = explicitColorSpace;
         Palette = new SKColor[mapSize];
+        var transparency = PdfCartonTransparency.OPAQUE;
         for (var index = 0; index < mapSize; index++)
         {
+            var entryAlpha = alpha is null ? byte.MaxValue : unchecked((byte)alpha[index]);
+            if (entryAlpha is not byte.MaxValue)
+                transparency = entryAlpha is 0 && transparency != PdfCartonTransparency.TRANSLUCENT
+                    ? PdfCartonTransparency.BITMASK
+                    : PdfCartonTransparency.TRANSLUCENT;
             Palette[index] = new SKColor(
                 unchecked((byte)red[index]),
                 unchecked((byte)green[index]),
-                unchecked((byte)blue[index]));
+                unchecked((byte)blue[index]),
+                entryAlpha);
         }
+        explicitAlpha = transparency != PdfCartonTransparency.OPAQUE;
+        explicitTransparency = transparency;
     }
 
     internal SKColor[]? Palette { get; }
@@ -3514,6 +4418,207 @@ public class JavaColorModel
         explicitColorSpace?.NumberOfComponents ??
         (imageType == PdfCartonFontCompat.TYPE_BYTE_GRAY ? 1 : 3);
     public JavaColorSpace ColorSpace { get; }
+    // The space Java2D's drawing loops treat this model's pixels as in: the
+    // native pixels are rendered from samples through it, and drawn pixels
+    // become samples through it. ColorSpace, except that the loops store and
+    // draw a TYPE_BYTE_GRAY sample as sRGB-encoded gray, though its
+    // ColorSpace (getRGB, setRGB, getDataElements) is the linear CS_GRAY.
+    internal JavaColorSpace DrawingSpace =>
+        IsImageTypeModel && imageType == PdfCartonFontCompat.TYPE_BYTE_GRAY
+            ? PdfCartonFontCompat.EncodedGrayColorSpace
+            : ColorSpace;
+    internal int ImageType => imageType;
+    // The model GetRaster/GetColorModel derive from a bitmap's image type.
+    internal bool IsImageTypeModel =>
+        explicitColorSpace is null && Palette is null && explicitMasks is null;
+    private bool IsIntImageType =>
+        imageType is PdfCartonFontCompat.TYPE_INT_RGB or
+            PdfCartonFontCompat.TYPE_INT_ARGB or
+            PdfCartonFontCompat.TYPE_INT_BGR;
+
+    private double[]? componentMaxima;
+
+    // Writes the normalized components of raster row y into components
+    // (Width * NumberOfComponents values), producing exactly what
+    // GetNormalizedComponents returns for each pixel. The scratch arguments
+    // are reused across rows so a full-image pass allocates nothing per pixel.
+    internal void GetNormalizedRow(
+        JavaRaster raster,
+        int y,
+        float[] components,
+        ref int[]? samples,
+        ref object? pixel)
+    {
+        var width = raster.Width;
+        var count = NumberOfComponents;
+        if (components.Length < checked(width * count))
+            throw new IndexOutOfRangeException();
+        if (ReadsComponentSamples(raster))
+        {
+            var length = width * count;
+            if (samples is null || samples.Length < length) samples = new int[length];
+            raster.GetPixels(0, y, width, 1, samples);
+            var maxima = componentMaxima ??= ComponentMaxima();
+            var clampSamples = raster.TransferType == PdfCartonFontCompat.DATA_BUFFER_TYPE_INT;
+            for (var index = 0; index < length; index++)
+            {
+                var value = samples[index] / maxima[index % count];
+                components[index] = clampSamples
+                    ? (float)JavaCompat.Clamp(value, 0d, 1d)
+                    : (float)value;
+            }
+            return;
+        }
+        if (ReadsForeignPackedSamples(raster))
+        {
+            // Another INT layout's packed raster: its bands are still red,
+            // green, blue (and alpha), which Java's setData copies as samples.
+            var bands = raster.NumberOfBands;
+            if (samples is null || samples.Length < width * bands) samples = new int[width * bands];
+            raster.ReadRowSamples(y, samples);
+            for (var x = 0; x < width; x++)
+                for (var component = 0; component < count; component++)
+                    components[x * count + component] = samples[x * bands + component] / 255f;
+            return;
+        }
+        for (var x = 0; x < width; x++)
+        {
+            pixel = raster.GetDataElements(x, y, 1, 1, pixel);
+            GetNormalizedComponents(pixel, components, x * count);
+        }
+    }
+
+    // INT image types decode a data element as one packed int, so their
+    // component (non-packed) rasters are read as samples.
+    private bool ReadsComponentSamples(JavaRaster raster) =>
+        Palette is null && explicitMasks is null &&
+        imageType != PdfCartonFontCompat.TYPE_BYTE_BINARY &&
+        raster.HasArrayStorage &&
+        raster.PackedPixelBits == 0 &&
+        !raster.IsSinglePixelPacked &&
+        raster.NumberOfBands == NumberOfComponents;
+
+    // Another INT layout's packed raster: its bands are still red, green,
+    // blue (and alpha), which Java's setData copies as samples.
+    private bool ReadsForeignPackedSamples(JavaRaster raster) =>
+        IsIntImageType && raster.IsSinglePixelPacked &&
+        raster.NumberOfBands >= NumberOfComponents &&
+        !raster.HasBitMasks(PackedMasks(imageType).AsSpan(0, NumberOfComponents));
+
+    // The color RenderRaster stores for the raster's pixel (x, y): the
+    // components GetNormalizedRow reads for it, converted as RenderedColor
+    // converts them. The scratch arguments are reused across calls, so a
+    // caller that keeps them allocates nothing per pixel.
+    internal SKColor RenderedColorAt(
+        JavaRaster raster,
+        int x,
+        int y,
+        ref int[]? samples,
+        ref object? pixel)
+    {
+        var count = NumberOfComponents;
+        Span<float> components = stackalloc float[MaximumPixelComponents];
+        var pixelComponents = components.Slice(0, count);
+        if (ReadsComponentSamples(raster))
+        {
+            if (samples is null || samples.Length < count) samples = new int[MaximumPixelComponents];
+            raster.GetPixel(x, y, samples);
+            var maxima = componentMaxima ??= ComponentMaxima();
+            var clampSamples = raster.TransferType == PdfCartonFontCompat.DATA_BUFFER_TYPE_INT;
+            for (var index = 0; index < count; index++)
+            {
+                var value = samples[index] / maxima[index];
+                pixelComponents[index] = clampSamples
+                    ? (float)JavaCompat.Clamp(value, 0d, 1d)
+                    : (float)value;
+            }
+        }
+        else if (ReadsForeignPackedSamples(raster))
+        {
+            var bands = raster.NumberOfBands;
+            if (samples is null || samples.Length < bands) samples = new int[Math.Max(bands, MaximumPixelComponents)];
+            raster.GetPixel(x, y, samples);
+            for (var component = 0; component < count; component++)
+                pixelComponents[component] = samples[component] / 255f;
+        }
+        else
+        {
+            pixel = raster.GetDataElements(x, y, pixel);
+            WriteNormalizedComponents(pixel, pixelComponents);
+        }
+        Span<float> rgb = stackalloc float[3];
+        DrawingSpace.ConvertToRgb(pixelComponents, rgb);
+        return new SKColor(
+            PdfCartonFontCompat.ComponentByte(rgb[0]),
+            PdfCartonFontCompat.ComponentByte(rgb[1]),
+            PdfCartonFontCompat.ComponentByte(rgb[2]),
+            HasAlpha
+                ? PdfCartonFontCompat.ComponentByte(pixelComponents[NumberOfColorComponents])
+                : byte.MaxValue);
+    }
+
+    // Java's ColorModel.getRGB(Object): getAlpha, getRed, getGreen and
+    // getBlue packed as 0xAARRGGBB, from one conversion of the pixel.
+    internal int GetRgb(object pixel)
+    {
+        Span<float> components = stackalloc float[MaximumPixelComponents];
+        var count = NumberOfComponents;
+        var pixelComponents = components.Slice(0, count);
+        WriteNormalizedComponents(pixel, pixelComponents);
+        Span<float> rgb = stackalloc float[3];
+        ColorSpace.ConvertToRgb(pixelComponents, rgb);
+        static uint Channel(float value) =>
+            (uint)(int)JavaCompat.Round(JavaCompat.Clamp(value, 0f, 1f) * 255f);
+        var alpha = HasAlpha ? Channel(pixelComponents[NumberOfColorComponents]) : 255u;
+        return unchecked((int)(alpha << 24 | Channel(rgb[0]) << 16 | Channel(rgb[1]) << 8 |
+                               Channel(rgb[2])));
+    }
+
+    // Java's ColorModel.getDataElements(int rgb, Object pixel): the color
+    // converted from sRGB into this model's space, its alpha appended when
+    // the model has one. The scratch arguments are reused across calls.
+    internal object GetDataElements(int argb, ref float[]? components, object? pixel) =>
+        GetDataElements(argb, ColorSpace, ref components, pixel);
+
+    // The data elements Java2D's drawing loops store for a drawn colour.
+    internal object GetDrawnDataElements(int argb, ref float[]? components, object? pixel) =>
+        GetDataElements(argb, DrawingSpace, ref components, pixel);
+
+    private object GetDataElements(
+        int argb,
+        JavaColorSpace colorSpace,
+        ref float[]? components,
+        object? pixel)
+    {
+        Span<float> rgb = stackalloc float[3];
+        rgb[0] = unchecked((byte)(argb >> 16)) / 255f;
+        rgb[1] = unchecked((byte)(argb >> 8)) / 255f;
+        rgb[2] = unchecked((byte)argb) / 255f;
+        if (components is null || components.Length < MaximumPixelComponents)
+            components = new float[MaximumPixelComponents];
+        var colorCount = NumberOfColorComponents;
+        Span<float> converted = stackalloc float[MaximumPixelComponents];
+        if (colorSpace.ConvertFromRgb(rgb, converted) < colorCount)
+            throw new ArgumentException("The color space returned fewer components than the color model has.");
+        converted.Slice(0, colorCount).CopyTo(components);
+        if (HasAlpha)
+            components[colorCount] = unchecked((byte)(argb >> 24)) / 255f;
+        return GetDataElements(components, 0, pixel);
+    }
+
+    private double[] ComponentMaxima()
+    {
+        var maxima = new double[NumberOfComponents];
+        for (var component = 0; component < maxima.Length; component++)
+        {
+            maxima[component] = explicitComponentBits is null
+                ? explicitDataType == PdfCartonFontCompat.DATA_BUFFER_TYPE_USHORT
+                    ? 65535d
+                    : 255d
+                : Math.Pow(2d, explicitComponentBits[component]) - 1d;
+        }
+        return maxima;
+    }
 
     public JavaRaster CreateCompatibleWritableRaster(int width, int height)
     {
@@ -3524,18 +4629,28 @@ public class JavaColorModel
             if (explicitPixelSize is 1 or 2 or 4)
                 return JavaRaster.Packed(width, height, explicitPixelSize.Value);
             return new JavaRaster(
-                PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE,
+                explicitPixelSize > 8
+                    ? PdfCartonFontCompat.DATA_BUFFER_TYPE_USHORT
+                    : PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE,
                 width,
                 height,
                 1);
         }
+        if (explicitColorSpace is null && explicitMasks is null &&
+            imageType is PdfCartonFontCompat.TYPE_INT_RGB or
+                PdfCartonFontCompat.TYPE_INT_ARGB or
+                PdfCartonFontCompat.TYPE_INT_BGR)
+        {
+            // Java's DirectColorModel packs a pixel into one int, in the
+            // layout GetDataElements and GetNormalizedComponents use.
+            return JavaRaster.SinglePixelPacked(
+                width,
+                height,
+                PackedMasks(imageType).AsSpan(0, NumberOfComponents).ToArray());
+        }
         var dataType = explicitColorSpace is not null
             ? explicitDataType
-            : imageType is PdfCartonFontCompat.TYPE_INT_RGB or
-                PdfCartonFontCompat.TYPE_INT_ARGB or
-                PdfCartonFontCompat.TYPE_INT_BGR
-                ? PdfCartonFontCompat.DATA_BUFFER_TYPE_INT
-                : PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE;
+            : PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE;
         return new JavaRaster(dataType, width, height, NumberOfComponents);
     }
 
@@ -3549,7 +4664,19 @@ public class JavaColorModel
         components ??= new float[offset + NumberOfComponents];
         if (components.Length < offset + NumberOfComponents)
             throw new IndexOutOfRangeException();
+        WriteNormalizedComponents(pixel, components.AsSpan(offset, NumberOfComponents));
+        return components;
+    }
 
+    // Color spaces have at most fifteen components, plus alpha.
+    private const int MaximumPixelComponents = JavaColorSpace.MaximumComponents + 1;
+
+    // Writes GetNormalizedComponents' values for pixel into components, which
+    // holds exactly NumberOfComponents values.
+    private void WriteNormalizedComponents(object pixel, Span<float> components)
+    {
+        ArgumentNullException.ThrowIfNull(pixel);
+        const int offset = 0;
         if (Palette is not null)
         {
             var paletteIndex = pixel switch
@@ -3571,7 +4698,7 @@ public class JavaColorModel
             components[offset + 2] = color.Blue / 255f;
             if (HasAlpha)
                 components[offset + NumberOfColorComponents] = color.Alpha / 255f;
-            return components;
+            return;
         }
 
 
@@ -3587,13 +4714,12 @@ public class JavaColorModel
                 components[offset + component] =
                     ((packedValue & mask) >> shift) / (float)maximum;
             }
-            return components;
+            return;
         }
 
-        if (pixel is int[] packed && packed.Length == 1 &&
-            imageType is PdfCartonFontCompat.TYPE_INT_RGB or
-                PdfCartonFontCompat.TYPE_INT_ARGB or
-                PdfCartonFontCompat.TYPE_INT_BGR)
+        // Like Java's DirectColorModel, the packed pixel is element zero of
+        // any int[] (callers reuse larger buffers).
+        if (pixel is int[] packed && packed.Length > 0 && IsIntImageType)
         {
             var value = packed[0];
             if (imageType == PdfCartonFontCompat.TYPE_INT_BGR)
@@ -3611,7 +4737,7 @@ public class JavaColorModel
             if (HasAlpha)
                 components[offset + NumberOfColorComponents] =
                     ((value >> 24) & 0xff) / 255f;
-            return components;
+            return;
         }
 
         for (var component = 0; component < NumberOfComponents; component++)
@@ -3636,7 +4762,6 @@ public class JavaColorModel
                     nameof(pixel))
             };
         }
-        return components;
     }
 
     public object GetDataElements(float[] components, int offset, object? pixel)
@@ -3667,6 +4792,13 @@ public class JavaColorModel
                 if (distance >= closestDistance) continue;
                 closestDistance = distance;
                 closestIndex = index;
+            }
+            if (explicitPixelSize > 8)
+            {
+                var wide = pixel as short[] ?? new short[1];
+                if (wide.Length == 0) throw new IndexOutOfRangeException();
+                wide[0] = unchecked((short)closestIndex);
+                return wide;
             }
             var indexed = pixel as sbyte[] ?? new sbyte[1];
             if (indexed.Length == 0) throw new IndexOutOfRangeException();
@@ -3771,9 +4903,14 @@ public class JavaColorModel
 
     public int GetBlue(object pixel) => GetRgbComponent(pixel, 2);
 
+    // The getters convert through stack buffers, so per-pixel callers such as
+    // SoftMask allocate nothing (a public array override of the color space
+    // still sees, and allocates, the arrays it is declared with).
     public int GetAlpha(object pixel)
     {
-        var components = GetNormalizedComponents(pixel, null, 0);
+        Span<float> components = stackalloc float[MaximumPixelComponents];
+        var count = NumberOfComponents;
+        WriteNormalizedComponents(pixel, components.Slice(0, count));
         return HasAlpha
             ? (int)JavaCompat.Round(
                 JavaCompat.Clamp(components[NumberOfColorComponents], 0f, 1f) * 255f)
@@ -3782,9 +4919,205 @@ public class JavaColorModel
 
     private int GetRgbComponent(object pixel, int component)
     {
-        var components = GetNormalizedComponents(pixel, null, 0);
-        var rgb = ColorSpace.ToRgb(components);
+        Span<float> components = stackalloc float[MaximumPixelComponents];
+        var count = NumberOfComponents;
+        WriteNormalizedComponents(pixel, components.Slice(0, count));
+        Span<float> rgb = stackalloc float[3];
+        ColorSpace.ConvertToRgb(components.Slice(0, count), rgb);
         return (int)JavaCompat.Round(JavaCompat.Clamp(rgb[component], 0f, 1f) * 255f);
+    }
+
+    // The color RenderRaster stores for a data element: one ToRgb of its
+    // normalized components, each channel rounded to a byte.
+    internal SKColor RenderedColor(object pixel)
+    {
+        Span<float> components = stackalloc float[MaximumPixelComponents];
+        var count = NumberOfComponents;
+        var pixelComponents = components.Slice(0, count);
+        WriteNormalizedComponents(pixel, pixelComponents);
+        Span<float> rgb = stackalloc float[3];
+        DrawingSpace.ConvertToRgb(pixelComponents, rgb);
+        return new SKColor(
+            PdfCartonFontCompat.ComponentByte(rgb[0]),
+            PdfCartonFontCompat.ComponentByte(rgb[1]),
+            PdfCartonFontCompat.ComponentByte(rgb[2]),
+            HasAlpha
+                ? PdfCartonFontCompat.ComponentByte(pixelComponents[NumberOfColorComponents])
+                : byte.MaxValue);
+    }
+
+    // A converter from raster sample rows to rendered colors, or null when the
+    // rendered color of a pixel is not a function of a single sample (index or
+    // gray) or of each band separately (sRGB/gray components, packed ints).
+    // Its tables hold RenderedColor results, so output is unchanged.
+    internal RasterRowConverter? CreateRowConverter(JavaRaster raster)
+    {
+        if (!raster.HasSampleStorage || explicitMasks is not null ||
+            DrawingSpace.OverridesArrayConversions)
+            return null;
+        var count = NumberOfComponents;
+        var bands = raster.NumberOfBands;
+        if (raster.IsSinglePixelPacked)
+        {
+            // An INT image type reads a packed raster's red, green, blue (and
+            // alpha) bands: decoded from its own layout, or copied as samples
+            // from another (GetNormalizedRow).
+            if (explicitColorSpace is not null || Palette is not null || !IsIntImageType ||
+                SeparableColorCount(DrawingSpace) != 3 || bands < count)
+                return null;
+            var colors = new SKColor[256];
+            var packed = new int[1];
+            for (var value = 0; value < colors.Length; value++)
+            {
+                packed[0] = value * 0x01010101;
+                colors[value] = RenderedColor(packed);
+            }
+            return new RasterRowConverter(RasterRowConverter.RgbBands, colors, bands, HasAlpha);
+        }
+
+        var transferType = raster.TransferType;
+        var domain = raster.PackedPixelBits != 0
+            ? 1 << raster.PackedPixelBits
+            : transferType == PdfCartonFontCompat.DATA_BUFFER_TYPE_BYTE
+            ? 256
+            : transferType == PdfCartonFontCompat.DATA_BUFFER_TYPE_USHORT &&
+                (long)raster.Width * raster.Height >= 65536
+            ? 65536
+            : 0;
+        if (domain == 0) return null;
+        // The data element GetDataElements returns for a pixel whose bands
+        // all hold sample (reused: RenderedColor does not retain it).
+        var words = transferType == PdfCartonFontCompat.DATA_BUFFER_TYPE_USHORT
+            ? new short[bands]
+            : null;
+        var bytes = new sbyte[bands];
+        object Element(int sample)
+        {
+            if (words is not null)
+            {
+                words.AsSpan().Fill(unchecked((short)sample));
+                return words;
+            }
+            bytes.AsSpan().Fill(unchecked((sbyte)sample));
+            return bytes;
+        }
+
+        if (bands == 1 && (Palette is not null || count == 1))
+        {
+            // Indices past the palette keep the per-pixel conversion, which
+            // reports them exactly as before.
+            var colors = new SKColor[Palette is null ? domain : Math.Min(domain, Palette.Length)];
+            for (var sample = 0; sample < colors.Length; sample++)
+                colors[sample] = RenderedColor(Element(sample));
+            return new RasterRowConverter(this, colors, Element);
+        }
+
+        var colorCount = SeparableColorCount(DrawingSpace);
+        if (Palette is not null || bands != count ||
+            colorCount == 0 || colorCount != NumberOfColorComponents)
+            return null;
+        // Every band carries the same sample, so each table entry holds each
+        // band's own rendered channel.
+        var table = new SKColor[domain];
+        for (var sample = 0; sample < domain; sample++)
+            table[sample] = RenderedColor(Element(sample));
+        return new RasterRowConverter(
+            colorCount == 1 ? RasterRowConverter.GrayBands : RasterRowConverter.RgbBands,
+            table,
+            bands,
+            HasAlpha);
+    }
+
+    // The bit masks of an INT image type's packed pixel, alpha last.
+    private static int[] PackedMasks(int imageType) =>
+        imageType == PdfCartonFontCompat.TYPE_INT_BGR
+            ? [0xff, 0xff00, 0xff0000, unchecked((int)0xff000000)]
+            : [0xff0000, 0xff00, 0xff, unchecked((int)0xff000000)];
+
+    // 3 or 1 when JavaColorSpace.ToRgb clamps each RGB component on its own
+    // or repeats the gray one; 0 for any other conversion.
+    private static int SeparableColorCount(JavaColorSpace colorSpace)
+    {
+        if (colorSpace is JavaIccColorSpace { IsSrgb: false }) return 0;
+        return colorSpace.Type switch
+        {
+            JavaColorSpace.TYPE_GRAY when colorSpace.NumberOfComponents == 1 => 1,
+            JavaColorSpace.TYPE_RGB when colorSpace.NumberOfComponents == 3 => 3,
+            _ => 0
+        };
+    }
+}
+
+// Converts rows of raster samples (as JavaRaster.ReadRowSamples returns them)
+// to the colors RenderRaster stores, through tables built by
+// JavaColorModel.CreateRowConverter.
+internal sealed class RasterRowConverter
+{
+    internal const int Indexed = 0;
+    internal const int GrayBands = 1;
+    internal const int RgbBands = 2;
+
+    private readonly int mode;
+    private readonly SKColor[] table;
+    private readonly int bands;
+    private readonly bool hasAlpha;
+    private readonly JavaColorModel? colorModel;
+    private readonly Func<int, object>? element;
+
+    // Band tables: entry s holds each channel rendered from sample s in that
+    // channel's band (gray from band 0); alpha comes from the last band.
+    internal RasterRowConverter(int mode, SKColor[] table, int bands, bool hasAlpha)
+    {
+        this.mode = mode;
+        this.table = table;
+        this.bands = bands;
+        this.hasAlpha = hasAlpha;
+    }
+
+    internal RasterRowConverter(JavaColorModel colorModel, SKColor[] table, Func<int, object> element)
+    {
+        mode = Indexed;
+        this.table = table;
+        bands = 1;
+        this.colorModel = colorModel;
+        this.element = element;
+    }
+
+    internal void Convert(int[] samples, Span<SKColor> row)
+    {
+        switch (mode)
+        {
+            case Indexed:
+                for (var x = 0; x < row.Length; x++)
+                {
+                    var sample = samples[x];
+                    row[x] = (uint)sample < (uint)table.Length
+                        ? table[sample]
+                        : colorModel!.RenderedColor(element!(sample));
+                }
+                return;
+            case GrayBands:
+                for (int x = 0, offset = 0; x < row.Length; x++, offset += bands)
+                {
+                    var gray = table[samples[offset]].Red;
+                    row[x] = new SKColor(
+                        gray,
+                        gray,
+                        gray,
+                        hasAlpha ? table[samples[offset + 1]].Alpha : byte.MaxValue);
+                }
+                return;
+            default:
+                for (int x = 0, offset = 0; x < row.Length; x++, offset += bands)
+                {
+                    row[x] = new SKColor(
+                        table[samples[offset]].Red,
+                        table[samples[offset + 1]].Green,
+                        table[samples[offset + 2]].Blue,
+                        hasAlpha ? table[samples[offset + 3]].Alpha : byte.MaxValue);
+                }
+                return;
+        }
     }
 }
 
@@ -3834,81 +5167,293 @@ public class JavaColorSpace
     public int NumberOfComponents => numberOfComponents;
     public bool IsSrgb => Kind == CS_sRGB;
 
+    // The array overloads are the Java-shaped API and delegate to the span
+    // overloads, which hold each space's conversion. Per-pixel callers use the
+    // span overloads, which write into caller-owned buffers and allocate nothing.
     public virtual float[] ToRgb(float[] components)
     {
         ArgumentNullException.ThrowIfNull(components);
-        if (components.Length < NumberOfComponents)
-            throw new ArgumentException("The component array is too short.", nameof(components));
-        static float Clamp(float value) => JavaCompat.Clamp(value, 0f, 1f);
-        return Type switch
-        {
-            TYPE_GRAY => new[]
-            {
-                Clamp(components[0]),
-                Clamp(components[0]),
-                Clamp(components[0])
-            },
-            TYPE_CMYK => new[]
-            {
-                1f - Math.Min(1f, Clamp(components[0]) + Clamp(components[3])),
-                1f - Math.Min(1f, Clamp(components[1]) + Clamp(components[3])),
-                1f - Math.Min(1f, Clamp(components[2]) + Clamp(components[3]))
-            },
-            _ => new[]
-            {
-                Clamp(components[0]),
-                Clamp(components.Length > 1 ? components[1] : components[0]),
-                Clamp(components.Length > 2 ? components[2] : components[0])
-            }
-        };
+        var rgb = new float[3];
+        ToRgb(components, rgb);
+        return rgb;
     }
 
     public virtual float[] FromRgb(float[] rgb)
     {
         ArgumentNullException.ThrowIfNull(rgb);
+        Span<float> buffer = stackalloc float[MaximumComponents];
+        var count = FromRgb(rgb, buffer);
+        return buffer.Slice(0, count).ToArray();
+    }
+
+    // Color spaces have at most fifteen components; FromRgb span callers pass
+    // an output buffer of at least this length.
+    internal const int MaximumComponents = PdfCartonIccProfileData.MaximumComponents;
+
+    private int arrayOverrides = -1;
+
+    // A subclass outside this assembly can only override the public array
+    // methods. Per-pixel callers use these entry points, which take the
+    // allocation-free span path unless such an override must be honored.
+    internal void ConvertToRgb(ReadOnlySpan<float> components, Span<float> rgb)
+    {
+        if (!OverridesArrayConversions)
+        {
+            ToRgb(components, rgb);
+            return;
+        }
+        var result = ToRgb(components.ToArray());
+        if (result.Length < 3)
+            throw new ArgumentException("The color space returned fewer than three RGB components.");
+        result.AsSpan(0, 3).CopyTo(rgb);
+    }
+
+    internal int ConvertFromRgb(ReadOnlySpan<float> rgb, Span<float> output)
+    {
+        if (!OverridesArrayConversions) return FromRgb(rgb, output);
+        var result = FromRgb(rgb.ToArray());
+        result.AsSpan().CopyTo(output);
+        return result.Length;
+    }
+
+    internal bool OverridesArrayConversions
+    {
+        get
+        {
+            if (arrayOverrides < 0)
+            {
+                var type = GetType();
+                var overrides = false;
+                foreach (var name in new[] { nameof(ToRgb), nameof(FromRgb), nameof(ToCieXyz), nameof(FromCieXyz) })
+                    overrides |= type.GetMethod(name, new[] { typeof(float[]) })!.DeclaringType !=
+                        typeof(JavaColorSpace);
+                arrayOverrides = overrides ? 1 : 0;
+            }
+            return arrayOverrides == 1;
+        }
+    }
+
+    // CS_CIEXYZ holds D50-relative XYZ (the ICC PCS), as Java's does, with
+    // components from 0 to 1 + 32767/32768.
+    private const float AlmostTwo = 1f + 32767f / 32768f;
+
+    // Java's ICC_ColorSpace hands LittleCMS each component as the 16-bit
+    // sample (short)((value - min) * 65535 / (max - min) + 0.5f), read back
+    // unsigned, so values outside the range wrap around rather than clamp.
+    private static float Sample16(float value, float min, float max)
+    {
+        var scaled = (value - min) * (65535f / (max - min)) + 0.5f;
+        var narrowed = float.IsNaN(scaled) ? 0
+            : scaled >= int.MaxValue ? int.MaxValue
+            : scaled <= int.MinValue ? int.MinValue
+            : (int)scaled;
+        return (narrowed & 0xffff) / 65535f * (max - min) + min;
+    }
+
+    // A LittleCMS 16-bit result read back as Java does (saturated).
+    private static float Result16(float value, float min, float max) =>
+        (float)Math.Floor(JavaCompat.Clamp((value - min) / (max - min), 0f, 1f) * 65535f + 0.5f) /
+        65535f * (max - min) + min;
+
+    private static float CieXyzSample(float value) => Sample16(value, 0f, AlmostTwo);
+
+    // CS_GRAY is Java's linear gray. These are ComponentColorModel's
+    // conversions for it: sRGB8ToLinearRGB16 (Math.round to 16 bits) and
+    // linearRGB8TosRGB8, in Java's float arithmetic.
+    private static float Linear16(float srgb)
+    {
+        var linear = srgb <= 0.04045f
+            ? srgb / 12.92f
+            : (float)Math.Pow((srgb + 0.055f) / 1.055f, 2.4);
+        return (float)Math.Floor(linear * 65535f + 0.5f);
+    }
+
+    private static float SrgbFromLinear(float linear) =>
+        linear <= 0.0031308f
+            ? linear * 12.92f
+            : 1.055f * (float)Math.Pow(linear, 1f / 2.4f) - 0.055f;
+
+    // JavaColorModel.SeparableColorCount relies on the gray and RGB cases
+    // converting each component on its own.
+    internal virtual void ToRgb(ReadOnlySpan<float> components, Span<float> rgb)
+    {
+        if (components.Length < NumberOfComponents)
+            throw new ArgumentException("The component array is too short.", nameof(components));
+        if (Kind == CS_CIEXYZ)
+        {
+            PdfCartonIccProfileData.XyzD50ToSrgb(
+                CieXyzSample(components[0]),
+                CieXyzSample(components[1]),
+                CieXyzSample(components[2]),
+                rgb);
+            return;
+        }
+        static float Clamp(float value) => JavaCompat.Clamp(value, 0f, 1f);
+        if (Kind == CS_GRAY)
+        {
+            rgb[0] = rgb[1] = rgb[2] = SrgbFromLinear(Clamp(components[0]));
+            return;
+        }
+        switch (Type)
+        {
+            case TYPE_GRAY:
+                var gray = Clamp(components[0]);
+                rgb[0] = gray;
+                rgb[1] = gray;
+                rgb[2] = gray;
+                return;
+            case TYPE_CMYK:
+                var black = Clamp(components[3]);
+                rgb[0] = 1f - Math.Min(1f, Clamp(components[0]) + black);
+                rgb[1] = 1f - Math.Min(1f, Clamp(components[1]) + black);
+                rgb[2] = 1f - Math.Min(1f, Clamp(components[2]) + black);
+                return;
+            default:
+                rgb[0] = Clamp(components[0]);
+                rgb[1] = Clamp(components.Length > 1 ? components[1] : components[0]);
+                rgb[2] = Clamp(components.Length > 2 ? components[2] : components[0]);
+                return;
+        }
+    }
+
+    // Writes the converted components into output (at least
+    // MaximumComponents long) and returns how many were written.
+    internal virtual int FromRgb(ReadOnlySpan<float> rgb, Span<float> output)
+    {
         if (rgb.Length < 3)
             throw new ArgumentException("RGB input must have three components.", nameof(rgb));
+        if (Kind == CS_CIEXYZ)
+        {
+            PdfCartonIccProfileData.SrgbToXyzD50(rgb, out output[0], out output[1], out output[2]);
+            return 3;
+        }
         var red = JavaCompat.Clamp(rgb[0], 0f, 1f);
         var green = JavaCompat.Clamp(rgb[1], 0f, 1f);
         var blue = JavaCompat.Clamp(rgb[2], 0f, 1f);
+        if (Kind == CS_GRAY)
+        {
+            // ComponentColorModel.getDataElements for linear gray.
+            output[0] = (0.2125f * Linear16(red) + 0.7154f * Linear16(green) +
+                         0.0721f * Linear16(blue)) / 65535f;
+            return 1;
+        }
         if (Type == TYPE_GRAY)
-            return new[] { red * 0.2126f + green * 0.7152f + blue * 0.0722f };
+        {
+            // Java2D's ByteGray loops: (77 R + 150 G + 29 B + 128) / 256.
+            output[0] = (red * 77f + green * 150f + blue * 29f) / 256f;
+            return 1;
+        }
         if (Type != TYPE_CMYK)
         {
-            var components = new float[NumberOfComponents];
-            if (components.Length > 0) components[0] = red;
-            if (components.Length > 1) components[1] = green;
-            if (components.Length > 2) components[2] = blue;
-            return components;
+            var count = NumberOfComponents;
+            output.Slice(0, count).Clear();
+            if (count > 0) output[0] = red;
+            if (count > 1) output[1] = green;
+            if (count > 2) output[2] = blue;
+            return count;
         }
         var black = 1f - Math.Max(red, Math.Max(green, blue));
-        if (black >= 1f) return new[] { 0f, 0f, 0f, 1f };
-        var scale = 1f - black;
-        return new[]
+        if (black >= 1f)
         {
-            (1f - red - black) / scale,
-            (1f - green - black) / scale,
-            (1f - blue - black) / scale,
-            black
-        };
+            output[0] = 0f;
+            output[1] = 0f;
+            output[2] = 0f;
+            output[3] = 1f;
+            return 4;
+        }
+        var scale = 1f - black;
+        output[0] = (1f - red - black) / scale;
+        output[1] = (1f - green - black) / scale;
+        output[2] = (1f - blue - black) / scale;
+        output[3] = black;
+        return 4;
     }
 
+    // The colour's D50-relative XYZ (the ICC PCS), unquantized. Spaces with no
+    // profile of their own convert through sRGB; colorimetric makes an ICC
+    // profile use its relative colorimetric transform, as Java's toCIEXYZ and
+    // fromCIEXYZ do, rather than its perceptual one.
+    internal virtual void ToXyz(ReadOnlySpan<float> components, Span<float> xyz, bool colorimetric = false)
+    {
+        if (components.Length < NumberOfComponents)
+            throw new ArgumentException("The component array is too short.", nameof(components));
+        if (Kind == CS_CIEXYZ)
+        {
+            components.Slice(0, 3).CopyTo(xyz);
+            return;
+        }
+        if (Kind == CS_GRAY)
+        {
+            // LittleCMS's gray-to-PCS: the linear gray times the D50 white.
+            var gray = JavaCompat.Clamp(components[0], 0f, 1f);
+            xyz[0] = gray * 0.9642f;
+            xyz[1] = gray;
+            xyz[2] = gray * 0.8249f;
+            return;
+        }
+        Span<float> rgb = stackalloc float[3];
+        ConvertToRgb(components, rgb);
+        PdfCartonIccProfileData.SrgbToXyzD50(rgb, out xyz[0], out xyz[1], out xyz[2]);
+    }
+
+    // Writes the components of a D50-relative XYZ colour into output (at
+    // least MaximumComponents long) and returns how many were written.
+    internal virtual int FromXyz(ReadOnlySpan<float> xyz, Span<float> output, bool colorimetric = false)
+    {
+        if (xyz.Length < 3)
+            throw new ArgumentException("XYZ input must have three components.", nameof(xyz));
+        if (Kind == CS_CIEXYZ)
+        {
+            xyz.Slice(0, 3).CopyTo(output);
+            return 3;
+        }
+        if (Kind == CS_GRAY)
+        {
+            // LittleCMS's PCS-to-gray keeps Y.
+            output[0] = JavaCompat.Clamp(xyz[1], 0f, 1f);
+            return 1;
+        }
+        Span<float> rgb = stackalloc float[3];
+        PdfCartonIccProfileData.XyzD50ToSrgb(xyz[0], xyz[1], xyz[2], rgb);
+        return ConvertFromRgb(rgb, output);
+    }
+
+    internal void ConvertToXyz(ReadOnlySpan<float> components, Span<float> xyz, bool colorimetric)
+    {
+        if (!OverridesArrayConversions)
+        {
+            ToXyz(components, xyz, colorimetric);
+            return;
+        }
+        var result = ToCieXyz(components.ToArray());
+        if (result.Length < 3)
+            throw new ArgumentException("The color space returned fewer than three XYZ components.");
+        result.AsSpan(0, 3).CopyTo(xyz);
+    }
+
+    internal int ConvertFromXyz(ReadOnlySpan<float> xyz, Span<float> output, bool colorimetric)
+    {
+        if (!OverridesArrayConversions) return FromXyz(xyz, output, colorimetric);
+        var result = FromCieXyz(xyz.ToArray());
+        result.AsSpan().CopyTo(output);
+        return result.Length;
+    }
+
+    // Java's toCIEXYZ and fromCIEXYZ pass the colour and the XYZ result
+    // through LittleCMS's 16-bit samples; this keeps that quantization.
     public virtual float[] ToCieXyz(float[] components)
     {
-        var rgb = ToRgb(components);
-        static float Linear(float component) =>
-            component <= 0.04045f
-                ? component / 12.92f
-                : JavaCompat.Pow((component + 0.055f) / 1.055f, 2.4f);
-        var red = Linear(rgb[0]);
-        var green = Linear(rgb[1]);
-        var blue = Linear(rgb[2]);
-        return new[]
-        {
-            red * 0.4124564f + green * 0.3575761f + blue * 0.1804375f,
-            red * 0.2126729f + green * 0.7151522f + blue * 0.0721750f,
-            red * 0.0193339f + green * 0.1191920f + blue * 0.9503041f
-        };
+        ArgumentNullException.ThrowIfNull(components);
+        if (components.Length < NumberOfComponents)
+            throw new ArgumentException("The component array is too short.", nameof(components));
+        Span<float> samples = stackalloc float[NumberOfComponents];
+        for (var index = 0; index < samples.Length; index++)
+            samples[index] = Sample16(components[index], GetMinValue(index), GetMaxValue(index));
+        var xyz = new float[3];
+        ToXyz(samples, xyz, colorimetric: true);
+        for (var index = 0; index < 3; index++)
+            xyz[index] = Result16(xyz[index], 0f, AlmostTwo);
+        return xyz;
     }
 
     public virtual float[] FromCieXyz(float[] xyz)
@@ -3916,14 +5461,14 @@ public class JavaColorSpace
         ArgumentNullException.ThrowIfNull(xyz);
         if (xyz.Length < 3)
             throw new ArgumentException("XYZ input must have three components.", nameof(xyz));
-        var red = xyz[0] * 3.2404542f - xyz[1] * 1.5371385f - xyz[2] * 0.4985314f;
-        var green = -xyz[0] * 0.9692660f + xyz[1] * 1.8760108f + xyz[2] * 0.0415560f;
-        var blue = xyz[0] * 0.0556434f - xyz[1] * 0.2040259f + xyz[2] * 1.0572252f;
-        static float Gamma(float component) =>
-            JavaCompat.Clamp(component <= 0.0031308f
-                ? 12.92f * component
-                : 1.055f * JavaCompat.Pow(component, 1f / 2.4f) - 0.055f, 0f, 1f);
-        return FromRgb(new[] { Gamma(red), Gamma(green), Gamma(blue) });
+        Span<float> samples = stackalloc float[3];
+        for (var index = 0; index < 3; index++)
+            samples[index] = CieXyzSample(xyz[index]);
+        Span<float> output = stackalloc float[MaximumComponents];
+        var result = new float[FromXyz(samples, output, colorimetric: true)];
+        for (var index = 0; index < result.Length; index++)
+            result[index] = Result16(output[index], GetMinValue(index), GetMaxValue(index));
+        return result;
     }
 
     public virtual float GetMinValue(int component)
@@ -3935,7 +5480,7 @@ public class JavaColorSpace
     public virtual float GetMaxValue(int component)
     {
         ValidateComponent(component);
-        return 1f;
+        return Kind == CS_CIEXYZ ? AlmostTwo : 1f;
     }
 
     private void ValidateComponent(int component)
@@ -3969,11 +5514,25 @@ public sealed class JavaIccColorSpace : JavaColorSpace
 
     public JavaIccProfile Profile { get; }
 
-    public override float[] ToRgb(float[] components) =>
-        IsSrgb ? base.ToRgb(components) : Profile.ToRgb(components);
+    internal override void ToRgb(ReadOnlySpan<float> components, Span<float> rgb)
+    {
+        if (IsSrgb) base.ToRgb(components, rgb);
+        else Profile.ToRgb(components, rgb);
+    }
 
-    public override float[] FromRgb(float[] rgb) =>
-        IsSrgb ? base.FromRgb(rgb) : Profile.FromRgb(rgb);
+    internal override int FromRgb(ReadOnlySpan<float> rgb, Span<float> output) =>
+        IsSrgb ? base.FromRgb(rgb, output) : Profile.FromRgb(rgb, output);
+
+    internal override void ToXyz(ReadOnlySpan<float> components, Span<float> xyz, bool colorimetric = false)
+    {
+        if (IsSrgb) base.ToXyz(components, xyz);
+        else Profile.Data.ToXyzD50(components, out xyz[0], out xyz[1], out xyz[2], colorimetric);
+    }
+
+    internal override int FromXyz(ReadOnlySpan<float> xyz, Span<float> output, bool colorimetric = false) =>
+        IsSrgb
+            ? base.FromXyz(xyz, output)
+            : Profile.Data.FromXyzD50(xyz[0], xyz[1], xyz[2], output, colorimetric);
 
     public override float GetMinValue(int component)
     {
@@ -4406,9 +5965,28 @@ public interface JavaBufferedImageOperation
 
 public class PdfCartonGraphics2D : IDisposable
 {
-    private readonly SKBitmap? bitmap;
+    private readonly PdfCartonImage? bitmap;
     private readonly SKCanvas? canvas;
     private readonly bool ownsCanvas;
+    // The Skia wrapper of bitmap's pinned pixels that canvas draws into,
+    // owned by the graphics that created it and released by its Dispose
+    // (an undisposed one's lease is finalized: PdfCartonPixelLease).
+    private readonly PdfCartonPixelLease? lease;
+    // The lease of the graphics a Create copy was made from, which the copy
+    // keeps reachable (so not finalized) while it draws on the shared canvas;
+    // the owner's dispose() still releases it.
+    private PdfCartonPixelLease? sharedLease;
+    // The Skia bitmap canvas draws into, shared with Create copies.
+    private readonly SKBitmap? leasedBitmap;
+    // The INT_ARGB image paint tiles are copied into for a custom composite,
+    // reused from band to band (and fill to fill) while the size holds.
+    private PdfCartonImage? compositeTile;
+    // The bitmap's retained raster is its storage (a CreateImage image, or
+    // one whose byte samples getData exposed, possibly after this instance was
+    // created): native drawing is reported to it (BeginDrawing) and custom
+    // composites go through it.
+    private bool TracksNativeDrawing =>
+        bitmap is not null && PdfCartonFontCompat.TracksNativeDrawing(bitmap);
     private readonly SKRectI initialDeviceClip;
     private int restoreCount;
     private bool disposed;
@@ -4425,6 +6003,18 @@ public class PdfCartonGraphics2D : IDisposable
     private SKMatrix transform = SKMatrix.CreateIdentity();
     // Keep clips in device coordinates so later transforms do not move them.
     private SKPath? clipPath;
+    // The clip's device rectangle while Java 2D would keep it as a rectangle
+    // (PdfCartonAliasedFill.ClipRectangle), else null.
+    private (double Left, double Top, double Right, double Bottom)? clipRectangle;
+    // The device pixels the clip keeps; canvases clip to it without
+    // antialiasing.
+    private SKPath? clipRegion;
+    // FillAntialiased's reusable device path (never shared with a copy).
+    private SKPath? scratchDevicePath;
+    // The reused Skia path managed shapes are drawn and clipped through
+    // (LeasePath); made on first use, kept until Dispose.
+    private SKPath? scratchPath;
+    private bool scratchPathOut;
 
     protected PdfCartonGraphics2D()
     {
@@ -4432,20 +6022,23 @@ public class PdfCartonGraphics2D : IDisposable
         initialDeviceClip = SKRectI.Empty;
     }
 
-    public PdfCartonGraphics2D(SKBitmap bitmap)
-        : this(
-            new SKCanvas(
-                bitmap ?? throw new ArgumentNullException(nameof(bitmap))),
-            bitmap,
-            ownsCanvas: true)
+    public PdfCartonGraphics2D(PdfCartonImage bitmap)
+        : this((bitmap ?? throw new ArgumentNullException(nameof(bitmap))).Lease())
     {
+    }
+
+    private PdfCartonGraphics2D(PdfCartonPixelLease lease)
+        : this(lease.Canvas, lease.Image, ownsCanvas: true, lease.Bitmap)
+    {
+        this.lease = lease;
     }
 
     public PdfCartonGraphics2D(SKCanvas canvas)
         : this(
             canvas ?? throw new ArgumentNullException(nameof(canvas)),
             null,
-            ownsCanvas: false)
+            ownsCanvas: false,
+            null)
     {
     }
 
@@ -4457,10 +6050,12 @@ public class PdfCartonGraphics2D : IDisposable
 
     private PdfCartonGraphics2D(
         SKCanvas canvas,
-        SKBitmap? bitmap,
-        bool ownsCanvas)
+        PdfCartonImage? bitmap,
+        bool ownsCanvas,
+        SKBitmap? leasedBitmap)
     {
         this.bitmap = bitmap;
+        this.leasedBitmap = leasedBitmap;
         this.canvas = canvas;
         this.ownsCanvas = ownsCanvas;
         initialDeviceClip = canvas.DeviceClipBounds;
@@ -4475,8 +6070,9 @@ public class PdfCartonGraphics2D : IDisposable
         var copy = bitmap is null
             ? canvas is null
                 ? new PdfCartonGraphics2D()
-                : new PdfCartonGraphics2D(canvas, null, ownsCanvas: false)
-            : new PdfCartonGraphics2D(canvas!, bitmap, ownsCanvas: false);
+                : new PdfCartonGraphics2D(canvas, null, ownsCanvas: false, null)
+            : new PdfCartonGraphics2D(canvas!, bitmap, ownsCanvas: false, leasedBitmap);
+        copy.sharedLease = lease ?? sharedLease;
         copy.samplingOptions = samplingOptions;
         copy.color = color;
         copy.background = background;
@@ -4487,11 +6083,24 @@ public class PdfCartonGraphics2D : IDisposable
         copy.renderingHints = new PdfCartonRenderingHints(renderingHints);
         copy.transform = transform;
         copy.clipPath = clipPath is null ? null : new SKPath(clipPath);
+        copy.clipRectangle = clipRectangle;
+        copy.clipRegion = clipRegion is null ? null : new SKPath(clipRegion);
         return copy;
     }
 
+    // A BufferedImage's device reports the bit depth of its image type
+    // (black-box probes of Java 25: 1 for TYPE_BYTE_BINARY, 8 for
+    // TYPE_BYTE_GRAY, 24 for TYPE_INT_RGB and TYPE_3BYTE_BGR, 32 for
+    // TYPE_INT_ARGB), so PDFRenderer draws a BINARY page aliased.
     public virtual JavaGraphicsConfiguration GetDeviceConfiguration() =>
-        new(32);
+        new(bitmap is null ? 32 : PdfCartonFontCompat.GetImageType(bitmap) switch
+        {
+            PdfCartonFontCompat.TYPE_BYTE_BINARY => 1,
+            PdfCartonFontCompat.TYPE_BYTE_GRAY => 8,
+            PdfCartonFontCompat.TYPE_INT_RGB or PdfCartonFontCompat.TYPE_INT_BGR or
+                PdfCartonFontCompat.TYPE_3BYTE_BGR => 24,
+            _ => 32
+        });
 
     public virtual void SetRenderingHint(object key, object value)
     {
@@ -4500,9 +6109,12 @@ public class PdfCartonGraphics2D : IDisposable
         renderingHints[key] = value;
         if (ReferenceEquals(key, PdfCartonRenderingHints.KEY_INTERPOLATION))
         {
+            // Java's bicubic interpolates with the Catmull-Rom cubic (a = -0.5):
+            // black-box probes of Java 25 drawing an impulse at quarter-pixel
+            // offsets give weights -7, 87, 23, -2 per 100 at 0.25.
             samplingOptions =
                 ReferenceEquals(value, PdfCartonRenderingHints.VALUE_INTERPOLATION_BICUBIC)
-                    ? new SKSamplingOptions(SKCubicResampler.Mitchell)
+                    ? new SKSamplingOptions(SKCubicResampler.CatmullRom)
                     : ReferenceEquals(
                         value,
                         PdfCartonRenderingHints.VALUE_INTERPOLATION_BILINEAR)
@@ -4539,7 +6151,7 @@ public class PdfCartonGraphics2D : IDisposable
         new(renderingHints);
 
     public virtual bool DrawImage(
-        SKBitmap image,
+        PdfCartonImage image,
         int destinationX1,
         int destinationY1,
         int destinationX2,
@@ -4552,9 +6164,11 @@ public class PdfCartonGraphics2D : IDisposable
     {
         ArgumentNullException.ThrowIfNull(image);
         _ = observer;
+        PdfCartonFontCompat.EnsureNativePixels(image);
         RenderImageLayer(
-            (layer, imagePaint) => layer.DrawBitmap(
-                image,
+            image,
+            (layer, view, imagePaint) => layer.DrawImage(
+                view,
                 new SKRect(sourceX1, sourceY1, sourceX2, sourceY2),
                 new SKRect(
                     destinationX1,
@@ -4569,36 +6183,38 @@ public class PdfCartonGraphics2D : IDisposable
     }
 
     public virtual bool DrawImage(
-        SKBitmap image,
+        PdfCartonImage image,
         int x,
         int y,
         object? observer) =>
-        DrawImage(image, x, y, x + image.Width, y + image.Height,
-            0, 0, image.Width, image.Height, observer);
+        DrawImage(image, x, y, x + PdfCartonFontCompat.GetImageWidth(image),
+            y + PdfCartonFontCompat.GetImageHeight(image), 0, 0,
+            PdfCartonFontCompat.GetImageWidth(image), PdfCartonFontCompat.GetImageHeight(image), observer);
 
     public virtual bool DrawImage(
-        SKBitmap image,
+        PdfCartonImage image,
         int x,
         int y,
         JavaColor backgroundColor,
         object? observer)
     {
-        FillImageBackground(x, y, image.Width, image.Height, backgroundColor);
+        FillImageBackground(x, y, PdfCartonFontCompat.GetImageWidth(image),
+            PdfCartonFontCompat.GetImageHeight(image), backgroundColor);
         return DrawImage(image, x, y, observer);
     }
 
     public virtual bool DrawImage(
-        SKBitmap image,
+        PdfCartonImage image,
         int x,
         int y,
         int width,
         int height,
         object? observer) =>
-        DrawImage(image, x, y, x + width, y + height,
-            0, 0, image.Width, image.Height, observer);
+        DrawImage(image, x, y, x + width, y + height, 0, 0,
+            PdfCartonFontCompat.GetImageWidth(image), PdfCartonFontCompat.GetImageHeight(image), observer);
 
     public virtual bool DrawImage(
-        SKBitmap image,
+        PdfCartonImage image,
         int x,
         int y,
         int width,
@@ -4611,7 +6227,7 @@ public class PdfCartonGraphics2D : IDisposable
     }
 
     public virtual bool DrawImage(
-        SKBitmap image,
+        PdfCartonImage image,
         int destinationX1,
         int destinationY1,
         int destinationX2,
@@ -4643,7 +6259,7 @@ public class PdfCartonGraphics2D : IDisposable
     }
 
     public virtual void DrawBufferedImage(
-        SKBitmap image,
+        PdfCartonImage image,
         JavaBufferedImageOperation operation,
         int x,
         int y)
@@ -4653,27 +6269,29 @@ public class PdfCartonGraphics2D : IDisposable
     }
 
     public virtual void DrawImage(
-        SKBitmap image,
+        PdfCartonImage image,
         JavaBufferedImageOperation operation,
         int x,
         int y) =>
         DrawBufferedImage(image, operation, x, y);
 
-    public virtual bool DrawImage(SKBitmap image, SKMatrix imageTransform, object? observer)
+    public virtual bool DrawImage(PdfCartonImage image, SKMatrix imageTransform, object? observer)
     {
         ArgumentNullException.ThrowIfNull(image);
         _ = observer;
+        PdfCartonFontCompat.EnsureNativePixels(image);
         if (PdfCartonFontCompat.IsDefaultMatrix(imageTransform))
         {
             imageTransform = SKMatrix.Identity;
         }
         RenderImageLayer(
-            (layer, imagePaint) =>
+            image,
+            (layer, view, imagePaint) =>
             {
                 var restore = layer.Save();
                 layer.Concat(imageTransform);
-                layer.DrawBitmap(
-                    image,
+                layer.DrawImage(
+                    view,
                     0,
                     0,
                     samplingOptions,
@@ -4684,10 +6302,10 @@ public class PdfCartonGraphics2D : IDisposable
         return true;
     }
 
-    public virtual void DrawRenderableImage(SKBitmap image, SKMatrix imageTransform) =>
+    public virtual void DrawRenderableImage(PdfCartonImage image, SKMatrix imageTransform) =>
         DrawImage(image, imageTransform, null);
 
-    public virtual void DrawRenderedImage(SKBitmap image, SKMatrix imageTransform) =>
+    public virtual void DrawRenderedImage(PdfCartonImage image, SKMatrix imageTransform) =>
         DrawImage(image, imageTransform, null);
 
     public virtual void SetColor(SKColor color) => SetColor(new JavaColor(color));
@@ -4728,47 +6346,80 @@ public class PdfCartonGraphics2D : IDisposable
             Color = background,
             BlendMode = SKBlendMode.Src
         };
-        RequireCanvas().DrawRect(new SKRect(x, y, x + width, y + height), clearPaint);
+        ApplyDestinationLuma(clearPaint);
+        var rectangle = new SKRect(x, y, x + width, y + height);
+        using (BeginDrawing(rectangle))
+            RequireCanvas().DrawRect(rectangle, clearPaint);
+        QuantizeBinaryDestination(DrawingBounds(rectangle, stroked: false));
     }
 
-    public virtual void ClipRect(int x, int y, int width, int height)
-    {
-        using var rectangle = PdfCartonFontCompat.CreatePath(
-            new SKRectI(x, y, x + width, y + height));
-        IntersectClip(rectangle);
-    }
+    public virtual void ClipRect(int x, int y, int width, int height) =>
+        IntersectClip(new SKRectI(x, y, x + width, y + height));
 
     public virtual void SetClip(int x, int y, int width, int height) =>
         SetClip(new SKRectI(x, y, x + width, y + height));
 
     public virtual void SetClip(object? clip)
     {
+        ClearClip();
+        if (clip is not null)
+        {
+            IntersectClip(clip);
+            return;
+        }
         ResetCanvasState();
-        clipPath?.Dispose();
-        clipPath = clip is null ? null : PdfCartonFontCompat.CreatePath(clip);
-        clipPath?.Transform(transform);
-        ApplyUserClip(RequireCanvas());
     }
 
+    // As in Java 2D, a rectangular clip comes back as a Rectangle2D while the
+    // transform keeps it axis-aligned, and any other clip as a path.
     public virtual object? GetClip()
     {
         if (clipPath is null || !transform.TryInvert(out var inverse)) return null;
-        var result = new SKPath(clipPath);
-        result.Transform(inverse);
+        if (clipRectangle is not null && PdfCartonAliasedFill.IsAxisAligned(inverse))
+            return inverse.MapRect(clipPath.Bounds);
+        // Java has no inverse fills; an inverse Skia path a caller clipped to
+        // comes back as such a path, which the caller owns.
+        if (clipPath.FillType is SKPathFillType.InverseWinding or SKPathFillType.InverseEvenOdd)
+        {
+            var inverted = new SKPath();
+            clipPath.Transform(in inverse, inverted);
+            return inverted;
+        }
+        using var userPath = new SKPath();
+        clipPath.Transform(in inverse, userPath);
+        var result = new JavaPath2D(JavaPath2D.WIND_NON_ZERO, userPath.VerbCount, doublePrecision: false);
+        result.ReadFrom(userPath);
         return result;
     }
 
     public virtual SKRectI GetClipBounds()
     {
-        using var userClip = (SKPath?)GetClip();
-        return userClip is null ? CanvasClipBounds() : PdfCartonFontCompat.PathBounds(userClip);
+        var userClip = GetClip();
+        if (userClip is SKRect rectangle)
+        {
+            return new SKRectI(
+                (int)Math.Floor(rectangle.Left),
+                (int)Math.Floor(rectangle.Top),
+                (int)Math.Ceiling(rectangle.Right),
+                (int)Math.Ceiling(rectangle.Bottom));
+        }
+        if (userClip is SKPath inverted)
+        {
+            using (inverted)
+            {
+                var bounds = inverted.Bounds;
+                return new SKRectI(
+                    (int)Math.Floor(bounds.Left), (int)Math.Floor(bounds.Top),
+                    (int)Math.Ceiling(bounds.Right), (int)Math.Ceiling(bounds.Bottom));
+            }
+        }
+        return userClip is JavaPath2D path ? PdfCartonFontCompat.PathBounds(path) : CanvasClipBounds();
     }
 
     public virtual void Clip(object shape)
     {
         ArgumentNullException.ThrowIfNull(shape);
-        using var path = PdfCartonFontCompat.CreatePath(shape);
-        IntersectClip(path);
+        IntersectClip(shape);
     }
 
     public virtual void CopyArea(
@@ -4781,19 +6432,43 @@ public class PdfCartonGraphics2D : IDisposable
     {
         if (bitmap is null)
             throw new InvalidOperationException("This graphics instance has no bitmap.");
-        using var snapshot = bitmap.Copy() ??
-            throw new InvalidOperationException("Unable to copy the graphics bitmap.");
+        PdfCartonBitmapView.Publish(bitmap);
+        var activeCanvas = RequireCanvas();
+        // Under an integer translation, snapshot the source area plus the
+        // pixels around it that sampling can reach. Otherwise snapshot the
+        // whole bitmap: filtering at other offsets rounds by the image origin.
+        var area = new SKRectI(0, 0, bitmap.Width, bitmap.Height);
+        var matrix = activeCanvas.TotalMatrix;
+        if (width > 0 && height > 0 && matrix is
+                { ScaleX: 1, ScaleY: 1, SkewX: 0, SkewY: 0, Persp0: 0, Persp1: 0, Persp2: 1 } &&
+            matrix.TransX == Math.Floor(matrix.TransX) && matrix.TransY == Math.Floor(matrix.TransY))
+        {
+            area = new SKRectI((int)Math.Max(0L, x - 3L), (int)Math.Max(0L, y - 3L),
+                (int)Math.Min(area.Right, (long)x + width + 3), (int)Math.Min(area.Bottom, (long)y + height + 3));
+            if (area.Width <= 0 || area.Height <= 0) area = new SKRectI(0, 0, 1, 1);
+        }
+        using var snapshot = new PdfCartonNativeBitmap(bitmap.Info.WithSize(area.Width, area.Height));
+        using (var pixels = leasedBitmap!.PeekPixels())
+            if (!pixels.ReadPixels(snapshot.Info, snapshot.GetPixels(), snapshot.RowBytes, area.Left, area.Top))
+                throw new InvalidOperationException("Unable to copy the graphics bitmap.");
         using var imagePaint = new SKPaint();
-        RequireCanvas().DrawBitmap(
-            snapshot,
-            new SKRect(x, y, x + width, y + height),
-            new SKRect(
-                x + destinationX,
-                y + destinationY,
-                x + destinationX + width,
-                y + destinationY + height),
-            samplingOptions,
-            imagePaint);
+        var source = new SKRect(x, y, x + width, y + height);
+        source.Offset(-area.Left, -area.Top);
+        var destination = new SKRect(
+            x + destinationX,
+            y + destinationY,
+            x + destinationX + width,
+            y + destinationY + height);
+        using (BeginDrawing(destination))
+        using (var image = PdfCartonFontCompat.DrawableImage(snapshot, leasedBitmap))
+        {
+            activeCanvas.DrawImage(
+                image!,
+                source,
+                destination,
+                samplingOptions,
+                imagePaint);
+        }
     }
 
     public virtual void DrawRect(int x, int y, int width, int height)
@@ -4816,6 +6491,7 @@ public class PdfCartonGraphics2D : IDisposable
     public virtual void FillOval(int x, int y, int width, int height)
         => DrawShape(new JavaEllipse(x, y, width, height), fill: true);
 
+    // Java draws drawArc as an Arc2D.OPEN shape and fillArc as Arc2D.PIE.
     public virtual void DrawArc(
         int x,
         int y,
@@ -4824,11 +6500,7 @@ public class PdfCartonGraphics2D : IDisposable
         int startAngle,
         int arcAngle)
     {
-        using var path = new SKPath();
-        path.AddArc(
-            new SKRect(x, y, x + width, y + height),
-            startAngle,
-            arcAngle);
+        using var path = ArcPath(x, y, width, height, startAngle, arcAngle, pie: false);
         DrawShape(path, fill: false);
     }
 
@@ -4840,15 +6512,62 @@ public class PdfCartonGraphics2D : IDisposable
         int startAngle,
         int arcAngle)
     {
-        using var path = new SKPath();
-        path.MoveTo(x + width / 2f, y + height / 2f);
-        path.ArcTo(
-            new SKRect(x, y, x + width, y + height),
-            startAngle,
-            arcAngle,
-            false);
-        path.Close();
+        using var path = ArcPath(x, y, width, height, startAngle, arcAngle, pie: true);
         DrawShape(path, fill: true);
+    }
+
+    // As java.awt.geom.Arc2D documents, angles are degrees counter-clockwise
+    // on screen, scaled to the frame so that 45 degrees lies on the line to
+    // its upper-right corner, and an extent is limited to one turn. Java
+    // splits the arc into ceil(|extent| / 90) equal cubic Bezier segments with
+    // the usual control distance 4/3 tan(segment / 4); a pie closes through
+    // the centre. A frame with a negative size has no path.
+    private static SKPath ArcPath(
+        double x,
+        double y,
+        double width,
+        double height,
+        double startAngle,
+        double arcAngle,
+        bool pie)
+    {
+        var path = new SKPath();
+        if (width < 0 || height < 0) return path;
+        var radiusX = width / 2;
+        var radiusY = height / 2;
+        var centerX = x + radiusX;
+        var centerY = y + radiusY;
+        var extent = Math.Max(-360, Math.Min(360, arcAngle));
+        var segments = (int)Math.Ceiling(Math.Abs(extent) / 90);
+        var start = startAngle * Math.PI / 180;
+        var step = segments == 0 ? 0 : extent * Math.PI / 180 / segments;
+        var control = 4.0 / 3 * Math.Tan(step / 4);
+        var cos = Math.Cos(start);
+        var sin = Math.Sin(start);
+        path.MoveTo((float)(centerX + radiusX * cos), (float)(centerY - radiusY * sin));
+        for (var segment = 1; segment <= segments; segment++)
+        {
+            var angle = start + segment * step;
+            var nextCos = Math.Cos(angle);
+            var nextSin = Math.Sin(angle);
+            path.CubicTo(
+                (float)(centerX + radiusX * (cos - control * sin)),
+                (float)(centerY - radiusY * (sin + control * cos)),
+                (float)(centerX + radiusX * (nextCos + control * nextSin)),
+                (float)(centerY - radiusY * (nextSin - control * nextCos)),
+                (float)(centerX + radiusX * nextCos),
+                (float)(centerY - radiusY * nextSin));
+            cos = nextCos;
+            sin = nextSin;
+        }
+
+        if (pie)
+        {
+            path.LineTo((float)centerX, (float)centerY);
+            path.Close();
+        }
+
+        return path;
     }
 
     public virtual void DrawRoundRect(
@@ -4859,11 +6578,7 @@ public class PdfCartonGraphics2D : IDisposable
         int arcWidth,
         int arcHeight)
     {
-        using var path = new SKPath();
-        path.AddRoundRect(
-            new SKRect(x, y, x + width, y + height),
-            arcWidth / 2f,
-            arcHeight / 2f);
+        using var path = JavaCurves.RoundRectangle(x, y, width, height, arcWidth, arcHeight);
         DrawShape(path, fill: false);
     }
 
@@ -4875,11 +6590,7 @@ public class PdfCartonGraphics2D : IDisposable
         int arcWidth,
         int arcHeight)
     {
-        using var path = new SKPath();
-        path.AddRoundRect(
-            new SKRect(x, y, x + width, y + height),
-            arcWidth / 2f,
-            arcHeight / 2f);
+        using var path = JavaCurves.RoundRectangle(x, y, width, height, arcWidth, arcHeight);
         DrawShape(path, fill: true);
     }
 
@@ -4942,7 +6653,7 @@ public class PdfCartonGraphics2D : IDisposable
     {
         ArgumentNullException.ThrowIfNull(shape);
         var hitShape = onStroke ? stroke.CreateStrokedShape(shape) : shape;
-        using var path = PdfCartonFontCompat.CreatePath(hitShape);
+        using var path = PdfCartonFontCompat.CreateSkiaPath(hitShape);
         path.Transform(transform);
         var bounds = path.Bounds;
         return bounds.IntersectsWith(new SKRect(
@@ -5008,13 +6719,17 @@ public class PdfCartonGraphics2D : IDisposable
         if (disposed)
             return;
         disposed = true;
-        clipPath?.Dispose();
-        clipPath = null;
+        ClearClip();
+        scratchDevicePath?.Dispose();
+        scratchDevicePath = null;
+        if (!scratchPathOut) scratchPath?.Dispose();
+        scratchPath = null;
         if (canvas is null)
             return;
         canvas.RestoreToCount(restoreCount);
         if (ownsCanvas)
             canvas.Dispose();
+        lease?.Dispose();
     }
 
     private void FillImageBackground(
@@ -5059,6 +6774,17 @@ public class PdfCartonGraphics2D : IDisposable
     private void DrawShape(object shape, bool fill)
     {
         ArgumentNullException.ThrowIfNull(shape);
+        if (shape is JavaPath2D managed)
+        {
+            // A managed path is drawn as the Skia path of its segments, made
+            // once for the whole draw in this graphics' reused path, except
+            // for an antialiased fill, whose coverage is computed from the
+            // segments themselves.
+            if (fill && FillManagedAntialiased(managed)) return;
+            using var managedLease = LeasePath(managed);
+            DrawShape(managedLease.Path, fill);
+            return;
+        }
         if (!fill && stroke is not JavaBasicStroke)
         {
             var strokedShape = stroke.CreateStrokedShape(shape);
@@ -5066,12 +6792,34 @@ public class PdfCartonGraphics2D : IDisposable
             return;
         }
 
+        if (fill && !IsAntialiasEnabled())
+        {
+            FillAliased(shape);
+            return;
+        }
+
+        // A Java paint sees the bounds of the shape as given (probed), even
+        // when the drawn geometry is moved or outlined below.
+        SKRect? paintBounds = !fill && paint is not JavaColor ? PdfCartonFontCompat.ShapeBounds(shape) : null;
+        // Java 2D moves an antialiased stroke's path first (PdfCartonStrokeNormalization).
+        using var normalized = !fill && NormalizesStrokes() ? NormalizedStroke(shape) : null;
+        if (normalized is not null)
+            shape = normalized;
+        // On a bitmap, an antialiased fill of a path, or of a BasicStroke's
+        // outline, takes Java 2D's coverage (PdfCartonAntialiasedFill). An
+        // axis-aligned Rectangle2D keeps Skia's exact coverage, as in Java,
+        // and a zero-width stroke stays a Skia hairline.
+        if (bitmap is not null && IsAntialiasEnabled() &&
+            (fill ? shape is not (SKRect or SKRectI) : stroke is JavaBasicStroke { Width: > 0 }) &&
+            FillAntialiased(shape, stroked: !fill, paintBounds))
+            return;
+
         if (paint is JavaColor)
         {
             if (shape is SKRect rectangle)
             {
                 RenderLayer(
-                    (layer, drawingPaint) =>
+                    (layer, _, drawingPaint) =>
                         layer.DrawRect(rectangle, drawingPaint),
                     stroked: !fill,
                     imagePaint: false, userBounds: rectangle);
@@ -5084,16 +6832,18 @@ public class PdfCartonGraphics2D : IDisposable
                     integerRectangle.Right,
                     integerRectangle.Bottom);
                 RenderLayer(
-                    (layer, drawingPaint) =>
+                    (layer, _, drawingPaint) =>
                         layer.DrawRect(convertedRectangle, drawingPaint),
                     stroked: !fill,
                     imagePaint: false, userBounds: convertedRectangle);
             }
             else
             {
-                using var path = PdfCartonFontCompat.CreatePath(shape);
+                // A shape that is already a path is drawn in place.
+                using var lease = PdfCartonFontCompat.BorrowPath(shape);
+                var path = lease.Path;
                 RenderLayer(
-                    (layer, drawingPaint) =>
+                    (layer, _, drawingPaint) =>
                         layer.DrawPath(path, drawingPaint),
                     stroked: !fill,
                     imagePaint: false, userBounds: PathBounds(path));
@@ -5101,18 +6851,53 @@ public class PdfCartonGraphics2D : IDisposable
         }
         else
         {
-            using var path = PdfCartonFontCompat.CreatePath(shape);
-            RenderPaintLayer(path, stroked: !fill);
+            using var lease = PdfCartonFontCompat.BorrowPath(shape);
+            RenderPaintLayer(lease.Path, stroked: !fill, paintBounds: paintBounds);
         }
     }
 
-    private SKPaint CreateDrawingPaint(bool stroked)
+    // Java 2D chooses the pixels of an aliased fill by its own rules (see
+    // PdfCartonAliasedFill), so the shape is mapped to device space, moved
+    // onto Skia's pixel-centre sampling, and drawn without a canvas matrix.
+    private void FillAliased(object shape)
+    {
+        var copiesOpaqueColor = paint is JavaColor { Alpha: 255 } &&
+            composite is JavaAlphaComposite { Alpha: 1f };
+        var thinStroke = stroke is JavaBasicStroke basicStroke &&
+            PdfCartonAliasedFill.IsThin(basicStroke.Width, transform);
+        using var devicePath = PdfCartonAliasedFill.DevicePath(
+            shape, transform, copiesOpaqueColor, thinStroke, DrawingBounds(null, stroked: false),
+            out var rectilinear);
+        if (paint is JavaColor)
+        {
+            RenderLayer(
+                (layer, _, drawingPaint) =>
+                    PdfCartonAliasedFill.Draw(layer, devicePath, drawingPaint, rectilinear),
+                stroked: false, imagePaint: false, PathBounds(devicePath), deviceSpace: true);
+        }
+        else
+        {
+            using var lease = PdfCartonFontCompat.BorrowPath(shape);
+            RenderPaintLayer(lease.Path, stroked: false, devicePath, rectilinear);
+        }
+    }
+
+    private SKPaint CreateDrawingPaint(bool stroked, SKShader? shader = null)
     {
         var basicStroke = stroke as JavaBasicStroke ?? new JavaBasicStroke(1f);
         var result = basicStroke.CreateSkiaPaint();
-        result.Color = paint is JavaColor paintColor ? paintColor : color;
+        result.Color = shader is not null ? SKColors.White
+            : paint is JavaColor paintColor ? paintColor : color;
+        result.Shader = shader;
         result.IsStroke = stroked;
         result.IsAntialias = IsAntialiasEnabled();
+        // Java 2D draws an aliased BasicStroke at most one device pixel wide
+        // (PdfCartonAliasedFill.IsThin) exactly as a zero-width one, dashes
+        // included (black-box probes of Java 25 on random paths, transforms,
+        // caps and joins); Skia would let it drop out between pixel centres.
+        if (stroked && bitmap is not null && !result.IsAntialias &&
+            PdfCartonAliasedFill.IsThin(basicStroke.Width, transform))
+            result.StrokeWidth = 0;
         return result;
     }
 
@@ -5126,14 +6911,19 @@ public class PdfCartonGraphics2D : IDisposable
         return result;
     }
 
-    private void RenderImageLayer(Action<SKCanvas, SKPaint> draw, SKRect userBounds) =>
-        RenderLayer(draw, stroked: false, imagePaint: true, userBounds);
+    private void RenderImageLayer(PdfCartonImage image, Action<SKCanvas, SKImage, SKPaint> draw, SKRect userBounds) =>
+        RenderLayer((target, targetBitmap, imagePaint) =>
+        {
+            using var view = PdfCartonFontCompat.DrawableImage(image, targetBitmap);
+            draw(target, view!, imagePaint);
+        }, stroked: false, imagePaint: true, userBounds);
 
     private static SKRect? PathBounds(SKPath path) =>
         path.FillType is SKPathFillType.InverseWinding or SKPathFillType.InverseEvenOdd
             ? null : path.Bounds;
 
-    private SKRectI DrawingBounds(SKRect? userBounds, bool stroked)
+    // deviceSpace: the bounds are already in device coordinates.
+    private SKRectI DrawingBounds(SKRect? userBounds, bool stroked, bool deviceSpace = false)
     {
         var clip = RequireCanvas().DeviceClipBounds;
         if (bitmap is not null)
@@ -5148,7 +6938,7 @@ public class PdfCartonGraphics2D : IDisposable
             var outset = drawingPaint.StrokeWidth * Math.Max(capScale, drawingPaint.StrokeMiter) / 2f;
             bounds.Inflate(outset, outset);
         }
-        bounds = transform.MapRect(bounds);
+        if (!deviceSpace) bounds = transform.MapRect(bounds);
         bounds.Inflate(2f, 2f); // antialiasing and image sampling at the edge
         if (float.IsNaN(bounds.Left) || float.IsNaN(bounds.Top) ||
             float.IsNaN(bounds.Right) || float.IsNaN(bounds.Bottom)) return clip;
@@ -5160,23 +6950,40 @@ public class PdfCartonGraphics2D : IDisposable
             : new SKRectI((int)left, (int)top, (int)right, (int)bottom);
     }
 
+    // draw gets the canvas, its bitmap (null if not known to be raster) and the paint.
+    // With deviceSpace, draw and userBounds use device coordinates: the canvas
+    // matrix is only the offset of the layer, if any.
     private void RenderLayer(
-        Action<SKCanvas, SKPaint> draw,
+        Action<SKCanvas, SKBitmap?, SKPaint> draw,
         bool stroked,
         bool imagePaint,
-        SKRect? userBounds)
+        SKRect? userBounds,
+        SKShader? shader = null,
+        bool deviceSpace = false)
     {
         ArgumentNullException.ThrowIfNull(draw);
         ThrowIfDisposed();
-        var bounds = DrawingBounds(userBounds, stroked);
+        var bounds = DrawingBounds(userBounds, stroked, deviceSpace);
         if (bounds.IsEmpty) return;
         if (composite is JavaAlphaComposite)
         {
             using var directPaint = imagePaint
                 ? CreateImagePaint()
-                : CreateDrawingPaint(stroked);
+                : CreateDrawingPaint(stroked, shader);
             ApplyFallbackComposite(directPaint);
-            draw(RequireCanvas(), directPaint);
+            if ((imagePaint || shader is not null) && IsBinaryDestination())
+            {
+                DrawSampledIntoBinary(bounds, deviceSpace, draw, directPaint);
+                return;
+            }
+            ApplyDestinationLuma(directPaint);
+            using (BeginDrawing(bounds))
+            {
+                var target = RequireCanvas();
+                if (deviceSpace) target.ResetMatrix();
+                draw(target, leasedBitmap, directPaint);
+                if (deviceSpace) target.SetMatrix(transform);
+            }
             QuantizeBinaryDestination(bounds);
             return;
         }
@@ -5186,96 +6993,341 @@ public class PdfCartonGraphics2D : IDisposable
                 "Custom Java composites require a bitmap-backed CPU canvas.");
         }
 
-        using var source = PdfCartonFontCompat.CreateBitmap(
+        var source = PdfCartonFontCompat.CreateIntermediate(
             bounds.Width,
             bounds.Height,
             PdfCartonFontCompat.TYPE_INT_ARGB);
-        source.Erase(SKColors.Transparent);
-        using (var layer = new SKCanvas(source))
+        using (var layerLease = source.Lease())
         {
-            ConfigureLayerCanvas(layer, bounds);
+            var layer = layerLease.Canvas;
+            ConfigureLayerCanvas(layer, bounds, deviceSpace);
             using var sourcePaint = imagePaint
                 ? CreateImagePaint()
-                : CreateDrawingPaint(stroked);
-            draw(layer, sourcePaint);
+                : CreateDrawingPaint(stroked, shader);
+            draw(layer, layerLease.Bitmap, sourcePaint);
         }
         CompositeLayer(source, bounds);
     }
 
-    private void RenderPaintLayer(SKPath shape, bool stroked)
+    // devicePath, when given, is the aliased device-space shape to draw
+    // instead of shape (see PdfCartonAliasedFill.Draw).
+    // coverage, when given, is an antialiased device-space mask to draw
+    // instead of shape (see PdfCartonAntialiasedFill.Draw).
+    private void RenderPaintLayer(
+        SKPath shape, bool stroked, SKPath? devicePath = null, bool rectilinear = false,
+        SKRect? paintBounds = null, (byte[] Mask, SKRectI Bounds)? coverage = null)
     {
+        var deviceSpace = devicePath is not null || coverage is not null;
+        var bounds = coverage is { Bounds: var maskBounds }
+            ? DrawingBounds(new SKRect(maskBounds.Left, maskBounds.Top, maskBounds.Right, maskBounds.Bottom),
+                stroked, deviceSpace: true)
+            : devicePath is not null
+            ? DrawingBounds(PathBounds(devicePath), stroked, deviceSpace: true)
+            : DrawingBounds(PathBounds(shape), stroked);
+        if (bounds.IsEmpty) return;
+        var deviceBounds = bounds;
+        using var context = paint.CreateContext(
+            bitmap is null
+                ? new JavaColorModel(PdfCartonFontCompat.TYPE_INT_ARGB)
+                : PdfCartonFontCompat.GetColorModel(bitmap),
+            deviceBounds,
+            paintBounds ?? shape.Bounds,
+            transform,
+            renderingHints);
+        // Texture paints, TilingPaint's among them, fill with a Skia shader.
+        if (context is JavaTexturePaint.TexturePaintContext texture)
+        {
+            using var shader = texture.CreateShader(
+                deviceSpace ? SKMatrix.Identity : transform, leasedBitmap);
+            if (shader is not null && coverage is ({ } textureMask, var textureBounds))
+                RenderLayer((layer, _, drawingPaint) =>
+                        PdfCartonAntialiasedFill.Draw(layer, textureMask, textureBounds, drawingPaint),
+                    stroked, imagePaint: false,
+                    new SKRect(textureBounds.Left, textureBounds.Top, textureBounds.Right, textureBounds.Bottom),
+                    shader, deviceSpace: true);
+            else if (shader is not null && devicePath is not null)
+                RenderLayer((layer, _, drawingPaint) =>
+                        PdfCartonAliasedFill.Draw(layer, devicePath, drawingPaint, rectilinear),
+                    stroked, imagePaint: false, PathBounds(devicePath), shader, deviceSpace: true);
+            else if (shader is not null)
+                RenderLayer((layer, _, drawingPaint) => layer.DrawPath(shape, drawingPaint),
+                    stroked, imagePaint: false, PathBounds(shape), shader);
+            return;
+        }
         if (bitmap is null)
         {
             throw new InvalidOperationException(
                 "Non-solid Java paints require a bitmap-backed CPU canvas.");
         }
 
-        var bounds = DrawingBounds(PathBounds(shape), stroked);
-        if (bounds.IsEmpty) return;
-
-        using var source = PdfCartonFontCompat.CreateBitmap(
-            bounds.Width,
-            bounds.Height,
-            PdfCartonFontCompat.TYPE_INT_ARGB);
-        source.Erase(SKColors.Transparent);
-        var deviceBounds = bounds;
-        using (var context = paint.CreateContext(
-                   PdfCartonFontCompat.GetColorModel(bitmap),
-                   deviceBounds,
-                   shape.Bounds,
-                   transform,
-                   renderingHints))
+        // Java's PaintContext.getRaster(x, y, w, h) may be asked for any part
+        // of the fill's device bounds, and Java paints, PDFBox's shading and
+        // soft-mask contexts among them, give a pixel the same colour in
+        // whichever rectangle holds it. So the context is asked for bands of
+        // at most PaintTileArea pixels, which keeps each raster it allocates
+        // (16 bytes per pixel for a PDFBox shading) off the large object
+        // heap, and each band is drawn, masked by the shape, as the whole fill
+        // would be. The bands' pixels are one managed array of this graphics,
+        // pinned only while a fill draws, that Skia wraps without allocating
+        // pixel memory of its own.
+        // A device-space mask (coverage, an aliased device path) is drawn band
+        // by band. Skia rasterizes a shape under the transform with rounding
+        // that depends on the canvas offset (rotated and skewed shapes moved
+        // by a band's offset gain or lose a level of edge coverage), so that
+        // mask is drawn once for the whole fill, as before.
+        // Only Skia reads it, so its pixels are native, released by the end of
+        // the fill.
+        using var shapeMask = coverage is null && devicePath is null
+            ? new PdfCartonNativeBitmap(new SKImageInfo(bounds.Width, bounds.Height,
+                SKColorType.Bgra8888, SKAlphaType.Unpremul))
+            : null;
+        if (shapeMask is not null)
         {
-            var raster = context.GetRaster(
-                deviceBounds.Left,
-                deviceBounds.Top,
-                deviceBounds.Width,
-                deviceBounds.Height);
-            using var paintBitmap = PdfCartonFontCompat.CreateImage(
-                context.GetColorModel(),
-                raster,
-                isRasterPremultiplied: false,
-                null);
-            using var sourceCanvas = new SKCanvas(source);
-            using var replacePaint = new SKPaint { BlendMode = SKBlendMode.Src };
-            sourceCanvas.DrawBitmap(paintBitmap, 0, 0, replacePaint);
-        }
-
-        using var mask = PdfCartonFontCompat.CreateBitmap(
-            bounds.Width,
-            bounds.Height,
-            PdfCartonFontCompat.TYPE_INT_ARGB);
-        mask.Erase(SKColors.Transparent);
-        using (var maskCanvas = new SKCanvas(mask))
-        {
-            ConfigureLayerCanvas(maskCanvas, bounds);
+            using var maskCanvas = new SKCanvas(shapeMask);
+            ConfigureLayerCanvas(maskCanvas, bounds, deviceSpace);
             using var maskPaint = CreateDrawingPaint(stroked);
             maskPaint.Color = SKColors.White;
             maskCanvas.DrawPath(shape, maskPaint);
         }
-        using (var sourceCanvas = new SKCanvas(source))
-        using (var maskPaint = new SKPaint { BlendMode = SKBlendMode.DstIn })
+        var pixels = paintTilePixels ?? new int[3 * PaintTileArea];
+        // A context drawing on this graphics while it paints (no PDFBox one
+        // does) takes a fresh array.
+        paintTilePixels = null;
+        var pin = GCHandle.Alloc(pixels, GCHandleType.Pinned);
+        var coveragePin = coverage is ({ } pinnedMask, _) ? GCHandle.Alloc(pinnedMask, GCHandleType.Pinned) : default;
+        var address = pin.AddrOfPinnedObject();
+        var paintTile = new PaintTileSlot(new SKBitmap(), address);
+        var source = new PaintTileSlot(new SKBitmap(), IntPtr.Add(address, PaintTileArea * sizeof(int)));
+        var mask = new PaintTileSlot(new SKBitmap(), IntPtr.Add(address, 2 * PaintTileArea * sizeof(int)));
+        SKCanvas? deviceCanvas = null;
+        var deviceRestore = 0;
+        try
         {
-            sourceCanvas.DrawBitmap(mask, 0, 0, maskPaint);
+            // With an alpha composite, the masked bands are drawn as images at
+            // their device position (or, on a binary image, mapped as Java maps
+            // a sampled colour).
+            if (composite is JavaAlphaComposite && !IsBinaryDestination())
+            {
+                deviceCanvas = RequireCanvas();
+                deviceRestore = deviceCanvas.Save();
+                deviceCanvas.ResetMatrix();
+            }
+            using var replacePaint = new SKPaint { BlendMode = SKBlendMode.Src };
+            using var maskInPaint = new SKPaint { BlendMode = SKBlendMode.DstIn };
+            using var maskPaint = CreateDrawingPaint(stroked);
+            maskPaint.Color = SKColors.White;
+            using var layerPaint = composite is JavaAlphaComposite ? CreateAlphaLayerPaint() : null;
+            using var shapeMaskImage = shapeMask is null ? null : PdfCartonFontCompat.DrawableImage(shapeMask, leasedBitmap);
+            // The coverage drawn as PdfCartonAntialiasedFill.Draw draws it.
+            using var coverageImage = coverage is { Bounds: var coverageBounds }
+                ? SKImage.FromPixels(
+                    new SKImageInfo(coverageBounds.Width, coverageBounds.Height, SKColorType.Alpha8, SKAlphaType.Premul),
+                    coveragePin.AddrOfPinnedObject(), coverageBounds.Width)
+                : null;
+            // An aliased device path drawn as PdfCartonAliasedFill.Draw draws it, its
+            // pixel runs found once for every band.
+            using var aliasedPath = devicePath is null ? null : PdfCartonAliasedFill.DrawnPath(devicePath, rectilinear,
+                new SKRect(bounds.Left - 1, bounds.Top - 1, bounds.Right + 1, bounds.Bottom + 1));
+            var rasterRenderer = new PdfCartonFontCompat.PaintRasterRenderer();
+            var tileWidth = Math.Min(bounds.Width, PaintTileArea);
+            var tileHeight = Math.Max(1, PaintTileArea / tileWidth);
+            for (var top = bounds.Top; top < bounds.Bottom; top += tileHeight)
+            {
+                for (var left = bounds.Left; left < bounds.Right; left += tileWidth)
+                {
+                    var tile = new SKRectI(left, top,
+                        Math.Min(bounds.Right, left + tileWidth), Math.Min(bounds.Bottom, top + tileHeight));
+                    var raster = context.GetRaster(tile.Left, tile.Top, tile.Width, tile.Height);
+                    var colorModel = context.GetColorModel();
+                    // Only the requested part of a larger raster is drawn.
+                    if (raster.Width > tile.Width || raster.Height > tile.Height)
+                        raster = raster.CopyRegion(0, 0, Math.Min(raster.Width, tile.Width),
+                            Math.Min(raster.Height, tile.Height));
+                    var tileInfo = new SKImageInfo(tile.Width, tile.Height, SKColorType.Bgra8888, SKAlphaType.Unpremul);
+                    var sourceCanvas = source.Canvas(tileInfo);
+                    var paintInfo = new SKImageInfo(raster.Width, raster.Height, SKColorType.Bgra8888,
+                        colorModel.HasAlpha ? SKAlphaType.Unpremul : SKAlphaType.Opaque);
+                    // The source is the paint's pixels drawn over transparency
+                    // with Src: an opaque pixel arrives unchanged, so a band
+                    // of only opaque pixels is rendered in place.
+                    var inPlace = false;
+                    if (paintInfo.Size == tileInfo.Size)
+                    {
+                        rasterRenderer.Render(source.Bitmap, colorModel, raster);
+                        inPlace = AllOpaque(pixels, PaintTileArea, tileInfo.Width * tileInfo.Height);
+                        if (!inPlace)
+                            Array.Copy(pixels, PaintTileArea, pixels, 0, tileInfo.Width * tileInfo.Height);
+                    }
+                    else
+                    {
+                        rasterRenderer.Render(paintTile.Install(paintInfo), colorModel, raster);
+                    }
+                    if (!inPlace)
+                    {
+                        paintTile.Install(paintInfo);
+                        source.Bitmap.Erase(SKColors.Transparent);
+                        using var paintImage = paintTile.Image();
+                        sourceCanvas.DrawImage(paintImage, 0, 0, replacePaint);
+                    }
+                    if (shapeMaskImage is not null)
+                    {
+                        sourceCanvas.DrawImage(shapeMaskImage, bounds.Left - tile.Left, bounds.Top - tile.Top, maskInPaint);
+                    }
+                    else
+                    {
+                        var maskCanvas = mask.Canvas(tileInfo);
+                        mask.Bitmap.Erase(SKColors.Transparent);
+                        var restore = maskCanvas.Save();
+                        ConfigureLayerCanvas(maskCanvas, tile, deviceSpace: true);
+                        if (coverageImage is not null)
+                            maskCanvas.DrawImage(coverageImage, coverage!.Value.Bounds.Left, coverage.Value.Bounds.Top,
+                                maskPaint);
+                        else
+                            maskCanvas.DrawPath(aliasedPath ?? devicePath!, maskPaint);
+                        maskCanvas.RestoreToCount(restore);
+                        using var maskImage = mask.Image();
+                        sourceCanvas.DrawImage(maskImage, 0, 0, maskInPaint);
+                    }
+                    if (layerPaint is null)
+                        CompositeLayer(compositeTile = PdfCartonFontCompat.CopyTile(source.Bitmap, compositeTile), tile);
+                    else if (deviceCanvas is null)
+                        DrawSampledIntoBinary(tile, deviceSpace: true, (target, targetBitmap, drawingPaint) =>
+                        {
+                            // The layer holds a Java paint's raster, which Java 2D maps like an image.
+                            using var layerImage = PdfCartonFontCompat.DrawableImage(source.Bitmap, targetBitmap);
+                            target.DrawImage(layerImage!, tile.Left, tile.Top, drawingPaint);
+                        }, layerPaint);
+                    else
+                        using (BeginDrawing(tile))
+                        using (var layerImage = source.Image())
+                            deviceCanvas.DrawImage(layerImage, tile.Left, tile.Top, layerPaint);
+                }
+            }
         }
-        if (composite is JavaAlphaComposite)
-            DrawAlphaLayer(source, bounds);
-        else
-            CompositeLayer(source, bounds);
+        finally
+        {
+            deviceCanvas?.RestoreToCount(deviceRestore);
+            paintTile.Dispose();
+            source.Dispose();
+            mask.Dispose();
+            if (coveragePin.IsAllocated) coveragePin.Free();
+            pin.Free();
+            paintTilePixels = pixels;
+        }
     }
 
-    private void DrawAlphaLayer(SKBitmap source, SKRectI bounds)
+    // The most pixels in one band: PDFBox's int[w * h * 4] of a band
+    // (81,920 bytes) stays below the 85,000-byte large object threshold.
+    private const int PaintTileArea = 5120;
+
+    // RenderPaintLayer's band pixels: the paint's, the masked source's and
+    // the mask's, PaintTileArea each.
+    private int[]? paintTilePixels;
+
+    // A bitmap over pixels RenderPaintLayer owns, with a canvas on it, both
+    // remade only when the tile's size changes: a raster canvas draws
+    // straight into the pixels, so it serves every tile of one size. Skia
+    // allocates no pixel memory for it and frees none.
+    private sealed class PaintTileSlot(SKBitmap bitmap, IntPtr pixels) : IDisposable
     {
-        var activeCanvas = RequireCanvas();
-        var restore = activeCanvas.Save();
-        activeCanvas.ResetMatrix();
-        using var drawingPaint = CreateImagePaint();
-        ApplyFallbackComposite(drawingPaint);
-        activeCanvas.DrawBitmap(source, bounds.Left, bounds.Top, drawingPaint);
-        activeCanvas.RestoreToCount(restore);
+        private SKCanvas? canvas;
+        private SKImageInfo info;
+
+        internal SKBitmap Bitmap => bitmap;
+
+        internal SKBitmap Install(SKImageInfo tileInfo)
+        {
+            if (info == tileInfo) return bitmap;
+            canvas?.Dispose();
+            canvas = null;
+            if (!bitmap.InstallPixels(tileInfo, pixels, tileInfo.RowBytes))
+                throw new InvalidOperationException("Unable to install paint tile pixels.");
+            info = tileInfo;
+            return bitmap;
+        }
+
+        internal SKCanvas Canvas(SKImageInfo tileInfo)
+        {
+            Install(tileInfo);
+            return canvas ??= new SKCanvas(bitmap);
+        }
+
+        // An image of the pixels as they are now, for one draw.
+        internal SKImage Image() =>
+            SKImage.FromPixels(info, pixels, info.RowBytes) ??
+            throw new InvalidOperationException("Unable to wrap paint tile pixels.");
+
+        public void Dispose()
+        {
+            canvas?.Dispose();
+            bitmap.Dispose();
+        }
     }
 
-    private void CompositeLayer(SKBitmap source, SKRectI bounds)
+    // True when the count BGRA pixels from start all have alpha 255.
+    private static bool AllOpaque(int[] pixels, int start, int count)
+    {
+        for (var index = start; index < start + count; index++)
+            if ((uint)pixels[index] < 0xff000000u) return false;
+        return true;
+    }
+
+    // The paint a masked paint layer is drawn with under an alpha composite.
+    private SKPaint CreateAlphaLayerPaint()
+    {
+        var drawingPaint = CreateImagePaint();
+        ApplyFallbackComposite(drawingPaint);
+        if (!IsBinaryDestination()) ApplyDestinationLuma(drawingPaint);
+        return drawingPaint;
+    }
+
+    private bool IsBinaryDestination() =>
+        bitmap is { ColorType: SKColorType.Gray8 } &&
+        PdfCartonFontCompat.GetImageType(bitmap) == PdfCartonFontCompat.TYPE_BYTE_BINARY;
+
+    // Java 2D composites a sampled colour (an image's, a texture's or a
+    // gradient's) with a TYPE_BYTE_BINARY destination in RGB, rounding, and
+    // only then picks black or white by PdfCartonFontCompat.IsJavaBinarySampledBlack
+    // (black-box probes of Java 25: 20,000 random translucent ARGB pixels
+    // drawn over black and over white all match). So the drawing goes to an
+    // RGB copy of the destination's bounds, which is then mapped back.
+    private void DrawSampledIntoBinary(
+        SKRectI bounds, bool deviceSpace, Action<SKCanvas, SKBitmap?, SKPaint> draw, SKPaint paint)
+    {
+        var destination = bitmap!;
+        // Only Skia and this method read it: native pixels, released on return.
+        using var copy = new PdfCartonNativeBitmap(new SKImageInfo(
+            bounds.Width, bounds.Height, SKColorType.Bgra8888, SKAlphaType.Opaque));
+        using (var copyCanvas = new SKCanvas(copy))
+        {
+            // The live pixels: DrawBitmap would copy the whole destination
+            // first, once per band of a paint fill.
+            using (var replacePaint = new SKPaint { BlendMode = SKBlendMode.Src })
+            using (var destinationImage = PdfCartonFontCompat.DrawableImage(destination, copy))
+                copyCanvas.DrawImage(
+                    destinationImage!,
+                    new SKRect(bounds.Left, bounds.Top, bounds.Right, bounds.Bottom),
+                    new SKRect(0, 0, bounds.Width, bounds.Height),
+                    replacePaint);
+            ConfigureLayerCanvas(copyCanvas, bounds, deviceSpace);
+            draw(copyCanvas, copy, paint);
+        }
+        using var source = new PdfCartonPixels(copy);
+        using var target = new PdfCartonPixels(destination);
+        for (var y = bounds.Top; y < bounds.Bottom; y++)
+        {
+            for (var x = bounds.Left; x < bounds.Right; x++)
+            {
+                var value = PdfCartonFontCompat.IsJavaBinarySampledBlack(
+                    source.Get(x - bounds.Left, y - bounds.Top))
+                    ? byte.MinValue
+                    : byte.MaxValue;
+                target.Set(x, y, new SKColor(value, value, value));
+            }
+        }
+    }
+
+    private void CompositeLayer(PdfCartonImage source, SKRectI bounds)
     {
         var destination = bitmap ??
             throw new InvalidOperationException(
@@ -5283,9 +7335,31 @@ public class PdfCartonGraphics2D : IDisposable
         var sourceColorModel = PdfCartonFontCompat.GetColorModel(source);
         var destinationColorModel = PdfCartonFontCompat.GetColorModel(destination);
         var sourceRaster = PdfCartonFontCompat.GetRaster(source);
+        if (TracksNativeDrawing)
+        {
+            // As in Java, compose into the image's own raster, in its colour
+            // model, and render only the composed pixels. The output starts
+            // as the destination, which Java passes as both rasters.
+            var retained = PdfCartonFontCompat.GetDetachedRaster(destination)!;
+            var detachedInput = retained.CopyRegion(bounds.Left, bounds.Top, bounds.Width, bounds.Height);
+            var detachedOutput = retained.CopyRegion(bounds.Left, bounds.Top, bounds.Width, bounds.Height);
+            using (var context = composite.CreateContext(
+                       sourceColorModel,
+                       destinationColorModel,
+                       renderingHints))
+            {
+                context.Compose(sourceRaster, detachedInput, detachedOutput);
+            }
+            PdfCartonFontCompat.SetDetachedRasterRegion(
+                destination,
+                bounds.Left,
+                bounds.Top,
+                detachedOutput);
+            return;
+        }
         var destinationRaster = PdfCartonFontCompat.GetRaster(destination)
             .CopyRegion(bounds.Left, bounds.Top, bounds.Width, bounds.Height);
-        using var output = PdfCartonFontCompat.CreateBitmap(
+        var output = PdfCartonFontCompat.CreateIntermediate(
             bounds.Width,
             bounds.Height,
             PdfCartonFontCompat.GetImageType(destination));
@@ -5299,17 +7373,17 @@ public class PdfCartonGraphics2D : IDisposable
         }
         // Copy only the affected pixels, preserving straight-alpha values without
         // sending the result through another draw/premultiplication round trip.
-        using var outputPixels = output.PeekPixels();
+        using var outputLease = output.Lease();
+        using var outputPixels = outputLease.Bitmap.PeekPixels();
         var destinationInfo = destination.Info;
         var offset = checked(bounds.Top * destination.RowBytes + bounds.Left * destinationInfo.BytesPerPixel);
         if (!outputPixels.ReadPixels(destinationInfo.WithSize(bounds.Width, bounds.Height),
-                IntPtr.Add(destination.GetPixels(), offset), destination.RowBytes))
+                IntPtr.Add(leasedBitmap!.GetPixels(), offset), destination.RowBytes))
             throw new InvalidOperationException("Unable to copy composite pixels to the destination.");
-        destination.NotifyPixelsChanged();
-        GC.KeepAlive(destination);
+        leasedBitmap.NotifyPixelsChanged();
     }
 
-    private void ConfigureLayerCanvas(SKCanvas layer, SKRectI bounds)
+    private void ConfigureLayerCanvas(SKCanvas layer, SKRectI bounds, bool deviceSpace = false)
     {
         layer.ResetMatrix();
         layer.Translate(-bounds.Left, -bounds.Top);
@@ -5318,49 +7392,281 @@ public class PdfCartonGraphics2D : IDisposable
             initialDeviceClip.Top,
             initialDeviceClip.Right,
             initialDeviceClip.Bottom));
-        if (clipPath is not null)
-            layer.ClipPath(clipPath, SKClipOperation.Intersect, IsAntialiasEnabled());
-        layer.Concat(transform);
+        if (clipRegion is not null)
+            layer.ClipPath(clipRegion, SKClipOperation.Intersect, antialias: false);
+        if (!deviceSpace) layer.Concat(transform);
     }
 
+    // Java 2D never antialiases a clip, so canvases clip to whole pixels.
     private void ApplyUserClip(SKCanvas target)
     {
-        if (clipPath is not null)
+        if (clipRegion is not null)
         {
             var matrix = target.TotalMatrix;
             target.ResetMatrix();
-            target.ClipPath(clipPath, SKClipOperation.Intersect, IsAntialiasEnabled());
+            target.ClipPath(clipRegion, SKClipOperation.Intersect, antialias: false);
             target.SetMatrix(matrix);
         }
     }
 
-    private void IntersectClip(SKPath addition)
+    private void ClearClip()
     {
-        using var deviceAddition = new SKPath(addition);
-        deviceAddition.Transform(transform);
+        clipPath?.Dispose();
+        clipPath = null;
+        clipRectangle = null;
+        clipRegion?.Dispose();
+        clipRegion = null;
+    }
+
+    // Intersects the clip with a user-space shape, following black-box
+    // probes of Java 25's Graphics2D.clip on BufferedImages:
+    // - Without a clip, the shape becomes the clip as setClip would set it.
+    // - A rectangular clip intersected with a Rectangle2D the transform keeps
+    //   axis-aligned stays a rectangle.
+    // - Such a Rectangle2D that holds the whole clip leaves it as it is.
+    // - Otherwise the device shapes are intersected. A rectangular result
+    //   becomes the rectangle of the device pixels it touches, [floor(lo),
+    //   ceil(hi)) on each axis; any other result is rasterised once (see
+    //   PdfCartonAliasedFill.ClipRegion).
+    private void IntersectClip(object shape)
+    {
+        if (shape is JavaPath2D managed)
+        {
+            using var managedLease = LeasePath(managed);
+            IntersectClip(managedLease.Path);
+            return;
+        }
+        var rectangle = PdfCartonAliasedFill.TryDeviceRectangle(
+            shape, transform, out var left, out var top, out var right, out var bottom);
         if (clipPath is null)
         {
-            clipPath = new SKPath(deviceAddition);
+            if (rectangle)
+            {
+                SetClipRectangle(left, top, right, bottom);
+                return;
+            }
+            var devicePath = PdfCartonFontCompat.CreateSkiaPath(shape);
+            devicePath.Transform(transform);
+            SetClipShape(devicePath, PdfCartonAliasedFill.ClipRegion(shape, transform, RegionBounds()));
+            return;
+        }
+        if (rectangle && clipRectangle is { } current)
+        {
+            SetClipRectangle(
+                Math.Max(left, current.Left), Math.Max(top, current.Top),
+                Math.Min(right, current.Right), Math.Min(bottom, current.Bottom));
+            return;
+        }
+        // Java has no inverse fills, but an SKPath clip may: its bounds are
+        // those of what it leaves out.
+        var clipBounds = clipPath.Bounds;
+        if (rectangle && !IsInverse(clipPath) && left <= clipBounds.Left && top <= clipBounds.Top &&
+            right >= clipBounds.Right && bottom >= clipBounds.Bottom)
+        {
+            return;
+        }
+        using var lease = PdfCartonFontCompat.BorrowPath(shape);
+        using var deviceAddition = new SKPath(lease.Path);
+        deviceAddition.Transform(transform);
+        var intersection = new SKPath();
+        if (!clipPath.Op(deviceAddition, SKPathOp.Intersect, intersection))
+        {
+            intersection.Dispose();
+            throw new InvalidOperationException("Unable to intersect graphics clips.");
+        }
+        if (!IsInverse(intersection) && intersection.IsRect)
+        {
+            var touched = intersection.GetRect();
+            intersection.Dispose();
+            SetClipRectangle(
+                Math.Floor(touched.Left), Math.Floor(touched.Top),
+                Math.Ceiling(touched.Right), Math.Ceiling(touched.Bottom));
+            return;
+        }
+        SetClipShape(intersection, PdfCartonAliasedFill.ClipRegion(intersection, SKMatrix.Identity, RegionBounds()));
+
+        static bool IsInverse(SKPath path) =>
+            path.FillType is SKPathFillType.InverseWinding or SKPathFillType.InverseEvenOdd;
+    }
+
+    // Makes the device rectangle the clip; an empty one keeps nothing.
+    private void SetClipRectangle(double left, double top, double right, double bottom)
+    {
+        if (!(left < right && top < bottom)) left = top = right = bottom = 0;
+        var devicePath = new SKPath();
+        devicePath.AddRect(new SKRect((float)left, (float)top, (float)right, (float)bottom));
+        SetClipShape(devicePath, PdfCartonAliasedFill.ClipRectangle(left, top, right, bottom, RegionBounds()));
+        clipRectangle = (left, top, right, bottom);
+    }
+
+    // Makes the device path, whose pixels are region, the clip; both are
+    // the graphics' own from now on.
+    private void SetClipShape(SKPath devicePath, SKPath region)
+    {
+        ClearClip();
+        clipPath = devicePath;
+        clipRegion = region;
+        ResetCanvasState();
+        ApplyUserClip(RequireCanvas());
+    }
+
+    // The device area a clip region has to describe.
+    private SKRect RegionBounds()
+    {
+        var area = initialDeviceClip;
+        if (bitmap is not null) area = SKRectI.Intersect(area, new SKRectI(0, 0, bitmap.Width, bitmap.Height));
+        return new SKRect(area.Left, area.Top, area.Right, area.Bottom);
+    }
+
+    // Only a bitmap has device pixels to move to; a canvas given directly
+    // (an SVG or PDF document canvas, say) keeps the exact geometry.
+    private bool NormalizesStrokes() =>
+        bitmap is not null &&
+        IsAntialiasEnabled() &&
+        !ReferenceEquals(
+            renderingHints.GetValueOrDefault(PdfCartonRenderingHints.KEY_STROKE_CONTROL),
+            PdfCartonRenderingHints.VALUE_STROKE_PURE);
+
+    private SKPath? NormalizedStroke(object shape)
+    {
+        using var lease = PdfCartonFontCompat.BorrowPath(shape);
+        return PdfCartonStrokeNormalization.Normalize(lease.Path, transform);
+    }
+
+    // The Skia path of a managed shape's segments for one operation: this
+    // graphics' reused path, refilled, or a path of its own while that one
+    // is out (a draw within a draw).
+    private PdfCartonFontCompat.PathLease LeasePath(JavaPath2D shape)
+    {
+        if (scratchPathOut || disposed) return PdfCartonFontCompat.BorrowPath(shape);
+        var path = scratchPath ??= new SKPath();
+        scratchPathOut = true;
+        shape.WriteTo(path);
+        return new PdfCartonFontCompat.PathLease(path, false, this);
+    }
+
+    internal void ReturnScratchPath(SKPath path)
+    {
+        scratchPathOut = false;
+        if (disposed) path.Dispose();
+    }
+
+    // An antialiased fill of a managed shape with a colour: its device
+    // segments go straight into Java 2D's coverage (PdfCartonAntialiasedFill),
+    // mapped as a Skia path of the shape would be, so no Skia path is made.
+    // False when FillAntialiased would not draw it this way.
+    private bool FillManagedAntialiased(JavaPath2D shape)
+    {
+        if (bitmap is null || !IsAntialiasEnabled() || paint is not JavaColor) return false;
+        if (transform.Persp0 != 0 || transform.Persp1 != 0 || transform.Persp2 != 1)
+            return false;
+        var types = shape.DeviceSegments(transform, out var segmentCount, out var points, out var pathBounds);
+        var bounds = DrawingBounds(pathBounds, stroked: false, deviceSpace: true);
+        var mask = PdfCartonAntialiasedFill.Mask(
+            types, segmentCount, points, shape.WindingRule == JavaPath2D.WIND_EVEN_ODD, bounds);
+        if (mask is null) return true;
+        try
+        {
+            var deviceBounds = new SKRect(bounds.Left, bounds.Top, bounds.Right, bounds.Bottom);
+            RenderLayer(
+                (layer, _, drawingPaint) => PdfCartonAntialiasedFill.Draw(layer, mask, bounds, drawingPaint),
+                stroked: false, imagePaint: false, deviceBounds, deviceSpace: true);
+        }
+        finally
+        {
+            PdfCartonAntialiasedFill.Return(mask);
+        }
+        return true;
+    }
+
+    // Fills shape, or the outline of the current BasicStroke along it, with
+    // Java 2D's antialiased coverage; false (nothing drawn) for a perspective
+    // transform or an inverse fill.
+    private bool FillAntialiased(object shape, bool stroked, SKRect? paintBounds)
+    {
+        if (transform.Persp0 != 0 || transform.Persp1 != 0 || transform.Persp2 != 1)
+            return false;
+        using var lease = PdfCartonFontCompat.BorrowPath(shape);
+        if (lease.Path.FillType is SKPathFillType.InverseWinding or SKPathFillType.InverseEvenOdd)
+            return false;
+        using var outline = stroked ? StrokeOutline(lease.Path) : null;
+        // The device path only feeds the mask, so one path is reused from
+        // fill to fill (one per glyph shown), the shape transformed into it.
+        var devicePath = scratchDevicePath ?? new SKPath();
+        scratchDevicePath = null;
+        byte[]? mask;
+        SKRectI bounds;
+        try
+        {
+            (outline ?? lease.Path).Transform(in transform, devicePath);
+            bounds = DrawingBounds(devicePath.Bounds, stroked: false, deviceSpace: true);
+            mask = PdfCartonAntialiasedFill.Mask(devicePath, bounds);
+        }
+        finally
+        {
+            if (disposed || scratchDevicePath is not null) devicePath.Dispose();
+            else scratchDevicePath = devicePath;
+        }
+        if (mask is null) return true;
+        try
+        {
+            var deviceBounds = new SKRect(bounds.Left, bounds.Top, bounds.Right, bounds.Bottom);
+            if (paint is JavaColor)
+                RenderLayer(
+                    (layer, _, drawingPaint) => PdfCartonAntialiasedFill.Draw(layer, mask, bounds, drawingPaint),
+                    stroked: false, imagePaint: false, deviceBounds, deviceSpace: true);
+            else
+                RenderPaintLayer(outline ?? lease.Path, stroked: false, paintBounds: paintBounds,
+                    coverage: (mask, bounds));
+        }
+        finally
+        {
+            PdfCartonAntialiasedFill.Return(mask);
+        }
+        return true;
+    }
+
+    // The outline of the current BasicStroke along path, in user space.
+    // Dashes are expanded only within the visible area, as Skia's own
+    // stroking does.
+    private SKPath StrokeOutline(SKPath path)
+    {
+        var basicStroke = (JavaBasicStroke)stroke;
+        double a = transform.ScaleX, b = transform.SkewY, c = transform.SkewX, d = transform.ScaleY;
+        var scale = Math.Max(Math.Sqrt(a * a + b * b), Math.Sqrt(c * c + d * d));
+        // Skia's offset curves at 8 times the device resolution came closer
+        // to Java's on random curved strokes (total alpha difference 10639
+        // -> 6928 over 60 cases) than at the device resolution.
+        var resolution = (float)Math.Max(1, scale) * 8;
+        var outline = new SKPath();
+        var clip = DrawingBounds(null, stroked: false);
+        if (clip.IsEmpty) return outline;
+        using var strokePaint = basicStroke.CreateSkiaPaint();
+        bool stroked;
+        if (transform.TryInvert(out var inverse))
+        {
+            var cull = inverse.MapRect(new SKRect(clip.Left, clip.Top, clip.Right, clip.Bottom));
+            var margin = (float)(basicStroke.Width * Math.Max(basicStroke.MiterLimit, 2) + 1 / scale);
+            cull.Inflate(margin, margin);
+            stroked = strokePaint.GetFillPath(path, outline, cull, resolution);
         }
         else
         {
-            using var intersection = new SKPath();
-            if (!clipPath.Op(deviceAddition, SKPathOp.Intersect, intersection))
-                throw new InvalidOperationException("Unable to intersect graphics clips.");
-            clipPath.Dispose();
-            clipPath = new SKPath(intersection);
+            stroked = strokePaint.GetFillPath(path, outline, resolution);
         }
-        RequireCanvas().ClipPath(
-            addition,
-            SKClipOperation.Intersect,
-            IsAntialiasEnabled());
+        if (!stroked) outline.Reset();
+        return outline;
     }
 
+    // A BufferedImage's Java 2D graphics draws aliased unless KEY_ANTIALIASING
+    // is VALUE_ANTIALIAS_ON (black-box probes of Java 25: fills and strokes
+    // with no hint match VALUE_ANTIALIAS_OFF pixel for pixel). A canvas given
+    // directly (an SVG or PDF document canvas, say) has no Java counterpart
+    // and keeps its exact, antialiased geometry unless told otherwise.
     private bool IsAntialiasEnabled() =>
-        !ReferenceEquals(
-            renderingHints.GetValueOrDefault(
-                PdfCartonRenderingHints.KEY_ANTIALIASING),
-            PdfCartonRenderingHints.VALUE_ANTIALIAS_OFF);
+        renderingHints.GetValueOrDefault(PdfCartonRenderingHints.KEY_ANTIALIASING) is var hint &&
+        (ReferenceEquals(hint, PdfCartonRenderingHints.VALUE_ANTIALIAS_ON) ||
+         (bitmap is null && !ReferenceEquals(hint, PdfCartonRenderingHints.VALUE_ANTIALIAS_OFF)));
 
     private void ApplyFallbackComposite(SKPaint drawingPaint)
     {
@@ -5377,6 +7683,20 @@ public class PdfCartonGraphics2D : IDisposable
             throw new InvalidOperationException(
                 "Custom Java composites require a bitmap-backed CPU canvas.");
         }
+    }
+
+    // A colour drawn into TYPE_BYTE_GRAY becomes Java2D's luma of it. Into
+    // TYPE_BYTE_BINARY (stored as Gray8 and quantized at 128 after each
+    // draw) a solid colour, the background included, goes by the same luma:
+    // black exactly when (77 R + 150 G + 29 B + 128) >> 8 < 128 (black-box
+    // probes of Java 25: 0 of 140,608 colours differ, translucent grays over
+    // black and white included). Sampled colours go by DrawSampledIntoBinary.
+    private void ApplyDestinationLuma(SKPaint drawingPaint)
+    {
+        if (bitmap is not { ColorType: SKColorType.Gray8 }) return;
+        var imageType = PdfCartonFontCompat.GetImageType(bitmap);
+        if (imageType is PdfCartonFontCompat.TYPE_BYTE_GRAY or PdfCartonFontCompat.TYPE_BYTE_BINARY)
+            drawingPaint.ColorFilter = PdfCartonFontCompat.JavaGrayLumaFilter;
     }
 
     private void QuantizeBinaryDestination(SKRectI bounds)
@@ -5399,6 +7719,15 @@ public class PdfCartonGraphics2D : IDisposable
             }
         }
     }
+
+    // Brackets native drawing into device bounds of the bitmap (disposed
+    // after the draw); null unless the bitmap is a CreateImage image.
+    private IDisposable? BeginDrawing(SKRectI bounds) =>
+        TracksNativeDrawing ? PdfCartonFontCompat.BeginNativeDrawing(bitmap!, bounds) : null;
+
+    // The same for a user-space rectangle under the current transform.
+    private IDisposable? BeginDrawing(SKRect userBounds) =>
+        TracksNativeDrawing ? BeginDrawing(DrawingBounds(userBounds, stroked: false)) : null;
 
     private SKCanvas RequireCanvas() =>
         !disposed
@@ -5507,117 +7836,6 @@ public class JavaPoint : JavaPoint2D, IEquatable<JavaPoint>
         checked((int)Math.Floor(value + 0.5d));
 }
 
-public sealed class JavaPathIterator
-{
-    public const int WIND_EVEN_ODD = 0;
-    public const int WIND_NON_ZERO = 1;
-    public const int SEG_MOVETO = 0;
-    public const int SEG_LINETO = 1;
-    public const int SEG_QUADTO = 2;
-    public const int SEG_CUBICTO = 3;
-    public const int SEG_CLOSE = 4;
-
-    private readonly List<(int Verb, double[] Coordinates)> segments = new();
-    private int index;
-
-    internal JavaPathIterator(SKPath path, object? transform)
-    {
-        ArgumentNullException.ThrowIfNull(path);
-        Path = new SKPath(path);
-        if (transform is SKMatrix matrix &&
-            !PdfCartonFontCompat.IsDefaultMatrix(matrix))
-        {
-            Path.Transform(matrix);
-        }
-
-        using var iterator = Path.CreateRawIterator();
-        var points = new SKPoint[4];
-        while (true)
-        {
-            var verb = iterator.Next(points);
-            switch (verb)
-            {
-                case SKPathVerb.Move:
-                    segments.Add((SEG_MOVETO, Coordinates(points[0])));
-                    break;
-                case SKPathVerb.Line:
-                    segments.Add((SEG_LINETO, Coordinates(points[1])));
-                    break;
-                case SKPathVerb.Quad:
-                    segments.Add((SEG_QUADTO, Coordinates(points[1], points[2])));
-                    break;
-                case SKPathVerb.Cubic:
-                    segments.Add((SEG_CUBICTO, Coordinates(points[1], points[2], points[3])));
-                    break;
-                case SKPathVerb.Close:
-                    segments.Add((SEG_CLOSE, Array.Empty<double>()));
-                    break;
-                case SKPathVerb.Done:
-                    return;
-                case SKPathVerb.Conic:
-                    throw new NotSupportedException(
-                        "A conic Skia segment cannot be represented by java.awt.geom.PathIterator.");
-                default:
-                    throw new NotSupportedException($"Unsupported Skia path verb `{verb}`.");
-            }
-        }
-    }
-
-    internal SKPath Path { get; }
-
-    public bool IsDone() => index >= segments.Count;
-
-    public void Next()
-    {
-        if (!IsDone()) index++;
-    }
-
-    public int CurrentSegment(double[] coordinates)
-    {
-        ArgumentNullException.ThrowIfNull(coordinates);
-        if (IsDone()) throw new InvalidOperationException("Path iterator is exhausted.");
-        var segment = segments[index];
-        if (coordinates.Length < segment.Coordinates.Length)
-        {
-            throw new IndexOutOfRangeException("Path coordinate array is too small.");
-        }
-        segment.Coordinates.CopyTo(coordinates, 0);
-        return segment.Verb;
-    }
-
-    public int CurrentSegment(float[] coordinates)
-    {
-        ArgumentNullException.ThrowIfNull(coordinates);
-        if (IsDone()) throw new InvalidOperationException("Path iterator is exhausted.");
-        var segment = segments[index];
-        if (coordinates.Length < segment.Coordinates.Length)
-        {
-            throw new IndexOutOfRangeException("Path coordinate array is too small.");
-        }
-        for (var coordinate = 0; coordinate < segment.Coordinates.Length; coordinate++)
-        {
-            coordinates[coordinate] = (float)segment.Coordinates[coordinate];
-        }
-        return segment.Verb;
-    }
-
-    public int GetWindingRule() =>
-        Path.FillType is SKPathFillType.EvenOdd or SKPathFillType.InverseEvenOdd
-            ? WIND_EVEN_ODD
-            : WIND_NON_ZERO;
-
-    private static double[] Coordinates(params SKPoint[] points)
-    {
-        var result = new double[points.Length * 2];
-        for (var index = 0; index < points.Length; index++)
-        {
-            result[index * 2] = points[index].X;
-            result[index * 2 + 1] = points[index].Y;
-        }
-        return result;
-    }
-}
-
 public sealed class JavaEllipse
 {
     private readonly double x;
@@ -5658,7 +7876,7 @@ public sealed class JavaEllipse
             }
         }
 
-        using var path = new SKPath();
+        var path = new JavaPath2D();
         for (var step = 0; step < steps; step++)
         {
             var angle = step * 2 * Math.PI / steps;
@@ -5673,58 +7891,1481 @@ public sealed class JavaEllipse
                 path.LineTo((float)pointX, (float)pointY);
             }
         }
-        path.Close();
+        path.ClosePath();
         return new JavaPathIterator(path, transform);
     }
 
+    // ToPath's segments as a managed path (new GeneralPath(ellipse) rounds
+    // them to float, an Area keeps them).
+    internal JavaPath2D ToJavaPath()
+    {
+        var path = new JavaPath2D(JavaPath2D.WIND_NON_ZERO, 6, doublePrecision: true);
+        if (width < 0 || height < 0) return path;
+        double rx = width / 2, ry = height / 2, cx = x + rx, cy = y + ry, right = x + width, bottom = y + height;
+        double kx = rx * JavaCurves.Control, ky = ry * JavaCurves.Control;
+        path.MoveTo(right, cy);
+        path.CurveTo(right, cy + ky, cx + kx, bottom, cx, bottom);
+        path.CurveTo(cx - kx, bottom, x, cy + ky, x, cy);
+        path.CurveTo(x, cy - ky, cx - kx, y, cx, y);
+        path.CurveTo(cx + kx, y, right, cy - ky, right, cy);
+        path.ClosePath();
+        return path;
+    }
+
+    // The path Java's Ellipse2D iterates (read back from Java 2D's
+    // PathIterator): four cubic quarters from the right end, downward on
+    // screen first, with control points 0.5522847498307933 of a radius from
+    // each end. A negative size has no path.
     internal SKPath ToPath()
     {
         var path = new SKPath();
-        path.AddOval(new SKRect(
-            (float)x,
-            (float)y,
-            (float)(x + width),
-            (float)(y + height)));
+        if (width < 0 || height < 0) return path;
+        double rx = width / 2, ry = height / 2, cx = x + rx, cy = y + ry, right = x + width, bottom = y + height;
+        double kx = rx * JavaCurves.Control, ky = ry * JavaCurves.Control;
+        path.MoveTo((float)right, (float)cy);
+        JavaCurves.CubicTo(path, right, cy + ky, cx + kx, bottom, cx, bottom);
+        JavaCurves.CubicTo(path, cx - kx, bottom, x, cy + ky, x, cy);
+        JavaCurves.CubicTo(path, x, cy - ky, cx - kx, y, cx, y);
+        JavaCurves.CubicTo(path, cx + kx, y, right, cy - ky, right, cy);
+        path.Close();
         return path;
     }
 }
 
-public sealed class JavaArea
+// Paths of Java 2D's curved shapes, as their PathIterators report them.
+internal static class JavaCurves
 {
-    private readonly SKPath path;
+    // The distance of a quarter ellipse's control points from its ends, in radii.
+    internal const double Control = 0.5522847498307933;
 
-    public JavaArea() => path = new SKPath();
+    internal static void CubicTo(SKPath path, double x1, double y1, double x2, double y2, double x3, double y3) =>
+        path.CubicTo((float)x1, (float)y1, (float)x2, (float)y2, (float)x3, (float)y3);
 
-    public JavaArea(object shape) => path = PdfCartonFontCompat.CreatePath(shape);
-
-    public bool IsEmpty => path.IsEmpty;
-    public SKRect Bounds => path.Bounds;
-    internal SKPath Path => path;
-
-    public void Intersect(JavaArea other)
+    // RoundRectangle2D: arcs of min(width, |arcWidth|) by min(height,
+    // |arcHeight|), from the top of the left side, downward first; a negative
+    // size has no path.
+    internal static SKPath RoundRectangle(double x, double y, double width, double height, double arcWidth, double arcHeight)
     {
-        ArgumentNullException.ThrowIfNull(other);
-        using var result = new SKPath();
-        if (!path.Op(other.path, SKPathOp.Intersect, result))
-            throw new InvalidOperationException("Unable to intersect paths.");
-        path.Reset();
-        path.AddPath(result);
+        var path = new SKPath();
+        if (width < 0 || height < 0) return path;
+        var rx = Math.Min(width, Math.Abs(arcWidth)) / 2;
+        var ry = Math.Min(height, Math.Abs(arcHeight)) / 2;
+        double right = x + width, bottom = y + height, kx = rx * Control, ky = ry * Control;
+        path.MoveTo((float)x, (float)(y + ry));
+        path.LineTo((float)x, (float)(bottom - ry));
+        CubicTo(path, x, bottom - ry + ky, x + rx - kx, bottom, x + rx, bottom);
+        path.LineTo((float)(right - rx), (float)bottom);
+        CubicTo(path, right - rx + kx, bottom, right, bottom - ry + ky, right, bottom - ry);
+        path.LineTo((float)right, (float)(y + ry));
+        CubicTo(path, right, y + ry - ky, right - rx + kx, y, right - rx, y);
+        path.LineTo((float)(x + rx), (float)y);
+        CubicTo(path, x + rx - kx, y, x, y + ry - ky, x, y + ry);
+        path.Close();
+        return path;
+    }
+}
+
+// Java 2D moves an antialiased BasicStroke's path before stroking it unless
+// KEY_STROKE_CONTROL is VALUE_STROKE_PURE (PDFBox never sets it). The rule was
+// inferred from black-box Java 2D probes (OpenJDK 25 drawing on BufferedImages
+// with antialiasing on, read back as alpha masks): a stroke's edges, measured
+// to 1/255 pixel while its line was shifted in 1/16 pixel steps, stay put for
+// a whole pixel and then jump by one, the line sitting on the pixel centre.
+// Rendering a candidate device path with VALUE_STROKE_PURE gave Java's
+// normalised masks exactly on random polylines, quadratics, cubics, closed
+// and reopened subpaths, dashes, all caps and joins, widths 0 to 2.7 and
+// random rotated, sheared and scaled transforms:
+// - Every device end point v moves to floor(v) + 1/2 on each axis.
+// - A cubic's first control point moves as far as its start did and its
+//   second as far as its end did; a quadratic's moves by the mean of the two.
+// - The stroke itself (width, dashes, caps, joins) still applies in user
+//   space, to the moved path.
+// Antialiased fills are never moved (the same probes gave identical masks for
+// both stroke-control values). Aliased drawing follows PdfCartonAliasedFill.
+internal static class PdfCartonStrokeNormalization
+{
+    // The path moved as above, in user space again, or null when the
+    // transform cannot be inverted.
+    internal static SKPath? Normalize(SKPath path, SKMatrix transform)
+    {
+        double a = transform.ScaleX, c = transform.SkewX, e = transform.TransX;
+        double b = transform.SkewY, d = transform.ScaleY, f = transform.TransY;
+        var determinant = a * d - b * c;
+        if (transform.Persp0 != 0 || transform.Persp1 != 0 || determinant == 0 ||
+            double.IsNaN(determinant) || double.IsInfinity(determinant))
+            return null;
+        double ia = d / determinant, ib = -b / determinant, ic = -c / determinant, id = a / determinant;
+        var result = new SKPath { FillType = path.FillType };
+        var points = new SKPoint[4];
+        // How far the current point and the subpath's start moved.
+        (double X, double Y) moved = default, startMoved = default;
+        using var iterator = path.CreateRawIterator();
+        SKPathVerb verb;
+        while ((verb = iterator.Next(points)) != SKPathVerb.Done)
+        {
+            switch (verb)
+            {
+                case SKPathVerb.Move:
+                    result.MoveTo(End(points[0], out moved));
+                    startMoved = moved;
+                    break;
+                case SKPathVerb.Line:
+                    result.LineTo(End(points[1], out moved));
+                    break;
+                case SKPathVerb.Quad:
+                    Quad(points[1], points[2]);
+                    break;
+                case SKPathVerb.Conic:
+                    // Java has no conics; a Skia-made arc is followed as quadratics.
+                    var quads = SKPath.ConvertConicToQuads(
+                        points[0], points[1], points[2], iterator.ConicWeight(), 2);
+                    for (var index = 1; index + 1 < quads.Length; index += 2)
+                        Quad(quads[index], quads[index + 1]);
+                    break;
+                case SKPathVerb.Cubic:
+                    var start = moved;
+                    var end = End(points[3], out moved);
+                    result.CubicTo(Shift(points[1], start), Shift(points[2], moved), end);
+                    break;
+                case SKPathVerb.Close:
+                    result.Close();
+                    moved = startMoved;
+                    break;
+            }
+        }
+        return result;
+
+        void Quad(SKPoint control, SKPoint endPoint)
+        {
+            var start = moved;
+            var end = End(endPoint, out moved);
+            result.QuadTo(Shift(control, ((start.X + moved.X) / 2, (start.Y + moved.Y) / 2)), end);
+        }
+
+        // The end point moved to its device pixel's centre, in user space.
+        SKPoint End(SKPoint point, out (double X, double Y) shift)
+        {
+            var (x, y) = Device(point);
+            shift = (Math.Floor(x) + 0.5 - x, Math.Floor(y) + 0.5 - y);
+            return User(x + shift.X, y + shift.Y);
+        }
+
+        SKPoint Shift(SKPoint point, (double X, double Y) shift)
+        {
+            var (x, y) = Device(point);
+            return User(x + shift.X, y + shift.Y);
+        }
+
+        (double X, double Y) Device(SKPoint point) =>
+            (a * point.X + c * point.Y + e, b * point.X + d * point.Y + f);
+
+        SKPoint User(double x, double y)
+        {
+            x -= e;
+            y -= f;
+            return new SKPoint((float)(ia * x + ic * y), (float)(ib * x + id * y));
+        }
+    }
+}
+
+// The pixels Java 2D covers when it fills a shape without antialiasing. The
+// rules were inferred from black-box Java 2D probes (OpenJDK 25 filling
+// shapes on BufferedImages while edges, transforms, strokes, colours and
+// composites varied) and checked against Java on random polygons:
+// - A rectangle (Rectangle2D) under a transform that keeps it axis-aligned
+//   covers device pixels [floor(lo + b), floor(hi + b)) on each axis, where
+//   b = 1/4 when an opaque colour is drawn with an opaque SRC_OVER composite
+//   and 0 otherwise.
+// - Other shapes, drawn with that opaque colour and composite while the
+//   current BasicStroke is at most one device pixel wide, cover the pixels
+//   whose top-left corner lies inside, after device coordinates are truncated
+//   to 1/1024 pixel.
+// - Otherwise each device point v moves to floor(v + 1/4) + 1/4 and the shape
+//   covers the pixels whose centre lies inside.
+// - Curves are first cut into lines by Java's own flattening, which differs
+//   between the two sampling rules (FlattenCorner, FlattenCentre).
+// A sample on a left or top edge is inside and one on a right or bottom edge
+// is not. Skia's aliased rasterizer takes pixel centres in (lo, hi] instead
+// and snaps sloped edges to 1/64 pixel, so only shapes made of horizontal and
+// vertical lines go to it directly; the scanline spans of any other shape are
+// computed here and Skia fills them as integer rectangles. Samples exactly on,
+// or within about 1/300 pixel of, a sloped edge can still differ from Java,
+// whose edge arithmetic is not exact.
+internal static class PdfCartonAliasedFill
+{
+    // Whether a BasicStroke of this width is at most one device pixel wide
+    // under the transform's largest scale (its largest singular value). The
+    // allowance covers the float rounding of the transform's entries.
+    internal static bool IsThin(float width, SKMatrix transform)
+    {
+        double a = transform.ScaleX, b = transform.SkewX, c = transform.SkewY, d = transform.ScaleY;
+        var sum = a * a + b * b + c * c + d * d;
+        var determinant = a * d - b * c;
+        var largest = (sum + Math.Sqrt(Math.Max(0, sum * sum - 4 * determinant * determinant))) / 2;
+        return (double)width * width * largest <= 1 + 1e-7;
     }
 
-    public void Reset() => path.Reset();
+    // Whether the transform maps axis-aligned rectangles to axis-aligned
+    // rectangles: it scales and translates, possibly swapping the axes.
+    internal static bool IsAxisAligned(SKMatrix transform) =>
+        transform.Persp0 == 0 && transform.Persp1 == 0 &&
+        ((transform.SkewX == 0 && transform.SkewY == 0) || (transform.ScaleX == 0 && transform.ScaleY == 0));
 
-    public JavaPathIterator GetPathIterator(object? transform) =>
-        new(path, transform);
+    // Java 2D clips (Graphics2D.setClip, clip and clipRect) are never
+    // antialiased. Black-box probes of Java 25 (setClip or clip on
+    // BufferedImages, then a whole-image fill, while shapes, transforms and
+    // rendering hints varied) show two rules:
+    // - A Rectangle2D that the transform keeps axis-aligned keeps the device
+    //   pixels whose centre lies in [lo, hi) on each axis; one with no area
+    //   keeps none. Intersected with another such rectangle it stays one.
+    // - Any other shape keeps exactly the pixels its aliased translucent fill
+    //   covers (the centre rule above, with points moved to floor(v + 1/4) +
+    //   1/4), which matched Java on 700 random polygons and curves under
+    //   random transforms, antialiasing on or off.
+    // Graphics2D.clip's intersections are described at
+    // PdfCartonGraphics2D.IntersectClip.
 
-    public override bool Equals(object? value)
+    // The device rectangle of a Rectangle2D (SKRect) or Rectangle (SKRectI)
+    // that the transform keeps axis-aligned, or an empty one when it has no
+    // area. False for any other shape or transform.
+    internal static bool TryDeviceRectangle(
+        object shape, SKMatrix transform, out double left, out double top, out double right, out double bottom)
     {
-        if (ReferenceEquals(this, value)) return true;
-        if (value is not JavaArea other) return false;
-        using var difference = new SKPath();
-        return path.Op(other.path, SKPathOp.Xor, difference) && difference.IsEmpty;
+        left = top = right = bottom = 0;
+        if (shape is not (SKRect or SKRectI)) return false;
+        var rectangle = shape is SKRect r ? r : (SKRect)(SKRectI)shape;
+        if (!(rectangle.Width > 0 && rectangle.Height > 0)) return true;
+        if (!IsAxisAligned(transform)) return false;
+        var (x0, y0) = Map(transform, rectangle.Left, rectangle.Top);
+        var (x1, y1) = Map(transform, rectangle.Right, rectangle.Bottom);
+        left = Math.Min(x0, x1);
+        top = Math.Min(y0, y1);
+        right = Math.Max(x0, x1);
+        bottom = Math.Max(y0, y1);
+        return true;
     }
 
-    public override int GetHashCode() => Bounds.GetHashCode();
+    // The pixels a rectangular clip keeps (see TryDeviceRectangle), within bounds.
+    internal static SKPath ClipRectangle(double left, double top, double right, double bottom, SKRect bounds)
+    {
+        var result = new SKPath();
+        var x0 = Math.Max(bounds.Left, Math.Ceiling(left - 0.5));
+        var y0 = Math.Max(bounds.Top, Math.Ceiling(top - 0.5));
+        var x1 = Math.Min(bounds.Right, Math.Ceiling(right - 0.5));
+        var y1 = Math.Min(bounds.Bottom, Math.Ceiling(bottom - 0.5));
+        if (x0 < x1 && y0 < y1) result.AddRect(new SKRect((float)x0, (float)y0, (float)x1, (float)y1));
+        return result;
+    }
+
+    // The pixels a clip to any other shape keeps, within bounds, as a path
+    // whose aliased Skia coverage is exactly those pixels.
+    internal static SKPath ClipRegion(object shape, SKMatrix transform, SKRect bounds)
+    {
+        using var devicePath = DevicePath(
+            shape, transform, copiesOpaqueColor: false, thinStroke: false, bounds, out var rectilinear);
+        // Rectilinear points lie at a quarter past a pixel boundary, never on
+        // a pixel centre, so Skia's own sampling agrees with Java's.
+        return rectilinear ? new SKPath(devicePath) : Spans(devicePath, bounds);
+    }
+
+    // The shape in device space, placed for Draw. Rectilinear device paths
+    // (horizontal and vertical lines only) are drawn directly. Any other
+    // shape comes back as lines, its curves flattened as Java 2D flattens
+    // them (FlattenCurve); parts of a curve wholly outside cull, the device
+    // clip, become chords, which cross the visible rows the same way.
+    internal static SKPath DevicePath(
+        object shape, SKMatrix transform, bool copiesOpaqueColor, bool thinStroke, SKRect cull,
+        out bool rectilinear)
+    {
+        rectilinear = true;
+        if (IsAxisAligned(transform) && shape is SKRect or SKRectI)
+        {
+            var rectangle = shape is SKRect r ? r : (SKRect)(SKRectI)shape;
+            var result = new SKPath();
+            if (!(rectangle.Width > 0 && rectangle.Height > 0)) return result;
+            var bias = copiesOpaqueColor ? 0.25 : 0;
+            var (x0, y0) = Map(transform, rectangle.Left, rectangle.Top);
+            var (x1, y1) = Map(transform, rectangle.Right, rectangle.Bottom);
+            result.AddRect(new SKRect(
+                (float)Math.Floor(Math.Min(x0, x1) + bias), (float)Math.Floor(Math.Min(y0, y1) + bias),
+                (float)Math.Floor(Math.Max(x0, x1) + bias), (float)Math.Floor(Math.Max(y0, y1) + bias)));
+            return result;
+        }
+
+        // Points snap to Java's grid first: to 1/1024 pixel at corners, or
+        // else to the pixel at a quarter offset, where a curve's control
+        // points move with its ends (a quadratic's by their mean). Only then
+        // is rectilinearity decided.
+        var corner = copiesOpaqueColor && thinStroke;
+        var straight = true;
+        using var lease = PdfCartonFontCompat.BorrowPath(shape);
+        var verbs = new List<(SKPathVerb Verb, int First)>();
+        var snapped = new List<(double X, double Y)>();
+        using (var iterator = lease.Path.CreateRawIterator())
+        {
+            var points = new SKPoint[4];
+            SKPathVerb verb;
+            var start = 0;
+            // How far snapping moved the current point and the subpath's start.
+            (double X, double Y) moved = default, startMoved = default;
+            while ((verb = iterator.Next(points)) != SKPathVerb.Done)
+            {
+                switch (verb)
+                {
+                    case SKPathVerb.Move:
+                        CheckImplicitClose(start);
+                        start = snapped.Count;
+                        verbs.Add((verb, snapped.Count));
+                        moved = startMoved = AddEnd(points[0]);
+                        break;
+                    case SKPathVerb.Line:
+                        var previous = snapped.Count > 0 ? snapped[snapped.Count - 1] : default;
+                        verbs.Add((verb, snapped.Count));
+                        moved = AddEnd(points[1]);
+                        CheckLine(previous, snapped[snapped.Count - 1]);
+                        break;
+                    case SKPathVerb.Quad:
+                        AddCurve([points[1]], points[2]);
+                        break;
+                    case SKPathVerb.Conic:
+                        // Java has no conics; a Skia-made arc is followed as quadratics.
+                        var quads = SKPath.ConvertConicToQuads(
+                            points[0], points[1], points[2], iterator.ConicWeight(), 2);
+                        for (var index = 1; index + 1 < quads.Length; index += 2)
+                            AddCurve([quads[index]], quads[index + 1]);
+                        break;
+                    case SKPathVerb.Cubic:
+                        AddCurve([points[1], points[2]], points[3]);
+                        break;
+                    case SKPathVerb.Close:
+                        if (snapped.Count > start) CheckLine(snapped[snapped.Count - 1], snapped[start]);
+                        verbs.Add((verb, snapped.Count));
+                        moved = startMoved;
+                        break;
+                }
+            }
+            CheckImplicitClose(start);
+
+            (double X, double Y) AddEnd(SKPoint point)
+            {
+                var (x, y) = Map(transform, point.X, point.Y);
+                var (snappedX, snappedY) = Snap(x, y);
+                snapped.Add((snappedX, snappedY));
+                return (snappedX - x, snappedY - y);
+            }
+
+            void AddCurve(SKPoint[] controls, SKPoint end)
+            {
+                straight = false;
+                verbs.Add((controls.Length == 1 ? SKPathVerb.Quad : SKPathVerb.Cubic, snapped.Count));
+                var (endX, endY) = Map(transform, end.X, end.Y);
+                var endSnapped = Snap(endX, endY);
+                (double X, double Y) endMoved = (endSnapped.X - endX, endSnapped.Y - endY);
+                for (var index = 0; index < controls.Length; index++)
+                {
+                    var (x, y) = Map(transform, controls[index].X, controls[index].Y);
+                    var shift = controls.Length == 1 ? ((moved.X + endMoved.X) / 2, (moved.Y + endMoved.Y) / 2)
+                        : index == 0 ? moved : endMoved;
+                    snapped.Add(corner ? Snap(x, y) : (x + shift.Item1, y + shift.Item2));
+                }
+                snapped.Add(endSnapped);
+                moved = endMoved;
+            }
+        }
+
+        (double X, double Y) Snap(double x, double y) => corner
+            ? (Math.Floor(x * 1024) / 1024, Math.Floor(y * 1024) / 1024)
+            : (Math.Floor(x + 0.25) + 0.25, Math.Floor(y + 0.25) + 0.25);
+
+        void CheckLine((double X, double Y) from, (double X, double Y) to)
+        {
+            if (from.X != to.X && from.Y != to.Y) straight = false;
+        }
+
+        // A fill closes an open subpath with a line back to its start.
+        void CheckImplicitClose(int subpathStart)
+        {
+            if (snapped.Count > subpathStart) CheckLine(snapped[subpathStart], snapped[snapped.Count - 1]);
+        }
+
+        // The result samples pixel centres. Skia covers pixel i when its
+        // centre lies in (lo, hi], so for it a corner coordinate t = j / 1024
+        // becomes the multiple of 1/64 s = (ceil(64 t) + 31) / 64, which holds
+        // that exactly when t <= i < t' for the other edge (and rounds to
+        // itself at 1/64). The span computation takes s = t + 1/2.
+        var direct = rectilinear = straight;
+        var offset = corner ? 0.5 : 0;
+        var device = new SKPath { FillType = lease.Path.FillType };
+        var flattened = new List<(double X, double Y)>();
+        (double X, double Y) current = default, subpathStart = default;
+        foreach (var (verb, first) in verbs)
+        {
+            switch (verb)
+            {
+                case SKPathVerb.Move:
+                    device.MoveTo(Point(snapped[first]));
+                    current = subpathStart = snapped[first];
+                    break;
+                case SKPathVerb.Line:
+                    device.LineTo(Point(snapped[first]));
+                    current = snapped[first];
+                    break;
+                case SKPathVerb.Quad or SKPathVerb.Cubic:
+                    var curve = new (double X, double Y)[verb == SKPathVerb.Quad ? 3 : 4];
+                    curve[0] = current;
+                    for (var index = 1; index < curve.Length; index++) curve[index] = snapped[first + index - 1];
+                    flattened.Clear();
+                    FlattenCurve(curve, corner, cull, flattened);
+                    foreach (var point in flattened) device.LineTo(Point(point));
+                    current = curve[curve.Length - 1];
+                    break;
+                case SKPathVerb.Close:
+                    device.Close();
+                    current = subpathStart;
+                    break;
+            }
+        }
+        return device;
+
+        SKPoint Point((double X, double Y) point) => corner && direct
+            ? new SKPoint((float)((Math.Ceiling(point.X * 64) + 31) / 64), (float)((Math.Ceiling(point.Y * 64) + 31) / 64))
+            : new SKPoint((float)(point.X + offset), (float)(point.Y + offset));
+    }
+
+    // Draws a DevicePath on a canvas whose matrix maps device coordinates.
+    internal static void Draw(SKCanvas canvas, SKPath devicePath, SKPaint paint, bool rectilinear)
+    {
+        if (rectilinear)
+        {
+            canvas.DrawPath(devicePath, paint);
+            return;
+        }
+        using var spans = Spans(devicePath, canvas.LocalClipBounds);
+        canvas.DrawPath(spans, paint);
+    }
+
+    // The path Draw draws for any canvas whose clip lies within clip:
+    // devicePath itself when rectilinear, else its pixel runs within clip,
+    // whole-pixel rectangles that a smaller clip only cuts. Null when it is
+    // devicePath itself.
+    internal static SKPath? DrawnPath(SKPath devicePath, bool rectilinear, SKRect clip) =>
+        rectilinear ? null : Spans(devicePath, clip);
+
+    // The pixels whose centres lie inside the path (lines only, as
+    // DevicePath makes it), left and top edges included, as one integer
+    // rectangle per run, within the clip.
+    private static SKPath Spans(SKPath path, SKRect clip)
+    {
+        var edges = new List<(double X0, double Y0, double X1, double Y1, int Winding)>();
+        Edges(path, edges);
+        var inverse = path.FillType is SKPathFillType.InverseWinding or SKPathFillType.InverseEvenOdd;
+        var evenOdd = path.FillType is SKPathFillType.EvenOdd or SKPathFillType.InverseEvenOdd;
+        var bounds = path.Bounds;
+        var clipLeft = (int)Math.Floor(clip.Left);
+        var clipRight = (int)Math.Ceiling(clip.Right);
+        var firstRow = (int)Math.Floor(inverse ? clip.Top : Math.Max(clip.Top, bounds.Top - 1));
+        var lastRow = (int)Math.Ceiling(inverse ? clip.Bottom : Math.Min(clip.Bottom, bounds.Bottom + 1));
+        // Edges by first row, then an active list per row.
+        edges.Sort((a, b) => a.Y0.CompareTo(b.Y0));
+        var active = new List<int>();
+        var crossings = new List<(double X, int Winding)>();
+        var next = 0;
+        var result = new SKPath();
+        for (var row = firstRow; row < lastRow; row++)
+        {
+            var y = row + 0.5;
+            while (next < edges.Count && edges[next].Y0 <= y) active.Add(next++);
+            crossings.Clear();
+            for (var index = active.Count - 1; index >= 0; index--)
+            {
+                var edge = edges[active[index]];
+                if (edge.Y1 <= y)
+                {
+                    active.RemoveAt(index);
+                    continue;
+                }
+                crossings.Add((edge.X0 + (y - edge.Y0) * (edge.X1 - edge.X0) / (edge.Y1 - edge.Y0), edge.Winding));
+            }
+            crossings.Sort((a, b) => a.X.CompareTo(b.X));
+            // Pixel i is inside when its centre i + 1/2 lies at or after the
+            // crossing that enters and before the one that leaves.
+            var winding = 0;
+            var runStart = inverse ? (double?)clipLeft + 0.5 : null;
+            foreach (var (x, edgeWinding) in crossings)
+            {
+                var wasInside = (evenOdd ? winding & 1 : winding) != 0;
+                winding += edgeWinding;
+                var isInside = (evenOdd ? winding & 1 : winding) != 0;
+                if (isInside == wasInside) continue;
+                if (isInside != inverse)
+                {
+                    runStart = x;
+                }
+                else if (runStart is double start)
+                {
+                    AddRun(start, x);
+                    runStart = null;
+                }
+            }
+            if (runStart is double open) AddRun(open, clipRight + 0.5);
+
+            void AddRun(double from, double to)
+            {
+                var left = Math.Max(clipLeft, Math.Ceiling(from - 0.5));
+                var right = Math.Min(clipRight, Math.Ceiling(to - 0.5));
+                if (left < right) result.AddRect(new SKRect((float)left, row, (float)right, row + 1));
+            }
+        }
+        return result;
+    }
+
+    // The outline of a path of lines as edges from top to bottom with their
+    // winding direction; an open subpath is closed.
+    private static void Edges(SKPath path, List<(double X0, double Y0, double X1, double Y1, int Winding)> edges)
+    {
+        using var iterator = path.CreateRawIterator();
+        var points = new SKPoint[4];
+        (double X, double Y) start = default, last = default;
+        var open = false;
+        SKPathVerb verb;
+        while ((verb = iterator.Next(points)) != SKPathVerb.Done)
+        {
+            switch (verb)
+            {
+                case SKPathVerb.Move:
+                    if (open) Line(last, start);
+                    start = last = (points[0].X, points[0].Y);
+                    open = true;
+                    break;
+                case SKPathVerb.Line:
+                    Line(last, (points[1].X, points[1].Y));
+                    break;
+                case SKPathVerb.Close:
+                    Line(last, start);
+                    last = start;
+                    open = false;
+                    break;
+            }
+        }
+        if (open) Line(last, start);
+
+        void Line((double X, double Y) from, (double X, double Y) to)
+        {
+            last = to;
+            if (from.Y == to.Y) return;
+            edges.Add(from.Y < to.Y
+                ? (from.X, from.Y, to.X, to.Y, 1)
+                : (to.X, to.Y, from.X, from.Y, -1));
+        }
+    }
+
+    // Java 2D's flattening of one snapped device-space curve (a quadratic or
+    // a cubic, given by its control points), appended to output as the
+    // points after its start. Inferred from black-box probes of Java 2D's
+    // masks (see FlattenCorner and FlattenCentre).
+    private static void FlattenCurve(
+        (double X, double Y)[] curve, bool corner, SKRect cull, List<(double X, double Y)> output)
+    {
+        foreach (var (x, y) in curve)
+        {
+            if (double.IsNaN(x) || double.IsInfinity(x) || double.IsNaN(y) || double.IsInfinity(y))
+            {
+                output.Add(curve[curve.Length - 1]);
+                return;
+            }
+        }
+        if (!corner)
+        {
+            FlattenCentre(curve, cull, output, 0);
+            return;
+        }
+        var cuts = new List<double> { 0, 1 };
+        AddExtrema(curve, point => point.X, cuts);
+        AddExtrema(curve, point => point.Y, cuts);
+        cuts.Sort();
+        for (var index = 1; index < cuts.Count; index++)
+        {
+            double from = cuts[index - 1], to = cuts[index];
+            if (to <= from) continue;
+            var piece = to < 1 ? Split(curve, to, left: true) : curve;
+            FlattenCorner(from > 0 ? Split(piece, from / to, left: false) : piece, cull, output, 0);
+        }
+    }
+
+    // Corner sampling, measured by fitting each row's edge position (found
+    // to 1/256 pixel by sliding the curve in 1/256 pixel steps) on 1200
+    // random curves: Java cuts a curve at its x and y extrema, halves each
+    // monotone piece while its control points span more than 256 pixels on
+    // an axis, then steps through the piece starting at 1/8 of it (cubic) or
+    // 1/4 (quadratic). Before each step it halves the step while the second
+    // difference of the next points, h^2 B''(u + h), exceeds 4 pixels on an
+    // axis, or a cubic's third difference h^3 B''' exceeds 2. The step never
+    // grows again.
+    private static void FlattenCorner(
+        (double X, double Y)[] curve, SKRect cull, List<(double X, double Y)> output, int depth)
+    {
+        if (Outside(curve, cull))
+        {
+            output.Add(curve[curve.Length - 1]);
+            return;
+        }
+        double minX = double.MaxValue, maxX = double.MinValue, minY = double.MaxValue, maxY = double.MinValue;
+        foreach (var (x, y) in curve)
+        {
+            minX = Math.Min(minX, x); maxX = Math.Max(maxX, x);
+            minY = Math.Min(minY, y); maxY = Math.Max(maxY, y);
+        }
+        if (depth < 40 && Math.Max(maxX - minX, maxY - minY) > 256)
+        {
+            FlattenCorner(Split(curve, 0.5, left: true), cull, output, depth + 1);
+            FlattenCorner(Split(curve, 0.5, left: false), cull, output, depth + 1);
+            return;
+        }
+        const int unit = 1 << 20;
+        var cubic = curve.Length == 4;
+        var level = cubic ? 3 : 2;
+        var position = 0;
+        while (position < unit)
+        {
+            var u = (double)position / unit;
+            while (level < 16 && TooCoarse(1.0 / (1 << level))) level++;
+            position = Math.Min(unit, position + (unit >> level));
+            output.Add(position == unit ? curve[curve.Length - 1] : Evaluate(curve, (double)position / unit));
+
+            bool TooCoarse(double h)
+            {
+                var (x, y) = SecondDerivative(curve, u + h);
+                if (Math.Max(Math.Abs(x), Math.Abs(y)) * h * h > 4) return true;
+                if (!cubic) return false;
+                var (nextX, nextY) = SecondDerivative(curve, u + 2 * h);
+                return Math.Max(Math.Abs(nextX - x), Math.Abs(nextY - y)) * h * h > 2;
+            }
+        }
+    }
+
+    // Centre sampling, measured by comparing whole masks of large and random
+    // curves against candidate subdivisions: Java halves the curve, without
+    // cutting it at its extrema, until every inner control point lies
+    // within one pixel of the chord between the ends.
+    private static void FlattenCentre(
+        (double X, double Y)[] curve, SKRect cull, List<(double X, double Y)> output, int depth)
+    {
+        var flat = true;
+        for (var index = 1; index < curve.Length - 1 && flat; index++)
+            flat = SegmentDistance(curve[index], curve[0], curve[curve.Length - 1]) <= 1;
+        if (flat || depth >= 24 || Outside(curve, cull))
+        {
+            output.Add(curve[curve.Length - 1]);
+            return;
+        }
+        FlattenCentre(Split(curve, 0.5, left: true), cull, output, depth + 1);
+        FlattenCentre(Split(curve, 0.5, left: false), cull, output, depth + 1);
+    }
+
+    // Whether the control points, and so the curve, lie wholly beyond one
+    // side of the clip; the piece and its chord then cross no visible row.
+    private static bool Outside((double X, double Y)[] curve, SKRect cull)
+    {
+        bool left = true, right = true, above = true, below = true;
+        foreach (var (x, y) in curve)
+        {
+            left &= x < cull.Left - 1;
+            right &= x > cull.Right + 1;
+            above &= y < cull.Top - 1;
+            below &= y > cull.Bottom + 1;
+        }
+        return left || right || above || below;
+    }
+
+    private static void AddExtrema(
+        (double X, double Y)[] curve, Func<(double X, double Y), double> axis, List<double> cuts)
+    {
+        double p0 = axis(curve[0]), p1 = axis(curve[1]), p2 = axis(curve[2]);
+        if (curve.Length == 3)
+        {
+            var denominator = p0 - 2 * p1 + p2;
+            if (denominator != 0) AddCut((p0 - p1) / denominator);
+            return;
+        }
+        // The derivative is a(1-t)^2 + 2b(1-t)t + ct^2 in the differences.
+        double a = p1 - p0, b = p2 - p1, c = axis(curve[3]) - p2;
+        double quadratic = a - 2 * b + c, linear = 2 * (b - a);
+        if (Math.Abs(quadratic) < 1e-12)
+        {
+            if (Math.Abs(linear) > 1e-12) AddCut(-a / linear);
+            return;
+        }
+        var discriminant = linear * linear - 4 * quadratic * a;
+        if (discriminant < 0) return;
+        var root = Math.Sqrt(discriminant);
+        AddCut((-linear - root) / (2 * quadratic));
+        AddCut((-linear + root) / (2 * quadratic));
+
+        void AddCut(double t)
+        {
+            if (t > 0 && t < 1) cuts.Add(t);
+        }
+    }
+
+    // One side of the curve split at t (de Casteljau).
+    private static (double X, double Y)[] Split((double X, double Y)[] curve, double t, bool left)
+    {
+        var count = curve.Length;
+        var work = ((double X, double Y)[])curve.Clone();
+        var result = new (double X, double Y)[count];
+        for (var level = 0; level < count; level++)
+        {
+            if (left) result[level] = work[0];
+            else result[count - 1 - level] = work[count - 1 - level];
+            for (var index = 0; index < count - 1 - level; index++)
+                work[index] = (work[index].X + (work[index + 1].X - work[index].X) * t,
+                    work[index].Y + (work[index + 1].Y - work[index].Y) * t);
+        }
+        return result;
+    }
+
+    private static (double X, double Y) Evaluate((double X, double Y)[] curve, double t)
+    {
+        var work = ((double X, double Y)[])curve.Clone();
+        for (var count = work.Length - 1; count > 0; count--)
+            for (var index = 0; index < count; index++)
+                work[index] = (work[index].X + (work[index + 1].X - work[index].X) * t,
+                    work[index].Y + (work[index + 1].Y - work[index].Y) * t);
+        return work[0];
+    }
+
+    private static (double X, double Y) SecondDerivative((double X, double Y)[] curve, double t)
+    {
+        if (curve.Length == 3)
+            return (2 * (curve[0].X - 2 * curve[1].X + curve[2].X), 2 * (curve[0].Y - 2 * curve[1].Y + curve[2].Y));
+        double ax = curve[0].X - 2 * curve[1].X + curve[2].X, ay = curve[0].Y - 2 * curve[1].Y + curve[2].Y;
+        double bx = curve[1].X - 2 * curve[2].X + curve[3].X, by = curve[1].Y - 2 * curve[2].Y + curve[3].Y;
+        return (6 * ((1 - t) * ax + t * bx), 6 * ((1 - t) * ay + t * by));
+    }
+
+    private static double SegmentDistance((double X, double Y) point, (double X, double Y) a, (double X, double Y) b)
+    {
+        double dx = b.X - a.X, dy = b.Y - a.Y;
+        var length = dx * dx + dy * dy;
+        var t = length == 0 ? 0 : Math.Max(0, Math.Min(1, ((point.X - a.X) * dx + (point.Y - a.Y) * dy) / length));
+        double px = a.X + t * dx - point.X, py = a.Y + t * dy - point.Y;
+        return Math.Sqrt(px * px + py * py);
+    }
+
+    private static (double X, double Y) Map(SKMatrix m, float x, float y) =>
+        ((double)m.ScaleX * x + (double)m.SkewX * y + m.TransX,
+         (double)m.SkewY * x + (double)m.ScaleY * y + m.TransY);
+}
+
+// The coverage Java 2D gives an antialiased fill of a path (any shape but an
+// axis-aligned Rectangle2D, whose coverage is its exact area as in Skia), and
+// so of an antialiased BasicStroke's outline. Inferred from black-box probes
+// of OpenJDK 25 filling paths with opaque black on TYPE_INT_ARGB images and
+// reading the alpha back; no JDK source was read:
+// - Sliding a horizontal edge down a pixel in 1/256 pixel steps changes the
+//   alpha in 8 steps, at offsets 1/16 + k/8: each pixel row is sampled on 8
+//   subscanlines at y = row + (2k + 1)/16, and a subscanline is inside an
+//   edge from its top (included) to its bottom (excluded).
+// - Sliding a vertical edge in 1/2048 pixel steps changes the alpha by one
+//   every 1/256 pixel, at offsets (k + 1/2)/256 (a half rounds down): along
+//   a subscanline the inside spans start and end at the crossing x rounded
+//   to 1/256 pixel, and each pixel gets the exact length of span it holds.
+// - With T the sum of a pixel's span lengths over its 8 subscanlines in
+//   1/256 pixel (0..2048), the alpha is (255 T + 512) / 2048 rounded down:
+//   fitted on edges giving 1..8 subscanlines and every 1/256 position.
+// This matched Java exactly, every pixel, on 400 random self-intersecting
+// polygons (non-zero winding). Curves are cut into lines first: a quadratic
+// into n equal parameter steps, n the least power of two with
+// 4 (|x0 - 2x1 + x2| + |y0 - 2y1 + y2|) <= n^2 (fitted on 320 random
+// quadratics, all exact). A cubic is stepped adaptively, halving the step
+// while the second difference ahead exceeds a pixel (summed over the axes)
+// and doubling it while that falls below a quarter (the third difference
+// bounded too); this matched about half of 100 random cubics exactly and the
+// rest within a few pixels.
+internal static class PdfCartonAntialiasedFill
+{
+    private const int Subscanlines = 8;
+    // The most crossings gathered at once (rows of a taller path go in
+    // bands; one row takes what it needs), and the largest scratch arrays
+    // and mask buffer kept for the next Mask on a thread.
+    private const int CrossingBudget = 1 << 16;
+    private const int KeptScratchLength = 1 << 16;
+
+    [ThreadStatic] private static int[]? cover;
+    [ThreadStatic] private static int[]? delta;
+    [ThreadStatic] private static Edge[]? edges;
+    [ThreadStatic] private static int[]? sampleCounts;
+    [ThreadStatic] private static int[]? sampleStarts;
+    [ThreadStatic] private static long[]? crossings;
+    [ThreadStatic] private static int[]? edgeKeys;
+    [ThreadStatic] private static int[]? edgeOrder;
+    [ThreadStatic] private static int[]? activeEdges;
+    [ThreadStatic] private static SKPoint[]? verbPoints;
+    // A mask buffer free for the next Mask on this thread (a nested fill,
+    // drawn while another mask is out, takes a new one).
+    [ThreadStatic] private static byte[]? spareMask;
+
+    // A line of the outline; its subscanlines are those of FirstSample until
+    // EndSample (indices from bounds' top, set by Mask).
+    private struct Edge
+    {
+        public double X0, Y0, X1, Y1, Slope;
+        public int Winding, FirstSample, EndSample;
+    }
+
+    // The Java 2D coverage of a device-space path within bounds, one byte a
+    // pixel in rows of bounds' width from its top-left corner, or null when
+    // the path covers no pixel there. The buffer may be longer than the
+    // mask; it is handed back with Return once drawn. Inverse fill types are
+    // not handled.
+    // Each edge's crossings are gathered by subscanline (a counting sort),
+    // each as its x in 1/256 pixel and its direction; a subscanline's few
+    // crossings are then sorted by that x. Crossings at the same quantized x
+    // may come in any order: the spans between them are empty, and a span
+    // they split adds up to the same cover. A page fills thousands of glyphs
+    // at most, too few for tiered compilation to reach these loops, so they
+    // are optimized from the first call (512 is
+    // MethodImplOptions.AggressiveOptimization, which netstandard2.0 lacks).
+    [MethodImpl((MethodImplOptions)512)]
+    internal static byte[]? Mask(SKPath devicePath, SKRectI bounds)
+    {
+        if (bounds.IsEmpty) return null;
+        using var iterator = devicePath.CreateRawIterator();
+        var segments = new SkiaSegments(iterator);
+        return Mask(ref segments, devicePath.FillType == SKPathFillType.EvenOdd, bounds);
+    }
+
+    // The same for a managed path's device segments (JavaPath2D.DeviceSegments).
+    [MethodImpl((MethodImplOptions)512)]
+    internal static byte[]? Mask(byte[] types, int typeCount, SKPoint[] points, bool evenOdd, SKRectI bounds)
+    {
+        if (bounds.IsEmpty) return null;
+        var segments = new ManagedSegments(types, typeCount, points);
+        return Mask(ref segments, evenOdd, bounds);
+    }
+
+    [MethodImpl((MethodImplOptions)512)]
+    private static byte[]? Mask<T>(ref T segments, bool evenOdd, SKRectI bounds) where T : struct, ISegments
+    {
+        int top = bounds.Top, bottom = bounds.Bottom, left = bounds.Left, right = bounds.Right;
+        var count = Flatten(ref segments, top, bottom);
+        if (count == 0) return null;
+        try
+        {
+            return Scan(edges!, count, evenOdd, top, left, right - left, bottom - top);
+        }
+        finally
+        {
+            // A large path's scratch does not outlive it.
+            if (sampleCounts?.Length > KeptScratchLength) sampleCounts = null;
+            if (sampleStarts?.Length > KeptScratchLength) sampleStarts = null;
+            if (crossings?.Length > CrossingBudget) crossings = null;
+            if (edges?.Length > KeptScratchLength) edges = null;
+            if (edgeKeys?.Length > KeptScratchLength) edgeKeys = null;
+            if (edgeOrder?.Length > KeptScratchLength) edgeOrder = null;
+            if (activeEdges?.Length > KeptScratchLength) activeEdges = null;
+            if (cover?.Length > KeptScratchLength) cover = null;
+            if (delta?.Length > KeptScratchLength) delta = null;
+        }
+    }
+
+    [MethodImpl((MethodImplOptions)512)]
+    private static byte[]? Scan(Edge[] list, int count, bool evenOdd, int top, int left, int width, int height)
+    {
+        var samples = height * Subscanlines;
+        // The crossings of each subscanline, from a difference array.
+        var perSample = sampleCounts = Grow(sampleCounts, samples + 1);
+        Array.Clear(perSample, 0, samples + 1);
+        long total = 0;
+        var spanning = 0;
+        for (var index = 0; index < count; index++)
+        {
+            ref var edge = ref list[index];
+            edge.FirstSample = FirstSampleFrom(edge.Y0, top, samples);
+            edge.EndSample = FirstSampleFrom(edge.Y1, top, samples);
+            if (edge.EndSample <= edge.FirstSample) continue;
+            perSample[edge.FirstSample]++;
+            perSample[edge.EndSample]--;
+            total += edge.EndSample - edge.FirstSample;
+            spanning++;
+        }
+        if (total < 2) return null;
+        var running = 0;
+        for (var sample = 0; sample < samples; sample++)
+        {
+            running += perSample[sample];
+            perSample[sample] = running;
+        }
+        // More crossings than the budget come in bands of rows, each from
+        // the edges that reach it, taken in order of their first subscanline.
+        var banded = total > CrossingBudget;
+        int[]? order = null, active = null;
+        if (banded)
+        {
+            var keys = edgeKeys = Grow(edgeKeys, spanning);
+            order = edgeOrder = Grow(edgeOrder, spanning);
+            active = activeEdges = Grow(activeEdges, spanning);
+            var kept = 0;
+            for (var index = 0; index < count; index++)
+            {
+                if (list[index].EndSample <= list[index].FirstSample) continue;
+                keys[kept] = list[index].FirstSample;
+                order[kept++] = index;
+            }
+            Array.Sort(keys, order, 0, spanning);
+        }
+
+        var cover = PdfCartonAntialiasedFill.cover = Grow(PdfCartonAntialiasedFill.cover, width + 1);
+        var delta = PdfCartonAntialiasedFill.delta = Grow(PdfCartonAntialiasedFill.delta, width + 1);
+        Array.Clear(cover, 0, width + 1);
+        Array.Clear(delta, 0, width + 1);
+        var size = checked(width * height);
+        var mask = spareMask is { } spare && spare.Length >= size ? spare : new byte[size];
+        if (ReferenceEquals(mask, spareMask)) spareMask = null;
+        Array.Clear(mask, 0, size);
+        double minimum = left * 256.0, maximum = (left + width) * 256.0;
+        var origin = left * 256;
+        var any = false;
+        int nextEdge = 0, activeCount = 0;
+        for (var bandTop = 0; bandTop < height;)
+        {
+            // Rows [bandTop, bandBottom) whose crossings fit the budget.
+            var bandTotal = RowCrossings(perSample, bandTop);
+            var bandBottom = bandTop + 1;
+            while (bandBottom < height)
+            {
+                var more = RowCrossings(perSample, bandBottom);
+                if (bandTotal + more > CrossingBudget) break;
+                bandTotal += more;
+                bandBottom++;
+            }
+            int firstSample = bandTop * Subscanlines, endSample = bandBottom * Subscanlines;
+            if (bandTotal < 2)
+            {
+                bandTop = bandBottom;
+                continue;
+            }
+            var starts = sampleStarts = Grow(sampleStarts, endSample - firstSample);
+            var position = 0;
+            for (var sample = firstSample; sample < endSample; sample++)
+            {
+                starts[sample - firstSample] = position;
+                position += perSample[sample];
+            }
+            var sorted = crossings = Grow(crossings, position);
+            if (!banded)
+            {
+                for (var index = 0; index < count; index++)
+                    Gather(ref list[index], firstSample, endSample, starts, sorted, top, minimum, maximum, origin);
+            }
+            else
+            {
+                while (nextEdge < spanning && list[order![nextEdge]].FirstSample < endSample)
+                    active![activeCount++] = order[nextEdge++];
+                var kept = 0;
+                for (var index = 0; index < activeCount; index++)
+                {
+                    ref var edge = ref list[active![index]];
+                    if (edge.EndSample <= firstSample) continue;
+                    active[kept++] = active[index];
+                    Gather(ref edge, firstSample, endSample, starts, sorted, top, minimum, maximum, origin);
+                }
+                activeCount = kept;
+            }
+            // starts[i] is now where subscanline firstSample + i + 1 begins.
+
+            for (var row = bandTop; row < bandBottom; row++)
+            {
+                // The cells this row's spans touched: the rest stay clear.
+                int touchedFrom = int.MaxValue, touchedTo = -1;
+                for (var sub = 0; sub < Subscanlines; sub++)
+                {
+                    var local = row * Subscanlines + sub - firstSample;
+                    var first = local == 0 ? 0 : starts[local - 1];
+                    var end = starts[local];
+                    if (end - first < 2) continue;
+                    SortCrossings(sorted, first, end);
+                    var winding = 0;
+                    var start = 0;
+                    for (var index = first; index < end; index++)
+                    {
+                        var crossing = sorted[index];
+                        var wasInside = evenOdd ? (winding & 1) != 0 : winding != 0;
+                        winding += (crossing & 1) != 0 ? 1 : -1;
+                        var inside = evenOdd ? (winding & 1) != 0 : winding != 0;
+                        if (inside == wasInside) continue;
+                        if (inside)
+                        {
+                            start = (int)(crossing >> 1);
+                            continue;
+                        }
+                        int from = start, to = (int)(crossing >> 1);
+                        if (to <= from) continue;
+                        int firstCell = from >> 8, lastCell = to >> 8;
+                        if (firstCell < touchedFrom) touchedFrom = firstCell;
+                        if (lastCell > touchedTo) touchedTo = lastCell;
+                        if (firstCell == lastCell)
+                        {
+                            cover[firstCell] += to - from;
+                            continue;
+                        }
+                        cover[firstCell] += 256 - (from & 255);
+                        delta[firstCell + 1] += 256;
+                        delta[lastCell] -= 256;
+                        cover[lastCell] += to & 255;
+                    }
+                }
+                if (touchedTo < 0) continue;
+                any = true;
+                var run = 0;
+                var offset = row * width;
+                var last = Math.Min(touchedTo, width - 1);
+                for (var x = touchedFrom; x <= last; x++)
+                {
+                    run += delta[x];
+                    mask[offset + x] = (byte)(((run + cover[x]) * 255 + 512) >> 11);
+                }
+                Array.Clear(cover, touchedFrom, touchedTo - touchedFrom + 1);
+                Array.Clear(delta, touchedFrom, touchedTo - touchedFrom + 1);
+            }
+            bandTop = bandBottom;
+        }
+        if (!any)
+        {
+            Return(mask);
+            return null;
+        }
+        return mask;
+    }
+
+    [MethodImpl((MethodImplOptions)512)]
+    private static long RowCrossings(int[] perSample, int row)
+    {
+        long sum = 0;
+        for (var sample = row * Subscanlines; sample < (row + 1) * Subscanlines; sample++)
+            sum += perSample[sample];
+        return sum;
+    }
+
+    // Puts edge's crossings of subscanlines [firstSample, endSample) at
+    // their subscanline's next free place in sorted, x in 1/256 pixel from
+    // the mask's left side doubled, plus one going down.
+    [MethodImpl((MethodImplOptions)512)]
+    private static void Gather(
+        ref Edge edge, int firstSample, int endSample, int[] starts, long[] sorted,
+        int top, double minimum, double maximum, int origin)
+    {
+        var direction = edge.Winding > 0 ? 1L : 0L;
+        var end = Math.Min(edge.EndSample, endSample);
+        for (var sample = Math.Max(edge.FirstSample, firstSample); sample < end; sample++)
+        {
+            var x = edge.X0 + (SampleY(top, sample) - edge.Y0) * edge.Slope;
+            sorted[starts[sample - firstSample]++] = ((long)(Quantize(x, minimum, maximum) - origin) << 1) | direction;
+        }
+    }
+
+    // The y of a subscanline, counted from the top row's first.
+    private static double SampleY(int top, int sample) =>
+        top + (sample >> 3) + (2 * (sample & (Subscanlines - 1)) + 1) / (2.0 * Subscanlines);
+
+    // The first of the samples subscanlines whose y is y or below.
+    private static int FirstSampleFrom(double y, int top, int samples)
+    {
+        var estimate = (y - top) * Subscanlines - 0.5;
+        var sample = estimate <= 0 ? 0 : estimate >= samples ? samples : (int)Math.Ceiling(estimate);
+        while (sample > 0 && SampleY(top, sample - 1) >= y) sample--;
+        while (sample < samples && SampleY(top, sample) < y) sample++;
+        return sample;
+    }
+
+    // Gives back a buffer Mask returned, for a later Mask on this thread to
+    // reuse; a page-sized one is left to the collector.
+    internal static void Return(byte[] mask)
+    {
+        if (mask.Length <= KeptScratchLength && (spareMask is null || spareMask.Length < mask.Length))
+            spareMask = mask;
+    }
+
+    // Draws a Mask of bounds' size placed at bounds' top-left corner on a
+    // canvas whose matrix maps device coordinates (an offset at most): its
+    // alpha is the coverage of the paint's colour or shader.
+    internal static void Draw(SKCanvas canvas, byte[] mask, SKRectI bounds, SKPaint paint)
+    {
+        var pinned = GCHandle.Alloc(mask, GCHandleType.Pinned);
+        try
+        {
+            var info = new SKImageInfo(bounds.Width, bounds.Height, SKColorType.Alpha8, SKAlphaType.Premul);
+            using var image = SKImage.FromPixels(info, pinned.AddrOfPinnedObject(), bounds.Width);
+            canvas.DrawImage(image, bounds.Left, bounds.Top, paint);
+        }
+        finally
+        {
+            pinned.Free();
+        }
+    }
+
+    // The crossing x in 1/256 pixel, a half rounding down, kept within the mask.
+    private static int Quantize(double x, double minimum, double maximum)
+    {
+        var scaled = Math.Ceiling(x * 256 - 0.5);
+        return (int)(scaled < minimum ? minimum : scaled > maximum ? maximum : scaled);
+    }
+
+    // Insertion sort for the few crossings of most subscanlines; a path
+    // with many edges on one (a long zigzag, say) is sorted in n log n.
+    private static void SortCrossings(long[] values, int first, int end)
+    {
+        if (end - first > 32)
+        {
+            Array.Sort(values, first, end - first);
+            return;
+        }
+        for (var index = first + 1; index < end; index++)
+        {
+            var value = values[index];
+            var position = index - 1;
+            while (position >= first && values[position] > value)
+            {
+                values[position + 1] = values[position];
+                position--;
+            }
+            values[position + 1] = value;
+        }
+    }
+
+    private static T[] Grow<T>(T[]? array, int length) =>
+        array is not null && array.Length >= length ? array : new T[Math.Max(length, (array?.Length ?? 16) * 2)];
+
+    // Segments as a Skia raw iterator reads them: the points of a line,
+    // quadratic or cubic start with its first point.
+    internal interface ISegments
+    {
+        SKPathVerb Next(SKPoint[] points);
+        float ConicWeight();
+    }
+
+    private readonly struct SkiaSegments(SKPath.RawIterator iterator) : ISegments
+    {
+        public SKPathVerb Next(SKPoint[] points) => iterator.Next(points);
+        public float ConicWeight() => iterator.ConicWeight();
+    }
+
+    // A managed path's segments read as the Skia path the same calls would
+    // have built: a segment after a close starts with a move to the closed
+    // subpath's start, as Skia inserts one.
+    private struct ManagedSegments(byte[] types, int typeCount, SKPoint[] points) : ISegments
+    {
+        private int segment;
+        private int point;
+        private SKPoint current;
+        private SKPoint start;
+        private bool closed;
+
+        public SKPathVerb Next(SKPoint[] output)
+        {
+            if (segment >= typeCount) return SKPathVerb.Done;
+            var type = types[segment];
+            if (closed && type != JavaPath2D.MoveSegment && type != JavaPath2D.CloseSegment)
+            {
+                closed = false;
+                output[0] = start;
+                return SKPathVerb.Move;
+            }
+            segment++;
+            output[0] = current;
+            switch (type)
+            {
+                case JavaPath2D.MoveSegment:
+                    closed = false;
+                    current = start = output[0] = points[point++];
+                    return SKPathVerb.Move;
+                case JavaPath2D.LineSegment:
+                    current = output[1] = points[point++];
+                    return SKPathVerb.Line;
+                case JavaPath2D.QuadSegment:
+                    output[1] = points[point++];
+                    current = output[2] = points[point++];
+                    return SKPathVerb.Quad;
+                case JavaPath2D.CubicSegment:
+                    output[1] = points[point++];
+                    output[2] = points[point++];
+                    current = output[3] = points[point++];
+                    return SKPathVerb.Cubic;
+                default:
+                    closed = true;
+                    current = start;
+                    return SKPathVerb.Close;
+            }
+        }
+
+        public float ConicWeight() => 1;
+    }
+
+    // The path's outline as lines (subpaths closed), keeping the edges that
+    // reach the sample rows of [top, bottom); returns how many are in edges.
+    // It and its hot local functions are optimized from the first call, as
+    // Mask is.
+    [MethodImpl((MethodImplOptions)512)]
+    private static int Flatten<T>(ref T segments, int top, int bottom) where T : struct, ISegments
+    {
+        edges ??= new Edge[64];
+        var count = 0;
+        var points = verbPoints ??= new SKPoint[4];
+        double startX = 0, startY = 0, x = 0, y = 0;
+        var open = false;
+        SKPathVerb verb;
+        while ((verb = segments.Next(points)) != SKPathVerb.Done)
+        {
+            switch (verb)
+            {
+                case SKPathVerb.Move:
+                    if (open) Line(startX, startY);
+                    startX = x = points[0].X;
+                    startY = y = points[0].Y;
+                    open = true;
+                    break;
+                case SKPathVerb.Line:
+                    Line(points[1].X, points[1].Y);
+                    break;
+                case SKPathVerb.Quad:
+                    Quad(points[1].X, points[1].Y, points[2].X, points[2].Y);
+                    break;
+                case SKPathVerb.Conic:
+                    // Java has no conics; a Skia-made arc is followed as quadratics.
+                    var quads = SKPath.ConvertConicToQuads(points[0], points[1], points[2], segments.ConicWeight(), 2);
+                    for (var index = 1; index + 1 < quads.Length; index += 2)
+                        Quad(quads[index].X, quads[index].Y, quads[index + 1].X, quads[index + 1].Y);
+                    break;
+                case SKPathVerb.Cubic:
+                    Cubic(points[1].X, points[1].Y, points[2].X, points[2].Y, points[3].X, points[3].Y);
+                    break;
+                case SKPathVerb.Close:
+                    Line(startX, startY);
+                    open = false;
+                    break;
+            }
+        }
+        if (open) Line(startX, startY);
+        return count;
+
+        [MethodImpl((MethodImplOptions)512)]
+        void Line(double toX, double toY)
+        {
+            double fromX = x, fromY = y;
+            x = toX;
+            y = toY;
+            if (fromY == toY || double.IsNaN(fromX + fromY + toX + toY) ||
+                double.IsInfinity(fromX + fromY + toX + toY))
+                return;
+            var winding = 1;
+            if (fromY > toY)
+            {
+                (fromX, fromY, toX, toY) = (toX, toY, fromX, fromY);
+                winding = -1;
+            }
+            if (toY <= top || fromY >= bottom) return;
+            if (count == edges!.Length) Array.Resize(ref edges, count * 2);
+            edges[count++] = new Edge
+            {
+                X0 = fromX, Y0 = fromY, X1 = toX, Y1 = toY,
+                Slope = (toX - fromX) / (toY - fromY), Winding = winding
+            };
+        }
+
+        [MethodImpl((MethodImplOptions)512)]
+        void Quad(double x1, double y1, double x2, double y2)
+        {
+            double x0 = x, y0 = y;
+            var size = Math.Abs(x0 - 2 * x1 + x2) + Math.Abs(y0 - 2 * y1 + y2);
+            var steps = 1;
+            while (steps < 1024 && 4 * size > (double)steps * steps) steps *= 2;
+            for (var index = 1; index < steps; index++)
+            {
+                var t = (double)index / steps;
+                var u = 1 - t;
+                Line(u * u * x0 + 2 * u * t * x1 + t * t * x2, u * u * y0 + 2 * u * t * y1 + t * t * y2);
+            }
+            Line(x2, y2);
+        }
+
+        [MethodImpl((MethodImplOptions)512)]
+        void Cubic(double x1, double y1, double x2, double y2, double x3, double y3)
+        {
+            double x0 = x, y0 = y;
+            if (double.IsNaN(x0 + y0 + x1 + y1 + x2 + y2 + x3 + y3) ||
+                double.IsInfinity(x0 + y0 + x1 + y1 + x2 + y2 + x3 + y3))
+            {
+                Line(x3, y3);
+                return;
+            }
+            const int unit = 1 << 16;
+            // The third difference, 6 h^3 |P3 - 3P2 + 3P1 - P0|, also stays
+            // within 8 px, so that a step across an inflection, whose second
+            // difference can vanish, stays short. That bound left the fit on
+            // random cubics unchanged.
+            var third = 6 * (Math.Abs(x3 - 3 * x2 + 3 * x1 - x0) + Math.Abs(y3 - 3 * y2 + 3 * y1 - y0));
+            var level = 2;
+            var position = 0;
+            while (position < unit)
+            {
+                var u = (double)position / unit;
+                while (level < 16 && (SecondDifference(u, 1.0 / (1 << level)) > 1 || ThirdDifference(level) > 8))
+                    level++;
+                while (level > 0 && position % (unit >> (level - 1)) == 0 &&
+                       SecondDifference(u, 1.0 / (1 << (level - 1))) < 0.25 && ThirdDifference(level - 1) <= 8)
+                    level--;
+                position = Math.Min(unit, position + (unit >> level));
+                if (position == unit)
+                {
+                    Line(x3, y3);
+                }
+                else
+                {
+                    var (px, py) = Point((double)position / unit);
+                    Line(px, py);
+                }
+            }
+
+            double ThirdDifference(int stepLevel)
+            {
+                var h = 1.0 / (1 << stepLevel);
+                return third * h * h * h;
+            }
+
+            [MethodImpl((MethodImplOptions)512)]
+            double SecondDifference(double u, double h)
+            {
+                var (ax, ay) = Point(u);
+                var (bx, by) = Point(u + h);
+                var (cx, cy) = Point(u + 2 * h);
+                return Math.Abs(ax - 2 * bx + cx) + Math.Abs(ay - 2 * by + cy);
+            }
+
+            [MethodImpl((MethodImplOptions)512)]
+            (double X, double Y) Point(double t)
+            {
+                var s = 1 - t;
+                double a = s * s * s, b = 3 * s * s * t, c = 3 * s * t * t, d = t * t * t;
+                return (a * x0 + b * x1 + c * x2 + d * x3, a * y0 + b * y1 + c * y2 + d * y3);
+            }
+        }
+    }
+}
+
+// A Skia bitmap compat makes for the length of one call (a snapshot, or a
+// colour-converted copy to read): Java images are PdfCartonImages, whose
+// pixels are managed arrays. Its pixels are native memory compat allocates
+// (NativePixels), which reports its bytes as GC memory pressure and counts
+// them in NativeBytes until Skia releases the pixels: when the bitmap is
+// disposed or finalized and no canvas or image still shares them.
+internal sealed class PdfCartonNativeBitmap : SKBitmap
+{
+    // Native pixel memory for one bitmap, zeroed as Skia's own allocation is.
+    // Its bytes stay in NativeBytes and in the GC's memory pressure until
+    // Skia releases the pixels, which a canvas or image sharing them delays
+    // past the bitmap's disposal.
+    private sealed class NativePixels
+    {
+        private static readonly byte[] Zeros = new byte[16384];
+        private readonly long bytes;
+        private int released;
+
+        internal NativePixels(long bytes)
+        {
+            Address = Marshal.AllocHGlobal(new IntPtr(bytes));
+            this.bytes = bytes;
+            for (long offset = 0; offset < bytes; offset += Zeros.Length)
+                Marshal.Copy(Zeros, 0, new IntPtr(Address.ToInt64() + offset),
+                    (int)Math.Min(Zeros.Length, bytes - offset));
+            Interlocked.Add(ref nativeBytes, bytes);
+            GC.AddMemoryPressure(bytes);
+        }
+
+        internal IntPtr Address { get; }
+
+        internal void Release()
+        {
+            if (Interlocked.Exchange(ref released, 1) != 0) return;
+            Marshal.FreeHGlobal(Address);
+            Interlocked.Add(ref nativeBytes, -bytes);
+            GC.RemoveMemoryPressure(bytes);
+        }
+    }
+
+    private static readonly SKBitmapReleaseDelegate ReleaseNativePixels =
+        (_, context) => ((NativePixels)context).Release();
+
+    // Installs zeroed native pixels for info (see NativePixels); false when
+    // Skia refuses them, which releases them. Like Skia's own allocation it
+    // refuses a buffer over int.MaxValue bytes, whose offsets Skia's CPU
+    // paths compute as signed 32-bit values.
+    private bool TryInstallNativePixels(SKImageInfo info)
+    {
+        var bytes = (long)info.RowBytes * info.Height;
+        if (bytes <= 0) return TryAllocPixels(info);
+        if (bytes > int.MaxValue) return false;
+        var pixels = new NativePixels(bytes);
+        try
+        {
+            // Skia calls the release delegate on failure too.
+            return InstallPixels(info, pixels.Address, info.RowBytes, ReleaseNativePixels, pixels);
+        }
+        catch
+        {
+            // Thrown before Skia took the pixels (preparing the callback):
+            // no release callback will run. Release is idempotent.
+            pixels.Release();
+            throw;
+        }
+    }
+
+    private static long liveCount;
+    private static long outstandingBytes;
+    private static long nativeBytes;
+    private readonly long pixelBytes;
+    private int registered;
+
+    internal PdfCartonNativeBitmap(SKImageInfo info)
+    {
+        pixelBytes = (long)info.RowBytes * info.Height;
+        Interlocked.Add(ref outstandingBytes, pixelBytes);
+        Interlocked.Increment(ref liveCount);
+        registered = 1;
+        bool installed;
+        try
+        {
+            installed = TryInstallNativePixels(info);
+        }
+        catch
+        {
+            Dispose();
+            throw;
+        }
+        if (!installed)
+        {
+            Dispose();
+            throw new System.ArgumentException("Unable to allocate pixels for the bitmap.", nameof(info));
+        }
+    }
+
+    // Compat bitmaps not yet disposed or finalized, and the bytes of the
+    // pixel memory they hold.
+    internal static long LiveCount => Interlocked.Read(ref liveCount);
+    internal static long OutstandingBytes => Interlocked.Read(ref outstandingBytes);
+
+    // The native pixel memory compat allocated for bitmaps that Skia has not
+    // released yet: unlike OutstandingBytes it counts per allocation, so
+    // pixels a canvas or image still shares after their bitmap was disposed
+    // or finalized stay counted.
+    internal static long NativeBytes => Interlocked.Read(ref nativeBytes);
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (Interlocked.Exchange(ref registered, 0) != 1) return;
+        Interlocked.Add(ref outstandingBytes, -pixelBytes);
+        Interlocked.Decrement(ref liveCount);
+    }
 }
 
 internal static class PdfCartonFontCompat
@@ -5771,9 +9412,64 @@ internal static class PdfCartonFontCompat
         internal JavaRaster? Raster { get; }
         internal JavaSampleModel? SampleModel { get; }
         internal int? Transparency { get; }
+        // Set by CreateDeferredImage: the native pixels have not been rendered
+        // from Raster yet. Read and cleared under a lock on this instance.
+        internal bool NativePending { get; set; }
+        // Set by CreateDeferredImage and ExposeSamples: Raster is managed
+        // storage the native pixels are rendered from, not a view of them, so
+        // native drawing must be copied back into it (BeginNativeDrawing).
+        internal bool DetachedRaster { get; set; }
+        // A detached raster's view of the native pixels it renders to,
+        // created on first use under a lock on this instance.
+        internal PdfCartonBitmapView? NativeView;
+        // Set by ExposeSamples: Raster's exposed sample array, and a copy of
+        // the samples the native pixels show (MarkRendered keeps it current).
+        // Used under a lock on this instance.
+        internal sbyte[]? ExposedSamples;
+        internal sbyte[]? RenderedSamples;
+        // Without ColorModel or Transparency (a decoded image, whose decoder
+        // colour model is unknown), the transparency classified from the
+        // pixels on first use; 0 until then. Written under a lock on this
+        // instance.
+        internal int PixelTransparency;
     }
 
-    private static readonly ConditionalWeakTable<SKBitmap, ImageMetadata> ImageMetadataByBitmap = new();
+    // Bitmap -> metadata with atomic replacement. netstandard2.0's
+    // ConditionalWeakTable has no AddOrUpdate, and Remove-then-Add races: a
+    // concurrent Add throws and readers briefly see no entry.
+    private sealed class ImageMetadataTable
+    {
+        private sealed class Entry
+        {
+            internal ImageMetadata? Metadata;
+        }
+
+        private static readonly ConditionalWeakTable<PdfCartonImage, Entry>.CreateValueCallback CreateEntry =
+            _ => new Entry();
+        private readonly ConditionalWeakTable<PdfCartonImage, Entry> entries = new();
+
+        internal bool TryGetValue(PdfCartonImage bitmap, out ImageMetadata metadata)
+        {
+            metadata = entries.TryGetValue(bitmap, out var entry)
+                ? Volatile.Read(ref entry.Metadata)!
+                : null!;
+            return metadata is not null;
+        }
+
+        internal void Set(PdfCartonImage bitmap, ImageMetadata metadata) =>
+            Volatile.Write(ref entries.GetValue(bitmap, CreateEntry).Metadata, metadata);
+
+        // Installs metadata only if the bitmap's entry is still expected.
+        internal bool TryReplace(PdfCartonImage bitmap, ImageMetadata? expected, ImageMetadata metadata) =>
+            ReferenceEquals(
+                Interlocked.CompareExchange(
+                    ref entries.GetValue(bitmap, CreateEntry).Metadata,
+                    metadata,
+                    expected),
+                expected);
+    }
+
+    private static readonly ImageMetadataTable ImageMetadataByBitmap = new();
     private static readonly Lazy<JavaIccProfile> StandardSrgbProfile = new(CreateSrgbProfile);
     // Apache PDFBox's bundled sRGB.icc, gzip-compressed for a compact authored
     // runtime representation. Upstream SHA-256:
@@ -5782,9 +9478,9 @@ internal static class PdfCartonFontCompat
         H4sIAAAAAAACA+2ZV1BUWRrHz72dEw3dTZOhyUmihAYk5yQ5igp0N5kWmhwURQZHYAQRkaQIIgo44OgQZBQVUQyIggIq6jQyCCjj4CgmVJbGB7dqq/Zpd1+2/w/3/uo7p+537q1TdX9VBwAZfAIrMQXWByCRm8rzdbZjBIeEMjD3ARaQABFQADqClZLk6efkD1YjmAv+Je/GASS439MRjOedJcUUf9AxPDrr8ujNZMtm8O9DZCdy2QBAtFWOY3NSWKu8c5Vj2IlsQX1OwBmpSakAwN6rTOOtLnCV2QKO/MaZAo7+xiVrc/x97Vf5KABYYvQa408JOHKNKT0CZsXwEgGQHlidr8JK4q0+X1rQS/HbGtYiKngfRjSHy+FFpHLYDPCfzj/1QqWsfnzwX8r/qo9g73yjN5ZrewKiV32vbasAgPkKAETZ95rKYQDIuwHo6vteizwOQHcZAJJPWWm89G815NraAR6QAQ1IAXmgDDSADjAEpsAC2ABH4Aa8gD8IAVsAC8SARMADGSAX7AKFoBiUgYOgBtSDJtAC2sEZ0A3Og8vgGrgF7oIxMAn4YAa8BIvgHViGIAgDkSAqJAUpQKqQNmQIMSEryBHygHyhECgcioa4UBqUC+2GiqFyqAZqgFqgX6Bz0GXoBjQCPYSmoHnob+gTjICJMA2Wg9VgPZgJ28LusD+8GY6Gk+FsuADeB1fBjfApuAu+DN+Cx2A+/BJeQgAEAUFHKCJ0EEyEPcILEYqIQvAQOxBFiEpEI6Id0YsYRNxD8BELiI9INJKKZCB1kBZIF2QAkoVMRu5AliBrkCeRXcgB5D3kFHIR+RVFQsmitFHmKFdUMCoalYEqRFWimlGdqKuoMdQM6h0ajaaj1dGmaBd0CDoOnYMuQR9Gd6AvoUfQ0+glDAYjhdHGWGK8MBGYVEwhphpzCnMRM4qZwXzAErAKWEOsEzYUy8XmYyuxrdg+7Ch2FruME8Wp4sxxXjg2LgtXimvC9eLu4GZwy3gxvDreEu+Pj8Pvwlfh2/FX8Y/xbwgEghLBjOBDiCXsJFQRThOuE6YIH4kUohbRnhhGTCPuI54gXiI+JL4hkUhqJBtSKCmVtI/UQrpCekr6IEIV0RVxFWGL5InUinSJjIq8IuPIqmRb8hZyNrmSfJZ8h7wgihNVE7UXjRDdIVorek50QnRJjCpmIOYllihWItYqdkNsjoKhqFEcKWxKAeUY5QplmoqgKlPtqSzqbmoT9Sp1hoamqdNcaXG0YtrPtGHaojhF3Eg8UDxTvFb8gjifjqCr0V3pCfRS+hn6OP2ThJyErQRHYq9Eu8SoxHtJGUkbSY5kkWSH5JjkJymGlKNUvNR+qW6pJ9JIaS1pH+kM6SPSV6UXZGgyFjIsmSKZMzKPZGFZLVlf2RzZY7JDskty8nLOckly1XJX5Bbk6fI28nHyFfJ98vMKVAUrhViFCoWLCi8Y4gxbRgKjijHAWFSUVXRRTFNsUBxWXFZSVwpQylfqUHqijFdmKkcpVyj3Ky+qKKh4quSqtKk8UsWpMlVjVA+pDqq+V1NXC1Lbo9atNqcuqe6qnq3epv5Yg6RhrZGs0ahxXxOtydSM1zyseVcL1jLWitGq1bqjDWubaMdqH9YeWYdaZ7aOu65x3YQOUcdWJ12nTWdKl67roZuv2637Sk9FL1Rvv96g3ld9Y/0E/Sb9SQOKgZtBvkGvwd+GWoYsw1rD++tJ653W563vWf/aSNuIY3TE6IEx1djTeI9xv/EXE1MTnkm7ybypimm4aZ3pBJPG9GaWMK+boczszPLMzpt9NDcxTzU/Y/6XhY5FvEWrxdwG9Q2cDU0bpi2VLCMsGyz5VgyrcKujVnxrResI60brZzbKNmybZptZW03bONtTtq/s9O14dp127+3N7bfbX3JAODg7FDkMO1IcAxxrHJ86KTlFO7U5LTobO+c4X3JBubi77HeZcJVzZbm2uC66mbptdxtwJ7r7ude4P/PQ8uB59HrCnm6eBzwfb1TdyN3Y7QW8XL0OeD3xVvdO9v7NB+3j7VPr89zXwDfXd9CP6rfVr9Xvnb+df6n/ZIBGQFpAfyA5MCywJfB9kENQeRA/WC94e/CtEOmQ2JCeUExoYGhz6NImx00HN82EGYcVho1vVt+cufnGFuktCVsubCVvjdh6NhwVHhTeGv45wiuiMWIp0jWyLnKRZc86xHrJtmFXsOc5lpxyzmyUZVR51Fy0ZfSB6PkY65jKmIVY+9ia2NdxLnH1ce/jveJPxK8kBCV0JGITwxPPcSnceO7ANvltmdtGkrSTCpP4yebJB5MXee685hQoZXNKTypt9Sc9lKaR9kPaVLpVem36h4zAjLOZYpnczKEsray9WbPZTtnHc5A5rJz+XMXcXblT2223N+yAdkTu6M9TzivIm9npvPPkLvyu+F238/Xzy/Pf7g7a3VsgV7CzYPoH5x/aCkUKeYUTeyz21P+I/DH2x+G96/dW7/1axC66WaxfXFn8uYRVcvMng5+qflrZF7VvuNSk9EgZuoxbNr7fev/JcrHy7PLpA54HuioYFUUVbw9uPXij0qiy/hD+UNohfpVHVU+1SnVZ9eeamJqxWrvajjrZur117w+zD48esTnSXi9XX1z/6Wjs0QcNzg1djWqNlcfQx9KPPW8KbBo8zjze0izdXNz85QT3BP+k78mBFtOWllbZ1tI2uC2tbf5U2Km7Pzv83NOu097QQe8oPg1Op51+8Uv4L+Nn3M/0n2Webf9V9de6TmpnURfUldW12B3Tze8J6Rk553auv9eit/M33d9OnFc8X3tB/EJpH76voG/lYvbFpUtJlxYuR1+e7t/aP3kl+Mr9AZ+B4avuV69fc7p2ZdB28OJ1y+vnb5jfOHeTebP7lsmtriHjoc7bxrc7h02Gu+6Y3um5a3a3d2TDSN+o9ejlew73rt13vX9rbOPYyHjA+IOJsAn+A/aDuYcJD18/Sn+0PLnzMepx0RPRJ5VPZZ82/q75ewffhH9hymFq6Jnfs8lp1vTLP1L++DxT8Jz0vHJWYbZlznDu/LzT/N0Xm17MvEx6ubxQ+KfYn3WvNF79+pfNX0OLwYszr3mvV/4ueSP15sRbo7f9S95LT98lvlt+X/RB6sPJj8yPg5+CPs0uZ3zGfK76ovml96v718criSsrQhcQuoDQBYQuIHQBoQsIXUDoAkIXELqA0AWELiB0AaELCF3g/9gF1s5xVoMQXI5NAOCfA4DHbQCqawBQiwKAHJbKyUwVjHK3MVjbkrJ4sdExqesYaSkcRhSPw0nIAvh/AHXlhbUKGwAA
         """;
 
-    internal static SKBitmap ReadImage(JavaFile file) => ReadImage(file.OpenFileInfo());
+    internal static PdfCartonImage ReadImage(JavaFile file) => ReadImage(file.OpenFileInfo());
 
-    internal static SKBitmap ReadImage(FileInfo file)
+    internal static PdfCartonImage ReadImage(FileInfo file)
     {
         ArgumentNullException.ThrowIfNull(file);
         try
@@ -5797,7 +9493,7 @@ internal static class PdfCartonFontCompat
         }
     }
 
-    internal static SKBitmap ReadImage(Stream stream)
+    internal static PdfCartonImage ReadImage(Stream stream)
     {
         ArgumentNullException.ThrowIfNull(stream);
         using var encoded = new MemoryStream();
@@ -5805,7 +9501,26 @@ internal static class PdfCartonFontCompat
         return DecodeImage(encoded.ToArray());
     }
 
-    internal static SKBitmap DecodeImage(byte[] encoded, int imageIndex = 0)
+    // SKBitmap.Decode(Stream) into an image: an unpremultiplied source
+    // decodes premultiplied, in the codec's colour type.
+    internal static PdfCartonImage? DecodeStream(Stream stream)
+    {
+        using var codec = SKCodec.Create(stream);
+        if (codec is null) return null;
+        var source = codec.Info;
+        var info = new SKImageInfo(
+            source.Width,
+            source.Height,
+            source.ColorType,
+            source.AlphaType == SKAlphaType.Unpremul ? SKAlphaType.Premul : source.AlphaType);
+        var bitmap = new PdfCartonImage(info);
+        SKCodecResult result;
+        using (var lease = bitmap.Lease())
+            result = codec.GetPixels(info, lease.Bitmap.GetPixels());
+        return result is SKCodecResult.Success or SKCodecResult.IncompleteInput ? bitmap : null;
+    }
+
+    internal static PdfCartonImage DecodeImage(byte[] encoded, int imageIndex = 0)
     {
         if (imageIndex < 0)
             throw new IndexOutOfRangeException(
@@ -5814,11 +9529,10 @@ internal static class PdfCartonFontCompat
         if (sixteenBitPng is not null)
         {
             if (imageIndex == 0) return sixteenBitPng;
-            sixteenBitPng.Dispose();
             throw new IndexOutOfRangeException(
                 "This image stream exposes a single image.");
         }
-        SKBitmap? bitmap;
+        PdfCartonImage? bitmap;
         if (IsTiff(encoded))
         {
             bitmap = DecodeTiff(encoded, imageIndex);
@@ -5840,16 +9554,34 @@ internal static class PdfCartonFontCompat
         if (bitmap is null) throw new IOException("Unsupported or invalid image stream.");
         if (!IsTiff(encoded))
         {
-            RegisterImageType(
+            RegisterDecodedImageType(
                 bitmap,
                 IsGif(encoded)
                     ? InferGifImageType(encoded)
-                    : InferImageType(bitmap));
+                    : InferImageType(bitmap),
+                encoded);
         }
         return bitmap;
     }
 
-    private static SKBitmap? DecodeSixteenBitPng(byte[] encoded)
+    // Java's PNG reader gives a PNG with an alpha channel (colour type 4 or
+    // 6) a TRANSLUCENT colour model whatever its alpha samples; other decoded
+    // images are classified from their pixels on first use.
+    internal static void RegisterDecodedImageType(PdfCartonImage bitmap, int type, byte[] encoded)
+    {
+        ReadOnlySpan<byte> png = [137, 80, 78, 71, 13, 10, 26, 10];
+        if (encoded.Length > 25 && encoded.AsSpan(0, png.Length).SequenceEqual(png) &&
+            encoded[25] is 4 or 6 && bitmap.AlphaType != SKAlphaType.Opaque)
+        {
+            ImageMetadataByBitmap.Set(
+                bitmap,
+                new ImageMetadata(type, transparency: PdfCartonTransparency.TRANSLUCENT));
+            return;
+        }
+        RegisterImageType(bitmap, type);
+    }
+
+    private static PdfCartonImage? DecodeSixteenBitPng(byte[] encoded)
     {
         ReadOnlySpan<byte> signature =
             [137, 80, 78, 71, 13, 10, 26, 10];
@@ -6062,7 +9794,7 @@ internal static class PdfCartonFontCompat
         return paletteSize == 2 ? TYPE_BYTE_BINARY : TYPE_CUSTOM;
     }
 
-    private static SKBitmap? DecodeSkia(byte[] encoded)
+    private static PdfCartonImage? DecodeSkia(byte[] encoded)
     {
         using var data = SKData.CreateCopy(encoded);
         using var codec = SKCodec.Create(data);
@@ -6076,14 +9808,14 @@ internal static class PdfCartonFontCompat
                 : SKColorType.Bgra8888,
             source.AlphaType == SKAlphaType.Opaque
                 ? SKAlphaType.Opaque
-                : SKAlphaType.Unpremul,
-            source.ColorSpace);
-        var bitmap = new SKBitmap(info);
-        var result = codec.GetPixels(info, bitmap.GetPixels());
-        if (result == SKCodecResult.Success || result == SKCodecResult.IncompleteInput)
-            return bitmap;
-        bitmap.Dispose();
-        return null;
+                : SKAlphaType.Unpremul);
+        // Without a destination colour space Skia decodes the stored colours
+        // unconverted, as it did into the source's own space.
+        var bitmap = new PdfCartonImage(info);
+        SKCodecResult result;
+        using (var lease = bitmap.Lease())
+            result = codec.GetPixels(info, lease.Bitmap.GetPixels());
+        return result is SKCodecResult.Success or SKCodecResult.IncompleteInput ? bitmap : null;
     }
 
     private static bool IsTiff(byte[] encoded) =>
@@ -6093,7 +9825,7 @@ internal static class PdfCartonFontCompat
          (encoded[0] == (byte)'M' && encoded[1] == (byte)'M' &&
           encoded[2] == 0 && encoded[3] == 42));
 
-    private static SKBitmap DecodeTiff(byte[] encoded, int imageIndex)
+    private static PdfCartonImage DecodeTiff(byte[] encoded, int imageIndex)
     {
         var littleEndian = encoded[0] == (byte)'I';
         ushort U16(int offset)
@@ -6386,8 +10118,8 @@ internal static class PdfCartonFontCompat
         return output.ToArray();
     }
 
-    internal static SKBitmap ScaleImage(
-        SKBitmap source,
+    internal static PdfCartonImage ScaleImage(
+        PdfCartonImage source,
         int width,
         int height,
         int hints)
@@ -6405,23 +10137,178 @@ internal static class PdfCartonFontCompat
         if (width == 0 || height == 0)
             throw new ArgumentException("Scaled image dimensions cannot be zero.");
 
-        var destination = new SKBitmap(
+        if (hints == SCALE_SMOOTH)
+            return AreaAverageImage(source, width, height);
+        var destination = new PdfCartonImage(new SKImageInfo(
             width,
             height,
             source.ColorType,
-            source.AlphaType,
-            source.ColorSpace);
-        using var canvas = new SKCanvas(destination);
+            source.AlphaType));
+        PdfCartonBitmapView.Publish(source);
+        using var destinationLease = destination.Lease();
+        var canvas = destinationLease.Canvas;
         using var paint = new SKPaint();
-        var sampling = hints == SCALE_SMOOTH
-            ? new SKSamplingOptions(SKCubicResampler.Mitchell)
-            : SKSamplingOptions.Default;
-        canvas.DrawBitmap(
-            source,
-            new SKRect(0, 0, width, height),
-            sampling,
-            paint);
+        using var image = DrawableImage(source, destinationLease.Bitmap);
+        canvas.DrawImage(image!, new SKRect(0, 0, width, height), SKSamplingOptions.Default, paint);
         return destination;
+    }
+
+    // getScaledInstance(SCALE_SMOOTH) averages areas (black-box probes of
+    // Java 25 against random opaque and translucent images, 1-bit to
+    // 32-bit, scaled up and down): a destination pixel is the mean of the
+    // source rectangle it covers, partly covered source pixels weighted by
+    // the covered fraction and colours by their alpha, each channel rounded
+    // to nearest. A gray source stays gray; anything else becomes 32-bit.
+    private static PdfCartonImage AreaAverageImage(PdfCartonImage source, int width, int height)
+    {
+        EnsureNativePixels(source);
+        int sourceWidth = source.Width, sourceHeight = source.Height;
+        var gray = source.ColorType == SKColorType.Gray8;
+        var opaque = gray || source.AlphaType == SKAlphaType.Opaque;
+        var converted = gray || source.ColorType == SKColorType.Bgra8888 &&
+            source.AlphaType != SKAlphaType.Premul
+            ? null
+            : ConvertedForReading(source);
+        try
+        {
+            var destination = new PdfCartonImage(new SKImageInfo(
+                width,
+                height,
+                gray ? SKColorType.Gray8 : SKColorType.Bgra8888,
+                opaque ? SKAlphaType.Opaque : SKAlphaType.Unpremul));
+            var input = converted is null ? source.GetPixelSpan() : converted.GetPixelSpan();
+            var output = destination.GetPixelSpan();
+            int inputRowBytes = converted?.RowBytes ?? source.RowBytes, outputRowBytes = destination.RowBytes;
+            var channels = gray ? 1 : 4;
+            var columns = AreaWeights(sourceWidth, width);
+            var rows = AreaWeights(sourceHeight, height);
+            var area = (double)sourceWidth / width * sourceHeight / height;
+            // Per destination row: the weighted sum of horizontally averaged
+            // source rows, in premultiplied (alpha-weighted) channels.
+            var sum = new double[width * channels];
+            var filtered = new double[width * channels];
+            var filteredRow = -1;
+            for (var y = 0; y < height; y++)
+            {
+                Array.Clear(sum, 0, sum.Length);
+                foreach (var (row, rowWeight) in rows[y])
+                {
+                    if (row != filteredRow)
+                    {
+                        FilterRow(input.Slice(row * inputRowBytes), columns, channels, opaque, filtered);
+                        filteredRow = row;
+                    }
+                    for (var i = 0; i < sum.Length; i++)
+                        sum[i] += filtered[i] * rowWeight;
+                }
+                var target = output.Slice(y * outputRowBytes);
+                for (var x = 0; x < width; x++)
+                {
+                    var at = x * channels;
+                    if (gray)
+                    {
+                        target[x] = RoundChannel(sum[at] / area);
+                        continue;
+                    }
+                    if (opaque)
+                    {
+                        target[at] = RoundChannel(sum[at] / area);
+                        target[at + 1] = RoundChannel(sum[at + 1] / area);
+                        target[at + 2] = RoundChannel(sum[at + 2] / area);
+                        target[at + 3] = byte.MaxValue;
+                        continue;
+                    }
+                    var alpha = sum[at + 3];
+                    target[at + 3] = RoundChannel(alpha / area);
+                    for (var c = 0; c < 3; c++)
+                        target[at + c] = alpha > 0 ? RoundChannel(sum[at + c] / alpha) : (byte)0;
+                }
+            }
+            return destination;
+        }
+        finally
+        {
+            converted?.Dispose();
+        }
+    }
+
+    private static SKBitmap ConvertedForReading(PdfCartonImage source)
+    {
+        var converted = new PdfCartonNativeBitmap(new SKImageInfo(
+            source.Width, source.Height, SKColorType.Bgra8888, SKAlphaType.Unpremul));
+        using var lease = source.Lease();
+        using var from = lease.Bitmap.PeekPixels();
+        using var to = converted.PeekPixels();
+        if (from is null || to is null || !from.ReadPixels(to))
+        {
+            converted.Dispose();
+            throw new InvalidOperationException("Unable to read the image's pixels.");
+        }
+        GC.KeepAlive(source);
+        return converted;
+    }
+
+    // For each destination pixel along one axis, the source pixels its
+    // span [i * s / d, (i + 1) * s / d) overlaps and the overlapped length.
+    private static (int Index, double Weight)[][] AreaWeights(int sourceLength, int destinationLength)
+    {
+        var weights = new (int, double)[destinationLength][];
+        var step = (double)sourceLength / destinationLength;
+        var list = new List<(int, double)>();
+        for (var i = 0; i < destinationLength; i++)
+        {
+            double start = i * step, end = (i + 1) * step;
+            list.Clear();
+            var last = Math.Min(sourceLength, (int)Math.Ceiling(end));
+            for (var j = (int)Math.Floor(start); j < last; j++)
+            {
+                var overlap = Math.Min(end, j + 1) - Math.Max(start, j);
+                if (overlap > 0) list.Add((j, overlap));
+            }
+            weights[i] = list.ToArray();
+        }
+        return weights;
+    }
+
+    // One source row averaged horizontally; colour channels of a
+    // translucent row are weighted by alpha, which is the fourth channel.
+    private static void FilterRow(
+        ReadOnlySpan<byte> row,
+        (int Index, double Weight)[][] columns,
+        int channels,
+        bool opaque,
+        double[] filtered)
+    {
+        for (var x = 0; x < columns.Length; x++)
+        {
+            double c0 = 0, c1 = 0, c2 = 0, c3 = 0;
+            foreach (var (column, weight) in columns[x])
+            {
+                var at = column * channels;
+                if (channels == 1)
+                {
+                    c0 += row[at] * weight;
+                    continue;
+                }
+                var alphaWeight = opaque ? weight : row[at + 3] * weight;
+                c0 += row[at] * alphaWeight;
+                c1 += row[at + 1] * alphaWeight;
+                c2 += row[at + 2] * alphaWeight;
+                c3 += opaque ? 0 : alphaWeight;
+            }
+            var to = x * channels;
+            filtered[to] = c0;
+            if (channels == 1) continue;
+            filtered[to + 1] = c1;
+            filtered[to + 2] = c2;
+            filtered[to + 3] = c3;
+        }
+    }
+
+    private static byte RoundChannel(double value)
+    {
+        var rounded = Math.Floor(value + 0.5);
+        return (byte)(rounded <= 0 ? 0 : rounded >= 255 ? 255 : rounded);
     }
 
     internal static void SetImageIoUseCache(bool useCache)
@@ -6431,7 +10318,19 @@ internal static class PdfCartonFontCompat
         _ = useCache;
     }
 
-    internal static SKBitmap CreateBitmap(int width, int height, int type)
+    // new BufferedImage(width, height, type). TYPE_INT_RGB and TYPE_INT_ARGB
+    // images keep their pixels in the int array DataBufferInt.getData()
+    // returns, and TYPE_BYTE_GRAY images in the byte array
+    // DataBufferByte.getData() returns, as in Java.
+    internal static PdfCartonImage CreateBitmap(int width, int height, int type) =>
+        CreateBitmap(width, height, type, intBacked: true);
+
+    // A compat-internal intermediate whose storage no Java code holds (its
+    // pixels are not exposed as the data buffer array).
+    internal static PdfCartonImage CreateIntermediate(int width, int height, int type) =>
+        CreateBitmap(width, height, type, intBacked: false);
+
+    private static PdfCartonImage CreateBitmap(int width, int height, int type, bool intBacked)
     {
         if (width <= 0 || height <= 0)
             throw new ArgumentException("Bitmap dimensions must be positive.");
@@ -6442,16 +10341,23 @@ internal static class PdfCartonFontCompat
         var alphaType = type is TYPE_INT_ARGB or TYPE_4BYTE_ABGR
             ? SKAlphaType.Unpremul
             : SKAlphaType.Opaque;
-        var bitmap = new SKBitmap(new SKImageInfo(width, height, colorType, alphaType));
+        var info = new SKImageInfo(width, height, colorType, alphaType);
+        var bitmap = new PdfCartonImage(info, tracked: intBacked)
+        {
+            IntBacked = intBacked && type is TYPE_INT_RGB or TYPE_INT_ARGB && BitConverter.IsLittleEndian,
+            ByteBacked = intBacked && type == TYPE_BYTE_GRAY
+        };
         bitmap.Erase(
             alphaType == SKAlphaType.Opaque
                 ? SKColors.Black
                 : SKColors.Transparent);
-        RegisterImageType(bitmap, type);
+        // As in Java, the type fixes the colour model and so the
+        // transparency: no later call reads the pixels to classify it.
+        ImageMetadataByBitmap.Set(bitmap, new ImageMetadata(type, new JavaColorModel(type)));
         return bitmap;
     }
 
-    internal static int GetImageType(SKBitmap bitmap)
+    internal static int GetImageType(PdfCartonImage bitmap)
     {
         ArgumentNullException.ThrowIfNull(bitmap);
         return ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata)
@@ -6459,36 +10365,36 @@ internal static class PdfCartonFontCompat
             : InferImageType(bitmap);
     }
 
-    internal static JavaRaster GetRaster(SKBitmap bitmap)
+    internal static JavaRaster GetRaster(PdfCartonImage bitmap)
     {
         ArgumentNullException.ThrowIfNull(bitmap);
-        if (ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) &&
-            metadata.Raster is not null)
+        while (true)
         {
-            return metadata.Raster;
-        }
-        var imageType = metadata?.Type ?? InferImageType(bitmap);
-        var raster = imageType == TYPE_BYTE_BINARY
-            ? JavaRaster.BinarySnapshot(bitmap)
-            : new JavaRaster(bitmap);
-        if (imageType is TYPE_BYTE_BINARY or TYPE_CUSTOM)
-            return raster;
-        var colorModel = metadata?.ColorModel ?? new JavaColorModel(
-            imageType,
-            metadata?.Transparency ?? GetTransparency(bitmap));
-        ImageMetadataByBitmap.Remove(bitmap);
-        ImageMetadataByBitmap.Add(
-            bitmap,
-            new ImageMetadata(
+            ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata);
+            if (metadata?.Raster is { } retained)
+                return retained;
+            var imageType = metadata?.Type ?? InferImageType(bitmap);
+            var raster = imageType == TYPE_BYTE_BINARY
+                ? JavaRaster.BinarySnapshot(bitmap)
+                : new JavaRaster(bitmap);
+            if (imageType is TYPE_BYTE_BINARY or TYPE_CUSTOM)
+                return raster;
+            var colorModel = metadata?.ColorModel ?? new JavaColorModel(
+                imageType,
+                metadata?.Transparency ?? GetTransparency(bitmap));
+            var updated = new ImageMetadata(
                 imageType,
                 colorModel,
                 raster,
                 metadata?.SampleModel,
-                metadata?.Transparency));
-        return raster;
+                metadata?.Transparency);
+            // On a lost race, use the type or raster another thread installed.
+            if (ImageMetadataByBitmap.TryReplace(bitmap, metadata, updated))
+                return raster;
+        }
     }
 
-    internal static bool HasManagedImageData(SKBitmap bitmap)
+    internal static bool HasManagedImageData(PdfCartonImage bitmap)
     {
         ArgumentNullException.ThrowIfNull(bitmap);
         return ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) &&
@@ -6496,7 +10402,7 @@ internal static class PdfCartonFontCompat
                metadata.ColorModel is not null;
     }
 
-    internal static JavaRaster GetImageData(SKBitmap bitmap)
+    internal static JavaRaster GetImageData(PdfCartonImage bitmap)
     {
         ArgumentNullException.ThrowIfNull(bitmap);
         if (ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) &&
@@ -6509,25 +10415,52 @@ internal static class PdfCartonFontCompat
             : new JavaRaster(bitmap).DeepCopy();
     }
 
-    internal static int GetTransparency(SKBitmap bitmap)
+    // BufferedImage.getTransparency(): the colour model's transparency, so
+    // pixels are never read for an image with a colour model, which
+    // CreateBitmap gives every new BufferedImage (Java's TYPE_INT_ARGB and
+    // TYPE_4BYTE_ABGR are TRANSLUCENT whatever they hold), nor for a foreign
+    // bitmap, whose inferred type is TYPE_INT_ARGB. Only a decoded image
+    // registered without a colour model, as a GIF or paletted PNG, whose
+    // Java IndexColorModel is BITMASK when every alpha is 0 or 255, is
+    // classified from its pixels, once.
+    internal static int GetTransparency(PdfCartonImage bitmap)
     {
         ArgumentNullException.ThrowIfNull(bitmap);
-        if (ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) &&
-            metadata.Transparency.HasValue)
-        {
-            return metadata.Transparency.Value;
-        }
+        ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata);
+        if (metadata?.Transparency is { } transparency) return transparency;
+        if (metadata?.ColorModel is { } colorModel) return colorModel.Transparency;
         if (bitmap.AlphaType == SKAlphaType.Opaque)
             return PdfCartonTransparency.OPAQUE;
-        using var access = new PdfCartonPixels(bitmap);
-        for (var y = 0; y < bitmap.Height; y++)
-            for (var x = 0; x < bitmap.Width; x++)
-                if (access.Get(x, y).Alpha is not 0 and not byte.MaxValue)
-                    return PdfCartonTransparency.TRANSLUCENT;
-        return PdfCartonTransparency.BITMASK;
+        return metadata is null
+            ? PdfCartonTransparency.TRANSLUCENT
+            : PixelTransparency(bitmap, metadata);
     }
 
-    internal static JavaColorModel GetColorModel(SKBitmap bitmap)
+    private static int PixelTransparency(PdfCartonImage bitmap, ImageMetadata metadata)
+    {
+        var known = Volatile.Read(ref metadata.PixelTransparency);
+        if (known != 0) return known;
+        lock (metadata)
+        {
+            known = metadata.PixelTransparency;
+            if (known != 0) return known;
+            var classified = PdfCartonTransparency.BITMASK;
+            using (var access = new PdfCartonPixels(bitmap))
+            {
+                for (var y = 0; y < bitmap.Height && classified == PdfCartonTransparency.BITMASK; y++)
+                    for (var x = 0; x < bitmap.Width; x++)
+                        if (access.Get(x, y).Alpha is not 0 and not byte.MaxValue)
+                        {
+                            classified = PdfCartonTransparency.TRANSLUCENT;
+                            break;
+                        }
+            }
+            Volatile.Write(ref metadata.PixelTransparency, classified);
+            return classified;
+        }
+    }
+
+    internal static JavaColorModel GetColorModel(PdfCartonImage bitmap)
     {
         ArgumentNullException.ThrowIfNull(bitmap);
         return ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) &&
@@ -6538,7 +10471,7 @@ internal static class PdfCartonFontCompat
                 metadata?.Transparency ?? GetTransparency(bitmap));
     }
 
-    internal static JavaSampleModel GetSampleModel(SKBitmap bitmap)
+    internal static JavaSampleModel GetSampleModel(PdfCartonImage bitmap)
     {
         ArgumentNullException.ThrowIfNull(bitmap);
         if (ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) &&
@@ -6551,15 +10484,36 @@ internal static class PdfCartonFontCompat
             : new JavaSampleModel();
     }
 
-    internal static JavaRaster? GetAlphaRaster(SKBitmap bitmap)
+    internal static JavaRaster? GetAlphaRaster(PdfCartonImage bitmap)
     {
         ArgumentNullException.ThrowIfNull(bitmap);
-        if (!GetColorModel(bitmap).HasAlpha) return null;
+        // An indexed model's alpha is in its colour map, not in a band, so
+        // like Java it has no alpha raster.
+        var colorModel = GetColorModel(bitmap);
+        if (!colorModel.HasAlpha || colorModel.Palette is not null) return null;
+        EnsureNativePixels(bitmap);
         var raster = new JavaRaster(
             DATA_BUFFER_TYPE_BYTE,
             bitmap.Width,
             bitmap.Height,
             1);
+        if (bitmap.ColorType is SKColorType.Bgra8888 or SKColorType.Rgba8888)
+        {
+            // Alpha is the fourth byte of every pixel, premultiplied or not.
+            var alpha = raster.GetByteData();
+            var pixels = bitmap.GetPixelSpan();
+            var rowBytes = bitmap.RowBytes;
+            var opaque = bitmap.AlphaType == SKAlphaType.Opaque;
+            for (var y = 0; y < bitmap.Height; y++)
+            {
+                var input = pixels.Slice(y * rowBytes, bitmap.Width * 4);
+                var output = alpha.AsSpan(y * bitmap.Width, bitmap.Width);
+                for (var x = 0; x < output.Length; x++)
+                    output[x] = unchecked((sbyte)(opaque ? byte.MaxValue : input[x * 4 + 3]));
+            }
+            GC.KeepAlive(bitmap);
+            return raster;
+        }
         using var access = new PdfCartonPixels(bitmap);
         var sample = new int[1];
         for (var y = 0; y < bitmap.Height; y++)
@@ -6573,7 +10527,7 @@ internal static class PdfCartonFontCompat
         return raster;
     }
 
-    internal static void SetImageData(SKBitmap bitmap, JavaRaster raster)
+    internal static void SetImageData(PdfCartonImage bitmap, JavaRaster raster)
     {
         ArgumentNullException.ThrowIfNull(bitmap);
         ArgumentNullException.ThrowIfNull(raster);
@@ -6597,38 +10551,246 @@ internal static class PdfCartonFontCompat
                     retainedRaster.SetPixels(0, y, bitmap.Width, 1,
                         raster.GetPixels(0, y, bitmap.Width, 1, row));
             }
-            RenderRaster(bitmap, metadata.ColorModel, retainedRaster);
+            RenderRetainedRaster(bitmap, metadata);
             return;
         }
         var colorModel = new JavaColorModel(GetImageType(bitmap));
         RenderRaster(bitmap, colorModel, raster);
     }
 
-    private static void RenderRaster(
-        SKBitmap bitmap,
+    // Re-renders a bitmap's retained raster. A live view of the bitmap's own
+    // pixels under its image-type model already holds the rendered result.
+    private static void RenderRetainedRaster(PdfCartonImage bitmap, ImageMetadata metadata)
+    {
+        // A deferred render draws the same raster.
+        if (bitmap.RunPendingRender()) return;
+        lock (metadata)
+        {
+            if (!RendersAsStored(bitmap, metadata.ColorModel!, metadata.Raster!))
+                RenderRaster(bitmap, metadata.ColorModel!, metadata.Raster!);
+            metadata.NativePending = false;
+            metadata.ExposedSamples?.CopyTo(metadata.RenderedSamples!, 0);
+        }
+    }
+
+    // True when raster is the bitmap's live pixel view and model is the image-
+    // type model of a format whose round trip through it is exact, so
+    // rendering the raster would rewrite every native pixel unchanged.
+    internal static bool RendersAsStored(
+        PdfCartonImage bitmap,
         JavaColorModel colorModel,
         JavaRaster raster)
     {
-        using var output = new PdfCartonPixels(bitmap);
-        object? pixel = null;
-        for (var y = 0; y < bitmap.Height; y++)
+        if (!raster.IsLiveViewOf(bitmap) || !colorModel.IsImageTypeModel) return false;
+        if (bitmap.ColorType == SKColorType.Gray8)
+            return colorModel.ImageType == TYPE_BYTE_GRAY && !colorModel.HasAlpha;
+        if (bitmap.ColorType != SKColorType.Bgra8888) return false;
+        return colorModel.ImageType switch
         {
-            for (var x = 0; x < bitmap.Width; x++)
+            TYPE_INT_RGB or TYPE_3BYTE_BGR =>
+                bitmap.AlphaType == SKAlphaType.Opaque && !colorModel.HasAlpha,
+            TYPE_INT_ARGB or TYPE_4BYTE_ABGR =>
+                bitmap.AlphaType == SKAlphaType.Unpremul && colorModel.HasAlpha,
+            _ => false
+        };
+    }
+
+    // Renders every pixel through the color model once: components are read a
+    // row at a time into reused buffers and converted with one ToRgb per pixel.
+    private static void RenderRaster(
+        PdfCartonImage bitmap,
+        JavaColorModel colorModel,
+        JavaRaster raster)
+    {
+        if (TryRenderSampleRows(bitmap, colorModel, raster)) return;
+        float[]? components = null;
+        int[]? samples = null;
+        object? pixel = null;
+        var output = new PdfCartonPixels(bitmap);
+        RenderRasterPixels(ref output, bitmap.Width, bitmap.Height, colorModel, raster,
+            ref components, ref samples, ref pixel);
+    }
+
+    // RenderRaster's conversion of each pixel, with buffers a caller may reuse.
+    private static void RenderRasterPixels(
+        ref PdfCartonPixels output,
+        int width,
+        int height,
+        JavaColorModel colorModel,
+        JavaRaster raster,
+        ref float[]? components,
+        ref int[]? samples,
+        ref object? pixel)
+    {
+        var count = colorModel.NumberOfComponents;
+        var alphaIndex = colorModel.NumberOfColorComponents;
+        var hasAlpha = colorModel.HasAlpha;
+        var colorSpace = colorModel.DrawingSpace;
+        if (components is null || components.Length < checked(width * count))
+            components = new float[checked(width * count)];
+        Span<float> rgb = stackalloc float[3];
+        for (var y = 0; y < height; y++)
+        {
+            colorModel.GetNormalizedRow(raster, y, components, ref samples, ref pixel);
+            for (var x = 0; x < width; x++)
             {
-                pixel = raster.GetDataElements(x, y, 1, 1, pixel);
+                var pixelComponents = new ReadOnlySpan<float>(components, x * count, count);
+                colorSpace.ConvertToRgb(pixelComponents, rgb);
                 output.Set(
                     x,
                     y,
                     new SKColor(
-                        unchecked((byte)colorModel.GetRed(pixel)),
-                        unchecked((byte)colorModel.GetGreen(pixel)),
-                        unchecked((byte)colorModel.GetBlue(pixel)),
-                        unchecked((byte)colorModel.GetAlpha(pixel))));
+                        ComponentByte(rgb[0]),
+                        ComponentByte(rgb[1]),
+                        ComponentByte(rgb[2]),
+                        hasAlpha ? ComponentByte(pixelComponents[alphaIndex]) : byte.MaxValue));
             }
         }
     }
 
-    internal static SKBitmap CreateImage(
+    // Bulk rows for managed samples whose rendered colors come from per-sample
+    // tables (indexed, gray, sRGB and packed INT models): no per-pixel color
+    // conversion, and whole rows written to the native pixels at once.
+    private static bool TryRenderSampleRows(
+        PdfCartonImage bitmap,
+        JavaColorModel colorModel,
+        JavaRaster raster)
+    {
+        if (raster.Width != bitmap.Width || raster.Height != bitmap.Height) return false;
+        var converter = colorModel.CreateRowConverter(raster);
+        if (converter is null) return false;
+        var samples = new int[checked(raster.Width * raster.NumberOfBands)];
+        var row = new SKColor[raster.Width];
+        using var output = new PdfCartonPixels(bitmap);
+        for (var y = 0; y < raster.Height; y++)
+        {
+            raster.ReadRowSamples(y, samples);
+            converter.Convert(samples, row);
+            output.SetRow(y, row);
+        }
+        return true;
+    }
+
+    internal static byte ComponentByte(float value) =>
+        unchecked((byte)(int)JavaCompat.Round(JavaCompat.Clamp(value, 0f, 1f) * 255f));
+
+    // Copies a paint tile (straight BGRA pixels compat owns) into an
+    // INT_ARGB image of its size, made anew only when image is null or of
+    // another size, for a custom composite to read through its raster.
+    internal static PdfCartonImage CopyTile(SKBitmap tile, PdfCartonImage? image)
+    {
+        if (image is null || image.Width != tile.Width || image.Height != tile.Height)
+            image = CreateIntermediate(tile.Width, tile.Height, TYPE_INT_ARGB);
+        var rowLength = tile.Width * 4;
+        var from = tile.GetPixelSpan();
+        var to = image.GetPixelSpan();
+        for (var y = 0; y < tile.Height; y++)
+            from.Slice(y * tile.RowBytes, rowLength).CopyTo(to.Slice(y * image.RowBytes, rowLength));
+        GC.KeepAlive(tile);
+        return image;
+    }
+
+    // Renders a paint context's rasters, one tile after another, each into a
+    // bitmap of its size and alpha type as CreateImage(colorModel, raster,
+    // false, null) renders it, keeping the row converter (whose tables cost
+    // a colour conversion per sample value) and the buffers from tile to tile.
+    internal sealed class PaintRasterRenderer
+    {
+        private JavaColorModel? colorModel;
+        private (bool, bool, int, int, int, bool) layout;
+        private RasterRowConverter? converter;
+        private int[]? samples;
+        private SKColor[]? row;
+        private float[]? components;
+        private object? pixel;
+
+        internal void Render(SKBitmap bitmap, JavaColorModel model, JavaRaster raster)
+        {
+            ArgumentNullException.ThrowIfNull(model);
+            ArgumentNullException.ThrowIfNull(raster);
+            if (raster.NumberOfBands != model.RasterBandCount)
+                throw new ArgumentException(
+                    "Raster band count does not match the color model.",
+                    nameof(raster));
+            // What CreateRowConverter reads of the raster.
+            var rasterLayout = (raster.HasSampleStorage, raster.IsSinglePixelPacked, raster.NumberOfBands,
+                raster.TransferType, raster.PackedPixelBits, (long)raster.Width * raster.Height >= 65536);
+            if (!ReferenceEquals(model, colorModel) || rasterLayout != layout)
+            {
+                colorModel = model;
+                layout = rasterLayout;
+                converter = model.CreateRowConverter(raster);
+                pixel = null;
+            }
+            if (converter is null)
+            {
+                var pixels = new PdfCartonPixels(bitmap);
+                RenderRasterPixels(ref pixels, bitmap.Width, bitmap.Height, model, raster,
+                    ref components, ref samples, ref pixel);
+                return;
+            }
+            var width = raster.Width;
+            if (samples is null || samples.Length < width * raster.NumberOfBands)
+                samples = new int[width * raster.NumberOfBands];
+            if (row is null || row.Length < width) row = new SKColor[width];
+            var colors = row.AsSpan(0, width);
+            using var output = new PdfCartonPixels(bitmap);
+            for (var y = 0; y < raster.Height; y++)
+            {
+                raster.ReadRowSamples(y, samples);
+                converter.Convert(samples, colors);
+                output.SetRow(y, colors);
+            }
+        }
+    }
+
+    internal static PdfCartonImage CreateImage(
+        JavaColorModel colorModel,
+        JavaRaster raster,
+        bool isRasterPremultiplied,
+        object? properties)
+    {
+        // The image may leave compat, so its pixels are rendered when they are
+        // first used, by whoever uses them; an image only read through its
+        // raster (a ColorConvertOp source) is never rendered.
+        var bitmap = CreateDeferredImage(
+            colorModel,
+            raster,
+            isRasterPremultiplied,
+            properties);
+        RenderOnFirstNativeUse(bitmap);
+        return bitmap;
+    }
+
+    // Leaves a deferred image's render (CreateDeferredImage, a codec's
+    // deferred read) to the first use of its pixels (PdfCartonImage.Storage),
+    // by compat or by a caller outside PdfCarton; any other image's pending
+    // raster writes are rendered now, as EnsureNativePixels does.
+    internal static void RenderOnFirstNativeUse(PdfCartonImage bitmap)
+    {
+        if (ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) && metadata.Raster is not null)
+        {
+            lock (metadata)
+            {
+                if (metadata.NativePending)
+                {
+                    bitmap.RenderOnFirstUse(metadata, RenderPendingPixels);
+                    return;
+                }
+            }
+        }
+        EnsureNativePixels(bitmap);
+    }
+
+    // BufferedImage.getWidth() and getHeight().
+    internal static int GetImageWidth(PdfCartonImage image) => image.Width;
+
+    internal static int GetImageHeight(PdfCartonImage image) => image.Height;
+
+    // CreateImage for an image only compat code uses, through its retained
+    // raster or after EnsureNativePixels: its native pixels are rendered
+    // only by EnsureNativePixels.
+    internal static PdfCartonImage CreateDeferredImage(
         JavaColorModel colorModel,
         JavaRaster raster,
         bool isRasterPremultiplied,
@@ -6641,7 +10803,7 @@ internal static class PdfCartonFontCompat
             throw new ArgumentException(
                 "Raster band count does not match the color model.",
                 nameof(raster));
-        var bitmap = new SKBitmap(
+        var bitmap = new PdfCartonImage(
             new SKImageInfo(
                 raster.Width,
                 raster.Height,
@@ -6654,32 +10816,389 @@ internal static class PdfCartonFontCompat
         var sampleModel = raster.PackedPixelBits == 0
             ? new JavaSampleModel()
             : new JavaMultiPixelPackedSampleModel(raster.PackedPixelBits);
-        ImageMetadataByBitmap.Add(
+        ImageMetadataByBitmap.Set(
             bitmap,
-            new ImageMetadata(TYPE_CUSTOM, colorModel, raster, sampleModel));
-        RenderRaster(bitmap, colorModel, raster);
+            new ImageMetadata(TYPE_CUSTOM, colorModel, raster, sampleModel)
+            {
+                NativePending = true,
+                DetachedRaster = true
+            });
         return bitmap;
     }
 
-    internal static int GetRgb(SKBitmap bitmap, int x, int y)
+    // True when bitmap is a CreateImage image, or one whose samples getData
+    // exposed, whose retained raster is its Java storage: drawing surfaces
+    // bracket native drawing into it with BeginNativeDrawing and compose
+    // custom composites into the raster.
+    internal static bool TracksNativeDrawing(PdfCartonImage bitmap) =>
+        ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) && metadata.DetachedRaster;
+
+    // DataBufferByte.getData() moved the samples of raster, bitmap's retained
+    // view, into samples. In Java that array is the image's storage, so from
+    // now on it is, as a CreateImage raster is (DetachedRaster): native
+    // drawing is copied into it, and every Publish renders the samples
+    // written through the array since the last one (RenderChangedSamples).
+    internal static void ExposeSamples(PdfCartonImage bitmap, JavaRaster raster, sbyte[] samples)
+    {
+        if (!ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) ||
+            !ReferenceEquals(metadata.Raster, raster) || metadata.ColorModel is null)
+            return;
+        lock (metadata)
+        {
+            metadata.ExposedSamples = samples;
+            metadata.RenderedSamples = (sbyte[])samples.Clone();
+            metadata.DetachedRaster = true;
+        }
+        PdfCartonBitmapView.SetRefresh(bitmap, () => RenderChangedSamples(bitmap, raster));
+    }
+
+    // Records that native pixel (x, y) shows its exposed samples, after a
+    // compat write rendered them. Called under a lock on metadata.
+    private static void MarkRendered(ImageMetadata metadata, int x, int y)
+    {
+        if (metadata.RenderedSamples is not { } rendered) return;
+        var bands = metadata.Raster!.NumberOfBands;
+        var start = (y * metadata.Raster.Width + x) * bands;
+        Array.Copy(metadata.ExposedSamples!, start, rendered, start, bands);
+    }
+
+    // Renders, and only renders, the pixels whose samples differ from those
+    // the native pixels show, so native drawing the samples never saw
+    // survives. Equal rows cost one vectorized comparison, and the writes go
+    // through a cached native view: no per-pixel native call.
+    private static void RenderChangedSamples(PdfCartonImage bitmap, JavaRaster raster)
+    {
+        if (!ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) ||
+            !ReferenceEquals(metadata.Raster, raster))
+            return;
+        lock (metadata)
+        {
+            // Pixels not rendered yet (nor allocated) are rendered from the
+            // raster, samples included, on first use.
+            if (metadata.NativePending ||
+                metadata.ExposedSamples is not { } samples || metadata.RenderedSamples is not { } published)
+                return;
+            var colorModel = metadata.ColorModel!;
+            var bands = raster.NumberOfBands;
+            var rowLength = raster.Width * bands;
+            PdfCartonBitmapView? view = null;
+            int[]? pixelSamples = null;
+            object? pixel = null;
+            for (var y = 0; y < raster.Height; y++)
+            {
+                var row = samples.AsSpan(y * rowLength, rowLength);
+                var shown = published.AsSpan(y * rowLength, rowLength);
+                if (row.SequenceEqual(shown)) continue;
+                view ??= NativeView(bitmap, metadata);
+                for (int x = 0, start = 0; x < raster.Width; x++, start += bands)
+                {
+                    var sample = row.Slice(start, bands);
+                    if (sample.SequenceEqual(shown.Slice(start, bands))) continue;
+                    sample.CopyTo(shown.Slice(start, bands));
+                    view.Set(x, y, colorModel.RenderedColorAt(raster, x, y, ref pixelSamples, ref pixel));
+                }
+            }
+        }
+    }
+
+    // Starts a native (Skia) draw into bounds of a CreateImage image. In Java
+    // the raster is the image's only storage, so disposing the result copies
+    // every pixel the draw changed into the retained raster, converted into
+    // its colour model as SetRgb converts a colour, and renders those pixels
+    // back from the raster as SetRgb renders them. Pixels the draw left
+    // alone keep their samples, including raster writes not yet rendered.
+    // Null for other images. The native pixels are rendered first, so a
+    // later deferred render cannot overwrite the drawing.
+    internal static IDisposable? BeginNativeDrawing(PdfCartonImage bitmap, SKRectI bounds)
+    {
+        if (!ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) ||
+            !metadata.DetachedRaster)
+            return null;
+        bounds.Intersect(new SKRectI(0, 0, bitmap.Width, bitmap.Height));
+        if (bounds.IsEmpty) return null;
+        EnsureNativePixels(bitmap);
+        lock (metadata)
+        {
+            var view = NativeView(bitmap, metadata);
+            var before = new uint[checked(bounds.Width * bounds.Height)];
+            var index = 0;
+            for (var y = bounds.Top; y < bounds.Bottom; y++)
+                for (var x = bounds.Left; x < bounds.Right; x++)
+                    before[index++] = (uint)view.Get(x, y);
+            return new NativeDrawing(bitmap, metadata, bounds, before);
+        }
+    }
+
+    private sealed class NativeDrawing(
+        PdfCartonImage bitmap,
+        ImageMetadata metadata,
+        SKRectI bounds,
+        uint[] before) : IDisposable
+    {
+        private int disposed;
+
+        public void Dispose()
+        {
+            if (Interlocked.Exchange(ref disposed, 1) != 0) return;
+            lock (metadata)
+            {
+                var raster = metadata.Raster!;
+                var colorModel = metadata.ColorModel!;
+                var view = NativeView(bitmap, metadata);
+                float[]? components = null;
+                object? element = null;
+                int[]? samples = null;
+                object? pixel = null;
+                var index = 0;
+                for (var y = bounds.Top; y < bounds.Bottom; y++)
+                {
+                    for (var x = bounds.Left; x < bounds.Right; x++)
+                    {
+                        var drawn = view.Get(x, y);
+                        if ((uint)drawn == before[index++]) continue;
+                        element = colorModel.GetDrawnDataElements(ToArgb(drawn), ref components, element);
+                        raster.SetDataElements(x, y, element);
+                        // The native pixel shows the stored sample, as Java
+                        // draws the image from its raster: a colour drawn
+                        // into a gray image is gray.
+                        view.Set(x, y, colorModel.RenderedColorAt(raster, x, y, ref samples, ref pixel));
+                        MarkRendered(metadata, x, y);
+                    }
+                }
+            }
+        }
+    }
+
+    // A detached raster's view of its image's pixels, made once. Called under
+    // a lock on metadata.
+    private static PdfCartonBitmapView NativeView(PdfCartonImage bitmap, ImageMetadata metadata)
+    {
+        var view = metadata.NativeView;
+        if (view is null)
+            metadata.NativeView = view = new PdfCartonBitmapView(bitmap);
+        return view;
+    }
+
+    // A CreateImage image's retained raster; null for other images. Custom
+    // composites read and write the image through it (SetDetachedRasterRegion),
+    // as Java composes into the image's raster.
+    internal static JavaRaster? GetDetachedRaster(PdfCartonImage bitmap) =>
+        ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) && metadata.DetachedRaster
+            ? metadata.Raster
+            : null;
+
+    // Copies region's samples into a CreateImage image's retained raster at
+    // (x, y) and renders those pixels, and only those, natively.
+    internal static void SetDetachedRasterRegion(PdfCartonImage bitmap, int x, int y, JavaRaster region)
+    {
+        if (!ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) ||
+            !metadata.DetachedRaster)
+            throw new InvalidOperationException("The image has no retained raster.");
+        lock (metadata)
+        {
+            var raster = metadata.Raster!;
+            var colorModel = metadata.ColorModel!;
+            var width = region.Width;
+            var row = new int[checked(width * region.NumberOfBands)];
+            for (var line = 0; line < region.Height; line++)
+                raster.SetPixels(x, y + line, width, 1, region.GetPixels(0, line, width, 1, row));
+            if (metadata.NativePending) return;
+            var view = NativeView(bitmap, metadata);
+            int[]? samples = null;
+            object? pixel = null;
+            for (var line = y; line < y + region.Height; line++)
+                for (var column = x; column < x + width; column++)
+                {
+                    view.Set(column, line, colorModel.RenderedColorAt(raster, column, line, ref samples, ref pixel));
+                    MarkRendered(metadata, column, line);
+                }
+        }
+    }
+
+    internal static bool IsNativePending(PdfCartonImage bitmap)
+    {
+        if (!ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata)) return false;
+        lock (metadata) return metadata.NativePending;
+    }
+
+    // Renders a deferred image's native pixels from its retained raster once,
+    // and publishes raster writes to Skia. Compat draws call it first.
+    internal static void EnsureNativePixels(PdfCartonImage bitmap)
+    {
+        PdfCartonBitmapView.Publish(bitmap);
+        if (bitmap.RunPendingRender()) return;
+        RenderPendingPixels(bitmap);
+    }
+
+    private static void RenderPendingPixels(PdfCartonImage bitmap)
+    {
+        if (!ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata)) return;
+        lock (metadata)
+        {
+            if (!metadata.NativePending) return;
+            RenderRaster(bitmap, metadata.ColorModel!, metadata.Raster!);
+            if (metadata.ExposedSamples is { } exposed)
+                Array.Copy(exposed, metadata.RenderedSamples!, exposed.Length);
+            metadata.NativePending = false;
+        }
+    }
+
+    private static readonly SKImageRasterReleaseDelegate KeepSourceAlive = (_, _) => { };
+
+    // An image's pixel array pinned while a Skia image wraps it.
+    private sealed class PinnedImagePixels(Array pixels)
+    {
+        private GCHandle handle = GCHandle.Alloc(pixels, GCHandleType.Pinned);
+        private int released;
+
+        internal IntPtr Address => handle.AddrOfPinnedObject();
+
+        internal void Release()
+        {
+            if (Interlocked.Exchange(ref released, 1) == 0) handle.Free();
+        }
+    }
+
+    private static readonly SKImageRasterReleaseDelegate ReleasePinnedImage =
+        (_, context) => ((PinnedImagePixels)context).Release();
+
+    // SKCanvas.DrawBitmap and SKBitmap.ToShader go through an image that
+    // copies all of a mutable bitmap's pixels, however little is drawn. A
+    // raster canvas reads them only while it draws, so for one this Skia
+    // image wraps the image's pinned pixels instead, and unpins them when it
+    // (and any shader made from it) is released, which compat does before
+    // the call returns. rasterTarget is the Skia bitmap of the canvas: null
+    // for a canvas that may record or defer, which, like a source sharing the
+    // target's pixels, gets a copy.
+    internal static SKImage? DrawableImage(PdfCartonImage source, SKBitmap? rasterTarget)
+    {
+        var pinned = new PinnedImagePixels(source.Storage);
+        try
+        {
+            using var pixmap = new SKPixmap(source.Info, pinned.Address, source.RowBytes);
+            if (rasterTarget is not null &&
+                !Overlaps((long)pinned.Address, source.ByteCount, rasterTarget))
+            {
+                var wrapping = pinned;
+                pinned = null;
+                // Skia releases the pin when the image is released.
+                var view = SKImage.FromPixels(pixmap, ReleasePinnedImage, wrapping);
+                if (view is not null) return view;
+                wrapping.Release();
+                pinned = new PinnedImagePixels(source.Storage);
+                using var copied = new SKPixmap(source.Info, pinned.Address, source.RowBytes);
+                return CountedCopy(copied);
+            }
+            return CountedCopy(pixmap);
+        }
+        finally
+        {
+            pinned?.Release();
+        }
+    }
+
+    // An image of a copy of pixmap whose pixels are a PdfCartonNativeBitmap's,
+    // so they stay counted in NativeBytes until Skia releases them (a
+    // recording canvas or a shader may keep the image past the call).
+    private static SKImage? CountedCopy(SKPixmap pixmap)
+    {
+        using var copy = new PdfCartonNativeBitmap(pixmap.Info);
+        using (var target = copy.PeekPixels())
+            if (!pixmap.ReadPixels(target)) return null;
+        copy.SetImmutable();
+        // An immutable bitmap's image shares its pixels.
+        return SKImage.FromBitmap(copy);
+    }
+
+    // A Skia bitmap compat made itself (a snapshot or tile), as above.
+    internal static SKImage? DrawableImage(SKBitmap source, SKBitmap? rasterTarget)
+    {
+        if (rasterTarget is not null &&
+            !Overlaps((long)source.GetPixels(), source.ByteCount, rasterTarget))
+        {
+            using var pixmap = source.PeekPixels();
+            if (pixmap is not null && SKImage.FromPixels(pixmap, KeepSourceAlive, source) is { } view)
+                return view;
+        }
+        using var pixels = source.PeekPixels();
+        return pixels is null ? null : CountedCopy(pixels);
+    }
+
+    private static bool Overlaps(long start, long length, SKBitmap target)
+    {
+        long other = (long)target.GetPixels();
+        var shares = start != 0 && other != 0 &&
+                     start < other + target.ByteCount && other < start + length;
+        GC.KeepAlive(target);
+        return shares;
+    }
+
+    // Per-thread scratch for one-pixel GetRgb/SetRgb, which Java allocates
+    // per call. Data-element buffers hold the most bands or components any
+    // raster or color model has; callers read and write only their prefix.
+    private static class RgbScratch
+    {
+        private const int ElementLength = JavaColorSpace.MaximumComponents + 1;
+
+        [ThreadStatic] private static sbyte[]? bytes;
+        [ThreadStatic] private static short[]? words;
+        [ThreadStatic] private static int[]? ints;
+        [ThreadStatic] internal static float[]? Components;
+        [ThreadStatic] internal static int[]? Samples;
+
+        // A data-element buffer of the raster's transfer type; a color model
+        // whose elements have another type allocates its own, as without one.
+        internal static object Element(JavaRaster raster) =>
+            raster.TransferType switch
+            {
+                DATA_BUFFER_TYPE_USHORT => words ??= new short[ElementLength],
+                DATA_BUFFER_TYPE_INT => ints ??= new int[ElementLength],
+                _ => bytes ??= new sbyte[ElementLength]
+            };
+    }
+
+    internal static int GetRgb(PdfCartonImage bitmap, int x, int y)
     {
         ArgumentNullException.ThrowIfNull(bitmap);
         if (ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) &&
             metadata.Raster is not null &&
             metadata.ColorModel is not null)
         {
-            var pixel = metadata.Raster.GetDataElements(x, y, null);
-            return unchecked(
-                (int)((uint)metadata.ColorModel.GetAlpha(pixel) << 24 |
-                      (uint)metadata.ColorModel.GetRed(pixel) << 16 |
-                      (uint)metadata.ColorModel.GetGreen(pixel) << 8 |
-                      (uint)metadata.ColorModel.GetBlue(pixel)));
+            var raster = metadata.Raster;
+            return metadata.ColorModel.GetRgb(raster.GetDataElements(x, y, RgbScratch.Element(raster)));
         }
-        return ToArgb(PdfCartonPixels.Read(bitmap, x, y));
+        var color = PdfCartonPixels.Read(bitmap, x, y);
+        return IsByteGray(bitmap) ? ByteGrayRgbTable[color.Red] : ToArgb(color);
+    }
+
+    // A TYPE_BYTE_GRAY bitmap whose native pixels are its samples.
+    private static bool IsByteGray(PdfCartonImage bitmap) =>
+        bitmap.ColorType == SKColorType.Gray8 && GetImageType(bitmap) == TYPE_BYTE_GRAY;
+
+    // getRGB of each TYPE_BYTE_GRAY sample value, built on first use.
+    private static int[]? byteGrayRgbTable;
+
+    private static int[] ByteGrayRgbTable => byteGrayRgbTable ??= BuildByteGrayRgbTable();
+
+    private static int[] BuildByteGrayRgbTable()
+    {
+        var table = new int[256];
+        for (var sample = 0; sample < table.Length; sample++) table[sample] = ByteGrayRgb((byte)sample);
+        return table;
+    }
+
+    // getRGB of a TYPE_BYTE_GRAY sample: Java's linear CS_GRAY colour model.
+    private static int ByteGrayRgb(byte sample)
+    {
+        Span<float> gray = stackalloc float[1];
+        Span<float> rgb = stackalloc float[3];
+        gray[0] = sample / 255f;
+        GrayColorSpace.ToRgb(gray, rgb);
+        return unchecked((int)0xff000000) | ComponentByte(rgb[0]) * 0x010101;
     }
 
     internal static int[] GetRgb(
-        SKBitmap bitmap,
+        PdfCartonImage bitmap,
         int x,
         int y,
         int width,
@@ -6690,45 +11209,89 @@ internal static class PdfCartonFontCompat
     {
         ArgumentNullException.ThrowIfNull(bitmap);
         values ??= new int[checked(offset + (height - 1) * scansize + width)];
+        if (ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) &&
+            metadata.Raster is not null &&
+            metadata.ColorModel is not null)
+        {
+            // Like Java's getRGB, one data-element buffer serves every pixel.
+            var raster = metadata.Raster;
+            var colorModel = metadata.ColorModel;
+            object? pixel = null;
+            for (var row = 0; row < height; row++)
+            {
+                for (var column = 0; column < width; column++)
+                {
+                    pixel = raster.GetDataElements(x + column, y + row, pixel);
+                    values[offset + row * scansize + column] = colorModel.GetRgb(pixel);
+                }
+            }
+            return values;
+        }
+        // The native pixels: resolve their format, stride and address once for
+        // the region, then convert each pixel exactly as GetRgb(bitmap, x, y).
+        var byteGray = bitmap.ColorType == SKColorType.Gray8 &&
+                       (metadata?.Type ?? InferImageType(bitmap)) == TYPE_BYTE_GRAY;
+        var grayTable = byteGray ? ByteGrayRgbTable : null;
+        using var pixels = new PdfCartonPixels(bitmap);
         for (var row = 0; row < height; row++)
         {
+            var start = offset + row * scansize;
+            if (pixels.TryGetArgbRow(x, y + row, width, values, start, grayTable)) continue;
             for (var column = 0; column < width; column++)
             {
-                values[offset + row * scansize + column] =
-                    GetRgb(bitmap, x + column, y + row);
+                var color = pixels.Get(x + column, y + row);
+                values[start + column] = grayTable is not null ? grayTable[color.Red] : ToArgb(color);
             }
         }
         return values;
     }
 
-    internal static void SetRgb(SKBitmap bitmap, int x, int y, int argb)
+    internal static void SetRgb(PdfCartonImage bitmap, int x, int y, int argb)
     {
         ArgumentNullException.ThrowIfNull(bitmap);
         if (ImageMetadataByBitmap.TryGetValue(bitmap, out var metadata) &&
             metadata.Raster is not null &&
             metadata.ColorModel is not null)
         {
-            var rgb = new[]
+            // Java: raster.setDataElements(x, y, colorModel.getDataElements(rgb, null)).
+            var colorModel = metadata.ColorModel;
+            var raster = metadata.Raster;
+            var scratch = RgbScratch.Element(raster);
+            var pixel = colorModel.GetDataElements(argb, ref RgbScratch.Components, scratch);
+            object? element = scratch;
+            if (!metadata.DetachedRaster)
             {
-                unchecked((byte)(argb >> 16)) / 255f,
-                unchecked((byte)(argb >> 8)) / 255f,
-                unchecked((byte)argb) / 255f
-            };
-            var converted = metadata.ColorModel.ColorSpace.FromRgb(rgb);
-            var components = new float[metadata.ColorModel.NumberOfComponents];
-            Array.Copy(
-                converted,
-                components,
-                metadata.ColorModel.NumberOfColorComponents);
-            if (metadata.ColorModel.HasAlpha)
-            {
-                components[metadata.ColorModel.NumberOfColorComponents] =
-                    unchecked((byte)(argb >> 24)) / 255f;
+                // A live view of the bitmap's own pixels writes the native
+                // pixel itself; otherwise (an INT_BGR view, or a view whose
+                // samples were materialized) render the one written pixel.
+                raster.SetDataElements(x, y, pixel);
+                if (!RendersAsStored(bitmap, colorModel, raster))
+                    PdfCartonPixels.Write(bitmap, x, y,
+                        colorModel.RenderedColorAt(raster, x, y, ref RgbScratch.Samples, ref element));
+                return;
             }
-            var pixel =
-                metadata.ColorModel.GetDataElements(components, 0, null);
-            metadata.Raster.SetDataElements(x, y, pixel);
-            RenderRaster(bitmap, metadata.ColorModel, metadata.Raster);
+            lock (metadata)
+            {
+                raster.SetDataElements(x, y, pixel);
+                // A deferred image renders the whole raster on first draw.
+                if (metadata.NativePending) return;
+                NativeView(bitmap, metadata).Set(
+                    x, y, colorModel.RenderedColorAt(raster, x, y, ref RgbScratch.Samples, ref element));
+                MarkRendered(metadata, x, y);
+            }
+            return;
+        }
+        if (IsByteGray(bitmap))
+        {
+            // Java's linear CS_GRAY getDataElements.
+            Span<float> rgb = stackalloc float[3];
+            Span<float> gray = stackalloc float[JavaColorSpace.MaximumComponents];
+            rgb[0] = unchecked((byte)(argb >> 16)) / 255f;
+            rgb[1] = unchecked((byte)(argb >> 8)) / 255f;
+            rgb[2] = unchecked((byte)argb) / 255f;
+            GrayColorSpace.FromRgb(rgb, gray);
+            var sample = ComponentByte(gray[0]);
+            PdfCartonPixels.Write(bitmap, x, y, new SKColor(sample, sample, sample));
             return;
         }
         var color = FromArgb(argb);
@@ -6741,7 +11304,7 @@ internal static class PdfCartonFontCompat
         PdfCartonPixels.Write(bitmap, x, y, color);
     }
 
-    internal static SKBitmap CreateCompatibleImage(
+    internal static PdfCartonImage CreateCompatibleImage(
         int width,
         int height,
         int transparency)
@@ -6754,14 +11317,14 @@ internal static class PdfCartonFontCompat
                 "Invalid transparency constant.",
                 nameof(transparency));
         }
-        var bitmap = new SKBitmap(
+        var bitmap = new PdfCartonImage(new SKImageInfo(
             width,
             height,
             SKColorType.Bgra8888,
             transparency == PdfCartonTransparency.OPAQUE
                 ? SKAlphaType.Opaque
-                : SKAlphaType.Unpremul);
-        ImageMetadataByBitmap.Add(
+                : SKAlphaType.Unpremul));
+        ImageMetadataByBitmap.Set(
             bitmap,
             new ImageMetadata(
                 transparency == PdfCartonTransparency.BITMASK
@@ -6794,7 +11357,7 @@ internal static class PdfCartonFontCompat
             unchecked((byte)argb),
             unchecked((byte)(argb >> 24)));
 
-    internal static PdfCartonGraphics2D CreateGraphics(SKBitmap bitmap) => new(bitmap);
+    internal static PdfCartonGraphics2D CreateGraphics(PdfCartonImage bitmap) => new(bitmap);
 
     internal static JavaRaster CreateBandedRaster(
         int dataType,
@@ -6864,17 +11427,46 @@ internal static class PdfCartonFontCompat
         return new JavaIccProfile(ToSignedBytes(profile.ToArray()));
     }
 
+    // As Java's ColorSpace.getInstance, each standard space is one shared
+    // instance. Colour spaces compare by identity, so BlendComposite (and any
+    // other srcColorSpace.equals(dstColorSpace) check) sees the default colour
+    // models' spaces as equal and skips the CIE XYZ conversion.
+    private static readonly Lazy<JavaColorSpace> SrgbColorSpace = new(() =>
+        new JavaIccColorSpace(
+            JavaColorSpace.CS_sRGB,
+            GetIccProfile(JavaColorSpace.CS_sRGB)));
+    private static readonly JavaColorSpace GrayColorSpace =
+        new(JavaColorSpace.CS_GRAY);
+    // A gray space whose component is the sRGB value itself, converted from
+    // colours with Java2D's ByteGray luma.
+    internal static readonly JavaColorSpace EncodedGrayColorSpace =
+        new(0, JavaColorSpace.TYPE_GRAY, 1);
+    // Java2D's ByteGray luma for Skia, which stores a colour drawn into
+    // Gray8 as its BT.709 luma: the gray this filter hands it is its own luma.
+    internal static readonly SKColorFilter JavaGrayLumaFilter = SKColorFilter.CreateColorMatrix(
+    [
+        77f / 256f, 150f / 256f, 29f / 256f, 0f, 0f,
+        77f / 256f, 150f / 256f, 29f / 256f, 0f, 0f,
+        77f / 256f, 150f / 256f, 29f / 256f, 0f, 0f,
+        0f, 0f, 0f, 1f, 0f
+    ]);
+
+    // Java 2D maps a sampled colour (r, g, b) drawn into TYPE_BYTE_BINARY to
+    // black exactly when (r >> 3) + (g >> 3) + (b >> 3) <= 46 (black-box
+    // probes of Java 25 over all 5-bit cells, for drawImage at any scale,
+    // TexturePaint and GradientPaint).
+    internal static bool IsJavaBinarySampledBlack(SKColor color) =>
+        (color.Red >> 3) + (color.Green >> 3) + (color.Blue >> 3) <= 46;
+
+    private static readonly JavaColorSpace CieXyzColorSpace =
+        new(JavaColorSpace.CS_CIEXYZ);
+
     internal static JavaColorSpace GetColorSpace(int colorSpace) =>
         colorSpace switch
         {
-            JavaColorSpace.CS_sRGB =>
-                new JavaIccColorSpace(
-                    JavaColorSpace.CS_sRGB,
-                    GetIccProfile(JavaColorSpace.CS_sRGB)),
-            JavaColorSpace.CS_GRAY =>
-                new JavaColorSpace(JavaColorSpace.CS_GRAY),
-            JavaColorSpace.CS_CIEXYZ =>
-                new JavaColorSpace(JavaColorSpace.CS_CIEXYZ),
+            JavaColorSpace.CS_sRGB => SrgbColorSpace.Value,
+            JavaColorSpace.CS_GRAY => GrayColorSpace,
+            JavaColorSpace.CS_CIEXYZ => CieXyzColorSpace,
             _ => throw new ArgumentException(
                 $"Unsupported standard color-space identifier `{colorSpace}`.",
                 nameof(colorSpace))
@@ -6939,13 +11531,14 @@ internal static class PdfCartonFontCompat
         return result;
     }
 
-    internal static void RegisterImageType(SKBitmap bitmap, int type)
+    // The type of a decoded bitmap, whose colour model (and so transparency)
+    // GetTransparency then classifies from its pixels once.
+    internal static void RegisterImageType(PdfCartonImage bitmap, int type)
     {
-        ImageMetadataByBitmap.Remove(bitmap);
-        ImageMetadataByBitmap.Add(bitmap, new ImageMetadata(type));
+        ImageMetadataByBitmap.Set(bitmap, new ImageMetadata(type));
     }
 
-    internal static int InferImageType(SKBitmap bitmap) =>
+    internal static int InferImageType(PdfCartonImage bitmap) =>
         bitmap.ColorType == SKColorType.Gray8
             ? TYPE_BYTE_GRAY
             : bitmap.AlphaType == SKAlphaType.Opaque ? TYPE_INT_RGB : TYPE_INT_ARGB;
@@ -7030,23 +11623,65 @@ internal static class PdfCartonFontCompat
         matrix.TransY += matrix.SkewY * (float)x + matrix.ScaleY * (float)y;
     }
 
+    // Swaps and negates the transform's columns, as Java does (probed), so
+    // no entry picks up rounding or a 0 * infinity NaN.
     internal static void QuadrantRotateInPlace(ref SKMatrix matrix, int quadrants)
     {
         var normalized = ((quadrants % 4) + 4) % 4;
-        var rotation = normalized switch
+        float scaleX = matrix.ScaleX, skewX = matrix.SkewX, skewY = matrix.SkewY, scaleY = matrix.ScaleY;
+        switch (normalized)
         {
-            0 => Identity(),
-            1 => AffineTransform(0, 1, -1, 0, 0, 0),
-            2 => AffineTransform(-1, 0, 0, -1, 0, 0),
-            _ => AffineTransform(0, -1, 1, 0, 0, 0)
-        };
-        ConcatenateInPlace(ref matrix, rotation);
+            case 1:
+                matrix.ScaleX = skewX;
+                matrix.SkewY = scaleY;
+                matrix.SkewX = -scaleX;
+                matrix.ScaleY = -skewY;
+                break;
+            case 2:
+                matrix.ScaleX = -scaleX;
+                matrix.SkewY = -skewY;
+                matrix.SkewX = -skewX;
+                matrix.ScaleY = -scaleY;
+                break;
+            case 3:
+                matrix.ScaleX = -skewX;
+                matrix.SkewY = -scaleY;
+                matrix.SkewX = scaleX;
+                matrix.ScaleY = skewY;
+                break;
+        }
     }
 
+    // Java's AffineTransform.rotate gives an exact quadrant rotation when the
+    // angle's sine or cosine is exactly 1 or -1 (black-box probes of Java 25:
+    // rotate(toRadians(90)) yields m00 = 0, not cos(pi/2) = 6.1e-17, and so do
+    // 89.99999999 and 270.0000001 degrees, whose sines round to 1 and -1, and
+    // 180.0000001 degrees, whose cosine rounds to -1; 90.00001 degrees does
+    // not). Strokes on /Rotate 90 and 270 pages depend on it: the residue
+    // would move device points that lie on a pixel edge across it.
     internal static void RotateInPlace(ref SKMatrix matrix, double radians)
     {
-        var cosine = (float)Math.Cos(radians);
-        var sine = (float)Math.Sin(radians);
+        var exactSine = Math.Sin(radians);
+        var exactCosine = Math.Cos(radians);
+        if (exactSine == 1.0)
+        {
+            QuadrantRotateInPlace(ref matrix, 1);
+            return;
+        }
+        if (exactSine == -1.0)
+        {
+            QuadrantRotateInPlace(ref matrix, 3);
+            return;
+        }
+        if (exactCosine == -1.0)
+        {
+            QuadrantRotateInPlace(ref matrix, 2);
+            return;
+        }
+        if (exactCosine == 1.0)
+            return;
+        var cosine = (float)exactCosine;
+        var sine = (float)exactSine;
         var scaleX = matrix.ScaleX;
         var skewX = matrix.SkewX;
         var skewY = matrix.SkewY;
@@ -7279,15 +11914,18 @@ internal static class PdfCartonFontCompat
         if (destinationEnd > destination.Length)
             throw new ArgumentOutOfRangeException(nameof(destinationOffset));
 
-        if (pointCount == 0) return;
-        var values = ReferenceEquals(source, destination)
-            ? source.AsSpan(sourceOffset, pointCount * 2).ToArray()
-            : source;
-        var readOffset = ReferenceEquals(source, destination) ? 0 : sourceOffset;
+        // In place like Java's AffineTransform.transform: a destination starting
+        // inside the source is moved there first, then one forward pass.
+        if (ReferenceEquals(source, destination) &&
+            destinationOffset > sourceOffset && destinationOffset < sourceEnd)
+        {
+            Array.Copy(source, sourceOffset, destination, destinationOffset, pointCount * 2);
+            sourceOffset = destinationOffset;
+        }
         for (var point = 0; point < pointCount; point++)
         {
-            var x = values[readOffset + point * 2];
-            var y = values[readOffset + point * 2 + 1];
+            var x = source[sourceOffset + point * 2];
+            var y = source[sourceOffset + point * 2 + 1];
             destination[destinationOffset + point * 2] =
                 matrix.ScaleX * x + matrix.SkewX * y + matrix.TransX;
             destination[destinationOffset + point * 2 + 1] =
@@ -7308,61 +11946,90 @@ internal static class PdfCartonFontCompat
         return destination;
     }
 
-    internal static JavaPoint2D? CurrentPoint(SKPath path) =>
-        path.IsEmpty ? null : new JavaPoint2D(path.LastPoint.X, path.LastPoint.Y);
+    // Path2D.getCurrentPoint: null for an empty path, else the last point,
+    // or after a close the start of the closed subpath.
+    internal static JavaPoint2D? CurrentPoint(JavaPath2D path) =>
+        path.TryGetCurrentPoint(out var x, out var y) ? new JavaPoint2D(x, y) : null;
 
-    internal static JavaPathIterator PathIterator(SKPath path, object? transform) =>
+    internal static JavaPathIterator PathIterator(JavaPath2D path, object? transform) =>
         new(path, transform);
 
-    internal static JavaPathIterator ShapePathIterator(
-        object shape,
-        object? transform)
-    {
-        using var path = CreatePath(shape);
-        return new JavaPathIterator(path, transform);
-    }
+    // Shape.getPathIterator: paths and areas are iterated in place.
+    internal static JavaPathIterator ShapePathIterator(object shape, object? transform) =>
+        new(ToJavaPath(shape), transform);
 
-    internal static void Close(SKPath path) => path.Close();
+    internal static void Close(JavaPath2D path) => path.ClosePath();
 
-    internal static void SetWindingRule(SKPath path, int windingRule) =>
-        path.FillType = windingRule == JavaPathIterator.WIND_EVEN_ODD
-            ? SKPathFillType.EvenOdd
-            : SKPathFillType.Winding;
+    // Path2D.reset.
+    internal static void ResetPath(JavaPath2D path) => path.Reset();
 
-    internal static void TransformPath(SKPath path, SKMatrix transform)
+    // Path2D.clone: a path of the same precision.
+    internal static JavaPath2D ClonePath(JavaPath2D path) =>
+        new(path, path.IsDoublePrecision);
+
+    internal static void SetWindingRule(JavaPath2D path, int windingRule) =>
+        path.SetWindingRule(windingRule);
+
+    internal static void TransformPath(JavaPath2D path, SKMatrix transform)
     {
         ArgumentNullException.ThrowIfNull(path);
         path.Transform(transform);
     }
 
-    internal static object CreateTransformedShape(
-        SKMatrix transform,
-        object shape)
+    // AffineTransform.createTransformedShape: a path that reads the shape's
+    // segments through the transform (JavaPath2D), so a glyph outline drawn
+    // once per glyph shown is never copied.
+    internal static JavaPath2D CreateTransformedShape(SKMatrix transform, object shape)
     {
-        var path = CreatePath(shape);
-        path.Transform(transform);
-        return path;
+        ArgumentNullException.ThrowIfNull(shape);
+        return new JavaPath2D(ToJavaPath(shape), transform);
     }
 
     internal static SKRect ShapeBounds(object shape)
     {
-        using var path = CreatePath(shape);
-        return path.Bounds;
+        if (shape is JavaPath2D path) return path.Bounds;
+        using var lease = BorrowPath(shape);
+        return lease.Path.Bounds;
     }
 
-    internal static SKPath CreatePath(int windingRule, int initialCapacity)
+    // createTransformedShape(shape).getBounds2D().
+    internal static SKRect TransformedShapeBounds(SKMatrix transform, object shape) =>
+        CreateTransformedShape(transform, shape).Bounds;
+
+    // The shape as a Skia path to read, not keep: an SKPath is lent as is,
+    // any other shape is copied into a path the lease owns.
+    internal static PathLease BorrowPath(object shape) =>
+        shape is SKPath path ? new PathLease(path, false)
+        : shape is JavaPath2D managed ? new PathLease(managed.ToSKPath(), true)
+        : new PathLease(CreateSkiaPath(shape), true);
+
+    internal readonly struct PathLease : IDisposable
     {
-        if (initialCapacity < 0) throw new ArgumentException("Initial capacity cannot be negative.");
-        var path = new SKPath();
-        SetWindingRule(path, windingRule);
-        return path;
+        private readonly PdfCartonGraphics2D? returnTo;
+
+        internal PathLease(SKPath path, bool owned, PdfCartonGraphics2D? returnTo = null)
+        {
+            Path = path;
+            Owned = owned;
+            this.returnTo = returnTo;
+        }
+
+        internal SKPath Path { get; }
+        internal bool Owned { get; }
+
+        public void Dispose()
+        {
+            if (returnTo is not null) returnTo.ReturnScratchPath(Path);
+            else if (Owned) Path.Dispose();
+        }
     }
 
-    internal static SKPath CreatePath(object shape)
+    // A Skia path of any Java shape, which the caller owns.
+    internal static SKPath CreateSkiaPath(object shape)
     {
         ArgumentNullException.ThrowIfNull(shape);
         if (shape is SKPath path) return new SKPath(path);
-        if (shape is JavaArea area) return new SKPath(area.Path);
+        if (shape is JavaPath2D managed) return managed.ToSKPath();
         if (shape is JavaEllipse ellipse) return ellipse.ToPath();
         if (shape is SKRect rectangle)
         {
@@ -7383,7 +12050,51 @@ internal static class PdfCartonFontCompat
         throw new ArgumentException("Unsupported Java shape.", nameof(shape));
     }
 
-    internal static SKRectI PathBounds(SKPath path)
+    // The shape as a managed path to read: a path as it is, any other shape
+    // copied.
+    internal static JavaPath2D ToJavaPath(object shape)
+    {
+        ArgumentNullException.ThrowIfNull(shape);
+        if (shape is JavaPath2D path) return path;
+        if (shape is JavaEllipse ellipse) return ellipse.ToJavaPath();
+        var result = new JavaPath2D(JavaPath2D.WIND_NON_ZERO, 5, doublePrecision: true);
+        if (shape is SKRect or SKRectI)
+        {
+            var rectangle = shape is SKRectI i ? new SKRect(i.Left, i.Top, i.Right, i.Bottom) : (SKRect)shape;
+            // The rectangle's corners as SKPath.AddRect adds them.
+            result.MoveTo(rectangle.Left, rectangle.Top);
+            result.LineTo(rectangle.Right, rectangle.Top);
+            result.LineTo(rectangle.Right, rectangle.Bottom);
+            result.LineTo(rectangle.Left, rectangle.Bottom);
+            result.ClosePath();
+            return result;
+        }
+        if (shape is SKPath skiaPath)
+        {
+            result.ReadFrom(skiaPath);
+            return result;
+        }
+        throw new ArgumentException("Unsupported Java shape.", nameof(shape));
+    }
+
+    // new GeneralPath().
+    internal static JavaPath2D CreatePath() => new();
+
+    internal static JavaPath2D CreatePath(int windingRule, int initialCapacity) =>
+        new(windingRule, initialCapacity, doublePrecision: false);
+
+    // new GeneralPath(shape): a float copy.
+    internal static JavaPath2D CreatePath(object shape) =>
+        new(ToJavaPath(shape), doublePrecision: false);
+
+    // new Path2D.Double(shape).
+    internal static JavaPath2D CreateDoublePath(object shape) =>
+        new(ToJavaPath(shape), doublePrecision: true);
+
+    // new Area(shape).
+    internal static JavaArea CreateArea(object shape) => new(ToJavaPath(shape));
+
+    internal static SKRectI PathBounds(JavaPath2D path)
     {
         var bounds = path.Bounds;
         return new SKRectI(
@@ -7393,43 +12104,31 @@ internal static class PdfCartonFontCompat
             (int)Math.Ceiling(bounds.Bottom));
     }
 
-    internal static void AddPath(SKPath path, JavaPathIterator addition) =>
-        path.AddPath(addition.Path);
+    internal static void AddPath(JavaPath2D path, JavaPathIterator addition) =>
+        path.Append(addition, connect: false);
 
-    internal static void AppendPath(SKPath path, object shape, bool connect)
-    {
-        using var addition = CreatePath(shape);
-        path.AddPath(
-            addition,
-            connect ? SKPathAddMode.Extend : SKPathAddMode.Append);
-    }
+    internal static void AppendPath(JavaPath2D path, object shape, bool connect) =>
+        path.Append(ShapePathIterator(shape, null), connect);
 
-    internal static void AppendPath(
-        SKPath path,
-        JavaPathIterator addition,
-        bool connect) =>
-        path.AddPath(
-            addition.Path,
-            connect ? SKPathAddMode.Extend : SKPathAddMode.Append);
+    internal static void AppendPath(JavaPath2D path, JavaPathIterator addition, bool connect) =>
+        path.Append(addition, connect);
 
-    internal static void MoveTo(SKPath path, double x, double y) =>
-        path.MoveTo((float)x, (float)y);
+    internal static void MoveTo(JavaPath2D path, double x, double y) => path.MoveTo(x, y);
 
-    internal static void LineTo(SKPath path, double x, double y) =>
-        path.LineTo((float)x, (float)y);
+    internal static void LineTo(JavaPath2D path, double x, double y) => path.LineTo(x, y);
 
-    internal static void QuadTo(SKPath path, double x1, double y1, double x2, double y2) =>
-        path.QuadTo((float)x1, (float)y1, (float)x2, (float)y2);
+    internal static void QuadTo(JavaPath2D path, double x1, double y1, double x2, double y2) =>
+        path.QuadTo(x1, y1, x2, y2);
 
     internal static void CurveTo(
-        SKPath path,
+        JavaPath2D path,
         double x1,
         double y1,
         double x2,
         double y2,
         double x3,
         double y3) =>
-        path.CubicTo((float)x1, (float)y1, (float)x2, (float)y2, (float)x3, (float)y3);
+        path.CurveTo(x1, y1, x2, y2, x3, y3);
 }
 
 #pragma warning restore CS0618

@@ -61,7 +61,7 @@ public class TestPDNumberTreeNode {
       = new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.TestPDNumberTreeNode.PDTest));
     global::System.Collections.Generic.IDictionary<int,
       global::DripSharp.PdfCarton.Pdmodel.Common.TestPDNumberTreeNode.PDTest> Numbers
-      = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int,
+      = new global::DripSharp.Runtime.JavaTreeMap<int,
       global::DripSharp.PdfCarton.Pdmodel.Common.TestPDNumberTreeNode.PDTest>();
     global::DripSharp.Runtime.JavaCompat.MapPut(Numbers, 1,
       new global::DripSharp.PdfCarton.Pdmodel.Common.TestPDNumberTreeNode.PDTest(89));
@@ -81,7 +81,7 @@ public class TestPDNumberTreeNode {
       global::DripSharp.PdfCarton.Pdmodel.Common.COSObjectable>(Numbers));
     this.node24
       = new global::DripSharp.PdfCarton.Pdmodel.Common.PDNumberTreeNode(typeof(global::DripSharp.PdfCarton.Pdmodel.Common.TestPDNumberTreeNode.PDTest));
-    Numbers = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int,
+    Numbers = new global::DripSharp.Runtime.JavaTreeMap<int,
       global::DripSharp.PdfCarton.Pdmodel.Common.TestPDNumberTreeNode.PDTest>();
     global::DripSharp.Runtime.JavaCompat.MapPut(Numbers, 8,
       new global::DripSharp.PdfCarton.Pdmodel.Common.TestPDNumberTreeNode.PDTest(54));

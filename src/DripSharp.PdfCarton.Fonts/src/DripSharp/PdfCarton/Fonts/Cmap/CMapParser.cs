@@ -503,7 +503,7 @@ public class CMapParser {
       stringByte = randomAccessRead.Read();
     }
     if (global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.isDelimiter(stringByte)) {
-      randomAccessRead.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessRead)).Rewind(1);
     }
     return new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.LiteralName(buffer.ToString());
   }
@@ -522,7 +522,7 @@ public class CMapParser {
     }
     if ((global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.isDelimiter(nextByte)
       || global::DripSharp.PdfCarton.Runtime.Fonts.JavaCompat.IsDigit(nextByte))) {
-      randomAccessRead.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessRead)).Rewind(1);
     }
     return new global::DripSharp.PdfCarton.Fonts.Cmap.CMapParser.Operator(buffer.ToString());
   }
@@ -540,7 +540,7 @@ public class CMapParser {
       nextByte = randomAccessRead.Read();
     }
     if ((nextByte != unchecked(-1))) {
-      randomAccessRead.Rewind(1);
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessRead)).Rewind(1);
     }
     string value = buffer.ToString();
     try {

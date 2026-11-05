@@ -99,19 +99,19 @@ public class PDDeviceCMYK : global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.P
     return this.awtColorSpace.ToRgb(value);
   }
 
-  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
     return default!;
   }
 
-  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
     this.Init();
     return this.ToRGBImageAWT(raster, this.awtColorSpace);
   }
 
-  protected internal override global::SkiaSharp.SKBitmap ToRGBImageAWT(global::DripSharp.Runtime.JavaRaster raster,
+  protected internal override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRGBImageAWT(global::DripSharp.Runtime.JavaRaster raster,
     global::DripSharp.Runtime.JavaColorSpace colorSpace) {
     if (this.usePureJavaCMYKConversion) {
-      global::SkiaSharp.SKBitmap dest
+      global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage dest
         = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(raster.Width, raster.Height,
         global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
       global::DripSharp.Runtime.JavaColorSpace destCS

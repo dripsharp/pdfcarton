@@ -48,7 +48,9 @@ public class PDCIDFontType0 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont
               = ff3Stream.GetCOSObject().CreateView();
             global::System.Exception __dripsharpPrimary_86_39_0 = null!;
             try {
-              if (((randomAccessRead.Length() > 0) && (randomAccessRead.Peek() == (int)'%'))) {
+              if (((randomAccessRead.Length() > 0)
+                && (((global::DripSharp.PdfCarton.IO.RandomAccessRead)(randomAccessRead)).Peek()
+                == (int)'%'))) {
                 global::Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFontType0.LOG,
                   global::DripSharp.Runtime.JavaCompat.StringValueOf(global::DripSharp.Runtime.JavaCompat.Concat("Found PFB but expected embedded CFF font ",
                   fd.GetFontName())));
@@ -236,7 +238,7 @@ public class PDCIDFontType0 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont
       0));
   }
 
-  public override global::SkiaSharp.SKPath GetPath(int code) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(int code) {
     int cid = this.CodeToCID(code);
     if (((this.cid2gid != default!) && this.__field_isEmbedded)) {
       cid = this.cid2gid[cid];
@@ -254,7 +256,7 @@ public class PDCIDFontType0 : global::DripSharp.PdfCarton.Pdmodel.Font.PDCIDFont
     }
   }
 
-  public override global::SkiaSharp.SKPath GetNormalizedPath(int code) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetNormalizedPath(int code) {
     return this.GetPath(code);
   }
 

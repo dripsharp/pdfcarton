@@ -262,7 +262,7 @@ public class PDTextAppearanceHandler
       * min)) / (float)2.25F), ((float)((0.001F * min)) / (float)2.25F)));
     contentStream.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance((float)(500),
       (float)(375)));
-    global::SkiaSharp.SKPath path
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path
       = global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.GetGlyphPath(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.HelveticaBold,
       "question");
     this.addPath(contentStream, path);
@@ -298,7 +298,7 @@ public class PDTextAppearanceHandler
       * min)) / 3), ((float)((0.001F * min)) / 3)));
     contentStream.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance((float)(850),
       (float)(900)));
-    global::SkiaSharp.SKPath path
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path
       = global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.GetGlyphPath(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.Helvetica,
       "paragraph");
     this.addPath(contentStream, path);
@@ -351,7 +351,7 @@ public class PDTextAppearanceHandler
       * 1.3333F), ((yScale * min) * 1.3333F)));
     contentStream.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance((float)(0),
       (float)(50)));
-    global::SkiaSharp.SKPath path
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path
       = global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.GetGlyphPath(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.Symbol,
       "circleplus");
     this.addPath(contentStream, path);
@@ -556,7 +556,7 @@ public class PDTextAppearanceHandler
       * min)) / (float)0.8F), ((float)((yScale * min)) / (float)0.8F)));
     contentStream.Transform(global::DripSharp.PdfCarton.Util.Matrix.GetTranslateInstance((float)(0),
       (float)(ty)));
-    global::SkiaSharp.SKPath path
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path
       = global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.GetGlyphPath(global::DripSharp.PdfCarton.Pdmodel.Font.Standard14Fonts.FontName.ZapfDingbats,
       glyphName);
     this.addPath(contentStream, path);
@@ -564,10 +564,10 @@ public class PDTextAppearanceHandler
   }
 
   private void addPath(global::DripSharp.PdfCarton.Pdmodel.PDAppearanceContentStream contentStream,
-    global::SkiaSharp.SKPath path) {
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D path) {
     double curX = 0;
     double curY = 0;
-    global::DripSharp.Runtime.JavaPathIterator it
+    global::DripSharp.PdfCarton.Runtime.Fonts.JavaPathIterator it
       = global::DripSharp.Runtime.PdfCartonFontCompat.PathIterator(path,
       global::DripSharp.Runtime.PdfCartonFontCompat.Identity());
     double[] coords = new double[6];
@@ -575,11 +575,11 @@ public class PDTextAppearanceHandler
       int type = it.CurrentSegment(coords);
       switch (type) {
         case var __case_628_22_0 when __case_628_22_0
-          == global::DripSharp.Runtime.JavaPathIterator.SEG_CLOSE:
+          == global::DripSharp.PdfCarton.Runtime.Fonts.JavaPathIterator.SEG_CLOSE:
         contentStream.ClosePath();
         break;
         case var __case_631_22_0 when __case_631_22_0
-          == global::DripSharp.Runtime.JavaPathIterator.SEG_CUBICTO:
+          == global::DripSharp.PdfCarton.Runtime.Fonts.JavaPathIterator.SEG_CUBICTO:
         contentStream.CurveTo((float)((float)(coords[0])), (float)((float)(coords[1])),
           (float)((float)(coords[2])), (float)((float)(coords[3])), (float)((float)(coords[4])),
           (float)((float)(coords[5])));
@@ -587,7 +587,7 @@ public class PDTextAppearanceHandler
         curY = coords[5];
         break;
         case var __case_637_22_0 when __case_637_22_0
-          == global::DripSharp.Runtime.JavaPathIterator.SEG_QUADTO:
+          == global::DripSharp.PdfCarton.Runtime.Fonts.JavaPathIterator.SEG_QUADTO:
         double cp1x = (curX + (((double)2.0D / (double)3.0D) * (coords[0] - curX)));
         double cp1y = (curY + (((double)2.0D / (double)3.0D) * (coords[1] - curY)));
         double cp2x = (coords[2] + (((double)2.0D / (double)3.0D) * (coords[0] - coords[2])));
@@ -598,13 +598,13 @@ public class PDTextAppearanceHandler
         curY = coords[3];
         break;
         case var __case_652_22_0 when __case_652_22_0
-          == global::DripSharp.Runtime.JavaPathIterator.SEG_LINETO:
+          == global::DripSharp.PdfCarton.Runtime.Fonts.JavaPathIterator.SEG_LINETO:
         contentStream.LineTo((float)((float)(coords[0])), (float)((float)(coords[1])));
         curX = coords[0];
         curY = coords[1];
         break;
         case var __case_657_22_0 when __case_657_22_0
-          == global::DripSharp.Runtime.JavaPathIterator.SEG_MOVETO:
+          == global::DripSharp.PdfCarton.Runtime.Fonts.JavaPathIterator.SEG_MOVETO:
         contentStream.MoveTo((float)((float)(coords[0])), (float)((float)(coords[1])));
         curX = coords[0];
         curY = coords[1];

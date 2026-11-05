@@ -122,7 +122,8 @@ public sealed class PDIndexed
       }
       baseRaster.SetPixel(i__192_18, 0, @base);
     }
-    global::SkiaSharp.SKBitmap rgbImage = this.baseColorSpace.ToRGBImage(baseRaster);
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage rgbImage
+      = this.baseColorSpace.ToRGBImage(baseRaster);
     global::DripSharp.Runtime.JavaRaster rgbRaster
       = global::DripSharp.Runtime.PdfCartonFontCompat.GetRaster(rgbImage);
     this.rgbColorTable
@@ -147,10 +148,10 @@ public sealed class PDIndexed
         / (float)255.0F) };
   }
 
-  public override global::SkiaSharp.SKBitmap ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRGBImage(global::DripSharp.Runtime.JavaRaster raster) {
     int width = raster.Width;
     int height = raster.Height;
-    global::SkiaSharp.SKBitmap rgbImage
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage rgbImage
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
     global::DripSharp.Runtime.JavaRaster rgbRaster
@@ -166,7 +167,7 @@ public sealed class PDIndexed
     return rgbImage;
   }
 
-  public override global::SkiaSharp.SKBitmap ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage ToRawImage(global::DripSharp.Runtime.JavaRaster raster) {
     if (((this.baseColorSpace is global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)
       && ((global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDICCBased)(this.baseColorSpace!)).IsSRGB())) {
       sbyte[] r = new sbyte[this.colorTable.Length];

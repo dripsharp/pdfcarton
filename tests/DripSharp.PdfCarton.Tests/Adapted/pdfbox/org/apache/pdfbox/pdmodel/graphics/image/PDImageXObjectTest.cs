@@ -110,7 +110,7 @@ public class PDImageXObjectTest {
               typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument) },
             new object[] { (global::DripSharp.Runtime.JavaFile)file,
               (global::DripSharp.PdfCarton.Pdmodel.PDDocument)doc });
-          global::SkiaSharp.SKBitmap bim
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
             = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
             = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.CreateFromImage(doc,
@@ -222,7 +222,7 @@ public class PDImageXObjectTest {
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image
             = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromFile(global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
             global::DripSharp.Runtime.JavaCompat.FileGetAbsolutePath(file)), doc);
-          global::SkiaSharp.SKBitmap bim
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
             = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
             = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.CreateFromImage(doc,
@@ -330,7 +330,7 @@ public class PDImageXObjectTest {
               typeof(global::DripSharp.PdfCarton.Pdmodel.PDDocument) },
             new object[] { (global::DripSharp.Runtime.JavaFile)file,
               (global::DripSharp.PdfCarton.Pdmodel.PDDocument)doc });
-          global::SkiaSharp.SKBitmap bim
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
             = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
             = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.CreateFromImage(doc,
@@ -445,7 +445,7 @@ public class PDImageXObjectTest {
             global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject image
               = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject.CreateFromByteArray(doc,
               byteArray, (string)default!);
-            global::SkiaSharp.SKBitmap bim
+            global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
               = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(is1);
             global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.PDImageXObject expectedImage
               = global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.LosslessFactory.CreateFromImage(doc,
@@ -597,13 +597,15 @@ public class PDImageXObjectTest {
     }
   }
 
-  private void checkIdentARGB(global::SkiaSharp.SKBitmap expectedImage,
-    global::SkiaSharp.SKBitmap actualImage) {
+  private void checkIdentARGB(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage expectedImage,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage actualImage) {
     string errMsg = "";
-    int w = expectedImage.Width;
-    int h = expectedImage.Height;
-    global::DripSharp.Testing.JavaAssertions.Equal(w, actualImage.Width, null);
-    global::DripSharp.Testing.JavaAssertions.Equal(h, actualImage.Height, null);
+    int w = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(expectedImage);
+    int h = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(expectedImage);
+    global::DripSharp.Testing.JavaAssertions.Equal(w,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(actualImage), null);
+    global::DripSharp.Testing.JavaAssertions.Equal(h,
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(actualImage), null);
     for (int y = 0; (y < h); ++y) {
       for (int x = 0; (x < w); ++x) {
         if ((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(expectedImage, x, y)
@@ -625,7 +627,8 @@ public class PDImageXObjectTest {
     sbyte[] byteArray) {
     global::System.IO.MemoryStream bais
       = global::DripSharp.Runtime.JavaCompat.NewMemoryStream(byteArray);
-    global::SkiaSharp.SKBitmap bim = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(bais);
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
+      = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(bais);
     if (global::DripSharp.PdfCarton.Tests.Support.IsAlphaPremultiplied(bim)) {
       global::DripSharp.Runtime.JavaColorModel colorModel
         = global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(bim);
@@ -635,15 +638,17 @@ public class PDImageXObjectTest {
       bim = global::DripSharp.Runtime.PdfCartonFontCompat.CreateImage(colorModel, raster, false,
         (global::DripSharp.Runtime.JavaHashtable<object, object>)default!);
     }
-    global::SkiaSharp.SKBitmap flattened
-      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(bim.Width, bim.Height,
+    global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage flattened
+      = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(bim),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(bim),
       global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
     global::DripSharp.Runtime.PdfCartonGraphics2D g
       = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(flattened);
     g.SetComposite(global::DripSharp.Runtime.JavaAlphaComposite.GetInstance(global::DripSharp.Runtime.JavaAlphaComposite.SRC_OVER,
       1f));
     g.SetColor(global::DripSharp.Runtime.JavaColor.White);
-    g.FillRect(0, 0, flattened.Width, flattened.Height);
+    g.FillRect(0, 0, global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(flattened),
+      global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(flattened));
     g.DrawImage(bim, 0, 0, (object)default!);
     g.Dispose();
     return global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactory.CreateFromImage(document,

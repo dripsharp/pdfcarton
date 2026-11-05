@@ -28,7 +28,7 @@ public class SequenceRandomAccessReadTest {
           sequenceRandomAccessRead.Length(), null);
         sbyte[] bytesRead = new sbyte[overallLength];
         global::DripSharp.Testing.JavaAssertions.Equal(overallLength,
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead))).Read(bytesRead),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead)).Read(bytesRead),
           null);
         global::DripSharp.Testing.JavaAssertions.Equal(global::DripSharp.Runtime.JavaCompat.Concat(input1,
           input2), global::DripSharp.Runtime.JavaCompat.NewString(bytesRead,
@@ -144,7 +144,7 @@ public class SequenceRandomAccessReadTest {
         sequenceRandomAccessRead.Seek((long)(17));
         sbyte[] bytesRead = new sbyte[6];
         global::DripSharp.Testing.JavaAssertions.Equal(6,
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead))).Read(bytesRead),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead)).Read(bytesRead),
           null);
         global::DripSharp.Testing.JavaAssertions.Equal("789abc",
           global::DripSharp.Runtime.JavaCompat.NewString(bytesRead,
@@ -156,7 +156,7 @@ public class SequenceRandomAccessReadTest {
           sequenceRandomAccessRead.GetPosition(), null);
         bytesRead = new sbyte[6];
         global::DripSharp.Testing.JavaAssertions.Equal(6,
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead))).Read(bytesRead),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead)).Read(bytesRead),
           null);
         global::DripSharp.Testing.JavaAssertions.Equal("789abc",
           global::DripSharp.Runtime.JavaCompat.NewString(bytesRead,
@@ -164,7 +164,7 @@ public class SequenceRandomAccessReadTest {
         sequenceRandomAccessRead.Seek((long)(0));
         bytesRead = new sbyte[6];
         global::DripSharp.Testing.JavaAssertions.Equal(6,
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead))).Read(bytesRead),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead)).Read(bytesRead),
           null);
         global::DripSharp.Testing.JavaAssertions.Equal("012345",
           global::DripSharp.Runtime.JavaCompat.NewString(bytesRead,
@@ -210,7 +210,7 @@ public class SequenceRandomAccessReadTest {
     global::DripSharp.Testing.JavaAssertions.False(sequenceRandomAccessRead.IsEOF(), null);
     sbyte[] bytesRead = new sbyte[5];
     global::DripSharp.Testing.JavaAssertions.Equal(5,
-      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead))).Read(bytesRead),
+      ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead)).Read(bytesRead),
       null);
     global::DripSharp.Testing.JavaAssertions.Equal("pqrst",
       global::DripSharp.Runtime.JavaCompat.NewString(bytesRead, global::System.Text.Encoding.UTF8),
@@ -254,7 +254,7 @@ public class SequenceRandomAccessReadTest {
         sbyte[] bytesRead = new sbyte[10];
         sequenceRandomAccessRead.Seek((long)(15));
         global::DripSharp.Testing.JavaAssertions.Equal(10,
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead))).Read(bytesRead),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead)).Read(bytesRead),
           null);
         global::DripSharp.Testing.JavaAssertions.Equal("56789abcde",
           global::DripSharp.Runtime.JavaCompat.NewString(bytesRead,
@@ -262,7 +262,7 @@ public class SequenceRandomAccessReadTest {
         ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead)).Rewind(15);
         bytesRead = new sbyte[5];
         global::DripSharp.Testing.JavaAssertions.Equal(5,
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead))).Read(bytesRead),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead)).Read(bytesRead),
           null);
         global::DripSharp.Testing.JavaAssertions.Equal("01234",
           global::DripSharp.Runtime.JavaCompat.NewString(bytesRead,
@@ -270,7 +270,7 @@ public class SequenceRandomAccessReadTest {
         bytesRead = new sbyte[5];
         sequenceRandomAccessRead.Seek((long)(38));
         global::DripSharp.Testing.JavaAssertions.Equal(2,
-          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead))).Read(bytesRead),
+          ((global::DripSharp.PdfCarton.IO.RandomAccessRead)(sequenceRandomAccessRead)).Read(bytesRead),
           null);
         global::DripSharp.Testing.JavaAssertions.Equal("st",
           global::DripSharp.Runtime.JavaCompat.NewString(bytesRead, 0, 2,

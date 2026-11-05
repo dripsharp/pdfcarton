@@ -102,7 +102,7 @@ public class InvalidFileTester {
   }
 
   public virtual void After() {
-    global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(this.OutputResult);
+    global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(this.OutputResult);
   }
 
   static InvalidFileTester() {

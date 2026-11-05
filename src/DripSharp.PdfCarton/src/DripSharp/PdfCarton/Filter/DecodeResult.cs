@@ -13,7 +13,7 @@ public sealed class DecodeResult {
 
   private global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDJPXColorSpace colorSpace = null!;
 
-  private global::SkiaSharp.SKBitmap smask = null!;
+  private global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage smask = null!;
 
   internal DecodeResult(global::DripSharp.PdfCarton.Cos.COSDictionary parameters) {
     this.parameters = parameters;
@@ -41,11 +41,11 @@ public sealed class DecodeResult {
     this.colorSpace = colorSpace;
   }
 
-  internal void setJPXSMask(global::SkiaSharp.SKBitmap smask) {
+  internal void setJPXSMask(global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage smask) {
     this.smask = smask;
   }
 
-  public global::SkiaSharp.SKBitmap GetJPXSMask() {
+  public global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage GetJPXSMask() {
     return this.smask;
   }
 }

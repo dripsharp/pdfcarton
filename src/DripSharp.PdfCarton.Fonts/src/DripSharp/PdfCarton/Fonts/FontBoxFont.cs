@@ -15,7 +15,7 @@ public interface FontBoxFont {
 
   public global::System.Collections.Generic.IList<global::System.IConvertible> GetFontMatrix();
 
-  public global::SkiaSharp.SKPath GetPath(string name);
+  public global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(string name);
 
   public float GetWidth(string name);
 

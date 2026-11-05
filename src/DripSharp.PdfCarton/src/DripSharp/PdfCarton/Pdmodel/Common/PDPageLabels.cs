@@ -15,7 +15,7 @@ public class PDPageLabels : global::DripSharp.PdfCarton.Pdmodel.Common.COSObject
   private readonly global::DripSharp.PdfCarton.Pdmodel.PDDocument doc = null!;
 
   public PDPageLabels(global::DripSharp.PdfCarton.Pdmodel.PDDocument document) {
-    this.labels = global::DripSharp.Runtime.JavaCompat.NewSortedDictionary<int,
+    this.labels = new global::DripSharp.Runtime.JavaTreeMap<int,
       global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange>();
     this.doc = document;
     global::DripSharp.PdfCarton.Pdmodel.Common.PDPageLabelRange defaultRange

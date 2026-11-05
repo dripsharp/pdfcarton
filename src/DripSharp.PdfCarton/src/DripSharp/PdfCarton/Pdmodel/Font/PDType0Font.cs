@@ -425,11 +425,11 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
       "/"), descendant!), ", PostScript name: "), this.GetBaseFont());
   }
 
-  public virtual global::SkiaSharp.SKPath GetPath(int code) {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(int code) {
     return this.descendantFont.GetPath(code);
   }
 
-  public virtual global::SkiaSharp.SKPath GetNormalizedPath(int code) {
+  public virtual global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetNormalizedPath(int code) {
     return this.descendantFont.GetNormalizedPath(code);
   }
 

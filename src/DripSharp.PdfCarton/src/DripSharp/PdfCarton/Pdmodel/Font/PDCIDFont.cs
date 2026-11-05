@@ -375,9 +375,9 @@ global::DripSharp.PdfCarton.Pdmodel.Font.PDVectorFont {
 
   public abstract float GetHeight(int code);
 
-  public abstract global::SkiaSharp.SKPath GetNormalizedPath(int code);
+  public abstract global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetNormalizedPath(int code);
 
-  public abstract global::SkiaSharp.SKPath GetPath(int code);
+  public abstract global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(int code);
 
   public abstract float GetWidthFromFont(int code);
 

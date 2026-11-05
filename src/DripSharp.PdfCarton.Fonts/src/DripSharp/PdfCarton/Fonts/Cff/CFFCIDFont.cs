@@ -151,7 +151,7 @@ public class CFFCIDFont : global::DripSharp.PdfCarton.Fonts.Cff.CFFFont {
     return this.charStringParser;
   }
 
-  public override global::SkiaSharp.SKPath GetPath(string selector) {
+  public override global::DripSharp.PdfCarton.Runtime.Fonts.JavaPath2D GetPath(string selector) {
     int cid = this.selectorToCID(selector);
     return this.GetType2CharString(cid).GetPath();
   }

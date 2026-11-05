@@ -385,8 +385,8 @@ public class TestSymmetricKeyEncryption {
     int numSrcPages = document.GetNumberOfPages();
     global::DripSharp.PdfCarton.Rendering.PDFRenderer pdfRenderer
       = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(document);
-    global::System.Collections.Generic.IList<global::SkiaSharp.SKBitmap> srcImgTab
-      = new global::System.Collections.Generic.List<global::SkiaSharp.SKBitmap>();
+    global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage> srcImgTab
+      = new global::System.Collections.Generic.List<global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage>();
     global::System.Collections.Generic.IList<sbyte[]> srcContentStreamTab
       = new global::System.Collections.Generic.List<sbyte[]>();
     for (int i__370_18 = 0; (i__370_18 < numSrcPages); ++i__370_18) {
@@ -417,7 +417,8 @@ public class TestSymmetricKeyEncryption {
           null);
         pdfRenderer = new global::DripSharp.PdfCarton.Rendering.PDFRenderer(encryptedDoc);
         for (int i__384_22 = 0; (i__384_22 < encryptedDoc.GetNumberOfPages()); ++i__384_22) {
-          global::SkiaSharp.SKBitmap bim = pdfRenderer.RenderImage(i__384_22);
+          global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage bim
+            = pdfRenderer.RenderImage(i__384_22);
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.CheckIdent(bim,
             global::DripSharp.Runtime.JavaCompat.ListGet(srcImgTab, i__384_22)); {
             global::System.IO.Stream unfilteredStream__391_34

@@ -152,7 +152,7 @@ public class JPEGFactoryTest {
       try {
         global::DripSharp.PdfCarton.Pdmodel.PDDocument document
           = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
-        global::SkiaSharp.SKBitmap image
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image
           = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
         global::DripSharp.Testing.JavaAssertions.Equal(3,
           global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfComponents,
@@ -184,7 +184,7 @@ public class JPEGFactoryTest {
       try {
         global::DripSharp.PdfCarton.Pdmodel.PDDocument document
           = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
-        global::SkiaSharp.SKBitmap image
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image
           = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
         global::DripSharp.Testing.JavaAssertions.Equal(1,
           global::DripSharp.Runtime.PdfCartonFontCompat.GetColorModel(image).NumberOfComponents,
@@ -226,19 +226,21 @@ public class JPEGFactoryTest {
       try {
         global::DripSharp.PdfCarton.Pdmodel.PDDocument document
           = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
-        global::SkiaSharp.SKBitmap image
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image
           = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
-        int width = image.Width;
-        int height = image.Height;
-        global::SkiaSharp.SKBitmap argbImage
+        int width = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image);
+        int height = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image);
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage argbImage
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
           global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_ARGB);
         global::DripSharp.Runtime.PdfCartonGraphics2D ag
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(argbImage);
         ag.DrawImage(image, 0, 0, (object)default!);
         ag.Dispose();
-        for (int x = 0; (x < argbImage.Width); ++x) {
-          for (int y = 0; (y < argbImage.Height); ++y) {
+        for (int x = 0;
+          (x < global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(argbImage)); ++x) {
+          for (int y = 0;
+            (y < global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(argbImage)); ++y) {
             global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(argbImage, x, y,
               ((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(argbImage, x,
               y) & 16777215) | (unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(y,
@@ -257,7 +259,7 @@ public class JPEGFactoryTest {
           8, width, height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
-        global::DripSharp.Testing.JavaAssertions.True((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.ColorCount(ximage.GetSoftMask().GetImage()) > global::DripSharp.Runtime.JavaCompat.IntegralDivide(image.Height,
+        global::DripSharp.Testing.JavaAssertions.True((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.ColorCount(ximage.GetSoftMask().GetImage()) > global::DripSharp.Runtime.JavaCompat.IntegralDivide(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image),
           10)), null);
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document,
           ximage, global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
@@ -289,19 +291,21 @@ public class JPEGFactoryTest {
       try {
         global::DripSharp.PdfCarton.Pdmodel.PDDocument document
           = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
-        global::SkiaSharp.SKBitmap image
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image
           = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
-        int width = image.Width;
-        int height = image.Height;
-        global::SkiaSharp.SKBitmap argbImage
+        int width = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image);
+        int height = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image);
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage argbImage
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
           global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_4BYTE_ABGR);
         global::DripSharp.Runtime.PdfCartonGraphics2D ag
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(argbImage);
         ag.DrawImage(image, 0, 0, (object)default!);
         ag.Dispose();
-        for (int x = 0; (x < argbImage.Width); ++x) {
-          for (int y = 0; (y < argbImage.Height); ++y) {
+        for (int x = 0;
+          (x < global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(argbImage)); ++x) {
+          for (int y = 0;
+            (y < global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(argbImage)); ++y) {
             global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(argbImage, x, y,
               ((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(argbImage, x,
               y) & 16777215) | (unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(y,
@@ -320,7 +324,7 @@ public class JPEGFactoryTest {
           8, width, height, global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox", "jpg"),
           global::DripSharp.PdfCarton.Tests.Support.TestPath("pdfbox",
           global::DripSharp.PdfCarton.Pdmodel.Graphics.Color.PDDeviceGray.Instance.GetName()));
-        global::DripSharp.Testing.JavaAssertions.True((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.ColorCount(ximage.GetSoftMask().GetImage()) > global::DripSharp.Runtime.JavaCompat.IntegralDivide(image.Height,
+        global::DripSharp.Testing.JavaAssertions.True((global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.ColorCount(ximage.GetSoftMask().GetImage()) > global::DripSharp.Runtime.JavaCompat.IntegralDivide(global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image),
           10)), null);
         global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.ValidateXImage.doWritePDF(document,
           ximage, global::DripSharp.PdfCarton.Pdmodel.Graphics.Image.JPEGFactoryTest.TESTRESULTSDIR,
@@ -352,19 +356,21 @@ public class JPEGFactoryTest {
       try {
         global::DripSharp.PdfCarton.Pdmodel.PDDocument document
           = new global::DripSharp.PdfCarton.Pdmodel.PDDocument();
-        global::SkiaSharp.SKBitmap image
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image
           = global::DripSharp.Runtime.PdfCartonFontCompat.ReadImage(@is);
-        int width = image.Width;
-        int height = image.Height;
-        global::SkiaSharp.SKBitmap rgbImage
+        int width = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image);
+        int height = global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image);
+        global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage rgbImage
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateBitmap(width, height,
           global::DripSharp.Runtime.PdfCartonFontCompat.TYPE_INT_RGB);
         global::DripSharp.Runtime.PdfCartonGraphics2D ag
           = global::DripSharp.Runtime.PdfCartonFontCompat.CreateGraphics(rgbImage);
         ag.DrawImage(image, 0, 0, (object)default!);
         ag.Dispose();
-        for (int x = 0; (x < rgbImage.Width); ++x) {
-          for (int y = 0; (y < rgbImage.Height); ++y) {
+        for (int x = 0; (x < global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(rgbImage));
+          ++x) {
+          for (int y = 0;
+            (y < global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(rgbImage)); ++y) {
             global::DripSharp.Runtime.PdfCartonFontCompat.SetRgb(rgbImage, x, y,
               ((global::DripSharp.Runtime.PdfCartonFontCompat.GetRgb(rgbImage, x,
               y) & 16777215) | (unchecked((global::DripSharp.Runtime.JavaCompat.IntegralDivide(y,

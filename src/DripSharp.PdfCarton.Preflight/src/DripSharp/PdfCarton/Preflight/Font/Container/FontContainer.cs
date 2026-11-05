@@ -125,4 +125,21 @@ public abstract class FontContainer<T> : IFontContainer where T
     global::DripSharp.Runtime.JavaCompat.MapPut(this.codeToDetail, code,
       new global::DripSharp.PdfCarton.Preflight.Font.Util.GlyphDetail(code, e));
   }
+
+  bool IFontContainer.HasGlyph(int code) => this.HasGlyph(code);
+}
+
+public interface IFontContainer {
+  void Push(global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError error);
+  void Push(global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> errors);
+  global::System.Collections.Generic.IList<global::DripSharp.PdfCarton.Preflight.ValidationResult.ValidationError> GetAllErrors();
+  bool IsValid();
+  bool ErrorsAleadyMerged();
+  void SetErrorsAlreadyMerged(bool errorsAlreadyMerged);
+  bool IsEmbeddedFont();
+  void NotEmbedded();
+  void CheckGlyphWidth(int code);
+  bool HasGlyph(int code);
+  void MarkAsValid(int code);
+  void MarkAsInvalid(int code, global::DripSharp.PdfCarton.Preflight.Font.Util.GlyphException e);
 }

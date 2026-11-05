@@ -18,6 +18,10 @@ public sealed class GeneratedSuiteIntegrityTests
             ("Fixtures/cmap/CMapNoWhitespace", "c4380323aaa93324c0721b3898a9fede13e157c751910c3173319ba51e194411"),
             ("Fixtures/cmap/CMapTest", "c3d6d04024aa4d8034d4253670801aa1dc950473bc3cd014451f8272ea3972ce"),
             ("Fixtures/cmap/Identitybfrange", "e27cfa7c3e5e2ebdea2d23dde738db5b6ead5471410f4895220e3b567b3be3c0"),
+            ("Fixtures/cmyk-h2v1.jpg", "59d3794924159843ade3374561abb738f5e909071b386c02fa9e9225c55df952"),
+            ("Fixtures/cmyk-h3v1.jpg", "67fc7b7d3bdc16cf69a2732b0ec82ded67d7573c1fe1ff945a4ea9dba3aee9cf"),
+            ("Fixtures/cmyk-narrow3.jpg", "8df9039f95bbc0f0b326fb8bfaba98213e322c43d4768bf880b5becc0aaff508"),
+            ("Fixtures/cmyk.jpg", "379ba4137f476522c1d928612e428de6e9398bbb87449d9e3b022f34a5ac0f70"),
             ("Fixtures/commons-logging.properties", "d418de3568777e0833210876d3a85a846c5e721baad6b4052cb312f31941183b"),
             ("Fixtures/expected_errors.txt", "dee25d1ea3a20f7e94b812f8892b08527bea608127b3df90df754f8656bf6f65"),
             ("Fixtures/gsub/lohit_bengali/bng2/abvs.txt", "cba871ad180ff955de0bf9ff7c6b5d3085fbc721dec53410b2da5e0ec1bd3c86"),
@@ -690,11 +694,16 @@ public sealed class GeneratedSuiteIntegrityTests
             ("Fixtures/validxmp/metadata.rdf", "fe09f1db98b1c4c9d2b72ee7854a09394c5eb24a95e3a754cb404a9248e031fe"),
             ("Fixtures/validxmp/only_space_fields.xmp", "5484b6d8030a1ec206bff158d1e0c9951dcd1dbe369f8a206d6097ce26c28f62"),
             ("Fixtures/validxmp/override_ns.rdf", "a3882df6745a1352ab26781ffd223c3e083dcc8e882f03dece37440731c4e6f8"),
+            ("Fixtures/ycck-h1v2.jpg", "8d50477ef3e3097521f3287e01424af1336755f67d5646a85062a0d8e4bc061a"),
+            ("Fixtures/ycck-h1v4.jpg", "49974eb3e7ac3701b877fb38b69f82e607a432d9800a6eed709e54fa3be11b1c"),
+            ("Fixtures/ycck-narrow2.jpg", "df420ec4070db7d9bc5b30900b54cb55bba6222c95b89beab4f759ad47a3335b"),
+            ("Fixtures/ycck-progressive.jpg", "71c0e89e1ee6367c16efefb089df50358fcbf2d59dbd4870c44fae0e6edee576"),
+            ("Fixtures/ycck.jpg", "f681dade6a99f38d949e4a1b6cc298af11175e03ef3e5321f40e5301af3f71c4"),
         };
 
     public static void VerifyGovernedFixtures()
     {
-        Xunit.Assert.Equal(682, GovernedFixtures.Length);
+        Xunit.Assert.Equal(691, GovernedFixtures.Length);
         foreach ((string relative, string expected) in GovernedFixtures)
         {
             string path = global::System.IO.Path.Combine(

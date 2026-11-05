@@ -27,7 +27,7 @@ public class PDEncryption : global::DripSharp.PdfCarton.Pdmodel.Common.COSObject
 
   private readonly global::DripSharp.PdfCarton.Cos.COSDictionary dictionary = null!;
 
-  private global::DripSharp.Runtime.PdfBoxSecurityHandler securityHandler = null!;
+  private global::DripSharp.PdfCarton.Pdmodel.Encryption.ISecurityHandler securityHandler = null!;
 
   public PDEncryption() {
     this.dictionary = new global::DripSharp.PdfCarton.Cos.COSDictionary();
@@ -39,7 +39,7 @@ public class PDEncryption : global::DripSharp.PdfCarton.Pdmodel.Common.COSObject
       = global::DripSharp.PdfCarton.Pdmodel.Encryption.SecurityHandlerFactory.Instance.NewSecurityHandlerForFilter(this.GetFilter());
   }
 
-  public virtual global::DripSharp.Runtime.PdfBoxSecurityHandler GetSecurityHandler() {
+  public virtual global::DripSharp.PdfCarton.Pdmodel.Encryption.ISecurityHandler GetSecurityHandler() {
     if ((this.securityHandler == default!)) {
       throw new global::System.IO.IOException(global::DripSharp.Runtime.JavaCompat.Concat("No security handler for filter ",
         this.GetFilter()));
@@ -47,7 +47,7 @@ public class PDEncryption : global::DripSharp.PdfCarton.Pdmodel.Common.COSObject
     return this.securityHandler;
   }
 
-  public virtual void SetSecurityHandler(global::DripSharp.Runtime.PdfBoxSecurityHandler securityHandler) {
+  public virtual void SetSecurityHandler(global::DripSharp.PdfCarton.Pdmodel.Encryption.ISecurityHandler securityHandler) {
     this.securityHandler = securityHandler;
   }
 

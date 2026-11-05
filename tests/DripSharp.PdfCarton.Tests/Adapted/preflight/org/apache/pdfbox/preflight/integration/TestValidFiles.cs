@@ -77,7 +77,7 @@ public class TestValidFiles {
   }
 
   internal static void afterClass() {
-    global::DripSharp.PdfCarton.Tests.Support.CloseQuietly(global::DripSharp.PdfCarton.Preflight.Integration.TestValidFiles.IsartorResultFile);
+    global::DripSharp.PdfCarton.IO.IOUtils.CloseQuietly(global::DripSharp.PdfCarton.Preflight.Integration.TestValidFiles.IsartorResultFile);
   }
 
   internal virtual void validate(global::DripSharp.Runtime.JavaFile path) {

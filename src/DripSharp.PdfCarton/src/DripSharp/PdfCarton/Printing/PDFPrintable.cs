@@ -140,7 +140,7 @@ public sealed class PDFPrintable : global::DripSharp.Runtime.JavaPrintable {
       }
       global::SkiaSharp.SKMatrix printerBorderTransform = printerGraphics.GetTransform();
       double borderScale = scale;
-      global::SkiaSharp.SKBitmap image = default!;
+      global::DripSharp.PdfCarton.Runtime.Fonts.PdfCartonImage image = default!;
       if ((rasterDpi > 0)) {
         float dpiScale = ((float)rasterDpi / 72);
         if (global::DripSharp.PdfCarton.Printing.PDFPrintable.LOG.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Debug)) {
@@ -166,7 +166,9 @@ public sealed class PDFPrintable : global::DripSharp.Runtime.JavaPrintable {
         (float)((float)scale), global::DripSharp.PdfCarton.Rendering.RenderDestination.Print);
       if ((image! != default!)) {
         printerGraphics.SetBackground(global::DripSharp.Runtime.JavaColor.White);
-        printerGraphics.ClearRect(0, 0, image!.Width, image!.Height);
+        printerGraphics.ClearRect(0, 0,
+          global::DripSharp.Runtime.PdfCartonFontCompat.GetImageWidth(image!),
+          global::DripSharp.Runtime.PdfCartonFontCompat.GetImageHeight(image!));
         printerGraphics.DrawImage(image!, 0, 0, (object)default!);
       }
       if (this.showPageBorder) {

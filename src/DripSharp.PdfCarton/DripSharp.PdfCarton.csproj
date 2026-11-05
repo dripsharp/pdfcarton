@@ -39,7 +39,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
     <PackageReference Include="SkiaSharp" Version="4.150.1" />
     <PackageReference Include="System.Memory" Version="4.6.3" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.0" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.0" />
     <SourceRoot Include="$(MSBuildProjectDirectory)/" RepositoryUrl="https://github.com/dripsharp/pdfcarton.git" SourceControl="git" RevisionId="$(RepositoryCommit)" SourceLinkUrl="https://raw.githubusercontent.com/dripsharp/pdfcarton/$(RepositoryCommit)/src/DripSharp.PdfCarton/*" />
     <ProjectReference Include="../DripSharp.PdfCarton.Fonts/DripSharp.PdfCarton.Fonts.csproj" />
@@ -78,5 +78,8 @@
     <None Include="src/Legal/COPYRIGHT-JJ2000-5.1.txt" Pack="true" PackagePath="THIRD-PARTY/COPYRIGHT-JJ2000-5.1.txt" />
     <None Include="src/Legal/THIRD-PARTY-COREJ2K-LICENSE.txt" Pack="true" PackagePath="THIRD-PARTY/COREJ2K-LICENSE.txt" />
     <None Include="src/Legal/THIRD-PARTY-JBIG2-LICENSE.txt" Pack="true" PackagePath="THIRD-PARTY/JBIG2-LICENSE.txt" />
+    <None Include="src/Legal/THIRD-PARTY-LIBJPEG-TURBO-LICENSE.md.txt" Pack="true" PackagePath="THIRD-PARTY/LIBJPEG-TURBO-LICENSE.md.txt" />
+    <None Include="src/Legal/THIRD-PARTY-LIBJPEG-TURBO-NOTICE.txt" Pack="true" PackagePath="THIRD-PARTY/LIBJPEG-TURBO-NOTICE.txt" />
+    <None Include="src/Legal/THIRD-PARTY-LIBJPEG-TURBO-README.ijg.txt" Pack="true" PackagePath="THIRD-PARTY/LIBJPEG-TURBO-README.ijg.txt" />
   </ItemGroup>
 </Project>
