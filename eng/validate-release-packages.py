@@ -28,9 +28,9 @@ PUBLIC_DEPENDENCIES = {
     "Microsoft.Extensions.Logging.Abstractions": "10.0.0",
     "SkiaSharp": "4.150.1",
     "SkiaSharp.NativeAssets.Linux": "4.150.1",
-    "System.Formats.Asn1": "10.0.0",
+    "System.Formats.Asn1": "10.0.13",
     "System.Memory": "4.6.3",
-    "System.Security.Cryptography.Pkcs": "10.0.0",
+    "System.Security.Cryptography.Pkcs": "10.0.13",
     "System.Text.Encoding.CodePages": "10.0.0",
 }
 
